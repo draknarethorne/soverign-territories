@@ -1,12 +1,12 @@
-Here is the Final Consolidated Master Design Document (Version 4.4).
+Here is the Final Consolidated Master Design Document (Version 4.6).
 
-This version integrates everything we have discussed: the Maps, Stacking, Campaigns, Cards, Auction House, Chat, and the Expansion Roadmap. It now includes enhanced sections on Combat Mechanics, Progression & Balance, Monetization (pay-for-speed/look-and-feel model), Multiplayer, UI/UX, Technical Integration, and more. Clarifications: 2.5D/2D perspective (no 3D modeling); turn-based with AI auto-battle for AFK defending/joining events; focus on card collecting, deck-building, and positioning decks/cards as game-pieces (heroes/avatars on maps/castles); board game look/feel with decks as cards and game-piece combinations; deterministic combat based on math (power, elements, classes, buffs)—no random dice except possibly in arena battles. Decisions are logic-based. Added common features for stickiness/retention: shields, enhanced alliances/friends, improved auction house, comprehensive currencies/VIP, daily/weekly events, achievements/leaderboards, notifications, seasonal content, and tutorials. Expanded card system with rarities, boosting/specialization, visual effects, pre-built decks, and RPG-like hero customization. Open-source references added for prototyping. You can copy and paste this entire block into your Google Doc as the single source of truth.
+This version is a complete, line-by-line review and expansion of the entire document. Sections have been re-organized for logical flow (Philosophy -> Core Systems -> Gameplay -> Economy/Social -> Advanced Mechanics -> Technical/Pipeline). Light sections have been expanded with deeper details, examples, and best-of-class concepts from referenced genres (e.g., HoMM for strategy, Slay the Spire for deck-building). Each section now reads as a comprehensive player's guide/reference manual, explaining systems, mechanics, and how to play. This serves as the "cheat-guide" for gameplay, enabling detailed architecture and coding plans.
 
 # PROJECT: SOVEREIGN TERRITORIES
 
 ## Master Game Design Document (The Complete Codex)
 
-Version: 4.5
+Version: 4.6
 
 Owner: [User] ("The Architect")
 
