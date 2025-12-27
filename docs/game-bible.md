@@ -1,12 +1,12 @@
-Here is the Final Consolidated Master Design Document (Version 4.1).
+Here is the Final Consolidated Master Design Document (Version 4.4).
 
-This version integrates everything we have discussed: the Maps, Stacking, Campaigns, Cards, Auction House, Chat, and the Expansion Roadmap. It now includes enhanced sections on Combat Mechanics, Progression & Balance, Monetization (pay-for-speed/look-and-feel model), Multiplayer, UI/UX, Technical Integration, and more. Clarifications: 2.5D/2D perspective (no 3D modeling); turn-based with AI auto-battle for AFK defending/joining events; focus on card collecting, deck-building, and positioning decks/cards as game-pieces (heroes/avatars on maps/castles); board game look/feel with decks as cards and game-piece combinations; deterministic combat based on math (power, elements, classes, buffs)—no random dice except possibly in arena battles. Decisions are logic-based. Open-source references added for prototyping. You can copy and paste this entire block into your Google Doc as the single source of truth.
+This version integrates everything we have discussed: the Maps, Stacking, Campaigns, Cards, Auction House, Chat, and the Expansion Roadmap. It now includes enhanced sections on Combat Mechanics, Progression & Balance, Monetization (pay-for-speed/look-and-feel model), Multiplayer, UI/UX, Technical Integration, and more. Clarifications: 2.5D/2D perspective (no 3D modeling); turn-based with AI auto-battle for AFK defending/joining events; focus on card collecting, deck-building, and positioning decks/cards as game-pieces (heroes/avatars on maps/castles); board game look/feel with decks as cards and game-piece combinations; deterministic combat based on math (power, elements, classes, buffs)—no random dice except possibly in arena battles. Decisions are logic-based. Added common features for stickiness/retention: shields, enhanced alliances/friends, improved auction house, comprehensive currencies/VIP, daily/weekly events, achievements/leaderboards, notifications, seasonal content, and tutorials. Expanded card system with rarities, boosting/specialization, visual effects, pre-built decks, and RPG-like hero customization. Open-source references added for prototyping. You can copy and paste this entire block into your Google Doc as the single source of truth.
 
 # PROJECT: SOVEREIGN TERRITORIES
 
 ## Master Game Design Document (The Complete Codex)
 
-Version: 4.1
+Version: 4.4
 
 Owner: [User] ("The Architect")
 
@@ -14,7 +14,7 @@ Owner: [User] ("The Architect")
 
 "Build the Deck. Rule the Map. Automate the Empire."
 
-A hybrid strategy game combining the territory control of Risk, the deck-building depth of Pokémon, and the tactical progression of Heroes of Might & Magic. The game is built on a "Universal Engine" designed to support multiple themes (Medieval, Sci-Fi, Mythic) within the same ruleset. Perspective: 2.5D and 2D (isometric/board-like views, no full 3D modeling). Turn-based gameplay with AI tactics enabling "auto-battle" in all scenarios for AFK defending/joining monthly/weekly events. Focus: Collecting cards, growing/building decks, positioning decks/cards as game-pieces (heroes/avatars on maps/castles). Board game look/feel: Decks are cards, combined with game-pieces. Combat: Deterministic math-based (power, elements, classes, buffs)—no random dice (except arena). Decisions logic-based. Monetization: "Pay-for-speed" or "pay-for-look-and-feel" model.
+A hybrid strategy game combining the territory control of Risk, the deck-building depth of Pokémon, and the tactical progression of Heroes of Might & Magic. The game is built on a "Universal Engine" designed to support multiple themes (Medieval, Sci-Fi, Mythic) within the same ruleset. Perspective: 2.5D and 2D (isometric/board-like views, no full 3D modeling). Turn-based gameplay with AI tactics enabling "auto-battle" in all scenarios for AFK defending/joining monthly/weekly events. Focus: Collecting cards, growing/building decks, positioning decks/cards as game-pieces (heroes/avatars on maps/castles). Board game look/feel: Decks are cards, combined with game-pieces. Combat: Deterministic math-based (power, elements, classes, buffs)—no random dice (except arena). Decisions logic-based. Monetization: "Pay-for-speed" or "pay-for-look-and-feel" model. Stickiness: Daily logins for rewards/refreshes, events, and progression; multiple sessions via energy resets, spawns, and chances.
 
 ## Open-Source References
 - Slay the Spire (GitHub): Deck-building mechanics and card collection.
@@ -23,7 +23,7 @@ A hybrid strategy game combining the territory control of Risk, the deck-buildin
 
 # SECTION 2: THE CARD SYSTEM (Assets & Collection)
 
-Everything in the game is a card. Decks represent formations with heroes/units, positioned as game-pieces on maps/castles.
+Everything in the game is a card. Decks represent formations with heroes/units, positioned as game-pieces on maps/castles. Flexible system for AFK battles: Base tactics on heroes/units (e.g., aggressive, defensive); attach custom tactics for overrides. Unit types: Fighting/melee, ranged/archers, land/water/air, scouts, mages, vehicles/riders. Stats: Base power, HP, speed, defense; modifiers from elements (fire, water), buffs, terrain.
 
 ## 1. Card Types
 
@@ -32,13 +32,21 @@ Everything in the game is a card. Decks represent formations with heroes/units, 
 - Buildings: Structures (Walls, Mines, Towers). Played into "Castle Slots" on the State Map to defend territory or produce Gold.
 - Tactics: AI Logic Modules (e.g., "Focus Healers", "Flank Left"). Equipped to Units/Heroes to program their auto-battle behavior.
 
-## 2. The "Theme" System (Extensions)
+## 2. Rarities and Customization
+
+- **Basic/Common**: Generalized cards (e.g., basic archer, wall). No specialization; used for fodder or basic builds.
+- **Rare**: More creative generalized cards (e.g., elite scout, enchanted tower). Some minor customization options.
+- **Epic**: Specific named cards (e.g., "Stormbringer the Mage"). Boostable with scrolls/books from PvE, draws, events. Limited points for specialization (skill tree-like: allocate to stats/abilities, e.g., +fire damage or +healing). Visual effects on map figures (e.g., boosted fire stat glows red border).
+- **Legendary**: Specific named cards (e.g., "Thor the Thunderer"). Highly boostable; equip weapons/armor for RPG-like customization (e.g., find/equip swords in events). Skill trees for unique abilities. Visual effects (e.g., halos for healing boosts). Not all stats max out; limits encourage strategy.
+- **Pre-Built Decks**: Buy themed decks (e.g., fire elemental, with hero, units, tactics, buildings). Customize by swapping cards. Saved decks in storage; loose cards in codex.
+
+## 3. The "Theme" System (Extensions)
 
 - Core Set: The base game (Medieval Fantasy).
 - Expansion Series: Future content drops (e.g., "Iron Legion" - Modern Military).
 - Tag Synergy: Cards have tags (e.g., NORSE, MECH). Building a "Theme Deck" (e.g., 20 NORSE cards) grants synergy bonuses, encouraging players to collect specific sets.
 
-## 3. Deck Drawing (The Store)
+## 4. Deck Drawing (The Store)
 
 - The Pack System: Players buy digital "Booster Packs" using Gems or Gold.
   - Standard Pack: 5 Cards (Mostly Common/Rare).
@@ -53,31 +61,36 @@ Everything in the game is a card. Decks represent formations with heroes/units, 
 
 # SECTION 3: THE MAP HIERARCHY (The World)
 
-A "Fractal" world where time scale matches map scale. 2.5D/2D views for board game feel.
+A "Fractal" world where time scale matches map scale. 2.5D/2D views for board game feel. Shields: Activate temporary protection (24-72 hours) on castles to opt out of PVP attacks (earned via quests or gems).
 
 ## Tier 1: Global Map (Quarterly Season)
 
 - View: 2.5D Continental Globe (isometric projection).
-- Gameplay: Alliance Politics. Control "Wonders" for server-wide buffs.
-- Control: Based on owning the majority of Tier 2 Capitals.
+- Gameplay: Alliance Politics/PVP. Control "Wonders" (neutral PVE objectives) for server-wide buffs. Limited alliances; wars are siege-like with coordinated attacks.
+- Control: Based on owning the majority of Tier 2 Capitals. Zoom in reveals Tier 2 hexes under control.
+- Terrain: Global biomes affect alliance buffs (e.g., desert alliances get +gold).
 
 ## Tier 2: State Map (Monthly War)
 
 - View: Regional Kingdom (Hex Grid, 2D top-down).
-- Gameplay: Castle Placement. Your physical base sits here.
-- Control: Occupying territory here taxes the players in Tier 3.
+- Gameplay: Castle Placement/PVP with PVE scrambles. Individual commanders place/attack castles; alliances coordinate sieges.
+- Control: Occupying territory here taxes the players in Tier 3. Hex ownership determines Tier 3 spawns.
+- Terrain: Hex types (mountains, plains) modify building/unit stats (e.g., towers +range on hills).
+- Shields: Castle shields prevent PVP raids but allow PVE.
 
 ## Tier 3: County Map (Weekly Reset)
 
 - View: District Scale (~10km, 2D grid).
-- Gameplay: Resource Scramble. Procedurally generated every Monday.
-- Objective: Capture Gold Mines and Mana Wells for weekly income.
+- Gameplay: Resource Scramble/PVE with optional PVP. Weekly campaigns: PVE-only, joint alliance PVE, or PVP vs. one alliance. Players get X turns/day; auto-battle for AFK.
+- Objective: Capture Gold Mines and Mana Wells for weekly income. Procedurally generated every Monday.
+- Terrain: Dynamic biomes affect unit movement (e.g., swamps slow vehicles).
 
 ## Tier 4: Local Map (Daily Mission)
 
 - View: Tactical 8x8 Battle Grid (Tabletop Style, 2D).
-- Gameplay: PvE Dungeons and PvP Duels.
-- Environment: Randomly generated biomes (Desert, Castle Gate, Jungle) based on the location in Tier 3.
+- Gameplay: PvE Dungeons and PvP Duels/PVE. Deck vs. deck battles; auto or manual control.
+- Environment: Randomly generated biomes (Desert, Castle Gate, Jungle) based on Tier 3 location. Terrain bonuses/penalties (e.g., cover +defense).
+- Spawns: Based on Tier 3 ownership; PVE enemies spawn in dungeons.
 
 ## Open-Source References
 - OpenTTD (GitHub): Multi-tier map hierarchies and resource management.
@@ -88,7 +101,7 @@ A "Fractal" world where time scale matches map scale. 2.5D/2D views for board ga
 
 ## 1. The Saga Campaign (PvE Story)
 
-- Concept: A linear "Journey" map separate from the political world.
+- Concept: A linear "Journey" map separate from the political world. PVE-focused; auto or manual control.
 - Progression: Unlock stages by defeating AI. Every 10th stage is a Boss.
 - Resource: Uses "Energy" (daily recharge).
 - Loot: The primary source of XP and "Fodder Cards" (Common units).
@@ -99,13 +112,25 @@ A "Fractal" world where time scale matches map scale. 2.5D/2D views for board ga
 - Solution: Squad Stacking.
   - Play 5 "Archer" cards on one tile = 1 "Archer Squad" Token.
   - Stats: 5x HP, 5x Attack.
-  - Risk: Highly vulnerable to Area of Effect (AoE) damage (Fireballs/Artillery).
+  - Risk: Highly vulnerable to Area of Effect (AoE) damage (Fireballs/Artillery). Terrain affects stacking (e.g., no stacking in forests).
 
 ## 3. The Expedition (Weekly Side Game)
 
 - Concept: A mini-board game (Mario Party style) that resets weekly.
 - Mechanic: Limited daily moves. Roll dice to land on rewards.
 - Monetization: Buy extra "Moves" to finish the board before Sunday night.
+
+## 4. Alliance Events (PVP/PVE Hybrid)
+
+- Types: Limited human interaction (direct attacks/heals for short periods) + full auto-battle at scale (turn-based fast for RTS feel).
+- Scale: Large alliance vs. alliance; ongoing conquest on maps.
+- Options: PVE-only campaigns, PVP vs. one alliance, joint alliance PVE.
+
+## 5. Daily/Weekly Challenges & Events
+
+- Daily: Quests (e.g., win 3 PVE battles) for rewards; energy refreshes, spawns appear.
+- Weekly: Themed scrambles, tournaments, or alliance raids. Leaderboards for top performers.
+- Retention: Encourages multiple logins; pay-for-speed for boosts.
 
 ## Open-Source References
 - Slay the Spire (GitHub): Campaign progression and loot systems.
@@ -116,18 +141,25 @@ A "Fractal" world where time scale matches map scale. 2.5D/2D views for board ga
 
 ## 1. Currencies
 
-- Gold (Soft): Earned via taxes and gameplay. Used for upgrades.
-- Gems (Hard): Bought with $$. Used for Packs and Cosmetics.
-- Sovereign Tokens: Earned via "Contracts" (Quests). Used for exclusive skins.
+- Stamina/Energy: For moves/actions on maps (recharges hourly/daily; full resets prompt logins).
+- Gold/Coins: Earned from taxes/maps; used for upgrades/builds.
+- Gems: Hard currency (bought with $$); for packs, speed boosts, cosmetics.
+- Sovereign Tokens: From quests; for exclusive skins/themes.
 
-## 2. The Auction House (Player Market)
+## 2. VIP Levels & Daily Rewards
 
-- Concept: A true free market. Players can sell their rare cards to others.
-- The "Offline Store": You don't need to be online. List an item in your Castle's "Market Stall."
-- The Tax: The System takes a 10% Cut of all sales. This prevents inflation.
-- Restriction: "Starting Cards" cannot be sold (prevents re-rolling abuse).
+- VIP: Unlocked via gem spending; grants daily bonuses (extra energy, gold multipliers, faster recharges).
+- Daily Rewards: Login streaks for free items (cards, energy); refreshes at midnight.
 
-## 3. Monetization Model (Pay-for-Speed/Look-and-Feel)
+## 3. The Auction House (Player Market)
+
+- Concept: True free market; bidding, watching, search filters, escrow for safety.
+- Features: Quick sell, player ratings, featured listings (premium).
+- Offline: List in castle stalls.
+- Tax: 10% system cut.
+- Restriction: Starting cards unsellable.
+
+## 4. Monetization Model (Pay-for-Speed/Look-and-Feel)
 
 - Core Principle: No pay-to-win. Purchases enhance experience without altering balance.
 - Pay-for-Speed: Buy energy refills, extra expedition moves, or fast-forward battle animations.
@@ -143,18 +175,21 @@ A "Fractal" world where time scale matches map scale. 2.5D/2D views for board ga
 
 ## 1. Alliance System
 
-- Hierarchy: Leader -> Generals -> Officers -> Members.
-- Bank: Alliances have a shared "Treasury" (Gold/Resources) funded by taxes.
-- Tech Tree: Alliances donate resources to unlock buffs (e.g., "+5% Move Speed on Global Map").
+- Hierarchy: Leader -> Generals -> Officers -> Members (promotions via contributions).
+- Bank: Shared treasury; donations (gold/gems) for buffs/tech tree.
+- Events: Joint raids, tournaments.
+- Ranks: Based on activity/donations.
 
 ## 2. Chat & Diplomacy
 
-- Channels: Global, Region, Alliance, and "Whisper" (Private).
-- Translation: Auto-translate feature for international servers (using an API).
-- Diplomacy Tools: Alliance Leaders can set status with other Alliances:
-  - Neutral: Normal rules.
-  - Ally: Cannot attack each other; shared vision on map.
-  - War: Attack bonuses active; kill notifications broadcast to all members.
+- Channels: Global, Region, Alliance, Whispers; voice notes/emojis.
+- Translation: Auto-translate for international play.
+- Diplomacy: Status settings (Neutral/Ally/War); voting for declarations.
+
+## 3. Friend System & Gifting
+
+- Friends: Invite, co-op PVE, gifting cards/resources.
+- Gifting: Free; VIP bonuses.
 
 ## Open-Source References
 - FreeCiv (GitHub): Alliance systems and diplomacy.
@@ -174,6 +209,7 @@ The "Universal Engine" allows for endless expansion without code rewrites.
 - Expansion 3: "Valhalla" (Norse Theme)
   - Adds: Viking Heroes, Longships, Frost Giants.
   - Mechanic: "Rage" mechanic (Attack increases as HP decreases).
+- Seasonal Content: Limited-time themes (holidays) with exclusive rewards/cards.
 
 ## Open-Source References
 - Modding Frameworks (e.g., Unity Modding Tools on GitHub): Expansion support.
@@ -182,8 +218,8 @@ The "Universal Engine" allows for endless expansion without code rewrites.
 
 # SECTION 8: COMBAT MECHANICS
 
-- **System**: Turn-based on 8x8 grid. Players alternate actions: move, attack, or use tactics. Units have speed stat for initiative. AI tactics enable auto-battle for AFK scenarios.
-- **Resolution**: Deterministic: Damage = Attack - Defense (factoring elements, classes, buffs). AoE affects stacked units multiplicatively. PvP ends when one side has no units or objectives captured. No random dice; logic-based.
+- **System**: Turn-based on 8x8 grid. Players alternate actions: move, attack, or use tactics. Units have speed stat for initiative. AI tactics enable auto-battle for AFK scenarios. Deck formations: Hero/leader + units + buffs/tactics; calculate rolled-up stats (power, HP, etc.) with modifiers.
+- **Resolution**: Deterministic: Damage = Attack - Defense (factoring elements, classes, buffs, terrain). AoE affects stacked units multiplicatively. PvP ends when one side has no units or objectives captured. No random dice; logic-based. Unit types interact (e.g., air ignores land terrain).
 - **PvE AI**: Scripted tactics; bosses have phases.
 - **Alignment**: Pay-for-speed allows skipping animations or auto-resolving non-critical battles.
 
@@ -195,8 +231,12 @@ The "Universal Engine" allows for endless expansion without code rewrites.
 # SECTION 9: PROGRESSION & BALANCE
 
 - **Leveling**: Gain XP from battles/campaigns to unlock deck slots and card upgrades (+1 stat per level).
+- **Castle/Lord Leveling**: Your main castle (lord) levels up with XP, unlocking more deck slots (e.g., Level 1: 3 slots, Level 10: 10 slots). Higher levels allow larger armies and more complex tactics.
+- **Deck Storage**: Save built decks without dismantling them; switch between saved decks for different strategies (e.g., PvP vs. PvE). Storage limited by castle level.
+- **RPG Elements**: Equip weapons/armor on heroes from events/loot; skill trees for heroes (allocate points to abilities like +damage or +healing). Visual effects on equipped items (e.g., glowing sword).
 - **Rarity**: Common (1x stats), Rare (2x), Epic (3x), Legendary (5x).
 - **Balance**: Soft counters (e.g., fire weak to water). Playtesting ensures no dominant strategies; expansions introduce meta shifts.
+- **Achievements & Leaderboards**: Unlock badges/titles for milestones (e.g., conquer 10 hexes). Global/alliance boards for conquests, deck power, donations.
 - **Alignment**: Free progression; pay-for-speed buys extra quests or energy.
 
 ## Open-Source References
@@ -218,8 +258,9 @@ The "Universal Engine" allows for endless expansion without code rewrites.
 
 # SECTION 11: USER INTERFACE & EXPERIENCE
 
-- **Design**: Touch-optimized; swipe zoom, drag placement. HUD shows stacked units with health bars.
-- **Tutorials**: Interactive overlays.
+- **Design**: Touch-optimized; swipe zoom, drag placement. HUD shows stacked units with health bars. Zoom in/out UI for map layers.
+- **Tutorials**: Interactive overlays; progressive unlocks.
+- **Push Notifications & Alerts**: Opt-in alerts for energy refills, events, attacks (if shields down).
 - **Mobile-First**: Portrait mode, collapsible menus.
 - **Alignment**: Pay-for-speed: Skip tutorials.
 
