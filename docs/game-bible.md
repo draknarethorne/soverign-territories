@@ -6,7 +6,7 @@ This version integrates everything we have discussed: the Maps, Stacking, Campai
 
 ## Master Game Design Document (The Complete Codex)
 
-Version: 4.4
+Version: 4.5
 
 Owner: [User] ("The Architect")
 
@@ -31,6 +31,7 @@ Everything in the game is a card. Decks represent formations with heroes/units, 
 - Units: The Army. Ranged, Infantry, Cavalry, Tanks, Dragons. If "Common" units die in PvP, they are Lost (Permadeath), creating a constant need for reinforcements.
 - Buildings: Structures (Walls, Mines, Towers). Played into "Castle Slots" on the State Map to defend territory or produce Gold.
 - Tactics: AI Logic Modules (e.g., "Focus Healers", "Flank Left"). Equipped to Units/Heroes to program their auto-battle behavior.
+- Equipment: Weapons/Armor (e.g., "Excalibur Sword," "Dragon Scale Armor"). Cards that attach to Heroes for stat boosts and visual effects. Drawn from special packs or events.
 
 ## 2. Rarities and Customization
 
@@ -39,6 +40,14 @@ Everything in the game is a card. Decks represent formations with heroes/units, 
 - **Epic**: Specific named cards (e.g., "Stormbringer the Mage"). Boostable with scrolls/books from PvE, draws, events. Limited points for specialization (skill tree-like: allocate to stats/abilities, e.g., +fire damage or +healing). Visual effects on map figures (e.g., boosted fire stat glows red border).
 - **Legendary**: Specific named cards (e.g., "Thor the Thunderer"). Highly boostable; equip weapons/armor for RPG-like customization (e.g., find/equip swords in events). Skill trees for unique abilities. Visual effects (e.g., halos for healing boosts). Not all stats max out; limits encourage strategy.
 - **Pre-Built Decks**: Buy themed decks (e.g., fire elemental, with hero, units, tactics, buildings). Customize by swapping cards. Saved decks in storage; loose cards in codex.
+
+## 2.5 Stacking and Formations
+
+- **Concept**: Cards "stack" onto a Hero card to form a single "Unit Stack" (e.g., Hero on top, with attached Tactics, Buffs, Equipment). During battle, the stack acts as one entity; math combines all cards' stats/buffs for combat resolution. Stacks are positioned as game-pieces on maps/castles.
+- **Attachment Rules**: Socket-like compatibility—certain cards fit specific Heroes (e.g., healing Tactics only on Heroes with "Healer" tag; no attaching ranged Tactics to melee-only Heroes). Equipment (weapons/armor) attaches to Heroes for RPG boosts.
+- **Deck Count Impact**: Core cards (Heroes, Units, Buildings) count fully towards deck/formation size (e.g., 10-card deck limit). Attachments (Tactics, Buffs, Equipment) are "bonus cards" and don't count towards the total, allowing larger effective decks without increasing slots. Alternatively, attachments count as 0.5 slots for balance.
+- **Withdrawal**: Use "Special Items" (earned in events) to remove a card from a stack (e.g., to reuse elsewhere), adding risk/reward to stacking.
+- **Equipment as Cards**: Equipment (swords, armor) are cards drawn from special packs/events, bought/traded like others. Attach to Heroes for visual effects and stat boosts (e.g., +damage sword).
 
 ## 3. The "Theme" System (Extensions)
 
