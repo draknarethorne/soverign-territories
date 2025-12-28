@@ -1,6 +1,6 @@
-Here is the Final Consolidated Master Design Document (Version 4.7).
+Here is the Final Consolidated Master Design Document (Version 4.8).
 
-This version is a complete, line-by-line review and expansion of the entire document. Sections have been re-organized for logical flow (Philosophy -> Core Systems -> Gameplay -> Economy/Social -> Advanced Mechanics -> Technical/Pipeline). Light sections have been expanded with deeper details, examples, and best-of-class concepts from referenced genres (e.g., HoMM for strategy, Slay the Spire for deck-building). Each section now reads as a comprehensive player's guide/reference manual, explaining systems, mechanics, and how to play. This serves as the "cheat-guide" for gameplay, enabling detailed architecture and coding plans.
+This version incorporates the PvE Territorial Conquest Campaign, building decks, AFK resource production, terrain effects, and PvE-to-PvP progression. Sections have been expanded with economy building mechanics, map placement limits, and alliance benefits. This serves as the updated player's guide/reference manual for the enhanced gameplay loop.
 
 # PROJECT: SOVEREIGN TERRITORIES
 
@@ -39,7 +39,7 @@ Owner: [User] ("The Architect")
 
 ## Overview
 
-Sovereign Territories is a hybrid strategy game that merges the territorial conquest of Risk, the strategic deck-building of Pokémon TCG, and the tactical army management of Heroes of Might and Magic (HoMM). Players collect and customize cards to build powerful decks, deploy them as units on a multi-tiered map, and engage in turn-based battles that can be automated for passive play.
+Sovereign Territories is a hybrid strategy game that merges the territorial conquest of Risk, the strategic deck-building of Pokémon TCG, and the tactical army management of Heroes of Might and Magic (HoMM). Players collect and customize cards to build powerful decks, deploy them as units on a multi-tiered map, and engage in turn-based battles that can be automated for passive play. A key feature is the PvE Territorial Conquest Campaign, where players build economies on maps against AI opponents, placing building cards for AFK resource production (food, water, lumber, ore, gold) and strategic advantages, allowing safe progression before unlocking PvP alliances at higher levels.
 
 The game features a "Universal Engine" that allows seamless integration of different themes—such as Medieval Fantasy, Sci-Fi, or Mythic—without changing the core ruleset. This ensures endless replayability and expansion potential.
 
@@ -49,18 +49,20 @@ The game adopts a 2.5D isometric view for maps and castles, combined with 2D top
 
 ## Gameplay Loop
 
-1. **Collect Cards**: Acquire cards through packs, quests, or trades.
-2. **Build Decks**: Assemble decks with heroes, units, tactics, and equipment.
-3. **Deploy on Maps**: Position your decks as game pieces on the world map to control territories.
+1. **Collect Cards**: Acquire cards through packs, quests, trades, or AFK rewards.
+2. **Build Decks**: Assemble battle decks with heroes, units, tactics, equipment; build building decks for structures.
+3. **Deploy on Maps**: Position battle decks as units on maps; place building cards for defense, production, and AFK resource generation.
 4. **Engage in Combat**: Fight turn-based battles, either manually or via auto-battle.
-5. **Progress and Expand**: Level up, unlock new content, and participate in events.
+5. **Progress and Expand**: Level up castles/lords, expand territories, participate in PvP alliances (after Level 10), and manage AFK economies.
 
 ## Key Mechanics
 
 - **Turn-Based Strategy**: All actions are turn-based, with AI tactics allowing for "auto-battle" modes. This enables AFK gameplay for defending territories or participating in events.
 - **Deterministic Combat**: Battles are resolved through math-based calculations involving power, elements, classes, and buffs. No random dice rolls (except in special arena modes), making decisions strategic and predictable.
 - **Card as Game Pieces**: Decks are not just collections; they are positioned on maps as heroes and units, combining card game depth with board game positioning.
-- **AFK Features**: Automate battles and map actions to allow players to progress even when not actively playing.
+- **Building Placement and AFK Economy**: Place building cards on map tiles for defense, production, and passive resource generation (food, water, lumber, ore, gold) based on terrain and synergies.
+- **PvE to PvP Progression**: Start with safe PvE territorial conquest against AI, building economies; unlock PvP alliances at Level 10 for competitive play.
+- **AFK Features**: Automate battles, map actions, and production to allow players to progress even when not actively playing.
 
 ## Monetization
 
@@ -108,13 +110,34 @@ Units form the backbone of your army. They include melee fighters, ranged archer
 
 ### Buildings
 
-Buildings are defensive or productive structures placed in castle slots. They generate resources or provide buffs.
+Buildings are static structures placed on map tiles to provide defensive boosts, resource production, or strategic advantages. Unlike units, buildings are drawn from separate "Building Decks" and can be left on maps for AFK benefits. They include production buildings (e.g., mines, farms), defensive structures (e.g., turrets, walls), and support buildings (e.g., barracks for unit recovery, storage for resource accumulation).
 
-- **Examples**: Wall (defense boost), Gold Mine (income generator).
-- **How They Work**: Played into your castle on the state map. In combat, buildings can be targeted or provide area buffs.
-- **Inspiration from Risk**: Fortifications that must be sieged, similar to Risk's territories.
+- **Examples**: Gold Mine (produces gold over time), Farm (produces food), Turret (auto-attacks enemies), Barracks (recovers unit HP), Storage Warehouse (increases resource cap).
+- **How They Work**: Drawn from building decks or purchased. Placed on specific map tiles (e.g., resource-rich hexes for mines). Provide passive effects like +defense to adjacent tiles or AFK resource generation. In battles, buildings can be targeted for destruction, adding siege mechanics. Limits on placement based on castle/lord level (e.g., Level 1 castle allows 3 buildings).
+- **Inspiration from Supreme Commander**: Base-building with production and defense, but card-based placement.
+
+### Building Decks
+
+Separate from battle decks, building decks contain cards for structures. Players build and draw from these decks to place buildings on maps. Synergies exist (e.g., placing a Mill near a Farm boosts food production).
+
+- **Drawing**: Use energy or gold to draw from building decks. Can buy specific cards with gold/gems.
+- **Placement**: On PvE maps, players hold multiple castles/forts, each with slots for buildings. Placement affects production (e.g., terrain bonuses: +50% on fertile land).
+- **AFK Production**: While offline, placed buildings generate resources based on their level and terrain. E.g., a Level 3 Mine on ore-rich tile produces 10 ore/hour.
 
 ### Tactics
+
+Tactics are AI modules that program auto-battle behavior. Attach them to heroes or units for customized strategies.
+
+- **Examples**: "Focus Healers" (prioritize healing targets), "Flank Left" (maneuver around enemies).
+- **How They Work**: Equipped to stacks; AI follows the tactic during auto-battle. Overrides default behavior for tactical depth.
+- **Inspiration from Chess Engines**: Pre-programmed strategies, like Stockfish's opening books.
+
+### Equipment
+
+Equipment cards attach to heroes for stat boosts and visuals. Acquired from events or packs.
+
+- **Examples**: "Excalibur Sword" (+attack), "Dragon Scale Armor" (+defense).
+- **How They Work**: Socket-compatible; visual effects appear on the hero's game piece (e.g., glowing sword).
 
 Tactics are AI modules that program auto-battle behavior. Attach them to heroes or units for customized strategies.
 
@@ -202,7 +225,7 @@ Animated pack openings with VFX.
 
 # SECTION 3: THE MAP HIERARCHY (The World)
 
-The world is fractal, with time scaling to map size. Shields protect castles temporarily.
+The world is fractal, with time scaling to map size. Shields protect castles temporarily. Maps support random generation for replayability, with terrain affecting production and battles. Players place building cards on map tiles to build economies, with limits based on castle/lord level.
 
 ## Tier 1: Global Map (Quarterly Season)
 
@@ -212,11 +235,15 @@ The world is fractal, with time scaling to map size. Shields protect castles tem
 
 ### Gameplay
 
-Alliance politics; control wonders for buffs.
+Alliance politics; control wonders for buffs. In PvE, start small and expand against AI opponents, occupying territories for resources.
 
 ### Control
 
-Majority of capitals.
+Majority of capitals. Players can hold multiple castles across the map.
+
+### Building Placement
+
+Place castles and forts; each allows building slots (e.g., 5 slots at Level 1, scaling with lord level).
 
 ## Tier 2: State Map (Monthly War)
 
@@ -226,11 +253,15 @@ Hex grid.
 
 ### Gameplay
 
-Castle placement; sieges.
+Castle placement; sieges. PvE mode allows building decks to place turrets, garrisons, barracks on hexes.
 
 ### Terrain
 
-Hexes affect stats.
+Hexes affect stats and production: Fertile land boosts farms (+food), mountains boost mines (+ore), forests provide cover (+defense).
+
+### Random Generation
+
+Maps are procedurally generated with varying terrain, ensuring replayability like Diablo dungeons.
 
 ## Tier 3: County Map (Weekly Reset)
 
@@ -240,11 +271,11 @@ District grid.
 
 ### Gameplay
 
-Resource scrambles.
+Resource scrambles. Place production buildings on tiles for AFK income.
 
 ### Terrain
 
-Dynamic biomes.
+Dynamic biomes: Water tiles boost fishing huts, dirt tiles for farms.
 
 ## Tier 4: Local Map (Daily Mission)
 
@@ -254,11 +285,11 @@ Dynamic biomes.
 
 ### Gameplay
 
-Tactical battles.
+Tactical battles. Buildings placed here provide local buffs (e.g., turret defends a corner).
 
 ### Environment
 
-Biome-based bonuses.
+Biome-based bonuses; buildings interact with environment (e.g., windmill on plains for extra production).
 
 ## Open-Source References
 
@@ -363,7 +394,36 @@ Large-scale events where alliances engage in coordinated wars, blending PvP sieg
 ### Inspiration
 - FreeCiv: Alliance diplomacy and wars.
 
-## 4.5 Daily/Weekly Challenges & Events
+## 4.5 Territorial Conquest Campaign (PvE Map Mode)
+
+### Overview
+A persistent PvE mode where players engage in turn-based territorial conquest against 1-3 AI opponents on multi-tier maps, emulating Risk with deck-building and economy building. Start small on the global map, build decks, occupy territories for AFK resources, level up castles and lords. Allows safe progression before unlocking PvP.
+
+### How to Play
+- **Entry**: Available from start; no prerequisites, but PvP requires reaching Level 10.
+- **Setup**: Choose a random or themed map (e.g., fantasy world). Begin with one castle; AI opponents start similarly.
+- **Turns**: Turn-based; players move units, place buildings, attack territories. AI progresses in parallel, simulating live opponents.
+- **Objectives**: Conquer all enemy capitals or hold key territories for a set time. Can be played in parallel with PvP once eligible.
+- **Progression**: As you expand, unlock higher map tiers, more building slots, and stronger AI.
+
+### Mechanics
+- **Building Economy**: Draw from building decks to place turrets, garrisons, barracks, mines, farms on map tiles. Limits based on castle/lord level (e.g., Level 1: 3 buildings per castle).
+- **AFK Production**: While offline, placed buildings generate resources (food, water, lumber, ore, gold) based on card levels and terrain. E.g., Farm on fertile tile: 5 food/hour.
+- **Resource Management**: Spend resources to buy cards, upgrade buildings, or recruit units. Storage buildings increase caps.
+- **Multiple Castles**: Hold forts and castles across the map; each provides building slots and defense.
+- **Terrain Effects**: Maps have random generation; water boosts fishing, forests lumber, mountains ore. Affects battles (e.g., cover for defense) and production.
+- **Replayability**: Random maps allow re-playing for leveling, but diminishing returns after efficiency drops.
+
+### Player Tips
+- Focus on PVE to build resources safely; use AFK time to accumulate wealth.
+- Balance battle decks for attacks and building decks for economy.
+- Upgrade lord/castle to increase slots and production multipliers.
+
+### Inspiration
+- Risk: Territorial conquest against AI.
+- Supreme Commander: Base-building and resource production on maps.
+
+## 4.6 Daily/Weekly Challenges & Events
 
 ### Overview
 Recurring content to maintain engagement, from simple quests to competitive tournaments.
@@ -402,7 +462,7 @@ The economy in Sovereign Territories is player-driven, with multiple currencies 
 ## 5.1 Currencies
 
 ### Overview
-Four main currencies drive the game's loops: Energy for actions, Gold for in-game purchases, Gems for premium features, and Tokens for exclusive items.
+Multiple currencies and resources drive the game's loops: Energy for actions, Gold for purchases, Gems for premium, Tokens for exclusives, and Resources (Food, Water, Lumber, Ore) for building and sustaining empires.
 
 ### Energy (Stamina)
 - **Purpose**: Powers map movements, battles, and expeditions.
@@ -412,8 +472,14 @@ Four main currencies drive the game's loops: Energy for actions, Gold for in-gam
 
 ### Gold (Coins)
 - **Purpose**: Buys cards, upgrades, and basic items.
-- **Sources**: Taxes from territories, battles, mines.
-- **Sinks**: Pack purchases, building constructions.
+- **Sources**: Taxes from territories, battles, mines, AFK production.
+- **Sinks**: Pack purchases, building constructions, card buys.
+
+### Resources (Food, Water, Lumber, Ore)
+- **Purpose**: Sustain buildings and units; spent on upgrades or sold for gold.
+- **Sources**: AFK production from placed buildings (e.g., farms for food, mines for ore), battles, territories.
+- **Sinks**: Building maintenance, unit recruitment, trading.
+- **Storage**: Buildings like warehouses increase caps; excess decays if over limit.
 
 ### Gems
 - **Purpose**: Hard currency for speed-ups and cosmetics.
@@ -427,6 +493,14 @@ Four main currencies drive the game's loops: Energy for actions, Gold for in-gam
 
 ### Player Tips
 - Balance energy for dailies; save gems for emergencies.
+
+### 5.1.5 AFK Production Mechanics
+
+- **How It Works**: Placed building cards on PvE maps generate resources passively. Production rate depends on building level, terrain bonuses (e.g., +50% on optimal tiles), and synergies (e.g., adjacent buildings boost each other).
+- **Examples**: Level 2 Farm on fertile hex: 8 food/hour; Mine on mountain: 6 ore/hour.
+- **Limits**: Capped by storage buildings; overflow leads to loss or reduced efficiency.
+- **Upgrades**: Level up buildings with resources/gold to increase output.
+- **Strategy**: Place strategically for max AFK gains; monitor via UI notifications.
 
 ## 5.2 VIP Levels & Daily Rewards
 
@@ -633,7 +707,7 @@ Players earn XP from battles, quests, and events. This XP unlocks deck slots, al
 
 ## 9.2 Castle/Lord Leveling
 
-Your main castle acts as a hub, leveling with XP to unlock features. Higher levels increase deck slots (e.g., Level 10 allows 10-slot decks), enable more complex tactics, and provide passive buffs like increased gold income.
+Your main castle acts as a hub, leveling with XP to unlock features. Higher levels increase deck slots (e.g., Level 10 allows 10-slot decks), enable more complex tactics, and provide passive buffs like increased gold income. At Level 10, players become eligible for PvP alliances and top-tier maps. Players can join alliances earlier, contributing resources and experience for alliance bonuses (e.g., 10% boost to earnings).
 
 ## 9.3 Deck Storage and Management
 
