@@ -28,7 +28,8 @@ Owner: [User] ("The Architect")
 14. Legal & Compliance
 15. Sound & Polish
 16. Edge Cases
-17. Immediate Next Steps (Technical)
+17. Additional Features for Complete Gamer Experience
+18. Immediate Next Steps (Technical)
 
 # SECTION 1: CORE PHILOSOPHY
 
@@ -584,25 +585,37 @@ Expansions drop periodically, introducing new themes, cards, and mechanics while
 
 # SECTION 8: COMBAT MECHANICS
 
-Combat is turn-based, deterministic, and grid-based, with AI support for auto-battle. Inspired by chess and card games.
+Combat in Sovereign Territories is the heart of the game, blending strategic depth with accessibility. All battles are turn-based on an 8x8 grid, ensuring deterministic outcomes based on math rather than luck. This allows players to master tactics while enabling auto-battle for AFK play, making it suitable for both casual and competitive gamers.
 
 ## 8.1 System Overview
 
+The combat system emphasizes planning and execution, where every action counts. Players position their deck-formed units on the grid, then engage in alternating turns. Units are derived from stacked cards, combining stats for powerful formations.
+
 ### Turn Structure
-- Players alternate actions: move, attack, use tactics.
-- Units have speed for initiative order.
+- **Initiative**: Determined by unit speed stats; faster units act first.
+- **Actions**: Move (limited range), attack (melee/ranged), or activate tactics/buffs.
+- **Phases**: Movement phase followed by action phase, preventing simultaneous moves.
 
 ### Resolution
-- Damage = Attack - Defense, factoring elements, buffs, terrain.
-- AoE affects stacks multiplicatively.
-- PvP ends when objectives met or units depleted.
+Combat resolution is purely mathematical, ensuring fairness. Damage calculations incorporate elements (e.g., fire beats water), class bonuses (e.g., archers vs. infantry), terrain modifiers (e.g., hills boost defense), and buffs from equipment or tactics. Area of Effect (AoE) attacks, like fireballs, multiply damage against stacked units, adding risk-reward to formations.
 
 ### AI Integration
-- Tactics program auto-behavior; overrides for AFK.
+Programmable tactics allow players to set AI behaviors, such as "focus healers" or "flank left," enabling auto-battle during AFK scenarios. This keeps the game engaging even when offline, with tactics evolving as players unlock more options.
 
-## 8.2 PvE vs. PvP
-- PvE: Scripted enemies with phases.
-- PvP: Player decks; Elo-based.
+## 8.2 PvE vs. PvP Differences
+
+- **PvE Battles**: Feature scripted AI with phases (e.g., a boss starts aggressive, then switches to defensive). Designed for progression, with loot drops tied to performance.
+- **PvP Battles**: Player vs. player, using Elo matchmaking for balanced matches. Decks are pitted against each other, with objectives like capturing points or eliminating units.
+
+## 8.3 Advanced Features
+
+- **Stack Vulnerabilities**: Large stacks are AoE magnets, encouraging tactical spreading.
+- **Elemental Interactions**: A rock-paper-scissors system (fire > water > earth > fire) adds depth.
+- **Buff/Debuff System**: Temporary effects from tactics, lasting 2-5 turns.
+
+## Player Tips
+- Experiment with tactics in PvE before PvP.
+- Use terrain to your advantage; position archers on hills.
 
 ## Open-Source References
 
@@ -612,25 +625,35 @@ Combat is turn-based, deterministic, and grid-based, with AI support for auto-ba
 
 # SECTION 9: PROGRESSION & BALANCE
 
-Progression is free, with RPG elements for depth. Balance ensures no dominant strategies.
+Progression in Sovereign Territories is designed to be rewarding and endless, with RPG-like depth to keep players invested. From leveling castles to customizing heroes, every action contributes to long-term growth. Balance is maintained through soft counters and meta shifts, ensuring strategies remain viable while expansions introduce new challenges.
 
-## 9.1 Leveling
-- XP from battles unlocks slots/upgrades.
+## 9.1 Leveling Mechanics
+
+Players earn XP from battles, quests, and events. This XP unlocks deck slots, allowing larger formations, and card upgrades like stat boosts. Leveling is free and tied to engagement, with milestones granting titles or bonuses.
 
 ## 9.2 Castle/Lord Leveling
-- Levels unlock deck slots; higher for larger armies.
 
-## 9.3 Deck Storage
-- Save decks; switch for strategies.
+Your main castle acts as a hub, leveling with XP to unlock features. Higher levels increase deck slots (e.g., Level 10 allows 10-slot decks), enable more complex tactics, and provide passive buffs like increased gold income.
+
+## 9.3 Deck Storage and Management
+
+Decks can be saved and switched instantly, supporting multiple strategies. Storage is limited by castle level, encouraging progression. Dismantling isn't required, preserving builds for PvE or PvP.
 
 ## 9.4 RPG Elements
-- Equip items; skill trees for abilities.
 
-## 9.5 Rarities & Balance
-- Counters (e.g., fire vs. water); expansions shift meta.
+Heroes gain skill trees, allocating points to abilities like +damage or healing. Equipment from events adds visuals and stats, creating personalized units.
 
-## 9.6 Achievements & Leaderboards
-- Badges/titles; global/alliance boards.
+## 9.5 Rarities and Balance
+
+Cards have rarities affecting stats, with counters (e.g., water counters fire) preventing dominance. Expansions introduce new cards, shifting metas and requiring adaptation.
+
+## 9.6 Achievements and Leaderboards
+
+Achievements reward milestones with badges and unlocks. Leaderboards track conquests, deck power, and donations, fostering competition.
+
+## Player Tips
+- Focus on castle leveling for endgame power.
+- Balance PvE/PvP to maintain progression.
 
 ## Open-Source References
 
@@ -640,16 +663,22 @@ Progression is free, with RPG elements for depth. Balance ensures no dominant st
 
 # SECTION 10: MULTIPLAYER & MATCHMAKING
 
-Multiplayer uses Elo for fair PvP; alliances for guilds.
+Multiplayer emphasizes fair, community-driven PvP with alliance support. Matchmaking uses Elo for balanced encounters, while anti-cheat ensures integrity.
 
-## 10.1 Matchmaking
-- Elo-based; alliances enable lobbies.
+## 10.1 Matchmaking System
 
-## 10.2 Anti-Cheat
-- Server validation; reports/mutes.
+Elo-based ratings match players of similar skill. Alliances enable guild lobbies for coordinated play, adding strategy beyond individual decks.
 
-## 10.3 Diplomacy
-- Voting for war declarations.
+## 10.2 Anti-Cheat Measures
+
+Server-side validation prevents exploits. Reports and mutes handle griefing, with bans for severe cases.
+
+## 10.3 Diplomacy Features
+
+Voting systems for war declarations, with chat for negotiations.
+
+## Player Tips
+- Join alliances for better matchmaking and events.
 
 ## Open-Source References
 
@@ -659,16 +688,28 @@ Multiplayer uses Elo for fair PvP; alliances for guilds.
 
 # SECTION 11: USER INTERFACE & EXPERIENCE
 
-Touch-optimized UI for mobile; tutorials for onboarding.
+The UI is touch-optimized for mobile, with intuitive navigation. Tutorials guide new players, while notifications keep veterans engaged.
 
-## 11.1 Design
-- Swipe zoom; HUD with health bars.
+## 11.1 Design Principles
 
-## 11.2 Tutorials
-- Overlays; progressive unlocks.
+Swipe gestures for zooming, drag-and-drop for placement. HUD displays unit health and buffs clearly.
 
-## 11.3 Notifications
-- Alerts for events.
+## 11.2 Tutorials and Onboarding
+
+Progressive overlays teach mechanics, from deck-building to combat. Skip options for experienced players.
+
+## 11.3 Notifications and Alerts
+
+Opt-in push notifications for energy refills, attacks, or events.
+
+## Player Tips
+- Use tutorials to master stacking early.
+
+## Open-Source References
+
+- Unity UI Samples (GitHub): Touch interfaces.
+- Godot UI Frameworks (GitHub): Mobile optimizations.
+- Slay the Spire UI (GitHub): HUD and tutorials.
 
 ## Open-Source References
 
@@ -1092,3 +1133,38 @@ The "Universal Engine" allows for endless expansion without code rewrites.
 
 This document is now your "Constitution." It contains the DNA of the entire project.
 
+#   S E C T I O N   1 7 :   A D D I T I O N A L   F E A T U R E S   F O R   C O M P L E T E   G A M E R   E X P E R I E N C E 
+ 
+ T o   f i l l   g a p s   a n d   e n s u r e   a   t y p i c a l   g a m e r   e x p e r i e n c e ,   w e ' v e   a d d e d   t h e s e   e l e m e n t s . 
+ 
+ # #   1 7 . 1   O n b o a r d i n g   a n d   T u t o r i a l s 
+ 
+ -   * * D e t a i l e d   F l o w * * :   S t a r t   w i t h   c a r d   b a s i c s ,   t h e n   d e c k - b u i l d i n g ,   m a p   p l a c e m e n t ,   a n d   c o m b a t .   I n t e r a c t i v e   q u e s t s   g u i d e   f i r s t   h o u r s . 
+ -   * * A c c e s s i b i l i t y * * :   V o i c e - o v e r   f o r   t u t o r i a l s ;   a d j u s t a b l e   t e x t   s i z e s . 
+ 
+ # #   1 7 . 2   A c c e s s i b i l i t y   O p t i o n s 
+ 
+ -   * * F e a t u r e s * * :   C o l o r b l i n d   m o d e s ,   h i g h - c o n t r a s t   U I ,   o n e - h a n d e d   p l a y ,   s u b t i t l e s   f o r   a u d i o . 
+ -   * * I n s p i r a t i o n * * :   E n s u r e s   i n c l u s i v i t y ,   l i k e   i n   m o d e r n   m o b i l e   g a m e s . 
+ 
+ # #   1 7 . 3   E n d g a m e   a n d   L o n g - T e r m   G o a l s 
+ 
+ -   * * C o n t e n t * * :   H i g h - l e v e l   a l l i a n c e s ,   m e t a - m a s t e r y ,   c o s m e t i c   c o l l e c t i o n s . 
+ -   * * R e t e n t i o n * * :   S e a s o n a l   e v e n t s ,   l e a d e r b o a r d s   r e s e t   m o n t h l y . 
+ 
+ # #   1 7 . 4   C r o s s - P l a t f o r m   P l a y 
+ 
+ -   * * S y n c * * :   A c c o u n t s   a c r o s s   m o b i l e / P C ;   c l o u d   s a v e s . 
+ 
+ # #   1 7 . 5   C o m m u n i t y   a n d   E x t e r n a l   F e a t u r e s 
+ 
+ -   * * F o r u m s / D i s c o r d * * :   O f f i c i a l   c h a n n e l s   f o r   d i s c u s s i o n s . 
+ -   * * E s p o r t s   P o t e n t i a l * * :   T o u r n a m e n t s   f o r   c o m p e t i t i v e   p l a y e r s . 
+ 
+ # #   1 7 . 6   M o n e t i z a t i o n   B a l a n c e   C h e c k s 
+ 
+ -   * * N o   G a p s * * :   E n s u r e   f r e e   p r o g r e s s i o n ;   o p t i o n a l   I A P s . 
+ 
+ T h i s   f i l l s   a n y   g a m e p l a y   h o l e s ,   a l i g n i n g   w i t h   e x p e c t a t i o n s . 
+ 
+ 
