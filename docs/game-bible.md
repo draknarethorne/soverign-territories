@@ -1,6 +1,6 @@
-Here is the Final Consolidated Master Design Document (Version 4.8).
+Here is the Final Consolidated Master Design Document (Version 4.9).
 
-This version incorporates the PvE Territorial Conquest Campaign, building decks, AFK resource production, terrain effects, and PvE-to-PvP progression. Sections have been expanded with economy building mechanics, map placement limits, and alliance benefits. This serves as the updated player's guide/reference manual for the enhanced gameplay loop.
+This version incorporates the Codex and Card Views system for viewing, leveling, combining, and splitting cards. Sections expanded with card-centric UI, no castle views, and mechanics for star leveling and attachments.
 
 # PROJECT: SOVEREIGN TERRITORIES
 
@@ -180,6 +180,15 @@ Highly customizable with full skill trees and equipment slots.
 
 - **Stats**: Limits encourage strategy; unique abilities.
 - **Example**: Thor with a rage mechanic (attack increases as HP drops).
+
+### Card Leveling and Combining
+
+Cards can be leveled up by combining multiple copies (stars) or attaching other cards for boosts. This is done in the Codex view.
+
+- **Combining for Stars**: Merge identical cards to increase star level (e.g., 3x Common Archer → 1x 3-Star Archer with boosted stats). Higher stars provide multiplicative bonuses (e.g., +50% attack per star).
+- **Attaching Boosters**: Attach equipment, tactics, or other cards to a base card for temporary or permanent stat boosts. E.g., Attach a "Fire Rune" to boost fire damage.
+- **Splitting Stacks**: For a cost (e.g., rare Sovereign Tokens or gems), split a combined card back into components. Useful for redistributing resources.
+- **Mechanics**: Combining requires the cards to be in your collection; attached cards can be detached without cost but may lose progress.
 
 ### Pre-Built Decks
 
@@ -775,6 +784,20 @@ Progressive overlays teach mechanics, from deck-building to combat. Skip options
 ## 11.3 Notifications and Alerts
 
 Opt-in push notifications for energy refills, attacks, or events.
+
+## 11.4 Codex and Card Views
+
+The Codex is the central hub for viewing, managing, and upgrading cards. No separate castle/town views; everything is card-centric.
+
+- **Global Codex View**: Grid or list of all owned cards, filterable by type (hero, unit, building, etc.), rarity, star level, or placement status (e.g., "Placed on Map X").
+- **Map-Specific View**: When viewing a map, overlay or filter shows cards placed on that map, with indicators for their positions and stats.
+- **Card Detail View**: Tap a card to see stats, attached boosts, star level, and options to combine/split. Shows placement info (e.g., "On State Map, Region 5").
+- **Combining/Splitting UI**: Drag-and-drop interface to merge cards for stars or attach boosters. Splitting prompts for cost confirmation (e.g., 100 Sovereign Tokens).
+- **Filters and Search**: Search by name, filter by unplaced/placed, or view by deck.
+
+### Player Tips
+- Use the Codex to plan upgrades before placing cards on maps.
+- Check map views to see card distributions for strategy.
 
 ## Player Tips
 - Use tutorials to master stacking early.
