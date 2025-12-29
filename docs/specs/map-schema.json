@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Map",
+  "type": "object",
+  "required": ["mapId","coordinateSystem","tiles","version"],
+  "properties": {
+    "mapId": {"type":"string"},
+    "name": {"type":"string"},
+    "coordinateSystem": {"type":"string","enum":["square","hex"]},
+    "size": {"type":"object","properties":{"width":{"type":"integer"},"height":{"type":"integer"}}},
+    "tiles": {"type":"array","items":{"type":"string"}},
+    "tileObjects": {"type":"object","additionalProperties":{
+      "type":"object",
+      "properties":{
+        "tileId":{"type":"string"},
+        "coord":{"type":"object"},
+        "terrain":{"type":"string"},
+        "terrainModifiers":{"type":"object","additionalProperties":{"type":"number"}},
+        "ownerId":{"oneOf":[{"type":"string"},{"type":"null"}]},
+        "structures":{"type":"array","items":{"type":"object"}},
+        "deployedStacks":{"type":"array","items":{"type":"object"}},
+        "production":{"type":"object"},
+        "visibility":{"type":"object"},
+        "passable":{"type":"boolean"},
+        "tags":{"type":"array","items":{"type":"string"}}
+      }
+    }},
+    "owners": {"type":"object"},
+    "season": {"type":"string"},
+    "version": {"type":"integer"},
+    "lastUpdated": {"type":"string","format":"date-time"}
+  },
+  "additionalProperties": false
+}

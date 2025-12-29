@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Alliance",
+  "type": "object",
+  "required": ["allianceId","name","leaderId","createdAt"],
+  "properties": {
+    "allianceId": {"type":"string"},
+    "name": {"type":"string"},
+    "tag": {"type":"string"},
+    "leaderId": {"type":"string"},
+    "officers": {"type":"array","items":{"type":"string"}},
+    "members": {"type":"array","items":{"type":"object"}},
+    "createdAt": {"type":"string","format":"date-time"},
+    "treasury": {"type":"object"},
+    "bankHistory": {"type":"array","items":{"type":"object"}},
+    "rank": {"type":"integer"},
+    "powerRating": {"type":"number"},
+    "joinRule": {"type":"string"},
+    "allianceTech": {"type":"object"},
+    "events": {"type":"array","items":{"type":"object"}},
+    "warDeclarations": {"type":"array","items":{"type":"object"}},
+    "schemaVersion": {"type":"integer"}
+  },
+  "additionalProperties": false
+}

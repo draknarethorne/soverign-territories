@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ability",
+  "type": "object",
+  "required": ["abilityId","name","effects"],
+  "properties": {
+    "abilityId": {"type":"string"},
+    "name": {"type":"string"},
+    "description": {"type":"string"},
+    "cooldown": {"type":"integer"},
+    "effects": {"type":"array","items":{"type":"object"}},
+    "targeting": {"type":"object"},
+    "visual": {"type":"string"},
+    "schemaVersion": {"type":"integer"}
+  },
+  "additionalProperties": false
+}
