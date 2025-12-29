@@ -817,6 +817,131 @@ Friends enable co-op and gifting for social bonds.
 - Discord Bots (GitHub): Chat and translation APIs.
 - Nakama Examples (GitHub): Social features and matchmaking.
 
+## Player & Account Data Model (Engine Schema)
+
+A canonical player/account schema is essential for matchmaking, persistence, progression, moderation, and analytics. The server owns authoritative account records; clients receive sanitized views.
+
+### Core Player Profile
+
+{
+  "playerId": "player-77",
+  "username": "RedBanner",
+  "displayName": "Red Banner",
+  "emailHash": "(server-only)",
+  "avatar": "atlas://chars/red_banner",
+  "createdAt": "2025-12-01T08:00:00Z",
+  "lastLogin": "2025-12-28T12:30:00Z",
+  "timezone": "UTC-5",
+  "region": "NA",
+  "language": "en-US",
+  "schemaVersion": 1
+}
+
+### Account Progression & VIP
+
+{
+  "level": 12,
+  "xp": 34500,
+  "vipLevel": 2,
+  "vipExpiry": "2026-01-15T00:00:00Z",
+  "titles": ["Duke of Blackfort"],
+  "badges": ["Founding Member"]
+}
+
+### Inventory & Decks
+
+{
+  "cards": [ { "instanceId": "inst-453", "cardId": "unit-archer-001", "star": 2 } ],
+  "decks": [ { "deckId": "deck-1", "name": "PvE Rush", "slots": ["inst-453", ...] } ],
+  "buildingDecks": [...],
+  "cosmetics": { "skinIds": [...], "emotes": [...] }
+}
+
+### Resources & Economy
+
+{
+  "gold": 12500,
+  "gems": 120,
+  "sovereignTokens": 5,
+  "resources": { "food": 1200, "ore": 80 }
+}
+
+### Player Statistics (Aggregates)
+
+{
+  "totalWins": 342,
+  "totalLosses": 187,
+  "pvpWins": 120,
+  "pveWins": 222,
+  "kills": 4520,
+  "deaths": 3100,
+  "territoriesCaptured": 89,
+  "structuresBuilt": 412,
+  "timePlayedSeconds": 452000,
+  "dailyLoginStreak": 18,
+  "seasonRank": 4521,
+  "elo": 1320
+}
+
+### Social & Moderation
+
+{
+  "friends": ["player-88","player-99"],
+  "blocked": [],
+  "allianceId": "all-222",
+  "roleInAlliance": "member",
+  "reports": { "count": 0, "lastReportId": null },
+  "moderationFlags": []
+}
+
+### Session & Device
+
+{
+  "sessions": [ { "sessionId": "s-1", "device": "iPhone-12", "lastSeen": "2025-12-28T12:30:00Z" } ],
+  "consent": { "telemetry": true, "marketing": false }
+}
+
+Notes for engineers:
+- Store sensitive fields (email, payment receipts) server-side only and encrypt at rest.
+- Keep `stats` as denormalized aggregates for quick leaderboard queries; maintain event logs for auditability.
+- Index by `region`, `elo`, `allianceId` for efficient matchmaking and queries.
+
+## Alliance Data Model (Engine Schema)
+
+Alliances are social groups with shared resources, events, and governance. Keep an authoritative alliance record server-side.
+
+{
+  "allianceId": "all-222",
+  "name": "Black Banner",
+  "tag": "BB",
+  "leaderId": "player-77",
+  "officers": ["player-88"],
+  "members": [ { "playerId":"player-77", "role":"leader", "joinedAt":"2025-01-01T00:00:00Z" }, ... ],
+  "createdAt": "2025-01-01T00:00:00Z",
+  "treasury": { "gold": 125000, "gems": 1200 },
+  "bankHistory": [ { "txId":"tx-1", "playerId":"player-88", "amount": 1000, "currency":"gold", "time":"2025-12-10T12:00:00Z" } ],
+  "rank": 12,
+  "powerRating": 45230,
+  "joinRule": "invite|open|application",
+  "inviteCodes": ["INV-ABCD"],
+  "allianceTech": { "level": 3, "bonuses": { "goldBonus": 0.05 } },
+  "events": [ { "eventId":"ev-1", "type":"raid", "startsAt":"2025-12-30T00:00:00Z" } ],
+  "warDeclarations": [ { "against":"all-333", "status":"active", "declaredAt":"2025-12-20T00:00:00Z" } ]
+}
+
+Notes:
+- Track `contributions` per player for rank/perk gating.
+- Keep `bankHistory` immutable and link to `txHistory` for auditing.
+- Expose endpoints for alliance leaders to manage invites, start events, and withdraw from treasury with multi-signature if desired.
+
+### Recommended Indexing & Scaling
+
+- Index player records by `playerId`, `region`, and `elo` for matchmaking.
+- Shard alliance data by `allianceId` and partition time-series (bankHistory, events) into append-only logs for efficient writes.
+- Cache frequently-read data (top alliances, player summaries) in Redis with TTLs and invalidate on mutation.
+
+These schemas provide a baseline for account features: progression, social systems, economy, moderation, telemetry, and scalability. We can expand each schema into a separate `docs/specs/` file (JSON Schema) for direct use by backend and client teams.
+
 # SECTION 7: EXTENSION ROADMAP (Future Proofing)
 
 The Universal Engine allows seamless expansions without rewrites, adding themes, mechanics, and content for long-term engagement.
