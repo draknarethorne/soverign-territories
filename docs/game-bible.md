@@ -2331,11 +2331,252 @@ Use that file for theme validation, bonus calculations, and deck synergy checks.
 
 ### Pack System
 
-Buy packs with gems or gold. Pity timers guarantee legendaries.
+**Design Philosophy**: **Hybrid Universal + Specialized Model**
+
+Sovereign Territories uses a **3-tier pack system** inspired by best-in-class card games:
+1. **Universal Packs** (default, like Pokemon TCG) - contain both Battle and Economy cards
+2. **Specialized Boosters** (targeted progression) - focus on specific card types
+3. **Premium Theme Packs** (themed collections) - element/faction-specific bundles
+
+This balances **simplicity for new players** with **targeted progression for veterans**, while creating **diverse monetization options** without diluting card acquisition.
+
+---
+
+#### Tier 1: Universal Packs (Core Acquisition)
+
+**Standard Pack** (Default pack for all rewards/purchases):
+- **Contents**: 5 cards total
+  - 3-4 Battle Cards (Heroes, Units, Tactics, Equipment)
+  - 1-2 Economy Cards (Buildings, Workers)
+- **Rarity Distribution**:
+  - 3 Common/Uncommon (60% chance each)
+  - 1 Rare or better (8% Rare, 1.5% Epic, 0.5% Legendary)
+  - 1 Guaranteed Economy Card (any rarity, follows same odds)
+- **Why This Works**:
+  - ✅ **Pokemon-Style Familiarity**: Mix of card types in every pack
+  - ✅ **Guaranteed Economy Cards**: Players always build economic foundation
+  - ✅ **Simple Onboarding**: New players don't need to choose pack types
+  - ✅ **Free-to-Play Path**: All content obtainable from one pack type
+
+**Cost**:
+- **Gold**: 1,000 gold per pack (earned via AFK production, quests)
+- **Gems**: 100 gems per pack ($1 USD value)
+- **Free Sources**: Daily login (1 per day), quest rewards (2-5 per week), alliance gifts
+
+**Pity System** (Universal Packs):
+- **Legendary Guarantee**: Every 50 packs without Legendary = guaranteed Legendary in pack 50
+- **Epic Guarantee**: Every 10 packs without Epic = guaranteed Epic in pack 10
+- **Counter Visible**: UI shows "Pity Counter: 12/50 packs" to build anticipation
+- **Separate Trackers**: Battle and Economy pity counters are separate (prevents all-building Legendary packs)
+
+---
+
+#### Tier 2: Specialized Boosters (Targeted Progression)
+
+**Purpose**: Allow players to focus on specific deck-building needs without diluting universal pack value.
+
+**Battle Booster Pack**:
+- **Contents**: 5 cards, **all Battle Cards**
+  - No Economy Cards included
+  - Increased Epic/Legendary rates (+50% chance)
+  - Guaranteed 1 Rare or better
+- **Rarity Distribution**:
+  - 2 Common/Uncommon (60%)
+  - 2 Rare (12% Epic, 2% Legendary)
+  - 1 Guaranteed Rare+ (10% Epic, 3% Legendary)
+- **Use Case**: 
+  - Competitive players building tournament decks
+  - Players who already have economy established
+  - Targeting specific hero/unit synergies
+- **Cost**:
+  - 1,500 gold per pack (50% premium over Standard)
+  - 150 gems per pack
+  - **Not available for free** (premium option only)
+
+**Economy Booster Pack**:
+- **Contents**: 5 cards, **all Economy Cards**
+  - No Battle Cards included
+  - Guaranteed 1 Rare+ building or worker
+  - Higher chance of Legendary buildings (2% vs 0.5%)
+- **Rarity Distribution**:
+  - 2 Common buildings/workers (Farms, Mines, Farmers, Miners)
+  - 2 Uncommon buildings (Lumber Mills, Barracks, Turrets)
+  - 1 Guaranteed Rare+ (12% Rare Fortress, 2.5% Epic Wonder, 0.5% Legendary Monument)
+- **Use Case**:
+  - Players expanding AFK production infrastructure
+  - New castle setup (need 10-15 economy cards per territory)
+  - Alliance members pooling resources for guild bases
+- **Cost**:
+  - 800 gold per pack (20% cheaper than Standard, economy focus)
+  - 80 gems per pack
+  - **Available as alliance reward** (guild treasury purchases)
+
+**Why Separate Boosters?**:
+- ✅ **Respect Player Time**: Veterans don't want economy cards when chasing Legendaries
+- ✅ **New Player Safety**: Cheaper Economy Packs help establish AFK income early
+- ✅ **Strategic Choice**: "Do I need heroes or buildings right now?"
+- ✅ **Monetization Diversity**: Whales buy Battle Boosters, F2P grind Economy Packs
+
+**Pity System** (Specialized Boosters):
+- **Separate Pity Trackers**: Battle Booster pity ≠ Economy Booster pity ≠ Universal Pack pity
+- **Battle Booster**: Guaranteed Legendary every 30 packs (vs 50 for Universal)
+- **Economy Booster**: Guaranteed Legendary building every 40 packs
+- **UI Display**: "Battle Pity: 12/30 | Economy Pity: 8/40 | Universal: 25/50"
+
+---
+
+#### Tier 3: Premium Theme Packs (Curated Collections)
+
+**Purpose**: Themed bundles for specific playstyles, elements, or factions. High monetization potential with collector appeal.
+
+**Element Theme Packs** (e.g., "Fire Dominion Pack", "Frost Legion Pack"):
+- **Contents**: 10 cards, **all from one element**
+  - 6-7 Battle Cards (Fire heroes, Fire units, Fire tactics)
+  - 3-4 Economy Cards (Fire-themed buildings, workers)
+  - **Guaranteed 1 Epic+ from theme** (e.g., Fire Dragon hero, Volcano building)
+- **Rarity Distribution**:
+  - 4 Common/Uncommon (theme-locked)
+  - 4 Rare (theme-locked)
+  - 2 Epic+ (1 Epic guaranteed, 10% chance for Legendary)
+- **Use Case**:
+  - Mono-element deck builders
+  - Collectors completing element sets
+  - New players choosing faction identity
+- **Cost**:
+  - 3,000 gold per pack (3× Standard, but guaranteed Epic+)
+  - 300 gems per pack ($3 USD)
+  - **Limited-Time**: Rotates weekly (Fire week, Water week, etc.)
+
+**Faction Theme Packs** (e.g., "Norse Pantheon", "Medieval Knights", "Sci-Fi Mechs"):
+- **Contents**: 15 cards, **all from one faction/theme**
+  - 10 Battle Cards (Norse heroes: Thor, Odin, Loki + Viking warriors)
+  - 5 Economy Cards (Longhouse, Blacksmith, Norse workers)
+  - **Guaranteed 2 Epic+ from faction** (e.g., Thor + Valhalla building)
+- **Rarity Distribution**:
+  - 5 Common/Uncommon
+  - 6 Rare
+  - 4 Epic+ (2 Epic guaranteed, 20% for Legendary, 5% for Mythic)
+- **Use Case**:
+  - Thematic deck builders ("Pure Norse army")
+  - Lore collectors
+  - Event preparation (Norse-themed alliance wars)
+- **Cost**:
+  - **Premium Only**: $9.99 USD (cannot buy with gold)
+  - **Limited Availability**: Monthly rotation, 48-hour flash sales
+  - **Collector Value**: Exclusive alternate card art (same stats, unique visuals)
+
+**Starter Theme Packs** (New Player Bundles):
+- **Contents**: 30 cards, **pre-built synergistic deck**
+  - 20 Battle Cards (balanced hero + units + tactics)
+  - 10 Economy Cards (starter buildings for AFK income)
+  - **Guaranteed 1 Legendary hero** (choose from 3: Thor, Fire Mage, or Knight)
+  - **Guaranteed 3 Epic units** matching hero element
+- **Rarity Distribution**:
+  - 1 Legendary hero (choice)
+  - 3 Epic units (synergistic)
+  - 10 Rare cards (support)
+  - 16 Common/Uncommon (filler)
+- **Use Case**:
+  - **One-Time Purchase**: New players skip grinding, jump straight to competitive decks
+  - **Catch-Up Mechanic**: Returning players after hiatus
+- **Cost**:
+  - **$19.99 USD** (one-time offer, first 7 days only)
+  - **Best Value**: Equivalent to 200 Standard Packs worth of curated cards
+
+**Seasonal Event Packs** (Limited-Time):
+- **Contents**: 8 cards, **event-exclusive cards**
+  - 5 Battle Cards (Halloween-themed heroes, Christmas units, etc.)
+  - 3 Economy Cards (Haunted Farm, Santa's Workshop, etc.)
+  - **Guaranteed 1 Event-Exclusive Legendary** (cannot obtain elsewhere)
+- **Rarity Distribution**:
+  - 1 Event Legendary (100% exclusive)
+  - 2 Event Epic (exclusive variants)
+  - 5 Event Rare/Common (cosmetic reskins of existing cards)
+- **Use Case**:
+  - **FOMO Monetization**: "Get this before it's gone forever!"
+  - **Collector Prestige**: Show off exclusive holiday cards
+  - **Seasonal Meta**: Event cards have thematic bonuses (e.g., Halloween cards +20% power in October)
+- **Cost**:
+  - 5,000 gold per pack (expensive, limited stock per player)
+  - 500 gems per pack ($5 USD)
+  - **Max 10 packs per player per event** (prevents hoarding)
+
+---
+
+#### Pack Comparison Table
+
+| Pack Type | Cards | Battle:Economy Ratio | Epic+ Rate | Cost (Gold) | Cost (Gems) | Best For |
+|-----------|-------|----------------------|------------|-------------|-------------|----------|
+| **Standard (Universal)** | 5 | 3-4:1-2 | 2% | 1,000g | 100 | F2P daily grind, new players |
+| **Battle Booster** | 5 | 5:0 | 5% | 1,500g | 150 | Competitive PvP, hero chasers |
+| **Economy Booster** | 5 | 0:5 | 3% | 800g | 80 | AFK income builders, new castles |
+| **Element Theme** | 10 | 6-7:3-4 | 20% | 3,000g | 300 | Mono-element decks, collectors |
+| **Faction Theme** | 15 | 10:5 | 30% | N/A | $9.99 | Thematic decks, lore fans |
+| **Starter Bundle** | 30 | 20:10 | 50% | N/A | $19.99 | New players (one-time) |
+| **Seasonal Event** | 8 | 5:3 | 100% | 5,000g | 500 | Collectors, FOMO |
+
+---
+
+#### Why This System Works
+
+**For New Players**:
+- ✅ **Simple Default**: Standard Packs are the "training wheels" (like Pokemon booster packs)
+- ✅ **Guaranteed Economy**: Every pack has buildings, so you always build AFK income
+- ✅ **Accessible**: Can earn 7-10 Standard Packs per week F2P (daily login + quests)
+
+**For Mid-Game Players**:
+- ✅ **Strategic Choice**: "I need heroes" → Battle Booster, "I need economy" → Economy Booster
+- ✅ **Gold Efficiency**: Economy Packs are cheaper (800g vs 1,000g), better for resource management
+- ✅ **Thematic Identity**: Element/Faction packs let you commit to playstyle
+
+**For Whales/Collectors**:
+- ✅ **Premium Options**: Faction Theme Packs ($9.99) and Seasonal Event Packs (exclusive Legendaries)
+- ✅ **FOMO Monetization**: Limited-time packs drive impulse purchases
+- ✅ **Prestige**: Exclusive card art, alternate cosmetics
+
+**For Developers**:
+- ✅ **Diverse Monetization**: 7 pack types = 7 price points = broader revenue capture
+- ✅ **Controlled Economy**: Separate pity systems prevent exploit (can't game one pack type)
+- ✅ **Event Flexibility**: Seasonal packs drive retention spikes every quarter
+- ✅ **Analytics-Friendly**: Track which pack types sell best, adjust drop rates per pack
+
+---
+
+#### Pack Opening Experience (Visual Design)
+
+**Standard Pack Opening**:
+1. Player taps pack in inventory
+2. Pack expands with element-themed animation (fire = flames, water = ripples)
+3. Cards flip one-by-one with rarity reveal:
+   - **Common**: Matte glow, soft chime
+   - **Rare**: Holographic shimmer, brighter chime
+   - **Epic**: Particle burst, epic orchestra swell
+   - **Legendary**: Screen flash, radiant beam of light, choir fanfare
+4. Final card "lingers" in center (if Legendary, camera zooms in dramatically)
+5. "Tap to continue" → cards added to collection
+
+**Multi-Pack Opening** (Batch Mode):
+- **Skip Animations**: Open 10 packs at once, instant results screen
+- **Highlight Legendaries**: Auto-pause on Legendary cards for dopamine hit
+- **Summary**: "You got 2 Legendaries, 8 Epics, 25 Rares!"
+
+**VIP Perks**:
+- **VIP 3+**: Can batch-open up to 10 packs at once
+- **VIP 5**: "Instant Open" button (skip all animations, jump to results)
+
+---
 
 ### Visuals
 
-Animated pack openings with VFX.
+Animated pack openings with VFX (described above).
+
+**Pack Art Design**:
+- **Standard Pack**: Neutral silver/gold with Sovereign Territories logo
+- **Battle Booster**: Red/orange with crossed swords emblem
+- **Economy Booster**: Green/brown with coin stack emblem
+- **Element Theme**: Color-coded (Fire = red flames, Water = blue waves, etc.)
+- **Faction Theme**: Unique art per faction (Norse = runes, Medieval = castle, Sci-Fi = circuits)
+- **Seasonal Event**: Holiday-themed (Halloween = pumpkin, Christmas = snowflake)
 
 ## Pack Data Model (Engine Schema)
 
