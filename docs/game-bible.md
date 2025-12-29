@@ -1216,25 +1216,500 @@ For players who choose the **guided path**, we offer 3 expertly designed starter
 
 ---
 
-## 2.6 Stacking and Formations
+## 2.6 Card Stacking, Formations & Map Deployment
 
-### Concept
+### Overview: Heroes of Might and Magic Meets Modern CCGs
 
-Cards stack onto a hero to form a unit stack, acting as one entity in battle. Stats combine mathematically.
+Sovereign Territories borrows heavily from **Heroes of Might and Magic** army stacking while adding modern flexibility. Instead of forcing exact card duplication, we allow **cross-theme, same-type stacking** to create diverse armies from your collection.
 
-### Attachment Rules
+**Core Principles**:
+1. **Stacking**: Multiple cards occupy a single tile, combining stats into one powerful unit
+2. **Formations**: Pre-defined placement patterns for quick deployment
+3. **Visual Representation**: High-rarity cards = 3D figures, low-rarity = card sprites
+4. **Auto vs Manual**: Choose convenience or strategic control
+5. **Map Scaling**: 1 deck per tile on Global Map → zoom into battle with full deck
 
-Compatibility based on tags (e.g., healing tactics only on healer heroes).
+---
 
-### Deck Count Impact
+### Card Stacking System (HoMM-Style Armies)
 
-Core cards count fully; attachments are bonus or half-slots.
+#### What Is Stacking?
 
-### Withdrawal
+**Stacking** combines multiple cards of the **same unit type** onto a single map tile, merging them into one powerful army stack.
 
-Use special items to detach cards, adding strategy.
+**Example**:
+- 3x Elf Archer (Common)
+- 2x Human Crossbowman (Uncommon)
+- 1x Dwarven Marksman (Rare)
 
-## 2.6 Card Data Model (Engine Schema)
+All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
+
+#### Stacking Rules (Cross-Theme Flexibility)
+
+**✅ Valid Stacking Combinations**:
+- **Same Unit Type Across Themes**: 
+  - Elf Archers + Human Crossbowmen + Dwarven Marksmen = "Ranged Stack" ✅
+  - Norse Berserker + Samurai Warrior + Knight = "Melee Stack" ✅
+  - Fire Mage + Ice Mage + Lightning Wizard = "Caster Stack" ✅
+- **Same Rarity (Optional Bonus)**: 
+  - All Uncommon cards in stack = +10% to all stats (synergy bonus)
+  - All Rare+ cards in stack = +20% to all stats
+- **Mixed Rarity Allowed**: 
+  - Common + Rare + Epic in same stack = no penalty, just combined stats
+
+**❌ Invalid Stacking Combinations**:
+- **Different Unit Types**: 
+  - Archers + Warriors = ❌ (must be separate stacks)
+  - Cavalry + Mages = ❌ (different battlefield roles)
+- **Conflicting Elements** (Optional Rule): 
+  - Fire + Water units in same stack = -20% to all stats (anti-synergy)
+  - Earth + Wind = -10% stats
+  - Can disable this rule for casual modes
+
+**Why Cross-Theme Stacking?**:
+- ✅ **Collection Flexibility**: Use cards from multiple expansions together
+- ✅ **Visual Variety**: Stack shows mixed armor/weapon styles (elf + human archers)
+- ✅ **Replayability**: Different players build unique stacks from same card pools
+- ✅ **Economy**: Don't need 10x identical cards to build a strong stack
+- ⚠️ **Balance**: Requires careful stat tuning to prevent OP combos
+
+#### Stack Stat Calculation (Mathematical Precision)
+
+**Stack HP** = `Σ(BaseHP × HPMultiplier(rarity) × StarMultiplier(stars))` for all cards in stack
+**Stack Attack** = `Σ(BaseAttack × AttackMultiplier(rarity) × StarMultiplier(stars))`
+**Stack Defense** = `Average(Defense values) × (1 + 0.05 × (stackSize - 1))` (diminishing returns)
+**Stack Speed** = `Min(Speed values)` (slowest card determines stack movement)
+
+**Example Stack Math**:
+- 3x Common Elf Archer (HP: 10, Attack: 5, Defense: 2, Speed: 3)
+- 2x Uncommon Human Crossbowman (HP: 15, Attack: 7, Defense: 3, Speed: 2)
+- Total: 5 cards in stack
+
+**Calculations**:
+- HP = (10×3) + (15×2) = 30 + 30 = **60 HP**
+- Attack = (5×3) + (7×2) = 15 + 14 = **29 Attack**
+- Defense = ((2+2+2+3+3)/5) × (1 + 0.05×4) = 2.4 × 1.2 = **2.88 Defense**
+- Speed = Min(3, 3, 3, 2, 2) = **2 Speed**
+
+**Same-Rarity Bonus** (all 5 are Common/Uncommon mix):
+- Not applicable (need all same rarity for +10% bonus)
+
+#### Stack Size Limits
+
+| Map Tier | Max Cards Per Stack | Max Stacks Per Deck | Total Cards Deployed |
+|----------|---------------------|---------------------|----------------------|
+| **Tutorial Map** | 3 cards | 5 stacks | 15 cards max |
+| **Local/State Map** | 5 cards | 7 stacks | 35 cards max |
+| **County Map** | 7 cards | 10 stacks | 70 cards max |
+| **Global Map** | 10 cards | 15 stacks | 150 cards max |
+
+**Why Limits?**:
+- Prevents overwhelming visual clutter (10-card stack = manageable)
+- Encourages tactical spreading (don't put all eggs in one basket)
+- AoE vulnerability (large stacks = juicy fireball targets)
+- Performance optimization (fewer draw calls for mobile)
+
+---
+
+### Formation System (Auto-Deployment Presets)
+
+#### What Are Formations?
+
+**Formations** are pre-defined placement patterns that automatically position your stacks on the battlefield based on strategic templates.
+
+**Think Party-Based RPGs**: Tank in front, DPS in middle, healers in back.
+
+#### Formation Presets (Built-In Templates)
+
+**1. "Frontline Vanguard" Formation**:
+- **Epic/Legendary Heroes**: Front row center (tiles 1-3)
+- **Melee Units**: Front row flanks (tiles 4-6)
+- **Ranged Units**: Back row (tiles 7-12)
+- **Healers/Casters**: Rear center (tiles 13-15)
+- **Use Case**: Aggressive push, protect backline, classic army formation
+
+**2. "Defensive Turtle" Formation**:
+- **Tanks/Walls**: Surround perimeter (tiles 1, 3, 6, 9, 12, 15)
+- **Ranged Units**: Inner ring (tiles 2, 5, 8, 11, 14)
+- **Healers**: Absolute center (tile 7)
+- **Epic Heroes**: Behind walls (tiles 4, 10)
+- **Use Case**: Hold position, outlast opponent, protect key units
+
+**3. "Flanking Cavalry" Formation**:
+- **Fast Units (Cavalry, Scouts)**: Far left/right flanks (tiles 1, 6, 9, 15)
+- **Archers**: Center back (tiles 7, 8)
+- **Melee Infantry**: Center front (tiles 4, 5)
+- **Epic Heroes**: Mobile positions (tiles 2, 11)
+- **Use Case**: Pincer attack, surround enemy, mobility-focused
+
+**4. "Epic Showcase" Formation**:
+- **Epic+ Cards**: Prominently displayed in front (tiles 2, 5, 8, 11)
+- **Rare Support**: Behind Epics (tiles 3, 6, 9, 12)
+- **Commons/Uncommons**: Fill gaps
+- **Use Case**: Flex your collection, status display, whale competition
+
+**5. "Balanced Wedge" Formation**:
+- **Tank**: Front center tip (tile 1)
+- **Melee DPS**: Diagonal flanks (tiles 2, 3, 4, 6)
+- **Ranged**: Back triangle (tiles 7, 8, 9)
+- **Healers**: Rear (tiles 10, 11)
+- **Use Case**: Versatile, all-around solid, beginner-friendly
+
+#### Custom Formation Editor
+
+**Create Your Own**:
+1. Open **Formation Manager** in Codex
+2. Name your formation ("My PvP Build", "Fire Rush", etc.)
+3. Drag stacks onto 15-tile grid (visual editor)
+4. Save formation (up to 10 custom formations per player)
+5. Apply to any deck with 1-click
+
+**Formation Slots**:
+- **Free Players**: 5 custom formation slots
+- **VIP 3**: 10 custom formation slots
+- **VIP 5**: 20 custom formation slots + share with alliance
+
+**Formation Tags** (Auto-Sort):
+- Tag stacks as: Tank, DPS, Ranged, Healer, Caster, Support
+- Formation auto-fills based on tags (AI places tanks in front)
+- Override individual positions manually if needed
+
+---
+
+### Manual vs Auto Deployment
+
+#### Auto-Deployment (Quick Play)
+
+**When**: 
+- Campaign battles (PvE)
+- Daily missions
+- AFK auto-battles
+- Quick PvP matches
+
+**How**:
+1. Select deck
+2. Choose formation preset (or use default)
+3. Click "Deploy"
+4. System auto-places all stacks based on formation rules
+5. Battle starts immediately
+
+**Benefits**:
+- ⏱️ **Speed**: Deploy in 2 seconds
+- 🎮 **Convenience**: Perfect for farming/grinding
+- 📱 **Mobile-Friendly**: One-tap deployment
+- ♿ **Accessibility**: Reduces decision fatigue
+
+#### Manual Deployment (Strategic Control)
+
+**When**:
+- High-stakes PvP tournaments
+- Alliance wars
+- Guild vs Guild events
+- Ranked matches
+- Special events with setup days
+
+**How**:
+1. Select deck
+2. Battle map displayed with terrain
+3. Drag each stack individually onto desired tiles
+4. Consider terrain bonuses (hills, forests, rivers)
+5. Finalize placement
+6. Battle starts
+
+**Benefits**:
+- 🧠 **Strategy**: Optimize for specific map/enemy
+- 🏆 **Competitive Edge**: Outsmart opponents with positioning
+- 🎯 **Terrain Mastery**: Place archers on hills, cavalry on plains
+- 💎 **Skill Expression**: Separate good players from great
+
+#### Event Setup Days (Pre-Battle Planning)
+
+**For Major Events**:
+- **Register Early**: 3-7 days before event starts
+- **Map Revealed**: See terrain layout in advance
+- **Setup Phase**: Manually place formations
+- **Deadline**: 24 hours before event (or auto-deploy happens)
+- **Locked In**: Can't change once event starts
+
+**Example Timeline**:
+- **Day 1 (Monday)**: "Alliance War Week" announced, map revealed
+- **Days 2-5 (Tue-Fri)**: Players register, manually deploy formations
+- **Day 6 (Saturday 12pm)**: Deployment deadline, auto-deploy for unfinished
+- **Day 6 (Saturday 2pm)**: Event starts, battles resolve
+- **Day 7 (Sunday)**: Results posted, rewards distributed
+
+**Why Setup Days?**:
+- ✅ Allows casual players to participate without time pressure
+- ✅ Lets hardcore players optimize every placement
+- ✅ Creates community discussion ("Where did you put your Epic tank?")
+- ✅ Reduces server load (not everyone deploying simultaneously)
+
+---
+
+### Map Tiers & Deck Deployment
+
+#### Zoom Level System (Risk → HoMM Transition)
+
+Sovereign Territories uses a **multi-tier zoom system** where you deploy decks at macro level and zoom into battles at micro level.
+
+**Global Map** (Risk-Style):
+- **View**: Entire continent, 50-100 territories
+- **Deployment**: **1 deck per territory/tile**
+- **Representation**: Deck shown as single icon/flag
+- **Click Territory**: Zoom into County Map
+
+**County Map** (Regional View):
+- **View**: 10-20 tiles representing county divisions
+- **Deployment**: **Full deck spreads across tiles** (15-30 stacks)
+- **Representation**: Each stack = separate unit on map
+- **Click Stack**: Zoom into Battle Map
+
+**Battle Map** (Tactical Grid):
+- **View**: 15x15 grid (or custom size based on map)
+- **Deployment**: **Stacks positioned on grid tiles**
+- **Representation**: 3D units or card sprites
+- **Combat**: Turn-based tactical battles (HoMM style)
+
+#### Multiple Decks on Large Maps
+
+**Tutorial/Local Maps** (Level 1-5 Players):
+- **Restriction**: **1 deck only** (simplicity for new players)
+- **Deck Size**: 10-15 cards
+- **Stacks**: 3-5 stacks max
+
+**State Maps** (Level 10+ Players):
+- **Restriction**: **1-2 decks** (can deploy second deck to different territory)
+- **Deck Size**: 25-30 cards each
+- **Stacks**: 7-10 stacks per deck
+
+**County Maps** (Level 15+ Players):
+- **Restriction**: **2-3 decks** (spread forces across region)
+- **Deck Size**: 30-35 cards each
+- **Stacks**: 10-15 stacks per deck
+
+**Global Maps** (Level 20+ Players):
+- **Restriction**: **Up to 5 decks** (1 deck per territory controlled)
+- **Deck Size**: 40-50 cards each
+- **Stacks**: 15+ stacks per deck
+- **Multi-Front Warfare**: Manage multiple battles simultaneously (like HoMM campaign)
+
+**Example Scenario**:
+- Player controls 3 territories on Global Map
+- Deploys **Deck A** to Territory 1 (aggressive fire theme)
+- Deploys **Deck B** to Territory 2 (defensive earth theme)
+- Deploys **Deck C** to Territory 3 (economy buildings)
+- Enemy attacks Territory 1 → zooms into Battle Map with Deck A's stacks
+
+---
+
+### Visual Representation (3D Figures vs Card Sprites)
+
+#### Rarity-Based Visual Styling
+
+**Epic, Legendary, Mythic Cards** → **3D Miniature Figures**:
+- **Model**: Detailed 3D character model (similar to tabletop miniatures)
+- **Height**: 1.5-2x normal card height when placed on map
+- **Animation**: Idle animations (breathing, weapon twirl, magic glow)
+- **VFX**: Element-specific effects (fire hero has flame aura)
+- **Collectibility**: Premium feel, showpiece units
+- **Example**: Epic Thor = 3D Viking warrior with hammer, lightning crackling
+
+**Rare Cards** → **Premium Card Sprites with Stand**:
+- **Model**: 2D card sprite on small 3D stand/pedestal
+- **Height**: 1.2x normal card height
+- **Animation**: Gentle glow, card hovers slightly
+- **VFX**: Border shimmer matching element color
+- **Example**: Rare Fire Mage = glowing card standing upright on tile
+
+**Common & Uncommon Cards** → **Flat Card Sprites**:
+- **Model**: 2D card sprite lying flat or at slight angle
+- **Height**: 1x normal card height
+- **Animation**: Minimal (slight pulse on selection)
+- **VFX**: None (performance optimization)
+- **Example**: Common Archer = simple card sprite on tile
+
+#### Stack Visual Representation
+
+**How Stacks Appear on Map**:
+
+**Small Stacks (2-3 cards)**:
+- Display **lead card** (highest rarity in stack)
+- Small badge showing stack count ("×3")
+- Other cards appear as ghosted/faded copies behind lead
+
+**Medium Stacks (4-6 cards)**:
+- Display **lead card** prominently
+- 2-3 other cards fanned behind in arc formation
+- Stack count badge ("×6")
+- Mixed 3D figures + card sprites if rarities mixed
+
+**Large Stacks (7-10 cards)**:
+- Display **top 3 cards** in formation
+- Remaining cards shown as small icons in stack UI
+- Click stack → opens detailed stack view
+- Stack count badge ("×10") with glow effect
+
+**Visual Example (5-Card Ranged Stack)**:
+```
+Front View on Map:
+  [Epic Elf Archer 3D Figure] ← Lead card, largest
+  [Uncommon Human Crossbow Sprite] ← Second card, medium
+  [Common Archer Sprite] ← Third card, small
+  [×5 Badge] ← Stack count indicator
+  [Ranged Icon] ← Unit type indicator
+```
+
+#### Hover/Click Details
+
+**Hover Over Stack** (Desktop):
+- Tooltip shows all cards in stack
+- Combined stats displayed
+- Element type, unit type icons
+- Quick actions: Move, Attack, Split Stack
+
+**Click Stack** (Mobile/Desktop):
+- Opens **Stack Detail Panel**:
+  - List of all cards (with mini portraits)
+  - Combined stats breakdown
+  - Active buffs/debuffs
+  - Formation position
+  - Actions: Attack, Move, Use Ability, Split, Merge
+
+**Split Stack Feature**:
+- Right-click stack → "Split Stack"
+- Drag slider to divide cards into 2 stacks
+- Example: 10-card stack → split into 6-card + 4-card stacks
+- Useful for spreading forces, avoiding AoE damage
+
+---
+
+### Leaderboards & Competitive Metrics
+
+#### Event Leaderboards (Automated PvP Scoring)
+
+**Formation-Based Auto-Battles**:
+- Players register deck + formation
+- System runs battles between all registered players (round-robin or Swiss)
+- AI controls both sides using programmed tactics
+- Results determine rankings
+
+**Leaderboard Categories**:
+
+**1. Most Damage in Single Turn**:
+- Tracks highest damage dealt by one stack in one turn
+- Encourages glass cannon builds (all attack, no defense)
+- Rewards: Bonus gems, "Devastator" title
+
+**2. Most Total Damage in Battle**:
+- Cumulative damage across entire battle
+- Favors sustained DPS over burst
+- Rewards: Rare cards, "Destroyer" title
+
+**3. Most Healing**:
+- Total HP restored to allied units
+- Encourages healer-focused decks
+- Rewards: Healer-themed cosmetics, "Lifebringer" title
+
+**4. Fastest Victory**:
+- Lowest turn count to win
+- Rewards aggressive, efficient strategies
+- Rewards: Speed boost items, "Blitz" title
+
+**5. Most Efficient (Damage per Card)**:
+- Total damage ÷ number of cards deployed
+- Rewards quality over quantity builds
+- Rewards: Deck slots, "Tactician" title
+
+**6. Tankiest Defense (Damage Absorbed)**:
+- Total damage taken without dying
+- Encourages defensive, high-HP builds
+- Rewards: Defense equipment, "Immovable" title
+
+**7. Best Formation Positioning**:
+- AI judges terrain usage, unit spacing, synergies
+- Rewards strategic placement
+- Rewards: Formation slots, "Strategist" title
+
+#### Alliance Competition
+
+**Guild vs Guild Leaderboards**:
+- Top 10 players per alliance contribute to alliance score
+- Alliance with highest combined scores wins week
+- Rewards: Alliance bonuses, exclusive alliance banners
+- Encourages cooperation ("Let me take a support role so you can DPS")
+
+**Weekly Themes**:
+- **Week 1**: "Fire Week" (fire element cards get +20% stats, leaderboard for fire damage)
+- **Week 2**: "Healer Week" (most healing wins)
+- **Week 3**: "Speed Week" (fastest victories)
+- **Week 4**: "Tank Week" (most damage absorbed)
+
+**Why Variety Matters**:
+- ✅ Prevents meta stagnation (different builds shine each week)
+- ✅ Encourages deck diversity (can't use same deck every week)
+- ✅ Rewards different playstyles (not just "who has most Legendaries")
+- ✅ F2P competitive (strategy > card rarity for some categories)
+
+---
+
+### Map Generation (Pre-Set vs Procedural)
+
+#### Map Types
+
+**1. Pre-Set Campaign Maps** (HoMM Campaign Style):
+- **Design**: Hand-crafted by developers
+- **Features**: Unique terrain, scripted events, boss locations
+- **Use Case**: Story campaign, tutorial, special events
+- **Replayability**: Fixed layout, but different strategies/decks
+- **Example**: "The Frozen Wastes" campaign map with ice obstacles
+
+**2. Procedurally Generated Maps** (Diablo/Slay the Spire Style):
+- **Design**: Algorithm creates unique map each time
+- **Seed**: Random seed saved to database (players can share seeds)
+- **Features**: Random terrain, resource node placement, neutral mobs
+- **Use Case**: Daily missions, quick PvP, infinite replayability
+- **Example**: "Daily Conquest" generates new map every 24 hours
+
+**3. Player-Created Maps** (Future Feature):
+- **Design**: Map editor for community
+- **Features**: Place terrain, objectives, starting zones
+- **Use Case**: Custom scenarios, alliance training grounds
+- **Curation**: Best maps featured by developers
+
+#### Generated Map Database
+
+**How It Works**:
+1. Event announced: "Weekly Tournament - Seed #47382"
+2. Server generates map from seed, saves to database
+3. All players get exact same map layout
+4. Players deploy formations during setup phase
+5. Battles resolve simultaneously
+6. Map saved permanently (can replay historical events)
+
+**Benefits**:
+- ✅ **Fairness**: Everyone plays on same map
+- ✅ **Skill Testing**: Can't memorize maps, must adapt
+- ✅ **Replayability**: Infinite unique maps
+- ✅ **Storage**: Save map data (not just seed) for tournaments
+
+---
+
+### Summary: Stacking, Formations & Deployment
+
+| Aspect | Key Features | HoMM Inspiration | Modern Twist |
+|--------|--------------|------------------|--------------|
+| **Stacking** | 2-10 cards per tile, same unit type, cross-theme allowed | ✅ Army stacks | Cross-theme flexibility |
+| **Formations** | 5 presets + custom editor, auto/manual placement | ✅ Hero armies | Party-based RPG templates |
+| **Visual** | 3D figures (Epic+), card sprites (Common/Uncommon) | ✅ Unit figures | Rarity-based styling |
+| **Maps** | Multi-tier zoom (Global→County→Battle) | ✅ Strategic→Tactical | Risk-style world map |
+| **Deployment** | 1 deck per territory on Global, full deck in battle | ✅ Campaign heroes | Multiple deck management |
+| **Events** | Setup days, auto-battles, leaderboards | ✅ PvP tournaments | Competitive metrics |
+
+**Design Philosophy**: **Simplicity through automation, depth through customization**. Casual players use auto-deploy with presets, hardcore players manually place every stack for terrain advantage.
+
+---
+
+## 2.7 Card Data Model (Engine Schema)
 
 The authoritative card schema has been moved to a standalone spec for engineering use: [docs/specs/card-schema.json](docs/specs/card-schema.json).
 Use that file for client/server serialization, validation, and migrations. The `abilities` and `effects` fields reference the `ability-schema` in `docs/specs/ability-schema.json`.
