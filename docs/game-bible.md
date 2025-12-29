@@ -403,6 +403,83 @@ Biome-based bonuses; buildings interact with environment (e.g., windmill on plai
 - FreeCiv (GitHub): Hex grids.
 - Catan Clones (GitHub): Procedural maps.
 
+## Map Data Model (Engine Schema)
+
+Provide a canonical map and tile schema so the server and client share a single source of truth for positions, ownership, deployed cards, and pathing. This section covers coordinate systems, tile structure, map metadata, and server notes.
+
+### Coordinate Systems
+
+- **Square Grid**: Use `x,y` integers for local maps (e.g., tactical 8x8). Origin `(0,0)` can be bottom-left. Tiles are addressed as `{x: int, y: int}`.
+- **Hex Grid**: Use axial coordinates `{q,r}` for hex maps (e.g., state maps). Provide conversion utilities to/from cube coordinates where needed.
+- **Global/Region IDs**: Large maps reference `regionId` or `mapId` strings; tile coords are local to that map.
+
+### Tile Object (example JSON)
+
+Each tile is the authoritative container for occupancy, terrain, production, and combat modifiers.
+
+{
+  "tileId": "map-01_q12_r-3",
+  "mapId": "map-01",
+  "coord": { "q": 12, "r": -3 },
+  "terrain": "mountain",              // affects production & movement
+  "terrainModifiers": { "moveCost": 2, "defenseBonus": 0.25 },
+  "ownerId": "alliance-123" | null,
+  "structures": [ { "cardId": "bld-mine-01", "instanceId": "inst-453", "hp": 800 } ],
+  "deployedStacks": [ { "stackId": "stk-001", "cardIds": ["unit-archer-001","unit-archer-001"], "ownerId": "player-77" } ],
+  "production": { "resourceType": "ore", "baseRate": 6, "lastCollected": "2025-12-28T12:34:00Z" },
+  "visibility": { "fog": true, "visibleTo": ["player-77","alliance-123"] },
+  "passable": true,
+  "tags": ["ore-rich","cliff"]
+}
+
+Notes:
+- `structures` hold building instances with their `hp` and `instanceId` for durability and repair.
+- `deployedStacks` reference stack instances; server resolves `cardIds` to canonical card instances and validates stack limits.
+- `visibility` supports fog-of-war and per-player visibility lists for PvE/PvP differences.
+
+### Map Object (example JSON)
+
+{
+  "mapId": "map-01",
+  "name": "Northern Reach",
+  "size": { "width": 120, "height": 90 },
+  "coordinateSystem": "hex",
+  "tiles": [ "map-01_q12_r-3", "map-01_q13_r-3", ... ],
+  "owners": { "player-77": { "castles": ["tileId-1","tileId-2"] } },
+  "season": "spring",
+  "version": 1,
+  "lastUpdated": "2025-12-28T12:00:00Z"
+}
+
+### Pathfinding & Movement
+
+- Store `moveCost` per tile in `terrainModifiers` to feed A* pathfinding. `moveRange` on units is applied as a maximum path length per turn where tile costs are summed.
+- `moveType` (fly/swim/walk) selects which tiles are considered passable or have modified costs.
+- Pathfinding should be computed server-side for authoritative movement validation; client-side prediction may run the same algorithm for smooth visuals.
+
+### Ownership, Capture, and Siege
+
+- Tiles have `ownerId` and `fortificationLevel`. Capture rules: reduce `fortificationHP` to 0 via siege events/combat or use specific capture actions.
+- When a tile changes ownership, emit `tile_captured` events with `previousOwner`, `newOwner`, `time`, and `causalActionId`.
+
+### Event Hooks & Time-based Production
+
+- Tiles expose hooks for `onEnter`, `onLeave`, `onStructureDestroyed`, and `onProductionTick` to allow scripted map events and AI behaviors.
+- Production uses `lastCollected` timestamps and `baseRate` to compute offline gains: `produced = baseRate * terrainBonus * hoursElapsed` capped by storage constraints.
+
+### Concurrency & Server Notes
+
+- **Locking**: Use optimistic concurrency with `version` or server-side locks for tiles when processing multi-action turns to prevent race conditions in alliance events.
+- **Deltas**: The server should broadcast compact deltas (`tileUpdated`, `stackMoved`, `structureDamaged`) instead of full map snapshots to reduce bandwidth.
+- **Snapshots & Replays**: Save periodic map snapshots and event logs for debugging and replay. Store minimal diffs for storage efficiency.
+
+### Example Usage Patterns for Engineers
+
+- To place a building: client sends `placeStructure(mapId,tileCoord,cardInstanceId)`; server validates `deployConstraints`, `ownerId`, `buildTime`, deducts cost, creates `structure` instance, and returns `tileUpdated` delta.
+- To move a stack: client sends `moveStack(stackId, path[])`; server validates path using A* with tile `moveCost`, verifies movement budget (`moveRange`), atomically updates source and destination tiles, and emits `stackMoved`.
+
+These map primitives ensure the engine and client have clear expectations for tile state, movement, production, and ownership. Additional map-specific attributes (weather, dynamic events, secret resources) can be layered atop this baseline.
+
 # SECTION 4: GAMEPLAY MODES
 
 Sovereign Territories offers a variety of gameplay modes to cater to different playstyles, from solo PvE progression to large-scale alliance PvP. Each mode integrates the core mechanics of deck-building, map control, and auto-battle, providing depth for casual and hardcore players.
