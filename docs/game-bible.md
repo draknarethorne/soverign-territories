@@ -1,6 +1,6 @@
-Here is the Final Consolidated Master Design Document (Version 4.9).
+Here is the Final Consolidated Master Design Document (Version 5.0).
 
-This version incorporates the Codex and Card Views system for viewing, leveling, combining, and splitting cards. Sections expanded with card-centric UI, no castle views, and mechanics for star leveling and attachments.
+This version incorporates Territory/Tile Codex Views, visual figurine/statue representations of deployed cards, deployment limits per territory, and visual upgrades from towns to castles. Everything is card-centric, with figurine visuals based on card stacks and territory levels.
 
 # PROJECT: SOVEREIGN TERRITORIES
 
@@ -422,11 +422,23 @@ A persistent PvE mode where players engage in turn-based territorial conquest ag
 - **Multiple Castles**: Hold forts and castles across the map; each provides building slots and defense.
 - **Terrain Effects**: Maps have random generation; water boosts fishing, forests lumber, mountains ore. Affects battles (e.g., cover for defense) and production.
 - **Replayability**: Random maps allow re-playing for leveling, but diminishing returns after efficiency drops.
+- **Territory/Tile Codex Views**: Each occupied territory (castle, fort, town) has a codex view showing deployment slots, card type limits, and current stacks. Players click a tile to see what cards are deployed there and manage deployments.
+- **Visual Representations (Figurines/Statues)**: Occupied tiles display figurines/statues representing the stacked cards deployed there. Visual appearance changes based on:
+  - **Card Composition**: Different hero types and unit stacks render as unique figurines (e.g., a general with cavalry creates a mounted statue).
+  - **Territory Level**: Towns appear as modest structures; leveling to castles upgrades the visual (e.g., castle walls, larger statues).
+  - **Stacking**: Multiple cards in a stack combine visually into a layered or grouped figurine.
+- **Deployment Limits Per Tile**: Each tile (based on territory level and type) has limits:
+  - Max hero slots (e.g., 1 hero per castle tile).
+  - Max unit stacks (e.g., 5 unit stacks per castle, 2 per fort).
+  - Building placement limits (e.g., 3 buildings per castle, 1 per fort).
+  - Type restrictions (e.g., turrets only on walls, farms only on fertile terrain).
 
 ### Player Tips
 - Focus on PVE to build resources safely; use AFK time to accumulate wealth.
 - Balance battle decks for attacks and building decks for economy.
 - Upgrade lord/castle to increase slots and production multipliers.
+- Use tile codex views to strategically position hero stacks and buildings.
+- Watch figurine visuals evolve as you level territories and add cards.
 
 ### Inspiration
 - Risk: Territorial conquest against AI.
@@ -787,13 +799,23 @@ Opt-in push notifications for energy refills, attacks, or events.
 
 ## 11.4 Codex and Card Views
 
-The Codex is the central hub for viewing, managing, and upgrading cards. No separate castle/town views; everything is card-centric.
+The Codex is the central hub for viewing, managing, and upgrading cards. No separate castle/town views; everything is card-centric and territory-focused.
 
 - **Global Codex View**: Grid or list of all owned cards, filterable by type (hero, unit, building, etc.), rarity, star level, or placement status (e.g., "Placed on Map X").
-- **Map-Specific View**: When viewing a map, overlay or filter shows cards placed on that map, with indicators for their positions and stats.
-- **Card Detail View**: Tap a card to see stats, attached boosts, star level, and options to combine/split. Shows placement info (e.g., "On State Map, Region 5").
-- **Combining/Splitting UI**: Drag-and-drop interface to merge cards for stars or attach boosters. Splitting prompts for cost confirmation (e.g., 100 Sovereign Tokens).
-- **Filters and Search**: Search by name, filter by unplaced/placed, or view by deck.
+- **Map-Specific View**: When viewing a map, overlay or filter shows cards placed on that map, with indicators for their positions and stats. Click on any territory to access its tile codex.
+- **Tile/Territory Codex View**: Click on any occupied territory (castle, fort, town) to open a detailed codex showing:
+  - All deployed cards (heroes, units, buildings) on that tile as a stack.
+  - Available deployment slots and limits (e.g., "1/1 hero slots, 3/5 unit stacks, 2/3 buildings").
+  - Card type restrictions and terrain bonuses specific to that tile.
+  - **Visual Figurine Representation**: Shows how deployed cards appear as figurines/statues on the tile, with upgrades reflecting territory level (town to castle).
+  - Options to add/remove/rearrange cards on the tile.
+- **Figurine/Statue System**: Occupied tiles display visual representations based on:
+  - **Card Composition**: Hero type + unit stacks render as unique figurines (e.g., cavalry general on horseback).
+  - **Territory Level**: Towns show modest structures; castles show grander visuals (walls, banners, larger statues).
+  - **Stacking**: Multiple cards visually layer or group into one composed figurine.
+- **Card Detail View**: Tap a card to see stats, attached boosts, star level, options to combine/split, and current deployment (e.g., "Deployed on State Map, Blackfort Castle").
+- **Combining/Splitting UI**: Drag-and-drop to merge cards for stars or attach boosters. Splitting costs resources (e.g., 100 Sovereign Tokens).
+- **Filters and Search**: Search by name, filter by unplaced/placed/deployed, view by deck, or filter by territory/map.
 
 ### Player Tips
 - Use the Codex to plan upgrades before placing cards on maps.
