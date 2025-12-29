@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deck Schema",
+  "description": "Schema for player decks (battle and building)",
+  "type": "object",
+  "properties": {
+    "deckId": {
+      "type": "string",
+      "description": "Unique deck identifier"
+    },
+    "playerId": {
+      "type": "string",
+      "description": "Owner player ID"
+    },
+    "deckType": {
+      "type": "string",
+      "enum": ["battle", "building"],
+      "description": "Type of deck"
+    },
+    "name": {
+      "type": "string",
+      "description": "Deck name"
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "description": "Card ID"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of copies"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Card level"
+          }
+        },
+        "required": ["cardId", "quantity"]
+      },
+      "description": "List of cards in the deck"
+    },
+    "maxSlots": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum card slots"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether this is the active deck"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["deckId", "playerId", "deckType", "name", "cards", "maxSlots", "isActive", "schemaVersion"]
+}

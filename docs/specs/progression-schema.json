@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Progression Schema",
+  "description": "Schema for player and castle leveling",
+  "type": "object",
+  "properties": {
+    "playerId": {
+      "type": "string",
+      "description": "Player identifier"
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Player level"
+    },
+    "xp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current XP"
+    },
+    "xpToNext": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "XP needed for next level"
+    },
+    "castleLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Castle/lord level"
+    },
+    "castleXp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Castle XP"
+    },
+    "castleXpToNext": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "XP needed for next castle level"
+    },
+    "unlocks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of unlocked features (deck slots, tactics, etc.)"
+    },
+    "vipLevel": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "VIP level"
+    },
+    "vipXp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "VIP XP from gem spending"
+    },
+    "vipPerks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Active VIP perks"
+    },
+    "achievements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Achievement ID"
+          },
+          "progress": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Current progress"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Completion status"
+          }
+        },
+        "required": ["id", "progress", "completed"]
+      },
+      "description": "Achievement progress"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["playerId", "level", "xp", "xpToNext", "castleLevel", "castleXp", "castleXpToNext", "unlocks", "vipLevel", "vipXp", "vipPerks", "achievements", "schemaVersion"]
+}

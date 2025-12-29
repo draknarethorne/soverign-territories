@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deployment Schema",
+  "description": "Schema for unit/building deployments on map tiles",
+  "type": "object",
+  "properties": {
+    "deploymentId": {
+      "type": "string",
+      "description": "Unique deployment identifier"
+    },
+    "tileId": {
+      "type": "string",
+      "description": "Map tile ID"
+    },
+    "playerId": {
+      "type": "string",
+      "description": "Owner player ID"
+    },
+    "deployedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "type": "string",
+            "enum": ["hero", "unit", "building"],
+            "description": "Type of deployed item"
+          },
+          "cardId": {
+            "type": "string",
+            "description": "Card ID"
+          },
+          "stackSize": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number in stack"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "description": "X coordinate on tile"
+              },
+              "y": {
+                "type": "integer",
+                "description": "Y coordinate on tile"
+              }
+            },
+            "required": ["x", "y"]
+          }
+        },
+        "required": ["itemType", "cardId", "stackSize"]
+      },
+      "description": "List of deployed items on the tile"
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "maxHeroes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Max hero slots"
+        },
+        "maxUnits": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Max unit stacks"
+        },
+        "maxBuildings": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Max buildings"
+        }
+      },
+      "required": ["maxHeroes", "maxUnits", "maxBuildings"]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Deployment timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["deploymentId", "tileId", "playerId", "deployedItems", "limits", "schemaVersion"]
+}

@@ -203,6 +203,9 @@ Use special items to detach cards, adding strategy.
 The authoritative card schema has been moved to a standalone spec for engineering use: [docs/specs/card-schema.json](docs/specs/card-schema.json).
 Use that file for client/server serialization, validation, and migrations. The `abilities` and `effects` fields reference the `ability-schema` in `docs/specs/ability-schema.json`.
 
+The deck schema for battle and building decks has been moved to a standalone spec: [docs/specs/deck-schema.json](docs/specs/deck-schema.json).
+Use that file for deck validation, slot limits, and card compatibility checks.
+
 
 ## 3. The "Theme" System (Extensions)
 
@@ -217,6 +220,11 @@ Buy packs with gems or gold. Pity timers guarantee legendaries.
 ### Visuals
 
 Animated pack openings with VFX.
+
+## Pack Data Model (Engine Schema)
+
+The pack schema for card acquisition has been moved to a standalone spec: [docs/specs/pack-schema.json](docs/specs/pack-schema.json).
+Use that file for gacha mechanics, pity systems, and pack validation.
 
 ## Open-Source References
 
@@ -302,6 +310,9 @@ Biome-based bonuses; buildings interact with environment (e.g., windmill on plai
 
 The authoritative map and tile schema has been extracted to a standalone spec: [docs/specs/map-schema.json](docs/specs/map-schema.json).
 Use that file for map serialization, pathfinding constraints, and server-side tile validation. Event hooks and production rules are specified in the schema and implementation notes there.
+
+The deployment schema for tile deployments has been moved to a standalone spec: [docs/specs/deployment-schema.json](docs/specs/deployment-schema.json).
+Use that file for managing unit/building placements, stack limits, and codex view data.
 
 # SECTION 4: GAMEPLAY MODES
 
@@ -473,6 +484,11 @@ Recurring content to maintain engagement, from simple quests to competitive tour
 - Mario Party Clone (GitHub): Expedition-style mini-games.
 - Chess Engines (e.g., Stockfish on GitHub): AI tactics for auto-battle.
 
+## Event Data Model (Engine Schema)
+
+The event schema has been moved to a standalone spec for engineering: [docs/specs/event-schema.json](docs/specs/event-schema.json).
+Use that file for challenge scheduling, reward distribution, leaderboard calculations, and event participation tracking. Saga campaigns, expeditions, and tournaments are structured in the schema.
+
 # SECTION 5: ECONOMY & TRADING
 
 The economy in Sovereign Territories is player-driven, with multiple currencies fueling deck-building, map actions, and social features. Trading systems encourage community interaction, while monetization ensures fair progression.
@@ -554,6 +570,11 @@ A true free market where players buy/sell cards, fostering economy depth.
 
 ### Player Tips
 - Sell duplicates; buy rares cheaply.
+
+## Economy & Trade Data Models (Engine Schemas)
+
+The resource and trade schemas have been moved to standalone specs for engineering: [docs/specs/resource-schema.json](docs/specs/resource-schema.json) and [docs/specs/trade-schema.json](docs/specs/trade-schema.json).
+Use those files for currency management, production calculations, auction validation, and marketplace transactions. Sensitive financial data is encrypted and server-only.
 
 ## 5.4 Monetization Model
 
@@ -803,6 +824,11 @@ Achievements reward milestones with badges and unlocks. Leaderboards track conqu
 ## Player Tips
 - Focus on castle leveling for endgame power.
 - Balance PvE/PvP to maintain progression.
+
+## Progression Data Model (Engine Schema)
+
+The progression schema has been moved to a standalone spec for engineering: [docs/specs/progression-schema.json](docs/specs/progression-schema.json).
+Use that file for leveling calculations, unlock validation, VIP perks, and achievement tracking. XP formulas and castle scaling are detailed in the schema notes.
 
 ## Open-Source References
 

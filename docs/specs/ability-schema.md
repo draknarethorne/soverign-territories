@@ -25,3 +25,9 @@ Example ability (single-target heal):
 Notes for engine implementers
 - Ability resolution should be deterministic and server-side. Include event logs for each effect for replay and debugging.
 - Effects may reference `statusIds` for buff/debuff lifecycles; store durations and unique instance IDs for expiry.
+
+Effect Typing and Resolution Order
+- Effect types defined in `effect-types.md`.
+- Resolution order: Targeting → Pre-Effects → Damage/Heal → Status → Post-Effects.
+- Example: Fireball applies damage then burn status.
+- Engine: Server validates targeting; applies effects in order.

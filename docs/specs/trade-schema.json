@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trade Schema",
+  "description": "Schema for player trades and auction listings",
+  "type": "object",
+  "properties": {
+    "tradeId": {
+      "type": "string",
+      "description": "Unique trade identifier"
+    },
+    "sellerId": {
+      "type": "string",
+      "description": "Seller player ID"
+    },
+    "buyerId": {
+      "type": ["string", "null"],
+      "description": "Buyer player ID, null if auction"
+    },
+    "itemType": {
+      "type": "string",
+      "enum": ["card", "resource", "equipment"],
+      "description": "Type of item being traded"
+    },
+    "itemId": {
+      "type": "string",
+      "description": "ID of the item (card ID, resource type, etc.)"
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Quantity of item"
+    },
+    "price": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "enum": ["gold", "gems", "sovereignTokens"],
+          "description": "Currency type"
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Price amount"
+        }
+      },
+      "required": ["currency", "amount"]
+    },
+    "tradeType": {
+      "type": "string",
+      "enum": ["direct", "auction"],
+      "description": "Direct sale or auction"
+    },
+    "auctionData": {
+      "type": "object",
+      "properties": {
+        "startPrice": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Starting bid"
+        },
+        "currentBid": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current highest bid"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Auction end time"
+        },
+        "bidders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of bidder IDs"
+        }
+      },
+      "required": ["startPrice", "currentBid", "endTime"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "completed", "cancelled"],
+      "description": "Trade status"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp"
+    },
+    "completedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Completion timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["tradeId", "sellerId", "itemType", "itemId", "quantity", "price", "tradeType", "status", "createdAt", "schemaVersion"],
+  "if": {
+    "properties": { "tradeType": { "const": "auction" } }
+  },
+  "then": {
+    "required": ["auctionData"]
+  }
+}

@@ -22,3 +22,24 @@ Examples
 
 Scaling notes
 - Store tiles as a compact keyed collection (e.g., `mapId:tiles` map). Diff updates are preferred over full map sends.
+
+Algorithms Integration
+- Pathfinding uses A* as detailed in `algorithms.md`.
+- AoE calculations for abilities use tile enumeration functions from `algorithms.md`.
+
+Event Scripting
+- Maps can have scripted events (e.g., random encounters, resource spawns).
+- Events are defined in `eventSchema` array; triggered by time or player actions.
+- Example: Resource node depletion after N harvests.
+- Engine: Server manages event timers; clients receive event notifications.
+
+Terrain Effects
+- Hexes affect production and combat: Fertile (+food), Mountain (+ore), Forest (+defense/cover).
+- Combat modifiers: Hills (+ranged attack), Rivers (movement penalty).
+- Building synergies: Adjacent buildings boost output (e.g., Mill near Farm +50% food).
+
+Building Placement Rules
+- Limits per territory: Castle (3 buildings), Fort (1), Town (0).
+- Terrain restrictions: Mines on mountains, Farms on plains.
+- AFK Production: Buildings generate resources based on level and bonuses.
+- Engine: Server validates placement; calculates production ticks.

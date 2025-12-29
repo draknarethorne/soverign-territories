@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resource Schema",
+  "description": "Schema for currencies and resources in Sovereign Territories",
+  "type": "object",
+  "properties": {
+    "playerId": {
+      "type": "string",
+      "description": "Player identifier"
+    },
+    "energy": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current energy/stamina"
+    },
+    "maxEnergy": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum energy capacity"
+    },
+    "gold": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Gold coins"
+    },
+    "gems": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Premium gems"
+    },
+    "sovereignTokens": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Rare tokens for exclusives"
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "food": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Food resource"
+        },
+        "water": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Water resource"
+        },
+        "lumber": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Lumber resource"
+        },
+        "ore": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Ore resource"
+        }
+      },
+      "required": ["food", "water", "lumber", "ore"]
+    },
+    "resourceCaps": {
+      "type": "object",
+      "properties": {
+        "food": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Food storage cap"
+        },
+        "water": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Water storage cap"
+        },
+        "lumber": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Lumber storage cap"
+        },
+        "ore": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Ore storage cap"
+        }
+      },
+      "required": ["food", "water", "lumber", "ore"]
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version for migrations"
+    }
+  },
+  "required": ["playerId", "energy", "maxEnergy", "gold", "gems", "sovereignTokens", "resources", "resourceCaps", "schemaVersion"]
+}

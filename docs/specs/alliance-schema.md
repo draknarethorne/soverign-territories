@@ -19,3 +19,9 @@ Events & wars
 Scaling
 - Shard alliance data by `allianceId` and store histories in append-only partitions.
 - Cache frequently-read alliance summaries.
+
+Contribution Algorithms
+- Contributions weighted by resource type: Gold (1x), Cards (2x), Time (0.5x).
+- Leaderboard: Top contributors get bonuses (e.g., extra treasury share).
+- Example: Player contributes 100 gold → +100 points; 5 rare cards → +200 points.
+- Engine: Server calculates weekly; updates member stats.

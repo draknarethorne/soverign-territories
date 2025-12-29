@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pack Schema",
+  "description": "Schema for card packs and gacha mechanics",
+  "type": "object",
+  "properties": {
+    "packId": {
+      "type": "string",
+      "description": "Unique pack identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Pack display name"
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "enum": ["gold", "gems"],
+          "description": "Currency type"
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Cost amount"
+        }
+      },
+      "required": ["currency", "amount"]
+    },
+    "contents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rarity": {
+            "type": "string",
+            "enum": ["common", "rare", "epic", "legendary"],
+            "description": "Card rarity"
+          },
+          "probability": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Drop probability"
+          },
+          "cardIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Possible card IDs"
+          }
+        },
+        "required": ["rarity", "probability"]
+      },
+      "description": "Pack contents with probabilities"
+    },
+    "guarantees": {
+      "type": "object",
+      "properties": {
+        "pityThreshold": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Pulls for guaranteed rare+"
+        },
+        "guaranteedRarity": {
+          "type": "string",
+          "enum": ["rare", "epic", "legendary"],
+          "description": "Guaranteed minimum rarity"
+        }
+      },
+      "description": "Pity system guarantees"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether pack is available"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["packId", "name", "cost", "contents", "isActive", "schemaVersion"]
+}
