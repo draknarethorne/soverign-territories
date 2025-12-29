@@ -139,20 +139,6 @@ Equipment cards attach to heroes for stat boosts and visuals. Acquired from even
 - **Examples**: "Excalibur Sword" (+attack), "Dragon Scale Armor" (+defense).
 - **How They Work**: Socket-compatible; visual effects appear on the hero's game piece (e.g., glowing sword).
 
-Tactics are AI modules that program auto-battle behavior. Attach them to heroes or units for customized strategies.
-
-- **Examples**: "Focus Healers" (prioritize healing targets), "Flank Left" (maneuver around enemies).
-- **How They Work**: Equipped to stacks; AI follows the tactic during auto-battle. Overrides default behavior for tactical depth.
-- **Inspiration from Chess Engines**: Pre-programmed strategies, like Stockfish's opening books.
-
-### Equipment
-
-Equipment cards attach to heroes for stat boosts and visuals. Acquired from events or packs.
-
-- **Examples**: "Excalibur Sword" (+attack), "Dragon Scale Armor" (+defense).
-- **How They Work**: Socket-compatible; visual effects appear on the hero's game piece (e.g., glowing sword).
-- **Inspiration from RPGs**: Gear slots, like in HoMM's artifacts.
-
 ## 2. Rarities and Customization
 
 ### Basic/Common
@@ -823,12 +809,6 @@ The Codex is the central hub for viewing, managing, and upgrading cards. No sepa
 
 ## Player Tips
 - Use tutorials to master stacking early.
-
-## Open-Source References
-
-- Unity UI Samples (GitHub): Touch interfaces.
-- Godot UI Frameworks (GitHub): Mobile optimizations.
-- Slay the Spire UI (GitHub): HUD and tutorials.
 
 ## Open-Source References
 
