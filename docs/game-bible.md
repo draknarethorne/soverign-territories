@@ -198,6 +198,117 @@ Core cards count fully; attachments are bonus or half-slots.
 
 Use special items to detach cards, adding strategy.
 
+## 2.6 Card Data Model (Engine Schema)
+
+Provide a canonical card data model to ensure client/server parity and easy serialization. Example JSON-like schema:
+
+- `id`: unique string
+- `name`: display name
+- `type`: `hero|unit|building|tactic|equipment`
+- `rarity`: `common|rare|epic|legendary`
+- `level`: integer
+- `xp`: integer
+- `stats`: { `attack`: number, `defense`: number, `hp`: number, `speed`: number }
+- `element`: `fire|water|earth|air|none`
+- `abilities`: array of ability ids (refer to ability registry)
+- `sockets`: array of socket types (for equipment/tactics)
+- `stackSize`: max stack count for unit cards
+- `production`: { for building cards: `resourceType`, `ratePerHour`, `terrainBonus` }
+- `visual`: atlas/sprite reference for client
+- `ownerId`: account id (server side only)
+- `deployConstraints`: tile/terrain constraints (e.g., "farm -> fertile")
+
+Notes for engineers:
+- Keep this schema authoritative on the server; client receives read-only deltas.
+- Use versioned schema with a `schemaVersion` field to support migrations.
+- Validate stat bounds server-side to prevent tampering.
+
+### Additional Fields (Ranged / Movement / Engine Needs)
+
+To ensure combat and movement are unambiguous for engine and client, include the following attributes:
+
+- `attackType`: `melee|ranged|aoe|piercing` (defines targeting rules and interactions)
+- `attackRange`: integer (tiles/radius for the primary attack; 1 = adjacent melee)
+- `attackSpeed`: number (attacks per second or turns-to-attack modifier)
+- `aoeRadius`: integer (0 for single-target; >0 for area effects)
+- `projectileSpeed`: number (units/sec for projectile travel if needed for visuals)
+- `ammo`: integer or null (if attack consumes ammo)
+- `moveRange`: integer (tiles per turn)
+- `moveType`: `walk|fly|teleport|swim` (affects terrain costs and restrictions)
+- `movementCostModifiers`: map of terrainType -> multiplier (e.g., forest: 0.5 move)
+- `visionRange`: integer (tiles visible for fog-of-war)
+- `stealth`: boolean or stealthRating (hidden unless detectRange >= value)
+- `detectRange`: integer (how far reveals stealth)
+- `resistances`: map (e.g., `fire`:0.1 means 10% resistance)
+- `vulnerabilities`: map (e.g., `water`: -0.25 means 25% extra damage)
+- `critChance`: float (0-1)
+- `critMultiplier`: float (e.g., 1.5)
+- `evasion`: float (chance to avoid attacks)
+- `block`: numeric flat damage block per hit
+- `statusImmunities`: array of status ids
+- `cooldowns`: map of abilityId -> turns
+- `aiTags`: array (e.g., `skirmisher`,`tank`,`support`) to help server bots and replay AI
+- `targetingPriority`: array or rule-set (e.g., `['heal','ranged','melee']`)
+- `deployCost`: cost object {gold,energy,tokens}
+- `upkeep`: periodic cost while deployed (optional)
+- `durability`: for buildings: separate HP pool and repairRate
+- `buildTime`: seconds or turns to construct
+- `isTradable`: boolean
+- `bindOnPickup`: boolean
+- `maxStack`: for cards that are stackable in inventory (not battle stacks)
+- `tooltip`: localized description id
+
+### Server-only / Audit Fields
+
+- `ownerId`: account id
+- `createdAt`, `lastUpdated`: timestamps
+- `schemaVersion`: integer
+- `txHistory`: optional reference to transaction log for audits
+
+### Example JSON snippets
+
+Melee unit example:
+
+{
+  "id": "unit-archer-001",
+  "name": "Field Archer",
+  "type": "unit",
+  "rarity": "common",
+  "level": 1,
+  "stats": { "attack": 8, "defense": 2, "hp": 30, "speed": 5 },
+  "attackType": "ranged",
+  "attackRange": 3,
+  "attackSpeed": 1.0,
+  "aoeRadius": 0,
+  "projectileSpeed": 12,
+  "moveRange": 2,
+  "moveType": "walk",
+  "element": "none",
+  "stackSize": 5
+}
+
+Building example:
+
+{
+  "id": "bld-mine-01",
+  "name": "Iron Mine",
+  "type": "building",
+  "rarity": "rare",
+  "production": { "resourceType": "ore", "ratePerHour": 6, "terrainBonus": {"mountain": 1.5} },
+  "durability": 1000,
+  "buildTime": 3600,
+  "deployConstraints": ["mountain","ore-rich"],
+  "isTradable": false
+}
+
+Notes:
+- `attackRange` and `moveRange` are expressed in tile units to keep engine grid math simple.
+- `moveType` allows bypassing movement restrictions (e.g., `fly` ignores terrain penalties).
+- `attackType` combined with `aoeRadius` defines whether attacks target single tiles, cones, or radii; the server must have utility methods to compute affected tile lists given attacker position and orientation.
+
+These fields provide a comprehensive baseline; additional game-specific attributes (e.g., resource consumption, special reagent types, element-specific mechanics) can be added as needed, but the above ensures combat, movement, targeting, and economy hooks are covered.
+
+
 ## 3. The "Theme" System (Extensions)
 
 Build theme decks for synergy bonuses (e.g., 20 Norse cards grant frost immunity).
@@ -677,6 +788,21 @@ The combat system emphasizes planning and execution, where every action counts. 
 - **Actions**: Move (limited range), attack (melee/ranged), or activate tactics/buffs.
 - **Phases**: Movement phase followed by action phase, preventing simultaneous moves.
 
+### Initiative & Turn Order (Deterministic)
+
+- **Initiative Score** = `BaseSpeed + SpeedBuffs + (StackBonus)` where `StackBonus = log(stackSize + 1)` to give diminishing returns for very large stacks.
+- Units are sorted by Initiative Score descending at the start of each round. Ties are broken by `unitId` deterministic ordering.
+- Use a fixed simulation tick (e.g., 100ms) for visuals; all authoritative decisions are made on discrete turn boundaries to keep client prediction simple.
+
+### Stack Math (Precise Combination Rules)
+
+- **Stack HP** = `BaseHP × stackSize × HPMultiplier(level)` where `HPMultiplier(level)` is defined per card (e.g., 1 + 0.1*(level-1)).
+- **Stack Attack** = `BaseAttack × stackSize × AttackMultiplier(level)`.
+- **Stack Defense** = `BaseDefense × (1 + 0.05*(stackSize-1))` (defense scales with diminishing returns to favor numbers but reduce absolute tanking).
+- **AoE Interaction**: AoE damage applies to stacks as absolute damage; apply damage to stack HP, then calculate casualties as `floor(damage / BaseHP)` for units removed, leaving fractional HP on remainder.
+- **Overkill**: No damage spillover to other stacks unless an ability explicitly states "splash overflow".
+
+
 ### Resolution
 Combat resolution is purely mathematical, ensuring fairness. Damage calculations incorporate elements (e.g., fire beats water), class bonuses (e.g., archers vs. infantry), terrain modifiers (e.g., hills boost defense), and buffs from equipment or tactics. Area of Effect (AoE) attacks, like fireballs, multiply damage against stacked units, adding risk-reward to formations.
 
@@ -877,6 +1003,27 @@ Unity client + Nakama server; Docker deployment.
 - **Platform Optimizations**: Touch-first UI for mobile, mouse/keyboard support for PC, with adaptive controls (e.g., swipe vs. click-and-drag).
 - **Sync Mechanics**: Real-time sync for multiplayer; offline queue for actions, resolving on reconnect. Data integrity via conflict resolution (e.g., last-write-wins for non-critical changes).
 - **Performance**: Unity's Addressables for asset loading, ensuring smooth cross-device play without data loss.
+
+## 12.4 Network Model & Determinism
+
+- **Server-Authoritative Model**: All combat resolution, card state changes, economy transactions, and matchmaking decisions occur server-side. Clients send intents/commands; server validates and returns state deltas.
+- **Deterministic Simulation for Replays**: Combat logs should include a compact deterministic event log so clients can replay battles for VODs without resimulating randomness.
+- **Latency Handling**: Use client-side prediction for movement visuals, but require server reconciliation for authoritative state; use an action queue with sequence numbers.
+- **Tick Rate**: Use a fixed authoritative tick (e.g., 10 ticks/sec) for multiplayer interactions; turn actions are batched on turn boundaries for tactical matches.
+
+## 12.5 Analytics, Instrumentation & Testing Hooks
+
+- **Event List (minimum)**: `battle_start`, `battle_end`, `battle_action`, `card_combined`, `card_split`, `purchase`, `auction_listing`, `match_found`, `match_result`, `resource_produced`, `building_destroyed`, `vip_purchase`.
+- **Client Tags**: Include `clientVersion`, `platform`, `region`, and `schemaVersion` in telemetry to correlate issues.
+- **A/B Testing Hooks**: Feature flags server-side to roll out balancing changes and see win-rate deltas.
+- **Automated Playtests**: Headless bots that run thousands of simulated matches to identify balance outliers before patching.
+
+## 12.6 Economy Controls & Anti-Cheat
+
+- **Inflation Controls**: Sink design (crafting costs, maintenance, storage decay) with weekly monitoring metrics (currency velocity, top percent hoarding).
+- **Server Validation**: All currency and inventory changes validated on server; client-only UI ops never change authoritative state.
+- **Anti-Cheat**: Server-side rate limits, anomaly detection for impossible actions (e.g., combining more copies than owned), and signed receipts for IAP validation.
+- **Rollback & Dispute**: Maintain reversible transaction logs for manual audits and automated rollback if fraud detected.
 
 ## Open-Source References
 
