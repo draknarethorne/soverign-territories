@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Diplomacy Schema",
+  "description": "Schema for alliances, treaties, and political relationships",
+  "type": "object",
+  "properties": {
+    "allianceId": {
+      "type": "string",
+      "description": "Unique alliance identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Alliance name"
+    },
+    "leaderId": {
+      "type": "string",
+      "description": "Alliance leader player ID"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "Member player ID"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["leader", "officer", "member"],
+            "description": "Member role in alliance"
+          },
+          "joinedAt": {
+            "type": "integer",
+            "description": "Unix timestamp when player joined"
+          }
+        },
+        "required": ["playerId", "role", "joinedAt"]
+      },
+      "description": "Alliance member list"
+    },
+    "treaties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "treatyId": {
+            "type": "string",
+            "description": "Treaty identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["trade", "defense", "non-aggression", "research"],
+            "description": "Treaty type"
+          },
+          "partnerAllianceId": {
+            "type": "string",
+            "description": "Partner alliance ID"
+          },
+          "terms": {
+            "type": "object",
+            "description": "Treaty-specific terms"
+          },
+          "signedAt": {
+            "type": "integer",
+            "description": "Unix timestamp when treaty was signed"
+          },
+          "expiresAt": {
+            "type": "integer",
+            "description": "Unix timestamp when treaty expires"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "pending", "expired", "broken"],
+            "description": "Treaty status"
+          }
+        },
+        "required": ["treatyId", "type", "partnerAllianceId", "signedAt", "status"]
+      },
+      "description": "Active treaties with other alliances"
+    },
+    "reputation": {
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "type": "integer",
+          "minimum": -100,
+          "maximum": 100,
+          "description": "Reputation score with other alliances"
+        }
+      },
+      "description": "Reputation scores with other alliances"
+    },
+    "policies": {
+      "type": "object",
+      "properties": {
+        "openMembership": {
+          "type": "boolean",
+          "description": "Whether alliance accepts new members"
+        },
+        "taxRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Alliance tax rate on member resources"
+        },
+        "votingThreshold": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1,
+          "description": "Majority threshold for alliance votes"
+        }
+      },
+      "description": "Alliance governance policies"
+    },
+    "votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "voteId": {
+            "type": "string",
+            "description": "Vote identifier"
+          },
+          "proposal": {
+            "type": "string",
+            "description": "Vote proposal text"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["policy", "treaty", "expulsion", "declaration"],
+            "description": "Vote type"
+          },
+          "initiatorId": {
+            "type": "string",
+            "description": "Player who initiated the vote"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Voting options"
+          },
+          "votes": {
+            "type": "object",
+            "patternProperties": {
+              "^.*$": {
+                "type": "string",
+                "description": "Vote choice by player ID"
+              }
+            },
+            "description": "Current votes cast"
+          },
+          "deadline": {
+            "type": "integer",
+            "description": "Unix timestamp when voting ends"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "passed", "failed", "cancelled"],
+            "description": "Vote status"
+          }
+        },
+        "required": ["voteId", "proposal", "type", "initiatorId", "options", "votes", "deadline", "status"]
+      },
+      "description": "Active alliance votes"
+    },
+    "createdAt": {
+      "type": "integer",
+      "description": "Unix timestamp when alliance was created"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["allianceId", "name", "leaderId", "members", "treaties", "reputation", "policies", "votes", "createdAt", "schemaVersion"]
+}

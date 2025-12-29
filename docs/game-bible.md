@@ -872,6 +872,8 @@ Server-side validation prevents exploits. Reports and mutes handle griefing, wit
 
 Voting systems for war declarations, with chat for negotiations.
 
+The diplomacy schema for alliances and treaties has been moved to a standalone spec: [docs/specs/diplomacy-schema.json](docs/specs/diplomacy-schema.json).
+
 ## Player Tips
 - Join alliances for better matchmaking and events.
 
@@ -893,9 +895,13 @@ Swipe gestures for zooming, drag-and-drop for placement. HUD displays unit healt
 
 Progressive overlays teach mechanics, from deck-building to combat. Skip options for experienced players.
 
+The tutorial schema for onboarding flows has been moved to a standalone spec: [docs/specs/tutorial-schema.json](docs/specs/tutorial-schema.json).
+
 ## 11.3 Notifications and Alerts
 
 Opt-in push notifications for energy refills, attacks, or events.
+
+The notification schema for in-game alerts has been moved to a standalone spec: [docs/specs/notification-schema.json](docs/specs/notification-schema.json).
 
 ## 11.4 Accessibility and Inclusivity (Best-in-Class from Modern Games like The Sims)
 

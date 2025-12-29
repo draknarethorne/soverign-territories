@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Starter Deck Schema",
+  "description": "Schema for pre-built starter decks",
+  "type": "object",
+  "properties": {
+    "starterDeckId": {
+      "type": "string",
+      "description": "Unique starter deck identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Deck display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Deck description"
+    },
+    "theme": {
+      "type": "string",
+      "description": "Associated theme"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"],
+      "description": "Recommended difficulty"
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "description": "Card ID"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of copies"
+          }
+        },
+        "required": ["cardId", "quantity"]
+      },
+      "description": "Pre-defined card list"
+    },
+    "unlocksAtLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Player level required"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether deck is available"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["starterDeckId", "name", "description", "theme", "difficulty", "cards", "unlocksAtLevel", "isActive", "schemaVersion"]
+}

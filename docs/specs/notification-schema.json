@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Notification Schema",
+  "description": "Schema for in-game notifications and alerts",
+  "type": "object",
+  "properties": {
+    "notificationId": {
+      "type": "string",
+      "description": "Unique notification identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["info", "warning", "error", "achievement", "trade", "diplomacy", "combat"],
+      "description": "Notification category"
+    },
+    "title": {
+      "type": "string",
+      "description": "Notification title"
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification content"
+    },
+    "recipientId": {
+      "type": "string",
+      "description": "Target player ID"
+    },
+    "senderId": {
+      "type": "string",
+      "description": "Source player or system ID"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp when notification was created"
+    },
+    "expiresAt": {
+      "type": "integer",
+      "description": "Unix timestamp when notification expires"
+    },
+    "isRead": {
+      "type": "boolean",
+      "description": "Whether player has viewed the notification"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actionId": {
+            "type": "string",
+            "description": "Action identifier"
+          },
+          "label": {
+            "type": "string",
+            "description": "Button text"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["accept", "decline", "view", "dismiss"],
+            "description": "Action type"
+          },
+          "data": {
+            "type": "object",
+            "description": "Additional action data"
+          }
+        },
+        "required": ["actionId", "label", "type"]
+      },
+      "description": "Available actions for the notification"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional notification data"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["notificationId", "type", "title", "message", "recipientId", "timestamp", "isRead", "schemaVersion"]
+}

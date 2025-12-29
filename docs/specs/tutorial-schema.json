@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tutorial Schema",
+  "description": "Schema for onboarding tutorials and quests",
+  "type": "object",
+  "properties": {
+    "tutorialId": {
+      "type": "string",
+      "description": "Unique tutorial identifier"
+    },
+    "title": {
+      "type": "string",
+      "description": "Tutorial title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Tutorial description"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stepId": {
+            "type": "string",
+            "description": "Step identifier"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "User instruction"
+          },
+          "trigger": {
+            "type": "string",
+            "enum": ["action", "completion", "time"],
+            "description": "Completion trigger"
+          },
+          "target": {
+            "type": "string",
+            "description": "Target action or element"
+          },
+          "reward": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["xp", "card", "resource"],
+                "description": "Reward type"
+              },
+              "amount": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Reward amount"
+              }
+            },
+            "description": "Step completion reward"
+          }
+        },
+        "required": ["stepId", "instruction", "trigger"]
+      },
+      "description": "Sequential tutorial steps"
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Required completed tutorials"
+    },
+    "isMandatory": {
+      "type": "boolean",
+      "description": "Whether tutorial blocks progression"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["tutorialId", "title", "description", "steps", "prerequisites", "isMandatory", "schemaVersion"]
+}

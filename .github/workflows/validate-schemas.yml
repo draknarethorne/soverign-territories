@@ -37,6 +37,10 @@ jobs:
           ajv validate -s docs/specs/equipment-schema.json -d docs/specs/equipment-schema.json
           ajv validate -s docs/specs/theme-schema.json -d docs/specs/theme-schema.json
           ajv validate -s docs/specs/matchmaking-schema.json -d docs/specs/matchmaking-schema.json
+          ajv validate -s docs/specs/starter-deck-schema.json -d docs/specs/starter-deck-schema.json
+          ajv validate -s docs/specs/tutorial-schema.json -d docs/specs/tutorial-schema.json
+          ajv validate -s docs/specs/notification-schema.json -d docs/specs/notification-schema.json
+          ajv validate -s docs/specs/diplomacy-schema.json -d docs/specs/diplomacy-schema.json
       - name: Generate TypeScript types
         run: |
           json2ts docs/specs/card-schema.json > docs/specs/card-schema.d.ts
@@ -55,3 +59,7 @@ jobs:
           json2ts docs/specs/equipment-schema.json > docs/specs/equipment-schema.d.ts
           json2ts docs/specs/theme-schema.json > docs/specs/theme-schema.d.ts
           json2ts docs/specs/matchmaking-schema.json > docs/specs/matchmaking-schema.d.ts
+          json2ts docs/specs/starter-deck-schema.json > docs/specs/starter-deck-schema.d.ts
+          json2ts docs/specs/tutorial-schema.json > docs/specs/tutorial-schema.d.ts
+          json2ts docs/specs/notification-schema.json > docs/specs/notification-schema.d.ts
+          json2ts docs/specs/diplomacy-schema.json > docs/specs/diplomacy-schema.d.ts
