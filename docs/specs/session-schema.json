@@ -1,0 +1,323 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Session Schema",
+  "description": "Schema for player sessions, analytics, telemetry, and engagement tracking",
+  "type": "object",
+  "properties": {
+    "sessionId": {
+      "type": "string",
+      "description": "Unique session identifier"
+    },
+    "playerId": {
+      "type": "string",
+      "description": "Player who owns this session"
+    },
+    "deviceId": {
+      "type": "string",
+      "description": "Device identifier (anonymized)"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["ios", "android", "windows", "macos", "web"],
+      "description": "Platform type"
+    },
+    "clientVersion": {
+      "type": "string",
+      "description": "Client version (e.g., '1.2.3')"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "description": "Schema version for migrations"
+    },
+    "region": {
+      "type": "string",
+      "description": "Geographic region (e.g., 'US', 'EU', 'APAC')"
+    },
+    "startTime": {
+      "type": "integer",
+      "description": "Session start timestamp (Unix)"
+    },
+    "endTime": {
+      "type": "integer",
+      "description": "Session end timestamp (Unix)"
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Session duration in seconds"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "paused", "ended", "crashed"],
+      "description": "Current session state"
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "battlesPlayed": {
+          "type": "integer",
+          "description": "Number of battles in this session"
+        },
+        "cardsCollected": {
+          "type": "integer",
+          "description": "Cards acquired in this session"
+        },
+        "goldEarned": {
+          "type": "integer",
+          "description": "Gold earned in this session"
+        },
+        "gemsSpent": {
+          "type": "integer",
+          "description": "Gems spent in this session"
+        },
+        "screensVisited": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "UI screens visited"
+        },
+        "actionsPerformed": {
+          "type": "integer",
+          "description": "Total user actions (clicks, drags, etc.)"
+        },
+        "errorCount": {
+          "type": "integer",
+          "description": "Errors encountered"
+        }
+      },
+      "description": "Session-level metrics"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "description": "Unique event identifier"
+          },
+          "eventType": {
+            "type": "string",
+            "description": "Event type (e.g., 'battle_start', 'purchase', 'tutorial_complete')"
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "Event timestamp (Unix)"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Event-specific data"
+          }
+        },
+        "required": ["eventId", "eventType", "timestamp"]
+      },
+      "description": "Events logged during session"
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "avgFPS": {
+          "type": "number",
+          "description": "Average frames per second"
+        },
+        "minFPS": {
+          "type": "number",
+          "description": "Minimum FPS (performance dips)"
+        },
+        "maxFPS": {
+          "type": "number",
+          "description": "Maximum FPS"
+        },
+        "loadTimes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Screen load times in seconds"
+        },
+        "memoryUsage": {
+          "type": "number",
+          "description": "Peak memory usage in MB"
+        },
+        "networkLatency": {
+          "type": "number",
+          "description": "Average network latency in ms"
+        }
+      },
+      "description": "Performance metrics"
+    },
+    "engagement": {
+      "type": "object",
+      "properties": {
+        "tutorialProgress": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Tutorial completion percentage (0.0 to 1.0)"
+        },
+        "dailyQuestsCompleted": {
+          "type": "integer",
+          "description": "Daily quests completed this session"
+        },
+        "socialInteractions": {
+          "type": "integer",
+          "description": "Chat messages, trades, alliance actions"
+        },
+        "timeInBattle": {
+          "type": "integer",
+          "description": "Seconds spent in battles"
+        },
+        "timeInMenu": {
+          "type": "integer",
+          "description": "Seconds spent in menus/UI"
+        },
+        "afkTime": {
+          "type": "integer",
+          "description": "Seconds inactive but session active"
+        }
+      },
+      "description": "Engagement tracking"
+    },
+    "monetization": {
+      "type": "object",
+      "properties": {
+        "purchasesMade": {
+          "type": "integer",
+          "description": "Number of IAP purchases"
+        },
+        "totalRevenue": {
+          "type": "number",
+          "description": "Total revenue generated (USD)"
+        },
+        "adsViewed": {
+          "type": "integer",
+          "description": "Rewarded ads watched (if applicable)"
+        },
+        "vipLevel": {
+          "type": "integer",
+          "description": "Player's VIP level at session start"
+        }
+      },
+      "description": "Monetization metrics"
+    },
+    "funnel": {
+      "type": "object",
+      "properties": {
+        "ftueCompleted": {
+          "type": "boolean",
+          "description": "First-time user experience completed"
+        },
+        "firstBattle": {
+          "type": "boolean",
+          "description": "Played first battle"
+        },
+        "firstPurchase": {
+          "type": "boolean",
+          "description": "Made first purchase"
+        },
+        "pvpUnlocked": {
+          "type": "boolean",
+          "description": "Reached Level 10 for PvP"
+        },
+        "allianceJoined": {
+          "type": "boolean",
+          "description": "Joined an alliance"
+        }
+      },
+      "description": "Key funnel milestones"
+    },
+    "consent": {
+      "type": "object",
+      "properties": {
+        "telemetryConsent": {
+          "type": "boolean",
+          "description": "Player consented to telemetry"
+        },
+        "marketingConsent": {
+          "type": "boolean",
+          "description": "Player consented to marketing"
+        },
+        "crashReportingConsent": {
+          "type": "boolean",
+          "description": "Player consented to crash reporting"
+        },
+        "consentTimestamp": {
+          "type": "integer",
+          "description": "When consent was given (Unix)"
+        },
+        "gdprCompliant": {
+          "type": "boolean",
+          "description": "Session adheres to GDPR requirements"
+        }
+      },
+      "description": "GDPR consent flags"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errorId": {
+            "type": "string",
+            "description": "Unique error identifier"
+          },
+          "errorType": {
+            "type": "string",
+            "enum": ["crash", "exception", "network", "validation", "timeout"],
+            "description": "Error category"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "stackTrace": {
+            "type": "string",
+            "description": "Stack trace (sanitized)"
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "When error occurred (Unix)"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Error severity"
+          }
+        },
+        "required": ["errorId", "errorType", "timestamp"]
+      },
+      "description": "Errors encountered during session"
+    },
+    "abTests": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "A/B test variants active for this session (e.g., 'balance_v2': 'variant_a')"
+    },
+    "retention": {
+      "type": "object",
+      "properties": {
+        "daysSinceInstall": {
+          "type": "integer",
+          "description": "Days since app install"
+        },
+        "daysSinceLastSession": {
+          "type": "integer",
+          "description": "Days since previous session"
+        },
+        "totalSessions": {
+          "type": "integer",
+          "description": "Total sessions for this player"
+        },
+        "isChurned": {
+          "type": "boolean",
+          "description": "Player considered churned (>7 days inactive)"
+        }
+      },
+      "description": "Retention tracking"
+    }
+  },
+  "required": ["sessionId", "playerId", "platform", "clientVersion", "schemaVersion", "startTime", "status", "consent"],
+  "additionalProperties": false
+}

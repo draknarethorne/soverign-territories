@@ -38,6 +38,12 @@ Files:
 - theme-schema.md — narrative notes for theme schema.
 - matchmaking-schema.json — authoritative JSON Schema for Elo matchmaking.
 - matchmaking-schema.md — narrative notes for matchmaking schema.
+- audio-schema.json — authoritative JSON Schema for audio assets and music.
+- audio-schema.md — narrative notes for audio schema.
+- session-schema.json — authoritative JSON Schema for player sessions and analytics.
+- session-schema.md — narrative notes for session schema.
+- store-schema.json — authoritative JSON Schema for IAP products and monetization.
+- store-schema.md — narrative notes for store schema.
 
 Purpose and guidance
 

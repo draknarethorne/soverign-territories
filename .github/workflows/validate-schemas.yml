@@ -49,6 +49,9 @@ jobs:
           ajv validate -s docs/specs/expedition-schema.json -d docs/specs/expedition-schema.json
           ajv validate -s docs/specs/campaign-schema.json -d docs/specs/campaign-schema.json
           ajv validate -s docs/specs/leaderboard-schema.json -d docs/specs/leaderboard-schema.json
+          ajv validate -s docs/specs/audio-schema.json -d docs/specs/audio-schema.json
+          ajv validate -s docs/specs/session-schema.json -d docs/specs/session-schema.json
+          ajv validate -s docs/specs/store-schema.json -d docs/specs/store-schema.json
       - name: Generate TypeScript types
         run: |
           json2ts docs/specs/card-schema.json > docs/specs/card-schema.d.ts
@@ -79,3 +82,6 @@ jobs:
           json2ts docs/specs/expedition-schema.json > docs/specs/expedition-schema.d.ts
           json2ts docs/specs/campaign-schema.json > docs/specs/campaign-schema.d.ts
           json2ts docs/specs/leaderboard-schema.json > docs/specs/leaderboard-schema.d.ts
+          json2ts docs/specs/audio-schema.json > docs/specs/audio-schema.d.ts
+          json2ts docs/specs/session-schema.json > docs/specs/session-schema.d.ts
+          json2ts docs/specs/store-schema.json > docs/specs/store-schema.d.ts

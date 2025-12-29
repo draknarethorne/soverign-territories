@@ -1,0 +1,237 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Store Schema",
+  "description": "Schema for in-app purchases, store bundles, pricing, and monetization products",
+  "type": "object",
+  "properties": {
+    "productId": {
+      "type": "string",
+      "description": "Unique product identifier (matches App Store/Google Play)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Product display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description shown in store"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["consumable", "subscription", "bundle", "cosmetic", "currency", "starter_pack"],
+      "description": "Product type"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["currency", "energy", "cards", "vip", "cosmetics", "boosters", "limited_time"],
+      "description": "Store category"
+    },
+    "price": {
+      "type": "object",
+      "properties": {
+        "usd": {
+          "type": "number",
+          "description": "Base price in USD"
+        },
+        "regional": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Regional pricing (e.g., 'EUR': 4.99, 'JPY': 500)"
+        }
+      },
+      "required": ["usd"],
+      "description": "Pricing tiers"
+    },
+    "contents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "type": "string",
+            "description": "Type of item (gems, energy, cards, etc.)"
+          },
+          "itemId": {
+            "type": "string",
+            "description": "Specific item identifier"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantity included"
+          }
+        },
+        "required": ["itemType", "quantity"]
+      },
+      "description": "Bundle contents"
+    },
+    "bonus": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether bonus is active"
+        },
+        "percentage": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Bonus percentage (e.g., 50 = 50% extra)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Bonus description (e.g., '+50% gems')"
+        }
+      },
+      "description": "First-time buyer bonus or promotional bonus"
+    },
+    "availability": {
+      "type": "object",
+      "properties": {
+        "isAvailable": {
+          "type": "boolean",
+          "description": "Whether product is currently available"
+        },
+        "startTime": {
+          "type": "integer",
+          "description": "Availability start timestamp (Unix)"
+        },
+        "endTime": {
+          "type": "integer",
+          "description": "Availability end timestamp (Unix)"
+        },
+        "purchaseLimit": {
+          "type": "integer",
+          "description": "Max purchases per player (null = unlimited)"
+        },
+        "levelRequirement": {
+          "type": "integer",
+          "description": "Minimum player level to purchase"
+        }
+      },
+      "description": "Availability constraints"
+    },
+    "subscription": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "string",
+          "enum": ["weekly", "monthly", "quarterly", "yearly"],
+          "description": "Subscription period"
+        },
+        "renewalPrice": {
+          "type": "number",
+          "description": "Renewal price (may differ from first purchase)"
+        },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Subscription benefits (e.g., 'Daily gems', 'VIP Level 3')"
+        }
+      },
+      "description": "Subscription-specific settings"
+    },
+    "visual": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "type": "string",
+          "description": "Product icon asset path"
+        },
+        "banner": {
+          "type": "string",
+          "description": "Store banner asset path"
+        },
+        "badge": {
+          "type": "string",
+          "enum": ["new", "popular", "best_value", "limited_time", "vip_exclusive"],
+          "description": "Store badge overlay"
+        }
+      },
+      "description": "Visual presentation"
+    },
+    "platformIds": {
+      "type": "object",
+      "properties": {
+        "ios": {
+          "type": "string",
+          "description": "Apple App Store product ID"
+        },
+        "android": {
+          "type": "string",
+          "description": "Google Play product ID"
+        },
+        "steam": {
+          "type": "string",
+          "description": "Steam product ID (if applicable)"
+        }
+      },
+      "description": "Platform-specific product IDs"
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "trackingId": {
+          "type": "string",
+          "description": "Analytics tracking identifier"
+        },
+        "cohort": {
+          "type": "string",
+          "description": "Player cohort for pricing experiments"
+        },
+        "abTestVariant": {
+          "type": "string",
+          "description": "A/B test variant (e.g., 'price_test_a')"
+        }
+      },
+      "description": "Analytics and A/B testing metadata"
+    },
+    "promotion": {
+      "type": "object",
+      "properties": {
+        "isPromoted": {
+          "type": "boolean",
+          "description": "Whether to highlight in UI"
+        },
+        "discountPercentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Discount percentage"
+        },
+        "originalPrice": {
+          "type": "number",
+          "description": "Original price before discount"
+        },
+        "promoText": {
+          "type": "string",
+          "description": "Promotional text (e.g., 'Black Friday Sale!')"
+        }
+      },
+      "description": "Promotional settings"
+    },
+    "receiptValidation": {
+      "type": "object",
+      "properties": {
+        "requiresValidation": {
+          "type": "boolean",
+          "description": "Whether server-side receipt validation is required"
+        },
+        "validationEndpoint": {
+          "type": "string",
+          "description": "Server endpoint for receipt validation"
+        }
+      },
+      "description": "Anti-fraud measures"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "description": "Schema version for migrations"
+    }
+  },
+  "required": ["productId", "name", "type", "price", "schemaVersion"],
+  "additionalProperties": false
+}

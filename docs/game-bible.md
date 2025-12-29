@@ -1006,64 +1006,748 @@ Unity client + Nakama server; Docker deployment.
 
 # SECTION 13: CONTENT PIPELINE & ITERATION
 
-Agile sprints; analytics for balance.
+Sovereign Territories follows an agile development methodology inspired by best-in-class live service games like Clash Royale (Supercell) and League of Legends (Riot Games). The pipeline emphasizes rapid prototyping, data-driven balance, and continuous iteration based on player feedback.
 
-## 13.1 Process
-- Prototype core first.
+## 13.1 Development Process
 
-## 13.2 Testing
-- A/B for balance.
+### Agile Sprint Structure
+- **2-Week Sprints**: Feature development, testing, and deployment
+- **Daily Standups**: 15-minute team syncs on progress and blockers
+- **Sprint Planning**: Prioritize features based on player data and roadmap
+- **Retrospectives**: Post-sprint reviews to improve process
+
+### Prototyping Philosophy
+- **Core First**: Implement card system, combat, and economy before polish
+- **Vertical Slice**: Complete one gameplay mode end-to-end before expanding
+- **Throwaway Prototypes**: Rapid experiments to validate mechanics (1-3 days)
+- **Playable Builds**: Weekly playable builds for internal testing
+
+### Content Creation Pipeline
+1. **Design**: Game designers create card/map specs using schemas
+2. **Art**: Artists create assets (2.5D sprites, UI elements, VFX)
+3. **Implementation**: Engineers integrate using Unity + Nakama
+4. **Testing**: QA validates functionality and balance
+5. **Deployment**: Server-side updates via Nakama (no client download for data)
+
+### Version Control & Collaboration
+- **Git Workflow**: Feature branches → PR → Code review → Merge to main
+- **Unity Collaborate**: Scene and asset versioning
+- **Schema Versioning**: All schemas have `schemaVersion` for migrations
+- **Changelog**: Auto-generated from Git commits for patch notes
+
+## 13.2 Testing & Quality Assurance
+
+### Automated Testing (Inspired by Riot Games)
+- **Unit Tests**: 80% code coverage for core systems (combat math, pathfinding)
+- **Integration Tests**: Server-client communication, matchmaking, economy
+- **Headless Bots**: Simulate 1000+ AI matches for balance testing
+- **Regression Tests**: Prevent old bugs from reappearing
+- **CI/CD**: GitHub Actions runs tests on every commit
+
+### Playtesting
+- **Internal Alpha**: Weekly team playtests (30-60 minutes)
+- **Closed Beta**: 100-1000 external testers for 4-8 weeks
+- **A/B Testing**: Test card balance, UI changes, pricing (see Section 13.3)
+- **Focus Groups**: Qualitative feedback on new features
+
+### Balance Testing
+- **Win Rate Analysis**: Target 48-52% win rate for all card archetypes
+- **Meta Tracking**: Monitor deck popularity, adjust overused/underused cards
+- **Simulation**: Run 10,000+ simulated battles with different deck compositions
+- **Patch Cadence**: Balance updates every 2 weeks, major patches monthly
+
+### Performance Testing
+- **Load Testing**: Stress test servers with 10,000+ concurrent players
+- **Mobile Optimization**: Target 60 FPS on mid-tier devices (iPhone 12, Samsung S21)
+- **Network Testing**: Simulate poor connections (high latency, packet loss)
+- **Memory Profiling**: Keep RAM usage < 1GB on mobile
+
+## 13.3 Analytics & Data-Driven Design (Inspired by Supercell)
+
+### Key Performance Indicators (KPIs)
+- **Retention**: Day 1 (>40%), Day 7 (>20%), Day 30 (>10%)
+- **Engagement**: Sessions/day (2-3), Session length (15-30 min)
+- **Monetization**: ARPU (>$0.50), ARPPU (>$10), Conversion rate (>3%)
+- **Technical**: Crash rate (<1%), Load time (<2 seconds)
+
+### A/B Testing Framework
+- **Feature Flags**: Server-side toggles for gradual rollout (10% → 50% → 100%)
+- **Variants**: Test 2-3 variants simultaneously (e.g., card cost 3 vs 4 vs 5)
+- **Statistical Significance**: Minimum 10,000 players per variant, p < 0.05
+- **Rollback**: Instant revert if metrics degrade (e.g., retention drops >5%)
+
+### Analytics Events (See session-schema.json)
+Minimum tracked events:
+- `battle_start`, `battle_end`, `battle_action`
+- `card_combined`, `card_split`, `purchase`
+- `auction_listing`, `match_found`, `match_result`
+- `resource_produced`, `building_destroyed`, `vip_purchase`
+
+### Dashboards & Monitoring
+- **Real-Time**: Grafana dashboards for live metrics (DAU, revenue, errors)
+- **Historical**: BigQuery/Redshift for deep analysis (cohorts, funnels)
+- **Alerts**: PagerDuty for critical issues (crash rate spike, server downtime)
+- **Player Support**: Tools to view individual player states for debugging
+
+## 13.4 Live Operations (Inspired by Clash Royale)
+
+### Content Cadence
+- **Weekly**: Expeditions, limited-time offers, alliance events
+- **Bi-Weekly**: Balance patches, bug fixes
+- **Monthly**: New cards (3-5), seasonal themes
+- **Quarterly**: Expansions (50+ cards, new maps, mechanics)
+
+### Seasonal Content
+- **Seasons**: 3-month cycles with unique themes (e.g., Norse, Sci-Fi)
+- **Battle Pass**: 50-tier progression with exclusive rewards
+- **Leaderboards**: Seasonal rankings reset every quarter
+- **Meta Shifts**: Intentional balance changes to keep game fresh
+
+### Community Engagement
+- **Patch Notes**: Transparent communication of changes
+- **Developer Blogs**: Behind-the-scenes on design decisions
+- **Social Media**: Daily content on Twitter, Reddit, Discord
+- **Feedback Loops**: Monthly surveys, in-game feedback buttons
+
+## 13.5 Content Tools & Automation
+
+### Schema-Driven Development
+- **JSON Schemas**: All game data validated against schemas (see docs/specs/)
+- **Code Generation**: TypeScript and C# types auto-generated from schemas
+- **Hot Reloading**: Server-side data updates without client patches
+- **Version Migration**: Automated schema migrations on updates
+
+### Content Editors
+- **Unity Editor**: Custom inspectors for card creation, map editing
+- **Web Tools**: Internal dashboards for balancing, event scheduling
+- **Spreadsheets**: Google Sheets integration for rapid iteration
 
 ## Open-Source References
 
-- Unity Version Control (GitHub): Pipeline management.
-- A/B Testing Libraries (GitHub): Balance testing.
-- Open-Source Analytics (e.g., Matomo on GitHub): DAU tracking.
+- Unity Version Control (GitHub): Pipeline management and collaboration
+- A/B Testing Libraries (GitHub, e.g., Growthbook): Feature flags and experimentation
+- Open-Source Analytics (e.g., Matomo, PostHog on GitHub): DAU tracking and funnels
+- Unity Test Framework (GitHub): Automated testing examples
+- Grafana (GitHub): Real-time dashboards and monitoring
 
 # SECTION 14: LEGAL & COMPLIANCE
 
-Standards for safety; IAP disclosures.
+Sovereign Territories adheres to international standards for player safety, data privacy, and fair monetization. Compliance is built into the game's core design, not bolted on later.
 
-## 14.1 Standards
-- COPPA, GDPR.
+## 14.1 Privacy & Data Protection
 
-## 14.2 IAP
-- Clear disclosures.
+### GDPR (General Data Protection Regulation)
+**Applies to**: All players in EU, EEA, UK
+
+**Requirements**:
+- **Consent**: Explicit opt-in for telemetry, marketing, cookies (see session-schema.json)
+- **Right to Access**: Players can download their data via in-game menu
+- **Right to Erasure**: Account deletion removes all PII within 30 days
+- **Data Minimization**: Only collect necessary data (no tracking beyond gameplay)
+- **Privacy Policy**: Clear, accessible policy in 10+ languages
+- **Data Portability**: Export account data in JSON format
+
+**Implementation**:
+- Session schema tracks consent flags (`telemetryConsent`, `marketingConsent`)
+- Server-side anonymization of device IDs, IP addresses
+- No third-party analytics without consent
+- Cookie banner on web version
+
+### CCPA (California Consumer Privacy Act)
+**Applies to**: Players in California, USA
+
+**Requirements**:
+- **Do Not Sell**: Players can opt out of data sharing
+- **Disclosure**: List all data collected and shared with third parties
+- **Deletion**: Same as GDPR (30-day window)
+
+**Implementation**:
+- "Do Not Sell My Info" link in settings
+- No sale of player data to third parties (we don't sell data, period)
+
+### COPPA (Children's Online Privacy Protection Act)
+**Applies to**: Players under 13 in USA
+
+**Requirements**:
+- **Age Gate**: Ask for birthdate on first launch
+- **Parental Consent**: Require verifiable parental consent for <13
+- **Limited Data**: No behavioral advertising, location tracking for <13
+- **No Chat**: Disable chat for <13 or use pre-approved messages only
+
+**Implementation**:
+- Age verification on account creation
+- If <13: Restricted mode (no chat, limited data collection, no ads)
+- Parent email verification via COPPA-compliant service (e.g., SuperAwesome)
+
+### Data Security
+- **Encryption**: All data encrypted at rest (AES-256) and in transit (TLS 1.3)
+- **Access Control**: Role-based access to player data (engineers, support, analytics)
+- **Audit Logs**: Track all data access for compliance audits
+- **Breach Notification**: Notify affected players within 72 hours of breach
+
+## 14.2 In-App Purchase Compliance
+
+### Platform Policies
+**Apple App Store**:
+- No misleading IAP descriptions
+- Clear pricing in local currency
+- Restore purchases button for non-consumables
+- Family Sharing support for non-consumables
+- No "loot boxes" without odds disclosure
+
+**Google Play**:
+- No deceptive practices (fake urgency, hidden costs)
+- Odds disclosure for randomized items (card packs)
+- Refund policy (14 days, no questions asked)
+- Age-appropriate content ratings
+
+### Fair Monetization Principles
+- **No Pay-to-Win**: Paying players don't get gameplay advantages (pay-for-speed, cosmetics only)
+- **Transparent Odds**: Pack opening shows exact probabilities (e.g., 5% legendary)
+- **Pity System**: Guaranteed legendary after 30 packs (documented in pack-schema.json)
+- **No Dark Patterns**: No fake timers, manipulative UI, or predatory tactics
+- **Clear Pricing**: All prices shown in local currency before purchase
+- **No Surprise Charges**: Explicit confirmation before all purchases
+
+### IAP Disclosures
+- **Terms of Service**: Linked in store, accessible from settings
+- **Refund Policy**: Apple/Google handle refunds per platform policy
+- **Currency Disclaimer**: "Gems are virtual currency with no real-world value"
+- **Age Restriction**: "In-app purchases available. Parental supervision recommended."
+
+### Odds Disclosure (for Card Packs)
+Example from pack opening screen:
+```
+Card Pack Odds:
+- Common: 70%
+- Rare: 20%
+- Epic: 8%
+- Legendary: 2%
+Pity system: Guaranteed legendary within 30 packs
+```
+
+## 14.3 Content Rating & Age Appropriateness
+
+### ESRB (USA): E10+ (Everyone 10+)
+**Reasoning**: Fantasy violence (card battles), mild combat themes
+**Content Descriptors**: Fantasy Violence
+
+### PEGI (Europe): PEGI 7
+**Reasoning**: Non-realistic violence, no inappropriate language
+**Content Descriptors**: Violence
+
+### Platform Compliance
+- **Apple**: 9+ rating (Infrequent/Mild Cartoon or Fantasy Violence)
+- **Google**: IARC rating (Everyone 10+)
+
+### Content Guidelines
+- **No Gore/Blood**: Card battles are stylized, not realistic
+- **No Profanity**: Chat has profanity filter, pre-approved emotes
+- **No Gambling**: Card packs are skill-based progression, not gambling
+- **Cultural Sensitivity**: Diverse themes, no stereotypes or offensive content
+
+## 14.4 Community Safety & Moderation
+
+### Chat Moderation
+- **Profanity Filter**: Auto-filter offensive words (customizable per region)
+- **Report System**: Players can report toxic behavior, spam, harassment
+- **Mute/Block**: Players can mute/block individuals
+- **Moderators**: Human review of reports, warnings → temporary bans → permanent bans
+
+### Anti-Harassment Policy
+- **Zero Tolerance**: Hate speech, threats, doxxing = instant ban
+- **Appeals Process**: Players can appeal bans via support ticket
+- **Transparency**: Monthly reports on moderation actions
+
+### Alliance Moderation
+- **Leader Tools**: Kick members, set alliance policies
+- **Report Alliance**: Players can report entire alliances for organized harassment
+
+## 14.5 Intellectual Property
+
+### Trademarks
+- "Sovereign Territories" trademark filed in US, EU, Japan
+- Logo, icon, card art protected under copyright
+
+### User-Generated Content
+- **Alliance Names**: Prohibited names (profanity, trademarks, hate speech)
+- **Custom Decks**: Players own their deck compositions, not the cards
+- **Fan Art**: Encourage fan art, credit creators, don't monetize without permission
+
+### Third-Party Assets
+- **Licensed Assets**: Unity Asset Store, Freesound (Creative Commons)
+- **Attribution**: Credit third-party assets in game credits
+- **Open-Source**: Nakama, Unity packages (comply with licenses)
+
+## 14.6 Terms of Service & EULA
+
+### Key Clauses
+- **Account Ownership**: Accounts owned by the company, not players
+- **Virtual Currency**: No real-world value, no refunds except as required by law
+- **Cheating**: Use of hacks, bots, exploits = ban
+- **Termination**: Company reserves right to terminate accounts for ToS violations
+- **Dispute Resolution**: Binding arbitration (USA), courts (EU)
+
+### Updates & Communication
+- **ToS Updates**: 30-day notice before major changes
+- **Email Notifications**: Critical updates emailed to players
+- **In-Game Notices**: Patch notes, event announcements
+
+## 14.7 Regional Considerations
+
+### China
+- **Real-Name Registration**: Required by law
+- **Playtime Limits**: Minors limited to 3 hours/week
+- **No Loot Boxes**: Packs must show exact contents or odds
+
+### South Korea
+- **Shutdown Law**: No gameplay for minors midnight-6am
+- **Probability Disclosure**: All randomized rewards must show odds
+
+### Japan
+- **Kompu Gacha Ban**: No "complete the set" mechanics
+- **Gambling Laws**: Card packs comply with non-gambling regulations
 
 ## Open-Source References
 
-- GDPR Libraries (GitHub): Compliance tools.
-- Unity IAP Docs: IAP handling.
-- Open-Source Legal Templates (GitHub): Disclosures.
+- GDPR Compliance Libraries (GitHub): Cookie consent, data export tools
+- Unity IAP Documentation: Platform-compliant purchase flows
+- Open-Source Legal Templates (GitHub): Terms of Service, Privacy Policy templates
+- COPPA Compliance Services: SuperAwesome, Privo for age verification
+- IARC Rating System: International Age Rating Coalition for content ratings
 
 # SECTION 15: SOUND & POLISH
 
-Thematic audio for immersion.
+Audio design in Sovereign Territories creates immersion, provides feedback, and enhances accessibility. Inspired by best-in-class games like The Witcher 3 (adaptive music) and The Last of Us Part II (accessibility), our audio system is both functional and artistic.
 
-## 15.1 Audio
-- Music/SFX.
+The audio schema for all sound assets has been moved to a standalone spec: [docs/specs/audio-schema.json](docs/specs/audio-schema.json).
+
+## 15.1 Music Composition
+
+### Adaptive Music System (Inspired by The Witcher 3)
+- **Layered Tracks**: Music dynamically changes based on game state
+  - **Exploration**: Calm, ambient base layer
+  - **Combat Start**: Add percussion layer
+  - **Low HP**: Add intense string layer
+  - **Victory**: Transition to triumphant fanfare
+- **Seamless Transitions**: Crossfade between layers (2-3 seconds)
+- **Theme Consistency**: Each theme (medieval, sci-fi, norse) has unique music palette
+
+### Music Categories
+- **Main Menu**: Epic orchestral theme, sets tone for game
+- **Map Exploration**: Ambient, territory-specific (forests = woodwinds, mountains = brass)
+- **Battle Music**: Intense, rhythmic, escalates with battle intensity
+- **Victory/Defeat**: Short stingers (5-10 seconds)
+- **Expedition Board Game**: Upbeat, playful (Mario Party-inspired)
+- **Campaign Story**: Narrative-driven, thematic per campaign
+
+### Composition Style
+- **Medieval Theme**: Orchestral (strings, brass, woodwinds), Celtic influences
+- **Sci-Fi Theme**: Synthesizers, electronic beats, ambient pads
+- **Norse Theme**: Epic choir, percussion, horns (Vikings TV series inspiration)
+
+### Implementation
+- **Unity Audio Mixer**: Separate volume controls (Music, SFX, Ambient, UI, Voiceover)
+- **Dynamic Intensity**: Battle music layers enabled/disabled based on HP, turn count
+- **Looping**: All music loops seamlessly using loop points (audio-schema.json)
+
+## 15.2 Sound Effects (SFX)
+
+### Feedback-Driven Design (Inspired by Hearthstone)
+Every player action has audio feedback:
+- **Card Play**: Satisfying "snap" sound when placing cards
+- **Combat Hit**: Impact sounds matched to damage (light tap for 5 damage, heavy thud for 50)
+- **Building Placement**: Construction sound (hammer, stone-on-stone)
+- **Resource Collection**: Coins jingling, gem chime, wood chopping
+- **Level Up**: Triumphant "ding" with visual sparkle
+- **Notification**: Gentle chime for alerts
+
+### SFX Categories
+- **UI Sounds**: Button clicks, menu transitions, card flips
+- **Combat Sounds**: Sword clashes, magic spells, explosions, unit deaths
+- **Environmental**: Ambient sounds (wind, water, birds) based on map biome
+- **Social**: Chat message received, trade offer, alliance invitation
+
+### Variation to Avoid Repetition
+- **3-5 Variants**: Each SFX has 3-5 variations played randomly
+- **Pitch Randomization**: ±10% pitch shift for organic feel
+- **Spatial Audio**: Position SFX at source (card placement at tile position)
+
+### Implementation
+- **AudioSource Pooling**: Reuse 32 AudioSource components for performance
+- **Priority System**: Important sounds (voiceover, victory) override background
+- **Distance Attenuation**: Ambient sounds fade with camera distance
+
+## 15.3 Voiceover & Localization
+
+### Tutorial Voiceover
+- **Narrator**: Professional voice actor guides new players
+- **Localization**: 10+ languages (English, Spanish, French, German, Japanese, Chinese, Korean, Portuguese, Russian, Arabic)
+- **Subtitles**: Always displayed, synchronized with audio
+- **Skip Option**: Players can skip tutorial VO
+
+### Character Voiceover (Future Expansion)
+- **Hero Lines**: Unique voice lines for legendary heroes (e.g., Thor: "For Asgard!")
+- **Victory/Defeat Quotes**: Short one-liners after battles
+- **Cultural Authenticity**: Norse heroes speak with Scandinavian accents, etc.
+
+### Localization Pipeline
+- **Text Localization**: UI strings in `localization.json` files
+- **Audio Localization**: Separate audio files per language (audio-schema.json)
+- **Cultural Sensitivity**: Avoid idioms, slang, culturally-specific references
+
+## 15.4 Accessibility Features (Inspired by The Last of Us Part II)
+
+### Audio Accessibility
+- **Subtitles**: All voiceover and important SFX have subtitles
+- **Visual Cues**: On-screen icons when audio plays (e.g., sword icon for attack SFX)
+- **Screen Reader Support**: Text-to-speech for blind players (iOS VoiceOver, Android TalkBack)
+- **Haptic Feedback**: Controller/phone vibration for critical audio (battle hits, notifications)
+- **Audio Descriptions**: Optional narration describing visual events
+
+### Colorblind Support
+- **High-Contrast Mode**: Adjustable UI contrast (150%, 200%)
+- **Color Alternatives**: Elements use symbols + colors (e.g., Fire = red + flame icon)
+- **Colorblind Filters**: Deuteranopia, Protanopia, Tritanopia filters
+
+### Control Accessibility
+- **One-Handed Mode**: UI elements movable to left/right side (mobile)
+- **Button Size**: Adjustable touch targets (50%, 100%, 150%, 200%)
+- **Simplified Controls**: Auto-battle for players with dexterity issues
+- **Voice Commands**: "Attack", "Retreat", "End Turn" via speech recognition (future)
+
+### Difficulty Modifiers
+- **Reduced Animation Speed**: 0.5x speed for players with cognitive disabilities
+- **Auto-Skip**: Automatically skip non-interactive scenes
+- **Assist Mode**: Reduced enemy difficulty for casual players
+
+## 15.5 Visual Polish
+
+### Particle Effects (VFX)
+- **Card Play**: Glow, sparkle, trail effects based on rarity
+- **Combat**: Impact flashes, elemental effects (fire, water, lightning)
+- **Level Up**: Fireworks, confetti, screen flash
+- **Rare Drops**: Legendary beam of light from card packs
+
+### Animations
+- **Card Flip**: 3D flip animation when revealing cards
+- **Unit Movement**: Smooth grid-to-grid transitions (0.3 seconds)
+- **Building Construction**: Scaffold-to-complete animation (1 second)
+- **Victory Pose**: Hero victory animation at battle end
+
+### UI Polish
+- **Smooth Transitions**: Fade in/out, slide animations (0.3-0.5 seconds)
+- **Micro-Interactions**: Button press feedback (scale down 5%, bounce back)
+- **Loading Screens**: Animated tips, lore snippets, rotating models
+- **Tooltips**: Smooth appear/disappear with icons and formatted text
+
+### Performance Optimization
+- **Particle Pooling**: Reuse VFX instances
+- **LOD System**: Reduce particle count on low-end devices
+- **60 FPS Target**: Maintain smooth framerate on mid-tier devices (iPhone 12, Samsung S21)
+- **Adaptive Quality**: Auto-adjust graphics based on device performance
+
+## 15.6 Monetization via Premium Audio
+
+### Premium Soundtracks (Pay-for-Look-and-Feel)
+- **Alternate Themes**: Purchase orchestral, electronic, or jazz soundtracks
+- **Exclusive Music**: VIP-only tracks, seasonal event music
+- **Unlock Method**: Gems (500-1000), VIP Level 3+, achievement rewards
+- **Audio Gallery**: Players can preview and purchase in-game
+
+### Premium SFX Packs
+- **Sci-Fi SFX**: Laser sounds, robotic voices for sci-fi theme
+- **Fantasy SFX**: Magic spells, dragon roars for fantasy theme
+
+## 15.7 Implementation Details
+
+### Unity Audio System
+- **Audio Mixer**: 5 groups (Master, Music, SFX, Ambient, UI, Voiceover)
+- **Volume Controls**: Independent sliders for each group (saved in PlayerPrefs)
+- **Ducking**: Lower music volume when voiceover plays (-10dB)
+- **Reverb Zones**: Environmental reverb (cathedral = long reverb, forest = short)
+
+### Asset Pipeline
+- **Compression**: 
+  - Music: OGG Vorbis, Quality 7 (streaming for files >1MB)
+  - SFX: WAV uncompressed for <100KB, OGG for >100KB
+  - Voiceover: OGG Vorbis, Quality 5
+- **Addressables**: Dynamic loading/unloading for memory optimization
+- **Memory Budget**: 50MB max loaded audio at any time
+
+### Platform Considerations
+- **iOS**: AAC format support, respect silent mode switch
+- **Android**: OGG format, handle audio focus (pause when call received)
+- **Web**: MP3 fallback for browsers without OGG support
 
 ## Open-Source References
 
-- Freesound (GitHub integrations): Audio assets.
-- Unity Audio Samples (GitHub): Sound design.
-- Open-Source Music Engines (e.g., FMOD samples).
+- Freesound (GitHub integrations): Free audio assets (CC0, CC-BY licenses)
+- Unity Audio Samples (GitHub): Adaptive music examples, audio mixer setups
+- FMOD Integration (GitHub): Advanced audio middleware (future expansion)
+- The Last of Us Part II (GDC talks): Accessibility best practices
+- Unity Addressables (GitHub): Dynamic audio loading examples
 
 # SECTION 16: EDGE CASES
 
-Handling disconnects and griefing.
+Edge case handling is critical for player trust and retention. This section covers disconnect recovery, data corruption, exploits, platform-specific issues, economic anomalies, and social problems.
 
-## 16.1 Handling
-- Auto-save.
+## 16.1 Disconnect & Network Issues
 
-## 16.2 Griefing
-- Reports/bans.
+### Mid-Battle Disconnection
+**Scenario**: Player loses internet connection during PvP battle
+
+**Handling**:
+1. **Grace Period**: 30 seconds to reconnect
+2. **AI Takeover**: If not reconnected, AI plays remaining turns using player's tactics
+3. **Reconnect Flow**: Player rejoins battle mid-turn if reconnected within 2 minutes
+4. **Fair Loss**: If disconnect >2 minutes, count as loss (no Elo penalty if <3 disconnects/day)
+5. **Penalties**: Repeated disconnects (>5/day) = temporary matchmaking ban (1 hour)
+
+**Implementation**:
+- Server saves battle state every turn
+- WebSocket reconnection with state sync
+- Client displays "Reconnecting..." overlay
+
+### Server Downtime
+**Scenario**: Server maintenance or unexpected outage
+
+**Handling**:
+1. **Scheduled Maintenance**: 24-hour notice, during low-traffic hours (2-4 AM local time)
+2. **Compensation**: Free energy, card packs for downtime >1 hour
+3. **Offline Mode**: Single-player campaign playable offline (sync progress on reconnect)
+4. **Status Page**: Public status page (status.sovereignterritories.com) with uptime metrics
+
+### Packet Loss & High Latency
+**Scenario**: Player on poor connection (>500ms latency, 20% packet loss)
+
+**Handling**:
+1. **Latency Indicator**: UI shows connection quality (green/yellow/red)
+2. **Turn Extension**: Auto-extend turn timer by latency amount (max +30 seconds)
+3. **Client Prediction**: Local prediction with server reconciliation
+4. **Graceful Degradation**: Disable animations, reduce update frequency
+
+## 16.2 Data Corruption & Recovery
+
+### Corrupted Save Data
+**Scenario**: Player's account data becomes corrupted (rare bug, storage failure)
+
+**Handling**:
+1. **Daily Backups**: Server backs up all accounts daily (7-day retention)
+2. **Auto-Recovery**: Server detects corruption, restores from most recent backup
+3. **Manual Recovery**: Support team can restore from specific backup point
+4. **Compensation**: Restore lost progress + bonus resources for inconvenience
+
+### Schema Migration Failure
+**Scenario**: New schema version breaks old data
+
+**Handling**:
+1. **Migration Scripts**: Automated scripts convert old schema to new (e.g., v1 → v2)
+2. **Backward Compatibility**: Server supports N-1 schema versions
+3. **Staging Tests**: Test migrations on staging environment before production
+4. **Rollback Plan**: Instant rollback to previous server version if migrations fail
+5. **Canary Deployment**: Deploy to 1% of players first, monitor for errors
+
+### Duplicate Items (Dupe Bug)
+**Scenario**: Bug allows players to duplicate cards or currency
+
+**Handling**:
+1. **Detection**: Server monitors for impossible inventory changes (e.g., +1000 gems without purchase)
+2. **Anomaly Alerts**: Automated alerts for suspicious activity
+3. **Rollback**: Remove duplicated items, restore to legitimate state
+4. **Bans**: Intentional exploits = permanent ban; accidental = warning + rollback
+5. **Hotfix**: Immediate server patch to close exploit
+
+## 16.3 Exploit Prevention
+
+### Timing Attacks
+**Scenario**: Player manipulates local clock to cheat timers (energy recharge, event deadlines)
+
+**Handling**:
+1. **Server-Side Time**: All timers use server timestamp, not client
+2. **Sync Validation**: Reject requests with suspicious timestamps (>1 hour drift)
+3. **NTP Sync**: Client syncs with server time on every session start
+
+### Replay Attacks
+**Scenario**: Player captures network request and replays to duplicate actions
+
+**Handling**:
+1. **Request Nonces**: One-time unique IDs for each request
+2. **Signature Validation**: HMAC signatures prevent request tampering
+3. **Sequence Numbers**: Reject out-of-order or duplicate sequence numbers
+
+### Client-Side Hacks
+**Scenario**: Modified client sends invalid data (e.g., infinite HP, instant win)
+
+**Handling**:
+1. **Server Validation**: All actions validated server-side (never trust client)
+2. **Sanity Checks**: Reject impossible values (e.g., damage >10,000)
+3. **Behavioral Analysis**: Detect inhuman patterns (e.g., 100 actions in 1 second)
+4. **Bans**: Hacked clients = instant permanent ban
+
+### Auction Sniping
+**Scenario**: Player uses bot to snipe auctions in final seconds
+
+**Handling**:
+1. **Anti-Snipe Extension**: Auction extends 60 seconds if bid placed in final 30 seconds
+2. **Rate Limiting**: Max 10 bids/minute per player
+3. **Captcha**: Require captcha for bids in final 60 seconds (prevents bots)
+
+## 16.4 Platform-Specific Issues
+
+### iOS App Store Rejection
+**Scenario**: Apple rejects update for policy violation
+
+**Handling**:
+1. **Pre-Submission Review**: Internal checklist for App Store guidelines
+2. **Appeals Process**: Detailed explanation to Apple if rejected
+3. **Hot Fix**: Server-side updates for non-client changes (no resubmission needed)
+4. **Age Rating**: Ensure content matches E10+ rating
+
+### Android Fragmentation
+**Scenario**: Game crashes on specific Android devices (e.g., Samsung Galaxy S7)
+
+**Handling**:
+1. **Device Testing**: Test on 20+ devices (high, mid, low-end)
+2. **Crash Reporting**: Unity Cloud Diagnostics tracks device-specific crashes
+3. **Conditional Features**: Disable heavy VFX on low-end devices
+4. **Min SDK**: Android 7.0+ (API 24) to avoid legacy issues
+
+### Web Browser Compatibility
+**Scenario**: Game doesn't load on Safari or Firefox
+
+**Handling**:
+1. **Browser Testing**: QA tests on Chrome, Safari, Firefox, Edge
+2. **Fallbacks**: MP3 audio fallback (Safari doesn't support OGG)
+3. **WebGL 2.0**: Minimum requirement, show error for unsupported browsers
+
+## 16.5 Economic Edge Cases
+
+### Negative Balance
+**Scenario**: Bug causes player to have -500 gold
+
+**Handling**:
+1. **Prevention**: Server validates all transactions (debit before credit)
+2. **Correction**: If detected, set balance to 0 + compensate 500 gold
+3. **Root Cause**: Investigate and fix bug that caused negative balance
+
+### Overflow Errors
+**Scenario**: Player accumulates 2 billion gold (integer overflow)
+
+**Handling**:
+1. **Use Long/BigInt**: Store currency as 64-bit integers (max 9 quintillion)
+2. **Caps**: Soft cap at 1 billion gold with warning (invest in buildings, cards)
+3. **Overflow Protection**: Server rejects transactions that would overflow
+
+### Inflation Spiral
+**Scenario**: AFK economy produces too much gold, devalues currency
+
+**Handling**:
+1. **Weekly Monitoring**: Track total gold in economy, velocity, top 1% holdings
+2. **Sinks**: Increase costs (auctions, upgrades) if inflation detected
+3. **Decay**: Storage decay for excess resources (see resource-schema.json)
+4. **Seasonal Resets**: Partial economy reset every 3 months (leaderboards, not inventories)
+
+### Market Manipulation
+**Scenario**: Whales buy all legendaries on auction house, resell at 10x price
+
+**Handling**:
+1. **Price Limits**: Max listing price = 5x market average
+2. **Volume Limits**: Max 10 legendaries per player on auction
+3. **Cooldowns**: 24-hour cooldown between buying and reselling same card
+4. **Monitoring**: Alert if single player controls >20% of legendary market
+
+## 16.6 Social & Community Issues
+
+### Harassment & Toxicity
+**Scenario**: Player harasses others in chat, uses slurs
+
+**Handling**:
+1. **Profanity Filter**: Auto-filter offensive words (customizable per region)
+2. **Report System**: Right-click player → Report → Select reason
+3. **Human Review**: Support team reviews reports within 24 hours
+4. **Escalation**: Warning → 24h mute → 7-day ban → permanent ban
+5. **Appeals**: Players can appeal via support ticket
+
+### Alliance Griefing
+**Scenario**: Player joins alliance, steals treasury, leaves
+
+**Handling**:
+1. **Role Permissions**: Only leaders/officers can withdraw from treasury
+2. **Withdrawal Limits**: Max 10% of treasury per withdrawal, 24-hour cooldown
+3. **Audit Logs**: Track all treasury transactions with timestamps
+4. **Multi-Sig**: Require 2+ officers to approve large withdrawals (>10,000 gold)
+
+### Impersonation
+**Scenario**: Player creates account with name similar to famous streamer (e.g., "Ninja_Official")
+
+**Handling**:
+1. **Verification Badges**: Verified checkmark for official streamers, devs
+2. **Name Blacklist**: Reserve famous names, trademarks
+3. **Reports**: Players can report impersonation
+4. **Forced Rename**: Change impersonator's name + warning
+
+### GDPR Deletion Requests
+**Scenario**: Player requests account deletion under GDPR
+
+**Handling**:
+1. **Deletion Flow**: Settings → Privacy → Delete Account → Confirm via email
+2. **Grace Period**: 7-day grace period to cancel deletion
+3. **Data Removal**: Delete all PII within 30 days
+4. **Anonymization**: Convert account to "[Deleted User]" for leaderboard history
+5. **No Recovery**: Permanent deletion, no account recovery
+
+## 16.7 Payment & Refund Issues
+
+### Failed Payment
+**Scenario**: Player's credit card is declined during IAP
+
+**Handling**:
+1. **Retry Prompt**: "Payment failed. Try again?"
+2. **Alternative Methods**: Offer PayPal, Google Pay, Apple Pay
+3. **Support Contact**: Link to support if repeated failures
+
+### Refund Abuse
+**Scenario**: Player makes purchase, requests refund, keeps items
+
+**Handling**:
+1. **Revocation**: Remove items if refund granted
+2. **Platform Refunds**: Apple/Google handle refunds, notify server
+3. **Abuse Detection**: Flag accounts with >3 refunds, investigate
+4. **Bans**: Repeated refund abuse = ban from IAP
+
+### Double Charge
+**Scenario**: Player charged twice for single purchase
+
+**Handling**:
+1. **Idempotency**: Server uses transaction IDs to prevent double fulfillment
+2. **Refund**: Immediately refund duplicate charge via platform
+3. **Compensation**: Extra gems for inconvenience
+
+## 16.8 Testing & QA for Edge Cases
+
+### Chaos Engineering
+- **Network Simulation**: Test with packet loss, latency, disconnects
+- **Server Failures**: Randomly kill server instances, ensure recovery
+- **Load Spikes**: Simulate 10,000 concurrent players, test scaling
+
+### Penetration Testing
+- **Security Audits**: Annual third-party security audits
+- **Bug Bounty**: Reward players for finding exploits (responsible disclosure)
+- **Ethical Hacking**: Internal red team tests for vulnerabilities
+
+### Regression Testing
+- **Automated Tests**: 1000+ test cases run on every commit
+- **Canary Deployments**: Test on 1% of players before full rollout
+- **Rollback Drills**: Practice instant rollback (target <5 minutes)
 
 ## Open-Source References
 
-- Nakama Error Handling (GitHub): Disconnect management.
-- Open-Source Chat Moderation (GitHub): Anti-griefing.
-- Unity Save Systems (GitHub): Auto-save.
+- Nakama Error Handling (GitHub): Disconnect recovery, graceful degradation examples
+- Open-Source Chat Moderation (GitHub, e.g., Perspective API): Toxicity detection
+- Unity Save Systems (GitHub): Auto-save, cloud sync patterns
+- Chaos Engineering Tools (GitHub, e.g., Chaos Monkey): Failure injection testing
+- OWASP Security Guidelines: Web/mobile security best practices
 
 # Immediate Next Steps (Technical)
 
