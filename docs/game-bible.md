@@ -1257,21 +1257,67 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 - **Mixed Rarity Allowed**: 
   - Common + Rare + Epic in same stack = no penalty, just combined stats
 
-**❌ Invalid Stacking Combinations**:
-- **Different Unit Types**: 
-  - Archers + Warriors = ❌ (must be separate stacks)
-  - Cavalry + Mages = ❌ (different battlefield roles)
-- **Conflicting Elements** (Optional Rule): 
-  - Fire + Water units in same stack = -20% to all stats (anti-synergy)
-  - Earth + Wind = -10% stats
-  - Can disable this rule for casual modes
+#### Stacking Rules (Map-Dependent Flexibility)
 
-**Why Cross-Theme Stacking?**:
-- ✅ **Collection Flexibility**: Use cards from multiple expansions together
-- ✅ **Visual Variety**: Stack shows mixed armor/weapon styles (elf + human archers)
-- ✅ **Replayability**: Different players build unique stacks from same card pools
-- ✅ **Economy**: Don't need 10x identical cards to build a strong stack
-- ⚠️ **Balance**: Requires careful stat tuning to prevent OP combos
+**IMPORTANT**: Stacking rules differ based on which map layer you're on:
+
+**On County Map (Strategic Layer)** → **Full Army Stacks Allowed**:
+- ✅ **Mix ALL Card Types**: Epic heroes + Archers + Healers + Walls + Buildings in ONE stack
+- ✅ **Cross-Theme**: Elf + Human + Dwarf units together
+- ✅ **Mixed Rarity**: Common + Rare + Epic + Legendary in same stack
+- **Why**: County map represents your entire army moving as one force (like HoMM heroes with their armies)
+- **Visual**: Stack shows as single icon/flag with lead hero portrait
+
+**On Battle Map (Tactical Layer)** → **Unit Type Stacking**:
+- ✅ **Same Unit Type Only**: Archers stack with archers, warriors with warriors
+- ✅ **Cross-Theme Still Allowed**: Elf Archers + Human Crossbowmen = valid
+- ❌ **No Mixed Types**: Archers + Warriors = separate stacks on battle grid
+- **Why**: Battle map is where you deploy formations (tanks front, archers back)
+- **Visual**: Each unit type gets its own tile position on tactical grid
+
+**Stacking Hierarchy by Map Layer**:
+
+| Map Layer | Stack Composition | Visual | Example |
+|-----------|-------------------|--------|---------|
+| **Global Map** | Entire deck = 1 icon | Flag/banner with deck name | "Fire Rush Deck" icon on territory |
+| **County Map** | Full army stack (10-50 cards all types) | Hero portrait + army count | "Thor + 24 units" moving as one |
+| **Battle Map** | Separated by unit type | Individual stacks on grid tiles | 3× Archer stacks, 2× Warrior stacks, 1× Hero |
+
+**Example Flow**:
+1. **Global Map**: You deploy "Viking Deck" to Territory A (appears as single flag)
+2. **Zoom to County Map**: "Viking Deck" appears as Thor (hero portrait) + 14 unit cards = 1 movable stack
+3. **Move stack to enemy spawn**: Engage battle
+4. **Zoom to Battle Map**: 15 cards separate into formation:
+   - Thor (Epic hero) → Front center tile
+   - 3× Archers (mixed elf/human) → Back row left
+   - 2× Berserkers (warriors) → Front row right
+   - 1× Healer → Rear center
+   - Etc.
+
+---
+
+#### Mixed-Type Stacking (County Map Only)
+
+**✅ Valid County Map Stack Combinations**:
+- **Epic Hero + Units + Buildings + Workers**:
+  - Example: Thor + 5 Archers + 3 Warriors + 2 Healers + 1 Farm + 1 Mine = 13-card stack
+- **Cross-Theme Mixed Army**:
+  - Example: Elf Archers + Human Knights + Dwarf Miners + Norse Healer = 1 stack
+- **Economy + Battle Mix**:
+  - Example: 10 battle cards + 5 economy cards (buildings/workers) = 15-card stack
+
+**❌ Invalid Battle Map Combinations**:
+- Archers + Warriors on same battle grid tile = ❌ (must separate into different tiles)
+- Hero + Archers on same battle tile = ❌ (hero gets own tile)
+- Farm + Archers on same battle tile = ❌ (buildings don't deploy to battle grid)
+
+**Why This Matters**:
+- **County Map** = Strategic movement (armies travel together, like HoMM)
+- **Battle Map** = Tactical deployment (separate unit types for formation strategy)
+- **Simplifies county exploration** (don't micromanage 50 individual units)
+- **Adds depth to battles** (formation positioning matters)
+
+---
 
 #### Stack Stat Calculation (Mathematical Precision)
 
@@ -1280,34 +1326,82 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 **Stack Defense** = `Average(Defense values) × (1 + 0.05 × (stackSize - 1))` (diminishing returns)
 **Stack Speed** = `Min(Speed values)` (slowest card determines stack movement)
 
-**Example Stack Math**:
+**Example Stack Math** (County Map Full Army):
+- 1x Epic Thor (HP: 100, Attack: 20, Defense: 15, Speed: 4)
 - 3x Common Elf Archer (HP: 10, Attack: 5, Defense: 2, Speed: 3)
 - 2x Uncommon Human Crossbowman (HP: 15, Attack: 7, Defense: 3, Speed: 2)
-- Total: 5 cards in stack
+- 1x Rare Healer (HP: 20, Attack: 2, Defense: 5, Speed: 2)
+- Total: 7 battle cards in county stack
 
-**Calculations**:
-- HP = (10×3) + (15×2) = 30 + 30 = **60 HP**
-- Attack = (5×3) + (7×2) = 15 + 14 = **29 Attack**
-- Defense = ((2+2+2+3+3)/5) × (1 + 0.05×4) = 2.4 × 1.2 = **2.88 Defense**
-- Speed = Min(3, 3, 3, 2, 2) = **2 Speed**
+**County Map Stats** (moving as one army):
+- HP = 100 + (10×3) + (15×2) + 20 = 100 + 30 + 30 + 20 = **180 HP**
+- Attack = 20 + (5×3) + (7×2) + 2 = 20 + 15 + 14 + 2 = **51 Attack**
+- Defense = ((15+2+2+2+3+3+5)/7) × (1 + 0.05×6) = 4.57 × 1.3 = **5.94 Defense**
+- Speed = Min(4, 3, 3, 3, 2, 2, 2) = **2 Speed** (entire army moves at healer speed)
 
-**Same-Rarity Bonus** (all 5 are Common/Uncommon mix):
-- Not applicable (need all same rarity for +10% bonus)
+**Battle Map Stats** (separated into unit type stacks):
+- Thor: 100 HP, 20 Attack, 15 Defense, 4 Speed (solo hero)
+- Archer Stack (3× Elf): 30 HP, 15 Attack, ~2.3 Defense, 3 Speed
+- Crossbow Stack (2× Human): 30 HP, 14 Attack, 3 Defense, 2 Speed
+- Healer (solo): 20 HP, 2 Attack, 5 Defense, 2 Speed
 
-#### Stack Size Limits
+**Same-Rarity Bonus** (applies to battle map stacks only):
+- Archer stack (all Common) = +10% stats = 33 HP, 16.5 Attack
+- Crossbow stack (all Uncommon) = +10% stats = 33 HP, 15.4 Attack
 
-| Map Tier | Max Cards Per Stack | Max Stacks Per Deck | Total Cards Deployed |
-|----------|---------------------|---------------------|----------------------|
-| **Tutorial Map** | 3 cards | 5 stacks | 15 cards max |
-| **Local/State Map** | 5 cards | 7 stacks | 35 cards max |
-| **County Map** | 7 cards | 10 stacks | 70 cards max |
-| **Global Map** | 10 cards | 15 stacks | 150 cards max |
+---
 
-**Why Limits?**:
-- Prevents overwhelming visual clutter (10-card stack = manageable)
-- Encourages tactical spreading (don't put all eggs in one basket)
-- AoE vulnerability (large stacks = juicy fireball targets)
-- Performance optimization (fewer draw calls for mobile)
+#### Deck Composition Limits (Rarity Budget System)
+
+To prevent "all Legendary" decks while still allowing creativity, we use a **Rarity Point Budget**:
+
+**Rarity Point Costs**:
+- Common = 1 point
+- Uncommon = 2 points
+- Rare = 4 points
+- Epic = 8 points
+- Legendary = 16 points
+- Mythic = 32 points
+
+**Deck Budget by Player Level**:
+
+| Player Level | Battle Card Limit | Rarity Point Budget | Example Deck Composition |
+|--------------|-------------------|---------------------|--------------------------|
+| **1-5** | 10-15 cards | 50 points | 5 Legendaries (80 pts) = ❌ TOO HIGH |
+| **1-5** | 10-15 cards | 50 points | 1 Epic (8) + 5 Rare (20) + 9 Common (9) = 37 pts ✅ |
+| **10-15** | 25-30 cards | 120 points | 2 Legendary (32) + 3 Epic (24) + 10 Rare (40) + 15 Common (15) = 111 pts ✅ |
+| **20-25** | 35-40 cards | 200 points | 3 Legendary (48) + 5 Epic (40) + 15 Rare (60) + 17 Common (17) = 165 pts ✅ |
+| **30+** | 40-50 cards | 300 points | 5 Legendary (80) + 8 Epic (64) + 20 Rare (80) + 17 Common (17) = 241 pts ✅ |
+
+**Example Scenarios**:
+- **"5 Legendary Whale Deck"** (Level 30):
+  - 5 Legendary = 80 points
+  - Remaining budget: 220 points
+  - Can add: 27 Epics (216 pts) OR 55 Rares (220 pts) OR 220 Commons
+  - **Result**: Extremely top-heavy, very few cards (5-32 total)
+  
+- **"Balanced Mid-Range Deck"** (Level 20):
+  - 2 Legendary (32) + 5 Epic (40) + 12 Rare (48) + 20 Common (20) = 140 points
+  - Total: 39 cards
+  - **Result**: Good mix, flexible strategies
+
+**Economy Cards** (Separate Budget):
+- **Not counted against rarity budget**
+- Separate limit: 10-15 economy cards per deck
+- Types: Buildings (Farm, Mine, Turret, Wall), Workers (Farmer, Miner, Scout)
+- Can deploy to county map tiles, don't go to battle map
+
+**Total Deck Composition**:
+- **Battle Cards**: 10-50 (based on Player Level) within rarity budget
+- **Economy Cards**: 10-15 (not counted in rarity budget)
+- **Max Total Deck**: 50 battle + 15 economy = **65 cards** (Level 30+ only)
+
+**Why Rarity Budget System?**:
+- ✅ **Prevents "5 Legendary Only" decks** (too expensive, need filler)
+- ✅ **Encourages diversity** (mix rarities for better value)
+- ✅ **Allows whales to flex** (can still build heavy Legendary decks, just fewer cards)
+- ✅ **F2P viable** (Common/Uncommon decks are cheap, can compete with strategy)
+- ✅ **Scales with progression** (higher level = bigger budget = more power)
 
 ---
 
@@ -1499,6 +1593,261 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 - Deploys **Deck B** to Territory 2 (defensive earth theme)
 - Deploys **Deck C** to Territory 3 (economy buildings)
 - Enemy attacks Territory 1 → zooms into Battle Map with Deck A's stacks
+
+---
+
+### PvE Campaign: County Map Exploration (Tutorial & Progression)
+
+#### Tutorial Flow (First Battle - Manual Required)
+
+**Goal**: Teach core mechanics with easy victory, manual movement required.
+
+**Setup**:
+1. Player receives starter deck (10-15 cards: 1 Epic, 5 Rare, 9 Common/Uncommon)
+2. Sets formation using "Balanced Explorer" preset
+3. Deck appears on **Global Map** as single flag icon
+4. Zoom into **County Map** → deck appears as Epic hero portrait + "14 units" label
+
+**First Battle**:
+1. **County Map**: Player sees single PvE spawn (red enemy flag) nearby
+2. **Move Order**: Click your army stack → click adjacent tile → army moves (teach movement)
+3. **Engage Combat**: Move stack onto enemy spawn tile → battle triggers
+4. **Zoom to Battle Map**: 15 cards from your deck separate into formation on tactical grid (5x5 or 7x7)
+5. **Manual Placement Required**: 
+   - Tutorial highlights each card type
+   - "Place your Epic Hero in front" → player drags Thor to front center
+   - "Place Archers in back row" → player drags 3 Archer cards to back tiles
+   - "Place Healer behind hero" → player drags Healer to rear center
+   - Etc. until all cards placed
+6. **Turn-Based Combat Begins**:
+   - Tutorial forces manual movement each turn
+   - "Move Thor forward 2 tiles to attack goblin"
+   - "Use Archer to shoot from range"
+   - "Healer stays back and casts heal on Thor"
+7. **Easy Victory**: 
+   - Enemy: 5× Common Goblin + 1× Uncommon Goblin Chief (total: 6 cards, ~40 HP total)
+   - Player: 15 cards, ~150 HP total
+   - Player wins in 3-5 turns even with suboptimal play
+8. **Rewards**: 100 XP, 500 gold, 1 Common card, "First Victory" achievement
+
+**Post-Tutorial**:
+- **Auto-Battle Unlocked**: "You can now use Auto-Battle for future fights! (or continue manual)"
+- **Next 3-5 Battles**: Similar easy spawns, player can choose auto or manual
+- **Quick Wins**: Teaches players the county map flow without frustration
+
+---
+
+#### County Map Structure (Open Exploration, Non-Linear)
+
+**Map Design Philosophy**:
+- **Not Linear Stages**: Unlike "Stage 1 → Stage 2 → Boss", county maps are open exploration
+- **Fog of War**: Map starts mostly hidden, reveals as you explore
+- **Static Spawns**: Enemy camps/spawns don't roam (expansion feature)
+- **Respawning**: Defeated spawns respawn after 1-6 hours (for farming)
+- **Goal**: Find and defeat the Boss (always on map), but path is player's choice
+- **Buffs Along the Way**: Capture key locations for permanent bonuses
+
+**Example County Map Layout** (Medium Difficulty):
+```
+    [Fog] [Fog] [?Mine?] [Fog] [Fog]
+    [Fog] [Spawn][  Path  ][Spawn][Fog]
+  [Start] [Path][Buff Shrine][Path][Town]
+    [Fog] [Path][   Fog   ][Spawn][Fog]
+    [Fog] [Fog] [?Boss?] [Fog] [Fog]
+```
+
+**Tile Types**:
+- **Start**: Where your army begins (safe zone, can't be attacked)
+- **Path**: Empty tiles, safe to traverse
+- **Spawn**: Enemy camps (2-8 cards each, various difficulties)
+- **Fog**: Unrevealed tiles (might contain spawns, resources, or nothing)
+- **Buff Shrine**: Capture for +10% ATK or +10% HP (permanent for this map)
+- **Resource Nodes**: Gold Mine, Lumber Mill, Farm (can garrison economy cards)
+- **Town**: Capture for +1 "Flex Hero" (temporary ally for this map only)
+- **Boss**: Final objective, always present but location varies
+
+**Map Sizes**:
+- **Tutorial County**: 5x5 tiles (25 total), 3 spawns, 1 boss
+- **Easy County**: 7x7 tiles (49 total), 5-8 spawns, 1 boss, 2 buff shrines, 1 town
+- **Medium County**: 10x10 tiles (100 total), 10-15 spawns, 1 boss, 3 buff shrines, 2 towns
+- **Hard County**: 12x12 tiles (144 total), 20-30 spawns, 1 boss, 5 buff shrines, 3 towns
+- **Elite County**: 15x15 tiles (225 total), 40-50 spawns, 1 elite + 1 boss, 8 buff shrines, 5 towns
+
+---
+
+#### Splitting Your Deck (HoMM Garrison System)
+
+**How It Works**:
+- Start with **1 full army stack** (all 10-15 battle cards together)
+- As you explore, you can **split your deck** into multiple stacks
+- Each stack moves independently on county map
+- **Why Split?**: 
+  - Leave garrison at captured resource node
+  - Send scout ahead into fog
+  - Defend multiple fronts
+  - Optimize movement (fast cavalry scouts vs slow tank army)
+
+**Splitting Mechanics**:
+1. **Right-Click Army Stack** → "Split Stack"
+2. **Slider Interface**: Divide cards between Stack A and Stack B
+   - Example: 15-card army → 10 cards (main) + 5 cards (garrison)
+3. **Formation Assignment**: Each split gets its own formation template
+   - Main army: "Frontline Vanguard" (aggressive)
+   - Garrison: "Defensive Turtle" (hold position)
+4. **Confirm Split**: Two separate stacks now visible on county map
+
+**Garrison Deployment** (Leaving Cards Behind):
+1. **Capture Resource Node**: Defeat spawn guarding Gold Mine
+2. **Deploy Economy Cards**: 
+   - Drag 1× Farm card to mine tile (boosts gold production)
+   - Drag 2× Worker (Miner) cards to mine tile (increases yield)
+3. **Optional Battle Garrison**: 
+   - Leave 3× Common Spearmen at mine for defense
+   - If enemy attacks mine, 3 Spearmen auto-battle (usually lose, but delay enemy)
+4. **Global Map Indicator**: Small flag appears on mine tile (shows you control it)
+
+**Economy Card Limits**:
+- **Max Economy Cards in Deck**: 10-15 (separate from battle cards)
+- **Max Economy Cards Per Tile**: 5 (prevents overloading one location)
+- **Types**:
+  - Buildings: Farm (+food), Mine (+ore), Lumber Mill (+wood), Turret (+defense)
+  - Workers: Farmer, Miner, Lumberjack, Scout (boosts associated buildings)
+  - Walls/Fortifications: Defensive structures (don't go to battle map)
+
+**Visual on County Map**:
+- **Main Army Stack**: Epic hero portrait + "10 units" label, moves freely
+- **Garrison Tile**: Small flag + building icon + "3 units" label, stationary
+- **Empty Tile**: No indicator (you don't control it)
+
+---
+
+#### Flex Heroes & Temporary Allies (Power Scaling)
+
+**Concept**: As you explore county map, find temporary hero cards that join for this map only.
+
+**How Flex Heroes Work**:
+1. **Capture Town Tile**: Defeat spawn guarding town
+2. **Recruit Flex Hero**: Town offers 1 random Rare/Epic hero to join
+3. **Add to Deck (Temporary)**: Flex hero added to current army stack
+4. **Duration**: Only for this county map (removed when map complete)
+5. **Power Scaling**: Can reach 50 total battle cards if you find all flex heroes
+
+**Example County Map with Flex Heroes**:
+- **Starting Deck**: 15 battle cards (your permanent collection)
+- **Town 1**: +1 Rare Fire Mage (temp) → now 16 cards
+- **Town 2**: +1 Epic Knight (temp) → now 17 cards
+- **Buff Shrine 1**: +10% ATK boost → all cards stronger
+- **Town 3**: +2 Uncommon Archers (temp) → now 19 cards
+- **Boss Area**: +1 Legendary Dragon (temp, only if you captured all towns) → now 20 cards
+- **Final Boss Battle**: You have 20 cards vs Boss with 25 cards
+
+**Why Flex Heroes?**:
+- ✅ **Power Scaling**: Even with small starting deck, you grow stronger as you explore
+- ✅ **Replayability**: Different towns offer different flex heroes each playthrough
+- ✅ **Strategy**: Do you rush boss or explore for flex heroes first?
+- ✅ **F2P Friendly**: Don't need huge collection to beat hard counties (flex heroes help)
+- ✅ **No Permanent Bloat**: Flex heroes disappear after map, don't clutter Codex
+
+**Flex Hero Pool** (Random per Town):
+- **Uncommon Flex** (60% chance): Basic units (Archer, Spearman, Scout)
+- **Rare Flex** (30% chance): Specialists (Healer, Mage, Cavalry)
+- **Epic Flex** (9% chance): Named heroes (Sir Lancelot, Merlin, Odin)
+- **Legendary Flex** (1% chance, final town only): Mythic heroes (Thor, Dragon, Phoenix)
+
+---
+
+#### Static Spawns & Respawning (Farming System)
+
+**Spawn Behavior**:
+- **Static Placement**: Spawns don't move or patrol (future expansion: roaming enemies)
+- **Visible on Map**: Once fog cleared, spawns show as red flag icons
+- **Difficulty Indicators**: 
+  - Gray flag = Easy (1-3 Common cards)
+  - Green flag = Normal (3-5 Common/Uncommon)
+  - Blue flag = Hard (5-8 Uncommon/Rare)
+  - Purple flag = Elite (8-12 Rare/Epic)
+  - Gold flag = Boss (15-25 Epic/Legendary)
+
+**Respawn Timers**:
+- **Easy Spawns**: Respawn after 1 hour (quick farming)
+- **Normal Spawns**: Respawn after 3 hours
+- **Hard Spawns**: Respawn after 6 hours
+- **Elite Spawns**: Respawn after 12 hours
+- **Boss**: Respawn after 24 hours (or only once per county instance)
+
+**Why Respawning?**:
+- ✅ **Farming**: Players can grind spawns for XP/gold/cards without progressing
+- ✅ **Deck Testing**: Try new formations against known enemies
+- ✅ **Casual Play**: Don't feel rushed to complete county in one session
+- ✅ **AFK Grinding**: Set auto-battle, check back in 6 hours, spawns refreshed
+
+**Farming Efficiency**:
+- **Easy Spawn**: 50 XP, 100 gold, 10% chance Common card (1-hour respawn)
+- **Normal Spawn**: 100 XP, 300 gold, 20% chance Uncommon (3-hour respawn)
+- **Hard Spawn**: 200 XP, 800 gold, 30% chance Rare (6-hour respawn)
+- **Elite Spawn**: 500 XP, 2,000 gold, 50% chance Epic (12-hour respawn)
+- **Boss**: 2,000 XP, 10,000 gold, 100% Legendary card (24-hour respawn)
+
+---
+
+#### Minimum Battle Power (Optional Rule - TBD)
+
+**Consideration**: Should there be a minimum stack strength to engage spawns?
+
+**Option A: No Minimum** (Current Design):
+- ✅ Single Scout card can engage any spawn
+- ✅ Scouts reveal spawn composition before committing full army
+- ✅ High-risk, high-reward (sacrifice scout for intel)
+- ❌ Can feel "gamey" (suicide scouts for info)
+
+**Option B: Minimum Battle Power Required**:
+- Spawn shows "Power Level: 500" indicator
+- Your stack must have combined HP+Attack ≥ 500 to engage
+- Example: 1× Scout (HP:5, ATK:3) = 8 power → can't engage 500 power spawn
+- Example: 10-card army (HP:150, ATK:50) = 200 power → can engage
+- ✅ Prevents suicide scouts
+- ❌ Less flexible, forces larger armies
+
+**Recommended**: **Option A (No Minimum)** for launch, add Option B as difficulty modifier for Hard/Elite counties.
+
+---
+
+#### County Map Flow Summary
+
+**Player Journey**:
+1. **Enter County Map**: Full deck (15 cards) as single army stack on start tile
+2. **Explore**: Move stack to reveal fog of war, discover spawns/resources/towns
+3. **Engage Spawns**: Battle for XP/gold/cards, respawn for farming if desired
+4. **Capture Resources**: Deploy economy cards (farms, mines, workers) to tiles
+5. **Garrison Defense**: Leave 3-5 battle cards at key tiles to defend
+6. **Split Army**: Divide main force from garrison/scouts as needed
+7. **Recruit Flex Heroes**: Find towns, add temporary allies (up to 50 total cards)
+8. **Buff Shrines**: Capture for permanent +10% stat boosts
+9. **Find Boss**: Non-linear path, boss location varies
+10. **Final Battle**: Zoom to battle map, deploy full army + flex heroes vs boss
+11. **Victory**: Complete county, rewards (Legendary card, 10,000 XP, unlock next county)
+12. **Global Map**: Return to global view, flex heroes removed, county marked complete
+
+**Visual Flow**:
+```
+Global Map (Risk View)
+    ↓ [Zoom into County Territory]
+County Map (HoMM Strategic View)
+  - Move army stacks
+  - Split decks
+  - Garrison tiles
+  - Explore fog
+  - Engage spawns
+    ↓ [Engage Spawn]
+Battle Map (HoMM Tactical View)
+  - Deploy formation
+  - Turn-based combat
+  - Manual or auto-battle
+    ↓ [Victory]
+County Map (Return)
+  - Continue exploration
+  - Or complete boss and exit
+```
 
 ---
 
