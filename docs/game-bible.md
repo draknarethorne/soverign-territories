@@ -593,44 +593,501 @@ Use that file for equipment compatibility, stat calculations, and visual effects
 
 ## 2. Rarities and Customization
 
-### Basic/Common
+Sovereign Territories uses a **6-tier rarity system** with distinct visual identities, star progression, and leveling mechanics. **Element determines frame color** (fire=red, water=blue, etc.), while **rarity determines frame complexity** (border ornateness, holographic effects, animations).
 
-Generalized cards for basic builds. No specialization.
+### Rarity Tiers Overview
 
-- **Stats**: Base values only.
+**Visual Hierarchy**: Element defines **frame color**, Rarity defines **effects & complexity**
 
-### Uncommon
+| Rarity | Star Range | Leveling | Drop Rate | Visual Identity |
+|--------|------------|----------|-----------|-----------------|
+| **Common** | 1★ (fixed) | Cannot level | 70% | Simple frame, matte finish, small badge |
+| **Uncommon** | 1-2★ | +1 level max | 20% | Decorative corners, subtle glow, gem badge |
+| **Rare** | 2-3★ | +1 level max | 8% | Ornate frame, holographic shimmer, animated badge |
+| **Epic** | 3-4★ | +1 level max | 1.5% | Complex runes, particle glow, pulsing badge |
+| **Legendary** | 5★ (fixed) | Cannot level* | 0.48% | Animated frame, radiant aura, crown badge |
+| **Mythic** | 6★ (fixed) | Cannot level* | 0.02% | Ultra-ornate frame, screen glow, creature badge |
 
+*Future: Epic/Legendary may gain +2 leveling (3-5★ / 5-7★) while maintaining rarity-based stat advantages
 
+### Common - 1 Star
 
-### Rare
+**Visual Design**:
+- **Frame Color**: Determined by element (Fire=red, Water=blue, Earth=green, Lightning=yellow, Wind=cyan, Frost=light blue)
+- **Frame Style**: Simple thin border with minimal decoration, matte finish
+- **Background**: Light gradient of element color (fire = red-orange fade, water = blue-teal fade)
+- **Star Display**: Single white star at bottom center of card
+- **Rarity Indicator**: Small circular badge in top-right corner with "C" or dot pattern
+- **Finish**: Matte, no special effects or shine
 
-Creative variants with minor customization.
+**Gameplay Characteristics**:
+- **Starting Stars**: Always 1★ (cannot be increased)
+- **Leveling**: **Cannot level up** (stays at base stats permanently)
+- **Customization**: None (pure stat values, no skill points)
+- **Use Case**: Fodder for combining, early-game units, bulk army stacks
+- **Examples**: Basic Archer, Spearman, Scout, Farm (building), Mine (building)
 
-- **Stats**: Slight boosts; some options for stat allocation.
+**Why Commons Don't Level**:
+- Simplicity for new players (no decision paralysis)
+- Encourages progression to higher rarities
+- Prevents common-only meta dominance
+- Maintains economy value (always abundant supply for auction house)
 
-### Epic
+### Uncommon - 1-2 Stars
 
-Named cards with boostable stats via skill trees.
+**Visual Design**:
+- **Frame Color**: Determined by element (same color family as Common)
+- **Frame Style**: Medium border with decorative corners, subtle embossed patterns
+- **Background**: Richer gradient of element color with slight texture (fire = flame wisps, water = ripples)
+- **Star Display**: 1-2 white stars at bottom, unfilled slots show as dim outlines
+- **Rarity Indicator**: Hexagonal gem badge in top-right corner with soft glow animation
+- **Finish**: Semi-gloss with faint shimmer overlay
 
-- **Stats**: Customizable points (e.g., +fire damage or +healing). Visual effects on map.
-- **Example**: Allocate points to increase HP or speed.
+**Gameplay Characteristics**:
+- **Starting Stars**: 1★ by default
+- **Leveling**: Can level up to **2★** (one level upgrade)
+  - Requires: Combine with duplicate OR spend resources (1,000 gold + 50 XP)
+  - Stat Boost: +25% to all base stats at 2★
+- **Customization**: Minor (choose 1 of 2 passive bonuses when leveling to 2★)
+  - Example: Fire Warrior → choose "+10% attack" OR "+10% HP"
+- **Use Case**: Early-to-mid game core units, niche specialists
+- **Examples**: Elite Archer, Heavy Infantry, Healer, Barracks (building)
 
-### Legendary
+**Leveling Process**:
+1. Obtain duplicate Uncommon card (from pack, quest, or auction)
+2. In Codex, select "Combine for Stars" option
+3. Card upgrades from 1★ to 2★, visual star fills in with green glow animation
+4. Choose 1 passive bonus from 2 options (decision is permanent)
 
-Highly customizable with full skill trees and equipment slots.
+### Rare - 2-3 Stars
 
-- **Stats**: Limits encourage strategy; unique abilities.
-- **Example**: Thor with a rage mechanic (attack increases as HP drops).
+**Visual Design**:
+- **Frame Color**: Determined by element with metallic sheen added
+- **Frame Style**: Ornate border with geometric patterns, beveled edges, crystal accents
+- **Background**: Deep gradient of element color with animated subtle effects (fire = flowing embers, water = wave shimmer)
+- **Star Display**: 2-3 white stars with element-colored glow around them
+- **Rarity Indicator**: Crystalline gem badge with slow rotation animation and inner light
+- **Finish**: Glossy holographic overlay with rainbow shimmer at angles
 
-### Card Leveling and Combining
+**Gameplay Characteristics**:
+- **Starting Stars**: 2★ by default
+- **Leveling**: Can level up to **3★** (one level upgrade)
+  - Requires: Combine 2 duplicates OR spend 5,000 gold + 200 XP
+  - Stat Boost: +40% to all base stats at 3★
+- **Customization**: Moderate (allocate 3 skill points across 3 stats when leveling)
+  - Example: At 3★, distribute +3 points across Attack/Defense/HP (e.g., +2 Attack, +1 HP)
+- **Use Case**: Mid-game powerhouses, strategic deck staples
+- **Examples**: Dragon Knight, Archmage, Siege Engine, Turret (building), Granary (building)
 
-Cards can be leveled up by combining multiple copies (stars) or attaching other cards for boosts. This is done in the Codex view.
+**Skill Point Allocation**:
+- **3 Points Total** to distribute at 3★
+- **Options**: Attack, Defense, HP, Speed, Range (depending on card type)
+- **Limits**: Max 2 points in any single stat (prevents min-maxing)
+- **Respec**: Costs 100 gems to reset allocation (once per month free)
 
-- **Combining for Stars**: Merge identical cards to increase star level (e.g., 3x Common Archer → 1x 3-Star Archer with boosted stats). Higher stars provide multiplicative bonuses (e.g., +50% attack per star).
-- **Attaching Boosters**: Attach equipment, tactics, or other cards to a base card for temporary or permanent stat boosts. E.g., Attach a "Fire Rune" to boost fire damage.
-- **Splitting Stacks**: For a cost (e.g., rare Sovereign Tokens or gems), split a combined card back into components. Useful for redistributing resources.
-- **Mechanics**: Combining requires the cards to be in your collection; attached cards can be detached without cost but may lose progress.
+### Epic - 3-4 Stars
+
+**Visual Design**:
+- **Frame Color**: Determined by element with rich metallic finish and color depth
+- **Frame Style**: Highly ornate border with intricate patterns, mystical runes matching element theme
+- **Background**: Vibrant element gradient with animated energy particles (fire = floating embers, lightning = crackling arcs)
+- **Star Display**: 3-4 white stars with strong element-colored aura and pulse effect
+- **Rarity Indicator**: Large ornate gem badge with pulsing energy rings and particle effects
+- **Finish**: Premium holographic with prismatic rainbow and parallax depth effect
+- **Special**: Faint element-themed particle effects around entire card border
+
+**Gameplay Characteristics**:
+- **Starting Stars**: 3★ by default
+- **Leveling**: Can level up to **4★** (one level upgrade)
+  - Requires: Combine 3 duplicates OR spend 20,000 gold + 1,000 XP
+  - Stat Boost: +60% to all base stats at 4★
+- **Customization**: High (skill tree with 5 nodes, unlock 3 at 4★)
+  - Example: "Thor" at 4★ → unlock 3 of 5 abilities: [Chain Lightning, Thunder Shield, Rage Mode, Mjolnir Throw, Storm Call]
+- **Use Case**: Late-game specialists, named heroes, powerful buildings
+- **Examples**: Thor, Merlin, Odin, Fortress (building), Wonder Monument (building)
+
+**Skill Tree System**:
+- **5 Total Nodes** per Epic card (unique to each card)
+- **3 Unlockable** at 4★ (choose wisely, permanent)
+- **Synergies**: Some nodes combo with others (e.g., "Chain Lightning" + "Storm Call" = extended chain range)
+- **Visual Feedback**: Unlocked abilities show glowing nodes on card art
+
+### Legendary - 5 Stars
+
+**Visual Design**:
+- **Frame Color**: Determined by element with radiant metallic sheen and golden highlights
+- **Frame Style**: Ultra-ornate animated border with flowing energy matching element (fire = flame trails, water = liquid gold flows)
+- **Background**: Rich element gradient with radiant aura and animated environment effects
+- **Star Display**: 5 white stars in arc formation with intense element-colored glow and rhythmic pulse
+- **Rarity Indicator**: Majestic crown or phoenix badge with animated light rays and rotation
+- **Finish**: Premium animated holographic with 3D parallax depth and element-specific shine
+- **Special**: Border animates with element energy flow, subtle screen glow when hovered
+
+**Gameplay Characteristics**:
+- **Starting Stars**: 5★ by default (max stars)
+- **Leveling**: **Cannot level** (already at peak power, balanced for fairness)
+- **Customization**: Maximum (full skill tree with 10 nodes, all unlockable over time)
+  - Unlock progression: 2 nodes at acquisition, +1 node per 500 hero XP (earned in battles)
+  - Example: "Ragnarok Thor" → unlock all 10 abilities eventually: [Chain Lightning III, Thunder Shield II, Rage Mode, Mjolnir Throw, Storm Call, Lightning Strike, Thor's Fury, Berserker, Immortal Wrath, Godly Presence]
+- **Equipment Slots**: 3 slots (weapon, armor, accessory)
+- **Use Case**: Endgame heroes, win conditions, status symbols
+- **Examples**: Ragnarok Thor, Merlin the Eternal, Gaia Prime, Emperor's Castle (building)
+
+**Why Legendaries Don't Level**:
+- **Balance**: All Legendary cards equal at 5★ prevents power creep
+- **Fairness**: Free and paying players both get 5★ legendaries (no advantage)
+- **Skill Tree Progression**: Unlocking 10 nodes provides progression without star inflation
+- **Collectibility**: 5★ rarity maintains prestige ("I have the same Thor as the pros")
+
+### Mythic - 6 Stars
+
+**Visual Design**:
+- **Frame Color**: Determined by element with transcendent iridescent sheen and cosmic highlights
+- **Frame Style**: Impossibly ornate animated border with living element energy (fire = sentient flames, water = cascading torrents)
+- **Background**: Hyper-saturated element gradient with reality-warping effects and animated cosmic particles
+- **Star Display**: 6 white stars in hexagon formation, slowly rotating with element-colored energy trails
+- **Rarity Indicator**: Mythical creature badge (dragon, phoenix, leviathan) matching element with full animation
+- **Finish**: Ultimate holographic with screen-wide subtle glow effect (accessibility-friendly dimming option)
+- **Special**: Card pulses with element energy, screen border glows element color when in hand, deploy animation has screen flash
+
+**Gameplay Characteristics**:
+- **Starting Stars**: 6★ by default (beyond legendary)
+- **Leveling**: **Cannot level** (already transcendent)
+- **Customization**: Ultimate (12-node skill tree + 5 equipment slots)
+  - All nodes unlockable, but requires 10,000 hero XP total (months of play)
+  - Example: "Primordial Chaos" → 12 reality-bending abilities
+- **Equipment Slots**: 5 slots (weapon, armor, accessory, relic, artifact)
+- **Use Case**: Ultra-rare seasonal rewards, tournament prizes, whale targets
+- **Drop Rate**: 0.02% (1 in 5,000 packs), pity timer at 500 packs
+- **Examples**: Primordial Chaos, The World Serpent, Infinity Nexus (building)
+
+**Mythic Acquisition**:
+- **Battle Pass**: Tier 50 reward (1 random Mythic per season)
+- **Grand Tournaments**: Top 100 global PvP players per season
+- **Seasonal Events**: Complete 50-stage endgame challenge
+- **Packs**: 0.02% drop rate with 500-pack pity timer (not recommended)
+- **Auction House**: Tradeable, but expect 1,000,000+ gold prices
+
+**Balance Consideration**:
+- **Power Level**: Mythics are ~20% stronger than Legendaries in perfect conditions
+- **Situational**: Require specific deck synergies to reach full potential
+- **Not Auto-Win**: Skilled players with Legendary decks can beat Mythic decks
+- **Flex Factor**: Primarily for collectors and whales (prestige > power)
+
+---
+
+## Visual Design System: Elements + Rarities
+
+### Core Philosophy (Pokemon-Style Approach)
+
+**Element Drives Frame Color** - Just like Pokemon TCG where Fire cards are red, Water are blue, and Grass are green, element determines the primary visual identity.
+
+**Rarity Drives Complexity & Effects** - Border ornateness, holographic quality, animation, and badge sophistication increase with rarity.
+
+**Stars Show Progression** - Simple white stars (with element-colored glow) at bottom indicate current power level.
+
+### 3-Way Visual System
+
+**1. Element (Primary Frame Color & Theme)**
+
+Element determines the **color palette and thematic motifs** for every card:
+
+| Element | Frame Color | Background | Motifs |
+|---------|-------------|------------|--------|
+| **Fire** | Red-Orange | Warm red gradients | Flames, embers, lava cracks |
+| **Water** | Blue | Cool blue gradients | Waves, ripples, bubbles |
+| **Earth** | Brown-Green | Natural earth tones | Vines, stone, crystals |
+| **Lightning** | Yellow-Purple | Electric gradients | Arcs, sparks, storm clouds |
+| **Wind** | Cyan-White | Airy light tones | Swirls, clouds, feathers |
+| **Frost** | Light Blue-White | Icy gradients | Snowflakes, ice shards, aurora |
+
+**Why Element = Color**:
+- **Instant Recognition**: Players identify card type at a glance (critical in fast gameplay)
+- **Collection Organization**: Fire deck looks cohesive, all red-orange frames together
+- **Deckbuilding UX**: Easier to spot element mismatches when building mono-element decks
+- **Proven Model**: Pokemon's success validates element-driven color scheme
+
+**2. Rarity (Border Complexity & Visual Effects)**
+
+Rarity determines **how fancy the frame is** and **what special effects** appear:
+
+| Rarity | Frame Complexity | Holographic | Animation | Badge |
+|--------|------------------|-------------|-----------|-------|
+| **Common** | Thin simple border | None | None | Small dot |
+| **Uncommon** | Medium decorative | Faint shimmer | None | Gem (static) |
+| **Rare** | Ornate geometric | Rainbow holo | Subtle | Gem (rotating) |
+| **Epic** | Intricate runes | Prismatic | Particles | Large (pulsing) |
+| **Legendary** | Ultra-ornate | Premium holo | Full border | Crown (animated) |
+| **Mythic** | Transcendent | Screen glow | Everything | Creature (living) |
+
+**Progressive Complexity**:
+- **Common**: Bare minimum - clean and readable
+- **Uncommon**: Slight flair - corner decorations, subtle texture
+- **Rare**: Obviously special - beveled edges, crystal accents, holo shine
+- **Epic**: Premium feel - animated particles, deep frame detail
+- **Legendary**: Jaw-dropping - flowing energy, 3D depth, radiant glow
+- **Mythic**: Impossible - reality-bending effects, screen presence
+
+**3. Stars (Progression Level)**
+
+Stars show **current power level** within the rarity tier:
+
+- **Color**: White stars with element-colored glow/aura (fire card = white stars with red glow)
+- **Position**: Bottom center of card in horizontal row or arc
+- **Unfilled Slots**: Dim outline shows max potential (e.g., 1★ Uncommon shows 2 slots, 1 filled, 1 outline)
+- **Animation**: Stars pulse softly with element energy at Rare+ rarities
+
+### Card Anatomy (Visual Breakdown)
+
+```
+┌─────────────────────────────────┐
+│ [Badge]               [Element] │ ← Top: Rarity badge (left), Element icon (right)
+│                                 │
+│                                 │
+│         [Card Art]              │ ← Center: Illustration with element-colored background
+│                                 │
+│                                 │
+├─────────────────────────────────┤
+│  [Name]              [Cost]     │ ← Name bar with element-colored background
+├─────────────────────────────────┤
+│                                 │
+│     [Stats & Abilities]         │ ← Text box with element-tinted background
+│                                 │
+├─────────────────────────────────┤
+│        ★ ★ ★ ☆ ☆               │ ← Bottom: Star progression (white stars, element glow)
+└─────────────────────────────────┘
+  ↑ Frame border color = Element
+  ↑ Frame complexity = Rarity
+```
+
+### Visual Examples (Element + Rarity Combos)
+
+**Fire Element Common Archer (1★)**:
+- **Frame**: Thin red-orange border, matte finish
+- **Background**: Light red gradient with subtle flame texture
+- **Stars**: 1 white star at bottom (no glow on commons)
+- **Badge**: Small circular dot in top-right
+- **Effect**: None
+- **Overall Feel**: Simple, clean, clearly Fire-type
+
+**Water Element Rare Mage (2★)**:
+- **Frame**: Ornate blue border with wave patterns, beveled edges
+- **Background**: Deep blue gradient with animated ripple effect
+- **Stars**: 2 white stars with blue glow, 1 dim outline showing 3★ potential
+- **Badge**: Crystalline gem badge with slow rotation
+- **Effect**: Rainbow holographic shimmer overlay
+- **Overall Feel**: Premium, clearly Water-type, obviously Rare quality
+
+**Lightning Element Legendary Thor (5★)**:
+- **Frame**: Ultra-ornate yellow-purple border with flowing electric energy animation
+- **Background**: Vibrant electric gradient with crackling arcs and storm clouds
+- **Stars**: 5 white stars in arc with intense yellow-purple glow and pulse
+- **Badge**: Majestic crown with animated light rays
+- **Effect**: Premium holographic + 3D parallax + border energy flow + screen glow on hover
+- **Overall Feel**: Jaw-dropping, unmistakably Lightning-type, obviously Legendary
+
+**Earth Element Mythic Gaia (6★)**:
+- **Frame**: Impossibly ornate brown-green border with living vines and crystal growths
+- **Background**: Hyper-saturated earth gradient with cosmic particles and reality-warp
+- **Stars**: 6 white stars in hexagon rotating with green-brown energy trails
+- **Badge**: Animated dragon/tree-spirit creature with breathing animation
+- **Effect**: Ultimate holographic + screen glow + element energy pulse + deploy screen flash
+- **Overall Feel**: Transcendent, clearly Earth-type, unmistakably Mythic rarity
+
+### Design Benefits of This System
+
+**1. Clarity**: Element color = instant card type recognition (fire deck is all red frames)
+**2. Collectibility**: Rarity effects make opening packs exciting (holo shimmer = rare!)
+**3. Progression**: Stars show power within rarity (my 3★ Rare beats your 2★ Rare)
+**4. Cohesion**: Fire cards look like a family (same color, different complexity levels)
+**5. Proven**: Matches Pokemon/Magic Arena success model (element = color, rarity = foil/effects)
+**6. Accessibility**: Colorblind players can identify rarity by border complexity even if color is hard to see
+**7. Future-Proof**: Easy to add new elements (just assign new color) or rarities (add new effect tier)
+
+---
+
+## Card Leveling and Combining System
+
+### Leveling Mechanics by Rarity
+
+**Common (1★ Fixed)**:
+- ❌ **Cannot level up**
+- **Why**: Keeps commons accessible and prevents common-only meta
+- **Alternative**: Combine multiples into higher-rarity cards (future feature)
+
+**Uncommon (1★ → 2★)**:
+- ✅ **Can level once** (1★ to 2★)
+- **Method 1**: Combine with 1 duplicate Uncommon
+- **Method 2**: Spend 1,000 gold + 50 XP
+- **Stat Boost**: +25% to all stats
+- **Customization**: Choose 1 of 2 passive bonuses
+
+**Rare (2★ → 3★)**:
+- ✅ **Can level once** (2★ to 3★)
+- **Method 1**: Combine with 2 duplicate Rares
+- **Method 2**: Spend 5,000 gold + 200 XP
+- **Stat Boost**: +40% to all stats
+- **Customization**: Allocate 3 skill points across stats
+
+**Epic (3★ → 4★)**:
+- ✅ **Can level once** (3★ to 4★)
+- **Method 1**: Combine with 3 duplicate Epics
+- **Method 2**: Spend 20,000 gold + 1,000 XP
+- **Stat Boost**: +60% to all stats
+- **Customization**: Unlock 3 of 5 skill tree nodes
+
+**Legendary (5★ Fixed)**:
+- ❌ **Cannot level up** (already max stars)
+- **Progression**: Unlock skill tree nodes via hero XP (earned in battles)
+- **Equipment**: Attach 3 equipment cards for stat boosts
+
+**Mythic (6★ Fixed)**:
+- ❌ **Cannot level up** (transcendent)
+- **Progression**: Unlock 12-node skill tree via hero XP
+- **Equipment**: Attach 5 equipment cards
+
+### Combining Process (Step-by-Step)
+
+**Example: Leveling an Uncommon from 1★ to 2★**
+
+1. **Open Codex**: Navigate to card collection view
+2. **Select Card**: Click on your 1★ Uncommon "Elite Archer"
+3. **Choose Method**:
+   - Option A: "Combine with Duplicate" (requires 1 more Elite Archer in inventory)
+   - Option B: "Level with Resources" (costs 1,000 gold + 50 XP)
+4. **Confirm**: Animation shows stars merging, second star fills in with green glow
+5. **Customization**: Choose passive bonus:
+   - "+10% Attack" OR "+10% HP" (permanent decision)
+6. **Result**: Elite Archer is now 2★ with +25% stats and chosen bonus
+
+**Splitting Cards (Reverse Process)**:
+- **Cost**: 100 Sovereign Tokens (rare currency) OR 500 gems
+- **Function**: Split a leveled card back to base stars + return duplicate(s)
+- **Example**: Split 2★ Uncommon → get 1★ Uncommon + 1★ Uncommon duplicate
+- **Use Case**: Redistribute resources, sell duplicates, undo mistakes
+- **Limitation**: Lose chosen passive bonus (resets to base)
+
+---
+
+## Shiny Variants (Collectible Cosmetics)
+
+### What Are Shinies?
+
+**Shiny cards** are **cosmetic-only variants** of existing cards with alternate art, special animations, and enhanced visual effects. They have **identical stats** to normal versions but are extremely rare and collectible.
+
+**Visual Differences**:
+- **Alternate Art**: Completely different illustration (e.g., normal Thor = classic armor, shiny Thor = modern tactical gear)
+- **Holographic Effect**: Prismatic rainbow shimmer overlays entire card
+- **Animated Background**: Living elements (flames move, water flows, lightning crackles)
+- **Particle Effects**: Sparkles, light trails, or elemental particles around card
+- **Shiny Badge**: Small star icon with "SHINY" text in corner (doesn't replace rarity badge)
+
+**Example Comparisons**:
+- **Normal Fire Archer**: Static fire background, simple arrow sprite
+- **Shiny Fire Archer**: Animated flames, archer sprite has glowing eyes, arrows leave trails
+
+### Shiny Rarity & Drop Rates
+
+**Any card can be shiny** (Common to Mythic), but drop rates are **extremely low**:
+
+| Base Rarity | Normal Drop Rate | Shiny Drop Rate | Shiny Chance (if you get that rarity) |
+|-------------|------------------|-----------------|---------------------------------------|
+| Common | 70% | 0.7% | 1% (1 in 100 commons) |
+| Uncommon | 20% | 0.2% | 1% (1 in 100 uncommons) |
+| Rare | 8% | 0.08% | 1% (1 in 100 rares) |
+| Epic | 1.5% | 0.015% | 1% (1 in 100 epics) |
+| Legendary | 0.48% | 0.0048% | 1% (1 in 100 legendaries) |
+| Mythic | 0.02% | 0.0002% | 1% (1 in 100 mythics) |
+
+**Practical Drop Rates**:
+- **Shiny Common**: ~1 per 143 packs (0.7%)
+- **Shiny Legendary**: ~1 per 20,833 packs (0.0048%)
+- **Shiny Mythic**: ~1 per 500,000 packs (0.0002%)
+
+### Shiny Pity System
+
+To prevent "never seeing a shiny" frustration, implement **separate pity timers**:
+
+**Shiny Pity Counters**:
+1. **Any Shiny**: Guaranteed shiny (random rarity) after **100 packs** without shiny
+   - Rarity distribution follows normal pack rates (70% common, 20% uncommon, etc.)
+2. **Rare+ Shiny**: Guaranteed Rare/Epic/Legendary shiny after **500 packs** without Rare+ shiny
+   - Distribution: 80% Rare, 18% Epic, 2% Legendary
+3. **Legendary Shiny**: Guaranteed Legendary shiny after **2,000 packs** without Legendary shiny
+   - Specific card is random from Legendary pool
+4. **Mythic Shiny**: No pity timer (ultra-exclusive)
+   - Only obtainable via special events, tournaments, or 0.0002% luck
+
+**Pity Timer UI**:
+- Display in pack opening screen: "Next guaranteed shiny in: 47 packs"
+- Separate counters for "Any Shiny" and "Rare+ Shiny"
+- Resets to 0 after pity trigger
+
+### Shiny Acquisition Methods
+
+**Primary Sources**:
+1. **Pack Openings**: 1% chance per card of that rarity (with pity backup)
+2. **Shiny-Specific Packs**: "Premium Shiny Pack" (1,000 gems, guarantees 1 shiny)
+3. **Seasonal Events**: "Shiny Week" - 2x shiny drop rates for 7 days
+4. **Battle Pass**: Tier 40 reward = 1 guaranteed Rare+ shiny
+5. **Achievements**: "Open 1,000 packs" = 1 random shiny reward
+
+**Secondary Sources**:
+6. **Auction House**: Players can trade shinies (expect 10x normal card price)
+7. **Crafting**: Combine 10 normal versions → 1 shiny version (costly but deterministic)
+8. **VIP Bonuses**: VIP 5 gets +0.5% shiny rate (1.5% instead of 1%)
+
+### Shiny Balance Philosophy
+
+**Why Shinies Are Rare**:
+- **Exclusivity**: Makes them special ("I have a shiny Legendary Thor!")
+- **Collector Value**: Drive engagement for completionists
+- **Monetization**: Whales chase shinies (pay-for-look, not pay-to-win)
+- **Trading Economy**: Creates high-value auction house items
+
+**Preventing Shiny Inflation**:
+- **No Gameplay Advantage**: Shinies = normal cards (same stats, same abilities)
+- **Low Drop Rates**: Even with pity, takes months to collect multiple shinies
+- **No Shiny-Only Rewards**: Can't lock content behind "must have shiny" walls
+- **Dust System** (Future): Convert excess shinies to currency for targeted shiny crafting
+
+### Shiny Showcase Features
+
+**Profile Display**:
+- **Shiny Showcase Tab**: Display up to 5 favorite shinies on profile
+- **Shiny Counter**: "23/500 Shinies Collected" badge
+- **Shiny Leaderboard**: Global ranking for most shinies owned (whale competition)
+
+**In-Battle VFX**:
+- **Entrance Animation**: Shiny cards have special deploy animations (sparkles, screen flash)
+- **Glow Effect**: Shiny units on battlefield have subtle aura (doesn't obstruct gameplay)
+- **Victory Poses**: Shiny heroes have unique victory animations
+
+**Social Bragging**:
+- **Chat Links**: Share shiny card in alliance chat (clickable card preview)
+- **Shiny Trading**: Whisper trade offers for specific shinies
+- **Flex Emotes**: "Look at my shiny!" emote for BM (bad manners) post-victory
+
+---
+
+### Summary Table: Full Rarity System
+
+| Rarity | Stars | Leveling | Drop % | Shiny % | Visual Effects (Frame Complexity) |
+|--------|-------|----------|--------|---------|-----------------------------------|
+| Common | 1★ | ❌ None | 70% | 0.7% | Simple, matte (element-colored) |
+| Uncommon | 1-2★ | ✅ +1 | 20% | 0.2% | Decorative, subtle glow (element-colored) |
+| Rare | 2-3★ | ✅ +1 | 8% | 0.08% | Ornate, holographic (element-colored) |
+| Epic | 3-4★ | ✅ +1* | 1.5% | 0.015% | Complex runes, particles (element-colored) |
+| Legendary | 5★ | ❌ None* | 0.48% | 0.0048% | Animated, radiant (element-colored) |
+| Mythic | 6★ | ❌ None | 0.02% | 0.0002% | Ultra-ornate, screen glow (element-colored) |
+
+*Future expansion: Epic 3-5★ (+2 leveling), Legendary 5-7★ (+2 leveling)
+
+**Key Design Principle**: Element determines frame **color**, rarity determines frame **complexity**. A Fire Epic has a red ornate frame; a Water Epic has a blue ornate frame (same complexity, different color).
+
+**Rarity-Based Stat Scaling**: Rarity defines **base stats**, leveling multiplies that base. Higher rarity always wins at equal stars.
+- Example: 5★ Epic (base 100 attack × 1.6 = 160) < 5★ Legendary (base 150 attack = 150, no leveling)
+- Future: With +2 leveling, 5★ Epic could reach 200 attack (100 × 2.0), surpassing base Legendary but requiring heavy investment
 
 ### Pre-Built Decks
 
