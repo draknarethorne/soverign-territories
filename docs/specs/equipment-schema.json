@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Equipment Schema",
+  "description": "Schema for hero equipment and stat boosts",
+  "type": "object",
+  "properties": {
+    "equipmentId": {
+      "type": "string",
+      "description": "Unique equipment identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Equipment display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Equipment description"
+    },
+    "slot": {
+      "type": "string",
+      "enum": ["weapon", "armor", "accessory", "mount"],
+      "description": "Equipment slot type"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "rare", "epic", "legendary"],
+      "description": "Equipment rarity"
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "attack": {
+          "type": "integer",
+          "description": "Attack bonus"
+        },
+        "defense": {
+          "type": "integer",
+          "description": "Defense bonus"
+        },
+        "health": {
+          "type": "integer",
+          "description": "Health bonus"
+        },
+        "speed": {
+          "type": "integer",
+          "description": "Speed bonus"
+        }
+      },
+      "description": "Stat modifiers"
+    },
+    "abilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Granted ability IDs"
+    },
+    "visualEffect": {
+      "type": "string",
+      "description": "Visual effect on hero figurine"
+    },
+    "acquisition": {
+      "type": "string",
+      "enum": ["packs", "events", "crafting", "quests"],
+      "description": "How to obtain"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["equipmentId", "name", "description", "slot", "rarity", "stats", "acquisition", "schemaVersion"]
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tactic Schema",
+  "description": "Schema for AI tactics that drive auto-battle behavior",
+  "type": "object",
+  "properties": {
+    "tacticId": {
+      "type": "string",
+      "description": "Unique tactic identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Tactic display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Tactic description"
+    },
+    "targetType": {
+      "type": "string",
+      "enum": ["hero", "unit", "stack"],
+      "description": "What the tactic can be attached to"
+    },
+    "priorityRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "condition": {
+            "type": "string",
+            "enum": ["healthLow", "enemyNearby", "allyInDanger", "resourceRich", "flankOpen"],
+            "description": "Trigger condition"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["attack", "defend", "heal", "move", "retreat", "focus"],
+            "description": "AI action to take"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Priority weight (0-1)"
+          }
+        },
+        "required": ["condition", "action", "weight"]
+      },
+      "description": "List of priority rules for AI decision-making"
+    },
+    "movementBehavior": {
+      "type": "string",
+      "enum": ["aggressive", "defensive", "flanking", "kiting", "static"],
+      "description": "General movement approach"
+    },
+    "targetingPreferences": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["weakest", "strongest", "healers", "ranged", "melee", "bosses"]
+      },
+      "description": "Preferred target types"
+    },
+    "cooldown": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Turns between uses"
+    },
+    "unlocksAtLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Player level required to unlock"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["tacticId", "name", "description", "targetType", "priorityRules", "movementBehavior", "targetingPreferences", "unlocksAtLevel", "schemaVersion"]
+}

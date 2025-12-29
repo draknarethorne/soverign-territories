@@ -30,6 +30,14 @@ Files:
 - deployment-schema.md — narrative notes for deployment schema.
 - pack-schema.json — authoritative JSON Schema for card packs.
 - pack-schema.md — narrative notes for pack schema.
+- tactic-schema.json — authoritative JSON Schema for AI tactics.
+- tactic-schema.md — narrative notes for tactic schema.
+- equipment-schema.json — authoritative JSON Schema for hero equipment.
+- equipment-schema.md — narrative notes for equipment schema.
+- theme-schema.json — authoritative JSON Schema for card themes.
+- theme-schema.md — narrative notes for theme schema.
+- matchmaking-schema.json — authoritative JSON Schema for Elo matchmaking.
+- matchmaking-schema.md — narrative notes for matchmaking schema.
 
 Purpose and guidance
 

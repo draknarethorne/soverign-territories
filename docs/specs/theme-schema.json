@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Theme Schema",
+  "description": "Schema for card themes and synergy bonuses",
+  "type": "object",
+  "properties": {
+    "themeId": {
+      "type": "string",
+      "description": "Unique theme identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Theme display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Theme description"
+    },
+    "requiredTags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Card tags required for theme"
+    },
+    "thresholds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of themed cards needed"
+          },
+          "bonuses": {
+            "type": "object",
+            "properties": {
+              "attack": {
+                "type": "number",
+                "description": "Attack multiplier"
+              },
+              "defense": {
+                "type": "number",
+                "description": "Defense multiplier"
+              },
+              "abilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Granted ability IDs"
+              }
+            },
+            "description": "Bonuses at this threshold"
+          }
+        },
+        "required": ["count", "bonuses"]
+      },
+      "description": "Synergy thresholds and bonuses"
+    },
+    "visualTheme": {
+      "type": "string",
+      "description": "Visual theme (e.g., Norse, Sci-Fi)"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["themeId", "name", "description", "requiredTags", "thresholds", "schemaVersion"]
+}

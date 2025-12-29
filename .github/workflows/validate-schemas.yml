@@ -33,6 +33,10 @@ jobs:
           ajv validate -s docs/specs/deck-schema.json -d docs/specs/deck-schema.json
           ajv validate -s docs/specs/deployment-schema.json -d docs/specs/deployment-schema.json
           ajv validate -s docs/specs/pack-schema.json -d docs/specs/pack-schema.json
+          ajv validate -s docs/specs/tactic-schema.json -d docs/specs/tactic-schema.json
+          ajv validate -s docs/specs/equipment-schema.json -d docs/specs/equipment-schema.json
+          ajv validate -s docs/specs/theme-schema.json -d docs/specs/theme-schema.json
+          ajv validate -s docs/specs/matchmaking-schema.json -d docs/specs/matchmaking-schema.json
       - name: Generate TypeScript types
         run: |
           json2ts docs/specs/card-schema.json > docs/specs/card-schema.d.ts
@@ -47,3 +51,7 @@ jobs:
           json2ts docs/specs/deck-schema.json > docs/specs/deck-schema.d.ts
           json2ts docs/specs/deployment-schema.json > docs/specs/deployment-schema.d.ts
           json2ts docs/specs/pack-schema.json > docs/specs/pack-schema.d.ts
+          json2ts docs/specs/tactic-schema.json > docs/specs/tactic-schema.d.ts
+          json2ts docs/specs/equipment-schema.json > docs/specs/equipment-schema.d.ts
+          json2ts docs/specs/theme-schema.json > docs/specs/theme-schema.d.ts
+          json2ts docs/specs/matchmaking-schema.json > docs/specs/matchmaking-schema.d.ts

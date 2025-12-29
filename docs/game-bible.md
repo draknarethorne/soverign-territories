@@ -132,12 +132,22 @@ Tactics are AI modules that program auto-battle behavior. Attach them to heroes 
 - **How They Work**: Equipped to stacks; AI follows the tactic during auto-battle. Overrides default behavior for tactical depth.
 - **Inspiration from Chess Engines**: Pre-programmed strategies, like Stockfish's opening books.
 
+## Tactic Data Model (Engine Schema)
+
+The tactic schema for AI behavior has been moved to a standalone spec: [docs/specs/tactic-schema.json](docs/specs/tactic-schema.json).
+Use that file for tactic validation, AI simulation, and attachment rules.
+
 ### Equipment
 
 Equipment cards attach to heroes for stat boosts and visuals. Acquired from events or packs.
 
 - **Examples**: "Excalibur Sword" (+attack), "Dragon Scale Armor" (+defense).
 - **How They Work**: Socket-compatible; visual effects appear on the hero's game piece (e.g., glowing sword).
+
+## Equipment Data Model (Engine Schema)
+
+The equipment schema for hero gear has been moved to a standalone spec: [docs/specs/equipment-schema.json](docs/specs/equipment-schema.json).
+Use that file for equipment compatibility, stat calculations, and visual effects.
 
 ## 2. Rarities and Customization
 
@@ -210,6 +220,11 @@ Use that file for deck validation, slot limits, and card compatibility checks.
 ## 3. The "Theme" System (Extensions)
 
 Build theme decks for synergy bonuses (e.g., 20 Norse cards grant frost immunity).
+
+## Theme Data Model (Engine Schema)
+
+The theme schema for synergies has been moved to a standalone spec: [docs/specs/theme-schema.json](docs/specs/theme-schema.json).
+Use that file for theme validation, bonus calculations, and deck synergy checks.
 
 ## 4. Deck Drawing (The Store)
 
@@ -843,6 +858,11 @@ Multiplayer emphasizes fair, community-driven PvP with alliance support. Matchma
 ## 10.1 Matchmaking System
 
 Elo-based ratings match players of similar skill. Alliances enable guild lobbies for coordinated play, adding strategy beyond individual decks.
+
+## Matchmaking Data Model (Engine Schema)
+
+The matchmaking schema for Elo and lobbies has been moved to a standalone spec: [docs/specs/matchmaking-schema.json](docs/specs/matchmaking-schema.json).
+Use that file for rating calculations, lobby management, and anti-cheat enforcement.
 
 ## 10.2 Anti-Cheat Measures
 

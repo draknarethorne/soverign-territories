@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Matchmaking Schema",
+  "description": "Schema for Elo-based matchmaking and game lobbies",
+  "type": "object",
+  "properties": {
+    "playerId": {
+      "type": "string",
+      "description": "Player identifier"
+    },
+    "eloRating": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current Elo rating"
+    },
+    "eloHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "matchId": {
+            "type": "string",
+            "description": "Match identifier"
+          },
+          "oldRating": {
+            "type": "integer",
+            "description": "Rating before match"
+          },
+          "newRating": {
+            "type": "integer",
+            "description": "Rating after match"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Match timestamp"
+          }
+        },
+        "required": ["matchId", "oldRating", "newRating", "timestamp"]
+      },
+      "description": "History of Elo changes"
+    },
+    "matchmakingPreferences": {
+      "type": "object",
+      "properties": {
+        "gameMode": {
+          "type": "string",
+          "enum": ["ranked", "casual", "alliance"],
+          "description": "Preferred game mode"
+        },
+        "maxWaitTime": {
+          "type": "integer",
+          "minimum": 30,
+          "description": "Max wait time in seconds"
+        },
+        "region": {
+          "type": "string",
+          "description": "Preferred region"
+        }
+      },
+      "description": "Player matchmaking settings"
+    },
+    "allianceId": {
+      "type": ["string", "null"],
+      "description": "Alliance for guild lobbies"
+    },
+    "banStatus": {
+      "type": "object",
+      "properties": {
+        "isBanned": {
+          "type": "boolean",
+          "description": "Ban status"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Ban reason"
+        },
+        "expiresAt": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Ban expiration"
+        }
+      },
+      "required": ["isBanned"]
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["playerId", "eloRating", "eloHistory", "matchmakingPreferences", "banStatus", "schemaVersion"]
+}
