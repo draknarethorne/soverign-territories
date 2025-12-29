@@ -1,0 +1,200 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Economy Node Schema",
+  "description": "Schema for resource nodes and economy card deployment mechanics",
+  "type": "object",
+  "required": ["nodeId", "nodeType", "resourceType", "productionRate", "schemaVersion"],
+  "properties": {
+    "nodeId": {
+      "type": "string",
+      "description": "Unique node identifier (e.g., 'gold_mine_01', 'forest_patch_02')"
+    },
+    "nodeType": {
+      "type": "string",
+      "enum": ["mine", "forest", "quarry", "farm", "fishing_spot", "ruins", "shrine"],
+      "description": "Type of resource node"
+    },
+    "resourceType": {
+      "type": "string",
+      "enum": ["gold", "food", "stone", "wood", "mana", "xp"],
+      "description": "Primary resource produced"
+    },
+    "baseProductionRate": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Base production per hour (before building bonuses)"
+    },
+    "maxStorageCap": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum accumulated resources before collection required (0=unlimited)"
+    },
+    "offlineProductionCap": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Max hours of offline production (default 12, prevents infinite AFK)"
+    },
+    "deployedBuildingId": {
+      "type": "string",
+      "description": "Card ID of economy card currently deployed (null if empty)"
+    },
+    "deployedSince": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when building was deployed"
+    },
+    "accumulatedResources": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Resources waiting to be collected"
+    },
+    "lastCollectionTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time player collected resources"
+    },
+    "buildingBonusMultiplier": {
+      "type": "number",
+      "minimum": 1.0,
+      "description": "Production multiplier from deployed building (1.0=no building, 2.0=double, 5.0=5×)"
+    },
+    "matchBonus": {
+      "type": "boolean",
+      "description": "True if deployed building matches node type (e.g., Mine on Gold Mine = 100% production, Granary on Gold Mine = 50%)"
+    },
+    "deploymentConstraints": {
+      "type": "object",
+      "description": "Rules for what can be deployed",
+      "properties": {
+        "allowedBuildingTypes": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Card types allowed (e.g., ['mine', 'any_economy'])"
+        },
+        "minPlayerLevel": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Player level required to deploy on this node"
+        },
+        "territoryOwnershipRequired": {
+          "type": "boolean",
+          "description": "Must player own the territory to deploy?"
+        }
+      }
+    },
+    "retrievalCost": {
+      "type": "object",
+      "description": "Cost to retrieve deployed building (time or resources)",
+      "properties": {
+        "timeCost": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Seconds required to retrieve (instant if 0)"
+        },
+        "resourceCost": {
+          "type": "object",
+          "properties": {
+            "gold": {"type": "integer", "minimum": 0},
+            "gems": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "mapPosition": {
+      "type": "object",
+      "description": "Node location on County Map",
+      "properties": {
+        "x": {"type": "integer"},
+        "y": {"type": "integer"},
+        "mapId": {"type": "string"}
+      }
+    },
+    "visualAsset": {
+      "type": "string",
+      "description": "Asset path for node visual (e.g., 'Nodes/GoldMine')"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether node is discovered and active"
+    },
+    "isDestroyed": {
+      "type": "boolean",
+      "description": "Whether node was destroyed in combat (disables production)"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "nodeId": "gold_mine_tutorial_01",
+      "nodeType": "mine",
+      "resourceType": "gold",
+      "baseProductionRate": 50,
+      "maxStorageCap": 1000,
+      "offlineProductionCap": 12,
+      "deployedBuildingId": "mine_lvl1_card",
+      "deployedSince": "2025-12-29T10:00:00Z",
+      "accumulatedResources": 250,
+      "lastCollectionTime": "2025-12-29T09:00:00Z",
+      "buildingBonusMultiplier": 2.0,
+      "matchBonus": true,
+      "deploymentConstraints": {
+        "allowedBuildingTypes": ["mine", "any_economy"],
+        "minPlayerLevel": 0,
+        "territoryOwnershipRequired": false
+      },
+      "retrievalCost": {
+        "timeCost": 0,
+        "resourceCost": {
+          "gold": 0,
+          "gems": 0
+        }
+      },
+      "mapPosition": {
+        "x": 5,
+        "y": 3,
+        "mapId": "tutorial_county_map"
+      },
+      "visualAsset": "Nodes/GoldMine",
+      "isActive": true,
+      "isDestroyed": false,
+      "schemaVersion": 1
+    },
+    {
+      "nodeId": "forest_01",
+      "nodeType": "forest",
+      "resourceType": "wood",
+      "baseProductionRate": 75,
+      "maxStorageCap": 1500,
+      "offlineProductionCap": 12,
+      "deployedBuildingId": null,
+      "accumulatedResources": 0,
+      "buildingBonusMultiplier": 1.0,
+      "matchBonus": false,
+      "deploymentConstraints": {
+        "allowedBuildingTypes": ["lumber_mill", "any_economy"],
+        "minPlayerLevel": 3,
+        "territoryOwnershipRequired": true
+      },
+      "retrievalCost": {
+        "timeCost": 300,
+        "resourceCost": {
+          "gold": 100,
+          "gems": 0
+        }
+      },
+      "mapPosition": {
+        "x": 2,
+        "y": 7,
+        "mapId": "county_map_02"
+      },
+      "visualAsset": "Nodes/Forest",
+      "isActive": true,
+      "isDestroyed": false,
+      "schemaVersion": 1
+    }
+  ]
+}
