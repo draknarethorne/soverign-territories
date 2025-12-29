@@ -54,9 +54,47 @@ This document walks through the **exact player journey** from app launch to firs
 
 **Player Action**: Taps "START YOUR JOURNEY"
 
-**Design Decisions Needed**:
-- [ ] Background animation (subtle parallax? moving fog?)
-- [ ] Audio: Menu music theme (orchestral? epic? calm?)
+**Design Decisions**:
+- Background animation: Subtle parallax with moving fog (2-3 layers)
+- Audio: Epic orchestral theme (60-90 sec loop, fade on scene transition)
+
+---
+
+### Step 2B: EULA/Privacy Acceptance (One-Time, Legally Required)
+**Screen**: Terms of Service
+```
+[Header: "Welcome to Sovereign Territories"]
+
+[Scrollable Text Box - 200 words]:
+"By playing Sovereign Territories you agree to:
+• Collect cards, battle enemies, manage territories
+• Age requirement: 13+ (COPPA compliance)
+• Data we collect: Email (optional), device ID, gameplay stats
+• Data usage: Save progress, improve game, send updates
+• No selling of personal data to third parties
+• Full details: [Read Full Terms] [Read Privacy Policy]"
+
+[☐ I accept the Terms of Service and Privacy Policy]
+
+[Continue] (disabled until checked)
+```
+
+**Player Action**: 
+1. Scrolls through terms (optional)
+2. Checks acceptance box
+3. Taps "Continue"
+
+**System Actions**:
+1. Store acceptance: `PlayerPrefs.SetInt("EULA_Accepted_v1", 1)`
+2. Store date: `PlayerPrefs.SetString("EULA_Accept_Date", DateTime.UtcNow)`
+3. Skip this screen on future launches (already accepted)
+
+**Edge Cases**:
+- Player declines (unchecks box): Continue button stays disabled, cannot proceed
+- Under 13: Show "Ask a parent or guardian to play" (require 13+ checkbox)
+- Terms update: Bump version to `EULA_Accepted_v2`, re-prompt existing users
+
+**Implementation Notes**: See tutorial-gap-resolutions.md Gap 1 for full legal text and Unity code
 
 ---
 
@@ -81,13 +119,10 @@ This document walks through the **exact player journey** from app launch to firs
 3. Assign default name: "Player_[random 5-digit number]"
 4. Store session token locally (PlayerPrefs encrypted)
 
-**Design Decisions Needed**:
-- [ ] Default name format (Player_12345 vs Sovereign_12345 vs random adjective+noun)
-- [ ] Can change name later? (Yes, recommend unlocking at Level 3)
-- [ ] EULA/Privacy acceptance (required by law - add checkbox before buttons)
-- [ ] Offline mode support (if no internet, show "Offline Mode Available" with limited features)
-
-**Gap**: EULA/Privacy policy acceptance is legally required but not currently designed
+**Design Decisions**:
+- Default name format: `Player_12345` (5-digit random number)
+- Name change: Free once at Level 3, then 100 gold per change
+- Offline mode: Not supported in MVP (requires Nakama for all features)
 
 ---
 
@@ -140,50 +175,80 @@ This document walks through the **exact player journey** from app launch to firs
 
 ---
 
-### Step 6: Pack Opening Animation (CRITICAL MOMENT)
+### Step 6: Pack Opening Animation (CRITICAL MOMENT - THE HOOK)
 **Screen**: Pack Opening
 ```
 [Center: First pack (glowing gold)]
 [Pack expands, tears open]
-[4 cards flip one-by-one with sound effects]
+[5 cards flip one-by-one with sound effects]
 
-Card 1: [Common Spearman] - quick reveal, white glow
-Card 2: [Common Farm] - quick reveal, white glow
-Card 3: [Uncommon Knight] - medium reveal, green shimmer
-Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
+Card 1: [Common Spearman] - quick reveal (1 sec), white glow
+Card 2: [Common Farm] - quick reveal (1 sec), white glow
+Card 3: [Uncommon Knight] - medium reveal (1.5 sec), green shimmer
+Card 4: [Uncommon Archer] - medium reveal (1.5 sec), green shimmer  
+Card 5: [EPIC WATER MAGE] - SLOW reveal (3 sec), PURPLE PARTICLE BURST, screen shake
 
-[Text: "EPIC! Fire Warrior!"]
-[Sound: Epic fanfare]
+[Text: "EPIC! Water Mage!"]
+[Sound: Epic fanfare, 2-second flourish]
 ```
 
-**System Actions**:
-1. Guaranteed 1 Epic in first 5 packs (player always gets Epic in pack 1-2 for excitement)
-2. Total draws: 20 cards (5 packs × 4 cards each)
-3. Distribution enforced:
-   - 1 Epic (guaranteed in first 2 packs)
-   - 5 Rare
-   - 8-10 Uncommon
-   - 6-8 Common
-   - 3% Legendary chance (replaces 1 Rare if triggered)
+**Starter Pool Strategy** (Guaranteed Viable Deck):
+- **Total Cards**: 20 cards (4 packs × 5 cards each)
+- **Guaranteed Distribution**:
+  - **10 Fixed Cards** (ensure deck is buildable):
+    - 1× Epic Hero (from beginner pool: Water Mage, Knight Captain, or Forest Ranger)
+    - 2× Rare Units (Knight, Healer)
+    - 4× Uncommon Units (Archer ×2, Scout ×2)
+    - 2× Uncommon Buildings (Granary, Watchtower)
+    - 1× Rare Tactic (Adaptive Strategy)
+  - **10 Random Cards** (variety for replayability):
+    - 5× Rare or better (weighted 80% Rare, 20% Epic)
+    - 5× Common/Uncommon mix
+
+**Epic Pool Weighting** (Beginner-Friendly Only):
+Instead of drawing from all 50+ Epics, starter uses curated pool of 3:
+- **Water Mage**: Balanced caster, ranged attacks, heal ability (easy to use)
+- **Knight Captain**: Tanky melee, inspire aura (forgiving positioning)
+- **Forest Ranger**: Ranged DPS, movement bonus (teaches kiting)
+
+**Why Limited Epic Pool?**
+- Prevents "trap" Epics (e.g., cards requiring specific 5-card synergies)
+- Ensures first Epic feels powerful without manual optimization
+- Full Epic pool (all rarities) unlocks after tutorial completion
+
+**Fallback Logic** (Gap 2 Resolution):
+If random 10 cards don't allow Balanced Explorer deck (needs 1 Hero, 6 Units, 2 Buildings, 2 Tactics):
+1. System validates deck requirements
+2. If missing cards: Auto-grant free Common versions (silent, no UI interruption)
+3. Example: Need 2 Tactics but only drew 1? Grant "Rally Cry" (Common Tactic) for free
 
 **Pack Opening Flow**:
-- Pack 1: 3 Common + 1 Epic (HOOK - early dopamine hit)
-- Pack 2-4: Mix of Common/Uncommon/Rare (build anticipation)
-- Pack 5: Guaranteed Rare minimum (finish strong)
+- **Pack 1** (5 cards): 3 Common + 1 Uncommon + 1 Epic (HOOK - early dopamine hit)
+  - Animation: **Unskippable** (20 seconds total, 4 sec/card)
+  - After Pack 1 completes: **"Skip to Results" button appears** (bottom-right corner)
+  
+- **Pack 2-4** (15 cards): Mix of Common/Uncommon/Rare
+  - Animation: **Skippable** (tap "Skip to Results" → instant reveal of all 15 cards)
+  - If skip: Total time = 20 sec (Pack 1) + 1 sec (instant reveal) = **21 seconds**
+  - If watch: Total time = 20 sec + 60 sec = **80 seconds**
+
+**Skip Behavior** (Gap 3 Resolution):
+- First pack **mandatory** (showcases animation quality, hooks player with Epic)
+- Button appears after Pack 1: **"Skip to Results"** with confirmation
+- Confirmation dialog: "Skip remaining packs? You can replay animations in Codex later. [Skip] [Keep Watching]"
+- If skip: All 15 remaining cards appear instantly in grid (no animation loss, saved to replay)
 
 **Player Experience**:
-- Total time: 60-90 seconds (4-5 seconds per card × 20 cards)
-- Skippable after Pack 1 (Button: "Skip to Results" appears)
-- Can re-watch pack openings in Codex later (replay animation)
+- **Fast path**: 21 seconds (Pack 1 mandatory + skip rest)
+- **Full experience**: 80 seconds (watch all animations)
+- **Replay**: Codex has "Replay Pack Opening" for each pack (re-watch anytime)
 
-**Design Decisions Needed**:
-- [ ] Pack opening speed (4 seconds per card = 80 seconds total, too long?)
-- [ ] Skip behavior (instant reveal all or fast-forward animation?)
-- [ ] Epic reveal choreography (screen shake intensity, particle duration)
-- [ ] Sound design (unique chime per rarity, voice lines?)
-- [ ] Legendary near-miss (show "gold glow" that fades to purple if 3% fails?)
-
-**Gap**: Pack opening animation specifics need Unity VFX design
+**Design Decisions** (Resolved):
+- ✅ Pack opening speed: 4 sec/card standard, 3 sec for Epic (extended flourish)
+- ✅ Skip behavior: First pack mandatory, rest skippable (Pokemon model)
+- ✅ Epic reveal choreography: Screen shake (0.2 sec), particle burst (2 sec), fanfare audio (2 sec)
+- ✅ Sound design: Unique chime per rarity (Common=ping, Uncommon=chime, Rare=bell, Epic=orchestra hit)
+- ✅ Legendary near-miss: Not in starter packs (too confusing for tutorial)
 
 ---
 
@@ -191,26 +256,28 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 **Screen**: Your Starting Collection
 ```
 [Header: "Your Starting Collection - 20 Cards"]
-[Grid view: All 20 cards displayed]
+[Grid view: All 20 cards displayed (4 rows × 5 columns)]
 [Sorting: Rarity (Epic → Common), then alphabetical]
 
-[Highlighted: Epic Fire Warrior] (pulsing border)
+[Highlighted: Epic Water Mage] (gold pulsing border)
 [Text: "Your first Epic hero! Let's build a deck around it."]
 
-[Button: "Build My Deck"] (large, pulsing)
+[Button: "Build My Deck"] (large, center, pulsing)
 ```
 
 **Player Action**: Taps "Build My Deck"
 
 **System Actions**:
-1. Cache all 20 cards in Codex
-2. Mark all as "new" (badge indicator)
-3. Prepare deck builder UI
+1. Add all 20 cards to Codex (player collection)
+2. Mark all cards as "New!" (gold badge indicator)
+3. Validate Balanced Explorer deck is buildable from pool
+4. If missing cards for deck: Silent auto-grant (see Fallback Logic in Step 6)
+5. Load deck builder scene
 
-**Design Decisions Needed**:
-- [ ] Grid vs List view (grid = see card art, list = see stats)
-- [ ] Filter/Sort controls (unlock later or show grayed out?)
-- [ ] Tap card for details (modal popup with full stats?)
+**Design Decisions** (Resolved):
+- ✅ Grid view default (shows card art for visual appeal)
+- ✅ Filter/Sort controls hidden until tutorial complete (reduce cognitive load)
+- ✅ Tap card for details: Shows modal popup with full stats (Attack, Defense, HP, Ability text)
 
 ---
 
@@ -460,6 +527,9 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 [Bottom: Your Hand - 11 cards displayed]
 [Cards: Epic Water Mage, 2× Knight, 2× Archer, 2× Scout, 1× Healer, 1× Granary, 1× Watchtower, 1× Tactic]
 
+[Bottom-Left: Button "Reset Formation"]
+[Bottom-Right: Button "Start Battle" (disabled until 11/11 placed)]
+
 [Tutorial Overlay]:
 "Place your hero in the front line!"
 [Highlight: Water Mage card pulsing]
@@ -469,11 +539,23 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 **Player Action**: Drags Water Mage card to center-front tile
 
 **Visual Feedback**:
-- Card lifts off hand (zoom 1.2x)
-- Drag ghost shows placement preview
-- Tile glows green (valid placement)
-- Snap animation when placed
-- Card locks in place, border turns blue
+- Card lifts off hand (zoom 1.2×, rotation tilt 5°)
+- Drag ghost shows placement preview (50% opacity)
+- Tile glows green (valid placement) or red (invalid)
+- Snap animation when placed (0.2 sec ease-out)
+- Card locks in place, border turns blue (placed state)
+
+**Placement Undo Mechanics** (Gap 4 Resolution):
+1. **Drag-to-Reposition**: Tap placed card → Drag to new tile → Release to move
+2. **Reset Formation**: Taps "Reset Formation" button
+   - Confirmation dialog: "Reset formation and return all cards to hand? [Cancel] [Reset]"
+   - If Reset: All placed cards return to hand, grid clears
+3. **Auto-Save**: Formation saved as player places (if leave scene, cards stay placed on return)
+
+**Edge Cases**:
+- **Mid-drag cancel**: Release card on invalid tile (red) → Returns to hand with bounce animation
+- **Overlapping cards**: Prevent placement on occupied tiles (highlight red, shake animation)
+- **Reset during tutorial**: Tutorial text updates ("Try again! Remember, place Hero first.")
 
 **System Actions**:
 1. Validate placement (front row allowed for heroes)
@@ -630,19 +712,36 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 3. Goblin Chief attacks Knight (Knight: 30 HP → 22 HP)
 4. Goblin Archer shoots at Water Mage (Water Mage: 50 HP → 43 HP)
 
-[Each action: 1-second animation]
-[Total enemy turn: 4-5 seconds]
+[Each action: 1-second animation at 1× speed]
+[Total enemy turn: 4-5 seconds at 1× speed]
 
 [Text: "Enemy Turn Complete"]
 [Auto-advances to Player Turn 2]
 ```
 
-**Design Decisions Needed**:
-- [ ] Enemy turn speed (1× speed, 2× speed, instant?)
-- [ ] Can player skip enemy turn? (Recommend YES - "Skip" button appears after 1 second)
-- [ ] Enemy AI "thinking" animation (hourglass icon?)
+**Battle Speed Settings** (Gap 5 Resolution):
+- **Tutorial**: Locked to **1× Normal speed** (forces player to learn animations)
+- **Post-Tutorial Unlock**: Settings menu adds Battle Speed options
+  - 1× Normal: 1.0 sec movement, 1.5 sec attack, 1.0 sec death
+  - 2× Fast: 0.5 sec movement, 0.75 sec attack, 0.5 sec death
+  - 4× Very Fast: 0.25 sec movement, 0.4 sec attack, 0.25 sec death
+  - Instant: 0 sec animations (units teleport, damage instant, but show numbers 1 sec)
 
-**Gap**: Enemy turn animation speed control (settings menu option?)
+**Settings Menu** (unlocks Step 28):
+```
+[Battle Speed]:
+◉ 1× Normal (default)
+○ 2× Fast
+○ 4× Very Fast
+○ Instant (no animations)
+
+Note: PvP battles always use 1× speed (fair for both players)
+```
+
+**Design Decisions** (Resolved):
+- ✅ Enemy turn speed: 1× forced for tutorial, player choice post-tutorial
+- ✅ Skip enemy turn: Not in tutorial (need to see what happened), available post-tutorial
+- ✅ Enemy AI "thinking": No animation (instant decision, just execute actions)
 
 ---
 
@@ -697,45 +796,77 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 
 **Victory Condition**: All 6 enemy units defeated
 
-**Design Decisions Needed**:
-- [ ] When to stop tutorial? (after 2 manual turns, or once player deals 50% damage?)
-- [ ] Failure handling (if player loses tutorial battle - retry or resurrect for free?)
+**Tutorial Safety Nets** (Gap 9 Resolution - Tutorial Failure Recovery):
+This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 weak cards), but handle edge cases:
 
-**Gap**: Tutorial battle is designed to be unlosable, but need failure recovery flow
+1. **If player loses** (impossible but handle it):
+   - Defeat screen: "Defeat... but every hero stumbles once."
+   - Button: "Try Again (Free Resurrection)"
+   - If tapped: All units restored to full HP, battle restarts from placement phase
+   - Tutorial text: "Let's adjust your formation!"
+
+2. **If player force-quits mid-battle**:
+   - On relaunch: "Welcome back! Your battle is still in progress."
+   - Buttons: [Resume Battle] [Retreat to County Map]
+   - Retreat: No penalties (units restored, no XP loss, can retry later)
+
+3. **If player loses 3 times** (extremely unlikely, indicates bug):
+   - After 3rd defeat: "This battle seems tough. Let's skip it for now."
+   - Auto-Win: Player granted victory rewards (XP, gold, cards)
+   - Tutorial advances to next step
+   - Analytics flag: `Tutorial_AutoWin_Triggered` (developer notification)
+
+**Free Retries**: First 3 battles allow unlimited free resurrections (no death penalty, no resource cost)
 
 ---
 
 ### Step 23: Victory Screen
 **Screen**: Victory!
 ```
-[Background: Animated victory fanfare]
-[Large text: "VICTORY!"]
-[Fireworks VFX]
+[Background: Animated victory fanfare, golden particles]
+[Large text: "VICTORY!" (3-second animation, skippable after 1 sec)]
+[Fireworks VFX: 2-second burst]
 
 [Rewards Box]:
 📊 +100 XP (Player Level: 1 → 1, 100/250 XP to Level 2)
 💰 +500 Gold (Total: 500 Gold)
-🎴 +1 Common Card: [Spearman] (revealed with animation)
-🏆 Achievement Unlocked: "First Victory"
 
-[Button: "Continue"]
+🎴 New Card Acquired:
+[Card Visual: Common Spearman]
+(Auto-added to Codex)
+
+[Optional Button: "View Codex"]
+[Primary Button: "Continue"]
+
+🏆 Achievement Unlocked: "First Victory" (toast notification, top-right)
 ```
 
-**Player Action**: Taps "Continue"
+**Player Action**: Taps "Continue" (most common) or "View Codex" (optional)
+
+**Card Reward Destination** (Gap 6 Resolution):
+- **Auto-add to Codex** (no interruption, no deck management mid-victory)
+- **"New!" Badge**: Card highlighted in Codex with gold border
+- **No prompt**: Don't ask "Add to Deck?" (interrupts victory high)
+- **Optional**: "View Codex" button lets player inspect immediately if curious
+- **Replay**: Codex shows all acquired cards with timestamps
+
+**Why Auto-Add?**
+- Hearthstone model: All rewards auto-add, player manages deck later in Collection
+- No friction: Victory → Rewards → Continue (smooth flow)
+- Codex is the hub: All card management happens in Codex, not mid-battle
 
 **System Actions**:
-1. Award XP, gold, card
-2. Add card to Codex (not auto-added to deck)
-3. Check for level-up (no, still Level 1)
-4. Unlock "Auto-Battle" feature for future battles
-5. Return to County Map
+1. Award XP: +100 (total 100/250 to Level 2)
+2. Award gold: +500 (total 500 gold)
+3. Award card: Common Spearman → Add to Codex (mark as "New!")
+4. Store badge: `PlayerPrefs.SetInt("Card_spearman_New", 1)` (for Codex highlight)
+5. Unlock Auto-Battle feature (shown in next step)
+6. Return to County Map
 
-**Design Decisions Needed**:
-- [ ] Victory fanfare duration (3 seconds? 5 seconds? skippable?)
-- [ ] Card reward destination (Codex or prompt "Add to Deck?")
-- [ ] Achievement notification (modal popup or toast notification?)
-
-**Gap**: Where do card rewards go? (Codex auto-add or player choice?)
+**Design Decisions** (Resolved):
+- ✅ Victory fanfare duration: 3 seconds total, skippable after 1 second
+- ✅ Card reward destination: Auto-add to Codex with "New!" badge (no prompt)
+- ✅ Achievement notification: Toast notification (top-right, 3-second fade)
 
 ---
 
@@ -768,15 +899,47 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 
 **Auto-Battle Flow**:
 1. Cards auto-place using "Balanced Formation" preset
-2. Battle auto-plays in 5-10 seconds
+2. Battle auto-plays in 10 seconds (5-8 turns compressed)
 3. Victory (guaranteed for tutorial spawns)
 4. Rewards screen (same as manual)
-5. "That was fast! Auto-Battle is great for farming." (tutorial text)
+5. Tutorial text: "That was fast! Auto-Battle is great for farming."
 
-**Design Decisions Needed**:
-- [ ] Auto-Battle speed (5 seconds, 10 seconds, instant with results?)
-- [ ] Can cancel mid-auto-battle? (switch to manual control?)
-- [ ] Auto-Battle loss handling (if AI loses, retry as manual?)
+**Auto-Battle Loss Handling** (Gap 7 Resolution):
+If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
+
+1. **Defeat Screen**:
+   ```
+   "Your army was defeated!"
+   - Casualties: 3 units lost (visual shows cards)
+   - XP penalty: -10 XP (minor setback)
+   
+   Auto-retry? (1 free retry)
+   [Try Again (Auto)] [Fight Manually] [Retreat]
+   ```
+
+2. **First Loss**: Offer **1 free auto-retry** (system reruns battle, no penalty)
+   - If retry wins: Continue normally
+   - If retry loses: Force choice (Manual or Retreat)
+
+3. **Second Loss**: Force manual battle or retreat
+   - Manual: Player takes control, retry with manual placement
+   - Retreat: Return to County Map, units restored, no casualties (safe escape)
+
+4. **Retreat Mechanic**:
+   - No unit loss (all cards returned to deck)
+   - No XP penalty
+   - Can re-challenge later
+   - Tutorial text: "Sometimes retreating is the smart choice."
+
+**Auto-Battle Settings** (unlocked Step 28):
+- Speed: 5 sec (Instant) / 10 sec (Fast) / 15 sec (Normal with animations)
+- Free Retries: 1 per battle (prevents frustration)
+- Retreat: Always available (no trap battles)
+
+**Design Decisions** (Resolved):
+- ✅ Auto-Battle speed: 10 seconds default (shows key moments), instant option in settings
+- ✅ Cancel mid-auto-battle: No (let battle finish, only 10 seconds)
+- ✅ Auto-Battle loss: 1 free retry, then manual or retreat (AFK Arena lite model)
 
 ---
 
@@ -836,7 +999,7 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
 **Screen**: County Map - Gold Mine Discovered
 ```
 [Player army explores, reveals Gold Mine tile]
-[Gold Mine: Neutral tile, no enemies, gold icon]
+[Gold Mine: Neutral tile, no enemies, gold coin icon]
 
 [Tutorial Overlay]:
 "You found a Gold Mine! Deploy Economy Cards here for passive income."
@@ -847,30 +1010,94 @@ Card 4: [EPIC FIRE WARRIOR] - SLOW reveal, PURPLE PARTICLE BURST, screen shake
   - Option 2: Skip (can deploy later)
 ```
 
-**If Player Chooses "Deploy Now"**:
+**Economy Card Deployment Flow** (Gap 8 Resolution - Full Design):
+
+**Step 1: Discovery**
+- Player's army moves onto resource node tile (Gold Mine, Forest, Quarry, etc.)
+- Tutorial text: "Resource nodes produce passive income when buildings are deployed."
+
+**Step 2: Deployment Menu**
 ```
 [Economy Card Menu]:
 Available Economy Cards in Deck:
-- 1× Granary (Food production)
-- 1× Watchtower (Vision, no income)
+- 1× Granary (Food production, MISMATCH)
+- 1× Mine (Gold production, MATCH!)
+- 1× Watchtower (Vision, no production)
 
-[Tutorial text]:
-"You don't have a Mine building yet! You can deploy other buildings or wait to get a Mine card."
+[If player has matching building]:
+"Deploy Mine on Gold Mine?"
+- Production: +100 Gold/hour
+- Match Bonus: 100% efficiency (Mine on Gold Mine = full rate)
+[Deploy] [Cancel]
 
-[Player deploys Granary]:
-- Granary placed on Gold Mine tile
-- Tile shows: Gold Mine + Granary icon + "+20 Food/hour"
-- Granary card removed from deck (stays on tile)
+[If deploying mismatched building]:
+"Deploy Granary on Gold Mine?"
+- Production: +50 Gold/hour (mismatched type, 50% penalty)
+- Note: Granary works best on Farms
+[Deploy] [Cancel]
 ```
 
-**Tutorial Text**: "Your Granary will produce food while you're away! To retrieve it, return here later."
+**Step 3: Building Deployed**
+```
+[Tile visual changes]:
+- Gold Mine icon + Mine building sprite overlay
+- Timer: "0/60 min" (production starts immediately)
+- Income rate: "+100 Gold/hour" (floating text above tile)
 
-**Design Decisions Needed**:
-- [ ] Economy card tutorial timing (now or later?)
-- [ ] Force economy deployment or optional?
-- [ ] What if player has no matching building for node type?
+[Mine card removed from battle deck]
+(Stays on tile until retrieved)
+```
 
-**Gap**: Economy card deployment flow needs full design (retrieval, income display, etc.)
+**Step 4: Passive Production (AFK)**
+- Player can leave, play other battles, or close app
+- Production runs in background (up to **12 hours offline cap**)
+- Example: Player returns 30 min later → **+50 Gold accumulated**
+
+**Step 5: Collect Income**
+```
+[Player taps Gold Mine tile 30 min later]:
+"Collect +50 Gold?"
+- Timer: 30/60 min elapsed
+- Accumulated: +50 Gold (ready to collect)
+- Full production: Wait 30 more min for +100 Gold
+
+[Collect] [Wait for Full]
+```
+
+If player taps **Collect**:
+- +50 Gold added to inventory (Total: 3,050 Gold)
+- Timer resets to 0/60 min
+- Production continues (next 60 min cycle)
+
+**Step 6: Retrieve Building (Optional)**
+```
+[Player taps Gold Mine tile after collecting]:
+[Building Options Menu]:
+- Collect Income: +100 Gold (60 min elapsed)
+- Retrieve Building (returns Mine card to deck)
+- Upgrade Building (unlocks at Level 5, costs gold)
+
+[If player taps Retrieve]:
+"Retrieve Mine building?"
+- Stops production immediately
+- Returns Mine card to battle deck
+- Tile returns to empty Gold Mine (available for redeployment)
+- Retrieval cost: **Free for tutorial** (instant), later costs time or resources
+
+[Retrieve] [Cancel]
+```
+
+**Edge Cases**:
+- **No matching building**: Can deploy any economy card, but mismatch = 50% production rate
+- **Offline income cap**: Max 12 hours of production (e.g., 1,200 Gold from Mine at 100/hour)
+- **Multiple nodes**: Can deploy on multiple tiles (limited by economy cards owned)
+- **Tile conquest (PvP)**: If tile is lost in PvP, building returns to deck automatically (no loss)
+
+**Design Decisions** (Resolved):
+- ✅ Economy tutorial timing: **Optional** after first resource node discovery (not forced)
+- ✅ Force deployment: No, player can skip and deploy later
+- ✅ Mismatch penalty: 50% production rate (Granary on Gold Mine = 50 Gold/hour instead of 100)
+- ✅ Retrieval cost: Free in tutorial/PvE, costs gold or time in PvP zones
 
 ---
 
@@ -881,19 +1108,20 @@ Available Economy Cards in Deck:
 "🎉 Tutorial Complete! 🎉"
 
 Unlocked:
-✅ Auto-Battle (fast combat)
-✅ Codex (manage collection)
-✅ County Map (explore freely)
+✅ Auto-Battle (fast combat, 1 free retry per battle)
+✅ Battle Speed Settings (1×/2×/4×/Instant)
+✅ Codex (manage collection, deck builder)
+✅ County Map (explore freely, 10-20 tiles)
 ✅ Daily Login Rewards (start tomorrow)
 ✅ Pack Shop (buy packs with gold)
 
 [Rewards]:
-- 1,000 Gold bonus
+- 1,000 Gold bonus (Total: ~3,500 Gold)
 - 1 Rare Pack (5 cards)
-- "Tutorial Graduate" title
+- "Tutorial Graduate" title badge
 
 [Next Steps]:
-- Complete County Map (defeat Boss)
+- Complete County Map (defeat Boss, 10-20 battles)
 - Join Alliance (unlock at Level 10)
 - Try Arena PvP (unlock at Level 15)
 
@@ -902,11 +1130,11 @@ Unlocked:
 
 **Player Action**: Taps "Continue Playing"
 
-**System unlocks**:
-1. Full County Map access (10-20 tiles, 1 Boss)
-2. Pack shop available
-3. Daily rewards start tomorrow
-4. Settings menu unlocked (audio, controls, name change)
+**System Unlocks**:
+1. **Full County Map**: 10-20 tiles, 1 Boss battle (harder difficulty)
+2. **Pack Shop**: Buy Standard Packs (5 cards, 1,000 gold each)
+3. **Daily Rewards**: Login streaks start tomorrow (Day 1: 100 gold, Day 7: Rare Pack)
+4. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
 
 ---
 
@@ -934,40 +1162,55 @@ Unlocked:
 
 ---
 
-## Open Gaps & Design Decisions Needed
+## All Critical Gaps RESOLVED ✅
 
-### Critical Gaps:
-1. **EULA/Privacy acceptance flow** (legally required, not designed)
-2. **Card pool fallback logic** (what if starter deck can't be built from 20 cards?)
-3. **Pack opening skip behavior** (instant reveal or fast-forward animation?)
-4. **Placement undo mechanics** (can player reset formation before battle?)
-5. **Enemy turn animation speed** (settings option for 1×, 2×, 4×, instant?)
-6. **Card reward destination** (auto-add to Codex or prompt "Add to Deck?")
-7. **Auto-Battle loss handling** (retry as manual or auto-retry?)
-8. **Economy card deployment full flow** (retrieval, income display, tile limits)
-9. **Tutorial failure recovery** (if player loses tutorial battle - impossible but need plan)
+All 9 critical gaps have been integrated directly into the tutorial flow above. For detailed design rationale and implementation notes, see [tutorial-gap-resolutions.md](tutorial-gap-resolutions.md).
 
-### Design Decisions Needed:
-- [ ] Splash screen duration and logo animation style
-- [ ] Default player name format (Player_12345 vs Sovereign_12345)
-- [ ] Name change policy (free first change, then cost?)
-- [ ] Pack opening speed (4 sec/card too slow?)
-- [ ] Legendary near-miss effect (show gold glow that fades?)
-- [ ] Grid vs List view for Codex
-- [ ] Movement animation speed (instant, 0.5 sec, 1 sec?)
-- [ ] Attack animation length (0.5 sec, 1 sec, 2 sec?)
-- [ ] Death animation style (shatter, fade, dissolve?)
-- [ ] Victory fanfare duration (3 sec, 5 sec, skippable?)
-- [ ] Auto-Battle speed (5 sec, 10 sec, instant?)
-- [ ] Codex tutorial timing (after 3 battles or Level 2?)
-- [ ] Economy card tutorial timing (force now or optional?)
+**Gap Resolution Summary**:
+1. ✅ **EULA/Privacy** - Mandatory checkbox screen (Step 2B, App Store compliance)
+2. ✅ **Card Pool Fallback** - 10 guaranteed cards + silent auto-grant (Step 6, no stuck players)
+3. ✅ **Pack Skip** - First pack mandatory, rest skippable (Step 6, 21 sec vs 80 sec)
+4. ✅ **Placement Undo** - Drag-to-reposition + Reset Formation button (Step 15, XCOM model)
+5. ✅ **Battle Speed** - Settings for 1×/2×/4×/Instant (Step 20, unlocks Step 28)
+6. ✅ **Card Rewards** - Auto-add to Codex with "New!" badge (Step 23, Hearthstone model)
+7. ✅ **Auto-Battle Loss** - 1 free retry, then manual or retreat (Step 24, AFK Arena lite)
+8. ✅ **Economy Deployment** - Full deploy → collect → retrieve flow (Step 27, 12hr offline cap)
+9. ✅ **Tutorial Failure** - Free resurrection ×3 + auto-win failsafe (Step 22, Pokemon model)
+
+**All Design Decisions RESOLVED ✅**:
+- ✅ Splash duration: 2-3 seconds (asset loading time)
+- ✅ Default name: `Player_12345` (5-digit random)
+- ✅ Name change: Free once at Level 3, then 100 gold
+- ✅ Pack opening: 4 sec/card standard, 3 sec for Epic
+- ✅ Pack skip: First pack mandatory (21 sec fast path)
+- ✅ Codex view: Grid default (visual appeal)
+- ✅ Movement speed: 1.0 sec at 1×, adjustable post-tutorial
+- ✅ Attack length: 1.5 sec at 1×, adjustable post-tutorial
+- ✅ Death animation: Shatter effect (0.5 sec at 1×)
+- ✅ Victory fanfare: 3 sec total, skippable after 1 sec
+- ✅ Auto-Battle speed: 10 sec default, instant option available
+- ✅ Codex tutorial: After 3 battles (Step 26)
+- ✅ Economy tutorial: Optional after first resource node (Step 27)
 
 ---
 
-## Next Steps
+## Implementation-Ready Specifications
 
-1. **Resolve critical gaps** (EULA, card pool fallback, placement undo)
-2. **Make design decisions** (animation speeds, UI layouts, timing)
-3. **Create Unity scene breakdown** (Tutorial_01_CardDraw, Tutorial_02_DeckBuild, etc.)
-4. **Write QA test script** (literal step-by-step checklist for testing)
-5. **Build MVP scope document** (what to implement in Phase 1)
+This document is now **QA-ready** and **developer-ready**:
+- ✅ All UI screens defined (28 steps, minute-by-minute)
+- ✅ All player actions specified (tap, drag, choice points)
+- ✅ All system responses documented (validations, animations, rewards)
+- ✅ All edge cases handled (failures, retries, cancellations)
+- ✅ All animations timed (durations, speeds, skip behavior)
+
+**For Unity Implementation**: See [mvp-scope.md](mvp-scope.md) for:
+- Week-by-week build plan (8 weeks to MVP)
+- Code examples (CardData, BattleManager, PackOpening)
+- Scene structure (EULA → MainMenu → CardDraw → DeckBuilder → Battle)
+- File organization (Scripts/, Prefabs/, Scenes/)
+
+**For QA Testing**: Use this document as literal test script:
+- Follow each step exactly (Step 1 → Step 28)
+- Verify all UI elements appear as described
+- Test all edge cases (skip, undo, retry, retreat)
+- Confirm timings match specifications (pack opening, battle speed)
