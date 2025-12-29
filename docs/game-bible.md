@@ -1396,25 +1396,25 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
   - Heroes, Units, Tactics, Equipment
   - Used for combat and exploration
   - Can be split into multiple hero-led armies on county map
-- **Resource Cards**: 10-15 (separate category, not counted in rarity budget)
+- **Economy Cards**: 10-15 (separate category, not counted in rarity budget)
   - Buildings: Farm, Mine, Lumber Mill, Turret, Wall
   - Workers: Farmer, Miner, Lumberjack, Scout
   - Deployed to captured tiles for AFK income
   - Left behind when army moves (must return to retrieve)
-- **Max Total Deck**: 50 battle + 15 resource = **65 cards** (Level 30+ only)
+- **Max Total Deck**: 50 battle + 15 economy = **65 cards** (Level 30+ only)
 
 **Why Separate Categories?**:
-- ✅ **Clarity**: Battle cards fight, resource cards generate income
+- ✅ **Clarity**: Battle cards fight, economy cards generate income
 - ✅ **Strategy**: Decide which tiles deserve resource investment
 - ✅ **Risk/Reward**: Leave valuable workers behind, or keep army flexible?
-- ✅ **Economy Management**: Resource cards are strategic deployments, not combat filler
+- ✅ **Economy Management**: Economy cards are strategic deployments, not combat filler
 
 **Card Category Breakdown**:
 
 | Category | Types | Count Limit | Counted in Rarity Budget? | Use Case |
 |----------|-------|-------------|---------------------------|----------|
 | **Battle Cards** | Heroes, Units, Tactics, Equipment | 10-50 (Player Level) | ✅ Yes | Combat, exploration, formations |
-| **Resource Cards** | Buildings, Workers | 10-15 (fixed) | ❌ No | AFK income, tile upgrades |
+| **Economy Cards** | Buildings, Workers | 10-15 (fixed) | ❌ No | AFK income, tile upgrades |
 
 **Example Level 20 Deck**:
 - **Battle Cards** (35 total, 200 rarity points):
@@ -1423,7 +1423,7 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
   - 12 Rare Units (48 pts)
   - 16 Common/Uncommon Units (20 pts)
   - Total: 140 points (under 200 budget ✅)
-- **Resource Cards** (12 total, separate):
+- **Economy Cards** (12 total, separate):
   - 3 Farms
   - 2 Mines
   - 1 Lumber Mill
@@ -1437,7 +1437,7 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
 - ✅ **Allows whales to flex** (can still build heavy Legendary decks, just fewer cards)
 - ✅ **F2P viable** (Common/Uncommon decks are cheap, can compete with strategy)
 - ✅ **Scales with progression** (higher level = bigger budget = more power)
-- ✅ **Resource cards separate** (don't compete with battle card budget)
+- ✅ **Economy cards separate** (don't compete with battle card budget)
 
 ---
 
@@ -1817,16 +1817,16 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-#### Resource Card Deployment (Strategic Tile Upgrades)
+#### Economy Card Deployment (Strategic Tile Upgrades)
 
-**How Resource Cards Work**:
+**How Economy Cards Work**:
 
 **1. Capture Tile with Resource Node**:
 - Defeat spawn guarding **Gold Mine** tile
 - Tile now controlled (shows your faction color)
 
-**2. Deploy Resource Cards**:
-- Open **Resource Card Menu** (while army on tile)
+**2. Deploy Economy Cards**:
+- Open **Economy Card Menu** (while army on tile)
 - Select cards to deploy:
   - 1× Mine (building) → +50 gold/hour AFK
   - 2× Miner (worker) → +25 gold/hour each (+50 total)
@@ -1835,19 +1835,19 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 **3. Army Leaves Tile**:
 - Move army to next objective
-- Resource cards **stay behind** (static deployment)
-- Tile shows: Small flag + Mine icon + "3 resource cards" badge
+- Economy cards **stay behind** (static deployment)
+- Tile shows: Small flag + Mine icon + "3 economy cards" badge
 - AFK income continues (100 gold/hour) even when army is elsewhere
 
 **4. Retrieval**:
 - **Problem**: Want to move Miners to different tile
 - **Solution**: Send hero back to original tile
-- **Process**: Army moves onto tile → "Retrieve Resource Cards" → select which to take → cards added back to army deck
+- **Process**: Army moves onto tile → "Retrieve Economy Cards" → select which to take → cards added back to army deck
 - **Strategic Decision**: Is it worth the time to retrieve, or leave them?
 
-**Resource Card Deployment Limits**:
+**Economy Card Deployment Limits**:
 
-| Resource Node Type | Max Resource Cards Per Tile | AFK Income Bonus |
+| Resource Node Type | Max Economy Cards Per Tile | AFK Income Bonus |
 |--------------------|------------------------------|------------------|
 | **Gold Mine** | 5 (1 Mine + 4 Miners) | +200 gold/hour max |
 | **Farm** | 5 (1 Farm + 4 Farmers) | +50 food/hour max |
@@ -1855,7 +1855,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 | **Turret/Wall Tile** | 3 (Defensive structures only) | No income, +defense |
 
 **Why Retrieval Matters**:
-- ✅ **Resource cards are limited** (only 10-15 in deck)
+- ✅ **Economy cards are limited** (only 10-15 in deck)
 - ✅ **Opportunity cost**: Miners on Tile A can't help Tile B
 - ✅ **Strategic redeployment**: Move workers to better tiles as you progress
 - ❌ **Time cost**: Hero must backtrack (wastes turns in PvP or empowers enemies in PvE)
@@ -1879,13 +1879,13 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 **Why Time Pressure?**:
 - ✅ Discourages infinite farming (get stronger, but so do enemies)
 - ✅ Rewards efficient pathing (plan route to boss)
-- ✅ Makes retrieving resource cards risky (every turn counts)
+- ✅ Makes retrieving economy cards risky (every turn counts)
 - ❌ Can disable for "Casual Mode" (no time pressure, farm forever)
 
 **PvP County Battles** (Guild vs Guild Events):
 
 **"Skip Turn" Mechanic**:
-- **Problem**: Hero is backtracking to retrieve resource cards
+- **Problem**: Hero is backtracking to retrieve economy cards
 - **Solution**: Click "Skip Turn" → hero doesn't move this turn
 - **Cost**: Opponent gets extra turn (2 actions vs your 1)
 - **Strategy**: Only skip if absolutely necessary (repositioning, waiting for reinforcements)
@@ -1926,7 +1926,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 **Player Journey with Multiple Armies & Resource Management**:
 
-1. **Deploy Deck to County Map**: Full 30 battle cards + 10 resource cards
+1. **Deploy Deck to County Map**: Full 30 battle cards + 10 economy cards
 2. **Split into Hero-Led Armies**: 
    - Thor + 15 units (main force)
    - Fire Mage + 10 units (support force)
@@ -1937,8 +1937,8 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
    - Knight scouts right (reveals fog fast)
 4. **Capture Resource Nodes**:
    - Thor defeats spawn guarding Gold Mine
-   - Deploy 1 Mine + 2 Miners (3 resource cards placed)
-   - Thor continues forward, resource cards stay behind (+100 gold/hour AFK)
+   - Deploy 1 Mine + 2 Miners (3 economy cards placed)
+   - Thor continues forward, economy cards stay behind (+100 gold/hour AFK)
 5. **Recruit Flex Heroes**:
    - Fire Mage captures Town 1 → +1 Rare Healer (temp ally)
    - Knight captures Town 2 → +1 Epic Berserker (temp ally)
@@ -3206,20 +3206,138 @@ Social features build community, from alliances for large-scale play to friends 
 ## 6.1 Alliance System
 
 ### Overview
-Alliances are guilds for cooperative play, enabling shared resources and joint events.
+Alliances are guilds for cooperative play, enabling shared resources and joint events. Players unlock alliance features progressively as they level up their account, ensuring new players master PvE fundamentals before entering competitive multiplayer.
 
-### How to Play
-- **Join/Create**: Search or found alliances; invite players.
-- **Hierarchy**: Leader > Generals > Officers > Members; promote via contributions.
-- **Bank**: Shared treasury for donations; funds buffs/tech trees.
-- **Events**: Joint raids, tournaments; coordinated PvP.
+### Player Level Progression: Safe Growth to Competitive Play
+
+**Design Philosophy**: Players should grow to Level 30 through **safe PvE content** without being constantly raided by high-level players. PvP is **opt-in**, not forced. This prevents new players from wasting resources healing expensive Epic/Legendary units while learning the game.
+
+#### Level 10: Alliance Join (Social Foundation)
+**Unlocks**:
+- Join or create an alliance (up to 100 members)
+- Access alliance chat and diplomacy channels
+- Participate in **Alliance PvE Events** (cooperative raids against AI bosses)
+- Donate to alliance treasury for buffs
+- Vote on alliance decisions (ally/war declarations)
+
+**What You CAN'T Do Yet**:
+- ❌ Join PvP Arena battles (requires Level 15)
+- ❌ Participate in Alliance Wars (requires Level 30)
+- ❌ Deploy to active PvP maps (requires Level 20)
+
+**Why This Level?**:
+- By Level 10, players have 25-30 card decks and understand deck building
+- Alliance PvE events teach coordination without PvP risk
+- Social bonding builds community before competitive pressure
+- Players learn alliance mechanics (treasury, voting, diplomacy) in safe environment
+
+---
+
+#### Level 15: Controlled PvP (Matchmade Arenas)
+**Unlocks**:
+- **1v1 Arena**: Matchmade battles against players within ±3 levels
+- **3v3 Arena**: Team battles with alliance members or random teammates
+- **Bracketed Rewards**: Separate reward pools for Level 15-19, 20-24, 25-29, 30+ brackets
+- **No Territory Loss**: Arena battles don't affect your map territories (safe practice)
+
+**What You CAN'T Do Yet**:
+- ❌ Deploy to active PvP maps (requires Level 20)
+- ❌ Raid other players' territories (requires Level 20)
+- ❌ Participate in Alliance Wars (requires Level 30)
+
+**Why This Level?**:
+- Players have 30-35 card decks and multiple Epic heroes
+- Controlled matchmaking prevents Level 30 stomps
+- No permanent losses (territories safe) = low-risk experimentation
+- Learn PvP tactics before open-world map battles
+
+**Bracketed Matchmaking Prevents Unfair Fights**:
+| Player Level Bracket | Matchmaking Pool | Max Deck Size | Typical Deck Power |
+|----------------------|------------------|---------------|---------------------|
+| **15-19** | Only Level 15-19 players | 30-35 cards | 2-3 Epics, mostly Rares |
+| **20-24** | Only Level 20-24 players | 35-40 cards | 3-5 Epics, 1 Legendary |
+| **25-29** | Only Level 25-29 players | 40-45 cards | 5+ Epics, 2-3 Legendaries |
+| **30+** | All Level 30+ players | 40-50 cards | Full Legendary/Mythic decks |
+
+---
+
+#### Level 20: Active PvP Maps (Open-World Conquest)
+**Unlocks**:
+- Deploy decks to **Active PvP Maps** (open-world territorial conquest)
+- Raid other players' territories (steal resources, capture tiles)
+- Defend your territories from raids (auto-battle or manual)
+- **Warning**: Your territories CAN be attacked by other Level 20+ players
+- Participate in **Regional Competitions** (State/County-level leaderboards)
+
+**What You CAN'T Do Yet**:
+- ❌ Participate in Alliance Wars (requires Level 30)
+
+**Why This Level?**:
+- Players have 35-40 card decks with solid Legendary cards
+- Enough experience to defend territories effectively
+- Resources to heal units after losses (3-4 weeks of AFK income built up)
+- Understand risk/reward of open-world PvP
+
+**Opt-In System**:
+- **PvE-Only Toggle**: Players can stay in "PvE Mode" indefinitely (territories never attacked)
+- **Opt Into PvP**: Click "Enable PvP Mode" to deploy to Active PvP Maps
+- **Once Enabled**: Cannot disable for 7 days (prevents exploit of "turn off when losing")
+- **Rewards**: PvP maps have 2× resource nodes and exclusive Legendary card packs
+
+**Safe Zone Protection**:
+- **First 24 Hours**: New PvP territories have "Shield" (cannot be attacked)
+- **Beginner Bracket**: Level 20-24 players matched against similar levels on dedicated maps
+- **Anti-Griefing**: If you're attacked 3× in 24 hours, auto-shield activates for 12 hours
+
+---
+
+#### Level 30: Alliance Wars (Large-Scale Guild Battles)
+**Unlocks**:
+- Participate in **Alliance Wars** (50v50 guild wars every 2 weeks)
+- Coordinate with alliance for large-scale territory control
+- Contribute multiple decks to alliance war efforts
+- Compete for server-wide leaderboards and prestige rewards
+
+**Why This Level?**:
+- Players have max 40-50 card decks with full Legendary/Mythic options
+- Months of experience in PvE, Arena PvP, and Active PvP Maps
+- Enough resources to sustain multi-battle campaigns
+- Deep understanding of strategy, formations, and meta
+
+**Alliance War Mechanics**:
+- 2-week war seasons (Week 1: Preparation, Week 2: Active war)
+- Each alliance declares 1 enemy alliance (voted by members)
+- Shared map with 50+ contested tiles
+- Alliance members contribute decks to "War Pool" (up to 3 decks per player)
+- Officers assign decks to defend key tiles
+- Victory = Legendary packs for entire alliance, exclusive cosmetics, server bragging rights
+
+---
+
+### How to Play (Alliance Features by Level)
+
+| Player Level | Alliance Features Available | PvP Risk | Time to Reach (Active Player) |
+|--------------|----------------------------|----------|-------------------------------|
+| **1-9** | ❌ No alliance access | ✅ Zero (PvE only) | Days 1-7 |
+| **10-14** | ✅ Join alliance, PvE events, chat, donations | ✅ Zero (PvE only) | Week 1-2 |
+| **15-19** | ✅ + Matchmade Arena (1v1/3v3) | ⚠️ Low (no territory loss) | Week 2-4 |
+| **20-29** | ✅ + Active PvP Maps (opt-in) | ⚠️ Medium (can be raided) | Month 1-3 |
+| **30+** | ✅ + Alliance Wars | ⚠️ High (large-scale wars) | Month 3-6 |
 
 ### Mechanics
+- **Join/Create**: Search or found alliances; invite players (Level 10+).
+- **Hierarchy**: Leader > Generals > Officers > Members; promote via contributions.
+- **Bank**: Shared treasury for donations; funds buffs/tech trees.
+- **Events**: Joint PvE raids (Level 10+), Arena tournaments (Level 15+), Alliance Wars (Level 30+).
 - **Ranks**: Based on activity/donations; higher ranks unlock perks.
 - **Limits**: Server-wide caps to prevent monopolies.
 
 ### Player Tips
-- Join active alliances for events; contribute regularly for ranks.
+- **Level 10-14**: Join active alliance for PvE events; learn coordination in safe environment.
+- **Level 15-19**: Practice PvP in Arenas (no risk) before committing to Active PvP Maps.
+- **Level 20+**: Only opt into Active PvP Maps when you have resources to heal losses.
+- **Level 30+**: Contribute to Alliance Wars for prestige and exclusive Legendary packs.
+- **If you want to experiment early**: Arena PvP at Level 15 lets you test strategies without consequences.
 
 ## 6.2 Chat & Diplomacy
 
@@ -3785,14 +3903,14 @@ Both are **100% F2P accessible**—active players level faster, but there is no 
 
 | Player Level | Max Deck Size | Key Unlocks | F2P Timeline (Active Player) |
 |--------------|---------------|-------------|------------------------------|
-| **1** | 10-15 cards | Tutorial, first castle | Day 1 |
+| **1** | 10-15 cards | Tutorial, first castle, PvE county maps | Day 1 |
 | **3** | 15-20 cards | Auction house access | Day 1-2 |
-| **5** | 20-25 cards | Alliance membership, daily quests | Day 3-5 |
-| **10** | 25-30 cards | PvP ranked mode, State Map access | Week 1-2 |
-| **15** | 30-35 cards | Secondary castles (up to 5 total), County Map | Week 2-4 |
-| **20** | 35-40 cards | Advanced tactics, Global Map access | Month 1-2 |
-| **25** | 40-45 cards | Prestige cosmetics | Month 2-3 |
-| **30** | 40-50 cards (max) | All content unlocked, legendary frame | Month 3-6 |
+| **5** | 20-25 cards | Daily quests, saga battles | Day 3-5 |
+| **10** | 25-30 cards | **Alliance join**, Alliance PvE events, State Map | Week 1-2 |
+| **15** | 30-35 cards | **Controlled PvP** (1v1/3v3 Arena), Secondary castles (up to 5) | Week 2-4 |
+| **20** | 35-40 cards | **Active PvP Maps** (open-world conquest), County Map, Advanced tactics | Month 1-2 |
+| **25** | 40-45 cards | Prestige cosmetics, Global Map access | Month 2-3 |
+| **30** | 40-50 cards (max) | All content unlocked, legendary frame, Alliance Wars | Month 3-6 |
 
 **Why Player Level Matters**:
 - ✅ **Persistent**: Never lost, even if castles are destroyed
