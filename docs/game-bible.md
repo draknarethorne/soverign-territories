@@ -1393,8 +1393,43 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
 
 **Total Deck Composition**:
 - **Battle Cards**: 10-50 (based on Player Level) within rarity budget
-- **Economy Cards**: 10-15 (not counted in rarity budget)
-- **Max Total Deck**: 50 battle + 15 economy = **65 cards** (Level 30+ only)
+  - Heroes, Units, Tactics, Equipment
+  - Used for combat and exploration
+  - Can be split into multiple hero-led armies on county map
+- **Resource Cards**: 10-15 (separate category, not counted in rarity budget)
+  - Buildings: Farm, Mine, Lumber Mill, Turret, Wall
+  - Workers: Farmer, Miner, Lumberjack, Scout
+  - Deployed to captured tiles for AFK income
+  - Left behind when army moves (must return to retrieve)
+- **Max Total Deck**: 50 battle + 15 resource = **65 cards** (Level 30+ only)
+
+**Why Separate Categories?**:
+- ✅ **Clarity**: Battle cards fight, resource cards generate income
+- ✅ **Strategy**: Decide which tiles deserve resource investment
+- ✅ **Risk/Reward**: Leave valuable workers behind, or keep army flexible?
+- ✅ **Economy Management**: Resource cards are strategic deployments, not combat filler
+
+**Card Category Breakdown**:
+
+| Category | Types | Count Limit | Counted in Rarity Budget? | Use Case |
+|----------|-------|-------------|---------------------------|----------|
+| **Battle Cards** | Heroes, Units, Tactics, Equipment | 10-50 (Player Level) | ✅ Yes | Combat, exploration, formations |
+| **Resource Cards** | Buildings, Workers | 10-15 (fixed) | ❌ No | AFK income, tile upgrades |
+
+**Example Level 20 Deck**:
+- **Battle Cards** (35 total, 200 rarity points):
+  - 2 Legendary Heroes (32 pts)
+  - 5 Epic Units (40 pts)
+  - 12 Rare Units (48 pts)
+  - 16 Common/Uncommon Units (20 pts)
+  - Total: 140 points (under 200 budget ✅)
+- **Resource Cards** (12 total, separate):
+  - 3 Farms
+  - 2 Mines
+  - 1 Lumber Mill
+  - 3 Farmers
+  - 2 Miners
+  - 1 Turret
 
 **Why Rarity Budget System?**:
 - ✅ **Prevents "5 Legendary Only" decks** (too expensive, need filler)
@@ -1402,6 +1437,7 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
 - ✅ **Allows whales to flex** (can still build heavy Legendary decks, just fewer cards)
 - ✅ **F2P viable** (Common/Uncommon decks are cheap, can compete with strategy)
 - ✅ **Scales with progression** (higher level = bigger budget = more power)
+- ✅ **Resource cards separate** (don't compete with battle card budget)
 
 ---
 
@@ -1675,49 +1711,264 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-#### Splitting Your Deck (HoMM Garrison System)
+#### Splitting Your Deck into Multiple Armies (Multi-Hero System)
+
+**Core Concept**: Each **Epic+ hero** in your deck can lead their own independent army stack on the county map.
 
 **How It Works**:
-- Start with **1 full army stack** (all 10-15 battle cards together)
-- As you explore, you can **split your deck** into multiple stacks
-- Each stack moves independently on county map
-- **Why Split?**: 
-  - Leave garrison at captured resource node
-  - Send scout ahead into fog
-  - Defend multiple fronts
-  - Optimize movement (fast cavalry scouts vs slow tank army)
+- **Single Hero Deck**: If you have 1 Epic hero + 14 units → **1 army stack** on county map
+- **Multi-Hero Deck**: If you have 3 Epic heroes + 30 units → **up to 3 army stacks** (divide units between heroes)
+- **Visual**: Each Epic+ hero = **3D miniature figurine** on county map (looks like tabletop wargaming)
+- **Movement**: Each army moves independently (like HoMM multiple heroes)
 
-**Splitting Mechanics**:
-1. **Right-Click Army Stack** → "Split Stack"
-2. **Slider Interface**: Divide cards between Stack A and Stack B
-   - Example: 15-card army → 10 cards (main) + 5 cards (garrison)
-3. **Formation Assignment**: Each split gets its own formation template
-   - Main army: "Frontline Vanguard" (aggressive)
-   - Garrison: "Defensive Turtle" (hold position)
-4. **Confirm Split**: Two separate stacks now visible on county map
+**Deck Deployment Example**:
 
-**Garrison Deployment** (Leaving Cards Behind):
-1. **Capture Resource Node**: Defeat spawn guarding Gold Mine
-2. **Deploy Economy Cards**: 
-   - Drag 1× Farm card to mine tile (boosts gold production)
-   - Drag 2× Worker (Miner) cards to mine tile (increases yield)
-3. **Optional Battle Garrison**: 
-   - Leave 3× Common Spearmen at mine for defense
-   - If enemy attacks mine, 3 Spearmen auto-battle (usually lose, but delay enemy)
-4. **Global Map Indicator**: Small flag appears on mine tile (shows you control it)
+**Starting Deck** (Level 15 Player, 30 battle cards):
+- 1× Legendary Thor (hero)
+- 2× Epic Fire Mage (hero), Epic Knight (hero)
+- 10× Rare/Uncommon warriors, archers, healers
+- 15× Common scouts, spearmen
+- 2× Rare tactics
 
-**Economy Card Limits**:
-- **Max Economy Cards in Deck**: 10-15 (separate from battle cards)
-- **Max Economy Cards Per Tile**: 5 (prevents overloading one location)
-- **Types**:
-  - Buildings: Farm (+food), Mine (+ore), Lumber Mill (+wood), Turret (+defense)
-  - Workers: Farmer, Miner, Lumberjack, Scout (boosts associated buildings)
-  - Walls/Fortifications: Defensive structures (don't go to battle map)
+**County Map Deployment Options**:
 
-**Visual on County Map**:
-- **Main Army Stack**: Epic hero portrait + "10 units" label, moves freely
-- **Garrison Tile**: Small flag + building icon + "3 units" label, stationary
-- **Empty Tile**: No indicator (you don't control it)
+**Option 1: Single Mega-Army** (Conservative):
+- **Army 1**: Thor + 2 Epic heroes + all 27 units = 1 powerful stack
+- **Visual**: Thor figurine (3D) + "29 units" badge
+- **Pros**: Maximum power concentration, hard to defeat
+- **Cons**: Slow movement (one stack at a time), can't cover multiple objectives
+
+**Option 2: Three Hero-Led Armies** (Aggressive):
+- **Army 1**: Thor + 10 units (heavy hitters) = main force
+  - Visual: Thor 3D figurine + "10 units" badge
+- **Army 2**: Fire Mage + 8 units (ranged support)
+  - Visual: Fire Mage 3D figurine + "8 units" badge
+- **Army 3**: Knight + 9 units (fast cavalry)
+  - Visual: Knight 3D figurine + "9 units" badge
+- **Pros**: Cover more ground, explore faster, multi-pronged attacks
+- **Cons**: Each army weaker individually, risk of defeat in detail
+
+**Option 3: Mixed Strategy** (Balanced):
+- **Army 1**: Thor + Fire Mage + 20 units = main army (26 cards)
+  - Visual: Thor figurine (lead) + Fire Mage figurine behind + "24 units" badge
+- **Army 2**: Knight + 7 units = scout/flanking force (8 cards)
+  - Visual: Knight figurine + "7 units" badge
+- **Pros**: Strong main force + flexible scout army
+- **Cons**: Scout army vulnerable if caught alone
+
+---
+
+#### Hero-Less Stacks (Lower Rarity Units)
+
+**Question**: Can you deploy Common/Uncommon cards without a hero?
+
+**Answer**: **Yes, but visually distinct and mechanically limited.**
+
+**Visual Representation by Stack Type**:
+
+| Stack Composition | Visual on County Map | Movement | Example |
+|-------------------|---------------------|----------|---------|
+| **Epic+ Hero + Units** | 3D miniature figurine (hero) + unit count badge | Full speed | Thor figurine + "15 units" |
+| **Rare Hero + Units** | Premium card sprite standing upright + unit badge | Full speed | Rare Mage card + "8 units" |
+| **No Hero, 5+ Units** | Thick/layered card sprite standing upright | 75% speed | "10 Archers" thick card |
+| **No Hero, 2-4 Units** | Standard card sprite standing upright | 50% speed | "3 Scouts" card sprite |
+| **Single Scout** | Flat card sprite (lying down) | 100% speed | "Scout" flat card (fast but fragile) |
+
+**Thick Card Visual** (5+ cards, no hero):
+- **Appearance**: Card stack that looks physically thicker
+- **Count Badge**: "×10 Archers" displayed prominently
+- **Example**: 10× Uncommon Archers = appears as layered/thick card sprite standing upright on tile
+- **Why**: Shows multiple cards without rendering 10 separate sprites (performance optimization)
+
+**Single Scout Mechanic**:
+- **Use Case**: Sacrifice 1 Common Scout to reveal fog of war
+- **Visual**: Single flat card sprite (vulnerable, low profile)
+- **Movement**: Fastest (no army to slow down)
+- **Combat**: Dies instantly if engaged (suicide scouting for intel)
+- **Strategy**: "Is this spawn too strong? Send scout to find out before committing main army"
+
+---
+
+#### Splitting Process (Dividing Your Deck)
+
+**Step-by-Step**:
+
+1. **Deploy Full Deck to County Map**: All 30 battle cards appear as 1 stack (lead hero)
+2. **Right-Click Stack** → "Manage Armies"
+3. **Army Management UI Opens**:
+   - Shows all heroes in deck (Legendary Thor, Epic Fire Mage, Epic Knight)
+   - Shows all units sorted by type (warriors, archers, healers, etc.)
+4. **Drag Units to Heroes**:
+   - Drag 10 warriors → assign to Thor
+   - Drag 8 archers → assign to Fire Mage
+   - Drag 9 cavalry → assign to Knight
+   - Leave 2× tactics unassigned (shared resource pool)
+5. **Confirm Split**: 3 separate army stacks now visible on county map
+6. **Each Army Gets Formation**:
+   - Thor's Army: "Frontline Vanguard" formation
+   - Fire Mage's Army: "Defensive Turtle" formation
+   - Knight's Army: "Flanking Cavalry" formation
+
+**Re-Merge Armies**:
+- Move two hero stacks onto same tile
+- Right-click → "Merge Armies"
+- Units combine into single stack (lead hero = highest rarity)
+- Can split again later (unlimited splits/merges)
+
+---
+
+#### Resource Card Deployment (Strategic Tile Upgrades)
+
+**How Resource Cards Work**:
+
+**1. Capture Tile with Resource Node**:
+- Defeat spawn guarding **Gold Mine** tile
+- Tile now controlled (shows your faction color)
+
+**2. Deploy Resource Cards**:
+- Open **Resource Card Menu** (while army on tile)
+- Select cards to deploy:
+  - 1× Mine (building) → +50 gold/hour AFK
+  - 2× Miner (worker) → +25 gold/hour each (+50 total)
+  - Total: +100 gold/hour from this tile
+- Cards are **removed from army deck** and **placed on tile**
+
+**3. Army Leaves Tile**:
+- Move army to next objective
+- Resource cards **stay behind** (static deployment)
+- Tile shows: Small flag + Mine icon + "3 resource cards" badge
+- AFK income continues (100 gold/hour) even when army is elsewhere
+
+**4. Retrieval**:
+- **Problem**: Want to move Miners to different tile
+- **Solution**: Send hero back to original tile
+- **Process**: Army moves onto tile → "Retrieve Resource Cards" → select which to take → cards added back to army deck
+- **Strategic Decision**: Is it worth the time to retrieve, or leave them?
+
+**Resource Card Deployment Limits**:
+
+| Resource Node Type | Max Resource Cards Per Tile | AFK Income Bonus |
+|--------------------|------------------------------|------------------|
+| **Gold Mine** | 5 (1 Mine + 4 Miners) | +200 gold/hour max |
+| **Farm** | 5 (1 Farm + 4 Farmers) | +50 food/hour max |
+| **Lumber Mill** | 5 (1 Mill + 4 Lumberjacks) | +50 wood/hour max |
+| **Turret/Wall Tile** | 3 (Defensive structures only) | No income, +defense |
+
+**Why Retrieval Matters**:
+- ✅ **Resource cards are limited** (only 10-15 in deck)
+- ✅ **Opportunity cost**: Miners on Tile A can't help Tile B
+- ✅ **Strategic redeployment**: Move workers to better tiles as you progress
+- ❌ **Time cost**: Hero must backtrack (wastes turns in PvP or empowers enemies in PvE)
+
+---
+
+#### Time Pressure Mechanics (Turn Cost)
+
+**PvE County Maps** (Optional Difficulty Modifier):
+
+**"Enemy Grows Stronger" Mechanic**:
+- **Every 5 turns** you take, all enemy spawns gain **+10% HP and ATK**
+- **Turn Counter**: Visible in top-right corner ("Turn 15 - Enemies +30% stronger")
+- **Strategy**: Rush boss before enemies scale too high, OR farm buff shrines to offset
+- **Example**:
+  - Turn 1-5: Enemies at 100% power
+  - Turn 6-10: Enemies at 110% power
+  - Turn 11-15: Enemies at 120% power
+  - Turn 30+: Enemies at 160% power (hard mode)
+
+**Why Time Pressure?**:
+- ✅ Discourages infinite farming (get stronger, but so do enemies)
+- ✅ Rewards efficient pathing (plan route to boss)
+- ✅ Makes retrieving resource cards risky (every turn counts)
+- ❌ Can disable for "Casual Mode" (no time pressure, farm forever)
+
+**PvP County Battles** (Guild vs Guild Events):
+
+**"Skip Turn" Mechanic**:
+- **Problem**: Hero is backtracking to retrieve resource cards
+- **Solution**: Click "Skip Turn" → hero doesn't move this turn
+- **Cost**: Opponent gets extra turn (2 actions vs your 1)
+- **Strategy**: Only skip if absolutely necessary (repositioning, waiting for reinforcements)
+- **Visual**: Grayed-out hero icon shows "Skipped Turn" status
+
+**Example PvP Scenario**:
+- **Turn 10**: You send Knight back to retrieve 2 Miners from captured mine
+- **Turn 11**: Knight reaches mine tile, retrieves Miners (but enemy gets 2 actions this turn)
+- **Turn 12**: Knight returns to main army with Miners, ready to redeploy elsewhere
+- **Cost**: Enemy used 2 extra actions (captured additional tile, recruited flex hero)
+
+---
+
+#### Visual Design Summary (County Map Representation)
+
+**What You See on County Map**:
+
+| Unit Type | Visual | Example |
+|-----------|--------|---------|
+| **Legendary Hero + Army** | Large 3D figurine (gold glow) + badge | Thor miniature + "25 units" |
+| **Epic Hero + Army** | Medium 3D figurine + badge | Fire Mage miniature + "12 units" |
+| **Rare Hero + Army** | Standing card sprite (premium) + badge | Rare Knight card + "8 units" |
+| **Uncommon Units Only (5+)** | Thick/layered card sprite + badge | "10 Archers" thick card |
+| **Common Units Only (2-4)** | Standard card sprite + badge | "3 Scouts" card |
+| **Single Scout** | Flat card sprite (low profile) | "Scout" flat card |
+| **Resource Tile (Yours)** | Small flag + building icon + count | Flag + Mine icon + "3 cards" |
+| **Enemy Spawn** | Red flag + difficulty color | Red flag (purple = elite spawn) |
+
+**Animation/VFX**:
+- **3D Figurines**: Idle animations (breathing, weapon shifts)
+- **Card Sprites**: Gentle hover/glow effect
+- **Movement**: Units slide smoothly between tiles (no teleporting)
+- **Combat Engage**: Visual effect when stack enters enemy tile (clash animation)
+
+---
+
+#### County Map Gameplay Loop (Revised)
+
+**Player Journey with Multiple Armies & Resource Management**:
+
+1. **Deploy Deck to County Map**: Full 30 battle cards + 10 resource cards
+2. **Split into Hero-Led Armies**: 
+   - Thor + 15 units (main force)
+   - Fire Mage + 10 units (support force)
+   - Knight + 5 units (scout force)
+3. **Explore with Multiple Armies**:
+   - Thor pushes center (strong spawns)
+   - Fire Mage flanks left (medium spawns)
+   - Knight scouts right (reveals fog fast)
+4. **Capture Resource Nodes**:
+   - Thor defeats spawn guarding Gold Mine
+   - Deploy 1 Mine + 2 Miners (3 resource cards placed)
+   - Thor continues forward, resource cards stay behind (+100 gold/hour AFK)
+5. **Recruit Flex Heroes**:
+   - Fire Mage captures Town 1 → +1 Rare Healer (temp ally)
+   - Knight captures Town 2 → +1 Epic Berserker (temp ally)
+6. **Buff Shrines**:
+   - Thor captures Shrine of Power → +10% ATK (permanent for map)
+7. **Resource Redeployment**:
+   - Knight backtracks to Gold Mine (Turn 20)
+   - Retrieves 2 Miners (Turn 21)
+   - Redeploys Miners to newly captured Lumber Mill (Turn 22)
+   - Cost: 3 turns (enemy grew +6% stronger during this time)
+8. **Merge for Boss**:
+   - All 3 armies converge on Boss tile
+   - Right-click → "Merge All Armies"
+   - Final force: Thor + Fire Mage + Knight + 30 units + 3 flex heroes = **36 cards**
+9. **Boss Battle**:
+   - Zoom to Battle Map
+   - Deploy formation (all 36 cards)
+   - Defeat boss (25-card enemy deck)
+10. **Victory**:
+    - Collect rewards (Legendary card, 10,000 XP)
+    - Flex heroes removed
+    - Resource cards stay on county tiles (for AFK income until you complete map)
+    - Mark county complete, return to Global Map
+
+**Key Takeaways**:
+- ✅ **Multiple heroes = multiple armies** (epic+ heroes lead independently)
+- ✅ **Resource cards separate from battle cards** (strategic tile upgrades)
+- ✅ **Retrieval costs time** (turns in PvE, actions in PvP)
+- ✅ **Visual clarity** (3D figurines for heroes, card sprites for units, thick cards for stacks)
+- ✅ **Time pressure optional** (enemies grow stronger in PvE, skip turns risky in PvP)
 
 ---
 
