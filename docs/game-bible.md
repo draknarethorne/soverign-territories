@@ -338,6 +338,8 @@ Sovereign Territories offers a variety of gameplay modes to cater to different p
 ### Overview
 The Saga Campaign is a linear, story-driven PvE journey that serves as the game's tutorial and primary progression path. Players embark on a "hero's journey" across themed maps, battling AI enemies and bosses to unlock new cards, resources, and story elements.
 
+The campaign schema for Saga progression has been moved to a standalone spec: [docs/specs/campaign-schema.json](docs/specs/campaign-schema.json).
+
 ### How to Play
 - **Entry**: Accessible from the main menu; requires a basic deck to start.
 - **Progression**: Advance through stages by defeating enemies. Each stage is a tactical battle on an 8x8 grid.
@@ -384,6 +386,8 @@ Stacking is the core tactical mechanic, allowing players to combine multiple uni
 
 ### Overview
 A mini-board game mode that resets weekly, offering light-hearted, luck-based gameplay. Think Mario Party meets Monopoly, integrated with the game's card economy.
+
+The expedition schema for board game mode has been moved to a standalone spec: [docs/specs/expedition-schema.json](docs/specs/expedition-schema.json).
 
 ### How to Play
 - **Board**: Procedurally generated path with spaces for rewards, penalties, or events.
@@ -472,6 +476,8 @@ A persistent PvE mode where players engage in turn-based territorial conquest ag
 ### Overview
 Recurring content to maintain engagement, from simple quests to competitive tournaments.
 
+The quest schema for daily and weekly challenges has been moved to a standalone spec: [docs/specs/quest-schema.json](docs/specs/quest-schema.json).
+
 ### Daily Challenges
 - **Quests**: E.g., "Win 3 PvE battles" or "Collect 10 gold mines."
 - **Rewards**: Energy refills, card packs, or spawns.
@@ -481,6 +487,8 @@ Recurring content to maintain engagement, from simple quests to competitive tour
 - **Tournaments**: PvP brackets with themed decks (e.g., "Fire Elemental Only").
 - **Scrambles**: Time-limited map rushes for resources.
 - **Leaderboards**: Top players get exclusive skins or titles.
+
+The leaderboard schema for competitive rankings has been moved to a standalone spec: [docs/specs/leaderboard-schema.json](docs/specs/leaderboard-schema.json).
 
 ### Mechanics
 - **Progress Tracking**: In-game UI shows streaks and completions.
@@ -720,6 +728,10 @@ Expansions drop periodically, introducing new themes, cards, and mechanics while
 
 Combat in Sovereign Territories is the heart of the game, blending strategic depth with accessibility. All battles are turn-based on an 8x8 grid, ensuring deterministic outcomes based on math rather than luck. This allows players to master tactics while enabling auto-battle for AFK play, making it suitable for both casual and competitive gamers.
 
+The battle schema for combat encounters has been moved to a standalone spec: [docs/specs/battle-schema.json](docs/specs/battle-schema.json).
+
+The reward schema for all game rewards has been moved to a standalone spec: [docs/specs/reward-schema.json](docs/specs/reward-schema.json).
+
 ## 8.1 System Overview
 
 The combat system emphasizes planning and execution, where every action counts. Players position their deck-formed units on the grid, then engage in alternating turns. Units are derived from stacked cards, combining stats for powerful formations.
@@ -836,6 +848,8 @@ Beyond max level, focus on infinite progression:
 
 Achievements reward milestones with badges and unlocks. Leaderboards track conquests, deck power, and donations, fostering competition.
 
+The achievement schema has been moved to a standalone spec: [docs/specs/achievement-schema.json](docs/specs/achievement-schema.json).
+
 ## Player Tips
 - Focus on castle leveling for endgame power.
 - Balance PvE/PvP to maintain progression.
@@ -886,6 +900,8 @@ The diplomacy schema for alliances and treaties has been moved to a standalone s
 # SECTION 11: USER INTERFACE & EXPERIENCE
 
 The UI is touch-optimized for mobile, with intuitive navigation. Tutorials guide new players, while notifications keep veterans engaged.
+
+The UI schema for interface elements has been moved to a standalone spec: [docs/specs/ui-schema.json](docs/specs/ui-schema.json).
 
 ## 11.1 Design Principles
 

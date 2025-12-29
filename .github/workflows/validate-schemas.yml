@@ -41,6 +41,14 @@ jobs:
           ajv validate -s docs/specs/tutorial-schema.json -d docs/specs/tutorial-schema.json
           ajv validate -s docs/specs/notification-schema.json -d docs/specs/notification-schema.json
           ajv validate -s docs/specs/diplomacy-schema.json -d docs/specs/diplomacy-schema.json
+          ajv validate -s docs/specs/achievement-schema.json -d docs/specs/achievement-schema.json
+          ajv validate -s docs/specs/quest-schema.json -d docs/specs/quest-schema.json
+          ajv validate -s docs/specs/reward-schema.json -d docs/specs/reward-schema.json
+          ajv validate -s docs/specs/battle-schema.json -d docs/specs/battle-schema.json
+          ajv validate -s docs/specs/ui-schema.json -d docs/specs/ui-schema.json
+          ajv validate -s docs/specs/expedition-schema.json -d docs/specs/expedition-schema.json
+          ajv validate -s docs/specs/campaign-schema.json -d docs/specs/campaign-schema.json
+          ajv validate -s docs/specs/leaderboard-schema.json -d docs/specs/leaderboard-schema.json
       - name: Generate TypeScript types
         run: |
           json2ts docs/specs/card-schema.json > docs/specs/card-schema.d.ts
@@ -63,3 +71,11 @@ jobs:
           json2ts docs/specs/tutorial-schema.json > docs/specs/tutorial-schema.d.ts
           json2ts docs/specs/notification-schema.json > docs/specs/notification-schema.d.ts
           json2ts docs/specs/diplomacy-schema.json > docs/specs/diplomacy-schema.d.ts
+          json2ts docs/specs/achievement-schema.json > docs/specs/achievement-schema.d.ts
+          json2ts docs/specs/quest-schema.json > docs/specs/quest-schema.d.ts
+          json2ts docs/specs/reward-schema.json > docs/specs/reward-schema.d.ts
+          json2ts docs/specs/battle-schema.json > docs/specs/battle-schema.d.ts
+          json2ts docs/specs/ui-schema.json > docs/specs/ui-schema.d.ts
+          json2ts docs/specs/expedition-schema.json > docs/specs/expedition-schema.d.ts
+          json2ts docs/specs/campaign-schema.json > docs/specs/campaign-schema.d.ts
+          json2ts docs/specs/leaderboard-schema.json > docs/specs/leaderboard-schema.d.ts

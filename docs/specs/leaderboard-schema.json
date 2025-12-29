@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Leaderboard Schema",
+  "description": "Schema for competitive rankings and leaderboards",
+  "type": "object",
+  "properties": {
+    "leaderboardId": {
+      "type": "string",
+      "description": "Unique leaderboard identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Leaderboard display name"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["global", "alliance", "friends", "regional"],
+      "description": "Leaderboard scope"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["pvp_elo", "conquest", "deck_power", "donations", "achievements", "expedition"],
+      "description": "Ranking category"
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["all_time", "season", "weekly", "daily"],
+          "description": "Time period type"
+        },
+        "startTime": {
+          "type": "integer",
+          "description": "Period start timestamp"
+        },
+        "endTime": {
+          "type": "integer",
+          "description": "Period end timestamp"
+        },
+        "seasonId": {
+          "type": "string",
+          "description": "Season identifier"
+        }
+      },
+      "required": ["type"],
+      "description": "Leaderboard time period"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Player rank"
+          },
+          "playerId": {
+            "type": "string",
+            "description": "Player identifier"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Player display name"
+          },
+          "allianceId": {
+            "type": "string",
+            "description": "Player's alliance ID"
+          },
+          "score": {
+            "type": "number",
+            "description": "Player score/rating"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "integer",
+                "description": "Player level"
+              },
+              "wins": {
+                "type": "integer",
+                "description": "Total wins"
+              },
+              "losses": {
+                "type": "integer",
+                "description": "Total losses"
+              },
+              "winRate": {
+                "type": "number",
+                "description": "Win percentage"
+              },
+              "streak": {
+                "type": "integer",
+                "description": "Current win streak"
+              }
+            },
+            "description": "Additional player stats"
+          },
+          "previousRank": {
+            "type": "integer",
+            "description": "Previous rank (for change tracking)"
+          },
+          "rankChange": {
+            "type": "integer",
+            "description": "Rank change since last update"
+          },
+          "lastUpdated": {
+            "type": "integer",
+            "description": "Last score update timestamp"
+          }
+        },
+        "required": ["rank", "playerId", "displayName", "score"]
+      },
+      "description": "Leaderboard entries"
+    },
+    "rewards": {
+      "type": "object",
+      "properties": {
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "minRank": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Minimum rank for tier"
+              },
+              "maxRank": {
+                "type": "integer",
+                "description": "Maximum rank for tier"
+              },
+              "rewardIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Reward identifiers"
+              },
+              "tierName": {
+                "type": "string",
+                "description": "Tier display name"
+              }
+            },
+            "required": ["minRank", "rewardIds"]
+          },
+          "description": "Reward tiers by rank"
+        },
+        "distributionTime": {
+          "type": "integer",
+          "description": "When rewards are distributed"
+        }
+      },
+      "description": "Leaderboard rewards"
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Entries per page"
+        },
+        "currentPage": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Current page number"
+        },
+        "totalEntries": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of entries"
+        }
+      },
+      "description": "Pagination settings"
+    },
+    "updateFrequency": {
+      "type": "integer",
+      "description": "Update interval in seconds"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether leaderboard is currently active"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["leaderboardId", "name", "type", "category", "period", "entries", "isActive", "schemaVersion"]
+}

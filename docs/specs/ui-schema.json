@@ -1,0 +1,319 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UI Schema",
+  "description": "Schema for user interface elements and layouts",
+  "type": "object",
+  "properties": {
+    "uiId": {
+      "type": "string",
+      "description": "Unique UI element identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["screen", "panel", "button", "list", "grid", "form", "modal"],
+      "description": "UI element type"
+    },
+    "name": {
+      "type": "string",
+      "description": "UI element name"
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X position (relative or absolute)"
+            },
+            "y": {
+              "type": "number",
+              "description": "Y position (relative or absolute)"
+            }
+          },
+          "description": "Element position"
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Element width"
+            },
+            "height": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Element height"
+            }
+          },
+          "description": "Element dimensions"
+        },
+        "anchor": {
+          "type": "string",
+          "enum": ["top-left", "top-center", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-center", "bottom-right"],
+          "description": "Layout anchor point"
+        },
+        "pivot": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Pivot X (0-1)"
+            },
+            "y": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Pivot Y (0-1)"
+            }
+          },
+          "description": "Rotation/scaling pivot point"
+        }
+      },
+      "description": "Layout properties"
+    },
+    "visual": {
+      "type": "object",
+      "properties": {
+        "background": {
+          "type": "string",
+          "description": "Background asset path"
+        },
+        "foreground": {
+          "type": "string",
+          "description": "Foreground asset path"
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "description": "Primary color (hex)"
+            },
+            "secondary": {
+              "type": "string",
+              "description": "Secondary color (hex)"
+            },
+            "accent": {
+              "type": "string",
+              "description": "Accent color (hex)"
+            }
+          },
+          "description": "UI color scheme"
+        },
+        "fonts": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "type": "string",
+              "description": "Font family"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 8,
+              "description": "Font size"
+            },
+            "style": {
+              "type": "string",
+              "enum": ["normal", "bold", "italic", "bold-italic"],
+              "description": "Font style"
+            }
+          },
+          "description": "Typography settings"
+        }
+      },
+      "description": "Visual styling"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Static text content"
+        },
+        "dynamicText": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Localization key"
+            },
+            "variables": {
+              "type": "object",
+              "description": "Text interpolation variables"
+            }
+          },
+          "description": "Dynamic/localized text"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Image asset path"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "Image X position"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Image Y position"
+                  }
+                },
+                "description": "Image position within element"
+              }
+            }
+          },
+          "description": "Image assets"
+        }
+      },
+      "description": "Content elements"
+    },
+    "interactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string",
+            "enum": ["click", "hover", "drag", "swipe", "long-press"],
+            "description": "Interaction event type"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action to perform"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Action parameters"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Conditions for interaction availability"
+          }
+        }
+      },
+      "description": "Interactive behaviors"
+    },
+    "states": {
+      "type": "object",
+      "properties": {
+        "normal": {
+          "type": "object",
+          "description": "Normal state styling"
+        },
+        "hover": {
+          "type": "object",
+          "description": "Hover state styling"
+        },
+        "pressed": {
+          "type": "object",
+          "description": "Pressed state styling"
+        },
+        "disabled": {
+          "type": "object",
+          "description": "Disabled state styling"
+        },
+        "selected": {
+          "type": "object",
+          "description": "Selected state styling"
+        }
+      },
+      "description": "Visual states"
+    },
+    "animations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "trigger": {
+            "type": "string",
+            "enum": ["onShow", "onHide", "onStateChange", "onInteraction"],
+            "description": "Animation trigger"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["fade", "slide", "scale", "bounce", "shake"],
+            "description": "Animation type"
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Animation duration in seconds"
+          },
+          "easing": {
+            "type": "string",
+            "enum": ["linear", "ease-in", "ease-out", "ease-in-out"],
+            "description": "Animation easing function"
+          }
+        }
+      },
+      "description": "UI animations"
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Screen reader label"
+        },
+        "hint": {
+          "type": "string",
+          "description": "Accessibility hint"
+        },
+        "group": {
+          "type": "string",
+          "description": "Navigation group"
+        },
+        "order": {
+          "type": "integer",
+          "description": "Tab order"
+        }
+      },
+      "description": "Accessibility features"
+    },
+    "responsive": {
+      "type": "object",
+      "properties": {
+        "breakpoints": {
+          "type": "object",
+          "properties": {
+            "mobile": {
+              "type": "object",
+              "description": "Mobile layout overrides"
+            },
+            "tablet": {
+              "type": "object",
+              "description": "Tablet layout overrides"
+            },
+            "desktop": {
+              "type": "object",
+              "description": "Desktop layout overrides"
+            }
+          },
+          "description": "Responsive breakpoints"
+        }
+      },
+      "description": "Responsive design settings"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["uiId", "type", "name", "schemaVersion"]
+}

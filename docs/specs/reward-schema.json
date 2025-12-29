@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Reward Schema",
+  "description": "Schema for rewards distributed throughout the game",
+  "type": "object",
+  "properties": {
+    "rewardId": {
+      "type": "string",
+      "description": "Unique reward identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["xp", "card", "resource", "energy", "cosmetic", "title", "currency"],
+      "description": "Reward type"
+    },
+    "subtype": {
+      "type": "string",
+      "description": "Reward subtype (e.g., 'gold' for resource type)"
+    },
+    "amount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Reward amount or quantity"
+    },
+    "itemId": {
+      "type": "string",
+      "description": "Specific item ID (for cards, cosmetics, etc.)"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "epic", "legendary"],
+      "description": "Item rarity (if applicable)"
+    },
+    "isGuaranteed": {
+      "type": "boolean",
+      "description": "Whether this reward is guaranteed or part of a pool"
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Weight for random selection (higher = more likely)"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["level", "vip", "achievement", "time"],
+            "description": "Condition type"
+          },
+          "value": {
+            "type": "string",
+            "description": "Condition value"
+          },
+          "operator": {
+            "type": "string",
+            "enum": ["equals", "greater", "less", "contains"],
+            "description": "Comparison operator"
+          }
+        }
+      },
+      "description": "Conditions for reward eligibility"
+    },
+    "presentation": {
+      "type": "object",
+      "properties": {
+        "animation": {
+          "type": "string",
+          "description": "Reward animation type"
+        },
+        "sound": {
+          "type": "string",
+          "description": "Reward sound effect"
+        },
+        "text": {
+          "type": "string",
+          "description": "Custom reward text"
+        }
+      },
+      "description": "Presentation settings"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["rewardId", "type", "amount", "isGuaranteed", "schemaVersion"]
+}

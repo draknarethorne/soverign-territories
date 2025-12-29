@@ -1,0 +1,353 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Battle Schema",
+  "description": "Schema for combat encounters and battle resolution",
+  "type": "object",
+  "properties": {
+    "battleId": {
+      "type": "string",
+      "description": "Unique battle identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["pve", "pvp", "alliance", "tutorial", "event"],
+      "description": "Battle type"
+    },
+    "mapId": {
+      "type": "string",
+      "description": "Map identifier where battle occurs"
+    },
+    "gridSize": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16,
+          "description": "Grid width"
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16,
+          "description": "Grid height"
+        }
+      },
+      "required": ["width", "height"],
+      "description": "Battle grid dimensions"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "Player identifier"
+          },
+          "team": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4,
+            "description": "Team number"
+          },
+          "deckId": {
+            "type": "string",
+            "description": "Battle deck identifier"
+          },
+          "isAI": {
+            "type": "boolean",
+            "description": "Whether participant is AI-controlled"
+          },
+          "aiTacticId": {
+            "type": "string",
+            "description": "AI tactic for auto-battle"
+          }
+        },
+        "required": ["playerId", "team", "deckId"]
+      },
+      "description": "Battle participants"
+    },
+    "units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "unitId": {
+            "type": "string",
+            "description": "Unique unit identifier"
+          },
+          "cardId": {
+            "type": "string",
+            "description": "Source card identifier"
+          },
+          "playerId": {
+            "type": "string",
+            "description": "Owning player"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Grid X position"
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Grid Y position"
+              }
+            },
+            "required": ["x", "y"],
+            "description": "Unit position on grid"
+          },
+          "stats": {
+            "type": "object",
+            "properties": {
+              "health": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Current health"
+              },
+              "maxHealth": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Maximum health"
+              },
+              "attack": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Attack power"
+              },
+              "defense": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Defense value"
+              },
+              "speed": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Movement speed"
+              }
+            },
+            "required": ["health", "maxHealth", "attack", "defense", "speed"],
+            "description": "Unit combat stats"
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "effectId": {
+                  "type": "string",
+                  "description": "Status effect identifier"
+                },
+                "duration": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Effect duration in turns"
+                },
+                "value": {
+                  "type": "number",
+                  "description": "Effect magnitude"
+                }
+              }
+            },
+            "description": "Active status effects"
+          },
+          "isAlive": {
+            "type": "boolean",
+            "description": "Whether unit is alive"
+          }
+        },
+        "required": ["unitId", "cardId", "playerId", "position", "stats", "isAlive"]
+      },
+      "description": "All units in the battle"
+    },
+    "terrain": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Grid X position"
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Grid Y position"
+              }
+            },
+            "required": ["x", "y"],
+            "description": "Terrain position"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["grass", "forest", "mountain", "water", "road", "wall"],
+            "description": "Terrain type"
+          },
+          "modifiers": {
+            "type": "object",
+            "properties": {
+              "defense": {
+                "type": "number",
+                "description": "Defense modifier"
+              },
+              "movement": {
+                "type": "number",
+                "description": "Movement cost modifier"
+              },
+              "attack": {
+                "type": "number",
+                "description": "Attack modifier"
+              }
+            },
+            "description": "Terrain stat modifiers"
+          }
+        }
+      },
+      "description": "Terrain features on the battle grid"
+    },
+    "turnOrder": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Current turn order (unit IDs)"
+    },
+    "currentTurn": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current turn number"
+    },
+    "currentUnit": {
+      "type": "string",
+      "description": "Currently active unit ID"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actionId": {
+            "type": "string",
+            "description": "Unique action identifier"
+          },
+          "unitId": {
+            "type": "string",
+            "description": "Acting unit"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["move", "attack", "ability", "end_turn"],
+            "description": "Action type"
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "description": "Target X position"
+              },
+              "y": {
+                "type": "integer",
+                "description": "Target Y position"
+              },
+              "unitId": {
+                "type": "string",
+                "description": "Target unit ID"
+              }
+            },
+            "description": "Action target"
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "Action timestamp"
+          }
+        },
+        "required": ["actionId", "unitId", "type", "timestamp"]
+      },
+      "description": "Battle action history"
+    },
+    "victoryConditions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["elimination", "survival", "objective", "turns"],
+          "description": "Victory condition type"
+        },
+        "value": {
+          "type": "integer",
+          "description": "Condition value (turns, etc.)"
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Objective identifier"
+              },
+              "description": {
+                "type": "string",
+                "description": "Objective description"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "integer",
+                    "description": "Objective X position"
+                  },
+                  "y": {
+                    "type": "integer",
+                    "description": "Objective Y position"
+                  }
+                },
+                "description": "Objective position"
+              },
+              "isCompleted": {
+                "type": "boolean",
+                "description": "Completion status"
+              }
+            }
+          },
+          "description": "Specific objectives"
+        }
+      },
+      "required": ["type"],
+      "description": "Battle victory conditions"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["setup", "active", "paused", "completed", "abandoned"],
+      "description": "Battle status"
+    },
+    "winner": {
+      "type": "integer",
+      "description": "Winning team number (null if ongoing)"
+    },
+    "startTime": {
+      "type": "integer",
+      "description": "Battle start timestamp"
+    },
+    "endTime": {
+      "type": "integer",
+      "description": "Battle end timestamp"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["battleId", "type", "mapId", "gridSize", "participants", "units", "terrain", "turnOrder", "currentTurn", "actions", "victoryConditions", "status", "startTime", "schemaVersion"]
+}

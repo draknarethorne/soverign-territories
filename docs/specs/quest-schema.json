@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Quest Schema",
+  "description": "Schema for daily/weekly quests and challenges",
+  "type": "object",
+  "properties": {
+    "questId": {
+      "type": "string",
+      "description": "Unique quest identifier"
+    },
+    "title": {
+      "type": "string",
+      "description": "Quest display title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Quest description"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["daily", "weekly", "event", "story"],
+      "description": "Quest type"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["combat", "collection", "economy", "social", "exploration"],
+      "description": "Quest category"
+    },
+    "objectives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objectiveId": {
+            "type": "string",
+            "description": "Objective identifier"
+          },
+          "description": {
+            "type": "string",
+            "description": "Objective description"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["stat", "action", "collect", "reach", "interact"],
+            "description": "Objective type"
+          },
+          "target": {
+            "type": "string",
+            "description": "Target value or identifier"
+          },
+          "required": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required amount"
+          },
+          "current": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Current progress"
+          },
+          "isCompleted": {
+            "type": "boolean",
+            "description": "Whether objective is completed"
+          }
+        },
+        "required": ["objectiveId", "description", "type", "required"]
+      },
+      "description": "Quest objectives"
+    },
+    "rewards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["xp", "card", "resource", "energy", "cosmetic"],
+            "description": "Reward type"
+          },
+          "id": {
+            "type": "string",
+            "description": "Reward identifier"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Reward amount"
+          }
+        },
+        "required": ["type", "amount"]
+      },
+      "description": "Quest completion rewards"
+    },
+    "timeLimit": {
+      "type": "integer",
+      "description": "Time limit in seconds (null for no limit)"
+    },
+    "cooldown": {
+      "type": "integer",
+      "description": "Cooldown before quest can be repeated (in seconds)"
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Required quest IDs or conditions"
+    },
+    "isRepeatable": {
+      "type": "boolean",
+      "description": "Whether quest can be repeated"
+    },
+    "maxCompletions": {
+      "type": "integer",
+      "description": "Maximum completion count (null for unlimited)"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["questId", "title", "description", "type", "category", "objectives", "rewards", "isRepeatable", "schemaVersion"]
+}

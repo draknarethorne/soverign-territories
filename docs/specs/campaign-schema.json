@@ -1,0 +1,252 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Campaign Schema",
+  "description": "Schema for Saga Campaign progression and levels",
+  "type": "object",
+  "properties": {
+    "campaignId": {
+      "type": "string",
+      "description": "Unique campaign identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Campaign name"
+    },
+    "theme": {
+      "type": "string",
+      "enum": ["medieval", "scifi", "mythic", "custom"],
+      "description": "Campaign theme"
+    },
+    "levels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "levelId": {
+            "type": "string",
+            "description": "Unique level identifier"
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Level number in sequence"
+          },
+          "name": {
+            "type": "string",
+            "description": "Level display name"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["normal", "boss", "story", "challenge"],
+            "description": "Level type"
+          },
+          "difficulty": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Difficulty rating"
+          },
+          "energyCost": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Energy required to play"
+          },
+          "battleConfig": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "Battle map identifier"
+              },
+              "enemies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "cardId": {
+                      "type": "string",
+                      "description": "Enemy card identifier"
+                    },
+                    "level": {
+                      "type": "integer",
+                      "description": "Enemy level"
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of units"
+                    },
+                    "position": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "integer",
+                          "description": "Grid X position"
+                        },
+                        "y": {
+                          "type": "integer",
+                          "description": "Grid Y position"
+                        }
+                      }
+                    }
+                  },
+                  "required": ["cardId", "level", "count"]
+                },
+                "description": "Enemy configuration"
+              },
+              "aiTacticId": {
+                "type": "string",
+                "description": "AI tactic for enemies"
+              },
+              "victoryCondition": {
+                "type": "string",
+                "enum": ["elimination", "survival", "objective"],
+                "description": "Win condition"
+              },
+              "turns": {
+                "type": "integer",
+                "description": "Turn limit (null for unlimited)"
+              }
+            },
+            "required": ["mapId", "enemies", "aiTacticId", "victoryCondition"],
+            "description": "Battle configuration"
+          },
+          "rewards": {
+            "type": "object",
+            "properties": {
+              "firstTime": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "First completion reward IDs"
+              },
+              "standard": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Standard completion reward IDs"
+              },
+              "perfect": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Perfect score reward IDs"
+              }
+            },
+            "required": ["firstTime", "standard"],
+            "description": "Level rewards"
+          },
+          "prerequisites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Required level IDs to unlock"
+          },
+          "story": {
+            "type": "object",
+            "properties": {
+              "intro": {
+                "type": "string",
+                "description": "Intro narrative text"
+              },
+              "outro": {
+                "type": "string",
+                "description": "Outro narrative text"
+              },
+              "characters": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Character IDs in story"
+              }
+            },
+            "description": "Story elements"
+          },
+          "modes": {
+            "type": "object",
+            "properties": {
+              "normal": {
+                "type": "boolean",
+                "description": "Normal mode available"
+              },
+              "hard": {
+                "type": "boolean",
+                "description": "Hard mode available"
+              },
+              "hardMultiplier": {
+                "type": "number",
+                "description": "Hard mode difficulty multiplier"
+              }
+            },
+            "description": "Available difficulty modes"
+          }
+        },
+        "required": ["levelId", "number", "name", "type", "difficulty", "energyCost", "battleConfig", "rewards", "prerequisites"]
+      },
+      "description": "Campaign levels"
+    },
+    "progression": {
+      "type": "object",
+      "properties": {
+        "currentLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Player's current level number"
+        },
+        "completedLevels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Completed level IDs"
+        },
+        "stars": {
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3,
+              "description": "Stars earned per level"
+            }
+          },
+          "description": "Star ratings per level"
+        }
+      },
+      "description": "Player progression in campaign"
+    },
+    "isLocked": {
+      "type": "boolean",
+      "description": "Whether campaign is locked"
+    },
+    "unlockConditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["level", "achievement", "purchase"],
+            "description": "Unlock condition type"
+          },
+          "value": {
+            "type": "string",
+            "description": "Condition value"
+          }
+        }
+      },
+      "description": "Conditions to unlock campaign"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["campaignId", "name", "theme", "levels", "isLocked", "schemaVersion"]
+}

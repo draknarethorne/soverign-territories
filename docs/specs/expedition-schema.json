@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Expedition Schema",
+  "description": "Schema for weekly board game mode (Mario Party-style)",
+  "type": "object",
+  "properties": {
+    "expeditionId": {
+      "type": "string",
+      "description": "Unique expedition identifier"
+    },
+    "season": {
+      "type": "string",
+      "description": "Season identifier (e.g., 'week-2025-52')"
+    },
+    "theme": {
+      "type": "string",
+      "description": "Visual theme for the board"
+    },
+    "board": {
+      "type": "object",
+      "properties": {
+        "boardId": {
+          "type": "string",
+          "description": "Board layout identifier"
+        },
+        "spaces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "spaceId": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Space number on board"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["start", "reward", "penalty", "event", "challenge", "shop", "end"],
+                "description": "Space type"
+              },
+              "content": {
+                "type": "object",
+                "properties": {
+                  "rewardId": {
+                    "type": "string",
+                    "description": "Reward identifier"
+                  },
+                  "eventId": {
+                    "type": "string",
+                    "description": "Event identifier"
+                  },
+                  "penalty": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["move_back", "lose_currency", "skip_turn"],
+                        "description": "Penalty type"
+                      },
+                      "value": {
+                        "type": "integer",
+                        "description": "Penalty value"
+                      }
+                    }
+                  }
+                },
+                "description": "Space content"
+              }
+            },
+            "required": ["spaceId", "type"]
+          },
+          "description": "Board spaces"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "Total number of spaces"
+        }
+      },
+      "required": ["boardId", "spaces", "length"],
+      "description": "Board configuration"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "Player identifier"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Current position on board"
+          },
+          "moves": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Remaining moves"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Collected items"
+          },
+          "bonuses": {
+            "type": "object",
+            "properties": {
+              "diceBonus": {
+                "type": "integer",
+                "description": "Bonus to dice rolls"
+              },
+              "doubleMove": {
+                "type": "boolean",
+                "description": "Double move available"
+              }
+            },
+            "description": "Active bonuses"
+          },
+          "isFinished": {
+            "type": "boolean",
+            "description": "Whether player reached the end"
+          },
+          "finishTime": {
+            "type": "integer",
+            "description": "Timestamp when finished"
+          }
+        },
+        "required": ["playerId", "position", "moves", "isFinished"]
+      },
+      "description": "Expedition participants"
+    },
+    "dice": {
+      "type": "object",
+      "properties": {
+        "minRoll": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Minimum dice value"
+        },
+        "maxRoll": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum dice value"
+        },
+        "rerollsAvailable": {
+          "type": "boolean",
+          "description": "Whether rerolls are allowed"
+        },
+        "rerollCost": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["gems", "tokens"],
+              "description": "Currency type for reroll"
+            },
+            "amount": {
+              "type": "integer",
+              "description": "Cost amount"
+            }
+          },
+          "description": "Reroll cost"
+        }
+      },
+      "required": ["minRoll", "maxRoll"],
+      "description": "Dice configuration"
+    },
+    "rewards": {
+      "type": "object",
+      "properties": {
+        "firstPlace": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "First place reward IDs"
+        },
+        "secondPlace": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Second place reward IDs"
+        },
+        "thirdPlace": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Third place reward IDs"
+        },
+        "participation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Participation reward IDs"
+        }
+      },
+      "description": "Final placement rewards"
+    },
+    "startTime": {
+      "type": "integer",
+      "description": "Expedition start timestamp"
+    },
+    "endTime": {
+      "type": "integer",
+      "description": "Expedition end timestamp"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["upcoming", "active", "completed"],
+      "description": "Expedition status"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["realtime", "async"],
+      "description": "Play mode"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version"
+    }
+  },
+  "required": ["expeditionId", "season", "theme", "board", "participants", "dice", "rewards", "startTime", "endTime", "status", "mode", "schemaVersion"]
+}
