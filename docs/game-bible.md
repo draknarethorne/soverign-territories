@@ -1089,11 +1089,134 @@ To prevent "never seeing a shiny" frustration, implement **separate pity timers*
 - Example: 5★ Epic (base 100 attack × 1.6 = 160) < 5★ Legendary (base 150 attack = 150, no leveling)
 - Future: With +2 leveling, 5★ Epic could reach 200 attack (100 × 2.0), surpassing base Legendary but requiring heavy investment
 
-### Pre-Built Decks
+---
 
-Themed starter decks for quick play. Customize by swapping cards.
+## 2.5 New Player Onboarding: Starter Cards & First Deck
 
-## 2.5 Stacking and Formations
+### Initial Card Draw (First-Time Player Experience)
+
+**Goal**: Give new players choices and agency from the very start while preventing analysis paralysis.
+
+**The Draw**:
+- **Total Cards Received**: 20-30 cards (randomized within guaranteed rarity distribution)
+- **Guaranteed Distribution**:
+  - **1 Epic** (randomly selected from beginner-friendly Epic pool)
+  - **5 Rare** cards (mix of units, buildings, tactics)
+  - **8-12 Uncommon** cards (core army units and basic buildings)
+  - **12-14 Common** cards (fodder units, basic buildings)
+  - **Legendary Chance**: 3% chance to replace 1 Rare with 1 Legendary (lucky roll, "WOW" moment)
+
+**Why 20-30 Cards vs 10-15 Deck Limit?**:
+- **Choice Without Commitment**: Players get to experiment with different combinations before settling on a deck
+- **Storage Tutorial**: Introduces the Codex and inactive card storage from the start
+- **Early Trading**: Players can immediately engage with auction house to trade unwanted extras
+- **Replayability**: Different players get different starting cards, creating unique first experiences
+
+### Starter Deck Assembly (Tutorial Flow)
+
+**Option 1: Auto-Select (Guided Path)**:
+1. Player clicks "Build My First Deck"
+2. System offers 3 **pre-curated starter decks** based on playstyle:
+   - **"Aggro Rush"**: Fast units, low-cost heroes, blitz tactics (Fire/Lightning elements)
+   - **"Defensive Builder"**: Tanky units, fortifications, economy buildings (Earth/Frost elements)
+   - **"Balanced Explorer"**: Mix of offense/defense, versatile for learning (Water/Wind elements)
+3. Player picks one → system auto-selects 10 cards from their drawn pool that best match the theme
+4. Player receives **1 Bonus Booster Pack** (5 cards) as reward for choosing guided path
+5. Tutorial highlights deck slots and how to swap cards later
+
+**Option 2: Manual Selection (Freedom Path)**:
+1. Player clicks "I'll Build My Own Deck"
+2. Codex opens showing all 20-30 drawn cards
+3. Tutorial prompts: "Select 10-15 cards for your starting deck" (drag-and-drop UI)
+4. System validates deck (must have at least 1 hero/unit, no invalid combos)
+5. Remaining cards go to inactive storage
+6. Player feels accomplished, keeps all cards for future use
+
+**Recommended Flow**: Present both options, default to **Option 1** for new-to-CCG players, highlight **Option 2** for experienced card game players.
+
+### Starting Deck Size Constraints
+
+**Player Level 1 (New Player)**:
+- **Deck Size**: 10-15 cards (minimum 10, maximum 15)
+- **Why Small Start**: 
+  - Faster gameplay (less decision paralysis)
+  - Easier to learn card interactions
+  - Encourages mastery of fewer cards before expanding
+  - Prevents "too many options" overwhelm
+
+**Total Collection Size** (Unlimited):
+- **Codex Capacity**: Unlimited storage for all owned cards
+- **Active vs Inactive**: Only cards in a deck slot count as "active"
+- **Inactive Benefits**: Can still be viewed, traded, combined, upgraded in Codex
+
+### Deck Size Progression (Player Level Scaling)
+
+As players gain **Player XP** (from battles, quests, events), their **Player Level** increases, unlocking larger deck sizes:
+
+| Player Level | Max Deck Size | How to Reach | Estimated Time (Active Player) |
+|--------------|---------------|--------------|--------------------------------|
+| **1** | 10-15 cards | Start of game | Day 1 |
+| **3** | 15-20 cards | Complete tutorial campaign (5 battles) | Day 1-2 |
+| **5** | 20-25 cards | Complete first saga chapter (10 battles) | Day 3-5 |
+| **10** | 25-30 cards | Reach County Map, join alliance | Week 1-2 |
+| **15** | 30-35 cards | Complete State Map PvE | Week 3-4 |
+| **20** | 35-40 cards | Reach Global Map | Month 1-2 |
+| **30** | 40-50 cards (max) | Endgame content, prestige | Month 3-6 |
+
+**Why Progressive Scaling?**:
+- **F2P Accessible**: All players can reach max deck size through normal play (no paywall)
+- **Natural Progression**: Deck size grows as player skill and collection grow
+- **Active Player Advantage**: More active play = faster leveling = earlier access to bigger decks
+- **Strategic Depth**: Larger decks unlock more complex combos and deck archetypes
+
+### Pre-Built Decks (Curated Starter Templates)
+
+For players who choose the **guided path**, we offer 3 expertly designed starter decks that teach core mechanics:
+
+**1. "Aggro Rush" Starter Deck (10 cards)**:
+- **Theme**: Fast, aggressive Fire/Lightning units that overwhelm opponents early
+- **Composition**:
+  - 1x Epic Fire Warrior (hero, high attack)
+  - 3x Uncommon Archers (ranged DPS)
+  - 2x Uncommon Cavalry (fast flankers)
+  - 2x Common Spearmen (cheap frontline)
+  - 1x Rare Tactic: "Blitz Formation" (units move +2 speed for 3 turns)
+  - 1x Rare Building: Barracks (spawns reinforcements)
+- **Playstyle**: Attack early, control center map, win before opponent builds economy
+- **Learning Goal**: Teaches positioning, aggression timing, resource management
+
+**2. "Defensive Builder" Starter Deck (12 cards)**:
+- **Theme**: Slow, defensive Earth/Frost units with strong economy
+- **Composition**:
+  - 1x Epic Stone Golem (hero, high defense, taunt)
+  - 2x Uncommon Wall units (block pathways)
+  - 3x Uncommon Spearmen (defensive formation bonus)
+  - 2x Rare Building: Farm (generates food)
+  - 2x Rare Building: Mine (generates ore)
+  - 1x Uncommon Building: Turret (auto-attacks nearby enemies)
+  - 1x Rare Tactic: "Turtle Formation" (all units +50% defense for 5 turns)
+- **Playstyle**: Hold territory, build economy, outlast opponent with superior resources
+- **Learning Goal**: Teaches economy, positioning, patience, late-game scaling
+
+**3. "Balanced Explorer" Starter Deck (11 cards)**:
+- **Theme**: Versatile Water/Wind units good for learning all mechanics
+- **Composition**:
+  - 1x Epic Water Mage (hero, ranged caster with healing ability)
+  - 2x Uncommon Knights (balanced attack/defense)
+  - 2x Uncommon Archers (ranged support)
+  - 2x Common Scouts (fast movement, vision range)
+  - 1x Rare Healer unit (keeps army alive)
+  - 1x Uncommon Building: Granary (stores resources)
+  - 1x Uncommon Building: Watchtower (reveals fog of war)
+  - 1x Rare Tactic: "Adaptive Strategy" (choose offensive or defensive stance each turn)
+- **Playstyle**: React to opponent, mix offense/defense, learn all card types
+- **Learning Goal**: Teaches flexibility, all core mechanics, adaptability
+
+**Bonus for Guided Path**: Players who choose a pre-built deck receive **1 Booster Pack** (5 random cards) to expand their collection immediately.
+
+---
+
+## 2.6 Stacking and Formations
 
 ### Concept
 
@@ -2559,6 +2682,120 @@ Programmable tactics allow players to set AI behaviors, such as "focus healers" 
 # SECTION 9: PROGRESSION & BALANCE
 
 Progression in Sovereign Territories is designed to be rewarding and endless, with RPG-like depth to keep players invested. From leveling castles to customizing heroes, every action contributes to long-term growth. Balance is maintained through soft counters and meta shifts, ensuring strategies remain viable while expansions introduce new challenges.
+
+---
+
+### Player Level vs Castle Level (Critical Design Distinction)
+
+Sovereign Territories uses **two parallel progression systems** that serve different purposes:
+
+1. **Player Level** (Account-Wide Avatar Progression)
+2. **Castle Level** (Per-Castle Territory Progression)
+
+Both are **100% F2P accessible**—active players level faster, but there is no paywall.
+
+---
+
+#### Player Level (Your Avatar/Account)
+
+**What It Represents**: Your personal mastery and unlocked capabilities across the entire game. This is **your meta-progression** that never resets.
+
+**How to Gain Player XP**:
+- Campaign battles, daily quests, weekly events, monthly challenges
+- PvP victories, alliance contributions, achievements
+- Battle Pass tiers (seasonal)
+- First-time achievements (one-time bonuses)
+
+**Player Level Benefits (Applied to ALL Your Castles)**:
+
+| Player Level | Max Deck Size | Key Unlocks | F2P Timeline (Active Player) |
+|--------------|---------------|-------------|------------------------------|
+| **1** | 10-15 cards | Tutorial, first castle | Day 1 |
+| **3** | 15-20 cards | Auction house access | Day 1-2 |
+| **5** | 20-25 cards | Alliance membership, daily quests | Day 3-5 |
+| **10** | 25-30 cards | PvP ranked mode, State Map access | Week 1-2 |
+| **15** | 30-35 cards | Secondary castles (up to 5 total), County Map | Week 2-4 |
+| **20** | 35-40 cards | Advanced tactics, Global Map access | Month 1-2 |
+| **25** | 40-45 cards | Prestige cosmetics | Month 2-3 |
+| **30** | 40-50 cards (max) | All content unlocked, legendary frame | Month 3-6 |
+
+**Why Player Level Matters**:
+- ✅ **Persistent**: Never lost, even if castles are destroyed
+- ✅ **Deck Size Scaling**: Prevents new players from being overwhelmed by 50-card decks
+- ✅ **Content Gating**: Learn basics before accessing complex systems
+- ✅ **Social Status**: Visible rank badge shows experience
+- ✅ **F2P Fairness**: Cannot be purchased—everyone earns through play
+- ❌ **No Direct Power**: Does NOT make cards stronger (Level 50 player with Commons loses to Level 10 with Legendaries)
+
+---
+
+#### Castle Level (Your Territory Bases)
+
+**What It Represents**: The strength and development of a **specific castle** you control on the map. **Think of it as your "Base Level"** for that location.
+
+**How to Gain Castle XP** (Separate from Player XP):
+- Holding territories (10 XP/hour per territory)—AFK passive income
+- Building upgrades (100-500 XP per level)
+- Winning defenses (200 XP per successful defense)
+- Wonder control (500 XP/hour, contested)
+- Alliance contributions (50 XP per 1,000 gold donated)
+
+**Castle Level Benefits (Specific to Each Castle)**:
+
+| Castle Level | Building Slots | Hero Stacks Max | Deck Slots | Gold Bonus | Map Tier |
+|--------------|----------------|-----------------|------------|------------|----------|
+| **1** | 5 | 3 | 3 | +0% | Tutorial |
+| **5** | 10 | 5 | 5 | +10% | Local |
+| **10** | 15 | 7 | 7 | +25% | State |
+| **15** | 20 | 10 | 8 | +50% | County |
+| **20** | 30 | 15 | 9 | +75% | Global |
+| **25** | 40 | 20 | 10 | +100% | Prestige skin |
+| **30** | 50 | 25 | 10 | +150% | Mega-castle |
+
+**Why Castle Level Matters**:
+- ✅ **Territory Control**: Higher-level castles hold more buildings and defend better
+- ✅ **Economic Bonuses**: Gold bonuses encourage leveling your main economic castle
+- ✅ **Multiple Instances**: Control up to 5 castles (Player Level 15+), each with independent Castle Levels
+- ✅ **Strategic Choices**: Level one mega-castle OR spread XP across multiple castles
+- ✅ **AFK Progression**: Holding territory generates Castle XP passively
+- ❌ **Can Be Lost**: If castle is destroyed on the map, you lose that Castle Level (but keep Player Level)
+
+---
+
+#### System Comparison Table
+
+| System | What It Affects | How to Level | Persistent? | F2P Timeline |
+|--------|-----------------|--------------|-------------|--------------|
+| **Player Level** | Deck size, feature unlocks, content access | Battles, quests, events | ✅ Always | Day 1 → Month 6 for max |
+| **Castle Level** | Building slots, hero stacks, deck storage, gold bonus | Territory control, buildings | ❌ Lost if destroyed | Hour 1 → Month 2 per castle |
+
+---
+
+#### Example Scenario
+
+**You are Player Level 20**:
+- Unlocked 35-card decks (usable in ALL battles, regardless of castle)
+- Unlocked Global Map access
+- Can control up to 5 castles simultaneously
+
+**You have 3 castles**:
+1. **Main Castle** (Castle Level 25): Fully upgraded, +100% gold, 40 building slots
+2. **Resource Castle** (Castle Level 10): Mining region, 15 building slots
+3. **PvP Border Castle** (Castle Level 5): Defense outpost, 10 building slots
+
+**Your Player Level 20** gives you 35-card decks for every battle.
+**Your Castle Levels** determine how many buildings and defenses each castle can deploy.
+
+---
+
+#### Design Philosophy
+
+**Player Level** = **Who you are** (skill, experience, mastery)
+**Castle Level** = **What you control** (territory, resources, power)
+
+You are always progressing your account (Player Level) even if your territorial holdings (Castles) fluctuate.
+
+---
 
 ## 9.1 Leveling Mechanics
 
