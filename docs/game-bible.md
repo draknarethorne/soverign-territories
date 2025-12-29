@@ -680,8 +680,30 @@ The combat system emphasizes planning and execution, where every action counts. 
 ### Resolution
 Combat resolution is purely mathematical, ensuring fairness. Damage calculations incorporate elements (e.g., fire beats water), class bonuses (e.g., archers vs. infantry), terrain modifiers (e.g., hills boost defense), and buffs from equipment or tactics. Area of Effect (AoE) attacks, like fireballs, multiply damage against stacked units, adding risk-reward to formations.
 
+**Detailed Damage Formula** (inspired by Slay the Spire's clarity):
+- Base Damage = (Attacker's Attack Stat × Stack Multiplier) × Elemental Multiplier × Buff Factor
+- Elemental Multiplier: 1.5x advantage (e.g., Fire vs. Water), 0.75x disadvantage, 1.0x neutral.
+- Defense Reduction: Damage = Base Damage - (Defender's Defense Stat × Terrain Bonus × Stack Defense Multiplier)
+- Final Damage: Capped at 0; overkill doesn't carry over unless specified by abilities.
+- Example: A stack of 3 Fire Archers (Attack 10 each, total 30) attacking Water Infantry (Defense 5) on neutral terrain: 30 × 1.5 × 1.0 - (5 × 1.0 × 1.0) = 45 - 5 = 40 damage.
+
+**Win/Loss Conditions** (best-in-class from Chess and HoMM):
+- **PvE Battles**: Eliminate all enemy units or survive a set number of turns (e.g., defend for 10 turns). Boss battles may require reducing boss HP to 0 across phases.
+- **PvP Battles**: Eliminate all opponent units, capture a central objective (e.g., flag on grid), or achieve a point threshold (e.g., control 5+ tiles).
+- **Alliance Events**: Alliance with most surviving units or captured territories wins; individual contributions earn personal rewards.
+- **Draws**: Rare, resolved by Elo adjustment or rematch; no draws in PvE.
+
+**Building Integration in Combat** (inspired by Civilization's tile improvements):
+- Buildings on the battle grid (if the map tile has them) provide passive buffs: e.g., +20% defense for units on fortified tiles, or resource generation interrupts if destroyed.
+- Siege Mechanics: Attacking enemy castles requires breaching walls (reduce building HP first), adding a pre-combat phase. Buildings can be targeted for AoE or direct attacks, yielding resources if destroyed.
+
 ### AI Integration
 Programmable tactics allow players to set AI behaviors, such as "focus healers" or "flank left," enabling auto-battle during AFK scenarios. This keeps the game engaging even when offline, with tactics evolving as players unlock more options.
+
+**Player Agency in Auto-Battle** (balancing automation with control, like in auto-chess games):
+- Tactics provide base AI; players can queue "interrupt commands" (e.g., "Heal now" or "Retreat") that trigger at specific moments, with a cooldown to prevent spam.
+- "Hero Moments": In key battles, allow 1-2 manual actions per turn during auto-mode, chosen from a simplified menu.
+- Override Toggle: Switch to full manual mid-battle, but at a cost (e.g., reduced XP or energy penalty).
 
 ## 8.2 PvE vs. PvP Differences
 
@@ -728,7 +750,22 @@ Heroes gain skill trees, allocating points to abilities like +damage or healing.
 
 Cards have rarities affecting stats, with counters (e.g., water counters fire) preventing dominance. Expansions introduce new cards, shifting metas and requiring adaptation.
 
-## 9.6 Achievements and Leaderboards
+## 9.6 Difficulty Scaling and Balancing (Best-in-Class from Slay the Spire and Hearthstone)
+
+- **Dynamic Scaling**: Enemy strength scales with player level (e.g., +10% stats per 5 levels). PvE AI adapts tactics based on player performance (e.g., more aggressive after losses).
+- **Soft Counters**: Overpowered decks face increased encounter rates with counters (e.g., fire-heavy decks encounter more water enemies). Meta shifts via patches adjust card power levels.
+- **Player Feedback Loops**: Post-battle analytics show win rates by card/element; A/B testing on new cards ensures balance.
+- **Accessibility Options**: Difficulty modifiers (e.g., -25% enemy HP) for new players, adjustable in settings.
+
+## 9.7 Endgame Content (Inspired by Civilization's Endless Modes)
+
+Beyond max level, focus on infinite progression:
+- **Meta Wars**: Seasonal events where top alliances compete in escalating PvP tournaments, with rewards like exclusive themes.
+- **Player-Created Challenges**: User-generated maps and decks, rated by community votes, for endless replayability.
+- **Infinite PvP Ladder**: Climb ranks with rematches; top tiers unlock cosmetic rewards and influence game updates.
+- **Legacy Systems**: Permanent achievements (e.g., "Conqueror of 100 Maps") that persist across seasons, encouraging long-term play.
+
+## 9.8 Achievements and Leaderboards
 
 Achievements reward milestones with badges and unlocks. Leaderboards track conquests, deck power, and donations, fostering competition.
 
@@ -783,7 +820,15 @@ Progressive overlays teach mechanics, from deck-building to combat. Skip options
 
 Opt-in push notifications for energy refills, attacks, or events.
 
-## 11.4 Codex and Card Views
+## 11.4 Accessibility and Inclusivity (Best-in-Class from Modern Games like The Sims)
+
+- **Colorblind Support**: High-contrast modes, color-coded alternatives (e.g., symbols for elements), and customizable UI themes.
+- **Simplified Controls**: One-handed mode for mobile, voice commands via Unity's accessibility plugins, and adjustable button sizes.
+- **Audio Cues**: Screen reader compatibility, audio descriptions for battles, and sound-based feedback for actions.
+- **Difficulty Modifiers**: Reduced animation speeds, auto-skip options, and text-to-speech for tutorials.
+- **Internationalization**: Full localization with cultural sensitivity, ensuring inclusive representation in themes.
+
+## 11.5 Codex and Card Views
 
 The Codex is the central hub for viewing, managing, and upgrading cards. No separate castle/town views; everything is card-centric and territory-focused.
 
@@ -825,6 +870,13 @@ Unity client + Nakama server; Docker deployment.
 
 ## 12.2 Offline
 - Cache/sync.
+
+## 12.3 Cross-Platform Sync and Features (Inspired by Unity's Multi-Platform Best Practices)
+
+- **Account Linking**: Unified accounts across mobile (iOS/Android), PC (Windows/Mac), and web via Nakama's authentication, with cloud saves for seamless progression.
+- **Platform Optimizations**: Touch-first UI for mobile, mouse/keyboard support for PC, with adaptive controls (e.g., swipe vs. click-and-drag).
+- **Sync Mechanics**: Real-time sync for multiplayer; offline queue for actions, resolving on reconnect. Data integrity via conflict resolution (e.g., last-write-wins for non-critical changes).
+- **Performance**: Unity's Addressables for asset loading, ensuring smooth cross-device play without data loss.
 
 ## Open-Source References
 
