@@ -32,36 +32,36 @@ This guide walks you through setting up your local development environment for *
 3. Run installer: `UnityHubSetup.exe`
 4. Accept defaults (install to `C:\Program Files\Unity Hub\`)
 
-#### Install Unity 6 LTS (Recommended)
+#### Install Unity 6 LTS (Current Recommended Version)
 1. Open **Unity Hub**
 2. Click **"Installs"** tab (left sidebar)
-3. Click **"Install Editor"** → Choose **"6000.x LTS"** (Unity 6, recommended version shown)
+3. Click **"Install Editor"** → Unity Hub will recommend **Unity 6.3 LTS** (current as of December 2025)
 4. Click **"Install"** (Unity 6 installs core editor first, modules come later)
 5. Wait for download (3-5 GB, 15-20 minutes)
 
 **Add Modules After Installation** (optional, can do later):
-1. In Unity Hub **"Installs"** tab, find Unity 6 LTS
+1. In Unity Hub **"Installs"** tab, find your Unity 6 LTS installation
 2. Click **⚙️ (gear icon)** → **"Add Modules"**
-3. Select:
-   - ✅ **Microsoft Visual Studio Community 2022** (C# IDE - recommended)
+3. Select modules you need:
+   - ✅ **Microsoft Visual Studio Community 2022** (C# IDE - recommended for Windows)
    - ✅ **Android Build Support** (for mobile later - optional)
    - ✅ **iOS Build Support** (Mac only - optional)
    - ✅ **Documentation** (offline help - optional)
 4. Click **"Install"**
 
-**For MVP**: Just the core editor is fine. Add Android/iOS modules when ready to build mobile versions.
+**For MVP**: Just the core editor is fine. Add Android/iOS modules later when ready to build mobile versions.
 
 **Why Unity 6 LTS?**
-- Latest LTS release (October 2024, over 1 year of stability)
-- 2-year support window (supported until October 2026)
-- Better performance than Unity 2021
-- Improved UI Toolkit (better for card UI)
+- Current LTS release (as of December 2025)
+- Long-term support with stability updates
+- Better performance and modern features
+- Improved UI Toolkit (excellent for card-based UI)
 - Fully compatible with Nakama Unity SDK
-- Modern C# features (.NET Standard 2.1)
+- Modern C# features
 
-**Alternative: Unity 2021 LTS**
-- If you need older tutorials that reference Unity 2021, install **2021.3.x LTS** instead
-- Both versions work fine for Sovereign Territories
+**Alternative: Unity 2022 LTS**
+- If you encounter compatibility issues or prefer a more established version, Unity 2022 LTS is also available
+- Both Unity 6 LTS and 2022 LTS will work for Sovereign Territories
 
 ---
 
@@ -74,7 +74,7 @@ This guide walks you through setting up your local development environment for *
 4. Configure:
    - **Project Name**: `SovereignTerritories`
    - **Location**: `C:\Soverign-Territories\soverign-territories\src\`
-   - **Unity Version**: `6000.x LTS` (or `2021.3.x LTS` if you installed that)
+   - **Unity Version**: Select your installed Unity 6 LTS version
 5. Click **"Create Project"** (2-3 minutes to initialize)
 
 #### Verify Project Structure
@@ -500,7 +500,7 @@ public class CardLoader : MonoBehaviour
 ## 🎯 What's Next?
 
 **You now have**:
-- ✅ Unity 6 LTS (or 2021 LTS) installed
+- ✅ Unity 6 LTS installed (or Unity 2022 LTS)
 - ✅ Project created with folder structure
 - ✅ Free placeholder art imported
 - ✅ JSON parsing verified
@@ -598,7 +598,7 @@ public class CardLoader : MonoBehaviour
 
 Before proceeding to Week 1 of MVP implementation, verify:
 
-- [ ] Unity 6 LTS (or 2021 LTS) installed and launches successfully
+- [ ] Unity 6 LTS (or 2022 LTS) installed and launches successfully
 - [ ] Project created at `src/SovereignTerritories/`
 - [ ] Folder structure created (Scripts/Cards/, Prefabs/, Resources/CardData/)
 - [ ] 4 Unity packages installed (Newtonsoft.Json, Addressables, Input System, TextMeshPro)
