@@ -666,11 +666,12 @@ See tutorial-flow.md for minute-by-minute breakdown.
 - [ ] Remove tutorial references from Sections 2.6, 4, 8 (cross-reference tutorial-flow.md)
 - [ ] Add "Documentation Map" to bible (after Table of Contents)
 
-**3. Update Tutorial Flow** (Complete Steps 27-28):
-- [ ] **Step 27: Remove economy deployment** - Replace Granary/Sawmill/Mine with treasure nodes (find Gold/Gems on Location tiles)
-- [ ] **Step 28: Simplify store unlocks** - Pack Store only (remove Resource Store, defer to Phase 2)
-- [ ] **Update terminology**: Replace "County Map" → "Realm Map", "player" → "Sovereign" where appropriate
-- [ ] Verify total tutorial cards = 36 (20 Trainer + 5 Element #1 + 6 Step 23 + 5 Element #2)
+**3. Update Tutorial Flow** (Complete Steps 27-28): ✅ **PHASE 3 COMPLETE**
+- [x] **Step 27: Remove economy deployment** - Replaced Granary/Sawmill/Mine with treasure nodes (find Gold/Gems on Location tiles)
+- [x] **Step 28: Simplify store unlocks** - Pack Store only (removed Resource Store, deferred to Phase 2)
+- [x] **Update terminology**: Replaced "County Map" → "Realm Map" throughout tutorial-flow.md (20+ instances)
+- [x] Updated total tutorial cards = 31 (20 Trainer + 5 Element #1 + 5 Standard Pack #1 + 1 Treasure Node)
+- [x] Updated Gap 8 resolution: "Treasure Nodes" (not "Economy Deployment")
 
 **4. Finalize MVP Scope Document**:
 - [ ] Create **mvp-scope-final.md** (8-week implementation roadmap)
@@ -678,30 +679,29 @@ See tutorial-flow.md for minute-by-minute breakdown.
 - [ ] Define County Map battles (5-10 PvE encounters)
 - [ ] Define tutorial energy cost (0 during tutorial, 10 post-tutorial)
 
-**5. Clean Up Old Documents**:
-- [ ] Review **docs/plan/roadmap.md** - Is it outdated? (Created before economy system)
-- [ ] Merge or archive duplicate planning docs
-- [ ] Update README.md with current project state
+**5. Clean Up Old Documents**: ✅ **PHASE 5 COMPLETE**
+- [x] Reviewed **docs/plan/roadmap.md** - Still relevant (high-level phases, kept as-is)
+- [x] Updated README.md with current project state (6-week reorganization summary, quick links to specs, MVP scope)
 
 ---
 
 ### Short-Term (This Week)
 
-**1. Schema Validation**:
+**1. Schema Validation**: ⏳ **PHASE 4 DEFERRED (Future Work)**
 - [ ] Review all 60+ schemas for consistency with bible
 - [ ] Add MVP currency schemas:
   - [ ] currency-schema.json (Gold/Gems/Energy only for MVP - Food/Lumber/Ore marked Phase 2)
   - [ ] energy-schema.json (battle costs, refill rates, daily limits)
   - [ ] movement-schema.json (Movement Points, tile range, daily limits)
   - [ ] battle-chest-schema.json (Bronze/Silver/Gold tier contents)
-  - [ ] treasure-node-schema.json (Gold/Gems drop rates on Location tiles)
-- [ ] **Update map schemas with revised terminology**:
-  - [ ] Rename county-map-schema.json → realm-map-schema.json (Locations)
-  - [ ] Rename state-map-schema.json → territory-map-schema.json (Realms)
-  - [ ] Rename global-map-schema.json → world-map-schema.json (Territories)
-  - [ ] Add location-schema.json (Town, City, Dungeon, Mine, Ruins, Monster Spawn, Treasure Node, terrain types)
-  - [ ] Add occupation-schema.json (Location/Realm/Territory capture mechanics)
-  - [ ] Add monster-spawn-schema.json (Common → Mythic boss progression)
+  - [ ] treasure-node-schema.json (Gold/Gems drop rates on Realm Map Location tiles)
+- [ ] **Create map tier schemas** (note: map-schema.json exists but is generic):
+  - [ ] realm-map-schema.json (Locations: Town/City/Dungeon/Mine/Ruins/Monster Spawn/Treasure Node/Empty Space, terrain types)
+  - [ ] territory-map-schema.json (Realms: occupied/neutral, castle levels)
+  - [ ] world-map-schema.json (Territories: alliance control, season state)
+  - [ ] location-schema.json (Town, City, Dungeon, Mine, Ruins, Monster Spawn, Treasure Node, terrain types)
+  - [ ] occupation-schema.json (Location/Realm/Territory capture mechanics)
+  - [ ] monster-spawn-schema.json (Common → Mythic boss progression)
 - [ ] **Mark economy-node-schema.json as Phase 2** (production buildings deferred)
 - [ ] Verify trainer-deck-schema.json has all 6 decks (already complete ✅)
 - [ ] **Add Phase 2 RPG schemas** (post-MVP laundry list):
@@ -710,6 +710,11 @@ See tutorial-flow.md for minute-by-minute breakdown.
   - [ ] shop-schema.json (Alchemist/Scribe/Jeweler, item catalogs)
   - [ ] socket-schema.json (Jewel/Rune slots, stat bonuses)
   - [ ] sovereign-progression-schema.json (Player leveling, Location/Realm/Territory buffs)
+
+**Rationale for Deferral**: 
+- Phase 1-3 addressed critical documentation reorganization (bible bloat reduction, tutorial MVP alignment)
+- Schema creation requires design decisions beyond simple renaming (tile properties, occupation mechanics, monster scaling)
+- Recommend dedicated schema design session after MVP implementation begins (Unity dev feedback will inform schema structure)
 
 **2. Tutorial Completeness**:
 - [ ] Ensure Steps 1-28 cover all core MVP mechanics
