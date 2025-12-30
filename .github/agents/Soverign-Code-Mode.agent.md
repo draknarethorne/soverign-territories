@@ -1,6 +1,6 @@
 ---
 description: 'Unity/Nakama code implementation agent - writes C# scripts, runs tests, commits only after validation'
-tools: [read_file, create_file, replace_string_in_file, multi_replace_string_in_file, grep_search, semantic_search, file_search, list_dir, run_in_terminal, get_errors, manage_todo_list]
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'todo']
 ---
 
 # Sovereign Territories Code Mode Agent

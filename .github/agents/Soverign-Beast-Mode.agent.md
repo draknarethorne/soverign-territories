@@ -1,6 +1,6 @@
 ---
-description: 'Expert game design agent for Sovereign Territories - deep analysis, iterative design, automated git workflow, and meta-reflection on architectural decisions (DESIGN ONLY, not code implementation)'
-tools: [read_file, replace_string_in_file, multi_replace_string_in_file, grep_search, semantic_search, run_in_terminal, list_dir, file_search, manage_todo_list]
+description: 'Expert game design agent for Sovereign Territories - deep analysis, iterative design, automated git workflow, and meta-reflection on architectural decisions'
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'todo']
 ---
 
 # Sovereign Territories Beast Mode Agent (Design Specialist)

@@ -531,13 +531,18 @@ After Trainer Deck reveal animation completes:
 
 ## Phase 4: County Map Introduction (8-10 Minutes)
 
-### Step 12: Map Camera Intro
+### Step 12: Map Camera Intro & Movement System
 **Screen**: County Map - Tutorial Start
 ```
 [Camera: Zoomed out view of County Map]
 [Background: Lush green terrain with fog of war covering 70% of map]
 
-[Visible: Start tile (glowing green), 1 Path tile, 1 Enemy Spawn (red)]
+[HUD Elements]:
+- Top-Right: Movement Points (10/10, green footstep icon)
+- Top-Left: Energy (100/100, yellow lightning icon)  
+- Top-Center: Food (0), Lumber (0), Ore (0)
+
+[Visible: Start tile (glowing green), Path tiles leading to Enemy (2 tiles away)]
 [Fog: Everything else hidden]
 
 [Tutorial Overlay]:
@@ -554,14 +559,23 @@ After Trainer Deck reveal animation completes:
 
 **Tutorial Steps** (Sequential overlays):
 1. "This is your army" (highlights player stack)
-2. "These are enemy spawns" (highlights goblin camp)
-3. "Tap your army to select it" (waits for player to tap)
+2. "These are enemy spawns" (highlights goblin camp, 2 tiles away)
+3. **"You have 10 Movement Points per day"** (highlights Movement Points HUD)
+   - Tooltip: "Each move costs 1 Movement Point. You can move 3 tiles per turn."
+4. "Tap your army to select it" (waits for player to tap)
 
 **System Actions**:
 1. Load county map (Tutorial_Map_01)
 2. Place player army on Start tile
 3. Place 1 enemy spawn 2 tiles away
-4. Disable all other interactions until tutorial completes
+4. Initialize HUD: Movement Points (10/10), Energy (100/100), Resources (0/0/0)
+5. Disable all other interactions until tutorial completes
+
+**Movement Point System Introduction**:
+- **Movement Points**: 10/day (resets midnight UTC)
+- **Movement Range**: 3 tiles per turn (1 Movement Point = move up to 3 tiles)
+- **Enemy is 2 tiles away**: Player will reach enemy in 1 turn (costs 1 Movement Point, 9 remaining)
+- **Visual**: After first move, HUD updates to "9/10 Movement Points"
 
 **Design Decisions Needed**:
 - [ ] Camera zoom level (show 5×5 tiles? 7×7? whole map?)
@@ -574,23 +588,31 @@ After Trainer Deck reveal animation completes:
 **Screen**: Move Your Army
 ```
 [Tutorial Overlay]:
-"Tap the enemy camp to move and attack!"
-[Arrow pointing from your army to goblin camp]
-[Goblin camp pulsing red]
-
+"Tap adjacent tiles to move. You can move 3 tiles before your turn ends!"
+[Arrow pointing from your army to first path tile]
 [Movement Range: Green highlight on 3 adjacent tiles]
-[Enemy Tile: Red highlight (attack target)]
+
+[After first move]:
+"Great! Keep moving to the enemy camp."
+[Goblin camp now 1 tile away, pulsing red]
+
+[Movement Points HUD: Updates from 10/10 → Still 10/10 (turn hasn't ended yet)]
 ```
 
 **Player Action**: 
-1. Taps goblin camp tile
-2. Army moves (1-second walk animation)
-3. Army reaches goblin camp
+1. Taps first path tile → Army moves (1-second walk animation)
+2. Taps second path tile (enemy camp) → Army reaches enemy camp
+3. Movement complete (2 tiles moved in 1 turn)
 
 **System Actions**:
-1. Calculate movement path (2 tiles)
-2. Play walk animation (army sprite moves along path)
-3. Trigger battle transition
+1. First tap: Move army 1 tile (no Movement Point cost yet, turn hasn't ended)
+2. Second tap: Move army to enemy tile (triggers battle)
+3. **After battle**: Movement Point cost applied (10/10 → 9/10)
+4. Trigger battle transition
+
+**Movement Point Cost Timing**:
+- **During Tutorial**: Costs applied after battle (player sees "9/10" post-battle)
+- **Tooltip After Battle**: "You used 1 Movement Point this turn. You have 9 left today!"
 
 **Design Decisions Needed**:
 - [ ] Movement animation speed (instant, 0.5 sec/tile, 1 sec/tile?)
@@ -926,20 +948,58 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 ---
 
-### Step 23: Victory Screen + First Pack Reward
+### Step 23: Victory Screen, Battle Chest & Pack Reward
 **Screen**: Victory!
 ```
 [Background: Animated victory fanfare, golden particles]
 [Large text: "VICTORY!" (3-second animation, skippable after 1 sec)]
 [Fireworks VFX: 2-second burst]
 
-[Rewards Box]:
-📊 +100 XP (Player Level: 1 → 1, 100/250 XP to Level 2)
-💰 +500 Gold (Total: 1,000 Gold)
+[Bronze Chest appears: Small bronze chest model, glowing]
+[Text: "Battle Chest Earned! Tap to open."]
+[Button: "Open Chest"] (pulsing, cannot skip)
+```
+
+**Battle Chest Opening Animation** (NEW):
+- Player taps "Open Chest"
+- **Bronze Chest** (easy PvE battle tier):
+  - Lid flips open with particle effects (1-second animation)
+  - Contents reveal sequentially (3 seconds total):
+    * 💰 +50 Gold (coin icon flies to HUD, "+50!" popup)
+    * 📊 +100 XP (progress bar fills, "100/250 to Level 2")
+    * 🌾 +20 Food (wheat icon flies to HUD, "+20!" popup)
+    * 🎴 +1 Common Card (Footman flips, 10% drop chance, guaranteed for tutorial)
+
+**Tooltip After Chest**:
+```
+"Bronze Chests drop from easy battles.
+Harder battles drop Silver or Gold Chests with better rewards!"
+```
+
+**Energy System Introduction**:
+```
+[After chest opening, Energy tutorial appears]
+
+📊 ENERGY SYSTEM UNLOCKED
+
+"This battle cost 0 Energy (Tutorial Campaign is free!)"
+
+"Post-tutorial battles cost 10 Energy each."
+"You refill 1 Energy every 6 minutes (240 Energy/day)."
+"Your max Energy: 100 (enough for 10 battles before waiting)"
+
+[HUD shows: Energy meter 100/100 (yellow lightning icon)]
+
+[Button: "Got it!"] (dismiss tutorial)
+```
+
+**Pack Reward** (After Energy Tutorial):
+```
+[Screen: Victory Bonus]
 
 🎁 **BONUS: Standard Booster Pack Earned!**
 [Glowing pack icon bounces in]
-[Text: "You've earned your first pack! Tap to open."]
+[Text: "You've earned your first pack for beating the tutorial battle! Tap to open."]
 [Button: "Open Pack"] (pulsing, cannot skip)
 ```
 
@@ -953,16 +1013,17 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 **After Pack Opening**:
 ```
-[Screen returns to victory rewards]
+[Screen returns to victory summary]
 
-🎴 5 New Cards Acquired:
-- [Common Healer] (Water)
-- [Common Scout] (Earth)  
-- [Common Farm] (Neutral)
-- [Uncommon Archer] (Fire)
-- [Rare Knight] (Earth)
+🏆 BATTLE REWARDS SUMMARY:
+- Bronze Chest: 50 Gold, 100 XP, 20 Food, 1 Common card (Footman)
+- Standard Pack: 5 random cards (Healer, Scout, Farm, Archer, Knight)
 
-(Auto-added to Codex)
+📊 Player Level: 1 (100/250 XP to Level 2)
+💰 Gold: 4,550 (4,500 from tutorial + 50 from chest)
+🌾 Food: 20 (first resource earned!)
+
+🎴 Total Cards: 31 (25 from Trainer Deck + Element Booster + 1 from chest + 5 from pack)
 
 [Optional Button: "View Codex"]
 [Primary Button: "Continue"]
@@ -979,30 +1040,34 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 - **Optional**: "View Codex" button lets player inspect immediately if curious
 - **Replay**: Codex shows all acquired cards with timestamps
 
-**Why Earned Pack Here?**:
-- ✅ **Reward for Achievement**: Beating first battle feels like earning, not handout
+**Why Battle Chest + Pack Here?**:
+- ✅ **Reward Variety**: Chest (instant Gold/XP/resources) + Pack (collector appeal)
+- ✅ **Energy System Introduction**: Explain without blocking (tutorial = 0 cost)
+- ✅ **Resource Introduction**: First Food earned (20 Food for future battles)
 - ✅ **Pokemon Store Feel**: "I won, I get to open a pack!" (dopamine spike)
 - ✅ **Cross-Element Exposure**: Fire player sees Water/Earth cards (variety)
-- ✅ **Collection Growth**: 25 → 30 cards (meaningful progression)
-- ✅ **Pacing**: Not overwhelming (5 cards only, 5 seconds)
+- ✅ **Collection Growth**: 25 → 31 cards (6 new: 1 from chest, 5 from pack)
 
-**Total Cards After Step 23**: 25 (starting) + 5 (pack) = **30 cards**
+**Total Cards After Step 23**: 25 (starting) + 1 (chest) + 5 (pack) = **31 cards**
 
 **System Actions**:
-1. Award XP: +100 (total 100/250 to Level 2)
-2. Award gold: +500 (total 1,000 gold)
-3. Award pack: 1 Standard Pack → Auto-open (cannot skip)
-4. Award 5 random cards → Add to Codex (mark as "New!")
-5. Store badges: `PlayerPrefs.SetInt("Card_[id]_New", 1)` for each card
-6. Unlock Auto-Battle feature (shown in next step)
-7. Return to County Map
+1. Award Bronze Chest: 50 Gold, 100 XP, 20 Food, 1 Common card
+2. Update HUD: Gold (4,500 → 4,550), XP (0 → 100/250), Food (0 → 20)
+3. Introduce Energy system (tutorial popup, no cost yet)
+4. Award pack: 1 Standard Pack → Auto-open (cannot skip)
+5. Award 5 random cards → Add to Codex (mark as "New!")
+6. Store badges: `PlayerPrefs.SetInt("Card_[id]_New", 1)` for each card
+7. Unlock Auto-Battle feature (shown in next step)
+8. Return to County Map
 
 **Design Decisions** (Resolved):
 - ✅ Victory fanfare duration: 3 seconds total, skippable after 1 second
+- ✅ **Battle Chest tier: Bronze (easy PvE battles)**
 - ✅ **First pack timing: After first battle victory (earned reward)**
 - ✅ **Pack type: Standard Pack (5 random cards, cross-element exposure)**
 - ✅ Card reward destination: Auto-add to Codex with "New!" badge (no prompt)
 - ✅ Achievement notification: Toast notification (top-right, 3-second fade)
+- ✅ **Energy introduction: After chest, before pack (teaches mechanic without blocking)**
 
 ---
 
@@ -1014,6 +1079,11 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 [Camera returns to County Map]
 [Player army back on Start tile]
 [Fog of War: Revealed 2 more tiles (nearby path + another enemy spawn)]
+
+[HUD Update]:
+- Movement Points: 9/10 (1 used for first battle turn)
+- Energy: 100/100 (tutorial battles still free)
+- Food: 20 (from battle chest)
 
 [Tutorial Overlay]:
 "Great job! You can now use Auto-Battle for faster fights."

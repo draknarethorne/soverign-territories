@@ -3574,6 +3574,597 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 - Supercell Analytics (unofficial docs): Monetization models.
 - Open-Source IAP Libraries (GitHub, e.g., Unity IAP samples): In-app purchase handling.
 
+---
+
+# SECTION 5.5: RESOURCE ECONOMY & CURRENCY SYSTEMS
+
+## 5.5.1 Currency Overview
+
+**Core Philosophy**: Multiple currencies prevent whale dominance (can't buy everything with real money) and create diverse progression paths (PvP skill, AFK patience, exploration, grinding).
+
+**Currency Types**:
+1. **Gold** (Soft currency - earned through gameplay)
+2. **Gems** (Premium currency - bought with real money or earned slowly)
+3. **Food** (Resource - AFK gathering, exploration)
+4. **Lumber** (Resource - AFK gathering, exploration)
+5. **Ore** (Resource - AFK gathering, exploration)
+6. **Arena Tokens** (PvP currency - ranked match rewards only)
+7. **Energy** (Stamina - battle cost, prevents grinding)
+
+**No "Coins" Separate Currency**: Real money purchases use Gems directly (simplicity, no conversion confusion).
+
+---
+
+## 5.5.2 Gold (Soft Currency)
+
+**Definition**: Primary earned currency for card collection and progression.
+
+**Sources** (How Players Earn Gold):
+- **Battle Victory**: 50-200 Gold per battle (scales with difficulty)
+- **Tutorial Rewards**: 4,500 Gold total (tutorial completion)
+- **Daily Login**: 100-500 Gold (Day 1-28 progression)
+- **Weekly Quests**: 500 Gold per quest (5/7 quests = 2,500 Gold/week)
+- **AFK Production**: Economy buildings generate 10-100 Gold/hour (Granary, Sawmill, Mine)
+- **Alliance Donations**: Other members can gift Gold (100-1,000 per donation)
+- **Achievements**: 1,000-5,000 Gold for milestones (first Legendary, 100 battles won, etc.)
+- **Seasonal Events**: 2,000-10,000 Gold for event completion
+- **Selling Cards**: Duplicate cards → Gold (Common: 10 Gold, Legendary: 1,000 Gold)
+
+**Sinks** (How Players Spend Gold):
+- **Pack Purchases**: 
+  - Standard Pack: 1,000 Gold (5 random cards)
+  - Element Booster: 1,500 Gold (5 cards, 80% element match)
+  - Epic Booster: 3,000 Gold (5 cards, guaranteed Epic)
+  - Game Deck: 50,000 Gold (50 cards, 1 Legendary, 2-3 Epics, 1/week limit)
+- **Card Combining**: 
+  - +1 Star: 100 Gold + 2 duplicate cards (Common → 1★ Uncommon)
+  - +2 Stars: 500 Gold + 4 duplicate cards (Uncommon → 2★ Rare)
+  - +3 Stars: 2,000 Gold + 8 duplicate cards (Rare → 3★ Epic)
+  - +4 Stars: 10,000 Gold + 16 duplicate cards (Epic → 4★ Legendary)
+  - +5 Stars: 50,000 Gold + 32 duplicate cards (Legendary → 5★ Mythic)
+- **Building Upgrades**:
+  - Granary Level 2: 500 Gold (increases Food production +20%)
+  - Sawmill Level 2: 500 Gold (increases Lumber production +20%)
+  - Mine Level 2: 500 Gold (increases Ore production +20%)
+- **Name Change**: 100 Gold (first change free, subsequent changes cost Gold)
+- **Speed-Ups**: 50 Gold per hour (speed up building retrieval, card combining timers)
+- **Resource Trading**: 1,000 Gold → 500 Food/Lumber/Ore (emergency conversion)
+
+**Earn Rate vs Spend Rate** (F2P Balance):
+- **F2P Player**: ~3,000 Gold/week (daily login + quests + battles)
+- **Spending Goal**: 1 Standard Pack/day (7,000 Gold/week) OR save for Game Deck (50k Gold = 16 weeks)
+- **Result**: F2P players can buy 3-4 packs/week with Gold, requires choices (packs vs upgrades)
+
+---
+
+## 5.5.3 Gems (Premium Currency)
+
+**Definition**: Premium currency for premium content, shortcuts, and exclusive packs.
+
+**Sources** (How Players Earn Gems):
+- **Real Money Purchases**:
+  - Starter Pack: $4.99 = 500 Gems (one-time purchase)
+  - Small Pack: $4.99 = 500 Gems (5/week limit)
+  - Medium Pack: $9.99 = 1,100 Gems (3/week limit, 10% bonus)
+  - Large Pack: $19.99 = 2,500 Gems (1/week limit, 25% bonus)
+  - Battle Pass: $4.99 = 1,000 Gems over 30 days (Tier 1-40 rewards, 1/month limit)
+- **Free Gem Sources**:
+  - Daily Login: 10-50 Gems (Day 7, 14, 21, 28 bonus days)
+  - Achievements: 50-500 Gems (first Epic pull, 50 battles won, etc.)
+  - Weekly Quests: 100 Gems per 7/7 quest completion (encourages consistency)
+  - Alliance Wars: 200-1,000 Gems for winning alliance (monthly season rewards)
+  - Seasonal Events: 500-2,000 Gems for event completion
+
+**Earn Rate** (Free Gems):
+- **F2P Player**: ~500 Gems/month (daily login + weekly quests + achievements)
+- **Active Player**: ~1,000 Gems/month (adds alliance wars + events)
+- **Whale**: Unlimited (real money purchases, $136/week max)
+
+**Sinks** (How Players Spend Gems):
+- **Premium Packs**:
+  - Premium Standard Pack: 100 Gems (5 cards, 10% shiny rate, 10/week limit)
+  - Premium Element Booster: 150 Gems (5 cards, element match, 10% shiny, 5/week limit)
+  - Premium Epic Booster: 300 Gems (5 cards, guaranteed Epic, 10% shiny, 3/week limit)
+  - Shiny Guaranteed Pack: 1,000 Gems (5 cards, 100% shiny, 1/week limit)
+- **Energy Refills**: 50 Gems per refill (restores max Energy, unlimited purchases)
+- **Instant Speed-Ups**: 100 Gems per instant completion (building retrieval, card combining)
+- **VIP Pass**: $4.99/month = auto-buy for 500 Gems (daily bonuses: +10% Gold, +10% XP, +1 Energy refill/day)
+- **Cosmetic Items**:
+  - Card Backs: 200-500 Gems (visual customization for deck)
+  - Battle Emotes: 100-300 Gems (chat expressions during PvP)
+  - Hero Skins: 500-1,000 Gems (alternate art for Legendary heroes)
+
+**Spending Comparison**:
+- **F2P Player**: 500 Gems/month → 5 Premium Standard Packs OR 1 Energy refill/day for 10 days
+- **Whale**: $136/week → 14,400 Gems/month → 10 Premium Standard + 5 Premium Element + 3 Premium Epic + 1 Shiny Guaranteed + leftover for refills
+
+---
+
+## 5.5.4 Food (AFK Resource)
+
+**Definition**: Consumable resource for unit maintenance and battle entry costs.
+
+**Sources** (How Players Earn Food):
+- **AFK Production** (Auto-Collected):
+  - Granary: 10 Food/hour (Level 1), 20 Food/hour (Level 2), 40 Food/hour (Level 3)
+  - Farm: 50 Food/hour (Level 1), 100 Food/hour (Level 2), 200 Food/hour (Level 3)
+  - **Auto-Collection**: Resources accumulate up to storage capacity, then stop
+  - **Storage Capacity**: 1,000 Food (Level 1 storage), 5,000 (Level 2), 20,000 (Level 3)
+  - **No Tapping Required**: Check in when you want to spend, not to collect
+- **Battle Rewards**: 20-100 Food per battle chest (bronze/silver/gold tier)
+- **Exploration**: County Map resource nodes (100-500 Food per node, respawns daily)
+- **Daily Login**: 500-2,000 Food (Day 7, 14, 21, 28 bonus days)
+- **Alliance Donations**: Members can gift Food (100-1,000 per donation)
+- **Gold Trading**: 1,000 Gold → 500 Food (emergency conversion)
+
+**Production Rate** (AFK Gathering):
+- **Early Game** (1 Granary Level 1): 240 Food/day (10/hour × 24 hours)
+- **Mid Game** (2 Granaries Level 2 + 1 Farm Level 1): 2,160 Food/day
+- **Late Game** (3 Granaries Level 3 + 2 Farms Level 3): 7,680 Food/day
+
+**Sinks** (How Players Spend Food):
+- **Battle Entry Cost**: 20 Food per battle (prevents grinding, encourages AFK production)
+- **Unit Deployment**: 50 Food per unit deployed on County Map (stack of 5 units = 250 Food)
+- **Building Upgrades**:
+  - Granary Level 2: 500 Food (ironic sink: spend Food to make more Food)
+  - Farm Level 2: 1,000 Food
+  - Mine Level 2: 300 Food (miners need to eat)
+- **Card Combining**: 100 Food per combine (represents feeding units during training)
+- **Resource Trading**: 500 Food → 1,000 Gold (sell surplus for Gold)
+
+**Consumption vs Production**:
+- **20 Food/battle**: Player with 2,160 Food/day can fight 108 battles/day (unrealistic due to Energy limits)
+- **Energy System**: Caps battles at ~24/day (480 Food/day consumption)
+- **Result**: Food accumulates naturally, players rarely run out (AFK progression)
+
+---
+
+## 5.5.5 Lumber (AFK Resource)
+
+**Definition**: Crafting resource for equipment, building construction, and upgrades.
+
+**Sources** (How Players Earn Lumber):
+- **AFK Production** (Auto-Collected):
+  - Sawmill: 10 Lumber/hour (Level 1), 20 Lumber/hour (Level 2), 40 Lumber/hour (Level 3)
+  - Forest: 50 Lumber/hour (Level 1), 100 Lumber/hour (Level 2), 200 Lumber/hour (Level 3)
+  - **Auto-Collection**: Resources accumulate up to storage capacity, then stop
+  - **Storage Capacity**: 1,000 Lumber (Level 1 storage), 5,000 (Level 2), 20,000 (Level 3)
+  - **No Tapping Required**: Check in when you want to spend, not to collect
+- **Battle Rewards**: 20-100 Lumber per battle chest (bronze/silver/gold tier)
+- **Exploration**: County Map resource nodes (100-500 Lumber per node, respawns daily)
+- **Daily Login**: 500-2,000 Lumber (Day 7, 14, 21, 28 bonus days)
+- **Alliance Donations**: Members can gift Lumber (100-1,000 per donation)
+- **Gold Trading**: 1,000 Gold → 500 Lumber (emergency conversion)
+
+**Production Rate** (AFK Gathering):
+- **Early Game** (1 Sawmill Level 1): 240 Lumber/day
+- **Mid Game** (2 Sawmills Level 2 + 1 Forest Level 1): 2,160 Lumber/day
+- **Late Game** (3 Sawmills Level 3 + 2 Forests Level 3): 7,680 Lumber/day
+
+**Sinks** (How Players Spend Lumber):
+- **Equipment Crafting**:
+  - Wooden Shield: 100 Lumber (+2 Health for equipped hero)
+  - Hunting Bow: 200 Lumber (+1 Attack, +1 Range for equipped hero)
+  - Siege Ladder: 500 Lumber (tactical item, allows wall climbing in battles)
+- **Building Construction**:
+  - Deploy new economy building: 300 Lumber (one-time cost per building)
+  - Sawmill: 500 Lumber (ironic: spend Lumber to build Lumber factory)
+  - Farm: 400 Lumber (wooden barn construction)
+- **Building Upgrades**:
+  - Sawmill Level 2: 500 Lumber
+  - Forest Level 2: 1,000 Lumber
+  - Granary Level 2: 300 Lumber (wooden storage expansion)
+- **Card Combining**: 50 Lumber per combine (building training dummies, wooden targets)
+- **Resource Trading**: 500 Lumber → 1,000 Gold (sell surplus for Gold)
+
+**Usage Pattern**:
+- **Early Game**: Spend on equipment (Wooden Shield, Hunting Bow)
+- **Mid Game**: Spend on building construction (deploy more economy buildings)
+- **Late Game**: Spend on upgrades (Level 3 buildings for max production)
+
+---
+
+## 5.5.6 Ore (AFK Resource)
+
+**Definition**: Advanced crafting resource for high-tier equipment and building upgrades.
+
+**Sources** (How Players Earn Ore):
+- **AFK Production** (Auto-Collected):
+  - Mine: 5 Ore/hour (Level 1), 10 Ore/hour (Level 2), 20 Ore/hour (Level 3)
+  - Quarry: 25 Ore/hour (Level 1), 50 Ore/hour (Level 2), 100 Ore/hour (Level 3)
+  - **Auto-Collection**: Resources accumulate up to storage capacity, then stop
+  - **Storage Capacity**: 500 Ore (Level 1 storage), 2,500 (Level 2), 10,000 (Level 3)
+  - **No Tapping Required**: Check in when you want to spend, not to collect
+- **Battle Rewards**: 10-50 Ore per battle chest (bronze/silver/gold tier)
+- **Exploration**: County Map resource nodes (50-250 Ore per node, respawns daily)
+- **Daily Login**: 250-1,000 Ore (Day 7, 14, 21, 28 bonus days)
+- **Alliance Donations**: Members can gift Ore (50-500 per donation)
+- **Gold Trading**: 1,000 Gold → 250 Ore (emergency conversion, expensive)
+
+**Production Rate** (AFK Gathering):
+- **Early Game** (1 Mine Level 1): 120 Ore/day
+- **Mid Game** (2 Mines Level 2 + 1 Quarry Level 1): 1,080 Ore/day
+- **Late Game** (3 Mines Level 3 + 2 Quarries Level 3): 3,840 Ore/day
+
+**Sinks** (How Players Spend Ore):
+- **Equipment Crafting**:
+  - Iron Sword: 200 Ore (+3 Attack for equipped hero)
+  - Iron Armor: 300 Ore (+5 Health for equipped hero)
+  - Steel Shield: 500 Ore (+3 Health, +1 Defense for equipped hero)
+  - Mythic Weapon: 2,000 Ore (+5 Attack, +2 Range, Legendary-tier equipment)
+- **Building Upgrades**:
+  - Mine Level 2: 500 Ore
+  - Quarry Level 2: 1,000 Ore
+  - Granary Level 3: 200 Ore (stone foundation)
+  - Sawmill Level 3: 200 Ore (steel saw blades)
+- **Card Combining**: 25 Ore per combine (forging stronger units)
+- **Resource Trading**: 250 Ore → 1,000 Gold (sell surplus for Gold)
+
+**Scarcity Design**:
+- **Ore is Rare**: Slowest production rate (120 Ore/day vs 240 Food/Lumber)
+- **High-Value Sinks**: Mythic equipment costs 2,000 Ore (17 days of production for 1 item)
+- **Result**: Players must choose (upgrade buildings OR craft equipment, can't do both)
+
+---
+
+## 5.5.7 Arena Tokens (PvP Currency)
+
+**Definition**: Exclusive currency earned from ranked PvP matches, usable only in PvP Store.
+
+**Sources** (How Players Earn Arena Tokens):
+- **Ranked Match Victory**: 10-50 Tokens (scales with bracket: Bronze = 10, Mythic = 50)
+- **Ranked Match Loss**: 5 Tokens (participation reward, encourages trying)
+- **Weekly Ranking Rewards**:
+  - Top 100: 500 Tokens
+  - Top 10: 1,000 Tokens
+  - Rank 1: 2,000 Tokens
+- **Alliance War Victory**: 200-500 Tokens for winning alliance
+- **Seasonal Ranked Rewards**: 1,000-5,000 Tokens at season end (resets monthly)
+
+**Earn Rate**:
+- **Casual Player**: 5 matches/week × 10 Tokens = 50 Tokens/week
+- **Active Player**: 20 matches/week × 20 Tokens = 400 Tokens/week
+- **Competitive Player**: 50 matches/week × 30 Tokens + weekly ranking = 2,000+ Tokens/week
+
+**Sinks** (How Players Spend Arena Tokens):
+- **PvP-Exclusive Packs**:
+  - Arena Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards only)
+  - Gladiator Booster: 1,000 Tokens (5 cards, guaranteed Epic, PvP-exclusive Epics)
+- **PvP-Exclusive Cards**:
+  - Arena Champion Hero: 2,000 Tokens (Legendary hero, only obtainable in PvP Store)
+  - Tournament Tactician: 500 Tokens (Epic support card, PvP utility focus)
+- **Cosmetic Items**:
+  - Arena Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion" titles)
+  - Ranked Card Back: 1,000 Tokens (exclusive card back for ranked players)
+  - Victory Emote: 300 Tokens (special emote for PvP matches)
+
+**Store Separation**:
+- **Cannot Buy with Gold/Gems**: Arena Tokens only obtainable through PvP
+- **Cannot Trade**: Arena Tokens are account-bound (prevents farming on alt accounts)
+- **Result**: PvP players have exclusive content (rewards skill, not spending)
+
+---
+
+## 5.5.8 Energy (Stamina System)
+
+**Definition**: Stamina resource that limits battles per day, prevents endless grinding, encourages AFK progression.
+
+**Core Mechanics**:
+- **Max Energy**: Based on Player Level
+  - Level 1-10: 100 Max Energy
+  - Level 11-20: 150 Max Energy
+  - Level 21-30: 200 Max Energy
+  - Level 31+: 250 Max Energy
+- **Battle Cost**: 
+  - Tutorial Campaign: 0 Energy (unlimited battles, no interruption)
+  - County Map Battle: 10 Energy per battle
+  - Random Campaign: 10 Energy per battle
+  - Boss Battle: 20 Energy
+  - Alliance War: 0 Energy (alliance events are unlimited during war periods)
+- **Refill Rate**: 1 Energy per 6 minutes (10 Energy/hour, 240 Energy/day)
+- **Daily Battle Limit**: 
+  - Free Player: 24 battles/day (240 Energy refill / 10 per battle)
+  - With Refills: Unlimited (Gem refills allow more battles, but Food cost still limits)
+
+**Refill Options**:
+- **Wait**: Free, 1 Energy per 6 minutes (natural refill)
+- **Gem Refill**: 50 Gems per full refill (instant, unlimited purchases)
+- **Level-Up**: Full Energy refill on level-up (automatic, incentivizes progression)
+- **VIP Pass**: +1 free Energy refill/day ($4.99/month perk)
+
+**Tutorial Exception**:
+- **Campaign Energy**: 0 Energy cost (players can complete tutorial without stopping)
+- **Introduction**: Step 23 (after first battle victory) → Tooltip: "Future battles cost Energy, but the campaign is free!"
+- **Post-Tutorial**: County Map battles cost 10 Energy (players learn mechanic without blocking tutorial)
+
+**Design Philosophy**:
+- **Prevents Grinding**: Can't farm 1,000 battles on day 1 (limits F2P hardcore grinders)
+- **Encourages AFK**: Natural refill (240 Energy/day) = 24 battles/day = incentivizes checking in multiple times
+- **Whale Option**: Gem refills (50 Gems × 10 refills = 500 Gems/day = $5/day) = 240 extra battles/day
+- **Food Gating**: Even with infinite Energy refills, Food cost (20 Food/battle) limits battles to ~380/day (7,680 Food production / 20 per battle)
+
+**Energy vs Food Balance**:
+- **Energy Limits**: 24 battles/day (free)
+- **Food Limits**: 380 battles/day (max production)
+- **Result**: Energy is primary gate (Food rarely runs out), whales can spend Gems for 10× more battles
+
+---
+
+## 5.5.9 County Map Movement System
+
+**Definition**: Turn-based movement for deployed card stacks on County Map, limits exploration pacing.
+
+**Core Mechanics**:
+- **Movement Range**: 3 tiles per turn (hex-based County Map)
+- **Turn Cost**: 1 Movement Point per turn
+- **Max Movement Points**: 10 per day (resets at midnight UTC)
+- **Movement Point Refill**: None (daily cap only, cannot refill with Gems)
+
+**Movement Rules**:
+- **Deployed Stack**: Player deploys hero + units on County Map (Step 12 of tutorial)
+- **Each Turn**: Player can move stack up to 3 tiles in any direction
+- **Obstacles**: Rivers, mountains block movement (must path around)
+- **Enemy Tiles**: Moving onto enemy tile triggers battle (costs 10 Energy + 20 Food + 1 Movement Point)
+- **Resource Nodes**: Moving onto resource node collects resources (100-500 Food/Lumber/Ore, costs 1 Movement Point)
+
+**Daily Exploration Limit**:
+- **10 Movement Points**: Can move 30 tiles/day (3 tiles × 10 turns)
+- **County Map Size**: 40 tiles total (can explore 75% of map in 1 day if straight line)
+- **Realistic Exploration**: Obstacles, battles, backtracking = 5-7 days to fully explore 1 County Map
+- **Result**: Exploration is paced, can't blitz entire map in 1 session
+
+**Tutorial Integration**:
+- **Step 12**: Deploy first stack, move 3 tiles to PvE enemy (costs 1 Movement Point)
+- **Step 13**: Battle PvE enemy, win, return to starting tile (costs 1 Movement Point to return)
+- **Tooltip**: "You have 10 Movement Points per day. Plan your route carefully!"
+- **Post-Tutorial**: Full County Map unlocked (40 tiles, 10 Movement Points/day = 4 days to fully explore)
+
+**No Gem Refills** (Intentional):
+- **Energy**: Can refill with Gems (whale advantage for battles)
+- **Movement Points**: Cannot refill (prevents whales from exploring entire map instantly)
+- **Result**: Exploration is time-gated for everyone (F2P and whales explore at same pace)
+
+**Alliance Coordination**:
+- **Shared Map**: Alliance members share County Map progress (if one member explores tile, all see it)
+- **Coordination**: Members can split exploration (Member A goes north, Member B goes south)
+- **Result**: Alliances explore faster collectively (10 members × 10 Movement Points = 100 tiles/day)
+
+---
+
+## 5.5.10 Store Separation
+
+**Philosophy**: Three distinct stores prevent currency confusion and create exclusive progression paths.
+
+---
+
+### Pack Store (Gold & Gems)
+
+**Purpose**: Card collection, pack opening, deck building.
+
+**Currency**: Gold (unlimited purchases) or Gems (weekly limits).
+
+**Items Available**:
+
+**Standard Packs** (Always Available):
+- Standard Pack: 1,000 Gold OR 100 Gems (5 random cards, 1% shiny, unlimited Gold purchases, 10 Premium/week)
+- Element Booster: 1,500 Gold OR 150 Gems (5 cards, 80% element match, unlimited Gold, 5 Premium/week)
+- Epic Booster: 3,000 Gold OR 300 Gems (5 cards, guaranteed Epic, unlimited Gold, 3 Premium/week)
+- Shiny Guaranteed Pack: 1,000 Gems ONLY (5 cards, 100% shiny, 1/week limit)
+
+**Theme Packs** (Rotating Weekly):
+- Viking Conquest Pack: 2,000 Gold OR 200 Gems (5 cards, Norse theme, guaranteed Rare)
+- Roman Legion Pack: 2,000 Gold OR 200 Gems (5 cards, Roman theme, guaranteed Rare)
+- Elemental Chaos Pack: 2,500 Gold OR 250 Gems (5 cards, pure Fire/Water/Earth/Air, guaranteed Epic)
+- Seasonal Event Pack: 3,000 Gold OR 300 Gems (5 cards, limited-time event theme, guaranteed Epic)
+
+**Game Decks** (Expansion Content):
+- Starter Game Deck: 50,000 Gold OR $19.99 (50 cards, 1 Legendary, 2-3 Epics, 1/week limit)
+- Norse Mythology Deck: 75,000 Gold OR $29.99 (50 cards, Norse theme, 2 Legendaries, expansion)
+- Roman Empire Deck: 75,000 Gold OR $29.99 (50 cards, Roman theme, 2 Legendaries, expansion)
+- Mythic Realms Deck: 100,000 Gold OR $49.99 (75 cards, fantasy theme, 3 Legendaries, premium expansion)
+
+**Store UI**:
+- **Tab 1: Earn with Gold** (Standard, Element, Epic Boosters - unlimited purchases)
+- **Tab 2: Premium Packs** (Gem purchases with weekly limits displayed: "10/10 this week")
+- **Tab 3: Theme Packs** (Rotating weekly, preview next week's theme)
+- **Tab 4: Game Decks** (Expansion content, preview future decks)
+
+---
+
+### Resource Store (Food, Lumber, Ore)
+
+**Purpose**: Trade surplus resources for items, convert between resource types, emergency Gold purchases.
+
+**Currency**: Food, Lumber, Ore (no Gold/Gems required).
+
+**Items Available**:
+
+**Resource Trading** (Always Available):
+- 500 Food → 1,000 Gold (sell surplus Food)
+- 500 Lumber → 1,000 Gold (sell surplus Lumber)
+- 250 Ore → 1,000 Gold (sell surplus Ore, higher value)
+- 1,000 Gold → 500 Food/Lumber/Ore (emergency conversion, expensive)
+- 500 Food → 250 Lumber (resource swap)
+- 500 Lumber → 250 Ore (resource swap)
+
+**Equipment Blueprints** (Unlock Crafting):
+- Wooden Shield Blueprint: 300 Lumber (unlocks crafting recipe)
+- Hunting Bow Blueprint: 500 Lumber
+- Iron Sword Blueprint: 500 Ore
+- Iron Armor Blueprint: 800 Ore
+- Steel Shield Blueprint: 1,200 Ore
+- Mythic Weapon Blueprint: 5,000 Ore (Legendary-tier equipment)
+
+**Building Blueprints** (Unlock New Buildings):
+- Farm Blueprint: 1,000 Food (unlocks Farm deployment)
+- Forest Blueprint: 1,000 Lumber (unlocks Forest deployment)
+- Quarry Blueprint: 1,000 Ore (unlocks Quarry deployment)
+- Advanced Granary Blueprint: 2,000 Food (unlocks Level 3 upgrade)
+
+**Consumable Items**:
+- Energy Potion: 500 Food (restores 50 Energy, emergency refill without Gems)
+- Movement Scroll: 1,000 Lumber (+3 Movement Points, one-time use)
+- Battle Banner: 500 Ore (+5% Attack for all units in next battle, one-time use)
+
+**Store UI**:
+- **Tab 1: Trading** (Resource conversions: Food/Lumber/Ore ↔ Gold)
+- **Tab 2: Blueprints** (Equipment and building recipes)
+- **Tab 3: Consumables** (Energy potions, movement scrolls, battle items)
+
+---
+
+### PvP Store (Arena Tokens Only)
+
+**Purpose**: Exclusive rewards for ranked PvP players, encourages competitive play.
+
+**Currency**: Arena Tokens (cannot use Gold/Gems/resources).
+
+**Items Available**:
+
+**PvP-Exclusive Packs**:
+- Arena Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards)
+- Gladiator Booster: 1,000 Tokens (5 cards, guaranteed Epic, PvP-exclusive Epics)
+- Mythic Arena Pack: 5,000 Tokens (10 cards, 1 Legendary, best PvP cards)
+
+**PvP-Exclusive Cards** (Cannot Get from Other Packs):
+- Arena Champion (Legendary Hero): 2,000 Tokens (Fire element, 40 Attack/50 Health, PvP-focused abilities)
+- Tournament Tactician (Epic Unit): 500 Tokens (Support unit, +10% Attack to all allies in PvP)
+- Duelist's Blade (Epic Equipment): 800 Tokens (+5 Attack, +1 Range, PvP-only equipment)
+
+**Cosmetic Items**:
+- Arena Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion", "Legend" titles, display in profile)
+- Ranked Card Back: 1,000 Tokens (exclusive card back, shows rank tier: Bronze/Silver/Gold/Mythic)
+- Victory Emote Pack: 300 Tokens (5 emotes: "Good Game", "Well Played", "Oops", "Thinking", "GG")
+- Mythic Frame: 2,000 Tokens (golden animated border for profile, prestige item)
+
+**Seasonal Exclusives** (Reset Monthly):
+- Season 1 Champion Card: 3,000 Tokens (limited-time Legendary, only in Season 1)
+- Season 1 Emote: 500 Tokens (limited-time cosmetic, never available again)
+
+**Store UI**:
+- **Tab 1: Packs** (Arena Champion, Gladiator Booster, Mythic Arena Pack)
+- **Tab 2: Cards** (PvP-exclusive Legendaries, Epics, Equipment)
+- **Tab 3: Cosmetics** (Titles, card backs, emotes, frames)
+- **Tab 4: Seasonal** (Limited-time items, resets monthly)
+
+---
+
+## 5.5.11 Reward Variety & Splash Moments
+
+**Philosophy**: Three distinct reward types (chests, packs, resources) create varied progression and maintain engagement.
+
+---
+
+### Battle Chests (Immediate Gratification)
+
+**Definition**: Loot boxes earned from battle victories, opened immediately for Gold/XP/cards/resources.
+
+**Chest Tiers** (Based on Battle Difficulty):
+- **Bronze Chest** (Easy PvE): 50-100 Gold, 100-200 XP, 20-50 Food/Lumber/Ore, 10% chance for Common card
+- **Silver Chest** (Medium PvE/PvP): 100-200 Gold, 200-400 XP, 50-100 Food/Lumber/Ore, 30% chance for Uncommon card
+- **Gold Chest** (Hard PvE/Boss): 200-500 Gold, 400-800 XP, 100-200 Food/Lumber/Ore, 50% chance for Rare card, 5% chance for Epic card
+
+**Opening Animation**:
+1. Chest appears on Victory Screen (bronze/silver/gold glow)
+2. Tap to open → Chest lid flips open with particle effects
+3. Contents pop out sequentially: Gold counter animates (+150!), XP bar fills, resources fly to HUD, card flips if present
+4. Total duration: 3-5 seconds (quick but satisfying)
+
+**Tutorial Integration**:
+- **Step 23**: First battle victory → Bronze Chest (50 Gold, 100 XP, 20 Food, Common card)
+- **Tooltip**: "You earned a Battle Chest! Tap to open your rewards."
+- **Post-Tutorial**: All battles drop chests (tier scales with difficulty)
+
+---
+
+### Pack Opening (Collector Appeal)
+
+**Definition**: Card packs purchased from Pack Store, opened with 5-card reveal animation.
+
+**Opening Animation** (Already Defined):
+1. Pack appears on screen (Standard/Element/Epic/Shiny visual)
+2. Tap to open → Pack tears open, cards fly out
+3. Cards flip one-by-one: 1 sec per card (Common/Uncommon/Rare), 3 sec for Epic/Legendary (dramatic reveal)
+4. Shiny reveal: Golden aura, animated shimmer, special sound effect
+5. Total duration: 5-15 seconds (depending on rarities)
+
+**Tutorial Integration**:
+- **Step 6**: Trainer Deck (20 cards, Epic reveal is 3 sec dramatic) + Element Booster #1 (5 cards)
+- **Step 23**: Standard Pack (5 cards, first self-earned pack)
+- **Step 27**: Element Booster #2 (5 cards, economy milestone reward)
+- **Step 28**: 2 Standard Packs (10 cards, tutorial completion)
+- **Total**: 5 packs opened in tutorial (45 cards total)
+
+---
+
+### Resource Accumulation (AFK Progression)
+
+**Definition**: Resources generated by economy buildings while playing or AFK, auto-collected up to storage capacity.
+
+**Auto-Collection System**:
+1. **No Tapping Required**: Buildings produce resources continuously
+2. **Storage Capacity**: Resources accumulate up to max storage (1,000-20,000 depending on level)
+3. **Production Stops**: When storage is full, production halts until player spends resources
+4. **Visual Indicator**: HUD shows "Food: 850/1,000" (yellow = near capacity, red = full)
+5. **Spend to Progress**: Player checks in to spend resources on upgrades, equipment, etc.
+
+**Production Rates** (Already Defined):
+- **Granary**: 10 Food/hour (Level 1), 20 Food/hour (Level 2), 40 Food/hour (Level 3)
+- **Sawmill**: 10 Lumber/hour (Level 1), 20 Lumber/hour (Level 2), 40 Lumber/hour (Level 3)
+- **Mine**: 5 Ore/hour (Level 1), 10 Ore/hour (Level 2), 20 Ore/hour (Level 3)
+
+**Storage Upgrades**:
+- **Level 1 Storage**: 1,000 Food, 1,000 Lumber, 500 Ore (starting capacity, fills in ~41 hours AFK)
+- **Level 2 Storage**: 5,000 Food, 5,000 Lumber, 2,500 Ore (fills in ~8 days AFK)
+- **Level 3 Storage**: 20,000 Food, 20,000 Lumber, 10,000 Ore (fills in ~20 days AFK)
+
+**Design Philosophy**:
+- **No Tap-Tap-Tap**: Unlike Clash of Clans or similar games, no need to manually collect
+- **Wake Up to Full Storage**: Check in after sleeping, storage is full, ready to spend
+- **Spend to Continue**: Player spends resources on meaningful choices (upgrade buildings OR craft equipment)
+- **Not a Crafting Game**: Spend resources on strategic choices, not micromanaging production queues
+
+**Tutorial Integration**:
+- **Step 27**: Deploy economy building, resources auto-accumulate
+- **Tooltip**: "Resources accumulate automatically up to storage capacity. Spend them to keep producing!"
+- **Post-Tutorial**: Full economy system unlocked (deploy 10+ buildings, wake up to full storage)
+
+---
+
+## 5.5.12 Currency Balance Summary
+
+**Daily Earnings** (F2P Active Player):
+- **Gold**: 500 (daily login) + 500 (5 battles × 100) + 500 (1 weekly quest / 7 days) + 240 (AFK production) = **1,740 Gold/day**
+- **Gems**: 10 (daily login, bonus days) + 14 (weekly quest / 7 days) = **24 Gems/day**
+- **Food**: 240 (AFK Granary) + 100 (5 battles × 20) = **340 Food/day** (surplus after 100 Food spent on battles)
+- **Lumber**: 240 (AFK Sawmill) + 100 (5 battles × 20) = **340 Lumber/day**
+- **Ore**: 120 (AFK Mine) + 50 (5 battles × 10) = **170 Ore/day**
+- **Arena Tokens**: 50 (5 PvP matches × 10) = **50 Tokens/day** (if active in PvP)
+- **Energy**: 240 (natural refill) + 100 (starting) = **340 Energy/day** (enough for 34 battles, capped at 24)
+
+**Weekly Earnings** (F2P Active Player):
+- **Gold**: 12,180/week (can buy 12 Standard Packs OR 4 Epic Boosters OR save for Game Deck in 4 weeks)
+- **Gems**: 168/week (can buy 1 Premium Standard Pack with 68 Gems left over)
+- **Food**: 2,380/week (enough for 119 battles + building upgrades)
+- **Lumber**: 2,380/week (enough for 23 equipment crafts + building upgrades)
+- **Ore**: 1,190/week (enough for 5 Iron Swords + building upgrades)
+- **Arena Tokens**: 350/week (can buy 1 Arena Champion Pack every 1.5 weeks)
+
+**Whale Comparison** ($136/week):
+- **Gold**: Same as F2P (12,180/week, cannot buy Gold with real money)
+- **Gems**: 14,400/week (10× F2P, can buy 144 Premium Standard Packs OR 28 Energy refills/day)
+- **Food/Lumber/Ore**: 10× F2P (AFK production scales with Energy refills → more battles → more chest drops)
+- **Arena Tokens**: Same as F2P (skill-based, cannot buy with money)
+
+**Design Philosophy**:
+- **Gold Equality**: F2P and whales earn Gold at same rate (skill and time investment matter)
+- **Gem Advantage**: Whales get 10× Gems (premium packs, energy refills, shortcuts)
+- **Resource Advantage**: Whales get 10× resources (more battles via Energy refills → more chest drops)
+- **Arena Equality**: Whales cannot buy Arena Tokens (PvP rewards skill, not spending)
+- **Deck Power Brackets**: Rarity budget + PvP matchmaking prevent pay-to-win (whales fight whales)
+
+---
+
 # SECTION 6: SOCIAL INFRASTRUCTURE
 
 Social features build community, from alliances for large-scale play to friends for casual co-op. Integrated with Nakama for real-time interaction.
