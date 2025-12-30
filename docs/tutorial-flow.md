@@ -175,78 +175,167 @@ This document walks through the **exact player journey** from app launch to firs
 
 ---
 
-### Step 6: Pack Opening Animation (CRITICAL MOMENT - THE HOOK)
-**Screen**: Pack Opening
+### Step 6: Trainer Deck Selection (CRITICAL MOMENT - THE HOOK)
+**Screen**: Choose Your Starting Path
 ```
-[Center: First pack (glowing gold)]
-[Pack expands, tears open]
-[5 cards flip one-by-one with sound effects]
+[Header: "Choose Your Trainer Deck"]
+[Subtitle: "Begin your journey with 20 curated cards"]
 
-Card 1: [Common Spearman] - quick reveal (1 sec), white glow
-Card 2: [Common Farm] - quick reveal (1 sec), white glow
-Card 3: [Uncommon Knight] - medium reveal (1.5 sec), green shimmer
-Card 4: [Uncommon Archer] - medium reveal (1.5 sec), green shimmer  
-Card 5: [EPIC WATER MAGE] - SLOW reveal (3 sec), PURPLE PARTICLE BURST, screen shake
+[6 Deck Options in 2 rows × 3 columns]
 
-[Text: "EPIC! Water Mage!"]
-[Sound: Epic fanfare, 2-second flourish]
+ROW 1: CURATED DECKS (Named Epic Hero + Themed Support)
+┌─────────────────────┬─────────────────────┬─────────────────────┐
+│ FLAME WARLORD DECK  │ TIDAL GUARDIAN DECK │ STONE SENTINEL DECK │
+│ [Fire Element]      │ [Water Element]     │ [Earth Element]     │
+│                     │                     │                     │
+│ Epic: Flame Warlord │ Epic: Tidal Guard   │ Epic: Stone Sentinel│
+│ 20 Fire-synergy     │ 20 Water-synergy    │ 20 Earth-synergy    │
+│ cards included      │ cards included      │ cards included      │
+│                     │                     │                     │
+│ [Preview 5 Cards]   │ [Preview 5 Cards]   │ [Preview 5 Cards]   │
+│ [SELECT]            │ [SELECT]            │ [SELECT]            │
+└─────────────────────┴─────────────────────┴─────────────────────┘
+
+ROW 2: ELEMENT DECKS (Guaranteed Epic + Random Support)
+┌─────────────────────┬─────────────────────┬─────────────────────┐
+│ FIRE ELEMENT DECK   │ WATER ELEMENT DECK  │ EARTH ELEMENT DECK  │
+│ [Fire Element]      │ [Water Element]     │ [Earth Element]     │
+│                     │                     │                     │
+│ Epic: Random Fire   │ Epic: Random Water  │ Epic: Random Earth  │
+│ 20 varied cards     │ 20 varied cards     │ 20 varied cards     │
+│ (more randomness)   │ (more randomness)   │ (more randomness)   │
+│                     │                     │                     │
+│ [? ? ? ? ?]         │ [? ? ? ? ?]         │ [? ? ? ? ?]         │
+│ [SELECT]            │ [SELECT]            │ [SELECT]            │
+└─────────────────────┴─────────────────────┴─────────────────────┘
+
+[Bottom: "Need help choosing?" tooltip - explains Curated vs Random]
 ```
 
-**Starter Pool Strategy** (Guaranteed Viable Deck):
-- **Total Cards**: 20 cards (4 packs × 5 cards each)
-- **Guaranteed Distribution**:
-  - **10 Fixed Cards** (ensure deck is buildable):
-    - 1× Epic Hero (from beginner pool: Water Mage, Knight Captain, or Forest Ranger)
-    - 2× Rare Units (Knight, Healer)
-    - 4× Uncommon Units (Archer ×2, Scout ×2)
-    - 2× Uncommon Buildings (Granary, Watchtower)
-    - 1× Rare Tactic (Adaptive Strategy)
-  - **10 Random Cards** (variety for replayability):
-    - 5× Rare or better (weighted 80% Rare, 20% Epic)
-    - 5× Common/Uncommon mix
+**Deck Categories**:
 
-**Epic Pool Weighting** (Beginner-Friendly Only):
-Instead of drawing from all 50+ Epics, starter uses curated pool of 3:
-- **Water Mage**: Balanced caster, ranged attacks, heal ability (easy to use)
-- **Knight Captain**: Tanky melee, inspire aura (forgiving positioning)
-- **Forest Ranger**: Ranged DPS, movement bonus (teaches kiting)
+**CURATED DECKS** (3 options):
+- **Guaranteed Contents**: Specific named Epic + pre-built theme
+- **Playstyle**: Locked synergy (all cards work together)
+- **Appeal**: New players, collectors, competitive (meta-ready)
 
-**Why Limited Epic Pool?**
-- Prevents "trap" Epics (e.g., cards requiring specific 5-card synergies)
-- Ensures first Epic feels powerful without manual optimization
-- Full Epic pool (all rarities) unlocks after tutorial completion
+**ELEMENT DECKS** (3 options):
+- **Guaranteed Contents**: Epic from element pool + random support
+- **Playstyle**: Higher variance, deckbuilding challenge
+- **Appeal**: Replayability, players who like RNG
+
+---
+
+**Curated Deck #1: Flame Warlord Deck** (Fire Element)
+- **Epic Hero**: Flame Warlord (Fire, 5★)
+  - Melee attacker, burn damage-over-time, aggressive playstyle
+- **20 Cards Total**:
+  - 1× Flame Warlord (Epic Hero)
+  - 6× Fire Units (Pyromancer ×2, Fire Knight ×2, Ember Scout ×2)
+  - 2× Fire Buildings (Forge, Barracks)
+  - 1× Fire Worker (Coal Miner)
+  - 8× Fire Tactics (Fireball, Flame Wall, Scorched Earth, etc.)
+  - 2× Fire Equipment (Flaming Sword, Ember Shield)
+- **Synergy Theme**: Burn stacking (units apply burn, hero amplifies damage)
+- **Recommended For**: Aggressive players, beginners (straightforward)
+
+**Curated Deck #2: Tidal Guardian Deck** (Water Element)
+- **Epic Hero**: Tidal Guardian (Water, 5★)
+  - Tank/healer hybrid, defensive auras, sustain playstyle
+- **20 Cards Total**:
+  - 1× Tidal Guardian (Epic Hero)
+  - 6× Water Units (Cleric ×2, Guardian ×2, Frost Mage ×2)
+  - 2× Water Buildings (Temple, Granary)
+  - 1× Water Worker (Fisher)
+  - 8× Water Tactics (Heal Wave, Ice Shield, Tidal Surge, etc.)
+  - 2× Water Equipment (Healing Staff, Frost Armor)
+- **Synergy Theme**: Healing chain (units heal adjacent allies, hero amplifies)
+- **Recommended For**: Defensive players, beginners (forgiving)
+
+**Curated Deck #3: Stone Sentinel Deck** (Earth Element)
+- **Epic Hero**: Stone Sentinel (Earth, 5★)
+  - Ranged DPS, area control, terrain manipulation
+- **20 Cards Total**:
+  - 1× Stone Sentinel (Epic Hero)
+  - 6× Earth Units (Forest Ranger ×2, Druid ×2, Earth Elemental ×2)
+  - 2× Earth Buildings (Grove, Quarry)
+  - 1× Earth Worker (Lumberjack)
+  - 8× Earth Tactics (Entangle, Earthquake, Stone Wall, etc.)
+  - 2× Earth Equipment (Thornbow, Earth Armor)
+- **Synergy Theme**: Terrain control (slow enemies, increase movement cost)
+- **Recommended For**: Tactical players, intermediate skill
+
+---
+
+**Element Deck #4: Fire Element Deck** (Random Fire Cards)
+- **Epic Hero**: Random Fire Epic (from pool of 5-8 Fire Epics)
+  - Could be: Flame Warlord, Phoenix Knight, Inferno Mage, etc.
+- **20 Cards Total**:
+  - 1× Random Fire Epic Hero (guaranteed)
+  - 19× Random cards (60% Fire element, 40% mixed)
+  - Rarity distribution: 1 Epic, 3 Rares, 8 Uncommons, 8 Commons
+- **Variance**: High (each player gets different deck)
+- **Synergy**: Not guaranteed (requires deckbuilding skill)
+- **Recommended For**: Experienced players, replayability
+
+**Element Deck #5: Water Element Deck** (Random Water Cards)
+- Same structure as Fire Element Deck, but Water pool
+- **Epic Hero**: Random Water Epic (Tidal Guardian, Sea Witch, Frost King, etc.)
+
+**Element Deck #6: Earth Element Deck** (Random Earth Cards)
+- Same structure as Fire Element Deck, but Earth pool
+- **Epic Hero**: Random Earth Epic (Stone Sentinel, Forest Lord, Terra Golem, etc.)
+
+---
+
+**Selection Flow**:
+1. Player hovers over deck → Preview popup shows 5 sample cards
+2. Player clicks "SELECT" → Confirmation dialog:
+   ```
+   "Start your journey with the [Flame Warlord Deck]?
+   This choice is permanent and cannot be changed.
+   
+   [CONFIRM] [BACK]"
+   ```
+3. Player confirms → Deck is granted (20 cards instantly added to Codex)
+4. **Reveal Animation**: Cards flip one-by-one (same animation as old pack opening)
+   - Epic Hero revealed FIRST (3 sec dramatic reveal, screen shake)
+   - Remaining 19 cards revealed in batches of 5 (1 sec each)
+   - Total time: 3 sec (Epic) + 19 sec (others) = **22 seconds**
+   - **Skippable after Epic** (button appears after hero reveal)
 
 **Fallback Logic** (Gap 2 Resolution):
-If random 10 cards don't allow Balanced Explorer deck (needs 1 Hero, 6 Units, 2 Buildings, 2 Tactics):
-1. System validates deck requirements
-2. If missing cards: Auto-grant free Common versions (silent, no UI interruption)
-3. Example: Need 2 Tactics but only drew 1? Grant "Rally Cry" (Common Tactic) for free
+- Not needed (all Trainer Decks are pre-validated to build Balanced Explorer deck)
+- Each deck includes minimum: 1 Hero, 6 Units, 2 Buildings, 2 Tactics
 
-**Pack Opening Flow**:
-- **Pack 1** (5 cards): 3 Common + 1 Uncommon + 1 Epic (HOOK - early dopamine hit)
-  - Animation: **Unskippable** (20 seconds total, 4 sec/card)
-  - After Pack 1 completes: **"Skip to Results" button appears** (bottom-right corner)
-  
-- **Pack 2-4** (15 cards): Mix of Common/Uncommon/Rare
-  - Animation: **Skippable** (tap "Skip to Results" → instant reveal of all 15 cards)
-  - If skip: Total time = 20 sec (Pack 1) + 1 sec (instant reveal) = **21 seconds**
-  - If watch: Total time = 20 sec + 60 sec = **80 seconds**
+**Bonus Booster Packs** (OPTIONAL - Post-Selection):
+After Trainer Deck is revealed:
+```
+[Screen: Bonus Rewards]
+"Bonus: 4 Standard Booster Packs!"
+[4 glowing packs appear]
+[Button: "Open Packs" or "Skip to Deck Building"]
+```
 
-**Skip Behavior** (Gap 3 Resolution):
-- First pack **mandatory** (showcases animation quality, hooks player with Epic)
-- Button appears after Pack 1: **"Skip to Results"** with confirmation
-- Confirmation dialog: "Skip remaining packs? You can replay animations in Codex later. [Skip] [Keep Watching]"
-- If skip: All 15 remaining cards appear instantly in grid (no animation loss, saved to replay)
+- If player opens: 4 packs × 5 cards = **20 bonus cards** (truly random, any element)
+- If player skips: Packs saved to inventory (can open later in Pack Shop)
+- **Total starting cards**: 20 (Trainer Deck) + 20 (Bonus) = **40 cards**
 
 **Player Experience**:
-- **Fast path**: 21 seconds (Pack 1 mandatory + skip rest)
-- **Full experience**: 80 seconds (watch all animations)
-- **Replay**: Codex has "Replay Pack Opening" for each pack (re-watch anytime)
+- **Fast path**: 22 seconds (Trainer Deck reveal only, skip bonus packs)
+- **Full experience**: 22 sec + 80 sec = 102 seconds (watch Trainer + bonus packs)
+- **Element commitment**: Choosing Fire Deck locks you into Fire playstyle early
+- **Replayability**: 6 starting options (vs 1 random pack opening)
 
 **Design Decisions** (Resolved):
-- ✅ Pack opening speed: 4 sec/card standard, 3 sec for Epic (extended flourish)
-- ✅ Skip behavior: First pack mandatory, rest skippable (Pokemon model)
-- ✅ Epic reveal choreography: Screen shake (0.2 sec), particle burst (2 sec), fanfare audio (2 sec)
+- ✅ Starter system: Trainer Deck (20 curated cards) instead of random packs
+- ✅ Deck options: 6 total (3 Curated named Epics + 3 Random Element decks)
+- ✅ Elements: Fire, Water, Earth (Wind/Dark/Light expansion later)
+- ✅ Epic reveal speed: 3 sec dramatic reveal with screen shake + fanfare
+- ✅ Card reveal speed: 1 sec/card for non-Epics (19 cards = 19 sec)
+- ✅ Bonus packs: 4 Standard Packs (5 cards each) offered after Trainer Deck
+- ✅ Skip behavior: Can skip after Epic reveal (22 sec mandatory, rest skippable)
+- ✅ Permanence: Trainer Deck choice is permanent (encourages alt accounts)
 - ✅ Sound design: Unique chime per rarity (Common=ping, Uncommon=chime, Rare=bell, Epic=orchestra hit)
 - ✅ Legendary near-miss: Not in starter packs (too confusing for tutorial)
 

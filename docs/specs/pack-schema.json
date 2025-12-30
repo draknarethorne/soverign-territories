@@ -1,29 +1,39 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Pack Schema",
-  "description": "Schema for card packs and gacha mechanics",
+  "description": "Schema for card packs and gacha mechanics. Includes Standard Packs (5 cards, random), Booster Packs (5 cards, element-focused), and Game Decks (50 cards, curated theme, $19.99).",
   "type": "object",
   "properties": {
     "packId": {
       "type": "string",
-      "description": "Unique pack identifier"
+      "description": "Unique pack identifier (e.g., 'standard_pack', 'fire_booster', 'game_deck_norse')"
     },
     "name": {
       "type": "string",
-      "description": "Pack display name"
+      "description": "Pack display name (e.g., 'Standard Pack', 'Fire Booster', 'Norse Conquest Game Deck')"
+    },
+    "packType": {
+      "type": "string",
+      "enum": ["standard", "booster", "theme", "game_deck", "trainer_deck"],
+      "description": "standard=5 random cards | booster=5 element-focused | theme=10 seasonal | game_deck=50 curated | trainer_deck=20 starter (see trainer-deck-schema.json)"
+    },
+    "cardCount": {
+      "type": "integer",
+      "description": "Number of cards in pack (5 for standard/booster, 10 for theme, 50 for game_deck, 20 for trainer_deck)",
+      "enum": [5, 10, 20, 50]
     },
     "cost": {
       "type": "object",
       "properties": {
         "currency": {
           "type": "string",
-          "enum": ["gold", "gems"],
-          "description": "Currency type"
+          "enum": ["gold", "gems", "usd"],
+          "description": "Currency type (gold=earned, gems=premium, usd=real money)"
         },
         "amount": {
-          "type": "integer",
+          "type": "number",
           "minimum": 0,
-          "description": "Cost amount"
+          "description": "Cost amount (e.g., 1000 gold, 100 gems, 19.99 USD for Game Deck)"
         }
       },
       "required": ["currency", "amount"]
@@ -35,26 +45,49 @@
         "properties": {
           "rarity": {
             "type": "string",
-            "enum": ["common", "rare", "epic", "legendary"],
-            "description": "Card rarity"
+            "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic"],
+            "description": "Card rarity tier"
           },
           "probability": {
             "type": "number",
             "minimum": 0,
             "maximum": 1,
-            "description": "Drop probability"
+            "description": "Drop probability (0-1). Sum of all probabilities should = 1.0"
+          },
+          "guaranteedCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Minimum cards of this rarity per pack (e.g., Game Decks guarantee 2 Epics)"
           },
           "cardIds": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Possible card IDs"
+            "description": "Specific card IDs in pool (for curated packs) or empty for random pool"
+          },
+          "filterBy": {
+            "type": "object",
+            "description": "Filters for random selection (e.g., element=fire, cardType=unit)",
+            "properties": {
+              "element": {
+                "type": "string",
+                "enum": ["fire", "water", "earth", "wind", "dark", "light", "neutral"]
+              },
+              "cardType": {
+                "type": "string",
+                "enum": ["hero", "unit", "building", "worker", "tactic", "equipment"]
+              },
+              "faction": {
+                "type": "string",
+                "description": "Faction filter (e.g., 'norse', 'roman', 'modern_military')"
+              }
+            }
           }
         },
         "required": ["rarity", "probability"]
       },
-      "description": "Pack contents with probabilities"
+      "description": "Pack contents with probabilities and filters"
     },
     "guarantees": {
       "type": "object",
@@ -62,25 +95,241 @@
         "pityThreshold": {
           "type": "integer",
           "minimum": 0,
-          "description": "Pulls for guaranteed rare+"
+          "description": "Number of packs before guaranteed rare+ (e.g., 10 packs = 1 Epic, 50 packs = 1 Legendary)"
         },
         "guaranteedRarity": {
           "type": "string",
           "enum": ["rare", "epic", "legendary"],
-          "description": "Guaranteed minimum rarity"
+          "description": "Guaranteed minimum rarity at pity threshold"
+        },
+        "noDuplicates": {
+          "type": "boolean",
+          "description": "Whether pack prevents duplicate cards (true for Game Decks, false for Standard Packs)"
         }
       },
-      "description": "Pity system guarantees"
+      "description": "Pity system guarantees and duplicate protection"
+    },
+    "monetization": {
+      "type": "object",
+      "description": "Premium pack pricing and bundles",
+      "properties": {
+        "realMoneyPrice": {
+          "type": "number",
+          "description": "USD price (e.g., 19.99 for Game Deck)",
+          "minimum": 0
+        },
+        "goldEquivalent": {
+          "type": "integer",
+          "description": "Earned gold equivalent (e.g., 50000 gold = $19.99 Game Deck)",
+          "minimum": 0
+        },
+        "gemEquivalent": {
+          "type": "integer",
+          "description": "Premium gem equivalent (e.g., 2000 gems = $19.99 Game Deck)",
+          "minimum": 0
+        },
+        "bundleDiscount": {
+          "type": "number",
+          "description": "Discount when buying 10-pack bundle (e.g., 0.15 = 15% off)",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "unlockRequirements": {
+      "type": "object",
+      "description": "Conditions to make pack available in shop",
+      "properties": {
+        "playerLevel": {
+          "type": "integer",
+          "description": "Minimum player level (0 = available from start)",
+          "minimum": 0
+        },
+        "campaignProgress": {
+          "type": "string",
+          "description": "Required campaign completion (e.g., 'tutorial_complete', 'chapter_1_complete')"
+        },
+        "seasonalAvailability": {
+          "type": "object",
+          "description": "Time-limited availability (e.g., Halloween Pack Oct 1-31)",
+          "properties": {
+            "startDate": {
+              "type": "string",
+              "format": "date",
+              "description": "ISO 8601 date (e.g., '2026-10-01')"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date",
+              "description": "ISO 8601 date (e.g., '2026-10-31')"
+            }
+          }
+        }
+      }
     },
     "isActive": {
       "type": "boolean",
-      "description": "Whether pack is available"
+      "description": "Whether pack is currently available in shop"
     },
     "schemaVersion": {
       "type": "integer",
       "minimum": 1,
-      "description": "Schema version"
+      "description": "Schema version for data migration"
     }
   },
-  "required": ["packId", "name", "cost", "contents", "isActive", "schemaVersion"]
+  "required": ["packId", "name", "packType", "cardCount", "cost", "contents", "isActive", "schemaVersion"],
+  "examples": [
+    {
+      "packId": "standard_pack",
+      "name": "Standard Pack",
+      "packType": "standard",
+      "cardCount": 5,
+      "cost": {
+        "currency": "gold",
+        "amount": 1000
+      },
+      "contents": [
+        {
+          "rarity": "common",
+          "probability": 0.6,
+          "guaranteedCount": 3
+        },
+        {
+          "rarity": "uncommon",
+          "probability": 0.3,
+          "guaranteedCount": 1
+        },
+        {
+          "rarity": "rare",
+          "probability": 0.09,
+          "guaranteedCount": 0
+        },
+        {
+          "rarity": "epic",
+          "probability": 0.01,
+          "guaranteedCount": 0
+        }
+      ],
+      "guarantees": {
+        "pityThreshold": 10,
+        "guaranteedRarity": "epic",
+        "noDuplicates": false
+      },
+      "isActive": true,
+      "schemaVersion": 1
+    },
+    {
+      "packId": "game_deck_norse",
+      "name": "Norse Conquest Game Deck",
+      "packType": "game_deck",
+      "cardCount": 50,
+      "cost": {
+        "currency": "usd",
+        "amount": 19.99
+      },
+      "contents": [
+        {
+          "rarity": "legendary",
+          "probability": 0.02,
+          "guaranteedCount": 1,
+          "cardIds": ["odin_allfather", "thor_thunderlord"]
+        },
+        {
+          "rarity": "epic",
+          "probability": 0.06,
+          "guaranteedCount": 2,
+          "filterBy": {
+            "faction": "norse"
+          }
+        },
+        {
+          "rarity": "rare",
+          "probability": 0.2,
+          "guaranteedCount": 10,
+          "filterBy": {
+            "faction": "norse"
+          }
+        },
+        {
+          "rarity": "uncommon",
+          "probability": 0.4,
+          "guaranteedCount": 20,
+          "filterBy": {
+            "faction": "norse"
+          }
+        },
+        {
+          "rarity": "common",
+          "probability": 0.32,
+          "guaranteedCount": 17,
+          "filterBy": {
+            "faction": "norse"
+          }
+        }
+      ],
+      "guarantees": {
+        "noDuplicates": true
+      },
+      "monetization": {
+        "realMoneyPrice": 19.99,
+        "goldEquivalent": 50000,
+        "gemEquivalent": 2000
+      },
+      "unlockRequirements": {
+        "playerLevel": 10,
+        "campaignProgress": "tutorial_complete"
+      },
+      "isActive": true,
+      "schemaVersion": 1
+    },
+    {
+      "packId": "fire_booster",
+      "name": "Fire Booster Pack",
+      "packType": "booster",
+      "cardCount": 5,
+      "cost": {
+        "currency": "gems",
+        "amount": 100
+      },
+      "contents": [
+        {
+          "rarity": "uncommon",
+          "probability": 0.5,
+          "guaranteedCount": 2,
+          "filterBy": {
+            "element": "fire"
+          }
+        },
+        {
+          "rarity": "rare",
+          "probability": 0.4,
+          "guaranteedCount": 2,
+          "filterBy": {
+            "element": "fire"
+          }
+        },
+        {
+          "rarity": "epic",
+          "probability": 0.1,
+          "guaranteedCount": 0,
+          "filterBy": {
+            "element": "fire"
+          }
+        }
+      ],
+      "guarantees": {
+        "pityThreshold": 10,
+        "guaranteedRarity": "epic",
+        "noDuplicates": false
+      },
+      "isActive": true,
+      "schemaVersion": 1
+    }
+  ],
+  "notes": {
+    "gameDeckDesign": "Game Decks model Pokemon Battle Boxes: 50 curated cards, 1 Legendary, 2-3 Epics, no duplicates, $19.99. Purchasable with earned gold (50k) or premium gems (2k) to avoid RNG. Future themes: Norse, Roman, Modern Military, Greek.",
+    "standardPackDesign": "5 cards, 1000 gold, weighted random. Pity system: 1 Epic every 10 packs, 1 Legendary every 50 packs.",
+    "boosterPackDesign": "5 cards, 100 gems, element-focused (80%+ cards match element). Used for targeted collection completion.",
+    "trainerDeckDesign": "20 cards, free starter choice (see trainer-deck-schema.json). Permanent one-time selection during onboarding."
+  }
 }

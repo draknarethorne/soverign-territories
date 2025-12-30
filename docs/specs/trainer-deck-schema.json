@@ -1,0 +1,409 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trainer Deck Schema",
+  "description": "Pre-constructed 20-card starter decks for onboarding. Curated decks have named Epics + themed synergy. Element decks have random Epics + varied support. Inspired by Pokemon Trainer Decks / Battle Boxes.",
+  "type": "object",
+  "properties": {
+    "deckId": {
+      "type": "string",
+      "description": "Unique identifier (e.g., 'trainer_flame_warlord', 'trainer_fire_random')",
+      "pattern": "^trainer_[a-z_]+$"
+    },
+    "deckName": {
+      "type": "string",
+      "description": "Display name (e.g., 'Flame Warlord Deck', 'Fire Element Deck')",
+      "maxLength": 50
+    },
+    "deckType": {
+      "type": "string",
+      "enum": ["curated", "element"],
+      "description": "curated = named Epic + pre-built theme | element = random Epic + varied support"
+    },
+    "element": {
+      "type": "string",
+      "enum": ["fire", "water", "earth", "wind", "dark", "light", "neutral"],
+      "description": "Primary element theme (fire/water/earth for launch, wind/dark/light for expansion)"
+    },
+    "guaranteedEpic": {
+      "type": "string",
+      "description": "Specific card ID for Curated decks (e.g., 'flame_warlord'), 'random' for Element decks",
+      "examples": ["flame_warlord", "tidal_guardian", "random"]
+    },
+    "cardList": {
+      "type": "array",
+      "description": "Exact 20 cards included in the deck (for Curated) or card pool (for Element)",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "description": "Card ID from card database (e.g., 'flame_warlord', 'pyromancer')"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "description": "Number of copies (e.g., Pyromancer x2)"
+          }
+        },
+        "required": ["cardId", "quantity"]
+      }
+    },
+    "rarityDistribution": {
+      "type": "object",
+      "description": "Guaranteed rarity breakdown for Element decks (Curated uses exact cardList)",
+      "properties": {
+        "epic": {
+          "type": "integer",
+          "description": "Number of Epic cards (always 1 for Trainer Decks)",
+          "enum": [1]
+        },
+        "rare": {
+          "type": "integer",
+          "description": "Number of Rare cards (2-4 for Element decks)",
+          "minimum": 2,
+          "maximum": 4
+        },
+        "uncommon": {
+          "type": "integer",
+          "description": "Number of Uncommon cards (6-10 for Element decks)",
+          "minimum": 6,
+          "maximum": 10
+        },
+        "common": {
+          "type": "integer",
+          "description": "Number of Common cards (6-10 for Element decks)",
+          "minimum": 6,
+          "maximum": 10
+        }
+      },
+      "required": ["epic", "rare", "uncommon", "common"]
+    },
+    "playstyle": {
+      "type": "string",
+      "description": "Brief description of deck strategy (e.g., 'Aggressive burn stacking', 'Defensive sustain')",
+      "maxLength": 100
+    },
+    "recommendedFor": {
+      "type": "string",
+      "description": "Target player archetype (e.g., 'Beginners', 'Aggressive players', 'Replayability')",
+      "maxLength": 100
+    },
+    "previewCards": {
+      "type": "array",
+      "description": "5 cards shown in selection screen preview",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "description": "Card IDs to display in preview (always includes guaranteedEpic)"
+      }
+    },
+    "isPermanentChoice": {
+      "type": "boolean",
+      "description": "Whether selection is irreversible (true for Trainer Decks)",
+      "enum": [true]
+    },
+    "bonusContent": {
+      "type": "object",
+      "description": "Additional rewards granted with deck",
+      "properties": {
+        "boosterPacks": {
+          "type": "integer",
+          "description": "Number of Standard Booster Packs (5 cards each) given after Trainer Deck reveal",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "startingGold": {
+          "type": "integer",
+          "description": "Bonus gold granted with deck (e.g., 500 for tutorial)",
+          "minimum": 0
+        }
+      }
+    },
+    "unlockRequirements": {
+      "type": "object",
+      "description": "Conditions to make deck available (e.g., DLC, events)",
+      "properties": {
+        "playerLevel": {
+          "type": "integer",
+          "description": "Minimum player level required (0 = available from start)",
+          "minimum": 0
+        },
+        "isPremium": {
+          "type": "boolean",
+          "description": "Whether deck requires purchase (false for starter decks)"
+        },
+        "priceInGold": {
+          "type": "integer",
+          "description": "Cost in earned gold (0 for free starter decks)",
+          "minimum": 0
+        },
+        "priceInGems": {
+          "type": "integer",
+          "description": "Cost in premium gems (0 for free starter decks)",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "required": [
+    "deckId",
+    "deckName",
+    "deckType",
+    "element",
+    "guaranteedEpic",
+    "cardList",
+    "playstyle",
+    "recommendedFor",
+    "previewCards",
+    "isPermanentChoice"
+  ],
+  "examples": [
+    {
+      "deckId": "trainer_flame_warlord",
+      "deckName": "Flame Warlord Deck",
+      "deckType": "curated",
+      "element": "fire",
+      "guaranteedEpic": "flame_warlord",
+      "cardList": [
+        { "cardId": "flame_warlord", "quantity": 1 },
+        { "cardId": "pyromancer", "quantity": 2 },
+        { "cardId": "fire_knight", "quantity": 2 },
+        { "cardId": "ember_scout", "quantity": 2 },
+        { "cardId": "forge", "quantity": 1 },
+        { "cardId": "barracks", "quantity": 1 },
+        { "cardId": "coal_miner", "quantity": 1 },
+        { "cardId": "fireball", "quantity": 2 },
+        { "cardId": "flame_wall", "quantity": 2 },
+        { "cardId": "scorched_earth", "quantity": 2 },
+        { "cardId": "ignite", "quantity": 2 },
+        { "cardId": "flaming_sword", "quantity": 1 },
+        { "cardId": "ember_shield", "quantity": 1 }
+      ],
+      "playstyle": "Aggressive burn stacking (units apply burn, hero amplifies damage)",
+      "recommendedFor": "Aggressive players, beginners (straightforward strategy)",
+      "previewCards": [
+        "flame_warlord",
+        "pyromancer",
+        "fireball",
+        "flaming_sword",
+        "ember_scout"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    },
+    {
+      "deckId": "trainer_tidal_guardian",
+      "deckName": "Tidal Guardian Deck",
+      "deckType": "curated",
+      "element": "water",
+      "guaranteedEpic": "tidal_guardian",
+      "cardList": [
+        { "cardId": "tidal_guardian", "quantity": 1 },
+        { "cardId": "cleric", "quantity": 2 },
+        { "cardId": "guardian", "quantity": 2 },
+        { "cardId": "frost_mage", "quantity": 2 },
+        { "cardId": "temple", "quantity": 1 },
+        { "cardId": "granary", "quantity": 1 },
+        { "cardId": "fisher", "quantity": 1 },
+        { "cardId": "heal_wave", "quantity": 2 },
+        { "cardId": "ice_shield", "quantity": 2 },
+        { "cardId": "tidal_surge", "quantity": 2 },
+        { "cardId": "purify", "quantity": 2 },
+        { "cardId": "healing_staff", "quantity": 1 },
+        { "cardId": "frost_armor", "quantity": 1 }
+      ],
+      "playstyle": "Defensive sustain (healing chain, units heal adjacent allies)",
+      "recommendedFor": "Defensive players, beginners (forgiving positioning)",
+      "previewCards": [
+        "tidal_guardian",
+        "cleric",
+        "heal_wave",
+        "healing_staff",
+        "frost_mage"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    },
+    {
+      "deckId": "trainer_stone_sentinel",
+      "deckName": "Stone Sentinel Deck",
+      "deckType": "curated",
+      "element": "earth",
+      "guaranteedEpic": "stone_sentinel",
+      "cardList": [
+        { "cardId": "stone_sentinel", "quantity": 1 },
+        { "cardId": "forest_ranger", "quantity": 2 },
+        { "cardId": "druid", "quantity": 2 },
+        { "cardId": "earth_elemental", "quantity": 2 },
+        { "cardId": "grove", "quantity": 1 },
+        { "cardId": "quarry", "quantity": 1 },
+        { "cardId": "lumberjack", "quantity": 1 },
+        { "cardId": "entangle", "quantity": 2 },
+        { "cardId": "earthquake", "quantity": 2 },
+        { "cardId": "stone_wall", "quantity": 2 },
+        { "cardId": "natures_wrath", "quantity": 2 },
+        { "cardId": "thornbow", "quantity": 1 },
+        { "cardId": "earth_armor", "quantity": 1 }
+      ],
+      "playstyle": "Terrain control (slow enemies, increase movement cost, area denial)",
+      "recommendedFor": "Tactical players, intermediate skill (requires planning)",
+      "previewCards": [
+        "stone_sentinel",
+        "forest_ranger",
+        "entangle",
+        "thornbow",
+        "earth_elemental"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    },
+    {
+      "deckId": "trainer_fire_random",
+      "deckName": "Fire Element Deck",
+      "deckType": "element",
+      "element": "fire",
+      "guaranteedEpic": "random",
+      "cardList": [
+        { "cardId": "random_fire_epic", "quantity": 1 },
+        { "cardId": "random_fire_pool", "quantity": 19 }
+      ],
+      "rarityDistribution": {
+        "epic": 1,
+        "rare": 3,
+        "uncommon": 8,
+        "common": 8
+      },
+      "playstyle": "Variable (depends on random Epic drawn, requires deckbuilding skill)",
+      "recommendedFor": "Experienced players, replayability (each account gets different cards)",
+      "previewCards": [
+        "question_mark_1",
+        "question_mark_2",
+        "question_mark_3",
+        "question_mark_4",
+        "question_mark_5"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    },
+    {
+      "deckId": "trainer_water_random",
+      "deckName": "Water Element Deck",
+      "deckType": "element",
+      "element": "water",
+      "guaranteedEpic": "random",
+      "cardList": [
+        { "cardId": "random_water_epic", "quantity": 1 },
+        { "cardId": "random_water_pool", "quantity": 19 }
+      ],
+      "rarityDistribution": {
+        "epic": 1,
+        "rare": 3,
+        "uncommon": 8,
+        "common": 8
+      },
+      "playstyle": "Variable (depends on random Epic drawn, requires deckbuilding skill)",
+      "recommendedFor": "Experienced players, replayability (each account gets different cards)",
+      "previewCards": [
+        "question_mark_1",
+        "question_mark_2",
+        "question_mark_3",
+        "question_mark_4",
+        "question_mark_5"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    },
+    {
+      "deckId": "trainer_earth_random",
+      "deckName": "Earth Element Deck",
+      "deckType": "element",
+      "element": "earth",
+      "guaranteedEpic": "random",
+      "cardList": [
+        { "cardId": "random_earth_epic", "quantity": 1 },
+        { "cardId": "random_earth_pool", "quantity": 19 }
+      ],
+      "rarityDistribution": {
+        "epic": 1,
+        "rare": 3,
+        "uncommon": 8,
+        "common": 8
+      },
+      "playstyle": "Variable (depends on random Epic drawn, requires deckbuilding skill)",
+      "recommendedFor": "Experienced players, replayability (each account gets different cards)",
+      "previewCards": [
+        "question_mark_1",
+        "question_mark_2",
+        "question_mark_3",
+        "question_mark_4",
+        "question_mark_5"
+      ],
+      "isPermanentChoice": true,
+      "bonusContent": {
+        "boosterPacks": 4,
+        "startingGold": 500
+      },
+      "unlockRequirements": {
+        "playerLevel": 0,
+        "isPremium": false,
+        "priceInGold": 0,
+        "priceInGems": 0
+      }
+    }
+  ],
+  "notes": {
+    "designPhilosophy": "Trainer Decks model Pokemon TCG Trainer Decks / Battle Boxes: curated synergy for beginners, random variety for replayability. Permanent choice encourages multiple accounts (F2P engagement) and makes choice meaningful.",
+    "expansionPath": "Future Game Decks (50 cards, $19.99) can be multi-element (e.g., Norse Deck = Fire + Earth), include 2-3 Epics + 1 Legendary, and offer 'skip RNG' option for collectors.",
+    "elementExpansion": "Wind/Dark/Light elements unlock post-launch. New Trainer Decks (e.g., Shadow Assassin Deck) can be added as DLC or earned through campaigns.",
+    "rarityBudget": "Trainer Decks bypass rarity budget (pre-validated to be balanced). Game Decks must respect rarity budget (e.g., 50 cards with 2 Epics = 32 points used of 100 point budget)."
+  }
+}

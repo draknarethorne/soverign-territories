@@ -1091,62 +1091,81 @@ To prevent "never seeing a shiny" frustration, implement **separate pity timers*
 
 ---
 
-## 2.5 New Player Onboarding: Starter Cards & First Deck
+## 2.5 New Player Onboarding: Trainer Decks & Game Decks
 
-### Initial Card Draw (First-Time Player Experience)
+### Trainer Deck System (Starter Onboarding)
 
-**Goal**: Give new players choices and agency from the very start while preventing analysis paralysis.
+**Goal**: Give new players meaningful choice and immediate power fantasy while teaching core mechanics. Inspired by Pokemon TCG Trainer Decks and Battle Boxes.
 
-**The Draw**:
-- **Total Cards Received**: 20-30 cards (randomized within guaranteed rarity distribution)
-- **Guaranteed Distribution**:
-  - **1 Epic** (randomly selected from beginner-friendly Epic pool)
-  - **5 Rare** cards (mix of units, buildings, tactics)
-  - **8-12 Uncommon** cards (core army units and basic buildings)
-  - **12-14 Common** cards (fodder units, basic buildings)
-  - **Legendary Chance**: 3% chance to replace 1 Rare with 1 Legendary (lucky roll, "WOW" moment)
+**The Selection**:
+Instead of random pack opening, players choose from **6 Trainer Decks** during onboarding:
 
-**Why 20-30 Cards vs 10-15 Deck Limit?**:
-- **Choice Without Commitment**: Players get to experiment with different combinations before settling on a deck
-- **Storage Tutorial**: Introduces the Codex and inactive card storage from the start
-- **Early Trading**: Players can immediately engage with auction house to trade unwanted extras
-- **Replayability**: Different players get different starting cards, creating unique first experiences
+**CURATED DECKS** (3 options - Named Epic + Pre-Built Synergy):
+1. **Flame Warlord Deck** (Fire Element) - Aggressive burn-stacking playstyle
+2. **Tidal Guardian Deck** (Water Element) - Defensive sustain with healing chains
+3. **Stone Sentinel Deck** (Earth Element) - Terrain control and area denial
 
-### Starter Deck Assembly (Tutorial Flow)
+**ELEMENT DECKS** (3 options - Random Epic + Varied Support):
+4. **Fire Element Deck** - Guaranteed Fire Epic (random from pool), 19 varied cards
+5. **Water Element Deck** - Guaranteed Water Epic (random from pool), 19 varied cards
+6. **Earth Element Deck** - Guaranteed Earth Epic (random from pool), 19 varied cards
 
-**Option 1: Auto-Select (Guided Path)**:
-1. Player clicks "Build My First Deck"
-2. System offers 3 **pre-curated starter decks** based on playstyle:
-   - **"Aggro Rush"**: Fast units, low-cost heroes, blitz tactics (Fire/Lightning elements)
-   - **"Defensive Builder"**: Tanky units, fortifications, economy buildings (Earth/Frost elements)
-   - **"Balanced Explorer"**: Mix of offense/defense, versatile for learning (Water/Wind elements)
-3. Player picks one → system auto-selects 10 cards from their drawn pool that best match the theme
-4. Player receives **1 Bonus Booster Pack** (5 cards) as reward for choosing guided path
-5. Tutorial highlights deck slots and how to swap cards later
+**Deck Contents**: Each Trainer Deck contains exactly **20 cards**:
+- 1× Epic Hero (named for Curated, random for Element decks)
+- 6× Units (element-themed or varied)
+- 2× Buildings (economy or military)
+- 1× Worker (resource production)
+- 8× Tactics (combat abilities)
+- 2× Equipment (hero attachments)
 
-**Option 2: Manual Selection (Freedom Path)**:
-1. Player clicks "I'll Build My Own Deck"
-2. Codex opens showing all 20-30 drawn cards
-3. Tutorial prompts: "Select 10-15 cards for your starting deck" (drag-and-drop UI)
-4. System validates deck (must have at least 1 hero/unit, no invalid combos)
-5. Remaining cards go to inactive storage
-6. Player feels accomplished, keeps all cards for future use
+**Key Differences**:
+- **Curated Decks**: Perfect synergy out-of-the-box (all Fire cards work together), recommended for beginners
+- **Element Decks**: Higher variance, deckbuilding challenge, better replayability for experienced players
+- **Permanent Choice**: Selection cannot be changed (encourages alt accounts for F2P engagement)
 
-**Recommended Flow**: Present both options, default to **Option 1** for new-to-CCG players, highlight **Option 2** for experienced card game players.
+**Why 20 Cards vs 10-15 Deck Limit?**:
+- **Immediate Playability**: All 20 cards fit in first deck slot (no storage confusion)
+- **Future Expansion**: Players unlock deck size progression to 50 cards by Level 30
+- **Collection Start**: Strong foundation for themed deckbuilding (Fire player gets Fire synergy immediately)
+- **Pokemon Model**: Matches Battle Box design (pre-built playable deck + expansion potential)
+
+### Trainer Deck Selection Flow (Tutorial Step 6)
+
+**Screen**: "Choose Your Starting Path"
+- **6 Options Displayed**: 2 rows × 3 columns grid
+  - **Top Row**: Curated Decks (Flame Warlord, Tidal Guardian, Stone Sentinel)
+  - **Bottom Row**: Element Decks (Fire, Water, Earth)
+- **Preview System**: Hovering shows 5 sample cards from deck
+- **Commitment Warning**: "This choice is permanent and cannot be changed. Choose wisely!"
+
+**Selection Steps**:
+1. Player hovers over decks → Preview popup shows Epic hero + 4 support cards
+2. Player clicks "SELECT" → Confirmation dialog appears
+3. Player confirms → 20 cards instantly added to Codex
+4. **Reveal Animation**: Cards flip one-by-one (Epic first with 3-sec dramatic reveal + screen shake)
+5. **Bonus Reward**: 4 Standard Booster Packs (5 cards each) offered after reveal
+   - **Total Starting Cards**: 20 (Trainer Deck) + 20 (Bonus Packs) = **40 cards**
+   - **Skip Option**: Can skip bonus packs and open later in Pack Shop
+
+**Why This Flow?**:
+- **Meaningful Choice**: Curated vs Random appeals to different player psychologies
+- **Element Commitment**: Choosing Fire locks early playstyle, teaches identity
+- **Replayability**: 6 starting options vs 1 random draw (encourages multiple accounts)
+- **Power Fantasy**: Guaranteed Epic hero from minute 1 (no "bad luck" first experience)
 
 ### Starting Deck Size Constraints
 
 **Player Level 1 (New Player)**:
-- **Deck Size**: 10-15 cards (minimum 10, maximum 15)
-- **Why Small Start**: 
-  - Faster gameplay (less decision paralysis)
-  - Easier to learn card interactions
-  - Encourages mastery of fewer cards before expanding
-  - Prevents "too many options" overwhelm
+- **Deck Size**: 20 cards (fixed for Trainer Deck)
+- **Why Fixed Start**: 
+  - Trainer Decks are pre-balanced (20 cards optimal)
+  - No deck editing confusion (play immediately)
+  - Teaches full card type diversity (heroes, units, buildings, tactics, equipment)
+  - Encourages mastery before deckbuilding freedom
 
 **Total Collection Size** (Unlimited):
 - **Codex Capacity**: Unlimited storage for all owned cards
-- **Active vs Inactive**: Only cards in a deck slot count as "active"
+- **Active vs Inactive**: Cards in deck slots are "active", rest stored in Codex
 - **Inactive Benefits**: Can still be viewed, traded, combined, upgraded in Codex
 
 ### Deck Size Progression (Player Level Scaling)
@@ -1155,13 +1174,13 @@ As players gain **Player XP** (from battles, quests, events), their **Player Lev
 
 | Player Level | Max Deck Size | How to Reach | Estimated Time (Active Player) |
 |--------------|---------------|--------------|--------------------------------|
-| **1** | 10-15 cards | Start of game | Day 1 |
-| **3** | 15-20 cards | Complete tutorial campaign (5 battles) | Day 1-2 |
-| **5** | 20-25 cards | Complete first saga chapter (10 battles) | Day 3-5 |
-| **10** | 25-30 cards | Reach County Map, join alliance | Week 1-2 |
-| **15** | 30-35 cards | Complete State Map PvE | Week 3-4 |
-| **20** | 35-40 cards | Reach Global Map | Month 1-2 |
-| **30** | 40-50 cards (max) | Endgame content, prestige | Month 3-6 |
+| **1** | 20 cards (fixed Trainer Deck) | Start of game | Day 1 |
+| **3** | 20-25 cards | Complete tutorial campaign (5 battles) | Day 1-2 |
+| **5** | 25-30 cards | Complete first saga chapter (10 battles) | Day 3-5 |
+| **10** | 30-35 cards | Reach County Map, join alliance | Week 1-2 |
+| **15** | 35-40 cards | Complete State Map PvE | Week 3-4 |
+| **20** | 40-45 cards | Reach Global Map | Month 1-2 |
+| **30** | 45-50 cards (max) | Endgame content, prestige | Month 3-6 |
 
 **Why Progressive Scaling?**:
 - **F2P Accessible**: All players can reach max deck size through normal play (no paywall)
@@ -1169,50 +1188,47 @@ As players gain **Player XP** (from battles, quests, events), their **Player Lev
 - **Active Player Advantage**: More active play = faster leveling = earlier access to bigger decks
 - **Strategic Depth**: Larger decks unlock more complex combos and deck archetypes
 
-### Pre-Built Decks (Curated Starter Templates)
+### Game Deck System (Post-Launch Premium Content)
 
-For players who choose the **guided path**, we offer 3 expertly designed starter decks that teach core mechanics:
+**Purpose**: Offer curated 50-card decks for collectors and players who want to skip pack RNG. Models Pokemon Battle Boxes.
 
-**1. "Aggro Rush" Starter Deck (10 cards)**:
-- **Theme**: Fast, aggressive Fire/Lightning units that overwhelm opponents early
-- **Composition**:
-  - 1x Epic Fire Warrior (hero, high attack)
-  - 3x Uncommon Archers (ranged DPS)
-  - 2x Uncommon Cavalry (fast flankers)
-  - 2x Common Spearmen (cheap frontline)
-  - 1x Rare Tactic: "Blitz Formation" (units move +2 speed for 3 turns)
-  - 1x Rare Building: Barracks (spawns reinforcements)
-- **Playstyle**: Attack early, control center map, win before opponent builds economy
-- **Learning Goal**: Teaches positioning, aggression timing, resource management
+**Format**: 
+- **50 cards per Game Deck** (full playable collection)
+- **Guaranteed Contents**: 1 Legendary, 2-3 Epics, 10 Rares, ~20 Uncommons, ~17 Commons
+- **No Duplicates**: Each card is unique within the deck
+- **Theme-Based**: Norse Conquest, Roman Legion, Modern Military, Greek Mythology, etc.
 
-**2. "Defensive Builder" Starter Deck (12 cards)**:
-- **Theme**: Slow, defensive Earth/Frost units with strong economy
-- **Composition**:
-  - 1x Epic Stone Golem (hero, high defense, taunt)
-  - 2x Uncommon Wall units (block pathways)
-  - 3x Uncommon Spearmen (defensive formation bonus)
-  - 2x Rare Building: Farm (generates food)
-  - 2x Rare Building: Mine (generates ore)
-  - 1x Uncommon Building: Turret (auto-attacks nearby enemies)
-  - 1x Rare Tactic: "Turtle Formation" (all units +50% defense for 5 turns)
-- **Playstyle**: Hold territory, build economy, outlast opponent with superior resources
-- **Learning Goal**: Teaches economy, positioning, patience, late-game scaling
+**Pricing**:
+- **Real Money**: $19.99 USD (premium option, instant purchase)
+- **Earned Gold**: 50,000 Gold (grindable option, ~2-3 weeks active play)
+- **Premium Gems**: 2,000 Gems (convertible currency, ~$20 value)
 
-**3. "Balanced Explorer" Starter Deck (11 cards)**:
-- **Theme**: Versatile Water/Wind units good for learning all mechanics
-- **Composition**:
-  - 1x Epic Water Mage (hero, ranged caster with healing ability)
-  - 2x Uncommon Knights (balanced attack/defense)
-  - 2x Uncommon Archers (ranged support)
-  - 2x Common Scouts (fast movement, vision range)
-  - 1x Rare Healer unit (keeps army alive)
-  - 1x Uncommon Building: Granary (stores resources)
-  - 1x Uncommon Building: Watchtower (reveals fog of war)
-  - 1x Rare Tactic: "Adaptive Strategy" (choose offensive or defensive stance each turn)
-- **Playstyle**: React to opponent, mix offense/defense, learn all card types
-- **Learning Goal**: Teaches flexibility, all core mechanics, adaptability
+**Expansion Path**:
+- **Launch**: 3 Curated Trainer Decks (Fire/Water/Earth), 3 Random Element Decks (free)
+- **Month 1-3**: Add Wind/Dark/Light Trainer Decks (free unlocks via campaign)
+- **Year 1**: Release 6 Game Decks (Norse, Roman, Greek, Egyptian, Sci-Fi, Fantasy) at $19.99 each
+- **Seasonal**: Limited-edition Game Decks (Halloween, Winter, Summer) with exclusive Legendary cards
 
-**Bonus for Guided Path**: Players who choose a pre-built deck receive **1 Booster Pack** (5 random cards) to expand their collection immediately.
+**Why Game Decks?**:
+- **Whale Appeal**: $120 to own all 6 Game Decks (collector completionist)
+- **F2P Accessible**: Can buy with earned gold (respects non-payers)
+- **Content Drops**: New Game Deck = new theme = marketing event
+- **Skip RNG**: Players tired of pack gambling can buy guaranteed cards
+- **Multi-Element Design**: Later Game Decks can mix elements (Norse = Fire + Earth, Greek = Water + Wind)
+
+**Example Game Deck**: 
+**"Norse Conquest" Game Deck** ($19.99 / 50,000 Gold):
+- 1× Legendary: Odin Allfather (Hero, summons ravens)
+- 3× Epic: Thor Thunderlord, Freya Valkyrie, Loki Trickster
+- 10× Rare Norse units (Berserkers, Shieldmaidens, Frost Giants)
+- 20× Uncommon Norse buildings/tactics (Longhouses, Rune Stones, Blizzard)
+- 16× Common Norse workers/equipment (Blacksmiths, Fur Cloaks)
+- **Theme**: Fire + Earth synergy (burn damage + fortifications)
+
+**Unlock Requirements**:
+- Player Level 10+ (prevents new players from bypassing progression)
+- Tutorial complete (ensures players understand mechanics)
+- Available in Pack Shop under "Game Decks" tab
 
 ---
 
