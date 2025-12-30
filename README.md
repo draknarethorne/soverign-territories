@@ -48,7 +48,7 @@ A hybrid strategy game merging:
 3. 🗺️ Check [docs/map-tier-progression.md](docs/map-tier-progression.md) - Map hierarchy
 
 ### For Visual Designers
-1. 🎨 Read [docs/ASSETS.md](docs/ASSETS.md) - Art style guide, asset lists
+1. 🎨 Read [docs/assets.md](docs/assets.md) - Art style guide, asset lists
 2. 📐 Review MVP card templates (100 cards, 6 rarities)
 3. 🖼️ Check UI mockup priorities (Deck Builder, Battle Grid, Realm Map)
 
@@ -71,7 +71,7 @@ soverign-territories/
 │   ├── map-tier-progression.md    # Map hierarchy
 │   ├── rpg-systems-spec.md        # Phase 2/3 mechanics
 │   ├── terminology-guide.md       # Canonical naming
-│   ├── ASSETS.md                  # Art style guide
+│   ├── assets.md                  # Art style guide
 │   ├── specs/                     # JSON schemas
 │   │   ├── card-schema.json
 │   │   ├── pack-schema.json
@@ -200,7 +200,7 @@ gantt
 - 📊 Progression UI (Player Level, XP bar, reward screens)
 - 🎓 Tutorial tooltips (28 steps, highlight boxes)
 
-**See [docs/ASSETS.md](docs/ASSETS.md)** for complete asset list and style guide.
+**See [docs/assets.md](docs/assets.md)** for complete asset list and style guide.
 
 ---
 
@@ -252,7 +252,7 @@ This is a personal game design project. All game mechanics, art concepts, and do
 -  **Full Documentation**: [docs/README.md](docs/README.md)
 -  **Game Bible**: [docs/game-bible.md](docs/game-bible.md)
 -  **MVP Roadmap**: [docs/mvp-scope-final.md](docs/mvp-scope-final.md)
--  **Asset Guide**: [docs/ASSETS.md](docs/ASSETS.md)
+-  **Asset Guide**: [docs/assets.md](docs/assets.md)
 -  **Progress Tracking**: [docs/working/reorganization-status.md](docs/working/reorganization-status.md)
 
 ---

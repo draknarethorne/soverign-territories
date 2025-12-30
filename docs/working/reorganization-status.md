@@ -39,7 +39,7 @@
   - Removed detailed trading strategies and VIP tier breakdowns
 - ✅ Created docs/README.md - Comprehensive documentation hub (270+ lines)
 - ✅ Enhanced README.md with visual polish (badges, Mermaid diagrams, icons)
-- ✅ Created docs/ASSETS.md - Complete visual asset guide (500+ lines)
+- ✅ Created docs/assets.md - Complete visual asset guide (500+ lines)
 
 ### Phase 8-10 (December 30, 2024) ✅
 - ✅ Condensed Section 2.6 (Card Stacking, Formations & Map Deployment) from ~1,093 to ~150 lines
@@ -81,7 +81,7 @@
 - ✅ Mermaid diagrams: System architecture, roadmap timeline, MVP Gantt chart
 - ✅ Status badges: Unity, C#, Nakama versions, Bible status, Phase progress
 - ✅ Icon conventions: 🎴 🗺️ ⚔️ 💰 💎 ⚡ for visual navigation
-- ✅ ASSETS.md: Complete art style guide with 100 card list, color palette, tool recommendations
+- ✅ assets.md: Complete art style guide with 100 card list, color palette, tool recommendations
 - ✅ assets/examples/: 28 JPEGs (battle maps, cards, UI mockups for artist reference)
 
 ### Bible is Now Production-Ready!
@@ -89,7 +89,7 @@
 ✅ **Quick Reference**: 4,194 lines (was 6,807) - 38% leaner  
 ✅ **Spec-Driven**: All detailed mechanics in dedicated spec files  
 ✅ **Phase-Marked**: MVP clearly separated from Phase 2/3/4 features  
-✅ **Asset-Ready**: Complete visual guide for artists (ASSETS.md + example JPEGs)  
+✅ **Asset-Ready**: Complete visual guide for artists (assets.md + example JPEGs)  
 ✅ **Developer-Friendly**: Clear entry point (README.md), organized specs  
 
 **No Further Condensing Needed** - Bible is now ideal size for quick reference while specs provide implementation details.
