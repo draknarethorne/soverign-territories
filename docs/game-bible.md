@@ -3135,356 +3135,195 @@ Use that file for challenge scheduling, reward distribution, leaderboard calcula
 
 # SECTION 5: ECONOMY & TRADING
 
-The economy in Sovereign Territories is player-driven, with multiple currencies fueling deck-building, map actions, and social features. Trading systems encourage community interaction, while monetization ensures fair progression.
-
-## 5.1 Currencies
-
-### Overview
-Multiple currencies and resources drive the game's loops: Energy for actions, Gold for purchases, Gems for premium, Tokens for exclusives, and Resources (Food, Water, Lumber, Ore) for building and sustaining empires.
-
-### Energy (Stamina)
-- **Purpose**: Powers map movements, battles, and expeditions.
-- **Recharge**: Hourly (full reset prompts logins); daily cap.
-- **Sources**: Daily rewards, quests, VIP bonuses.
-- **Sinks**: All active gameplay; encourages strategic use.
-
-### Gold (Coins)
-- **Purpose**: Buys cards, upgrades, and basic items.
-- **Sources**: Taxes from territories, battles, mines, AFK production.
-- **Sinks**: Pack purchases, building constructions, card buys.
-
-### Resources (Food, Water, Lumber, Ore)
-- **Purpose**: Sustain buildings and units; spent on upgrades or sold for gold.
-- **Sources**: AFK production from placed buildings (e.g., farms for food, mines for ore), battles, territories.
-- **Sinks**: Building maintenance, unit recruitment, trading.
-- **Storage**: Buildings like warehouses increase caps; excess decays if over limit.
-
-### Gems
-- **Purpose**: Hard currency for speed-ups and cosmetics.
-- **Sources**: Real-money purchases, events, achievements.
-- **Sinks**: Energy refills, pack guarantees, VIP upgrades.
-
-### Sovereign Tokens
-- **Purpose**: Rare currency for exclusive skins/themes.
-- **Sources**: Quests, leaderboards, seasonal events.
-- **Sinks**: Limited-time purchases.
-
-### Player Tips
-- Balance energy for dailies; save gems for emergencies.
-
-### 5.1.5 AFK Production Mechanics
-
-- **How It Works**: Placed building cards on PvE maps generate resources passively. Production rate depends on building level, terrain bonuses (e.g., +50% on optimal tiles), and synergies (e.g., adjacent buildings boost each other).
-- **Examples**: Level 2 Farm on fertile hex: 8 food/hour; Mine on mountain: 6 ore/hour.
-- **Limits**: Capped by storage buildings; overflow leads to loss or reduced efficiency.
-- **Upgrades**: Level up buildings with resources/gold to increase output.
-- **Strategy**: Place strategically for max AFK gains; monitor via UI notifications.
-
-## 5.2 VIP Levels & Daily Rewards
-
-### Overview
-The VIP system rewards consistent spending with perks that enhance convenience and social status, but **never gameplay power**. It's designed for retention without creating pay-to-win imbalance.
-
-### VIP Tier Structure
-**Progression**: Unlock VIP tiers by cumulative gem spending (lifetime, not monthly)
-
-- **VIP 0 (Free Player)**:
-  - 100 max energy (recharges 1 per 30 minutes)
-  - 3 deck slots
-  - 1 free pack per week
-  - Basic chat emotes (10 options)
-  - Standard auction house fees (10%)
-
-- **VIP 1** (100 gems lifetime = $1 USD):
-  - +20 max energy (120 total)
-  - +1 deck slot (4 total)
-  - Daily free common pack (1 per day)
-  - +5 chat emotes (15 total)
-  - -1% auction house fees (9%)
-  - VIP badge (bronze) next to username
-  - Skip tutorial option for alt accounts
-
-- **VIP 2** (500 gems = $5):
-  - +30 max energy (130 total, faster recharge: 1 per 25 min)
-  - +1 deck slot (5 total)
-  - Daily free rare pack (1 per day)
-  - +10 chat emotes (25 total)
-  - -2% auction fees (8%)
-  - VIP badge (silver)
-  - Auto-battle speed: 2x unlocked
-  - Alliance treasury contribution UI shortcut
-  - Priority matchmaking (10% faster queue times)
-
-- **VIP 3** (2,000 gems = $20):
-  - +50 max energy (150 total, 1 per 20 min)
-  - +2 deck slots (7 total)
-  - Daily free epic pack (1 per day)
-  - +20 chat emotes + custom emote upload (45 total)
-  - -3% auction fees (7%)
-  - VIP badge (gold)
-  - Auto-battle speed: 4x unlocked
-  - Gifting: Send 5 gifts per day (vs 3 for free)
-  - Resource storage +20%
-  - Exclusive VIP-only chat channel
-  - Login streak protection: 1 missed day forgiven per month
-
-- **VIP 4** (5,000 gems = $50):
-  - +70 max energy (170 total, 1 per 15 min)
-  - +2 deck slots (9 total)
-  - Daily free epic pack + weekly legendary pack
-  - All emotes unlocked + animated emotes
-  - -4% auction fees (6%)
-  - VIP badge (platinum)
-  - Auto-battle: Instant results (skip animations entirely)
-  - Gifting: Send 10 gifts per day
-  - Resource storage +50%
-  - Exclusive VIP-4 avatar frames
-  - Alliance leadership: VIP-only alliance creation
-  - Priority customer support (24-hour response)
-
-- **VIP 5** (10,000 gems = $100):
-  - +100 max energy (200 total, 1 per 10 min)
-  - +1 deck slot (10 total, max)
-  - Daily free legendary pack
-  - Custom chat name colors + font styles
-  - -5% auction fees (5%, minimum)
-  - VIP badge (diamond)
-  - Auto-battle: Queue 10 battles at once
-  - Gifting: Unlimited
-  - Resource storage +100%
-  - Exclusive legendary VIP-only cards (cosmetic variants, same stats)
-  - Private 1-on-1 matches with friends (custom rules)
-  - Developer Q&A access (monthly AMA)
-  - Eternal login streak protection (never resets)
-
-### Daily Rewards System
-**Login Streaks**: Consecutive logins grant escalating rewards
-
-**Free Player Rewards** (7-day cycle):
-- Day 1: 50 gold, 10 energy
-- Day 2: 100 gold, 1 common pack
-- Day 3: 150 gold, 20 energy
-- Day 4: 200 gold, 1 rare pack
-- Day 5: 250 gold, 30 energy
-- Day 6: 300 gold, 1 epic pack
-- **Day 7: 500 gold, 50 gems, 1 legendary card** (guaranteed)
-- Resets to Day 1, but Day 7 reward only once per week
-
-**VIP Bonus Rewards** (added on top):
-- VIP 1: +25% gold on all days
-- VIP 2: +50% gold, +1 rare pack on Day 4
-- VIP 3: +100% gold, +1 epic pack on Day 6
-- VIP 4: +150% gold, Day 7 reward = 2 legendary cards
-- VIP 5: +200% gold, Day 7 reward = 3 legendary cards + exclusive VIP skin
-
-**Streak Protection**:
-- Free players: Lose all progress if 1 day missed
-- VIP 3+: 1 forgiveness per month (VIP 5: infinite forgiveness)
-- Grace period: 4-hour buffer after midnight (login by 4am counts for previous day)
-
-### VIP Exclusives (Cosmetic Only)
-- **Avatar Frames**: Animated borders around profile picture (gold, platinum, diamond)
-- **Card Skins**: Alternate art for existing cards (same stats, different visuals)
-- **Chat Effects**: Sparkles, emojis, animated text for VIP 4+
-- **Profile Badges**: Special titles ("Platinum Patron", "Diamond Sovereign")
-- **Battle VFX**: Premium visual effects for VIP 5 (golden card glow, special victory animations)
-
-### Anti-Pay-to-Win Design
-- **No Stat Advantages**: VIP players don't get stronger cards, just more convenience
-- **Energy Cap**: VIP energy recharges faster, but can't exceed daily active limit (200 = ~6 hours play)
-- **Deck Slots**: Max 10 slots prevents analysis paralysis, equal for VIP 5 and free at endgame
-- **Auction Fees**: 5% minimum prevents market manipulation
-- **Free Legendary Path**: Free players can still get Day 7 legendary weekly
-
-### VIP Monetization Philosophy
-- **Pay-for-Speed**: VIP players progress faster (more energy, packs), but don't become stronger
-- **Pay-for-Convenience**: Auto-battle speed, queue multiple battles, priority support
-- **Pay-for-Status**: Cosmetics, badges, exclusive social features for prestige
-- **Whale-Friendly**: VIP 5 targets spenders, but doesn't lock content behind paywall
-- **Fair Free Play**: Free players can achieve 90% of VIP 5 progression with time investment
-
-### Analytics & Balance
-- **Target VIP Distribution**: 70% VIP 0, 15% VIP 1-2, 10% VIP 3-4, 5% VIP 5
-- **ARPPU Target**: $15-30 per paying user (focused on VIP 2-3)
-- **Whale Revenue**: VIP 4-5 expected to generate 40-60% of total revenue
-- **Conversion Rate**: 5-10% of free players convert to VIP 1+ within 30 days
-
-## 5.3 The Auction House (Player Market)
-
-### Overview
-A **true player-driven free market** where supply and demand determine prices. The Auction House is the economic heart of Sovereign Territories, fostering community interaction, price discovery, and strategic trading.
-
-### How to Play
-
-**Accessing the Market**:
-- **Unlock**: Available at castle Level 5 (prevents early-game market flooding)
-- **Location**: Dedicated Auction House tab in main menu (UI: medieval marketplace theme)
-- **Fees**: 10% house cut on all sales (reduced to 5% for VIP 5)
-- **Currency**: Gold only (gems cannot be traded to prevent real-money trading)
-
-**Listing Items**:
-1. **Select Card**: Choose from inventory (unlisted cards only)
-2. **Set Price**: 
-   - **Fixed Price**: Instant buyout (e.g., 500 gold)
-   - **Auction**: Starting bid + buyout option (e.g., start 100g, buyout 500g)
-3. **Duration**: 24 hours, 48 hours, or 7 days
-4. **Quantity**: List 1-100 copies of same card (bulk discount encouraged)
-5. **Preview**: See estimated market value based on recent sales
-6. **Confirm**: Pay 1% listing fee upfront (refunded if sold)
-
-**Bidding Mechanics**:
-- **Minimum Increment**: +5% of current bid (prevents penny-bidding spam)
-- **Proxy Bidding**: Set max bid, system auto-bids up to your limit
-- **Escrow**: Bid amount locked in escrow until outbid or auction ends
-- **Anti-Snipe Extension**: Auction extends 60 seconds if bid placed in final 30 seconds
-- **Notifications**: Push notifications for outbid alerts (opt-in)
-
-**Instant Buyout**:
-- **One-Click Purchase**: Pay listed price, card delivered instantly
-- **Bulk Discount**: Buying 10+ copies gives 5% discount
-- **Price Warnings**: Alert if price >150% of market average ("This seems expensive!")
-
-**Advanced Search & Filters**:
-- **By Rarity**: Common, Rare, Epic, Legendary
-- **By Type**: Hero, Unit, Building, Tactic, Equipment
-- **By Theme**: Norse, Medieval, Sci-Fi, etc.
-- **By Price**: Min/max gold range
-- **By Seller**: Favorite traders, alliance members
-- **By Stats**: Min attack, min HP, specific abilities
-- **Sort Options**: Lowest price, ending soon, newly listed, popularity
-
-### Offline Mode
-**Persistent Listings**:
-- Listings remain active even when offline
-- Automated bidding system continues
-- Sales notifications on next login
-- Auto-delivery to inventory (no manual collection)
-
-**Watchlist**:
-- Favorite up to 50 listings for price tracking
-- Alerts when watched item price drops 10%
-- Historical price charts (last 30 days)
-
-### Market Dynamics
-
-**Supply & Demand**:
-- **Popular Cards**: High demand drives prices up (e.g., meta heroes = 5,000-10,000 gold)
-- **Oversupply**: Common cards flood market, prices drop to vendor minimum (10-50 gold)
-- **Seasonal Fluctuations**: New expansion release crashes old card prices (-30-50%)
-- **Event Impact**: Limited-time events spike demand for specific themes (e.g., Norse week = +200% for Thor)
-
-**Price Discovery**:
-- **Market Average**: System calculates 7-day rolling average per card
-- **Suggested Price**: Listing UI shows recommended price (±15% of average)
-- **Price Trends**: Up/down arrows indicate recent price movement
-- **Whales vs Free Players**: Whales stabilize market by buying underpriced cards, flipping for profit
-
-**Anti-Manipulation Safeguards**:
-- **Volume Limits**: 
-  - Max 10 legendary cards listed per player at once
-  - Max 50 epic cards per player
-  - Unlimited common/rare
-- **Price Floors**: Cards cannot be listed below vendor sell price (prevents value destruction)
-- **Price Ceilings**: Cards cannot exceed 5x market average (prevents price gouging)
-- **Wash Trading Detection**: System flags accounts buying/selling between own alt accounts
-- **Bot Prevention**: Captcha for rapid purchases (>10 per minute)
-
-### Strategic Trading
-
-**Buy Low, Sell High**:
-- **Weekend Dips**: Prices drop Saturday-Sunday (high supply from weekend players)
-- **Weekday Peaks**: Prices rise Monday-Wednesday (low supply, high demand)
-- **Patch Speculation**: Buy cards expected to be buffed, sell before nerfs
-- **Expansion Pre-Buy**: Stock up on staples before expansion (prices rise 20-40%)
-
-**Flipping for Profit**:
-- **Snipe Underpriced**: Buy cards listed 30-50% below market, relist at average
-- **Bulk Arbitrage**: Buy 100 commons at 10g each, sell bundle at 15g each
-- **Cross-Market Trading**: Buy on low-pop servers, sell on high-pop (future feature)
-
-**Collection Completion**:
-- **Missing Cards**: Use auction to fill gaps in collection (faster than packs)
-- **Duplicate Fodder**: Sell extra copies to fund legendary purchases
-- **Set Bonus Hunting**: Complete theme sets (20 Norse cards) via market shopping
-
-### Player Tips
-
-**For Sellers**:
-- **Undercut by 5%**: List slightly below market average for fast sales
-- **Auction for Rares**: Let bidding war drive up price for rare/legendary cards
-- **Bundle Discounts**: Sell 10-packs of commons for bulk buyers
-- **Weekend Sales**: List commons Friday night when demand spikes
-- **Relist Failed Auctions**: If no bids, reduce starting price by 10-20%
-
-**For Buyers**:
-- **Patience Pays**: Wait for weekend dips to buy (20-30% savings)
-- **Snipe Auctions**: Bid in final 10 seconds for less competition (but beware auto-extend)
-- **Buy in Bulk**: 10+ copies = 5% discount
-- **Check Market History**: Review 30-day price chart before overpaying
-- **Set Price Alerts**: Get notified when target cards drop to desired price
-
-### Restrictions
-
-**Non-Tradable Items**:
-- **Starter Cards**: Tutorial reward cards are soul-bound (cannot sell/trade)
-- **VIP Exclusive Cards**: Cosmetic variants stay with VIP account
-- **Event-Locked**: Some seasonal cards locked for 30 days after acquisition
-- **Gems**: Cannot be sold or traded (prevents real-money trading)
-
-**Account Requirements**:
-- **Level Gate**: Must be castle Level 5+ to sell (prevents bot spam)
-- **Verified Email**: Require email verification to list items (anti-fraud)
-- **Trade Cooldown**: New accounts have 7-day cooldown before selling (prevents hacks/chargebacks)
-
-### Economy Health Monitoring
-
-**Developer Tools**:
-- **Inflation Tracking**: Monitor total gold in economy, velocity, hoarding
-- **Price Anomaly Alerts**: Flag 500%+ price spikes (investigate manipulation)
-- **Banned Card Removal**: Pull items from market if exploit discovered
-- **Emergency Rollback**: Revert trades if dupe bug detected (rare, with compensation)
-
-**Transparency Reports**:
-- **Monthly Market Stats**: Published blog post with:
-  - Top 10 most-traded cards
-  - Average prices per rarity tier
-  - Total gold transacted
-  - Price trend analysis
-- **Player Confidence**: Builds trust in market fairness
-
-### Future Expansion Features
-- **Cross-Server Trading**: Buy/sell across regional servers (planned for Year 2)
-- **Trade Chat**: Dedicated channel for WTB/WTS spam
-- **Rental System**: Rent legendary cards for 24-hour trials (test before buying)
-- **NFT Integration**: Optional blockchain-based card ownership (controversial, under review)
-
-## Economy & Trade Data Models (Engine Schemas)
-
-The resource and trade schemas have been moved to standalone specs for engineering: [docs/specs/resource-schema.json](docs/specs/resource-schema.json) and [docs/specs/trade-schema.json](docs/specs/trade-schema.json).
-Use those files for currency management, production calculations, auction validation, and marketplace transactions. Sensitive financial data is encrypted and server-only.
-
-## 5.4 Monetization Model
-
-### Overview
-Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
-
-### Pay-for-Speed
-- Energy refills, battle skips, extra moves.
-
-### Pay-for-Look-and-Feel
-- Skins, themes, soundtracks.
-
-### Analytics
-- Track 80/20 rule for balance.
-
-### Player Tips
-- Optional; free progression viable.
-
-## Open-Source References
-
-- EVE Online Market Clones (GitHub): Player-driven auction systems.
-- Supercell Analytics (unofficial docs): Monetization models.
-- Open-Source IAP Libraries (GitHub, e.g., Unity IAP samples): In-app purchase handling.
+**See [economy-system.md](economy-system.md) for complete currency specs, earning rates, and F2P balance calculations.**
+
+The economy in Sovereign Territories uses **multiple currencies** to prevent whale dominance and create diverse progression paths:
+- **Gold** (soft currency) - Cannot be bought, F2P fairness
+- **Gems** (premium) - Whale advantage but capped at $136/week
+- **Energy** (stamina) - Time-gated, limits grinding
+- **Food/Lumber/Ore** (Phase 2) - AFK production, cannot buy with Gems
+- **Arena Tokens** (Phase 3) - Skill-based PvP currency
+
+## 5.1 MVP Currencies (Phase 1)
+
+### Gold (Soft Currency)
+**Cannot be bought with real money** - F2P fairness pillar
+
+**Earning** (F2P Player):
+- Daily Login: 500 Gold/day
+- Battle Rewards: 100-200 Gold per battle
+- Battle Chests: 50-500 Gold (Bronze → Platinum)
+- **Total**: ~700 Gold/day (4,900/week)
+
+**Spending**:
+- Standard Pack: 1,000 Gold (5 cards)
+- Element Booster: 2,000 Gold (5 cards)
+- Epic Booster: 5,000 Gold (5 cards)
+
+**F2P Balance**: Can buy 4-5 Standard Packs per week
+
+### Gems (Premium Currency)
+**Weekly purchase cap**: $136/week maximum (prevents whale blitz)
+
+**Earning** (F2P):
+- Daily Login: 10 Gems/day (70/week)
+
+**Earning** (Whale):
+- Purchase: $0.99 = 100 Gems, $4.99 = 550 Gems, $19.99 = 2,400 Gems
+- **Total**: ~5,070 Gems/week (70× F2P advantage)
+
+**Spending** (Phase 2):
+- Premium Pack: 100 Gems (10% shiny rate)
+- Energy Refill: 50 Gems (100 Energy)
+- Speed-Up: 100 Gems (instant combining)
+
+**F2P Balance**: Rarity Budget prevents whale decks from dominating PvP
+
+### Energy (Stamina System)
+**Purpose**: Prevent grinding, encourage daily login
+
+**Mechanics**:
+- Starting: 100 Energy (tutorial completion)
+- Refill: 1 Energy per 6 minutes (240/day)
+- Daily Max: 340 Energy total
+- Battle Cost: 10 Energy per battle
+- **Daily Battles**: 34 battles/day max
+
+**Refills** (Phase 2):
+- Gem Refill: 50 Gems = 100 Energy
+- Energy Potion: From battle chests (cannot buy)
+
+## 5.2 Phase 2 Currencies (Month 2-3)
+
+### Food/Lumber/Ore (Resource Economy)
+**AFK Production** - Cannot buy with Gems (time-gated)
+
+**Food**:
+- Production: Granary 10-50 Food/hour (24-hour cap)
+- Spending: Battle entry (20 Food), deployment (50 Food), upgrades (500-1,000 Food)
+- **Total**: 340 Food/day (240 AFK + 100 chests)
+
+**Lumber**:
+- Production: Sawmill 10-50 Lumber/hour
+- Spending: Equipment crafting (100-500 Lumber), construction (300 Lumber), upgrades (500-1,000 Lumber)
+- **Total**: 340 Lumber/day
+
+**Ore** (Rarest):
+- Production: Mine 5-25 Ore/hour (half of Food/Lumber)
+- Spending: High-tier equipment (200-2,000 Ore), card combining (500 Ore for Legendary → Mythic)
+- **Total**: 170 Ore/day (intentional bottleneck)
+
+**Auto-Collection**:
+- Resources accumulate to storage cap (1,000-20,000)
+- Production stops when full (incentivizes spending)
+- No tap-to-collect annoyance
+
+**F2P Balance**: Whales must wait for AFK production (cannot buy infinite resources)
+
+## 5.3 VIP System (Phase 2 - Post-MVP)
+
+**Philosophy**: Pay-for-convenience, never pay-to-win
+
+**VIP Tiers** (Unlocked by cumulative Gem spending):
+- **VIP 0 (Free)**: 100 max energy, 3 deck slots
+- **VIP 1** ($1): +20 energy, +1 deck slot, daily common pack
+- **VIP 2** ($5): +30 energy, +1 deck slot, daily rare pack, 2× auto-battle
+- **VIP 3** ($20): +50 energy, +2 deck slots, daily epic pack, 4× auto-battle
+- **VIP 4** ($50): +70 energy, +2 deck slots, weekly legendary pack, instant auto-battle
+- **VIP 5** ($100): +100 energy, +1 deck slot (10 max), daily legendary pack, queue 10 battles
+
+**VIP Perks** (Convenience only):
+- Faster energy recharge (1 per 30min → 1 per 10min)
+- More deck slots (3 → 10)
+- Auto-battle speed (1× → instant results)
+- Reduced auction fees (10% → 5%)
+- Cosmetic rewards (avatar frames, card skins, chat effects)
+
+**Anti-Pay-to-Win**:
+- VIP players get **no stat advantages**
+- Energy cap prevents infinite grinding (200 max = 6 hours/day)
+- Rarity Budget prevents all-Legendary VIP decks
+- Free players get Day 7 legendary weekly (same as VIP)
+
+**Daily Login Rewards** (7-day cycle):
+- Days 1-6: Gold, Energy, Common/Rare/Epic Packs
+- **Day 7**: 500 Gold, 50 Gems, 1 Legendary Card (VIP 5 gets 3 Legendaries)
+- Streak protection: Free = none, VIP 3+ = 1 forgiveness/month
+
+**Monetization Balance**:
+- 70% players stay VIP 0 (viable free path)
+- 15% convert to VIP 1-2 ($1-$5 spenders)
+- 10% reach VIP 3-4 ($20-$50 spenders)
+- 5% reach VIP 5 ($100+ whales, generate 40-60% revenue)
+
+## 5.4 Auction House (Phase 3 - Post-MVP)
+
+**Status**: Phase 3 feature (Month 4-6), not in MVP
+
+**Overview**: Player-driven free market where supply and demand determine prices.
+
+**Core Mechanics**:
+- **Unlock**: Castle Level 5+ (prevents early-game flooding)
+- **Currency**: Gold only (Gems cannot be traded)
+- **Fees**: 10% house cut (VIP 5 = 5%)
+- **Listing**: Fixed price or auction (24h/48h/7d duration)
+- **Bidding**: Proxy bidding, anti-snipe extension (+60s if bid in final 30s)
+- **Filters**: Rarity, Type, Theme, Price range, Stats
+
+**Market Dynamics**:
+- **Supply & Demand**: Meta cards = 5,000-10,000 Gold, commons = 10-50 Gold
+- **Price Discovery**: 7-day rolling average, suggested pricing
+- **Seasonal Fluctuations**: New expansions crash old card prices (-30-50%)
+- **Anti-Manipulation**: Volume limits, price floors/ceilings, wash trading detection
+
+**Trading Strategies**:
+- **Buy Low/Sell High**: Weekend dips (Saturday-Sunday), weekday peaks (Monday-Wednesday)
+- **Flipping**: Snipe underpriced cards 30-50% below market, relist at average
+- **Collection Completion**: Use auction to fill gaps (faster than packs)
+
+**Restrictions**:
+- **Non-Tradable**: Tutorial cards (soul-bound), VIP cosmetics, event-locked items (30-day hold)
+- **Requirements**: Level 5+, verified email, 7-day trade cooldown for new accounts
+
+**Economy Monitoring**:
+- **Inflation Tracking**: Developer tools monitor gold velocity, hoarding
+- **Transparency Reports**: Monthly market stats (top 10 cards, price trends)
+- **Emergency Rollback**: Revert trades if dupe bug discovered
+
+**Future Features** (Phase 4):
+- Cross-server trading
+- Trade chat channel
+- 24-hour card rental system
+
+## 5.5 Monetization Model
+
+**Philosophy**: Pay-for-speed (convenience) or pay-for-cosmetics, **never pay-to-win**
+
+**Pay-for-Speed** (Phase 2):
+- Energy refills (50 Gems = 100 Energy)
+- Auto-battle speed (2× → instant)
+- Queue multiple battles (VIP 5 only)
+
+**Pay-for-Cosmetics**:
+- Card skins (alternate art, same stats)
+- Avatar frames, chat effects
+- VIP-only legendary cosmetic variants
+
+**F2P Fairness**:
+- Gold cannot be bought (prevents pay-to-win)
+- Rarity Budget limits deck power (whales can't run all-Legendary)
+- VIP players progress faster, not stronger
+
+**Analytics & Balance**:
+- Target 80/20 rule: 80% players free, 20% paying
+- Whale revenue (VIP 5) = 40-60% of total
+- ARPPU target: $15-30 per paying user
+
+## Data Schemas
+
+See standalone specs for engineering:
+- [resource-schema.json](specs/resource-schema.json) - Currency management, production calculations
+- [trade-schema.json](specs/trade-schema.json) - Auction validation, marketplace transactions
 
 ---
 
