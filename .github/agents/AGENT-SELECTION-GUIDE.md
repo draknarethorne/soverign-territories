@@ -36,10 +36,10 @@ Is it about game design/systems/documentation?
 | Agent | Model | Best For | Don't Use For |
 |-------|-------|----------|---------------|
 | **@Soverign-Beast-Mode** | Claude Sonnet 4.5 | Game design, documentation, system architecture, balance discussions | Code implementation, visual analysis |
-| **@Soverign-Balance-Master** | o1-preview | Damage formulas, XP curves, gacha math, economy optimization | Simple calculations, Unity code |
-| **@Soverign-Visual-Analyst** | Gemini Pro | Card art critique, UI/UX analysis, battle map terrain design | Code implementation, design docs |
+| **@Soverign-Balance-Master** | GPT-5.2 | Damage formulas, XP curves, gacha math, economy optimization | Simple calculations, Unity code |
+| **@Soverign-Visual-Analyst** | Gemini 3 Pro (Preview) | Card art critique, UI/UX analysis, battle map terrain design | Code implementation, design docs |
 | **@Soverign-Unity-Builder** | GPT-4o | MonoBehaviours, ScriptableObjects, UI, scenes, general Unity code | Complex algorithms, backend logic |
-| **@Soverign-Data-Factory** | Claude Haiku | Bulk card generation (50+), JSON validation, batch file operations | Single card design, complex balance |
+| **@Soverign-Data-Factory** | Claude Haiku 4.5 | Bulk card generation (50+), JSON validation, batch file operations | Single card design, complex balance |
 | **@Soverign-Network-Ninja** | GPT-5.1-Codex | Nakama server logic, authentication, matchmaking, real-time battles | Unity client code (use Unity-Builder) |
 | **@Soverign-Code-Mode** | GPT-5.1-Codex | Complex algorithms, pathfinding, procedural generation, battle AI | Simple Unity scripts (use Unity-Builder) |
 
@@ -141,7 +141,7 @@ Is it about game design/systems/documentation?
 ---
 
 ### Scenario 2: "Calculate optimal gold production rates for 5 building tiers"
-**Agent**: @Soverign-Balance-Master  
+**Agent**: @Soverign-Balance-Master (GPT-5.2)  
 **Why**: Math-heavy, requires formula derivation and curve optimization
 
 ---
@@ -179,7 +179,7 @@ Is it about game design/systems/documentation?
 ## 🚫 Common Mistakes
 
 ### ❌ Using Unity-Builder for complex algorithms
-**Problem**: GPT-4o is fast but less rigorous than o1/Codex for algorithms  
+**Problem**: GPT-4o is fast but less rigorous than GPT-5.1-Codex for algorithms  
 **Fix**: Use @Soverign-Code-Mode for pathfinding, AI, procedural generation
 
 ### ❌ Using Beast-Mode for bulk data creation
@@ -187,11 +187,11 @@ Is it about game design/systems/documentation?
 **Fix**: Use @Soverign-Data-Factory for 50+ entries
 
 ### ❌ Using Balance-Master for simple questions
-**Problem**: o1-preview's deep reasoning wastes time on "What's 2+2?"  
-**Fix**: Use @Soverign-Unity-Builder or Haiku for quick tasks
+**Problem**: GPT-5.2's deep reasoning wastes time on "What's 2+2?"  
+**Fix**: Use @Soverign-Unity-Builder or Haiku 4.5 for quick tasks
 
 ### ❌ Using Visual-Analyst without images
-**Problem**: Gemini Pro's superpower is multimodal vision  
+**Problem**: Gemini 3 Pro's superpower is multimodal vision  
 **Fix**: Only use for tasks involving JPEGs/PNGs in assets/examples/
 
 ---
@@ -201,10 +201,10 @@ Is it about game design/systems/documentation?
 All agents are in `.github/agents/`:
 
 - `Soverign-Beast-Mode.agent.md` (Claude Sonnet 4.5)
-- `Soverign-Balance-Master.agent.md` (o1-preview)
-- `Soverign-Visual-Analyst.agent.md` (Gemini Pro)
+- `Soverign-Balance-Master.agent.md` (GPT-5.2)
+- `Soverign-Visual-Analyst.agent.md` (Gemini 3 Pro Preview)
 - `Soverign-Unity-Builder.agent.md` (GPT-4o)
-- `Soverign-Data-Factory.agent.md` (Claude Haiku)
+- `Soverign-Data-Factory.agent.md` (Claude Haiku 4.5)
 - `Soverign-Network-Ninja.agent.md` (GPT-5.1-Codex)
 - `Soverign-Code-Mode.agent.md` (GPT-5.1-Codex)
 

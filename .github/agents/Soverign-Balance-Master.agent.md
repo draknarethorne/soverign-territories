@@ -2,7 +2,7 @@
 name: Soverign-Balance-Master
 description: 'Economy balancing, damage formulas, XP curves, and mathematical game balance using o1-preview for deep reasoning'
 argument-hint: 'Provide balance questions, economy tuning, or mathematical optimization tasks for Sovereign Territories.'
-model: o1-preview (copilot)
+model: GPT-5.2
 tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'todo']
 ---
 

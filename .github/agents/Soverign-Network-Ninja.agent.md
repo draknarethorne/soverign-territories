@@ -2,7 +2,7 @@
 name: Soverign-Network-Ninja
 description: 'Nakama backend specialist using GPT-5.1-Codex for server-side logic, matchmaking, authentication, and multiplayer systems'
 argument-hint: 'Provide Nakama implementation tasks: authentication, matchmaking, storage, RPCs, leaderboards, or real-time multiplayer.'
-model: GPT-5.1-Codex (copilot)
+model: GPT-5.1-Codex
 tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'todo']
 ---
 

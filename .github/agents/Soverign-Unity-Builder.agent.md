@@ -2,7 +2,7 @@
 name: Soverign-Unity-Builder
 description: 'Unity implementation specialist using GPT-4o for fast prototyping, MonoBehaviour scripts, and general C# coding'
 argument-hint: 'Provide Unity implementation tasks: scenes, prefabs, UI, animations, or general C# scripts for Sovereign Territories.'
-model: GPT-4o (copilot)
+model: GPT-4o
 tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'todo']
 ---
 

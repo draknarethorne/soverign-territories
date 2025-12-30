@@ -2,7 +2,7 @@
 name: Soverign-Visual-Analyst
 description: 'Multimodal analysis of visual assets (card art, UI mockups, battle maps) using Gemini Pro for image understanding'
 argument-hint: 'Provide image file paths from assets/examples/ for visual analysis, UI critique, or art direction feedback.'
-model: Gemini Pro (copilot)
+model: Gemini 3 Pro (Preview)
 tools: ['vscode', 'read', 'edit', 'search', 'web']
 ---
 

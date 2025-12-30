@@ -2,7 +2,7 @@
 name: Soverign-Data-Factory
 description: 'Bulk data creation using Claude Haiku for speed - generates 100+ card/building/tactic entries from schemas'
 argument-hint: 'Provide bulk data tasks: generate 50 cards, validate JSON schemas, create ScriptableObject templates, batch file operations.'
-model: Claude Haiku (copilot)
+model: Claude Haiku 4.5
 tools: ['vscode', 'execute', 'read', 'edit', 'search']
 ---
 

@@ -2,7 +2,7 @@
 name: Soverign-Beast-Mode
 description: 'Expert game design agent for Sovereign Territories - deep analysis, iterative design, automated git workflow, and meta-reflection on architectural decisions'
 argument-hint: 'Provide design requests, balance questions, or documentation tasks for Sovereign Territories game systems.'
-model: Claude Sonnet 4.5 (copilot)
+model: Claude Sonnet 4.5
 tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'todo']
 ---
 
