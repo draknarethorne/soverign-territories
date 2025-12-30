@@ -1,8 +1,15 @@
 # Unity & Nakama Framework Reference
 
+**Last Updated**: December 30, 2025  
+**Related Docs**: [local-development-setup.md](../mvp/local-development-setup.md) (beginner setup guide), [unity-implementation-guide.md](../mvp/unity-implementation-guide.md) (C# code examples)
+
+---
+
 ## Overview
 
 This document provides an overview of how the Unity game engine and Nakama multiplayer server framework support the Sovereign Territories game design. It highlights out-of-the-box features that align with our specs and provides guidance for kick-starting development.
+
+**🎯 New to Unity/Nakama?** Start with [local-development-setup.md](../mvp/local-development-setup.md) for step-by-step installation instructions. This document is a **technical reference** for understanding framework capabilities.
 
 ## Nakama Server Framework
 
