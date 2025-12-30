@@ -52,7 +52,8 @@ This guide walks you through setting up your local development environment for *
 **For MVP**: Just the core editor is fine. Add Android/iOS modules when ready to build mobile versions.
 
 **Why Unity 6 LTS?**
-- Latest LTS (stable, no breaking changes for 2 years)
+- Latest LTS release (October 2024, supported until ~2026-2027)
+- 2-year support window with no breaking changes (Unity's LTS commitment)
 - Better performance than Unity 2021
 - Improved UI Toolkit (better for card UI)
 - Fully compatible with Nakama Unity SDK
