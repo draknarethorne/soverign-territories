@@ -1302,1094 +1302,123 @@ Instead of random pack opening, Sovereigns choose from **6 Trainer Decks**:
 
 ## 2.6 Card Stacking, Formations & Map Deployment
 
-### Overview: Heroes of Might and Magic Meets Modern CCGs
+> **See [combat-mechanics.md](specs/combat-mechanics.md) for complete stacking formulas, formation templates, and map deployment mechanics.**
 
-Sovereign Territories borrows heavily from **Heroes of Might and Magic** army stacking while adding modern flexibility. Instead of forcing exact card duplication, we allow **cross-theme, same-type stacking** to create diverse armies from your collection.
+### Core Mechanics (Heroes of Might and Magic Inspiration)
 
-**Core Principles**:
-1. **Stacking**: Multiple cards occupy a single tile, combining stats into one powerful unit
-2. **Formations**: Pre-defined placement patterns for quick deployment
-3. **Visual Representation**: High-rarity cards = 3D figures, low-rarity = card sprites
-4. **Auto vs Manual**: Choose convenience or strategic control
-5. **Map Scaling**: 1 deck per tile on World Map → zoom into battle with full deck
+**Stacking System**:
+- Multiple cards occupy single tile, combine stats into one powerful unit
+- **Same Unit Type Stacking**: Archers + Crossbowmen = "Ranged Stack" ✅
+- **Cross-Theme Allowed**: Elf + Human + Dwarf units stack together
+- **Mixed Rarity**: Common + Epic in same stack (no penalty)
 
----
+**Map Layer Stacking Rules**:
+- **Realm Map** (Strategic): Full army stacks (heroes + units + buildings)
+- **Battle Map** (Tactical): Separated by unit type (archers back, warriors front)
 
-### Card Stacking System (HoMM-Style Armies)
+**Visual Representation**:
 
-#### What Is Stacking?
+**Visual Representation**:
+- **Epic+ Cards**: 3D miniature figures (animated, VFX effects)
+- **Rare Cards**: Premium card sprites on stands
+- **Common/Uncommon**: Flat card sprites
 
-**Stacking** combines multiple cards of the **same unit type** onto a single map tile, merging them into one powerful army stack.
+### Rarity Budget System (Deck Constraints)
 
-**Example**:
-- 3x Elf Archer (Common)
-- 2x Human Crossbowman (Uncommon)
-- 1x Dwarven Marksman (Rare)
-
-All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
-
-#### Stacking Rules (Cross-Theme Flexibility)
-
-**✅ Valid Stacking Combinations**:
-- **Same Unit Type Across Themes**: 
-  - Elf Archers + Human Crossbowmen + Dwarven Marksmen = "Ranged Stack" ✅
-  - Norse Berserker + Samurai Warrior + Knight = "Melee Stack" ✅
-  - Fire Mage + Ice Mage + Lightning Wizard = "Caster Stack" ✅
-- **Same Rarity (Optional Bonus)**: 
-  - All Uncommon cards in stack = +10% to all stats (synergy bonus)
-  - All Rare+ cards in stack = +20% to all stats
-- **Mixed Rarity Allowed**: 
-  - Common + Rare + Epic in same stack = no penalty, just combined stats
-
-#### Stacking Rules (Map-Dependent Flexibility)
-
-**IMPORTANT**: Stacking rules differ based on which map layer you're on:
-
-**On Realm Map (Strategic Layer)** → **Full Army Stacks Allowed**:
-- ✅ **Mix ALL Card Types**: Epic heroes + Archers + Healers + Walls + Buildings in ONE stack
-- ✅ **Cross-Theme**: Elf + Human + Dwarf units together
-- ✅ **Mixed Rarity**: Common + Rare + Epic + Legendary in same stack
-- **Why**: Realm Map represents your entire army moving as one force (like HoMM heroes with their armies)
-- **Visual**: Stack shows as single icon/flag with lead hero portrait
-
-**On Battle Map (Tactical Layer)** → **Unit Type Stacking**:
-- ✅ **Same Unit Type Only**: Archers stack with archers, warriors with warriors
-- ✅ **Cross-Theme Still Allowed**: Elf Archers + Human Crossbowmen = valid
-- ❌ **No Mixed Types**: Archers + Warriors = separate stacks on battle grid
-- **Why**: Battle map is where you deploy formations (tanks front, archers back)
-- **Visual**: Each unit type gets its own tile position on tactical grid
-
-**Stacking Hierarchy by Map Layer**:
-
-| Map Layer | Stack Composition | Visual | Example |
-|-----------|-------------------|--------|---------|
-| **World Map** | Entire deck = 1 icon | Flag/banner with deck name | "Fire Rush Deck" icon on territory |
-| **Realm Map** | Full army stack (10-50 cards all types) | Hero portrait + army count | "Thor + 24 units" moving as one |
-| **Battle Map** | Separated by unit type | Individual stacks on grid tiles | 3× Archer stacks, 2× Warrior stacks, 1× Hero |
-
-**Example Flow**:
-1. **World Map**: You deploy "Viking Deck" to Territory A (appears as single flag)
-2. **Zoom to Realm Map**: "Viking Deck" appears as Thor (hero portrait) + 14 unit cards = 1 movable stack
-3. **Move stack to enemy spawn**: Engage battle
-4. **Zoom to Battle Map**: 15 cards separate into formation:
-   - Thor (Epic hero) → Front center tile
-   - 3× Archers (mixed elf/human) → Back row left
-   - 2× Berserkers (warriors) → Front row right
-   - 1× Healer → Rear center
-   - Etc.
-
----
-
-#### Mixed-Type Stacking (Realm Map Only)
-
-**✅ Valid Realm Map Stack Combinations**:
-- **Epic Hero + Units + Buildings + Workers**:
-  - Example: Thor + 5 Archers + 3 Warriors + 2 Healers + 1 Farm + 1 Mine = 13-card stack
-- **Cross-Theme Mixed Army**:
-  - Example: Elf Archers + Human Knights + Dwarf Miners + Norse Healer = 1 stack
-- **Economy + Battle Mix**:
-  - Example: 10 battle cards + 5 economy cards (buildings/workers) = 15-card stack
-
-**❌ Invalid Battle Map Combinations**:
-- Archers + Warriors on same battle grid tile = ❌ (must separate into different tiles)
-- Hero + Archers on same battle tile = ❌ (hero gets own tile)
-- Farm + Archers on same battle tile = ❌ (buildings don't deploy to battle grid)
-
-**Why This Matters**:
-- **Realm Map** = Strategic movement (armies travel together, like HoMM)
-- **Battle Map** = Tactical deployment (separate unit types for formation strategy)
-- **Simplifies county exploration** (don't micromanage 50 individual units)
-- **Adds depth to battles** (formation positioning matters)
-
----
-
-#### Stack Stat Calculation (Mathematical Precision)
-
-**Stack HP** = `Σ(BaseHP × HPMultiplier(rarity) × StarMultiplier(stars))` for all cards in stack
-**Stack Attack** = `Σ(BaseAttack × AttackMultiplier(rarity) × StarMultiplier(stars))`
-**Stack Defense** = `Average(Defense values) × (1 + 0.05 × (stackSize - 1))` (diminishing returns)
-**Stack Speed** = `Min(Speed values)` (slowest card determines stack movement)
-
-**Example Stack Math** (Realm Map Full Army):
-- 1x Epic Thor (HP: 100, Attack: 20, Defense: 15, Speed: 4)
-- 3x Common Elf Archer (HP: 10, Attack: 5, Defense: 2, Speed: 3)
-- 2x Uncommon Human Crossbowman (HP: 15, Attack: 7, Defense: 3, Speed: 2)
-- 1x Rare Healer (HP: 20, Attack: 2, Defense: 5, Speed: 2)
-- Total: 7 battle cards in county stack
-
-**Realm Map Stats** (moving as one army):
-- HP = 100 + (10×3) + (15×2) + 20 = 100 + 30 + 30 + 20 = **180 HP**
-- Attack = 20 + (5×3) + (7×2) + 2 = 20 + 15 + 14 + 2 = **51 Attack**
-- Defense = ((15+2+2+2+3+3+5)/7) × (1 + 0.05×6) = 4.57 × 1.3 = **5.94 Defense**
-- Speed = Min(4, 3, 3, 3, 2, 2, 2) = **2 Speed** (entire army moves at healer speed)
-
-**Battle Map Stats** (separated into unit type stacks):
-- Thor: 100 HP, 20 Attack, 15 Defense, 4 Speed (solo hero)
-- Archer Stack (3× Elf): 30 HP, 15 Attack, ~2.3 Defense, 3 Speed
-- Crossbow Stack (2× Human): 30 HP, 14 Attack, 3 Defense, 2 Speed
-- Healer (solo): 20 HP, 2 Attack, 5 Defense, 2 Speed
-
-**Same-Rarity Bonus** (applies to battle map stacks only):
-- Archer stack (all Common) = +10% stats = 33 HP, 16.5 Attack
-- Crossbow stack (all Uncommon) = +10% stats = 33 HP, 15.4 Attack
-
----
-
-#### Deck Composition Limits (Rarity Budget System)
-
-To prevent "all Legendary" decks while still allowing creativity, we use a **Rarity Point Budget**:
+**Purpose**: Prevent "all Legendary" decks while allowing creativity
 
 **Rarity Point Costs**:
-- Common = 1 point
-- Uncommon = 2 points
-- Rare = 4 points
-- Epic = 8 points
-- Legendary = 16 points
-- Mythic = 32 points
+- Common = 1pt, Uncommon = 2pt, Rare = 4pt, Epic = 8pt, Legendary = 16pt, Mythic = 32pt
 
-**Deck Budget by Player Level**:
+**Deck Budgets by Player Level**:
 
-| Player Level | Battle Card Limit | Rarity Point Budget | Example Deck Composition |
-|--------------|-------------------|---------------------|--------------------------|
-| **1-5** | 10-15 cards | 50 points | 5 Legendaries (80 pts) = ❌ TOO HIGH |
-| **1-5** | 10-15 cards | 50 points | 1 Epic (8) + 5 Rare (20) + 9 Common (9) = 37 pts ✅ |
-| **10-15** | 25-30 cards | 120 points | 2 Legendary (32) + 3 Epic (24) + 10 Rare (40) + 15 Common (15) = 111 pts ✅ |
-| **20-25** | 35-40 cards | 200 points | 3 Legendary (48) + 5 Epic (40) + 15 Rare (60) + 17 Common (17) = 165 pts ✅ |
-| **30+** | 40-50 cards | 300 points | 5 Legendary (80) + 8 Epic (64) + 20 Rare (80) + 17 Common (17) = 241 pts ✅ |
+| Player Level | Battle Card Limit | Rarity Budget | Example Deck |
+|--------------|-------------------|---------------|--------------|
+| **1-5** | 10-15 cards | 50 pts | 1 Epic (8) + 5 Rare (20) + 9 Common (9) = 37 pts ✅ |
+| **10-15** | 25-30 cards | 120 pts | 2 Legendary (32) + 3 Epic (24) + 10 Rare (40) + 15 Common (15) = 111 pts ✅ |
+| **20-25** | 35-40 cards | 200 pts | 3 Legendary (48) + 5 Epic (40) + 15 Rare (60) + 17 Common (17) = 165 pts ✅ |
+| **30+** | 40-50 cards | 300 pts | 5 Legendary (80) + 8 Epic (64) + 20 Rare (80) + 17 Common (17) = 241 pts ✅ |
 
-**Example Scenarios**:
-- **"5 Legendary Whale Deck"** (Level 30):
-  - 5 Legendary = 80 points
-  - Remaining budget: 220 points
-  - Can add: 27 Epics (216 pts) OR 55 Rares (220 pts) OR 220 Commons
-  - **Result**: Extremely top-heavy, very few cards (5-32 total)
-  
-- **"Balanced Mid-Range Deck"** (Level 20):
-  - 2 Legendary (32) + 5 Epic (40) + 12 Rare (48) + 20 Common (20) = 140 points
-  - Total: 39 cards
-  - **Result**: Good mix, flexible strategies
-
-**Economy Cards** (Separate Budget):
-- **Not counted against rarity budget**
-- Separate limit: 10-15 economy cards per deck
-- Types: Buildings (Farm, Mine, Turret, Wall), Workers (Farmer, Miner, Scout)
-- Can deploy to Realm Map tiles, don't go to battle map
-
-**Total Deck Composition**:
-- **Battle Cards**: 10-50 (based on Player Level) within rarity budget
-  - Heroes, Units, Tactics, Equipment
-  - Used for combat and exploration
-  - Can be split into multiple hero-led armies on Realm Map
-- **Economy Cards**: 10-15 (separate category, not counted in rarity budget)
-  - Buildings: Farm, Mine, Lumber Mill, Turret, Wall
-  - Workers: Farmer, Miner, Lumberjack, Scout
-  - Deployed to captured tiles for AFK income
-  - Left behind when army moves (must return to retrieve)
-- **Max Total Deck**: 50 battle + 15 economy = **65 cards** (Level 30+ only)
-
-**Why Separate Categories?**:
-- ✅ **Clarity**: Battle cards fight, economy cards generate income
-- ✅ **Strategy**: Decide which tiles deserve resource investment
-- ✅ **Risk/Reward**: Leave valuable workers behind, or keep army flexible?
-- ✅ **Economy Management**: Economy cards are strategic deployments, not combat filler
-
-**Card Category Breakdown**:
-
-| Category | Types | Count Limit | Counted in Rarity Budget? | Use Case |
-|----------|-------|-------------|---------------------------|----------|
-| **Battle Cards** | Heroes, Units, Tactics, Equipment | 10-50 (Player Level) | ✅ Yes | Combat, exploration, formations |
-| **Economy Cards** | Buildings, Workers | 10-15 (fixed) | ❌ No | AFK income, tile upgrades |
-
-**Example Level 20 Deck**:
-- **Battle Cards** (35 total, 200 rarity points):
-  - 2 Legendary Heroes (32 pts)
-  - 5 Epic Units (40 pts)
-  - 12 Rare Units (48 pts)
-  - 16 Common/Uncommon Units (20 pts)
-  - Total: 140 points (under 200 budget ✅)
-- **Economy Cards** (12 total, separate):
-  - 3 Farms
-  - 2 Mines
-  - 1 Lumber Mill
-  - 3 Farmers
-  - 2 Miners
-  - 1 Turret
-
-**Why Rarity Budget System?**:
-- ✅ **Prevents "5 Legendary Only" decks** (too expensive, need filler)
-- ✅ **Encourages diversity** (mix rarities for better value)
-- ✅ **Allows whales to flex** (can still build heavy Legendary decks, just fewer cards)
-- ✅ **F2P viable** (Common/Uncommon decks are cheap, can compete with strategy)
-- ✅ **Scales with progression** (higher level = bigger budget = more power)
-- ✅ **Economy cards separate** (don't compete with battle card budget)
-
----
+**Economy Cards** (Separate):
+- **Not counted in rarity budget** (separate 10-15 card limit)
+- Types: Buildings (Farm, Mine, Turret), Workers (Farmer, Miner)
+- Deploy to Realm Map tiles for AFK income
+- Left behind when army moves (must retrieve to redeploy)
 
 ### Formation System (Auto-Deployment Presets)
 
-#### What Are Formations?
-
-**Formations** are pre-defined placement patterns that automatically position your stacks on the battlefield based on strategic templates.
-
-**Think Party-Based RPGs**: Tank in front, DPS in middle, healers in back.
-
-#### Formation Presets (Built-In Templates)
-
-**1. "Frontline Vanguard" Formation**:
-- **Epic/Legendary Heroes**: Front row center (tiles 1-3)
-- **Melee Units**: Front row flanks (tiles 4-6)
-- **Ranged Units**: Back row (tiles 7-12)
-- **Healers/Casters**: Rear center (tiles 13-15)
-- **Use Case**: Aggressive push, protect backline, classic army formation
-
-**2. "Defensive Turtle" Formation**:
-- **Tanks/Walls**: Surround perimeter (tiles 1, 3, 6, 9, 12, 15)
-- **Ranged Units**: Inner ring (tiles 2, 5, 8, 11, 14)
-- **Healers**: Absolute center (tile 7)
-- **Epic Heroes**: Behind walls (tiles 4, 10)
-- **Use Case**: Hold position, outlast opponent, protect key units
-
-**3. "Flanking Cavalry" Formation**:
-- **Fast Units (Cavalry, Scouts)**: Far left/right flanks (tiles 1, 6, 9, 15)
-- **Archers**: Center back (tiles 7, 8)
-- **Melee Infantry**: Center front (tiles 4, 5)
-- **Epic Heroes**: Mobile positions (tiles 2, 11)
-- **Use Case**: Pincer attack, surround enemy, mobility-focused
-
-**4. "Epic Showcase" Formation**:
-- **Epic+ Cards**: Prominently displayed in front (tiles 2, 5, 8, 11)
-- **Rare Support**: Behind Epics (tiles 3, 6, 9, 12)
-- **Commons/Uncommons**: Fill gaps
-- **Use Case**: Flex your collection, status display, whale competition
-
-**5. "Balanced Wedge" Formation**:
-- **Tank**: Front center tip (tile 1)
-- **Melee DPS**: Diagonal flanks (tiles 2, 3, 4, 6)
-- **Ranged**: Back triangle (tiles 7, 8, 9)
-- **Healers**: Rear (tiles 10, 11)
-- **Use Case**: Versatile, all-around solid, beginner-friendly
-
-#### Custom Formation Editor
-
-**Create Your Own**:
-1. Open **Formation Manager** in Codex
-2. Name your formation ("My PvP Build", "Fire Rush", etc.)
-3. Drag stacks onto 15-tile grid (visual editor)
-4. Save formation (up to 10 custom formations per player)
-5. Apply to any deck with 1-click
-
-**Formation Slots**:
-- **Free Players**: 5 custom formation slots
-- **VIP 3**: 10 custom formation slots
-- **VIP 5**: 20 custom formation slots + share with alliance
-
-**Formation Tags** (Auto-Sort):
-- Tag stacks as: Tank, DPS, Ranged, Healer, Caster, Support
-- Formation auto-fills based on tags (AI places tanks in front)
-- Override individual positions manually if needed
-
----
-
-### Manual vs Auto Deployment
-
-#### Auto-Deployment (Quick Play)
-
-**When**: 
-- Campaign battles (PvE)
-- Daily missions
-- AFK auto-battles
-- Quick PvP matches
-
-**How**:
-1. Select deck
-2. Choose formation preset (or use default)
-3. Click "Deploy"
-4. System auto-places all stacks based on formation rules
-5. Battle starts immediately
-
-**Benefits**:
-- ⏱️ **Speed**: Deploy in 2 seconds
-- 🎮 **Convenience**: Perfect for farming/grinding
-- 📱 **Mobile-Friendly**: One-tap deployment
-- ♿ **Accessibility**: Reduces decision fatigue
-
-#### Manual Deployment (Strategic Control)
-
-**When**:
-- High-stakes PvP tournaments
-- Alliance wars
-- Guild vs Guild events
-- Ranked matches
-- Special events with setup days
-
-**How**:
-1. Select deck
-2. Battle map displayed with terrain
-3. Drag each stack individually onto desired tiles
-4. Consider terrain bonuses (hills, forests, rivers)
-5. Finalize placement
-6. Battle starts
-
-**Benefits**:
-- 🧠 **Strategy**: Optimize for specific map/enemy
-- 🏆 **Competitive Edge**: Outsmart opponents with positioning
-- 🎯 **Terrain Mastery**: Place archers on hills, cavalry on plains
-- 💎 **Skill Expression**: Separate good players from great
-
-#### Event Setup Days (Pre-Battle Planning)
-
-**For Major Events**:
-- **Register Early**: 3-7 days before event starts
-- **Map Revealed**: See terrain layout in advance
-- **Setup Phase**: Manually place formations
-- **Deadline**: 24 hours before event (or auto-deploy happens)
-- **Locked In**: Can't change once event starts
-
-**Example Timeline**:
-- **Day 1 (Monday)**: "Alliance War Week" announced, map revealed
-- **Days 2-5 (Tue-Fri)**: Players register, manually deploy formations
-- **Day 6 (Saturday 12pm)**: Deployment deadline, auto-deploy for unfinished
-- **Day 6 (Saturday 2pm)**: Event starts, battles resolve
-- **Day 7 (Sunday)**: Results posted, rewards distributed
-
-**Why Setup Days?**:
-- ✅ Allows casual players to participate without time pressure
-- ✅ Lets hardcore players optimize every placement
-- ✅ Creates community discussion ("Where did you put your Epic tank?")
-- ✅ Reduces server load (not everyone deploying simultaneously)
-
----
-
-### Map Tiers & Deck Deployment
-
-#### Zoom Level System (Risk → HoMM Transition)
-
-Sovereign Territories uses a **multi-tier zoom system** where you deploy decks at macro level and zoom into battles at micro level.
-
-**World Map** (Risk-Style):
-- **View**: Entire continent, 50-100 territories
-- **Deployment**: **1 deck per territory/tile**
-- **Representation**: Deck shown as single icon/flag
-- **Click Territory**: Zoom into Realm Map
-
-**Realm Map** (Regional View):
-- **View**: 10-20 tiles representing county divisions
-- **Deployment**: **Full deck spreads across tiles** (15-30 stacks)
-- **Representation**: Each stack = separate unit on map
-- **Click Stack**: Zoom into Battle Map
-
-**Battle Map** (Tactical Grid):
-- **View**: 15x15 grid (or custom size based on map)
-- **Deployment**: **Stacks positioned on grid tiles**
-- **Representation**: 3D units or card sprites
-- **Combat**: Turn-based tactical battles (HoMM style)
-
-#### Multiple Decks on Large Maps
-
-**Tutorial/Local Maps** (Level 1-5 Players):
-- **Restriction**: **1 deck only** (simplicity for new players)
-- **Deck Size**: 10-15 cards
-- **Stacks**: 3-5 stacks max
-
-**Territory Maps** (Level 10+ Players):
-- **Restriction**: **1-2 decks** (can deploy second deck to different territory)
-- **Deck Size**: 25-30 cards each
-- **Stacks**: 7-10 stacks per deck
-
-**Realm Maps** (Level 15+ Players):
-- **Restriction**: **2-3 decks** (spread forces across region)
-- **Deck Size**: 30-35 cards each
-- **Stacks**: 10-15 stacks per deck
-
-**World Maps** (Level 20+ Players):
-- **Restriction**: **Up to 5 decks** (1 deck per territory controlled)
-- **Deck Size**: 40-50 cards each
-- **Stacks**: 15+ stacks per deck
-- **Multi-Front Warfare**: Manage multiple battles simultaneously (like HoMM campaign)
-
-**Example Scenario**:
-- Player controls 3 territories on World Map
-- Deploys **Deck A** to Territory 1 (aggressive fire theme)
-- Deploys **Deck B** to Territory 2 (defensive earth theme)
-- Deploys **Deck C** to Territory 3 (economy buildings)
-- Enemy attacks Territory 1 → zooms into Battle Map with Deck A's stacks
-
----
-
-### PvE Campaign: Realm Map Exploration (Tutorial & Progression)
-
-#### Tutorial Flow (First Battle - Manual Required)
-
-**Goal**: Teach core mechanics with easy victory, manual movement required.
-
-**Setup**:
-1. Player receives starter deck (10-15 cards: 1 Epic, 5 Rare, 9 Common/Uncommon)
-2. Sets formation using "Balanced Explorer" preset
-3. Deck appears on **World Map** as single flag icon
-4. Zoom into **Realm Map** → deck appears as Epic hero portrait + "14 units" label
-
-**First Battle**:
-1. **Realm Map**: Player sees single PvE spawn (red enemy flag) nearby
-2. **Move Order**: Click your army stack → click adjacent tile → army moves (teach movement)
-3. **Engage Combat**: Move stack onto enemy spawn tile → battle triggers
-4. **Zoom to Battle Map**: 15 cards from your deck separate into formation on tactical grid (5x5 or 7x7)
-5. **Manual Placement Required**: 
-   - Tutorial highlights each card type
-   - "Place your Epic Hero in front" → player drags Thor to front center
-   - "Place Archers in back row" → player drags 3 Archer cards to back tiles
-   - "Place Healer behind hero" → player drags Healer to rear center
-   - Etc. until all cards placed
-6. **Turn-Based Combat Begins**:
-   - Tutorial forces manual movement each turn
-   - "Move Thor forward 2 tiles to attack goblin"
-   - "Use Archer to shoot from range"
-   - "Healer stays back and casts heal on Thor"
-7. **Easy Victory**: 
-   - Enemy: 5× Common Goblin + 1× Uncommon Goblin Chief (total: 6 cards, ~40 HP total)
-   - Player: 15 cards, ~150 HP total
-   - Player wins in 3-5 turns even with suboptimal play
-8. **Rewards**: 100 XP, 500 gold, 1 Common card, "First Victory" achievement
-
-**Post-Tutorial**:
-- **Auto-Battle Unlocked**: "You can now use Auto-Battle for future fights! (or continue manual)"
-- **Next 3-5 Battles**: Similar easy spawns, player can choose auto or manual
-- **Quick Wins**: Teaches players the Realm Map flow without frustration
-
----
-
-#### Realm Map Structure (Open Exploration, Non-Linear)
-
-**Map Design Philosophy**:
-- **Not Linear Stages**: Unlike "Stage 1 → Stage 2 → Boss", Realm Maps are open exploration
-- **Fog of War**: Map starts mostly hidden, reveals as you explore
-- **Static Spawns**: Enemy camps/spawns don't roam (expansion feature)
-- **Respawning**: Defeated spawns respawn after 1-6 hours (for farming)
-- **Goal**: Find and defeat the Boss (always on map), but path is player's choice
-- **Buffs Along the Way**: Capture key locations for permanent bonuses
-
-**Example Realm Map Layout** (Medium Difficulty):
-```
-    [Fog] [Fog] [?Mine?] [Fog] [Fog]
-    [Fog] [Spawn][  Path  ][Spawn][Fog]
-  [Start] [Path][Buff Shrine][Path][Town]
-    [Fog] [Path][   Fog   ][Spawn][Fog]
-    [Fog] [Fog] [?Boss?] [Fog] [Fog]
-```
-
-**Tile Types**:
-- **Start**: Where your army begins (safe zone, can't be attacked)
-- **Path**: Empty tiles, safe to traverse
-- **Spawn**: Enemy camps (2-8 cards each, various difficulties)
-- **Fog**: Unrevealed tiles (might contain spawns, resources, or nothing)
-- **Buff Shrine**: Capture for +10% ATK or +10% HP (permanent for this map)
-- **Resource Nodes**: Gold Mine, Lumber Mill, Farm (can garrison economy cards)
-- **Town**: Capture for +1 "Flex Hero" (temporary ally for this map only)
-- **Boss**: Final objective, always present but location varies
-
-**Map Sizes**:
-- **Tutorial County**: 5x5 tiles (25 total), 3 spawns, 1 boss
-- **Easy County**: 7x7 tiles (49 total), 5-8 spawns, 1 boss, 2 buff shrines, 1 town
-- **Medium County**: 10x10 tiles (100 total), 10-15 spawns, 1 boss, 3 buff shrines, 2 towns
-- **Hard County**: 12x12 tiles (144 total), 20-30 spawns, 1 boss, 5 buff shrines, 3 towns
-- **Elite County**: 15x15 tiles (225 total), 40-50 spawns, 1 elite + 1 boss, 8 buff shrines, 5 towns
-
----
-
-#### Splitting Your Deck into Multiple Armies (Multi-Hero System)
-
-**Core Concept**: Each **Epic+ hero** in your deck can lead their own independent army stack on the Realm Map.
-
-**How It Works**:
-- **Single Hero Deck**: If you have 1 Epic hero + 14 units → **1 army stack** on Realm Map
-- **Multi-Hero Deck**: If you have 3 Epic heroes + 30 units → **up to 3 army stacks** (divide units between heroes)
-- **Visual**: Each Epic+ hero = **3D miniature figurine** on Realm Map (looks like tabletop wargaming)
-- **Movement**: Each army moves independently (like HoMM multiple heroes)
-
-**Deck Deployment Example**:
-
-**Starting Deck** (Level 15 Player, 30 battle cards):
-- 1× Legendary Thor (hero)
-- 2× Epic Fire Mage (hero), Epic Knight (hero)
-- 10× Rare/Uncommon warriors, archers, healers
-- 15× Common scouts, spearmen
-- 2× Rare tactics
-
-**Realm Map Deployment Options**:
-
-**Option 1: Single Mega-Army** (Conservative):
-- **Army 1**: Thor + 2 Epic heroes + all 27 units = 1 powerful stack
-- **Visual**: Thor figurine (3D) + "29 units" badge
-- **Pros**: Maximum power concentration, hard to defeat
-- **Cons**: Slow movement (one stack at a time), can't cover multiple objectives
-
-**Option 2: Three Hero-Led Armies** (Aggressive):
-- **Army 1**: Thor + 10 units (heavy hitters) = main force
-  - Visual: Thor 3D figurine + "10 units" badge
-- **Army 2**: Fire Mage + 8 units (ranged support)
-  - Visual: Fire Mage 3D figurine + "8 units" badge
-- **Army 3**: Knight + 9 units (fast cavalry)
-  - Visual: Knight 3D figurine + "9 units" badge
-- **Pros**: Cover more ground, explore faster, multi-pronged attacks
-- **Cons**: Each army weaker individually, risk of defeat in detail
-
-**Option 3: Mixed Strategy** (Balanced):
-- **Army 1**: Thor + Fire Mage + 20 units = main army (26 cards)
-  - Visual: Thor figurine (lead) + Fire Mage figurine behind + "24 units" badge
-- **Army 2**: Knight + 7 units = scout/flanking force (8 cards)
-  - Visual: Knight figurine + "7 units" badge
-- **Pros**: Strong main force + flexible scout army
-- **Cons**: Scout army vulnerable if caught alone
-
----
-
-#### Hero-Less Stacks (Lower Rarity Units)
-
-**Question**: Can you deploy Common/Uncommon cards without a hero?
-
-**Answer**: **Yes, but visually distinct and mechanically limited.**
-
-**Visual Representation by Stack Type**:
-
-| Stack Composition | Visual on Realm Map | Movement | Example |
-|-------------------|---------------------|----------|---------|
-| **Epic+ Hero + Units** | 3D miniature figurine (hero) + unit count badge | Full speed | Thor figurine + "15 units" |
-| **Rare Hero + Units** | Premium card sprite standing upright + unit badge | Full speed | Rare Mage card + "8 units" |
-| **No Hero, 5+ Units** | Thick/layered card sprite standing upright | 75% speed | "10 Archers" thick card |
-| **No Hero, 2-4 Units** | Standard card sprite standing upright | 50% speed | "3 Scouts" card sprite |
-| **Single Scout** | Flat card sprite (lying down) | 100% speed | "Scout" flat card (fast but fragile) |
-
-**Thick Card Visual** (5+ cards, no hero):
-- **Appearance**: Card stack that looks physically thicker
-- **Count Badge**: "×10 Archers" displayed prominently
-- **Example**: 10× Uncommon Archers = appears as layered/thick card sprite standing upright on tile
-- **Why**: Shows multiple cards without rendering 10 separate sprites (performance optimization)
-
-**Single Scout Mechanic**:
-- **Use Case**: Sacrifice 1 Common Scout to reveal fog of war
-- **Visual**: Single flat card sprite (vulnerable, low profile)
-- **Movement**: Fastest (no army to slow down)
-- **Combat**: Dies instantly if engaged (suicide scouting for intel)
-- **Strategy**: "Is this spawn too strong? Send scout to find out before committing main army"
-
----
-
-#### Splitting Process (Dividing Your Deck)
-
-**Step-by-Step**:
-
-1. **Deploy Full Deck to Realm Map**: All 30 battle cards appear as 1 stack (lead hero)
-2. **Right-Click Stack** → "Manage Armies"
-3. **Army Management UI Opens**:
-   - Shows all heroes in deck (Legendary Thor, Epic Fire Mage, Epic Knight)
-   - Shows all units sorted by type (warriors, archers, healers, etc.)
-4. **Drag Units to Heroes**:
-   - Drag 10 warriors → assign to Thor
-   - Drag 8 archers → assign to Fire Mage
-   - Drag 9 cavalry → assign to Knight
-   - Leave 2× tactics unassigned (shared resource pool)
-5. **Confirm Split**: 3 separate army stacks now visible on Realm Map
-6. **Each Army Gets Formation**:
-   - Thor's Army: "Frontline Vanguard" formation
-   - Fire Mage's Army: "Defensive Turtle" formation
-   - Knight's Army: "Flanking Cavalry" formation
-
-**Re-Merge Armies**:
-- Move two hero stacks onto same tile
-- Right-click → "Merge Armies"
-- Units combine into single stack (lead hero = highest rarity)
-- Can split again later (unlimited splits/merges)
-
----
-
-#### Economy Card Deployment (Strategic Tile Upgrades)
-
-**How Economy Cards Work**:
-
-**1. Capture Tile with Resource Node**:
-- Defeat spawn guarding **Gold Mine** tile
-- Tile now controlled (shows your faction color)
-
-**2. Deploy Economy Cards**:
-- Open **Economy Card Menu** (while army on tile)
-- Select cards to deploy:
-  - 1× Mine (building) → +50 gold/hour AFK
-  - 2× Miner (worker) → +25 gold/hour each (+50 total)
-  - Total: +100 gold/hour from this tile
-- Cards are **removed from army deck** and **placed on tile**
-
-**3. Army Leaves Tile**:
-- Move army to next objective
-- Economy cards **stay behind** (static deployment)
-- Tile shows: Small flag + Mine icon + "3 economy cards" badge
-- AFK income continues (100 gold/hour) even when army is elsewhere
-
-**4. Retrieval**:
-- **Problem**: Want to move Miners to different tile
-- **Solution**: Send hero back to original tile
-- **Process**: Army moves onto tile → "Retrieve Economy Cards" → select which to take → cards added back to army deck
-- **Strategic Decision**: Is it worth the time to retrieve, or leave them?
-
-**Economy Card Deployment Limits**:
-
-| Resource Node Type | Max Economy Cards Per Tile | AFK Income Bonus |
-|--------------------|------------------------------|------------------|
-| **Gold Mine** | 5 (1 Mine + 4 Miners) | +200 gold/hour max |
-| **Farm** | 5 (1 Farm + 4 Farmers) | +50 food/hour max |
-| **Lumber Mill** | 5 (1 Mill + 4 Lumberjacks) | +50 wood/hour max |
-| **Turret/Wall Tile** | 3 (Defensive structures only) | No income, +defense |
-
-**Why Retrieval Matters**:
-- ✅ **Economy cards are limited** (only 10-15 in deck)
-- ✅ **Opportunity cost**: Miners on Tile A can't help Tile B
-- ✅ **Strategic redeployment**: Move workers to better tiles as you progress
-- ❌ **Time cost**: Hero must backtrack (wastes turns in PvP or empowers enemies in PvE)
-
----
-
-#### Time Pressure Mechanics (Turn Cost)
-
-**PvE Realm Maps** (Optional Difficulty Modifier):
-
-**"Enemy Grows Stronger" Mechanic**:
-- **Every 5 turns** you take, all enemy spawns gain **+10% HP and ATK**
-- **Turn Counter**: Visible in top-right corner ("Turn 15 - Enemies +30% stronger")
-- **Strategy**: Rush boss before enemies scale too high, OR farm buff shrines to offset
-- **Example**:
-  - Turn 1-5: Enemies at 100% power
-  - Turn 6-10: Enemies at 110% power
-  - Turn 11-15: Enemies at 120% power
-  - Turn 30+: Enemies at 160% power (hard mode)
-
-**Why Time Pressure?**:
-- ✅ Discourages infinite farming (get stronger, but so do enemies)
-- ✅ Rewards efficient pathing (plan route to boss)
-- ✅ Makes retrieving economy cards risky (every turn counts)
-- ❌ Can disable for "Casual Mode" (no time pressure, farm forever)
-
-**PvP County Battles** (Guild vs Guild Events):
-
-**"Skip Turn" Mechanic**:
-- **Problem**: Hero is backtracking to retrieve economy cards
-- **Solution**: Click "Skip Turn" → hero doesn't move this turn
-- **Cost**: Opponent gets extra turn (2 actions vs your 1)
-- **Strategy**: Only skip if absolutely necessary (repositioning, waiting for reinforcements)
-- **Visual**: Grayed-out hero icon shows "Skipped Turn" status
-
-**Example PvP Scenario**:
-- **Turn 10**: You send Knight back to retrieve 2 Miners from captured mine
-- **Turn 11**: Knight reaches mine tile, retrieves Miners (but enemy gets 2 actions this turn)
-- **Turn 12**: Knight returns to main army with Miners, ready to redeploy elsewhere
-- **Cost**: Enemy used 2 extra actions (captured additional tile, recruited flex hero)
-
----
-
-#### Visual Design Summary (Realm Map Representation)
-
-**What You See on Realm Map**:
-
-| Unit Type | Visual | Example |
-|-----------|--------|---------|
-| **Legendary Hero + Army** | Large 3D figurine (gold glow) + badge | Thor miniature + "25 units" |
-| **Epic Hero + Army** | Medium 3D figurine + badge | Fire Mage miniature + "12 units" |
-| **Rare Hero + Army** | Standing card sprite (premium) + badge | Rare Knight card + "8 units" |
-| **Uncommon Units Only (5+)** | Thick/layered card sprite + badge | "10 Archers" thick card |
-| **Common Units Only (2-4)** | Standard card sprite + badge | "3 Scouts" card |
-| **Single Scout** | Flat card sprite (low profile) | "Scout" flat card |
-| **Resource Tile (Yours)** | Small flag + building icon + count | Flag + Mine icon + "3 cards" |
-| **Enemy Spawn** | Red flag + difficulty color | Red flag (purple = elite spawn) |
-
-**Animation/VFX**:
-- **3D Figurines**: Idle animations (breathing, weapon shifts)
-- **Card Sprites**: Gentle hover/glow effect
-- **Movement**: Units slide smoothly between tiles (no teleporting)
-- **Combat Engage**: Visual effect when stack enters enemy tile (clash animation)
-
----
-
-#### Realm Map Gameplay Loop (Revised)
-
-**Player Journey with Multiple Armies & Resource Management**:
-
-1. **Deploy Deck to Realm Map**: Full 30 battle cards + 10 economy cards
-2. **Split into Hero-Led Armies**: 
-   - Thor + 15 units (main force)
-   - Fire Mage + 10 units (support force)
-   - Knight + 5 units (scout force)
-3. **Explore with Multiple Armies**:
-   - Thor pushes center (strong spawns)
-   - Fire Mage flanks left (medium spawns)
-   - Knight scouts right (reveals fog fast)
-4. **Capture Resource Nodes**:
-   - Thor defeats spawn guarding Gold Mine
-   - Deploy 1 Mine + 2 Miners (3 economy cards placed)
-   - Thor continues forward, economy cards stay behind (+100 gold/hour AFK)
-5. **Recruit Flex Heroes**:
-   - Fire Mage captures Town 1 → +1 Rare Healer (temp ally)
-   - Knight captures Town 2 → +1 Epic Berserker (temp ally)
-6. **Buff Shrines**:
-   - Thor captures Shrine of Power → +10% ATK (permanent for map)
-7. **Resource Redeployment**:
-   - Knight backtracks to Gold Mine (Turn 20)
-   - Retrieves 2 Miners (Turn 21)
-   - Redeploys Miners to newly captured Lumber Mill (Turn 22)
-   - Cost: 3 turns (enemy grew +6% stronger during this time)
-8. **Merge for Boss**:
-   - All 3 armies converge on Boss tile
-   - Right-click → "Merge All Armies"
-   - Final force: Thor + Fire Mage + Knight + 30 units + 3 flex heroes = **36 cards**
-9. **Boss Battle**:
-   - Zoom to Battle Map
-   - Deploy formation (all 36 cards)
-   - Defeat boss (25-card enemy deck)
-10. **Victory**:
-    - Collect rewards (Legendary card, 10,000 XP)
-    - Flex heroes removed
-    - Resource cards stay on county tiles (for AFK income until you complete map)
-    - Mark county complete, return to World Map
-
-**Key Takeaways**:
-- ✅ **Multiple heroes = multiple armies** (epic+ heroes lead independently)
-- ✅ **Resource cards separate from battle cards** (strategic tile upgrades)
-- ✅ **Retrieval costs time** (turns in PvE, actions in PvP)
-- ✅ **Visual clarity** (3D figurines for heroes, card sprites for units, thick cards for stacks)
-- ✅ **Time pressure optional** (enemies grow stronger in PvE, skip turns risky in PvP)
-
----
-
-#### Flex Heroes & Temporary Allies (Power Scaling)
-
-**Concept**: As you explore Realm Map, find temporary hero cards that join for this map only.
-
-**How Flex Heroes Work**:
-1. **Capture Town Tile**: Defeat spawn guarding town
-2. **Recruit Flex Hero**: Town offers 1 random Rare/Epic hero to join
-3. **Add to Deck (Temporary)**: Flex hero added to current army stack
-4. **Duration**: Only for this Realm Map (removed when map complete)
-5. **Power Scaling**: Can reach 50 total battle cards if you find all flex heroes
-
-**Example Realm Map with Flex Heroes**:
-- **Starting Deck**: 15 battle cards (your permanent collection)
-- **Town 1**: +1 Rare Fire Mage (temp) → now 16 cards
-- **Town 2**: +1 Epic Knight (temp) → now 17 cards
-- **Buff Shrine 1**: +10% ATK boost → all cards stronger
-- **Town 3**: +2 Uncommon Archers (temp) → now 19 cards
-- **Boss Area**: +1 Legendary Dragon (temp, only if you captured all towns) → now 20 cards
-- **Final Boss Battle**: You have 20 cards vs Boss with 25 cards
-
-**Why Flex Heroes?**:
-- ✅ **Power Scaling**: Even with small starting deck, you grow stronger as you explore
-- ✅ **Replayability**: Different towns offer different flex heroes each playthrough
-- ✅ **Strategy**: Do you rush boss or explore for flex heroes first?
-- ✅ **F2P Friendly**: Don't need huge collection to beat hard counties (flex heroes help)
-- ✅ **No Permanent Bloat**: Flex heroes disappear after map, don't clutter Codex
-
-**Flex Hero Pool** (Random per Town):
-- **Uncommon Flex** (60% chance): Basic units (Archer, Spearman, Scout)
-- **Rare Flex** (30% chance): Specialists (Healer, Mage, Cavalry)
-- **Epic Flex** (9% chance): Named heroes (Sir Lancelot, Merlin, Odin)
-- **Legendary Flex** (1% chance, final town only): Mythic heroes (Thor, Dragon, Phoenix)
-
----
-
-#### Static Spawns & Respawning (Farming System)
-
-**Spawn Behavior**:
-- **Static Placement**: Spawns don't move or patrol (future expansion: roaming enemies)
-- **Visible on Map**: Once fog cleared, spawns show as red flag icons
-- **Difficulty Indicators**: 
-  - Gray flag = Easy (1-3 Common cards)
-  - Green flag = Normal (3-5 Common/Uncommon)
-  - Blue flag = Hard (5-8 Uncommon/Rare)
-  - Purple flag = Elite (8-12 Rare/Epic)
-  - Gold flag = Boss (15-25 Epic/Legendary)
-
-**Respawn Timers**:
-- **Easy Spawns**: Respawn after 1 hour (quick farming)
-- **Normal Spawns**: Respawn after 3 hours
-- **Hard Spawns**: Respawn after 6 hours
-- **Elite Spawns**: Respawn after 12 hours
-- **Boss**: Respawn after 24 hours (or only once per county instance)
-
-**Why Respawning?**:
-- ✅ **Farming**: Players can grind spawns for XP/gold/cards without progressing
-- ✅ **Deck Testing**: Try new formations against known enemies
-- ✅ **Casual Play**: Don't feel rushed to complete county in one session
-- ✅ **AFK Grinding**: Set auto-battle, check back in 6 hours, spawns refreshed
-
-**Farming Efficiency**:
-- **Easy Spawn**: 50 XP, 100 gold, 10% chance Common card (1-hour respawn)
-- **Normal Spawn**: 100 XP, 300 gold, 20% chance Uncommon (3-hour respawn)
-- **Hard Spawn**: 200 XP, 800 gold, 30% chance Rare (6-hour respawn)
-- **Elite Spawn**: 500 XP, 2,000 gold, 50% chance Epic (12-hour respawn)
-- **Boss**: 2,000 XP, 10,000 gold, 100% Legendary card (24-hour respawn)
-
----
-
-#### Minimum Battle Power (Optional Rule - TBD)
-
-**Consideration**: Should there be a minimum stack strength to engage spawns?
-
-**Option A: No Minimum** (Current Design):
-- ✅ Single Scout card can engage any spawn
-- ✅ Scouts reveal spawn composition before committing full army
-- ✅ High-risk, high-reward (sacrifice scout for intel)
-- ❌ Can feel "gamey" (suicide scouts for info)
-
-**Option B: Minimum Battle Power Required**:
-- Spawn shows "Power Level: 500" indicator
-- Your stack must have combined HP+Attack ≥ 500 to engage
-- Example: 1× Scout (HP:5, ATK:3) = 8 power → can't engage 500 power spawn
-- Example: 10-card army (HP:150, ATK:50) = 200 power → can engage
-- ✅ Prevents suicide scouts
-- ❌ Less flexible, forces larger armies
-
-**Recommended**: **Option A (No Minimum)** for launch, add Option B as difficulty modifier for Hard/Elite counties.
-
----
-
-#### Realm Map Flow Summary
-
-**Player Journey**:
-1. **Enter Realm Map**: Full deck (15 cards) as single army stack on start tile
-2. **Explore**: Move stack to reveal fog of war, discover spawns/resources/towns
-3. **Engage Spawns**: Battle for XP/gold/cards, respawn for farming if desired
-4. **Capture Resources**: Deploy economy cards (farms, mines, workers) to tiles
-5. **Garrison Defense**: Leave 3-5 battle cards at key tiles to defend
-6. **Split Army**: Divide main force from garrison/scouts as needed
-7. **Recruit Flex Heroes**: Find towns, add temporary allies (up to 50 total cards)
-8. **Buff Shrines**: Capture for permanent +10% stat boosts
-9. **Find Boss**: Non-linear path, boss location varies
-10. **Final Battle**: Zoom to battle map, deploy full army + flex heroes vs boss
-11. **Victory**: Complete county, rewards (Legendary card, 10,000 XP, unlock next county)
-12. **World Map**: Return to global view, flex heroes removed, county marked complete
-
-**Visual Flow**:
-```
-World Map (Risk View)
-    ↓ [Zoom into County Territory]
-Realm Map (HoMM Strategic View)
-  - Move army stacks
-  - Split decks
-  - Garrison tiles
-  - Explore fog
-  - Engage spawns
-    ↓ [Engage Spawn]
-Battle Map (HoMM Tactical View)
-  - Deploy formation
-  - Turn-based combat
-  - Manual or auto-battle
-    ↓ [Victory]
-Realm Map (Return)
-  - Continue exploration
-  - Or complete boss and exit
-```
-
----
-
-### Visual Representation (3D Figures vs Card Sprites)
-
-#### Rarity-Based Visual Styling
-
-**Epic, Legendary, Mythic Cards** → **3D Miniature Figures**:
-- **Model**: Detailed 3D character model (similar to tabletop miniatures)
-- **Height**: 1.5-2x normal card height when placed on map
-- **Animation**: Idle animations (breathing, weapon twirl, magic glow)
-- **VFX**: Element-specific effects (fire hero has flame aura)
-- **Collectibility**: Premium feel, showpiece units
-- **Example**: Epic Thor = 3D Viking warrior with hammer, lightning crackling
-
-**Rare Cards** → **Premium Card Sprites with Stand**:
-- **Model**: 2D card sprite on small 3D stand/pedestal
-- **Height**: 1.2x normal card height
-- **Animation**: Gentle glow, card hovers slightly
-- **VFX**: Border shimmer matching element color
-- **Example**: Rare Fire Mage = glowing card standing upright on tile
-
-**Common & Uncommon Cards** → **Flat Card Sprites**:
-- **Model**: 2D card sprite lying flat or at slight angle
-- **Height**: 1x normal card height
-- **Animation**: Minimal (slight pulse on selection)
-- **VFX**: None (performance optimization)
-- **Example**: Common Archer = simple card sprite on tile
-
-#### Stack Visual Representation
-
-**How Stacks Appear on Map**:
-
-**Small Stacks (2-3 cards)**:
-- Display **lead card** (highest rarity in stack)
-- Small badge showing stack count ("×3")
-- Other cards appear as ghosted/faded copies behind lead
-
-**Medium Stacks (4-6 cards)**:
-- Display **lead card** prominently
-- 2-3 other cards fanned behind in arc formation
-- Stack count badge ("×6")
-- Mixed 3D figures + card sprites if rarities mixed
-
-**Large Stacks (7-10 cards)**:
-- Display **top 3 cards** in formation
-- Remaining cards shown as small icons in stack UI
-- Click stack → opens detailed stack view
-- Stack count badge ("×10") with glow effect
-
-**Visual Example (5-Card Ranged Stack)**:
-```
-Front View on Map:
-  [Epic Elf Archer 3D Figure] ← Lead card, largest
-  [Uncommon Human Crossbow Sprite] ← Second card, medium
-  [Common Archer Sprite] ← Third card, small
-  [×5 Badge] ← Stack count indicator
-  [Ranged Icon] ← Unit type indicator
-```
-
-#### Hover/Click Details
-
-**Hover Over Stack** (Desktop):
-- Tooltip shows all cards in stack
-- Combined stats displayed
-- Element type, unit type icons
-- Quick actions: Move, Attack, Split Stack
-
-**Click Stack** (Mobile/Desktop):
-- Opens **Stack Detail Panel**:
-  - List of all cards (with mini portraits)
-  - Combined stats breakdown
-  - Active buffs/debuffs
-  - Formation position
-  - Actions: Attack, Move, Use Ability, Split, Merge
-
-**Split Stack Feature**:
-- Right-click stack → "Split Stack"
-- Drag slider to divide cards into 2 stacks
-- Example: 10-card stack → split into 6-card + 4-card stacks
-- Useful for spreading forces, avoiding AoE damage
-
----
-
-### Leaderboards & Competitive Metrics
-
-#### Event Leaderboards (Automated PvP Scoring)
-
-**Formation-Based Auto-Battles**:
-- Players register deck + formation
-- System runs battles between all registered players (round-robin or Swiss)
-- AI controls both sides using programmed tactics
-- Results determine rankings
-
-**Leaderboard Categories**:
-
-**1. Most Damage in Single Turn**:
-- Tracks highest damage dealt by one stack in one turn
-- Encourages glass cannon builds (all attack, no defense)
-- Rewards: Bonus gems, "Devastator" title
-
-**2. Most Total Damage in Battle**:
-- Cumulative damage across entire battle
-- Favors sustained DPS over burst
-- Rewards: Rare cards, "Destroyer" title
-
-**3. Most Healing**:
-- Total HP restored to allied units
-- Encourages healer-focused decks
-- Rewards: Healer-themed cosmetics, "Lifebringer" title
-
-**4. Fastest Victory**:
-- Lowest turn count to win
-- Rewards aggressive, efficient strategies
-- Rewards: Speed boost items, "Blitz" title
-
-**5. Most Efficient (Damage per Card)**:
-- Total damage ÷ number of cards deployed
-- Rewards quality over quantity builds
-- Rewards: Deck slots, "Tactician" title
-
-**6. Tankiest Defense (Damage Absorbed)**:
-- Total damage taken without dying
-- Encourages defensive, high-HP builds
-- Rewards: Defense equipment, "Immovable" title
-
-**7. Best Formation Positioning**:
-- AI judges terrain usage, unit spacing, synergies
-- Rewards strategic placement
-- Rewards: Formation slots, "Strategist" title
-
-#### Alliance Competition
-
-**Guild vs Guild Leaderboards**:
-- Top 10 players per alliance contribute to alliance score
-- Alliance with highest combined scores wins week
-- Rewards: Alliance bonuses, exclusive alliance banners
-- Encourages cooperation ("Let me take a support role so you can DPS")
-
-**Weekly Themes**:
-- **Week 1**: "Fire Week" (fire element cards get +20% stats, leaderboard for fire damage)
-- **Week 2**: "Healer Week" (most healing wins)
-- **Week 3**: "Speed Week" (fastest victories)
-- **Week 4**: "Tank Week" (most damage absorbed)
-
-**Why Variety Matters**:
-- ✅ Prevents meta stagnation (different builds shine each week)
-- ✅ Encourages deck diversity (can't use same deck every week)
-- ✅ Rewards different playstyles (not just "who has most Legendaries")
-- ✅ F2P competitive (strategy > card rarity for some categories)
-
----
-
-### Map Generation (Pre-Set vs Procedural)
-
-#### Map Types
-
-**1. Pre-Set Campaign Maps** (HoMM Campaign Style):
-- **Design**: Hand-crafted by developers
-- **Features**: Unique terrain, scripted events, boss locations
-- **Use Case**: Story campaign, tutorial, special events
-- **Replayability**: Fixed layout, but different strategies/decks
-- **Example**: "The Frozen Wastes" campaign map with ice obstacles
-
-**2. Procedurally Generated Maps** (Diablo/Slay the Spire Style):
-- **Design**: Algorithm creates unique map each time
-- **Seed**: Random seed saved to database (players can share seeds)
-- **Features**: Random terrain, resource node placement, neutral mobs
-- **Use Case**: Daily missions, quick PvP, infinite replayability
-- **Example**: "Daily Conquest" generates new map every 24 hours
-
-**3. Player-Created Maps** (Future Feature):
-- **Design**: Map editor for community
-- **Features**: Place terrain, objectives, starting zones
-- **Use Case**: Custom scenarios, alliance training grounds
-- **Curation**: Best maps featured by developers
-
-#### Generated Map Database
-
-**How It Works**:
-1. Event announced: "Weekly Tournament - Seed #47382"
-2. Server generates map from seed, saves to database
-3. All players get exact same map layout
-4. Players deploy formations during setup phase
-5. Battles resolve simultaneously
-6. Map saved permanently (can replay historical events)
-
-**Benefits**:
-- ✅ **Fairness**: Everyone plays on same map
-- ✅ **Skill Testing**: Can't memorize maps, must adapt
-- ✅ **Replayability**: Infinite unique maps
-- ✅ **Storage**: Save map data (not just seed) for tournaments
-
----
-
-### Summary: Stacking, Formations & Deployment
-
-| Aspect | Key Features | HoMM Inspiration | Modern Twist |
-|--------|--------------|------------------|--------------|
-| **Stacking** | 2-10 cards per tile, same unit type, cross-theme allowed | ✅ Army stacks | Cross-theme flexibility |
-| **Formations** | 5 presets + custom editor, auto/manual placement | ✅ Hero armies | Party-based RPG templates |
-| **Visual** | 3D figures (Epic+), card sprites (Common/Uncommon) | ✅ Unit figures | Rarity-based styling |
-| **Maps** | Multi-tier zoom (Global→County→Battle) | ✅ Strategic→Tactical | Risk-style world map |
-| **Deployment** | 1 deck per territory on Global, full deck in battle | ✅ Campaign heroes | Multiple deck management |
-| **Events** | Setup days, auto-battles, leaderboards | ✅ PvP tournaments | Competitive metrics |
-
-**Design Philosophy**: **Simplicity through automation, depth through customization**. Casual players use auto-deploy with presets, hardcore players manually place every stack for terrain advantage.
+**Built-In Formations**:
+1. **Frontline Vanguard**: Heroes front, melee flanks, ranged back
+2. **Defensive Turtle**: Tanks surround, ranged center, healers protected
+3. **Flanking Cavalry**: Fast units on flanks, archers center
+4. **Epic Showcase**: Premium cards prominently displayed (status flex)
+5. **Balanced Wedge**: Tank front, melee sides, ranged rear
+
+**Custom Formation Editor**:
+- Create up to 5-20 custom formations (VIP increases slots)
+- Drag units onto grid, save template
+- Auto-fill by unit tags (Tank, DPS, Ranged, Healer)
+
+**Auto vs Manual Deployment**:
+- **Auto**: Quick PvE/farming, one-click deploy
+- **Manual**: High-stakes PvP, terrain optimization, tournament setup days
+
+### Map Tiers & Multi-Army System
+
+**Zoom Levels** (Risk → Heroes of Might and Magic):
+- **World Map**: 1 deck per territory (flag icon)
+- **Realm Map**: Full deck spreads into hero-led armies (10-20 tiles)
+- **Battle Map**: Tactical grid combat (15×15 tiles)
+
+**Multi-Hero Armies**:
+- **Each Epic+ hero** can lead independent army on Realm Map
+- **Example**: 3 Epic heroes + 30 units = 3 separate army stacks
+- **Visual**: Thor (3D figure) + "10 units" badge
+- **Strategy**: Split for exploration, merge for boss battles
+
+**Army Composition Examples**:
+- **Single Army**: Thor + 29 units = 1 powerful stack
+- **Split Army**: Thor + 10 units, Fire Mage + 8 units, Knight + 9 units = 3 stacks
+- **Hero-Less Stacks**: 10× Archers = thick card sprite (75% movement speed)
+
+### Realm Map Exploration (PvE Campaigns)
+
+**Map Structure** (Non-Linear Exploration):
+- **Fog of War**: Reveals as you explore
+- **Static Spawns**: Enemy camps (respawn 1-24 hours for farming)
+- **Resource Nodes**: Gold Mines, Farms, Lumber Mills
+- **Buff Shrines**: +10% ATK/HP (permanent per map)
+- **Towns**: Recruit Flex Heroes (temporary allies)
+- **Boss**: Final objective (defeat to complete county)
+
+**Economy Card Deployment**:
+1. Capture resource node (defeat spawn)
+2. Deploy economy cards: 1 Mine + 2 Miners = +100 gold/hour AFK
+3. Army leaves tile, cards stay behind
+4. Retrieve later (costs turns) or leave permanently
+
+**Flex Heroes** (Temporary Allies):
+- Towns offer random Rare/Epic heroes for this map only
+- Grow from 15-card starting deck to 50-card army
+- Removed when map complete (no permanent bloat)
+
+**Time Pressure** (Optional):
+- Every 5 turns, enemies gain +10% HP/ATK
+- Discourages infinite farming, rewards efficient pathing
+- Can disable for "Casual Mode"
+
+### Competitive Features
+
+**Event Setup Days** (Tournament Deployment):
+- 3-7 days to manually place formations
+- Map revealed in advance for strategic planning
+- Battles resolve simultaneously (AI vs AI)
+- Leaderboards: Most Damage, Fastest Victory, Tankiest Defense
+
+**Map Generation**:
+- **Pre-Set**: Hand-crafted campaign maps (story mode)
+- **Procedural**: Random seed per event (fair, replayable)
+- **Player-Created**: Community map editor (future)
 
 ---
 
