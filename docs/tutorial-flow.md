@@ -175,7 +175,7 @@ This document walks through the **exact player journey** from app launch to firs
 
 ---
 
-### Step 6: Trainer Deck Selection (CRITICAL MOMENT - THE HOOK)
+I fee### Step 6: Trainer Deck Selection (CRITICAL MOMENT - THE HOOK)
 **Screen**: Choose Your Starting Path
 ```
 [Header: "Choose Your Trainer Deck"]
@@ -308,24 +308,40 @@ ROW 2: ELEMENT DECKS (Guaranteed Epic + Random Support)
 - Not needed (all Trainer Decks are pre-validated to build Balanced Explorer deck)
 - Each deck includes minimum: 1 Hero, 6 Units, 2 Buildings, 2 Tactics
 
-**Bonus Booster Packs** (OPTIONAL - Post-Selection):
-After Trainer Deck is revealed:
+**Bonus Element Booster** (Immediate - Reinforces Choice):
+After Trainer Deck reveal animation completes:
 ```
-[Screen: Bonus Rewards]
-"Bonus: 4 Standard Booster Packs!"
-[4 glowing packs appear]
-[Button: "Open Packs" or "Skip to Deck Building"]
+[Screen: Welcome Bonus]
+"Welcome to the [Fire/Water/Earth] path! Here's an Element Booster to strengthen your deck."
+[1 glowing pack appears - colored to match element (red/blue/green)]
+[Auto-opens after 2 seconds - no skip option]
 ```
 
-- If player opens: 4 packs × 5 cards = **20 bonus cards** (truly random, any element)
-- If player skips: Packs saved to inventory (can open later in Pack Shop)
-- **Total starting cards**: 20 (Trainer Deck) + 20 (Bonus) = **40 cards**
+**Element Booster Contents** (5 cards):
+- **Guaranteed**: 80%+ cards match Trainer Deck element
+- **Fire Booster** (if Fire Trainer Deck):
+  - 4× Fire cards (mix of Common/Uncommon/Rare)
+  - 1× Random card (any element, for variety)
+- **Water/Earth Boosters**: Same structure (4 element + 1 random)
+
+**Rarity Distribution**:
+- 2× Common (60% element match)
+- 2× Uncommon (90% element match)  
+- 1× Rare (100% element match, reinforces synergy)
+
+**Why Immediate Element Booster?**:
+- ✅ **Pokemon Store Experience**: Buy Battle Deck → Get matching booster
+- ✅ **Synergy Reinforcement**: Fire player gets more Fire cards (25 total Fire-themed)
+- ✅ **Immediate Collection Growth**: 20 → 25 cards in 30 seconds
+- ✅ **Element Identity**: Reinforces "I'm a Fire player" commitment
+- ✅ **Not Overwhelming**: 5 cards only (not 20 random like old design)
+
+**Total Starting Cards**: 20 (Trainer Deck) + 5 (Element Booster) = **25 cards**
 
 **Player Experience**:
-- **Fast path**: 22 seconds (Trainer Deck reveal only, skip bonus packs)
-- **Full experience**: 22 sec + 80 sec = 102 seconds (watch Trainer + bonus packs)
-- **Element commitment**: Choosing Fire Deck locks you into Fire playstyle early
-- **Replayability**: 6 starting options (vs 1 random pack opening)
+- **Fast path**: 22 sec (Trainer reveal) + 15 sec (Element Booster) = **37 seconds total**
+- **Element commitment**: Choosing Fire Deck locks you into Fire playstyle + gets Fire booster
+- **Replayability**: 6 starting options × different Element Booster contents
 
 **Design Decisions** (Resolved):
 - ✅ Starter system: Trainer Deck (20 curated cards) instead of random packs
@@ -333,7 +349,7 @@ After Trainer Deck is revealed:
 - ✅ Elements: Fire, Water, Earth (Wind/Dark/Light expansion later)
 - ✅ Epic reveal speed: 3 sec dramatic reveal with screen shake + fanfare
 - ✅ Card reveal speed: 1 sec/card for non-Epics (19 cards = 19 sec)
-- ✅ Bonus packs: 4 Standard Packs (5 cards each) offered after Trainer Deck
+- ✅ **Element Booster**: 1 pack (5 cards, 80% element match) after Trainer Deck reveal
 - ✅ Skip behavior: Can skip after Epic reveal (22 sec mandatory, rest skippable)
 - ✅ Permanence: Trainer Deck choice is permanent (encourages alt accounts)
 - ✅ Sound design: Unique chime per rarity (Common=ping, Uncommon=chime, Rare=bell, Epic=orchestra hit)
@@ -344,11 +360,11 @@ After Trainer Deck is revealed:
 ### Step 7: Collection Overview
 **Screen**: Your Starting Collection
 ```
-[Header: "Your Starting Collection - 20 Cards"]
-[Grid view: All 20 cards displayed (4 rows × 5 columns)]
+[Header: "Your Starting Collection - 25 Cards"]
+[Grid view: All 25 cards displayed (5 rows × 5 columns)]
 [Sorting: Rarity (Epic → Common), then alphabetical]
 
-[Highlighted: Epic Water Mage] (gold pulsing border)
+[Highlighted: Epic Flame Warlord/Tidal Guardian/Stone Sentinel] (gold pulsing border)
 [Text: "Your first Epic hero! Let's build a deck around it."]
 
 [Button: "Build My Deck"] (large, center, pulsing)
@@ -357,7 +373,7 @@ After Trainer Deck is revealed:
 **Player Action**: Taps "Build My Deck"
 
 **System Actions**:
-1. Add all 20 cards to Codex (player collection)
+1. Add all 25 cards to Codex (20 Trainer + 5 Element Booster)
 2. Mark all cards as "New!" (gold badge indicator)
 3. Validate Balanced Explorer deck is buildable from pool
 4. If missing cards for deck: Silent auto-grant (see Fallback Logic in Step 6)
@@ -367,6 +383,7 @@ After Trainer Deck is revealed:
 - ✅ Grid view default (shows card art for visual appeal)
 - ✅ Filter/Sort controls hidden until tutorial complete (reduce cognitive load)
 - ✅ Tap card for details: Shows modal popup with full stats (Attack, Defense, HP, Ability text)
+- ✅ **Total starting cards: 25** (20 Trainer Deck + 5 Element Booster)
 
 ---
 
@@ -909,7 +926,7 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 ---
 
-### Step 23: Victory Screen
+### Step 23: Victory Screen + First Pack Reward
 **Screen**: Victory!
 ```
 [Background: Animated victory fanfare, golden particles]
@@ -918,10 +935,33 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 [Rewards Box]:
 📊 +100 XP (Player Level: 1 → 1, 100/250 XP to Level 2)
-💰 +500 Gold (Total: 500 Gold)
+💰 +500 Gold (Total: 1,000 Gold)
 
-🎴 New Card Acquired:
-[Card Visual: Common Spearman]
+🎁 **BONUS: Standard Booster Pack Earned!**
+[Glowing pack icon bounces in]
+[Text: "You've earned your first pack! Tap to open."]
+[Button: "Open Pack"] (pulsing, cannot skip)
+```
+
+**Pack Opening Animation**:
+- Player taps "Open Pack"
+- **Standard Pack** (5 cards, fully random - any element):
+  - **Purpose**: Cross-element exposure (Fire player sees Water/Earth cards)
+  - **Rarity**: 3 Common, 1 Uncommon, 1 Rare (standard distribution)
+  - **Animation**: Same flip animation as Trainer Deck (1 sec/card = 5 sec total)
+  - **Result**: 5 new cards auto-added to Codex
+
+**After Pack Opening**:
+```
+[Screen returns to victory rewards]
+
+🎴 5 New Cards Acquired:
+- [Common Healer] (Water)
+- [Common Scout] (Earth)  
+- [Common Farm] (Neutral)
+- [Uncommon Archer] (Fire)
+- [Rare Knight] (Earth)
+
 (Auto-added to Codex)
 
 [Optional Button: "View Codex"]
@@ -934,26 +974,33 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 **Card Reward Destination** (Gap 6 Resolution):
 - **Auto-add to Codex** (no interruption, no deck management mid-victory)
-- **"New!" Badge**: Card highlighted in Codex with gold border
+- **"New!" Badge**: Cards highlighted in Codex with gold border
 - **No prompt**: Don't ask "Add to Deck?" (interrupts victory high)
 - **Optional**: "View Codex" button lets player inspect immediately if curious
 - **Replay**: Codex shows all acquired cards with timestamps
 
-**Why Auto-Add?**
-- Hearthstone model: All rewards auto-add, player manages deck later in Collection
-- No friction: Victory → Rewards → Continue (smooth flow)
-- Codex is the hub: All card management happens in Codex, not mid-battle
+**Why Earned Pack Here?**:
+- ✅ **Reward for Achievement**: Beating first battle feels like earning, not handout
+- ✅ **Pokemon Store Feel**: "I won, I get to open a pack!" (dopamine spike)
+- ✅ **Cross-Element Exposure**: Fire player sees Water/Earth cards (variety)
+- ✅ **Collection Growth**: 25 → 30 cards (meaningful progression)
+- ✅ **Pacing**: Not overwhelming (5 cards only, 5 seconds)
+
+**Total Cards After Step 23**: 25 (starting) + 5 (pack) = **30 cards**
 
 **System Actions**:
 1. Award XP: +100 (total 100/250 to Level 2)
-2. Award gold: +500 (total 500 gold)
-3. Award card: Common Spearman → Add to Codex (mark as "New!")
-4. Store badge: `PlayerPrefs.SetInt("Card_spearman_New", 1)` (for Codex highlight)
-5. Unlock Auto-Battle feature (shown in next step)
-6. Return to County Map
+2. Award gold: +500 (total 1,000 gold)
+3. Award pack: 1 Standard Pack → Auto-open (cannot skip)
+4. Award 5 random cards → Add to Codex (mark as "New!")
+5. Store badges: `PlayerPrefs.SetInt("Card_[id]_New", 1)` for each card
+6. Unlock Auto-Battle feature (shown in next step)
+7. Return to County Map
 
 **Design Decisions** (Resolved):
 - ✅ Victory fanfare duration: 3 seconds total, skippable after 1 second
+- ✅ **First pack timing: After first battle victory (earned reward)**
+- ✅ **Pack type: Standard Pack (5 random cards, cross-element exposure)**
 - ✅ Card reward destination: Auto-add to Codex with "New!" badge (no prompt)
 - ✅ Achievement notification: Toast notification (top-right, 3-second fade)
 
@@ -1171,6 +1218,26 @@ If player taps **Collect**:
 - Stops production immediately
 - Returns Mine card to battle deck
 - Tile returns to empty Gold Mine (available for redeployment)
+- **Tutorial reward: Element Booster Pack!**
+
+[Pack automatically opens]:
+"Great work! Here's an Element Booster to strengthen your deck."
+[1 Element Booster (5 cards, 80% match your element)]
+```
+
+**Element Booster Reward** (Economy Milestone):
+- **Purpose**: Reinforce element synergy after learning economy
+- **Contents**: 5 cards (4 match Trainer Deck element + 1 random)
+- **Timing**: After first economy building deployment (milestone achievement)
+- **Animation**: Auto-opens (15 sec, same as Step 6/7)
+
+**Why Element Booster at Economy Milestone?**:
+- ✅ **Paced Rewards**: 2 major milestones = 2 Element Boosters (Step 6 + Step 27)
+- ✅ **Element Reinforcement**: Fire player gets more Fire cards (useful for economy buildings)
+- ✅ **Collection Growth**: 30 → 35 cards (continuous progression)
+- ✅ **Retention Hook**: "Complete economy tutorial = free pack" (incentive)
+
+**Total Cards After Step 27**: 30 (after Step 23) + 5 (Element Booster) = **35 cards**
 - Retrieval cost: **Free for tutorial** (instant), later costs time or resources
 
 [Retrieve] [Cancel]
@@ -1201,15 +1268,29 @@ Unlocked:
 ✅ Battle Speed Settings (1×/2×/4×/Instant)
 ✅ Codex (manage collection, deck builder)
 ✅ County Map (explore freely, 10-20 tiles)
-✅ Daily Login Rewards (start tomorrow)
-✅ Pack Shop (buy packs with gold)
+✅ **Daily Login Rewards (starts tomorrow)**
+✅ **Pack Shop (buy packs with gold/gems)**
 
 [Rewards]:
-- 1,000 Gold bonus (Total: ~3,500 Gold)
-- 1 Rare Pack (5 cards)
+- 1,000 Gold bonus (Total: ~4,500 Gold)
+- **2 Standard Booster Packs** (10 cards total)
 - "Tutorial Graduate" title badge
 
-[Next Steps]:
+[Button: "Open Packs Now" or "Save for Later"]
+```
+
+**Pack Opening Option** (Player Choice):
+- **If "Open Packs Now"**: 2 Standard Packs auto-open sequentially (10 sec total)
+  - 10 random cards (cross-element variety)
+  - **Total cards after opening**: 35 + 10 = **45 cards**
+- **If "Save for Later"**: Packs added to inventory (can open in Pack Shop anytime)
+
+**After Pack Decision**:
+```
+[Next Steps Screen]:
+"What's Next?"
+
+Continue Your Journey:
 - Complete County Map (defeat Boss, 10-20 battles)
 - Join Alliance (unlock at Level 10)
 - Try Arena PvP (unlock at Level 15)
@@ -1221,33 +1302,51 @@ Unlocked:
 
 **System Unlocks**:
 1. **Full County Map**: 10-20 tiles, 1 Boss battle (harder difficulty)
-2. **Pack Shop**: Buy Standard Packs (5 cards, 1,000 gold each)
-3. **Daily Rewards**: Login streaks start tomorrow (Day 1: 100 gold, Day 7: Rare Pack)
-4. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
+2. **Pack Shop**: Buy Standard Packs (1,000 gold), Element Boosters (1,500 gold), Epic Boosters (3,000 gold)
+3. **Daily Login Rewards** (starts next login):
+   - Day 1-6: Random card (60% Common, 30% Uncommon, 10% Rare)
+   - Day 7: Choose 1 Rare card (filter by element)
+   - Day 14: 1 Standard Pack (5 cards)
+   - Day 28: Choose 1 Legendary (pool of 10)
+4. **Weekly Quest System**:
+   - Complete 5/7 daily quests → **2 Standard Packs**
+   - Example quests: "Win 3 battles", "Deploy 5 buildings", "Open 2 packs"
+5. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
+
+**Total Cards After Tutorial** (if opened packs): 
+- 20 (Trainer Deck) + 5 (Element Booster #1) + 5 (Battle Victory Pack) + 5 (Element Booster #2) + 10 (Tutorial Complete Packs) = **45 cards**
+
+**Total Gold After Tutorial**: ~4,500 Gold (4 Standard Packs OR 3 Element Boosters OR save for Game Deck)
 
 ---
 
 ## Summary: Tutorial Completion Checklist
 
-**By end of 15-minute tutorial, player has**:
+**By end of 15-20 minute tutorial, player has**:
 ✅ Created account and chosen name  
-✅ Opened 20 starter cards (1 Epic guaranteed)  
-✅ Built first deck (11-15 cards, Balanced Explorer theme)  
-✅ Received bonus pack (5 cards)  
+✅ Chosen Trainer Deck (20 cards, 1 Epic guaranteed)  
+✅ Received Element Booster #1 (5 cards, reinforce element synergy)  
+✅ Built first deck (20 cards, element-themed)  
 ✅ Learned County Map navigation  
 ✅ Fought first manual battle (card placement, movement, attack)  
-✅ Won first battle (unlosable tutorial)  
+✅ Won first battle + **earned Standard Pack** (5 cards, cross-element variety)  
 ✅ Unlocked Auto-Battle  
-✅ Collected 500-1,000 gold, 5-8 new cards  
+✅ Collected 3,500-4,500 gold from battles  
 ✅ Reached Level 1-2 (100-250 XP)  
 ✅ Introduced to Codex (card management)  
-✅ Introduced to Economy cards (optional deployment)  
+✅ Deployed first Economy card + **earned Element Booster #2** (5 cards)  
+✅ **Tutorial Complete rewards: 2 Standard Packs** (10 cards)  
+✅ **Daily Login Rewards unlocked** (starts next login)  
+✅ **Weekly Quest System unlocked** (2 packs/week)  
+
+**Total Collection**: 45 cards (20 Trainer + 5 Element #1 + 5 Standard #1 + 5 Element #2 + 10 Standard #2)
 
 **Player is now ready for**:
 - County Map free exploration (10-20 battles to Boss)
-- Pack purchases (buy with gold)
+- Pack Shop purchases (Standard, Element Booster, Epic Booster)
+- Daily login rewards (cards every day, packs every 7/14/28 days)
 - Deck customization (swap cards in Codex)
-- Economy building (deploy buildings on resource nodes)
+- Economy building (deploy buildings on resource nodes for passive gold)
 
 ---
 
