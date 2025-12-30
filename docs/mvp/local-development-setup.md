@@ -32,10 +32,10 @@ This guide walks you through setting up your local development environment for *
 3. Run installer: `UnityHubSetup.exe`
 4. Accept defaults (install to `C:\Program Files\Unity Hub\`)
 
-#### Install Unity 2021 LTS
+#### Install Unity 6 LTS (Recommended)
 1. Open **Unity Hub**
 2. Click **"Installs"** tab (left sidebar)
-3. Click **"Install Editor"** → Choose **"2021.3 LTS"** (Long Term Support)
+3. Click **"Install Editor"** → Choose **"6000.x LTS"** (Unity 6, recommended version shown)
 4. Select modules:
    - ✅ **Microsoft Visual Studio Community 2022** (C# IDE)
    - ✅ **Android Build Support** (for mobile later)
@@ -43,10 +43,16 @@ This guide walks you through setting up your local development environment for *
    - ✅ **Documentation** (offline help)
 5. Click **"Install"** (3-5 GB download, 15-20 minutes)
 
-**Why 2021 LTS?**
-- Stable (no breaking changes for 2 years)
-- Nakama Unity SDK fully compatible
-- Best mobile performance
+**Why Unity 6 LTS?**
+- Latest LTS (stable, no breaking changes for 2 years)
+- Better performance than Unity 2021
+- Improved UI Toolkit (better for card UI)
+- Fully compatible with Nakama Unity SDK
+- Modern C# features (.NET Standard 2.1)
+
+**Alternative: Unity 2021 LTS**
+- If you need older tutorials that reference Unity 2021, install **2021.3.x LTS** instead
+- Both versions work fine for Sovereign Territories
 
 ---
 
@@ -59,7 +65,7 @@ This guide walks you through setting up your local development environment for *
 4. Configure:
    - **Project Name**: `SovereignTerritories`
    - **Location**: `C:\Soverign-Territories\soverign-territories\src\`
-   - **Unity Version**: `2021.3.x LTS`
+   - **Unity Version**: `6000.x LTS` (or `2021.3.x LTS` if you installed that)
 5. Click **"Create Project"** (2-3 minutes to initialize)
 
 #### Verify Project Structure
@@ -583,7 +589,7 @@ public class CardLoader : MonoBehaviour
 
 Before proceeding to Week 1 of MVP implementation, verify:
 
-- [ ] Unity 2021 LTS installed and launches successfully
+- [ ] Unity 6 LTS (or 2021 LTS) installed and launches successfully
 - [ ] Project created at `src/SovereignTerritories/`
 - [ ] Folder structure created (Scripts/Cards/, Prefabs/, Resources/CardData/)
 - [ ] 4 Unity packages installed (Newtonsoft.Json, Addressables, Input System, TextMeshPro)
