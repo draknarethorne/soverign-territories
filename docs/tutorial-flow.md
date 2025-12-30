@@ -44,7 +44,7 @@ This document walks through the **exact player journey** from app launch to firs
 ### Step 2: Main Menu (First-Time Player)
 **Screen**: Main Menu
 ```
-[Background: Animated county map with fog]
+[Background: Animated Realm Map with fog]
 [Center: "Sovereign Territories" title logo]
 
 [Large Button: "START YOUR JOURNEY"]
@@ -529,12 +529,12 @@ After Trainer Deck reveal animation completes:
 
 ---
 
-## Phase 4: County Map Introduction (8-10 Minutes)
+## Phase 4: Realm Map Introduction (8-10 Minutes)
 
 ### Step 12: Map Camera Intro & Movement System
-**Screen**: County Map - Tutorial Start
+**Screen**: Realm Map - Tutorial Start
 ```
-[Camera: Zoomed out view of County Map]
+[Camera: Zoomed out view of Realm Map]
 [Background: Lush green terrain with fog of war covering 70% of map]
 
 [HUD Elements]:
@@ -546,7 +546,7 @@ After Trainer Deck reveal animation completes:
 [Fog: Everything else hidden]
 
 [Tutorial Overlay]:
-"This is the County Map - your army's battlefield!"
+"This is the Realm Map - your army's battlefield!"
 [Arrow pointing to Start tile]
 
 [Your Army Icon: Epic Water Mage portrait + "11 units" badge]
@@ -565,7 +565,7 @@ After Trainer Deck reveal animation completes:
 4. "Tap your army to select it" (waits for player to tap)
 
 **System Actions**:
-1. Load county map (Tutorial_Map_01)
+1. Load Realm Map (Tutorial_Map_01)
 2. Place player army on Start tile
 3. Place 1 enemy spawn 2 tiles away
 4. Initialize HUD: Movement Points (10/10), Energy (100/100), Resources (0/0/0)
@@ -626,7 +626,7 @@ After Trainer Deck reveal animation completes:
 ### Step 14: Battle Transition
 **Screen**: Battle Start Cinematic
 ```
-[Animation: Camera zooms from County Map into Battle Map]
+[Animation: Camera zooms from Realm Map into Battle Map]
 [Effect: Screen flash, particle burst]
 [Sound: Battle horn]
 
@@ -935,7 +935,7 @@ This battle is designed to be **unlosable** (player has 11 cards, enemy has 6 we
 
 2. **If player force-quits mid-battle**:
    - On relaunch: "Welcome back! Your battle is still in progress."
-   - Buttons: [Resume Battle] [Retreat to County Map]
+   - Buttons: [Resume Battle] [Retreat to Realm Map]
    - Retreat: No penalties (units restored, no XP loss, can retry later)
 
 3. **If player loses 3 times** (extremely unlikely, indicates bug):
@@ -1058,7 +1058,7 @@ Harder battles drop Silver or Gold Chests with better rewards!"
 5. Award 5 random cards → Add to Codex (mark as "New!")
 6. Store badges: `PlayerPrefs.SetInt("Card_[id]_New", 1)` for each card
 7. Unlock Auto-Battle feature (shown in next step)
-8. Return to County Map
+8. Return to Realm Map
 
 **Design Decisions** (Resolved):
 - ✅ Victory fanfare duration: 3 seconds total, skippable after 1 second
@@ -1073,10 +1073,10 @@ Harder battles drop Silver or Gold Chests with better rewards!"
 
 ## Phase 6: Post-Tutorial Loop (15-60 Minutes)
 
-### Step 24: County Map - Auto-Battle Unlock
-**Screen**: County Map - After First Battle
+### Step 24: Realm Map - Auto-Battle Unlock
+**Screen**: Realm Map - After First Battle
 ```
-[Camera returns to County Map]
+[Camera returns to Realm Map]
 [Player army back on Start tile]
 [Fog of War: Revealed 2 more tiles (nearby path + another enemy spawn)]
 
@@ -1129,7 +1129,7 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 
 3. **Second Loss**: Force manual battle or retreat
    - Manual: Player takes control, retry with manual placement
-   - Retreat: Return to County Map, units restored, no casualties (safe escape)
+   - Retreat: Return to Realm Map, units restored, no casualties (safe escape)
 
 4. **Retreat Mechanic**:
    - No unit loss (all cards returned to deck)
@@ -1149,7 +1149,7 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 
 ---
 
-### Step 25: County Map - 3-5 More Battles
+### Step 25: Realm Map - 3-5 More Battles
 **Tutorial Goals**:
 1. Defeat 3-5 more easy spawns (2-6 units each)
 2. Reach Player Level 2 (unlock 15-20 card deck size)
@@ -1201,133 +1201,73 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 
 ---
 
-### Step 27: First Resource Node (Economy Card Introduction)
-**Screen**: County Map - Gold Mine Discovered
+### Step 27: First Treasure Node (Resource Reward) - **MVP**
+**Screen**: Realm Map - Treasure Chest Discovered
 ```
-[Player army explores, reveals Gold Mine tile]
-[Gold Mine: Neutral tile, no enemies, gold coin icon]
+[Player army explores, reveals Treasure Chest tile]
+[Treasure Chest: Neutral tile, no enemies, sparkling chest icon]
 
 [Tutorial Overlay]:
-"You found a Gold Mine! Deploy Economy Cards here for passive income."
+"You found a Treasure Node! Defeat the guardian to claim Gold and Gems."
 
-[Player moves army onto Gold Mine]
-[Prompt: "Deploy Economy Cards?"]
-  - Option 1: Deploy Now (opens Economy card menu)
-  - Option 2: Skip (can deploy later)
+[Player moves army onto Treasure Chest]
+[Prompt: "Battle the Guardian?"]
+  - Battle Now (1 Energy) - Recommended
+  - Skip (can battle later)
 ```
 
-**Economy Card Deployment Flow** (Gap 8 Resolution - Full Design):
+**Treasure Node Battle Flow** (MVP Replacement for Economy Cards):
+
+**Phase 2 Note**: Economy card deployment (Granary/Sawmill/Mine) is deferred to Phase 2. MVP uses treasure nodes (one-time Gold/Gems rewards) instead.
 
 **Step 1: Discovery**
-- Player's army moves onto resource node tile (Gold Mine, Forest, Quarry, etc.)
-- Tutorial text: "Resource nodes produce passive income when buildings are deployed."
+- Player's army moves onto treasure node tile
+- Tutorial text: "Treasure Nodes contain Gold, Gems, and rare cards. Defeat the guardian to claim rewards."
 
-**Step 2: Deployment Menu**
+**Step 2: Guardian Battle** (Auto-Win Tutorial)
 ```
-[Economy Card Menu]:
-Available Economy Cards in Deck:
-- 1× Granary (Food production, MISMATCH)
-- 1× Mine (Gold production, MATCH!)
-- 1× Watchtower (Vision, no production)
+[Battle Map 8×8]:
+- Player's Deck: Full 20-card Trainer Deck (same as Step 15-24 battles)
+- Guardian: Weak 3-card deck (1 Common enemy, no hero)
+  - Purpose: Quick win, teaches treasure node combat
+  - Total Power: 50 (player has ~120, guaranteed win)
 
-[If player has matching building]:
-"Deploy Mine on Gold Mine?"
-- Production: +100 Gold/hour
-- Match Bonus: 100% efficiency (Mine on Gold Mine = full rate)
-[Deploy] [Cancel]
+[Tutorial Text]:
+"This treasure is guarded by a weak enemy. Defeat it to claim the rewards!"
 
-[If deploying mismatched building]:
-"Deploy Granary on Gold Mine?"
-- Production: +50 Gold/hour (mismatched type, 50% penalty)
-- Note: Granary works best on Farms
-[Deploy] [Cancel]
+[Auto-Battle Option]: "Skip Battle" button (instant win, shows loot)
 ```
 
-**Step 3: Building Deployed**
+**Step 3: Victory & Loot**
 ```
-[Tile visual changes]:
-- Gold Mine icon + Mine building sprite overlay
-- Timer: "0/60 min" (production starts immediately)
-- Income rate: "+100 Gold/hour" (floating text above tile)
+[Victory Screen]:
+"💰 Treasure Claimed! 💰"
 
-[Mine card removed from battle deck]
-(Stays on tile until retrieved)
-```
+Rewards:
+- +300 Gold
+- +10 Gems
+- +1 Uncommon card (random, 80% matches Trainer Deck element)
 
-**Step 4: Passive Production (AFK)**
-- Player can leave, play other battles, or close app
-- Production runs in background (up to **12 hours offline cap**)
-- Example: Player returns 30 min later → **+50 Gold accumulated**
+[Player Total After]:
+- Gold: 3,300 (3,000 from battles + 300 treasure)
+- Gems: 110 (100 starting + 10 treasure)
+- Cards: 31 (30 from packs + 1 treasure)
 
-**Step 5: Collect Income**
-```
-[Player taps Gold Mine tile 30 min later]:
-"Collect +50 Gold?"
-- Timer: 30/60 min elapsed
-- Accumulated: +50 Gold (ready to collect)
-- Full production: Wait 30 more min for +100 Gold
-
-[Collect] [Wait for Full]
+[Button: "Continue Exploring"]
 ```
 
-If player taps **Collect**:
-- +50 Gold added to inventory (Total: 3,050 Gold)
-- Timer resets to 0/60 min
-- Production continues (next 60 min cycle)
+**Why Treasure Nodes Replace Economy Deployment?**:
+- ✅ **Simpler MVP**: No AFK production system, no building management
+- ✅ **Active Engagement**: Player fights for rewards (not passive waiting)
+- ✅ **Paced Rewards**: Treasure nodes scattered on Realm Map (5-10 total), encourages exploration
+- ✅ **Gem Source**: Provides F2P Gem income (10-20 Gems per treasure node)
+- ✅ **Card Rewards**: Uncommon/Rare cards from treasure nodes (no packs needed)
 
-**Step 6: Retrieve Building (Optional)**
-```
-[Player taps Gold Mine tile after collecting]:
-[Building Options Menu]:
-- Collect Income: +100 Gold (60 min elapsed)
-- Retrieve Building (returns Mine card to deck)
-- Upgrade Building (unlocks at Level 5, costs gold)
-
-[If player taps Retrieve]:
-"Retrieve Mine building?"
-- Stops production immediately
-- Returns Mine card to battle deck
-- Tile returns to empty Gold Mine (available for redeployment)
-- **Tutorial reward: Element Booster Pack!**
-
-[Pack automatically opens]:
-"Great work! Here's an Element Booster to strengthen your deck."
-[1 Element Booster (5 cards, 80% match your element)]
-```
-
-**Element Booster Reward** (Economy Milestone):
-- **Purpose**: Reinforce element synergy after learning economy
-- **Contents**: 5 cards (4 match Trainer Deck element + 1 random)
-- **Timing**: After first economy building deployment (milestone achievement)
-- **Animation**: Auto-opens (15 sec, same as Step 6/7)
-
-**Why Element Booster at Economy Milestone?**:
-- ✅ **Paced Rewards**: 2 major milestones = 2 Element Boosters (Step 6 + Step 27)
-- ✅ **Element Reinforcement**: Fire player gets more Fire cards (useful for economy buildings)
-- ✅ **Collection Growth**: 30 → 35 cards (continuous progression)
-- ✅ **Retention Hook**: "Complete economy tutorial = free pack" (incentive)
-
-**Total Cards After Step 27**: 30 (after Step 23) + 5 (Element Booster) = **35 cards**
-- Retrieval cost: **Free for tutorial** (instant), later costs time or resources
-
-[Retrieve] [Cancel]
-```
-
-**Edge Cases**:
-- **No matching building**: Can deploy any economy card, but mismatch = 50% production rate
-- **Offline income cap**: Max 12 hours of production (e.g., 1,200 Gold from Mine at 100/hour)
-- **Multiple nodes**: Can deploy on multiple tiles (limited by economy cards owned)
-- **Tile conquest (PvP)**: If tile is lost in PvP, building returns to deck automatically (no loss)
-
-**Design Decisions** (Resolved):
-- ✅ Economy tutorial timing: **Optional** after first resource node discovery (not forced)
-- ✅ Force deployment: No, player can skip and deploy later
-- ✅ Mismatch penalty: 50% production rate (Granary on Gold Mine = 50 Gold/hour instead of 100)
-- ✅ Retrieval cost: Free in tutorial/PvE, costs gold or time in PvP zones
+**Total Cards After Step 27**: 30 (after Step 23) + 1 (Treasure Node) = **31 cards**
 
 ---
 
-### Step 28: Tutorial Complete - Freedom Unlocked
+### Step 28: Tutorial Complete - Freedom Unlocked - **MVP**
 **Screen**: Tutorial Complete!
 ```
 [Major Achievement Popup]:
@@ -1337,117 +1277,59 @@ Unlocked:
 ✅ Auto-Battle (fast combat, 1 free retry per battle)
 ✅ Battle Speed Settings (1×/2×/4×/Instant)
 ✅ Codex (manage collection, deck builder)
-✅ County Map (explore freely, 10-20 tiles)
+✅ Realm Map (explore freely, 10-20 tiles)
 ✅ **Daily Login Rewards (starts tomorrow)**
-✅ **Pack Shop (buy packs with gold/gems)**
+✅ **Pack Store (buy packs with Gold)**
 
 [Rewards]:
-- 1,000 Gold bonus (Total: ~4,500 Gold)
-- **2 Standard Booster Packs** (10 cards total)
+- 1,000 Gold bonus (Total: ~4,300 Gold)
 - "Tutorial Graduate" title badge
-
-[Button: "Open Packs Now" or "Save for Later"]
-```
-
-**Pack Opening Option** (Player Choice):
-- **If "Open Packs Now"**: 2 Standard Packs auto-open sequentially (10 sec total)
-  - 10 random cards (cross-element variety)
-  - **Total cards after opening**: 35 + 10 = **45 cards**
-- **If "Save for Later"**: Packs added to inventory (can open in Pack Shop anytime)
-
-**After Pack Decision**:
-```
-[Next Steps Screen]:
-"What's Next?"
-
-Continue Your Journey:
-- Complete County Map (defeat Boss, 10-20 battles)
-- Join Alliance (unlock at Level 10)
-- Try Arena PvP (unlock at Level 15)
 
 [Button: "Continue Playing"]
 ```
 
+**MVP Store Note**: Only Pack Store is available in MVP. Resource Store (Food/Lumber/Ore) and PvP Store (Arena Tokens) are deferred to Phase 2-3.
+
 **Player Action**: Taps "Continue Playing"
 
 **System Unlocks**:
-1. **Full County Map**: 10-20 tiles, 1 Boss battle (harder difficulty)
+1. **Full Realm Map**: 10-20 tiles, 5-10 treasure nodes, 1 Boss battle (harder difficulty)
 
-2. **Pack Shop** (F2P + Premium Options):
+2. **Pack Store** (MVP - Gold Only):
    ```
-   [Pack Shop Screen]
+   [Pack Store Screen]
    
-   EARN WITH GOLD (Unlimited):
+   AVAILABLE PACKS (Gold):
    - Standard Pack (5 cards): 1,000 Gold
+     - 50% Common, 30% Uncommon, 15% Rare, 4% Epic, 1% Legendary
+     - Average rarity: ~7 stars per pack (1.4 stars/card)
+   
    - Element Booster (5 cards, 80% element match): 1,500 Gold
-   - Epic Booster (5 cards, guaranteed Epic): 3,000 Gold
-   - Game Deck (50 cards, 1 Legendary): 50,000 Gold
+     - Same rarity distribution as Standard
+     - 4/5 cards match chosen element (Fire/Water/Earth)
    
-   PREMIUM PACKS (Weekly Limits):
-   - Premium Standard Pack (5 cards, 10% shiny rate): 100 Gems | 10/week
-   - Premium Element Booster (5 cards, 10% shiny rate): 150 Gems | 5/week
-   - Premium Epic Booster (5 cards, 10% shiny rate): 300 Gems | 3/week
-   - Shiny Guaranteed Pack (1 guaranteed shiny): 1,000 Gems | 1/week
-   
-   [Your Gold: 4,500] [Your Gems: 0]
-   [Weekly Limits Reset: 6 days, 23 hours]
+   [Your Gold: 4,300] [Your Gems: 110]
+   [Note: "Gem purchases unlock at Player Level 5"]
    ```
 
-3. **Shiny System Tutorial** (If player gets shiny in tutorial packs):
-   ```
-   [Popup: "✨ Shiny Card!"]
-   "You found a Shiny Uncommon Archer!"
-   
-   Shinies provide bonuses:
-   - ✨ 5% stat boost in battles (31 Attack vs 30 normal)
-   - ✨ 5% production boost on economy deployments
-   - ✨ Animated golden aura on maps
-   - ✨ 10× trade value in Auction House
-   
-   Drop Rates:
-   - Standard Packs: 1% shiny chance (1 per ~20 packs)
-   - Premium Packs: 10% shiny chance (1 per ~2 packs)
-   
-   Pity System: Guaranteed shiny after 100 Standard Packs
-   
-   [Button: "Awesome!"]
-   ```
+**Why Simplified Store for MVP?**:
+- ✅ **No Gem Purchases Yet**: Players must reach Level 5 before Gem Store unlocks (prevents impulse buying in first hour)
+- ✅ **No Resource Store**: Food/Lumber/Ore economy is Phase 2 (not in MVP)
+- ✅ **No PvP Store**: Arena Tokens are Phase 3 (not in MVP)
+- ✅ **Gold Sinks**: Players can spend tutorial Gold on packs immediately (retention hook)
 
-4. **Daily Login Rewards** (starts next login):
-   - Day 1-6: Random card (60% Common, 30% Uncommon, 10% Rare)
-   - Day 7: Choose 1 Rare card (filter by element)
-   - Day 14: 1 Standard Pack (5 cards)
-   - Day 28: Choose 1 Legendary (pool of 10, option for shiny variant)
+3. **Daily Login Rewards** (starts next login):
+   - Day 1-6: +200 Gold/day
+   - Day 7: +1,000 Gold + 1 Standard Pack
+   - Day 14: +2,000 Gold + 1 Element Booster
+   - Day 21: +3,000 Gold + 20 Gems
+   - Day 28: +5,000 Gold + 1 Rare card (player choice from pool of 10)
 
-5. **Weekly Quest System**:
-   - Complete 5/7 daily quests → **2 Standard Packs**
-   - Example quests: "Win 3 battles", "Deploy 5 buildings", "Open 2 packs"
-   - Quest reset: Every Monday 00:00 UTC
+4. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 Gold after first free change)
 
-6. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
+**Total Cards After Step 28**: 31 (no pack opening yet, players can buy packs with Gold)
 
-**Pack Economy Explanation** (Optional Tutorial Popup):
-```
-[Pack Shop Guide]
-
-EARNING PACKS (Free-to-Play):
-- Daily Quests: +300 Gold/day → 3 Standard Packs/week
-- Battle Victories: +50 Gold/win → 20 wins = 1 pack
-- Weekly Quests: 2 Standard Packs/week (5/7 daily quests)
-- Campaign Rewards: ~10 packs (County + State Map completion)
-Total F2P: ~10-15 packs/week through play
-
-BUYING PACKS (Optional):
-- Premium Packs: 10% shiny rate (vs 1% Standard)
-- Weekly Limits: Prevents "buy 1,000 packs instantly"
-- Shiny Bonus: 5% stat/production boost (not game-breaking)
-- Fair Play: Rarity Budget limits deck power (see Deck Builder)
-
-[Button: "Got It!"]
-```
-
-**Total Cards After Tutorial** (if opened packs): 
-- 20 (Trainer Deck) + 5 (Element Booster #1) + 5 (Battle Victory Pack) + 5 (Element Booster #2) + 10 (Tutorial Complete Packs) = **45 cards**
+---
 
 **Total Gold After Tutorial**: ~4,500 Gold (4 Standard Packs OR 3 Element Boosters OR save for Game Deck)
 
@@ -1456,33 +1338,33 @@ BUYING PACKS (Optional):
 
 ---
 
-## Summary: Tutorial Completion Checklist
+## Summary: Tutorial Completion Checklist - **MVP**
 
 **By end of 15-20 minute tutorial, player has**:
 ✅ Created account and chosen name  
 ✅ Chosen Trainer Deck (20 cards, 1 Epic guaranteed)  
 ✅ Received Element Booster #1 (5 cards, reinforce element synergy)  
 ✅ Built first deck (20 cards, element-themed)  
-✅ Learned County Map navigation  
+✅ Learned Realm Map navigation  
 ✅ Fought first manual battle (card placement, movement, attack)  
 ✅ Won first battle + **earned Standard Pack** (5 cards, cross-element variety)  
 ✅ Unlocked Auto-Battle  
-✅ Collected 3,500-4,500 gold from battles  
+✅ Collected 3,500-4,300 Gold from battles  
+✅ Collected 110 Gems (100 starting + 10 from treasure node)  
 ✅ Reached Level 1-2 (100-250 XP)  
 ✅ Introduced to Codex (card management)  
-✅ Deployed first Economy card + **earned Element Booster #2** (5 cards)  
-✅ **Tutorial Complete rewards: 2 Standard Packs** (10 cards)  
-✅ **Daily Login Rewards unlocked** (starts next login)  
-✅ **Weekly Quest System unlocked** (2 packs/week)  
+✅ **Defeated first Treasure Node + earned 1 Uncommon card** (Step 27)  
+✅ **Tutorial Complete: 1,000 Gold bonus** (no pack rewards in MVP)  
+✅ **Daily Login Rewards unlocked** (starts next login, +200 Gold/day)  
 
-**Total Collection**: 45 cards (20 Trainer + 5 Element #1 + 5 Standard #1 + 5 Element #2 + 10 Standard #2)
+**Total Collection**: 31 cards (20 Trainer + 5 Element #1 + 5 Standard #1 + 1 Treasure Node reward)
 
 **Player is now ready for**:
-- County Map free exploration (10-20 battles to Boss)
-- Pack Shop purchases (Standard, Element Booster, Epic Booster)
-- Daily login rewards (cards every day, packs every 7/14/28 days)
+- Realm Map free exploration (5-10 treasure nodes, 1 Boss battle)
+- Pack Store purchases (Standard Pack 1,000 Gold, Element Booster 1,500 Gold)
+- Daily login rewards (Gold every day)
 - Deck customization (swap cards in Codex)
-- Economy building (deploy buildings on resource nodes for passive gold)
+- **Phase 2**: Economy building (deploy buildings on resource nodes for passive gold)
 
 ---
 
@@ -1498,7 +1380,7 @@ All 9 critical gaps have been integrated directly into the tutorial flow above. 
 5. ✅ **Battle Speed** - Settings for 1×/2×/4×/Instant (Step 20, unlocks Step 28)
 6. ✅ **Card Rewards** - Auto-add to Codex with "New!" badge (Step 23, Hearthstone model)
 7. ✅ **Auto-Battle Loss** - 1 free retry, then manual or retreat (Step 24, AFK Arena lite)
-8. ✅ **Economy Deployment** - Full deploy → collect → retrieve flow (Step 27, 12hr offline cap)
+8. ✅ **Treasure Nodes** - MVP uses treasure nodes (one-time rewards) instead of economy deployment (Step 27, Phase 2 feature)
 9. ✅ **Tutorial Failure** - Free resurrection ×3 + auto-win failsafe (Step 22, Pokemon model)
 
 **All Design Decisions RESOLVED ✅**:
