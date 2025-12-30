@@ -654,10 +654,14 @@ See tutorial-flow.md for minute-by-minute breakdown.
   - Player title: "Sovereign" (not "player", "lord", "commander")
   - Occupation terminology: "Occupy Location", "Control Realm", "Dominate Territory"
 
-**2. Reorganize Bible Sections** (Reduce 800 lines):
-- [ ] Rewrite Section 2.5 (Onboarding) - High-level philosophy only (remove UI flow)
-- [ ] **Mark Section 5.5 (Economy) Food/Lumber/Ore as Phase 2** - Keep Gold/Gems/Energy for MVP, defer production buildings
-- [ ] **Update map terminology throughout bible**: Replace "County Map" → "Realm Map (Locations)", "State Map" → "Territory Map (Realms)", "Global Map" → "World Map (Territories)"
+**2. Reorganize Bible Sections** (Reduce 800 lines): ✅ **PHASE 2 COMPLETE**
+- [x] Rewrite Section 2.5 (Onboarding) - High-level philosophy only (condensed ~138 lines to ~50 lines)
+- [x] **Mark Section 5.5 (Economy) Food/Lumber/Ore as Phase 2** - Kept Gold/Gems/Energy for MVP, deferred production buildings
+  - Added Phase 2 disclaimer to Section 5.5.1 header
+  - Marked Food/Lumber/Ore sections as "PHASE 2 ❌ NOT IN MVP"
+  - Marked Arena Tokens as "PHASE 3 ❌ NOT IN MVP"
+  - Marked Energy as "MVP ✅"
+- [x] **Update map terminology throughout bible**: Replaced "County Map" → "Realm Map" (20+ instances), "State Map" → "Territory Map" (9 instances), "Global Map" → "World Map" (21+ instances)
 - [ ] **Standardize player title**: Replace inconsistent "player"/"lord"/"commander" with "Sovereign" in design sections
 - [ ] Remove tutorial references from Sections 2.6, 4, 8 (cross-reference tutorial-flow.md)
 - [ ] Add "Documentation Map" to bible (after Table of Contents)

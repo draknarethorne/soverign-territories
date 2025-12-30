@@ -31,6 +31,39 @@ Owner: [User] ("The Architect")
 17. Additional Features for Complete Gamer Experience
 18. Immediate Next Steps (Technical)
 
+---
+
+## Documentation Map
+
+**This game bible is the master design document. For implementation details, reference these supporting documents**:
+
+### Core Specifications (Implementation Details)
+- **[mvp-scope-final.md](mvp-scope-final.md)** - 8-week MVP roadmap, Must Have vs Won't Have features
+- **[economy-system.md](economy-system.md)** - Currency earning rates, F2P vs whale balance, Phase 2 Food/Lumber/Ore economy
+- **[combat-calculation-spec.md](combat-calculation-spec.md)** - MVP Attack/Defense formulas, Phase 2 RPG stats, Phase 3 elemental interactions
+- **[rpg-systems-spec.md](rpg-systems-spec.md)** - Health/Mana/Stamina mechanics, Consumables, RPG Shops, Equipment Sockets (Phase 2-3)
+- **[map-tier-progression.md](map-tier-progression.md)** - World→Territory→Realm→Battle hierarchy, occupation mechanics, monster scaling
+- **[terminology-guide.md](terminology-guide.md)** - Canonical reference for map names, player title (Sovereign), occupation terms
+
+### Tutorial & Onboarding
+- **[tutorial-flow.md](tutorial-flow.md)** - 28-step tutorial progression (0-60 minutes), exact card rewards, UI flow
+
+### Data Specifications (Schemas)
+- **docs/specs/*.json** - 60+ JSON schemas for cards, packs, economy, combat, maps, progression
+
+### Project Management
+- **[bible-reorganization-plan.md](bible-reorganization-plan.md)** - Reorganization roadmap, action items, Phase 1-5 tracking
+- **[README.md](../README.md)** - Project overview, tech stack, quick start guide
+
+**Where to Find What**:
+- **Game design philosophy** → This bible (Sections 1-18)
+- **Exact earning rates, formulas** → Supporting specs (economy-system.md, combat-calculation-spec.md)
+- **MVP feature list** → mvp-scope-final.md
+- **Tutorial step-by-step** → tutorial-flow.md
+- **Terminology standards** → terminology-guide.md
+
+---
+
 # SECTION 1: CORE PHILOSOPHY
 
 ## Game Tagline
@@ -105,7 +138,7 @@ Sovereign Territories is designed around a **5-minute core loop** for engagement
    - **Deck Slots**: Unlock via castle leveling (start with 3, max 10 at Level 30)
 
 3. **Deploy on Maps**: 
-   - **Battle Deployments**: Position hero stacks on State/County maps for territorial control
+   - **Battle Deployments**: Position hero stacks on State/Realm Maps for territorial control
    - **Building Placement**: Place farms, mines, turrets on optimal terrain tiles
    - **Territory Management**: Monitor multiple castles/forts, upgrade to increase slots
    - **Resource Optimization**: Balance production (food, lumber, ore) with storage limits
@@ -183,7 +216,7 @@ Sovereign Territories combines multiple proven gameplay systems into a cohesive 
 **Core Philosophy**: Merge card game collection with board game positioning
 - **Deck = Army**: Your 20-30 card deck deploys as 8 units on battlefield
 - **Hero Stacks**: Attach 5-10 unit cards to 1 hero = combined stats (e.g., 5 archers = 500 HP, 250 attack)
-- **Map Positioning**: Heroes placed on State/County/Global maps as figurines
+- **Map Positioning**: Heroes placed on State/County/World Maps as figurines
 - **Visual Feedback**: Figurines evolve based on card composition (cavalry stack = mounted statue)
 - **Territory Control**: Each controlled territory displays your card stacks as visual ownership markers
 
@@ -1024,7 +1057,7 @@ Stars show **current power level** within the rarity tier:
 ### Shiny Utility System (Collector Advantage)
 
 **Map Deployment Bonuses**:
-Shinies provide **5% production/combat bonuses** when deployed on County/State maps:
+Shinies provide **5% production/combat bonuses** when deployed on County/Territory Maps:
 
 **Economy Buildings** (Deployed on resource nodes):
 - **Normal Mine**: +100 Gold/hour
@@ -1038,7 +1071,7 @@ Shinies provide **5% production/combat bonuses** when deployed on County/State m
 
 **Visual Indicators**:
 - **Battle Map**: Shiny units have golden aura, particle trail
-- **County Map**: Shiny buildings have animated gold shimmer
+- **Realm Map**: Shiny buildings have animated gold shimmer
 - **Codex**: Shiny cards have holographic border, star icon
 
 **Why This Works**:
@@ -1075,7 +1108,7 @@ Shinies provide **5% production/combat bonuses** when deployed on County/State m
 2. **Seasonal Events**: "Shiny Week" - 2× shiny drop rates for 7 days
 3. **Battle Pass**: Tier 40 reward = 1 guaranteed Rare+ shiny (free track)
 4. **Daily Login Rewards**: Day 28 = Choose 1 Legendary (option to select shiny variant)
-5. **Campaign Milestones**: Complete State Map = 1 random Rare+ shiny
+5. **Campaign Milestones**: Complete Territory Map = 1 random Rare+ shiny
 
 **Secondary Sources** (Whale/Grind):
 6. **Shiny Guaranteed Pack**: 1,000 gems ($9.99) = 1 guaranteed shiny (random rarity)
@@ -1209,14 +1242,30 @@ Limit resets in: 3 days, 14 hours
 
 ---
 
-## 2.5 New Player Onboarding: Trainer Decks & Game Decks
+## 2.5 New Player Onboarding: Philosophy & Trainer Deck System
+
+**For complete tutorial flow (28 steps, UI mockups, exact rewards), see [tutorial-flow.md](tutorial-flow.md)**
+
+### Onboarding Philosophy
+
+**Goal**: Get Sovereigns from "What is this game?" to "I understand and want more" in 30-60 minutes.
+
+**Key Principles**:
+1. **Power Fantasy First**: Give Epic hero immediately (no "bad luck" first experience)
+2. **Meaningful Choice**: 6 Trainer Deck options (Fire/Water/Earth Curated or Element), not random
+3. **Playable Immediately**: 20-card Trainer Deck fits in first deck slot, works out-of-the-box
+4. **Learn by Doing**: Tutorial uses actual gameplay (battles, deck building, Realm Map exploration)
+5. **Respect Player Time**: Skip options after first battle, auto-battle for grinders
+
+**Tutorial Duration**:
+- **Minimum**: 30 minutes (skip all optional text, auto-battle)
+- **Maximum**: 60 minutes (read all lore, manual battles, explore all UI)
+- **Average**: 45 minutes (first-time players, moderate pace)
 
 ### Trainer Deck System (Starter Onboarding)
 
-**Goal**: Give new players meaningful choice and immediate power fantasy while teaching core mechanics. Inspired by Pokemon TCG Trainer Decks and Battle Boxes.
-
-**The Selection**:
-Instead of random pack opening, players choose from **6 Trainer Decks** during onboarding:
+**The Selection** (Tutorial Step 6):
+Instead of random pack opening, Sovereigns choose from **6 Trainer Decks**:
 
 **CURATED DECKS** (3 options - Named Epic + Pre-Built Synergy):
 1. **Flame Warlord Deck** (Fire Element) - Aggressive burn-stacking playstyle
@@ -1228,125 +1277,26 @@ Instead of random pack opening, players choose from **6 Trainer Decks** during o
 5. **Water Element Deck** - Guaranteed Water Epic (random from pool), 19 varied cards
 6. **Earth Element Deck** - Guaranteed Earth Epic (random from pool), 19 varied cards
 
-**Deck Contents**: Each Trainer Deck contains exactly **20 cards**:
-- 1× Epic Hero (named for Curated, random for Element decks)
-- 6× Units (element-themed or varied)
-- 2× Buildings (economy or military)
-- 1× Worker (resource production)
-- 8× Tactics (combat abilities)
-- 2× Equipment (hero attachments)
-
-**Key Differences**:
+**Why This Design?**:
 - **Curated Decks**: Perfect synergy out-of-the-box (all Fire cards work together), recommended for beginners
 - **Element Decks**: Higher variance, deckbuilding challenge, better replayability for experienced players
 - **Permanent Choice**: Selection cannot be changed (encourages alt accounts for F2P engagement)
+- **Inspiration**: Pokemon TCG Trainer Decks and Battle Boxes (pre-built playable decks)
 
-**Why 20 Cards vs 10-15 Deck Limit?**:
-- **Immediate Playability**: All 20 cards fit in first deck slot (no storage confusion)
-- **Future Expansion**: Players unlock deck size progression to 50 cards by Level 30
-- **Collection Start**: Strong foundation for themed deckbuilding (Fire player gets Fire synergy immediately)
-- **Pokemon Model**: Matches Battle Box design (pre-built playable deck + expansion potential)
+**Deck Contents**: Each Trainer Deck contains exactly **20 cards**:
+- 1× Epic Hero (named for Curated, random for Element decks)
+- 6× Units (element-themed or varied)
+- 2× Buildings (economy or military - art only for MVP, functional in Phase 2)
+- 1× Worker (resource production - art only for MVP, functional in Phase 2)
+- 8× Tactics (combat abilities)
+- 2× Equipment (hero attachments)
 
-### Trainer Deck Selection Flow (Tutorial Step 6)
+**Starting Collection** (After Tutorial):
+- **Trainer Deck**: 20 cards (selected at Step 6)
+- **Bonus Packs**: 16 cards (Element Booster at Step 6, 6 cards at Step 23, Element Booster at Step 27)
+- **Total**: 36 cards by tutorial completion (Step 28)
 
-**Screen**: "Choose Your Starting Path"
-- **6 Options Displayed**: 2 rows × 3 columns grid
-  - **Top Row**: Curated Decks (Flame Warlord, Tidal Guardian, Stone Sentinel)
-  - **Bottom Row**: Element Decks (Fire, Water, Earth)
-- **Preview System**: Hovering shows 5 sample cards from deck
-- **Commitment Warning**: "This choice is permanent and cannot be changed. Choose wisely!"
-
-**Selection Steps**:
-1. Player hovers over decks → Preview popup shows Epic hero + 4 support cards
-2. Player clicks "SELECT" → Confirmation dialog appears
-3. Player confirms → 20 cards instantly added to Codex
-4. **Reveal Animation**: Cards flip one-by-one (Epic first with 3-sec dramatic reveal + screen shake)
-5. **Bonus Reward**: 4 Standard Booster Packs (5 cards each) offered after reveal
-   - **Total Starting Cards**: 20 (Trainer Deck) + 20 (Bonus Packs) = **40 cards**
-   - **Skip Option**: Can skip bonus packs and open later in Pack Shop
-
-**Why This Flow?**:
-- **Meaningful Choice**: Curated vs Random appeals to different player psychologies
-- **Element Commitment**: Choosing Fire locks early playstyle, teaches identity
-- **Replayability**: 6 starting options vs 1 random draw (encourages multiple accounts)
-- **Power Fantasy**: Guaranteed Epic hero from minute 1 (no "bad luck" first experience)
-
-### Starting Deck Size Constraints
-
-**Player Level 1 (New Player)**:
-- **Deck Size**: 20 cards (fixed for Trainer Deck)
-- **Why Fixed Start**: 
-  - Trainer Decks are pre-balanced (20 cards optimal)
-  - No deck editing confusion (play immediately)
-  - Teaches full card type diversity (heroes, units, buildings, tactics, equipment)
-  - Encourages mastery before deckbuilding freedom
-
-**Total Collection Size** (Unlimited):
-- **Codex Capacity**: Unlimited storage for all owned cards
-- **Active vs Inactive**: Cards in deck slots are "active", rest stored in Codex
-- **Inactive Benefits**: Can still be viewed, traded, combined, upgraded in Codex
-
-### Deck Size Progression (Player Level Scaling)
-
-As players gain **Player XP** (from battles, quests, events), their **Player Level** increases, unlocking larger deck sizes:
-
-| Player Level | Max Deck Size | How to Reach | Estimated Time (Active Player) |
-|--------------|---------------|--------------|--------------------------------|
-| **1** | 20 cards (fixed Trainer Deck) | Start of game | Day 1 |
-| **3** | 20-25 cards | Complete tutorial campaign (5 battles) | Day 1-2 |
-| **5** | 25-30 cards | Complete first saga chapter (10 battles) | Day 3-5 |
-| **10** | 30-35 cards | Reach County Map, join alliance | Week 1-2 |
-| **15** | 35-40 cards | Complete State Map PvE | Week 3-4 |
-| **20** | 40-45 cards | Reach Global Map | Month 1-2 |
-| **30** | 45-50 cards (max) | Endgame content, prestige | Month 3-6 |
-
-**Why Progressive Scaling?**:
-- **F2P Accessible**: All players can reach max deck size through normal play (no paywall)
-- **Natural Progression**: Deck size grows as player skill and collection grow
-- **Active Player Advantage**: More active play = faster leveling = earlier access to bigger decks
-- **Strategic Depth**: Larger decks unlock more complex combos and deck archetypes
-
-### Game Deck System (Post-Launch Premium Content)
-
-**Purpose**: Offer curated 50-card decks for collectors and players who want to skip pack RNG. Models Pokemon Battle Boxes.
-
-**Format**: 
-- **50 cards per Game Deck** (full playable collection)
-- **Guaranteed Contents**: 1 Legendary, 2-3 Epics, 10 Rares, ~20 Uncommons, ~17 Commons
-- **No Duplicates**: Each card is unique within the deck
-- **Theme-Based**: Norse Conquest, Roman Legion, Modern Military, Greek Mythology, etc.
-
-**Pricing**:
-- **Real Money**: $19.99 USD (premium option, instant purchase)
-- **Earned Gold**: 50,000 Gold (grindable option, ~2-3 weeks active play)
-- **Premium Gems**: 2,000 Gems (convertible currency, ~$20 value)
-
-**Expansion Path**:
-- **Launch**: 3 Curated Trainer Decks (Fire/Water/Earth), 3 Random Element Decks (free)
-- **Month 1-3**: Add Wind/Dark/Light Trainer Decks (free unlocks via campaign)
-- **Year 1**: Release 6 Game Decks (Norse, Roman, Greek, Egyptian, Sci-Fi, Fantasy) at $19.99 each
-- **Seasonal**: Limited-edition Game Decks (Halloween, Winter, Summer) with exclusive Legendary cards
-
-**Why Game Decks?**:
-- **Whale Appeal**: $120 to own all 6 Game Decks (collector completionist)
-- **F2P Accessible**: Can buy with earned gold (respects non-payers)
-- **Content Drops**: New Game Deck = new theme = marketing event
-- **Skip RNG**: Players tired of pack gambling can buy guaranteed cards
-- **Multi-Element Design**: Later Game Decks can mix elements (Norse = Fire + Earth, Greek = Water + Wind)
-
-**Example Game Deck**: 
-**"Norse Conquest" Game Deck** ($19.99 / 50,000 Gold):
-- 1× Legendary: Odin Allfather (Hero, summons ravens)
-- 3× Epic: Thor Thunderlord, Freya Valkyrie, Loki Trickster
-- 10× Rare Norse units (Berserkers, Shieldmaidens, Frost Giants)
-- 20× Uncommon Norse buildings/tactics (Longhouses, Rune Stones, Blizzard)
-- 16× Common Norse workers/equipment (Blacksmiths, Fur Cloaks)
-- **Theme**: Fire + Earth synergy (burn damage + fortifications)
-
-**Unlock Requirements**:
-- Player Level 10+ (prevents new players from bypassing progression)
-- Tutorial complete (ensures players understand mechanics)
-- Available in Pack Shop under "Game Decks" tab
+**For exact card lists, reveal animations, and UI flow, see [tutorial-flow.md](tutorial-flow.md)**
 
 ---
 
@@ -1361,7 +1311,7 @@ Sovereign Territories borrows heavily from **Heroes of Might and Magic** army st
 2. **Formations**: Pre-defined placement patterns for quick deployment
 3. **Visual Representation**: High-rarity cards = 3D figures, low-rarity = card sprites
 4. **Auto vs Manual**: Choose convenience or strategic control
-5. **Map Scaling**: 1 deck per tile on Global Map → zoom into battle with full deck
+5. **Map Scaling**: 1 deck per tile on World Map → zoom into battle with full deck
 
 ---
 
@@ -1395,11 +1345,11 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 
 **IMPORTANT**: Stacking rules differ based on which map layer you're on:
 
-**On County Map (Strategic Layer)** → **Full Army Stacks Allowed**:
+**On Realm Map (Strategic Layer)** → **Full Army Stacks Allowed**:
 - ✅ **Mix ALL Card Types**: Epic heroes + Archers + Healers + Walls + Buildings in ONE stack
 - ✅ **Cross-Theme**: Elf + Human + Dwarf units together
 - ✅ **Mixed Rarity**: Common + Rare + Epic + Legendary in same stack
-- **Why**: County map represents your entire army moving as one force (like HoMM heroes with their armies)
+- **Why**: Realm Map represents your entire army moving as one force (like HoMM heroes with their armies)
 - **Visual**: Stack shows as single icon/flag with lead hero portrait
 
 **On Battle Map (Tactical Layer)** → **Unit Type Stacking**:
@@ -1413,13 +1363,13 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 
 | Map Layer | Stack Composition | Visual | Example |
 |-----------|-------------------|--------|---------|
-| **Global Map** | Entire deck = 1 icon | Flag/banner with deck name | "Fire Rush Deck" icon on territory |
-| **County Map** | Full army stack (10-50 cards all types) | Hero portrait + army count | "Thor + 24 units" moving as one |
+| **World Map** | Entire deck = 1 icon | Flag/banner with deck name | "Fire Rush Deck" icon on territory |
+| **Realm Map** | Full army stack (10-50 cards all types) | Hero portrait + army count | "Thor + 24 units" moving as one |
 | **Battle Map** | Separated by unit type | Individual stacks on grid tiles | 3× Archer stacks, 2× Warrior stacks, 1× Hero |
 
 **Example Flow**:
-1. **Global Map**: You deploy "Viking Deck" to Territory A (appears as single flag)
-2. **Zoom to County Map**: "Viking Deck" appears as Thor (hero portrait) + 14 unit cards = 1 movable stack
+1. **World Map**: You deploy "Viking Deck" to Territory A (appears as single flag)
+2. **Zoom to Realm Map**: "Viking Deck" appears as Thor (hero portrait) + 14 unit cards = 1 movable stack
 3. **Move stack to enemy spawn**: Engage battle
 4. **Zoom to Battle Map**: 15 cards separate into formation:
    - Thor (Epic hero) → Front center tile
@@ -1430,9 +1380,9 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 
 ---
 
-#### Mixed-Type Stacking (County Map Only)
+#### Mixed-Type Stacking (Realm Map Only)
 
-**✅ Valid County Map Stack Combinations**:
+**✅ Valid Realm Map Stack Combinations**:
 - **Epic Hero + Units + Buildings + Workers**:
   - Example: Thor + 5 Archers + 3 Warriors + 2 Healers + 1 Farm + 1 Mine = 13-card stack
 - **Cross-Theme Mixed Army**:
@@ -1446,7 +1396,7 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 - Farm + Archers on same battle tile = ❌ (buildings don't deploy to battle grid)
 
 **Why This Matters**:
-- **County Map** = Strategic movement (armies travel together, like HoMM)
+- **Realm Map** = Strategic movement (armies travel together, like HoMM)
 - **Battle Map** = Tactical deployment (separate unit types for formation strategy)
 - **Simplifies county exploration** (don't micromanage 50 individual units)
 - **Adds depth to battles** (formation positioning matters)
@@ -1460,14 +1410,14 @@ All 6 cards stack onto **one tile** as "Ranged Stack Alpha" with combined stats.
 **Stack Defense** = `Average(Defense values) × (1 + 0.05 × (stackSize - 1))` (diminishing returns)
 **Stack Speed** = `Min(Speed values)` (slowest card determines stack movement)
 
-**Example Stack Math** (County Map Full Army):
+**Example Stack Math** (Realm Map Full Army):
 - 1x Epic Thor (HP: 100, Attack: 20, Defense: 15, Speed: 4)
 - 3x Common Elf Archer (HP: 10, Attack: 5, Defense: 2, Speed: 3)
 - 2x Uncommon Human Crossbowman (HP: 15, Attack: 7, Defense: 3, Speed: 2)
 - 1x Rare Healer (HP: 20, Attack: 2, Defense: 5, Speed: 2)
 - Total: 7 battle cards in county stack
 
-**County Map Stats** (moving as one army):
+**Realm Map Stats** (moving as one army):
 - HP = 100 + (10×3) + (15×2) + 20 = 100 + 30 + 30 + 20 = **180 HP**
 - Attack = 20 + (5×3) + (7×2) + 2 = 20 + 15 + 14 + 2 = **51 Attack**
 - Defense = ((15+2+2+2+3+3+5)/7) × (1 + 0.05×6) = 4.57 × 1.3 = **5.94 Defense**
@@ -1523,13 +1473,13 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
 - **Not counted against rarity budget**
 - Separate limit: 10-15 economy cards per deck
 - Types: Buildings (Farm, Mine, Turret, Wall), Workers (Farmer, Miner, Scout)
-- Can deploy to county map tiles, don't go to battle map
+- Can deploy to Realm Map tiles, don't go to battle map
 
 **Total Deck Composition**:
 - **Battle Cards**: 10-50 (based on Player Level) within rarity budget
   - Heroes, Units, Tactics, Equipment
   - Used for combat and exploration
-  - Can be split into multiple hero-led armies on county map
+  - Can be split into multiple hero-led armies on Realm Map
 - **Economy Cards**: 10-15 (separate category, not counted in rarity budget)
   - Buildings: Farm, Mine, Lumber Mill, Turret, Wall
   - Workers: Farmer, Miner, Lumberjack, Scout
@@ -1716,13 +1666,13 @@ To prevent "all Legendary" decks while still allowing creativity, we use a **Rar
 
 Sovereign Territories uses a **multi-tier zoom system** where you deploy decks at macro level and zoom into battles at micro level.
 
-**Global Map** (Risk-Style):
+**World Map** (Risk-Style):
 - **View**: Entire continent, 50-100 territories
 - **Deployment**: **1 deck per territory/tile**
 - **Representation**: Deck shown as single icon/flag
-- **Click Territory**: Zoom into County Map
+- **Click Territory**: Zoom into Realm Map
 
-**County Map** (Regional View):
+**Realm Map** (Regional View):
 - **View**: 10-20 tiles representing county divisions
 - **Deployment**: **Full deck spreads across tiles** (15-30 stacks)
 - **Representation**: Each stack = separate unit on map
@@ -1741,24 +1691,24 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 - **Deck Size**: 10-15 cards
 - **Stacks**: 3-5 stacks max
 
-**State Maps** (Level 10+ Players):
+**Territory Maps** (Level 10+ Players):
 - **Restriction**: **1-2 decks** (can deploy second deck to different territory)
 - **Deck Size**: 25-30 cards each
 - **Stacks**: 7-10 stacks per deck
 
-**County Maps** (Level 15+ Players):
+**Realm Maps** (Level 15+ Players):
 - **Restriction**: **2-3 decks** (spread forces across region)
 - **Deck Size**: 30-35 cards each
 - **Stacks**: 10-15 stacks per deck
 
-**Global Maps** (Level 20+ Players):
+**World Maps** (Level 20+ Players):
 - **Restriction**: **Up to 5 decks** (1 deck per territory controlled)
 - **Deck Size**: 40-50 cards each
 - **Stacks**: 15+ stacks per deck
 - **Multi-Front Warfare**: Manage multiple battles simultaneously (like HoMM campaign)
 
 **Example Scenario**:
-- Player controls 3 territories on Global Map
+- Player controls 3 territories on World Map
 - Deploys **Deck A** to Territory 1 (aggressive fire theme)
 - Deploys **Deck B** to Territory 2 (defensive earth theme)
 - Deploys **Deck C** to Territory 3 (economy buildings)
@@ -1766,7 +1716,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-### PvE Campaign: County Map Exploration (Tutorial & Progression)
+### PvE Campaign: Realm Map Exploration (Tutorial & Progression)
 
 #### Tutorial Flow (First Battle - Manual Required)
 
@@ -1775,11 +1725,11 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 **Setup**:
 1. Player receives starter deck (10-15 cards: 1 Epic, 5 Rare, 9 Common/Uncommon)
 2. Sets formation using "Balanced Explorer" preset
-3. Deck appears on **Global Map** as single flag icon
-4. Zoom into **County Map** → deck appears as Epic hero portrait + "14 units" label
+3. Deck appears on **World Map** as single flag icon
+4. Zoom into **Realm Map** → deck appears as Epic hero portrait + "14 units" label
 
 **First Battle**:
-1. **County Map**: Player sees single PvE spawn (red enemy flag) nearby
+1. **Realm Map**: Player sees single PvE spawn (red enemy flag) nearby
 2. **Move Order**: Click your army stack → click adjacent tile → army moves (teach movement)
 3. **Engage Combat**: Move stack onto enemy spawn tile → battle triggers
 4. **Zoom to Battle Map**: 15 cards from your deck separate into formation on tactical grid (5x5 or 7x7)
@@ -1803,21 +1753,21 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 **Post-Tutorial**:
 - **Auto-Battle Unlocked**: "You can now use Auto-Battle for future fights! (or continue manual)"
 - **Next 3-5 Battles**: Similar easy spawns, player can choose auto or manual
-- **Quick Wins**: Teaches players the county map flow without frustration
+- **Quick Wins**: Teaches players the Realm Map flow without frustration
 
 ---
 
-#### County Map Structure (Open Exploration, Non-Linear)
+#### Realm Map Structure (Open Exploration, Non-Linear)
 
 **Map Design Philosophy**:
-- **Not Linear Stages**: Unlike "Stage 1 → Stage 2 → Boss", county maps are open exploration
+- **Not Linear Stages**: Unlike "Stage 1 → Stage 2 → Boss", Realm Maps are open exploration
 - **Fog of War**: Map starts mostly hidden, reveals as you explore
 - **Static Spawns**: Enemy camps/spawns don't roam (expansion feature)
 - **Respawning**: Defeated spawns respawn after 1-6 hours (for farming)
 - **Goal**: Find and defeat the Boss (always on map), but path is player's choice
 - **Buffs Along the Way**: Capture key locations for permanent bonuses
 
-**Example County Map Layout** (Medium Difficulty):
+**Example Realm Map Layout** (Medium Difficulty):
 ```
     [Fog] [Fog] [?Mine?] [Fog] [Fog]
     [Fog] [Spawn][  Path  ][Spawn][Fog]
@@ -1847,12 +1797,12 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 #### Splitting Your Deck into Multiple Armies (Multi-Hero System)
 
-**Core Concept**: Each **Epic+ hero** in your deck can lead their own independent army stack on the county map.
+**Core Concept**: Each **Epic+ hero** in your deck can lead their own independent army stack on the Realm Map.
 
 **How It Works**:
-- **Single Hero Deck**: If you have 1 Epic hero + 14 units → **1 army stack** on county map
+- **Single Hero Deck**: If you have 1 Epic hero + 14 units → **1 army stack** on Realm Map
 - **Multi-Hero Deck**: If you have 3 Epic heroes + 30 units → **up to 3 army stacks** (divide units between heroes)
-- **Visual**: Each Epic+ hero = **3D miniature figurine** on county map (looks like tabletop wargaming)
+- **Visual**: Each Epic+ hero = **3D miniature figurine** on Realm Map (looks like tabletop wargaming)
 - **Movement**: Each army moves independently (like HoMM multiple heroes)
 
 **Deck Deployment Example**:
@@ -1864,7 +1814,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 - 15× Common scouts, spearmen
 - 2× Rare tactics
 
-**County Map Deployment Options**:
+**Realm Map Deployment Options**:
 
 **Option 1: Single Mega-Army** (Conservative):
 - **Army 1**: Thor + 2 Epic heroes + all 27 units = 1 powerful stack
@@ -1900,7 +1850,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 **Visual Representation by Stack Type**:
 
-| Stack Composition | Visual on County Map | Movement | Example |
+| Stack Composition | Visual on Realm Map | Movement | Example |
 |-------------------|---------------------|----------|---------|
 | **Epic+ Hero + Units** | 3D miniature figurine (hero) + unit count badge | Full speed | Thor figurine + "15 units" |
 | **Rare Hero + Units** | Premium card sprite standing upright + unit badge | Full speed | Rare Mage card + "8 units" |
@@ -1927,7 +1877,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 **Step-by-Step**:
 
-1. **Deploy Full Deck to County Map**: All 30 battle cards appear as 1 stack (lead hero)
+1. **Deploy Full Deck to Realm Map**: All 30 battle cards appear as 1 stack (lead hero)
 2. **Right-Click Stack** → "Manage Armies"
 3. **Army Management UI Opens**:
    - Shows all heroes in deck (Legendary Thor, Epic Fire Mage, Epic Knight)
@@ -1937,7 +1887,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
    - Drag 8 archers → assign to Fire Mage
    - Drag 9 cavalry → assign to Knight
    - Leave 2× tactics unassigned (shared resource pool)
-5. **Confirm Split**: 3 separate army stacks now visible on county map
+5. **Confirm Split**: 3 separate army stacks now visible on Realm Map
 6. **Each Army Gets Formation**:
    - Thor's Army: "Frontline Vanguard" formation
    - Fire Mage's Army: "Defensive Turtle" formation
@@ -1998,7 +1948,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 #### Time Pressure Mechanics (Turn Cost)
 
-**PvE County Maps** (Optional Difficulty Modifier):
+**PvE Realm Maps** (Optional Difficulty Modifier):
 
 **"Enemy Grows Stronger" Mechanic**:
 - **Every 5 turns** you take, all enemy spawns gain **+10% HP and ATK**
@@ -2033,9 +1983,9 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-#### Visual Design Summary (County Map Representation)
+#### Visual Design Summary (Realm Map Representation)
 
-**What You See on County Map**:
+**What You See on Realm Map**:
 
 | Unit Type | Visual | Example |
 |-----------|--------|---------|
@@ -2056,11 +2006,11 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-#### County Map Gameplay Loop (Revised)
+#### Realm Map Gameplay Loop (Revised)
 
 **Player Journey with Multiple Armies & Resource Management**:
 
-1. **Deploy Deck to County Map**: Full 30 battle cards + 10 economy cards
+1. **Deploy Deck to Realm Map**: Full 30 battle cards + 10 economy cards
 2. **Split into Hero-Led Armies**: 
    - Thor + 15 units (main force)
    - Fire Mage + 10 units (support force)
@@ -2095,7 +2045,7 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
     - Collect rewards (Legendary card, 10,000 XP)
     - Flex heroes removed
     - Resource cards stay on county tiles (for AFK income until you complete map)
-    - Mark county complete, return to Global Map
+    - Mark county complete, return to World Map
 
 **Key Takeaways**:
 - ✅ **Multiple heroes = multiple armies** (epic+ heroes lead independently)
@@ -2108,16 +2058,16 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 #### Flex Heroes & Temporary Allies (Power Scaling)
 
-**Concept**: As you explore county map, find temporary hero cards that join for this map only.
+**Concept**: As you explore Realm Map, find temporary hero cards that join for this map only.
 
 **How Flex Heroes Work**:
 1. **Capture Town Tile**: Defeat spawn guarding town
 2. **Recruit Flex Hero**: Town offers 1 random Rare/Epic hero to join
 3. **Add to Deck (Temporary)**: Flex hero added to current army stack
-4. **Duration**: Only for this county map (removed when map complete)
+4. **Duration**: Only for this Realm Map (removed when map complete)
 5. **Power Scaling**: Can reach 50 total battle cards if you find all flex heroes
 
-**Example County Map with Flex Heroes**:
+**Example Realm Map with Flex Heroes**:
 - **Starting Deck**: 15 battle cards (your permanent collection)
 - **Town 1**: +1 Rare Fire Mage (temp) → now 16 cards
 - **Town 2**: +1 Epic Knight (temp) → now 17 cards
@@ -2197,10 +2147,10 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 
 ---
 
-#### County Map Flow Summary
+#### Realm Map Flow Summary
 
 **Player Journey**:
-1. **Enter County Map**: Full deck (15 cards) as single army stack on start tile
+1. **Enter Realm Map**: Full deck (15 cards) as single army stack on start tile
 2. **Explore**: Move stack to reveal fog of war, discover spawns/resources/towns
 3. **Engage Spawns**: Battle for XP/gold/cards, respawn for farming if desired
 4. **Capture Resources**: Deploy economy cards (farms, mines, workers) to tiles
@@ -2211,13 +2161,13 @@ Sovereign Territories uses a **multi-tier zoom system** where you deploy decks a
 9. **Find Boss**: Non-linear path, boss location varies
 10. **Final Battle**: Zoom to battle map, deploy full army + flex heroes vs boss
 11. **Victory**: Complete county, rewards (Legendary card, 10,000 XP, unlock next county)
-12. **Global Map**: Return to global view, flex heroes removed, county marked complete
+12. **World Map**: Return to global view, flex heroes removed, county marked complete
 
 **Visual Flow**:
 ```
-Global Map (Risk View)
+World Map (Risk View)
     ↓ [Zoom into County Territory]
-County Map (HoMM Strategic View)
+Realm Map (HoMM Strategic View)
   - Move army stacks
   - Split decks
   - Garrison tiles
@@ -2229,7 +2179,7 @@ Battle Map (HoMM Tactical View)
   - Turn-based combat
   - Manual or auto-battle
     ↓ [Victory]
-County Map (Return)
+Realm Map (Return)
   - Continue exploration
   - Or complete boss and exit
 ```
@@ -2727,7 +2677,7 @@ Use that file for gacha mechanics, pity systems, and pack validation.
 
 The world is fractal, with time scaling to map size. Shields protect castles temporarily. Maps support random generation for replayability, with terrain affecting production and battles. Players place building cards on map tiles to build economies, with limits based on castle/lord level.
 
-## Tier 1: Global Map (Quarterly Season)
+## Tier 1: World Map (Quarterly Season)
 
 ### View
 **2.5D rotating globe** with continents, oceans, and climate zones visible. Zoom out to see entire world; zoom in to see State-level detail.
@@ -2772,7 +2722,7 @@ The world is fractal, with time scaling to map size. Shields protect castles tem
 - **Fort Slots**: Smaller outposts with 3 slots (1 production, 2 defense)
 - **Scaling**: Slots increase with lord level (+1 slot per 2 levels)
 
-**Building Types for Global Map**:
+**Building Types for World Map**:
 - **Production**: Mines (ore), Farms (food), Lumber Mills (wood), Banks (gold)
 - **Defense**: Walls (+50% defense), Turrets (auto-attack), Moats (slow enemies)
 - **Special**: Wonder Monuments (boost wonder capture speed), Teleport Gates (fast travel)
@@ -2786,13 +2736,13 @@ The world is fractal, with time scaling to map size. Shields protect castles tem
 - **Season End**: Top 3 alliances get exclusive legendary cards, titles, themes
 - **Personal Ranking**: Individual contribution (captures, defenses) earns bonus rewards
 
-## Tier 2: State Map (Monthly War)
+## Tier 2: Territory Map (Monthly War)
 
 ### View
 **Hex grid overlay** on isometric terrain. Each hex is a playable tile (50-100 hexes per state).
 
 ### Scale & Scope
-- **Size**: 50-100 hexes per state map
+- **Size**: 50-100 hexes per Territory Map
 - **Playtime**: 1-month campaigns with weekly checkpoints
 - **Player Count**: 10-30 players per state (subset of global server)
 - **Reset**: Monthly reset with rewards based on final holdings
@@ -2855,7 +2805,7 @@ The world is fractal, with time scaling to map size. Shields protect castles tem
 - **Monthly Ranking**: Top 3 players per state get exclusive state-themed cards
 - **Hex Control**: Each hex controlled at month end grants resources (gold, gems, packs)
 
-## Tier 3: County Map (Weekly Reset)
+## Tier 3: Realm Map (Weekly Reset)
 
 ### View
 **District grid overlay** (20x20 tiles) with visible resource nodes and building placements.
@@ -3142,7 +3092,7 @@ Large-scale events where alliances engage in coordinated wars, blending PvP sieg
 ## 4.5 Territorial Conquest Campaign (PvE Map Mode)
 
 ### Overview
-A persistent PvE mode where players engage in turn-based territorial conquest against 1-3 AI opponents on multi-tier maps, emulating Risk with deck-building and economy building. Start small on the global map, build decks, occupy territories for AFK resources, level up castles and lords. Allows safe progression before unlocking PvP.
+A persistent PvE mode where players engage in turn-based territorial conquest against 1-3 AI opponents on multi-tier maps, emulating Risk with deck-building and economy building. Start small on the World Map, build decks, occupy territories for AFK resources, level up castles and lords. Allows safe progression before unlocking PvP.
 
 ### How to Play
 - **Entry**: Available from start; no prerequisites, but PvP requires reaching Level 10.
@@ -3578,24 +3528,32 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 # SECTION 5.5: RESOURCE ECONOMY & CURRENCY SYSTEMS
 
+**For complete earning rates, F2P projections, and implementation details, see [economy-system.md](economy-system.md)**
+
+**IMPORTANT**: Food/Lumber/Ore economy is **PHASE 2** (Month 2-3). MVP uses Gold/Gems/Energy only.
+
 ## 5.5.1 Currency Overview
 
 **Core Philosophy**: Multiple currencies prevent whale dominance (can't buy everything with real money) and create diverse progression paths (PvP skill, AFK patience, exploration, grinding).
 
-**Currency Types**:
-1. **Gold** (Soft currency - earned through gameplay)
-2. **Gems** (Premium currency - bought with real money or earned slowly)
-3. **Food** (Resource - AFK gathering, exploration)
-4. **Lumber** (Resource - AFK gathering, exploration)
-5. **Ore** (Resource - AFK gathering, exploration)
-6. **Arena Tokens** (PvP currency - ranked match rewards only)
-7. **Energy** (Stamina - battle cost, prevents grinding)
+**MVP Currency Types** (8-Week Implementation):
+1. **Gold** (Soft currency - earned through gameplay, **cannot buy with real money**)
+2. **Gems** (Premium currency - bought with real money or earned slowly, **$136/week cap**)
+3. **Energy** (Stamina - battle cost, **time-gated** to 24 battles/day)
+
+**Phase 2 Currency Types** (Month 2-3 - **DEFERRED POST-MVP**):
+4. **Food** (**PHASE 2** - AFK gathering, production buildings, auto-collection)
+5. **Lumber** (**PHASE 2** - AFK gathering, production buildings, auto-collection)
+6. **Ore** (**PHASE 2** - AFK gathering, production buildings, auto-collection)
+
+**Phase 3 Currency Types** (Month 4-6 - **DEFERRED POST-LAUNCH**):
+7. **Arena Tokens** (**PHASE 3** - PvP ranked match rewards, skill-based, cannot buy)
 
 **No "Coins" Separate Currency**: Real money purchases use Gems directly (simplicity, no conversion confusion).
 
 ---
 
-## 5.5.2 Gold (Soft Currency)
+## 5.5.2 Gold (Soft Currency) - **MVP**
 
 **Definition**: Primary earned currency for card collection and progression.
 
@@ -3680,7 +3638,11 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.4 Food (AFK Resource)
+## 5.5.4 Food (AFK Resource) - **PHASE 2** ❌ **NOT IN MVP**
+
+**For complete Food economy details, see [economy-system.md](economy-system.md) Phase 2 section**
+
+**MVP Status**: Food is deferred to Phase 2 (Month 2-3). MVP uses treasure nodes on Realm Map for resource rewards instead of production buildings.
 
 **Definition**: Consumable resource for unit maintenance and battle entry costs.
 
@@ -3692,7 +3654,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
   - **Storage Capacity**: 1,000 Food (Level 1 storage), 5,000 (Level 2), 20,000 (Level 3)
   - **No Tapping Required**: Check in when you want to spend, not to collect
 - **Battle Rewards**: 20-100 Food per battle chest (bronze/silver/gold tier)
-- **Exploration**: County Map resource nodes (100-500 Food per node, respawns daily)
+- **Exploration**: Realm Map resource nodes (100-500 Food per node, respawns daily)
 - **Daily Login**: 500-2,000 Food (Day 7, 14, 21, 28 bonus days)
 - **Alliance Donations**: Members can gift Food (100-1,000 per donation)
 - **Gold Trading**: 1,000 Gold → 500 Food (emergency conversion)
@@ -3704,7 +3666,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 **Sinks** (How Players Spend Food):
 - **Battle Entry Cost**: 20 Food per battle (prevents grinding, encourages AFK production)
-- **Unit Deployment**: 50 Food per unit deployed on County Map (stack of 5 units = 250 Food)
+- **Unit Deployment**: 50 Food per unit deployed on Realm Map (stack of 5 units = 250 Food)
 - **Building Upgrades**:
   - Granary Level 2: 500 Food (ironic sink: spend Food to make more Food)
   - Farm Level 2: 1,000 Food
@@ -3719,7 +3681,11 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.5 Lumber (AFK Resource)
+## 5.5.5 Lumber (AFK Resource) - **PHASE 2** ❌ **NOT IN MVP**
+
+**For complete Lumber economy details, see [economy-system.md](economy-system.md) Phase 2 section**
+
+**MVP Status**: Lumber is deferred to Phase 2 (Month 2-3). MVP uses treasure nodes on Realm Map for resource rewards instead of production buildings.
 
 **Definition**: Crafting resource for equipment, building construction, and upgrades.
 
@@ -3731,7 +3697,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
   - **Storage Capacity**: 1,000 Lumber (Level 1 storage), 5,000 (Level 2), 20,000 (Level 3)
   - **No Tapping Required**: Check in when you want to spend, not to collect
 - **Battle Rewards**: 20-100 Lumber per battle chest (bronze/silver/gold tier)
-- **Exploration**: County Map resource nodes (100-500 Lumber per node, respawns daily)
+- **Exploration**: Realm Map resource nodes (100-500 Lumber per node, respawns daily)
 - **Daily Login**: 500-2,000 Lumber (Day 7, 14, 21, 28 bonus days)
 - **Alliance Donations**: Members can gift Lumber (100-1,000 per donation)
 - **Gold Trading**: 1,000 Gold → 500 Lumber (emergency conversion)
@@ -3764,7 +3730,11 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.6 Ore (AFK Resource)
+## 5.5.6 Ore (AFK Resource) - **PHASE 2** ❌ **NOT IN MVP**
+
+**For complete Ore economy details, see [economy-system.md](economy-system.md) Phase 2 section**
+
+**MVP Status**: Ore is deferred to Phase 2 (Month 2-3). MVP uses treasure nodes on Realm Map for resource rewards instead of production buildings.
 
 **Definition**: Advanced crafting resource for high-tier equipment and building upgrades.
 
@@ -3776,7 +3746,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
   - **Storage Capacity**: 500 Ore (Level 1 storage), 2,500 (Level 2), 10,000 (Level 3)
   - **No Tapping Required**: Check in when you want to spend, not to collect
 - **Battle Rewards**: 10-50 Ore per battle chest (bronze/silver/gold tier)
-- **Exploration**: County Map resource nodes (50-250 Ore per node, respawns daily)
+- **Exploration**: Realm Map resource nodes (50-250 Ore per node, respawns daily)
 - **Daily Login**: 250-1,000 Ore (Day 7, 14, 21, 28 bonus days)
 - **Alliance Donations**: Members can gift Ore (50-500 per donation)
 - **Gold Trading**: 1,000 Gold → 250 Ore (emergency conversion, expensive)
@@ -3807,7 +3777,11 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.7 Arena Tokens (PvP Currency)
+## 5.5.7 Arena Tokens (PvP Currency) - **PHASE 3** ❌ **NOT IN MVP**
+
+**For complete Arena Token economy details, see [economy-system.md](economy-system.md) Phase 3 section**
+
+**MVP Status**: Arena Tokens are deferred to Phase 3 (Month 4-6). MVP is single-player tutorial + Realm Map PvE only (no PvP).
 
 **Definition**: Exclusive currency earned from ranked PvP matches, usable only in PvP Store.
 
@@ -3845,7 +3819,9 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.8 Energy (Stamina System)
+## 5.5.8 Energy (Stamina System) - **MVP** ✅
+
+**For complete Energy system details, see [economy-system.md](economy-system.md) MVP section**
 
 **Definition**: Stamina resource that limits battles per day, prevents endless grinding, encourages AFK progression.
 
@@ -3857,7 +3833,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
   - Level 31+: 250 Max Energy
 - **Battle Cost**: 
   - Tutorial Campaign: 0 Energy (unlimited battles, no interruption)
-  - County Map Battle: 10 Energy per battle
+  - Realm Map Battle: 10 Energy per battle
   - Random Campaign: 10 Energy per battle
   - Boss Battle: 20 Energy
   - Alliance War: 0 Energy (alliance events are unlimited during war periods)
@@ -3875,7 +3851,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 **Tutorial Exception**:
 - **Campaign Energy**: 0 Energy cost (players can complete tutorial without stopping)
 - **Introduction**: Step 23 (after first battle victory) → Tooltip: "Future battles cost Energy, but the campaign is free!"
-- **Post-Tutorial**: County Map battles cost 10 Energy (players learn mechanic without blocking tutorial)
+- **Post-Tutorial**: Realm Map battles cost 10 Energy (players learn mechanic without blocking tutorial)
 
 **Design Philosophy**:
 - **Prevents Grinding**: Can't farm 1,000 battles on day 1 (limits F2P hardcore grinders)
@@ -3890,18 +3866,18 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 ---
 
-## 5.5.9 County Map Movement System
+## 5.5.9 Realm Map Movement System
 
-**Definition**: Turn-based movement for deployed card stacks on County Map, limits exploration pacing.
+**Definition**: Turn-based movement for deployed card stacks on Realm Map, limits exploration pacing.
 
 **Core Mechanics**:
-- **Movement Range**: 3 tiles per turn (hex-based County Map)
+- **Movement Range**: 3 tiles per turn (hex-based Realm Map)
 - **Turn Cost**: 1 Movement Point per turn
 - **Max Movement Points**: 10 per day (resets at midnight UTC)
 - **Movement Point Refill**: None (daily cap only, cannot refill with Gems)
 
 **Movement Rules**:
-- **Deployed Stack**: Player deploys hero + units on County Map (Step 12 of tutorial)
+- **Deployed Stack**: Player deploys hero + units on Realm Map (Step 12 of tutorial)
 - **Each Turn**: Player can move stack up to 3 tiles in any direction
 - **Obstacles**: Rivers, mountains block movement (must path around)
 - **Enemy Tiles**: Moving onto enemy tile triggers battle (costs 10 Energy + 20 Food + 1 Movement Point)
@@ -3909,15 +3885,15 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 
 **Daily Exploration Limit**:
 - **10 Movement Points**: Can move 30 tiles/day (3 tiles × 10 turns)
-- **County Map Size**: 40 tiles total (can explore 75% of map in 1 day if straight line)
-- **Realistic Exploration**: Obstacles, battles, backtracking = 5-7 days to fully explore 1 County Map
+- **Realm Map Size**: 40 tiles total (can explore 75% of map in 1 day if straight line)
+- **Realistic Exploration**: Obstacles, battles, backtracking = 5-7 days to fully explore 1 Realm Map
 - **Result**: Exploration is paced, can't blitz entire map in 1 session
 
 **Tutorial Integration**:
 - **Step 12**: Deploy first stack, move 3 tiles to PvE enemy (costs 1 Movement Point)
 - **Step 13**: Battle PvE enemy, win, return to starting tile (costs 1 Movement Point to return)
 - **Tooltip**: "You have 10 Movement Points per day. Plan your route carefully!"
-- **Post-Tutorial**: Full County Map unlocked (40 tiles, 10 Movement Points/day = 4 days to fully explore)
+- **Post-Tutorial**: Full Realm Map unlocked (40 tiles, 10 Movement Points/day = 4 days to fully explore)
 
 **No Gem Refills** (Intentional):
 - **Energy**: Can refill with Gems (whale advantage for battles)
@@ -3925,7 +3901,7 @@ Pay-for-speed (convenience) or pay-for-look-and-feel (cosmetics), no pay-to-win.
 - **Result**: Exploration is time-gated for everyone (F2P and whales explore at same pace)
 
 **Alliance Coordination**:
-- **Shared Map**: Alliance members share County Map progress (if one member explores tile, all see it)
+- **Shared Map**: Alliance members share Realm Map progress (if one member explores tile, all see it)
 - **Coordination**: Members can split exploration (Member A goes north, Member B goes south)
 - **Result**: Alliances explore faster collectively (10 members × 10 Movement Points = 100 tiles/day)
 
@@ -4869,13 +4845,13 @@ Both are **100% F2P accessible**—active players level faster, but there is no 
 
 | Player Level | Max Deck Size | Key Unlocks | F2P Timeline (Active Player) |
 |--------------|---------------|-------------|------------------------------|
-| **1** | 10-15 cards | Tutorial, first castle, PvE county maps | Day 1 |
+| **1** | 10-15 cards | Tutorial, first castle, PvE Realm Maps | Day 1 |
 | **3** | 15-20 cards | Auction house access | Day 1-2 |
 | **5** | 20-25 cards | Daily quests, saga battles | Day 3-5 |
-| **10** | 25-30 cards | **Alliance join**, Alliance PvE events, State Map | Week 1-2 |
+| **10** | 25-30 cards | **Alliance join**, Alliance PvE events, Territory Map | Week 1-2 |
 | **15** | 30-35 cards | **Controlled PvP** (1v1/3v3 Arena), Secondary castles (up to 5) | Week 2-4 |
-| **20** | 35-40 cards | **Active PvP Maps** (open-world conquest), County Map, Advanced tactics | Month 1-2 |
-| **25** | 40-45 cards | Prestige cosmetics, Global Map access | Month 2-3 |
+| **20** | 35-40 cards | **Active PvP Maps** (open-world conquest), Realm Map, Advanced tactics | Month 1-2 |
+| **25** | 40-45 cards | Prestige cosmetics, World Map access | Month 2-3 |
 | **30** | 40-50 cards (max) | All content unlocked, legendary frame, Alliance Wars | Month 3-6 |
 
 **Why Player Level Matters**:
@@ -4934,7 +4910,7 @@ Both are **100% F2P accessible**—active players level faster, but there is no 
 
 **You are Player Level 20**:
 - Unlocked 35-card decks (usable in ALL battles, regardless of castle)
-- Unlocked Global Map access
+- Unlocked World Map access
 - Can control up to 5 castles simultaneously
 
 **You have 3 castles**:
@@ -4984,10 +4960,10 @@ Players earn XP from battles, quests, and events. This XP unlocks deck slots, al
 
 ### Unlock Milestones
 - **Level 5**: Unlock Auction House, join alliances
-- **Level 10**: PvP ranked matchmaking, alliance wars, State Map access
+- **Level 10**: PvP ranked matchmaking, alliance wars, Territory Map access
 - **Level 15**: Unlock Expedition board game mode
-- **Level 20**: County Map access, advanced building decks
-- **Level 25**: Global Map access, wonder control
+- **Level 20**: Realm Map access, advanced building decks
+- **Level 25**: World Map access, wonder control
 - **Level 30**: Max deck slots (10), prestige titles, endgame content
 - **Level 40**: Legendary achievement badge, developer Q&A access
 - **Level 50**: Eternal title, custom avatar frame, name in credits
@@ -5017,15 +4993,15 @@ Your main castle acts as a hub, leveling with XP to unlock features. Higher leve
 - **Holding Territories**: 10 XP per hour per controlled territory
 - **Building Upgrades**: 100-500 XP per building level
 - **Winning Defenses**: 200 XP per successful defense
-- **Wonder Control**: 500 XP per hour (Global Map wonders)
+- **Wonder Control**: 500 XP per hour (World Map wonders)
 - **Alliance Contributions**: 50 XP per 1,000 gold donated to alliance
 
 **Castle Level Benefits**:
 - **Level 1**: 3 deck slots, 5 building slots, 3 hero stacks max
 - **Level 5**: 5 deck slots, 10 building slots, 5 hero stacks, +10% gold production
-- **Level 10**: 7 deck slots, 15 building slots, 7 hero stacks, +25% gold, unlock State Map
-- **Level 15**: 8 deck slots, 20 building slots, 10 hero stacks, +50% gold, unlock County Map
-- **Level 20**: 9 deck slots, 30 building slots, 15 hero stacks, +75% gold, unlock Global Map
+- **Level 10**: 7 deck slots, 15 building slots, 7 hero stacks, +25% gold, unlock Territory Map
+- **Level 15**: 8 deck slots, 20 building slots, 10 hero stacks, +50% gold, unlock Realm Map
+- **Level 20**: 9 deck slots, 30 building slots, 15 hero stacks, +75% gold, unlock World Map
 - **Level 25**: 10 deck slots (max), 40 building slots, 20 hero stacks, +100% gold, prestige castle skin
 - **Level 30**: Mega-castle visual upgrade, +150% gold, legendary lord status
 
@@ -5064,7 +5040,7 @@ Your main castle acts as a hub, leveling with XP to unlock features. Higher leve
 - Hold up to 5 castles simultaneously (1 main + 4 secondary)
 - Each castle levels independently
 - Secondary castles have 50% building slots of main castle
-- Useful for controlling multiple regions on Global Map
+- Useful for controlling multiple regions on World Map
 - Maintenance cost: 1,000 gold per day per secondary castle
 
 ## 9.3 Deck Storage and Management
@@ -5350,7 +5326,7 @@ The Codex is the central hub for viewing, managing, and upgrading cards. No sepa
   - **Card Composition**: Hero type + unit stacks render as unique figurines (e.g., cavalry general on horseback).
   - **Territory Level**: Towns show modest structures; castles show grander visuals (walls, banners, larger statues).
   - **Stacking**: Multiple cards visually layer or group into one composed figurine.
-- **Card Detail View**: Tap a card to see stats, attached boosts, star level, options to combine/split, and current deployment (e.g., "Deployed on State Map, Blackfort Castle").
+- **Card Detail View**: Tap a card to see stats, attached boosts, star level, options to combine/split, and current deployment (e.g., "Deployed on Territory Map, Blackfort Castle").
 - **Combining/Splitting UI**: Drag-and-drop to merge cards for stars or attach boosters. Splitting costs resources (e.g., 100 Sovereign Tokens).
 - **Filters and Search**: Search by name, filter by unplaced/placed/deployed, view by deck, or filter by territory/map.
 
@@ -6443,7 +6419,7 @@ This section covers quality-of-life features, social enhancements, and engagemen
 
 ### Alliance Warfare
 **Territory Control**:
-- Alliances declare war, fight for control of State/Global map territories
+- Alliances declare war, fight for control of State/World Map territories
 - Territory yields resources (gold, gems) to controlling alliance
 - Shared treasury: Members contribute, leaders spend on buffs
 
@@ -6636,7 +6612,7 @@ This section outlines the **roadmap for Phase 1 (Prototype)** and actionable tas
 
 2. **Week 11-12**: Map hierarchy
    - Implement Tier 4 (8x8 local battles) - already done in Phase 1
-   - Add Tier 3 (County Map with resource scrambles)
+   - Add Tier 3 (Realm Map with resource scrambles)
    - Design procedural map generation (random terrain, biomes)
    - Build territory control mechanics (capture, defend)
 
