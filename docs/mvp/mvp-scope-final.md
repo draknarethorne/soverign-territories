@@ -105,43 +105,54 @@
 
 ---
 
-### Week 5-6: Realm Map & Exploration
+### Week 5-6: Campaign Mode & Stage Progression
 
-**Realm Map**:
-- ✅ 40-hex map (Locations)
-- ✅ Fog of war: 20 Locations visible at start, 20 hidden
-- ✅ Movement: 3 tiles per turn, 10 Movement Points/day
-- ✅ Terrain: Plains, Forest, Mountain (impassable), Water (impassable)
-- ✅ Camera: Top-down isometric, drag to pan, pinch to zoom
+**Campaign Structure**:
+- ✅ 8 Worlds × 9 Stages = 72 total battles (linear progression)
+- ✅ World themes: Goblin Plains, Bandit Forests, Orc Wastelands, Undead Crypts, Dragon Peaks, Demon Wastes, Celestial Realm, Void Dimension
+- ✅ Boss battles: Stages X-5 (mini-boss), X-9 (world boss)
+- ✅ Unlock system: Beat Stage 1-1 to unlock 1-2, beat 1-9 to unlock World 2
+- ✅ 3-star rating: Speed (under 10 turns), No Deaths (full army survives), Full Health (hero >80% HP)
 
-**Enemy Encounters** (5-10 PvE battles):
-- ✅ Goblin Raiders (Common, 3-card deck)
-- ✅ Bandit Camp (Uncommon, 5-card deck)
-- ✅ Orc Warband (Rare, 7-card deck)
-- ✅ Ancient Ruins (Epic, 10-card deck, Realm Boss)
+**Stage Types**:
+- ✅ Regular stages (1-1 to 1-4, 1-6 to 1-8): 3-7 card enemy decks, increasing difficulty
+- ✅ Mini-boss stages (X-5): 7-10 card decks, Rare/Epic heroes
+- ✅ World boss stages (X-9): 12-15 card decks, Epic/Legendary heroes
+- ✅ Final boss (8-9): Mythic Void Lord, 20-card deck
 
-**Treasure Nodes**:
-- ✅ Gold Node: 100-500 Gold (5-10 nodes on map)
-- ✅ Gem Node: 10-50 Gems (2-5 nodes on map)
-- ✅ Empty Locations: No reward, passable
+**Rewards Per Stage**:
+- ✅ First clear: 100-500 Gold, 50-200 XP, 1-3 cards (rarity increases with world)
+- ✅ 3-star clear: +1 Epic card (choice from 3 options)
+- ✅ Replays: 50% reduced rewards (encourages progression over farming)
+
+**Daily Event**:
+- ✅ Daily Challenge Stage: Random unlocked stage, 2× rewards, 3 attempts/day
+- ✅ Total daily value: ~1,000 Gold (= 1 Standard Pack purchase incentive)
 
 **Energy System**:
-- ✅ Tutorial battles: 0 Energy cost (unlosable)
+- ✅ Tutorial battles (Stages 1-1 to 1-4): 0 Energy (unlosable)
 - ✅ Post-tutorial battles: 10 Energy per battle
 - ✅ Daily refill: 240 Energy/day (24 battles max)
 - ✅ Starting Energy: 100 (10 battles to start)
 
 **Deliverables**:
-- [ ] RealmMap C# class (40-hex map, fog of war, pathfinding)
-- [ ] Movement system (3 tiles/turn, 10 Movement Points/day)
-- [ ] Enemy encounters (5-10 battles, simple AI)
-- [ ] Treasure nodes (Gold/Gems, collect on tile entry)
-- [ ] Energy system (10 per battle, 240 refill/day, UI display)
-- [ ] Realm Map UI (hex grid, unit display, fog of war)
+- [ ] CampaignManager C# class (stage unlocking, progression tracking, 3-star rating)
+- [ ] Stage Select UI (world map view, 9 stage icons per world, lock/unlock states)
+- [ ] 3-star rating system (turn count, deaths, hero health tracking)
+- [ ] Enemy AI decks (72 pre-built decks, JSON data files)
+- [ ] Daily Challenge system (random stage selection, timer, 2× rewards multiplier)
+- [ ] Replay rewards reduction (50% Gold/XP after first clear)
+
+**What Moves to Phase 2**:
+- ❌ Realm Map (40-tile hex grid) - Phase 2 Months 4-6
+- ❌ Open-world exploration - Phase 2
+- ❌ Fog of war, Movement Points - Phase 2
+- ❌ Territory occupation - Phase 2
+- ❌ AFK economy cards - Phase 2
 
 ---
 
-### Week 7-8: Progression & Stores
+### Week 7-8: Progression, Stores & Monetization
 
 **Player Leveling**:
 - ✅ Level 1-5 progression (tutorial ends at Level 2)
@@ -149,10 +160,27 @@
 - ✅ XP sources: Battle wins (50-200 XP), quest completion (Phase 2)
 
 **Pack Store**:
-- ✅ Standard Pack (5 cards): 1,000 Gold
-- ✅ Element Booster (5 cards): 2,000 Gold
-- ✅ Epic Booster (5 cards): 5,000 Gold
+- ✅ Standard Pack (5 cards): $0.99 OR 1,000 Gold
+- ✅ Element Booster (5 cards): $1.99 OR 2,000 Gold
+- ✅ Epic Booster (5 cards): $4.99 OR 5,000 Gold
+- ✅ Mega Pack (20 cards, 1 Legendary): $19.99 (money only, whale bait)
 - ✅ Pack opening animation (reveal 1 card at a time, skip option)
+
+**Battle Pass**:
+- ✅ Monthly season: $4.99 (30-day cycle)
+- ✅ Free Track: 5 Standard Packs, 2,000 Gold, 100 Gems
+- ✅ Paid Track: 10 Standard Packs, 1 Epic Booster, 1 Exclusive Legendary, 5,000 Gold, 500 Gems
+- ✅ Progress: 10 XP per battle, 3,000 XP to max (300 battles = ~10-15 days)
+
+**Energy Refills**:
+- ✅ Small Refill: $0.99 (100 Energy = 10 battles)
+- ✅ Large Refill: $3.99 (500 Energy = 50 battles)
+- ✅ Daily Unlimited: $9.99 (infinite battles for 24 hours)
+
+**First-Time Offers** (one-time only):
+- ✅ Starter Pack: $0.99 (2 Standard Packs, 500 Gold, 100 Gems, first 7 days)
+- ✅ New Player Bundle: $4.99 (1 Epic Booster, 1 Legendary choice, 2,000 Gold, first 14 days)
+- ✅ Whale Welcome Pack: $49.99 (5 Mega Packs, 1 Mythic, 30-day Battle Pass, first 30 days)
 
 **Gold Earning**:
 - ✅ Battle rewards: 50-200 Gold per battle
@@ -180,10 +208,13 @@
 
 **Deliverables**:
 - [ ] PlayerLevel C# class (XP tracking, level-up rewards)
-- [ ] PackStore UI (buy packs with Gold, opening animation)
+- [ ] PackStore UI (buy packs with Gold OR money, IAP integration)
+- [ ] BattlePass system (30-day season, Free/Paid tracks, XP progression)
+- [ ] EnergyRefill system (IAP, instant refill)
+- [ ] FirstTimeOffer system (one-time bundles, 7/14/30 day timers)
 - [ ] DailyLogin system (7-day cycle, reward claims)
-- [ ] Analytics tracking (Nakama server, Unity Analytics)
-- [ ] Gold display UI (current Gold, earn/spend notifications)
+- [ ] Analytics tracking (Nakama server, Unity Analytics, revenue tracking)
+- [ ] Gold/Gem display UI (current balances, earn/spend notifications)
 
 ---
 
@@ -196,8 +227,11 @@
 - ✅ Card system (~100 cards, simple Attack/Defense stats)
 - ✅ Deck building (6 Trainer Decks, drag-drop builder)
 - ✅ Combat (8×8 battle map, manual + auto-battle)
-- ✅ Realm Map (40 Locations, HoMM-style exploration)
-- ✅ Treasure nodes (Gold/Gems on Realm Map)
+- ✅ Campaign Mode (72 stages, 8 worlds, 3-star rating)
+- ✅ Daily Challenge (bonus rewards, login incentive)
+- ✅ Pack Store (Standard/Element/Epic/Mega packs, IAP integration)
+- ✅ Battle Pass ($4.99/month, exclusive rewards)
+- ✅ Energy Refills ($0.99-$9.99, whale monetization)
 - ✅ Energy system (10 per battle, 240 refill/day)
 - ✅ Pack Store (Standard/Element/Epic Packs, Gold only)
 - ✅ Daily login (7-day reward cycle)
