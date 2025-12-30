@@ -1302,21 +1302,87 @@ Continue Your Journey:
 
 **System Unlocks**:
 1. **Full County Map**: 10-20 tiles, 1 Boss battle (harder difficulty)
-2. **Pack Shop**: Buy Standard Packs (1,000 gold), Element Boosters (1,500 gold), Epic Boosters (3,000 gold)
-3. **Daily Login Rewards** (starts next login):
+
+2. **Pack Shop** (F2P + Premium Options):
+   ```
+   [Pack Shop Screen]
+   
+   EARN WITH GOLD (Unlimited):
+   - Standard Pack (5 cards): 1,000 Gold
+   - Element Booster (5 cards, 80% element match): 1,500 Gold
+   - Epic Booster (5 cards, guaranteed Epic): 3,000 Gold
+   - Game Deck (50 cards, 1 Legendary): 50,000 Gold
+   
+   PREMIUM PACKS (Weekly Limits):
+   - Premium Standard Pack (5 cards, 10% shiny rate): 100 Gems | 10/week
+   - Premium Element Booster (5 cards, 10% shiny rate): 150 Gems | 5/week
+   - Premium Epic Booster (5 cards, 10% shiny rate): 300 Gems | 3/week
+   - Shiny Guaranteed Pack (1 guaranteed shiny): 1,000 Gems | 1/week
+   
+   [Your Gold: 4,500] [Your Gems: 0]
+   [Weekly Limits Reset: 6 days, 23 hours]
+   ```
+
+3. **Shiny System Tutorial** (If player gets shiny in tutorial packs):
+   ```
+   [Popup: "✨ Shiny Card!"]
+   "You found a Shiny Uncommon Archer!"
+   
+   Shinies provide bonuses:
+   - ✨ 5% stat boost in battles (31 Attack vs 30 normal)
+   - ✨ 5% production boost on economy deployments
+   - ✨ Animated golden aura on maps
+   - ✨ 10× trade value in Auction House
+   
+   Drop Rates:
+   - Standard Packs: 1% shiny chance (1 per ~20 packs)
+   - Premium Packs: 10% shiny chance (1 per ~2 packs)
+   
+   Pity System: Guaranteed shiny after 100 Standard Packs
+   
+   [Button: "Awesome!"]
+   ```
+
+4. **Daily Login Rewards** (starts next login):
    - Day 1-6: Random card (60% Common, 30% Uncommon, 10% Rare)
    - Day 7: Choose 1 Rare card (filter by element)
    - Day 14: 1 Standard Pack (5 cards)
-   - Day 28: Choose 1 Legendary (pool of 10)
-4. **Weekly Quest System**:
+   - Day 28: Choose 1 Legendary (pool of 10, option for shiny variant)
+
+5. **Weekly Quest System**:
    - Complete 5/7 daily quests → **2 Standard Packs**
    - Example quests: "Win 3 battles", "Deploy 5 buildings", "Open 2 packs"
-5. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
+   - Quest reset: Every Monday 00:00 UTC
+
+6. **Settings Menu**: Audio, battle speed (1×/2×/4×/Instant), name change (100 gold after first free change)
+
+**Pack Economy Explanation** (Optional Tutorial Popup):
+```
+[Pack Shop Guide]
+
+EARNING PACKS (Free-to-Play):
+- Daily Quests: +300 Gold/day → 3 Standard Packs/week
+- Battle Victories: +50 Gold/win → 20 wins = 1 pack
+- Weekly Quests: 2 Standard Packs/week (5/7 daily quests)
+- Campaign Rewards: ~10 packs (County + State Map completion)
+Total F2P: ~10-15 packs/week through play
+
+BUYING PACKS (Optional):
+- Premium Packs: 10% shiny rate (vs 1% Standard)
+- Weekly Limits: Prevents "buy 1,000 packs instantly"
+- Shiny Bonus: 5% stat/production boost (not game-breaking)
+- Fair Play: Rarity Budget limits deck power (see Deck Builder)
+
+[Button: "Got It!"]
+```
 
 **Total Cards After Tutorial** (if opened packs): 
 - 20 (Trainer Deck) + 5 (Element Booster #1) + 5 (Battle Victory Pack) + 5 (Element Booster #2) + 10 (Tutorial Complete Packs) = **45 cards**
 
 **Total Gold After Tutorial**: ~4,500 Gold (4 Standard Packs OR 3 Element Boosters OR save for Game Deck)
+
+**Shiny Chance in Tutorial Packs**: 
+- 45 cards opened × 1% shiny rate = **~0.45 average shinies** (36% chance of 1 shiny, 64% chance of 0)
 
 ---
 

@@ -988,62 +988,180 @@ Stars show **current power level** within the rarity tier:
 
 ### Shiny Rarity & Drop Rates
 
-**Any card can be shiny** (Common to Mythic), but drop rates are **extremely low**:
+**Any card can be shiny** (Common to Mythic), with **utility bonuses for collectors**:
 
-| Base Rarity | Normal Drop Rate | Shiny Drop Rate | Shiny Chance (if you get that rarity) |
-|-------------|------------------|-----------------|---------------------------------------|
-| Common | 70% | 0.7% | 1% (1 in 100 commons) |
-| Uncommon | 20% | 0.2% | 1% (1 in 100 uncommons) |
-| Rare | 8% | 0.08% | 1% (1 in 100 rares) |
-| Epic | 1.5% | 0.015% | 1% (1 in 100 epics) |
-| Legendary | 0.48% | 0.0048% | 1% (1 in 100 legendaries) |
-| Mythic | 0.02% | 0.0002% | 1% (1 in 100 mythics) |
+### Shiny Drop Rates (Pack Type Dependent)
 
-**Practical Drop Rates**:
-- **Shiny Common**: ~1 per 143 packs (0.7%)
-- **Shiny Legendary**: ~1 per 20,833 packs (0.0048%)
-- **Shiny Mythic**: ~1 per 500,000 packs (0.0002%)
+**Standard Packs** (Earned through play):
+- **Shiny Chance**: 1% per card (same as current system)
+- **F2P Accessible**: ~1 shiny every 100 cards (20 packs)
+- **Pity System**: Guaranteed shiny after 100 packs
 
-### Shiny Pity System
+**Premium Packs** (Purchased with gems/money):
+- **Shiny Chance**: 10% per card (10× higher than standard)
+- **Whale Appeal**: ~1 shiny every 10 cards (2 packs)
+- **Pity System**: Guaranteed Rare+ shiny after 20 premium packs
 
-To prevent "never seeing a shiny" frustration, implement **separate pity timers**:
+**Pack Type Examples**:
+| Pack Type | Cost | Shiny Rate | Avg Shinies/Pack | F2P Access |
+|-----------|------|------------|------------------|------------|
+| **Standard Pack** | 1,000 Gold | 1% | 0.05 (1 per 20 packs) | ✅ Daily quests |
+| **Element Booster** | 1,500 Gold | 1% | 0.05 | ✅ Campaign rewards |
+| **Premium Standard** | 100 Gems ($0.99) | 10% | 0.5 (1 per 2 packs) | ❌ Gem purchase only |
+| **Premium Element** | 150 Gems ($1.49) | 10% | 0.5 | ❌ Gem purchase only |
+| **Epic Booster** | 3,000 Gold | 1% | 0.05 | ✅ Weekly quests |
+| **Premium Epic** | 300 Gems ($2.99) | 10% | 0.5 | ❌ Gem purchase only |
+| **Shiny Guaranteed** | 1,000 Gems ($9.99) | 100% | 1.0 (always 1 shiny) | ❌ Special events |
 
-**Shiny Pity Counters**:
-1. **Any Shiny**: Guaranteed shiny (random rarity) after **100 packs** without shiny
-   - Rarity distribution follows normal pack rates (70% common, 20% uncommon, etc.)
-2. **Rare+ Shiny**: Guaranteed Rare/Epic/Legendary shiny after **500 packs** without Rare+ shiny
+**Rarity Distribution** (Within Shiny Drops):
+- Common Shiny: 60% (if shiny procs, 60% chance it's Common)
+- Uncommon Shiny: 25%
+- Rare Shiny: 12%
+- Epic Shiny: 2.5%
+- Legendary Shiny: 0.5%
+- Mythic Shiny: 0.001% (ultra-rare, special events only)
+
+### Shiny Utility System (Collector Advantage)
+
+**Map Deployment Bonuses**:
+Shinies provide **5% production/combat bonuses** when deployed on County/State maps:
+
+**Economy Buildings** (Deployed on resource nodes):
+- **Normal Mine**: +100 Gold/hour
+- **Shiny Mine**: +105 Gold/hour (5% production boost)
+- **Stacking**: 2 Shiny economy cards on same territory = +10% total (cumulative)
+
+**Battle Units** (Deployed in formations):
+- **Normal Knight**: 30 Attack, 40 Defense
+- **Shiny Knight**: 31 Attack, 42 Defense (rounded up, 5% boost)
+- **Stacking**: All-shiny formation (5 shinies) = +25% stats (powerful but rare)
+
+**Visual Indicators**:
+- **Battle Map**: Shiny units have golden aura, particle trail
+- **County Map**: Shiny buildings have animated gold shimmer
+- **Codex**: Shiny cards have holographic border, star icon
+
+**Why This Works**:
+- ✅ **Collector Value**: Shinies aren't just cosmetic (5% edge)
+- ✅ **Not Pay-to-Win**: 5% boost ≠ game-breaking (skill still matters)
+- ✅ **Whale Appeal**: All-shiny deck = flex + slight edge
+- ✅ **F2P Competitive**: Normal cards 95% as good (no paywalls)
+- ✅ **Stacking Incentive**: Collect multiple shinies for bigger bonuses
+
+### Shiny Pity System (Anti-Frustration)
+
+**Pity Counters** (Separate for Standard vs Premium Packs):
+
+**Standard Pack Pity** (F2P Accessible):
+1. **Any Shiny**: Guaranteed shiny after **100 packs** without shiny
+   - Rarity: 60% Common, 25% Uncommon, 12% Rare, 2.5% Epic, 0.5% Legendary
+2. **Rare+ Shiny**: Guaranteed Rare/Epic/Legendary shiny after **500 packs**
    - Distribution: 80% Rare, 18% Epic, 2% Legendary
-3. **Legendary Shiny**: Guaranteed Legendary shiny after **2,000 packs** without Legendary shiny
-   - Specific card is random from Legendary pool
-4. **Mythic Shiny**: No pity timer (ultra-exclusive)
-   - Only obtainable via special events, tournaments, or 0.0002% luck
 
-**Pity Timer UI**:
-- Display in pack opening screen: "Next guaranteed shiny in: 47 packs"
-- Separate counters for "Any Shiny" and "Rare+ Shiny"
-- Resets to 0 after pity trigger
+**Premium Pack Pity** (Gem Purchase):
+1. **Any Shiny**: Guaranteed shiny after **20 packs** without shiny (5× faster)
+2. **Rare+ Shiny**: Guaranteed Rare/Epic/Legendary shiny after **50 packs**
+
+**Mythic Shiny** (No Pity):
+- **Ultra-Exclusive**: No pity timer, 0.001% drop rate
+- **Acquisition**: Special events, tournament rewards, 500k+ packs (theoretical)
 
 ### Shiny Acquisition Methods
 
-**Primary Sources**:
-1. **Pack Openings**: 1% chance per card of that rarity (with pity backup)
-2. **Shiny-Specific Packs**: "Premium Shiny Pack" (1,000 gems, guarantees 1 shiny)
-3. **Seasonal Events**: "Shiny Week" - 2x shiny drop rates for 7 days
-4. **Battle Pass**: Tier 40 reward = 1 guaranteed Rare+ shiny
-5. **Achievements**: "Open 1,000 packs" = 1 random shiny reward
+**Primary Sources** (All Players):
+1. **Pack Openings**: 
+   - Standard Packs: 1% shiny rate (F2P accessible)
+   - Premium Packs: 10% shiny rate (gem purchase)
+2. **Seasonal Events**: "Shiny Week" - 2× shiny drop rates for 7 days
+3. **Battle Pass**: Tier 40 reward = 1 guaranteed Rare+ shiny (free track)
+4. **Daily Login Rewards**: Day 28 = Choose 1 Legendary (option to select shiny variant)
+5. **Campaign Milestones**: Complete State Map = 1 random Rare+ shiny
 
-**Secondary Sources**:
-6. **Auction House**: Players can trade shinies (expect 10x normal card price)
-7. **Crafting**: Combine 10 normal versions → 1 shiny version (costly but deterministic)
-8. **VIP Bonuses**: VIP 5 gets +0.5% shiny rate (1.5% instead of 1%)
+**Secondary Sources** (Whale/Grind):
+6. **Shiny Guaranteed Pack**: 1,000 gems ($9.99) = 1 guaranteed shiny (random rarity)
+7. **Auction House**: Players can trade shinies (expect 10× normal card price)
+8. **Crafting**: Combine 10 normal versions → 1 shiny version (costly but deterministic)
+9. **VIP Bonuses**: VIP 5 gets +1% shiny rate in all packs (2% Standard, 11% Premium)
+
+### Weekly Purchase Limits (Anti-Whale-Blitz)
+
+**Purpose**: Prevent whales from "buying 1,000 packs day 1" and dominating instantly.
+
+**Weekly Shop Caps** (Resets every Monday 00:00 UTC):
+
+**Gold Purchases** (Unlimited):
+- ✅ **Standard Packs**: Unlimited (1,000 gold each)
+- ✅ **Element Boosters**: Unlimited (1,500 gold each)
+- ✅ **Epic Boosters**: Unlimited (3,000 gold each)
+- **Why Unlimited**: Gold is earned through play (prevents F2P frustration)
+
+**Gem Purchases** (Weekly Limits):
+| Pack Type | Cost | Weekly Limit | Rationale |
+|-----------|------|--------------|-----------|
+| **Premium Standard Pack** | 100 Gems | 10/week | Prevents infinite shiny farming |
+| **Premium Element Booster** | 150 Gems | 5/week | Limits element-specific shinies |
+| **Premium Epic Booster** | 300 Gems | 3/week | Prevents Epic spam |
+| **Shiny Guaranteed Pack** | 1,000 Gems | 1/week | Ultra-premium (1 guaranteed shiny) |
+| **Game Deck** | 2,000 Gems | 1/week | Prevents instant 300-card collection |
+
+**Real Money Purchases** (Weekly Limits):
+| Item | Price | Weekly Limit | Rationale |
+|------|-------|--------------|-----------|
+| **5-Pack Bundle** | $4.99 | 5/week | Max 25 Standard Packs/week ($24.95) |
+| **Premium 5-Pack Bundle** | $9.99 | 3/week | Max 15 Premium Packs/week ($29.97) |
+| **Game Deck** | $19.99 | 1/week | Max 1 Game Deck/week (50 cards) |
+| **Battle Pass** | $4.99 | 1/month | Monthly subscription (not weekly) |
+
+**Total Whale Spending Cap** (Week 1):
+- 10 Premium Standard Packs: 1,000 Gems ($9.90)
+- 5 Premium Element Boosters: 750 Gems ($7.50)
+- 3 Premium Epic Boosters: 900 Gems ($9.00)
+- 1 Shiny Guaranteed Pack: 1,000 Gems ($9.99)
+- 1 Game Deck: 2,000 Gems ($19.99)
+- 5× 5-Pack Bundles: $24.95
+- 3× Premium 5-Pack Bundles: $29.97
+- 1× Game Deck direct: $19.99
+- 1× Battle Pass: $4.99
+- **Total Max Spend**: ~$136/week
+
+**Weekly Limit UI**:
+```
+[Pack Shop - Premium Standard Pack]
+Cost: 100 Gems
+Weekly Limit: 7/10 remaining
+
+[Purchase] [Purchase 5] [Purchase 10 (Max)]
+
+Limit resets in: 3 days, 14 hours
+```
+
+**Why Weekly Limits Work**:
+- ✅ **Prevents Day 1 Stomp**: Whale can't buy 1,000 packs instantly (max ~100/week)
+- ✅ **Sustains Revenue**: Whales spend every week (recurring income)
+- ✅ **F2P Fairness**: Whale gets 100 packs/week, F2P gets 10 packs/week (10× gap, not 1000×)
+- ✅ **Progression Pacing**: Even whales take months to collect all shinies
+- ✅ **Event FOMO**: "Shiny Week" doubles value (encourages weekly engagement)
 
 ### Shiny Balance Philosophy
 
-**Why Shinies Are Rare**:
-- **Exclusivity**: Makes them special ("I have a shiny Legendary Thor!")
-- **Collector Value**: Drive engagement for completionists
-- **Monetization**: Whales chase shinies (pay-for-look, not pay-to-win)
-- **Trading Economy**: Creates high-value auction house items
+**Why Shinies Have Utility (5% Bonus)**:
+- **Collector Reward**: Shinies feel special beyond just visuals
+- **Whale Justification**: Spending $100/week has tangible benefit (5% edge)
+- **Not Pay-to-Win**: 5% boost ≠ game-breaking (Normal Knight: 30 Attack, Shiny Knight: 31 Attack)
+- **Skill > Spending**: Good player with normal cards beats bad player with shinies
+- **F2P Accessible**: 1% drop rate in free packs (patience rewarded)
+
+**Why Premium Packs Exist (10× Shiny Rate)**:
+- **Whale Appeal**: $10 for 2 Premium Packs = ~1 shiny (predictable value)
+- **Time vs Money**: F2P grinds 100 packs for shiny, whale buys 10 packs ($50)
+- **Not Exclusive**: F2P can still get shinies (just slower)
+- **Weekly Limits**: Even whales can't buy infinite shinies (10 Premium Packs/week max)
+
+**Why Weekly Caps Matter**:
+- **Prevents Power Spike**: No "buy 1,000 packs, dominate PvP day 1"
+- **Sustains Engagement**: Whales return every week to hit cap (retention)
+- **F2P Competitive**: 10× spending gap (not 1000×) keeps matches fair
+- **Trading Economy**: Limits on new shinies entering market (auction house value stable)
 
 **Preventing Shiny Inflation**:
 - **No Gameplay Advantage**: Shinies = normal cards (same stats, same abilities)
