@@ -158,15 +158,16 @@ This document walks through the **exact player journey** from app launch to firs
 ## Phase 2: Initial Card Draw (2-5 Minutes) - THE HOOK
 
 ### Step 5: Opening Cinematic
-**Screen**: Card Draw Intro
+**Screen**: Trainer Deck Selection Intro
 ```
 [Fade in: Mystical card vault opening]
 [Narrator text: "Your journey begins with these cards..."]
-[Animated: 5 glowing card packs floating]
-[Button: "Open Packs"] (pulsing)
+[Animated: 6 glowing Trainer Decks appearing in a circle]
+[Text: "Choose your path..." fades in]
+[Button: "Choose Your Deck"] (pulsing)
 ```
 
-**Player Action**: Taps "Open Packs"
+**Player Action**: Taps "Choose Your Deck"
 
 **Design Decisions Needed**:
 - [ ] Narrator voice (text only or voice-over?)
