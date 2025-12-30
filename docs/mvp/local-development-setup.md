@@ -36,12 +36,20 @@ This guide walks you through setting up your local development environment for *
 1. Open **Unity Hub**
 2. Click **"Installs"** tab (left sidebar)
 3. Click **"Install Editor"** → Choose **"6000.x LTS"** (Unity 6, recommended version shown)
-4. Select modules:
-   - ✅ **Microsoft Visual Studio Community 2022** (C# IDE)
-   - ✅ **Android Build Support** (for mobile later)
-   - ✅ **iOS Build Support** (Mac only, skip if Windows)
-   - ✅ **Documentation** (offline help)
-5. Click **"Install"** (3-5 GB download, 15-20 minutes)
+4. Click **"Install"** (Unity 6 installs core editor first, modules come later)
+5. Wait for download (3-5 GB, 15-20 minutes)
+
+**Add Modules After Installation** (optional, can do later):
+1. In Unity Hub **"Installs"** tab, find Unity 6 LTS
+2. Click **⚙️ (gear icon)** → **"Add Modules"**
+3. Select:
+   - ✅ **Microsoft Visual Studio Community 2022** (C# IDE - recommended)
+   - ✅ **Android Build Support** (for mobile later - optional)
+   - ✅ **iOS Build Support** (Mac only - optional)
+   - ✅ **Documentation** (offline help - optional)
+4. Click **"Install"**
+
+**For MVP**: Just the core editor is fine. Add Android/iOS modules when ready to build mobile versions.
 
 **Why Unity 6 LTS?**
 - Latest LTS (stable, no breaking changes for 2 years)
