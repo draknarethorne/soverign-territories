@@ -67,8 +67,10 @@ soverign-territories/
 │       └── UI/ (buttons, backgrounds)
 └── docs/
     ├── game-bible.md (systems reference)
-    ├── tutorial-flow.md (player journey)
-    └── mvp/ (this folder)
+    └── mvp/
+        ├── tutorial-flow.md (player journey)
+        ├── unity-implementation-guide.md (this file)
+        └── mvp-scope-final.md (8-week roadmap)
 ```
 
 ---
