@@ -3674,342 +3674,116 @@ Players set tactics before battle, AI executes automatically:
 
 # SECTION 9: PROGRESSION & BALANCE
 
-Progression in Sovereign Territories is designed to be rewarding and endless, with RPG-like depth to keep players invested. From leveling castles to customizing heroes, every action contributes to long-term growth. Balance is maintained through soft counters and meta shifts, ensuring strategies remain viable while expansions introduce new challenges.
+> **See [progression-schema.json](specs/progression-schema.json) for complete XP formulas, unlock thresholds, and achievement tracking.**
+
+Progression uses **two parallel systems**: Player Level (account-wide, unlocks features) and Castle Level (per-territory, unlocks buildings/slots). Balance maintained through soft counters, dynamic scaling, and meta shifts.
 
 ---
 
-### Player Level vs Castle Level (Critical Design Distinction)
+## 9.1 Dual Progression Systems
 
-Sovereign Territories uses **two parallel progression systems** that serve different purposes:
+### Player Level (Account-Wide)
 
-1. **Player Level** (Account-Wide Avatar Progression)
-2. **Castle Level** (Per-Castle Territory Progression)
+### Player Level (Account-Wide)
 
-Both are **100% F2P accessible**—active players level faster, but there is no paywall.
+**What It Is**: Personal mastery, unlocks content/features across entire game
 
----
+**How to Level**: Battles (10-100 XP), daily quests (50-200 XP), events, achievements
 
-#### Player Level (Your Avatar/Account)
+**Key Unlocks**:
+- **Level 10**: Alliance join, PvE events, 25-30 card decks
+- **Level 15**: Arena PvP (1v1/3v3), secondary castles (up to 5)
+- **Level 20**: Active PvP Maps (open-world), Realm Map, 35-40 card decks
+- **Level 30**: Max deck size (50 cards), Alliance Wars, all content unlocked
 
-**What It Represents**: Your personal mastery and unlocked capabilities across the entire game. This is **your meta-progression** that never resets.
+**F2P Timeline**: Level 30 in 3-6 months of active play (~160,000 XP total)
 
-**How to Gain Player XP**:
-- Campaign battles, daily quests, weekly events, monthly challenges
-- PvP victories, alliance contributions, achievements
-- Battle Pass tiers (seasonal)
-- First-time achievements (one-time bonuses)
+**Why It Matters**:
+- ✅ Persistent (never lost), gates content to prevent overwhelm
+- ❌ No direct power (Level 50 with Commons loses to Level 10 with Legendaries)
 
-**Player Level Benefits (Applied to ALL Your Castles)**:
+### Castle Level (Per-Territory)
 
-| Player Level | Max Deck Size | Key Unlocks | F2P Timeline (Active Player) |
-|--------------|---------------|-------------|------------------------------|
-| **1** | 10-15 cards | Tutorial, first castle, PvE Realm Maps | Day 1 |
-| **3** | 15-20 cards | Auction house access | Day 1-2 |
-| **5** | 20-25 cards | Daily quests, saga battles | Day 3-5 |
-| **10** | 25-30 cards | **Alliance join**, Alliance PvE events, Territory Map | Week 1-2 |
-| **15** | 30-35 cards | **Controlled PvP** (1v1/3v3 Arena), Secondary castles (up to 5) | Week 2-4 |
-| **20** | 35-40 cards | **Active PvP Maps** (open-world conquest), Realm Map, Advanced tactics | Month 1-2 |
-| **25** | 40-45 cards | Prestige cosmetics, World Map access | Month 2-3 |
-| **30** | 40-50 cards (max) | All content unlocked, legendary frame, Alliance Wars | Month 3-6 |
+**What It Is**: Strength/development of specific castle on map (like "base level")
 
-**Why Player Level Matters**:
-- ✅ **Persistent**: Never lost, even if castles are destroyed
-- ✅ **Deck Size Scaling**: Prevents new players from being overwhelmed by 50-card decks
-- ✅ **Content Gating**: Learn basics before accessing complex systems
-- ✅ **Social Status**: Visible rank badge shows experience
-- ✅ **F2P Fairness**: Cannot be purchased—everyone earns through play
-- ❌ **No Direct Power**: Does NOT make cards stronger (Level 50 player with Commons loses to Level 10 with Legendaries)
+**How to Level**: Holding territories (10 XP/hour), building upgrades (100-500 XP), winning defenses (200 XP)
 
----
+**Key Benefits**:
 
-#### Castle Level (Your Territory Bases)
+| Castle Level | Building Slots | Hero Stacks | Deck Slots | Gold Bonus |
+|--------------|----------------|-------------|------------|------------|
+| **1** | 5 | 3 | 3 | +0% |
+| **10** | 15 | 7 | 7 | +25% |
+| **20** | 30 | 15 | 9 | +75% |
+| **30** | 50 | 25 | 10 | +150% |
 
-**What It Represents**: The strength and development of a **specific castle** you control on the map. **Think of it as your "Base Level"** for that location.
+**Why It Matters**:
+- ✅ Economic bonuses, territory control, AFK progression
+- ❌ Can be lost if castle destroyed (but keep Player Level)
 
-**How to Gain Castle XP** (Separate from Player XP):
-- Holding territories (10 XP/hour per territory)—AFK passive income
-- Building upgrades (100-500 XP per level)
-- Winning defenses (200 XP per successful defense)
-- Wonder control (500 XP/hour, contested)
-- Alliance contributions (50 XP per 1,000 gold donated)
+### Lord Skill Tree (Castle Level 5+)
 
-**Castle Level Benefits (Specific to Each Castle)**:
+**4 Branches** (1 skill point per castle level):
+1. **Economic**: +25% gold, -5% auction fees, +50% storage
+2. **Military**: +10% unit stats, +100% siege damage, +50% building HP
+3. **Diplomatic**: +25% alliance efficiency, +3 max allies
+4. **Arcane**: +50 energy, +5% legendary drop rate, +50% AFK production
 
-| Castle Level | Building Slots | Hero Stacks Max | Deck Slots | Gold Bonus | Map Tier |
-|--------------|----------------|-----------------|------------|------------|----------|
-| **1** | 5 | 3 | 3 | +0% | Tutorial |
-| **5** | 10 | 5 | 5 | +10% | Local |
-| **10** | 15 | 7 | 7 | +25% | State |
-| **15** | 20 | 10 | 8 | +50% | County |
-| **20** | 30 | 15 | 9 | +75% | Global |
-| **25** | 40 | 20 | 10 | +100% | Prestige skin |
-| **30** | 50 | 25 | 10 | +150% | Mega-castle |
+**Respec**: 500 gems, once per month
 
-**Why Castle Level Matters**:
-- ✅ **Territory Control**: Higher-level castles hold more buildings and defend better
-- ✅ **Economic Bonuses**: Gold bonuses encourage leveling your main economic castle
-- ✅ **Multiple Instances**: Control up to 5 castles (Player Level 15+), each with independent Castle Levels
-- ✅ **Strategic Choices**: Level one mega-castle OR spread XP across multiple castles
-- ✅ **AFK Progression**: Holding territory generates Castle XP passively
-- ❌ **Can Be Lost**: If castle is destroyed on the map, you lose that Castle Level (but keep Player Level)
+### Multiple Castles (Player Level 15+)
+
+- Hold up to 5 castles (1 main + 4 secondary)
+- Each levels independently
+- Secondary castles have 50% building slots
+- Maintenance: 1,000 gold/day per secondary
 
 ---
 
-#### System Comparison Table
+## 9.2 Deck Management
 
-| System | What It Affects | How to Level | Persistent? | F2P Timeline |
-|--------|-----------------|--------------|-------------|--------------|
-| **Player Level** | Deck size, feature unlocks, content access | Battles, quests, events | ✅ Always | Day 1 → Month 6 for max |
-| **Castle Level** | Building slots, hero stacks, deck storage, gold bonus | Territory control, buildings | ❌ Lost if destroyed | Hour 1 → Month 2 per castle |
-
----
-
-#### Example Scenario
-
-**You are Player Level 20**:
-- Unlocked 35-card decks (usable in ALL battles, regardless of castle)
-- Unlocked World Map access
-- Can control up to 5 castles simultaneously
-
-**You have 3 castles**:
-1. **Main Castle** (Castle Level 25): Fully upgraded, +100% gold, 40 building slots
-2. **Resource Castle** (Castle Level 10): Mining region, 15 building slots
-3. **PvP Border Castle** (Castle Level 5): Defense outpost, 10 building slots
-
-**Your Player Level 20** gives you 35-card decks for every battle.
-**Your Castle Levels** determine how many buildings and defenses each castle can deploy.
-
----
-
-#### Design Philosophy
-
-**Player Level** = **Who you are** (skill, experience, mastery)
-**Castle Level** = **What you control** (territory, resources, power)
-
-You are always progressing your account (Player Level) even if your territorial holdings (Castles) fluctuate.
-
----
-
-## 9.1 Leveling Mechanics
-
-Players earn XP from battles, quests, and events. This XP unlocks deck slots, allowing larger formations, and card upgrades like stat boosts. Leveling is free and tied to engagement, with milestones granting titles or bonuses.
-
-### XP Sources
-- **PvE Battles**: 10-50 XP per victory (scales with difficulty)
-- **PvP Matches**: 25-100 XP per match (win = full, loss = 25%)
-- **Daily Quests**: 50-200 XP per quest completed
-- **Weekly Challenges**: 500-1000 XP for tournament participation
-- **Alliance Events**: 100-500 XP for contributions
-- **First Win of Day**: Bonus 100 XP
-- **Login Streaks**: 50 XP per day (cumulative up to 350 XP on day 7)
-
-### XP Progression Curve
-**Level Requirements** (exponential curve to encourage long-term play):
-- Level 1 → 2: 100 XP
-- Level 2 → 3: 250 XP
-- Level 3 → 4: 500 XP
-- Level 4 → 5: 1,000 XP
-- Level 5 → 10: 2,000 XP per level (total: 10,000 XP)
-- Level 10 → 20: 5,000 XP per level (total: 50,000 XP)
-- Level 20 → 30: 10,000 XP per level (total: 100,000 XP)
-- Level 30+: 15,000 XP per level (no cap, infinite progression)
-
-**Total XP to Level 30**: ~160,000 XP (estimated 60-90 days of active play)
-
-### Unlock Milestones
-- **Level 5**: Unlock Auction House, join alliances
-- **Level 10**: PvP ranked matchmaking, alliance wars, Territory Map access
-- **Level 15**: Unlock Expedition board game mode
-- **Level 20**: Realm Map access, advanced building decks
-- **Level 25**: World Map access, wonder control
-- **Level 30**: Max deck slots (10), prestige titles, endgame content
-- **Level 40**: Legendary achievement badge, developer Q&A access
-- **Level 50**: Eternal title, custom avatar frame, name in credits
-
-### Titles & Badges
-**Earned at Milestones**:
-- Level 10: "Veteran Commander"
-- Level 20: "Master Tactician"
-- Level 30: "Sovereign Lord"
-- Level 40: "Legendary Conqueror"
-- Level 50: "Eternal Sovereign" (displayed next to username)
-
-**Special Titles** (achievement-based):
-- "Undefeated" (50 PvP wins without loss)
-- "Whale Hunter" (defeat 10 VIP 5 players)
-- "Economy Tycoon" (1,000,000 gold earned)
-- "Card Collector" (500+ unique cards)
-
-## 9.2 Castle/Lord Leveling
-
-Your main castle acts as a hub, leveling with XP to unlock features. Higher levels increase deck slots (e.g., Level 10 allows 10-slot decks), enable more complex tactics, and provide passive buffs like increased gold income. At Level 10, players become eligible for PvP alliances and top-tier maps. Players can join alliances earlier, contributing resources and experience for alliance bonuses (e.g., 10% boost to earnings).
-
-### Castle XP & Leveling
-**Separate from Player XP**: Castle levels via territory control and building upgrades
-
-**Castle XP Sources**:
-- **Holding Territories**: 10 XP per hour per controlled territory
-- **Building Upgrades**: 100-500 XP per building level
-- **Winning Defenses**: 200 XP per successful defense
-- **Wonder Control**: 500 XP per hour (World Map wonders)
-- **Alliance Contributions**: 50 XP per 1,000 gold donated to alliance
-
-**Castle Level Benefits**:
-- **Level 1**: 3 deck slots, 5 building slots, 3 hero stacks max
-- **Level 5**: 5 deck slots, 10 building slots, 5 hero stacks, +10% gold production
-- **Level 10**: 7 deck slots, 15 building slots, 7 hero stacks, +25% gold, unlock Territory Map
-- **Level 15**: 8 deck slots, 20 building slots, 10 hero stacks, +50% gold, unlock Realm Map
-- **Level 20**: 9 deck slots, 30 building slots, 15 hero stacks, +75% gold, unlock World Map
-- **Level 25**: 10 deck slots (max), 40 building slots, 20 hero stacks, +100% gold, prestige castle skin
-- **Level 30**: Mega-castle visual upgrade, +150% gold, legendary lord status
-
-### Lord Skill Tree
-**Unlocks at Castle Level 5**: Allocate skill points (1 per castle level)
-
-**Skill Tree Branches**:
-1. **Economic** (Gold & Resources):
-   - **Tax Collector**: +5/10/15/20/25% gold from territories
-   - **Resource Boost**: +5/10/15/20/25% food/lumber/ore production
-   - **Market Savvy**: -1/-2/-3/-4/-5% auction house fees
-   - **Warehouse Manager**: +10/20/30/40/50% storage capacity
-
-2. **Military** (Combat & Defense):
-   - **Strategic Mind**: +5/10/15/20/25% XP from battles
-   - **Fortifications**: +10/20/30/40/50% building HP
-   - **Elite Training**: +2/4/6/8/10% unit attack and HP
-   - **Siege Master**: +20/40/60/80/100% damage to enemy buildings
-
-3. **Diplomatic** (Alliance & Social):
-   - **Charisma**: +5/10/15/20/25% alliance contribution efficiency
-   - **Negotiator**: -10/-20/-30/-40/-50% war declaration costs
-   - **Mentor**: +5/10/15% XP for all alliance members (aura buff)
-   - **Diplomat**: +1/2/3 max alliance allies
-
-4. **Arcane** (Magic & Special):
-   - **Mana Reserves**: +10/20/30/40/50 max energy
-   - **Energy Recharge**: -5/-10/-15/-20/-25% energy recharge time
-   - **Card Luck**: +1/2/3/4/5% legendary drop rate from packs
-   - **AFK Efficiency**: +10/20/30/40/50% AFK resource production
-
-**Respec Cost**: 500 gems (can reset skill tree once per month)
-
-### Multiple Castles
-**Secondary Castles** (Unlocked at Player Level 15):
-- Hold up to 5 castles simultaneously (1 main + 4 secondary)
-- Each castle levels independently
-- Secondary castles have 50% building slots of main castle
-- Useful for controlling multiple regions on World Map
-- Maintenance cost: 1,000 gold per day per secondary castle
-
-## 9.3 Deck Storage and Management
-
-Decks can be saved and switched instantly, supporting multiple strategies. Storage is limited by castle level, encouraging progression. Dismantling isn't required, preserving builds for PvE or PvP.
-
-### Deck Slots
-**Progressive Unlocks**:
+**Deck Slots** (Progressive Unlocks):
 - **Castle Level 1**: 3 deck slots (1 battle deck, 1 building deck, 1 experimental)
 - **Castle Level 5**: 5 slots (2 battle, 2 building, 1 flex)
 - **Castle Level 10**: 7 slots (3 battle, 3 building, 1 flex)
 - **Castle Level 20**: 9 slots (4 battle, 4 building, 1 flex)
-- **Castle Level 25**: 10 slots (max: 5 battle, 5 building)
+**Deck Slots** (Progressive Unlocks):
+- Castle Level 1: 3 slots | Level 10: 7 slots | Level 25: 10 slots (max)
+- VIP 5: +2 extra slots (12 total)
 
-**VIP Bonus**: VIP 5 gets +2 extra slots (12 total)
+**Deck Features**:
+- Quick switch (1-click dropdown), templates, copy/import/export
+- Auto-complete (AI suggests cards), win rate tracking, deck tags
+- Share deck codes ("ST-DECK-ABC123"), community deck library
 
-### Deck Management UI
-**Features**:
-1. **Quick Switch**: Dropdown menu to switch active deck (1-click)
-2. **Deck Templates**: Save deck compositions with names ("PvP Aggro", "PvE Farm", "Norse Theme")
-3. **Copy Deck**: Duplicate existing deck as starting point for variations
-4. **Import/Export**: Share deck codes with friends ("ST-DECK-ABC123")
-5. **Auto-Complete**: AI suggests cards to fill empty slots based on theme/synergy
-6. **Deck Comparison**: Side-by-side view of 2 decks (shows stat differences)
-7. **Win Rate Tracking**: Display win/loss record per deck (data-driven optimization)
-8. **Deck Tags**: Color-code and label decks (red = PvP, blue = PvE, green = Economy)
+**Deck Constraints**:
+- **Battle Decks**: 20-30 cards, max 1 Legendary hero OR 2 Epic heroes
+- **Building Decks**: 15-25 cards, max 10 production + 10 defense buildings
+- **Theme Bonus**: 20+ cards of same theme = synergy buff
 
-### Deck Building Constraints
-**Battle Decks**:
-- **Size**: 20-30 cards (smaller = faster cycling, larger = more options)
-- **Hero Limit**: 1 legendary hero OR 2 epic heroes OR 3 rare heroes
-- **Unit Limit**: Max 20 unit cards (stacks counted individually)
-- **Tactic Limit**: Max 5 tactics (AI behavior slots)
-- **Equipment Limit**: Max 10 equipment cards (attached to heroes)
-- **Theme Bonus**: 20+ cards of same theme = synergy buff (see Section 2.3)
+---
 
-**Building Decks**:
-- **Size**: 15-25 cards
-- **Production Limit**: Max 10 production buildings (farms, mines, etc.)
-- **Defense Limit**: Max 10 defense buildings (turrets, walls, etc.)
-- **Special Limit**: Max 5 special buildings (wonders, teleports, etc.)
-- **Terrain Matching**: Must have buildings for available terrain (e.g., don't bring fishing huts to desert map)
+## 9.3 Balance Systems
 
-### Deck Validation
-**Pre-Battle Checks**:
-- **Minimum Size**: Battle deck must have ≥15 cards, building deck ≥10 cards
-- **Illegal Cards**: Flag cards banned in current mode (e.g., OP cards banned in ranked)
-- **Synergy Warnings**: Alert if deck has anti-synergies (e.g., fire + water units = neutral)
-- **Missing Roles**: Warn if deck lacks tank, healer, or DPS (suggest adding)
-- **Over-Budget**: Some modes have "deck cost" limits (total rarity points ≤100)
+**Difficulty Scaling** (Dynamic):
+- Enemy strength scales with Player Level (+10% stats per 5 levels)
+- PvE AI adapts tactics based on player performance
+- Soft counters: Fire-heavy decks encounter more water enemies
+- Meta shifts via patches adjust card power
 
-### Smart Deck Suggestions
-**AI-Powered Recommendations**:
-- **Meta Decks**: Copy top 100 player decks (with permission)
-- **Counter Decks**: AI suggests decks to counter current PvP meta
-- **Beginner Decks**: Pre-built starter decks for new players (Norse Aggro, Medieval Control)
-- **Theme Optimizer**: Auto-fill to reach 20-card theme bonus
-- **Budget Decks**: Builds using common/rare cards only (F2P friendly)
+**Endgame Content** (Infinite Progression):
+- **Meta Wars**: Seasonal alliance PvP tournaments
+- **Infinite Ladder**: Climb ranks, top tiers unlock cosmetics
+- **Player Challenges**: User-generated maps rated by community
+- **Legacy Achievements**: Permanent titles across seasons
 
-### Deck Sharing & Community
-**Social Features**:
-- **Deck Codes**: 12-character codes to share decks ("ST-DECK-ABC123")
-- **Deck Library**: Browse community-submitted decks, filter by theme/mode/rating
-- **Upvote/Downvote**: Rate decks (best decks rise to top)
-- **Comments**: Discuss decks, suggest improvements
-- **Deck Guides**: Write 500-word guides explaining deck strategy (formatting support)
-- **Streamer Decks**: Featured decks from top streamers/pro players
+**Achievements & Titles**:
+- Milestones: "Veteran Commander" (Lv 10), "Sovereign Lord" (Lv 30)
+- Special: "Whale Hunter" (defeat 10 VIP 5 players), "Card Collector" (500+ unique)
 
-## 9.4 RPG Elements
+> **See [achievement-schema.json](specs/achievement-schema.json) for complete achievement system and [progression-schema.json](specs/progression-schema.json) for XP formulas.**
 
-Heroes gain skill trees, allocating points to abilities like +damage or healing. Equipment from events adds visuals and stats, creating personalized units.
-
-## 9.5 Rarities and Balance
-
-Cards have rarities affecting stats, with counters (e.g., water counters fire) preventing dominance. Expansions introduce new cards, shifting metas and requiring adaptation.
-
-## 9.6 Difficulty Scaling and Balancing (Best-in-Class from Slay the Spire and Hearthstone)
-
-- **Dynamic Scaling**: Enemy strength scales with player level (e.g., +10% stats per 5 levels). PvE AI adapts tactics based on player performance (e.g., more aggressive after losses).
-- **Soft Counters**: Overpowered decks face increased encounter rates with counters (e.g., fire-heavy decks encounter more water enemies). Meta shifts via patches adjust card power levels.
-- **Player Feedback Loops**: Post-battle analytics show win rates by card/element; A/B testing on new cards ensures balance.
-- **Accessibility Options**: Difficulty modifiers (e.g., -25% enemy HP) for new players, adjustable in settings.
-
-## 9.7 Endgame Content (Inspired by Civilization's Endless Modes)
-
-Beyond max level, focus on infinite progression:
-- **Meta Wars**: Seasonal events where top alliances compete in escalating PvP tournaments, with rewards like exclusive themes.
-- **Player-Created Challenges**: User-generated maps and decks, rated by community votes, for endless replayability.
-- **Infinite PvP Ladder**: Climb ranks with rematches; top tiers unlock cosmetic rewards and influence game updates.
-- **Legacy Systems**: Permanent achievements (e.g., "Conqueror of 100 Maps") that persist across seasons, encouraging long-term play.
-
-## 9.8 Achievements and Leaderboards
-
-Achievements reward milestones with badges and unlocks. Leaderboards track conquests, deck power, and donations, fostering competition.
-
-The achievement schema has been moved to a standalone spec: [docs/specs/achievement-schema.json](docs/specs/achievement-schema.json).
-
-## Player Tips
-- Focus on castle leveling for endgame power.
-- Balance PvE/PvP to maintain progression.
-
-## Progression Data Model (Engine Schema)
-
-The progression schema has been moved to a standalone spec for engineering: [docs/specs/progression-schema.json](docs/specs/progression-schema.json).
-Use that file for leveling calculations, unlock validation, VIP perks, and achievement tracking. XP formulas and castle scaling are detailed in the schema notes.
-
-## Open-Source References
-
-- Slay the Spire (GitHub): Progression and rarity systems.
-- Hearthstone Balance Tools (unofficial): Meta analysis.
-- Unity Analytics Samples (GitHub): Playtesting frameworks.
+---
 
 # SECTION 10: MULTIPLAYER & MATCHMAKING
 
