@@ -41,20 +41,40 @@
 - ✅ Enhanced README.md with visual polish (badges, Mermaid diagrams, icons)
 - ✅ Created docs/ASSETS.md - Complete visual asset guide (500+ lines)
 
+### Phase 8-10 (December 30, 2024) ✅
+- ✅ Condensed Section 2.6 (Card Stacking, Formations & Map Deployment) from ~1,093 to ~150 lines
+  - Removed detailed stacking formulas (referenced combat-mechanics.md)
+  - Removed step-by-step tutorial flows and PvE campaign details
+  - Removed extensive visual styling descriptions (3D figures, card sprites)
+  - Kept core mechanics: stacking rules, rarity budget, formation presets, multi-hero armies
+- ✅ Condensed Section 9 (Progression & Balance) from ~339 to ~158 lines
+  - Removed detailed XP progression tables (referenced progression-schema.json)
+  - Removed extensive Lord Skill Tree breakdowns (kept summary: 4 branches)
+  - Removed detailed deck management UI features (kept core constraints)
+  - Removed verbose endgame/achievement descriptions
+- ✅ Condensed Section 13 (Content Pipeline) from ~126 to ~92 lines
+  - Removed detailed agile workflow descriptions
+  - Removed extensive A/B testing framework details
+  - Kept core: Pipeline, testing, analytics KPIs, live ops cadence
+- ✅ Added 28 example JPEGs to assets/examples/ (battle maps, cards, UI screens)
+
 ---
 
 ## Current Bible State
 
-**Total Lines**: 5,190 (down from 6,807)  
-**Reduction**: 1,617 lines removed (~24% reduction)  
-**Status**: ✅ **BELOW TARGET** (<6,000 lines achieved!)
+**Total Lines**: 4,194 (down from 6,807)  
+**Reduction**: 2,613 lines removed (~38% reduction!)  
+**Status**: ✅ **MASSIVELY BELOW TARGET** (1,806 lines below 6,000 target!)
 
 ### Major Reductions Achieved
 - Section 2.5 (Onboarding): ~138 → ~50 lines (-88 lines)
+- Section 2.6 (Card Stacking): ~1,093 → ~150 lines (-943 lines)
 - Section 4 (Gameplay Modes): ~600 → ~100 lines (-500 lines)
 - Section 5 (Economy & Trading): ~970 → ~250 lines (-720 lines)
 - Section 8 (Combat Mechanics): ~300 → ~100 lines (-200 lines)
-- **Total Saved**: ~1,508 lines from condensing alone
+- Section 9 (Progression): ~339 → ~158 lines (-181 lines)
+- Section 13 (Content Pipeline): ~126 → ~92 lines (-34 lines)
+- **Total Saved**: ~2,666 lines from condensing (accounting for added spec references)
 
 ### Documentation Enhancements
 - ✅ docs/README.md: GitHub auto-displays when viewing docs/ folder
@@ -62,27 +82,21 @@
 - ✅ Status badges: Unity, C#, Nakama versions, Bible status, Phase progress
 - ✅ Icon conventions: 🎴 🗺️ ⚔️ 💰 💎 ⚡ for visual navigation
 - ✅ ASSETS.md: Complete art style guide with 100 card list, color palette, tool recommendations
+- ✅ assets/examples/: 28 JPEGs (battle maps, cards, UI mockups for artist reference)
 
-### Sections Still Available for Optional Condensing
+### Bible is Now Production-Ready!
 
-#### Could Condense Further (If Desired)
-- [ ] **Section 2.6 (Card Stacking)**: ~400 lines
-  - Current: Detailed HoMM-style stacking rules
-  - Opportunity: Could reference gameplay-modes-spec.md for stack math examples
-  - Estimated Savings: ~150-200 lines
-  
-- [ ] **Section 9 (Progression & Balance)**: ~340 lines
-  - Current: XP tables and level scaling formulas
-  - Opportunity: Could extract exact XP values to progression-spec.md
-  - Estimated Savings: ~150-200 lines
+✅ **Quick Reference**: 4,194 lines (was 6,807) - 38% leaner  
+✅ **Spec-Driven**: All detailed mechanics in dedicated spec files  
+✅ **Phase-Marked**: MVP clearly separated from Phase 2/3/4 features  
+✅ **Asset-Ready**: Complete visual guide for artists (ASSETS.md + example JPEGs)  
+✅ **Developer-Friendly**: Clear entry point (README.md), organized specs  
 
-- [ ] **Section 13 (Content Pipeline)**: ~126 lines
-  - Current: Implementation workflow details
-  - Opportunity: Could move to separate development-process.md
-  - Estimated Savings: Remove entirely (~126 lines)
+**No Further Condensing Needed** - Bible is now ideal size for quick reference while specs provide implementation details.
 
-**Note**: Since we're already at 5,190 lines (well below 6,000), further condensing is **optional**. Bible is now a concise quick reference while specs provide detailed implementation guides.
-   - TODO: Design RPG shop pricing (Alchemist/Scribe cost balancing)
+---
+
+## Design TODOs (In Spec Files)
    - TODO: Define equipment socket system (1-3 sockets based on rarity)
 
 5. **Economy** (economy-system.md):

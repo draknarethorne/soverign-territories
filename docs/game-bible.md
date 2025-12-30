@@ -4132,129 +4132,98 @@ Sovereign Territories uses a modern, scalable tech stack: **Unity client** + **N
 
 # SECTION 13: CONTENT PIPELINE & ITERATION
 
-Sovereign Territories follows an agile development methodology inspired by best-in-class live service games like Clash Royale (Supercell) and League of Legends (Riot Games). The pipeline emphasizes rapid prototyping, data-driven balance, and continuous iteration based on player feedback.
+> **See individual spec files in [docs/specs/](specs/) for schemas, versioning, and data validation.**
+
+Sovereign Territories follows agile development inspired by Clash Royale and League of Legends. Emphasis on rapid prototyping, data-driven balance, and continuous iteration.
+
+---
 
 ## 13.1 Development Process
 
-### Agile Sprint Structure
-- **2-Week Sprints**: Feature development, testing, and deployment
-- **Daily Standups**: 15-minute team syncs on progress and blockers
-- **Sprint Planning**: Prioritize features based on player data and roadmap
-- **Retrospectives**: Post-sprint reviews to improve process
+**Agile Structure**:
+- 2-week sprints, daily standups, retrospectives
+- Core first: Card system, combat, economy before polish
+- Weekly playable builds for testing
 
-### Prototyping Philosophy
-- **Core First**: Implement card system, combat, and economy before polish
-- **Vertical Slice**: Complete one gameplay mode end-to-end before expanding
-- **Throwaway Prototypes**: Rapid experiments to validate mechanics (1-3 days)
-- **Playable Builds**: Weekly playable builds for internal testing
+**Content Pipeline**:
+1. Design: Specs using JSON schemas
+2. Art: 2.5D sprites, UI, VFX
+3. Implementation: Unity + Nakama
+4. Testing: QA + automated tests
+5. Deployment: Server-side updates (no client download for data)
 
-### Content Creation Pipeline
-1. **Design**: Game designers create card/map specs using schemas
-2. **Art**: Artists create assets (2.5D sprites, UI elements, VFX)
-3. **Implementation**: Engineers integrate using Unity + Nakama
-4. **Testing**: QA validates functionality and balance
-5. **Deployment**: Server-side updates via Nakama (no client download for data)
+**Version Control**: Git workflow (feature branches → PR → code review → main)
 
-### Version Control & Collaboration
-- **Git Workflow**: Feature branches → PR → Code review → Merge to main
-- **Unity Collaborate**: Scene and asset versioning
-- **Schema Versioning**: All schemas have `schemaVersion` for migrations
-- **Changelog**: Auto-generated from Git commits for patch notes
+---
 
 ## 13.2 Testing & Quality Assurance
 
-### Automated Testing (Inspired by Riot Games)
-- **Unit Tests**: 80% code coverage for core systems (combat math, pathfinding)
-- **Integration Tests**: Server-client communication, matchmaking, economy
-- **Headless Bots**: Simulate 1000+ AI matches for balance testing
-- **Regression Tests**: Prevent old bugs from reappearing
-- **CI/CD**: GitHub Actions runs tests on every commit
+**Automated Testing**:
+- Unit tests (80% coverage), integration tests, regression tests
+- Headless bots simulate 1000+ AI matches for balance
+- CI/CD via GitHub Actions
 
-### Playtesting
-- **Internal Alpha**: Weekly team playtests (30-60 minutes)
-- **Closed Beta**: 100-1000 external testers for 4-8 weeks
-- **A/B Testing**: Test card balance, UI changes, pricing (see Section 13.3)
-- **Focus Groups**: Qualitative feedback on new features
+**Playtesting**:
+- Internal alpha (weekly team play), closed beta (100-1000 testers, 4-8 weeks)
+- A/B testing: Card balance, UI changes, pricing
+- Win rate target: 48-52% for all archetypes
 
-### Balance Testing
-- **Win Rate Analysis**: Target 48-52% win rate for all card archetypes
-- **Meta Tracking**: Monitor deck popularity, adjust overused/underused cards
-- **Simulation**: Run 10,000+ simulated battles with different deck compositions
-- **Patch Cadence**: Balance updates every 2 weeks, major patches monthly
+**Performance Targets**:
+- 60 FPS on mid-tier mobile (iPhone 12, Samsung S21)
+- <1GB RAM usage, <2 second load time, <1% crash rate
 
-### Performance Testing
-- **Load Testing**: Stress test servers with 10,000+ concurrent players
-- **Mobile Optimization**: Target 60 FPS on mid-tier devices (iPhone 12, Samsung S21)
-- **Network Testing**: Simulate poor connections (high latency, packet loss)
-- **Memory Profiling**: Keep RAM usage < 1GB on mobile
+---
 
-## 13.3 Analytics & Data-Driven Design (Inspired by Supercell)
+## 13.3 Analytics & KPIs
 
-### Key Performance Indicators (KPIs)
+**Key Metrics**:
 - **Retention**: Day 1 (>40%), Day 7 (>20%), Day 30 (>10%)
-- **Engagement**: Sessions/day (2-3), Session length (15-30 min)
-- **Monetization**: ARPU (>$0.50), ARPPU (>$10), Conversion rate (>3%)
-- **Technical**: Crash rate (<1%), Load time (<2 seconds)
+- **Engagement**: 2-3 sessions/day, 15-30 min sessions
+- **Monetization**: ARPU >$0.50, ARPPU >$10, conversion >3%
 
-### A/B Testing Framework
-- **Feature Flags**: Server-side toggles for gradual rollout (10% → 50% → 100%)
-- **Variants**: Test 2-3 variants simultaneously (e.g., card cost 3 vs 4 vs 5)
-- **Statistical Significance**: Minimum 10,000 players per variant, p < 0.05
-- **Rollback**: Instant revert if metrics degrade (e.g., retention drops >5%)
+**A/B Testing**:
+- Feature flags for gradual rollout (10% → 50% → 100%)
+- Minimum 10,000 players per variant, instant rollback if metrics degrade
 
-### Analytics Events (See session-schema.json)
-Minimum tracked events:
-- `battle_start`, `battle_end`, `battle_action`
-- `card_combined`, `card_split`, `purchase`
-- `auction_listing`, `match_found`, `match_result`
-- `resource_produced`, `building_destroyed`, `vip_purchase`
+**Tracked Events** (see session-schema.json):
+- `battle_start/end`, `card_combined`, `purchase`, `match_result`, `vip_purchase`
 
-### Dashboards & Monitoring
-- **Real-Time**: Grafana dashboards for live metrics (DAU, revenue, errors)
-- **Historical**: BigQuery/Redshift for deep analysis (cohorts, funnels)
-- **Alerts**: PagerDuty for critical issues (crash rate spike, server downtime)
-- **Player Support**: Tools to view individual player states for debugging
+**Monitoring**: Grafana (real-time), BigQuery (historical), PagerDuty (alerts)
 
-## 13.4 Live Operations (Inspired by Clash Royale)
+---
 
-### Content Cadence
-- **Weekly**: Expeditions, limited-time offers, alliance events
+## 13.4 Live Operations
+
+**Content Cadence**:
+- **Weekly**: Events, limited offers
 - **Bi-Weekly**: Balance patches, bug fixes
 - **Monthly**: New cards (3-5), seasonal themes
-- **Quarterly**: Expansions (50+ cards, new maps, mechanics)
+- **Quarterly**: Expansions (50+ cards, new maps)
 
-### Seasonal Content
-- **Seasons**: 3-month cycles with unique themes (e.g., Norse, Sci-Fi)
-- **Battle Pass**: 50-tier progression with exclusive rewards
-- **Leaderboards**: Seasonal rankings reset every quarter
-- **Meta Shifts**: Intentional balance changes to keep game fresh
+**Seasonal Content**:
+- 3-month seasons with themes (Norse, Sci-Fi, etc.)
+- Battle Pass (50 tiers), leaderboard resets, meta shifts
 
-### Community Engagement
-- **Patch Notes**: Transparent communication of changes
-- **Developer Blogs**: Behind-the-scenes on design decisions
-- **Social Media**: Daily content on Twitter, Reddit, Discord
-- **Feedback Loops**: Monthly surveys, in-game feedback buttons
+**Community Engagement**:
+- Transparent patch notes, developer blogs
+- Daily social media (Twitter, Reddit, Discord)
+- Monthly surveys, in-game feedback buttons
 
-## 13.5 Content Tools & Automation
+---
 
-### Schema-Driven Development
-- **JSON Schemas**: All game data validated against schemas (see docs/specs/)
-- **Code Generation**: TypeScript and C# types auto-generated from schemas
-- **Hot Reloading**: Server-side data updates without client patches
-- **Version Migration**: Automated schema migrations on updates
+## 13.5 Content Tools
 
-### Content Editors
-- **Unity Editor**: Custom inspectors for card creation, map editing
-- **Web Tools**: Internal dashboards for balancing, event scheduling
-- **Spreadsheets**: Google Sheets integration for rapid iteration
+**Schema-Driven Development**:
+- JSON schemas validate all game data (see docs/specs/)
+- Code generation: Auto-generate TypeScript/C# types
+- Hot reloading: Server-side updates without client patches
 
-## Open-Source References
+**Content Editors**:
+- Unity custom inspectors (cards, maps)
+- Web dashboards (balancing, events)
+- Google Sheets integration for rapid iteration
 
-- Unity Version Control (GitHub): Pipeline management and collaboration
-- A/B Testing Libraries (GitHub, e.g., Growthbook): Feature flags and experimentation
-- Open-Source Analytics (e.g., Matomo, PostHog on GitHub): DAU tracking and funnels
-- Unity Test Framework (GitHub): Automated testing examples
-- Grafana (GitHub): Real-time dashboards and monitoring
+---
 
 # SECTION 14: LEGAL & COMPLIANCE
 
