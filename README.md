@@ -7,11 +7,17 @@
 
 > **"Build the Deck. Rule the Map. Automate the Empire."**
 
-A hybrid strategy game merging:
-- 🎴 **Pokemon TCG deck-building** - Collect 100+ cards, 6 rarities (Common → Mythic)
-- 🗺️ **Risk-style territorial conquest** - Alliance wars, seasonal campaigns
-- ⚔️ **Heroes of Might and Magic tactical combat** - 8×8 grid, hero-led armies
-- 💰 **AFK progression** - Passive income from economy cards (Phase 2)
+A multi-genre hybrid strategy game blending the best mechanics from:
+- 🎴 **TCG Deck-Building** (Pokemon TCG, Magic: The Gathering) - Collect 100+ cards, 6 rarities, strategic deck construction
+- 🗺️ **Territorial Conquest** (Risk, HoMM campaigns) - Alliance wars, map control, seasonal campaigns  
+- ⚔️ **Party-Based Tactical Combat** (Baldur's Gate, HoMM) - Heroes with Health/Mana/Stamina, 8×8 grid battles, formations
+- 🎲 **Tabletop Wargaming** (Warhammer) - 3D hero figurines on maps, visual unit stacks
+- 🔄 **Roguelike Replayability** (Diablo, Slay the Spire) - Procedurally generated maps, endless runs
+- 💰 **AFK Progression** (Idle games) - Passive income, auto-battle, come-back rewards
+
+**What We AVOID**: Forced resource collection, tedious base building, repetitive unit production, tap-tap-tap grind mechanics.
+
+**What We EMBRACE**: Opening packs, collecting cards, leveling heroes, deck strategy, PvE campaigns, battle tactics—the **fun** parts of gaming!
 
 ---
 
@@ -236,6 +242,37 @@ This is currently a **solo design project**. Documentation is actively maintaine
 -  Create a GitHub Issue
 -  Discuss in GitHub Discussions
 -  Fork and submit Pull Requests (docs improvements welcome)
+
+---
+
+## 🎮 Inspirations & Credits
+
+Sovereign Territories stands on the shoulders of giants. This game is a love letter to decades of gaming across multiple genres:
+
+### Core Mechanical Influences
+- **TCG/CCG**: Pokemon TCG, Magic: The Gathering (deck building, rarity systems, card collection)
+- **Party-Based RPGs**: Baldur's Gate, Neverwinter Nights, Diablo (hero attributes: Health/Mana/Stamina, equipment, leveling)
+- **Tactical Strategy**: Heroes of Might and Magic III, Fire Emblem (grid-based combat, hero-led armies, formations)
+- **Territorial Conquest**: Risk, Diplomacy (map control, alliances, conquest campaigns)
+- **RTS**: Supreme Commander, Warcraft II, StarCraft (deck composition = army composition, no tedious production)
+- **Tabletop Wargaming**: Warhammer 40K, Warhammer Fantasy (3D figurines on maps, visual unit representation)
+- **Roguelikes**: Diablo, Slay the Spire (procedural maps, random encounters, replayability)
+- **Idle/AFK**: AFK Arena, Idle Heroes (passive progression, auto-battle, offline rewards)
+- **Mobile Strategy**: Clash Royale, Clash of Clans (quick battles, collection progression, F2P balance)
+
+### Thematic Inspirations
+- **Medieval Fantasy**: Lord of the Rings, D&D, Elder Scrolls
+- **Norse Mythology**: God of War, Age of Mythology
+- **Historical**: Total War series, Age of Empires
+- **Sci-Fi**: StarCraft, Warhammer 40K
+- **Board Games**: Risk, Settlers of Catan, Twilight Imperium (territory control, resource management)
+
+### Design Philosophy
+This game cherry-picks the **most enjoyable** mechanics from each genre while avoiding the **tedious grind**:
+- ✅ **YES**: Card collecting, deck building, hero progression, strategic battles, map exploration
+- ❌ **NO**: Forced resource gathering, repetitive base building, waiting for unit production, tap-to-collect mechanics
+
+The goal: **Come back to open packs, level heroes, conquer maps, and enjoy strategic depth—not to babysit production queues.**
 
 ---
 
