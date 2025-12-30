@@ -9,20 +9,29 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 ## 🎯 Quick Start
 
 **New to the project?** Start here:
-1. 📖 Read [game-bible.md](game-bible.md) - Master design document (~6,300 lines)
-2. 🎮 Review [mvp-scope-final.md](mvp-scope-final.md) - 8-week implementation roadmap
-3. 🎓 Walk through [tutorial-flow.md](tutorial-flow.md) - Player onboarding (28 steps)
+1. 📖 Read [game-bible.md](game-bible.md) - Master design document (4,194 lines)
+2. 🎮 Review [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) - 8-week MVP roadmap
+3. 🎓 Walk through [mvp/tutorial-flow.md](mvp/tutorial-flow.md) - Player onboarding (28 steps, 0-60 min)
+4. 🔍 Browse [specs/](specs/) - 33 JSON schemas + 34 markdown companions
+5. 💻 Start coding with [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md)
 
 ---
 
 ## 📊 Documentation Status
 
-![Bible Status](https://img.shields.io/badge/Bible-6,300_lines-blue)
-![Phase](https://img.shields.io/badge/Phase-6_Complete-green)
-![Specs](https://img.shields.io/badge/Specs-7_Created-yellow)
-![MVP Scope](https://img.shields.io/badge/MVP-8_Weeks-orange)
+![Bible Status](https://img.shields.io/badge/Bible-4,194_lines-blue)
+![Specs](https://img.shields.io/badge/Specs-67_files-green)
+![TODOs](https://img.shields.io/badge/TODOs-87_consolidated-yellow)
+![MVP Ready](https://img.shields.io/badge/MVP-Ready_for_Unity-brightgreen)
 
-**Last Major Update**: December 30, 2024 (Phase 6: Condensed Sections 4 & 8, Added 75+ inline TODOs)
+**Last Major Update**: December 30, 2025 (Documentation cleanup complete)
+
+**Recent Changes**:
+- ✅ Condensed game-bible.md from 6,807 → 4,194 lines (38% reduction)
+- ✅ Reorganized docs into mvp/, design/, archive/ folders
+- ✅ Consolidated 87 TODOs into design-todos-phase2-3.md
+- ✅ Created unity-implementation-guide.md with C# code examples
+- ✅ Archived redundant mvp-scope.md (superseded by mvp-scope-final.md)
 
 ---
 
@@ -31,240 +40,277 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 ### 🎮 Master Design
 | Document | Purpose | Status | Lines |
 |----------|---------|--------|-------|
-| [game-bible.md](game-bible.md) | Complete game vision (MVP through Phase 4) | ✅ Active | ~6,300 |
-| [terminology-guide.md](terminology-guide.md) | Canonical naming reference | ✅ Stable | ~200 |
+| [game-bible.md](game-bible.md) | Complete game vision (MVP through Phase 4) | ✅ Authoritative | 4,194 |
+| [design/terminology-guide.md](design/terminology-guide.md) | Canonical naming reference | ✅ Stable | ~200 |
 
 **Key Bible Sections**:
 - **Section 1**: Overview & Core Pillars (F2P fairness, opt-in PvP, AFK progression)
 - **Section 2**: Card System (6 rarities, 6 types, Rarity Budget deck constraints)
 - **Section 4**: Gameplay Modes (8 modes from Realm Map PvE to World Map seasons)
 - **Section 5**: Economy & Trading (Multi-currency system: Gold/Gems/Energy + Food/Lumber/Ore)
-- **Section 8**: Combat Mechanics (MVP one-hit removal → Phase 2 RPG stats)
+- **Section 8**: Combat Mechanics (MVP Attack/Defense → Phase 2 Health/Mana/Stamina)
 - **Section 9**: Progression (Player Level 1-30, Castle Level 1-15)
+
+---
+
+## 🚀 MVP Implementation
+
+### Essential MVP Documents
+| Document | Purpose | Status | Phase |
+|----------|---------|--------|-------|
+| [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) | 8-week roadmap, week-by-week deliverables | ✅ Authoritative | MVP |
+| [mvp/tutorial-flow.md](mvp/tutorial-flow.md) | 28-step player journey (0-60 min) | ✅ Complete | MVP |
+| [mvp/tutorial-gap-resolutions.md](mvp/tutorial-gap-resolutions.md) | 9 critical design decisions resolved | ✅ Complete | MVP |
+| [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md) | C# code examples, project structure | ✅ Ready | MVP |
+
+**MVP Scope** (15-minute core loop):
+1. Launch → Account → EULA
+2. Open 20 starter cards (4 packs × 5 cards)
+3. Choose Balanced Explorer deck (11 cards)
+4. Move army on Realm Map (40 locations, fog of war)
+5. Trigger battle → Place cards on 8×8 grid
+6. Win battle → Rewards (Gold, XP, +1 card)
+7. Return to map → Loop (fight more battles)
 
 ---
 
 ## 🔧 Implementation Specs
 
-### Core Systems
-| Spec | Covers | Phase | TODOs |
-|------|--------|-------|-------|
-| [combat-calculation-spec.md](combat-calculation-spec.md) | Battle formulas, damage, abilities | MVP + Phase 2/3 | 40+ |
-| [economy-system.md](economy-system.md) | Currency earning/spending, F2P balance | MVP + Phase 2/3 | 15+ |
-| [rpg-systems-spec.md](rpg-systems-spec.md) | Health/Mana, Consumables, Equipment | Phase 2/3 | 20+ |
-| [map-tier-progression.md](map-tier-progression.md) | Map hierarchy (World → Battle) | MVP + Phase 2-4 | 10+ |
+### Core Systems (Priority P0 - MVP Blocking)
+| Spec | Covers | Files | Status |
+|------|--------|-------|--------|
+| **Card System** | 6 rarities, 6 types, stats, rarity budget | [card-schema.json](specs/card-schema.json), [pack-schema.json](specs/pack-schema.json), [trainer-deck-schema.json](specs/trainer-deck-schema.json) | ✅ Ready |
+| **Battle System** | 8×8 tactical grid, Attack/Defense formula | [battle-schema.json](specs/battle-schema.json), [ability-schema.json](specs/ability-schema.json) | ✅ Ready |
+| **Tutorial** | 28-step onboarding, EULA, safety nets | [tutorial-schema.json](specs/tutorial-schema.json) | ✅ Ready |
+| **Deck Management** | 20-card decks, rarity budget validation | [deck-schema.json](specs/deck-schema.json), [starter-deck-schema.json](specs/starter-deck-schema.json) | ✅ Ready |
+| **Progression** | Player Level 1-30, XP curves, unlocks | [progression-schema.json](specs/progression-schema.json), [player-schema.json](specs/player-schema.json) | ✅ Ready |
 
-### Specialized Specs
-| Spec | Covers | Phase | TODOs |
+### Supporting Systems (Priority P1 - Post-MVP)
+| Spec | Covers | Files | Phase |
 |------|--------|-------|-------|
-| [gameplay-modes-spec.md](gameplay-modes-spec.md) | 8 gameplay modes (Realm Map → World Map) | MVP + Phase 2-4 | 20+ |
-| [mvp-scope-final.md](mvp-scope-final.md) | 8-week roadmap, card tiers, tutorial | MVP | 5+ |
-| [tutorial-flow.md](tutorial-flow.md) | 28-step onboarding, 31-card starter deck | MVP | 3+ |
-
-**Total Inline TODOs**: 113+ design decisions marked for future work
+| **Economy** | Gold/Gems/Food/Lumber/Ore, AFK production | [resource-schema.json](specs/resource-schema.json), [economy-system.md](design/economy-system.md) | Phase 2 |
+| **Equipment** | Sockets, Jewels/Runes, stats | [equipment-schema.json](specs/equipment-schema.json) | Phase 2 |
+| **RPG Stats** | Health/Mana/Stamina, consumables | [rpg-systems-spec.md](design/rpg-systems-spec.md) | Phase 2 |
+| **Map Tiers** | World/Territory/Realm/Battle hierarchy | [map-schema.json](specs/map-schema.json), [map-tier-progression.md](design/map-tier-progression.md) | Phase 3 |
+| **PvP** | Arena, Territory Wars, Alliance Wars | [matchmaking-schema.json](specs/matchmaking-schema.json), [alliance-schema.json](specs/alliance-schema.json) | Phase 3 |
 
 ---
 
-## 🗺️ System Architecture
+## 📁 Document Organization
 
-```mermaid
-graph TD
-    A[Player] --> B[Deck Building]
-    A --> C[Map Exploration]
-    A --> D[Economy Management]
-    
-    B --> E[Card Collection]
-    B --> F[Rarity Budget]
-    
-    C --> G[Realm Map PvE]
-    C --> H[Territory Map PvP]
-    C --> I[World Map Wars]
-    
-    D --> J[Gold - F2P Currency]
-    D --> K[Gems - Premium]
-    D --> L[Food/Lumber/Ore]
-    
-    G --> M[Tactical Combat]
-    H --> M
-    I --> M
-    
-    M --> N[MVP: Attack/Defense]
-    M --> O[Phase 2: RPG Stats]
-    M --> P[Phase 3: Elements/Status]
+```
+docs/
+├── game-bible.md (4,194 lines - master reference)
+├── README.md (this file - documentation hub)
+│
+├── mvp/ (MVP-critical documents)
+│   ├── mvp-scope-final.md (8-week roadmap)
+│   ├── tutorial-flow.md (28-step journey)
+│   ├── tutorial-gap-resolutions.md (9 design decisions)
+│   └── unity-implementation-guide.md (C# code examples)
+│
+├── specs/ (67 files - 33 JSON + 34 MD companions)
+│   ├── card-schema.json + card-schema.md
+│   ├── pack-schema.json + pack-schema.md
+│   ├── battle-schema.json + battle-schema.md
+│   ├── tutorial-schema.json + tutorial-schema.md
+│   └── ... (30 more schema pairs)
+│
+├── design/ (Deep-dive design specs)
+│   ├── economy-system.md (currency rates, F2P balance)
+│   ├── combat-calculation-spec.md (formulas, Phase 2-3 mechanics)
+│   ├── rpg-systems-spec.md (Health/Mana/Stamina, equipment)
+│   ├── map-tier-progression.md (World→Territory→Realm→Battle)
+│   ├── gameplay-modes-spec.md (8 modes with TODOs)
+│   ├── terminology-guide.md (canonical terms)
+│   ├── assets.md (visual guide)
+│   └── design-todos-phase2-3.md (87 consolidated TODOs)
+│
+├── assets/examples/ (28 JPEGs - battle maps, cards, UI mockups)
+│
+└── archive/ (completed/superseded documents)
+    ├── mvp-scope.md (superseded by mvp-scope-final.md)
+    ├── bible-reorganization-plan.md (condensing complete)
+    ├── reorganization-status.md (replaced by this README)
+    └── documentation-status-report.md (cleanup complete)
 ```
 
 ---
 
-## 🎯 MVP Scope (8 Weeks)
+## 🎯 Design TODOs
 
-```mermaid
-gantt
-    title MVP Development Timeline
-    dateFormat  YYYY-MM-DD
-    section Week 1-2
-    Card System (100 cards, 6 rarities)           :2025-01-06, 14d
-    section Week 3-4
-    Combat System (8x8 grid, Attack/Defense)      :2025-01-20, 14d
-    section Week 5-6
-    Realm Map (20-40 Locations, treasure nodes)   :2025-02-03, 14d
-    section Week 7-8
-    Progression & Stores (Player Level, Packs)    :2025-02-17, 14d
-```
+**All TODOs consolidated**: See [design/design-todos-phase2-3.md](design/design-todos-phase2-3.md)
 
-**Must Have**:
-- ✅ Card system (100 cards, Common → Mythic)
-- ✅ Deck building (10-50 cards, Rarity Budget)
-- ✅ Battle system (8×8 grid, one-hit removal)
-- ✅ Realm Map (HoMM-style exploration)
-- ✅ Tutorial (28 steps, 31 cards)
-- ✅ Currencies (Gold/Gems/Energy only)
+**Summary**:
+- **Total**: 87 design decisions needed
+- **Phase 2 (P0)**: 8 blocking TODOs (elemental multipliers, socket counts, AFK rates)
+- **Phase 2 (P1)**: 35 nice-to-have TODOs (status effects, consumables, terrain)
+- **Phase 3 (P2)**: 44 future TODOs (PvP modes, alliance wars, roguelike)
 
-**Won't Have** (Post-MVP):
-- ❌ Phase 2: Food/Lumber/Ore, RPG stats, Consumables
-- ❌ Phase 3: Territory/World Maps, PvP Arena, Elements
-
----
-
-## 📦 Data Schemas (JSON)
-
-Located in `specs/` directory:
-- [card-schema.json](specs/card-schema.json) - Card data structure
-- [pack-schema.json](specs/pack-schema.json) - Pack opening mechanics
-- [tactic-schema.json](specs/tactic-schema.json) - Tactic card abilities
-- [equipment-schema.json](specs/equipment-schema.json) - Equipment stats/sockets
-
----
-
-## 🚧 Work-in-Progress
-
-Located in `working/` directory (transient planning docs):
-- [reorganization-status.md](working/reorganization-status.md) - Phase 1-6 tracking, remaining work
-- [bible-reorganization-plan.md](working/bible-reorganization-plan.md) - Historical gap analysis
-
----
-
-## 🎨 Visual Design Notes
-
-### Art Style
-- **Maps**: 2.5D isometric (like Age of Empires, Civilization)
-- **Battles**: 2D tactical grid (like Fire Emblem, Advance Wars)
-- **Cards**: Painterly style (like Hearthstone, Legends of Runeterra)
-- **UI**: Dark theme with gold accents (medieval/fantasy aesthetic)
-
-### Icon Conventions
-- 🎴 Cards
-- ⚔️ Combat
-- 🗺️ Map
-- 💰 Gold
-- 💎 Gems
-- ⚡ Energy
-- 🍖 Food
-- 🪵 Lumber
-- ⚒️ Ore
-- 🏆 PvP Arena
-- 🏰 Castle
-- 👥 Alliance
-
----
-
-## 🔄 Phasing Summary
-
-| Phase | Timeline | Focus | Status |
-|-------|----------|-------|--------|
-| **MVP** | Week 1-8 | Core loop (cards, combat, map) | 🔵 Design Complete |
-| **Phase 2** | Month 2-3 | RPG systems (Health/Mana, Resources) | 🟡 Specs Created |
-| **Phase 3** | Month 4-6 | PvP (Arena, Territory Map, Elements) | 🟡 Specs Created |
-| **Phase 4** | Month 7-12 | Endgame (World Map, Expeditions, Seasons) | 🔴 Planning |
-
----
-
-## 📝 Terminology Quick Reference
-
-**Map Tiers** (smallest to largest):
-1. **Battle Map** (8×8 grid) - Tactical combat arena
-2. **Realm Map** (20-40 Locations) - HoMM-style exploration
-3. **Territory Map** (50-100 Realms) - Risk-style conquest (Phase 3)
-4. **World Map** (200-500 Territories) - Seasonal alliance wars (Phase 4)
-
-**Player Title**: "Sovereign" (not King, Lord, General - gender-neutral)
-
-**Currency Names**:
-- **Gold** - Soft currency (F2P, cannot buy)
-- **Gems** - Premium currency (whale advantage)
-- **Energy** - Stamina system (time-gated)
-- **Food/Lumber/Ore** - Resource currencies (Phase 2)
+**Critical Path** (must resolve before Phase 2):
+1. Elemental multipliers (Fire vs Water = 1.25× or 1.5×?)
+2. Terrain bonuses (Forest +10% Evasion, Mountain +20% Defense?)
+3. Status effect durations (Burn/Freeze/Poison = 2-3 turns?)
+4. Socket counts by rarity (Mythic = 3 or 4 sockets?)
+5. AFK production rates (30 Food/hour with 12-hour cap?)
+6. Battle Food cost (20 per battle for F2P balance?)
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Engine**: Unity 2021+ LTS
+**Unity Implementation**:
+- **Engine**: Unity 2021 LTS
 - **Language**: C# (.NET Standard 2.1)
-- **Server**: Nakama 3.x (PostgreSQL, WebSockets)
 - **Platforms**: Mobile (iOS/Android) + PC (Steam)
+- **UI Framework**: Unity UI Toolkit (recommended) or UGUI
+- **Art Style**: 2.5D isometric maps, 2D tactical battles (stylized painterly)
+
+**Backend** (Phase 3):
+- **Server**: Nakama 3.x (open-source game server)
+- **Database**: PostgreSQL (Nakama default)
+- **Real-time**: WebSockets for chat, matchmaking, live battles
+- **Authentication**: Nakama accounts (email, Google, Apple, Steam)
+
+**MVP Scope** (Local only):
+- **Save System**: PlayerPrefs (local save, no cloud sync)
+- **No Backend**: All gameplay client-side
+- **No IAP**: Monetization deferred to Phase 3
 
 ---
 
-## 🎯 Design Pillars
+## 📚 Key Concepts
 
-1. **F2P Respect**: 80-90% content accessible without spending
-2. **Opt-In PvP**: No forced raids, bracketed matchmaking, anti-griefing
-3. **AFK Progression**: Economy cards generate passive income (Phase 2)
-4. **Collector Appeal**: 6 rarities, thematic decks, seasonal exclusives
-5. **Strategic Depth**: Deck building, formations, multi-hero armies
+### Card System
+- **6 Rarity Tiers**: Common (1★) → Uncommon (1-2★) → Rare (2-3★) → Epic (3-4★) → Legendary (5★) → Mythic (6★)
+- **6 Card Types**: Heroes, Units, Buildings, Workers, Tactics, Equipment
+- **Rarity Budget**: Deck building constraint (Common=1pt, Mythic=32pt, max 100pts/deck)
+- **Battle vs Economy Cards**: Separate pools (10-50 battle cards, 10-15 economy cards)
 
----
+### Progression
+- **Dual System**: Player Level (account-wide, deck size) vs Castle Level (per-territory, building slots)
+- **Player Level Unlocks**:
+  - Level 10: Alliance join, PvE events
+  - Level 15: Matchmade Arena PvP (1v1/3v3)
+  - Level 20: Active PvP Maps (opt-in open-world)
+  - Level 30: Alliance Wars (50v50)
 
-## 📊 Current Metrics
+### Economy
+- **Currencies**: Gold (earned), Gems (premium), Energy (battle stamina)
+- **Resources** (Phase 2+): Food (battles), Lumber (buildings), Ore (equipment)
+- **AFK Progression**: Economy cards generate passive income (30 Food/hour, 12-hour cap)
+- **F2P Balance**: 80-90% content accessible without spending
 
-**Game Bible**:
-- **Current**: ~6,300 lines (down from 6,807)
-- **Target**: <6,000 lines
-- **Reduction**: ~500 lines condensed (Phase 6)
-
-**Spec Coverage**:
-- **Created**: 7 spec documents (~3,700 lines)
-- **Inline TODOs**: 113+ design decisions marked
-- **Schemas**: 4 JSON data templates
-
-**Reorganization Progress**:
-- ✅ Phase 1-6 Complete (Sections 2.5, 4, 5.5, 8 condensed)
-- ⏳ Phase 7 Pending (Sections 2.6, 5, 9, 13)
-
----
-
-## 📚 Reading Paths
-
-### For Designers
-1. [game-bible.md](game-bible.md) - Full vision
-2. [gameplay-modes-spec.md](gameplay-modes-spec.md) - 8 gameplay modes
-3. [economy-system.md](economy-system.md) - F2P balance
-
-### For Developers
-1. [mvp-scope-final.md](mvp-scope-final.md) - 8-week roadmap
-2. [combat-calculation-spec.md](combat-calculation-spec.md) - Battle formulas
-3. [rpg-systems-spec.md](rpg-systems-spec.md) - RPG mechanics
-
-### For Players (Marketing)
-1. [tutorial-flow.md](tutorial-flow.md) - Onboarding experience
-2. [game-bible.md](game-bible.md) Section 1 - Core Pillars
-3. [terminology-guide.md](terminology-guide.md) - Game lexicon
+### Combat (MVP)
+- **Grid**: 8×8 tactical grid (3 rows player, 3 rows enemy, 2 middle)
+- **Stats**: Attack/Defense only (MVP), Health/Mana/Stamina in Phase 2
+- **Formula**: Damage = Attacker's Attack - Defender's Defense (1-hit removal in MVP)
+- **Placement**: Deploy 10-50 cards before battle, auto-battle or manual control
 
 ---
 
-## 🤝 Contributing
+## 🎮 Game Modes
 
-This is currently a solo design project. Documentation is actively maintained and updated weekly.
+**MVP** (Realm Map PvE):
+- 40-location map with fog of war
+- NPC battles (monsters, bandits, bosses)
+- Movement Points system (10 MP, 1 per move)
+- Energy cost (20 Energy per battle, max 100)
 
-**For questions or collaboration**: Contact project owner via GitHub Issues.
+**Phase 2** (Campaign & Expeditions):
+- 3 chapters with narrative arcs
+- Boss battles with 2-3 phases
+- Roguelike Expeditions (random board, mini-battles)
+
+**Phase 3** (PvP & Endgame):
+- **Arena PvP**: 1v1/3v3 matchmaking, ELO brackets
+- **Territory Wars**: 10v10 alliance battles, castle sieges
+- **World Map**: 200-500 territories, 3-month seasons, 50v50 wars
 
 ---
 
-## 📄 License
+## 📖 Visual Reference
 
-Proprietary - All rights reserved.
+**Visual Assets**: See [design/assets.md](design/assets.md) for:
+- 28 example images (battle maps, card mockups, UI screens)
+- Color palette (Fire=red/orange, Water=blue, Earth=brown/green)
+- Element-driven visual design (gradients, glows, backgrounds)
+
+**Card Visual Breakdown**:
+- Frame color = rarity (Gray/Green/Blue/Purple/Gold/Red-orange)
+- Background = element (Fire, Water, Earth, etc.)
+- Stars = rarity tier (1-6 stars)
+- Stats = Attack/Defense/Health icons
 
 ---
 
-**Last Updated**: December 30, 2024  
-**Next Review**: Phase 7 (Condense Sections 2.6, 5, 9, 13)
+## 📄 Schema Reference
+
+**All Schemas**: See [specs/README.md](specs/README.md) for:
+- 33 JSON schemas (machine-readable)
+- 34 markdown companions (human-readable)
+- CI validation instructions
+- Versioning guidelines
+
+**Critical Schemas for MVP**:
+1. [card-schema.json](specs/card-schema.json) - Card data structure
+2. [pack-schema.json](specs/pack-schema.json) - Pack contents, probabilities
+3. [deck-schema.json](specs/deck-schema.json) - Deck validation rules
+4. [battle-schema.json](specs/battle-schema.json) - Combat grid, turn system
+5. [tutorial-schema.json](specs/tutorial-schema.json) - 28-step flow
+6. [player-schema.json](specs/player-schema.json) - Account data
+7. [progression-schema.json](specs/progression-schema.json) - XP curves
+
+---
+
+## 🚀 Getting Started (Unity Developers)
+
+**Week 1-2: Core Foundation**
+1. Create Unity 2021 LTS project
+2. Set up folder structure (Scripts/, Prefabs/, Scenes/, Resources/)
+3. Create CardData.cs ScriptableObject (see unity-implementation-guide.md)
+4. Create 11 test cards (Balanced Explorer starter deck)
+5. Create CardVisual prefab with rarity colors
+
+**Week 3-4: Onboarding Flow**
+6. Create MainMenu scene (Start Journey button)
+7. Create CardDraw scene (pack opening with 20-card reveal)
+8. Create DeckBuilder scene (choose Balanced Explorer)
+9. Implement pack opening animation (simple fade-in)
+
+**Week 5-6: County Map & Battle**
+10. Create CountyMap scene (7×7 grid, 1 enemy spawn)
+11. Create Battle scene (8×8 tactical grid)
+12. Implement card placement (drag-and-drop onto grid)
+13. Implement combat (Attack - Defense = damage)
+14. Add turn system (player turn → enemy turn → check victory)
+
+**Week 7-8: Victory Loop & Polish**
+15. Create VictoryScreen scene (rewards display)
+16. Implement reward system (+100 XP, +500 Gold, +1 card)
+17. Bug fixes, optimization (60 FPS on mobile)
+18. Playtest with 5-10 users
+
+**See**: [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md) for full C# code examples
+
+---
+
+## 📧 Contact & Contribution
+
+**Project Status**: Active development (MVP Phase)  
+**Target Launch**: Q2 2026 (MVP), Q4 2026 (Phase 2), 2027 (Phase 3)  
+
+**Documentation Maintained By**:
+- Design: @Soverign-Beast-Mode agent (Claude Sonnet 4.5)
+- Code: @Soverign-Code-Mode agent (GPT-5.1-Codex)
+- Unity: @Soverign-Unity-Builder agent (GPT-4o)
+
+**Last Documentation Audit**: December 30, 2025  
+**Next Planned Update**: Post-MVP playtest feedback (Week 9)
+
+---
+
+**Document Version**: 2.0 (Post-Cleanup)  
+**Bible Version**: 4,194 lines (38% reduction complete)  
+**Specs Count**: 67 files (33 JSON + 34 MD)  
+**TODOs**: 87 (all Phase 2-3, none blocking MVP)

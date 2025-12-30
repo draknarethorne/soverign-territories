@@ -37,30 +37,40 @@ Owner: [User] ("The Architect")
 
 **This game bible is the master design document. For implementation details, reference these supporting documents**:
 
-### Core Specifications (Implementation Details)
-- **[mvp-scope-final.md](mvp-scope-final.md)** - 8-week MVP roadmap, Must Have vs Won't Have features
-- **[economy-system.md](economy-system.md)** - Currency earning rates, F2P vs whale balance, Phase 2 Food/Lumber/Ore economy
-- **[combat-calculation-spec.md](combat-calculation-spec.md)** - MVP Attack/Defense formulas, Phase 2 RPG stats, Phase 3 elemental interactions
-- **[rpg-systems-spec.md](rpg-systems-spec.md)** - Health/Mana/Stamina mechanics, Consumables, RPG Shops, Equipment Sockets (Phase 2-3)
-- **[map-tier-progression.md](map-tier-progression.md)** - World→Territory→Realm→Battle hierarchy, occupation mechanics, monster scaling
-- **[terminology-guide.md](terminology-guide.md)** - Canonical reference for map names, player title (Sovereign), occupation terms
+### MVP Implementation (Start Here for Unity Development)
+- **[mvp/mvp-scope-final.md](mvp/mvp-scope-final.md)** - 8-week MVP roadmap, Must Have vs Won't Have features
+- **[mvp/tutorial-flow.md](mvp/tutorial-flow.md)** - 28-step tutorial progression (0-60 minutes), exact card rewards, UI flow
+- **[mvp/tutorial-gap-resolutions.md](mvp/tutorial-gap-resolutions.md)** - 9 critical design decisions resolved (EULA, deck fallbacks, safety nets)
+- **[mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md)** - C# code examples, project structure, ScriptableObjects
 
-### Tutorial & Onboarding
-- **[tutorial-flow.md](tutorial-flow.md)** - 28-step tutorial progression (0-60 minutes), exact card rewards, UI flow
+### Design Specifications (Deep-Dive System Details)
+- **[design/economy-system.md](design/economy-system.md)** - Currency earning rates, F2P vs whale balance, Phase 2 Food/Lumber/Ore economy
+- **[design/combat-calculation-spec.md](design/combat-calculation-spec.md)** - MVP Attack/Defense formulas, Phase 2 RPG stats, Phase 3 elemental interactions
+- **[design/rpg-systems-spec.md](design/rpg-systems-spec.md)** - Health/Mana/Stamina mechanics, Consumables, RPG Shops, Equipment Sockets (Phase 2-3)
+- **[design/map-tier-progression.md](design/map-tier-progression.md)** - World→Territory→Realm→Battle hierarchy, occupation mechanics, monster scaling
+- **[design/gameplay-modes-spec.md](design/gameplay-modes-spec.md)** - 8 gameplay modes (Realm Map, Arena PvP, Territory Wars, etc.)
+- **[design/terminology-guide.md](design/terminology-guide.md)** - Canonical reference for map names, player title (Sovereign), occupation terms
+- **[design/assets.md](design/assets.md)** - Visual guide (28 example images, color palette, element design)
+- **[design/design-todos-phase2-3.md](design/design-todos-phase2-3.md)** - **87 consolidated TODOs** (all Phase 2-3, none blocking MVP)
 
 ### Data Specifications (Schemas)
-- **docs/specs/*.json** - 60+ JSON schemas for cards, packs, economy, combat, maps, progression
+- **docs/specs/*.json** - 33 JSON schemas for cards, packs, economy, combat, maps, progression
+- **docs/specs/*.md** - 34 markdown companions (human-readable schema documentation)
+- **docs/specs/README.md** - Schema directory overview, CI validation, versioning
 
 ### Project Management
-- **[bible-reorganization-plan.md](bible-reorganization-plan.md)** - Reorganization roadmap, action items, Phase 1-5 tracking
-- **[README.md](../README.md)** - Project overview, tech stack, quick start guide
+- **[README.md](README.md)** - Documentation hub, quick start, tech stack, folder structure
+- **[archive/](archive/)** - Completed/superseded documents (mvp-scope.md, reorganization-status.md, etc.)
 
 **Where to Find What**:
 - **Game design philosophy** → This bible (Sections 1-18)
-- **Exact earning rates, formulas** → Supporting specs (economy-system.md, combat-calculation-spec.md)
-- **MVP feature list** → mvp-scope-final.md
-- **Tutorial step-by-step** → tutorial-flow.md
-- **Terminology standards** → terminology-guide.md
+- **MVP implementation roadmap** → mvp/mvp-scope-final.md
+- **Unity C# code examples** → mvp/unity-implementation-guide.md
+- **Tutorial step-by-step** → mvp/tutorial-flow.md
+- **Exact earning rates, formulas** → design/economy-system.md, design/combat-calculation-spec.md
+- **All TODOs consolidated** → design/design-todos-phase2-3.md
+- **Visual assets reference** → design/assets.md
+- **Terminology standards** → design/terminology-guide.md
 
 ---
 
