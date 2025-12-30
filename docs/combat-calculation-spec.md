@@ -244,6 +244,10 @@ Fire Mage Health = 50 - 1 = 49 (survives, barely scratched)
 
 ### Ability System (Phase 2)
 
+**TODO: Create ability template system (10-20 ability archetypes for designers)**  
+**TODO: Design AOE targeting UI (cone, circle, line-of-sight preview)**  
+**TODO: Determine cooldown reduction mechanics (CDR stat, items, hero abilities?)**
+
 **Mana Costs**:
 - Basic abilities: 10-20 Mana (melee strikes, minor buffs)
 - Intermediate abilities: 30-40 Mana (spells, ranged attacks)
@@ -270,10 +274,15 @@ Heal (Cleric)
 - Cooldown: 1 turn
 ```
 
+**TODO: Should abilities crit? (2× Fireball damage = 120 instead of 60?)**  
+**TODO: Design ability interrupts (can Silence stop casting? Stun cancel channeling?)**
+
 **Mana Regeneration**:
 - Out of combat: 10 Mana per minute (600 Mana per hour)
 - In combat: 5 Mana per turn (slower regen during battle)
 - Consumables: Mana Potion restores 50 Mana instantly (see [rpg-systems-spec.md](rpg-systems-spec.md))
+
+**TODO: Should regen scale with unit rarity? (Legendary = 8 Mana/turn, Common = 3?)**
 
 ---
 
@@ -363,20 +372,32 @@ No Elemental Bonus (Earth neutral to Fire, only Fire > Earth applies)
 
 ### Status Effects
 
+**TODO: Determine exact durations and damage values (2-5 turns? percentage vs flat damage?)**  
+**TODO: Design stacking mechanics (can 2 Burn effects stack? diminishing returns?)**  
+**TODO: Create purge/cleanse system (can Water Mage cleanse Burn? Priest purge Poison?)**
+
 **Burn** (Fire element):
 - Effect: 5 damage per turn for 3 turns
 - Total Damage: 15 over time
 - Example: Fire Mage's Fireball inflicts Burn on hit
+
+**TODO: Should Burn scale with attacker's Attack stat? (10% of Attack/turn instead of flat 5?)**
 
 **Freeze** (Water element):
 - Effect: Skip next turn (unit cannot move or attack)
 - Duration: 1 turn
 - Example: Ice Mage's Frostbolt freezes target for 1 turn
 
+**TODO: Should Freeze have slow phase after? (1 turn frozen, 1 turn -50% speed?)**  
+**TODO: Can Fire attacks melt Freeze early? (thaw mechanic)**
+
 **Poison** (Earth element):
 - Effect: 10% max Health per turn for 3 turns
 - Total Damage: 30% max Health
 - Example: Goblin Assassin's Poison Blade inflicts Poison
+
+**TODO: Should Poison reduce healing? (-50% healing effectiveness while poisoned)**  
+**TODO: Can Antidote consumable cure Poison? (see rpg-systems-spec.md)**
 
 **Stun** (Lightning element):
 - Effect: Skip next turn + cannot be healed
@@ -386,6 +407,10 @@ No Elemental Bonus (Earth neutral to Fire, only Fire > Earth applies)
 ---
 
 ### Terrain Modifiers (Phase 3)
+
+**TODO: Finalize exact percentage bonuses for each terrain type**  
+**TODO: Design stacking rules (do Forest + Mountain combine? +10% + 20% = +30%?)**  
+**TODO: Determine line-of-sight mechanics (does Forest block ranged attacks?)**
 
 **Mountain Hexes**:
 - +20% Defense for units on mountains
@@ -403,9 +428,17 @@ No Elemental Bonus (Earth neutral to Fire, only Fire > Earth applies)
 - No modifiers (normal terrain)
 - Passable (costs 1 Stamina per hex)
 
+**TODO: Add Hills terrain (+10% Defense, +1 range for archers?)**  
+**TODO: Add Desert terrain (-1 Stamina per turn, thirst effect?)**  
+**TODO: Add Snow terrain (Freeze effect on units without Cold Resist?)**
+
 ---
 
 ### Critical Hit System (Phase 3 - Speed-Based)
+
+**TODO: Design diminishing returns formula (prevent 100% crit at high Speed differences)**  
+**TODO: Determine if shields block crits (75% crit resistance for Shield units?)**  
+**TODO: Create crit visual feedback (red damage numbers, screen shake, particles)**
 
 **Formula**:
 ```
@@ -428,6 +461,9 @@ Crit Chance = (80 - 20) / 10 = 6% → 6% crit chance
 
 **Critical Damage**:
 - 2× normal damage (Phase 3, increased from MVP's 1.5×)
+
+**TODO: Should critical hits have bonus effects? (Burn on fire crits, Freeze on water crits?)**  
+**TODO: Design crit counter-tactics (items/abilities that reduce enemy crit chance)**
 
 ---
 

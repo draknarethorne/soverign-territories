@@ -107,6 +107,10 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 ### Food (Resource Currency)
 
+**TODO: Finalize exact AFK production rates (10-50 Food/hour too slow/fast? 24-hour cap?)**  
+**TODO: Design resource sinks (prevent infinite Food accumulation, create strategic choices)**  
+**TODO: Determine battle Food cost (20 per battle too expensive for F2P? tie to Player Level?)**
+
 **Earning Sources** (F2P Active Player):
 - AFK Production: Granary buildings generate 10-50 Food/hour (24-hour cap)
   - Level 1 Granary: 10 Food/hour (240 Food/day)
@@ -120,6 +124,8 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - Deployment: 50 Food to place building on Realm Map Location
 - Upgrades: 500-1,000 Food to upgrade Granary/Sawmill/Mine
 
+**TODO: Should Food replace Energy system entirely? (1 currency instead of 2?)**
+
 **F2P vs Whale Balance**:
 - Food CANNOT be bought with Gems (prevents pay-to-win)
 - Whales must wait for AFK production (time-gated)
@@ -128,6 +134,9 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 ---
 
 ### Lumber (Resource Currency)
+
+**TODO: Design Lumber-specific uses (prevent overlap with Food/Ore)**  
+**TODO: Determine building construction costs (300 Lumber too cheap/expensive?)**
 
 **Earning Sources** (F2P Active Player):
 - AFK Production: Sawmill buildings generate 10-50 Lumber/hour
@@ -147,6 +156,9 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 ---
 
 ### Ore (Resource Currency)
+
+**TODO: Finalize Ore scarcity (currently 50% of Food/Lumber, is that tight enough?)**  
+**TODO: Design high-tier equipment Ore costs (prevent F2P from crafting Mythic weapons too easily)**
 
 **Earning Sources** (F2P Active Player):
 - AFK Production: Mine buildings generate 5-25 Ore/hour (half of Food/Lumber)
@@ -190,6 +202,10 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 ## Auto-Collection System (Phase 2)
 
+**TODO: Design offline collection caps (12-hour max? 24-hour? unlimited?)**  
+**TODO: Determine storage upgrade costs (prevent F2P from maxing storage too easily)**  
+**TODO: Create visual feedback (notifications for full storage, upgrade prompts)**
+
 **Philosophy**: No tap-to-collect annoyance. Resources accumulate automatically.
 
 **Mechanics**:
@@ -204,6 +220,8 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - Production stops until player spends Food on battles/upgrades
 - Player spends 500 Food, production resumes
 
+**TODO: Should offline production be limited? (prevent 1-week vacation = 20,000 Food abuse)**
+
 **Design Intent**:
 - NOT a crafting game (no "check in every hour to collect")
 - Encourages strategic spending (deploy buildings, fight battles, upgrade)
@@ -213,6 +231,10 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 ## Store Separation (Phase 2)
 
+**TODO: Design Pack Store UI (tabs vs scrollable list, bundle offers, daily deals?)**  
+**TODO: Determine bundle pricing (50-card Game Deck = 2,400 Gems too cheap/expensive?)**  
+**TODO: Create resource bundle conversion rates (prevent exploits, keep emergency purchases viable)**
+
 **Pack Store** (Gold/Gems):
 - Standard Pack: 1,000 Gold (5 cards)
 - Element Booster: 2,000 Gold (5 cards)
@@ -220,16 +242,22 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - Premium Pack: 100 Gems (5 cards, 10% shiny rate)
 - Game Deck: 2,400 Gems OR 50,000 Gold (50 cards, themed)
 
+**TODO: Should Game Decks be Phase 3? (require Alliance Wars meta before creating precons)**
+
 **Resource Store** (Food/Lumber/Ore):
 - Food Bundles: 1,000 Food for 500 Gold (emergency purchase)
 - Lumber Bundles: 1,000 Lumber for 500 Gold
 - Ore Bundles: 500 Ore for 1,000 Gold (rarer, more expensive)
 - Equipment Blueprints: 500-2,000 Gold (craft with Lumber/Ore)
 
+**TODO: Should resource bundles exist? (creates pay-to-win path if whales can buy Food with Gold)**
+
 **PvP Store** (Arena Tokens - Phase 3):
 - Exclusive Cards: 500-5,000 Arena Tokens
 - Exclusive Equipment: 1,000-10,000 Arena Tokens
 - Season Rewards: Mythic cards for top players
+
+**TODO: Design PvP Store exclusive cards (create desirable chase cards without balance issues)**
 
 ---
 

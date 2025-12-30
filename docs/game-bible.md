@@ -2990,114 +2990,76 @@ Use that file for managing unit/building placements, stack limits, and codex vie
 
 # SECTION 4: GAMEPLAY MODES
 
-Sovereign Territories offers a variety of gameplay modes to cater to different playstyles, from solo PvE progression to large-scale alliance PvP. Each mode integrates the core mechanics of deck-building, map control, and auto-battle, providing depth for casual and hardcore players.
+**For detailed mode mechanics, rewards, and phasing, see [gameplay-modes-spec.md](gameplay-modes-spec.md)**
 
-## 4.1 The Saga Campaign (PvE Story Mode)
+Sovereign Territories offers multiple gameplay modes catering to different playstyles:
+- **MVP**: Realm Map PvE (tutorial + progression)
+- **Phase 2**: Alliance PvE Events, Daily/Weekly Challenges, Saga Campaign
+- **Phase 3**: Territory Map conquest, Arena PvP (1v1/3v3), Alliance Wars
+- **Phase 4**: World Map seasons, Expeditions (board game mode)
 
-### Overview
-The Saga Campaign is a linear, story-driven PvE journey that serves as the game's tutorial and primary progression path. Players embark on a "hero's journey" across themed maps, battling AI enemies and bosses to unlock new cards, resources, and story elements.
+---
 
-The campaign schema for Saga progression has been moved to a standalone spec: [docs/specs/campaign-schema.json](docs/specs/campaign-schema.json).
+## 4.1 Realm Map PvE (MVP - Tutorial & Progression)
 
-### How to Play
-- **Entry**: Accessible from the main menu; requires a basic deck to start.
-- **Progression**: Advance through stages by defeating enemies. Each stage is a tactical battle on an 8x8 grid.
-- **Boss Stages**: Every 10th stage features a powerful boss with phases (e.g., initial attack phase, then healing phase). Defeating bosses grants rare loot.
-- **Energy System**: Uses daily energy (recharges hourly). Run out, and wait or buy refills.
-- **Rewards**: Primary source of "Fodder Cards" (common units for deck-building) and XP for leveling.
-
-### Mechanics
-- **Story Integration**: Narrative elements tie into the universal themes (e.g., Norse saga with Thor as a boss).
-- **Difficulty Scaling**: Stages increase in complexity; optional hard mode for extra rewards.
-- **Auto-Battle Option**: For AFK progression, but manual control unlocks full loot potential.
-
-### Player Tips
-- Focus on building a balanced deck early; use Saga to test synergies.
-- Save energy for boss stages to maximize rewards.
-
-### Inspiration
-- Slay the Spire: Run-based progression with escalating difficulty.
-
-## 4.2 The Stacking Mechanic (Tactical Combat Core)
+**For tutorial flow, see [tutorial-flow.md](tutorial-flow.md)**
 
 ### Overview
-Stacking is the core tactical mechanic, allowing players to combine multiple unit cards into squads for efficient mobile gameplay. This addresses screen size limitations while adding strategic depth.
+The Realm Map is the **primary MVP mode**: a 20-40 Location hex grid for single-player exploration teaching core mechanics through scripted battles.
 
-### How to Play
-- **Formation**: In deck-building, select multiple cards of the same type (e.g., 5 Archer cards) and place them on one tile as a "Archer Squad."
-- **Stats Scaling**: Squad HP and attack multiply (e.g., 5x HP, 5x attack), but vulnerabilities increase.
-- **Vulnerabilities**: Highly susceptible to Area of Effect (AoE) attacks like fireballs or artillery, which can wipe entire stacks.
-- **Terrain Interaction**: Stacking restricted in dense terrain (e.g., forests prevent large stacks).
+### Key Features
+- **Map**: 20-40 hexes (Locations: Town, City, Dungeon, Mine, Ruins, Monster Spawn, Treasure Node)
+- **Movement**: 3 tiles/turn, 10 Movement Points/day (time-gated exploration)
+- **Battles**: 8×8 tactical grid, 20-50 card decks, auto-battle after tutorial
+- **Energy**: 10 Energy/battle (240 Energy/day = 24 battles max)
+- **Rewards**: Gold (50-500/battle), Gems (10-20/treasure node), Battle Chests (Bronze/Silver/Gold)
+- **Boss**: Final Location with Epic/Legendary boss (harder difficulty, rare loot)
 
-### Mechanics
-- **Stack Limits**: Max stack size based on deck slots or castle level.
-- **Breakdown**: In battle, stacks can be targeted individually or as a group.
-- **Strategic Trade-offs**: Larger stacks hit harder but are riskier.
+### MVP Scope
+- ✅ 3-5 Realm Maps (60-200 Locations total)
+- ✅ Treasure nodes (one-time Gold/Gems/card rewards)
+- ✅ Monster Spawns (Common → Epic rarity)
+- ❌ Economy deployment (Phase 2)
+- ❌ Multi-Realm occupation (Phase 3)
 
-### Player Tips
-- Use stacking for PvE rushes, but spread out in PvP to avoid AoE wipes.
-- Combine with tactics for auto-battle efficiency.
+---
 
-### Inspiration
-- Heroes of Might and Magic: Unit stacks with combined stats.
+## 4.2 Saga Campaign (Phase 2 - Story PvE) ❌ NOT IN MVP
 
-## 4.3 The Expedition (Weekly Side Game)
+**Schema**: [docs/specs/campaign-schema.json](docs/specs/campaign-schema.json)
 
-### Overview
-A mini-board game mode that resets weekly, offering light-hearted, luck-based gameplay. Think Mario Party meets Monopoly, integrated with the game's card economy.
+Linear story mode (Player Level 10+) with themed chapters, boss phases, and narrative cutscenes. Primary source of Common/Uncommon fodder cards.
 
-The expedition schema for board game mode has been moved to a standalone spec: [docs/specs/expedition-schema.json](docs/specs/expedition-schema.json).
+---
 
-### How to Play
-- **Board**: Procedurally generated path with spaces for rewards, penalties, or events.
-- **Movement**: Roll dice (or buy extra moves) to advance. Land on spaces to gain cards, gold, or challenges.
-- **Objective**: Reach the end first for a grand prize (e.g., legendary card).
-- **Multiplayer**: Up to 4 players; compete in real-time or async.
+## 4.3 Expeditions (Phase 4 - Board Game) ❌ NOT IN MVP
 
-### Mechanics
-- **Dice Rolls**: Random but influenced by VIP bonuses (e.g., +1 to rolls).
-- **Events**: Spaces trigger mini-games, like quick card battles or trivia.
-- **Monetization**: Buy extra moves or dice rerolls for pay-for-speed.
+**Schema**: [docs/specs/expedition-schema.json](docs/specs/expedition-schema.json)
 
-### Player Tips
-- Save moves for critical rolls; use expeditions to farm rare cards without energy cost.
-- Weekly reset encourages return plays.
+Weekly mini-game mode (Player Level 15+) mixing board game mechanics (Mario Party) with card battles. Roll dice, land on event spaces, race to finish for Legendary rewards.
 
-### Inspiration
-- Mario Party: Fun, random events on a board.
+---
 
-## 4.4 Alliance Events (PVP/PVE Hybrid)
+## 4.4 Alliance Events (Phase 3 - PvE/PvP Hybrid) ❌ NOT IN MVP
 
-### Overview
-Large-scale events where alliances engage in coordinated wars, blending PvP sieges with PvE objectives. Designed for community play with auto-battle support.
+Large-scale alliance events (50-200 players) combining PvE raids and PvP sieges. Auto-battle dominant with "hero moments" for key decisions.
 
-### How to Play
-- **Setup**: Alliances declare wars on maps; events last hours to days.
-- **Phases**: Initial PvE scrambles, then PvP attacks on castles.
-- **Participation**: Players contribute decks for auto-battle; limited direct control for key moments (e.g., heal allies).
-- **Scale**: Hundreds of players; outcomes based on collective strength.
+---
 
-### Mechanics
-- **Auto-Battle Dominance**: Most action is AI-driven; players set tactics beforehand.
-- **Limited Interaction**: Short windows for direct commands (e.g., 5-minute "hero moments").
-- **Rewards**: Shared based on alliance performance; top contributors get bonuses.
+## 4.5 Arena PvP (Phase 3 - Ranked Matches) ❌ NOT IN MVP
 
-### Player Tips
-- Coordinate with alliance chat; focus on strong decks for auto-contribution.
-- Use for social bonding and large rewards.
+**For matchmaking, see [combat-calculation-spec.md](combat-calculation-spec.md) Appendix**
 
-### Inspiration
-- FreeCiv: Alliance diplomacy and wars.
+Competitive 1v1/3v3 PvP (Player Level 15+) with Elo matchmaking and Arena Token rewards (skill-based, cannot buy).
 
-## 4.5 Territorial Conquest Campaign (PvE Map Mode)
+---
 
-### Overview
-A persistent PvE mode where players engage in turn-based territorial conquest against 1-3 AI opponents on multi-tier maps, emulating Risk with deck-building and economy building. Start small on the World Map, build decks, occupy territories for AFK resources, level up castles and lords. Allows safe progression before unlocking PvP.
+## 4.6 Territory/World Maps (Phase 3-4 - Alliance Conquest) ❌ NOT IN MVP
 
-### How to Play
-- **Entry**: Available from start; no prerequisites, but PvP requires reaching Level 10.
-- **Setup**: Choose a random or themed map (e.g., fantasy world). Begin with one castle; AI opponents start similarly.
-- **Turns**: Turn-based; players move units, place buildings, attack territories. AI progresses in parallel, simulating live opponents.
+**For occupation mechanics, see [map-tier-progression.md](map-tier-progression.md)**
+
+- **Territory Map** (Phase 3): 50-100 Realms, 1-month campaigns, castle sieges
+- **World Map** (Phase 4): 200-500 Territories, 3-month seasons, alliance wars
 - **Objectives**: Conquer all enemy capitals or hold key territories for a set time. Can be played in parallel with PvP once eligible.
 - **Progression**: As you expand, unlock higher map tiers, more building slots, and stronger AI.
 
@@ -4735,84 +4697,112 @@ Expansions drop **quarterly** (4 per year), introducing new themes, cards, and m
 
 # SECTION 8: COMBAT MECHANICS
 
-Combat in Sovereign Territories is the heart of the game, blending strategic depth with accessibility. All battles are turn-based on an 8x8 grid, ensuring deterministic outcomes based on math rather than luck. This allows players to master tactics while enabling auto-battle for AFK play, making it suitable for both casual and competitive gamers.
+**For exact damage formulas and calculations, see [combat-calculation-spec.md](combat-calculation-spec.md)**
 
-The battle schema for combat encounters has been moved to a standalone spec: [docs/specs/battle-schema.json](docs/specs/battle-schema.json).
+**Schemas**: [battle-schema.json](specs/battle-schema.json), [reward-schema.json](specs/reward-schema.json)
 
-The reward schema for all game rewards has been moved to a standalone spec: [docs/specs/reward-schema.json](docs/specs/reward-schema.json).
+Combat is the heart of Sovereign Territories: turn-based battles on an 8×8 grid with deterministic math (no RNG). Supports both manual control and auto-battle with programmable tactics.
 
-## 8.1 System Overview
+---
 
-The combat system emphasizes planning and execution, where every action counts. Players position their deck-formed units on the grid, then engage in alternating turns. Units are derived from stacked cards, combining stats for powerful formations.
+## 8.1 Core System (MVP)
+
+### Battle Grid
+- **8×8 Tactical Grid**: Chess-style positioning
+- **Turn-Based**: Alternating player/enemy turns (no real-time)
+- **Initiative**: Faster units act first (Speed stat determines order)
+- **Deterministic**: No dice rolls, pure math-based outcomes
 
 ### Turn Structure
-- **Initiative**: Determined by unit speed stats; faster units act first.
-- **Actions**: Move (limited range), attack (melee/ranged), or activate tactics/buffs.
-- **Phases**: Movement phase followed by action phase, preventing simultaneous moves.
+1. **Movement Phase**: Units move up to their range (1-3 tiles)
+2. **Action Phase**: Attack (melee/ranged) or activate ability
+3. **Resolution Phase**: Damage calculations, status effects apply
 
-### Initiative & Turn Order (Deterministic)
+### MVP Combat Formula (Simplified)
+```
+Damage = Attacker's Attack - Defender's Defense
+If Damage < 0, Damage = 0 (no overkill)
+If Damage ≥ Defender's Health, unit dies (one-hit removal)
+```
 
-- **Initiative Score** = `BaseSpeed + SpeedBuffs + (StackBonus)` where `StackBonus = log(stackSize + 1)` to give diminishing returns for very large stacks.
-- Units are sorted by Initiative Score descending at the start of each round. Ties are broken by `unitId` deterministic ordering.
-- Use a fixed simulation tick (e.g., 100ms) for visuals; all authoritative decisions are made on discrete turn boundaries to keep client prediction simple.
+**Example**: Fire Archer (30 Attack) vs Water Infantry (10 Defense, 25 Health)
+- Damage = 30 - 10 = 20
+- Result: Water Infantry takes 20 damage, survives with 5 Health
 
-### Stack Math (Precise Combination Rules)
+---
 
-- **Stack HP** = `BaseHP × stackSize × HPMultiplier(level)` where `HPMultiplier(level)` is defined per card (e.g., 1 + 0.1*(level-1)).
-- **Stack Attack** = `BaseAttack × stackSize × AttackMultiplier(level)`.
-- **Stack Defense** = `BaseDefense × (1 + 0.05*(stackSize-1))` (defense scales with diminishing returns to favor numbers but reduce absolute tanking).
-- **AoE Interaction**: AoE damage applies to stacks as absolute damage; apply damage to stack HP, then calculate casualties as `floor(damage / BaseHP)` for units removed, leaving fractional HP on remainder.
-- **Overkill**: No damage spillover to other stacks unless an ability explicitly states "splash overflow".
+## 8.2 Stacking System (HoMM-Inspired)
 
+**For full stacking rules, see Section 2.6**
 
-### Resolution
-Combat resolution is purely mathematical, ensuring fairness. Damage calculations incorporate elements (e.g., fire beats water), class bonuses (e.g., archers vs. infantry), terrain modifiers (e.g., hills boost defense), and buffs from equipment or tactics. Area of Effect (AoE) attacks, like fireballs, multiply damage against stacked units, adding risk-reward to formations.
+### Stack Math (MVP)
+- **Stack HP** = `BaseHP × stackSize` (linear scaling)
+- **Stack Attack** = `BaseAttack × stackSize` (linear scaling)
+- **AoE Vulnerability**: AoE attacks hit ALL units in stack (risk-reward trade-off)
 
-**Detailed Damage Formula** (inspired by Slay the Spire's clarity):
-- Base Damage = (Attacker's Attack Stat × Stack Multiplier) × Elemental Multiplier × Buff Factor
-- Elemental Multiplier: 1.5x advantage (e.g., Fire vs. Water), 0.75x disadvantage, 1.0x neutral.
-- Defense Reduction: Damage = Base Damage - (Defender's Defense Stat × Terrain Bonus × Stack Defense Multiplier)
-- Final Damage: Capped at 0; overkill doesn't carry over unless specified by abilities.
-- Example: A stack of 3 Fire Archers (Attack 10 each, total 30) attacking Water Infantry (Defense 5) on neutral terrain: 30 × 1.5 × 1.0 - (5 × 1.0 × 1.0) = 45 - 5 = 40 damage.
+**Example**: 3× Elf Archer (10 HP, 8 Attack each)
+- Stack HP = 10 × 3 = 30 HP total
+- Stack Attack = 8 × 3 = 24 Attack
+- Fireball (20 AoE damage) → kills 2 archers (20 damage / 10 HP = 2 casualties)
 
-**Win/Loss Conditions** (best-in-class from Chess and HoMM):
-- **PvE Battles**: Eliminate all enemy units or survive a set number of turns (e.g., defend for 10 turns). Boss battles may require reducing boss HP to 0 across phases.
-- **PvP Battles**: Eliminate all opponent units, capture a central objective (e.g., flag on grid), or achieve a point threshold (e.g., control 5+ tiles).
-- **Alliance Events**: Alliance with most surviving units or captured territories wins; individual contributions earn personal rewards.
-- **Draws**: Rare, resolved by Elo adjustment or rematch; no draws in PvE.
+---
 
-**Building Integration in Combat** (inspired by Civilization's tile improvements):
-- Buildings on the battle grid (if the map tile has them) provide passive buffs: e.g., +20% defense for units on fortified tiles, or resource generation interrupts if destroyed.
-- Siege Mechanics: Attacking enemy castles requires breaching walls (reduce building HP first), adding a pre-combat phase. Buildings can be targeted for AoE or direct attacks, yielding resources if destroyed.
+## 8.3 Auto-Battle & Tactics (MVP)
 
-### AI Integration
-Programmable tactics allow players to set AI behaviors, such as "focus healers" or "flank left," enabling auto-battle during AFK scenarios. This keeps the game engaging even when offline, with tactics evolving as players unlock more options.
+### Programmable AI
+Players set tactics before battle, AI executes automatically:
+- **Aggressive**: Focus lowest HP enemies first
+- **Defensive**: Prioritize high-threat targets (ranged > melee)
+- **Balanced**: Mix of offense/defense based on HP %
 
-**Player Agency in Auto-Battle** (balancing automation with control, like in auto-chess games):
-- Tactics provide base AI; players can queue "interrupt commands" (e.g., "Heal now" or "Retreat") that trigger at specific moments, with a cooldown to prevent spam.
-- "Hero Moments": In key battles, allow 1-2 manual actions per turn during auto-mode, chosen from a simplified menu.
-- Override Toggle: Switch to full manual mid-battle, but at a cost (e.g., reduced XP or energy penalty).
+### Hero Moments (Phase 2)
+- 1-2 manual actions per turn during auto-mode (heal ally, change target)
+- Cooldown prevents spam (once per 3 turns)
+- Override toggle: Switch to full manual (costs XP penalty)
 
-## 8.2 PvE vs. PvP Differences
+**TODO: Design 10-20 tactic templates for auto-battle (see gameplay-modes-spec.md)**
 
-- **PvE Battles**: Feature scripted AI with phases (e.g., a boss starts aggressive, then switches to defensive). Designed for progression, with loot drops tied to performance.
-- **PvP Battles**: Player vs. player, using Elo matchmaking for balanced matches. Decks are pitted against each other, with objectives like capturing points or eliminating units.
+---
 
-## 8.3 Advanced Features
+## 8.4 Win/Loss Conditions
 
-- **Stack Vulnerabilities**: Large stacks are AoE magnets, encouraging tactical spreading.
-- **Elemental Interactions**: A rock-paper-scissors system (fire > water > earth > fire) adds depth.
-- **Buff/Debuff System**: Temporary effects from tactics, lasting 2-5 turns.
+### PvE (MVP)
+- **Standard**: Eliminate all enemy units
+- **Survival**: Survive X turns (e.g., 10 turns vs waves)
+- **Boss**: Reduce boss HP to 0 (may have multiple phases)
 
-## Player Tips
-- Experiment with tactics in PvE before PvP.
-- Use terrain to your advantage; position archers on hills.
+### PvP (Phase 3) ❌ NOT IN MVP
+- **Elimination**: Kill all opponent units
+- **Capture**: Control central flag for 3 turns
+- **Points**: Control 5+ tiles at turn 15
+
+---
+
+## 8.5 Phase 2-3 Advanced Features ❌ NOT IN MVP
+
+**For detailed formulas, see [combat-calculation-spec.md](combat-calculation-spec.md)**
+
+### Phase 2: RPG Stats
+- **Health/Mana/Stamina** replaces simple HP (see rpg-systems-spec.md)
+- **Consumables**: Potions/Scrolls for mid-battle healing
+- **Status Effects**: Burn (DoT), Freeze (skip turn), Poison (HP drain)
+
+### Phase 3: Elemental Interactions
+- **Rock-Paper-Scissors**: Fire > Earth > Water > Fire
+- **Damage Bonus**: 1.5× advantage, 0.75× disadvantage
+- **Terrain Modifiers**: Hills (+20% Defense), Water (-50% Movement)
+
+**TODO: Define exact elemental multipliers (see combat-calculation-spec.md Phase 3 section)**
+**TODO: Design terrain effect formulas (percentage bonuses, stacking rules)**
+**TODO: Create status effect durations (2-5 turns? purge mechanics?)**
+
+---
 
 ## Open-Source References
 
-- Chess Engines (Stockfish on GitHub): Deterministic turn-based logic.
-- Slay the Spire (GitHub): Card-based combat resolution.
-- Battle Chess Clones (GitHub): Grid-based tactics.
+- **Chess Engines** (Stockfish): Deterministic turn-based logic
+- **Slay the Spire**: Card-based combat, clear damage formulas
+- **Battle Chess Clones**: Grid-based tactics visualization
 
 # SECTION 9: PROGRESSION & BALANCE
 

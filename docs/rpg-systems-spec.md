@@ -183,7 +183,13 @@ Army Health % = 125 / 350 = 36% (shows on Realm Map)
 
 ## Phase 2: Consumables (Month 2-3)
 
+**TODO: Create consumable catalog (10-20 Potion/Scroll types for variety)**  
+**TODO: Design shop pricing balance (prevent F2P from stockpiling infinite consumables)**  
+**TODO: Determine in-combat vs out-of-combat usage (MVP Phase 2 = out-of-combat only?)**
+
 ### Health Potions
+
+**TODO: Should Health Potions scale with unit rarity? (Legendary = 30% restore, Common = 10%?)**
 
 **Effect**: Restore 20% max Health to target unit instantly
 
@@ -208,6 +214,8 @@ New Health: 50 + 30 = 80/150 Health (53% army health)
 - Inventory limit: 99 Health Potions (prevents hoarding)
 - Can use multiple potions on same unit (1 per click)
 
+**TODO: Should rare potions exist? (Epic Health Potion = 50% restore, costs 1,000 Gold)**
+
 ---
 
 ### Mana Potions
@@ -230,6 +238,8 @@ Fire Mage (30/80 Mana, used Fireball twice)
 Use Mana Potion: +50 Mana
 New Mana: 30 + 50 = 80/80 Mana (full restore)
 ```
+
+**TODO: Should Mana Potions restore percentage instead of flat 50? (20% max Mana = scales with unit)**
 
 ---
 
@@ -258,6 +268,10 @@ Sovereign clicks Yes: +10 Movement Points, moves 5 hexes, 5 MP remain for tomorr
 ---
 
 ### Scrolls (Tactical Abilities)
+
+**TODO: Design 10-20 Scroll types (offensive, defensive, utility, summoning)**  
+**TODO: Determine Scroll rarity distribution (prevent F2P from abusing Legendary scrolls)**  
+**TODO: Create Scribe shop UI (show Scroll preview, effect description, cost)**
 
 **Effect**: Single-use abilities (replaces equipping Tactic cards to deck)
 
@@ -348,6 +362,10 @@ Scrolls Tab:
 
 ### Socket System (Diablo-Style)
 
+**TODO: Finalize socket count by rarity (should Mythic get 4 sockets? too powerful?)**  
+**TODO: Design socket UI (drag-and-drop? list view? preview stat bonuses before confirm?)**  
+**TODO: Create socket removal economy (100 Gold too cheap? prevents strategic choices)**
+
 **Rarity-Based Sockets**:
 - Common equipment: 0 sockets (no attachments)
 - Uncommon equipment: 1 socket
@@ -359,6 +377,8 @@ Scrolls Tab:
 **Socket Types**:
 - **Jewel Slots**: Stat bonuses (+Attack, +Defense, +Health, +Mana)
 - **Rune Slots**: Elemental affinity (+10% Fire damage, +10% Water resistance)
+
+**TODO: Should sockets be type-locked? (Jewel slot vs Rune slot, prevents mixing?)**
 
 **Example Equipment**:
 ```
@@ -379,6 +399,9 @@ Mythic Dragon Armor (3 sockets)
 ---
 
 ### Jewel Types
+
+**TODO: Create Jewel drop table (rarities, boss tiers, pity timers for Flawless Jewels)**  
+**TODO: Design Jewel combining system (3× Minor Ruby = 1× Ruby, 3× Ruby = 1× Flawless?)**
 
 **Attack Jewels**:
 - Minor Ruby: +5 Attack (common drop)
@@ -409,6 +432,9 @@ Mythic Dragon Armor (3 sockets)
 
 ### Rune Types (Elemental)
 
+**TODO: Design Rune stacking rules (can 2× Fire Runes = +20% Fire damage? diminishing returns?)**  
+**TODO: Create hybrid Runes (Fire+Water = Steam Rune, unique effects?)**
+
 **Offensive Runes**:
 - Fire Rune: +10% Fire damage
 - Water Rune: +10% Water damage
@@ -429,6 +455,9 @@ Mythic Dragon Armor (3 sockets)
 ---
 
 ### Socket Removal & Replacement
+
+**TODO: Should removed Jewels/Runes be destroyed or returned to inventory? (destruction = resource sink)**  
+**TODO: Design socket reroll mechanic (randomize socket types for 500 Gold?)**
 
 **Removing Jewels/Runes**:
 - Cost: 100 Gold per socket
