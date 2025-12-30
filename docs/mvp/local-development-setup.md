@@ -10,7 +10,7 @@
 ## 📋 Overview
 
 This guide walks you through setting up your local development environment for **Sovereign Territories**. You'll install:
-1. **Unity 2021 LTS** (game client development)
+1. **Unity 6 LTS** (game client development)
 2. **Visual Studio Code** (C# scripting, JSON editing)
 3. **Docker Desktop** (Nakama server, Phase 2+)
 4. **Git** (version control, already installed)
@@ -491,7 +491,7 @@ public class CardLoader : MonoBehaviour
 ## 🎯 What's Next?
 
 **You now have**:
-- ✅ Unity 2021 LTS installed
+- ✅ Unity 6 LTS (or 2021 LTS) installed
 - ✅ Project created with folder structure
 - ✅ Free placeholder art imported
 - ✅ JSON parsing verified
