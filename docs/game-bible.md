@@ -663,18 +663,34 @@ Sovereign Territories uses a **6-tier rarity system** with distinct visual ident
 
 **Visual Hierarchy**: Element defines **frame color**, Rarity defines **effects & complexity**
 
-| Rarity | Star Range | Leveling | Drop Rate | Visual Identity |
-|--------|------------|----------|-----------|-----------------|
-| **Common** | 1★ (fixed) | Cannot level | 70% | Simple frame, matte finish, small badge |
-| **Uncommon** | 1-2★ | +1 level max | 20% | Decorative corners, subtle glow, gem badge |
-| **Rare** | 2-3★ | +1 level max | 8% | Ornate frame, holographic shimmer, animated badge |
-| **Epic** | 3-4★ | +1 level max | 1.5% | Complex runes, particle glow, pulsing badge |
-| **Legendary** | 5★ (fixed) | Cannot level* | 0.48% | Animated frame, radiant aura, crown badge |
-| **Mythic** | 6★ (fixed) | Cannot level* | 0.02% | Ultra-ornate frame, screen glow, creature badge |
+| Rarity | Star Range | Max Stars | Tactic Slots | Drop Rate | Visual Identity |
+|--------|------------|-----------|--------------|-----------|-----------------|
+| **Common** | 1-3★ | +2 levels | 1-3 tactics | 70% | Simple frame, matte finish, small badge |
+| **Uncommon** | 1-4★ | +3 levels | 1-4 tactics | 20% | Decorative corners, subtle glow, gem badge |
+| **Rare** | 2-5★ | +3 levels | 2-5 tactics | 8% | Ornate frame, holographic shimmer, animated badge |
+| **Epic** | 3-6★ | +3 levels | 3-6 tactics | 1.5% | Complex runes, particle glow, pulsing badge |
+| **Legendary** | 5-7★ | +2 levels | 5-7 tactics | 0.48% | Animated frame, radiant aura, crown badge |
+| **Mythic** | 6-8★ | +2 levels | 6-8 tactics | 0.02% | Ultra-ornate frame, screen glow, creature badge |
 
-*Future: Epic/Legendary may gain +2 leveling (3-5★ / 5-7★) while maintaining rarity-based stat advantages
+**Key Changes from Original Design**:
+- ✅ **All rarities can rank up** (was: Common/Legendary/Mythic fixed)
+- ✅ **Tactic Slots scale with stars** (1★=1 tactic, 2★=2 tactics, etc.)
+- ✅ **Rarity still dominant** (Epic base stats = 8× Common base at same star rank)
 
-### Common - 1 Star
+### Common - 1-3 Stars
+
+**Star Progression** (Phase 1A):
+- **Starting**: Always 1★ when pulled from pack
+- **Max Rank**: 3★ (Bronze → Silver border)
+- **Fusion Path**:
+  - 1★→2★: 1 duplicate + 500 Gold (+50% stats, 2 tactics)
+  - 2★→3★: 2 duplicates + 2,000 Gold (+50% stats, 3 tactics)
+  - **Total**: 3 duplicates + 2,500 Gold to max
+
+**Tactic Slot Unlocks**:
+- 1★: 1 tactic slot
+- 2★: 2 tactic slots
+- 3★: 3 tactic slots (maxed)
 
 **Visual Design**:
 - **Frame Color**: Determined by element (Fire=red, Water=blue, Earth=green, Lightning=yellow, Wind=cyan, Frost=light blue)
@@ -685,17 +701,23 @@ Sovereign Territories uses a **6-tier rarity system** with distinct visual ident
 - **Finish**: Matte, no special effects or shine
 
 **Gameplay Characteristics**:
-- **Starting Stars**: Always 1★ (cannot be increased)
-- **Leveling**: **Cannot level up** (stays at base stats permanently)
-- **Customization**: None (pure stat values, no skill points)
-- **Use Case**: Fodder for combining, early-game units, bulk army stacks
+- **Starting Stars**: Always 1★ when pulled from pack
+- **Max Stars**: 3★ (can fuse twice: 1★→2★→3★)
+- **Fusion Costs**:
+  - 1★→2★: 1 duplicate + 500 Gold (+50% stats)
+  - 2★→3★: 2 duplicates + 2,000 Gold (+50% stats)
+  - **Total to max**: 3 duplicates + 2,500 Gold
+- **Tactic Slots**: 1★=1 tactic, 2★=2 tactics, 3★=3 tactics
+- **Base Stats**: 10 HP, 5 ATK (lowest tier)
+- **Customization**: None (pure stat increases, no skill points)
+- **Use Case**: Early-game units, F2P grind targets (easy to max), bulk deck filler
 - **Examples**: Basic Archer, Spearman, Scout, Farm (building), Mine (building)
 
-**Why Commons Don't Level**:
-- Simplicity for new players (no decision paralysis)
-- Encourages progression to higher rarities
-- Prevents common-only meta dominance
-- Maintains economy value (always abundant supply for auction house)
+**Why Commons Can Rank Up** (New Design):
+- F2P progression feeling (duplicates = visible power increase)
+- Maxing a Common = achievable goal (3 dups = ~30 packs)
+- Still weaker than higher rarities (3★ Common < 3★ Epic due to base stats)
+- Tactics provide variety, not raw power (3-tactic Common = versatile, not broken)
 
 ### Uncommon - 1-2 Stars
 
@@ -708,13 +730,18 @@ Sovereign Territories uses a **6-tier rarity system** with distinct visual ident
 - **Finish**: Semi-gloss with faint shimmer overlay
 
 **Gameplay Characteristics**:
-- **Starting Stars**: 1★ by default
-- **Leveling**: Can level up to **2★** (one level upgrade)
-  - Requires: Combine with duplicate OR spend resources (1,000 gold + 50 XP)
-  - Stat Boost: +25% to all base stats at 2★
-- **Customization**: Minor (choose 1 of 2 passive bonuses when leveling to 2★)
+- **Starting Stars**: 1★ by default (when pulled from pack)
+- **Max Stars**: 4★ (can fuse 3 times: 1★→2★→3★→4★)
+- **Fusion Costs**:
+  - 1★→2★: 1 duplicate + 1,000 Gold (+50% stats)
+  - 2★→3★: 2 duplicates + 5,000 Gold (+50% stats)
+  - 3★→4★: 4 duplicates + 10,000 Gold (+50% stats)
+  - **Total to max**: 7 duplicates + 16,000 Gold
+- **Tactic Slots**: 1★=1 tactic, 2★=2 tactics, 3★=3 tactics, 4★=4 tactics
+- **Base Stats**: 20 HP, 10 ATK (2× Common base)
+- **Customization**: Choose 1 of 2 passive bonuses at 2★ (permanent decision)
   - Example: Fire Warrior → choose "+10% attack" OR "+10% HP"
-- **Use Case**: Early-to-mid game core units, niche specialists
+- **Use Case**: Early-to-mid game core units, F2P endgame targets (achievable 4★)
 - **Examples**: Elite Archer, Heavy Infantry, Healer, Barracks (building)
 
 **Leveling Process**:
@@ -734,13 +761,19 @@ Sovereign Territories uses a **6-tier rarity system** with distinct visual ident
 - **Finish**: Glossy holographic overlay with rainbow shimmer at angles
 
 **Gameplay Characteristics**:
-- **Starting Stars**: 2★ by default
-- **Leveling**: Can level up to **3★** (one level upgrade)
-  - Requires: Combine 2 duplicates OR spend 5,000 gold + 200 XP
-  - Stat Boost: +40% to all base stats at 3★
-- **Customization**: Moderate (allocate 3 skill points across 3 stats when leveling)
-  - Example: At 3★, distribute +3 points across Attack/Defense/HP (e.g., +2 Attack, +1 HP)
-- **Use Case**: Mid-game powerhouses, strategic deck staples
+- **Starting Stars**: 2★ by default (higher starting point)
+- **Max Stars**: 5★ (can fuse 3 times: 2★→3★→4★→5★)
+- **Fusion Costs**:
+  - 2★→3★: 2 duplicates + 10,000 Gold (+50% stats)
+  - 3★→4★: 4 duplicates + 20,000 Gold (+50% stats)
+  - 4★→5★: 8 duplicates + 50,000 Gold (+50% stats)
+  - **Total to max**: 14 duplicates + 80,000 Gold
+- **Tactic Slots**: 2★=2 tactics, 3★=3 tactics, 4★=4 tactics, 5★=5 tactics
+- **Base Stats**: 40 HP, 20 ATK (4× Common base)
+- **Customization**: Allocate 3 skill points at 3★, +2 more at 4★, +3 more at 5★
+  - Example: At 5★, distribute +8 points across Attack/Defense/HP/Speed/Range
+  - Max 3 points in any single stat (prevents min-maxing)
+- **Use Case**: Mid-to-late game powerhouses, competitive PvP staples, F2P long-term goal
 - **Examples**: Dragon Knight, Archmage, Siege Engine, Turret (building), Granary (building)
 
 **Skill Point Allocation**:
@@ -761,7 +794,20 @@ Sovereign Territories uses a **6-tier rarity system** with distinct visual ident
 - **Special**: Faint element-themed particle effects around entire card border
 
 **Gameplay Characteristics**:
-- **Starting Stars**: 3★ by default
+- **Starting Stars**: 3★ by default (high starting point)
+- **Max Stars**: 6★ (can fuse 3 times: 3★→4★→5★→6★)
+- **Fusion Costs**:
+  - 3★→4★: 4 duplicates + 50,000 Gold (+50% stats)
+  - 4★→5★: 8 duplicates + 100,000 Gold (+50% stats)
+  - 5★→6★: 16 duplicates + 200,000 Gold (+50% stats)
+  - **Total to max**: 28 duplicates + 350,000 Gold
+- **Tactic Slots**: 3★=3 tactics, 4★=4 tactics, 5★=5 tactics, 6★=6 tactics
+- **Base Stats**: 80 HP, 40 ATK (8× Common base)
+- **Customization**: Unlock 3 of 5 skill tree nodes at 4★, +2 more at 5★, +3 more at 6★
+  - Skill tree includes: Stat boosts, passive abilities, active skills
+  - Example: Fire Titan → unlock "Burning Aura" (+10% ATK to allies) + "Inferno Strike" (2× damage on crit)
+- **Use Case**: Whale targets, endgame F2P trophy cards, PvP meta-defining heroes
+- **Examples**: Dragon Lord, Void Mage, Legendary Siege Tower, Citadel (building)
 - **Leveling**: Can level up to **4★** (one level upgrade)
   - Requires: Combine 3 duplicates OR spend 20,000 gold + 1,000 XP
   - Stat Boost: +60% to all base stats at 4★

@@ -651,102 +651,174 @@ After Trainer Deck reveal animation completes:
 
 ## Phase 5: First Tactical Battle (10-15 Minutes) - CORE LOOP
 
-### Step 15: Battle Map - Card Placement (Manual Required)
-**Screen**: Tactical Battle - Placement Phase
+### Step 15: Deck Builder - Select 6 Cards for Battle
+**Screen**: Battle Formation - Deck Builder
 ```
-[Top: Battle Map Grid - 7×7 tiles]
-[Your Side: Bottom 3 rows (green tint)]
-[Enemy Side: Top 3 rows (red tint, grayed out)]
-[No Man's Land: Middle row (neutral)]
+[Header: "Select 6 Cards for Battle"]
 
-[Bottom: Your Hand - 11 cards displayed]
-[Cards: Epic Water Mage, 2× Knight, 2× Archer, 2× Scout, 1× Healer, 1× Granary, 1× Watchtower, 1× Tactic]
+[Your Collection: 20 cards total]
+(Cards auto-sorted by star rank, then rarity)
 
-[Bottom-Left: Button "Reset Formation"]
-[Bottom-Right: Button "Start Battle" (disabled until 11/11 placed)]
+[Available Cards]:
+  ✅ Epic Water Mage (1★) - [AUTO-SELECTED, Slot 1] (Hero, 80 HP, 40 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ✅ Uncommon Knight (1★) - [AUTO-SELECTED, Slot 2] (20 HP, 10 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ✅ Uncommon Knight (1★) - [AUTO-SELECTED, Slot 3] (20 HP, 10 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ✅ Common Archer (1★) - [AUTO-SELECTED, Slot 4] (10 HP, 5 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ✅ Common Scout (1★) - [AUTO-SELECTED, Slot 5] (10 HP, 5 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ✅ Common Healer (1★) - [AUTO-SELECTED, Slot 6] (10 HP, 5 ATK)
+    → Border: Bronze, 1 Tactic Slot
+  ⬜ Common Knight (1★) × 3 copies - Not selected (tutorial uses Uncommon Knights)
+  ⬜ Common Archer (1★) × 4 copies - Not selected (have 1 Archer already)
+  ⬜ Common Scout (1★) × 4 copies - Not selected (have 1 Scout already)
+  ⬜ Common Healer (1★) × 3 copies - Not selected (have 1 Healer already)
+  ⬜ Building (Granary) - [GRAYED OUT] "Can't use in battles"
+  ⬜ Building (Watchtower) - [GRAYED OUT] "Realm Map only (Phase 2)"
 
-[Tutorial Overlay]:
-"Place your hero in the front line!"
-[Highlight: Water Mage card pulsing]
-[Highlight: Center-front tile (row 5, col 4) pulsing green]
+[Tutorial Text]:
+"We've selected your 6 strongest cards automatically."
+"You'll get more choices as you collect cards and rank them up!"
+
+[Button: "Next - Attach Tactics"] (advances to tactic assignment)
 ```
 
-**Player Action**: Drags Water Mage card to center-front tile
-
-**Visual Feedback**:
-- Card lifts off hand (zoom 1.2×, rotation tilt 5°)
-- Drag ghost shows placement preview (50% opacity)
-- Tile glows green (valid placement) or red (invalid)
-- Snap animation when placed (0.2 sec ease-out)
-- Card locks in place, border turns blue (placed state)
-
-**Placement Undo Mechanics** (Gap 4 Resolution):
-1. **Drag-to-Reposition**: Tap placed card → Drag to new tile → Release to move
-2. **Reset Formation**: Taps "Reset Formation" button
-   - Confirmation dialog: "Reset formation and return all cards to hand? [Cancel] [Reset]"
-   - If Reset: All placed cards return to hand, grid clears
-3. **Auto-Save**: Formation saved as player places (if leave scene, cards stay placed on return)
-
-**Edge Cases**:
-- **Mid-drag cancel**: Release card on invalid tile (red) → Returns to hand with bounce animation
-- **Overlapping cards**: Prevent placement on occupied tiles (highlight red, shake animation)
-- **Reset during tutorial**: Tutorial text updates ("Try again! Remember, place Hero first.")
+**Player Action**: Taps "Next - Attach Tactics"
 
 **System Actions**:
-1. Validate placement (front row allowed for heroes)
-2. Lock card to tile
-3. Remove card from hand
-4. Advance tutorial
+1. Lock 6-card selection (tutorial auto-picks)
+2. Transition to Tactic Assignment screen
+3. Show tactic attachment tutorial
 
-**Tutorial Sequence** (Each step waits for player action):
-1. "Place your hero" → Player places Water Mage (center-front)
-2. "Place your Knights" → Player places 2 Knights (left/right of hero)
-3. "Place your Archers in back" → Player places 2 Archers (back row)
-4. "Place your Healer" → Player places Healer (behind hero)
-5. "Great! We'll auto-place the rest." → System auto-places remaining 5 cards (Scouts, buildings)
-
-**Design Decisions Needed**:
-- [ ] Can undo placement before battle starts? (Recommend YES - "Reset Formation" button)
-- [ ] Time limit for placement? (Recommend NO for tutorial, add 60-second timer post-tutorial)
-- [ ] Invalid placement feedback (red X, "Can't place here" tooltip?)
-- [ ] Auto-place algorithm (if player doesn't place all cards, where do they go?)
-
-**Gap**: Placement undo/reset mechanics need design
+**Design Decisions**:
+- ✅ Tutorial auto-selects 6 cards (player can customize post-tutorial)
+- ✅ Grayed out cards show why unusable ("Economy cards can't battle")
+- ✅ Collection shows star count (★) and border color even at 1★
+- ✅ Future: Manual selection screen (drag cards to 6 slots, swap tactics between battles)
 
 ---
 
-### Step 16: Enemy Placement (Auto)
-**Screen**: Enemy Placement Phase
+### Step 15A: Tactic Assignment
+**Screen**: Attach Tactics to Cards
 ```
-[Tutorial text: "Enemy forces deploy!"]
+[Header: "Attach Tactics to Power Up Your Cards!"]
 
-[Enemy units auto-place in 2 seconds]:
-- Goblin Chief (center-front, Enemy side row 3)
-- 3× Goblin Warrior (front line spread)
-- 2× Goblin Archer (back line)
+[6 Selected Cards with Tactic Slots]:
 
-[Animation: Cards slide into position from top of screen]
-[Sound: Enemy war cry]
+[Slot 1]: Epic Water Mage (1★)
+  [Tactic Slot 1]: [Empty] ← Tutorial highlights
+  Available Tactics: Arcane Focus (Common), Regeneration (Rare), Time Warp (Epic)
 
-[Text: "Battle begins!"]
+[Slot 2]: Uncommon Knight (1★)
+  [Tactic Slot 1]: [Empty]
+  
+[Slot 3]: Uncommon Knight (1★)
+  [Tactic Slot 1]: [Empty]
+
+[Slot 4]: Common Archer (1★)
+  [Tactic Slot 1]: [Empty]
+
+[Slot 5]: Common Scout (1★)
+  [Tactic Slot 1]: [Empty]
+
+[Slot 6]: Common Healer (1★)
+  [Tactic Slot 1]: [Empty]
+
+[Tutorial Text]:
+"Drag 'Charge' tactic to your Knight!"
+[Arrow pointing to Slot 2 + Charge tactic card]
+
+[Tutorial Tactics Available]:
+  - Charge (Common): "Attack twice on first turn"
+  - Guardian (Common): "+20% HP, protect adjacent allies"
+  - Volley (Common): "Attack 3 enemies at once"
+  - Defensive Ward (Uncommon): "+50% damage reduction"
+
+[Tutorial Forces Assignment]:
+  Slot 1: Water Mage → (No tactic for tutorial - hero is strong enough)
+  Slot 2: Knight → Charge (player drags this one)
+  Slot 3: Knight → Guardian (tutorial auto-assigns after player does Slot 2)
+  Slot 4: Archer → Volley (auto-assigned)
+  Slot 5: Scout → (Empty - tutorial shows empty slot is OK)
+  Slot 6: Healer → Defensive Ward (auto-assigned)
+```
+
+**Player Action**: Drags "Charge" tactic to Knight (Slot 2)
+
+**Visual Feedback**:
+- Tactic card lifts, follows cursor
+- Slot 2 highlights green when tactic hovers over it
+- Tactic snaps into slot with click sound
+- Tactic icon appears in slot (sword icon for Charge)
+
+**System Actions**:
+1. Tutorial auto-assigns remaining tactics (Guardian, Volley, Defensive Ward)
+2. Show preview: "Knight + Charge = 2× attack on Turn 1!"
+3. Advance to battle grid
+
+**Tutorial Text**:
+"Tactics don't use slots - they attach to cards!"
+"At 2★, you'll unlock a 2nd tactic slot per card!"
+"Build your way to 6★ for 6 tactics on one card!"
+
+**Design Decisions**:
+- ✅ Tutorial teaches 1 tactic manually, auto-assigns rest (avoid tedium)
+- ✅ Shows empty slot is OK (Scout has no tactic, still usable)
+- ✅ Preview window shows tactic effect ("2× attack first turn")
+- ✅ Tactic icons color-coded: Common=gray, Uncommon=green, Rare=blue, Epic=purple
+
+---
+
+### Step 16: Battle Grid - Preset Formation
+**Screen**: Tactical Battle Map (8×8 Grid)
+```
+[Top: Enemy Side - 3 rows]
+Row 1 (Enemy back):  [  ][  ][  ][Goblin Archer][  ][Goblin Archer][  ][  ]
+Row 2 (Enemy mid):   [  ][  ][  ][  ][  ][  ][  ][  ]
+Row 3 (Enemy front): [  ][Goblin Warrior][  ][Goblin Chief][  ][Goblin Warrior][  ][  ]
+
+Row 4 (No Man's Land): [  ][  ][  ][  ][  ][  ][  ][  ]
+
+Row 5 (Player front): [  ][  ][Knight #2][Water Mage][Knight #1][  ][  ][  ]
+Row 6 (Player mid):   [  ][  ][Archer][Healer][Scout][  ][  ][  ]
+Row 7 (Player back):  [  ][  ][  ][  ][  ][  ][  ][  ]
+Row 8 (Player back):  [  ][  ][  ][  ][  ][  ][  ][  ]
+
+[Unit Details Shown on Cards]:
+  Water Mage (1★): 80 HP, 40 ATK, no tactics
+  Knight #1 (1★) + Charge: 20 HP, 10 ATK, [⚔️ Charge icon]
+  Knight #2 (1★) + Guardian: 24 HP (20 base +20%), 10 ATK, [🛡️ Guardian icon]
+  Archer (1★) + Volley: 10 HP, 5 ATK, [🎯 Volley icon]
+  Healer (1★) + Defensive Ward: 15 HP (10 base +50%), 5 ATK, [🔰 Ward icon]
+  Scout (1★): 10 HP, 5 ATK, no tactics
+
+[Tutorial Overlay]:
+"Your units are ready! Knight has Charge - he'll attack twice this turn!"
+[Arrow pointing to Knight #1]
+
 [Button: "Start Battle"]
 ```
 
 **Player Action**: Taps "Start Battle"
 
 **System Actions**:
-1. Enemy AI uses "Basic Formation" (tanks front, ranged back)
-2. Initialize turn order (player goes first for tutorial)
-3. Lock all placements, enter combat phase
+1. Preset formation spawns (no manual placement for tutorial)
+2. Tactic effects activate (Guardian +20% HP applied to Knight #2)
+3. Turn 1 begins (player's turn)
 
-**Design Decisions Needed**:
-- [ ] Enemy placement animation speed (instant or 2-second animation?)
-- [ ] Enemy formation variety (always same for tutorial, random post-tutorial?)
+**Design Decisions**:
+- ✅ Tutorial uses preset formation (skip manual placement complexity)
+- ✅ Post-tutorial: Player can choose formation in advanced mode (future)
+- ✅ Cards show tactic icons on battlefield (visual reminder)
+- ✅ HP bars show tactic boosts (+4 HP green text for Guardian Knight)
 
 ---
 
-### Step 17: Turn 1 - Movement Tutorial
-**Screen**: Your Turn - Move Phase
+### Step 17: Turn 1 - Charge Tactic Demo
+**Screen**: Your Turn - Movement Phase
 ```
 [Battle Grid: All units placed]
 [Your Water Mage: Glowing blue border (selected)]
@@ -1056,6 +1128,57 @@ Harder battles drop Silver or Gold Chests with better rewards!"
 - ✅ **Collection Growth**: 25 → 31 cards (6 new: 1 from chest, 5 from pack)
 
 **Total Cards After Step 23**: 25 (starting) + 1 (chest) + 5 (pack) = **31 cards**
+
+**NEW: Fusion Tutorial** (Triggered if duplicate earned):
+```
+[If chest/pack gave duplicate Knight]:
+
+[Popup appears]:
+"⭐ Card Fusion Unlocked! ⭐"
+
+[Screen shows Fusion UI]:
+Uncommon Knight (1★)
+  Owned: 3 copies (2 from Trainer Deck + 1 from reward)
+  Current Stats: 20 HP, 10 ATK
+  Border: Bronze (1★)
+  Tactic Slots: 1
+
+[Fusion Button]: "Fuse to 2★"
+  Cost: 1 duplicate + 1,000 Gold
+  New Stats: 30 HP (+50%), 15 ATK (+50%)
+  Border: Bronze→Silver
+  Tactic Slots: 2 (unlocks 2nd slot!)
+
+[Tutorial Text]:
+"Combine duplicates to increase Star Rank!"
+"Higher stars = better stats + more Tactic Slots!"
+
+[Player taps "Fuse to 2★"]:
+  - Animation: 2 Knight cards merge with golden light
+  - Sound: Metallic clink, ascending chime
+  - Result: Knight becomes 2★ (★★☆ display)
+  - Border changes: Bronze → Silver (visual progression)
+  - New Tactic Slot appears: [Empty Slot 2]
+
+[Post-Fusion Screen]:
+Uncommon Knight (2★)
+  Stats: 30 HP, 15 ATK (+50% from 1★!)
+  Border: Silver ★★☆
+  Tactic Slots: 2 (can now attach 2 tactics!)
+  
+[Tutorial Text]:
+"Your Knight is now 2★! Attach a 2nd tactic in the Deck Builder."
+"Keep collecting Knights to unlock 3★, then 4★!"
+"At 4★, Uncommons max out with 4 Tactic Slots!"
+
+[Button: "Continue"]
+```
+
+**If No Duplicate Earned** (Chest/pack gave new cards only):
+- Skip fusion tutorial (will trigger on first duplicate later)
+- Show tooltip: "Collect duplicates to unlock Fusion!"
+
+**Total Cards After Fusion**: 31 cards total, Knight now 2★ (consumes 1 duplicate)
 
 **System Actions**:
 1. Award Bronze Chest: 50 Gold, 100 XP, 20 Food, 1 Common card

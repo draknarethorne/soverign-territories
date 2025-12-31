@@ -69,7 +69,118 @@
 
 ---
 
-### Week 3-4: Combat System
+### Week 3-4: Card Fusion & Deck Building
+
+**Card Fusion System** (Star Rank Progression):
+- ✅ **Flexible Star Ranks**: Commons 1-3★, Uncommons 1-4★, Rares 2-5★, Epics 3-6★, Legendaries 5-7★, Mythics 6-8★
+- ✅ **Fusion Mechanic**: Combine duplicates + Gold to increase star rank
+- ✅ **Stat Scaling**: +50% stats per star rank (e.g., 1★→2★ = +50% HP/ATK)
+- ✅ **Tactic Slot Unlocks**: Tactic slots = star rank (1★=1 tactic, 2★=2 tactics, etc.)
+- ✅ **Rarity Base Multipliers**: Epic base stats = 8× Common base (ensures rarity > star rank)
+- ✅ **Visual Progression**: Star count (★★★) + border color (Bronze→Silver→Gold→Platinum→Prismatic)
+
+**Fusion Costs** (MVP - First 3 Rarities):
+- Common 1★→2★: 1 duplicate + 500 Gold
+- Common 2★→3★: 2 duplicates + 2,000 Gold (MAX: 3 tactics)
+- Uncommon 1★→2★: 1 duplicate + 1,000 Gold
+- Uncommon 2★→3★: 2 duplicates + 5,000 Gold
+- Uncommon 3★→4★: 4 duplicates + 10,000 Gold (MAX: 4 tactics)
+- Rare 2★→3★: 2 duplicates + 10,000 Gold
+- Rare 3★→4★: 4 duplicates + 20,000 Gold
+- Rare 4★→5★: 8 duplicates + 50,000 Gold (MAX: 5 tactics)
+
+**Deck Builder** (6-Slot Battle Formation):
+- ✅ **6-Slot System**: Select 6 cards from 20-50 card collection for battle
+- ✅ **No Stacking**: Each slot = 1 individual card (can't stack 10 Knights into 1 slot)
+- ✅ **Star Rank Progression**: Same card name can be different star ranks (Knight 1★ vs Knight 3★)
+- ✅ **Tactic Attachment**: Attach tactics = star rank (3★ card = 3 tactic slots)
+- ✅ **Collection View**: Grid of owned cards, sorted by star rank/rarity/element
+- ✅ **Auto-Fill Options**: Highest Power, Most Stars, Balanced, Last Used
+- ✅ **Visual Feedback**: Star count (★★★), border color (Bronze/Silver/Gold), tactic slot icons
+- ✅ **Deck Validation**: Can use same card name at different star ranks (Knight 1★ + Knight 3★ = valid)
+
+**Why Deck Size Matters** (20-50 card collection, 6 active):
+- **Variety**: Choose 6 Fire heroes OR 6 Water heroes (element synergy builds)
+- **Counter Builds**: Anti-tank deck vs boss, anti-swarm vs hordes
+- **Star Rank Options**: Use Knight 3★ OR Knight 1★ depending on tactic budget
+- **Future (Phase 2)**: Reserve/Draw system - if unit dies in battle, draw replacement from deck
+- **Future (Phase 2)**: Multi-hero armies - split 50-card deck across 3 heroes on Realm Map
+
+**Battle Formation Screen** (Pre-Battle):
+```
+[Select 6 Cards for Battle]
+
+[Your Collection: 20 cards total]
+  ✅ Epic Water Mage (3★) - [Selected, Slot 1] - 80 HP, 40 ATK, 3 Tactic Slots
+  ✅ Uncommon Knight (2★) - [Selected, Slot 2] - 30 HP, 15 ATK, 2 Tactic Slots
+  ✅ Common Healer (2★) - [Selected, Slot 3] - 15 HP, 7.5 ATK, 2 Tactic Slots
+  ✅ Common Archer (2★) - [Selected, Slot 4] - 15 HP, 7.5 ATK, 2 Tactic Slots
+  ✅ Common Scout (1★) - [Selected, Slot 5] - 10 HP, 5 ATK, 1 Tactic Slot
+  ✅ Uncommon Knight (1★) - [Selected, Slot 6] - 20 HP, 10 ATK, 1 Tactic Slot
+  ⬜ Common Healer (1★) - Not selected (weaker than 2★ version)
+  ⬜ Building (Granary) - Grayed out (can't use in battles, Realm Map only)
+  ... (12 more cards not selected)
+
+[Tactic Assignment Screen]:
+  Slot 1: Water Mage (3★) → [Arcane Focus] [Regeneration] [Time Warp] (3 tactics attached)
+  Slot 2: Knight (2★) → [Charge] [Guardian] (2 tactics attached)
+  Slot 3: Healer (2★) → [Defensive Ward] [AOE Blessing] (2 tactics attached)
+  Slot 4: Archer (2★) → [Volley] [Poison Arrows] (2 tactics attached)
+  Slot 5: Scout (1★) → [Smoke Bomb] (1 tactic attached)
+  Slot 6: Knight (1★) → [Charge] (1 tactic attached)
+
+Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
+
+[Button: Start Battle]
+```
+
+**Combat System** (8×8 Tactical Grid):
+- ✅ **6 Active Units**: Player's 6-slot formation spawns on grid in preset positions
+- ✅ **Preset Spawn Positions**:
+  - Slot 1 (Hero): Center-front (Row 5, Col 4)
+  - Slots 2-3: Front flanks (Row 5, Cols 3 & 5)
+  - Slots 4-5: Back line (Row 6, Cols 3 & 5)
+  - Slot 6: Support (Row 6, Col 4)
+- ✅ **Turn-Based Combat**: Player turn → AI turn → repeat until victory/defeat
+- ✅ **Movement**: Click unit → click tile (3-5 tiles/turn based on unit speed stat)
+- ✅ **Attack**: Click unit → click enemy in range → damage calculation
+- ✅ **Tactic Activation**: Passive tactics (always on), Active tactics (triggered by conditions)
+- ✅ **Win Condition**: All enemy units destroyed
+- ✅ **Loss Condition**: All player units destroyed (hero death = instant loss for MVP)
+
+**Stat Calculation** (Base × Star Multiplier):
+- **Rarity Base Stats**: Common=10 HP, Uncommon=20 HP, Rare=40 HP, Epic=80 HP, Legendary=160 HP, Mythic=320 HP
+- **Star Multiplier**: 1★=1×, 2★=1.5×, 3★=2.25×, 4★=3.375×, 5★=5.06×, 6★=7.59×, 7★=11.39×, 8★=17.09×
+- **Example**: 3★ Epic = 80 HP base × 2.25 = 180 HP
+- **Example**: 3★ Common = 10 HP base × 2.25 = 22.5 HP (Epic still 8× stronger at same star rank!)
+
+**Tactic Effects** (Examples for MVP):
+- **Charge** (Common, 1★): Attack twice on first turn
+- **Guardian** (Common, 1★): +20% HP, reduce damage to adjacent allies by 10%
+- **Volley** (Uncommon, 2★): Attack 3 enemies at once (50% damage each)
+- **Defensive Ward** (Uncommon, 2★): +50% damage reduction, heal 5 HP when blocking
+- **Regeneration** (Rare, 3★): Heal 10% max HP per turn
+- **AOE Blessing** (Rare, 3★): Heal all allies for 5 HP/turn
+- **Time Warp** (Epic, 4★): Take 2 turns in a row (5-turn cooldown)
+- **Annihilation** (Legendary, 5★): Instant kill 1 enemy (once per battle)
+
+**Deliverables**:
+- [ ] **CardFusionManager.cs** (combine duplicates, star rank up, stat recalculation)
+- [ ] **FusionUI scene** (drag duplicates to fuse, show before/after stats, border glow animation)
+- [ ] **DeckBuilderUI scene** (6-slot selection grid, tactic attachment UI, auto-fill button)
+- [ ] **TacticData.cs** (ScriptableObject: effect type, trigger condition, stat modifiers, cooldowns)
+- [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
+- [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
+- [ ] **BattleMap C# class** (8×8 grid, preset spawn coordinates for 6 player units + 6 enemy units)
+- [ ] **BattleManager singleton** (turn system, tactic activation logic, win/loss detection)
+- [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
+- [ ] **Attack system** (click enemy in range, calculate damage with tactic modifiers, death animation)
+- [ ] **Auto-Battle AI** (tactic-aware: prioritize targets, use cooldowns strategically)
+- [ ] **Victory screen UI** (XP/Gold/Card rewards, fusion prompt if duplicate earned)
+
+---
+
+### Week 5-6: Combat System
 
 **Battle Map**:
 - ✅ 8×8 hex grid (64 tiles total)
@@ -91,17 +202,24 @@
 **Victory Screen**:
 - ✅ XP gained (50-200 based on enemy difficulty)
 - ✅ Gold reward (50-200 based on enemy difficulty)
+- ✅ Card reward (1-3 cards based on stage, duplicates trigger fusion prompt)
 - ✅ Battle chest opening (Bronze tier for MVP)
-- ✅ Pack reward (Element Booster at Steps 23, 27)
+- ✅ **Fusion Prompt** (if duplicate earned): "You have 2 Knights! Fuse to rank up?"
+- ✅ Pack reward (Element Booster at tutorial Steps 23, 27)
 
 **Deliverables**:
-- [ ] BattleMap C# class (8×8 hex grid, pathfinding)
-- [ ] BattleManager singleton (turn system, win/loss conditions)
-- [ ] Unit placement (drag-drop from hand to board)
-- [ ] Movement system (click to move, A* pathfinding)
-- [ ] Attack system (click enemy, damage calculation, remove unit)
-- [ ] Auto-Battle AI (basic targeting, no advanced tactics)
-- [ ] Victory screen UI (XP/Gold display, chest opening animation)
+- [ ] **CardFusionManager.cs** (combine duplicates, star rank up, stat recalculation)
+- [ ] **FusionUI scene** (drag duplicates to fuse, show before/after stats, border animation)
+- [ ] **DeckBuilderUI scene** (6-slot selection, tactic attachment, auto-fill options)
+- [ ] **TacticData.cs** (ScriptableObject for tactic effects, triggers, cooldowns)
+- [ ] **BattleFormationUI** (show 6 selected cards + tactics before battle starts)
+- [ ] **BattleMap C# class** (8×8 grid, preset spawn positions for 6 units)
+- [ ] **BattleManager singleton** (turn system, tactic activation, win/loss conditions)
+- [ ] **Movement system** (click unit → click tile, A* pathfinding)
+- [ ] **Attack system** (click enemy, damage calculation, tactic modifiers, remove unit)
+- [ ] **Auto-Battle AI** (basic targeting, tactic-aware behavior)
+- [ ] **Victory screen UI** (XP/Gold/Card display, fusion prompt for duplicates)
+- [ ] **Star rank visuals** (★★★ display, border colors: Bronze/Silver/Gold/Platinum)
 
 ---
 
