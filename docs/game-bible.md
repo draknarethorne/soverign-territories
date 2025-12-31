@@ -1558,30 +1558,34 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 ╠═══════════════════════════════════════════════════════╣
 ║ ACTIVE DECK (6/50 cards - Healing Active):           ║
 ║                                                       ║
-║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
-║ [Heal Now: 20 Gold]                                  ║
+║ [Epic Water Mage] 60/80 HP, 30/60 Mana               ║
+║ ⏱️ 3h 20m (HP) + 1h (Mana) → Full                    ║
+║ [Heal Health: 20 Gold] [Heal Mana: 30 Gold]         ║
+║ [HEAL BOTH: 50 Gold]                                 ║
 ║                                                       ║
-║ [Knight] 25/30 HP              ⏱️ 50m → Full         ║
-║ [Heal Now: 5 Gold]                                   ║
+║ [Knight] 25/30 HP, 10/20 Mana  ⏱️ 50m + 20m          ║
+║ [Heal Health: 5 Gold] [Heal Mana: 10 Gold]          ║
 ║                                                       ║
-║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
-║ [Heal Now: 2 Gold]                                   ║
+║ [Archer] 8/10 HP, 10/10 Mana ✅ (Mana full)          ║
+║ ⏱️ 20m (HP only)                                      ║
+║ [Heal Health: 2 Gold]                                ║
 ║                                                       ║
-║ [Healer] 0/10 HP 💀 DEAD       ⏸️ FROZEN              ║
-║ [Resurrect: 20 Gold (2× cost)] OR [Use 1 Scroll 📜] ║
+║ [Healer] 0/10 HP 💀 DEAD, 0/20 Mana ⏸️ FROZEN        ║
+║ [Resurrect: 20 Gold] OR [Use 1 Scroll 📜]           ║
+║ (Restores to 1 HP + 10 Mana [50%])                   ║
 ║                                                       ║
-║ [Scout] 15/15 HP ✅ Healthy                           ║
-║ [Knight #2] 30/30 HP ✅ Healthy                       ║
+║ [Scout] 15/15 HP, 15/15 Mana ✅ Healthy              ║
+║ [Knight #2] 30/30 HP, 20/20 Mana ✅ Healthy          ║
 ║                                                       ║
 ║ ────────────────────────────────────────────────────  ║
 ║                                                       ║
 ║ CODEX STORAGE (14/50 cards - Healing Paused):        ║
-║ [Fire Mage] 40/60 HP ⏸️ PAUSED (add to deck to heal) ║
-║ [Common Archer] 5/10 HP ⏸️ PAUSED                     ║
+║ [Fire Mage] 40/60 HP, 20/40 Mana ⏸️ PAUSED           ║
+║ [Common Archer] 5/10 HP, 5/10 Mana ⏸️ PAUSED         ║
 ║ ... (12 more cards in storage)                       ║
 ║                                                       ║
-║ 💰 [HEAL ALL: 27 Gold] OR [Use Scrolls: 1 scroll]   ║
-║ (Damaged: 27 Gold OR 0 scrolls, Dead: 1 scroll)      ║
+║ 💰 [HEAL ALL: 67 Gold] OR [Scrolls: 1 + 37 Gold]    ║
+║ (HP: 27, Mana: 40, Dead: 20 OR 1 scroll)             ║
 ╚═══════════════════════════════════════════════════════╝
 ```
 
@@ -1591,57 +1595,69 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 
 **Option 1: AFK Regen** (FREE, Passive Healing)
 - **Cost**: FREE (no Gold)
-- **Rate**: **1 HP per 10 minutes** (real-time, offline progression)
+- **Regen Rates** (RPG Standard - Mana Recovers Faster):
+  - **Health**: **1 HP per 10 minutes** (real-time, offline progression)
+  - **Mana**: **1 mana per 2 minutes** (5× faster than Health, prevents mana-starvation)
 - **ONLY works for cards in ACTIVE DECK** (6-50 cards):
-  - **Active Deck**: ✅ AFK regen ACTIVE (1 HP per 10 min)
+  - **Active Deck**: ✅ AFK regen ACTIVE (Health 1 per 10 min, Mana 1 per 2 min)
   - **Codex Storage**: ⏸️ AFK regen PAUSED (no healing until added back to active deck)
-  - **Dead Cards (0 HP)**: ❌ AFK regen FROZEN (must pay 2× Gold to resurrect first)
-- **Full heal time** = `(Max HP - Current HP) × 10 minutes`
-- **Example**: 
-  - Epic Water Mage (60/80 HP, in active deck) → 20 HP missing → **200 minutes (3h 20m)** to full
-  - Knight (25/30 HP, in codex storage) → ⏸️ **No healing** (paused until added to active deck)
-  - Healer (0/10 HP DEAD, in active deck) → ❌ **No healing** (frozen until resurrected with Gold)
-- **Use Case**: F2P players, log out when Energy depletes, cards heal overnight
+  - **Dead Cards (0 HP)**: ❌ AFK regen FROZEN (must pay 2× Gold OR 1 Scroll to resurrect first)
+- **Full heal time**:
+  - **Health**: `(Max HP - Current HP) × 10 minutes`
+  - **Mana**: `(Max Mana - Current Mana) × 2 minutes`
+- **Examples**: 
+  - Epic Water Mage (60/80 HP, 30/60 Mana, in active deck) → **Health**: 20 HP × 10 min = **200 min (3h 20m)**, **Mana**: 30 × 2 min = **60 min (1h)** to full
+  - Knight (25/30 HP, 10/20 Mana, in codex storage) → ⏸️ **No healing** (paused until added to active deck)
+  - Healer (0/10 HP DEAD, 0/20 Mana, in active deck) → ❌ **No healing** (frozen until resurrected)
+- **Diablo III Model**: Mana recovers 5× faster (not limiting), Health is bottleneck (death risk)
+- **Use Case**: F2P players, log out when Energy depletes, mana recovers in 1-2 hours, Health takes 8-13 hours
 
 **Option 2: Instant Heal (Single Card)**
-- **Cost (Gold)**: 
-  - **Damaged cards (1-99% HP)**: 1 Gold per missing HP
-  - **Dead cards (0% HP)**: 2 Gold per missing HP (resurrection penalty)
+- **Cost (Gold) - Health**: 
+  - **Damaged Health (1-99%)**: 1 Gold per missing HP
+  - **Dead cards (0 HP)**: 2 Gold per missing HP (resurrection penalty)
+- **Cost (Gold) - Mana**: 
+  - **Depleted Mana (0-99%)**: 1 Gold per missing mana (same rate as HP)
+  - **Dead cards**: Resurrection restores 50% mana (FREE, no extra cost)
 - **Cost (Resurrection Scrolls)**: 
   - **Damaged cards**: Cannot use scrolls (Gold only)
-  - **Dead cards (0 HP)**: **1 Resurrection Scroll** → Resurrect to 1 HP (FREE, no Gold cost)
-- **Effect**: Restore selected card to full HP immediately (Gold) OR resurrect to 1 HP (Scroll, then AFK regen resumes)
+  - **Dead cards (0 HP)**: **1 Resurrection Scroll** → Resurrect to 1 HP + 50% mana (FREE, no Gold cost)
+- **Effect**: Restore selected card to full HP/Mana immediately (Gold) OR resurrect to 1 HP + 50% mana (Scroll)
 - **Strategic Choice**: 
   - **Common deaths (10-20 Gold)**: Use Gold OR use reserves (don't waste scrolls!)
   - **Epic deaths (80-160 Gold)**: Use Resurrection Scroll (save tons of Gold!)
+  - **Mana depletion**: Use Gold for urgent battles (boss fight), OR log out 1 hour (free AFK regen)
 - **Examples**: 
-  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold** instant heal (scrolls don't work for damaged cards)
-  - Knight (25/30 HP) → 5 HP missing → **5 Gold** instant heal
-  - **Healer (0/10 HP DEAD)** → 10 HP × 2× cost = **20 Gold** OR **1 Resurrection Scroll 📜** (FREE!)
-  - **Epic Hero (0/80 HP DEAD)** → 80 HP × 2× cost = **160 Gold** OR **1 Resurrection Scroll 📜** (saves 160 Gold!)
-- **Use Case**: Heal critical hero for boss fight, resurrect Epics with scrolls (F2P friendly), resurrect Commons with Gold (fast)
+  - Epic Water Mage (60/80 HP, 30/60 Mana) → **Health**: 20 Gold, **Mana**: 30 Gold, **Both**: 50 Gold
+  - Knight (25/30 HP, 10/20 Mana) → **Health**: 5 Gold, **Mana**: 10 Gold
+  - **Healer (0/10 HP DEAD, 0/20 Mana)** → **Gold**: 10 HP × 2 = **20 Gold** (restores to full HP + full mana), **Scroll**: **1 Resurrection Scroll 📜** (FREE! restores to 1 HP + 10 mana [50%])
+  - **Epic Hero (0/80 HP DEAD, 0/60 Mana)** → **Gold**: 80 HP × 2 = **160 Gold** (full HP + mana), **Scroll**: **1 Scroll** (saves 160 Gold! restores to 1 HP + 30 mana [50%])
+- **Use Case**: 
+  - **Health healing**: Critical for boss fights (avoid deaths)
+  - **Mana healing**: Whales spam tactics (20-30 Gold mana refill), F2P waits 1 hour (free)
+  - **Resurrection**: Epics use scrolls (F2P friendly), Commons use Gold (10-20 Gold fast)
 
 **Option 3: HEAL ALL (Whale Convenience)**
-- **Cost**: **Sum of all missing HP** (damaged cards × 1 Gold + dead cards × 2 Gold) OR **Scrolls for dead cards only**
+- **Cost**: **Sum of all missing HP + Mana** (damaged cards × 1 Gold per resource + dead cards × 2 Gold for HP) OR **Scrolls for dead cards only**
 - **Two Payment Methods**:
-  - **All Gold**: Pay full Gold cost (damaged 1× + dead 2×)
-  - **Scrolls + Gold**: Use Resurrection Scrolls for dead cards (FREE), pay Gold for damaged cards (1× cost)
-- **Effect**: Restore ALL damaged cards to full HP instantly, resurrect all dead cards
+  - **All Gold**: Pay full Gold cost (HP 1× + Mana 1× + dead HP 2×)
+  - **Scrolls + Gold**: Use Resurrection Scrolls for dead cards (FREE), pay Gold for HP/Mana (1× cost)
+- **Effect**: Restore ALL damaged cards to full HP + Mana instantly, resurrect all dead cards
 - **Example (All Gold)**: 
-  - Water Mage (60/80 HP): 20 HP × 1 Gold = 20 Gold
-  - Knight (25/30 HP): 5 HP × 1 Gold = 5 Gold
-  - Archer (8/10 HP): 2 HP × 1 Gold = 2 Gold
-  - Healer (0/10 HP DEAD): 10 HP × 2 Gold = 20 Gold (resurrection)
-  - **HEAL ALL Total**: **47 Gold** (20+5+2+20)
+  - Water Mage (60/80 HP, 30/60 Mana): 20 HP + 30 Mana = 50 Gold
+  - Knight (25/30 HP, 10/20 Mana): 5 HP + 10 Mana = 15 Gold
+  - Archer (8/10 HP, 10/10 Mana): 2 HP (mana full) = 2 Gold
+  - Healer (0/10 HP DEAD, 0/20 Mana): 10 HP × 2 = 20 Gold (resurrection, mana restored free)
+  - **HEAL ALL Total**: **87 Gold** (50+15+2+20)
 - **Example (Scrolls + Gold)**: 
-  - Water Mage (60/80 HP): 20 Gold (damaged, must use Gold)
-  - Knight (25/30 HP): 5 Gold
-  - Archer (8/10 HP): 2 Gold
-  - Healer (0/10 HP DEAD): **1 Resurrection Scroll 📜** (FREE, saves 20 Gold!)
-  - **HEAL ALL Total**: **27 Gold + 1 Scroll** (saves 20 Gold)
+  - Water Mage (60/80 HP, 30/60 Mana): 50 Gold (HP + Mana)
+  - Knight (25/30 HP, 10/20 Mana): 15 Gold (HP + Mana)
+  - Archer (8/10 HP, 10/10 Mana): 2 Gold (HP only, mana full)
+  - Healer (0/10 HP DEAD, 0/20 Mana): **1 Resurrection Scroll 📜** (FREE! saves 20 Gold, restores to 1 HP + 10 mana [50%])
+  - **HEAL ALL Total**: **67 Gold + 1 Scroll** (saves 20 Gold)
 - **Use Case**: 
-  - **Whale behavior**: Tap "HEAL ALL (47 Gold)" → Instant recovery (ignore scrolls, convenience over savings)
-  - **F2P mid-tier**: Tap "Use Scrolls + Gold (27 Gold + 1 Scroll)" → Save Gold for packs (strategic)
+  - **Whale behavior**: Tap "HEAL ALL (87 Gold)" → Instant full recovery (HP + Mana + resurrection, ignore scrolls)
+  - **F2P mid-tier**: Tap "Use Scrolls + Gold (67 Gold + 1 Scroll)" → Save 20 Gold (strategic)
 - **Button Placement**: Bottom of Hospital screen (prominent, easy tap, shows both payment options)
 
 **Option 4: Continue (Use Reserves)**
@@ -1707,10 +1723,68 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
   - Swap Knight for fresh reserve (free deck rotation)
 
 **Why Dead Cards Don't Heal**:
-- ✅ **Punishment for bad play**: Let units die = pay 2× Gold to resurrect
+- ✅ **Punishment for bad play**: Let units die = pay 2× Gold OR use scroll to resurrect
 - ✅ **Healer value**: Keeping units alive mid-battle = free (avoids resurrection costs)
-- ✅ **F2P friendly**: Don't let units die (use healers, retreat from hard battles) OR use Resurrection Scrolls
+- ✅ **F2P friendly**: Don't let units die (use healers, retreat) OR use Resurrection Scrolls
 - ✅ **Whale tax**: Play recklessly = pay resurrection costs (20-160 Gold per Epic OR 1 scroll)
+
+---
+
+### Mana System (RPG Standard - Tactic Limiter)
+
+**Design Philosophy**: **Prevent Tactic Spam** (Whale Limiter)
+
+Mana is the **core anti-pay-to-win mechanic** disguised as standard RPG resource management. Even with all-Legendary decks, whales can't spam 5 Fireballs in one turn (not enough mana). This creates **strategic depth** (when to use tactics?) while maintaining **F2P fairness** (Commons can use low-cost tactics 2-4 times per battle).
+
+**Mana Stats** (All Cards):
+- **Base Mana**: 10-100 scale (like HP)
+  - Common: 10-20 mana
+  - Uncommon: 20-40 mana
+  - Rare: 40-60 mana
+  - Epic: 60-100 mana
+  - Legendary: 100-150 mana (Phase 2)
+- **Displayed on cards**: `[Epic Water Mage] 80/80 HP, 60/60 Mana`
+
+**Mana Costs** (Tactics Only):
+- **Basic Attack**: **0 mana** (always available, prevents deadlock)
+- **Tactics**: Cost mana to activate
+  - **Low-cost tactics** (5-10 mana): Charge, Shield, Minor Heal (spam 2-4 times)
+  - **Mid-cost tactics** (15-25 mana): Fireball, Lightning Bolt, AOE spells (use 1-2 times)
+  - **High-cost tactics** (30-50 mana): Ultimate abilities (Phoenix Rebirth, Time Warp, once per battle)
+- **0 mana behavior**: Card can only use basic attack (tactics grayed out, tooltip "Not enough mana")
+
+**Mana Depletion** (Mid-Battle):
+- **Example**: Knight (20/20 mana) uses Charge (5 mana) → 15/20 mana remaining
+- **Turn 2**: Uses Guardian (5 mana) → 10/20 mana
+- **Turn 3**: Uses Charge again (5 mana) → 5/20 mana
+- **Turn 4**: Wants Charge but only has 5 mana → **Basic attack only** (0 mana cost)
+- **Result**: Tactic spam limited by mana (strategic choices, not infinite power)
+
+**Mana Regen** (5× Faster than Health - Diablo III Model):
+- **AFK Regen**: **1 mana per 2 minutes** (5× faster than Health's 1 HP per 10 min)
+- **Full regen examples**:
+  - Epic Water Mage (60 mana): 120 min (2 hours) vs Health (80 HP): 800 min (13.3 hours)
+  - Common Knight (20 mana): 40 min vs Health (30 HP): 300 min (5 hours)
+- **Why faster**: Prevents mana-starvation (Diablo III: mana recovers quickly, health is bottleneck)
+- **F2P strategy**: Log out when mana depletes → Come back in 1-2 hours (mana full, HP still recovering)
+
+**Hospital Integration** (Mana Healing):
+- **Individual heal**: [Heal Health: 20 Gold] [Heal Mana: 30 Gold] (1 Gold per resource)
+- **HEAL ALL**: Restores ALL Health + ALL Mana (one button convenience)
+- **Resurrection**: Restores to 1 HP + 50% mana (so resurrected cards can use tactics immediately)
+- **Resurrection Scrolls**: FREE resurrection (1 HP + 50% mana, no Gold cost)
+
+**Why Mana Prevents Whale Abuse**:
+✅ **Can't spam tactics infinitely**: Even all-Legendary deck limited by mana pool  
+✅ **Strategic choices matter**: Use Fireball now (25 mana) OR save for boss (50 mana ultimate)?  
+✅ **F2P viable**: Commons with 10-20 mana can still use low-cost tactics (5-10 mana)  
+✅ **Monetization preserved**: Whales pay for Mana Potions (instant refill, convenience)  
+✅ **Hard to retrofit later**: Adding mana post-launch = rebalance every card/tactic (Phase 1 essential)
+
+**Inventory System** (Future Items - Phase 1.5):
+- **Mana Potion** (🔮): Restore 50 mana instant (whale convenience, $0.99 IAP)
+- **Health Potion** (🧪): Restore 50 HP instant (whale convenience)
+- **Stamina Potion** (⚡): Restore 50 Energy instant (already planned)
 
 ---
 
@@ -1719,8 +1793,8 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 **Item Type**: Consumable (stored in Inventory, tracked in PlayerPrefs)
 
 **Effect**: 
-- **Resurrect 1 dead card** (0 HP → 1 HP) for FREE (no Gold cost)
-- **After resurrection**: AFK regen resumes (1 HP per 10 min)
+- **Resurrect 1 dead card** (0 HP → 1 HP + 50% mana) for FREE (no Gold cost)
+- **After resurrection**: AFK regen resumes (Health: 1 per 10 min, Mana: 1 per 2 min)
 - **Cannot be used on damaged cards** (only dead cards at 0 HP)
 
 **Strategic Use** (Save Scrolls for Expensive Deaths):

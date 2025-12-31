@@ -821,37 +821,58 @@ Row 8 (Player back):  [  ][  ][  ][  ][  ][  ][  ][  ]
 
 ---
 
-### Step 17: Turn 1 - Charge Tactic Demo
-**Screen**: Your Turn - Movement Phase
+### Step 17: Turn 1 - Charge Tactic Demo + Mana Tutorial
+**Screen**: Your Turn - Tactic Activation Phase
 ```
 [Battle Grid: All units placed]
-[Your Water Mage: Glowing blue border (selected)]
-[Movement Range: 2-3 tiles forward highlighted green]
+[Your Knight 2★: Glowing gold border (selected)]
+[Tactic Icons above Knight: "⚔️ Charge" (ready), "🛡️ Guardian" (ready)]
 
 [Tutorial Overlay]:
-"Tap Water Mage, then tap where to move!"
-[Arrow: Water Mage → Forward tile]
+"Your Knight has the 'Charge' tactic! Tap ⚔️ Charge to attack twice this turn!"
+[Arrow: Points to Charge icon]
+
+[Card Stats Display]:
+Knight 2★
+HP: 30/30
+Mana: 20/20  ← NEW!
+ATK: 15
+DEF: 8
 ```
 
 **Player Action**: 
-1. Taps Water Mage (select)
-2. Taps forward tile (2 spaces ahead)
-3. Water Mage moves forward
+1. Taps Knight 2★ (already selected by tutorial)
+2. Taps "⚔️ Charge" tactic icon
 
 **Visual Feedback**:
-- Movement animation (0.5 seconds, smooth slide)
-- Unit stats appear above card (HP: 50/50, ATK: 15, DEF: 10)
+- Charge icon glows (0.3 sec)
+- Mana bar depletes: 20/20 → 15/20 (costs 5 mana)
+- Knight gains "⚔️ Charge Active" buff icon (this turn only)
+- Knight's ATK temporarily shows +5 (15 → 20 for double attack)
 
 **System Actions**:
-1. Calculate movement cost (2 tiles = 2 movement points, Water Mage has 3 movement)
-2. Update Water Mage position
-3. Check for adjacent enemies (none yet)
-4. Advance tutorial
+1. Check mana cost: Charge costs 5 mana (Knight has 20/20 mana) ✅
+2. Deduct 5 mana from Knight: 20 → 15 mana remaining
+3. Apply Charge buff: "Attack twice this turn" (expires at end of turn)
+4. Update UI: Mana bar shows 15/20 (75% full, blue bar)
+5. Tutorial continues to attack phase
 
-**Design Decisions Needed**:
-- [ ] Movement path preview (show dotted line before confirming?)
-- [ ] Movement speed (instant, 0.3 sec, 0.5 sec, 1 sec?)
-- [ ] Stat display timing (always visible or on-hover?)
+**Tutorial Text** (Mana Education):
+```
+[Tutorial Popup]:
+"Charge costs 5 mana! Your Knight has 20 mana total."
+"Tactics cost mana to use. Basic attacks are FREE (0 mana)."
+"If you run out of mana, you can only use basic attacks!"
+"Mana regenerates 1 per 2 minutes (5× faster than Health)."
+
+[Button: "Got it!"]
+```
+
+**Design Decisions**:
+- ✅ Mana bar color: Blue (distinct from red Health bar)
+- ✅ Mana bar position: Below Health bar on card display
+- ✅ 0 mana behavior: Tactic icons grayed out, tooltip "Not enough mana (need 5, have 0)"
+- ✅ Tutorial timing: Teach mana immediately (Step 17), not in separate step (avoid overload)
 
 ---
 
@@ -1258,45 +1279,68 @@ Uncommon Knight (2★)
 ```
 ╔═══════════════════════════════════════════════════════╗
 ║                    🏥 HOSPITAL                        ║
-║              (Active Deck: 20/50 cards)               ║
+║         (Active Deck: 20/50 cards)                    ║
+║         (Inventory: 💰 500 Gold, 📜 5 Scrolls)        ║
 ╠═══════════════════════════════════════════════════════╣
 ║ HEALING IN ACTIVE DECK:                               ║
 ║                                                       ║
-║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
-║ ✅ Healing automatically (1 HP per 10 min)            ║
-║ [Heal Now: 20 Gold]                                  ║
+║ [Epic Water Mage] 60/80 HP, 30/60 Mana               ║
+║ ⏱️ 3h 20m (HP) + 1h (Mana) → Full                    ║
+║ ✅ Healing automatically (1 HP/10min, 1 Mana/2min)    ║
+║ [Heal Health: 20 Gold] [Heal Mana: 30 Gold]         ║
+║ [HEAL BOTH: 50 Gold]                                 ║
 ║                                                       ║
-║ [Knight 2★] 25/30 HP           ⏱️ 50m → Full         ║
+║ [Knight 2★] 25/30 HP, 10/20 Mana  ⏱️ 50m + 20m      ║
 ║ ✅ Healing automatically                              ║
-║ [Heal Now: 5 Gold]                                   ║
+║ [Heal Health: 5 Gold] [Heal Mana: 10 Gold]          ║
 ║                                                       ║
-║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
-║ ✅ Healing automatically                              ║
-║ [Heal Now: 2 Gold]                                   ║
+║ [Archer] 8/10 HP, 10/10 Mana ✅ (Mana full)          ║
+║ ⏱️ 20m (HP only)                                      ║
+║ [Heal Health: 2 Gold]                                ║
 ║                                                       ║
-║ [Healer] 0/10 HP 💀 DEAD       ⏸️ FROZEN              ║
+║ [Healer] 0/10 HP 💀 DEAD, 0/20 Mana ⏸️ FROZEN        ║
 ║ ❌ Dead cards don't heal! Must resurrect!              ║
-║ [Resurrect: 20 Gold] OR [Use 1 Scroll 📜] ← Tutorial  ║
+║ [Resurrect: 20 Gold] OR [Use 1 Scroll 📜]           ║
+║ (Restores to 1 HP + 10 Mana [50%])                   ║
 ║ (You have 5 scrolls - save for Epics!)               ║
 ║                                                       ║
-║ [Scout] 15/15 HP ✅ Healthy                           ║
-║ [Knight 1★] 30/30 HP ✅ Healthy                       ║
+║ [Scout] 15/15 HP, 15/15 Mana ✅ Healthy              ║
+║ [Knight 1★] 30/30 HP, 20/20 Mana ✅ Healthy          ║
 ║                                                       ║
-║ 💰 [HEAL ALL: 27 Gold] OR [Use Scrolls: 1 scroll]   ║
-║ (Damages: 20+5+2 Gold OR 0 scrolls, Dead: 1 scroll)  ║
+║ 💰 [HEAL ALL: 67 Gold] OR [Scrolls: 1 + 37 Gold]    ║
+║ (HP: 27, Mana: 40, Dead: 20 OR 1 scroll)             ║
 ╚═══════════════════════════════════════════════════════╝
 ```
 
 [Tutorial Text]:
-"Welcome to the Hospital! Damaged cards in your active deck heal automatically."
+"Welcome to the Hospital! Damaged cards heal Health AND Mana automatically."
 "BUT - dead cards (0 HP) are FROZEN! They need Gold OR Resurrection Scrolls."
 
 [Tutorial Pointer]: Points to Healer "[Resurrect: 20 Gold] OR [Use 1 Scroll 📜]"
 
 [Tutorial Text]:
-"Healer died in battle! You can resurrect with 20 Gold (2× cost) OR 1 Resurrection Scroll (FREE!)."
-"You have 5 scrolls from your starting kit. Save them for Epic deaths (80-160 Gold savings)!"
+"Healer died in battle! Resurrection costs 20 Gold OR 1 Scroll (FREE!)."
+"Resurrection restores 1 HP + 50% mana (so you can use tactics again)."
+"You have 5 scrolls. Save them for Epic deaths (80-160 Gold savings)!"
 "TIP: For Commons, use AFK regen or backups. For Epics, use scrolls!"
+
+[Tutorial Text]:
+"For tutorial, skip resurrection. Use your backup Cleric instead!"
+
+[Tutorial Text]:
+"Your damaged cards heal automatically while in your active deck:"
+"- **Health**: 1 HP per 10 minutes (slow, limiting factor)"
+"- **Mana**: 1 per 2 minutes (5× faster, recovers quickly)"
+"When you log out, AFK regen continues! Come back in 2 hours!"
+
+[Tutorial Pointer]: Points to "HEAL ALL: 67 Gold OR Use Scrolls: 1 scroll + 37 Gold"
+
+[Tutorial Text]:
+"**Mana Regen Strategy:**"
+"- Mana recovers 5× faster than Health"
+"- Water Mage: 1 hour for full mana vs 13 hours for full HP!"
+"- If mana depletes mid-battle → Basic attacks only (0 mana cost)"
+"- F2P: Log out when Energy/Mana depletes → Mana full in 2 hours!"
 
 [Tutorial Text]:
 "For tutorial, skip resurrection. Use your backup Cleric instead!"

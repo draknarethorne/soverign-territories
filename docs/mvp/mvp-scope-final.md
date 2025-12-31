@@ -47,10 +47,12 @@
 - ✅ 10 Workers (resource production, Phase 2)
   - Farmers, Lumberjacks, Miners (art only for MVP)
 
-**Stats** (Simple for MVP):
-- Attack: 1-100 scale
-- Defense: 0-50 scale
-- ❌ No Health/Mana/Stamina (Phase 2)
+**Stats** (RPG Standard):
+- **Health**: 10-100 scale (death at 0 HP)
+- **Mana**: 10-100 scale (tactics cost mana, basic attack FREE)
+- **Attack**: 1-100 scale
+- **Defense**: 0-50 scale
+- ✅ Health + Mana (RPG standard, prevents tactic spam)
 
 **Tutorial UI**:
 - ✅ EULA screen (Step 1)
@@ -60,10 +62,10 @@
 - ✅ Deck Builder (drag-and-drop, 20-card limit)
 
 **Deliverables**:
-- [ ] card-schema.json validated (all 100 cards)
-- [ ] CardData C# class (Attack/Defense properties)
-- [ ] CardManager singleton (load cards from JSON, cache)
-- [ ] **Inventory System** (Gold, Gems, Energy, **Resurrection Scrolls**, future items)
+- [ ] card-schema.json validated (all 100 cards, add Health/Mana to all cards)
+- [ ] CardData C# class (Health, Mana, Attack, Defense properties)
+- [ ] CardManager singleton (load cards from JSON, cache, track current HP/Mana)
+- [ ] **Inventory System** (Gold, Gems, Energy, **Resurrection Scrolls**, **Potions**, future items)
   - **Gold**: Battle rewards, daily login, pack duplicates
   - **Gems**: Premium currency (IAP only for MVP)
   - **Energy**: Battle cost (10/battle), regen 1 per 5 min, max 100 (can bank beyond via daily login)
@@ -73,6 +75,11 @@
     - Daily Challenge: 1 scroll/completion (incentive for daily play)
     - Weekly missions: 5 scrolls/week (incentive for weekly grind)
     - World boss clear: 3 scrolls (Stage X-9 first-time clear)
+  - **Potions** (Phase 1.5 - Design now, implement post-launch):
+    - **Health Potion** (🧪): Restore 50 HP instant (whale convenience)
+    - **Mana Potion** (🔮): Restore 50 mana instant (whale convenience, tactic spam enabler)
+    - **Stamina Potion** (⚡): Restore 50 Energy instant (already planned)
+    - **Future**: XP Boosters, Gold Multipliers, Pack Tickets
 - [ ] **HUD UI** (top bar: Gold, Gems, Energy, Scrolls, Player Level, XP bar)
 - [ ] Codex UI (Unity UI Toolkit, grid view, filters)
 - [ ] Deck Builder UI (drag-drop, validation, save/load)
@@ -165,22 +172,34 @@ Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
 - **Example**: 3★ Epic = 80 HP base × 2.25 = 180 HP
 - **Example**: 3★ Common = 10 HP base × 2.25 = 22.5 HP (Epic still 8× stronger at same star rank!)
 
-**Tactic Effects** (Examples for MVP):
-- **Charge** (Common, 1★): Attack twice on first turn
-- **Guardian** (Common, 1★): +20% HP, reduce damage to adjacent allies by 10%
-- **Volley** (Uncommon, 2★): Attack 3 enemies at once (50% damage each)
-- **Defensive Ward** (Uncommon, 2★): +50% damage reduction, heal 5 HP when blocking
-- **Regeneration** (Rare, 3★): Heal 10% max HP per turn
-- **AOE Blessing** (Rare, 3★): Heal all allies for 5 HP/turn
-- **Time Warp** (Epic, 4★): Take 2 turns in a row (5-turn cooldown)
-- **Annihilation** (Legendary, 5★): Instant kill 1 enemy (once per battle)
+**Tactic Effects** (Examples for MVP + Mana Costs):
+- **Charge** (Common, 1★, **5 mana**): Attack twice on first turn
+- **Guardian** (Common, 1★, **5 mana**): +20% HP, reduce damage to adjacent allies by 10%
+- **Volley** (Uncommon, 2★, **15 mana**): Attack 3 enemies at once (50% damage each)
+- **Defensive Ward** (Uncommon, 2★, **10 mana**): +50% damage reduction, heal 5 HP when blocking
+- **Fireball** (Rare, 3★, **20 mana**): Deal 50% extra damage to 1 enemy + burn (5 HP/turn for 3 turns)
+- **Regeneration** (Rare, 3★, **15 mana**): Heal 10% max HP per turn (3 turns)
+- **AOE Blessing** (Rare, 3★, **25 mana**): Heal all allies for 5 HP/turn (3 turns)
+- **Lightning Bolt** (Epic, 4★, **30 mana**): Deal 100% extra damage + stun (1 turn)
+- **Time Warp** (Epic, 4★, **50 mana**): Take 2 turns in a row (5-turn cooldown)
+- **Phoenix Rebirth** (Epic, 4★, **40 mana**): Resurrect at 50% HP if killed (once per battle)
+- **Annihilation** (Legendary, 5★, **50 mana**): Instant kill 1 enemy (once per battle)
+
+**Mana Cost Philosophy**:
+- ✅ **Basic Attack**: 0 mana (always available, prevents deadlock)
+- ✅ **Low-cost tactics** (5-10 mana): Spam 2-4 times per battle (Knight with 20 mana)
+- ✅ **Mid-cost tactics** (15-25 mana): Use 1-2 times per battle (strategic timing)
+- ✅ **High-cost tactics** (30-50 mana): Once per battle (Epic heroes with 60-100 mana)
+- ✅ **Whale limiter**: Even all-Legendary deck can't spam 5 Fireballs in 1 turn (not enough mana!)
+- ✅ **F2P viable**: Commons with 10-20 mana can still use low-cost tactics (5-10 mana)
 
 **Deliverables**:
 - [ ] **CardFusionManager.cs** (combine duplicates, star rank up, stat recalculation)
 - [ ] **FusionUI scene** (drag duplicates to fuse, show before/after stats, border glow animation)
 - [ ] **DeckBuilderUI scene** (6-slot selection grid, tactic attachment UI, auto-fill button)
-- [ ] **CardHPPersistence system** (save HP values between battles, show HP bars on deck screen)
-- [ ] **HealingSystem.cs** (Gold cost heal, rest timer, checkpoint auto-heals)
+- [ ] **CardHPManaPersistence system** (save HP + Mana values between battles, show HP/Mana bars on deck screen)
+- [ ] **HealingSystem.cs** (Gold cost heal for HP + Mana, AFK regen timers, checkpoint auto-heals)
+- [ ] **Tactic mana costs** (validate tactic.ManaCost <= card.CurrentMana before activation)
 
 **Persistent HP System** (NEW - deck size matters):
 - ✅ **Cards keep HP between battles** (don't auto-heal to full after victory)
@@ -243,13 +262,17 @@ Why 20-card deck matters:
 - [ ] **TacticData.cs** (ScriptableObject: effect type, trigger condition, stat modifiers, cooldowns)
 - [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
-- [ ] **Hospital UI** (main menu screen: list damaged cards, individual heal buttons, HEAL ALL button)
-- [ ] **HospitalManager.cs** (track card HP, AFK regen timers, Gold payment OR Scroll usage for resurrection)
-- [ ] **AFK Regen System** (1 HP per 10 min, ONLY for cards in active deck 6-50 cards)
-  - **Active Deck** (6-50 cards): AFK regen ACTIVE (1 HP per 10 min, offline progression)
+- [ ] **Hospital UI** (main menu screen: list damaged cards, show HP + Mana, individual heal buttons, HEAL ALL button)
+- [ ] **HospitalManager.cs** (track card HP + Mana, AFK regen timers, Gold payment OR Scroll usage for resurrection)
+- [ ] **AFK Regen System** (Health: 1 HP per 10 min, Mana: 1 per 2 min, ONLY for cards in active deck 6-50 cards)
+  - **Active Deck** (6-50 cards): AFK regen ACTIVE (Health 1 per 10 min, Mana 1 per 2 min, offline progression)
   - **Codex Storage**: AFK regen PAUSED (⏸️ no healing until added back to active deck)
-  - **Dead Cards (0 HP)**: AFK regen FROZEN (❌ no healing, must pay 2× Gold OR 1 Scroll to resurrect)
-- [ ] **Resurrection Options**: Dead cards show "[Resurrect: 20 Gold] OR [Use 1 Scroll 📜]" (player choice)
+  - **Dead Cards (0 HP)**: AFK regen FROZEN (❌ no healing/mana regen, must pay 2× Gold OR 1 Scroll to resurrect)
+- [ ] **Healing Options**: 
+  - **Health**: [Heal Health: 20 Gold] (1 Gold per HP)
+  - **Mana**: [Heal Mana: 30 Gold] (1 Gold per mana)
+  - **Both**: [HEAL ALL: 50 Gold] (restores HP + Mana, whale convenience)
+  - **Resurrection**: [Resurrect: 20 Gold (2× HP cost)] OR [Use 1 Scroll 📜] (restores to 1 HP + 50% mana)
 - [ ] **BattleMap C# class** (8×8 grid, preset spawn coordinates for 6 player units + 6 enemy units)
 - [ ] **BattleManager singleton** (turn system, tactic activation logic, win/loss detection)
 - [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
