@@ -2060,31 +2060,154 @@ Sovereign Territories offers multiple gameplay modes catering to different plays
 
 ---
 
-## 4.1 Realm Map PvE (MVP - Tutorial & Progression)
+## 4.1 Campaign Mode (Phase 1A - MVP Core PvE)
 
-**For tutorial flow, see [tutorial-flow.md](tutorial-flow.md)**
+**For tutorial flow, see [docs/mvp/tutorial-flow.md](docs/mvp/tutorial-flow.md)**
 
 ### Overview
-The Realm Map is the **primary MVP mode**: a 20-40 Location hex grid for single-player exploration teaching core mechanics through scripted battles.
+Campaign Mode is the **primary MVP mode**: a linear progression system with 72 battles across 8 themed worlds. Players defeat stages to unlock new worlds, earn 3-star ratings, and collect cards through Daily Challenges and stage rewards.
 
 ### Key Features
-- **Map**: 20-40 hexes (Locations: Town, City, Dungeon, Mine, Ruins, Monster Spawn, Treasure Node)
-- **Movement**: 3 tiles/turn, 10 Movement Points/day (time-gated exploration)
-- **Battles**: 8×8 tactical grid, 20-50 card decks, auto-battle after tutorial
+- **72 Battles**: 8 worlds × 9 stages each (World 1: Goblin Plains, World 2: Bandit Forests, ... World 8: Void Dimension)
+- **Linear Progression**: Stage 1-1 → 1-2 → ... → 8-9 (must complete previous stage to unlock next)
+- **3-Star Rating System**:
+  - ⭐ Victory (complete battle, any condition)
+  - ⭐⭐ Speed Clear (win in <10 turns)
+  - ⭐⭐⭐ Perfect Victory (no unit deaths + hero >80% HP)
+- **Boss Battles**:
+  - **Mini-Boss** (Stage X-5): 7-10 card deck, guaranteed Rare card reward
+  - **World Boss** (Stage X-9): 12-15 card deck, guaranteed Epic card reward
+  - **Final Boss** (Stage 8-9): 20-card Mythic deck, guaranteed Legendary card
+- **Daily Challenge**: 1 random stage/day, 3 attempts, 2× rewards (~1,000 Gold/day = pack purchase driver)
+- **Replay Penalty**: First clear = 100% rewards, all replays = 50% rewards (prevents farming, encourages progression)
 - **Energy**: 10 Energy/battle (240 Energy/day = 24 battles max)
-- **Rewards**: Gold (50-500/battle), Gems (10-20/treasure node), Battle Chests (Bronze/Silver/Gold)
-- **Boss**: Final Location with Epic/Legendary boss (harder difficulty, rare loot)
 
-### MVP Scope
-- ✅ 3-5 Realm Maps (60-200 Locations total)
-- ✅ Treasure nodes (one-time Gold/Gems/card rewards)
-- ✅ Monster Spawns (Common → Epic rarity)
-- ❌ Economy deployment (Phase 2)
-- ❌ Multi-Realm occupation (Phase 3)
+### Stage Difficulty Progression
+| Stage | Deck Size | Hero Rarity | Total Power | First Clear Rewards |
+|-------|-----------|-------------|-------------|---------------------|
+| 1-1   | 3 cards   | None        | 50          | 100 Gold, 1 Common  |
+| 1-3   | 5 cards   | Uncommon    | 120         | 200 Gold, 1 Uncommon|
+| 1-5   | 7 cards   | Rare        | 200         | 500 Gold, 1 Rare    |
+| 1-9   | 12 cards  | Epic        | 350         | 1,000 Gold, 1 Epic  |
+| 8-9   | 20 cards  | Mythic      | 800         | 5,000 Gold, 1 Legendary |
+
+### Monetization Integration
+- **Pack Store** (unlocked after tutorial):
+  - Standard Pack: $0.99 OR 1,000 Gold (5 cards)
+  - Element Booster: $1.99 OR 2,000 Gold (80% element match)
+  - Epic Booster: $4.99 OR 5,000 Gold (guaranteed Epic)
+  - Mega Pack: $19.99 money-only (20 cards, guaranteed Legendary)
+- **Battle Pass** (unlocked after tutorial):
+  - $4.99/month, 30-day seasons
+  - Free Track: 5 Standard Packs + 2,000 Gold (progression rewards)
+  - Paid Track: 10 Standard Packs + 1 Epic Booster + 1 Exclusive Legendary + 5,000 Gold + 500 Gems
+  - Progress: 10 XP/battle, 3,000 XP to max (300 battles = 10-15 days normal play)
+- **Energy Refills**:
+  - Small: $0.99 (100 Energy = 10 battles)
+  - Large: $3.99 (500 Energy = 50 battles)
+  - Daily Unlimited: $9.99 (24-hour infinite battles)
+- **First-Time Offers** (one-time only):
+  - Starter Pack: $0.99 (2 Standard Packs, 500 Gold, 100 Gems, first 7 days)
+  - New Player Bundle: $4.99 (Epic Booster + Legendary choice, first 14 days)
+  - Whale Welcome: $49.99 (5 Mega Packs + Mythic + Battle Pass, first 30 days)
+
+### F2P Balance (Monthly Earnings)
+- **Daily Challenge**: ~1,000 Gold/day × 30 days = 30,000 Gold (~30 Standard Packs)
+- **Energy Spending**: 24 battles/day × 100 Gold/battle × 30 days = 72,000 Gold (~72 Standard Packs OR 14 Epic Boosters)
+- **Battle Pass Free Track**: +5 Standard Packs + 2,000 Gold
+- **Total F2P Month 1**: ~100 Standard Packs, ~5 Epics, ~1 Legendary (70% whale power)
+- **Battle Pass Player**: ~120 packs, ~6 Epics, ~2 Legendaries (85% whale power)
+- **Whale ($50/month)**: ~200 packs, ~15 Epics, ~4 Legendaries (100% power)
+
+### MVP Scope (Phase 1A - 8-9 Weeks)
+- ✅ 72 battles (8 worlds × 9 stages)
+- ✅ 3-star rating system (Victory/Speed/Perfect)
+- ✅ Boss battles (Mini-boss X-5, World boss X-9, Final boss 8-9)
+- ✅ Daily Challenge (1 random stage/day, 2× rewards)
+- ✅ Replay penalty (50% rewards after first clear)
+- ✅ Pack Store (4 tiers, Gold + Money pricing)
+- ✅ Battle Pass (Free/Paid tracks, 30-day seasons)
+- ✅ Energy Refills (3 tiers, $0.99-$9.99)
+- ✅ First-Time Offers (3 bundles, time-gated)
+- ❌ Side quests (Phase 1.5, optional if retention data shows demand)
+- ❌ Branching narrative paths (Phase 1.5, optional)
+- ❌ Weekly Boss Hunt (Phase 1.5, optional)
+
+### Phase 1.5 (Optional - 2-3 Weeks, Conditional)
+**Only build if Phase 1A retention data shows demand (>5% Day 7 retention)**
+- **Side Quests**: 20-30 optional stages per world (unlock after completing main world)
+  - Rewards: Rare/Epic cards, Gems, exclusive titles
+  - Difficulty: 10-20% harder than main stages (skill check)
+  - Narrative: Branching story paths (save the village OR burn it, alignment system)
+- **Branching Paths**: World 3+ has 2 story branches (Light/Dark alignment)
+  - Different bosses, rewards, cosmetics based on choices
+  - Replay opposite alignment for completionist content
+- **Weekly Boss Hunt**: 1 super-hard boss/week, community leaderboard
+  - Top 100: 1,000 Arena Tokens (equivalent to 10 weeks grinding)
+  - Top 10: Exclusive Mythic card skin
+  - Participation: 500 Gold + 50 Gems (everyone who attempts)
+
+### Deferred to Phase 2 (Realm Map - 2-3 Months)
+- ❌ Realm Map exploration (40-80 tile hex grid, fog of war, Movement Points)
+- ❌ Territory occupation (castle control, multi-hero armies)
+- ❌ AFK economy cards (Granary/Sawmill/Mine passive income)
+- ❌ Resource nodes (Food/Lumber/Ore gathering)
+- ❌ Treasure nodes (one-time Gold/Gems on map tiles)
+
+### Player Tips
+- **3-Star Mastery**: Replaying for 3 stars gives diminished rewards but unlocks Achievement titles
+- **Daily Challenge Priority**: 2× rewards make Daily Challenge the most efficient Gold source
+- **Energy Management**: 240 Energy/day = 24 battles. Save Energy for Daily Challenge (higher ROI)
+- **Pack Purchases**: Standard Packs best Gold value (1,000 Gold = 5 cards). Epic Boosters for targeted hero pulls.
+- **Battle Pass Value**: $4.99 = 10 packs + Legendary (equivalent to $10-$15 retail value, 50-66% discount)
+- **First-Time Offers**: $0.99 Starter Pack is highest ROI (200% value), expires after 7 days
+
+### Inspiration
+- **Candy Crush**: Linear stage progression (3-star rating, level locking)
+- **Clash of Clans**: 3-star attack rating (Victory/Speed/Perfect)
+- **Raid Shadow Legends**: Campaign Mode structure (12 stages per chapter, boss battles)
+- **AFK Arena**: Stage rewards + Daily Challenges + Battle Pass combo
 
 ---
 
-## 4.2 Saga Campaign (Phase 2 - Story PvE) ❌ NOT IN MVP
+## 4.2 Realm Map (Phase 2 - Open-World PvE) ❌ NOT IN PHASE 1A
+
+**Planned for Phase 2 (2-3 months after Phase 1A launch)**
+
+### Overview
+The Realm Map is the **strategic expansion mode**: a 40-80 tile hex grid for open-world exploration with territory control, multi-hero armies, and AFK economy. Unlocks after completing Campaign World 1 (9 stages).
+
+### Key Features
+- **Map**: 40-80 hexes (Locations: Town, City, Dungeon, Mine, Ruins, Monster Spawn, Treasure Node)
+- **Movement**: 3 tiles/turn, 10 Movement Points/day (time-gated exploration)
+- **Territory Occupation**: Capture castles, hold for passive income, defend from AI raids
+- **Multi-Hero Armies**: Deploy 2-4 Epic+ heroes with independent 10-20 card stacks
+- **AFK Economy**: Place Granary/Sawmill/Mine cards on tiles for passive Food/Lumber/Ore generation
+- **Resource Nodes**: Food (farms), Lumber (forests), Ore (mountains) - gather for building upgrades
+- **Battles**: Same 8×8 tactical grid as Campaign Mode, but with multi-hero army stacks
+- **Energy**: 10 Energy/battle (same as Campaign Mode)
+
+### MVP Scope (Phase 2)
+- ✅ 3-5 Realm Maps (120-400 tiles total)
+- ✅ Territory occupation (castle control, building slots)
+- ✅ AFK economy (passive income while offline)
+- ✅ Multi-hero armies (2-4 heroes, independent stacks)
+- ✅ Resource gathering (Food/Lumber/Ore for upgrades)
+- ✅ Treasure nodes (one-time Gold/Gems/card rewards)
+- ❌ PvP territory raids (Phase 3, opt-in PvP maps)
+- ❌ Alliance territory wars (Phase 3, 50v50 battles)
+
+### Progression Integration
+- **Unlocks**: Complete Campaign World 1 (Stage 1-9)
+- **Coexistence**: Campaign Mode + Realm Map both stay (players choose which to play)
+- **Resource Sharing**: Gold/Gems/Energy shared between modes
+- **Deck Sharing**: Same card collection, different deck builds for different maps
+
+**For detailed Realm Map mechanics, see Phase 2 design document (to be created)**
+
+---
+
+## 4.3 Saga Campaign (Phase 3 - Story PvE) ❌ NOT IN MVP
 
 **Schema**: [docs/specs/campaign-schema.json](docs/specs/campaign-schema.json)
 
