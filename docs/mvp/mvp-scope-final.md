@@ -234,7 +234,10 @@ Why 20-card deck matters:
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
 - [ ] **Hospital UI** (main menu screen: list damaged cards, individual heal buttons, HEAL ALL button)
 - [ ] **HospitalManager.cs** (track card HP, AFK regen timers, Gold payment for instant heal)
-- [ ] **AFK Regen System** (1 HP per 10 min real-time, offline progression, PlayerPrefs save/load)
+- [ ] **AFK Regen System** (1 HP per 10 min, ONLY for cards in active deck 6-50 cards)
+  - **Active Deck** (6-50 cards): AFK regen ACTIVE (1 HP per 10 min, offline progression)
+  - **Codex Storage**: AFK regen PAUSED (⏸️ no healing until added back to active deck)
+  - **Dead Cards (0 HP)**: AFK regen FROZEN (❌ no healing, must pay 2× Gold to resurrect)
 - [ ] **BattleMap C# class** (8×8 grid, preset spawn coordinates for 6 player units + 6 enemy units)
 - [ ] **BattleManager singleton** (turn system, tactic activation logic, win/loss detection)
 - [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
@@ -329,6 +332,8 @@ Why 20-card deck matters:
 - ✅ Post-tutorial battles: 10 Energy per battle
 - ✅ Daily refill: 240 Energy/day (24 battles max)
 - ✅ Starting Energy: 100 (10 battles to start)
+- ✅ **Energy Banking**: Can exceed 100 max (daily login rewards stack, unclaimed refills bank)
+- ✅ **Natural AFK moment**: F2P depletes 100 Energy → Log out → 8h later: 100 Energy + healed cards
 
 **Deliverables**:
 - [ ] CampaignManager C# class (stage unlocking, progression tracking, 3-star rating)
@@ -383,16 +388,18 @@ Why 20-card deck matters:
 - ✅ Battle chests: 50-500 Gold (Bronze tier for MVP)
 - ✅ Total daily: ~700 Gold/day (500 login + 200 battles)
 
-**Daily Login**:
-- ✅ 7-day reward cycle:
-  - Day 1: 500 Gold
-  - Day 2: 1× Common card
-  - Day 3: 500 Gold
-  - Day 4: 1× Uncommon card
-  - Day 5: 1,000 Gold
-  - Day 6: 1× Rare card
-  - Day 7: 1× Standard Pack (5 cards)
-- ✅ Resets weekly (Day 8 = Day 1)
+**Daily Login** (Streak Bonuses):
+- ✅ 7-day reward cycle (streak required, missing 1 day = reset to Day 1):
+  - Day 1: 500 Gold + 50 Energy
+  - Day 2: 1× Common card + 50 Energy
+  - Day 3: 500 Gold + 50 Energy
+  - Day 4: 1× Uncommon card + 100 Energy
+  - Day 5: 1,000 Gold + 100 Energy
+  - Day 6: 1× Rare card + 100 Energy
+  - Day 7: 1× Standard Pack (5 cards) + 200 Energy (JACKPOT!)
+- ✅ **Energy Banking**: Day 7 = 200 Energy (can exceed 100 max, bank for weekend grind)
+- ✅ Resets weekly (Day 8 = Day 1, maintain streak to get Day 7 bonus)
+- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Energy → Play on weekend
 
 **Analytics** (Basic Tracking):
 - ✅ Battles won/lost

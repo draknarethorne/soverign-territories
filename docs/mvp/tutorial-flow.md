@@ -1254,30 +1254,48 @@ Uncommon Knight (2★)
 ```
 ╔═══════════════════════════════════════════════════════╗
 ║                    🏥 HOSPITAL                        ║
+║              (Active Deck: 20/50 cards)               ║
 ╠═══════════════════════════════════════════════════════╣
+║ HEALING IN ACTIVE DECK:                               ║
+║                                                       ║
 ║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
-║ [Heal Now: 20 Gold] [Tutorial highlights this]       ║
+║ ✅ Healing automatically (1 HP per 10 min)            ║
+║ [Heal Now: 20 Gold]                                  ║
 ║                                                       ║
 ║ [Knight 2★] 25/30 HP           ⏱️ 50m → Full         ║
+║ ✅ Healing automatically                              ║
 ║ [Heal Now: 5 Gold]                                   ║
 ║                                                       ║
 ║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
+║ ✅ Healing automatically                              ║
 ║ [Heal Now: 2 Gold]                                   ║
 ║                                                       ║
-║ [Healer] 0/10 HP 💀 DEAD       ⏱️ 1h 40m → Full      ║
-║ [Heal Now: 10 Gold]                                  ║
+║ [Healer] 0/10 HP 💀 DEAD       ⏸️ FROZEN              ║
+║ ❌ Dead cards don't heal! Must resurrect with Gold!   ║
+║ [Resurrect: 20 Gold (2× cost)] ← Tutorial points     ║
 ║                                                       ║
-║ [Scout] 15/15 HP ✅ Healthy (no healing needed)      ║
+║ [Scout] 15/15 HP ✅ Healthy                           ║
+║ [Knight 1★] 30/30 HP ✅ Healthy                       ║
 ║                                                       ║
-║ [Knight 1★] 30/30 HP ✅ Healthy (no healing needed)  ║
-║                                                       ║
-║ 💰 [HEAL ALL: 37 Gold] ← Tutorial highlights this    ║
+║ 💰 [HEAL ALL: 47 Gold] (20+5+2+20 resurrection)      ║
 ╚═══════════════════════════════════════════════════════╝
 ```
 
 [Tutorial Text]:
-"Welcome to the Hospital! Damaged cards heal slowly over time (AFK regen)."
-"OR pay Gold to heal instantly. Whales can use HEAL ALL for convenience!"
+"Welcome to the Hospital! Damaged cards in your active deck heal automatically."
+"BUT - dead cards (0 HP) are FROZEN! They need Gold to resurrect (2× cost)."
+
+[Tutorial Pointer]: Points to Healer "Resurrect: 20 Gold (2× cost)"
+
+[Tutorial Text]:
+"Healer died in battle! Resurrection costs 20 Gold (2× the normal 10 Gold)."
+"TIP: Use healers mid-battle to keep units alive and avoid resurrection costs!"
+"For tutorial, skip resurrection. Use your backup Cleric instead!"
+
+[Tutorial Text]:
+"Your damaged cards (Water Mage, Knight, Archer) heal automatically while in your active deck."
+"Dead Healer stays frozen until you pay Gold to resurrect."
+"When you log out, AFK regen continues! Come back in 2 hours, cards healed!"
 
 [Tutorial Pointer]: Points to "HEAL ALL: 37 Gold" button
 
@@ -1292,33 +1310,39 @@ Uncommon Knight (2★)
 **Player Action**: Taps "Continue" (tutorial doesn't force Gold spending)
 
 **System Actions**:
-1. Start AFK regen timers (save to PlayerPrefs: `lastLogoutTime`)
-2. Hospital button in main menu shows badge: "🏥 Hospital (4 damaged)"
-3. Deck builder shows HP bars (yellow/red for damaged, green for healthy)
-4. Dead Healer grayed out in deck builder: "💀 DEAD - Visit Hospital"
-5. Return to Realm Map
+1. Start AFK regen timers for damaged cards in active deck (save to PlayerPrefs: `lastLogoutTime`)
+2. Healer remains at 0/10 HP (frozen, no AFK regen until resurrected)
+3. Hospital button in main menu shows badge: "🏥 Hospital (4 damaged, 1 dead)"
+4. Deck builder shows HP bars (yellow/red for damaged, green for healthy)
+5. Dead Healer grayed out in deck builder: "💀 DEAD - Must resurrect in Hospital (20 Gold)"
+6. Return to Realm Map
 
 **Why Hospital Tutorial Matters**:
-- ✅ **Deck size justification**: "I need 12-15 healthy cards for rotation!"
-- ✅ **Healer value**: "Healers restore HP mid-battle, save Gold costs"
-- ✅ **Gold sink**: Whales spam "HEAL ALL", F2P uses AFK regen
-- ✅ **Mobile engagement**: "Check back in 2 hours, cards healed!"
-- ✅ **Strategic depth**: Save strong cards for bosses, use reserves for grinding
+- ✅ **F2P friendly**: Log out when Energy depletes → Cards heal automatically while offline!
+- ✅ **Healer value**: Keep units alive in battle = avoid 2× resurrection costs
+- ✅ **Gold sink**: Whales spam "HEAL ALL" (47 Gold), F2P uses AFK regen + reserves
+- ✅ **Mobile engagement**: "Check back in 2 hours, cards healed!" (except dead cards)
+- ✅ **Punishment for death**: Let units die = pay 2× Gold to resurrect!
 
-**AFK Regen Formula**:
-- **1 HP per 10 minutes** (real-time, offline progression)
-- **Healer (0/10 HP)**: 100 minutes (1h 40m) to full
-- **Water Mage (60/80 HP)**: 200 minutes (3h 20m) to full
-- **Knight (25/30 HP)**: 50 minutes to full
-- **Archer (8/10 HP)**: 20 minutes to full
+**AFK Regen Rules** (Critical for F2P):
+- **Active Deck (6-50 cards)**: ✅ 1 HP per 10 min (real-time, offline progression)
+- **Codex Storage**: ⏸️ AFK regen PAUSED (no healing until added back to active deck)
+- **Dead Cards (0 HP)**: ❌ AFK regen FROZEN (must pay 2× Gold to resurrect to 1 HP)
+
+**Resurrection Mechanics**:
+- **Dead cards (0 HP)**: Pay 2× Gold to resurrect to 1 HP
+- **After resurrection**: Card at 1 HP, AFK regen resumes (1 HP per 10 min)
+- **Example**: Healer (0/10 HP) → Pay 20 Gold → Resurrect to 1/10 HP → 90 min to full HP
 
 **Instant Heal Cost** (Gold Sink):
-- **1 Gold per missing HP** (simple formula)
-- **Water Mage (20 HP missing)**: 20 Gold
-- **Knight (5 HP missing)**: 5 Gold
-- **Archer (2 HP missing)**: 2 Gold
-- **Healer (10 HP missing)**: 10 Gold
-- **HEAL ALL**: 37 Gold total (20+5+2+10)
+- **Damaged (1-99% HP)**: 1 Gold per missing HP
+- **Dead (0% HP)**: 2 Gold per missing HP (resurrection penalty)
+- **Examples**:
+  - Water Mage (60/80 HP): 20 HP missing × 1 Gold = **20 Gold**
+  - Knight (25/30 HP): 5 HP missing × 1 Gold = **5 Gold**
+  - Archer (8/10 HP): 2 HP missing × 1 Gold = **2 Gold**
+  - Healer (0/10 HP DEAD): 10 HP missing × 2 Gold = **20 Gold** (resurrection)
+- **HEAL ALL**: 47 Gold total (20+5+2+20 resurrection)
 
 ---
 

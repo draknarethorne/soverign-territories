@@ -1582,27 +1582,38 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 **Option 1: AFK Regen** (FREE, Passive Healing)
 - **Cost**: FREE (no Gold)
 - **Rate**: **1 HP per 10 minutes** (real-time, offline progression)
+- **ONLY works for cards in ACTIVE DECK** (6-50 cards):
+  - **Active Deck**: ✅ AFK regen ACTIVE (1 HP per 10 min)
+  - **Codex Storage**: ⏸️ AFK regen PAUSED (no healing until added back to active deck)
+  - **Dead Cards (0 HP)**: ❌ AFK regen FROZEN (must pay 2× Gold to resurrect first)
 - **Full heal time** = `(Max HP - Current HP) × 10 minutes`
 - **Example**: 
-  - Epic Water Mage (60/80 HP) → 20 HP missing → **200 minutes (3h 20m)** to full
-  - Healer (0/10 HP) → 10 HP missing → **100 minutes (1h 40m)** to full
-- **Use Case**: F2P players, non-urgent battles, overnight healing
+  - Epic Water Mage (60/80 HP, in active deck) → 20 HP missing → **200 minutes (3h 20m)** to full
+  - Knight (25/30 HP, in codex storage) → ⏸️ **No healing** (paused until added to active deck)
+  - Healer (0/10 HP DEAD, in active deck) → ❌ **No healing** (frozen until resurrected with Gold)
+- **Use Case**: F2P players, log out when Energy depletes, cards heal overnight
 
 **Option 2: Instant Heal (Single Card)**
-- **Cost**: **1 Gold per missing HP**
-- **Effect**: Restore selected card to full HP immediately
+- **Cost**: 
+  - **Damaged cards (1-99% HP)**: 1 Gold per missing HP
+  - **Dead cards (0% HP)**: 2 Gold per missing HP (resurrection penalty)
+- **Effect**: Restore selected card to full HP immediately (or resurrect to 1 HP if dead, then heal)
 - **Example**: 
-  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold instant heal**
-  - Knight (25/30 HP) → 5 HP missing → **5 Gold instant heal**
-  - Healer (0/10 HP) → 10 HP missing → **10 Gold instant heal**
-- **Use Case**: Heal critical hero for boss fight, selective healing
+  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold** instant heal
+  - Knight (25/30 HP) → 5 HP missing → **5 Gold** instant heal
+  - Healer (0/10 HP DEAD) → 10 HP missing × 2× cost → **20 Gold** resurrection (restored to 1 HP, then AFK regen resumes)
+- **Use Case**: Heal critical hero for boss fight, resurrect dead cards to unlock deck slots
 
 **Option 3: HEAL ALL (Whale Convenience)**
-- **Cost**: **Sum of all missing HP** (no bundle discount in MVP, add later)
-- **Effect**: Restore ALL damaged cards to full HP instantly
+- **Cost**: **Sum of all missing HP** (damaged cards × 1 Gold + dead cards × 2 Gold)
+- **Effect**: Restore ALL damaged cards to full HP instantly, resurrect all dead cards
 - **Example**: 
-  - Water Mage (20 HP) + Knight (5 HP) + Archer (2 HP) + Healer (10 HP) = **37 Gold total**
-- **Use Case**: Whale convenience, urgent PvP tournament, boss rush event
+  - Water Mage (60/80 HP): 20 HP × 1 Gold = 20 Gold
+  - Knight (25/30 HP): 5 HP × 1 Gold = 5 Gold
+  - Archer (8/10 HP): 2 HP × 1 Gold = 2 Gold
+  - Healer (0/10 HP DEAD): 10 HP × 2 Gold = 20 Gold (resurrection)
+  - **HEAL ALL Total**: 47 Gold (20+5+2+20)
+- **Use Case**: Whale convenience (tap once, instant recovery), urgent PvP tournament, boss rush event
 - **Button Placement**: Bottom of Hospital screen (prominent, easy tap)
 
 **Option 4: Continue (Use Reserves)**
@@ -1647,10 +1658,15 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 
 ### Dead Cards (0 HP)
 
+**Resurrection Requirement** (ALL Players):
+- **Dead cards (0 HP) DON'T heal with AFK regen** (frozen at 0 HP)
+- **Must pay Gold to resurrect** (2× normal healing cost)
+- **After resurrection**: Card restored to 1 HP, then AFK regen resumes normally
+
 **Deck Builder Restrictions**:
-- **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Healing Required")
+- **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Must Resurrect in Hospital")
 - **Deck builder validation**: Prevents deploying 6-card formation if any card is 0 HP
-- **Error message**: "Healer is dead! Visit Hospital or swap in reserves."
+- **Error message**: "Healer is dead! Pay 20 Gold to resurrect OR swap in reserves."
 
 **Partially Damaged Cards** (Allowed in Battle):
 - **Yellow HP bar** (50-99% HP): Minor risk, usable
@@ -1660,10 +1676,11 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
   - Heal Knight to 30/30 HP for boss fight (spend 5 Gold)
   - Swap Knight for fresh reserve (free deck rotation)
 
-**AFK Regen Works for Dead Cards**:
-- 0 HP cards heal at same rate (1 HP per 10 min)
-- **Example**: Healer dies (0/10 HP) → 100 minutes to full (1h 40m)
-- **Overnight healing**: Log out at midnight, log in at 8am → 480 min passed = 48 HP healed
+**Why Dead Cards Don't Heal**:
+- ✅ **Punishment for bad play**: Let units die = pay 2× Gold to resurrect
+- ✅ **Healer value**: Keeping units alive mid-battle = free (avoids resurrection costs)
+- ✅ **F2P friendly**: Don't let units die (use healers, retreat from hard battles)
+- ✅ **Whale tax**: Play recklessly = pay resurrection costs (20-160 Gold per Epic)
 
 ---
 
@@ -1697,61 +1714,69 @@ To prevent "deadlock" (all cards dead/damaged, can't progress):
 - Action: Close Victory screen → Return to Realm Map (skip Hospital for now)
 
 **Day 1 - Battle 1-2** (Deck Rotation):
-- Open Deck Builder: Healer grayed out (💀 DEAD), Knight A yellow HP bar (18/30)
+- Open Deck Builder: Healer grayed out (💀 DEAD, must resurrect for 20 Gold), Knight A yellow HP bar (18/30, healing in deck)
 - Swap: Healer → **Cleric** (12/12 HP, fresh reserve), Knight A → **Knight C** (30/30 HP, fresh)
-- Deploy: Epic Water Mage (60/80 HP), Knight C, Knight B, Archer, Scout, Cleric
-- Result: Water Mage damaged (40/80 HP), Cleric dies
-- Action: Visit Hospital → Heal Water Mage for 20 Gold (critical hero for boss)
+- Deploy: Epic Water Mage (60/80 HP, still healing in deck), Knight C, Knight B, Archer, Scout, Cleric
+- Result: Water Mage damaged (40/80 HP), Cleric dies (0/12 HP)
+- Action: Visit Hospital → Heal Water Mage for 40 Gold (critical hero for boss)
 
-**Day 1 - Battle 1-3** (Reserves Depleted):
-- Problem: Healer (0/10 HP, AFK regen 1h 40m left), Cleric (0/12 HP, AFK regen 2h left), Knight A (18/30 HP, AFK regen 2h left)
-- Solution: Use remaining reserves OR wait for AFK regen
-- Deploy: Compromised deck (low HP units, risky)
+**Day 1 - Energy Depleted** (F2P Natural Stopping Point):
+- Problem: 100 Energy depleted (10 battles), Healer dead (0/10 HP, frozen), Cleric dead (0/12 HP, frozen), Water Mage damaged (40/80 HP, healing)
+- **F2P Action**: Log out (can't continue without Energy)
+- **AFK Regen**: Water Mage heals 1 HP per 10 min (400 min = 6.7 hours to full)
+- **8 hours later**: Energy refilled (96 Energy), Water Mage healed to full (80/80 HP)
+- **Log back in**: Full Energy + healed cards (except dead Healer/Cleric) = continue playing
 
-**Day 2 - Battle 1-4** (AFK Regen Complete):
-- 8 hours passed (480 min) → Healer full (10/10), Cleric full (12/12), Knight A full (30/30)
-- Deploy: Fresh optimal deck again
-- **Deck size matters**: Need 12-15 cards minimum for healthy rotation
+**Day 2 - Weekend Session** (No More Dead Cards for F2P):
+- **F2P**: Learned lesson! Don't let cards die = no resurrection costs. Use 14 healthy backup reserves, let Healer/Cleric stay dead (free up deck slots)
+- **Whale**: Pay 20 Gold to resurrect Healer + 24 Gold to resurrect Cleric = 44 Gold = continue with optimal deck immediately
 
 ---
 
 ### Healer Card Value (Economic Incentive)
 
 **Without Healers**:
-- Average battle: 2-3 cards damaged (200-300 HP lost)
-- Healing cost: 200-300 Gold OR 3.3-5 hours AFK wait
+- Average battle: 2-3 cards damaged (80-150 HP lost), 0-1 dead (20-40 Gold resurrection)
+- Total cost: 80-150 Gold healing + 20-40 Gold resurrection = **100-190 Gold/battle**
+- OR wait 13-25 hours AFK regen (F2P, no dead cards)
 
 **With Healers**:
 - Healer restores 100-200 HP mid-battle
-- Post-battle healing cost: 50-100 Gold (saved 150-200 Gold)
-- **Healer pays for itself**: 3-5 battles = 500 Gold saved
+- **Prevents deaths**: Units stay above 0 HP = no 2× resurrection cost
+- Post-battle healing cost: 20-50 Gold (saved 80-140 Gold)
+- **Healer pays for itself**: 2-3 battles = 200 Gold saved (vs letting units die)
 
 **Healer Types**:
-- **Common Healer** (10 HP, 20 Heal, 1★): Basic sustain
-- **Epic Cleric** (40 HP, 60 Heal, 3★): Powerful burst healing
-- **Legendary Paladin** (160 HP, 120 Heal + Tank, 5★): Hybrid tank/healer
+- **Common Healer** (10 HP, 20 Heal, 1★): Basic sustain, prevents 1 death/battle
+- **Epic Cleric** (40 HP, 60 Heal, 3★): Powerful burst healing, prevents 2-3 deaths/battle
+- **Legendary Paladin** (160 HP, 120 Heal + Tank, 5★): Hybrid tank/healer, prevents all deaths
 
 ---
 
 ### F2P vs Whale Behavior
 
-**F2P Players** (AFK Regen + Deck Rotation):
+**F2P Players** (AFK Regen + Deck Rotation + Avoid Deaths):
+- **Core Strategy**: DON'T let cards die (use healers mid-battle, retreat if losing)
 - Use AFK regen for all healing (FREE, just time)
 - Rotate between 12-15 cards naturally
-- Check Hospital after 2-4 hours (cards healed)
-- **Time investment**: 15-20 battles/day, log out between sessions
+- **Energy depletion = natural logout**: 10 battles (100 Energy) → log out → 8h later = full Energy + healed cards
+- Check Hospital after logging back in (cards healed overnight)
+- **Time investment**: 10-20 battles/day (100-200 Energy), log out between sessions
+- **Gold spent on healing**: 0 Gold (all AFK regen)
 
-**Mid-Tier Spenders** (Selective Healing):
+**Mid-Tier Spenders** (Selective Healing + Some Resurrections):
 - Heal critical heroes (20-50 Gold) for boss fights
 - Use AFK regen for common units
-- Spend 100-300 Gold/day on healing
+- **Occasionally resurrect** Epic heroes if died (40-160 Gold, rare)
+- Spend 100-300 Gold/day on healing + resurrections
 - **Convenience**: Skip wait times for important cards, AFK regen for others
 
-**Whales** (Spam HEAL ALL):
+**Whales** (Spam HEAL ALL + Resurrect Everything):
 - Always click "HEAL ALL" button after every 2-3 battles
-- Never wait, never rotate deck
-- Spend 500-2,000 Gold/day on healing
-- **Ultimate convenience**: Zero downtime, optimal deck 24/7
+- **Don't care about deaths**: Resurrect everything (2× cost = irrelevant)
+- Never wait, never rotate deck, never log out
+- Spend 500-2,000 Gold/day on healing + resurrections
+- **Ultimate convenience**: Zero downtime, optimal deck 24/7, play recklessly
 
 ---
 
