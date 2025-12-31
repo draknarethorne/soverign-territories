@@ -681,22 +681,45 @@ namespace SovereignTerritories.Battle
 - [ ] Implement PlayerDeck.cs singleton
 - [ ] Test: Can open packs, see 20 cards, choose deck
 
-### Week 5-6: County Map & Battle
-- [ ] Create CountyMap scene (7×7 grid, 1 enemy spawn)
-- [ ] Implement CountyMapController.cs with army movement
-- [ ] Create Battle scene (8×8 grid for tactical combat)
-- [ ] Implement BattleManager.cs with card placement
-- [ ] Implement BattleUnit.cs with Attack/Defense formula
-- [ ] Add turn system (player turn → enemy turn → check victory)
-- [ ] Test: Can move on map, trigger battle, place cards, attack, win
+### Week 5-6: Campaign Mode & Stage Progression
+- [ ] Create CampaignManager.cs (8 worlds, 9 stages each, 72 total battles)
+- [ ] Create WorldSelectScreen scene (show 8 worlds, World 1 unlocked, Worlds 2-8 locked)
+- [ ] Create StageSelectScreen scene (9 stage icons, linear unlocking, 3-star rating display)
+- [ ] Implement StageData.cs (stageId, enemyDeck, rewards, energyCost, firstClearRewards)
+- [ ] Create 72 AI enemy decks (JSON or ScriptableObjects):
+  - Stage 1-1: 3 cards (50 Power)
+  - Stage 1-5 (mini-boss): 7 cards (200 Power, Rare hero)
+  - Stage 1-9 (world boss): 12 cards (350 Power, Epic hero)
+  - Stage 8-9 (final boss): 20 cards (800 Power, Mythic hero)
+- [ ] Implement 3-star rating system:
+  - ⭐ Victory (battle won)
+  - ⭐⭐ Speed (<10 turns)
+  - ⭐⭐⭐ Perfect (no deaths + hero >80% HP)
+- [ ] Add Daily Challenge system (1 random stage/day, 2× rewards, 3 attempts)
+- [ ] Add replay penalty (50% rewards after first clear)
+- [ ] Test: Complete Stage 1-1, unlock Stage 1-2, earn 3 stars, replay for lower rewards
 
-### Week 7-8: Victory Loop & Polish
-- [ ] Create VictoryScreen scene (rewards display)
-- [ ] Implement reward system (+100 XP, +500 Gold, +1 card)
-- [ ] Add simple animations (fade in/out between scenes)
-- [ ] Add placeholder sound effects (button clicks, card reveals)
-- [ ] Bug fixes and optimization (60 FPS on mobile)
-- [ ] **Playtest with 5-10 users**, collect feedback
+### Week 7-8: Monetization & Pack Store
+- [ ] Create PackStoreScreen scene (4 pack tiers: Standard/Element/Epic/Mega)
+- [ ] Implement IAP integration (Unity IAP package):
+  - Standard Pack: $0.99 OR 1,000 Gold
+  - Element Booster: $1.99 OR 2,000 Gold
+  - Epic Booster: $4.99 OR 5,000 Gold
+  - Mega Pack: $19.99 (money-only, 20 cards, guaranteed Legendary)
+- [ ] Create BattlePassScreen scene (Free/Paid tracks, 30-day timer)
+- [ ] Implement BattlePassManager.cs:
+  - Track XP (10 XP/battle, 3,000 XP to max)
+  - Free Track: 5 Standard Packs + 2,000 Gold
+  - Paid Track ($4.99): 10 Standard Packs + 1 Epic Booster + 1 Exclusive Legendary + 5,000 Gold + 500 Gems
+- [ ] Add EnergyRefillScreen (Small $0.99, Large $3.99, Daily Unlimited $9.99)
+- [ ] Implement FirstTimeOfferManager.cs (track 7/14/30 day timers):
+  - Starter Pack: $0.99 (first 7 days)
+  - New Player Bundle: $4.99 (first 14 days)
+  - Whale Welcome: $49.99 (first 30 days)
+- [ ] Add Gem display UI (top-right HUD, show current Gem count)
+- [ ] Test: Buy $0.99 pack with real money (sandbox/test mode), earn Battle Pass XP, redeem free rewards
+
+**Note**: Unity IAP setup requires Apple App Store Connect + Google Play Console accounts. Use Unity's IAP Tester for local testing before production.
 
 ---
 
