@@ -1,128 +1,754 @@
-# Sovereign Territories - Tutorial Flow & Player Onboarding
+# Sovereign Territories - Tutorial Flow (Discovery-Based System)
 
-**Version**: 1.0  
-**Last Updated**: December 29, 2025  
-**Purpose**: Step-by-step player experience for the first 15-60 minutes of gameplay
+**Version**: 2.0 (REDESIGNED)  
+**Last Updated**: December 31, 2025  
+**Status**: Phase 1 MVP - Discovery-Based Tutorial System  
+**Purpose**: 5-minute onboarding + Codex + Achievements + Contextual Tooltips
 
 ---
 
 ## Overview
 
-This document walks through the **exact player journey** from app launch to first victory, calling out every UI screen, decision point, animation, and gap that needs design/development decisions.
+This document defines the **discovery-based tutorial system** that replaces the old 28-step forced tutorial (30-60 minutes, 60% drop-off risk) with a **5-minute mandatory onboarding** + **30 achievement-based tutorials** + **Codex of Knowledge** (optional guidebook) + **contextual tooltips** (first-time triggers).
+
+**Design Philosophy**:
+- **Lord of Shadows Model**: Achievements unlock through Level 10 with rewards
+- **Baldur's Gate 3**: Contextual tooltips appear when relevant (skippable)
+- **Elden Ring**: Minimal tutorialization, discovery-driven (2-min intro)
+- **Civilization VI**: Codex of Knowledge (Civilopedia = indexed guidebook)
 
 **Target Experience**:
-- **First 15 minutes**: Account → Card Draw → Deck Build → First Battle → Victory
-- **First Hour**: 5-10 tutorial battles, Codex introduction, basic economy understanding
-- **Goal**: Player feels excited about their cards, understands combat, wants to keep playing
+- **First 5 minutes**: Account creation → Open 2 packs → Auto-battle demo → Main menu unlocked
+- **Codex**: Always accessible (📖 book icon), 7 tabs, searchable, dynamic unlocks
+- **Achievements**: 30 total (Level 1-30), reward Gold/Gems/Packs/Codex entries
+- **Tooltips**: First-time triggers (Stamina, Temple, Rarity Budget, Multi-Hero)
+- **Goal**: Player discovers mechanics naturally, gets rewarded for exploration
 
-**Design Pillars**:
-1. **Immediate Gratification**: Player sees cool cards in first 2 minutes
-2. **Agency Without Overwhelm**: Offer choice (deck type) without decision paralysis
-3. **Easy First Win**: Tutorial battle is unlosable, teaches core mechanics
-4. **Codex Discovery**: Players understand collection/storage early
-5. **No Economy Stress**: Skip castle building, resource gathering until post-tutorial
-
----
-
-## Phase 1: Launch & Account Creation (0-2 Minutes)
-
-### Step 1: App Launch
-**Screen**: Splash Screen
-```
-[Sovereign Territories Logo]
-[Animated: Crown materializing from cards]
-[Loading bar: "Loading assets..." 0-100%]
-```
-
-**Design Decisions Needed**:
-- [ ] Splash duration (2-3 seconds minimum for asset loading)
-- [ ] Logo animation style (fade in, particle effect, crown assembly?)
-- [ ] Loading bar visibility (always show or only if loading >3 seconds?)
+**Core Pillars**:
+1. **No Forced Clicks**: Players explore freely, not "click this then that"
+2. **Reward Discovery**: First heal = +50 Gold + Temple Codex entry
+3. **Optional Depth**: Codex for hardcore, tooltips for casuals
+4. **Immediate Freedom**: 5-minute onboarding, then full main menu access
+5. **Achievement Dopamine**: 30 achievements (Lord of Shadows model)
 
 ---
 
-### Step 2: Main Menu (First-Time Player)
-**Screen**: Main Menu
+## 5-Minute Mandatory Onboarding (Steps 1-5)
+
+### Step 1: Account Creation (30 seconds)
+
+**Screen**: App Launch → EULA → Account Creation
 ```
-[Background: Animated Realm Map with fog]
-[Center: "Sovereign Territories" title logo]
-
-[Large Button: "START YOUR JOURNEY"]
-[Small Button: "Settings"]
-[Small Button: "Quit"]
-```
-
-**Player Action**: Taps "START YOUR JOURNEY"
-
-**Design Decisions**:
-- Background animation: Subtle parallax with moving fog (2-3 layers)
-- Audio: Epic orchestral theme (60-90 sec loop, fade on scene transition)
-
----
-
-### Step 2B: EULA/Privacy Acceptance (One-Time, Legally Required)
-**Screen**: Terms of Service
-```
-[Header: "Welcome to Sovereign Territories"]
-
-[Scrollable Text Box - 200 words]:
+[Splash Screen: Sovereign Territories Logo, 2-sec loading]
+↓
+[EULA Screen]:
 "By playing Sovereign Territories you agree to:
-• Collect cards, battle enemies, manage territories
-• Age requirement: 13+ (COPPA compliance)
-• Data we collect: Email (optional), device ID, gameplay stats
-• Data usage: Save progress, improve game, send updates
-• No selling of personal data to third parties
-• Full details: [Read Full Terms] [Read Privacy Policy]"
-
+• Age 13+ (COPPA compliance)
+• Data collection: Email (optional), device ID, gameplay stats
+• No selling of personal data
 [☐ I accept the Terms of Service and Privacy Policy]
-
-[Continue] (disabled until checked)
-```
-
-**Player Action**: 
-1. Scrolls through terms (optional)
-2. Checks acceptance box
-3. Taps "Continue"
-
-**System Actions**:
-1. Store acceptance: `PlayerPrefs.SetInt("EULA_Accepted_v1", 1)`
-2. Store date: `PlayerPrefs.SetString("EULA_Accept_Date", DateTime.UtcNow)`
-3. Skip this screen on future launches (already accepted)
-
-**Edge Cases**:
-- Player declines (unchecks box): Continue button stays disabled, cannot proceed
-- Under 13: Show "Ask a parent or guardian to play" (require 13+ checkbox)
-- Terms update: Bump version to `EULA_Accepted_v2`, re-prompt existing users
-
-**Implementation Notes**: See tutorial-gap-resolutions.md Gap 1 for full legal text and Unity code
-
----
-
-### Step 3: Account Creation
-**Screen**: Welcome Screen
-```
-[Header: "Welcome, Sovereign!"]
-[Text: "Choose how you'd like to continue:"]
-
-[Button: Continue as Guest] (auto-generates "Player_12345")
+[Continue] (disabled until checked)"
+↓
+[Welcome Screen]:
+"Welcome, Sovereign!"
+[Button: Continue as Guest] (auto-generates Player_12345)
 [Button: Sign In with Email]
 [Button: Sign In with Google]
 [Button: Sign In with Apple] (iOS only)
 [Button: Sign In with Steam] (PC only)
 ```
 
-**Player Action**: Taps "Continue as Guest" (fastest path)
+**Player Action**: Checks EULA box → Taps "Continue as Guest"
 
 **System Actions**:
-1. Generate unique device ID
-2. Create Nakama account (device auth)
-3. Assign default name: "Player_[random 5-digit number]"
-4. Store session token locally (PlayerPrefs encrypted)
+1. Store EULA acceptance: `PlayerPrefs.SetInt("EULA_Accepted_v1", 1)`
+2. Generate device ID + Nakama account (device auth)
+3. Assign default name: `Player_[random 5-digit number]`
+4. Store session token (encrypted PlayerPrefs)
+5. Grant starting resources:
+   - 5,000 Gold (enough for 5 Standard Packs)
+   - 100 Stamina (10 battles)
+   - 5 Resurrection Scrolls 📜 (save for Epic deaths)
+6. Load main menu
 
-**Design Decisions**:
-- Default name format: `Player_12345` (5-digit random number)
-- Name change: Free once at Level 3, then 100 gold per change
-- Offline mode: Not supported in MVP (requires Nakama for all features)
+**Duration**: 30 seconds (fastest path)
+
+---
+
+### Step 2: Open 2 Starter Packs (1 minute)
+
+**Screen**: First-Time Player Bonus
+```
+[Header: "Welcome, Commander!"]
+[Text: "Here are 2 Starter Packs to begin your journey!"]
+
+[2 glowing packs appear on screen]:
+Pack 1: [Fire Starter Pack] (red glow, fire icon)
+Pack 2: [Water Starter Pack] (blue glow, water icon)
+
+[Text: "Tap to open your first pack!"]
+[Arrow pointing to Pack 1]
+```
+
+**Pack Opening Flow**:
+1. Player taps Pack 1 (Fire Starter)
+   - **Auto-opens** (no skip option for first pack)
+   - **Contents**: 10 cards (guaranteed 1 Fire Knight hero, 9 support)
+   - **Animation**: Cards flip 1-by-1 (1 sec each = 10 sec total)
+   - **Rarity**: 1 Epic Fire Knight (hero) + 3 Rare + 6 Common
+   - **Guaranteed**: All Fire element (100% synergy)
+
+2. Player taps Pack 2 (Water Starter)
+   - **Auto-opens** (no skip option)
+   - **Contents**: 10 cards (guaranteed 1 Water Mage hero, 9 support)
+   - **Animation**: Cards flip 1-by-1 (1 sec each = 10 sec total)
+   - **Rarity**: 1 Epic Water Mage (hero) + 3 Rare + 6 Common
+   - **Guaranteed**: All Water element (100% synergy)
+
+**Total Cards Received**: 20 cards (10 Fire + 10 Water)
+
+**System Actions**:
+1. Grant 2 Starter Packs (Fire + Water)
+2. Auto-open packs (cards added to Codex)
+3. Mark all cards as "New!" (gold badge)
+4. Tutorial text: "Great! You now have 20 cards. Let's battle!"
+
+**Duration**: 1 minute (20 seconds opening + 40 seconds reveal animations)
+
+---
+
+### Step 3: First Auto-Battle (2 minutes)
+
+**Screen**: Battle Demo
+```
+[Header: "Your First Battle!"]
+[Text: "Watch your cards in action - this battle will play automatically."]
+
+[Auto-Battle Screen]:
+- 8x8 tactical grid
+- Player side: 6 cards auto-placed (3 Fire Knight + 3 Water Mage support)
+- Enemy side: 3 weak Goblin Raiders (guaranteed win)
+- Battle plays automatically (no player input)
+
+[Text overlay]: "Tap Auto Deploy to begin!"
+[Button: "Auto Deploy"] (pulsing)
+```
+
+**Player Action**: Taps "Auto Deploy" button
+
+**Auto-Battle Flow**:
+1. **Auto-Deploy Phase** (5 seconds):
+   - AI places player's 6 cards in optimal formation
+   - Fire Knight in front, Water Mage in back (tank + support)
+   - Animation: Cards slide onto grid with glow effect
+
+2. **Combat Phase** (20 seconds at 1× speed):
+   - AI plays 3-5 turns automatically
+   - Fire Knight charges → Attacks Goblin (damage numbers appear)
+   - Water Mage casts heal → Restores Fire Knight HP
+   - Goblins attack → Minimal damage
+   - Final Goblin dies → **Victory!**
+
+3. **Victory Screen** (5 seconds):
+   - Gold fanfare animation
+   - "VICTORY!" text (3 sec, skippable after 1 sec)
+   - Rewards appear:
+     * +50 Gold (coin icon flies to HUD)
+     * +100 XP (progress bar fills)
+     * +1 Common card (Footman flips, added to Codex)
+
+**Tutorial Text After Victory**:
+```
+"Great! Your cards won the battle!"
+"Most battles are like this - Auto Deploy does the work."
+"You can also place cards manually for strategy (coming soon)."
+
+[Button: "Continue"]
+```
+
+**System Actions**:
+1. Load battle scene (8x8 grid)
+2. Auto-place 6 cards (AI formation)
+3. Run auto-battle (AI vs AI, 20 sec at 1× speed)
+4. Award rewards: 50 Gold, 100 XP, 1 Common card
+5. Return to main menu
+
+**Duration**: 2 minutes (5 sec deploy + 20 sec combat + 5 sec victory + 30 sec tutorial text)
+
+---
+
+---
+
+### Step 4: HUD Introduction (30 seconds)
+
+**Screen**: Main HUD Tutorial
+```
+[After first battle, HUD overlays appear one-by-one]
+
+[Tooltip 1: Gold Icon (top-left)]:
+"💰 Gold: 5,050"
+"Earn Gold from battles. Spend in the Market to buy packs!"
+[Button: "Got it"] → Tooltip disappears
+
+[Tooltip 2: Gems Icon (top-left)]:
+"💎 Gems: 0"
+"Premium currency. Earn from achievements or buy with real money."
+[Button: "Got it"] → Tooltip disappears
+
+[Tooltip 3: Stamina Icon (top-right)]:
+"⚡ Stamina: 100/100"
+"Battles cost 10 Stamina each. Refills 1 every 6 minutes (240/day)."
+"You have 100 Stamina = 10 battles before waiting!"
+[Button: "Got it"] → Tooltip disappears
+
+[Tooltip 4: Player Level (top-center)]:
+"👤 Player Level: 1 (100/250 XP)"
+"Level up by winning battles. Higher levels = bigger decks!"
+[Button: "Got it"] → Tooltip disappears
+```
+
+**Player Action**: Taps "Got it" for each tooltip (4 total)
+
+**System Actions**:
+1. Show tooltips sequentially (wait for tap before next)
+2. Mark tooltips as seen: `PlayerPrefs.SetInt("Tutorial_HUD_Complete", 1)`
+3. All tooltips skippable: "Disable All Tooltips" in Settings
+4. Unlock main menu after final tooltip
+
+**Duration**: 30 seconds (4 tooltips × 7-8 seconds each)
+
+---
+
+### Step 5: Main Menu Unlocked (10 seconds)
+
+**Screen**: Main Menu (Full Freedom Granted)
+```
+[Header: "Welcome, Commander!"]
+[Text: "Your journey begins now. Explore freely!"]
+
+[Main Menu Buttons]:
+📖 [Codex] - View your collection (21 cards)
+⚔️ [Battle] - Campaign Mode (World 1 unlocked)
+🎁 [Market] - Buy packs (Standard Pack 1,000 Gold)
+⚙️ [Settings] - Name, audio, battle speed
+
+[Tutorial Text]:
+"Tap 📖 Codex to view your 21 cards!"
+"Or tap ⚔️ Battle to start your campaign!"
+"You can explore freely now - no forced steps!"
+
+[Button: "Start Exploring"] (dismisses tutorial overlay)
+```
+
+**Player Action**: Taps "Start Exploring" → Tutorial ends
+
+**System Actions**:
+1. Unlock main menu (all buttons accessible)
+2. Mark tutorial complete: `PlayerPrefs.SetInt("Tutorial_Complete", 1)`
+3. Show achievement notification: "🎯 First Steps Complete! (+50 Gold, +1 Common Pack)"
+4. Player can now:
+   - View Codex (21 cards: 20 from packs + 1 from battle)
+   - Start Campaign Mode (World 1, Stages 1-1 to 1-9)
+   - Buy packs in Market (5,050 Gold = 5 Standard Packs)
+   - Read Codex entries (7 tabs, searchable)
+   - Build custom decks (swap cards in/out)
+   - Change name (Settings → Name → 100 Gold)
+
+**Tutorial Complete!**
+- **Total Time**: ~5 minutes (30s account + 1min packs + 2min battle + 30s HUD + 10s menu)
+- **Total Cards**: 21 (20 from 2 packs + 1 from battle reward)
+- **Total Gold**: 5,050 (5,000 starting + 50 from battle)
+- **Player Level**: 1 (100/250 XP to Level 2)
+- **Stamina**: 90/100 (10 used for tutorial battle)
+- **Achievements**: 1/30 (First Steps complete)
+
+**Duration**: 10 seconds
+
+---
+
+## Codex of Knowledge (Optional Guidebook)
+
+**Access**: Always available (📖 book icon in main menu)  
+**Purpose**: Medieval manuscript-style indexed guidebook  
+**Design**: 7 tabs, searchable, dynamic unlocks, optional reading
+
+### Codex Structure
+
+**Tab 1: Getting Started**
+- What is Sovereign Territories?
+- Your first battle (recap Step 3)
+- Understanding resources (Gold, Gems, Stamina)
+- Deck building basics (6-50 cards, Rarity Budget)
+- Healing cards (Temple, AFK regen, Resurrection Scrolls)
+- Economy cards (place on map for passive income)
+
+**Tab 2: Battle Tactics**
+- 8x8 tactical grid (rows, columns, positioning)
+- Formations (front-line tanks, back-line support)
+- Multi-hero armies (Epic+ heroes lead independent stacks)
+- Auto-Battle vs Manual placement
+- Battle rewards (Bronze/Silver/Gold chests)
+
+**Tab 3: Card Types**
+- Heroes (lead armies, Epic+ heroes)
+- Units (footmen, archers, mages)
+- Buildings (castle structures, economy)
+- Workers (economy cards, AFK income)
+- Tactics (spells, buffs, debuffs)
+- Equipment (weapons, armor for heroes)
+
+**Tab 4: Progression**
+- Player Levels (1-100, unlock deck slots)
+- Castle Levels (1-50, territory building slots)
+- Card Rarity Tiers (Common → Mythic, 6 tiers)
+- Rarity Budget (prevents all-Legendary decks)
+- Unlocks (Level 10: Alliance, 15: Colosseum, 20: Active PvP, 30: Alliance Wars)
+
+**Tab 5: Economy & Markets**
+- Daily Login Rewards (Day 7 = Legendary Pack)
+- Pack Market (Standard, Element Boosters, Premium Themes)
+- Resource Market (Food, Lumber, Ore - Phase 2)
+- Colosseum Market (PvP Tokens - Phase 3)
+- Stamina (10 per battle, 240/day, 1 every 6 min)
+
+**Tab 6: Social & PvP**
+- Alliances (join at Level 10, social features + events)
+- Colosseum PvP (matchmade 1v1/3v3, Level 15+)
+- Active PvP Maps (opt-in open-world, Level 20+)
+- Alliance Wars (50v50, Level 30+)
+
+**Tab 7: Advanced Topics**
+- Deck strategies (aggro, control, economy)
+- Formations (front-line, back-line, flanking)
+- Element counters (Fire > Earth > Water > Fire)
+- Territory placement (AFK income optimization)
+
+### Codex Features
+
+**Searchable**: Type "How do I heal?" → Temple entry appears  
+**Dynamic Unlocks**: First heal → Temple entry unlocks in Codex  
+**Cross-References**: "See also: Resurrection Scrolls (Tab 4)"  
+**Examples**: Player use cases (e.g., "I'm out of Stamina - what now?")  
+**Always Accessible**: 📖 icon in main menu, Settings, or pause menu
+
+---
+
+## Achievement-Based Tutorials (30 Achievements)
+
+**Purpose**: Reward discovery (Lord of Shadows model)  
+**Design**: First-time actions trigger achievements with Gold/Gems/Packs  
+**Structure**: 30 achievements (Level 1-30), 3 tiers (early/mid/endgame)
+
+### Early Tier (Level 1-10) - 10 Achievements
+
+1. **First Steps** (Complete onboarding)  
+   - Reward: +50 Gold, +1 Common Pack  
+   - Tooltip: "Welcome, Commander!"
+
+2. **Battle Tested** (Win 3 battles)  
+   - Reward: +100 Gold, +1 Rare card  
+   - Tooltip: "You're getting the hang of this!"
+
+3. **Deck Builder** (Build first custom deck)  
+   - Reward: +50 Gems, +5 Common cards  
+   - Tooltip: "Strategic thinking pays off!"
+
+4. **Healing Touch** (Use Temple for first time)  
+   - Reward: +50 Gold, Temple Codex entry  
+   - Tooltip: "Wounded cards recover over time."
+
+5. **Economy Starter** (Place first Economy card on map)  
+   - Reward: +100 Gold, +1 Farmer  
+   - Tooltip: "Earn Gold while offline!"
+
+6. **Collection Milestone** (Own 50 cards)  
+   - Reward: +1 Uncommon Pack  
+   - Tooltip: "Your collection is growing!"
+
+7. **First Blood** (Deal 100 damage in battles)  
+   - Reward: +100 Gold, +50 XP  
+   - Tooltip: "Strike hard, strike true!"
+
+8. **Survivor** (Win without losing a card)  
+   - Reward: +1 Rare Pack  
+   - Tooltip: "Flawless victory!"
+
+9. **Formation Master** (Manually place cards 5 times)  
+   - Reward: +100 Gems, Formation Guide  
+   - Tooltip: "Strategy wins wars!"
+
+10. **Alliance Recruit** (Join alliance at Level 10)  
+    - Reward: +500 Gold, +1 Epic Pack  
+    - Tooltip: "Strength in numbers!"
+
+### Mid Tier (Level 11-20) - 10 Achievements
+
+11. **Colosseum Debut** (Play first PvP match at Level 15)  
+    - Reward: +100 Colosseum Tokens, +1 Rare Pack  
+    - Tooltip: "Test your skill against rivals!"
+
+12. **Collector** (Own 100 cards)  
+    - Reward: +1 Epic Pack  
+    - Tooltip: "A true card collector!"
+
+13. **Epic Commander** (Obtain first Epic hero)  
+    - Reward: +200 Gold, Multi-Hero Guide  
+    - Tooltip: "Epic heroes lead armies!"
+
+14. **Multi-Army General** (Deploy 2 heroes in one battle)  
+    - Reward: +300 Gold, +1 Epic card  
+    - Tooltip: "Divide and conquer!"
+
+15. **Economic Empire** (Earn 10,000 Gold from Economy cards)  
+    - Reward: +500 Gems, +1 Legendary Economy Pack  
+    - Tooltip: "Wealth flows from your empire!"
+
+16. **Deck Mastery** (Build 3 different decks)  
+    - Reward: +1 Epic Pack  
+    - Tooltip: "Versatility is key!"
+
+17. **PvP Victor** (Win 10 Colosseum matches)  
+    - Reward: +500 Tokens, +1 Legendary Pack  
+    - Tooltip: "Colosseum champion!"
+
+18. **Active PvP Unlock** (Reach Level 20)  
+    - Reward: +1,000 Gold, Active PvP Guide  
+    - Tooltip: "Open-world PvP awaits!"
+
+19. **Territory Baron** (Control 10 territories)  
+    - Reward: +1,000 Gold/day passive income  
+    - Tooltip: "Your empire expands!"
+
+20. **Champion Duelist** (Win 50 Colosseum matches)  
+    - Reward: +1,000 Tokens, +1 Mythic Pack  
+    - Tooltip: "Legendary duelist!"
+
+### Endgame Tier (Level 21-30) - 10 Achievements
+
+21. **Legendary Collector** (Own first Legendary card)  
+    - Reward: +500 Gems, +1 Mythic Pack  
+    - Tooltip: "True power unlocked!"
+
+22. **War Ready** (Reach Level 30)  
+    - Reward: +2,000 Gold, Alliance War Guide  
+    - Tooltip: "Alliance Wars begin!"
+
+23. **Mythic Legend** (Own first Mythic card)  
+    - Reward: +1,000 Gems, Mythic Showcase  
+    - Tooltip: "The rarest of the rare!"
+
+24. **Complete Collection** (Own 1 of every Common)  
+    - Reward: +1 Epic Pack  
+    - Tooltip: "Completionist pride!"
+
+25. **Alliance Champion** (Win first Alliance War)  
+    - Reward: +5,000 Gold, +3 Epic Packs, Title Badge  
+    - Tooltip: "Victory for your clan!"
+
+26. **Conquest Lord** (Control 50 territories)  
+    - Reward: +5,000 Gold/day passive income  
+    - Tooltip: "Your empire is vast!"
+
+27. **Master Tactician** (Win 100 battles)  
+    - Reward: +2,000 Gold, +1 Legendary Pack  
+    - Tooltip: "Undefeated general!"
+
+28. **Deck Virtuoso** (Build 10 different decks)  
+    - Reward: +500 Gems, +1 Mythic Pack  
+    - Tooltip: "Master of all strategies!"
+
+29. **Colosseum Legend** (Win 100 PvP matches)  
+    - Reward: +2,000 Tokens, Legendary Title  
+    - Tooltip: "Immortalized in legend!"
+
+30. **Ultimate Collector** (Own 500 cards)  
+    - Reward: +1,000 Gems, +5 Mythic Packs  
+    - Tooltip: "The ultimate sovereign!"
+
+---
+
+## Contextual Tooltips (First-Time Triggers)
+
+**Purpose**: Teach mechanics when relevant (Baldur's Gate 3 model)  
+**Design**: Non-blocking overlays, appear once per account, skippable  
+**Settings**: "Disable All Tooltips" option in Settings menu
+
+### Tooltip Triggers
+
+**First Stamina Depletion** (Player reaches 0/100 Stamina):
+```
+⚡ STAMINA DEPLETED
+
+"You're out of Stamina! Battles cost 10 Stamina each."
+"Stamina refills 1 every 6 minutes (240/day)."
+"Or buy Stamina refill: 100 Gems = 100 Stamina"
+
+[Button: "Got it"] (dismisses tooltip)
+[Link: "View Stamina Guide in Codex"]
+```
+
+**First Wounded Card** (Player has card below 50% HP):
+```
+🩹 WOUNDED CARD
+
+"Your Fire Knight took damage and is at 8/20 HP (40%)."
+"Visit the Temple to heal with Gold, or wait for AFK regen."
+"Dead cards (0 HP) don't heal automatically - must resurrect!"
+
+[Button: "Visit Temple"] (opens Temple UI)
+[Button: "Skip"] (dismisses tooltip)
+```
+
+**First Rarity Budget Warning** (Player exceeds deck budget):
+```
+⚖️ RARITY BUDGET EXCEEDED
+
+"Your deck is too powerful! Rarity Budget prevents all-Legendary decks."
+"Budget: 100 points (your deck: 120 points)"
+"Remove 1 Epic card or replace with Commons."
+
+[Button: "View Rarity Budget Guide"]
+[Button: "Adjust Deck"] (opens Deck Builder)
+```
+
+**First Epic Hero** (Player obtains first Epic):
+```
+👥 EPIC HERO UNLOCKED
+
+"Epic heroes can lead independent armies!"
+"Deploy 2 heroes in one battle (8 cards total: 4 per hero)."
+"Legendary heroes can lead 3 armies (12 cards total)!"
+
+[Button: "View Multi-Hero Guide"]
+[Button: "Got it"]
+```
+
+**First Colosseum Unlock** (Player reaches Level 15):
+```
+⚔️ COLOSSEUM PVP UNLOCKED
+
+"You can now battle other players in the Colosseum!"
+"Matchmade 1v1 or 3v3, earn Colosseum Tokens."
+"Spend Tokens in the PvP Market for exclusive cards!"
+
+[Button: "Play First Match"] (opens Colosseum matchmaking)
+[Button: "Later"] (dismisses tooltip)
+```
+
+**First Alliance War** (Player reaches Level 30):
+```
+🏰 ALLIANCE WARS UNLOCKED
+
+"Alliance Wars are 50v50 battles for territory control!"
+"Coordinate with your alliance, deploy cards on map."
+"Win wars for massive rewards (5,000 Gold + Epic Packs)!"
+
+[Button: "View Alliance War Guide"]
+[Button: "Got it"]
+```
+
+**All Tooltips Skippable**: "Don't show tips again" checkbox (saves to PlayerPrefs)
+
+---
+
+## Tutorial System Architecture
+
+### Server-Side Tracking (Nakama)
+
+**Achievement Progress** (stored in player metadata):
+```json
+{
+  "achievements": {
+    "first-steps": {
+      "unlocked": true,
+      "unlockDate": "2025-12-31T10:23:45Z",
+      "claimedReward": true
+    },
+    "battle-tested": {
+      "unlocked": false,
+      "progress": 2,
+      "target": 3
+    }
+  }
+}
+```
+
+**Tooltip State** (stored in player metadata):
+```json
+{
+  "tooltips": {
+    "stamina-depleted": true,
+    "first-wounded": true,
+    "rarity-budget": false,
+    "epic-hero": false
+  }
+}
+```
+
+**Codex Unlocks** (stored in player metadata):
+```json
+{
+  "codex": {
+    "temple-healing": true,
+    "multi-hero-armies": true,
+    "alliance-wars": false
+  }
+}
+```
+
+### Client-Side UI
+
+**Achievement Tab** (Settings → Achievements):
+```
+[Filter: All | Locked | Unlocked]
+[Search: "battle"]
+
+[Achievement: Battle Tested] (🏆 UNLOCKED)
+  - Description: "Win 3 battles"
+  - Progress: 3/3 ✅
+  - Reward: +100 Gold, +1 Rare card
+  - [CLAIM REWARD] (green button, pulsing)
+
+[Achievement: Colosseum Debut] (🔒 LOCKED)
+  - Description: "Play first PvP match (Level 15)"
+  - Progress: Level 12/15
+  - Reward: +100 Tokens, +1 Rare Pack
+  - [LOCKED UNTIL LEVEL 15]
+```
+
+**Codex UI** (Main Menu → Codex):
+```
+[📖 Codex of Knowledge]
+
+[Tabs]:
+  - Getting Started
+  - Battle Tactics
+  - Card Types
+  - Progression
+  - Economy & Markets
+  - Social & PvP
+  - Advanced Topics
+
+[Search Bar]: "How do I heal?"
+
+[Results]:
+  - Temple Healing (Tab 1)
+  - AFK Regen (Tab 1)
+  - Resurrection Scrolls (Tab 4)
+
+[Entry: Temple Healing] (unlocked after first heal)
+  - What: Visit Temple to heal damaged cards
+  - Cost: 1 Gold per missing HP (Dead cards: 2 Gold per HP)
+  - AFK: Cards heal 1 HP every 10 minutes while in active deck
+  - Tip: Dead cards (0 HP) don't heal - must resurrect!
+```
+
+---
+
+## Implementation Timeline (5 Weeks)
+
+**Week 1: Core Systems**
+- Account creation (EULA, Nakama auth, default name)
+- Pack opening (2 Starter Packs, 10 cards each, flip animation)
+- Auto-Battle (AI formation, AI combat, victory screen)
+- HUD (Gold, Gems, Stamina, Player Level tooltips)
+
+**Week 2: Contextual Tooltips**
+- Stamina depletion tooltip
+- Wounded card tooltip (Temple entry point)
+- Rarity Budget warning tooltip
+- Epic hero tooltip (Multi-Hero Guide)
+- Colosseum unlock tooltip (Level 15)
+- Alliance War tooltip (Level 30)
+
+**Week 3: Achievement System**
+- Server-side tracking (Nakama metadata)
+- Client-side UI (Achievement Tab, progress bars)
+- Reward claiming (Gold, Gems, Packs auto-granted)
+- Badge notifications (toast popups, red number on Settings icon)
+- 30 achievement definitions (early/mid/endgame tiers)
+
+**Week 4: Codex Content**
+- 7 tabs structure (Getting Started → Advanced Topics)
+- Search functionality ("How do I heal?" → Temple entry)
+- Dynamic unlocks (first heal → Temple entry appears)
+- Cross-references ("See also: Resurrection Scrolls")
+- 5,000+ words of indexed content
+
+**Week 5: Polish & Testing**
+- Settings menu ("Disable All Tooltips" checkbox)
+- Main menu integration (Codex icon, Achievement badge)
+- First-time player testing (5-minute onboarding, no forced clicks)
+- Analytics tracking (achievement completion rates, Codex usage)
+- Bug fixes (edge cases, skip behavior, tooltip timing)
+
+---
+
+## Success Metrics
+
+**Tutorial Completion** (5-minute onboarding):
+- Target: 70-80% completion (up from 40% for 28-step tutorial)
+- Drop-off points: Step 2 (pack opening), Step 3 (auto-battle)
+- Recovery: Tooltips re-appear on next login (no restart penalty)
+
+**Achievement Engagement**:
+- Target: 50% of players claim 5+ achievements
+- Top achievements: First Steps (95%), Battle Tested (75%), Healing Touch (60%)
+- Endgame: Alliance Champion (5%), Colosseum Legend (10%)
+
+**Codex Usage**:
+- Target: 30% of players read 3+ entries
+- Top searches: "heal", "stamina", "pvp", "alliance"
+- Unused entries: Flag for removal or rewrite
+
+**Day 1 Retention**:
+- Target: 40-50% (up from 30-40% for forced tutorial)
+- Benchmark: Hearthstone (50%), Pokemon TCG (40%), Clash of Clans (45%)
+
+**Day 7 Retention**:
+- Target: 20-25% (up from 15-20% for forced tutorial)
+- Key: Daily Login Rewards (Day 7 = Legendary Pack), Achievements (10 unlocked by Level 10)
+
+---
+
+## Competitive Advantages
+
+**vs Hearthstone** (5-min forced tutorial):
+- ✅ Our 5-min onboarding is equally fast
+- ✅ Codex is more accessible than Hearthstone's hidden wiki
+- ✅ Achievements reward exploration (Hearthstone has hidden quests)
+
+**vs Pokemon TCG** (10-min hand-hold tutorial):
+- ✅ Our discovery-based system is faster
+- ✅ Achievements unlock naturally (Pokemon forces 15 steps)
+- ✅ Codex eliminates "Where's the shop?" confusion
+
+**vs Clash of Clans** (15-min forced builder tutorial):
+- ✅ Our 5-min onboarding is 3× faster
+- ✅ No forced clicks (CoC makes you tap every building)
+- ✅ Achievements feel rewarding (CoC just unlocks features)
+
+**vs Slay the Spire** (2-min run, die, repeat):
+- ✅ Similar minimal tutorialization
+- ✅ Our tooltips are more helpful (StS is cryptic)
+- ✅ Codex provides depth (StS has no manual)
+
+---
+
+## Related Documents
+
+- [Tutorial System Redesign](../design/tutorial-system-redesign.md) - Full design rationale
+- [Competitive Analysis](../design/competitive-analysis.md) - Tutorial section (⭐⭐⭐⭐⭐ FIXED)
+- [Achievement Schema](../specs/achievement-schema.json) - Server-side data structure
+- [Achievement Schema Docs](../specs/achievement-schema.md) - Full 30-achievement list
+- [Codex Content](../design/codex-content.md) - 7 tabs, 5,000+ words (to be created)
+- [Tooltip Specifications](../design/tooltip-specs.md) - UI mockups, animations (to be created)
+
+---
+
+**Version History**:
+- **1.0** (2025-12-29) - Original 28-step forced tutorial (30-60 min, 60% drop-off risk)
+- **2.0** (2025-12-31) - Discovery-based redesign (5-min onboarding + Codex + achievements + tooltips)
 
 ---
 
