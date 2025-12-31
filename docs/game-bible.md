@@ -1554,24 +1554,34 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 ```
 ╔═══════════════════════════════════════════════════════╗
 ║                    🏥 HOSPITAL                        ║
+║         (Inventory: 💰 500 Gold, 📜 5 Scrolls)        ║
 ╠═══════════════════════════════════════════════════════╣
+║ ACTIVE DECK (6/50 cards - Healing Active):           ║
+║                                                       ║
 ║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
-║ [Heal Now: 20 Gold] [Speed Up: 40 Gold (instant)]   ║
+║ [Heal Now: 20 Gold]                                  ║
 ║                                                       ║
 ║ [Knight] 25/30 HP              ⏱️ 50m → Full         ║
-║ [Heal Now: 5 Gold] [Speed Up: 10 Gold]              ║
+║ [Heal Now: 5 Gold]                                   ║
 ║                                                       ║
 ║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
-║ [Heal Now: 2 Gold] [Speed Up: 4 Gold]               ║
+║ [Heal Now: 2 Gold]                                   ║
 ║                                                       ║
-║ [Healer] 0/10 HP 💀 DEAD       ⏱️ 1h 40m → Full      ║
-║ [Heal Now: 10 Gold] [Speed Up: 20 Gold (instant)]   ║
+║ [Healer] 0/10 HP 💀 DEAD       ⏸️ FROZEN              ║
+║ [Resurrect: 20 Gold (2× cost)] OR [Use 1 Scroll 📜] ║
 ║                                                       ║
-║ [Scout] 15/15 HP ✅ Healthy (no healing needed)      ║
+║ [Scout] 15/15 HP ✅ Healthy                           ║
+║ [Knight #2] 30/30 HP ✅ Healthy                       ║
 ║                                                       ║
-║ [Knight #2] 30/30 HP ✅ Healthy (no healing needed)  ║
+║ ────────────────────────────────────────────────────  ║
 ║                                                       ║
-║ 💰 [HEAL ALL: 37 Gold] ← Whale convenience button   ║
+║ CODEX STORAGE (14/50 cards - Healing Paused):        ║
+║ [Fire Mage] 40/60 HP ⏸️ PAUSED (add to deck to heal) ║
+║ [Common Archer] 5/10 HP ⏸️ PAUSED                     ║
+║ ... (12 more cards in storage)                       ║
+║                                                       ║
+║ 💰 [HEAL ALL: 27 Gold] OR [Use Scrolls: 1 scroll]   ║
+║ (Damaged: 27 Gold OR 0 scrolls, Dead: 1 scroll)      ║
 ╚═══════════════════════════════════════════════════════╝
 ```
 
@@ -1594,27 +1604,45 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 - **Use Case**: F2P players, log out when Energy depletes, cards heal overnight
 
 **Option 2: Instant Heal (Single Card)**
-- **Cost**: 
+- **Cost (Gold)**: 
   - **Damaged cards (1-99% HP)**: 1 Gold per missing HP
   - **Dead cards (0% HP)**: 2 Gold per missing HP (resurrection penalty)
-- **Effect**: Restore selected card to full HP immediately (or resurrect to 1 HP if dead, then heal)
-- **Example**: 
-  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold** instant heal
+- **Cost (Resurrection Scrolls)**: 
+  - **Damaged cards**: Cannot use scrolls (Gold only)
+  - **Dead cards (0 HP)**: **1 Resurrection Scroll** → Resurrect to 1 HP (FREE, no Gold cost)
+- **Effect**: Restore selected card to full HP immediately (Gold) OR resurrect to 1 HP (Scroll, then AFK regen resumes)
+- **Strategic Choice**: 
+  - **Common deaths (10-20 Gold)**: Use Gold OR use reserves (don't waste scrolls!)
+  - **Epic deaths (80-160 Gold)**: Use Resurrection Scroll (save tons of Gold!)
+- **Examples**: 
+  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold** instant heal (scrolls don't work for damaged cards)
   - Knight (25/30 HP) → 5 HP missing → **5 Gold** instant heal
-  - Healer (0/10 HP DEAD) → 10 HP missing × 2× cost → **20 Gold** resurrection (restored to 1 HP, then AFK regen resumes)
-- **Use Case**: Heal critical hero for boss fight, resurrect dead cards to unlock deck slots
+  - **Healer (0/10 HP DEAD)** → 10 HP × 2× cost = **20 Gold** OR **1 Resurrection Scroll 📜** (FREE!)
+  - **Epic Hero (0/80 HP DEAD)** → 80 HP × 2× cost = **160 Gold** OR **1 Resurrection Scroll 📜** (saves 160 Gold!)
+- **Use Case**: Heal critical hero for boss fight, resurrect Epics with scrolls (F2P friendly), resurrect Commons with Gold (fast)
 
 **Option 3: HEAL ALL (Whale Convenience)**
-- **Cost**: **Sum of all missing HP** (damaged cards × 1 Gold + dead cards × 2 Gold)
+- **Cost**: **Sum of all missing HP** (damaged cards × 1 Gold + dead cards × 2 Gold) OR **Scrolls for dead cards only**
+- **Two Payment Methods**:
+  - **All Gold**: Pay full Gold cost (damaged 1× + dead 2×)
+  - **Scrolls + Gold**: Use Resurrection Scrolls for dead cards (FREE), pay Gold for damaged cards (1× cost)
 - **Effect**: Restore ALL damaged cards to full HP instantly, resurrect all dead cards
-- **Example**: 
+- **Example (All Gold)**: 
   - Water Mage (60/80 HP): 20 HP × 1 Gold = 20 Gold
   - Knight (25/30 HP): 5 HP × 1 Gold = 5 Gold
   - Archer (8/10 HP): 2 HP × 1 Gold = 2 Gold
   - Healer (0/10 HP DEAD): 10 HP × 2 Gold = 20 Gold (resurrection)
-  - **HEAL ALL Total**: 47 Gold (20+5+2+20)
-- **Use Case**: Whale convenience (tap once, instant recovery), urgent PvP tournament, boss rush event
-- **Button Placement**: Bottom of Hospital screen (prominent, easy tap)
+  - **HEAL ALL Total**: **47 Gold** (20+5+2+20)
+- **Example (Scrolls + Gold)**: 
+  - Water Mage (60/80 HP): 20 Gold (damaged, must use Gold)
+  - Knight (25/30 HP): 5 Gold
+  - Archer (8/10 HP): 2 Gold
+  - Healer (0/10 HP DEAD): **1 Resurrection Scroll 📜** (FREE, saves 20 Gold!)
+  - **HEAL ALL Total**: **27 Gold + 1 Scroll** (saves 20 Gold)
+- **Use Case**: 
+  - **Whale behavior**: Tap "HEAL ALL (47 Gold)" → Instant recovery (ignore scrolls, convenience over savings)
+  - **F2P mid-tier**: Tap "Use Scrolls + Gold (27 Gold + 1 Scroll)" → Save Gold for packs (strategic)
+- **Button Placement**: Bottom of Hospital screen (prominent, easy tap, shows both payment options)
 
 **Option 4: Continue (Use Reserves)**
 - **Cost**: FREE (no Gold)
@@ -1660,13 +1688,15 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 
 **Resurrection Requirement** (ALL Players):
 - **Dead cards (0 HP) DON'T heal with AFK regen** (frozen at 0 HP)
-- **Must pay Gold to resurrect** (2× normal healing cost)
-- **After resurrection**: Card restored to 1 HP, then AFK regen resumes normally
+- **Must resurrect with Gold OR Resurrection Scroll**:
+  - **Gold**: 2× normal healing cost (10-160 Gold per card, instant heal to full HP)
+  - **Resurrection Scroll 📜**: FREE (0 HP → 1 HP, then AFK regen resumes)
+- **After resurrection**: Card restored to 1 HP (scroll) or full HP (Gold), then AFK regen resumes normally
 
 **Deck Builder Restrictions**:
 - **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Must Resurrect in Hospital")
 - **Deck builder validation**: Prevents deploying 6-card formation if any card is 0 HP
-- **Error message**: "Healer is dead! Pay 20 Gold to resurrect OR swap in reserves."
+- **Error message**: "Healer is dead! Pay 20 Gold OR use 1 Scroll OR swap in reserves."
 
 **Partially Damaged Cards** (Allowed in Battle):
 - **Yellow HP bar** (50-99% HP): Minor risk, usable
@@ -1679,8 +1709,72 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 **Why Dead Cards Don't Heal**:
 - ✅ **Punishment for bad play**: Let units die = pay 2× Gold to resurrect
 - ✅ **Healer value**: Keeping units alive mid-battle = free (avoids resurrection costs)
-- ✅ **F2P friendly**: Don't let units die (use healers, retreat from hard battles)
-- ✅ **Whale tax**: Play recklessly = pay resurrection costs (20-160 Gold per Epic)
+- ✅ **F2P friendly**: Don't let units die (use healers, retreat from hard battles) OR use Resurrection Scrolls
+- ✅ **Whale tax**: Play recklessly = pay resurrection costs (20-160 Gold per Epic OR 1 scroll)
+
+---
+
+### Resurrection Scrolls (F2P-Friendly Consumable)
+
+**Item Type**: Consumable (stored in Inventory, tracked in PlayerPrefs)
+
+**Effect**: 
+- **Resurrect 1 dead card** (0 HP → 1 HP) for FREE (no Gold cost)
+- **After resurrection**: AFK regen resumes (1 HP per 10 min)
+- **Cannot be used on damaged cards** (only dead cards at 0 HP)
+
+**Strategic Use** (Save Scrolls for Expensive Deaths):
+- **Common deaths (10-20 Gold)**: Use Gold OR use reserves (don't waste scrolls!)
+- **Uncommon deaths (20-40 Gold)**: Consider Gold (if rich) OR scroll (if poor)
+- **Epic deaths (80-160 Gold)**: **Use Resurrection Scroll** (saves tons of Gold!)
+- **Legendary deaths (200-320 Gold, Phase 2)**: **Always use scroll** (never pay 320 Gold!)
+
+**Scroll Sources** (Earn 10-15 Scrolls/Week):
+1. **Starting Kit**: 5 Resurrection Scrolls (tutorial teaches usage)
+2. **Daily Login Rewards**:
+   - Day 3: 1 Resurrection Scroll
+   - Day 5: 1 Resurrection Scroll
+   - Day 7: 2 Resurrection Scrolls
+   - **Weekly total**: 4 scrolls (enough for 2 Epic deaths or 4 Common deaths)
+3. **Daily Challenge** (1 Scroll/Day):
+   - Complete Daily Challenge stage → **1 Resurrection Scroll** (guaranteed)
+   - Weekly total: 7 scrolls (incentive for daily play)
+4. **Weekly Missions** (5 Scrolls/Week):
+   - Complete all weekly missions → **5 Resurrection Scrolls**
+   - Incentive to grind weekly objectives (NOT from regular campaign)
+5. **World Boss Clear** (Stage X-9):
+   - First-time world boss defeat → **3 Resurrection Scrolls** (one-time bonus)
+
+**Weekly Scroll Economy** (F2P):
+- **Daily login**: 4 scrolls/week
+- **Daily Challenge**: 7 scrolls/week (complete every day)
+- **Weekly missions**: 5 scrolls/week
+- **Total**: **10-16 scrolls/week** (enough for 5-8 Epic deaths OR 10-16 Common deaths)
+
+**F2P vs Whale Behavior**:
+
+**F2P Players**:
+- **Scroll Priority**: Save for Epic/Legendary deaths (80-320 Gold savings)
+- **Common deaths**: Use backups OR pay Gold (10-20 Gold is cheap)
+- **Stockpile scrolls**: Bank 20-30 scrolls for rainy day (Epic death streak)
+- **Strategic play**: Use healers mid-battle (avoid deaths entirely, keep scrolls)
+
+**Whale Players**:
+- **Ignore scrolls**: Spam "HEAL ALL (47 Gold)" → Instant convenience
+- **Scrolls accumulate**: Whales earn 10-15 scrolls/week but never use them (Gold is faster)
+- **Stockpile 100+ scrolls**: "Why do I have 127 scrolls?" (whale problem, not F2P problem)
+
+**Inventory System Integration**:
+- **HUD Display**: Top bar shows "📜 5 Scrolls" (like Gold, Gems, Energy)
+- **Inventory Screen**: List all items (Gold, Gems, Energy, Scrolls, future items)
+- **PlayerPrefs Tracking**: `PlayerPrefs.SetInt("ResurrectionScrolls", count)`, load on startup
+
+**Why This Works**:
+- ✅ **F2P friendly**: Don't always cost Gold to resurrect (use scrolls instead)
+- ✅ **Strategic depth**: Save scrolls for Epics, use Gold for Commons (resource management)
+- ✅ **Engagement driver**: Daily login + Daily Challenge + Weekly missions = scroll rewards
+- ✅ **Future-proof**: Inventory system ready for Phase 2 items (Health Potions, XP Boosters, etc.)
+- ✅ **Whale-friendly**: Whales ignore scrolls (Gold is faster), F2P rely on scrolls (free resurrections)
 
 ---
 

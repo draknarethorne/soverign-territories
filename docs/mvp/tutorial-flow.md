@@ -378,6 +378,10 @@ After Trainer Deck reveal animation completes:
 2. Mark all cards as "New!" (gold badge indicator)
 3. Validate Balanced Explorer deck is buildable from pool
 4. If missing cards for deck: Silent auto-grant (see Fallback Logic in Step 6)
+5. **Grant starting resources**:
+   - 1,000 Gold (enough for 1 Standard Pack)
+   - 100 Energy (10 tutorial battles, refills during tutorial)
+   - **5 Resurrection Scrolls** 📜 (save for Epic deaths, tutorial teaches usage later)
 5. Load deck builder scene
 
 **Design Decisions** (Resolved):
@@ -1271,39 +1275,50 @@ Uncommon Knight (2★)
 ║ [Heal Now: 2 Gold]                                   ║
 ║                                                       ║
 ║ [Healer] 0/10 HP 💀 DEAD       ⏸️ FROZEN              ║
-║ ❌ Dead cards don't heal! Must resurrect with Gold!   ║
-║ [Resurrect: 20 Gold (2× cost)] ← Tutorial points     ║
+║ ❌ Dead cards don't heal! Must resurrect!              ║
+║ [Resurrect: 20 Gold] OR [Use 1 Scroll 📜] ← Tutorial  ║
+║ (You have 5 scrolls - save for Epics!)               ║
 ║                                                       ║
 ║ [Scout] 15/15 HP ✅ Healthy                           ║
 ║ [Knight 1★] 30/30 HP ✅ Healthy                       ║
 ║                                                       ║
-║ 💰 [HEAL ALL: 47 Gold] (20+5+2+20 resurrection)      ║
+║ 💰 [HEAL ALL: 27 Gold] OR [Use Scrolls: 1 scroll]   ║
+║ (Damages: 20+5+2 Gold OR 0 scrolls, Dead: 1 scroll)  ║
 ╚═══════════════════════════════════════════════════════╝
 ```
 
 [Tutorial Text]:
 "Welcome to the Hospital! Damaged cards in your active deck heal automatically."
-"BUT - dead cards (0 HP) are FROZEN! They need Gold to resurrect (2× cost)."
+"BUT - dead cards (0 HP) are FROZEN! They need Gold OR Resurrection Scrolls."
 
-[Tutorial Pointer]: Points to Healer "Resurrect: 20 Gold (2× cost)"
+[Tutorial Pointer]: Points to Healer "[Resurrect: 20 Gold] OR [Use 1 Scroll 📜]"
 
 [Tutorial Text]:
-"Healer died in battle! Resurrection costs 20 Gold (2× the normal 10 Gold)."
-"TIP: Use healers mid-battle to keep units alive and avoid resurrection costs!"
+"Healer died in battle! You can resurrect with 20 Gold (2× cost) OR 1 Resurrection Scroll (FREE!)."
+"You have 5 scrolls from your starting kit. Save them for Epic deaths (80-160 Gold savings)!"
+"TIP: For Commons, use AFK regen or backups. For Epics, use scrolls!"
+
+[Tutorial Text]:
 "For tutorial, skip resurrection. Use your backup Cleric instead!"
 
 [Tutorial Text]:
 "Your damaged cards (Water Mage, Knight, Archer) heal automatically while in your active deck."
-"Dead Healer stays frozen until you pay Gold to resurrect."
+"Dead Healer stays frozen until you resurrect with Gold OR Scroll."
 "When you log out, AFK regen continues! Come back in 2 hours, cards healed!"
 
-[Tutorial Pointer]: Points to "HEAL ALL: 37 Gold" button
+[Tutorial Pointer]: Points to "HEAL ALL: 27 Gold OR Use Scrolls: 1 scroll" button
 
 [Tutorial Text]:
-"For tutorial, let's use free AFK regen. Your cards heal 1 HP per 10 minutes."
-"Healer (0/10 HP) needs 100 minutes (1h 40m) to fully heal."
+"You can HEAL ALL for 27 Gold (damaged cards) + 1 Scroll (dead Healer)."
+"OR skip healing, let AFK regen work (FREE), and use your backup Cleric!"
 
-[Tutorial Auto-Selects]: "Skip Healing" (closes Hospital)
+[Tutorial Text]:
+"**Resurrection Scroll Strategy:**"
+"- Common deaths (10-20 Gold): Use AFK regen or backups (don't waste scrolls!)"
+"- Epic deaths (80-160 Gold): Use scrolls (save tons of Gold!)"
+"- You earn 4 scrolls/week from daily login + 7 scrolls/week from missions = 10-15 scrolls/week!"
+
+[Tutorial Auto-Selects]: "Skip Healing" (closes Hospital, teaches F2P-friendly strategy)
 
 [Button: "Continue to Realm Map"]
 

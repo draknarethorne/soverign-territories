@@ -63,6 +63,17 @@
 - [ ] card-schema.json validated (all 100 cards)
 - [ ] CardData C# class (Attack/Defense properties)
 - [ ] CardManager singleton (load cards from JSON, cache)
+- [ ] **Inventory System** (Gold, Gems, Energy, **Resurrection Scrolls**, future items)
+  - **Gold**: Battle rewards, daily login, pack duplicates
+  - **Gems**: Premium currency (IAP only for MVP)
+  - **Energy**: Battle cost (10/battle), regen 1 per 5 min, max 100 (can bank beyond via daily login)
+  - **Resurrection Scrolls** (📜): Use instead of Gold to resurrect dead cards (0 HP → 1 HP)
+    - Starting kit: 5 scrolls (tutorial teaches usage)
+    - Daily login: Day 3, Day 5, Day 7 give scrolls (4 scrolls/week)
+    - Daily Challenge: 1 scroll/completion (incentive for daily play)
+    - Weekly missions: 5 scrolls/week (incentive for weekly grind)
+    - World boss clear: 3 scrolls (Stage X-9 first-time clear)
+- [ ] **HUD UI** (top bar: Gold, Gems, Energy, Scrolls, Player Level, XP bar)
 - [ ] Codex UI (Unity UI Toolkit, grid view, filters)
 - [ ] Deck Builder UI (drag-drop, validation, save/load)
 - [ ] Trainer Deck selection UI (6 buttons, preview cards, confirm)
@@ -233,11 +244,12 @@ Why 20-card deck matters:
 - [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
 - [ ] **Hospital UI** (main menu screen: list damaged cards, individual heal buttons, HEAL ALL button)
-- [ ] **HospitalManager.cs** (track card HP, AFK regen timers, Gold payment for instant heal)
+- [ ] **HospitalManager.cs** (track card HP, AFK regen timers, Gold payment OR Scroll usage for resurrection)
 - [ ] **AFK Regen System** (1 HP per 10 min, ONLY for cards in active deck 6-50 cards)
   - **Active Deck** (6-50 cards): AFK regen ACTIVE (1 HP per 10 min, offline progression)
   - **Codex Storage**: AFK regen PAUSED (⏸️ no healing until added back to active deck)
-  - **Dead Cards (0 HP)**: AFK regen FROZEN (❌ no healing, must pay 2× Gold to resurrect)
+  - **Dead Cards (0 HP)**: AFK regen FROZEN (❌ no healing, must pay 2× Gold OR 1 Scroll to resurrect)
+- [ ] **Resurrection Options**: Dead cards show "[Resurrect: 20 Gold] OR [Use 1 Scroll 📜]" (player choice)
 - [ ] **BattleMap C# class** (8×8 grid, preset spawn coordinates for 6 player units + 6 enemy units)
 - [ ] **BattleManager singleton** (turn system, tactic activation logic, win/loss detection)
 - [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
@@ -325,7 +337,8 @@ Why 20-card deck matters:
 
 **Daily Event**:
 - ✅ Daily Challenge Stage: Random unlocked stage, 2× rewards, 3 attempts/day
-- ✅ Total daily value: ~1,000 Gold (= 1 Standard Pack purchase incentive)
+- ✅ **Completion reward**: 1 Resurrection Scroll 📜 (guaranteed, incentive for daily play)
+- ✅ Total daily value: ~1,000 Gold + 1 Scroll (= 1 Standard Pack + free Epic resurrection)
 
 **Energy System**:
 - ✅ Tutorial battles (Stages 1-1 to 1-4): 0 Energy (unlosable)
@@ -392,14 +405,15 @@ Why 20-card deck matters:
 - ✅ 7-day reward cycle (streak required, missing 1 day = reset to Day 1):
   - Day 1: 500 Gold + 50 Energy
   - Day 2: 1× Common card + 50 Energy
-  - Day 3: 500 Gold + 50 Energy
+  - Day 3: 500 Gold + 50 Energy + **1 Resurrection Scroll 📜**
   - Day 4: 1× Uncommon card + 100 Energy
-  - Day 5: 1,000 Gold + 100 Energy
+  - Day 5: 1,000 Gold + 100 Energy + **1 Resurrection Scroll 📜**
   - Day 6: 1× Rare card + 100 Energy
-  - Day 7: 1× Standard Pack (5 cards) + 200 Energy (JACKPOT!)
+  - Day 7: 1× Standard Pack (5 cards) + 200 Energy (JACKPOT!) + **2 Resurrection Scrolls 📜**
+- ✅ **Weekly total**: 3,000 Gold + 650 Energy + **4 Resurrection Scrolls** (enough for 2 Epic deaths)
 - ✅ **Energy Banking**: Day 7 = 200 Energy (can exceed 100 max, bank for weekend grind)
 - ✅ Resets weekly (Day 8 = Day 1, maintain streak to get Day 7 bonus)
-- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Energy → Play on weekend
+- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Energy + 4 Scrolls → Play on weekend
 
 **Analytics** (Basic Tracking):
 - ✅ Battles won/lost
