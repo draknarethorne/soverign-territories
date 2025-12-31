@@ -189,8 +189,8 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - **Total Daily**: 10-50 Tokens (skill-based, cannot buy)
 
 **Spending**:
-- PvP Store Exclusive Cards: 500-5,000 Tokens
-- PvP Store Equipment: 1,000-10,000 Tokens
+- PvP Market Exclusive Cards: 500-5,000 Tokens
+- PvP Market Equipment: 1,000-10,000 Tokens
 - Season Rewards: Top 100 players get exclusive Mythic cards
 
 **F2P vs Whale Balance**:
@@ -231,11 +231,11 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 ## Store Separation (Phase 2)
 
-**TODO: Design Pack Store UI (tabs vs scrollable list, bundle offers, daily deals?)**  
+**TODO: Design Pack Market UI (tabs vs scrollable list, bundle offers, daily deals?)**  
 **TODO: Determine bundle pricing (50-card Game Deck = 2,400 Gems too cheap/expensive?)**  
 **TODO: Create resource bundle conversion rates (prevent exploits, keep emergency purchases viable)**
 
-**Pack Store** (Gold/Gems):
+**Pack Market** (Gold/Gems):
 - Standard Pack: 1,000 Gold (5 cards)
 - Element Booster: 2,000 Gold (5 cards)
 - Epic Booster: 5,000 Gold (5 cards)
@@ -244,7 +244,7 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 **TODO: Should Game Decks be Phase 3? (require Alliance Wars meta before creating precons)**
 
-**Resource Store** (Food/Lumber/Ore):
+**Resource Market** (Food/Lumber/Ore):
 - Food Bundles: 1,000 Food for 500 Gold (emergency purchase)
 - Lumber Bundles: 1,000 Lumber for 500 Gold
 - Ore Bundles: 500 Ore for 1,000 Gold (rarer, more expensive)

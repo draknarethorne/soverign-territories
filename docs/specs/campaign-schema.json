@@ -46,10 +46,10 @@
             "maximum": 10,
             "description": "Difficulty rating"
           },
-          "energyCost": {
+          "staminaCost": {
             "type": "integer",
             "minimum": 0,
-            "description": "Energy required to play"
+            "description": "Stamina required to play"
           },
           "battleConfig": {
             "type": "object",
@@ -186,7 +186,7 @@
             "description": "Available difficulty modes"
           }
         },
-        "required": ["levelId", "number", "name", "type", "difficulty", "energyCost", "battleConfig", "rewards", "prerequisites"]
+        "required": ["levelId", "number", "name", "type", "difficulty", "staminaCost", "battleConfig", "rewards", "prerequisites"]
       },
       "description": "Campaign levels"
     },

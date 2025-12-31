@@ -159,7 +159,7 @@
 ### Gems (Premium Currency)
 - **Display**: Gems (with gem icon)
 - **Earning**: Daily login (10/day F2P), purchases ($0.99-$19.99)
-- **Spending**: Premium Packs, Energy Refills, Speed-Ups (Phase 2)
+- **Spending**: Premium Packs, Stamina Refills, Speed-Ups (Phase 2)
 - **Example**: "Buy a Premium Pack for 100 Gems (10% shiny rate)."
 
 ### Food (Resource Currency, Phase 2)
@@ -180,11 +180,11 @@
 - **Spending**: High-tier equipment, upgrades, card combining
 - **Example**: "Craft an Iron Sword for 200 Ore (Phase 2)."
 
-### Energy (Stamina Currency)
-- **Display**: Energy (with lightning bolt icon)
+### Stamina (Battle Currency)
+- **Display**: Stamina (with lightning bolt icon)
 - **Earning**: Natural refill (1 per 6 minutes = 240/day), starting 100
-- **Spending**: Battle entry (10 Energy per battle)
-- **Example**: "You have 100/340 Energy (can fight 10 battles today)."
+- **Spending**: Battle entry (10 Stamina per battle)
+- **Example**: "You have 100/340 Stamina (can fight 10 battles today)."
 
 ### Movement Points (Movement Currency)
 - **Display**: Movement Points (with boot icon)
@@ -195,7 +195,7 @@
 ### Arena Tokens (PvP Currency, Phase 3)
 - **Display**: Arena Tokens (with sword icon)
 - **Earning**: PvP wins (10 Tokens), PvP losses (2 Tokens)
-- **Spending**: PvP Store exclusive cards/equipment
+- **Spending**: PvP Market exclusive cards/equipment
 - **Example**: "Buy a PvP-exclusive Legendary card for 5,000 Arena Tokens."
 
 ---
@@ -345,7 +345,7 @@
 - `occupation-schema.json` (Location/Realm/Territory ownership)
 
 ### Economy Schemas
-- `currency-schema.json` (Gold, Gems, Food, Lumber, Ore, Energy, Movement Points)
+- `currency-schema.json` (Gold, Gems, Food, Lumber, Ore, Stamina, Movement Points)
 - `economy-node-schema.json` (Granary, Sawmill, Mine production buildings - Phase 2)
 - `treasure-node-schema.json` (Gold/Gems loot nodes)
 
@@ -414,7 +414,7 @@
 | Acquire Territory | Dominate Territory | conquer, own, control |
 | Soft Currency | Gold | gold, coins |
 | Hard Currency | Gems | gems, crystals, premium currency |
-| Stamina | Energy | stamina, AP, action points |
+| Stamina | stamina, energy, AP, action points |
 | Movement | Movement Points | movement, MP, steps |
 
 ---

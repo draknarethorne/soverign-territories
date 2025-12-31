@@ -143,7 +143,7 @@ Expeditions reset weekly, providing fresh boards and encouraging return engageme
     "firstPlace": ["legendary-card-pack"],
     "secondPlace": ["rare-card-pack"],
     "thirdPlace": ["uncommon-card-pack"],
-    "participation": ["energy-refill"]
+    "participation": ["stamina-refill"]
   },
   "startTime": 1640995200,
   "endTime": 1641600000,

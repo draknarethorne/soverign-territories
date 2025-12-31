@@ -13,7 +13,7 @@ Reward category:
 - **xp**: Experience points for leveling
 - **card**: Card rewards (packs or specific cards)
 - **resource**: Game resources (gold, food, etc.)
-- **energy**: Energy/stamina refills
+- **stamina**: Stamina refills
 - **cosmetic**: Visual customizations
 - **title**: Achievement titles
 - **currency**: Special currencies (gems, tokens)
@@ -49,7 +49,7 @@ Comprehensive reward system covering all player motivations:
 - **XP**: Core progression currency
 - **Cards**: Collection incentives
 - **Resources**: Economic gameplay
-- **Energy**: Action economy
+- **Stamina**: Action economy
 - **Cosmetics**: Personalization
 - **Titles**: Social status
 - **Currency**: Premium purchases

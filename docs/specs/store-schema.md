@@ -16,7 +16,7 @@ Product description highlighting value proposition.
 
 ### type
 Product category:
-- **consumable**: One-time use (gems, energy refills)
+- **consumable**: One-time use (gems, stamina refills)
 - **subscription**: Recurring purchase (VIP membership)
 - **bundle**: Multiple items (starter pack, limited-time offer)
 - **cosmetic**: Visual items (skins, themes, soundtracks)
@@ -26,7 +26,7 @@ Product category:
 ### category
 Store organization:
 - **currency**: Gem packs
-- **energy**: Energy refills
+- **stamina**: Stamina refills
 - **cards**: Card packs
 - **vip**: VIP subscriptions
 - **cosmetics**: Skins, themes, soundtracks
@@ -40,7 +40,7 @@ Pricing structure:
 
 ### contents
 Bundle items:
-- **itemType**: gems, energy, cards, cosmetics
+- **itemType**: gems, stamina, cards, cosmetics
 - **itemId**: Specific item (e.g., 'legendary-card-pack')
 - **quantity**: Amount included
 
@@ -201,7 +201,7 @@ Anti-fraud measures:
 {
   "productId": "com.sovereign.vip.monthly",
   "name": "VIP Membership",
-  "description": "Unlock VIP benefits: daily gems, energy refills, exclusive content",
+  "description": "Unlock VIP benefits: daily gems, stamina refills, exclusive content",
   "type": "subscription",
   "category": "vip",
   "price": {
@@ -216,7 +216,7 @@ Anti-fraud measures:
     "renewalPrice": 9.99,
     "benefits": [
       "100 daily gems",
-      "2x energy refill speed",
+      "2x stamina refill speed",
       "VIP Level 3 perks",
       "Exclusive chat badges",
       "Alliance bonuses"
@@ -244,7 +244,7 @@ Anti-fraud measures:
 {
   "productId": "com.sovereign.starter.pack",
   "name": "Beginner's Blessing",
-  "description": "Kickstart your journey with gems, cards, and energy!",
+  "description": "Kickstart your journey with gems, cards, and stamina!",
   "type": "bundle",
   "category": "limited_time",
   "price": {
@@ -256,7 +256,7 @@ Anti-fraud measures:
       "quantity": 500
     },
     {
-      "itemType": "energy",
+      "itemType": "stamina",
       "quantity": 200
     },
     {
@@ -350,7 +350,7 @@ Anti-fraud measures:
 - **Level-Gated**: Unlock better offers at higher levels
 
 ### Subscription Benefits
-- **Daily Rewards**: Daily gems, energy to encourage logins
+- **Daily Rewards**: Daily gems, stamina to encourage logins
 - **Passive Bonuses**: 2x production speed, 1.5x XP gain
 - **Exclusive Content**: VIP-only cards, skins, themes
 - **Social Perks**: Alliance bonuses, chat badges

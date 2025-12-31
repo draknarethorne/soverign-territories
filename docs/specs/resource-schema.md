@@ -4,7 +4,7 @@ This document explains the resource schema for managing player economies, includ
 
 ## Key Fields
 
-- `energy`, `maxEnergy` — Stamina for actions; recharges hourly.
+- `stamina`, `maxStamina` — Stamina for battles; recharges hourly.
 - `gold` — Primary currency for purchases.
 - `gems` — Premium currency from IAP.
 - `sovereignTokens` — Rare for exclusives.

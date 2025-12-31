@@ -315,14 +315,14 @@ Sovereign clicks Yes: +10 Movement Points, moves 5 hexes, 5 MP remain for tomorr
 - Summon Phoenix Scroll: 5,000 Gold
 
 **Central Mall Screen** (Phase 2):
-- Combines Pack Store, Alchemist, Scribe into one UI
+- Combines Pack Market, Alchemist, Scribe into one UI
 - Tabs: Packs | Potions | Scrolls
 - Prevents navigation bloat (no separate shop screens)
 
 **Future Shops** (Phase 3+):
 - Jeweler: Equipment Sockets (Jewel/Rune slots)
 - Blacksmith: Equipment crafting (Lumber/Ore recipes)
-- PvP Store: Arena Token exclusives
+- PvP Market: Arena Token exclusives
 
 ---
 

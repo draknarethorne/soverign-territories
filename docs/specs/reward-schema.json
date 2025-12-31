@@ -10,7 +10,7 @@
     },
     "type": {
       "type": "string",
-      "enum": ["xp", "card", "resource", "energy", "cosmetic", "title", "currency"],
+      "enum": ["xp", "card", "resource", "stamina", "cosmetic", "title", "currency"],
       "description": "Reward type"
     },
     "subtype": {

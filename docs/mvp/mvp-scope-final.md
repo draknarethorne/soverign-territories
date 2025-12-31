@@ -65,10 +65,10 @@
 - [ ] card-schema.json validated (all 100 cards, add Health/Mana to all cards)
 - [ ] CardData C# class (Health, Mana, Attack, Defense properties)
 - [ ] CardManager singleton (load cards from JSON, cache, track current HP/Mana)
-- [ ] **Inventory System** (Gold, Gems, Energy, **Resurrection Scrolls**, **Potions**, future items)
+- [ ] **Inventory System** (Gold, Gems, Stamina, **Resurrection Scrolls**, **Potions**, future items)
   - **Gold**: Battle rewards, daily login, pack duplicates
   - **Gems**: Premium currency (IAP only for MVP)
-  - **Energy**: Battle cost (10/battle), regen 1 per 5 min, max 100 (can bank beyond via daily login)
+  - **Stamina**: Battle cost (10/battle), regen 1 per 5 min, max 100 (can bank beyond via daily login)
   - **Resurrection Scrolls** (📜): Use instead of Gold to resurrect dead cards (0 HP → 1 HP)
     - Starting kit: 5 scrolls (tutorial teaches usage)
     - Daily login: Day 3, Day 5, Day 7 give scrolls (4 scrolls/week)
@@ -78,9 +78,9 @@
   - **Potions** (Phase 1.5 - Design now, implement post-launch):
     - **Health Potion** (🧪): Restore 50 HP instant (whale convenience)
     - **Mana Potion** (🔮): Restore 50 mana instant (whale convenience, tactic spam enabler)
-    - **Stamina Potion** (⚡): Restore 50 Energy instant (already planned)
+    - **Stamina Potion** (⚡): Restore 50 Stamina instant (already planned)
     - **Future**: XP Boosters, Gold Multipliers, Pack Tickets
-- [ ] **HUD UI** (top bar: Gold, Gems, Energy, Scrolls, Player Level, XP bar)
+- [ ] **HUD UI** (top bar: Gold, Gems, Stamina, Scrolls, Player Level, XP bar)
 - [ ] Codex UI (Unity UI Toolkit, grid view, filters)
 - [ ] Deck Builder UI (drag-drop, validation, save/load)
 - [ ] Trainer Deck selection UI (6 buttons, preview cards, confirm)
@@ -403,14 +403,14 @@ TERRITORY 4: Shadowlands (Final)
 - ❌ NO named mobs (Phase 2)
 - ❌ NO economy/collection quests (Phase 2)
 
-**Energy System**:
-- ✅ Tutorial battles (Battles 1-1 to 1-4): 0 Energy (unlosable)
-- ✅ Post-tutorial battles: 10 Energy per battle
-- ✅ Daily Quest battles: 10 Energy per quest (same as campaign)
-- ✅ Daily refill: 240 Energy/day (24 battles max = campaign OR quests OR mix)
-- ✅ Starting Energy: 100 (10 battles to start)
-- ✅ **Energy Banking**: Can exceed 100 max (daily login rewards stack, unclaimed refills bank)
-- ✅ **Natural AFK moment**: F2P depletes 100 Energy → Log out → 8h later: 100 Energy + healed cards
+**Stamina System**:
+- ✅ Tutorial battles (Battles 1-1 to 1-4): 0 Stamina (unlosable)
+- ✅ Post-tutorial battles: 10 Stamina per battle
+- ✅ Daily Quest battles: 10 Stamina per quest (same as campaign)
+- ✅ Daily refill: 240 Stamina/day (24 battles max = campaign OR quests OR mix)
+- ✅ Starting Stamina: 100 (10 battles to start)
+- ✅ **Stamina Banking**: Can exceed 100 max (daily login rewards stack, unclaimed refills bank)
+- ✅ **Natural AFK moment**: F2P depletes 100 Stamina → Log out → 8h later: 100 Stamina + healed cards
 
 **Deliverables**:
 - [ ] CampaignManager C# class (World/Territory/Realm/Battle hierarchy, progression tracking, 3-star rating)
@@ -443,7 +443,7 @@ TERRITORY 4: Shadowlands (Final)
 - ✅ XP requirements: Level 1 = 0, Level 2 = 100, Level 3 = 300, Level 4 = 600, Level 5 = 1,000
 - ✅ XP sources: Battle wins (50-200 XP), quest completion (Phase 2)
 
-**Pack Store**:
+**Pack Market**:
 - ✅ Standard Pack (5 cards): $0.99 OR 1,000 Gold
 - ✅ Element Booster (5 cards): $1.99 OR 2,000 Gold
 - ✅ Epic Booster (5 cards): $4.99 OR 5,000 Gold
@@ -456,9 +456,9 @@ TERRITORY 4: Shadowlands (Final)
 - ✅ Paid Track: 10 Standard Packs, 1 Epic Booster, 1 Exclusive Legendary, 5,000 Gold, 500 Gems
 - ✅ Progress: 10 XP per battle, 3,000 XP to max (300 battles = ~10-15 days)
 
-**Energy Refills**:
-- ✅ Small Refill: $0.99 (100 Energy = 10 battles)
-- ✅ Large Refill: $3.99 (500 Energy = 50 battles)
+**Stamina Refills**:
+- ✅ Small Refill: $0.99 (100 Stamina = 10 battles)
+- ✅ Large Refill: $3.99 (500 Stamina = 50 battles)
 - ✅ Daily Unlimited: $9.99 (infinite battles for 24 hours)
 
 **First-Time Offers** (one-time only):
@@ -474,17 +474,17 @@ TERRITORY 4: Shadowlands (Final)
 
 **Daily Login** (Streak Bonuses):
 - ✅ 7-day reward cycle (streak required, missing 1 day = reset to Day 1):
-  - Day 1: 500 Gold + 50 Energy
-  - Day 2: 1× Common card + 50 Energy
-  - Day 3: 500 Gold + 50 Energy + **1 Resurrection Scroll 📜**
-  - Day 4: 1× Uncommon card + 100 Energy
-  - Day 5: 1,000 Gold + 100 Energy + **1 Resurrection Scroll 📜**
-  - Day 6: 1× Rare card + 100 Energy
-  - Day 7: 1× Standard Pack (5 cards) + 200 Energy (JACKPOT!) + **2 Resurrection Scrolls 📜**
-- ✅ **Weekly total**: 3,000 Gold + 650 Energy + **4 Resurrection Scrolls** (enough for 2 Epic deaths)
-- ✅ **Energy Banking**: Day 7 = 200 Energy (can exceed 100 max, bank for weekend grind)
+  - Day 1: 500 Gold + 50 Stamina
+  - Day 2: 1× Common card + 50 Stamina
+  - Day 3: 500 Gold + 50 Stamina + **1 Resurrection Scroll 📜**
+  - Day 4: 1× Uncommon card + 100 Stamina
+  - Day 5: 1,000 Gold + 100 Stamina + **1 Resurrection Scroll 📜**
+  - Day 6: 1× Rare card + 100 Stamina
+  - Day 7: 1× Standard Pack (5 cards) + 200 Stamina (JACKPOT!) + **2 Resurrection Scrolls 📜**
+- ✅ **Weekly total**: 3,000 Gold + 650 Stamina + **4 Resurrection Scrolls** (enough for 2 Epic deaths)
+- ✅ **Stamina Banking**: Day 7 = 200 Stamina (can exceed 100 max, bank for weekend grind)
 - ✅ Resets weekly (Day 8 = Day 1, maintain streak to get Day 7 bonus)
-- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Energy + 4 Scrolls → Play on weekend
+- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Stamina + 4 Scrolls → Play on weekend
 
 **Analytics** (Basic Tracking):
 - ✅ Battles won/lost
@@ -497,7 +497,7 @@ TERRITORY 4: Shadowlands (Final)
 - [ ] PlayerLevel C# class (XP tracking, level-up rewards)
 - [ ] PackStore UI (buy packs with Gold OR money, IAP integration)
 - [ ] BattlePass system (30-day season, Free/Paid tracks, XP progression)
-- [ ] EnergyRefill system (IAP, instant refill)
+- [ ] StaminaRefill system (IAP, instant refill)
 - [ ] FirstTimeOffer system (one-time bundles, 7/14/30 day timers)
 - [ ] DailyLogin system (7-day cycle, reward claims)
 - [ ] Analytics tracking (Nakama server, Unity Analytics, revenue tracking)
@@ -516,11 +516,11 @@ TERRITORY 4: Shadowlands (Final)
 - ✅ Combat (8×8 battle map, manual + auto-battle)
 - ✅ Campaign Mode (72 stages, 8 worlds, 3-star rating)
 - ✅ Daily Challenge (bonus rewards, login incentive)
-- ✅ Pack Store (Standard/Element/Epic/Mega packs, IAP integration)
+- ✅ Pack Market (Standard/Element/Epic/Mega packs, IAP integration)
 - ✅ Battle Pass ($4.99/month, exclusive rewards)
-- ✅ Energy Refills ($0.99-$9.99, whale monetization)
-- ✅ Energy system (10 per battle, 240 refill/day)
-- ✅ Pack Store (Standard/Element/Epic Packs, Gold only)
+- ✅ Stamina Refills ($0.99-$9.99, whale monetization)
+- ✅ Stamina system (10 per battle, 240 refill/day)
+- ✅ Pack Market (Standard/Element/Epic Packs, Gold only)
 - ✅ Daily login (7-day reward cycle)
 - ✅ Player leveling (Level 1-5 progression)
 
@@ -594,11 +594,11 @@ TERRITORY 4: Shadowlands (Final)
 
 ### Week 6 (Realm Map Polish)
 18. Treasure nodes (Gold/Gems, collect on entry)
-19. Energy system (10 per battle, 240 refill/day)
+19. Stamina system (10 per battle, 240 refill/day)
 20. Tutorial flow (Steps 16-27, Realm Map exploration)
 
 ### Week 7 (Stores & Progression)
-21. Pack Store UI (buy packs, opening animation)
+21. Pack Market UI (buy packs, opening animation)
 22. Daily login system (7-day cycle, reward claims)
 23. Player leveling (XP tracking, level-up rewards)
 
@@ -617,7 +617,7 @@ TERRITORY 4: Shadowlands (Final)
 - ✅ All 100 cards loadable (0 missing data errors)
 - ✅ Battle system works (manual + auto-battle)
 - ✅ Realm Map works (movement, fog of war, encounters)
-- ✅ Pack Store works (buy with Gold, opening animation)
+- ✅ Pack Market works (buy with Gold, opening animation)
 - ✅ Builds run on iOS/Android/PC (60 FPS, <100 MB download)
 
 ### Player Experience Metrics

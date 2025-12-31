@@ -685,7 +685,7 @@ namespace SovereignTerritories.Battle
 - [ ] Create CampaignManager.cs (8 worlds, 9 stages each, 72 total battles)
 - [ ] Create WorldSelectScreen scene (show 8 worlds, World 1 unlocked, Worlds 2-8 locked)
 - [ ] Create StageSelectScreen scene (9 stage icons, linear unlocking, 3-star rating display)
-- [ ] Implement StageData.cs (stageId, enemyDeck, rewards, energyCost, firstClearRewards)
+- [ ] Implement StageData.cs (stageId, enemyDeck, rewards, staminaCost, firstClearRewards)
 - [ ] Create 72 AI enemy decks (JSON or ScriptableObjects):
   - Stage 1-1: 3 cards (50 Power)
   - Stage 1-5 (mini-boss): 7 cards (200 Power, Rare hero)
@@ -699,7 +699,7 @@ namespace SovereignTerritories.Battle
 - [ ] Add replay penalty (50% rewards after first clear)
 - [ ] Test: Complete Stage 1-1, unlock Stage 1-2, earn 3 stars, replay for lower rewards
 
-### Week 7-8: Monetization & Pack Store
+### Week 7-8: Monetization & Pack Market
 - [ ] Create PackStoreScreen scene (4 pack tiers: Standard/Element/Epic/Mega)
 - [ ] Implement IAP integration (Unity IAP package):
   - Standard Pack: $0.99 OR 1,000 Gold
@@ -711,7 +711,7 @@ namespace SovereignTerritories.Battle
   - Track XP (10 XP/battle, 3,000 XP to max)
   - Free Track: 5 Standard Packs + 2,000 Gold
   - Paid Track ($4.99): 10 Standard Packs + 1 Epic Booster + 1 Exclusive Legendary + 5,000 Gold + 500 Gems
-- [ ] Add EnergyRefillScreen (Small $0.99, Large $3.99, Daily Unlimited $9.99)
+- [ ] Add StaminaRefillScreen (Small $0.99, Large $3.99, Daily Unlimited $9.99)
 - [ ] Implement FirstTimeOfferManager.cs (track 7/14/30 day timers):
   - Starter Pack: $0.99 (first 7 days)
   - New Player Bundle: $4.99 (first 14 days)

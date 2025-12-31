@@ -7,7 +7,7 @@ This document explains the progression schema for player growth, castle upgrades
 - `level`, `xp`, `xpToNext` — Player leveling; XP from battles/quests.
 - `castleLevel`, `castleXp`, `castleXpToNext` — Castle hub leveling; unlocks slots/buffs.
 - `unlocks` — Features unlocked (deck size, tactics).
-- `vipLevel`, `vipXp`, `vipPerks` — VIP from gem spending; perks like extra energy.
+- `vipLevel`, `vipXp`, `vipPerks` — VIP from gem spending; perks like extra stamina.
 - `achievements` — Progress tracking for milestones.
 
 ## Mechanics

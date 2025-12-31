@@ -20,7 +20,7 @@ Array of campaign levels:
 - **number**: Sequential level number
 - **type**: Normal, boss, story, or challenge
 - **difficulty**: Difficulty rating (1-10)
-- **energyCost**: Energy required to attempt
+- **staminaCost**: Stamina required to attempt
 - **battleConfig**: Enemy configuration and win conditions
 - **rewards**: First-time, standard, and perfect completion rewards
 - **prerequisites**: Levels that must be completed first
@@ -51,8 +51,8 @@ Levels award 1-3 stars based on performance:
 - 2 stars: Complete without losing units
 - 3 stars: Complete within turn limit/perfect score
 
-### Energy System
-Each level costs energy to attempt, encouraging strategic resource management.
+### Stamina System
+Each level costs stamina to attempt, encouraging strategic resource management.
 
 ### Story Integration
 Narrative elements connect levels, creating a cohesive campaign experience with character development and plot progression.
@@ -73,7 +73,7 @@ Narrative elements connect levels, creating a cohesive campaign experience with 
 
 ### Anti-Cheat
 - Server validates level prerequisites
-- Energy deduction verification
+- Stamina deduction verification
 - Battle result validation
 
 ## Examples
@@ -91,7 +91,7 @@ Narrative elements connect levels, creating a cohesive campaign experience with 
       "name": "First Steps",
       "type": "normal",
       "difficulty": 1,
-      "energyCost": 5,
+      "staminaCost": 5,
       "battleConfig": {
         "mapId": "forest-clearing",
         "enemies": [
@@ -109,7 +109,7 @@ Narrative elements connect levels, creating a cohesive campaign experience with 
         "victoryCondition": "elimination"
       },
       "rewards": {
-        "firstTime": ["starter-hero", "energy-refill"],
+        "firstTime": ["starter-hero", "stamina-refill"],
         "standard": ["common-card-pack"],
         "perfect": ["rare-card"]
       },
@@ -130,7 +130,7 @@ Narrative elements connect levels, creating a cohesive campaign experience with 
       "name": "The Bandit King",
       "type": "boss",
       "difficulty": 5,
-      "energyCost": 10,
+      "staminaCost": 10,
       "battleConfig": {
         "mapId": "bandit-fortress",
         "enemies": [
@@ -203,7 +203,7 @@ Narrative elements connect levels, creating a cohesive campaign experience with 
 - campaignId must be unique
 - Level numbers must be sequential
 - Prerequisites must reference valid level IDs within campaign
-- Energy cost must be non-negative
+- Stamina cost must be non-negative
 - Star ratings must be 0-3
 
 ## Related Schemas

@@ -95,8 +95,8 @@ Sovereign (20 cards) vs Goblin Raider Camp (5 cards)
 
 **Occupation Mechanics** (MVP):
 - **Occupy Location**: Win battle at Location → Location becomes "Occupied" (green flag)
-- **Occupation Buffs** (Phase 2): Each Location grants +1% Gold production OR +5 Energy/day
-- **Total Buffs**: 40 Locations = +40% Gold production OR +200 Energy/day (choose at occupation)
+- **Occupation Buffs** (Phase 2): Each Location grants +1% Gold production OR +5 Stamina/day
+- **Total Buffs**: 40 Locations = +40% Gold production OR +200 Stamina/day (choose at occupation)
 
 **Example Realm Map** (MVP):
 ```
@@ -167,8 +167,8 @@ Total Exploration Time: 1-2 hours (40 Locations × 2 minutes each)
 
 **Occupation Mechanics** (Phase 3):
 - **Occupy Realm**: Control all Locations in Realm (20-40 battles)
-- **Realm Buffs**: +5% Gold production, +10% XP gain, +50 Energy/day
-- **Total Buffs**: 50 Realms = +250% Gold, +500% XP, +2,500 Energy/day (massive power)
+- **Realm Buffs**: +5% Gold production, +10% XP gain, +50 Stamina/day
+- **Total Buffs**: 50 Realms = +250% Gold, +500% XP, +2,500 Stamina/day (massive power)
 
 **PvP Realm Occupation** (Phase 3):
 - Active PvP Realms: 10-20 Realms are "contested" (Sovereigns can attack each other)

@@ -23,7 +23,7 @@
     },
     "category": {
       "type": "string",
-      "enum": ["currency", "energy", "cards", "vip", "cosmetics", "boosters", "limited_time"],
+      "enum": ["currency", "stamina", "cards", "vip", "cosmetics", "boosters", "limited_time"],
       "description": "Store category"
     },
     "price": {
@@ -51,7 +51,7 @@
         "properties": {
           "itemType": {
             "type": "string",
-            "description": "Type of item (gems, energy, cards, etc.)"
+            "description": "Type of item (gems, stamina, cards, etc.)"
           },
           "itemId": {
             "type": "string",

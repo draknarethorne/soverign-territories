@@ -8,15 +8,15 @@
       "type": "string",
       "description": "Player identifier"
     },
-    "energy": {
+    "stamina": {
       "type": "integer",
       "minimum": 0,
-      "description": "Current energy/stamina"
+      "description": "Current stamina for battles"
     },
-    "maxEnergy": {
+    "maxStamina": {
       "type": "integer",
       "minimum": 0,
-      "description": "Maximum energy capacity"
+      "description": "Maximum stamina capacity"
     },
     "gold": {
       "type": "integer",
@@ -96,5 +96,5 @@
       "description": "Schema version for migrations"
     }
   },
-  "required": ["playerId", "energy", "maxEnergy", "gold", "gems", "sovereignTokens", "resources", "resourceCaps", "schemaVersion"]
+  "required": ["playerId", "stamina", "maxStamina", "gold", "gems", "sovereignTokens", "resources", "resourceCaps", "schemaVersion"]
 }

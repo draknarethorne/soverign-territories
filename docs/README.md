@@ -47,7 +47,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 - **Section 1**: Overview & Core Pillars (F2P fairness, opt-in PvP, AFK progression)
 - **Section 2**: Card System (6 rarities, 6 types, Rarity Budget deck constraints)
 - **Section 4**: Gameplay Modes (8 modes from Realm Map PvE to World Map seasons)
-- **Section 5**: Economy & Trading (Multi-currency system: Gold/Gems/Energy + Food/Lumber/Ore)
+- **Section 5**: Economy & Trading (Multi-currency system: Gold/Gems/Stamina + Food/Lumber/Ore)
 - **Section 8**: Combat Mechanics (MVP Attack/Defense → Phase 2 Health/Mana/Stamina)
 - **Section 9**: Progression (Player Level 1-30, Castle Level 1-15)
 
@@ -196,7 +196,7 @@ docs/
   - Level 30: Alliance Wars (50v50)
 
 ### Economy
-- **Currencies**: Gold (earned), Gems (premium), Energy (battle stamina)
+- **Currencies**: Gold (earned), Gems (premium), Stamina (battle stamina)
 - **Resources** (Phase 2+): Food (battles), Lumber (buildings), Ore (equipment)
 - **AFK Progression**: Economy cards generate passive income (30 Food/hour, 12-hour cap)
 - **F2P Balance**: 80-90% content accessible without spending
@@ -215,7 +215,7 @@ docs/
 - 40-location map with fog of war
 - NPC battles (monsters, bandits, bosses)
 - Movement Points system (10 MP, 1 per move)
-- Energy cost (20 Energy per battle, max 100)
+- Stamina cost (20 Stamina per battle, max 100)
 
 **Phase 2** (Campaign & Expeditions):
 - 3 chapters with narrative arcs

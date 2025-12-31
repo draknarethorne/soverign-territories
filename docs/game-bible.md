@@ -147,7 +147,7 @@ The game adopts a **2.5D isometric view** for maps and castles, combined with **
 Sovereign Territories is designed around a **5-minute core loop** for engagement, with deeper **30-minute sessions** for strategic play and **AFK progression** for retention.
 
 ### Core 5-Minute Loop (Mobile-Friendly)
-1. **Login & Collect**: Daily rewards, energy refill notifications, AFK resource collection
+1. **Login & Collect**: Daily rewards, stamina refill notifications, AFK resource collection
 2. **Quick Battle**: 1-2 PvE saga battles or expedition rolls (3-5 minutes)
 3. **Card Management**: Open 1 pack, combine/upgrade 2-3 cards in Codex
 4. **Social Check**: Alliance chat, accept gifts, send resources
@@ -192,18 +192,18 @@ Sovereign Territories is designed around a **5-minute core loop** for engagement
 ### AFK Progression Loop (Retention)
 - **Building Production**: Placed buildings generate resources passively (check every 4-8 hours)
 - **Auto-Battle Earnings**: Set tactics, let AI fight battles while offline (capped at 8 hours)
-- **Energy Recharge**: Full energy refill every 12 hours (login prompt)
+- **Stamina Recharge**: Full stamina refill every 12 hours (login prompt)
 - **Daily Reset**: New quests, shop refresh, event updates at midnight (local time)
 - **Weekly Events**: Expedition boards, tournaments, alliance wars (check 2-3 times per week)
 
 ### Session Flow Example (Typical Player)
-- **Morning (5 min)**: Login → Collect AFK rewards → Spend energy on 2 saga battles → Check alliance chat → Logout
+- **Morning (5 min)**: Login → Collect AFK rewards → Spend stamina on 2 saga battles → Check alliance chat → Logout
 - **Lunch (10 min)**: Open daily pack → Upgrade 3 cards → Place 2 new buildings → Start auto-battles → Logout
 - **Evening (30 min)**: PvP matches → Expedition roll → Auction house trading → Guild event contribution → Castle upgrades → Logout
 - **Before Bed (3 min)**: Claim battle results → Set overnight auto-battles → Daily quest check → Logout
 
 ### Retention Hooks
-- **Energy System**: 1 energy per 30 minutes, 100 max cap (encourages 2-3 logins per day)
+- **Stamina System**: 1 stamina per 30 minutes, 100 max cap (encourages 2-3 logins per day)
 - **Login Streaks**: Day 7 reward = guaranteed legendary (don't break streak)
 - **Limited Events**: Weekly expeditions, seasonal tournaments (FOMO)
 - **Alliance Dependencies**: Guild buffs, treasury contributions (social obligation)
@@ -297,7 +297,7 @@ Sovereign Territories combines multiple proven gameplay systems into a cohesive 
 **Core Philosophy**: Progress without grinding
 - **Auto-Battle Queue**: Set tactics, queue 10 battles, collect results next login
 - **AFK Production**: Buildings generate resources offline (8-hour cap)
-- **Energy Overflow**: Unused energy accumulates (max 100-200 depending on VIP)
+- **Stamina Overflow**: Unused stamina accumulates (max 100-200 depending on VIP)
 - **Simplified Modes**: Expedition = board game with 1 click per turn, minimal engagement
 - **Battle Pass**: Progression via time, not just active play (dailies auto-complete for VIP 5)
 
@@ -315,7 +315,7 @@ Sovereign Territories follows a **"pay-for-speed" and "pay-for-look-and-feel"** 
 **Philosophy**: Time is money, but skill determines victory
 
 **What Players Can Buy**:
-1. **Energy Refills**: 50 energy for 100 gems (normally recharges 1 per 30 min)
+1. **Stamina Refills**: 50 stamina for 100 gems (normally recharges 1 per 30 min)
    - Max 5 refills per day (prevent no-lifing)
    - VIP players get faster natural recharge (1 per 10 min at VIP 5)
 
@@ -376,7 +376,7 @@ Sovereign Territories follows a **"pay-for-speed" and "pay-for-look-and-feel"** 
 **Target Audiences**:
 - **Free Players (70%)**: Fully viable, can reach top 10% with skill and time
 - **Minnows (20%)**: $5-20/month on VIP 1-2, battle pass, occasional pack
-- **Dolphins (8%)**: $20-100/month on VIP 3-4, cosmetics, energy refills
+- **Dolphins (8%)**: $20-100/month on VIP 3-4, cosmetics, stamina refills
 - **Whales (2%)**: $100-500+/month on VIP 5, all cosmetics, max convenience
 
 **Revenue Projections** (for 10,000 DAU):
@@ -395,7 +395,7 @@ Sovereign Territories follows a **"pay-for-speed" and "pay-for-look-and-feel"** 
 ### Anti-Whale Protections
 **Prevent Pay-to-Win Creep**:
 1. **Spending Caps**: 
-   - Max 5 energy refills per day ($5 ceiling)
+   - Max 5 stamina refills per day ($5 ceiling)
    - No "unlimited gem bundles" (prevents runaway spending)
    - VIP 5 cap at $100 lifetime (can't buy VIP 6 for $1000)
 
@@ -439,11 +439,11 @@ Sovereign Territories uses proven retention mechanics from top F2P games, balanc
 
 ### Daily Login Incentives
 **7-Day Streak Rewards**:
-- Day 1: 50 gold + 10 energy
+- Day 1: 50 gold + 10 stamina
 - Day 2: 100 gold + 1 common pack
-- Day 3: 150 gold + 20 energy
+- Day 3: 150 gold + 20 stamina
 - Day 4: 200 gold + 1 rare pack
-- Day 5: 250 gold + 30 energy
+- Day 5: 250 gold + 30 stamina
 - Day 6: 300 gold + 1 epic pack
 - **Day 7: 500 gold + 50 gems + 1 LEGENDARY CARD** (big payoff)
 
@@ -452,27 +452,27 @@ Sovereign Territories uses proven retention mechanics from top F2P games, balanc
 - Sunk cost fallacy ("I've logged in 6 days, can't break streak now")
 - VIP 3+ gets streak protection (1 forgiveness per month = no reset if 1 day missed)
 
-### Energy System (Session Pacing)
+### Stamina System (Session Pacing)
 **How It Works**:
-- **Energy Cap**: 100 for free players, 200 for VIP 5
-- **Recharge Rate**: 1 energy per 30 minutes (free), 1 per 10 minutes (VIP 5)
-- **Energy Costs**: 
-  - PvE battle: 5 energy
-  - PvP match: 10 energy
-  - Expedition roll: 3 energy
-  - Boss battle: 20 energy
+- **Stamina Cap**: 100 for free players, 200 for VIP 5
+- **Recharge Rate**: 1 stamina per 30 minutes (free), 1 per 10 minutes (VIP 5)
+- **Stamina Costs**: 
+  - PvE battle: 5 stamina
+  - PvP match: 10 stamina
+  - Expedition roll: 3 stamina
+  - Boss battle: 20 stamina
 
 **Optimal Login Pattern**:
-- **Morning** (8 AM): 100 energy cap reached → spend 50 on 10 battles → start recharge
-- **Lunch** (12 PM): 60 energy accumulated → spend 30 on 6 battles → start recharge
-- **Evening** (6 PM): 90 energy accumulated → spend 50 on PvP + quests → start recharge
-- **Before Bed** (10 PM): 60 energy → spend on AFK queue → overnight recharge
+- **Morning** (8 AM): 100 stamina cap reached → spend 50 on 10 battles → start recharge
+- **Lunch** (12 PM): 60 stamina accumulated → spend 30 on 6 battles → start recharge
+- **Evening** (6 PM): 90 stamina accumulated → spend 50 on PvP + quests → start recharge
+- **Before Bed** (10 PM): 60 stamina → spend on AFK queue → overnight recharge
 
 **Why It Works**:
 - Encourages 2-4 logins per day (industry sweet spot)
 - Prevents burnout (can't grind 12 hours straight)
-- Creates urgency ("Energy is wasting if I don't log in")
-- Monetization: Whales buy refills ($1 per 50 energy, 5x per day max)
+- Creates urgency ("Stamina is wasting if I don't log in")
+- Monetization: Whales buy refills ($1 per 50 stamina, 5x per day max)
 
 ### Limited-Time Events (FOMO)
 **Weekly Rotation**:
@@ -565,14 +565,14 @@ Sovereign Territories uses proven retention mechanics from top F2P games, balanc
 - **Day 30 (D30) Retention**: 8-15% (target: 10%)
 
 **Our Retention Drivers**:
-- **Energy System**: Encourages 2-3 logins per day (boosts D1-D7)
+- **Stamina System**: Encourages 2-3 logins per day (boosts D1-D7)
 - **7-Day Login Streak**: Legendary reward on Day 7 (hooks players through first week)
 - **Alliance Social**: Guilds boost D30 retention by 2-3x (friends keep you playing)
 - **AFK Mechanics**: Low-stress engagement for busy players (prevents burnout)
 
 **Churn Prevention**:
 - **Lapsed Player Re-Engagement**: 
-  - Email after 3 days: "Your alliance misses you! +100 free energy"
+  - Email after 3 days: "Your alliance misses you! +100 free stamina"
   - Push notification after 7 days: "Come back for welcome-back legendary pack!"
   - In-game bonus after 14 days: 2x XP for next week
 - **Exit Surveys**: "Why are you leaving?" popup on uninstall (collect feedback)
@@ -3721,7 +3721,7 @@ Total Power: 1,750 (175% player power, within 150-200% range)
 ---
 
 ### Monetization Integration
-- **Pack Store** (unlocked after tutorial):
+- **Pack Market** (unlocked after tutorial):
   - Standard Pack: $0.99 OR 1,000 Gold (5 cards)
   - Element Booster: $1.99 OR 2,000 Gold (80% element match)
   - Epic Booster: $4.99 OR 5,000 Gold (guaranteed Epic)
@@ -3754,7 +3754,7 @@ Total Power: 1,750 (175% player power, within 150-200% range)
 - ✅ Boss battles (Mini-boss X-5, World boss X-9, Final boss 8-9)
 - ✅ Daily Challenge (1 random stage/day, 2× rewards)
 - ✅ Replay penalty (50% rewards after first clear)
-- ✅ Pack Store (4 tiers, Gold + Money pricing)
+- ✅ Pack Market (4 tiers, Gold + Money pricing)
 - ✅ Battle Pass (Free/Paid tracks, 30-day seasons)
 - ✅ Energy Refills (3 tiers, $0.99-$9.99)
 - ✅ First-Time Offers (3 bundles, time-gated)
@@ -4396,7 +4396,7 @@ See standalone specs for engineering:
 
 **MVP Status**: Arena Tokens are deferred to Phase 3 (Month 4-6). MVP is single-player tutorial + Realm Map PvE only (no PvP).
 
-**Definition**: Exclusive currency earned from ranked PvP matches, usable only in PvP Store.
+**Definition**: Exclusive currency earned from ranked PvP matches, usable only in PvP Market.
 
 **Sources** (How Players Earn Arena Tokens):
 - **Ranked Match Victory**: 10-50 Tokens (scales with bracket: Bronze = 10, Mythic = 50)
@@ -4418,7 +4418,7 @@ See standalone specs for engineering:
   - Arena Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards only)
   - Gladiator Booster: 1,000 Tokens (5 cards, guaranteed Epic, PvP-exclusive Epics)
 - **PvP-Exclusive Cards**:
-  - Arena Champion Hero: 2,000 Tokens (Legendary hero, only obtainable in PvP Store)
+  - Arena Champion Hero: 2,000 Tokens (Legendary hero, only obtainable in PvP Market)
   - Tournament Tactician: 500 Tokens (Epic support card, PvP utility focus)
 - **Cosmetic Items**:
   - Arena Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion" titles)
@@ -4526,7 +4526,7 @@ See standalone specs for engineering:
 
 ---
 
-### Pack Store (Gold & Gems)
+### Pack Market (Gold & Gems)
 
 **Purpose**: Card collection, pack opening, deck building.
 
@@ -4560,7 +4560,7 @@ See standalone specs for engineering:
 
 ---
 
-### Resource Store (Food, Lumber, Ore)
+### Resource Market (Food, Lumber, Ore)
 
 **Purpose**: Trade surplus resources for items, convert between resource types, emergency Gold purchases.
 
@@ -4602,7 +4602,7 @@ See standalone specs for engineering:
 
 ---
 
-### PvP Store (Arena Tokens Only)
+### PvP Market (Arena Tokens Only)
 
 **Purpose**: Exclusive rewards for ranked PvP players, encourages competitive play.
 
@@ -4668,7 +4668,7 @@ See standalone specs for engineering:
 
 ### Pack Opening (Collector Appeal)
 
-**Definition**: Card packs purchased from Pack Store, opened with 5-card reveal animation.
+**Definition**: Card packs purchased from Pack Market, opened with 5-card reveal animation.
 
 **Opening Animation** (Already Defined):
 1. Pack appears on screen (Standard/Element/Epic/Shiny visual)

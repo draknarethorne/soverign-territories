@@ -63,7 +63,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["card", "resource", "energy", "gold", "gems", "xp"],
+            "enum": ["card", "resource", "stamina", "gold", "gems", "xp"],
             "description": "Reward type"
           },
           "id": {

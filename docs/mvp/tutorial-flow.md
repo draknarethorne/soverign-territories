@@ -380,7 +380,7 @@ After Trainer Deck reveal animation completes:
 4. If missing cards for deck: Silent auto-grant (see Fallback Logic in Step 6)
 5. **Grant starting resources**:
    - 1,000 Gold (enough for 1 Standard Pack)
-   - 100 Energy (10 tutorial battles, refills during tutorial)
+   - 100 Stamina (10 tutorial battles, refills during tutorial)
    - **5 Resurrection Scrolls** 📜 (save for Epic deaths, tutorial teaches usage later)
 5. Load deck builder scene
 
@@ -578,7 +578,7 @@ After Trainer Deck reveal animation completes:
 1. Load Realm Map (Tutorial_Map_01)
 2. Place player army on Start tile
 3. Place 1 enemy spawn 2 tiles away
-4. Initialize HUD: Movement Points (10/10), Energy (100/100), Resources (0/0/0)
+4. Initialize HUD: Movement Points (10/10), Stamina (100/100), Resources (0/0/0)
 5. Disable all other interactions until tutorial completes
 
 **Movement Point System Introduction**:
@@ -603,7 +603,7 @@ After Trainer Deck reveal animation completes:
   Stage 1-1: UNLOCKED (green glow, "START" button)
     - Enemy: Goblin Raiders (3-card deck)
     - Rewards: 100 Gold, 1 Common card
-    - First Time Bonus: Tutorial stage (0 Energy)
+    - First Time Bonus: Tutorial stage (0 Stamina)
   
   Stages 1-2 to 1-9: LOCKED (grayed out, padlock icons)
     - "Complete Stage 1-1 to unlock"
@@ -618,11 +618,11 @@ After Trainer Deck reveal animation completes:
 "Stage 1-1: Goblin Raiders"
   - Enemy Power: 50 (3 Common cards)
   - Your Power: 120 (11 cards from Tutorial Deck)
-  - Energy Cost: 0 (Tutorial battle, free)
+  - Stamina Cost: 0 (Tutorial battle, free)
   - Buttons: [Begin Battle!] [Cancel]
 ```
 
-**Player Action**: Taps "Begin Battle!" (0 Energy for tutorial)
+**Player Action**: Taps "Begin Battle!" (0 Stamina for tutorial)
 
 **Transition**: Fade to black → Camera zooms from World Map into Battle Map (3-second cinematic)
 
@@ -1082,22 +1082,22 @@ Harder battles drop Silver or Gold Chests with better rewards!"
 
 **Energy System Introduction**:
 ```
-[After chest opening, Energy tutorial appears]
+[After chest opening, Stamina tutorial appears]
 
-📊 ENERGY SYSTEM UNLOCKED
+📊 STAMINA SYSTEM UNLOCKED
 
-"This battle cost 0 Energy (Tutorial Campaign is free!)"
+"This battle cost 0 Stamina (Tutorial Campaign is free!)"
 
-"Post-tutorial battles cost 10 Energy each."
-"You refill 1 Energy every 6 minutes (240 Energy/day)."
-"Your max Energy: 100 (enough for 10 battles before waiting)"
+"Post-tutorial battles cost 10 Stamina each."
+"You refill 1 Stamina every 6 minutes (240 Stamina/day)."
+"Your max Stamina: 100 (enough for 10 battles before waiting)"
 
-[HUD shows: Energy meter 100/100 (yellow lightning icon)]
+[HUD shows: Stamina meter 100/100 (yellow lightning icon)]
 
 [Button: "Got it!"] (dismiss tutorial)
 ```
 
-**Pack Reward** (After Energy Tutorial):
+**Pack Reward** (After Stamina Tutorial):
 ```
 [Screen: Victory Bonus]
 
@@ -1146,7 +1146,7 @@ Harder battles drop Silver or Gold Chests with better rewards!"
 
 **Why Battle Chest + Pack Here?**:
 - ✅ **Reward Variety**: Chest (instant Gold/XP/resources) + Pack (collector appeal)
-- ✅ **Energy System Introduction**: Explain without blocking (tutorial = 0 cost)
+- ✅ **Stamina System Introduction**: Explain without blocking (tutorial = 0 cost)
 - ✅ **Resource Introduction**: First Food earned (20 Food for future battles)
 - ✅ **Pokemon Store Feel**: "I won, I get to open a pack!" (dopamine spike)
 - ✅ **Cross-Element Exposure**: Fire player sees Water/Earth cards (variety)
@@ -1251,7 +1251,7 @@ Uncommon Knight (2★)
 **System Actions**:
 1. Award Bronze Chest: 50 Gold, 100 XP, 20 Food, 1 Common card
 2. Update HUD: Gold (4,500 → 4,550), XP (0 → 100/250), Food (0 → 20)
-3. Introduce Energy system (tutorial popup, no cost yet)
+3. Introduce Stamina system (tutorial popup, no cost yet)
 4. Award pack: 1 Standard Pack → Auto-open (cannot skip)
 5. Award 5 random cards → Add to Codex (mark as "New!")
 6. Store badges: `PlayerPrefs.SetInt("Card_[id]_New", 1)` for each card
@@ -1265,7 +1265,7 @@ Uncommon Knight (2★)
 - ✅ **Pack type: Standard Pack (5 random cards, cross-element exposure)**
 - ✅ Card reward destination: Auto-add to Codex with "New!" badge (no prompt)
 - ✅ Achievement notification: Toast notification (top-right, 3-second fade)
-- ✅ **Energy introduction: After chest, before pack (teaches mechanic without blocking)**
+- ✅ **Stamina introduction: After chest, before pack (teaches mechanic without blocking)**
 
 ---
 
@@ -1340,7 +1340,7 @@ Uncommon Knight (2★)
 "- Mana recovers 5× faster than Health"
 "- Water Mage: 1 hour for full mana vs 13 hours for full HP!"
 "- If mana depletes mid-battle → Basic attacks only (0 mana cost)"
-"- F2P: Log out when Energy/Mana depletes → Mana full in 2 hours!"
+"- F2P: Log out when Stamina/Mana depletes → Mana full in 2 hours!"
 
 [Tutorial Text]:
 "For tutorial, skip resurrection. Use your backup Cleric instead!"
@@ -1377,7 +1377,7 @@ Uncommon Knight (2★)
 6. Return to Realm Map
 
 **Why Temple Tutorial Matters**:
-- ✅ **F2P friendly**: Log out when Energy depletes → Cards heal automatically while offline!
+- ✅ **F2P friendly**: Log out when Stamina depletes → Cards heal automatically while offline!
 - ✅ **Healer value**: Keep units alive in battle = avoid 2× resurrection costs
 - ✅ **Gold sink**: Whales spam "HEAL ALL" (47 Gold), F2P uses AFK regen + reserves
 - ✅ **Mobile engagement**: "Check back in 2 hours, cards healed!" (except dead cards)
@@ -1416,7 +1416,7 @@ Uncommon Knight (2★)
 
 [HUD Update]:
 - Movement Points: 9/10 (1 used for first battle turn)
-- Energy: 100/100 (tutorial battles still free)
+- Stamina: 100/100 (tutorial battles still free)
 - Food: 20 (from battle chest)
 
 [Tutorial Overlay]:
@@ -1492,16 +1492,16 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 **Stage Sequence**:
 1. **Stage 1-2**: Goblin Ambush (4-card deck, 80 Power)
    - Rewards: 150 Gold, 50 XP, 1 Common card
-   - Energy: 10 Energy deducted (100 → 90)
+   - Stamina: 10 Stamina deducted (100 → 90)
    - Auto-Battle option now available
 
 2. **Stage 1-3**: Goblin Camp (5-card deck, 120 Power, Uncommon hero)
    - Rewards: 200 Gold, 75 XP, 1 Uncommon card
-   - Energy: 10 Energy deducted (90 → 80)
+   - Stamina: 10 Stamina deducted (90 → 80)
 
 3. **Stage 1-4**: Goblin Fortress (6-card deck, 160 Power, Uncommon hero)
    - Rewards: 250 Gold, 100 XP, 1 Uncommon card
-   - Energy: 10 Energy deducted (80 → 70)
+   - Stamina: 10 Stamina deducted (80 → 70)
    - Unlocks Stage 1-5 (mini-boss)
 
 **Rewards Accumulation**:
@@ -1512,7 +1512,7 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 **Design Decisions Needed**:
 - [ ] Tutorial pacing (how many stages before Codex tutorial?)
 - [ ] Enemy difficulty curve (gradual increase in deck size + hero rarity)
-- [ ] Energy refill prompts (when to suggest first Energy purchase?)
+- [ ] Stamina refill prompts (when to suggest first Stamina purchase?)
 
 ---
 
@@ -1559,14 +1559,14 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 Enemy: 7-card deck (Rare hero + 6 units)
 Total Power: 200 (player has ~180, challenging but winnable)
 Rewards: 500 Gold, 100 XP, 1 Rare card (guaranteed)
-Energy Cost: 10 Energy
+Stamina Cost: 10 Stamina
 
 [Tutorial Text]:
 "Mini-Boss ahead! These battles are harder but give better rewards!"
 "Tip: Use your strongest cards and position them carefully."
 
 [Buttons]:
-  - Begin Battle (10 Energy)
+  - Begin Battle (10 Stamina)
   - View Enemy Deck (preview cards)
   - Return (go back to stage select)
 ```
@@ -1620,7 +1620,7 @@ Unlocked:
 ✅ Codex (manage collection, deck builder)
 ✅ Campaign Mode (continue World 1, unlock Worlds 2-8)
 ✅ **Daily Challenge (bonus rewards, starts tomorrow)**
-✅ **Pack Store (buy packs with Gold or Money)**
+✅ **Pack Market (buy packs with Gold or Money)**
 ✅ **Battle Pass (optional $4.99/month, exclusive rewards)**
 
 [Rewards]:
@@ -1630,7 +1630,7 @@ Unlocked:
 [Button: "Continue Playing"]
 ```
 
-**MVP Store Note**: Only Pack Store and Battle Pass are available in MVP. Resource Store (Food/Lumber/Ore), Arena Store (PvP Tokens), and Realm Map are deferred to Phase 2.
+**MVP Market Note**: Only Pack Market and Battle Pass are available in MVP. Resource Market (Food/Lumber/Ore), Arena Market (PvP Tokens), and Realm Map are deferred to Phase 2.
 
 **Player Action**: Taps "Continue Playing"
 
@@ -1640,9 +1640,9 @@ Unlocked:
    - Stage 1-9: Goblin King (World Boss, 12-card deck, Epic/Legendary hero)
    - Worlds 2-8: Locked (requires World 1 completion)
 
-2. **Pack Store** (MVP - Gold Only):
+2. **Pack Market** (MVP - Gold Only):
    ```
-   [Pack Store Screen]
+   [Pack Market Screen]
    
    AVAILABLE PACKS (Gold):
    - Standard Pack (5 cards): 1,000 Gold
@@ -1657,10 +1657,10 @@ Unlocked:
    [Note: "Gem purchases unlock at Player Level 5"]
    ```
 
-**Why Simplified Store for MVP?**:
-- ✅ **No Gem Purchases Yet**: Players must reach Level 5 before Gem Store unlocks (prevents impulse buying in first hour)
-- ✅ **No Resource Store**: Food/Lumber/Ore economy is Phase 2 (not in MVP)
-- ✅ **No PvP Store**: Arena Tokens are Phase 3 (not in MVP)
+**Why Simplified Market for MVP?**:
+- ✅ **No Gem Purchases Yet**: Players must reach Level 5 before Gem Market unlocks (prevents impulse buying in first hour)
+- ✅ **No Resource Market**: Food/Lumber/Ore economy is Phase 2 (not in MVP)
+- ✅ **No PvP Market**: Arena Tokens are Phase 3 (not in MVP)
 - ✅ **Gold Sinks**: Players can spend tutorial Gold on packs immediately (retention hook)
 
 3. **Daily Login Rewards** (starts next login):
@@ -1705,7 +1705,7 @@ Unlocked:
 
 **Player is now ready for**:
 - Campaign Mode progression (Stages 1-6 to 1-9, unlock World 2)
-- Pack Store purchases (Standard Pack $0.99/1,000 Gold, Battle Pass $4.99/month)
+- Pack Market purchases (Standard Pack $0.99/1,000 Gold, Battle Pass $4.99/month)
 - Daily Challenge rewards (1 random stage/day, 2× rewards)
 - Deck customization (swap cards in Codex)
 - **Phase 2**: Realm Map (open-world hex grid, AFK economy, territory control)

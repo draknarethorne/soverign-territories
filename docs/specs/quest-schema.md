@@ -115,7 +115,7 @@ Different quest categories encourage diverse gameplay:
       "amount": 500
     },
     {
-      "type": "energy",
+      "type": "stamina",
       "amount": 50
     }
   ],
