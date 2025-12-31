@@ -1377,28 +1377,71 @@ Instead of random pack opening, Sovereigns choose from **6 Trainer Decks**:
 
 ---
 
-## 2.6 Card Stacking, Formations & Map Deployment
+## 2.6 6-Slot Deck Building & Battle Formation System
 
-> **See [combat-mechanics.md](specs/combat-mechanics.md) for complete stacking formulas, formation templates, and map deployment mechanics.**
+**Design Philosophy**: **Simplicity Over Complexity**
 
-### Core Mechanics (Heroes of Might and Magic Inspiration)
+Sovereign Territories uses a **6-slot active deck** system (not card stacking on grid tiles). Players select **6 cards from their 20-50 card collection** before each battle. Each card spawns as a **single unit** on the 8×8 battle grid.
 
-**Stacking System**:
-- Multiple cards occupy single tile, combine stats into one powerful unit
-- **Same Unit Type Stacking**: Archers + Crossbowmen = "Ranged Stack" ✅
-- **Cross-Theme Allowed**: Elf + Human + Dwarf units stack together
-- **Mixed Rarity**: Common + Epic in same stack (no penalty)
+**Why 6 Slots? (Not 10, not 20)**:
+- ✅ **Mobile-Friendly**: Quick pre-battle setup (30 seconds, not 5 minutes)
+- ✅ **Strategic Depth**: Meaningful card choices (can't bring everything)
+- ✅ **Deck Size Matters**: Need reserves for deck rotation (see Persistent HP below)
+- ✅ **No Tedious Placement**: Auto-deploy to preset positions (not manual grid placement)
 
-**Map Layer Stacking Rules**:
-- **Realm Map** (Strategic): Full army stacks (heroes + units + buildings)
-- **Battle Map** (Tactical): Separated by unit type (archers back, warriors front)
+---
 
-**Visual Representation**:
+### 6-Slot Deck Builder (Pre-Battle Setup)
 
-**Visual Representation**:
-- **Epic+ Cards**: 3D miniature figures (animated, VFX effects)
-- **Rare Cards**: Premium card sprites on stands
-- **Common/Uncommon**: Flat card sprites
+**How It Works**:
+1. **Before Battle**: Open deck builder UI
+2. **Select 6 Cards**: Drag from collection (20-50 cards) to 6 active slots
+3. **No Stacking**: 1 card per slot (each card = 1 unit on battle grid)
+4. **Multi-Hero Support**: Any slot can be a hero (not just Slot 1)
+5. **Auto-Deploy**: Battle starts, 6 cards spawn in preset positions
+
+**Slot Layout** (Visual):
+```
+[Slot 1] [Slot 2] [Slot 3]
+[Slot 4] [Slot 5] [Slot 6]
+```
+
+**Battle Grid Spawn Positions** (8×8 Grid):
+- **Slot 1** (Primary Hero): Row 5, Col 4 (center-front)
+- **Slot 2** (Left Flank): Row 5, Col 3
+- **Slot 3** (Right Flank): Row 5, Col 5
+- **Slot 4** (Back Left): Row 6, Col 3
+- **Slot 5** (Back Right): Row 6, Col 5
+- **Slot 6** (Support): Row 6, Col 4 (protected rear)
+
+**Example Pre-Battle Deck**:
+- Slot 1: **Epic Water Mage** (Primary hero, center-front)
+- Slot 2: **Knight** 3★ (Left tank)
+- Slot 3: **Knight** 1★ (Right tank, lower star = more tactic budget)
+- Slot 4: **Archer** (Back left ranged DPS)
+- Slot 5: **Scout** (Back right mobility unit)
+- Slot 6: **Healer** (Protected rear support)
+
+---
+
+### Multi-Hero System (Use Your Legendaries!)
+
+**Old Problem**: "Only 1 hero slot, can't use Epic/Legendary heroes if pulled"
+
+**New Solution**: **Any slot can be a hero** (up to 6 heroes total)
+
+**Use Cases**:
+1. **Single Hero** (Classic): 1 Epic hero + 5 support units
+2. **Dual Heroes** (Tank + Mage): 2 Epic heroes + 4 units
+3. **Triple Heroes** (Rock/Paper/Scissors): 3 Legendary heroes + 3 healers
+4. **All Heroes** (Whale Flex): 6 Legendary heroes = "Avengers Team"
+
+**Balance Consideration**:
+- Heroes cost **same rarity budget** as units (Epic hero = 8 pts, Epic unit = 8 pts)
+- All-hero deck = less tactical variety (no tanks, no healers)
+- Mixed deck usually stronger (1-2 heroes + specialized units)
+
+---
 
 ### Rarity Budget System (Deck Constraints)
 
@@ -1420,86 +1463,469 @@ Instead of random pack opening, Sovereigns choose from **6 Trainer Decks**:
 - **Not counted in rarity budget** (separate 10-15 card limit)
 - Types: Buildings (Farm, Mine, Turret), Workers (Farmer, Miner)
 - Deploy to Realm Map tiles for AFK income
-- Left behind when army moves (must retrieve to redeploy)
+- **Cannot use in battles** (grayed out in deck builder)
 
-### Formation System (Auto-Deployment Presets)
+---
 
-**Built-In Formations**:
-1. **Frontline Vanguard**: Heroes front, melee flanks, ranged back
-2. **Defensive Turtle**: Tanks surround, ranged center, healers protected
-3. **Flanking Cavalry**: Fast units on flanks, archers center
-4. **Epic Showcase**: Premium cards prominently displayed (status flex)
-5. **Balanced Wedge**: Tank front, melee sides, ranged rear
+## 2.7 Persistent HP & Deck Rotation System
 
-**Custom Formation Editor**:
-- Create up to 5-20 custom formations (VIP increases slots)
-- Drag units onto grid, save template
-- Auto-fill by unit tags (Tank, DPS, Ranged, Healer)
+**Design Philosophy**: **Justify Large Deck Sizes Through Consequences**
 
-**Auto vs Manual Deployment**:
-- **Auto**: Quick PvE/farming, one-click deploy
-- **Manual**: High-stakes PvP, terrain optimization, tournament setup days
+**Core Mechanic**: Cards **keep HP between battles** (don't auto-heal to full after every fight). This creates:
+- ✅ **Deck Size Value**: Need 12-15 healthy cards for rotation
+- ✅ **Healer Importance**: Restore HP mid-battle to reduce healing costs
+- ✅ **Gold Sink**: Instant healing costs Gold (or wait 3 stages for free rest)
+- ✅ **Strategic Rotation**: Use fresh reserves while injured cards rest
 
-### Map Tiers & Multi-Army System
+**Inspiration**: Clash of Clans (troops stay damaged), AFK Arena (heroes need rest), Darkest Dungeon (stress recovery)
 
-**Zoom Levels** (Risk → Heroes of Might and Magic):
-- **World Map**: 1 deck per territory (flag icon)
-- **Realm Map**: Full deck spreads into hero-led armies (10-20 tiles)
-- **Battle Map**: Tactical grid combat (15×15 tiles)
+---
 
-**Multi-Hero Armies**:
-- **Each Epic+ hero** can lead independent army on Realm Map
-- **Example**: 3 Epic heroes + 30 units = 3 separate army stacks
-- **Visual**: Thor (3D figure) + "10 units" badge
-- **Strategy**: Split for exploration, merge for boss battles
+### How Persistent HP Works
 
-**Army Composition Examples**:
-- **Single Army**: Thor + 29 units = 1 powerful stack
-- **Split Army**: Thor + 10 units, Fire Mage + 8 units, Knight + 9 units = 3 stacks
-- **Hero-Less Stacks**: 10× Archers = thick card sprite (75% movement speed)
+**After Battle**:
+1. **Damaged Cards Keep HP**: Epic Water Mage ends with 60/80 HP (not auto-heal to 80/80)
+2. **Dead Cards "Rest"**: Healer dies (0/10 HP) → grayed out for 3 stages
+3. **HP Saved**: All card HP values saved to PlayerPrefs (persist between sessions)
 
-### Realm Map Exploration (PvE Campaigns)
+**Deck Builder UI** (Shows HP):
+```
+[Epic Water Mage] 60/80 HP ⚡ (Healthy, can use)
+[Knight] 25/30 HP ⚠️ (Damaged, risky to use)
+[Healer] 0/10 HP 💀 (Dead, resting 3 stages)
+```
 
-**Map Structure** (Non-Linear Exploration):
-- **Fog of War**: Reveals as you explore
-- **Static Spawns**: Enemy camps (respawn 1-24 hours for farming)
-- **Resource Nodes**: Gold Mines, Farms, Lumber Mills
-- **Buff Shrines**: +10% ATK/HP (permanent per map)
-- **Towns**: Recruit Flex Heroes (temporary allies)
-- **Boss**: Final objective (defeat to complete county)
+**Victory Screen HP Summary** (After Battle):
+```
+╔════════════════════════════════════════╗
+║        HP DAMAGE REPORT                ║
+╠════════════════════════════════════════╣
+║ Epic Water Mage:  60/80 HP ⚡ Healthy  ║
+║ Knight:           25/30 HP ⚠️ Damaged  ║
+║ Archer:            8/10 HP ⚠️ Damaged  ║
+║ Scout:            10/10 HP ⚡ Healthy  ║
+║ Healer:            0/10 HP 💀 DEAD     ║
+║                                        ║
+║ HEALING OPTIONS:                       ║
+║ A) 🆓 FREE REST (3 stages, auto-heal)  ║
+║ B) 💰 100 Gold (heal 1 card instantly) ║
+║ C) 💰 500 Gold (heal ALL cards)        ║
+║ D) ➡️ Continue (use reserves)          ║
+╚════════════════════════════════════════╝
+```
 
-**Economy Card Deployment**:
-1. Capture resource node (defeat spawn)
-2. Deploy economy cards: 1 Mine + 2 Miners = +100 gold/hour AFK
-3. Army leaves tile, cards stay behind
-4. Retrieve later (costs turns) or leave permanently
+---
 
-**Flex Heroes** (Temporary Allies):
-- Towns offer random Rare/Epic heroes for this map only
-- Grow from 15-card starting deck to 50-card army
-- Removed when map complete (no permanent bloat)
+### Healing Options (Player Choice)
 
-**Time Pressure** (Optional):
-- Every 5 turns, enemies gain +10% HP/ATK
-- Discourages infinite farming, rewards efficient pathing
-- Can disable for "Casual Mode"
+**Option A: FREE REST** (3 Stages Auto-Heal)
+- **Cost**: FREE (no Gold)
+- **Effect**: Damaged/dead cards auto-heal after 3 stages pass
+- **Mechanic**: Grayed out in deck builder for 3 stages, then full HP
+- **Use Case**: F2P players, non-urgent battles, natural deck rotation
+
+**Option B: INSTANT HEAL (Single Card)**
+- **Cost**: 100 Gold per card
+- **Effect**: Select 1 card, restore to full HP immediately
+- **Use Case**: Heal critical hero (Epic Water Mage) for next boss fight
+
+**Option C: INSTANT HEAL (All Cards)**
+- **Cost**: 500 Gold (bundle discount, normally 6 × 100 = 600 Gold)
+- **Effect**: Restore ALL damaged cards to full HP
+- **Use Case**: Whale convenience, urgent PvP tournament, boss rush event
+
+**Option D: CONTINUE (Use Reserves)**
+- **Cost**: FREE (no Gold)
+- **Effect**: Skip healing, build new 6-card deck from reserves
+- **Use Case**: Normal gameplay, deck rotation strategy
+
+---
+
+### Auto-Heal Checkpoints (Safety Net)
+
+To prevent "deadlock" (all cards injured, can't progress):
+
+**Mini-Boss Auto-Heal** (Stage X-5):
+- **Effect**: All cards restored to **50% HP** after mini-boss defeated
+- **Example**: Stage 1-5 (mini-boss) → all cards 50% HP minimum
+- **Rationale**: Prevents "stuck" state, rewards mini-boss victory
+
+**World Boss Auto-Heal** (Stage X-9):
+- **Effect**: All cards restored to **100% HP** after world boss defeated
+- **Example**: Stage 1-9 (world boss) → all cards full HP
+- **Rationale**: Fresh start for next world (Stage 2-1), celebration moment
+
+---
+
+### Deck Rotation Strategy (Why 20-Card Deck?)
+
+**The Problem**: "Why have 20 cards when only 6 are active?"
+
+**The Solution**: **Persistent HP forces deck rotation**
+
+**Example Rotation Flow**:
+
+**Day 1 - Battle 1-1** (Starting Fresh):
+- Deploy: Epic Water Mage, Knight A, Knight B, Archer, Scout, Healer
+- Result: Healer dies (0/10 HP), Knight A damaged (18/30 HP)
+- Action: Select "Continue" (use reserves)
+
+**Day 1 - Battle 1-2** (Deck Rotation):
+- Deploy: Epic Water Mage (still 60/80 HP), **Knight C** (30/30 HP, fresh reserve), **Crossbowman** (15/15 HP, fresh), Archer, Scout, **Cleric** (12/12 HP, replacement healer)
+- Result: Water Mage damaged (40/80 HP), Crossbowman dies
+- Action: Select "100 Gold" (heal Water Mage to full, critical hero)
+
+**Day 1 - Battle 1-3** (Reserves Depleted):
+- Problem: Only 8 healthy cards left (Water Mage, Knight C, Archer, Scout, Cleric, + 3 low HP units)
+- Solution: Select "FREE REST" → Healer (1-1 death) + Knight A (1-1 damage) + Crossbowman (1-2 death) rest for 3 stages
+- Deploy: Compromised deck (low HP units, risky)
+
+**Day 2 - Battle 1-4** (Rested Cards Return):
+- Healer, Knight A, Crossbowman auto-heal to full (3 stages passed)
+- Deploy: Fresh optimal deck again
+- **Deck size matters**: Need 12-15 cards minimum for healthy rotation
+
+---
+
+### Healer Card Value (Economic Incentive)
+
+**Without Healers**:
+- Average battle: 2-3 cards damaged (200-300 HP lost)
+- Healing cost: 200-300 Gold OR 3-stage wait
+
+**With Healers**:
+- Healer restores 100-200 HP mid-battle
+- Post-battle healing cost: 50-100 Gold (saved 150-200 Gold)
+- **Healer pays for itself**: 3-5 battles = 500 Gold saved
+
+**Healer Types**:
+- **Common Healer** (10 HP, 20 Heal, 1★): Basic sustain
+- **Epic Cleric** (40 HP, 60 Heal, 3★): Powerful burst healing
+- **Legendary Paladin** (160 HP, 120 Heal + Tank, 5★): Hybrid tank/healer
+
+---
+
+### F2P vs Whale Behavior
+
+**F2P Players** (Deck Rotation Strategy):
+- Use "FREE REST" after every 2-3 battles
+- Rotate between 12-15 cards naturally
+- Avoid Gold healing (save for packs)
+- **Time investment**: 15-20 battles/day (3-4 rest cycles)
+
+**Mid-Tier Spenders** (Selective Healing):
+- Heal critical heroes (100 Gold) for boss fights
+- Use "FREE REST" for common units
+- Spend 300-500 Gold/day on healing
+- **Convenience**: Skip wait times, progress faster
+
+**Whales** (Spam Healing):
+- Always select "500 Gold (heal all)" after every battle
+- Never wait, never rotate deck
+- Spend 2,000-5,000 Gold/day on healing
+- **Ultimate convenience**: Zero downtime, optimal deck 24/7
+
+---
+
+### Gold Sink Analysis (Monetization)
+
+**Healing Costs vs Pack Purchases**:
+- 500 Gold/battle × 20 battles/day = **10,000 Gold/day** (whale healing spam)
+- Standard Pack = 1,000 Gold (10 battles worth of healing)
+- **Trade-off**: Heal instantly now OR buy packs for long-term power
+
+**Why This Works**:
+- ✅ **F2P Path Exists**: Free rest = zero Gold cost (just time)
+- ✅ **Whale Convenience**: 500 Gold = skip all waiting
+- ✅ **Mid-Tier Value**: 100 Gold selective healing = smart spending
+- ✅ **No Pay-to-Win**: Healing doesn't increase power, just reduces downtime
+
+**Comparison to Other Games**:
+- **Clash of Clans**: Troops cost Elixir to train (time OR gems)
+- **AFK Arena**: Heroes need rest (8 hours OR diamonds)
+- **Darkest Dungeon**: Stress healing costs Gold (or skip battles)
+- **Sovereign Territories**: HP healing costs Gold (or 3-stage rest)
+
+---
+
+## 2.8 Star Fusion System (Card Progression)
+
+**Design Philosophy**: **"Stacking" = Star Rank Increase, Not Unit Stacking**
+
+**Core Mechanic**: Fuse **duplicate cards** to increase **star rank** (Knight 1★ → Knight 2★ → Knight 3★). Higher star ranks grant:
+- ✅ **+50% Stats Per Star**: 2★ = 1.5× base, 3★ = 2.25× base, 6★ = 7.59× base
+- ✅ **+1 Tactic Slot Per Star**: 1★ = 1 tactic, 3★ = 3 tactics, 6★ = 6 tactics
+- ✅ **Visual Prestige**: Bronze → Silver → Gold → Rainbow borders, star displays
+
+**Why This Matters**:
+- Same card (Knight), different star ranks (1★ vs 3★) = **different power levels**
+- Players choose: Use Knight 1★ (save tactic slots) OR Knight 3★ (more power, more tactics)
+- Rarity still matters: 3★ Common (22 HP, 3 tactics) < 3★ Epic (80 HP, 3 tactics)
+
+---
+
+### Fusion Costs Per Rarity (Duplicate Requirements)
+
+**Flexible Star Caps** (Monetization + Balance):
+- **Lower Rarities**: Narrow star range (Common 1-3★, Uncommon 1-4★)
+- **Higher Rarities**: Wide star range (Epic 3-6★, Legendary 5-7★, Mythic 6-8★)
+- **Base Stat Multipliers**: Ensure rarity supremacy (Epic base = 8× Common base)
+
+| Rarity | Star Range | Fusion 1→2 | Fusion 2→3 | Fusion 3→4 | Fusion 4→5 | Fusion 5→6 | Fusion 6→7 | Fusion 7→8 | Total to Max |
+|--------|------------|------------|------------|------------|------------|------------|------------|------------|--------------|
+| **Common** | 1-3★ | 1 dup + 1K Gold | 2 dups + 1.5K Gold | ❌ | ❌ | ❌ | ❌ | ❌ | **3 dups + 2.5K Gold** |
+| **Uncommon** | 1-4★ | 1 dup + 2K Gold | 2 dups + 4K Gold | 4 dups + 10K Gold | ❌ | ❌ | ❌ | ❌ | **7 dups + 16K Gold** |
+| **Rare** | 2-5★ | ❌ | 2 dups + 8K Gold | 4 dups + 20K Gold | 8 dups + 52K Gold | ❌ | ❌ | ❌ | **14 dups + 80K Gold** |
+| **Epic** | 3-6★ | ❌ | ❌ | 4 dups + 30K Gold | 8 dups + 80K Gold | 16 dups + 240K Gold | ❌ | ❌ | **28 dups + 350K Gold** |
+| **Legendary** | 5-7★ | ❌ | ❌ | ❌ | ❌ | 8 dups + 100K Gold | 16 dups + 250K Gold | ❌ | **24 dups + 350K Gold** |
+| **Mythic** | 6-8★ | ❌ | ❌ | ❌ | ❌ | ❌ | 16 dups + 250K Gold | 32 dups + 500K Gold | **48 dups + 750K Gold** |
+
+**Key Insight**: Lower rarities easier to max (3 dups for Common 3★), higher rarities require massive investment (48 dups for Mythic 8★).
+
+---
+
+### Stat Scaling Per Star Rank
+
+**Formula**: `Final Stat = Base Stat × (1.5 ^ (Star Rank - 1))`
+
+**Example: Common Knight** (Base: 10 HP, 5 ATK):
+- **1★**: 10 HP, 5 ATK (1.5^0 = 1.0×)
+- **2★**: 15 HP, 7.5 ATK (1.5^1 = 1.5×)
+- **3★**: 22 HP, 11 ATK (1.5^2 = 2.25×)
+
+**Example: Epic Knight** (Base: 80 HP, 40 ATK):
+- **3★**: 180 HP, 90 ATK (1.5^2 = 2.25×)
+- **4★**: 270 HP, 135 ATK (1.5^3 = 3.375×)
+- **5★**: 405 HP, 202 ATK (1.5^4 = 5.0625×)
+- **6★**: 607 HP, 303 ATK (1.5^5 = 7.59375×)
+
+**Balance Check**: 3★ Common (22 HP) vs 3★ Epic (180 HP)
+- **Epic is 8.18× stronger** (because Epic base = 8× Common base)
+- ✅ **Rarity supremacy maintained**: Same star rank, Epic dominates
+
+---
+
+### Tactic Slot Scaling (Simple Rule)
+
+**Formula**: `Tactic Slots = Star Rank`
+
+| Star Rank | Tactic Slots | Example Card |
+|-----------|--------------|--------------|
+| **1★** | 1 tactic | Common Healer 1★ + "Defensive Ward" |
+| **2★** | 2 tactics | Uncommon Archer 2★ + "Volley" + "Evasion" |
+| **3★** | 3 tactics | Rare Knight 3★ + "Charge" + "Guardian" + "Rallying Cry" |
+| **4★** | 4 tactics | Uncommon Scout 4★ + 4 tactics (maxed Common rarity) |
+| **5★** | 5 tactics | Legendary Fire Mage 5★ + 5 tactics |
+| **6★** | 6 tactics | Epic Thor 6★ + 6 tactics (maxed Epic) |
+| **7★** | 7 tactics | Legendary Zeus 7★ + 7 tactics |
+| **8★** | 8 tactics | Mythic Odin 8★ + 8 tactics (absolute max) |
+
+**Strategic Trade-Off**:
+- **Higher Stars** = More tactics, more power (but costs duplicates)
+- **Lower Stars** = Fewer tactics, but easier to obtain (1 card, no fusion)
+
+**Example Deck Choice**:
+- Use **Knight 3★** (3 tactics, 22 HP) for tough battles
+- Use **Knight 1★** (1 tactic, 10 HP) for easy farming (save tactic budget for other cards)
+
+---
+
+### Visual Progression (Dopamine Loop)
+
+**Star Display** (UI):
+- **Filled Stars**: ★★★ (bright gold)
+- **Unfilled Stars**: ☆☆☆ (gray outline)
+- **Example**: 3★ Common = ★★★☆☆☆ (3 filled, 3 grayed for potential 6★ if Mythic)
+
+**Border Colors** (Card Frame):
+| Star Rank | Border Color | Glow Effect | Unlock Requirement |
+|-----------|--------------|-------------|---------------------|
+| **1★** | Bronze | None | Default (all cards start 1★) |
+| **2★** | Bronze+ | Faint pulse | 1 duplicate fused |
+| **3★** | Silver | Gentle glow | 3 duplicates fused (Common max) |
+| **4★** | Silver+ | Bright glow | 7 duplicates fused (Uncommon max) |
+| **5★** | Gold | Pulsing gold aura | 14-15 duplicates fused (Rare max, Legendary start) |
+| **6★** | Rainbow | Prismatic shine | 28-32 duplicates fused (Epic max, Mythic start) |
+| **7★** | Platinum | Epic holographic aura | 24 duplicates (Legendary max) |
+| **8★** | Prismatic | Reality-bending shimmer | 48 duplicates (Mythic max, whale flex) |
+
+**Damage Number Colors** (Battle Feedback):
+- **1-2★**: White damage numbers (standard)
+- **3-4★**: Blue damage numbers (enhanced)
+- **5★**: Gold damage numbers (elite)
+- **6★+**: Rainbow damage numbers (legendary crits)
+
+---
+
+### F2P vs Whale Star Progression
+
+**F2P Player (Month 1)**:
+- **Commons**: Max 3★ (easy, 3 duplicates per card)
+- **Uncommons**: Max 4★ (7 duplicates, common drops)
+- **Rares**: 2-3★ (1-3 duplicates earned)
+- **Epics/Legendaries**: 3-4★ (only if lucky pulls)
+- **Total Power**: ~608 HP (6 cards × avg 101 HP)
+
+**Whale Player (Month 1)**:
+- **Commons**: Max 3★ (ignore, focus on Epics)
+- **Uncommons**: Max 4★ (ignore, focus on Epics)
+- **Rares**: Max 5★ (bought duplicate packs)
+- **Epics**: Max 5-6★ (28 duplicates from whale spending)
+- **Legendaries**: Max 5★ (8 duplicates from targeted packs)
+- **Total Power**: ~859 HP (6 cards × avg 143 HP)
+
+**Power Gap**: 859 HP / 608 HP = **1.41× whale advantage** (70% F2P power)
+- ✅ **F2P Viable**: Can compete in lower PvP brackets
+- ✅ **Whale Advantage**: Clear power lead, but not insurmountable
+- ✅ **Skill Factor**: Formation, tactic choices, battle tactics matter
+
+---
+
+## 2.9 Tactic Attachment System (Revolutionary Mechanic)
+
+**Design Philosophy**: **Tactics Attach to Cards, Don't Consume Deck Slots**
+
+**How It Works**:
+1. **Tactics are separate items** (not cards in deck)
+2. **Attach to active cards** (drag Tactic onto Card in deck builder)
+3. **Persistent effects** (entire battle, not one-time use)
+4. **Tactic slots = Star rank** (1★ = 1 tactic, 6★ = 6 tactics)
+5. **Swappable between battles** (same units, different tactics = different roles)
+
+**Why This Is Revolutionary** (vs Other TCGs):
+- **Hearthstone**: Spells consume hand slots, one-time use, gone after cast
+- **Pokemon TCG**: Trainer cards consume deck slots, one-time use, discarded after
+- **Magic: The Gathering**: Instants/sorceries consume deck slots, one-time cast
+- **Sovereign Territories**: Tactics **don't consume slots**, **attach to units**, **persistent all battle**
+
+---
+
+### Tactic Attachment UI (Deck Builder)
+
+**Pre-Battle Setup**:
+```
+╔══════════════════════════════════════╗
+║       DECK BUILDER (6 SLOTS)         ║
+╠══════════════════════════════════════╣
+║ [Slot 1] Epic Water Mage 4★          ║
+║ ├─ Tactic: "Ice Armor" (+20 HP)     ║
+║ ├─ Tactic: "Mana Shield" (absorb)   ║
+║ ├─ Tactic: "Arcane Bolt" (+10 ATK)  ║
+║ └─ Tactic: "Frostbite" (slow enemy) ║
+║                                      ║
+║ [Slot 2] Knight 3★                   ║
+║ ├─ Tactic: "Charge" (burst damage)  ║
+║ ├─ Tactic: "Guardian" (taunt)       ║
+║ └─ Tactic: "Rallying Cry" (+10% HP) ║
+║                                      ║
+║ [Slot 3] Knight 1★                   ║
+║ └─ Tactic: "Defensive Ward" (block) ║
+║                                      ║
+║ [Slot 4] Archer 2★                   ║
+║ ├─ Tactic: "Volley" (AOE damage)    ║
+║ └─ Tactic: "Evasion" (+20% dodge)   ║
+║                                      ║
+║ [Slot 5] Scout 2★                    ║
+║ ├─ Tactic: "Speed Boost" (+2 move)  ║
+║ └─ Tactic: "Ambush" (first-strike)  ║
+║                                      ║
+║ [Slot 6] Healer 1★                   ║
+║ └─ Tactic: "Mass Heal" (AOE heal)   ║
+║                                      ║
+║ TOTAL: 6 cards + 14 tactics          ║
+║ (From 20-card collection)            ║
+╚══════════════════════════════════════╝
+```
+
+**Key Insight**: 6 cards + 14 attached tactics = **20 total items** (NOT 6+14=20 wasted deck slots!)
+
+---
+
+### Tactic Types (Persistent Battle Effects)
+
+**Category 1: Stat Buffs** (Passive Bonuses)
+- **"Ice Armor"**: +20 HP (increases max HP permanently)
+- **"Arcane Bolt"**: +10 ATK (increases damage dealt)
+- **"Speed Boost"**: +2 Movement (extra tiles per turn)
+
+**Category 2: Abilities** (Active Skills)
+- **"Charge"**: Once per battle, move 2 tiles + attack (+50% damage)
+- **"Mass Heal"**: Once per battle, heal all allies 50 HP (AOE)
+- **"Ambush"**: First attack each battle = guaranteed crit (2× damage)
+
+**Category 3: Status Effects** (Applied to Enemies)
+- **"Frostbite"**: Attacks slow enemy (-1 movement for 2 turns)
+- **"Poison Strike"**: Attacks apply 10 damage/turn for 3 turns
+- **"Stun Bash"**: 20% chance to stun enemy (skip 1 turn)
+
+**Category 4: Defensive** (Damage Mitigation)
+- **"Guardian"**: Taunt (enemies attack this unit first)
+- **"Mana Shield"**: Absorb 50 damage (blocks first hit)
+- **"Defensive Ward"**: +20% block chance (reduce damage by 50%)
+
+---
+
+### Same Units, Different Tactics = Different Roles
+
+**Example: 5× Healer Cards, Different Roles**
+
+**Healer A** (Tank Healer):
+- Tactic: "Guardian" (taunt, draw aggro)
+- Tactic: "Mana Shield" (absorb damage)
+- **Role**: Frontline tank who also heals
+
+**Healer B** (AOE Support):
+- Tactic: "Mass Heal" (heal all allies)
+- Tactic: "Speed Boost" (reach allies faster)
+- **Role**: Mobile support, group sustain
+
+**Healer C** (Single-Target Burst):
+- Tactic: "Mega Heal" (restore 100 HP to 1 ally)
+- Tactic: "Defensive Ward" (protect self)
+- **Role**: Save critical hero from death
+
+**Healer D** (Damage Healer):
+- Tactic: "Arcane Bolt" (+10 ATK)
+- Tactic: "Poison Strike" (apply DoT)
+- **Role**: Hybrid damage/healing
+
+**Healer E** (Pure Healer, 1★)**:
+- No tactics (1★ = 1 tactic slot, save for other cards)
+- **Role**: Budget healing, basic sustain
+
+---
+
+### Tactic Rarity & Drop Rates
+
+**Tactic Rarities** (Separate from Card Rarities):
+| Rarity | Effect Power | Drop Rate | Example |
+|--------|--------------|-----------|---------|
+| **Common** | +5-10 stats | 60% | "Minor Speed Boost" (+1 move) |
+| **Uncommon** | +10-20 stats | 25% | "Charge" (move+attack combo) |
+| **Rare** | +20-40 stats | 10% | "Ice Armor" (+20 HP) |
+| **Epic** | +40-80 stats | 4% | "Mass Heal" (AOE 50 HP) |
+| **Legendary** | +80-160 stats | 1% | "Annihilation" (AoE nuke 200 damage) |
+
+**Tactic Sources**:
+- **Standard Packs**: 20% chance to contain 1 tactic (instead of 5th card)
+- **Tactic Booster Packs**: 5 tactics per pack (guaranteed)
+- **Battle Rewards**: 5% chance for Common/Uncommon tactic drop
+- **PvP Leaderboards**: Rare/Epic tactics for top 100 players
+- **Seasonal Events**: Exclusive Legendary tactics (limited-time)
+
+---
 
 ### Competitive Features
 
 **Event Setup Days** (Tournament Deployment):
-- 3-7 days to manually place formations
-- Map revealed in advance for strategic planning
+- 3-7 days to manually configure 6-slot decks + tactic loadouts
+- Save up to 5 preset decks (VIP increases slots)
 - Battles resolve simultaneously (AI vs AI)
 - Leaderboards: Most Damage, Fastest Victory, Tankiest Defense
 
-**Map Generation**:
-- **Pre-Set**: Hand-crafted campaign maps (story mode)
-- **Procedural**: Random seed per event (fair, replayable)
-- **Player-Created**: Community map editor (future)
-
 ---
 
-## 2.7 Card Data Model (Engine Schema)
+## 2.10 Card Data Model (Engine Schema)
 
 The authoritative card schema has been moved to a standalone spec for engineering use: [docs/specs/card-schema.json](docs/specs/card-schema.json).
 Use that file for client/server serialization, validation, and migrations. The `abilities` and `effects` fields reference the `ability-schema` in `docs/specs/ability-schema.json`.
