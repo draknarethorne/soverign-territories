@@ -3096,31 +3096,629 @@ Sovereign Territories offers multiple gameplay modes catering to different plays
 **For tutorial flow, see [docs/mvp/tutorial-flow.md](docs/mvp/tutorial-flow.md)**
 
 ### Overview
-Campaign Mode is the **primary MVP mode**: a linear progression system with 72 battles across 8 themed worlds. Players defeat stages to unlock new worlds, earn 3-star ratings, and collect cards through Daily Challenges and stage rewards.
+Campaign Mode is the **primary MVP mode**: a linear progression system using **World → Territory → Realm → Battle** hierarchy that introduces map terminology without requiring full exploration systems. Players defeat battles to conquer realms and territories, earn 3-star ratings, and collect cards.
+
+### Campaign Structure (World → Territory → Realm → Battle)
+
+**NEW NAMING CONVENTION** (Aligns with full map hierarchy for future expansion):
+
+```
+WORLD: "The Forgotten Lands" (1 campaign world)
+├── TERRITORY 1: "Greenwood Valley" (Starting Territory)
+│   └── REALM 1: "Goblin Wastes"
+│       ├── Battle 1-1: "First Encounter" (3-card deck, tutorial)
+│       ├── Battle 1-2: "Goblin Ambush" (4-card deck)
+│       ├── Battle 1-3: "Raider Camp" (5-card deck)
+│       ├── Battle 1-4: "Archer Outpost" (6-card deck)
+│       └── Battle 1-5: "Warlord's Keep" (7-card deck, MINI-BOSS)
+│
+├── TERRITORY 2: "Ashen Peaks" (Mid-game Territory)
+│   ├── REALM 2: "Volcanic Badlands" (Battles 2-1 to 2-5)
+│   └── REALM 3: "Magma Caverns" (Battles 2-6 to 2-10, WORLD BOSS at 2-10)
+│
+├── TERRITORY 3: "Frozen Wastes" (Late-game Territory)
+│   ├── REALM 4: "Icewind Dale" (Battles 3-1 to 3-5)
+│   ├── REALM 5: "Frostfang Mountains" (Battles 3-6 to 3-10)
+│   └── REALM 6: "Glacier Throne" (Battles 3-11 to 3-15, EPIC BOSS at 3-15)
+│
+└── TERRITORY 4: "Shadowlands" (Final Territory)
+    ├── REALM 7: "Dark Forest" (Battles 4-1 to 4-5)
+    ├── REALM 8: "Necropolis" (Battles 4-6 to 4-10)
+    └── REALM 9: "Demon's Gate" (Battles 4-11 to 4-20, MYTHIC BOSS at 4-20)
+```
+
+**Total Content**:
+- **1 World**: "The Forgotten Lands"
+- **4 Territories**: Greenwood → Ashen → Frozen → Shadowlands
+- **9 Realms**: Distributed as 1 + 2 + 3 + 3 across territories
+- **~60-80 Battles**: Variable number per realm (5-20 battles, increases with difficulty)
+
+**Boss Placement**:
+- **Mini-Bosses**: End of every realm (Battles X-5, X-10, etc.) → Guaranteed Rare+ card
+- **Territory Bosses**: Final realm of territory (Battles 2-10, 3-15, 4-20) → Guaranteed Epic+ card
+- **World Boss**: Final battle (Battle 4-20, Mythic "Demon Overlord") → Guaranteed Legendary card
+
+### Why This Alignment Matters
+
+**1. Introduces Map Terminology Early** (without full map system):
+- Players learn **World → Territory → Realm → Battle** hierarchy from day 1
+- When Phase 3 adds full exploration, terms are familiar (no re-education)
+- Splash screen can say **"Conquer The Forgotten Lands"** (world name)
+
+**2. Simplified UI** (no complex map rendering for MVP):
+- Static list-based UI (like Fire Emblem campaign select)
+- Progress bars show completion ("Territory 2: 7/10 Battles ⏳")
+- No need for Unity NavMesh, pathfinding, or 2.5D map rendering (saves 2-3 weeks dev time)
+
+**3. Sets Up Future Expansion**:
+- **Phase 2**: Add weekly rotating Territory ("Stormpeak Highlands")
+  - 2 Realms, 10 Battles, boss drops exclusive card
+  - Rotates every Monday (FOMO mechanic)
+- **Phase 3**: Add full World Map exploration (HoMM-style movement between Territories)
+  - Existing campaign becomes "Story Mode" (fixed battles)
+  - New "Conquest Mode" uses same Territories with procedural generation
+
+**4. Clean Naming for Marketing**:
+- Game logo: **"SOVEREIGN TERRITORIES"**
+- Subtitle: **"Conquer The Forgotten Lands"** (World 1 name)
+- Future expansions: **"The Iron Kingdoms"**, **"The Celestial Isles"**, **"The Abyssal Depths"**
 
 ### Key Features
-- **72 Battles**: 8 worlds × 9 stages each (World 1: Goblin Plains, World 2: Bandit Forests, ... World 8: Void Dimension)
-- **Linear Progression**: Stage 1-1 → 1-2 → ... → 8-9 (must complete previous stage to unlock next)
+- **~60-80 Battles**: 1 world, 4 territories, 9 realms (linear progression)
+- **Linear Unlocking**: Battle 1-1 → 1-2 → ... → 4-20 (must complete previous to unlock next)
+- **Territory Progression**: Complete all battles in Territory 1 to unlock Territory 2
 - **3-Star Rating System**:
   - ⭐ Victory (complete battle, any condition)
   - ⭐⭐ Speed Clear (win in <10 turns)
   - ⭐⭐⭐ Perfect Victory (no unit deaths + hero >80% HP)
 - **Boss Battles**:
-  - **Mini-Boss** (Stage X-5): 7-10 card deck, guaranteed Rare card reward
-  - **World Boss** (Stage X-9): 12-15 card deck, guaranteed Epic card reward
-  - **Final Boss** (Stage 8-9): 20-card Mythic deck, guaranteed Legendary card
-- **Daily Challenge**: 1 random stage/day, 3 attempts, 2× rewards (~1,000 Gold/day = pack purchase driver)
+  - **Mini-Boss** (end of realm): 7-10 card deck, guaranteed Rare card reward
+  - **Territory Boss** (final realm): 12-15 card deck, guaranteed Epic card reward
+  - **World Boss** (Battle 4-20): 20-card Mythic deck, guaranteed Legendary card
 - **Replay Penalty**: First clear = 100% rewards, all replays = 50% rewards (prevents farming, encourages progression)
 - **Energy**: 10 Energy/battle (240 Energy/day = 24 battles max)
 
-### Stage Difficulty Progression
-| Stage | Deck Size | Hero Rarity | Total Power | First Clear Rewards |
-|-------|-----------|-------------|-------------|---------------------|
-| 1-1   | 3 cards   | None        | 50          | 100 Gold, 1 Common  |
-| 1-3   | 5 cards   | Uncommon    | 120         | 200 Gold, 1 Uncommon|
-| 1-5   | 7 cards   | Rare        | 200         | 500 Gold, 1 Rare    |
-| 1-9   | 12 cards  | Epic        | 350         | 1,000 Gold, 1 Epic  |
-| 8-9   | 20 cards  | Mythic      | 800         | 5,000 Gold, 1 Legendary |
+### Battle Difficulty Progression
+| Battle | Deck Size | Hero Rarity | Total Power | First Clear Rewards |
+|--------|-----------|-------------|-------------|---------------------|
+| 1-1    | 3 cards   | None        | 50          | 100 Gold, 1 Common  |
+| 1-3    | 5 cards   | Uncommon    | 120         | 200 Gold, 1 Uncommon|
+| 1-5    | 7 cards   | Rare (MINI)| 200         | 500 Gold, 1 Rare    |
+| 2-10   | 12 cards  | Epic (TERRITORY)| 350     | 1,000 Gold, 1 Epic  |
+| 4-20   | 20 cards  | Mythic (WORLD)| 800       | 5,000 Gold, 1 Legendary |
+
+### Progress Map UI (Static, No Exploration Required)
+
+**World Map Screen** (main campaign UI):
+```
+┌───────────────────────────────────────────┐
+│   THE FORGOTTEN LANDS (World 1)           │
+├───────────────────────────────────────────┤
+│                                           │
+│   [Territory 1: Greenwood Valley] ✅      │
+│   │                                       │
+│   └─ Realm 1: Goblin Wastes ✅ 5/5       │
+│                                           │
+│   [Territory 2: Ashen Peaks] ⏳ 7/10     │
+│   │                                       │
+│   ├─ Realm 2: Volcanic Badlands ✅ 5/5   │
+│   └─ Realm 3: Magma Caverns 🔒 2/5       │
+│                                           │
+│   [Territory 3: Frozen Wastes] 🔒        │
+│   │                                       │
+│   ├─ Realm 4: Icewind Dale 🔒            │
+│   ├─ Realm 5: Frostfang Mountains 🔒     │
+│   └─ Realm 6: Glacier Throne 🔒          │
+│                                           │
+│   [Territory 4: Shadowlands] 🔒          │
+│       └─ (3 realms, locked)               │
+└───────────────────────────────────────────┘
+```
+
+**Realm Progress Screen** (tap Territory 2):
+```
+┌───────────────────────────────────────────┐
+│   ASHEN PEAKS (Territory 2)               │
+├───────────────────────────────────────────┤
+│                                           │
+│   REALM 2: Volcanic Badlands ✅           │
+│   ├─ Battle 2-1: "Lava Fields" ⭐⭐⭐      │
+│   ├─ Battle 2-2: "Fire Elementals" ⭐⭐⭐  │
+│   ├─ Battle 2-3: "Ash Giants" ⭐⭐        │
+│   ├─ Battle 2-4: "Molten Forge" ⭐⭐⭐     │
+│   └─ Battle 2-5: "Flame Lord (BOSS)" ⭐⭐ │
+│                                           │
+│   REALM 3: Magma Caverns ⏳               │
+│   ├─ Battle 2-6: "Ember Tunnels" ⭐⭐⭐    │
+│   ├─ Battle 2-7: "Lava River" ⭐          │
+│   ├─ Battle 2-8: "Pyroclasm Pit" 🔒      │
+│   ├─ Battle 2-9: "Dragon's Lair" 🔒      │
+│   └─ Battle 2-10: "Inferno Wyrm (BOSS)" 🔒│
+└───────────────────────────────────────────┘
+```
+
+---
+
+## 4.1B Daily Quest/Bounty Board (Phase 1A - Replayability System)
+
+### Overview
+The **Daily Quest/Bounty Board** provides 5 rotating combat challenges with randomized enemy decks, separate from campaign progression. Uses **/con difficulty system** (EverQuest/WoW color-coded enemy levels) to create variable challenge and reward tiers.
+
+**Design Philosophy**:
+- **Hearthstone Model**: 5 quest slots (choose what to pursue, not forced)
+- **Refresh Timers**: Individual 4-6h after completion + global midnight reset
+- **Random Enemy Composition**: Not tied to campaign, creates variety/replayability
+- **No Grinding Required**: Optional content (campaign is primary progression)
+
+### Quest Board Structure
+
+**Quest Slots**: 5 active quests at a time (displayed on main menu "Bounty Board" button)
+
+| Difficulty | Color | Enemy Power | Rewards | Weekly Spawn Rate |
+|------------|-------|-------------|---------|-------------------|
+| **Trivial** | 🟢 Green | 50-80% player power | 100 Gold, 50 XP | 60% |
+| **Easy** | 🔵 Blue | 80-100% player power | 250 Gold, 100 XP, 1 Common card | 25% |
+| **Normal** | ⚪ White | 100-120% player power | 500 Gold, 200 XP, 1 Uncommon card | 10% |
+| **Tough** | 🟡 Yellow | 120-150% player power | 1,000 Gold, 500 XP, 1 Rare card | 4% |
+| **Elite** | 🔴 Red | 150-200% player power | 2,500 Gold, 1,000 XP, 1 Epic card, 3 Resurrection Scrolls | 1% |
+
+**/con Color System** (EverQuest/WoW industry standard):
+- **Green**: Easy win, low risk, fast completion (5-10 min)
+- **Blue**: Balanced challenge, decent rewards (10-15 min)
+- **White**: Fair fight, skill-based, good XP (15-20 min)
+- **Yellow**: Challenging, requires strategy, premium rewards (20-30 min)
+- **Red**: Deadly, near-impossible, whale bait (30+ min, multiple attempts)
+
+### Refresh Mechanics
+
+**1. Individual Refresh** (per quest):
+- Complete quest → 4-6 hour timer → new quest spawns in that slot
+- Example: Complete Green quest at 10:00 AM → new quest at 2:00-4:00 PM
+- **Random Difficulty**: New quest pulls from spawn rate table (60% Green, 25% Blue, etc.)
+
+**2. Daily Reset** (global):
+- Midnight EST/UTC → ALL 5 quests refresh (even incomplete ones)
+- **Resets Progression**: Incomplete quests lost (encourages daily completion)
+- **Fresh Board**: All 5 slots re-roll difficulty (could get 3 Greens, 1 Blue, 1 Yellow)
+
+**3. Reroll Option** (Phase 2 - monetization):
+- Spend **50 Gems** to reroll 1 quest (Hearthstone model)
+- Use case: Reroll Green quest hoping for Yellow/Red (better rewards)
+- **Daily Limit**: Max 3 rerolls/day (prevents infinite fishing for Red quests)
+
+### Quest Types (Random Mix)
+
+**Combat Quests** (100% of MVP pool, Phase 2 adds economy/collection quests):
+
+| Quest Type | Description | Example Rewards |
+|------------|-------------|----------------|
+| **Defeat Enemies** | "Defeat 3 Green enemies" | 300 Gold, 150 XP |
+| **Mini-Boss** | "Defeat 1 Yellow mini-boss" | 1,000 Gold, 1 Rare card |
+| **Survival** | "Survive 5 turns against Red elite" | 2,500 Gold, 1 Epic card |
+| **Speed Clear** | "Defeat White enemy in <8 turns" | 750 Gold, 300 XP, 1 Uncommon |
+| **Perfect Victory** | "Win vs Blue enemy without deaths" | 500 Gold, 200 XP, 1 Common |
+
+### Enemy Deck Generation (Random Spawns)
+
+**Quest enemies are NOT from campaign** (separate spawn pools):
+
+**Green Trivial Quest Example**:
+```json
+{
+  "questDifficulty": "green_trivial",
+  "enemyDeckSize": "3-5 cards",
+  "spawnPool": [
+    { "cardId": "goblin_raider", "weight": 30 },
+    { "cardId": "goblin_archer", "weight": 25 },
+    { "cardId": "flame_imp", "weight": 20 },
+    { "cardId": "skeleton_warrior", "weight": 15 },
+    { "cardId": "zombie_brute", "weight": 10 }
+  ],
+  "totalPower": "50-80% player power",
+  "namedMobChance": 0,  // No named mobs in Trivial
+  "bossChance": 0
+}
+```
+
+**Red Elite Quest Example**:
+```json
+{
+  "questDifficulty": "red_elite",
+  "enemyDeckSize": "8-12 cards",
+  "spawnPool": [
+    { "cardId": "orc_warlord", "weight": 30 },
+    { "cardId": "demon_knight", "weight": 25 },
+    { "cardId": "dragon_wyrmling", "weight": 20 },
+    { "cardId": "death_knight", "weight": 15 },
+    { "cardId": "elemental_titan", "weight": 10 }
+  ],
+  "totalPower": "150-200% player power",
+  "namedMobChance": 10,  // 10% chance "Gorthak the Cruel" spawns
+  "bossChance": 100  // Always has 1 boss (Epic/Legendary hero)
+}
+```
+
+**Variety Created**:
+- Same "Red Elite Quest" could have 10-20 different enemy combinations
+- Named mobs (Phase 2) add 5-10% spawn chance for unique bosses
+- Players can't memorize exact decks (prevents autopilot farming)
+
+### Phase 1 MVP Deliverables
+- ✅ Quest Board UI (5 slots, color-coded difficulty, timer display, "Bounty Board" button on main menu)
+- ✅ Quest generation system (random enemy decks from spawn pools, /con power scaling)
+- ✅ Individual refresh timers (4-6h per quest, tracked via PlayerPrefs)
+- ✅ Daily midnight reset (EST/UTC, ALL 5 quests refresh)
+- ✅ Combat quests only (Defeat, Mini-Boss, Survival, Speed Clear, Perfect Victory)
+- ❌ NO reroll option (Phase 2 monetization)
+- ❌ NO economy/collection quests (Phase 2, focus on combat for MVP)
+- ❌ NO named mobs (Phase 2, requires loot table system)
+
+### Phase 2 Expansion (Named Mobs + Loot)
+- **Named Mobs**: 5-10% spawn chance in Yellow/Red quests
+  - Example: "Gorthak the Cruel" (Orc Warlord, guaranteed Legendary equipment drop)
+  - First kill: Guaranteed card copy ("Gorthak" card, exclusive to quest board)
+  - Respawns weekly: Farm for equipment/gold, but card drop only ONCE per account
+- **Reroll System**: 50 Gems to reroll 1 quest, max 3/day
+- **Economy Quests**: "Deploy 3 buildings", "Earn 500 Gold from AFK production"
+- **Collection Quests**: "Open 2 Standard Packs", "Fuse 1 card to 2★"
+
+### Why This Works
+
+**F2P Perspective**:
+- **Daily Content**: 5 quests = 1-2 hours gameplay (respects time)
+- **Optional**: Can skip if busy (campaign is primary progression)
+- **Decent Rewards**: 3,000-5,000 Gold/day if complete all 5 (3-5 Standard Packs)
+
+**Whale Perspective**:
+- **Red Quests**: Challenging content that requires good decks (skill + card quality)
+- **Reroll Gambling** (Phase 2): Spend Gems to fish for Red quests (FOMO)
+- **Named Mob Hunting** (Phase 2): Grind for exclusive boss cards (collector appeal)
+
+**Retention Hook**:
+- **Daily Reset**: Log in every day or lose incomplete quests (daily habit formation)
+- **Variety**: Random enemy decks prevent stale repetition
+- **Progression Independent**: Doesn't block campaign (reduces pressure)
+
+### Inspiration
+- **Hearthstone**: 3 daily quests, reroll for 50 Gold (we use 5 quests, 50 Gems)
+- **Genshin Impact**: 4 daily commissions, refresh midnight UTC
+- **EverQuest**: /con color system (green = easy, red = deadly)
+- **WoW**: Daily quests with varying difficulty tiers, bonus rewards for elite quests
+
+---
+
+## 4.1C Loot Drop System (Phase 2 - Per-Card Rewards)
+
+### Overview
+The **Loot Drop System** transforms battles from "fixed end reward" to **"each defeated enemy drops loot"** (Diablo model). Creates per-card excitement, enemy-specific loot tables, and small chance for card copies to drop.
+
+**Design Philosophy**:
+- **Diablo Model**: Each enemy drops loot when defeated (accumulates to victory screen)
+- **Enemy-Specific Tables**: Healers drop potions/scrolls, tanks drop swords/shields
+- **Small Card Drop Chance**: 1-5% for defeated enemy to drop copy of itself
+- **Governor System**: Prevents every enemy dropping card (max 1 card/battle + pity counter)
+
+**Phase 1 Status**: System designed, but NOT implemented (need balancing data first)
+
+### Loot Drop Framework
+
+**Per-Card Loot Tables** (Phase 2):
+
+| Card Type | Primary Drop | Secondary Drop | Card Drop Chance |
+|-----------|--------------|----------------|------------------|
+| **Healer/Cleric** | 🧪 Health Potion (30%) | 📜 Resurrection Scroll (10%) | 2% (Common), 1% (Rare+) |
+| **Tank/Warrior** | 🛡️ Shield equipment (25%) | ⚔️ Sword equipment (15%) | 3% (Common), 1.5% (Rare+) |
+| **Mage/Wizard** | 🔮 Mana Potion (30%) | 📖 Tactic scroll (15%) | 2% (Common), 1% (Rare+) |
+| **Archer/Ranger** | 🏹 Bow equipment (25%) | 💰 50-100 Gold (40%) | 3% (Common), 1.5% (Rare+) |
+| **Worker** | 💰 100-200 Gold (60%) | 🧱 Resource items (20%, Phase 3) | 5% (Common), N/A |
+| **Boss (Epic+)** | 💎 100-300 Gems (20%) | 🎁 Legendary equipment (5%) | 10% (Epic), 25% (Legendary), 50% (Mythic) |
+
+**Drop Timing**: Loot drops **immediately when enemy is defeated** (visual feedback, card flips over to show loot icon), accumulates in reward pool shown at victory screen.
+
+**Example Battle Loot**:
+```
+Enemy Deck: 5 Commons, 2 Rares, 1 Epic boss
+
+Drops during battle:
+- Common Healer dies → 🧪 Health Potion (30% roll = success!)
+- Common Tank dies → 💰 50 Gold (40% roll = success!)
+- Rare Archer dies → (2% card drop check = FAIL)
+- Common Mage dies → 🔮 Mana Potion (30% roll = success!)
+- Rare Tank dies → 🛡️ Rare Shield (25% roll = success!)
+- Common Warrior dies → (3% card drop check = FAIL)
+- Epic Boss dies → 💎 200 Gems (20% roll = success!) + 🎁 Legendary Sword (5% roll = success!) + 10% card drop → SUCCESS!
+
+Victory Screen Total Loot:
+- 🧪 1 Health Potion
+- 🔮 1 Mana Potion
+- 💰 50 Gold
+- 🛡️ Rare "Iron Bulwark" Shield
+- 💎 200 Gems
+- 🎁 Legendary "Frostbite Blade" Sword
+- 🃏 Epic "Inferno Drake" card (boss card drop, bypasses governor)
+```
+
+### Governor System (Prevents Card Spam)
+
+**Problem**: If every card has 2-5% drop chance, 10-card enemy deck = 20-50% chance to drop at least 1 card (too generous, devalues packs).
+
+**Solution**: Global drop cap per battle
+
+**Governor Rules**:
+1. **Max Card Drops Per Battle**: 1 card maximum (first successful drop locks out all others)
+2. **Pity System**: If 50 battles with 0 card drops → guarantee 1 card drop in next battle (prevents frustration)
+3. **Named Mobs Bypass Governor** (Phase 2): Red/Yellow bosses with guaranteed drops ignore cap
+4. **Boss Priority**: Epic+ bosses roll for card drop FIRST (before commons), ensures boss cards more common
+
+**Example Governor in Action**:
+```
+Battle 1:
+- Common 1 dies → 3% card drop check → FAIL
+- Common 2 dies → 3% card drop check → FAIL
+- Epic Boss dies → 10% card drop check → SUCCESS! Epic card drops
+- Common 3 dies → 3% card drop check → (BLOCKED by governor, cap reached)
+- Rare dies → 1.5% card drop check → (BLOCKED by governor, cap reached)
+
+Result: 1 Epic card drop (boss), no other cards
+
+Battle 2-50: No card drops (bad RNG)
+Battle 51: Pity system guarantees 1 card drop (first enemy killed = guaranteed drop)
+```
+
+### Named Mobs (Phase 2 - Always Drop System)
+
+**Named Mobs** = Rare spawns with guaranteed loot (WoW rare mob model)
+
+**Examples**:
+- **"Gorthak the Cruel"** (Named Orc Warlord, Red difficulty):
+  - **Guaranteed Drops**: 1,000 Gold + 1 Epic equipment + **1 Gorthak card** (first kill only)
+  - **Spawn Rate**: 5-10% chance in Red Elite quests
+  - **Respawn**: Can farm weekly for equipment/gold, but **card drop only ONCE per account**
+  - **Bypasses Governor**: Gorthak's card drop doesn't count toward 1-card-per-battle cap
+
+- **"Azuriel the Frostborn"** (Named Dragon, Yellow difficulty):
+  - **Guaranteed Drops**: 500 Gold + 1 Rare equipment + 3 Resurrection Scrolls
+  - **Card Drop**: 25% chance for Azuriel card (can farm multiple times, not limited)
+  - **Spawn Rate**: 10% chance in Yellow Tough quests
+
+**Boss-Exclusive Cards** (Phase 3 - Future Monetization):
+- Weekly mini-campaigns feature named bosses
+- Boss card ONLY drops from that boss (not in packs, creates exclusivity)
+- **Example**: "Week 1: Demon Lord Vorgath" event
+  - 5 battles leading to Vorgath boss fight
+  - Vorgath card: 10% drop chance (F2P can grind 10-20 attempts)
+  - **Loot Booster IAP**: $4.99 → increases drop to 50% (not guaranteed, feels fair)
+  - **Collector Appeal**: "I have Vorgath, he was only available Week 1!"
+
+### Phase 1 MVP Deliverables
+- ✅ Loot table system designed (enemy type → drop pools, JSON data structure)
+- ✅ Per-card drop framework (CardData includes lootTableId)
+- ✅ Governor system algorithm (max 1 card/battle, pity counter tracking)
+- ❌ NO implementation (defer to Phase 2, need economy balancing data first)
+- ❌ NO named mobs (Phase 2)
+- ❌ NO card drop system active (Phase 2, too generous for MVP launch)
+- ❌ NO boss-exclusive cards (Phase 3 - monetization experiment)
+
+**Why Defer to Phase 2**:
+1. **Balancing Unknown**: Don't know if 2% card drop is too generous until we have player data
+2. **Pack Sales Risk**: If cards drop too often, pack sales plummet (need to test economy first)
+3. **Governor Tuning**: Pity system needs playtesting (50 battles? 100 battles? Need data)
+4. **Development Time**: Per-card loot UI + governor logic = 1-2 weeks (defer for MVP speed)
+
+### Why This Works (Phase 2+)
+
+**F2P Perspective**:
+- **Excitement**: Every enemy death = potential loot (Diablo dopamine)
+- **Card Acquisition**: Small chance to get cards without spending Gold on packs
+- **Resource Diversity**: Potions, equipment, scrolls (not just Gold)
+
+**Whale Perspective**:
+- **Named Mob Hunting**: Grind Red quests for exclusive boss cards (time = money trade-off)
+- **Loot Boosters** (Phase 3): Spend $4.99 to increase drop rates (convenience)
+- **Collector Completionism**: "I have ALL 20 named mob cards!"
+
+**Design Safety**:
+- **Governor**: Prevents card drop spam (protects pack sales)
+- **Pity System**: Prevents extreme bad RNG (player frustration)
+- **Boss Priority**: Ensures Epic/Legendary drops more common (rewards challenge)
+
+### Inspiration
+- **Diablo**: Per-enemy loot drops, rarity-based drop tables
+- **Path of Exile**: Weighted RNG, pity systems, boss-exclusive uniques
+- **WoW**: Named rare mobs with guaranteed drops, weekly lockouts
+- **Genshin Impact**: Boss-exclusive materials, weekly boss farming
+
+---
+
+## 4.1D Spawn System (Phase 2 - Instance Dungeon Variety)
+
+### Overview
+The **Spawn System** enables **randomized enemy decks** for battles (WoW instance dungeon model), where certain enemies spawn procedurally instead of being fixed. Creates replayability, grindable content, and rare "named mob" hunting.
+
+**Design Philosophy**:
+- **WoW Instance Dungeons**: Same dungeon, different enemy composition each run
+- **Named Mob Spawns**: 5-10% chance for rare elite to appear (guaranteed loot)
+- **Grindable Stages**: Replay same battle, different enemies/loot each time
+- **Applies to Daily Quests**: Random enemy composition creates variety
+
+**Phase 1 Status**: Foundation implemented (spawn pools for Daily Quests), full features Phase 2
+
+### Spawn Pool Structure
+
+**Campaign Stages** (MVP - Fixed Spawns):
+- **Phase 1**: ALL campaign stages have **fixed enemy decks** (predictable, tutorial-friendly)
+- **Example**: Battle 1-1 always has same 3 enemies (Common Goblin, Common Archer, Common Mage)
+- **Rationale**: New players need consistency to learn mechanics
+
+**Daily Quests** (MVP - Random Spawns):
+- **Phase 1**: Quest enemy decks generated from **spawn pools** (variety, replayability)
+- **Example**: "Green Trivial Quest" → pulls 3-5 cards from pool of 30 Common enemies (different each time)
+
+**Campaign Nightmare Mode** (Phase 2 - Random Spawns):
+- **Phase 2 Unlock**: Toggle "Nightmare Mode" on any completed campaign stage
+- **Battle 1-1 Nightmare**: Now pulls from spawn pool instead of fixed deck
+  - 2% chance for named mob ("Gorthak the Goblin King")
+  - Higher rewards: 2× Gold, 2× XP, chance for Rare/Epic drops
+- **Incentive**: Farm for equipment/gold, grind for rare card drops
+
+### Spawn Pool JSON Structure
+
+**Green Trivial Quest Spawn Pool** (MVP):
+```json
+{
+  "spawnPoolId": "green_trivial_quest",
+  "difficulty": "green_trivial",
+  "deckSize": { "min": 3, "max": 5 },
+  "powerRange": { "min": 50, "max": 80 },  // % of player power
+  "spawnPool": [
+    { "cardId": "goblin_raider", "weight": 30 },
+    { "cardId": "goblin_archer", "weight": 25 },
+    { "cardId": "flame_imp", "weight": 20 },
+    { "cardId": "skeleton_warrior", "weight": 15 },
+    { "cardId": "zombie_brute", "weight": 10 }
+  ],
+  "namedMobs": [],  // No named mobs in Trivial
+  "bossRequired": false
+}
+```
+
+**Red Elite Quest Spawn Pool** (MVP):
+```json
+{
+  "spawnPoolId": "red_elite_quest",
+  "difficulty": "red_elite",
+  "deckSize": { "min": 8, "max": 12 },
+  "powerRange": { "min": 150, "max": 200 },
+  "spawnPool": [
+    { "cardId": "orc_warlord", "weight": 30 },
+    { "cardId": "demon_knight", "weight": 25 },
+    { "cardId": "dragon_wyrmling", "weight": 20 },
+    { "cardId": "death_knight", "weight": 15 },
+    { "cardId": "elemental_titan", "weight": 10 }
+  ],
+  "namedMobs": [  // Phase 2
+    { "cardId": "gorthak_the_cruel", "spawnChance": 0.10 },  // 10%
+    { "cardId": "azuriel_frostborn", "spawnChance": 0.05 }   // 5%
+  ],
+  "bossRequired": true  // Always includes 1 Epic/Legendary boss
+}
+```
+
+### Enemy Deck Generation Algorithm
+
+**Step-by-Step** (runs when player starts quest):
+
+1. **Load Spawn Pool**: Lookup spawnPoolId (e.g., "red_elite_quest")
+2. **Determine Deck Size**: Random between min/max (8-12 for Red Elite)
+3. **Roll for Named Mobs** (Phase 2):
+   - If namedMobs list exists, roll % chance for each
+   - Example: 10% roll for Gorthak → SUCCESS → Gorthak spawns (replaces 1 slot)
+4. **Check Boss Requirement**:
+   - If bossRequired = true, select 1 Epic/Legendary hero from pool
+5. **Fill Remaining Slots**:
+   - Use weighted RNG to pull from spawnPool
+   - Example: 30% chance goblin_raider, 25% goblin_archer, etc.
+6. **Power Scaling**:
+   - Calculate total deck power
+   - If < powerRange.min, add 1-2 stronger cards
+   - If > powerRange.max, swap stronger cards for weaker
+7. **Return Enemy Deck**: Generated deck sent to battle system
+
+**Example Generated Deck** (Red Elite Quest):
+```
+Roll 1: Deck size = 10 cards
+Roll 2: Named mob check → 10% Gorthak → SUCCESS
+Roll 3: Boss required → Epic Orc Warlord selected
+Roll 4-10: Fill 8 slots → 2 Demon Knights, 3 Dragon Wyrmlings, 2 Death Knights, 1 Elemental Titan
+
+Final Deck:
+1. Gorthak the Cruel (NAMED MOB, Legendary)
+2. Orc Warlord (Epic BOSS)
+3. Demon Knight (Rare)
+4. Demon Knight (Rare)
+5. Dragon Wyrmling (Uncommon)
+6. Dragon Wyrmling (Uncommon)
+7. Dragon Wyrmling (Uncommon)
+8. Death Knight (Rare)
+9. Death Knight (Rare)
+10. Elemental Titan (Rare)
+
+Total Power: 1,750 (175% player power, within 150-200% range)
+```
+
+### Named Mob Spawn (Phase 2)
+
+**Named Mob Spawn Chances**:
+- **Green/Blue**: 0% (no named mobs, too easy)
+- **White**: 2% chance
+- **Yellow**: 5% chance
+- **Red**: 10% chance
+
+**Named Mob Rewards** (guaranteed drops, bypasses governor):
+- **White Named**: 500 Gold, 1 Rare equipment
+- **Yellow Named**: 1,000 Gold, 1 Epic equipment, 3 Resurrection Scrolls
+- **Red Named**: 2,500 Gold, 1 Legendary equipment, **1 Named Mob card** (first kill only)
+
+**Named Mob Hunting Loop** (Phase 2 retention hook):
+1. Complete 10 Red quests → 0 named mobs (bad RNG)
+2. Quest 11 → Gorthak spawns! (10% chance triggered)
+3. Defeat Gorthak → Legendary Sword + Gorthak card (first-time bonus)
+4. Next week → Gorthak spawns again → Legendary Sword (no card, already have)
+5. **Collector Chase**: 20 named mobs total → grind Red quests to find all
+
+### Grindable Stages (Phase 2)
+
+**Campaign Nightmare Mode** (Phase 2 unlock):
+- Complete Battle 1-1 on Normal → unlocks "Nightmare Toggle"
+- **Battle 1-1 Nightmare**:
+  - Enemy deck pulls from spawn pool (not fixed)
+  - 2% chance for named mob ("Gorthak the Goblin King")
+  - 2× rewards: 200 Gold (vs 100), 100 XP (vs 50)
+  - Chance for Rare/Epic drops (vs guaranteed Common)
+- **Grindability**: Replay same stage 10-20× with different enemies/loot each time
+- **F2P Grind**: Farm Battle 1-1 Nightmare for 200 Gold/battle (better than Daily Quest Green)
+
+**Weekly Rotating Territory** (Phase 2 monetization):
+- Every Monday, new Territory appears ("Stormpeak Highlands")
+- 2 Realms, 10 Battles, all use spawn pools (different each week)
+- Boss battle drops exclusive card ("Storm Dragon King", only available this week)
+- **FOMO Mechanic**: "This week only! Get Storm Dragon King before it rotates!"
+- **Loot Booster IAP**: $4.99 → 50% card drop (vs 10% base)
+
+### Phase 1 MVP Deliverables
+- ✅ Spawn pool system (JSON defines enemy deck generation)
+- ✅ Spawn pool JSON schema (spawnPoolId, difficulty, deckSize, powerRange, spawnPool array)
+- ✅ Enemy deck generation algorithm (weighted RNG, power scaling)
+- ✅ Daily Quest random spawns (different enemies each time, implemented)
+- ❌ NO campaign random spawns (all fixed for MVP, Nightmare Mode in Phase 2)
+- ❌ NO named mobs (Phase 2, requires loot table system)
+- ❌ NO Nightmare Mode (Phase 2)
+- ❌ NO weekly rotating Territory (Phase 2 monetization)
+
+### Why This Works
+
+**F2P Perspective**:
+- **Variety**: Same quest, different enemies each time (prevents stale repetition)
+- **Grindability** (Phase 2): Farm Nightmare Mode for better rewards without paywalls
+- **Named Mob Hunting** (Phase 2): Collector challenge ("I have 15/20 named mob cards!")
+
+**Whale Perspective**:
+- **Efficiency**: Random spawns = unpredictable difficulty (can't autopilot farm)
+- **Named Mob Chase** (Phase 2): Grind Red quests for rare spawns (time = money trade-off)
+- **Loot Boosters** (Phase 2): Spend $4.99 to guarantee named mob drops (convenience)
+
+**Retention Hook**:
+- **Weekly Variety**: Rotating Territories keep content fresh (Phase 2)
+- **Collector Completionism**: 20 named mobs = 20 weeks of grinding (long-term goal)
+- **Unpredictability**: Can't memorize exact decks (requires strategy, not memorization)
+
+### Inspiration
+- **WoW**: Instance dungeons with random mob packs, rare elite spawns
+- **Diablo**: Procedurally generated enemy composition, rare mob hunting
+- **Genshin Impact**: Weekly boss rotations, exclusive material drops
+- **Path of Exile**: Randomized map modifiers, league-exclusive content
+
+---
 
 ### Monetization Integration
 - **Pack Store** (unlocked after tutorial):

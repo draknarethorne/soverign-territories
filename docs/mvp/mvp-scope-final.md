@@ -338,46 +338,94 @@ Why 20-card deck matters:
 
 ---
 
-### Week 5-6: Campaign Mode & Stage Progression
+### Week 5-6: Campaign Mode & Battle Progression
 
-**Campaign Structure**:
-- ✅ 8 Worlds × 9 Stages = 72 total battles (linear progression)
-- ✅ World themes: Goblin Plains, Bandit Forests, Orc Wastelands, Undead Crypts, Dragon Peaks, Demon Wastes, Celestial Realm, Void Dimension
-- ✅ Boss battles: Stages X-5 (mini-boss), X-9 (world boss)
-- ✅ Unlock system: Beat Stage 1-1 to unlock 1-2, beat 1-9 to unlock World 2
-- ✅ 3-star rating: Speed (under 10 turns), No Deaths (full army survives), Full Health (hero >80% HP)
+**Campaign Structure** (NEW: World → Territory → Realm → Battle hierarchy):
+- ✅ **1 World**: "The Forgotten Lands"
+- ✅ **4 Territories**: Greenwood Valley (starting) → Ashen Peaks → Frozen Wastes → Shadowlands (final)
+- ✅ **9 Realms**: Distributed as 1 + 2 + 3 + 3 across territories
+- ✅ **~60-80 Battles**: Variable number per realm (5-20 battles, increases with difficulty)
+- ✅ Territory progression: Complete all battles in Territory 1 to unlock Territory 2
+- ✅ Linear unlocking: Battle 1-1 → 1-2 → ... → 4-20 (must complete previous to unlock next)
+- ✅ Boss battles: Mini-bosses (end of realm), Territory bosses (final realm), World boss (Battle 4-20)
+- ✅ 3-star rating: Victory, Speed Clear (<10 turns), Perfect Victory (no deaths + hero >80% HP)
 
-**Stage Types**:
-- ✅ Regular stages (1-1 to 1-4, 1-6 to 1-8): 3-7 card enemy decks, increasing difficulty
-- ✅ Mini-boss stages (X-5): 7-10 card decks, Rare/Epic heroes
-- ✅ World boss stages (X-9): 12-15 card decks, Epic/Legendary heroes
-- ✅ Final boss (8-9): Mythic Void Lord, 20-card deck
+**Why This Alignment**:
+- ✅ Introduces map terminology (World → Territory → Realm → Battle) without full exploration system
+- ✅ Simplified UI: Static list-based (like Fire Emblem), no 2.5D map rendering needed
+- ✅ Sets up Phase 3 expansion: Weekly rotating Territories, full World Map exploration
+- ✅ Clean marketing: "Sovereign Territories: Conquer The Forgotten Lands" (World 1 name)
 
-**Rewards Per Stage**:
-- ✅ First clear: 100-500 Gold, 50-200 XP, 1-3 cards (rarity increases with world)
+**Territory Distribution**:
+```
+TERRITORY 1: Greenwood Valley (Starting)
+├─ Realm 1: Goblin Wastes (Battles 1-1 to 1-5, MINI-BOSS at 1-5)
+
+TERRITORY 2: Ashen Peaks (Mid-game)
+├─ Realm 2: Volcanic Badlands (Battles 2-1 to 2-5, MINI-BOSS at 2-5)
+└─ Realm 3: Magma Caverns (Battles 2-6 to 2-10, TERRITORY BOSS at 2-10)
+
+TERRITORY 3: Frozen Wastes (Late-game)
+├─ Realm 4: Icewind Dale (Battles 3-1 to 3-5, MINI-BOSS at 3-5)
+├─ Realm 5: Frostfang Mountains (Battles 3-6 to 3-10, MINI-BOSS at 3-10)
+└─ Realm 6: Glacier Throne (Battles 3-11 to 3-15, TERRITORY BOSS at 3-15)
+
+TERRITORY 4: Shadowlands (Final)
+├─ Realm 7: Dark Forest (Battles 4-1 to 4-5, MINI-BOSS at 4-5)
+├─ Realm 8: Necropolis (Battles 4-6 to 4-10, MINI-BOSS at 4-10)
+└─ Realm 9: Demon's Gate (Battles 4-11 to 4-20, WORLD BOSS at 4-20)
+```
+
+**Battle Types**:
+- ✅ Regular battles: 3-7 card enemy decks, increasing difficulty
+- ✅ Mini-boss battles (end of realm): 7-10 card decks, Rare/Epic heroes, guaranteed Rare+ card
+- ✅ Territory boss battles (final realm): 12-15 card decks, Epic/Legendary heroes, guaranteed Epic+ card
+- ✅ World boss (Battle 4-20): Mythic "Demon Overlord", 20-card deck, guaranteed Legendary card
+
+**Rewards Per Battle**:
+- ✅ First clear: 100-500 Gold, 50-200 XP, 1-3 cards (rarity increases with territory)
 - ✅ 3-star clear: +1 Epic card (choice from 3 options)
 - ✅ Replays: 50% reduced rewards (encourages progression over farming)
 
-**Daily Event**:
-- ✅ Daily Challenge Stage: Random unlocked stage, 2× rewards, 3 attempts/day
-- ✅ **Completion reward**: 1 Resurrection Scroll 📜 (guaranteed, incentive for daily play)
-- ✅ Total daily value: ~1,000 Gold + 1 Scroll (= 1 Standard Pack + free Epic resurrection)
+**Daily Quest/Bounty Board** (NEW - Phase 1A):
+- ✅ 5 quest slots with /con difficulty (EverQuest/WoW color system: Green/Blue/White/Yellow/Red)
+- ✅ Randomized enemy decks (spawn pools, different each time)
+- ✅ Individual refresh timers (4-6h after completion)
+- ✅ Daily midnight reset (EST/UTC, ALL 5 quests refresh)
+- ✅ Difficulty-based rewards:
+  - Green: 100 Gold, 50 XP
+  - Blue: 250 Gold, 100 XP, 1 Common card
+  - White: 500 Gold, 200 XP, 1 Uncommon card
+  - Yellow: 1,000 Gold, 500 XP, 1 Rare card
+  - Red: 2,500 Gold, 1,000 XP, 1 Epic card, 3 Resurrection Scrolls
+- ✅ Combat quests only (Defeat, Mini-Boss, Survival, Speed Clear, Perfect Victory)
+- ❌ NO reroll option (Phase 2)
+- ❌ NO named mobs (Phase 2)
+- ❌ NO economy/collection quests (Phase 2)
 
 **Energy System**:
-- ✅ Tutorial battles (Stages 1-1 to 1-4): 0 Energy (unlosable)
+- ✅ Tutorial battles (Battles 1-1 to 1-4): 0 Energy (unlosable)
 - ✅ Post-tutorial battles: 10 Energy per battle
-- ✅ Daily refill: 240 Energy/day (24 battles max)
+- ✅ Daily Quest battles: 10 Energy per quest (same as campaign)
+- ✅ Daily refill: 240 Energy/day (24 battles max = campaign OR quests OR mix)
 - ✅ Starting Energy: 100 (10 battles to start)
 - ✅ **Energy Banking**: Can exceed 100 max (daily login rewards stack, unclaimed refills bank)
 - ✅ **Natural AFK moment**: F2P depletes 100 Energy → Log out → 8h later: 100 Energy + healed cards
 
 **Deliverables**:
-- [ ] CampaignManager C# class (stage unlocking, progression tracking, 3-star rating)
-- [ ] Stage Select UI (world map view, 9 stage icons per world, lock/unlock states)
+- [ ] CampaignManager C# class (World/Territory/Realm/Battle hierarchy, progression tracking, 3-star rating)
+- [ ] World/Territory Map UI (static list-based, progress bars showing "Territory 2: 7/10 Battles ⏳")
+- [ ] Realm Progress UI (battle list with star ratings, lock/unlock states)
+- [ ] **QuestBoardManager C# class** (5 quest slots, /con difficulty, refresh timers, spawn pool generation)
+- [ ] **Quest Board UI** ("Bounty Board" button on main menu, color-coded difficulty, timer display)
+- [ ] **Spawn Pool System** (JSON defines enemy deck generation, weighted RNG, power scaling)
 - [ ] 3-star rating system (turn count, deaths, hero health tracking)
-- [ ] Enemy AI decks (72 pre-built decks, JSON data files)
-- [ ] Daily Challenge system (random stage selection, timer, 2× rewards multiplier)
+- [ ] Enemy AI decks (~60-80 fixed campaign decks + spawn pool system for quests)
+- [ ] Daily midnight reset (quest refresh, PlayerPrefs timer tracking)
 - [ ] Replay rewards reduction (50% Gold/XP after first clear)
+- ❌ Loot drop system (Phase 2 - defer for balancing)
+- ❌ Named mob spawns (Phase 2)
+- ❌ Campaign Nightmare Mode (Phase 2)
 
 **What Moves to Phase 2**:
 - ❌ Realm Map (40-tile hex grid) - Phase 2 Months 4-6
