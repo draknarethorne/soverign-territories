@@ -1228,22 +1228,22 @@ Uncommon Knight (2★)
 
 [Tutorial Text]:
 "Cards keep HP between battles. Dead cards can't be used until healed!"
-"Visit the Hospital to heal cards with Gold, or wait for free AFK regen."
+"Visit the Temple to heal cards with Gold, or wait for free AFK regen."
 
-[Button: "🏥 Visit Hospital" (tutorial forces this)]
+[Button: "⛪ Visit Temple" (tutorial forces this)]
 
-**Player Action**: Taps "Visit Hospital" button
+**Player Action**: Taps "Visit Temple" button
 
 **System Actions**:
 1. Save HP values to PlayerPrefs (persist between battles)
 2. Mark damaged cards in deck collection (yellow/red HP bars)
-3. Open Hospital UI (tutorial screen)
-4. Show Hospital tutorial (next step)
+3. Open Temple UI (tutorial screen)
+4. Show Temple tutorial (next step)
 
 **Why Show HP Summary After First Battle**:
 - ✅ **Immediate consequence**: Player sees damage they just took
-- ✅ **Introduces Hospital**: Natural flow (damage → healing screen)
-- ✅ **No interruption**: Just info + Hospital button (not forced decision)
+- ✅ **Introduces Temple**: Natural flow (damage → healing screen)
+- ✅ **No interruption**: Just info + Temple button (not forced decision)
 - ✅ **Strategic awareness**: "Cards don't auto-heal, I need to manage this"
 
 **Total Cards After Step 23**: 31 cards total, Knight now 2★ (consumes 1 duplicate)
@@ -1269,16 +1269,16 @@ Uncommon Knight (2★)
 
 ---
 
-### Step 23A: Hospital UI Tutorial (NEW - After First Battle)
+### Step 23A: Temple UI Tutorial (NEW - After First Battle)
 
-**Context**: Player just saw HP damage summary, clicked "Visit Hospital" button
+**Context**: Player just saw HP damage summary, clicked "Visit Temple" button
 
-**Scene**: Hospital screen (main menu accessible after tutorial)
+**Scene**: Temple screen (main menu accessible after tutorial)
 
 **UI Display**:
 ```
 ╔═══════════════════════════════════════════════════════╗
-║                    🏥 HOSPITAL                        ║
+║                    ⛪ TEMPLE                          ║
 ║         (Active Deck: 20/50 cards)                    ║
 ║         (Inventory: 💰 500 Gold, 📜 5 Scrolls)        ║
 ╠═══════════════════════════════════════════════════════╣
@@ -1313,7 +1313,7 @@ Uncommon Knight (2★)
 ```
 
 [Tutorial Text]:
-"Welcome to the Hospital! Damaged cards heal Health AND Mana automatically."
+"Welcome to the Temple! Damaged cards heal Health AND Mana automatically."
 "BUT - dead cards (0 HP) are FROZEN! They need Gold OR Resurrection Scrolls."
 
 [Tutorial Pointer]: Points to Healer "[Resurrect: 20 Gold] OR [Use 1 Scroll 📜]"
@@ -1362,7 +1362,7 @@ Uncommon Knight (2★)
 "- Epic deaths (80-160 Gold): Use scrolls (save tons of Gold!)"
 "- You earn 4 scrolls/week from daily login + 7 scrolls/week from missions = 10-15 scrolls/week!"
 
-[Tutorial Auto-Selects]: "Skip Healing" (closes Hospital, teaches F2P-friendly strategy)
+[Tutorial Auto-Selects]: "Skip Healing" (closes Temple, teaches F2P-friendly strategy)
 
 [Button: "Continue to Realm Map"]
 
@@ -1371,12 +1371,12 @@ Uncommon Knight (2★)
 **System Actions**:
 1. Start AFK regen timers for damaged cards in active deck (save to PlayerPrefs: `lastLogoutTime`)
 2. Healer remains at 0/10 HP (frozen, no AFK regen until resurrected)
-3. Hospital button in main menu shows badge: "🏥 Hospital (4 damaged, 1 dead)"
+3. Temple button in main menu shows badge: "⛪ Temple (4 damaged, 1 dead)"
 4. Deck builder shows HP bars (yellow/red for damaged, green for healthy)
-5. Dead Healer grayed out in deck builder: "💀 DEAD - Must resurrect in Hospital (20 Gold)"
+5. Dead Healer grayed out in deck builder: "💀 DEAD - Must resurrect in Temple (20 Gold)"
 6. Return to Realm Map
 
-**Why Hospital Tutorial Matters**:
+**Why Temple Tutorial Matters**:
 - ✅ **F2P friendly**: Log out when Energy depletes → Cards heal automatically while offline!
 - ✅ **Healer value**: Keep units alive in battle = avoid 2× resurrection costs
 - ✅ **Gold sink**: Whales spam "HEAL ALL" (47 Gold), F2P uses AFK regen + reserves

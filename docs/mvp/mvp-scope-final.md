@@ -228,7 +228,7 @@ Pre-Battle (Stage 1-2):
   [Deck Builder shows HP status]:
   ✅ Water Mage (60/80, 75% HP) - READY (yellow HP bar)
   ⚠️ Knight #1 (10/30, 33% HP) - RISKY (red HP bar)
-  ❌ Healer (0/20, DEAD) - CAN'T USE (red X icon, "Visit Hospital")
+  ❌ Healer (0/20, DEAD) - CAN'T USE (red X icon, "Visit Temple")
   ✅ Archer (8/15, 53% HP) - READY (yellow HP bar)
   ✅ Scout (15/15, 100% HP) - READY (green HP bar)
   ✅ Knight #2 (25/30, 83% HP) - READY (green HP bar)
@@ -241,8 +241,8 @@ Pre-Battle (Stage 1-2):
 
   [Player Options]:
   Option A: Replace dead Healer with Archer #2 (free, deck rotation)
-  Option B: Visit Hospital screen → Heal Healer for 20 Gold (instant)
-  Option C: Visit Hospital screen → Heal All for 55 Gold (whale convenience)
+  Option B: Visit Temple screen → Heal Healer for 20 Gold (instant)
+  Option C: Visit Temple screen → Heal All for 55 Gold (whale convenience)
   Option D: Wait AFK, Healer auto-heals 1 HP per 10 min (3.3 hours to full)
   
 Selected Formation:
@@ -262,8 +262,8 @@ Why 20-card deck matters:
 - [ ] **TacticData.cs** (ScriptableObject: effect type, trigger condition, stat modifiers, cooldowns)
 - [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
-- [ ] **Hospital UI** (main menu screen: list damaged cards, show HP + Mana, individual heal buttons, HEAL ALL button)
-- [ ] **HospitalManager.cs** (track card HP + Mana, AFK regen timers, Gold payment OR Scroll usage for resurrection)
+- [ ] **Temple UI** (main menu screen: list damaged cards, show HP + Mana, individual heal buttons, HEAL ALL button)
+- [ ] **TempleManager.cs** (track card HP + Mana, AFK regen timers, Gold payment OR Scroll usage for resurrection)
 - [ ] **AFK Regen System** (Health: 1 HP per 10 min, Mana: 1 per 2 min, ONLY for cards in active deck 6-50 cards)
   - **Active Deck** (6-50 cards): AFK regen ACTIVE (Health 1 per 10 min, Mana 1 per 2 min, offline progression)
   - **Codex Storage**: AFK regen PAUSED (⏸️ no healing until added back to active deck)
@@ -278,7 +278,7 @@ Why 20-card deck matters:
 - [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
 - [ ] **Attack system** (click enemy in range, calculate damage with tactic modifiers, death animation)
 - [ ] **Auto-Battle AI** (tactic-aware: prioritize targets, use cooldowns strategically)
-- [ ] **Victory screen UI** (XP/Gold/Card rewards, HP damage summary, "Visit Hospital" button)
+- [ ] **Victory screen UI** (XP/Gold/Card rewards, HP damage summary, "Visit Temple" button)
 
 ---
 

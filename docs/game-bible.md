@@ -1529,11 +1529,11 @@ Sovereign Territories uses a **6-slot active deck** system (not card stacking on
 - **Effect**: Select 1 card, restore to full HP immediately
 ---
 
-### Hospital UI (Healing Management Screen)
+### Temple UI (Healing Management Screen)
 
 **Design Philosophy**: **Non-Intrusive Healing Management**
 
-Instead of forcing healing decisions after every battle, players access a **Hospital screen** (like Deck Builder or Shop) to manage damaged cards. This creates:
+Instead of forcing healing decisions after every battle, players access a **Temple screen** (like Deck Builder or Market) to manage damaged cards. This creates:
 - ✅ **Better UX**: No popup blocking progression after battles
 - ✅ **Strategic planning**: Visit when ready (like visiting Blacksmith in RPGs)
 - ✅ **AFK engagement**: "Check back in 2 hours, cards healed!"
@@ -1543,17 +1543,17 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 
 ---
 
-### Hospital Screen UI
+### Temple Screen UI
 
 **Main Menu Button**:
 ```
-🏥 Hospital (4 cards damaged) ⚠️
+⛪ Temple (4 cards damaged) ⚠️
 ```
 
-**Hospital Screen** (Accessible anytime):
+**Temple Screen** (Accessible anytime):
 ```
 ╔═══════════════════════════════════════════════════════╗
-║                    🏥 HOSPITAL                        ║
+║                    ⛪ TEMPLE                          ║
 ║         (Inventory: 💰 500 Gold, 📜 5 Scrolls)        ║
 ╠═══════════════════════════════════════════════════════╣
 ║ ACTIVE DECK (6/50 cards - Healing Active):           ║
@@ -1658,12 +1658,12 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 - **Use Case**: 
   - **Whale behavior**: Tap "HEAL ALL (87 Gold)" → Instant full recovery (HP + Mana + resurrection, ignore scrolls)
   - **F2P mid-tier**: Tap "Use Scrolls + Gold (67 Gold + 1 Scroll)" → Save 20 Gold (strategic)
-- **Button Placement**: Bottom of Hospital screen (prominent, easy tap, shows both payment options)
+- **Button Placement**: Bottom of Temple screen (prominent, easy tap, shows both payment options)
 
 **Option 4: Continue (Use Reserves)**
 - **Cost**: FREE (no Gold)
-- **Effect**: Close Hospital, return to Deck Builder
-- **Deck Builder shows damaged cards**: Yellow/red HP bars, dead cards grayed out with "💀 DEAD - Visit Hospital"
+- **Effect**: Close Temple, return to Deck Builder
+- **Deck Builder shows damaged cards**: Yellow/red HP bars, dead cards grayed out with "💀 DEAD - Visit Temple"
 - **Player choice**: Use partially damaged cards (risky) OR swap in fresh reserves
 - **Use Case**: Normal gameplay, deck rotation strategy
 
@@ -1686,7 +1686,7 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 ║ Healer:            0/10 HP 💀 DEAD     ║
 ║ Knight #2:        30/30 HP ✅          ║
 ║                                        ║
-║ 🏥 Visit Hospital to heal cards        ║
+║ ⛪ Visit Temple to heal cards          ║
 ║ ⏱️ AFK Regen: 1 HP per 10 min (FREE)   ║
 ║ ➡️ [Continue] (closes popup)           ║
 ╚════════════════════════════════════════╝
@@ -1694,9 +1694,9 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 
 **Key Changes from Original Design**:
 - ❌ **Removed**: 4 healing options (A/B/C/D) in Victory popup
-- ✅ **Simplified**: Just show HP damage summary + Hospital reminder
+- ✅ **Simplified**: Just show HP damage summary + Temple reminder
 - ✅ **No interruption**: Player taps "Continue", not forced decision
-- ✅ **Better flow**: Victory → Rewards → Continue → (Optional: Visit Hospital later)
+- ✅ **Better flow**: Victory → Rewards → Continue → (Optional: Visit Temple later)
 
 ---
 
@@ -1710,7 +1710,7 @@ Instead of forcing healing decisions after every battle, players access a **Hosp
 - **After resurrection**: Card restored to 1 HP (scroll) or full HP (Gold), then AFK regen resumes normally
 
 **Deck Builder Restrictions**:
-- **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Must Resurrect in Hospital")
+- **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Must Resurrect in Temple")
 - **Deck builder validation**: Prevents deploying 6-card formation if any card is 0 HP
 - **Error message**: "Healer is dead! Pay 20 Gold OR use 1 Scroll OR swap in reserves."
 
@@ -1768,7 +1768,7 @@ Mana is the **core anti-pay-to-win mechanic** disguised as standard RPG resource
 - **Why faster**: Prevents mana-starvation (Diablo III: mana recovers quickly, health is bottleneck)
 - **F2P strategy**: Log out when mana depletes → Come back in 1-2 hours (mana full, HP still recovering)
 
-**Hospital Integration** (Mana Healing):
+**Temple Integration** (Mana Healing):
 - **Individual heal**: [Heal Health: 20 Gold] [Heal Mana: 30 Gold] (1 Gold per resource)
 - **HEAL ALL**: Restores ALL Health + ALL Mana (one button convenience)
 - **Resurrection**: Restores to 1 HP + 50% mana (so resurrected cards can use tactics immediately)
@@ -1879,14 +1879,14 @@ To prevent "deadlock" (all cards dead/damaged, can't progress):
 **Day 1 - Battle 1-1** (Starting Fresh):
 - Deploy: Epic Water Mage, Knight A, Knight B, Archer, Scout, Healer
 - Result: Healer dies (0/10 HP), Knight A damaged (18/30 HP)
-- Action: Close Victory screen → Return to Realm Map (skip Hospital for now)
+- Action: Close Victory screen → Return to Realm Map (skip Temple for now)
 
 **Day 1 - Battle 1-2** (Deck Rotation):
 - Open Deck Builder: Healer grayed out (💀 DEAD, must resurrect for 20 Gold), Knight A yellow HP bar (18/30, healing in deck)
 - Swap: Healer → **Cleric** (12/12 HP, fresh reserve), Knight A → **Knight C** (30/30 HP, fresh)
 - Deploy: Epic Water Mage (60/80 HP, still healing in deck), Knight C, Knight B, Archer, Scout, Cleric
 - Result: Water Mage damaged (40/80 HP), Cleric dies (0/12 HP)
-- Action: Visit Hospital → Heal Water Mage for 40 Gold (critical hero for boss)
+- Action: Visit Temple → Heal Water Mage for 40 Gold (critical hero for boss)
 
 **Day 1 - Energy Depleted** (F2P Natural Stopping Point):
 - Problem: 100 Energy depleted (10 battles), Healer dead (0/10 HP, frozen), Cleric dead (0/12 HP, frozen), Water Mage damaged (40/80 HP, healing)
@@ -1925,7 +1925,7 @@ To prevent "deadlock" (all cards dead/damaged, can't progress):
 
 **Design Philosophy**: Cards are more than stats - they're **characters with history**
 
-The Hospital/Inn/Codex metaphor creates a natural RPG party feel:
+The Temple/Inn/Codex metaphor creates a natural RPG party feel:
 - **Active Deck**: Adventuring party resting at the inn (healing, drinking ale)
 - **Codex Storage**: Benchwarmers at the tavern (went back to day jobs, healing paused)
 - **Dead Cards**: In the cemetery (awaiting resurrection at the Temple)
@@ -1949,7 +1949,7 @@ Between battles, he works as a bouncer at the Rusty Tankard Inn."
 
 [Epic Water Mage]
 "Once drowned in a lagoon, now controls tides for revenge.
-Hates taverns (reminds her of death), prefers meditating at the Hospital fountain."
+Hates taverns (reminds her of death), prefers meditating at the Temple fountain."
 
 [Healer - 0 HP DEAD]
 "Died saving the Knight from a Goblin ambush. 
@@ -1967,7 +1967,7 @@ Healing paused until you add him back to your active deck."
 
 **Tutorial Integration**:
 - Step 8 (Codex): "Tap a card to read their story!"
-- Step 23A (Hospital): Healer bio updates when dead ("Currently in the cemetery...")
+- Step 23A (Temple): Healer bio updates when dead ("Currently in the cemetery...")
 
 ---
 
@@ -1996,7 +1996,7 @@ Healing paused until you add him back to your active deck."
 
 **Economy Stats**:
 - **Gold Earned**: Total Gold rewards from battles this card participated in
-- **Gold Spent on Healing**: Total Gold spent healing this card (Hospital visits)
+- **Gold Spent on Healing**: Total Gold spent healing this card (Temple visits)
 - **Resurrections**: Times resurrected (Gold vs Scroll breakdown)
 
 **Display**:
@@ -2094,7 +2094,7 @@ Leaderboards reward **skillful play** (tactical battles, formation strategy) AND
 
 **Phase 1 MVP** (Current):
 - ✅ Basic card stats (HP, Mana, Attack, Defense)
-- ✅ Hospital system (healing, resurrection)
+- ✅ Temple system (healing, resurrection)
 - ❌ Card bios (defer to Phase 1.5)
 - ❌ Stat tracking (defer to Phase 2)
 - ❌ Leaderboards (defer to Phase 2)
@@ -2166,7 +2166,7 @@ Leaderboards reward **skillful play** (tactical battles, formation strategy) AND
 - Use AFK regen for all healing (FREE, just time)
 - Rotate between 12-15 cards naturally
 - **Energy depletion = natural logout**: 10 battles (100 Energy) → log out → 8h later = full Energy + healed cards
-- Check Hospital after logging back in (cards healed overnight)
+- Check Temple after logging back in (cards healed overnight)
 - **Time investment**: 10-20 battles/day (100-200 Energy), log out between sessions
 - **Gold spent on healing**: 0 Gold (all AFK regen)
 
