@@ -1180,6 +1180,60 @@ Uncommon Knight (2★)
 
 **Total Cards After Fusion**: 31 cards total, Knight now 2★ (consumes 1 duplicate)
 
+**NEW: HP Damage Summary & Healing Tutorial**:
+```
+[After fusion/rewards, HP summary appears]:
+
+📊 **BATTLE DAMAGE REPORT**
+
+"Your cards took damage in battle. They keep their HP between fights!"
+
+[Card HP Status]:
+  ✅ Epic Water Mage: 60/80 HP (75% HP, green bar)
+    - Took 20 damage from Goblin Chief
+  ✅ Uncommon Knight (2★): 25/30 HP (83% HP, green bar)
+    - Took 5 damage from Goblin Warriors
+  ⚠️ Uncommon Knight (1★): 8/20 HP (40% HP, yellow bar)
+    - Took heavy damage, RISKY to use
+  ✅ Common Archer: 8/10 HP (80% HP, green bar)
+  ✅ Common Scout: 10/10 HP (100% HP, green bar)
+    - Untouched! MVP Scout dodged everything
+  ❌ Common Healer: 0/10 HP (DEAD, red X)
+    - Died protecting Water Mage
+
+[Tutorial Text]:
+"Dead cards rest for 3 stages (auto-heal)."
+"Or heal instantly with Gold!"
+
+[Healing Options]:
+  Option A: [FREE REST] - Healer auto-heals after Stage 1-4 (3 stages from now)
+  Option B: [100 Gold] - Heal Healer to 10/10 HP instantly
+  Option C: [500 Gold] - Heal ALL cards to full HP (bundle discount)
+  Option D: [Continue] - Use reserves, swap in fresh cards
+
+[Tutorial Auto-Selects]: Option D (Continue)
+"For tutorial, use your reserve cards! Healer will rest."
+
+[Button: "Continue"]
+```
+
+**Player Action**: Taps "Continue" (tutorial doesn't force Gold spending)
+
+**System Actions**:
+1. Save HP values to PlayerPrefs (persist between battles)
+2. Mark Healer as "Resting" (grayed out for 3 stages: 1-2, 1-3, 1-4)
+3. Auto-heal Healer at Stage 1-5 (stage counter check)
+4. Show deck builder with HP bars before next battle
+
+**Why Show HP Tutorial After First Battle**:
+- ✅ **Immediate consequence**: Player sees damage they just took
+- ✅ **Deck size matters**: "Oh, I need backups for injured cards!"
+- ✅ **Healer value**: "Healers save Gold by restoring HP mid-battle"
+- ✅ **Gold sink**: Whales can spam heal, F2P rotates deck naturally
+- ✅ **Strategic depth**: Save strong cards for bosses, use fresh reserves for grinding
+
+**Total Cards After Step 23**: 31 cards total, Knight now 2★ (consumes 1 duplicate)
+
 **System Actions**:
 1. Award Bronze Chest: 50 Gold, 100 XP, 20 Food, 1 Common card
 2. Update HUD: Gold (4,500 → 4,550), XP (0 → 100/250), Food (0 → 20)
