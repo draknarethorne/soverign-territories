@@ -187,7 +187,7 @@ This document outlines the visual asset requirements, art style guidelines, and 
 - 🍖 Food (resource currency, Phase 2)
 - 🪵 Lumber (resource currency, Phase 2)
 - ⚒️ Ore (resource currency, Phase 2)
-- 🎟️ Arena Tokens (PvP currency, Phase 3)
+- 🎫 Colosseum Tokens (PvP currency, Phase 3)
 
 ### Stat Icons
 - ⚔️ Attack (offensive power)

@@ -12,7 +12,7 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - **Gold**: Earned through gameplay, cannot be bought (F2P fairness)
 - **Gems**: Premium currency, whale advantage but limited by weekly caps
 - **Food/Lumber/Ore**: Resource currencies (Phase 2 - deferred post-MVP)
-- **Arena Tokens**: PvP skill-based currency (Phase 3 - post-MVP)
+- **Colosseum Tokens**: PvP skill-based currency (Phase 3 - post-MVP)
 - **Energy**: Stamina system to limit grinding (MVP)
 
 **Design Philosophy**: Multiple currencies ensure whales cannot buy everything. Gold is identical for F2P and whales, creating fair progression. Gems provide whale advantage but are limited by weekly purchase caps ($136/week max).
@@ -194,7 +194,7 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - Season Rewards: Top 100 players get exclusive Mythic cards
 
 **F2P vs Whale Balance**:
-- Arena Tokens CANNOT be bought with Gems (pure skill)
+- Colosseum Tokens CANNOT be bought with Gems (pure skill)
 - Whales with weak decks earn LESS than skilled F2P players
 - Matchmaking uses Deck Power brackets (see [combat-calculation-spec.md](combat-calculation-spec.md))
 
@@ -252,9 +252,9 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 
 **TODO: Should resource bundles exist? (creates pay-to-win path if whales can buy Food with Gold)**
 
-**PvP Store** (Arena Tokens - Phase 3):
-- Exclusive Cards: 500-5,000 Arena Tokens
-- Exclusive Equipment: 1,000-10,000 Arena Tokens
+**PvP Store** (Colosseum Tokens - Phase 3):
+- Exclusive Cards: 500-5,000 Colosseum Tokens
+- Exclusive Equipment: 1,000-10,000 Colosseum Tokens
 - Season Rewards: Mythic cards for top players
 
 **TODO: Design PvP Store exclusive cards (create desirable chase cards without balance issues)**
@@ -353,7 +353,7 @@ Sovereign Territories uses a **multi-currency economy** to prevent whale dominan
 - ❌ Resource Store (trade Food/Lumber/Ore for Gold)
 
 ### Phase 3 (Month 4-6)
-- ❌ Arena Tokens (PvP wins, skill-based)
+- ❌ Colosseum Tokens (PvP wins, skill-based)
 - ❌ PvP Store (exclusive cards, equipment)
 - ❌ Season leaderboards (top 100 Mythic rewards)
 

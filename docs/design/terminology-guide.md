@@ -192,11 +192,11 @@
 - **Spending**: Realm Map movement (1 Movement Point per hex)
 - **Example**: "You have 7/10 Movement Points (can move 7 hexes today)."
 
-### Arena Tokens (PvP Currency, Phase 3)
-- **Display**: Arena Tokens (with sword icon)
+### Colosseum Tokens (PvP Currency, Phase 3)
+- **Display**: Colosseum Tokens (with sword icon)
 - **Earning**: PvP wins (10 Tokens), PvP losses (2 Tokens)
 - **Spending**: PvP Market exclusive cards/equipment
-- **Example**: "Buy a PvP-exclusive Legendary card for 5,000 Arena Tokens."
+- **Example**: "Buy a PvP-exclusive Legendary card for 5,000 Colosseum Tokens."
 
 ---
 

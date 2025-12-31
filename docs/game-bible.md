@@ -2045,7 +2045,7 @@ Leaderboards reward **skillful play** (tactical battles, formation strategy) AND
 **2. Weekly Leaderboards** (Reset Every Monday):
 - **Weekly Top Killers**: Most kills this week (F2P can compete!)
 - **Weekly Top Campaign Progress**: Furthest stage cleared (Stage 3-7 vs Stage 1-9)
-- **Weekly Arena Wins**: Most PvP victories (Phase 3, matchmade 1v1)
+- **Weekly Colosseum Wins**: Most PvP victories (Phase 3, matchmade 1v1)
 - **Weekly Gold Earned**: Highest Gold rewards (whale metric, but F2P can optimize)
 
 **3. Campaign-Level Leaderboards** (Per World):
@@ -3772,7 +3772,7 @@ Total Power: 1,750 (175% player power, within 150-200% range)
   - Different bosses, rewards, cosmetics based on choices
   - Replay opposite alignment for completionist content
 - **Weekly Boss Hunt**: 1 super-hard boss/week, community leaderboard
-  - Top 100: 1,000 Arena Tokens (equivalent to 10 weeks grinding)
+  - Top 100: 1,000 Colosseum Tokens (equivalent to 10 weeks grinding)
   - Top 10: Exclusive Mythic card skin
   - Participation: 500 Gold + 50 Gems (everyone who attempts)
 
@@ -4160,7 +4160,7 @@ See standalone specs for engineering:
 6. **Ore** (**PHASE 2** - AFK gathering, production buildings, auto-collection)
 
 **Phase 3 Currency Types** (Month 4-6 - **DEFERRED POST-LAUNCH**):
-7. **Arena Tokens** (**PHASE 3** - PvP ranked match rewards, skill-based, cannot buy)
+7. **Colosseum Tokens** (**PHASE 3** - PvP ranked match rewards, skill-based, cannot buy)
 
 **No "Coins" Separate Currency**: Real money purchases use Gems directly (simplicity, no conversion confusion).
 
@@ -4390,15 +4390,15 @@ See standalone specs for engineering:
 
 ---
 
-## 5.5.7 Arena Tokens (PvP Currency) - **PHASE 3** ❌ **NOT IN MVP**
+## 5.5.7 Colosseum Tokens (PvP Currency) - **PHASE 3** ❌ **NOT IN MVP**
 
-**For complete Arena Token economy details, see [economy-system.md](economy-system.md) Phase 3 section**
+**For complete Colosseum Token economy details, see [economy-system.md](economy-system.md) Phase 3 section**
 
-**MVP Status**: Arena Tokens are deferred to Phase 3 (Month 4-6). MVP is single-player tutorial + Realm Map PvE only (no PvP).
+**MVP Status**: Colosseum Tokens are deferred to Phase 3 (Month 4-6). MVP is single-player tutorial + Realm Map PvE only (no PvP).
 
 **Definition**: Exclusive currency earned from ranked PvP matches, usable only in PvP Market.
 
-**Sources** (How Players Earn Arena Tokens):
+**Sources** (How Players Earn Colosseum Tokens):
 - **Ranked Match Victory**: 10-50 Tokens (scales with bracket: Bronze = 10, Mythic = 50)
 - **Ranked Match Loss**: 5 Tokens (participation reward, encourages trying)
 - **Weekly Ranking Rewards**:
@@ -4413,21 +4413,21 @@ See standalone specs for engineering:
 - **Active Player**: 20 matches/week × 20 Tokens = 400 Tokens/week
 - **Competitive Player**: 50 matches/week × 30 Tokens + weekly ranking = 2,000+ Tokens/week
 
-**Sinks** (How Players Spend Arena Tokens):
+**Sinks** (How Players Spend Colosseum Tokens):
 - **PvP-Exclusive Packs**:
-  - Arena Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards only)
+  - Colosseum Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards only)
   - Gladiator Booster: 1,000 Tokens (5 cards, guaranteed Epic, PvP-exclusive Epics)
 - **PvP-Exclusive Cards**:
-  - Arena Champion Hero: 2,000 Tokens (Legendary hero, only obtainable in PvP Market)
+  - Colosseum Champion Hero: 2,000 Tokens (Legendary hero, only obtainable in PvP Market)
   - Tournament Tactician: 500 Tokens (Epic support card, PvP utility focus)
 - **Cosmetic Items**:
-  - Arena Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion" titles)
+  - Colosseum Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion" titles)
   - Ranked Card Back: 1,000 Tokens (exclusive card back for ranked players)
   - Victory Emote: 300 Tokens (special emote for PvP matches)
 
 **Store Separation**:
-- **Cannot Buy with Gold/Gems**: Arena Tokens only obtainable through PvP
-- **Cannot Trade**: Arena Tokens are account-bound (prevents farming on alt accounts)
+- **Cannot Buy with Gold/Gems**: Colosseum Tokens only obtainable through PvP
+- **Cannot Trade**: Colosseum Tokens are account-bound (prevents farming on alt accounts)
 - **Result**: PvP players have exclusive content (rewards skill, not spending)
 
 ---
@@ -4602,26 +4602,26 @@ See standalone specs for engineering:
 
 ---
 
-### PvP Market (Arena Tokens Only)
+### PvP Market (Colosseum Tokens Only)
 
 **Purpose**: Exclusive rewards for ranked PvP players, encourages competitive play.
 
-**Currency**: Arena Tokens (cannot use Gold/Gems/resources).
+**Currency**: Colosseum Tokens (cannot use Gold/Gems/resources).
 
 **Items Available**:
 
 **PvP-Exclusive Packs**:
-- Arena Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards)
+- Colosseum Champion Pack: 500 Tokens (5 cards, guaranteed Rare, PvP-themed cards)
 - Gladiator Booster: 1,000 Tokens (5 cards, guaranteed Epic, PvP-exclusive Epics)
-- Mythic Arena Pack: 5,000 Tokens (10 cards, 1 Legendary, best PvP cards)
+- Mythic Colosseum Pack: 5,000 Tokens (10 cards, 1 Legendary, best PvP cards)
 
 **PvP-Exclusive Cards** (Cannot Get from Other Packs):
-- Arena Champion (Legendary Hero): 2,000 Tokens (Fire element, 40 Attack/50 Health, PvP-focused abilities)
+- Colosseum Champion (Legendary Hero): 2,000 Tokens (Fire element, 40 Attack/50 Health, PvP-focused abilities)
 - Tournament Tactician (Epic Unit): 500 Tokens (Support unit, +10% Attack to all allies in PvP)
 - Duelist's Blade (Epic Equipment): 800 Tokens (+5 Attack, +1 Range, PvP-only equipment)
 
 **Cosmetic Items**:
-- Arena Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion", "Legend" titles, display in profile)
+- Colosseum Title Badge: 200-500 Tokens ("Gladiator", "Duelist", "Champion", "Legend" titles, display in profile)
 - Ranked Card Back: 1,000 Tokens (exclusive card back, shows rank tier: Bronze/Silver/Gold/Mythic)
 - Victory Emote Pack: 300 Tokens (5 emotes: "Good Game", "Well Played", "Oops", "Thinking", "GG")
 - Mythic Frame: 2,000 Tokens (golden animated border for profile, prestige item)
@@ -4631,7 +4631,7 @@ See standalone specs for engineering:
 - Season 1 Emote: 500 Tokens (limited-time cosmetic, never available again)
 
 **Store UI**:
-- **Tab 1: Packs** (Arena Champion, Gladiator Booster, Mythic Arena Pack)
+- **Tab 1: Packs** (Colosseum Champion, Gladiator Booster, Mythic Colosseum Pack)
 - **Tab 2: Cards** (PvP-exclusive Legendaries, Epics, Equipment)
 - **Tab 3: Cosmetics** (Titles, card backs, emotes, frames)
 - **Tab 4: Seasonal** (Limited-time items, resets monthly)
@@ -4728,7 +4728,7 @@ See standalone specs for engineering:
 - **Food**: 240 (AFK Granary) + 100 (5 battles × 20) = **340 Food/day** (surplus after 100 Food spent on battles)
 - **Lumber**: 240 (AFK Sawmill) + 100 (5 battles × 20) = **340 Lumber/day**
 - **Ore**: 120 (AFK Mine) + 50 (5 battles × 10) = **170 Ore/day**
-- **Arena Tokens**: 50 (5 PvP matches × 10) = **50 Tokens/day** (if active in PvP)
+- **Colosseum Tokens**: 50 (5 PvP matches × 10) = **50 Tokens/day** (if active in PvP)
 - **Energy**: 240 (natural refill) + 100 (starting) = **340 Energy/day** (enough for 34 battles, capped at 24)
 
 **Weekly Earnings** (F2P Active Player):
@@ -4737,19 +4737,19 @@ See standalone specs for engineering:
 - **Food**: 2,380/week (enough for 119 battles + building upgrades)
 - **Lumber**: 2,380/week (enough for 23 equipment crafts + building upgrades)
 - **Ore**: 1,190/week (enough for 5 Iron Swords + building upgrades)
-- **Arena Tokens**: 350/week (can buy 1 Arena Champion Pack every 1.5 weeks)
+- **Colosseum Tokens**: 350/week (can buy 1 Colosseum Champion Pack every 1.5 weeks)
 
 **Whale Comparison** ($136/week):
 - **Gold**: Same as F2P (12,180/week, cannot buy Gold with real money)
 - **Gems**: 14,400/week (10× F2P, can buy 144 Premium Standard Packs OR 28 Energy refills/day)
 - **Food/Lumber/Ore**: 10× F2P (AFK production scales with Energy refills → more battles → more chest drops)
-- **Arena Tokens**: Same as F2P (skill-based, cannot buy with money)
+- **Colosseum Tokens**: Same as F2P (skill-based, cannot buy with money)
 
 **Design Philosophy**:
 - **Gold Equality**: F2P and whales earn Gold at same rate (skill and time investment matter)
 - **Gem Advantage**: Whales get 10× Gems (premium packs, energy refills, shortcuts)
 - **Resource Advantage**: Whales get 10× resources (more battles via Energy refills → more chest drops)
-- **Arena Equality**: Whales cannot buy Arena Tokens (PvP rewards skill, not spending)
+- **Colosseum Equality**: Whales cannot buy Colosseum Tokens (PvP rewards skill, not spending)
 - **Deck Power Brackets**: Rarity budget + PvP matchmaking prevent pay-to-win (whales fight whales)
 
 ---
@@ -4776,7 +4776,7 @@ Alliances are guilds for cooperative play, enabling shared resources and joint e
 - Vote on alliance decisions (ally/war declarations)
 
 **What You CAN'T Do Yet**:
-- ❌ Join PvP Arena battles (requires Level 15)
+- ❌ Join PvP Colosseum battles (requires Level 15)
 - ❌ Participate in Alliance Wars (requires Level 30)
 - ❌ Deploy to active PvP maps (requires Level 20)
 
@@ -4788,12 +4788,12 @@ Alliances are guilds for cooperative play, enabling shared resources and joint e
 
 ---
 
-#### Level 15: Controlled PvP (Matchmade Arenas)
+#### Level 15: Controlled PvP (Matchmade Colosseum)
 **Unlocks**:
-- **1v1 Arena**: Matchmade battles against players within ±3 levels
-- **3v3 Arena**: Team battles with alliance members or random teammates
+- **1v1 Colosseum**: Matchmade battles against players within ±3 levels
+- **3v3 Colosseum**: Team battles with alliance members or random teammates
 - **Bracketed Rewards**: Separate reward pools for Level 15-19, 20-24, 25-29, 30+ brackets
-- **No Territory Loss**: Arena battles don't affect your map territories (safe practice)
+- **No Territory Loss**: Colosseum battles don't affect your map territories (safe practice)
 
 **What You CAN'T Do Yet**:
 - ❌ Deploy to active PvP maps (requires Level 20)
@@ -4855,7 +4855,7 @@ Alliances are guilds for cooperative play, enabling shared resources and joint e
 
 **Why This Level?**:
 - Players have max 40-50 card decks with full Legendary/Mythic options
-- Months of experience in PvE, Arena PvP, and Active PvP Maps
+- Months of experience in PvE, Colosseum PvP, and Active PvP Maps
 - Enough resources to sustain multi-battle campaigns
 - Deep understanding of strategy, formations, and meta
 
@@ -4875,7 +4875,7 @@ Alliances are guilds for cooperative play, enabling shared resources and joint e
 |--------------|----------------------------|----------|-------------------------------|
 | **1-9** | ❌ No alliance access | ✅ Zero (PvE only) | Days 1-7 |
 | **10-14** | ✅ Join alliance, PvE events, chat, donations | ✅ Zero (PvE only) | Week 1-2 |
-| **15-19** | ✅ + Matchmade Arena (1v1/3v3) | ⚠️ Low (no territory loss) | Week 2-4 |
+| **15-19** | ✅ + Matchmade Colosseum (1v1/3v3) | ⚠️ Low (no territory loss) | Week 2-4 |
 | **20-29** | ✅ + Active PvP Maps (opt-in) | ⚠️ Medium (can be raided) | Month 1-3 |
 | **30+** | ✅ + Alliance Wars | ⚠️ High (large-scale wars) | Month 3-6 |
 
@@ -4883,16 +4883,16 @@ Alliances are guilds for cooperative play, enabling shared resources and joint e
 - **Join/Create**: Search or found alliances; invite players (Level 10+).
 - **Hierarchy**: Leader > Generals > Officers > Members; promote via contributions.
 - **Bank**: Shared treasury for donations; funds buffs/tech trees.
-- **Events**: Joint PvE raids (Level 10+), Arena tournaments (Level 15+), Alliance Wars (Level 30+).
+- **Events**: Joint PvE raids (Level 10+), Colosseum tournaments (Level 15+), Alliance Wars (Level 30+).
 - **Ranks**: Based on activity/donations; higher ranks unlock perks.
 - **Limits**: Server-wide caps to prevent monopolies.
 
 ### Player Tips
 - **Level 10-14**: Join active alliance for PvE events; learn coordination in safe environment.
-- **Level 15-19**: Practice PvP in Arenas (no risk) before committing to Active PvP Maps.
+- **Level 15-19**: Practice PvP in Colosseum (no risk) before committing to Active PvP Maps.
 - **Level 20+**: Only opt into Active PvP Maps when you have resources to heal losses.
 - **Level 30+**: Contribute to Alliance Wars for prestige and exclusive Legendary packs.
-- **If you want to experiment early**: Arena PvP at Level 15 lets you test strategies without consequences.
+- **If you want to experiment early**: Colosseum PvP at Level 15 lets you test strategies without consequences.
 
 ## 6.2 Chat & Diplomacy
 
@@ -5475,7 +5475,7 @@ Progression uses **two parallel systems**: Player Level (account-wide, unlocks f
 
 **Key Unlocks**:
 - **Level 10**: Alliance join, PvE events, 25-30 card decks
-- **Level 15**: Arena PvP (1v1/3v3), secondary castles (up to 5)
+- **Level 15**: Colosseum PvP (1v1/3v3), secondary castles (up to 5)
 - **Level 20**: Active PvP Maps (open-world), Realm Map, 35-40 card decks
 - **Level 30**: Max deck size (50 cards), Alliance Wars, all content unlocked
 

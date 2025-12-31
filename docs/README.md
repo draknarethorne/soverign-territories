@@ -92,7 +92,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 | **Equipment** | Sockets, Jewels/Runes, stats | [equipment-schema.json](specs/equipment-schema.json) | Phase 2 |
 | **RPG Stats** | Health/Mana/Stamina, consumables | [rpg-systems-spec.md](design/rpg-systems-spec.md) | Phase 2 |
 | **Map Tiers** | World/Territory/Realm/Battle hierarchy | [map-schema.json](specs/map-schema.json), [map-tier-progression.md](design/map-tier-progression.md) | Phase 3 |
-| **PvP** | Arena, Territory Wars, Alliance Wars | [matchmaking-schema.json](specs/matchmaking-schema.json), [alliance-schema.json](specs/alliance-schema.json) | Phase 3 |
+| **PvP** | Colosseum, Territory Wars, Alliance Wars | [matchmaking-schema.json](specs/matchmaking-schema.json), [alliance-schema.json](specs/alliance-schema.json) | Phase 3 |
 
 ---
 
@@ -191,7 +191,7 @@ docs/
 - **Dual System**: Player Level (account-wide, deck size) vs Castle Level (per-territory, building slots)
 - **Player Level Unlocks**:
   - Level 10: Alliance join, PvE events
-  - Level 15: Matchmade Arena PvP (1v1/3v3)
+  - Level 15: Matchmade Colosseum PvP (1v1/3v3)
   - Level 20: Active PvP Maps (opt-in open-world)
   - Level 30: Alliance Wars (50v50)
 
@@ -223,7 +223,7 @@ docs/
 - Roguelike Expeditions (random board, mini-battles)
 
 **Phase 3** (PvP & Endgame):
-- **Arena PvP**: 1v1/3v3 matchmaking, ELO brackets
+- **Colosseum PvP**: 1v1/3v3 matchmaking, ELO brackets
 - **Territory Wars**: 10v10 alliance battles, castle sieges
 - **World Map**: 200-500 territories, 3-month seasons, 50v50 wars
 

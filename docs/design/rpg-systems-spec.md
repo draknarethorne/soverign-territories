@@ -322,7 +322,7 @@ Sovereign clicks Yes: +10 Movement Points, moves 5 hexes, 5 MP remain for tomorr
 **Future Shops** (Phase 3+):
 - Jeweler: Equipment Sockets (Jewel/Rune slots)
 - Blacksmith: Equipment crafting (Lumber/Ore recipes)
-- PvP Market: Arena Token exclusives
+- PvP Market: Colosseum Token exclusives
 
 ---
 
@@ -449,7 +449,7 @@ Mythic Dragon Armor (3 sockets)
 
 **Earning Sources**:
 - Boss battles: 1× Rune (guaranteed from Epic/Legendary bosses)
-- PvP Arena rewards: 1-3 Runes (top 100 players)
+- PvP Colosseum rewards: 1-3 Runes (top 100 players)
 - Jeweler Shop: 2,000-10,000 Gold (rare, cannot buy with Gems)
 
 ---

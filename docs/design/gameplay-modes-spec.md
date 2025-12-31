@@ -11,7 +11,7 @@
 Sovereign Territories offers multiple gameplay modes catering to different playstyles:
 - **MVP**: Realm Map PvE (tutorial + progression)
 - **Phase 2**: Alliance PvE Events, Daily/Weekly Challenges
-- **Phase 3**: Territory Map conquest, Arena PvP, Alliance Wars
+- **Phase 3**: Territory Map conquest, Colosseum PvP, Alliance Wars
 - **Phase 4**: World Map seasons, Expeditions
 
 ---
@@ -149,20 +149,20 @@ Large-scale events where alliances coordinate to complete objectives. Mix of PvE
 
 ---
 
-## 4.5 Arena PvP (Phase 3 - Ranked 1v1/3v3)
+## 4.5 Colosseum PvP (Phase 3 - Ranked 1v1/3v3)
 
 **For matchmaking details, see [combat-calculation-spec.md](combat-calculation-spec.md) Appendix**
 
 ### Overview
-Competitive PvP unlocked at Player Level 15. Features Elo-based matchmaking and Arena Token rewards (cannot be purchased).
+Competitive PvP unlocked at Player Level 15. Features Elo-based matchmaking and Colosseum Token rewards (cannot be purchased).
 
 ### How to Play
 - **Entry**: Player Level 15+, deck with 20-50 cards
 - **Modes**: 
-  - **1v1 Arena**: Standard ranked, Elo matchmaking
+  - **1v1 Colosseum**: Standard ranked, Elo matchmaking
   - **3v3 Brawl**: Team battles, shared Elo (need 2 friends or auto-match)
 - **Seasons**: 3-month cycles, Elo resets to 50% of previous season
-- **Rewards**: Arena Tokens (1-10 per win, skill-based scaling)
+- **Rewards**: Colosseum Tokens (1-10 per win, skill-based scaling)
 
 ### Matchmaking Brackets (Prevents Pay-to-Win)
 - **Bronze** (Elo 0-999): New players, basic decks
@@ -176,7 +176,7 @@ Competitive PvP unlocked at Player Level 15. Features Elo-based matchmaking and 
 - **Brackets**: ±20% deck power variance (prevents whale stomping)
 - **Example**: 120-point deck fights 96-144 point decks only
 
-**TODO: Design Arena Token economy (how many tokens for Epic/Legendary cards?)**  
+**TODO: Design Colosseum Token economy (how many tokens for Epic/Legendary cards?)**  
 **TODO: Create seasonal reward tiers (end-of-season rewards based on final Elo?)**  
 **TODO: Define 3v3 team dynamics (shared health pool, separate armies, tag-team?)**
 
@@ -277,7 +277,7 @@ Quick objectives that reset daily/weekly for bonus rewards. Encourages return pl
 - **Battle Chests**: Instant rewards (Gold/XP/cards), Bronze/Silver/Gold tiers
 - **Pack Opening**: Collector appeal, Standard/Element/Epic Boosters
 - **AFK Resources**: Phase 2 economy (Food/Lumber/Ore from occupied Realms)
-- **Arena Tokens**: Phase 3 PvP currency (skill-based, cannot buy)
+- **Colosseum Tokens**: Phase 3 PvP currency (skill-based, cannot buy)
 
 ---
 
@@ -289,7 +289,7 @@ Quick objectives that reset daily/weekly for bonus rewards. Encourages return pl
 | Saga Campaign | Phase 2 | 10+ | ❌ Post-MVP |
 | Daily/Weekly Challenges | Phase 2 | 5+ | ❌ Post-MVP |
 | Alliance PvE Events | Phase 2 | 10+ | ❌ Post-MVP |
-| Arena PvP (1v1/3v3) | Phase 3 | 15+ | ❌ Post-MVP |
+| Colosseum PvP (1v1/3v3) | Phase 3 | 15+ | ❌ Post-MVP |
 | Territory Map Conquest | Phase 3 | 10+ | ❌ Post-MVP |
 | Expeditions (Board Game) | Phase 4 | 15+ | ❌ Post-MVP |
 | World Map Seasons | Phase 4 | 20+ | ❌ Post-MVP |

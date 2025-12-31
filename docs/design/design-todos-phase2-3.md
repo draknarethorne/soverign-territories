@@ -410,7 +410,7 @@ This document consolidates all **36 open TODOs** from game-bible.md, combat-calc
   - **Impact**: Player experience
   - **Recommendation**: Require 7-day membership before events, auto-kick <50% participation
 
-- [ ] ⏳ **TODO 74**: Design Arena Token economy (how many tokens for Epic/Legendary cards?)
+- [ ] ⏳ **TODO 74**: Design Colosseum Token economy (how many tokens for Epic/Legendary cards?)
   - **Source**: gameplay-modes-spec.md:179
   - **Impact**: PvP grind
   - **Recommendation**: Epic 500 tokens (50 wins), Legendary 2,000 tokens (200 wins) = 2-4 week grind

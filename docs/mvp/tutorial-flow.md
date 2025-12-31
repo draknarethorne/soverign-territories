@@ -1630,7 +1630,7 @@ Unlocked:
 [Button: "Continue Playing"]
 ```
 
-**MVP Market Note**: Only Pack Market and Battle Pass are available in MVP. Resource Market (Food/Lumber/Ore), Arena Market (PvP Tokens), and Realm Map are deferred to Phase 2.
+**MVP Market Note**: Only Pack Market and Battle Pass are available in MVP. Resource Market (Food/Lumber/Ore), Colosseum Market (PvP Tokens), and Realm Map are deferred to Phase 2.
 
 **Player Action**: Taps "Continue Playing"
 
@@ -1660,7 +1660,7 @@ Unlocked:
 **Why Simplified Market for MVP?**:
 - ✅ **No Gem Purchases Yet**: Players must reach Level 5 before Gem Market unlocks (prevents impulse buying in first hour)
 - ✅ **No Resource Market**: Food/Lumber/Ore economy is Phase 2 (not in MVP)
-- ✅ **No PvP Market**: Arena Tokens are Phase 3 (not in MVP)
+- ✅ **No PvP Market**: Colosseum Tokens are Phase 3 (not in MVP)
 - ✅ **Gold Sinks**: Players can spend tutorial Gold on packs immediately (retention hook)
 
 3. **Daily Login Rewards** (starts next login):
