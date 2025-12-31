@@ -530,28 +530,33 @@ After Trainer Deck reveal animation completes:
 
 ---
 
-## Phase 4: Realm Map Introduction (8-10 Minutes)
+## Phase 4: Campaign Mode Introduction (8-10 Minutes)
 
-### Step 12: Map Camera Intro & Movement System
-**Screen**: Realm Map - Tutorial Start
+### Step 12: Campaign World Select
+**Screen**: Campaign Mode - World 1 Selection
 ```
-[Camera: Zoomed out view of Realm Map]
-[Background: Lush green terrain with fog of war covering 70% of map]
+[Camera: Campaign world selection screen]
+[Background: Stylized map of 8 worlds in a branching path]
 
-[HUD Elements]:
-- Top-Right: Movement Points (10/10, green footstep icon)
-- Top-Left: Energy (100/100, yellow lightning icon)  
-- Top-Center: Food (0), Lumber (0), Ore (0)
+[Header: "Campaign Mode - Begin Your Journey"]
 
-[Visible: Start tile (glowing green), Path tiles leading to Enemy (2 tiles away)]
-[Fog: Everything else hidden]
+[World 1: Goblin Plains] - UNLOCKED (glowing green)
+  - Icon: Goblin face on green grasslands
+  - Progress: 0/9 stages completed
+  - [TAP TO START] button (pulsing)
+
+[Worlds 2-8: LOCKED] (grayed out, padlock icons)
+  - World 2: Bandit Forests (requires World 1 completion)
+  - World 3: Orc Wastelands
+  - World 4: Undead Crypts
+  - World 5: Dragon Peaks
+  - World 6: Demon Wastes
+  - World 7: Celestial Realm
+  - World 8: Void Dimension
 
 [Tutorial Overlay]:
-"This is the Realm Map - your army's battlefield!"
-[Arrow pointing to Start tile]
-
-[Your Army Icon: Epic Water Mage portrait + "11 units" badge]
-[Enemy Spawn Icon: Goblin face + "6 units" badge]
+"Complete stages to unlock new worlds and face epic bosses!"
+[Arrow pointing to World 1]
 
 [Button: "Next"] (advances tutorial)
 ```
@@ -585,49 +590,50 @@ After Trainer Deck reveal animation completes:
 
 ---
 
-### Step 13: Movement Tutorial
-**Screen**: Move Your Army
+### Step 13: Stage 1-1 - First Campaign Battle
+**Screen**: Stage Select - World 1
 ```
-[Tutorial Overlay]:
-"Tap adjacent tiles to move. You can move 3 tiles before your turn ends!"
-[Arrow pointing from your army to first path tile]
-[Movement Range: Green highlight on 3 adjacent tiles]
+[Header: "World 1: Goblin Plains - Stage Select"]
 
-[After first move]:
-"Great! Keep moving to the enemy camp."
-[Goblin camp now 1 tile away, pulsing red]
+[9 stage icons in horizontal row]:
+  Stage 1-1: UNLOCKED (green glow, "START" button)
+    - Enemy: Goblin Raiders (3-card deck)
+    - Rewards: 100 Gold, 1 Common card
+    - First Time Bonus: Tutorial stage (0 Energy)
+  
+  Stages 1-2 to 1-9: LOCKED (grayed out, padlock icons)
+    - "Complete Stage 1-1 to unlock"
 
-[Movement Points HUD: Updates from 10/10 → Still 10/10 (turn hasn't ended yet)]
+[Tutorial Text]:
+"Your first battle! Defeat the Goblin Raiders to progress."
+[Arrow pointing to Stage 1-1 START button]
+
+[Player taps START]
+
+[Battle Confirmation]:
+"Stage 1-1: Goblin Raiders"
+  - Enemy Power: 50 (3 Common cards)
+  - Your Power: 120 (11 cards from Tutorial Deck)
+  - Energy Cost: 0 (Tutorial battle, free)
+  - Buttons: [Begin Battle!] [Cancel]
 ```
 
-**Player Action**: 
-1. Taps first path tile → Army moves (1-second walk animation)
-2. Taps second path tile (enemy camp) → Army reaches enemy camp
-3. Movement complete (2 tiles moved in 1 turn)
+**Player Action**: Taps "Begin Battle!" (0 Energy for tutorial)
 
-**System Actions**:
-1. First tap: Move army 1 tile (no Movement Point cost yet, turn hasn't ended)
-2. Second tap: Move army to enemy tile (triggers battle)
-3. **After battle**: Movement Point cost applied (10/10 → 9/10)
-4. Trigger battle transition
-
-**Movement Point Cost Timing**:
-- **During Tutorial**: Costs applied after battle (player sees "9/10" post-battle)
-- **Tooltip After Battle**: "You used 1 Movement Point this turn. You have 9 left today!"
+**Transition**: Fade to black → Camera zooms from World Map into Battle Map (3-second cinematic)
 
 **Design Decisions Needed**:
-- [ ] Movement animation speed (instant, 0.5 sec/tile, 1 sec/tile?)
-- [ ] Movement path visual (dotted line preview before confirming?)
-- [ ] Can cancel movement mid-animation? (tap elsewhere to stop?)
-
-**Gap**: Movement animation style needs Unity animator setup
+- [ ] World map visual style (branching path? linear row? illustrated map?)
+- [ ] Stage icon design (numbered circles? thematic icons?)
+- [ ] Lock/unlock animation (fade in? slide in? sparkle effect?)
+- [ ] Stage completion indicator (stars below icon? checkmark overlay?)
 
 ---
 
 ### Step 14: Battle Transition
 **Screen**: Battle Start Cinematic
 ```
-[Animation: Camera zooms from Realm Map into Battle Map]
+[Animation: Camera zooms from Campaign World Map into Battle Map]
 [Effect: Screen flash, particle burst]
 [Sound: Battle horn]
 
@@ -1150,22 +1156,36 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 
 ---
 
-### Step 25: Realm Map - 3-5 More Battles
-**Tutorial Goals**:
-1. Defeat 3-5 more easy spawns (2-6 units each)
-2. Reach Player Level 2 (unlock 15-20 card deck size)
-3. Find first resource node (Gold Mine - introduces Economy cards)
-4. Unlock Codex tutorial (after 3 battles)
+### Step 25: Campaign Progression - Stages 1-2 to 1-4
+**Screen**: Stage Select - World 1
+
+[Player progresses through Stages 1-2, 1-3, 1-4]
+[Each stage unlocks the next upon completion]
+
+**Stage Sequence**:
+1. **Stage 1-2**: Goblin Ambush (4-card deck, 80 Power)
+   - Rewards: 150 Gold, 50 XP, 1 Common card
+   - Energy: 10 Energy deducted (100 → 90)
+   - Auto-Battle option now available
+
+2. **Stage 1-3**: Goblin Camp (5-card deck, 120 Power, Uncommon hero)
+   - Rewards: 200 Gold, 75 XP, 1 Uncommon card
+   - Energy: 10 Energy deducted (90 → 80)
+
+3. **Stage 1-4**: Goblin Fortress (6-card deck, 160 Power, Uncommon hero)
+   - Rewards: 250 Gold, 100 XP, 1 Uncommon card
+   - Energy: 10 Energy deducted (80 → 70)
+   - Unlocks Stage 1-5 (mini-boss)
 
 **Rewards Accumulation**:
 - Total XP: 500-700 (reach Level 2)
-- Total Gold: 2,500-3,000
-- Total Cards: 5-8 new cards (mix of Commons/Uncommons)
+- Total Gold: 1,200-1,500 (from Stages 1-1 to 1-4)
+- Total Cards: 4-6 new cards (mix of Commons/Uncommons)
 
 **Design Decisions Needed**:
-- [ ] Tutorial pacing (how many battles before Codex tutorial?)
-- [ ] Enemy difficulty curve (all easy or gradual increase?)
-- [ ] Resource node introduction (when do we teach Economy cards?)
+- [ ] Tutorial pacing (how many stages before Codex tutorial?)
+- [ ] Enemy difficulty curve (gradual increase in deck size + hero rarity)
+- [ ] Energy refill prompts (when to suggest first Energy purchase?)
 
 ---
 
@@ -1202,69 +1222,62 @@ If Auto-Battle results in defeat (should not happen in tutorial, but handle it):
 
 ---
 
-### Step 27: First Treasure Node (Resource Reward) - **MVP**
-**Screen**: Realm Map - Treasure Chest Discovered
+### Step 27: Stage 1-5 - First Mini-Boss Battle
+**Screen**: Stage Select - World 1
 ```
-[Player army explores, reveals Treasure Chest tile]
-[Treasure Chest: Neutral tile, no enemies, sparkling chest icon]
+[Stage 1-5: UNLOCKED] (Boss icon: Goblin Warchief portrait, red glow)
 
-[Tutorial Overlay]:
-"You found a Treasure Node! Defeat the guardian to claim Gold and Gems."
-
-[Player moves army onto Treasure Chest]
-[Prompt: "Battle the Guardian?"]
-  - Battle Now (1 Energy) - Recommended
-  - Skip (can battle later)
-```
-
-**Treasure Node Battle Flow** (MVP Replacement for Economy Cards):
-
-**Phase 2 Note**: Economy card deployment (Granary/Sawmill/Mine) is deferred to Phase 2. MVP uses treasure nodes (one-time Gold/Gems rewards) instead.
-
-**Step 1: Discovery**
-- Player's army moves onto treasure node tile
-- Tutorial text: "Treasure Nodes contain Gold, Gems, and rare cards. Defeat the guardian to claim rewards."
-
-**Step 2: Guardian Battle** (Auto-Win Tutorial)
-```
-[Battle Map 8×8]:
-- Player's Deck: Full 20-card Trainer Deck (same as Step 15-24 battles)
-- Guardian: Weak 3-card deck (1 Common enemy, no hero)
-  - Purpose: Quick win, teaches treasure node combat
-  - Total Power: 50 (player has ~120, guaranteed win)
+[Boss Preview Screen]:
+"⚔️ MINI-BOSS: Goblin Warchief ⚔️"
+Enemy: 7-card deck (Rare hero + 6 units)
+Total Power: 200 (player has ~180, challenging but winnable)
+Rewards: 500 Gold, 100 XP, 1 Rare card (guaranteed)
+Energy Cost: 10 Energy
 
 [Tutorial Text]:
-"This treasure is guarded by a weak enemy. Defeat it to claim the rewards!"
+"Mini-Boss ahead! These battles are harder but give better rewards!"
+"Tip: Use your strongest cards and position them carefully."
 
-[Auto-Battle Option]: "Skip Battle" button (instant win, shows loot)
+[Buttons]:
+  - Begin Battle (10 Energy)
+  - View Enemy Deck (preview cards)
+  - Return (go back to stage select)
 ```
 
-**Step 3: Victory & Loot**
+**Phase 2 Note**: Treasure nodes (Gold/Gems on map tiles) are deferred to Phase 2 Realm Map. MVP uses stage rewards instead.
+
+**Boss Battle Flow**:
+1. Player battles Goblin Warchief (7-card deck, Rare hero)
+2. Battle is harder than previous stages (requires strategy)
+3. Victory awards bonus rewards
+
+**Victory & Rewards**:
 ```
 [Victory Screen]:
-"💰 Treasure Claimed! 💰"
+"⚔️ MINI-BOSS DEFEATED! ⚔️"
 
 Rewards:
-- +300 Gold
-- +10 Gems
-- +1 Uncommon card (random, 80% matches Trainer Deck element)
+- +500 Gold
+- +100 XP
+- +1 Rare card (player choice from 3 options)
 
 [Player Total After]:
-- Gold: 3,300 (3,000 from battles + 300 treasure)
-- Gems: 110 (100 starting + 10 treasure)
-- Cards: 31 (30 from packs + 1 treasure)
+- Gold: ~1,500 (from Stages 1-1 to 1-5)
+- XP: Level 2 (425/600 XP toward Level 3)
+- Cards: 31 (25 starting + 5 from Standard Pack + 1 from boss)
 
-[Button: "Continue Exploring"]
+[Stage 1-6: UNLOCKED] (green glow, next stage available)
+
+[Button: "Continue Campaign"]
 ```
 
-**Why Treasure Nodes Replace Economy Deployment?**:
-- ✅ **Simpler MVP**: No AFK production system, no building management
-- ✅ **Active Engagement**: Player fights for rewards (not passive waiting)
-- ✅ **Paced Rewards**: Treasure nodes scattered on Realm Map (5-10 total), encourages exploration
-- ✅ **Gem Source**: Provides F2P Gem income (10-20 Gems per treasure node)
-- ✅ **Card Rewards**: Uncommon/Rare cards from treasure nodes (no packs needed)
+**Why Mini-Bosses Replace Treasure Nodes?**:
+- ✅ **Simpler MVP**: No map exploration, just stage progression
+- ✅ **Active Engagement**: Boss battles are skill tests, not random loot
+- ✅ **Paced Rewards**: Every 5th stage is a mini-boss (predictable, fair)
+- ✅ **Rare Card Source**: Guaranteed Rare card every mini-boss (collector appeal)
 
-**Total Cards After Step 27**: 30 (after Step 23) + 1 (Treasure Node) = **31 cards**
+**Total Cards After Step 27**: 25 (starting) + 5 (Standard Pack) + 1 (boss) = **31 cards**
 
 ---
 
@@ -1275,26 +1288,30 @@ Rewards:
 "🎉 Tutorial Complete! 🎉"
 
 Unlocked:
-✅ Auto-Battle (fast combat, 1 free retry per battle)
+✅ Auto-Battle (fast combat, skip animations)
 ✅ Battle Speed Settings (1×/2×/4×/Instant)
 ✅ Codex (manage collection, deck builder)
-✅ Realm Map (explore freely, 10-20 tiles)
-✅ **Daily Login Rewards (starts tomorrow)**
-✅ **Pack Store (buy packs with Gold)**
+✅ Campaign Mode (continue World 1, unlock Worlds 2-8)
+✅ **Daily Challenge (bonus rewards, starts tomorrow)**
+✅ **Pack Store (buy packs with Gold or Money)**
+✅ **Battle Pass (optional $4.99/month, exclusive rewards)**
 
 [Rewards]:
-- 1,000 Gold bonus (Total: ~4,300 Gold)
+- 1,000 Gold bonus (Total: ~2,500 Gold)
 - "Tutorial Graduate" title badge
 
 [Button: "Continue Playing"]
 ```
 
-**MVP Store Note**: Only Pack Store is available in MVP. Resource Store (Food/Lumber/Ore) and PvP Store (Arena Tokens) are deferred to Phase 2-3.
+**MVP Store Note**: Only Pack Store and Battle Pass are available in MVP. Resource Store (Food/Lumber/Ore), Arena Store (PvP Tokens), and Realm Map are deferred to Phase 2.
 
 **Player Action**: Taps "Continue Playing"
 
 **System Unlocks**:
-1. **Full Realm Map**: 10-20 tiles, 5-10 treasure nodes, 1 Boss battle (harder difficulty)
+1. **Full Campaign Mode**: 
+   - World 1: Stages 1-6 to 1-9 now unlocked (complete to unlock World 2)
+   - Stage 1-9: Goblin King (World Boss, 12-card deck, Epic/Legendary hero)
+   - Worlds 2-8: Locked (requires World 1 completion)
 
 2. **Pack Store** (MVP - Gold Only):
    ```
@@ -1332,10 +1349,10 @@ Unlocked:
 
 ---
 
-**Total Gold After Tutorial**: ~4,500 Gold (4 Standard Packs OR 3 Element Boosters OR save for Game Deck)
+**Total Gold After Tutorial**: ~2,500 Gold (2 Standard Packs OR 1 Element Booster OR save for Epic Booster)
 
 **Shiny Chance in Tutorial Packs**: 
-- 45 cards opened × 1% shiny rate = **~0.45 average shinies** (36% chance of 1 shiny, 64% chance of 0)
+- 31 cards received × 1% shiny rate = **~0.31 average shinies** (27% chance of 1 shiny, 73% chance of 0)
 
 ---
 
@@ -1346,26 +1363,25 @@ Unlocked:
 ✅ Chosen Trainer Deck (20 cards, 1 Epic guaranteed)  
 ✅ Received Element Booster #1 (5 cards, reinforce element synergy)  
 ✅ Built first deck (20 cards, element-themed)  
-✅ Learned Realm Map navigation  
+✅ Learned Campaign Mode progression  
 ✅ Fought first manual battle (card placement, movement, attack)  
 ✅ Won first battle + **earned Standard Pack** (5 cards, cross-element variety)  
 ✅ Unlocked Auto-Battle  
-✅ Collected 3,500-4,300 Gold from battles  
-✅ Collected 110 Gems (100 starting + 10 from treasure node)  
+✅ Collected 1,500-2,500 Gold from battles  
 ✅ Reached Level 1-2 (100-250 XP)  
 ✅ Introduced to Codex (card management)  
-✅ **Defeated first Treasure Node + earned 1 Uncommon card** (Step 27)  
-✅ **Tutorial Complete: 1,000 Gold bonus** (no pack rewards in MVP)  
-✅ **Daily Login Rewards unlocked** (starts next login, +200 Gold/day)  
+✅ **Defeated mini-boss Stage 1-5 + earned 1 Rare card** (Step 27)  
+✅ **Tutorial Complete: 1,000 Gold bonus**  
+✅ **Daily Challenge unlocked** (starts tomorrow, 2× rewards)  
 
-**Total Collection**: 31 cards (20 Trainer + 5 Element #1 + 5 Standard #1 + 1 Treasure Node reward)
+**Total Collection**: 31 cards (25 starting + 5 from Standard Pack + 1 from mini-boss)
 
 **Player is now ready for**:
-- Realm Map free exploration (5-10 treasure nodes, 1 Boss battle)
-- Pack Store purchases (Standard Pack 1,000 Gold, Element Booster 1,500 Gold)
-- Daily login rewards (Gold every day)
+- Campaign Mode progression (Stages 1-6 to 1-9, unlock World 2)
+- Pack Store purchases (Standard Pack $0.99/1,000 Gold, Battle Pass $4.99/month)
+- Daily Challenge rewards (1 random stage/day, 2× rewards)
 - Deck customization (swap cards in Codex)
-- **Phase 2**: Economy building (deploy buildings on resource nodes for passive gold)
+- **Phase 2**: Realm Map (open-world hex grid, AFK economy, territory control)
 
 ---
 
