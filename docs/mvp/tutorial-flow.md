@@ -1202,35 +1202,24 @@ Uncommon Knight (2★)
     - Died protecting Water Mage
 
 [Tutorial Text]:
-"Dead cards rest for 3 stages (auto-heal)."
-"Or heal instantly with Gold!"
+"Cards keep HP between battles. Dead cards can't be used until healed!"
+"Visit the Hospital to heal cards with Gold, or wait for free AFK regen."
 
-[Healing Options]:
-  Option A: [FREE REST] - Healer auto-heals after Stage 1-4 (3 stages from now)
-  Option B: [100 Gold] - Heal Healer to 10/10 HP instantly
-  Option C: [500 Gold] - Heal ALL cards to full HP (bundle discount)
-  Option D: [Continue] - Use reserves, swap in fresh cards
+[Button: "🏥 Visit Hospital" (tutorial forces this)]
 
-[Tutorial Auto-Selects]: Option D (Continue)
-"For tutorial, use your reserve cards! Healer will rest."
-
-[Button: "Continue"]
-```
-
-**Player Action**: Taps "Continue" (tutorial doesn't force Gold spending)
+**Player Action**: Taps "Visit Hospital" button
 
 **System Actions**:
 1. Save HP values to PlayerPrefs (persist between battles)
-2. Mark Healer as "Resting" (grayed out for 3 stages: 1-2, 1-3, 1-4)
-3. Auto-heal Healer at Stage 1-5 (stage counter check)
-4. Show deck builder with HP bars before next battle
+2. Mark damaged cards in deck collection (yellow/red HP bars)
+3. Open Hospital UI (tutorial screen)
+4. Show Hospital tutorial (next step)
 
-**Why Show HP Tutorial After First Battle**:
+**Why Show HP Summary After First Battle**:
 - ✅ **Immediate consequence**: Player sees damage they just took
-- ✅ **Deck size matters**: "Oh, I need backups for injured cards!"
-- ✅ **Healer value**: "Healers save Gold by restoring HP mid-battle"
-- ✅ **Gold sink**: Whales can spam heal, F2P rotates deck naturally
-- ✅ **Strategic depth**: Save strong cards for bosses, use fresh reserves for grinding
+- ✅ **Introduces Hospital**: Natural flow (damage → healing screen)
+- ✅ **No interruption**: Just info + Hospital button (not forced decision)
+- ✅ **Strategic awareness**: "Cards don't auto-heal, I need to manage this"
 
 **Total Cards After Step 23**: 31 cards total, Knight now 2★ (consumes 1 duplicate)
 
@@ -1252,6 +1241,84 @@ Uncommon Knight (2★)
 - ✅ Card reward destination: Auto-add to Codex with "New!" badge (no prompt)
 - ✅ Achievement notification: Toast notification (top-right, 3-second fade)
 - ✅ **Energy introduction: After chest, before pack (teaches mechanic without blocking)**
+
+---
+
+### Step 23A: Hospital UI Tutorial (NEW - After First Battle)
+
+**Context**: Player just saw HP damage summary, clicked "Visit Hospital" button
+
+**Scene**: Hospital screen (main menu accessible after tutorial)
+
+**UI Display**:
+```
+╔═══════════════════════════════════════════════════════╗
+║                    🏥 HOSPITAL                        ║
+╠═══════════════════════════════════════════════════════╣
+║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
+║ [Heal Now: 20 Gold] [Tutorial highlights this]       ║
+║                                                       ║
+║ [Knight 2★] 25/30 HP           ⏱️ 50m → Full         ║
+║ [Heal Now: 5 Gold]                                   ║
+║                                                       ║
+║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
+║ [Heal Now: 2 Gold]                                   ║
+║                                                       ║
+║ [Healer] 0/10 HP 💀 DEAD       ⏱️ 1h 40m → Full      ║
+║ [Heal Now: 10 Gold]                                  ║
+║                                                       ║
+║ [Scout] 15/15 HP ✅ Healthy (no healing needed)      ║
+║                                                       ║
+║ [Knight 1★] 30/30 HP ✅ Healthy (no healing needed)  ║
+║                                                       ║
+║ 💰 [HEAL ALL: 37 Gold] ← Tutorial highlights this    ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+[Tutorial Text]:
+"Welcome to the Hospital! Damaged cards heal slowly over time (AFK regen)."
+"OR pay Gold to heal instantly. Whales can use HEAL ALL for convenience!"
+
+[Tutorial Pointer]: Points to "HEAL ALL: 37 Gold" button
+
+[Tutorial Text]:
+"For tutorial, let's use free AFK regen. Your cards heal 1 HP per 10 minutes."
+"Healer (0/10 HP) needs 100 minutes (1h 40m) to fully heal."
+
+[Tutorial Auto-Selects]: "Skip Healing" (closes Hospital)
+
+[Button: "Continue to Realm Map"]
+
+**Player Action**: Taps "Continue" (tutorial doesn't force Gold spending)
+
+**System Actions**:
+1. Start AFK regen timers (save to PlayerPrefs: `lastLogoutTime`)
+2. Hospital button in main menu shows badge: "🏥 Hospital (4 damaged)"
+3. Deck builder shows HP bars (yellow/red for damaged, green for healthy)
+4. Dead Healer grayed out in deck builder: "💀 DEAD - Visit Hospital"
+5. Return to Realm Map
+
+**Why Hospital Tutorial Matters**:
+- ✅ **Deck size justification**: "I need 12-15 healthy cards for rotation!"
+- ✅ **Healer value**: "Healers restore HP mid-battle, save Gold costs"
+- ✅ **Gold sink**: Whales spam "HEAL ALL", F2P uses AFK regen
+- ✅ **Mobile engagement**: "Check back in 2 hours, cards healed!"
+- ✅ **Strategic depth**: Save strong cards for bosses, use reserves for grinding
+
+**AFK Regen Formula**:
+- **1 HP per 10 minutes** (real-time, offline progression)
+- **Healer (0/10 HP)**: 100 minutes (1h 40m) to full
+- **Water Mage (60/80 HP)**: 200 minutes (3h 20m) to full
+- **Knight (25/30 HP)**: 50 minutes to full
+- **Archer (8/10 HP)**: 20 minutes to full
+
+**Instant Heal Cost** (Gold Sink):
+- **1 Gold per missing HP** (simple formula)
+- **Water Mage (20 HP missing)**: 20 Gold
+- **Knight (5 HP missing)**: 5 Gold
+- **Archer (2 HP missing)**: 2 Gold
+- **Healer (10 HP missing)**: 10 Gold
+- **HEAL ALL**: 37 Gold total (20+5+2+10)
 
 ---
 

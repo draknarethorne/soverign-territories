@@ -1527,23 +1527,149 @@ Sovereign Territories uses a **6-slot active deck** system (not card stacking on
 **Option B: INSTANT HEAL (Single Card)**
 - **Cost**: 100 Gold per card
 - **Effect**: Select 1 card, restore to full HP immediately
-- **Use Case**: Heal critical hero (Epic Water Mage) for next boss fight
+---
 
-**Option C: INSTANT HEAL (All Cards)**
-- **Cost**: 500 Gold (bundle discount, normally 6 × 100 = 600 Gold)
-- **Effect**: Restore ALL damaged cards to full HP
-- **Use Case**: Whale convenience, urgent PvP tournament, boss rush event
+### Hospital UI (Healing Management Screen)
 
-**Option D: CONTINUE (Use Reserves)**
+**Design Philosophy**: **Non-Intrusive Healing Management**
+
+Instead of forcing healing decisions after every battle, players access a **Hospital screen** (like Deck Builder or Shop) to manage damaged cards. This creates:
+- ✅ **Better UX**: No popup blocking progression after battles
+- ✅ **Strategic planning**: Visit when ready (like visiting Blacksmith in RPGs)
+- ✅ **AFK engagement**: "Check back in 2 hours, cards healed!"
+- ✅ **Whale convenience**: "HEAL ALL" button for instant full-deck recovery
+
+**Inspiration**: Clash of Clans (troop training), AFK Arena (rest system), Darkest Dungeon (Sanitarium)
+
+---
+
+### Hospital Screen UI
+
+**Main Menu Button**:
+```
+🏥 Hospital (4 cards damaged) ⚠️
+```
+
+**Hospital Screen** (Accessible anytime):
+```
+╔═══════════════════════════════════════════════════════╗
+║                    🏥 HOSPITAL                        ║
+╠═══════════════════════════════════════════════════════╣
+║ [Epic Water Mage] 60/80 HP    ⏱️ 3h 20m → Full      ║
+║ [Heal Now: 20 Gold] [Speed Up: 40 Gold (instant)]   ║
+║                                                       ║
+║ [Knight] 25/30 HP              ⏱️ 50m → Full         ║
+║ [Heal Now: 5 Gold] [Speed Up: 10 Gold]              ║
+║                                                       ║
+║ [Archer] 8/10 HP               ⏱️ 20m → Full         ║
+║ [Heal Now: 2 Gold] [Speed Up: 4 Gold]               ║
+║                                                       ║
+║ [Healer] 0/10 HP 💀 DEAD       ⏱️ 1h 40m → Full      ║
+║ [Heal Now: 10 Gold] [Speed Up: 20 Gold (instant)]   ║
+║                                                       ║
+║ [Scout] 15/15 HP ✅ Healthy (no healing needed)      ║
+║                                                       ║
+║ [Knight #2] 30/30 HP ✅ Healthy (no healing needed)  ║
+║                                                       ║
+║ 💰 [HEAL ALL: 37 Gold] ← Whale convenience button   ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+---
+
+### Healing Options (Player Choice)
+
+**Option 1: AFK Regen** (FREE, Passive Healing)
 - **Cost**: FREE (no Gold)
-- **Effect**: Skip healing, build new 6-card deck from reserves
+- **Rate**: **1 HP per 10 minutes** (real-time, offline progression)
+- **Full heal time** = `(Max HP - Current HP) × 10 minutes`
+- **Example**: 
+  - Epic Water Mage (60/80 HP) → 20 HP missing → **200 minutes (3h 20m)** to full
+  - Healer (0/10 HP) → 10 HP missing → **100 minutes (1h 40m)** to full
+- **Use Case**: F2P players, non-urgent battles, overnight healing
+
+**Option 2: Instant Heal (Single Card)**
+- **Cost**: **1 Gold per missing HP**
+- **Effect**: Restore selected card to full HP immediately
+- **Example**: 
+  - Epic Water Mage (60/80 HP) → 20 HP missing → **20 Gold instant heal**
+  - Knight (25/30 HP) → 5 HP missing → **5 Gold instant heal**
+  - Healer (0/10 HP) → 10 HP missing → **10 Gold instant heal**
+- **Use Case**: Heal critical hero for boss fight, selective healing
+
+**Option 3: HEAL ALL (Whale Convenience)**
+- **Cost**: **Sum of all missing HP** (no bundle discount in MVP, add later)
+- **Effect**: Restore ALL damaged cards to full HP instantly
+- **Example**: 
+  - Water Mage (20 HP) + Knight (5 HP) + Archer (2 HP) + Healer (10 HP) = **37 Gold total**
+- **Use Case**: Whale convenience, urgent PvP tournament, boss rush event
+- **Button Placement**: Bottom of Hospital screen (prominent, easy tap)
+
+**Option 4: Continue (Use Reserves)**
+- **Cost**: FREE (no Gold)
+- **Effect**: Close Hospital, return to Deck Builder
+- **Deck Builder shows damaged cards**: Yellow/red HP bars, dead cards grayed out with "💀 DEAD - Visit Hospital"
+- **Player choice**: Use partially damaged cards (risky) OR swap in fresh reserves
 - **Use Case**: Normal gameplay, deck rotation strategy
+
+---
+
+### Victory Screen (Simplified - Info Only)
+
+**After Battle**:
+```
+╔════════════════════════════════════════╗
+║     VICTORY! Stage 1-1 Complete        ║
+╠════════════════════════════════════════╣
+║ Rewards: 50 Gold, 20 Food, 1 Pack     ║
+║                                        ║
+║ HP DAMAGE SUMMARY:                     ║
+║ Epic Water Mage:  60/80 HP ⚠️          ║
+║ Knight:           25/30 HP ⚠️          ║
+║ Archer:            8/10 HP ⚠️          ║
+║ Scout:            15/15 HP ✅          ║
+║ Healer:            0/10 HP 💀 DEAD     ║
+║ Knight #2:        30/30 HP ✅          ║
+║                                        ║
+║ 🏥 Visit Hospital to heal cards        ║
+║ ⏱️ AFK Regen: 1 HP per 10 min (FREE)   ║
+║ ➡️ [Continue] (closes popup)           ║
+╚════════════════════════════════════════╝
+```
+
+**Key Changes from Original Design**:
+- ❌ **Removed**: 4 healing options (A/B/C/D) in Victory popup
+- ✅ **Simplified**: Just show HP damage summary + Hospital reminder
+- ✅ **No interruption**: Player taps "Continue", not forced decision
+- ✅ **Better flow**: Victory → Rewards → Continue → (Optional: Visit Hospital later)
+
+---
+
+### Dead Cards (0 HP)
+
+**Deck Builder Restrictions**:
+- **Dead cards CAN'T be used in battle** (deck builder shows "💀 DEAD - Healing Required")
+- **Deck builder validation**: Prevents deploying 6-card formation if any card is 0 HP
+- **Error message**: "Healer is dead! Visit Hospital or swap in reserves."
+
+**Partially Damaged Cards** (Allowed in Battle):
+- **Yellow HP bar** (50-99% HP): Minor risk, usable
+- **Red HP bar** (1-49% HP): High risk, one hit = death
+- **Player choice**: 
+  - Use Knight 25/30 HP for easy battle (save Gold)
+  - Heal Knight to 30/30 HP for boss fight (spend 5 Gold)
+  - Swap Knight for fresh reserve (free deck rotation)
+
+**AFK Regen Works for Dead Cards**:
+- 0 HP cards heal at same rate (1 HP per 10 min)
+- **Example**: Healer dies (0/10 HP) → 100 minutes to full (1h 40m)
+- **Overnight healing**: Log out at midnight, log in at 8am → 480 min passed = 48 HP healed
 
 ---
 
 ### Auto-Heal Checkpoints (Safety Net)
 
-To prevent "deadlock" (all cards injured, can't progress):
+To prevent "deadlock" (all cards dead/damaged, can't progress):
 
 **Mini-Boss Auto-Heal** (Stage X-5):
 - **Effect**: All cards restored to **50% HP** after mini-boss defeated
@@ -1568,20 +1694,22 @@ To prevent "deadlock" (all cards injured, can't progress):
 **Day 1 - Battle 1-1** (Starting Fresh):
 - Deploy: Epic Water Mage, Knight A, Knight B, Archer, Scout, Healer
 - Result: Healer dies (0/10 HP), Knight A damaged (18/30 HP)
-- Action: Select "Continue" (use reserves)
+- Action: Close Victory screen → Return to Realm Map (skip Hospital for now)
 
 **Day 1 - Battle 1-2** (Deck Rotation):
-- Deploy: Epic Water Mage (still 60/80 HP), **Knight C** (30/30 HP, fresh reserve), **Crossbowman** (15/15 HP, fresh), Archer, Scout, **Cleric** (12/12 HP, replacement healer)
-- Result: Water Mage damaged (40/80 HP), Crossbowman dies
-- Action: Select "100 Gold" (heal Water Mage to full, critical hero)
+- Open Deck Builder: Healer grayed out (💀 DEAD), Knight A yellow HP bar (18/30)
+- Swap: Healer → **Cleric** (12/12 HP, fresh reserve), Knight A → **Knight C** (30/30 HP, fresh)
+- Deploy: Epic Water Mage (60/80 HP), Knight C, Knight B, Archer, Scout, Cleric
+- Result: Water Mage damaged (40/80 HP), Cleric dies
+- Action: Visit Hospital → Heal Water Mage for 20 Gold (critical hero for boss)
 
 **Day 1 - Battle 1-3** (Reserves Depleted):
-- Problem: Only 8 healthy cards left (Water Mage, Knight C, Archer, Scout, Cleric, + 3 low HP units)
-- Solution: Select "FREE REST" → Healer (1-1 death) + Knight A (1-1 damage) + Crossbowman (1-2 death) rest for 3 stages
+- Problem: Healer (0/10 HP, AFK regen 1h 40m left), Cleric (0/12 HP, AFK regen 2h left), Knight A (18/30 HP, AFK regen 2h left)
+- Solution: Use remaining reserves OR wait for AFK regen
 - Deploy: Compromised deck (low HP units, risky)
 
-**Day 2 - Battle 1-4** (Rested Cards Return):
-- Healer, Knight A, Crossbowman auto-heal to full (3 stages passed)
+**Day 2 - Battle 1-4** (AFK Regen Complete):
+- 8 hours passed (480 min) → Healer full (10/10), Cleric full (12/12), Knight A full (30/30)
 - Deploy: Fresh optimal deck again
 - **Deck size matters**: Need 12-15 cards minimum for healthy rotation
 
@@ -1591,7 +1719,7 @@ To prevent "deadlock" (all cards injured, can't progress):
 
 **Without Healers**:
 - Average battle: 2-3 cards damaged (200-300 HP lost)
-- Healing cost: 200-300 Gold OR 3-stage wait
+- Healing cost: 200-300 Gold OR 3.3-5 hours AFK wait
 
 **With Healers**:
 - Healer restores 100-200 HP mid-battle
@@ -1607,22 +1735,22 @@ To prevent "deadlock" (all cards injured, can't progress):
 
 ### F2P vs Whale Behavior
 
-**F2P Players** (Deck Rotation Strategy):
-- Use "FREE REST" after every 2-3 battles
+**F2P Players** (AFK Regen + Deck Rotation):
+- Use AFK regen for all healing (FREE, just time)
 - Rotate between 12-15 cards naturally
-- Avoid Gold healing (save for packs)
-- **Time investment**: 15-20 battles/day (3-4 rest cycles)
+- Check Hospital after 2-4 hours (cards healed)
+- **Time investment**: 15-20 battles/day, log out between sessions
 
 **Mid-Tier Spenders** (Selective Healing):
-- Heal critical heroes (100 Gold) for boss fights
-- Use "FREE REST" for common units
-- Spend 300-500 Gold/day on healing
-- **Convenience**: Skip wait times, progress faster
+- Heal critical heroes (20-50 Gold) for boss fights
+- Use AFK regen for common units
+- Spend 100-300 Gold/day on healing
+- **Convenience**: Skip wait times for important cards, AFK regen for others
 
-**Whales** (Spam Healing):
-- Always select "500 Gold (heal all)" after every battle
+**Whales** (Spam HEAL ALL):
+- Always click "HEAL ALL" button after every 2-3 battles
 - Never wait, never rotate deck
-- Spend 2,000-5,000 Gold/day on healing
+- Spend 500-2,000 Gold/day on healing
 - **Ultimate convenience**: Zero downtime, optimal deck 24/7
 
 ---

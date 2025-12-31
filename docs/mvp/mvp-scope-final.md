@@ -195,10 +195,10 @@ After Battle (Stage 1-1):
   Knight #2: 25/30 HP (83% HP, light damage)
 
 Pre-Battle (Stage 1-2):
-  [Deck Status]:
+  [Deck Builder shows HP status]:
   ✅ Water Mage (60/80, 75% HP) - READY (yellow HP bar)
   ⚠️ Knight #1 (10/30, 33% HP) - RISKY (red HP bar)
-  ❌ Healer (0/20, DEAD) - RESTING (2 stages left, grayed out)
+  ❌ Healer (0/20, DEAD) - CAN'T USE (red X icon, "Visit Hospital")
   ✅ Archer (8/15, 53% HP) - READY (yellow HP bar)
   ✅ Scout (15/15, 100% HP) - READY (green HP bar)
   ✅ Knight #2 (25/30, 83% HP) - READY (green HP bar)
@@ -210,10 +210,10 @@ Pre-Battle (Stage 1-2):
   ... (11 more fresh cards)
 
   [Player Options]:
-  Option A: Replace dead Healer with Archer #2 (free, rotation)
-  Option B: Heal Healer for 100 Gold (instant use)
-  Option C: Heal ALL cards for 500 Gold (whale option)
-  Option D: Wait 2 stages, Healer auto-heals for free
+  Option A: Replace dead Healer with Archer #2 (free, deck rotation)
+  Option B: Visit Hospital screen → Heal Healer for 20 Gold (instant)
+  Option C: Visit Hospital screen → Heal All for 55 Gold (whale convenience)
+  Option D: Wait AFK, Healer auto-heals 1 HP per 10 min (3.3 hours to full)
   
 Selected Formation:
   [Slot 1]: Water Mage (60/80, damaged but strong)
@@ -232,12 +232,15 @@ Why 20-card deck matters:
 - [ ] **TacticData.cs** (ScriptableObject: effect type, trigger condition, stat modifiers, cooldowns)
 - [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
+- [ ] **Hospital UI** (main menu screen: list damaged cards, individual heal buttons, HEAL ALL button)
+- [ ] **HospitalManager.cs** (track card HP, AFK regen timers, Gold payment for instant heal)
+- [ ] **AFK Regen System** (1 HP per 10 min real-time, offline progression, PlayerPrefs save/load)
 - [ ] **BattleMap C# class** (8×8 grid, preset spawn coordinates for 6 player units + 6 enemy units)
 - [ ] **BattleManager singleton** (turn system, tactic activation logic, win/loss detection)
 - [ ] **Movement system** (click unit → highlight valid tiles → click to move, A* pathfinding)
 - [ ] **Attack system** (click enemy in range, calculate damage with tactic modifiers, death animation)
 - [ ] **Auto-Battle AI** (tactic-aware: prioritize targets, use cooldowns strategically)
-- [ ] **Victory screen UI** (XP/Gold/Card rewards, fusion prompt if duplicate earned)
+- [ ] **Victory screen UI** (XP/Gold/Card rewards, HP damage summary, "Visit Hospital" button)
 
 ---
 
