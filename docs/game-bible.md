@@ -1921,6 +1921,244 @@ To prevent "deadlock" (all cards dead/damaged, can't progress):
 
 ---
 
+## Phase 2+ Future Features (Personality, Stats, Leaderboards)
+
+**Design Philosophy**: Cards are more than stats - they're **characters with history**
+
+The Hospital/Inn/Codex metaphor creates a natural RPG party feel:
+- **Active Deck**: Adventuring party resting at the inn (healing, drinking ale)
+- **Codex Storage**: Benchwarmers at the tavern (went back to day jobs, healing paused)
+- **Dead Cards**: In the cemetery (awaiting resurrection at the Temple)
+
+**Phase 2+ Features** will give cards **personality and competitive tracking** beyond combat stats.
+
+---
+
+### Card Personality System (Phase 1.5-2)
+
+**Card Bios** (Flavor Text):
+- **Implementation**: Add `bio: string` to CardData JSON schema
+- **Display**: Long-press card → Modal popup with 1-2 sentence bio
+- **Writer-friendly**: 100 bios in 2-3 hours (minimal effort, huge personality)
+
+**Example Bios**:
+```
+[Common Knight]
+"Spent 10 years guarding Baron Thornwick's castle. 
+Between battles, he works as a bouncer at the Rusty Tankard Inn."
+
+[Epic Water Mage]
+"Once drowned in a lagoon, now controls tides for revenge.
+Hates taverns (reminds her of death), prefers meditating at the Hospital fountain."
+
+[Healer - 0 HP DEAD]
+"Died saving the Knight from a Goblin ambush. 
+Currently awaiting resurrection at the Temple. (Tip: Use a scroll or pay 20 Gold!)"
+
+[Common Archer - Codex Storage]
+"Off-duty guard protecting merchant caravans for extra Gold.
+Healing paused until you add him back to your active deck."
+```
+
+**Monetization Angle** (Phase 3):
+- Premium card skins with alternate bios ("Legendary Healer - Party Animal Edition")
+- Seasonal events change bios ("Winter Festival: Knight is drunk at the inn, -10% ATK")
+- Bio packs: "Unlock 50 character backstories" (0.99 cents, collector appeal)
+
+**Tutorial Integration**:
+- Step 8 (Codex): "Tap a card to read their story!"
+- Step 23A (Hospital): Healer bio updates when dead ("Currently in the cemetery...")
+
+---
+
+### Card Stat Tracking System (Phase 2 - Engagement Hook)
+
+**Persistent Card Stats** (Track per individual card instance):
+
+**Combat Stats**:
+- **Kill Count**: Total enemies killed by this card (all-time)
+- **Killing Blows Dealt**: Final hit on enemy (boss kills tracked separately)
+- **Max Damage Dealt**: Highest single attack (record-breaking moments)
+- **Battles Won**: Number of battles this card participated in (active 6-slot party)
+- **Battles Survived**: Battles where card finished above 0 HP (survival rate %)
+- **Deaths**: Times this card hit 0 HP (resurrection count)
+
+**Support Stats** (Healers, Tanks):
+- **Heal Count**: Total HP healed (for Healer/Cleric cards)
+- **Max Heal**: Largest single heal (record)
+- **Damage Blocked**: Total damage prevented (for tanks with Guardian tactic)
+- **Allies Saved**: Prevented ally deaths via healing/tanking
+
+**Mana Stats**:
+- **Tactics Used**: Total tactic activations (Fireball, Charge, etc.)
+- **Mana Spent**: Total mana consumed across all battles
+- **Ultimate Uses**: High-cost tactic activations (Phoenix Rebirth, Time Warp)
+
+**Economy Stats**:
+- **Gold Earned**: Total Gold rewards from battles this card participated in
+- **Gold Spent on Healing**: Total Gold spent healing this card (Hospital visits)
+- **Resurrections**: Times resurrected (Gold vs Scroll breakdown)
+
+**Display**:
+- **Card Detail Screen**: Tap card → Stats tab (Kill Count: 127, Battles Won: 45, Deaths: 3)
+- **Codex**: Filter by "Most Kills", "Most Heals", "Most Deaths" (sort leaderboard)
+- **Deck Builder**: Hover stat icon → Quick stats tooltip
+
+**Data Structure** (JSON):
+```json
+{
+  "cardInstanceId": "water-mage-001",
+  "stats": {
+    "killCount": 127,
+    "killingBlows": 34,
+    "maxDamage": 95,
+    "battlesWon": 45,
+    "battlesSurvived": 42,
+    "deaths": 3,
+    "healCount": 0,
+    "tacticsUsed": 89,
+    "goldEarned": 2250,
+    "goldSpentHealing": 340,
+    "resurrections": {"gold": 2, "scrolls": 1}
+  }
+}
+```
+
+---
+
+### Hall of Fame / Leaderboards (Phase 2 - Whale Magnet)
+
+**Design Philosophy**: **Competitive prestige** without pay-to-win
+
+Leaderboards reward **skillful play** (tactical battles, formation strategy) AND **dedication** (whales grind more battles, F2P can compete on skill-based metrics).
+
+**Leaderboard Types**:
+
+**1. Global Leaderboards** (All Players):
+- **Top Killers**: Cards with most kills (all-time, player name + card name)
+  - Example: "#1: ScottMelmer's Epic Water Mage - 12,450 kills"
+- **Top Healers**: Cards with most HP healed (all-time)
+- **Top Survivors**: Cards with highest survival rate (Battles Survived / Battles Won)
+- **Top Damage**: Single highest damage dealt (record-breaking moment)
+- **Top Bosses Slain**: Most boss kills (Stage X-5, X-9 mini/world bosses)
+
+**2. Weekly Leaderboards** (Reset Every Monday):
+- **Weekly Top Killers**: Most kills this week (F2P can compete!)
+- **Weekly Top Campaign Progress**: Furthest stage cleared (Stage 3-7 vs Stage 1-9)
+- **Weekly Arena Wins**: Most PvP victories (Phase 3, matchmade 1v1)
+- **Weekly Gold Earned**: Highest Gold rewards (whale metric, but F2P can optimize)
+
+**3. Campaign-Level Leaderboards** (Per World):
+- **World 1 Champions**: Top 100 players who cleared Stage 1-9 (display on World 1 map)
+- **Speed Clears**: Fastest Stage 1-9 clear (turn count, timer)
+- **Perfect Clears**: Cleared Stage 1-9 with 0 deaths (tactical skill metric)
+
+**4. Personal Hall of Fame** (Player's Own Cards):
+- **Your Top 10 Cards**: Sorted by kills, heals, battles won
+- **Card Milestones**: "Epic Water Mage reached 1,000 kills!" (achievement popup)
+- **Retirement Ceremony**: Card reaches 10,000 kills → "Hall of Fame" badge (cosmetic prestige)
+
+**Display Integration**:
+
+**Main Menu**:
+- **Hall of Fame button**: Opens leaderboard screen (Global, Weekly, Campaign tabs)
+- **Your Rank**: "You are #342 in Weekly Top Killers (Epic Water Mage: 127 kills)"
+
+**Card Detail Screen**:
+- **Leaderboard Badge**: "🏆 #1 Global Top Healer" (if card is top 100)
+- **Player Name Display**: "ScottMelmer's Epic Water Mage" (bragging rights)
+
+**Campaign Map**:
+- **World Champions**: Tap Stage 1-9 → Shows Top 10 players who cleared it
+  - "#1: ScottMelmer (2 turns, 0 deaths, Epic Water Mage solo carry)"
+
+**Competitive Hooks**:
+
+**Whale Incentive**:
+- Grind more battles → More kills → Leaderboard dominance
+- Buy Energy Refills → More battles/day → Faster progression
+- "I want MY Epic Water Mage at #1 Global Killers!"
+
+**F2P Incentive**:
+- Weekly leaderboards reset → Fresh competition every Monday
+- Skill-based metrics (Perfect Clears, Survival Rate) → Tactical mastery matters
+- Personal Hall of Fame → Compete with yourself, not whales
+
+**Social Sharing** (Phase 3):
+- "My Epic Water Mage just hit 1,000 kills! #SovereignTerritories" (Twitter/Discord share button)
+- Screenshot card stats → Post to in-game guild chat
+
+---
+
+### Implementation Roadmap (When to Build This)
+
+**Phase 1 MVP** (Current):
+- ✅ Basic card stats (HP, Mana, Attack, Defense)
+- ✅ Hospital system (healing, resurrection)
+- ❌ Card bios (defer to Phase 1.5)
+- ❌ Stat tracking (defer to Phase 2)
+- ❌ Leaderboards (defer to Phase 2)
+
+**Phase 1.5** (Post-Launch Polish):
+- ✅ Card bios (1-2 sentence flavor text)
+- ✅ Basic stat tracking (Kill Count, Battles Won only)
+- ❌ Leaderboards (wait for player base)
+
+**Phase 2** (Major Update 1-2 months post-launch):
+- ✅ Full stat tracking (Kills, Heals, Max Damage, etc.)
+- ✅ Global Leaderboards (Top Killers, Top Healers)
+- ✅ Weekly Leaderboards (reset every Monday)
+- ✅ Personal Hall of Fame (player's own cards)
+
+**Phase 3** (3-6 months post-launch):
+- ✅ Campaign-Level Leaderboards (World Champions)
+- ✅ Social sharing (Twitter, Discord, in-game guild chat)
+- ✅ Premium card skins with alternate bios
+- ✅ Seasonal events (bios change, "Winter Festival drunk Knight")
+
+---
+
+### Why This Works (Design Rationale)
+
+**1. Cards Become Characters**:
+- Not just "Epic Water Mage #3", but "**My** Epic Water Mage with 1,200 kills"
+- Attachment → Harder to quit (sunk cost fallacy, but positive!)
+- "I can't abandon my Knight - he's been with me since Stage 1-1!"
+
+**2. Competitive Without Pay-to-Win**:
+- Whales grind more battles (leaderboard dominance)
+- F2P compete on skill (Perfect Clears, Survival Rate, Weekly resets)
+- Both groups engaged (different motivations, same systems)
+
+**3. Engagement Loops**:
+- "Just 50 more kills until my Water Mage hits 1,000!" (grind motivation)
+- "I'm #15 on Weekly Top Killers - if I play 10 more battles, I could hit Top 10!" (FOMO)
+- "My Healer just saved 100 allies - new record!" (personal achievement)
+
+**4. Sticky Retention**:
+- Week 1: "I'm learning the game"
+- Week 4: "My Epic Water Mage has 500 kills - I can't quit now!"
+- Week 12: "I'm #42 Global Top Killers - almost Top 10!"
+- Week 24: "My card is in the Hall of Fame (10,000 kills) - I'm a legend!"
+
+**5. Future-Proof**:
+- Card bios → Premium skins (monetization)
+- Stat tracking → Achievements (retention)
+- Leaderboards → Esports potential (Phase 4: tournaments, sponsored events)
+
+---
+
+**Design Notes**:
+- Keep Phase 1 MVP focused (ship core gameplay)
+- Document future features NOW (don't forget these goldmine ideas)
+- Card bios = 2-3 hour writer task (Phase 1.5 quick win)
+- Stat tracking = 1 week dev (Phase 2 major update)
+- Leaderboards = 2 weeks dev + backend (Phase 2, after player base exists)
+
+**The Vision**: Cards aren't disposable resources - they're **your party**, with history, personality, and legendary status. This transforms "card game" into "RPG party management" (thematic depth without mechanics complexity).
+
+---
+
 ### F2P vs Whale Behavior
 
 **F2P Players** (AFK Regen + Deck Rotation + Avoid Deaths):
