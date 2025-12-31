@@ -168,6 +168,67 @@ Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
 - [ ] **CardFusionManager.cs** (combine duplicates, star rank up, stat recalculation)
 - [ ] **FusionUI scene** (drag duplicates to fuse, show before/after stats, border glow animation)
 - [ ] **DeckBuilderUI scene** (6-slot selection grid, tactic attachment UI, auto-fill button)
+- [ ] **CardHPPersistence system** (save HP values between battles, show HP bars on deck screen)
+- [ ] **HealingSystem.cs** (Gold cost heal, rest timer, checkpoint auto-heals)
+
+**Persistent HP System** (NEW - deck size matters):
+- ✅ **Cards keep HP between battles** (don't auto-heal to full after victory)
+- ✅ **Dead/injured cards rest for 3 stages** (auto-heal after) OR heal instantly with Gold
+- ✅ **Heal costs**: 
+  - 100 Gold per card (instant full HP)
+  - 500 Gold for all cards (bundle discount)
+- ✅ **Auto-heal checkpoints**: 
+  - 50% HP restore after mini-boss (Stage X-5)
+  - 100% HP restore after world boss (Stage X-9)
+- ✅ **Deck rotation strategy**: Use fresh cards (100% HP) while injured ones rest
+- ✅ **Healer value**: Heal allies mid-battle to reduce post-battle Gold costs
+- ✅ **Visual feedback**: HP bars on deck selection screen (green=>yellow=>red)
+
+**Example HP Flow**:
+```
+After Battle (Stage 1-1):
+  Epic Water Mage: 60/80 HP (took 20 damage, still usable)
+  Knight #1: 10/30 HP (33% HP, risky to use)
+  Healer: 0/20 HP (DEAD, must rest OR heal)
+  Archer: 8/15 HP (53% HP, usable but weak)
+  Scout: 15/15 HP (100% HP, untouched)
+  Knight #2: 25/30 HP (83% HP, light damage)
+
+Pre-Battle (Stage 1-2):
+  [Deck Status]:
+  ✅ Water Mage (60/80, 75% HP) - READY (yellow HP bar)
+  ⚠️ Knight #1 (10/30, 33% HP) - RISKY (red HP bar)
+  ❌ Healer (0/20, DEAD) - RESTING (2 stages left, grayed out)
+  ✅ Archer (8/15, 53% HP) - READY (yellow HP bar)
+  ✅ Scout (15/15, 100% HP) - READY (green HP bar)
+  ✅ Knight #2 (25/30, 83% HP) - READY (green HP bar)
+  
+  [Available Reserves]:
+  ✅ Archer #2 (15/15, 100% HP) - FRESH
+  ✅ Scout #2 (15/15, 100% HP) - FRESH
+  ✅ Knight #3 (30/30, 100% HP) - FRESH
+  ... (11 more fresh cards)
+
+  [Player Options]:
+  Option A: Replace dead Healer with Archer #2 (free, rotation)
+  Option B: Heal Healer for 100 Gold (instant use)
+  Option C: Heal ALL cards for 500 Gold (whale option)
+  Option D: Wait 2 stages, Healer auto-heals for free
+  
+Selected Formation:
+  [Slot 1]: Water Mage (60/80, damaged but strong)
+  [Slot 2]: Knight #3 (30/30, FRESH from reserves)
+  [Slot 3]: Archer #2 (15/15, FRESH from reserves)
+  [Slot 4]: Archer #1 (8/15, wounded but usable)
+  [Slot 5]: Scout (15/15, undamaged)
+  [Slot 6]: Knight #2 (25/30, light damage)
+
+Why 20-card deck matters:
+  - 6 cards in battle took damage
+  - 14 cards fresh in reserves
+  - Need backups for injured rotation
+  - Smaller deck = forced healing costs (monetization)
+```
 - [ ] **TacticData.cs** (ScriptableObject: effect type, trigger condition, stat modifiers, cooldowns)
 - [ ] **BattleFormationUI** (pre-battle screen showing 6 selected cards + attached tactics)
 - [ ] **Star rank visuals** (★★★ display on cards, border colors: Bronze/Silver/Gold/Platinum)
@@ -189,10 +250,13 @@ Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
 - ✅ Camera: Top-down isometric, drag to pan, pinch to zoom
 
 **Manual Combat**:
-- ✅ Drag cards from hand to place on board (1 card = 1 unit)
+- ✅ 6-card formation spawns on grid (preset positions based on slot numbers)
 - ✅ Click unit to select, click tile to move (highlight valid moves)
-- ✅ Click enemy to attack (simple damage = Attack - Defense)
+- ✅ Click enemy to attack (damage = ATK - DEF, tactic modifiers applied)
 - ✅ Turn-based: Player → AI → Player (no simultaneous moves)
+- ✅ **HP Reduction**: Units lose HP when attacked, die at 0 HP
+- ✅ **Healer Mechanics**: Healer units can target allies to restore HP (reduces post-battle Gold costs)
+- ✅ **Tactic Activation**: Passive tactics (always on), Active tactics (click to activate with cooldowns)
 
 **Auto-Battle**:
 - ✅ AI plays both sides (skip animation option)
@@ -203,20 +267,30 @@ Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
 - ✅ XP gained (50-200 based on enemy difficulty)
 - ✅ Gold reward (50-200 based on enemy difficulty)
 - ✅ Card reward (1-3 cards based on stage, duplicates trigger fusion prompt)
+- ✅ **HP Damage Summary**: Show which cards took damage, current HP vs max HP
+- ✅ **Healing Options**:
+  - Free: Dead cards rest for 3 stages (grayed out in deck)
+  - 100 Gold: Heal 1 card to full HP instantly
+  - 500 Gold: Heal all cards to full HP (bundle discount)
+- ✅ **Auto-Heal Checkpoints**: Mini-boss (X-5) = 50% HP restore, World boss (X-9) = 100% HP restore
 - ✅ Battle chest opening (Bronze tier for MVP)
 - ✅ **Fusion Prompt** (if duplicate earned): "You have 2 Knights! Fuse to rank up?"
-- ✅ Pack reward (Element Booster at tutorial Steps 23, 27)
 
 **Deliverables**:
 - [ ] **CardFusionManager.cs** (combine duplicates, star rank up, stat recalculation)
 - [ ] **FusionUI scene** (drag duplicates to fuse, show before/after stats, border animation)
-- [ ] **DeckBuilderUI scene** (6-slot selection, tactic attachment, auto-fill options)
+- [ ] **DeckBuilderUI scene** (6-slot selection, tactic attachment, auto-fill options, HP bars)
+- [ ] **CardHPPersistence.cs** (save HP values after battle, load into deck builder, rest timer)
+- [ ] **HealingSystem.cs** (Gold cost validation, instant heal, rest countdown, checkpoint auto-heal)
 - [ ] **TacticData.cs** (ScriptableObject for tactic effects, triggers, cooldowns)
-- [ ] **BattleFormationUI** (show 6 selected cards + tactics before battle starts)
+- [ ] **BattleFormationUI** (show 6 selected cards + tactics + current HP before battle starts)
 - [ ] **BattleMap C# class** (8×8 grid, preset spawn positions for 6 units)
-- [ ] **BattleManager singleton** (turn system, tactic activation, win/loss conditions)
+- [ ] **BattleManager singleton** (turn system, tactic activation, HP tracking, win/loss conditions)
 - [ ] **Movement system** (click unit → click tile, A* pathfinding)
-- [ ] **Attack system** (click enemy, damage calculation, tactic modifiers, remove unit)
+- [ ] **Attack system** (click enemy, damage calculation, HP reduction, tactic modifiers, death animation)
+- [ ] **Healing mechanics** (Healer targets ally, restore HP, show heal numbers)
+- [ ] **Auto-Battle AI** (tactic-aware: prioritize targets, use cooldowns, heal allies when low HP)
+- [ ] **VictoryScreen UI** (XP/Gold/Cards, HP damage summary, healing options, fusion prompts)
 - [ ] **Auto-Battle AI** (basic targeting, tactic-aware behavior)
 - [ ] **Victory screen UI** (XP/Gold/Card display, fusion prompt for duplicates)
 - [ ] **Star rank visuals** (★★★ display, border colors: Bronze/Silver/Gold/Platinum)
