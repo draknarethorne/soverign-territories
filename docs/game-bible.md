@@ -632,11 +632,32 @@ Separate from battle decks, building decks contain cards for structures. Players
 
 ### Tactics
 
-Tactics are AI modules that program auto-battle behavior. Attach them to heroes or units for customized strategies.
+**Dual-Purpose Design**: Tactics serve TWO complementary roles:
+1. **AI Instructions** - Control targeting, movement, activation conditions (who/what/when)
+2. **Gameplay Effects** - Stat buffs, abilities, spells, status effects (how much damage/healing)
 
-- **Examples**: "Focus Healers" (prioritize healing targets), "Flank Left" (maneuver around enemies).
-- **How They Work**: Equipped to stacks; AI follows the tactic during auto-battle. Overrides default behavior for tactical depth.
-- **Inspiration from Chess Engines**: Pre-programmed strategies, like Stockfish's opening books.
+**Why Both Matter**:
+- **AI Instruction alone** = Smart targeting but no power (e.g., "Heal Hero" targets Epic hero instead of random unit)
+- **Effect alone** = Power but dumb AI (e.g., "50 HP heal" wastes on full-HP unit)
+- **AI + Effect together** = Strategic depth ("Heal Hero when <70% HP" + "50 HP heal" = saves your Legendary from death)
+
+**Examples** (AI Instruction + Effect):
+- **"Heal Hero"**: AI targets heroes with lowest HP% (not just lowest HP value) + Restore 50 HP
+- **"Boss Slayer"**: AI prioritizes highest-HP enemy (ignore weak units) + Deal +50% damage vs 200+ HP enemies
+- **"Fireball Barrage"**: AI casts on boss/high-HP target + 200 fire damage AOE (25 mana cost)
+- **"Kite & Shoot"**: AI maintains 3-tile distance from enemies + +1 attack range
+- **"Guardian"**: AI moves to frontline and draws aggro + Taunt (enemies attack this unit first)
+
+**How They Work**: 
+- Attach to cards in deck builder (drag-and-drop)
+- Tactic slots = star rank (1★ = 1 tactic, 6★ = 6 tactics)
+- AI reads attached tactics during auto-battle to choose actions
+- Manual control overrides AI (player chooses targets/movement)
+
+**Inspiration**: 
+- **Chess Engines** (Stockfish opening books = pre-programmed strategies)
+- **Final Fantasy XII Gambit System** (if ally HP <50% → cast Cure)
+- **Dragon Age: Origins** Tactics (if self HP <30% → drink potion)
 
 ## Tactic Data Model (Engine Schema)
 
@@ -2402,25 +2423,39 @@ Leaderboards reward **skillful play** (tactical battles, formation strategy) AND
 
 ### Tactic Types (Persistent Battle Effects)
 
-**Category 1: Stat Buffs** (Passive Bonuses)
+**Category 1: Combat AI Tactics** (Control How Units Fight):
+- **"Aggressive Assault"**: AI moves toward nearest enemy + +10% damage on first attack
+- **"Defensive Stance"**: AI stays in back row (don't chase) + +20% block chance while stationary
+- **"Boss Slayer"**: AI prioritizes highest-HP enemy (200+ HP) + +50% damage vs bosses
+- **"Swarm Tactics"**: AI targets weakest enemy (finish kills) + Gain +5% attack per kill (stacking)
+
+**Category 2: Healing AI Tactics** (Control Who Gets Healed):
+- **"Heal Hero"**: AI targets hero with lowest HP% (not just lowest HP) + Restore 50 HP (0 mana, passive)
+- **"Heal Lowest HP"** (Default): AI targets any ally with lowest HP + Restore 50 HP (0 mana, passive)
+- **"Heal All Allies"** (AOE): AI activates when 3+ allies below 50% HP + Restore 30 HP to ALL allies (20 mana)
+- **"Heal Self"** (Selfish): AI only heals self when below 30% HP + Restore 80 HP to self (0 mana, passive)
+
+**Category 3: Movement AI Tactics** (Control Positioning):
+- **"Flanking Maneuver"**: AI moves around enemy (target back row) + +2 movement range
+- **"Hold the Line"**: AI stays in starting position (defend tile) + +30% defense while stationary
+- **"Kite & Shoot"**: AI maintains 3-tile distance from enemy + +1 attack range
+- **"Charge Forward"**: AI moves maximum distance toward enemy + First attack deals +50% damage
+
+**Category 4: Spell Targeting Tactics** (Control Ability Usage):
+- **"Fireball Barrage"**: AI casts on highest-HP enemy (boss priority) + 200 fire damage + 50 AOE splash (25 mana)
+- **"Frost Nova"**: AI casts when 3+ enemies within 2 tiles + 100 ice damage + slow (-1 movement, 2 turns, 30 mana)
+- **"Lightning Strike"**: AI casts on enemy with highest attack + 150 lightning damage + 10% stun chance (20 mana)
+- **"Holy Light"**: AI casts when ally hero <30% HP + 100 HP heal + remove 1 debuff (cleanse, 20 mana)
+
+**Category 5: Status Effect Tactics** (Control Debuff Application):
+- **"Poison Strike"**: AI applies on first attack + 10 damage/turn for 3 turns (30 total DoT)
+- **"Stun Bash"**: AI prioritizes stunning highest-attack enemy + 20% chance to stun (skip 1 turn)
+- **"Armor Break"**: AI applies debuff on tankiest enemy + -30% defense for 3 turns (team benefits)
+
+**Category 6: Stat Buffs** (Passive Bonuses, No AI Logic):
 - **"Ice Armor"**: +20 HP (increases max HP permanently)
 - **"Arcane Bolt"**: +10 ATK (increases damage dealt)
 - **"Speed Boost"**: +2 Movement (extra tiles per turn)
-
-**Category 2: Abilities** (Active Skills)
-- **"Charge"**: Once per battle, move 2 tiles + attack (+50% damage)
-- **"Mass Heal"**: Once per battle, heal all allies 50 HP (AOE)
-- **"Ambush"**: First attack each battle = guaranteed crit (2× damage)
-
-**Category 3: Status Effects** (Applied to Enemies)
-- **"Frostbite"**: Attacks slow enemy (-1 movement for 2 turns)
-- **"Poison Strike"**: Attacks apply 10 damage/turn for 3 turns
-- **"Stun Bash"**: 20% chance to stun enemy (skip 1 turn)
-
-**Category 4: Defensive** (Damage Mitigation)
-- **"Guardian"**: Taunt (enemies attack this unit first)
-- **"Mana Shield"**: Absorb 50 damage (blocks first hit)
-- **"Defensive Ward"**: +20% block chance (reduce damage by 50%)
 
 ---
 

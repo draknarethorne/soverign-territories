@@ -10,17 +10,19 @@
 ## MVP Philosophy
 
 **Core Focus**: Prove the game loop works before adding complexity.
-- ✅ Tutorial (28 steps, 0-60 minutes, gets Sovereign to Level 2)
-- ✅ Deck building (6 Trainer Deck options, 20-card decks)
+- ✅ Tutorial (discovery-based, 5-minute onboarding, achievement rewards)
+- ✅ Deck building (6-slot formation, tactic attachment, star ranks)
 - ✅ Pack opening (Standard/Element/Epic Packs, collector appeal)
-- ✅ Realm Map exploration (40 Locations, HoMM-style movement)
-- ✅ Simple combat (Attack/Defense, no RPG stats yet)
+- ✅ **Crafting System** (scroll-based, targeted card acquisition, fixes RNG hell) ⭐ NEW - MVP Critical
+- ✅ **Async Arena PvP** (matchmade battles, Colosseum Tokens, skill-based rewards) ⭐ NEW - MVP Critical
+- ✅ Campaign Mode (60-80 battles, 4 Territories, 9 Realms, boss fights)
+- ✅ Combat (8×8 tactical grid, auto-battle + manual, tactic AI control)
 - ❌ No Food/Lumber/Ore economy (Phase 2)
-- ❌ No PvP (Phase 3)
+- ❌ No live PvP (async only for MVP, live in Phase 2)
 - ❌ No alliances (Phase 3)
 - ❌ No Territory/World Maps (Phase 3)
 
-**Success Metric**: Player completes tutorial, builds custom deck, wins 5 Realm Map battles, buys 1 pack with earned Gold. If this feels fun, proceed to Phase 2.
+**Success Metric**: Player completes tutorial, builds custom deck, wins 10 battles, crafts 1 card, plays 3 Arena matches, buys 1 pack with earned Gold. If this feels fun, proceed to Phase 1.1.
 
 ---
 
@@ -172,12 +174,27 @@ Total Cards Used: 6 units + 11 tactics = 17 cards from 20-card deck
 - **Example**: 3★ Epic = 80 HP base × 2.25 = 180 HP
 - **Example**: 3★ Common = 10 HP base × 2.25 = 22.5 HP (Epic still 8× stronger at same star rank!)
 
-**Tactic Effects** (Examples for MVP + Mana Costs):
-- **Charge** (Common, 1★, **5 mana**): Attack twice on first turn
-- **Guardian** (Common, 1★, **5 mana**): +20% HP, reduce damage to adjacent allies by 10%
-- **Volley** (Uncommon, 2★, **15 mana**): Attack 3 enemies at once (50% damage each)
-- **Defensive Ward** (Uncommon, 2★, **10 mana**): +50% damage reduction, heal 5 HP when blocking
-- **Fireball** (Rare, 3★, **20 mana**): Deal 50% extra damage to 1 enemy + burn (5 HP/turn for 3 turns)
+**Tactic Effects** (AI Instruction + Gameplay Effect + Mana Cost):
+
+**Combat AI Tactics** (Control targeting/movement):
+- **"Boss Slayer"** (Uncommon, 2★, **0 mana**): AI targets highest-HP enemy (200+ HP priority) + +50% damage vs bosses
+- **"Aggressive Assault"** (Common, 1★, **0 mana**): AI moves toward nearest enemy + +10% damage on first attack
+- **"Defensive Stance"** (Common, 1★, **0 mana**): AI stays in back row (don't chase) + +20% block chance while stationary
+
+**Healing AI Tactics** (Control who gets healed):
+- **"Heal Hero"** (Uncommon, 2★, **0 mana**): AI targets hero with lowest HP% (not just lowest HP) + Restore 50 HP
+- **"Heal Lowest HP"** (Common, 1★, **0 mana**): AI targets any ally with lowest HP + Restore 50 HP (default behavior)
+- **"Heal All Allies"** (Rare, 3★, **20 mana**): AI activates when 3+ allies below 50% HP + Restore 30 HP to ALL allies (AOE)
+
+**Spell Targeting Tactics** (Control ability usage):
+- **"Fireball Barrage"** (Rare, 3★, **25 mana**): AI casts on boss/high-HP target + 200 fire damage + 50 AOE splash
+- **"Lightning Strike"** (Rare, 3★, **20 mana**): AI casts on enemy with highest attack + 150 lightning damage + 10% stun
+
+**Stat Buff Tactics** (Passive bonuses, no AI logic):
+- **"Charge"** (Common, 1★, **5 mana**): Attack twice on first turn
+- **"Guardian"** (Common, 1★, **5 mana**): +20% HP + Taunt (enemies attack this unit first)
+- **"Volley"** (Uncommon, 2★, **15 mana**): Attack 3 enemies at once (50% damage each)
+- **"Defensive Ward"** (Uncommon, 2★, **10 mana**): +50% damage reduction + heal 5 HP when blocking
 - **Regeneration** (Rare, 3★, **15 mana**): Heal 10% max HP per turn (3 turns)
 - **AOE Blessing** (Rare, 3★, **25 mana**): Heal all allies for 5 HP/turn (3 turns)
 - **Lightning Bolt** (Epic, 4★, **30 mana**): Deal 100% extra damage + stun (1 turn)
@@ -436,41 +453,150 @@ TERRITORY 4: Shadowlands (Final)
 
 ---
 
-### Week 7-8: Progression, Stores & Monetization
+### Week 7: Scroll-Based Crafting System ⭐ NEW - Competitive Critical
+
+**Purpose**: Fix RNG hell - players can target specific cards instead of relying only on pack luck (Hearthstone dust parity)
+
+**Scroll-Based Crafting** (Simpler than Hearthstone Dust):
+- ✅ **6 Scroll Types**: Common, Uncommon, Rare, Epic, Legendary, Mythic (match card rarities)
+- ✅ **Duplicate Conversion**: 5 duplicates → 1 Scroll (same rarity)
+  - Example: 5 Common Knights → 1 Common Scroll
+  - Epic/Legendary: 3:1 and 2:1 ratios (rarer cards, lower conversion threshold)
+- ✅ **Scroll Usage**: 1 Scroll → Craft any card (same rarity)
+  - Example: 1 Common Scroll → Pick from 30 Common cards → Craft Healer
+- ✅ **Simple UI**: "Craft Common Card" → Show 30 Commons → Pick one → Confirm
+
+**Why Scrolls > Hearthstone Dust**:
+- ✅ No crafting cost database (Scrolls are currency, not per-card recipes)
+- ✅ Simple UI (pick from 30 Commons, not search 1,500+ cards)
+- ✅ Future-proof (add new cards, scrolls still work without database updates)
+- ✅ Monetization (sell scrolls in Market: Common $0.49, Legendary $9.99)
+
+**Crafting Hall UI**:
+```
+╔═══════════════════════════════════════════════════════╗
+║                  ⚒️ CRAFTING HALL                    ║
+╠═══════════════════════════════════════════════════════╣
+║ YOUR SCROLLS:                                         ║
+║   📜 Common Scrolls: 12                               ║
+║   📜 Uncommon Scrolls: 5                              ║
+║   📜 Rare Scrolls: 2                                  ║
+║                                                       ║
+║ CRAFT A CARD:                                         ║
+║ [Craft Common Card] (Costs: 1 Common Scroll)         ║
+║ [Craft Uncommon Card] (Costs: 1 Uncommon Scroll)     ║
+║ [Craft Rare Card] (Costs: 1 Rare Scroll) 🔒 Need 1   ║
+║                                                       ║
+║ CONVERT DUPLICATES:                                   ║
+║ [Convert 5 Common Dupes → 1 Common Scroll]           ║
+║   (You have 47 excess Commons)                        ║
+║ [CONVERT ALL RARITIES] (Smart convert: 9 scrolls)    ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+**F2P vs Whale Balance**:
+- **F2P Path**: Earn scrolls from duplicates (slow but free)
+  - Opening 25 packs (125 cards) = ~50 Commons → 10 Common Scrolls → 10 targeted Commons
+- **Whale Path**: Buy scrolls with Gold or IAP (instant targeted acquisition)
+  - Common Scroll: 100 Gold OR $0.49
+  - Legendary Scroll: 10,000 Gold OR $9.99
+
+**Deliverables (Week 7, 5 days)**:
+- [ ] **Day 1-2**: Crafting Hall UI (scroll inventory, craft buttons, convert buttons, card selection screen)
+- [ ] **Day 3**: CraftingManager.cs singleton (scroll inventory, duplicate conversion, craft logic, Nakama storage)
+- [ ] **Day 4**: Scroll Market tab (buy scrolls with Gold/IAP, bundle offers)
+- [ ] **Day 5**: Testing & polish (conversion logic, crafting validation, IAP receipt handling)
+
+---
+
+### Week 8: Async Arena PvP System ⭐ NEW - Competitive Critical
+
+**Purpose**: Add daily engagement loop + skill-based rewards (Clash of Clans async PvP parity)
+
+**Async Arena** (No Live PvP for MVP):
+- ✅ **Unlock**: Level 5 (after tutorial, ~Week 1 of play)
+- ✅ **Matchmaking**: Attack AI-controlled player decks (no live opponents, no websockets)
+- ✅ **Bracketed Tiers**: Level 1-9, 10-14, 15-19, 20+ (prevents whale stomp)
+- ✅ **Colosseum Tokens**: Skill-only currency (can't buy with money, prevents P2W)
+- ✅ **Token Shop**: Exclusive cards (Gladiator, Arena Champion) + Arena Packs
+
+**Why Async > Live PvP for MVP**:
+- ✅ No websockets (Nakama HTTP API only, simpler deployment)
+- ✅ No turn server (AI plays opponent's deck, no live coordination)
+- ✅ Mobile-friendly (play on your schedule, no 10-min commitment)
+- ✅ Fast iteration (fix AI balance without coordinating 2 players)
+
+**Arena Structure**:
+```
+🥉 Bronze Arena (Level 1-9)
+  - Rewards: 10-20 Tokens/win, 5 Tokens/loss
+  - Season end: 100 Tokens (participation trophy)
+
+🥈 Silver Arena (Level 10-14)
+  - Rewards: 20-40 Tokens/win, 10 Tokens/loss
+  - Season end: 300 Tokens + 1 Rare card
+
+🥇 Gold Arena (Level 15-19)
+  - Rewards: 40-80 Tokens/win, 20 Tokens/loss
+  - Season end: 800 Tokens + 1 Epic card
+
+💎 Diamond Arena (Level 20+)
+  - Rewards: 80-150 Tokens/win, 40 Tokens/loss
+  - Season end: 2,000 Tokens + 1 Legendary card
+```
+
+**Arena UI**:
+```
+╔═══════════════════════════════════════════════════════╗
+║                   ⚔️ ARENA PVP                        ║
+╠═══════════════════════════════════════════════════════╣
+║ YOUR RANK:                                            ║
+║   🥈 Silver Arena (Level 12)                          ║
+║   Tokens: 450 / 800 (to Gold Arena reward)           ║
+║                                                       ║
+║ TODAY'S BATTLES:                                      ║
+║   Battles played: 3 / 5 (2 free battles left)        ║
+║                                                       ║
+║ [FIND OPPONENT] (10 Stamina, matchmake vs Level 10-14)║
+║ [VIEW COLOSSEUM MARKET] (spend Tokens on exclusive   ║
+║  cards, can't buy with Gold/Gems)                     ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+**Colosseum Market** (Token-Only Shop):
+- **Exclusive Cards**: Gladiator Hero (500 Tokens, Epic 5★), Arena Champion (2,000 Tokens, Legendary 5★)
+- **Arena Pack**: 5 cards, 80% Arena-exclusive (300 Tokens)
+- **Cosmetics**: Colosseum Banner title (100 Tokens)
+
+**Daily Battle Limit**:
+- 5 free battles/day (reset at midnight UTC)
+- 6th+ battles: 100 Gems each (whale unlock, max 10/day)
+
+**F2P vs Whale Balance**:
+- **F2P**: 5 battles/day = 100-200 Tokens/day → Arena Champion in 10-20 days (grind reward)
+- **Whales**: Can't buy tokens with money (pure skill currency), only extra battles (100 Gems each)
+
+**Deliverables (Week 8, 5 days)**:
+- [ ] **Day 1-2**: Arena Home UI (rank, season, battles left, find opponent, matchmaking, opponent preview)
+- [ ] **Day 3**: ArenaManager.cs singleton (matchmaking SQL query, tier logic, token rewards, daily battle limit)
+- [ ] **Day 4**: Colosseum Market UI (token shop, exclusive cards, Arena Pack)
+- [ ] **Day 5**: Testing & polish (matchmaking speed, AI deck loading, token economy balance)
+
+---
+
+### Week 7-8: Stores & Progression (REBALANCED - Core Only)
 
 **Player Leveling**:
-- ✅ Level 1-5 progression (tutorial ends at Level 2)
-- ✅ XP requirements: Level 1 = 0, Level 2 = 100, Level 3 = 300, Level 4 = 600, Level 5 = 1,000
-- ✅ XP sources: Battle wins (50-200 XP), quest completion (Phase 2)
+- ✅ Level 1-20 progression (tutorial ends at Level 2, Arena unlocks at Level 5)
+- ✅ XP requirements: Level 1 = 0, Level 2 = 100, Level 3 = 300, Level 5 = 1,000, Level 10 = 5,000, Level 20 = 50,000
+- ✅ XP sources: Battle wins (50-200 XP), Arena wins (100 XP), quest completion
 
 **Pack Market**:
 - ✅ Standard Pack (5 cards): $0.99 OR 1,000 Gold
 - ✅ Element Booster (5 cards): $1.99 OR 2,000 Gold
 - ✅ Epic Booster (5 cards): $4.99 OR 5,000 Gold
 - ✅ Mega Pack (20 cards, 1 Legendary): $19.99 (money only, whale bait)
-- ✅ Pack opening animation (reveal 1 card at a time, skip option)
-
-**Battle Pass**:
-- ✅ Monthly season: $4.99 (30-day cycle)
-- ✅ Free Track: 5 Standard Packs, 2,000 Gold, 100 Gems
-- ✅ Paid Track: 10 Standard Packs, 1 Epic Booster, 1 Exclusive Legendary, 5,000 Gold, 500 Gems
-- ✅ Progress: 10 XP per battle, 3,000 XP to max (300 battles = ~10-15 days)
-
-**Stamina Refills**:
-- ✅ Small Refill: $0.99 (100 Stamina = 10 battles)
-- ✅ Large Refill: $3.99 (500 Stamina = 50 battles)
-- ✅ Daily Unlimited: $9.99 (infinite battles for 24 hours)
-
-**First-Time Offers** (one-time only):
-- ✅ Starter Pack: $0.99 (2 Standard Packs, 500 Gold, 100 Gems, first 7 days)
-- ✅ New Player Bundle: $4.99 (1 Epic Booster, 1 Legendary choice, 2,000 Gold, first 14 days)
-- ✅ Whale Welcome Pack: $49.99 (5 Mega Packs, 1 Mythic, 30-day Battle Pass, first 30 days)
-
-**Gold Earning**:
-- ✅ Battle rewards: 50-200 Gold per battle
-- ✅ Daily login: 500 Gold (7-day cycle)
-- ✅ Battle chests: 50-500 Gold (Bronze tier for MVP)
-- ✅ Total daily: ~700 Gold/day (500 login + 200 battles)
+- ✅ **Scroll Market Tab** (NEW): Buy scrolls with Gold/IAP (Common $0.49 → Legendary $9.99)
 
 **Daily Login** (Streak Bonuses):
 - ✅ 7-day reward cycle (streak required, missing 1 day = reset to Day 1):
@@ -482,26 +608,31 @@ TERRITORY 4: Shadowlands (Final)
   - Day 6: 1× Rare card + 100 Stamina
   - Day 7: 1× Standard Pack (5 cards) + 200 Stamina (JACKPOT!) + **2 Resurrection Scrolls 📜**
 - ✅ **Weekly total**: 3,000 Gold + 650 Stamina + **4 Resurrection Scrolls** (enough for 2 Epic deaths)
-- ✅ **Stamina Banking**: Day 7 = 200 Stamina (can exceed 100 max, bank for weekend grind)
-- ✅ Resets weekly (Day 8 = Day 1, maintain streak to get Day 7 bonus)
-- ✅ **Casual player value**: Log in daily for 5 min → Bank 50-200 Stamina + 4 Scrolls → Play on weekend
 
-**Analytics** (Basic Tracking):
-- ✅ Battles won/lost
-- ✅ Packs opened (Standard/Element/Epic)
-- ✅ Gold earned/spent
-- ✅ Tutorial completion rate (% of players who finish 28 steps)
-- ✅ Session length (average time per session)
+**Gold Earning** (Updated with Crafting/PvP):
+- ✅ Battle rewards: 50-200 Gold per battle
+- ✅ Arena wins: 50 Gold + Colosseum Tokens
+- ✅ Daily login: 500 Gold (7-day cycle)
+- ✅ Duplicate conversion: No Gold (convert to Scrolls instead)
+- ✅ Total daily: ~800 Gold/day (500 login + 300 battles/Arena)
 
-**Deliverables**:
-- [ ] PlayerLevel C# class (XP tracking, level-up rewards)
-- [ ] PackStore UI (buy packs with Gold OR money, IAP integration)
-- [ ] BattlePass system (30-day season, Free/Paid tracks, XP progression)
-- [ ] StaminaRefill system (IAP, instant refill)
-- [ ] FirstTimeOffer system (one-time bundles, 7/14/30 day timers)
-- [ ] DailyLogin system (7-day cycle, reward claims)
-- [ ] Analytics tracking (Nakama server, Unity Analytics, revenue tracking)
-- [ ] Gold/Gem display UI (current balances, earn/spend notifications)
+**Deliverables (Week 7-8 Core)**:
+- [ ] PlayerLevel C# class (XP tracking, level-up rewards, Arena unlock at Level 5)
+- [ ] PackStore UI (buy packs with Gold OR money, Scroll Market tab, IAP integration)
+- [ ] DailyLogin system (7-day cycle, reward claims, streak tracking)
+- [ ] Gold/Gem/Token display UI (HUD top bar: Gold, Gems, Stamina, Tokens, Scrolls, Player Level)
+
+**What's Deferred to Phase 1.1 (Month 2)**:
+- ❌ **Battle Pass** (30-day season, Free/Paid tracks) → Phase 1.1
+- ❌ **Advanced Analytics** (heatmaps, funnel analysis, cohort retention) → Phase 1.1
+- ❌ **Stamina Refills IAP** (Small/Large/Unlimited) → Phase 1.1 (Stamina system stays, IAP refills defer)
+- ❌ **First-Time Offers** (Starter Pack, Whale Welcome Pack) → Phase 1.1
+
+**Why This Works**:
+- ✅ **Crafting + PvP** fix critical competitive gaps (Hearthstone dust parity + engagement loop)
+- ✅ **Battle Pass deferred** = Non-critical (nice-to-have, not MVP blocker)
+- ✅ **Analytics deferred** = Post-launch optimization (collect data in Phase 1.1)
+- ✅ **Timeline intact** = 8 weeks maintained (Week 7 = Crafting, Week 8 = Arena PvP + Stores)
 
 ---
 
@@ -535,21 +666,27 @@ TERRITORY 4: Shadowlands (Final)
 
 ### What's Deferred (Post-MVP)
 
-**Phase 2 (Month 2-3)**:
+**Phase 1.1 (Month 2)**:
+- ❌ Battle Pass (30-day season, Free/Paid tracks, exclusive rewards)
+- ❌ Advanced Analytics (heatmaps, funnel analysis, cohort retention)
+- ❌ Stamina Refills IAP (Small $0.99, Large $3.99, Unlimited $9.99)
+- ❌ First-Time Offers (Starter Pack, Whale Welcome Pack)
+- ❌ Device optimization (iOS/Android framerate, build size)
+
+**Phase 2 (Month 3-5)**:
 - ❌ Food/Lumber/Ore economy (production buildings, auto-collection)
-- ❌ RPG card stats (Health/Mana/Stamina)
-- ❌ Consumables (Potions/Scrolls)
+- ❌ RPG card stats expansion (Health/Mana/Stamina per-card variation)
+- ❌ Consumables (Potions/Scrolls from battle chests)
 - ❌ RPG shops (Alchemist, Scribe, Jeweler)
 - ❌ Premium Packs (Gem currency, 10% shiny rate)
-- ❌ Card combining (star rank progression)
-- ❌ Daily/Weekly quests
+- ❌ Daily/Weekly quests (economy/collection quests, named mobs)
+- ❌ **Live PvP** (websockets, turn timer, ranked ladder, ELO matchmaking)
 
-**Phase 3 (Month 4-6)**:
+**Phase 3 (Month 6-9)**:
 - ❌ Territory Map (Realm occupation, 1-month campaigns)
 - ❌ World Map (Territory wars, 3-month seasons)
 - ❌ Occupation mechanics (Location → Realm → Territory)
-- ❌ PvP Colosseum (1v1 ranked matches)
-- ❌ Alliances (chat, donations, co-op events)
+- ❌ Alliances (chat, donations, co-op events, guild wars)
 - ❌ Elemental interactions (Fire > Earth > Water)
 - ❌ Status effects (Burn, Freeze, Poison)
 - ❌ Equipment sockets (Jewel/Rune attachments)
