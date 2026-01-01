@@ -1,32 +1,37 @@
 # Sovereign Territories - Competitive Analysis & Phase Roadmap
 
-**Document Purpose**: Comprehensive assessment of Sovereign Territories' Phase 1 design vs successful TCG/RPG games with large user bases and high ratings.
+**Document Purpose**: Competitive assessment of Sovereign Territories vs TCG/RPG/Adventure games.
 
-**Analysis Date**: December 31, 2025  
-**Analyst**: Design Team (Beast Mode Agent)  
+**Analysis Date**: January 1, 2026  
+**Developer Context**: Solo indie developer, part-time (evenings/weekends), first game project, hobby until April 2027  
+**Realistic MVP Timeline**: 16-24 weeks (not 8 weeks - adjusted for solo part-time development)  
 **Scope**: Phase 1 MVP + Roadmap for Phase 1.x, 2, 3+
 
 ---
 
 ## Executive Summary
 
-**Our Unique Position**: Sovereign Territories occupies a **hybrid niche** that no major competitor fully addresses:
-- **TCG Depth** (Pokemon, Hearthstone) + **AFK Progression** (AFK Arena, Idle Heroes) + **Tactical Combat** (Heroes of Might and Magic, Fire Emblem)
-- **F2P Respect** (80-90% content accessible) + **Collector Appeal** (6 rarity tiers, elemental theming)
-- **Opt-In PvP** (no forced raids, bracketed matchmaking) + **Territory Strategy** (Risk-style map conquest)
+**Our Unique Position**: Sovereign Territories is a **TCG/Adventure/RPG hybrid** inspired by the classics:
+- **TCG Collection** (Pokemon TCG, Gwent): Deck-building, 6 rarity tiers, pack opening, crafting
+- **Adventure/Exploration** (Baldur's Gate, Ultima, Slay the Spire): Campaign progression, hero parties, roguelike elements
+- **Tactical Combat** (Heroes of Might and Magic, Fire Emblem): 8×8 grid battles, formations, hero-led armies
+- **RPG Progression** (Diablo, Neverwinter Nights): Heroes with Health/Mana/Stamina, equipment, leveling
+- **NOT Base-Building**: Avoids Clash of Clans/RTS grind (no forced resource collection, no tap-to-collect monotony)
+
+**Core Philosophy**: "Take the fun parts (opening packs, leveling heroes, strategic battles, exploration) and avoid the tedium (forced resource collection, waiting for buildings, repetitive unit production)."
 
 **Competitive Strengths**:
-1. ✅ **Dual Card System** (Battle vs Economy) - No competitor has this separation
-2. ✅ **AFK Income Without Pay-to-Win** - Placement strategy > whale spending
-3. ✅ **6-Tier Rarity with Budget System** - Prevents all-Legendary decks
-4. ✅ **Medieval/RPG Theming** - Coherent, immersive from Day 1
-5. ✅ **Cross-Platform Unity** - Mobile + PC with shared accounts
+1. ✅ **TCG + Tactical Combat Fusion** - Pokemon TCG deck-building meets Heroes of Might and Magic battles
+2. ✅ **Adventure/Campaign Focus** - Slay the Spire progression meets Baldur's Gate exploration (60-80 battles)
+3. ✅ **6-Tier Rarity with Budget System** - Prevents all-Legendary decks (unique fairness innovation)
+4. ✅ **RPG Heroes** - Health/Mana/Stamina, equipment slots, leveling (Diablo-like depth)
+5. ✅ **Solo-Friendly Design** - Strong PvE campaign, opt-in Arena PvP (adventure first, territory wars later)
 
-**Competitive Risks**:
-1. ⚠️ **Complexity Onboarding** - 3 card types, 2 progression systems, 4 map tiers
-2. ⚠️ **Late PvP Unlock** - Level 15 for Colosseum (competitors unlock at Level 5-10)
-3. ⚠️ **No Live PvP in Phase 1** - Async only (Hearthstone has real-time from Day 1)
-4. ⚠️ **Content Velocity** - Need 200+ cards by Month 3 to compete with Hearthstone/LoR
+**Development Reality** (Solo Indie Context):
+1. ⚠️ **Solo Part-Time Developer** - Evenings/weekends only, realistic 16-24 week MVP (4-6 months)
+2. ⚠️ **First Game Project** - Learning Unity/Nakama as I go, hobby project until April 2027
+3. ⚠️ **Content Bottleneck** - 100 cards achievable (placeholder art), 200+ cards needs commissioned artist
+4. ⚠️ **Scope Discipline** - Must prioritize core loop (cards, combat, campaign) over nice-to-haves (maps, alliances)
 
 ---
 
@@ -36,21 +41,21 @@
 
 | Game | Genre | Players | Avg Rating | Revenue Model | Key Strength |
 |------|-------|---------|------------|---------------|--------------|
+| **Pokemon TCG Live** | Digital TCG | 50M+ | 3.8/5 | Packs (F2P-friendly) | Nostalgia, deck-building, easy to learn |
+| **Slay the Spire** | Roguelike TCG | 5M+ | 4.8/5 | Premium ($25) | Deck-building runs, strategic depth, endless replay |
+| **Baldur's Gate 3** | Party RPG | 10M+ | 4.9/5 | Premium ($60) | Turn-based tactics, hero parties, exploration |
 | **Hearthstone** | Digital TCG | 100M+ | 4.2/5 | Packs + Battle Pass | Fast-paced, polished UX, massive IP |
-| **Pokemon TCG Live** | Digital TCG | 50M+ | 3.8/5 | Packs (F2P-friendly) | Nostalgia, cross-platform, easy to learn |
 | **Magic: Arena** | Digital TCG | 30M+ | 4.0/5 | Packs + Drafts | Strategic depth, esports, paper parity |
 | **Legends of Runeterra** | Digital TCG | 20M+ | 4.3/5 | Champion Roads (F2P) | Generous F2P, spell stacking, region synergy |
-| **AFK Arena** | Idle RPG | 100M+ | 4.5/5 | Hero Gacha + VIP | Offline progression, auto-battle, gorgeous art |
-| **Clash of Clans** | Strategy | 500M+ | 4.5/5 | Gems + Season Pass | Clan wars, base building, 10-year retention |
-| **Fire Emblem Heroes** | Tactical RPG | 20M+ | 4.1/5 | Orb Gacha + Pass | Turn-based tactics, hero collecting, Nintendo IP |
 | **Gwent** | Digital TCG | 10M+ | 4.2/5 | Kegs (packs) | 3-round format, no RNG, competitive depth |
-| **Slay the Spire** | Roguelike TCG | 5M+ | 4.8/5 | Premium ($25) | Deck-building, run variety, strategic depth |
+| **Fire Emblem Heroes** | Tactical RPG | 20M+ | 4.1/5 | Orb Gacha + Pass | Turn-based tactics, hero collecting, Nintendo IP |
+| **AFK Arena** | Idle RPG | 100M+ | 4.5/5 | Hero Gacha + VIP | Offline progression, auto-battle, gorgeous art |
 
 **Market Gaps We Fill**:
-- ✅ **AFK TCG**: No major TCG has meaningful offline progression (we do via Economy cards)
-- ✅ **Tactical TCG**: Turn-based grid combat (8x8 map) is rare in mobile TCGs (Fire Emblem is gacha-only)
-- ✅ **Territory Strategy**: Risk-style map with card-based armies (unique)
-- ✅ **No Forced PvP**: All competitors have invasions or matchmaking you can't opt out of
+- ✅ **TCG + Tactical Combat**: Pokemon TCG deck-building + Heroes of Might and Magic 8×8 battles (no mobile game does both well)
+- ✅ **Adventure-First TCG**: Slay the Spire campaign progression + roguelike elements (NOT base-builder PvP grind)
+- ✅ **RPG Heroes in TCG**: Heroes have Health/Mana/Stamina, equipment slots (Diablo-like depth in card game)
+- ✅ **Solo-Friendly PvE**: 60-80 battle campaign, opt-in Arena PvP (Baldur's Gate progression, not forced PvP)
 
 ---
 
