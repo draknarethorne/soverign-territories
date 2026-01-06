@@ -15,6 +15,8 @@ A multi-genre hybrid strategy game blending the best mechanics from:
 - 🔄 **Roguelike Replayability** (Diablo, Slay the Spire) - Procedurally generated maps, endless runs
 - 💰 **AFK Progression** (Idle games) - Passive income, auto-battle, come-back rewards
 
+**What is the VISION**: We're building Pokemon TCG meets Slay the Spire meets Baldur's Gate, not Clash of Clans. Territory Maps are the endgame vision (Phase 3), but the MVP is all about validating the core loop: card collection + deck-building + tactical campaign battles.
+
 **What We AVOID**: Forced resource collection, tedious base building, repetitive unit production, tap-tap-tap grind mechanics.
 
 **What We EMBRACE**: Opening packs, collecting cards, leveling heroes, deck strategy, PvE campaigns, battle tactics—the **fun** parts of gaming!
