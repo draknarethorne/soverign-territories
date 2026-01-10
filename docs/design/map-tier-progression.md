@@ -1,8 +1,20 @@
 # Map Tier Progression - Location → Realm → Territory → World
 
-**Last Updated**: December 30, 2025  
+**Last Updated**: January 10, 2026  
 **Status**: HIGH PRIORITY - Defines core map hierarchy, occupation mechanics, stat buffs  
 **Related**: [game-bible.md](game-bible.md) Section 4, [mvp-scope-final.md](mvp-scope-final.md), [combat-calculation-spec.md](combat-calculation-spec.md)
+
+---
+
+> **⚠️ IMPORTANT - MVP SCOPE CLARIFICATION**
+> 
+> - ✅ **MVP**: Battle Map (8×8 tactical) + **SINGLE Realm Map** (40 Locations, linear campaign)
+> - ❌ **NOT MVP**: Territory Maps, World Maps, multi-Realm exploration
+> - 📅 **Phase 2-3**: Territory/World Maps are the long-term vision (IF the core loop succeeds)
+> - 🎯 **MVP Focus**: Validate core loop (card collection + deck-building + tactical campaign battles)
+> - 🎮 **Design Philosophy**: Pokemon TCG meets Slay the Spire meets Baldur's Gate, NOT base-building
+> 
+> **This document describes the FULL vision**. For realistic solo dev MVP scope (16-24 weeks), see [solo-dev-realistic-mvp.md](../mvp/solo-dev-realistic-mvp.md).
 
 ---
 

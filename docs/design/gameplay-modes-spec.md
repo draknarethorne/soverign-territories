@@ -55,13 +55,16 @@ The Realm Map is a **20-40 Location hex grid** for single-player exploration and
   - Gold: 500 Gold, 500 XP, 1 Rare card
 - **XP**: 100-500 per battle (Player Level progression)
 
-### MVP Scope
-- ✅ **Must Have**: 3-5 Realm Maps (60-200 Locations total)
-- ✅ **Must Have**: Tutorial Realm Map (20 Locations, scripted battles)
-- ✅ **Must Have**: Treasure nodes (one-time Gold/Gems rewards)
-- ✅ **Must Have**: Monster Spawns (Common → Epic rarity, respawning)
-- ❌ **Won't Have**: Economy deployment (deferred to Phase 2)
-- ❌ **Won't Have**: Multi-Realm occupation (deferred to Phase 3)
+### MVP Scope (Solo Dev 16-24 Weeks)
+- ✅ **Must Have**: **1 Realm Map (40 Locations, linear campaign)** ← **MVP FOCUS**
+  - Tutorial section: First 10 Locations (scripted battles, teaches core mechanics)
+  - Main campaign: Locations 11-40 (difficulty scaling, boss at Location 40)
+- ✅ **Must Have**: Treasure nodes (5-10 one-time Gold/Gems rewards)
+- ✅ **Must Have**: Monster Spawns (Common → Epic rarity, respawning enemies)
+- ⏸️ **Nice to Have** (if ahead of schedule): 2nd Realm Map (40 more Locations)
+- ❌ **Phase 2**: 3-5 Realm Maps (multi-region exploration) ← NOT MVP
+- ❌ **Phase 2**: Economy deployment (Food/Lumber/Ore buildings on tiles)
+- ❌ **Phase 3**: Multi-Realm occupation, Territory Map conquest
 
 **TODO: Define exact card pool for tutorial Realm Map (which 100 cards are MVP?)**  
 **TODO: Design boss battle mechanics (phases, enrage timers, unique abilities?)**  

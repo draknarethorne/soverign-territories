@@ -5,7 +5,7 @@
 ![C%23](https://img.shields.io/badge/C%23-.NET%20Standard%202.1-purple)
 ![Nakama](https://img.shields.io/badge/Nakama-3.x-green)
 
-> **"Build the Deck. Rule the Map. Automate the Empire."**
+> **"Build the Deck. Conquer the Campaign. Level Your Heroes."**
 
 A multi-genre hybrid strategy game blending the best mechanics from:
 - 🎴 **TCG Deck-Building** (Pokemon TCG, Magic: The Gathering) - Collect 100+ cards, 6 rarities, strategic deck construction

@@ -78,7 +78,10 @@ Owner: [User] ("The Architect")
 
 ## Game Tagline
 
-"Build the Deck. Rule the Map. Automate the Empire."
+**MVP Tagline** (Phase 1): "Build the Deck. Conquer the Campaign. Level Your Heroes."  
+**Future Vision** (Phase 2-3): "Build the Deck. Rule the Map. Automate the Empire."
+
+> **Design Note**: The MVP focuses on validating the core loop (card collection + deck-building + tactical campaign battles). Territory conquest and AFK empire automation are Phase 2-3 expansions if/when the foundation succeeds.
 
 ## Overview
 
