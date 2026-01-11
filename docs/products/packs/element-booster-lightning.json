@@ -1,10 +1,10 @@
 {
-  "productId": "element-booster-fire",
-  "productName": "Fire Element Booster",
+  "productId": "element-booster-lightning",
+  "productName": "Lightning Element Booster",
   "productType": "element-booster",
   "series": "base-set",
-  "element": "Fire",
-  "description": "Harness the flames! 5 Fire element cards with increased chances for rare Fire heroes and units.",
+  "element": "Lightning",
+  "description": "Harness the storm! 5 Lightning element cards with increased chances for rare Lightning heroes and units.",
   "price": {
     "gold": 1500,
     "gems": 150,
@@ -13,13 +13,13 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-fire-only",
+  "cardPool": "base-set-lightning-only",
   "guarantees": [
     {
       "slot": 5,
       "minimumRarity": "Uncommon",
-      "element": "Fire",
-      "description": "Last card is guaranteed Fire Uncommon+"
+      "element": "Lightning",
+      "description": "Last card is guaranteed Lightning Uncommon+"
     }
   ],
   "rarityDistribution": {
@@ -47,7 +47,7 @@
   "specialFeatures": {
     "shinyChance": 12,
     "heroBoost": true,
-    "elementRestriction": "Fire"
+    "elementRestriction": "Lightning"
   },
   "pitySystem": {
     "enabled": true,
@@ -56,13 +56,13 @@
     "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
   },
   "availability": {
-    "unlockLevel": 5,
+    "unlockLevel": 10,
     "purchaseLimit": null,
     "requiresProgression": false
   },
   "collectionMilestoneReward": {
-    "trigger": "complete-all-fire-25-cards",
+    "trigger": "complete-all-lightning-15-cards",
     "rewardQuantity": 1,
-    "message": "Congratulations on completing the Fire collection! Here's a bonus Fire Element Booster."
+    "message": "Congratulations on completing the Lightning collection! Here's a bonus Lightning Element Booster."
   }
 }

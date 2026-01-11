@@ -26,7 +26,7 @@ The Sovereign Territories product system separates **card definitions** (codex) 
 
 ---
 
-### 2. Booster Packs (10 total)
+### 2. Booster Packs (13 total)
 
 #### **Universal Packs** (Entry-level)
 - **Welcome Pack** ([welcome-pack.json](packs/welcome-pack.json))
@@ -40,15 +40,23 @@ The Sovereign Territories product system separates **card definitions** (codex) 
   - Default pack for F2P progression
   - **Pity System**: Epic every 10 packs, Legendary every 50 packs
 
-#### **Element Boosters** (Targeted acquisition)
-- **Fire Element Booster** ([element-booster-fire.json](packs/element-booster-fire.json))
-- **Water Element Booster** ([element-booster-water.json](packs/element-booster-water.json))
-- **Earth Element Booster** ([element-booster-earth.json](packs/element-booster-earth.json))
-  - 5 cards, Fire/Water/Earth only
+#### **Element Boosters** (Targeted acquisition - 6 total)
+- **Starter Elements** (25 cards each, unlock at Level 5):
+  - **Fire Element Booster** ([element-booster-fire.json](packs/element-booster-fire.json))
+  - **Water Element Booster** ([element-booster-water.json](packs/element-booster-water.json))
+  - **Earth Element Booster** ([element-booster-earth.json](packs/element-booster-earth.json))
+
+- **Expansion Elements** (15 cards each, unlock at Level 10):
+  - **Lightning Element Booster** ([element-booster-lightning.json](packs/element-booster-lightning.json))
+  - **Wind Element Booster** ([element-booster-wind.json](packs/element-booster-wind.json))
+  - **Frost Element Booster** ([element-booster-frost.json](packs/element-booster-frost.json))
+
+**All Element Boosters**:
+  - 5 cards, element-specific only
   - 1,500 Gold / 150 Gems / $1.49
-  - Higher rarity rates for element-specific cards
+  - Higher rarity rates for element cards (28% Uncommon vs 25% Standard)
   - 12% shiny chance (vs 10% standard)
-  - **Milestone Reward**: Free booster when completing element collection (25 cards)
+  - **Milestone Reward**: Free booster when completing element collection
 
 #### **Premium Packs** (Whale-tier)
 - **Hero Pack** ([hero-pack.json](packs/hero-pack.json))
@@ -85,13 +93,16 @@ The Sovereign Territories product system separates **card definitions** (codex) 
 
 ## Pity System
 
-**Scope**: Tracks across all universal packs (Standard, Element Boosters)
+**Scope**: Tracks across all universal packs (Standard + all Element Boosters)
 
 **Guarantees**:
 - **Epic**: Every 10 packs without an Epic → next pack guarantees Epic+
 - **Legendary**: Every 50 packs without a Legendary → next pack guarantees Legendary
 
-**Tracked Packs**: `standard-pack`, `element-booster-fire`, `element-booster-water`, `element-booster-earth`
+**Tracked Packs**: 
+- `standard-pack`
+- `element-booster-fire`, `element-booster-water`, `element-booster-earth`
+- `element-booster-lightning`, `element-booster-wind`, `element-booster-frost`
 
 **Not Tracked**: Premium packs (Hero/Rare/Epic/Legendary/Mythic) have their own guarantees
 
@@ -184,30 +195,31 @@ Total = 10 packs → NEXT PACK (any tracked type) guarantees Epic+
 
 ## Daily Login Rewards
 
-**File**: `docs/products/rewards/daily-login-rewards.json` (to be created)
+**File**: [daily-login-rewards.json](rewards/daily-login-rewards.json)
 
-**Structure**:
-```json
-{
-  "day1": { "gold": 100 },
-  "day2": { "gold": 150 },
-  "day3": { "gold": 200, "pack": "standard-pack" },
-  "day4": { "gold": 250 },
-  "day5": { "gold": 300 },
-  "day6": { "gold": 400 },
-  "day7": { "pack": "rare-pack", "gems": 50 }
-}
-```
+**7-Day Cycle** (Counter NEVER resets):
+- **Day 1**: 100 Gold
+- **Day 2**: 150 Gold
+- **Day 3**: 200 Gold + 1× Standard Pack
+- **Day 4**: 250 Gold
+- **Day 5**: 300 Gold + 25 Gems
+- **Day 6**: 400 Gold
+- **Day 7**: 1× Rare Pack + 50 Gems
 
-**Cycle**: Resets every 7 days  
-**Missed Days**: Do NOT reset counter (encourages consistency without punishing breaks)
+**Weekly Total**: 1,400 Gold + 75 Gems + 1 Standard Pack + 1 Rare Pack (~$3.98 value)
+
+**Missed Days Behavior**: 
+- Counter does NOT reset if you miss days
+- If you're on Day 3 and skip a week, next login = Day 4 (not Day 1)
+- Encourages consistency without punishing breaks
+
+**F2P Value**: 
+- Daily login alone = ~6,000 Gold/month + 8 packs/month (~$7.92 value)
+- Combined with quests (500 Gold/day) = 21,000 Gold/month total
 
 ---
 
-## Collection Milestones
-
-**Triggers** (defined in [series-manifest.json](../codex/base-set/series-manifest.json)):
-
+**Global Milestones**:
 | Milestone | Reward | Source |
 |---|---|---|
 | 10 cards | 250 Gold | Base Set manifest |
@@ -215,6 +227,20 @@ Total = 10 packs → NEXT PACK (any tracked type) guarantees Epic+
 | 50 cards | Rare Pack | Base Set manifest |
 | 75 cards | Epic Pack | Base Set manifest |
 | 100 cards | Legendary Pack | legendary-pack.json |
+| 140 cards | Mythic Pack + "Base Set Master" title | mythic-pack.json |
+
+**Element Mastery Milestones**:
+| Element | Cards Required | Reward | Title |
+|---|---|---|---|
+| Fire | 25/25 | Fire Element Booster | "Ember Legion Champion" |
+| Water | 25/25 | Water Element Booster | "Tidal Order Champion" |
+| Earth | 25/25 | Earth Element Booster | "Stone Compact Champion" |
+| Lightning | 15/15 | Lightning Element Booster | "Volt Covenant Champion" |
+| Wind | 15/15 | Wind Element Booster | "Sky Clans Champion" |
+| Frost | 15/15 | Frost Element Booster | "Frost Brotherhood Champion" |
+| Neutral | 20/20 | Hero Pack | "Sovereign Realms Diplomat" |
+
+**Total Milestone Value**: ~40,000 Gold + 13 free packs + 7 titles (~$40 value for F2P completion)
 | 140 cards | Mythic Pack + "Base Set Master" title | mythic-pack.json |
 | Complete Fire (25) | "Ember Legion Champion" + Fire Booster | element-booster-fire.json |
 | Complete Water (25) | "Tidal Order Champion" + Water Booster | element-booster-water.json |

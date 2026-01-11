@@ -1,0 +1,129 @@
+{
+  "systemId": "daily-login-rewards",
+  "systemName": "Daily Login Rewards",
+  "description": "Rewards for consecutive daily logins. Encourages daily engagement without punishing missed days (counter does NOT reset).",
+  "resetCycle": "7-days",
+  "counterPersistence": "never-resets",
+  "rewards": {
+    "day1": {
+      "dayNumber": 1,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 100
+        }
+      ],
+      "displayMessage": "Welcome back! Here's 100 Gold to start your day."
+    },
+    "day2": {
+      "dayNumber": 2,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 150
+        }
+      ],
+      "displayMessage": "Day 2 bonus! 150 Gold awarded."
+    },
+    "day3": {
+      "dayNumber": 3,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 200
+        },
+        {
+          "type": "pack",
+          "packId": "standard-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 3 milestone! 200 Gold + 1 Standard Pack."
+    },
+    "day4": {
+      "dayNumber": 4,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 250
+        }
+      ],
+      "displayMessage": "Day 4 bonus! 250 Gold awarded."
+    },
+    "day5": {
+      "dayNumber": 5,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 300
+        },
+        {
+          "type": "gems",
+          "amount": 25
+        }
+      ],
+      "displayMessage": "Day 5 bonus! 300 Gold + 25 Gems."
+    },
+    "day6": {
+      "dayNumber": 6,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 400
+        }
+      ],
+      "displayMessage": "Almost there! 400 Gold awarded."
+    },
+    "day7": {
+      "dayNumber": 7,
+      "rewards": [
+        {
+          "type": "pack",
+          "packId": "rare-pack",
+          "quantity": 1
+        },
+        {
+          "type": "gems",
+          "amount": 50
+        }
+      ],
+      "displayMessage": "Week complete! 1 Rare Pack + 50 Gems. Cycle resets tomorrow."
+    }
+  },
+  "totalWeeklyRewards": {
+    "gold": 1400,
+    "gems": 75,
+    "packs": {
+      "standard-pack": 1,
+      "rare-pack": 1
+    }
+  },
+  "missedDayBehavior": {
+    "counterResets": false,
+    "description": "If player misses a day, they remain on current day number. Next login continues from where they left off. This encourages consistency without punishing breaks.",
+    "example": "Player logs in Day 1, 2, 3, skips a week, comes back → still on Day 4 (does NOT reset to Day 1)"
+  },
+  "implementation": {
+    "nakamaStorage": {
+      "collection": "player_daily_login",
+      "key": "current_day",
+      "value": "1-7",
+      "lastLoginTimestamp": "unix_timestamp"
+    },
+    "rewardClaim": {
+      "autoGrantOnLogin": true,
+      "requiresUIConfirmation": false,
+      "description": "Rewards granted automatically on login, shown in popup UI"
+    }
+  },
+  "f2pBalance": {
+    "goldPerWeek": 1400,
+    "packsPerWeek": 2,
+    "monthlyValue": {
+      "gold": 6000,
+      "packs": 8,
+      "equivalentRealMoney": "$7.92 (8 packs × $0.99)"
+    },
+    "description": "F2P players earn ~6,000 Gold/month from dailies alone, enough for 6 Standard Packs. Combined with quest rewards (500 Gold/day = 15,000 Gold/month), F2P earns 21,000 Gold/month = 21 Standard Packs."
+  }
+}

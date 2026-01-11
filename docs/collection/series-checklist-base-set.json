@@ -1,0 +1,56 @@
+{
+  "seriesId": "base-set",
+  "seriesName": "Base Set",
+  "totalCards": 140,
+  "checklist": [
+    {
+      "collectionNumber": "BS-001",
+      "cardId": "HERO_ARIA_FLAME_KNIGHT",
+      "name": "Aria, Flame Knight",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "BS-002",
+      "cardId": "HERO_RAGNAR_INFERNO_BERSERKER",
+      "name": "Ragnar, Inferno Berserker",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "BS-003",
+      "cardId": "HERO_CINDER_FLAME_MAGE",
+      "name": "Cinder, Flame Mage",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "BS-004",
+      "cardId": "HERO_BLAZE_DRAGON_RIDER",
+      "name": "Blaze, Dragon Rider",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "BS-005",
+      "cardId": "HERO_EMBER_PHOENIX_GUARDIAN",
+      "name": "Ember, Phoenix Guardian",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "BS-006",
+      "cardId": "UNIT_FIRE_SOLDIER",
+      "name": "Fire Soldier",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    }
+  ],
+  "_note": "Full checklist truncated for brevity. In production, this file would contain all 140 cards (BS-001 to BS-140) with element/type/rarity for UI filtering and completion tracking."
+}

@@ -1,10 +1,10 @@
 {
-  "productId": "element-booster-fire",
-  "productName": "Fire Element Booster",
+  "productId": "element-booster-frost",
+  "productName": "Frost Element Booster",
   "productType": "element-booster",
   "series": "base-set",
-  "element": "Fire",
-  "description": "Harness the flames! 5 Fire element cards with increased chances for rare Fire heroes and units.",
+  "element": "Frost",
+  "description": "Embrace the ice! 5 Frost element cards with increased chances for rare Frost heroes and units.",
   "price": {
     "gold": 1500,
     "gems": 150,
@@ -13,13 +13,13 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-fire-only",
+  "cardPool": "base-set-frost-only",
   "guarantees": [
     {
       "slot": 5,
       "minimumRarity": "Uncommon",
-      "element": "Fire",
-      "description": "Last card is guaranteed Fire Uncommon+"
+      "element": "Frost",
+      "description": "Last card is guaranteed Frost Uncommon+"
     }
   ],
   "rarityDistribution": {
@@ -47,7 +47,7 @@
   "specialFeatures": {
     "shinyChance": 12,
     "heroBoost": true,
-    "elementRestriction": "Fire"
+    "elementRestriction": "Frost"
   },
   "pitySystem": {
     "enabled": true,
@@ -56,13 +56,13 @@
     "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
   },
   "availability": {
-    "unlockLevel": 5,
+    "unlockLevel": 10,
     "purchaseLimit": null,
     "requiresProgression": false
   },
   "collectionMilestoneReward": {
-    "trigger": "complete-all-fire-25-cards",
+    "trigger": "complete-all-frost-15-cards",
     "rewardQuantity": 1,
-    "message": "Congratulations on completing the Fire collection! Here's a bonus Fire Element Booster."
+    "message": "Congratulations on completing the Frost collection! Here's a bonus Frost Element Booster."
   }
 }

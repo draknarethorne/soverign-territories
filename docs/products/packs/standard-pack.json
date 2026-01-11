@@ -51,7 +51,7 @@
     "enabled": true,
     "epicGuaranteeAfter": 10,
     "legendaryGuaranteeAfter": 50,
-    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth"]
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
   },
   "availability": {
     "unlockLevel": 1,
