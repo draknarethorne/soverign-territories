@@ -1,0 +1,32 @@
+﻿{
+    "cardId":  "UNIT_FLAME_IMP",
+    "collectionNumber":  "BS-008",
+    "name":  "Flame Imp",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Common",
+                   "stars":  0,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  20,
+                  "mana":  25,
+                  "attack":  22,
+                  "defense":  4,
+                  "moveRange":  2,
+                  "attackRange":  2
+              },
+    "tacticSlots":  1,
+    "lore":  "Mischievous fire spirits summoned from volcanic rifts.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-04-lava-caves",
+                                              "location-08-inferno-pit"
+                                          ]
+                    }
+}

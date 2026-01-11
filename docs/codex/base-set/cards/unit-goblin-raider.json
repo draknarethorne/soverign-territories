@@ -1,0 +1,42 @@
+﻿{
+    "cardId":  "UNIT_GOBLIN_RAIDER",
+    "collectionNumber":  "BS-016",
+    "name":  "Goblin Raider",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Uncommon",
+                   "stars":  1,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  35,
+                  "mana":  25,
+                  "attack":  28,
+                  "defense":  9,
+                  "moveRange":  3,
+                  "attackRange":  1
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_RAID",
+                          "name":  "Raid",
+                          "type":  "Active",
+                          "manaCost":  15,
+                          "cooldown":  2,
+                          "description":  "Deal 35 damage. If target has lower HP than Goblin, deal 50 damage instead."
+                      }
+                  ],
+    "tacticSlots":  1,
+    "lore":  "Cunning goblins who strike when enemies are weakened.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-10-goblin-warlord-boss"
+                                          ]
+                    }
+}

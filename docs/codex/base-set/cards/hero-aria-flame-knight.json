@@ -1,0 +1,49 @@
+﻿{
+    "cardId":  "HERO_ARIA_FLAME_KNIGHT",
+    "collectionNumber":  "BS-001",
+    "name":  "Aria, Flame Knight",
+    "type":  "Hero",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Epic",
+                   "stars":  3,
+                   "points":  8
+               },
+    "stats":  {
+                  "health":  80,
+                  "mana":  60,
+                  "attack":  45,
+                  "defense":  12,
+                  "moveRange":  3,
+                  "attackRange":  1
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_BLAZING_STRIKE",
+                          "name":  "Blazing Strike",
+                          "type":  "Active",
+                          "manaCost":  30,
+                          "cooldown":  3,
+                          "description":  "Deal 70 damage to target enemy. Splash 20 damage to adjacent enemies."
+                      },
+                      {
+                          "abilityId":  "ABILITY_INFERNO_AURA",
+                          "name":  "Inferno Aura",
+                          "type":  "Passive",
+                          "description":  "All Fire units gain +15% ATK (Phase 2)."
+                      }
+                  ],
+    "tacticSlots":  3,
+    "lore":  "A legendary warrior who commands the eternal flames of the Ashen Citadel.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire",
+                                            "hero-pack"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-10-goblin-warlord-boss"
+                                          ]
+                    }
+}

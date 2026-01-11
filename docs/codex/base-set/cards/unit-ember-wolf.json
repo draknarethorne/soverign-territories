@@ -1,0 +1,32 @@
+﻿{
+    "cardId":  "UNIT_EMBER_WOLF",
+    "collectionNumber":  "BS-015",
+    "name":  "Ember Wolf",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Common",
+                   "stars":  0,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  29,
+                  "mana":  19,
+                  "attack":  22,
+                  "defense":  7,
+                  "moveRange":  3,
+                  "attackRange":  1
+              },
+    "tacticSlots":  1,
+    "lore":  "Pack hunters that coordinate fiery assaults.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-18-wolf-den",
+                                              "location-23-burning-tundra"
+                                          ]
+                    }
+}

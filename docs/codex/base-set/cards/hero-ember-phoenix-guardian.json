@@ -1,0 +1,53 @@
+﻿{
+    "cardId":  "HERO_EMBER_PHOENIX_GUARDIAN",
+    "collectionNumber":  "BS-005",
+    "name":  "Ember, Phoenix Guardian",
+    "type":  "Hero",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Epic",
+                   "stars":  3,
+                   "points":  8
+               },
+    "stats":  {
+                  "health":  75,
+                  "mana":  65,
+                  "attack":  40,
+                  "defense":  18,
+                  "moveRange":  3,
+                  "attackRange":  1
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_PHOENIX_REBIRTH",
+                          "name":  "Phoenix Rebirth",
+                          "type":  "Active",
+                          "manaCost":  60,
+                          "cooldown":  99,
+                          "usesPerBattle":  1,
+                          "description":  "When Ember dies, revive at 50% HP at start of next turn."
+                      },
+                      {
+                          "abilityId":  "ABILITY_HEALING_FLAMES",
+                          "name":  "Healing Flames",
+                          "type":  "Active",
+                          "manaCost":  30,
+                          "cooldown":  3,
+                          "description":  "Restore 30 HP to target ally. If Fire element, restore 50 HP."
+                      }
+                  ],
+    "tacticSlots":  3,
+    "lore":  "Bonded with the eternal phoenix spirit, guardian of the Flame Temple.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire",
+                                            "epic-pack",
+                                            "hero-pack"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-25-flame-temple",
+                                              "location-35-fire-trial"
+                                          ]
+                    }
+}
