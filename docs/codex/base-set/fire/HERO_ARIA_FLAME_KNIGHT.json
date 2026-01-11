@@ -1,0 +1,78 @@
+{
+  "cardId": "HERO_ARIA_FLAME_KNIGHT",
+  "collectionNumber": "BS-001",
+  "series": {
+    "seriesId": "base-set",
+    "seriesName": "Base Set",
+    "cardNumber": 1,
+    "totalCards": 140,
+    "releaseDate": "2026-06-01"
+  },
+  
+  "name": "Aria, Flame Knight",
+  "type": "Hero",
+  "element": "Fire",
+  "rarity": {
+    "tier": "Epic",
+    "stars": 3,
+    "points": 8
+  },
+  
+  "stats": {
+    "health": 80,
+    "mana": 60,
+    "attack": 45,
+    "defense": 12,
+    "moveRange": 3,
+    "attackRange": 1
+  },
+  
+  "abilities": [
+    {
+      "abilityId": "ABILITY_BLAZING_STRIKE",
+      "name": "Blazing Strike",
+      "type": "Active",
+      "manaCost": 30,
+      "cooldown": 3,
+      "usesPerBattle": 99,
+      "description": "Deal 70 damage to target enemy. Splash 20 damage to adjacent enemies."
+    },
+    {
+      "abilityId": "ABILITY_INFERNO_AURA",
+      "name": "Inferno Aura",
+      "type": "Passive",
+      "description": "All Fire units gain +15% ATK (Phase 2 feature)."
+    }
+  ],
+  
+  "tacticSlots": 3,
+  "lore": "A legendary warrior who commands the eternal flames of the Ashen Citadel. Aria's blade has never been extinguished, burning brighter with each victory.",
+  
+  "art": {
+    "portraitAsset": "Art/Cards/BS-001_Aria_Portrait.png",
+    "fullArtAsset": "Art/Cards/BS-001_Aria_FullArt.png",
+    "shinyPortrait": "Art/Cards/BS-001_Aria_Portrait_Shiny.png",
+    "voicelineActor": "TBD"
+  },
+  
+  "gameplay": {
+    "tacticSlots": 3,
+    "deckBuildingRules": {
+      "maxCopies": 1,
+      "uniqueHero": true
+    }
+  },
+  
+  "acquisition": {
+    "packSources": ["fire-starter-box", "standard-pack", "element-booster-fire", "hero-pack"],
+    "campaignDrops": ["location-10-goblin-warlord-boss"],
+    "dailyLoginRewards": []
+  },
+  
+  "meta": {
+    "designNotes": "Starter Fire hero. High ATK, low DEF = glass cannon aggro. Blazing Strike is AOE burst (good vs clustered enemies). Use early-game to establish board control.",
+    "balanceHistory": [
+      {"date": "2026-01-11", "change": "Initial design", "author": "Lead Designer"}
+    ]
+  }
+}

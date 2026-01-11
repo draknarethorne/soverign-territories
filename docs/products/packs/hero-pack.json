@@ -1,0 +1,63 @@
+{
+  "productId": "hero-pack",
+  "productName": "Hero Pack",
+  "productType": "specialty-pack",
+  "series": "base-set",
+  "description": "Build your leadership! Guaranteed 2 heroes from the Base Set.",
+  "price": {
+    "gold": 4000,
+    "gems": 400,
+    "realMoney": {
+      "usd": 3.99
+    }
+  },
+  "cardsPerPack": 5,
+  "cardPool": "base-set-all",
+  "guarantees": [
+    {
+      "slot": 1,
+      "type": "Hero",
+      "minimumRarity": "Uncommon",
+      "description": "First card is guaranteed Hero (Uncommon+)"
+    },
+    {
+      "slot": 5,
+      "type": "Hero",
+      "minimumRarity": "Rare",
+      "description": "Last card is guaranteed Hero (Rare+)"
+    }
+  ],
+  "rarityDistribution": {
+    "Uncommon": {
+      "weight": 50,
+      "percentChance": 50
+    },
+    "Rare": {
+      "weight": 35,
+      "percentChance": 35
+    },
+    "Epic": {
+      "weight": 12,
+      "percentChance": 12
+    },
+    "Legendary": {
+      "weight": 3,
+      "percentChance": 3
+    }
+  },
+  "specialFeatures": {
+    "shinyChance": 15,
+    "heroBoost": true,
+    "elementRestriction": null,
+    "typeFilter": "Hero"
+  },
+  "pitySystem": {
+    "enabled": false,
+    "description": "Hero Pack guarantees are independent of standard pity system"
+  },
+  "availability": {
+    "unlockLevel": 10,
+    "purchaseLimit": null,
+    "requiresProgression": false
+  }
+}
