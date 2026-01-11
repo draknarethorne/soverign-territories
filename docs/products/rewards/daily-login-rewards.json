@@ -1,8 +1,8 @@
 {
   "systemId": "daily-login-rewards",
   "systemName": "Daily Login Rewards",
-  "description": "Rewards for consecutive daily logins. Encourages daily engagement without punishing missed days (counter does NOT reset).",
-  "resetCycle": "7-days",
+  "description": "Rewards for consecutive daily logins. Encourages daily engagement without punishing missed days (counter does NOT reset). Uses specialized reward packs with controlled hero rates.",
+  "resetCycle": "30-days",
   "counterPersistence": "never-resets",
   "rewards": {
     "day1": {
@@ -34,11 +34,11 @@
         },
         {
           "type": "pack",
-          "packId": "standard-pack",
+          "packId": "daily-reward-pack",
           "quantity": 1
         }
       ],
-      "displayMessage": "Day 3 milestone! 200 Gold + 1 Standard Pack."
+      "displayMessage": "Day 3 milestone! 200 Gold + 1 Daily Reward Pack."
     },
     "day4": {
       "dayNumber": 4,
@@ -70,16 +70,21 @@
         {
           "type": "gold",
           "amount": 400
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
         }
       ],
-      "displayMessage": "Almost there! 400 Gold awarded."
+      "displayMessage": "Day 6 bonus! 400 Gold + 1 Daily Reward Pack."
     },
     "day7": {
       "dayNumber": 7,
       "rewards": [
         {
           "type": "pack",
-          "packId": "rare-pack",
+          "packId": "weekly-reward-pack",
           "quantity": 1
         },
         {
@@ -87,15 +92,316 @@
           "amount": 50
         }
       ],
-      "displayMessage": "Week complete! 1 Rare Pack + 50 Gems. Cycle resets tomorrow."
+      "displayMessage": "Week 1 complete! 1 Weekly Reward Pack + 50 Gems (guaranteed hero!)."
+    },
+    "day8": {
+      "dayNumber": 8,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 150
+        }
+      ],
+      "displayMessage": "Day 8 bonus! 150 Gold awarded."
+    },
+    "day9": {
+      "dayNumber": 9,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 200
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 9 milestone! 200 Gold + 1 Daily Reward Pack."
+    },
+    "day10": {
+      "dayNumber": 10,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 250
+        }
+      ],
+      "displayMessage": "Day 10 bonus! 250 Gold awarded."
+    },
+    "day11": {
+      "dayNumber": 11,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 300
+        },
+        {
+          "type": "gems",
+          "amount": 30
+        }
+      ],
+      "displayMessage": "Day 11 bonus! 300 Gold + 30 Gems."
+    },
+    "day12": {
+      "dayNumber": 12,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 400
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 12 bonus! 400 Gold + 1 Daily Reward Pack."
+    },
+    "day13": {
+      "dayNumber": 13,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 500
+        }
+      ],
+      "displayMessage": "Day 13 bonus! 500 Gold awarded."
+    },
+    "day14": {
+      "dayNumber": 14,
+      "rewards": [
+        {
+          "type": "pack",
+          "packId": "weekly-reward-pack",
+          "quantity": 1
+        },
+        {
+          "type": "gems",
+          "amount": 75
+        }
+      ],
+      "displayMessage": "Week 2 complete! 1 Weekly Reward Pack + 75 Gems (guaranteed hero!)."
+    },
+    "day15": {
+      "dayNumber": 15,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 200
+        }
+      ],
+      "displayMessage": "Halfway there! 200 Gold awarded."
+    },
+    "day16": {
+      "dayNumber": 16,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 250
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 16 milestone! 250 Gold + 1 Daily Reward Pack."
+    },
+    "day17": {
+      "dayNumber": 17,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 300
+        }
+      ],
+      "displayMessage": "Day 17 bonus! 300 Gold awarded."
+    },
+    "day18": {
+      "dayNumber": 18,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 350
+        },
+        {
+          "type": "gems",
+          "amount": 40
+        }
+      ],
+      "displayMessage": "Day 18 bonus! 350 Gold + 40 Gems."
+    },
+    "day19": {
+      "dayNumber": 19,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 400
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 19 bonus! 400 Gold + 1 Daily Reward Pack."
+    },
+    "day20": {
+      "dayNumber": 20,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 500
+        }
+      ],
+      "displayMessage": "Day 20 bonus! 500 Gold awarded."
+    },
+    "day21": {
+      "dayNumber": 21,
+      "rewards": [
+        {
+          "type": "pack",
+          "packId": "weekly-reward-pack",
+          "quantity": 1
+        },
+        {
+          "type": "gems",
+          "amount": 100
+        }
+      ],
+      "displayMessage": "Week 3 complete! 1 Weekly Reward Pack + 100 Gems (guaranteed hero!)."
+    },
+    "day22": {
+      "dayNumber": 22,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 250
+        }
+      ],
+      "displayMessage": "Day 22 bonus! 250 Gold awarded."
+    },
+    "day23": {
+      "dayNumber": 23,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 300
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 23 milestone! 300 Gold + 1 Daily Reward Pack."
+    },
+    "day24": {
+      "dayNumber": 24,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 400
+        }
+      ],
+      "displayMessage": "Day 24 bonus! 400 Gold awarded."
+    },
+    "day25": {
+      "dayNumber": 25,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 500
+        },
+        {
+          "type": "gems",
+          "amount": 50
+        }
+      ],
+      "displayMessage": "Day 25 bonus! 500 Gold + 50 Gems."
+    },
+    "day26": {
+      "dayNumber": 26,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 600
+        },
+        {
+          "type": "pack",
+          "packId": "daily-reward-pack",
+          "quantity": 1
+        }
+      ],
+      "displayMessage": "Day 26 bonus! 600 Gold + 1 Daily Reward Pack."
+    },
+    "day27": {
+      "dayNumber": 27,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 700
+        }
+      ],
+      "displayMessage": "Day 27 bonus! 700 Gold awarded."
+    },
+    "day28": {
+      "dayNumber": 28,
+      "rewards": [
+        {
+          "type": "pack",
+          "packId": "weekly-reward-pack",
+          "quantity": 1
+        },
+        {
+          "type": "gems",
+          "amount": 125
+        }
+      ],
+      "displayMessage": "Week 4 complete! 1 Weekly Reward Pack + 125 Gems (guaranteed hero!)."
+    },
+    "day29": {
+      "dayNumber": 29,
+      "rewards": [
+        {
+          "type": "gold",
+          "amount": 800
+        },
+        {
+          "type": "gems",
+          "amount": 75
+        }
+      ],
+      "displayMessage": "Almost at the grand finale! 800 Gold + 75 Gems."
+    },
+    "day30": {
+      "dayNumber": 30,
+      "rewards": [
+        {
+          "type": "pack",
+          "packId": "monthly-reward-pack",
+          "quantity": 1
+        },
+        {
+          "type": "gems",
+          "amount": 200
+        },
+        {
+          "type": "gold",
+          "amount": 1000
+        }
+      ],
+      "displayMessage": "🎉 MONTH COMPLETE! 1 Monthly Reward Pack (7 cards, Epic+ hero, Legendary guaranteed) + 1,000 Gold + 200 Gems! Cycle resets tomorrow."
     }
   },
-  "totalWeeklyRewards": {
-    "gold": 1400,
-    "gems": 75,
+  "totalMonthlyRewards": {
+    "gold": 11250,
+    "gems": 895,
     "packs": {
-      "standard-pack": 1,
-      "rare-pack": 1
+      "daily-reward-pack": 8,
+      "weekly-reward-pack": 4,
+      "monthly-reward-pack": 1
     }
   },
   "missedDayBehavior": {
@@ -117,13 +423,38 @@
     }
   },
   "f2pBalance": {
-    "goldPerWeek": 1400,
-    "packsPerWeek": 2,
-    "monthlyValue": {
-      "gold": 6000,
-      "packs": 8,
-      "equivalentRealMoney": "$7.92 (8 packs × $0.99)"
+    "goldPerMonth": 11250,
+    "gemsPerMonth": 895,
+    "packsPerMonth": 13,
+    "packBreakdown": {
+      "daily-reward-pack": 8,
+      "weekly-reward-pack": 4,
+      "monthly-reward-pack": 1
     },
-    "description": "F2P players earn ~6,000 Gold/month from dailies alone, enough for 6 Standard Packs. Combined with quest rewards (500 Gold/day = 15,000 Gold/month), F2P earns 21,000 Gold/month = 21 Standard Packs."
+    "monthlyValue": {
+      "gold": 11250,
+      "gems": 895,
+      "packs": "13 specialized packs",
+      "equivalentRealMoney": "$15-20 (Monthly pack alone = $10-15 value)",
+      "guaranteedHeroes": 5,
+      "heroBreakdown": "4 weekly (Epic+), 1 monthly (Epic+ guaranteed)"
+    },
+    "description": "F2P players earn 11,250 Gold/month + 895 Gems + 13 reward packs from daily login. Combined with quest rewards (500 Gold/day = 15,000 Gold/month), F2P earns 26,250 Gold/month total. Hero saturation controlled via Daily Reward Pack (low hero rate), Weekly Reward Pack (1 guaranteed hero/week), Monthly Reward Pack (Epic+ hero + Legendary + 0.5% Mythic chance)."
+  },
+  "pitySystem": {
+    "daily-reward-pack": {
+      "heroGuarantee": "1 hero (max Epic) every 10 daily packs",
+      "epicGuarantee": "1 Epic every 15 daily packs"
+    },
+    "weekly-reward-pack": {
+      "heroGuarantee": "Slot 1 always guaranteed (Uncommon+ hero)",
+      "epicGuarantee": "1 Epic every 5 weekly packs",
+      "legendaryGuarantee": "1 Legendary every 10 weekly packs"
+    },
+    "monthly-reward-pack": {
+      "heroGuarantee": "Slot 1 always Epic+ hero",
+      "legendaryGuarantee": "Slot 7 always Legendary",
+      "mythicGuarantee": "1 Mythic hero (Malakar) after 12 monthly packs (1 year play)"
+    }
   }
 }

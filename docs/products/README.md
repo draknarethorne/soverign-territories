@@ -197,25 +197,34 @@ Total = 10 packs → NEXT PACK (any tracked type) guarantees Epic+
 
 **File**: [daily-login-rewards.json](rewards/daily-login-rewards.json)
 
-**7-Day Cycle** (Counter NEVER resets):
-- **Day 1**: 100 Gold
-- **Day 2**: 150 Gold
-- **Day 3**: 200 Gold + 1× Standard Pack
-- **Day 4**: 250 Gold
-- **Day 5**: 300 Gold + 25 Gems
-- **Day 6**: 400 Gold
-- **Day 7**: 1× Rare Pack + 50 Gems
+**30-Day Cycle** (Counter NEVER resets):
+- **Days 1-30**: Progressive Gold (100 → 1,000), Gems (895 total), specialized packs
+- **Daily Reward Packs** (Days 3, 6, 9, 12, 16, 19, 23, 26): 8 packs/month with low hero rates (~3%, max Epic)
+- **Weekly Reward Packs** (Days 7, 14, 21, 28): 4 packs/month with guaranteed hero (Epic+ available)
+- **Monthly Reward Pack** (Day 30): 1 premium pack (7 cards, Epic+ hero guaranteed, Legendary guaranteed, 0.5% Mythic)
 
-**Weekly Total**: 1,400 Gold + 75 Gems + 1 Standard Pack + 1 Rare Pack (~$3.98 value)
+**Monthly Total**: 11,250 Gold + 895 Gems + 13 reward packs (~$15-20 value)
+
+**Pack Types**:
+- **Daily Reward Pack** (5 cards): Hero rate reduced 70%, max Epic heroes (prevents saturation)
+- **Weekly Reward Pack** (5 cards): Slot 1 guaranteed hero (Uncommon+), Epic/Legendary available
+- **Monthly Reward Pack** (7 cards): Slot 1 Epic+ hero, Slot 7 Legendary, 0.5% Mythic (Malakar)
+
+**Pity Systems**:
+- **Daily**: Hero every 10 packs, Epic every 15 packs
+- **Weekly**: Epic every 5 packs, Legendary every 10 packs
+- **Monthly**: Mythic hero (Malakar) after 12 months
 
 **Missed Days Behavior**: 
 - Counter does NOT reset if you miss days
-- If you're on Day 3 and skip a week, next login = Day 4 (not Day 1)
+- If you're on Day 15 and skip a week, next login = Day 16 (not Day 1)
 - Encourages consistency without punishing breaks
 
 **F2P Value**: 
-- Daily login alone = ~6,000 Gold/month + 8 packs/month (~$7.92 value)
-- Combined with quests (500 Gold/day) = 21,000 Gold/month total
+- Daily login alone = 11,250 Gold/month + 895 Gems + 13 packs (~$15-20 value)
+- **Guaranteed Heroes**: 5/month (4 weekly + 1 monthly Epic+)
+- Combined with quests (500 Gold/day) = **26,250 Gold/month total**
+- Hero saturation controlled via Daily Reward Pack (low rates) + Weekly/Monthly packs (guaranteed targeted drops)
 
 ---
 

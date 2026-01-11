@@ -44,16 +44,20 @@ Each box:
 - Free (tutorial reward, choose 1 of 3)
 - Recommended deck included for first battle
 
-#### **Booster Packs** (10 files)
+#### **Booster Packs** (13 files)
 1. **[welcome-pack.json](docs/products/packs/welcome-pack.json)**: Tutorial reward, guaranteed Uncommon+ hero
 2. **[standard-pack.json](docs/products/packs/standard-pack.json)**: 1,000 Gold, core F2P progression pack
 3. **[element-booster-fire.json](docs/products/packs/element-booster-fire.json)**: 1,500 Gold, Fire-only cards
 4. **[element-booster-water.json](docs/products/packs/element-booster-water.json)**: 1,500 Gold, Water-only
 5. **[element-booster-earth.json](docs/products/packs/element-booster-earth.json)**: 1,500 Gold, Earth-only
-6. **[hero-pack.json](docs/products/packs/hero-pack.json)**: 4,000 Gold, guaranteed 2 heroes
-7. **[rare-pack.json](docs/products/packs/rare-pack.json)**: 3,000 Gold, all 5 cards Rare+
-8. **[epic-pack.json](docs/products/packs/epic-pack.json)**: 5,000 Gold, all 5 cards Epic+
-9. **[legendary-pack.json](docs/products/packs/legendary-pack.json)**: 10,000 Gold, guaranteed Legendary + 4 Epic
+6. **[element-booster-lightning.json](docs/products/packs/element-booster-lightning.json)**: 1,500 Gold, Lightning-only
+7. **[element-booster-wind.json](docs/products/packs/element-booster-wind.json)**: 1,500 Gold, Wind-only
+8. **[element-booster-frost.json](docs/products/packs/element-booster-frost.json)**: 1,500 Gold, Frost-only
+9. **[hero-pack.json](docs/products/packs/hero-pack.json)**: 4,000 Gold, guaranteed 2 heroes
+10. **[rare-pack.json](docs/products/packs/rare-pack.json)**: 3,000 Gold, all 5 cards Rare+
+11. **[epic-pack.json](docs/products/packs/epic-pack.json)**: 5,000 Gold, all 5 cards Epic+
+12. **[legendary-pack.json](docs/products/packs/legendary-pack.json)**: 10,000 Gold, guaranteed Legendary + 4 Epic
+13. **[mythic-pack.json](docs/products/packs/mythic-pack.json)**: 20,000 Gold, choice card (Malakar, Demon Overlord)
 10. **[mythic-pack.json](docs/products/packs/mythic-pack.json)**: 20,000 Gold, choice card (Malakar, Demon Overlord)
 
 **Pity System**: Epic every 10 packs, Legendary every 50 packs (tracks across Standard + Element Boosters)

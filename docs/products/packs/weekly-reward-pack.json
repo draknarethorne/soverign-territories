@@ -1,0 +1,81 @@
+{
+  "productId": "weekly-reward-pack",
+  "productName": "Weekly Reward Pack",
+  "productType": "reward-pack",
+  "series": "base-set",
+  "description": "Weekly login reward pack. Improved hero rates with Epic and Legendary heroes available.",
+  "price": {
+    "gold": 0,
+    "gems": 0,
+    "realMoney": {
+      "usd": 0
+    }
+  },
+  "cardsPerPack": 5,
+  "cardPool": "base-set-all",
+  "guarantees": [
+    {
+      "slot": 5,
+      "minimumRarity": "Rare",
+      "description": "Last card is guaranteed Rare or better"
+    },
+    {
+      "slot": 1,
+      "type": "Hero",
+      "minimumRarity": "Uncommon",
+      "description": "First card is guaranteed Hero (Uncommon+)"
+    }
+  ],
+  "rarityDistribution": {
+    "Common": {
+      "weight": 50,
+      "percentChance": 50
+    },
+    "Uncommon": {
+      "weight": 30,
+      "percentChance": 30
+    },
+    "Rare": {
+      "weight": 14,
+      "percentChance": 14
+    },
+    "Epic": {
+      "weight": 5,
+      "percentChance": 5
+    },
+    "Legendary": {
+      "weight": 1,
+      "percentChance": 1
+    }
+  },
+  "specialFeatures": {
+    "shinyChance": 12,
+    "heroBoost": true,
+    "heroRestriction": {
+      "enabled": true,
+      "maxRarity": "Legendary",
+      "chanceModifier": 1.0,
+      "description": "Heroes drop at normal rates. Epic and Legendary available (no Mythic)"
+    },
+    "elementRestriction": null
+  },
+  "pitySystem": {
+    "enabled": true,
+    "epicGuaranteeAfter": 5,
+    "legendaryGuaranteeAfter": 10,
+    "heroGuaranteeAfter": null,
+    "trackedAcrossPacks": ["weekly-reward-pack"],
+    "description": "Epic every 5 weekly packs, Legendary every 10 weekly packs. Hero already guaranteed slot 1."
+  },
+  "availability": {
+    "unlockLevel": 1,
+    "purchaseLimit": null,
+    "requiresProgression": false,
+    "acquisition": "weekly-login-reward"
+  },
+  "designNotes": {
+    "purpose": "Weekly milestone reward. Guaranteed hero makes it exciting, Epic/Legendary heroes provide progression.",
+    "heroRate": "100% (slot 1 guaranteed), Epic ~5%, Legendary ~1%",
+    "balance": "1 guaranteed hero per week = 4 heroes/month (reasonable pace for F2P)"
+  }
+}
