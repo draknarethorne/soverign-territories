@@ -1,0 +1,854 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Starter Cards - Fire, Water, Earth",
+  "description": "Complete card definitions for 3 starter decks (45 cards total). Used in Tutorial Steps 1-2.",
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-10",
+  
+  "starterDecks": {
+    "fire": {
+      "deckId": "STARTER_FIRE",
+      "element": "Fire",
+      "playstyle": "Aggressive",
+      "description": "High attack, low defense. Win fast or lose fast.",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cards": [
+        {
+          "cardId": "HERO_ARIA_FLAME_KNIGHT",
+          "name": "Aria, Flame Knight",
+          "type": "Hero",
+          "element": "Fire",
+          "rarity": "Epic",
+          "rarityStars": 3,
+          "rarityPoints": 8,
+          "stats": {
+            "health": 80,
+            "mana": 60,
+            "attack": 45,
+            "defense": 12
+          },
+          "abilities": [
+            {
+              "abilityId": "BLAZING_STRIKE",
+              "name": "Blazing Strike",
+              "type": "Active",
+              "manaCost": 30,
+              "cooldown": 3,
+              "description": "Deal 70 fire damage to target enemy. If target dies, deal 20 splash damage to adjacent enemies."
+            },
+            {
+              "abilityId": "INFERNO_AURA",
+              "name": "Inferno Aura",
+              "type": "Passive",
+              "description": "All allied Fire units gain +15% Attack while Aria is alive."
+            }
+          ],
+          "tacticSlots": 3,
+          "lore": "Once a royal guard, Aria abandoned her post to seek glory on the battlefield. Her blade burns with eternal flame.",
+          "artAsset": "heroes/aria_flame_knight.png",
+          "voicelineActor": "Female_Warrior_01"
+        },
+        {
+          "cardId": "UNIT_EMBER_LEGIONNAIRE",
+          "name": "Ember Legionnaire",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 55,
+            "mana": 20,
+            "attack": 32,
+            "defense": 10
+          },
+          "abilities": [
+            {
+              "abilityId": "CHARGE",
+              "name": "Charge",
+              "type": "Active",
+              "manaCost": 10,
+              "cooldown": 0,
+              "description": "Move +2 tiles and attack same turn."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/ember_legionnaire.png"
+        },
+        {
+          "cardId": "UNIT_PHOENIX_HATCHLING",
+          "name": "Phoenix Hatchling",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 40,
+            "mana": 40,
+            "attack": 25,
+            "defense": 8
+          },
+          "abilities": [
+            {
+              "abilityId": "REBIRTH",
+              "name": "Rebirth",
+              "type": "Active",
+              "manaCost": 30,
+              "cooldown": 999,
+              "usesPerBattle": 1,
+              "description": "If killed, resurrect at 50% HP next turn."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/phoenix_hatchling.png"
+        },
+        {
+          "cardId": "UNIT_FLAME_IMP",
+          "name": "Flame Imp",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 45,
+            "mana": 35,
+            "attack": 28,
+            "defense": 9
+          },
+          "abilities": [
+            {
+              "abilityId": "FIREBALL",
+              "name": "Fireball",
+              "type": "Active",
+              "manaCost": 20,
+              "cooldown": 0,
+              "description": "Deal 35 fire damage to 1 enemy."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/flame_imp.png"
+        },
+        {
+          "cardId": "UNIT_GOBLIN_RAIDER",
+          "name": "Goblin Raider",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 30,
+            "mana": 15,
+            "attack": 22,
+            "defense": 6
+          },
+          "abilities": [
+            {
+              "abilityId": "RECKLESS_STRIKE",
+              "name": "Reckless Strike",
+              "type": "Active",
+              "manaCost": 5,
+              "cooldown": 0,
+              "description": "+50% damage, -30% defense for 1 turn."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/goblin_raider.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_FIRE_SOLDIER",
+          "name": "Fire Soldier",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 35,
+            "mana": 10,
+            "attack": 20,
+            "defense": 8
+          },
+          "abilities": [],
+          "tacticSlots": 1,
+          "artAsset": "units/fire_soldier.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_FLAME_ARCHER",
+          "name": "Flame Archer",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 25,
+            "mana": 12,
+            "attack": 18,
+            "defense": 5
+          },
+          "abilities": [
+            {
+              "abilityId": "RANGED_ATTACK",
+              "name": "Ranged Attack",
+              "type": "Passive",
+              "description": "Can attack from 3 tiles away."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/flame_archer.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_FIRE_SCOUT",
+          "name": "Fire Scout",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 20,
+            "mana": 8,
+            "attack": 15,
+            "defense": 4
+          },
+          "abilities": [
+            {
+              "abilityId": "SPRINT",
+              "name": "Sprint",
+              "type": "Active",
+              "manaCost": 5,
+              "cooldown": 0,
+              "description": "Move +1 tile this turn."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/fire_scout.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_SCORCH_ELEMENTAL",
+          "name": "Scorch Elemental",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 18,
+            "mana": 15,
+            "attack": 16,
+            "defense": 3
+          },
+          "abilities": [],
+          "tacticSlots": 1,
+          "artAsset": "units/scorch_elemental.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_FIRE_SHAMAN",
+          "name": "Fire Shaman",
+          "type": "Unit",
+          "element": "Fire",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 15,
+            "mana": 25,
+            "attack": 10,
+            "defense": 5
+          },
+          "abilities": [
+            {
+              "abilityId": "MINOR_FIREBALL",
+              "name": "Minor Fireball",
+              "type": "Active",
+              "manaCost": 12,
+              "cooldown": 0,
+              "description": "Deal 20 fire damage to 1 enemy."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/fire_shaman.png",
+          "quantity": 1
+        }
+      ]
+    },
+    
+    "water": {
+      "deckId": "STARTER_WATER",
+      "element": "Water",
+      "playstyle": "Defensive",
+      "description": "High defense, healing. Outlast enemies through attrition.",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cards": [
+        {
+          "cardId": "HERO_THALOR_TIDE_GUARDIAN",
+          "name": "Thalor, Tide Guardian",
+          "type": "Hero",
+          "element": "Water",
+          "rarity": "Epic",
+          "rarityStars": 3,
+          "rarityPoints": 8,
+          "stats": {
+            "health": 100,
+            "mana": 55,
+            "attack": 30,
+            "defense": 28
+          },
+          "abilities": [
+            {
+              "abilityId": "TIDAL_WAVE",
+              "name": "Tidal Wave",
+              "type": "Active",
+              "manaCost": 28,
+              "cooldown": 3,
+              "description": "Deal 50 water damage to 3 enemies in a line. Heal 20 HP to self."
+            },
+            {
+              "abilityId": "OCEANS_EMBRACE",
+              "name": "Ocean's Embrace",
+              "type": "Passive",
+              "description": "All allied Water units gain +20% Defense while Thalor is alive."
+            }
+          ],
+          "tacticSlots": 3,
+          "lore": "Guardian of the Azure Isles, Thalor commands the ocean's fury. His shield has never been broken.",
+          "artAsset": "heroes/thalor_tide_guardian.png",
+          "voicelineActor": "Male_Guardian_01"
+        },
+        {
+          "cardId": "UNIT_FROST_PALADIN",
+          "name": "Frost Paladin",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 65,
+            "mana": 25,
+            "attack": 24,
+            "defense": 18
+          },
+          "abilities": [
+            {
+              "abilityId": "SHIELD_ALLY",
+              "name": "Shield Ally",
+              "type": "Active",
+              "manaCost": 12,
+              "cooldown": 0,
+              "description": "Grant +15 DEF to 1 ally for 2 turns."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/frost_paladin.png"
+        },
+        {
+          "cardId": "UNIT_WATER_ELEMENTAL",
+          "name": "Water Elemental",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 50,
+            "mana": 40,
+            "attack": 22,
+            "defense": 14
+          },
+          "abilities": [
+            {
+              "abilityId": "HEALING_TIDE",
+              "name": "Healing Tide",
+              "type": "Active",
+              "manaCost": 22,
+              "cooldown": 0,
+              "description": "Restore 35 HP to 1 ally."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/water_elemental.png"
+        },
+        {
+          "cardId": "UNIT_ELVEN_ARCHER",
+          "name": "Elven Archer",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 42,
+            "mana": 30,
+            "attack": 28,
+            "defense": 10
+          },
+          "abilities": [
+            {
+              "abilityId": "PIERCING_ARROW",
+              "name": "Piercing Arrow",
+              "type": "Active",
+              "manaCost": 18,
+              "cooldown": 0,
+              "description": "Ignore 50% of target's defense."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/elven_archer.png"
+        },
+        {
+          "cardId": "UNIT_SEA_SERPENT",
+          "name": "Sea Serpent",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 48,
+            "mana": 20,
+            "attack": 20,
+            "defense": 12
+          },
+          "abilities": [
+            {
+              "abilityId": "AQUATIC_MOVEMENT",
+              "name": "Aquatic Movement",
+              "type": "Passive",
+              "description": "Move through water tiles (mountains block)."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/sea_serpent.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_FROST_SOLDIER",
+          "name": "Frost Soldier",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 40,
+            "mana": 10,
+            "attack": 18,
+            "defense": 10
+          },
+          "abilities": [],
+          "tacticSlots": 1,
+          "artAsset": "units/frost_soldier.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_WATER_SCOUT",
+          "name": "Water Scout",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 32,
+            "mana": 15,
+            "attack": 16,
+            "defense": 8
+          },
+          "abilities": [
+            {
+              "abilityId": "QUICK_STEP",
+              "name": "Quick Step",
+              "type": "Active",
+              "manaCost": 6,
+              "cooldown": 0,
+              "description": "Move +1 tile this turn."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/water_scout.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_AQUA_HEALER",
+          "name": "Aqua Healer",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 22,
+            "mana": 30,
+            "attack": 8,
+            "defense": 6
+          },
+          "abilities": [
+            {
+              "abilityId": "MINOR_HEAL",
+              "name": "Minor Heal",
+              "type": "Active",
+              "manaCost": 15,
+              "cooldown": 0,
+              "description": "Restore 20 HP to 1 ally."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/aqua_healer.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_ICE_SPRITE",
+          "name": "Ice Sprite",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 18,
+            "mana": 20,
+            "attack": 12,
+            "defense": 5
+          },
+          "abilities": [
+            {
+              "abilityId": "FROSTBOLT",
+              "name": "Frostbolt",
+              "type": "Active",
+              "manaCost": 10,
+              "cooldown": 0,
+              "description": "Deal 18 water damage to 1 enemy."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/ice_sprite.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_TIDAL_MAGE",
+          "name": "Tidal Mage",
+          "type": "Unit",
+          "element": "Water",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 20,
+            "mana": 25,
+            "attack": 10,
+            "defense": 7
+          },
+          "abilities": [
+            {
+              "abilityId": "WATER_SHIELD",
+              "name": "Water Shield",
+              "type": "Active",
+              "manaCost": 12,
+              "cooldown": 0,
+              "description": "Grant +8 DEF to self for 2 turns."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/tidal_mage.png",
+          "quantity": 1
+        }
+      ]
+    },
+    
+    "earth": {
+      "deckId": "STARTER_EARTH",
+      "element": "Earth",
+      "playstyle": "Balanced",
+      "description": "Moderate attack/defense. Adapts to any situation.",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cards": [
+        {
+          "cardId": "HERO_GAIA_STONE_SENTINEL",
+          "name": "Gaia, Stone Sentinel",
+          "type": "Hero",
+          "element": "Earth",
+          "rarity": "Epic",
+          "rarityStars": 3,
+          "rarityPoints": 8,
+          "stats": {
+            "health": 90,
+            "mana": 58,
+            "attack": 36,
+            "defense": 20
+          },
+          "abilities": [
+            {
+              "abilityId": "EARTHQUAKE",
+              "name": "Earthquake",
+              "type": "Active",
+              "manaCost": 32,
+              "cooldown": 3,
+              "description": "Deal 55 earth damage to all enemies on ground tiles. Cannot damage flying units."
+            },
+            {
+              "abilityId": "STONE_SKIN",
+              "name": "Stone Skin",
+              "type": "Passive",
+              "description": "All allied Earth units take -10% damage from all sources."
+            }
+          ],
+          "tacticSlots": 3,
+          "lore": "Born from the mountain's heart, Gaia is immovable. The earth itself bends to her will.",
+          "artAsset": "heroes/gaia_stone_sentinel.png",
+          "voicelineActor": "Female_Guardian_01"
+        },
+        {
+          "cardId": "UNIT_ROCK_GOLEM",
+          "name": "Rock Golem",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 70,
+            "mana": 15,
+            "attack": 26,
+            "defense": 16
+          },
+          "abilities": [
+            {
+              "abilityId": "FORTIFY",
+              "name": "Fortify",
+              "type": "Active",
+              "manaCost": 10,
+              "cooldown": 0,
+              "description": "Gain +10 DEF, cannot move for 1 turn."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/rock_golem.png"
+        },
+        {
+          "cardId": "UNIT_FOREST_DRUID",
+          "name": "Forest Druid",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 48,
+            "mana": 38,
+            "attack": 24,
+            "defense": 12
+          },
+          "abilities": [
+            {
+              "abilityId": "NATURES_BLESSING",
+              "name": "Nature's Blessing",
+              "type": "Active",
+              "manaCost": 20,
+              "cooldown": 0,
+              "description": "Restore 25 HP + 10 MP to 1 ally."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/forest_druid.png"
+        },
+        {
+          "cardId": "UNIT_STONE_GUARDIAN",
+          "name": "Stone Guardian",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Rare",
+          "rarityStars": 2,
+          "rarityPoints": 4,
+          "stats": {
+            "health": 58,
+            "mana": 25,
+            "attack": 28,
+            "defense": 14
+          },
+          "abilities": [
+            {
+              "abilityId": "TAUNT",
+              "name": "Taunt",
+              "type": "Active",
+              "manaCost": 8,
+              "cooldown": 0,
+              "description": "Force enemies to attack this unit for 2 turns."
+            }
+          ],
+          "tacticSlots": 2,
+          "artAsset": "units/stone_guardian.png"
+        },
+        {
+          "cardId": "UNIT_EARTH_WARRIOR",
+          "name": "Earth Warrior",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 42,
+            "mana": 12,
+            "attack": 22,
+            "defense": 10
+          },
+          "abilities": [
+            {
+              "abilityId": "POWER_STRIKE",
+              "name": "Power Strike",
+              "type": "Active",
+              "manaCost": 8,
+              "cooldown": 0,
+              "description": "Deal +50% damage on next attack."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/earth_warrior.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_VINE_ARCHER",
+          "name": "Vine Archer",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 35,
+            "mana": 15,
+            "attack": 20,
+            "defense": 7
+          },
+          "abilities": [
+            {
+              "abilityId": "RANGED_ATTACK",
+              "name": "Ranged Attack",
+              "type": "Passive",
+              "description": "Can attack from 3 tiles away."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/vine_archer.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_BOULDER_BEAST",
+          "name": "Boulder Beast",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Uncommon",
+          "rarityStars": 1,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 50,
+            "mana": 10,
+            "attack": 18,
+            "defense": 12
+          },
+          "abilities": [],
+          "tacticSlots": 1,
+          "artAsset": "units/boulder_beast.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_EARTH_SCOUT",
+          "name": "Earth Scout",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 28,
+            "mana": 10,
+            "attack": 16,
+            "defense": 6
+          },
+          "abilities": [
+            {
+              "abilityId": "PATHFINDER",
+              "name": "Pathfinder",
+              "type": "Active",
+              "manaCost": 6,
+              "cooldown": 0,
+              "description": "Reveal fog of war 2 tiles around this unit."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/earth_scout.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_STONE_ELEMENTAL",
+          "name": "Stone Elemental",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 25,
+            "mana": 12,
+            "attack": 15,
+            "defense": 8
+          },
+          "abilities": [],
+          "tacticSlots": 1,
+          "artAsset": "units/stone_elemental.png",
+          "quantity": 2
+        },
+        {
+          "cardId": "UNIT_NATURE_MAGE",
+          "name": "Nature Mage",
+          "type": "Unit",
+          "element": "Earth",
+          "rarity": "Common",
+          "rarityStars": 0,
+          "rarityPoints": 1,
+          "stats": {
+            "health": 20,
+            "mana": 28,
+            "attack": 12,
+            "defense": 6
+          },
+          "abilities": [
+            {
+              "abilityId": "EARTHEN_SPIKE",
+              "name": "Earthen Spike",
+              "type": "Active",
+              "manaCost": 14,
+              "cooldown": 0,
+              "description": "Deal 22 earth damage to 1 enemy."
+            }
+          ],
+          "tacticSlots": 1,
+          "artAsset": "units/nature_mage.png",
+          "quantity": 1
+        }
+      ]
+    }
+  },
+  
+  "notes": {
+    "designPhilosophy": "3 starter decks ensure meaningful choice without overwhelming new players. Fire (aggro), Water (control), Earth (balanced) teach distinct playstyles.",
+    "balanceTargets": {
+      "allDecksSameRarityPoints": 31,
+      "allDecksSameCardCount": 15,
+      "heroStatsVariance": "Fire = high ATK/low DEF, Water = low ATK/high DEF, Earth = balanced"
+    },
+    "implementationNotes": "Tutorial Step 1: Player chooses 1 of 3 portals. Tutorial Step 2: Player opens Welcome Pack (5 cards, 1 hero guaranteed). Total cards after tutorial: 15 (starter) + 5 (Welcome Pack) = 20 cards."
+  }
+}

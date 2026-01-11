@@ -1,19 +1,52 @@
 # Combat System Calculations
 
-**Last Updated**: December 30, 2025  
-**Status**: MVP uses simple Attack/Defense, Phase 2 adds RPG stats, Phase 3 adds status effects  
-**Related**: [game-bible.md](game-bible.md) Section 8, [card-schema.json](specs/card-schema.json)
+**Last Updated**: January 10, 2026  
+**Status**: MVP uses HP/Mana/ATK/DEF with ability system, Phase 2 adds elemental counters, Phase 3 adds status effects  
+**Related**: [game-bible.md](game-bible.md) Section 8, [starter-cards.json](../specs/starter-cards.json), [deck-progression-rules.md](deck-progression-rules.md)
 
 ---
 
 ## Overview
 
 Sovereign Territories combat evolves across 3 phases:
-- **MVP (Simple)**: Attack/Defense only, straightforward damage calculation
-- **Phase 2 (RPG)**: Health/Mana/Stamina system, abilities, recharge mechanics
-- **Phase 3 (Advanced)**: Elemental interactions, status effects, terrain modifiers
+- **MVP (Tactical)**: HP/Mana/ATK/DEF stats, ability system, 8×8 tactical battles
+- **Phase 2 (Elemental)**: Fire > Earth > Water > Fire counter-play (1.5× damage multiplier)
+- **Phase 3 (Advanced)**: Status effects (burn, freeze, stun), terrain modifiers (forest, water, mountains)
 
-**Design Philosophy**: Start simple for MVP (easy to balance, fast iteration), add complexity post-launch once core gameplay is proven.
+**Design Philosophy**: Start with tactical depth (positioning, abilities, hero synergies), add complexity post-launch once core gameplay is proven.
+
+---
+
+## ❌ **MVP CLARIFICATION: Elemental Mechanics**
+
+**Critical Design Note** (Updated January 10, 2026):
+
+- ❌ **NOT in MVP**: Elemental counter-play (Fire > Earth > Water > Fire with 1.5× damage multiplier)
+- ❌ **NOT in MVP**: Element-specific buffs (Fire Aura only buffs Fire units)
+- ❌ **NOT in MVP**: Terrain element interactions (Fire units stronger on lava tiles)
+
+- ✅ **MVP ONLY**: **Elements are visual flavor and identity**
+  - Fire heroes look red/orange, use flame VFX
+  - Water heroes look blue/cyan, use water VFX
+  - Earth heroes look brown/green, use stone/root VFX
+  - **Damage formula is identical**: `Damage = ATK - DEF` (no element multipliers)
+  - **Example**: Aria (Fire) attacking Thalor (Water) uses same formula as Aria attacking Gaia (Earth)
+
+**Why This Decision**:
+1. **Simplicity**: New players learn 1 damage formula, not 6 element interactions
+2. **Balance**: Easier to balance 3 starter decks (Fire/Water/Earth) when they're numerically equal
+3. **Iteration Speed**: Can ship MVP faster without tuning element multiplier math
+4. **Phase 2 Upgrade Path**: Once core loop validated, add counter-play as expansion feature
+
+**Phase 2 Design** (Future):
+- Fire > Earth (burns forests, 1.5× damage)
+- Earth > Water (dams rivers, 1.5× damage)
+- Water > Fire (extinguishes flames, 1.5× damage)
+- Lightning > Water (conducts, 1.5× damage)
+- Wind > Lightning (disperses electricity, 1.5× damage)
+- Frost > Wind (freezes air, 1.5× damage)
+
+**For MVP**: Treat all elements as cosmetic themes. Focus playtesting on ability balance (Aria's Blazing Strike vs Thalor's Tidal Wave), not element counters.
 
 ---
 

@@ -1,9 +1,35 @@
-# MVP Scope Final - 8-Week Implementation Roadmap
+# MVP Scope Final - Implementation Roadmap
 
-**Last Updated**: December 30, 2025  
+**Last Updated**: January 10, 2026  
 **Status**: Ready for Unity implementation  
-**Target Completion**: 8 weeks (2 months)  
-**Related**: [game-bible.md](game-bible.md), [tutorial-flow.md](tutorial-flow.md), [economy-system.md](economy-system.md)
+**Target Completion**: 16-24 weeks solo dev (see [solo-dev-realistic-mvp.md](solo-dev-realistic-mvp.md) for realistic timeline)  
+**ASPIRATIONAL Timeline**: 8 weeks full-time team (original estimate, NOT REALISTIC for solo dev)  
+**Related**: [game-bible.md](../game-bible.md), [starter-deck-design.md](../design/starter-deck-design.md), [campaign-structure.md](../design/campaign-structure.md)
+
+---
+
+## ⚠️ TIMELINE CLARIFICATION (January 10, 2026)
+
+**This document's "8-week" estimate assumed**:
+- Full-time team (40-60 hours/week per person)
+- 2-3 developers (Unity dev, backend dev, UI/UX designer)
+- Pre-existing art assets or contractor support
+
+**ACTUAL Reality for Solo Dev**:
+- Part-time solo developer (10-15 hours/week)
+- Learning Unity + Nakama from scratch
+- Creating all systems, art, design simultaneously
+- **Realistic Timeline**: 16-24 weeks (see [solo-dev-realistic-mvp.md](solo-dev-realistic-mvp.md))
+
+**Use This Document For**:
+- ✅ Feature scope definition (what's in MVP vs Phase 2)
+- ✅ Week-by-week feature breakdown (use as template, multiply by 2-3×)
+- ✅ Dependency mapping (what must be built first)
+
+**Use [solo-dev-realistic-mvp.md](solo-dev-realistic-mvp.md) For**:
+- ✅ Actual sprint planning
+- ✅ Realistic milestone dates
+- ✅ Risk mitigation strategies
 
 ---
 
