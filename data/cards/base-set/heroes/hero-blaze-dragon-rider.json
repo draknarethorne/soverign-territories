@@ -1,0 +1,49 @@
+﻿{
+    "cardId":  "HERO_BLAZE_DRAGON_RIDER",
+    "collectionNumber":  "BS-004",
+    "name":  "Blaze, Dragon Rider",
+    "type":  "Hero",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Legendary",
+                   "stars":  5,
+                   "points":  16
+               },
+    "stats":  {
+                  "health":  100,
+                  "mana":  70,
+                  "attack":  60,
+                  "defense":  20,
+                  "moveRange":  5,
+                  "attackRange":  1,
+                  "flying":  true
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_DRAGON_BREATH",
+                          "name":  "Dragon Breath",
+                          "type":  "Active",
+                          "manaCost":  50,
+                          "cooldown":  4,
+                          "usesPerBattle":  3,
+                          "description":  "Deal 100 damage in a 3-tile cone. Ignores 50% of enemy DEF."
+                      },
+                      {
+                          "abilityId":  "ABILITY_FLYING_MASTERY",
+                          "name":  "Flying Mastery",
+                          "type":  "Passive",
+                          "description":  "Immune to melee attacks from non-flying units."
+                      }
+                  ],
+    "tacticSlots":  4,
+    "lore":  "The last of the Dragon Riders, bonded to Pyrothos the Eternal Flame.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "legendary-pack",
+                                            "mythic-pack"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-30-dragon-wyrmling-boss"
+                                          ]
+                    }
+}

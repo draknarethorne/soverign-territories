@@ -1,0 +1,32 @@
+﻿{
+    "cardId":  "UNIT_LAVA_GOLEM",
+    "collectionNumber":  "BS-010",
+    "name":  "Lava Golem",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Common",
+                   "stars":  0,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  40,
+                  "mana":  15,
+                  "attack":  18,
+                  "defense":  12,
+                  "moveRange":  1,
+                  "attackRange":  1
+              },
+    "tacticSlots":  1,
+    "lore":  "Constructed from molten rock, slow but incredibly durable.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-07-magma-quarry",
+                                              "location-14-fire-temple"
+                                          ]
+                    }
+}

@@ -1,0 +1,65 @@
+{
+  "productId": "mythic-pack",
+  "productName": "Mythic Pack - Demon Overlord",
+  "productType": "mythic-choice-pack",
+  "series": "base-set",
+  "description": "Ultimate power! Choose Malakar, Demon Overlord (Epic) plus 4 Epic+ cards. The crown jewel of Base Set.",
+  "price": {
+    "gold": 20000,
+    "gems": 2000,
+    "realMoney": {
+      "usd": 19.99
+    }
+  },
+  "cardsPerPack": 5,
+  "cardPool": "base-set-all",
+  "guarantees": [
+    {
+      "slot": 1,
+      "cardId": "HERO_MALAKAR_DEMON_OVERLORD",
+      "collectionNumber": "BS-128",
+      "minimumRarity": "Epic",
+      "description": "First card is always Malakar, Demon Overlord (player choice confirmation)"
+    },
+    {
+      "slot": "2-5",
+      "minimumRarity": "Epic",
+      "description": "Remaining 4 cards are guaranteed Epic or better"
+    }
+  ],
+  "rarityDistribution": {
+    "Epic": {
+      "weight": 70,
+      "percentChance": 70
+    },
+    "Legendary": {
+      "weight": 30,
+      "percentChance": 30
+    }
+  },
+  "specialFeatures": {
+    "shinyChance": 30,
+    "heroBoost": true,
+    "elementRestriction": null,
+    "choiceCard": true,
+    "description": "Player confirms they want Malakar before opening"
+  },
+  "pitySystem": {
+    "enabled": false,
+    "description": "Mythic Pack is a guaranteed choice pack"
+  },
+  "availability": {
+    "unlockLevel": 30,
+    "purchaseLimit": 1,
+    "requiresProgression": true,
+    "progressionRequirement": "complete-140-base-set-cards"
+  },
+  "milestoneReward": {
+    "trigger": "complete-140-base-set-cards",
+    "rewardQuantity": 1,
+    "message": "Congratulations! You've collected all 140 Base Set cards! Claim your Mythic Pack featuring Malakar, Demon Overlord!"
+  },
+  "meta": {
+    "note": "Malakar is the 'chase card' of Base Set - Epic rarity (8 points) but thematically presented as Mythic for collection milestone"
+  }
+}

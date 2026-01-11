@@ -1,0 +1,36 @@
+﻿{
+    "cardId":  "TACTIC_FLAME_SHIELD",
+    "collectionNumber":  "BS-023",
+    "name":  "Flame Shield",
+    "type":  "Tactic",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Uncommon",
+                   "stars":  1,
+                   "points":  1
+               },
+    "stats":  {
+                  "manaCost":  20
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_FLAME_SHIELD_CAST",
+                          "name":  "Flame Shield",
+                          "type":  "Active",
+                          "manaCost":  20,
+                          "cooldown":  0,
+                          "description":  "Target ally gains +15 DEF for 3 turns. Attackers take 5 fire damage."
+                      }
+                  ],
+    "lore":  "Protective flames that shield allies while burning enemies.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-08-inferno-pit"
+                                          ]
+                    }
+}

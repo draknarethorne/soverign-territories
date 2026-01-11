@@ -1,0 +1,41 @@
+﻿{
+    "cardId":  "UNIT_PHOENIX_HATCHLING",
+    "collectionNumber":  "BS-017",
+    "name":  "Phoenix Hatchling",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Uncommon",
+                   "stars":  1,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  30,
+                  "mana":  35,
+                  "attack":  26,
+                  "defense":  8,
+                  "moveRange":  2,
+                  "attackRange":  1,
+                  "flying":  true
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_REBIRTH_MINOR",
+                          "name":  "Rebirth (Minor)",
+                          "type":  "Passive",
+                          "description":  "When this unit dies, 25% chance to revive with 20 HP at end of turn."
+                      }
+                  ],
+    "tacticSlots":  1,
+    "lore":  "Young phoenixes learning the cycle of death and rebirth.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-22-phoenix-nest",
+                                              "location-28-sky-temple"
+                                          ]
+                    }
+}

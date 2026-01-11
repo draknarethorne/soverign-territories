@@ -1,0 +1,41 @@
+﻿{
+    "cardId":  "UNIT_INFERNO_GUARD",
+    "collectionNumber":  "BS-019",
+    "name":  "Inferno Guard",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Uncommon",
+                   "stars":  1,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  42,
+                  "mana":  28,
+                  "attack":  26,
+                  "defense":  12,
+                  "moveRange":  2,
+                  "attackRange":  1
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_RETALIATE",
+                          "name":  "Retaliate",
+                          "type":  "Passive",
+                          "description":  "When attacked, deal 15 damage back to attacker."
+                      }
+                  ],
+    "tacticSlots":  2,
+    "lore":  "Guards who punish those foolish enough to attack them.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-20-orc-chieftain-boss",
+                                              "location-29-inferno-bastion"
+                                          ]
+                    }
+}

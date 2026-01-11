@@ -1,0 +1,48 @@
+﻿{
+    "cardId":  "HERO_CINDER_FLAME_MAGE",
+    "collectionNumber":  "BS-003",
+    "name":  "Cinder, Flame Mage",
+    "type":  "Hero",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Uncommon",
+                   "stars":  1,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  50,
+                  "mana":  80,
+                  "attack":  30,
+                  "defense":  10,
+                  "moveRange":  2,
+                  "attackRange":  3
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_FLAME_BOLT",
+                          "name":  "Flame Bolt",
+                          "type":  "Active",
+                          "manaCost":  20,
+                          "cooldown":  1,
+                          "description":  "Deal 40 damage to target enemy (3-range)."
+                      },
+                      {
+                          "abilityId":  "ABILITY_MANA_REGEN",
+                          "name":  "Arcane Flow",
+                          "type":  "Passive",
+                          "description":  "Restore 10 Mana at start of each turn."
+                      }
+                  ],
+    "tacticSlots":  2,
+    "lore":  "A young pyromancer studying the ancient arts of fire magic.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-05-tutorial-town",
+                                              "location-20-orc-chieftain-boss"
+                                          ]
+                    }
+}

@@ -1,0 +1,49 @@
+﻿{
+    "cardId":  "HERO_THALOR_TIDE_GUARDIAN",
+    "collectionNumber":  "BS-026",
+    "name":  "Thalor, Tide Guardian",
+    "type":  "Hero",
+    "element":  "Water",
+    "rarity":  {
+                   "tier":  "Epic",
+                   "stars":  3,
+                   "points":  8
+               },
+    "stats":  {
+                  "health":  100,
+                  "mana":  55,
+                  "attack":  30,
+                  "defense":  28,
+                  "moveRange":  2,
+                  "attackRange":  1
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_TIDAL_WAVE",
+                          "name":  "Tidal Wave",
+                          "type":  "Active",
+                          "manaCost":  28,
+                          "cooldown":  3,
+                          "description":  "Deal 50 damage to 3 enemies. Heal self for 20 HP."
+                      },
+                      {
+                          "abilityId":  "ABILITY_OCEANS_EMBRACE",
+                          "name":  "Ocean\u0027s Embrace",
+                          "type":  "Passive",
+                          "description":  "All Water units gain +20% DEF (Phase 2)."
+                      }
+                  ],
+    "tacticSlots":  3,
+    "lore":  "Guardian of the Coral Depths, master of defensive water magic.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "water-starter-box",
+                                            "standard-pack",
+                                            "element-booster-water",
+                                            "hero-pack"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-10-goblin-warlord-boss"
+                                          ]
+                    }
+}

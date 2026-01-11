@@ -1,0 +1,129 @@
+{
+  "seriesId": "base-set",
+  "seriesName": "Base Set",
+  "seriesCode": "BS",
+  "releaseDate": "2026-06-01",
+  "totalCards": 140,
+  "description": "The foundational card series for Sovereign Territories, featuring Fire, Water, Earth, Lightning, Wind, and Frost elements. This set establishes the core mechanics and introduces the world's primary heroes and factions.",
+  
+  "worldLore": "In the Sovereign Realms, six elemental powers vie for dominance. The Ember Legion commands flames from the Ashen Citadel, while the Tidal Order guards the Coral Depths. The Stone Compact holds the Verdant Highlands, the Volt Covenant rules the Storm Peaks, the Sky Clans soar above the Sky Isles, and the Frost Brotherhood endures in the Frozen Wastes. You will choose your faction and lead them to victory.",
+  
+  "cardBreakdown": {
+    "byRarity": {
+      "Common": 56,
+      "Uncommon": 42,
+      "Rare": 25,
+      "Epic": 12,
+      "Legendary": 4,
+      "Mythic": 1
+    },
+    "byElement": {
+      "Fire": 25,
+      "Water": 25,
+      "Earth": 25,
+      "Lightning": 15,
+      "Wind": 15,
+      "Frost": 15,
+      "Neutral": 20
+    },
+    "byType": {
+      "Hero": 35,
+      "Unit": 70,
+      "Tactic": 21,
+      "Building": 14
+    }
+  },
+  
+  "collectionMilestones": [
+    {
+      "cardsOwned": 10,
+      "reward": "250 Gold",
+      "achievement": "Newcomer",
+      "description": "Collect your first 10 Base Set cards"
+    },
+    {
+      "cardsOwned": 25,
+      "reward": "Standard Pack",
+      "achievement": "Apprentice Collector",
+      "description": "Collect 25 Base Set cards"
+    },
+    {
+      "cardsOwned": 50,
+      "reward": "Rare Pack",
+      "achievement": "Collector",
+      "description": "Collect 50 Base Set cards"
+    },
+    {
+      "cardsOwned": 75,
+      "reward": "Epic Pack",
+      "achievement": "Master Collector",
+      "description": "Collect 75 Base Set cards"
+    },
+    {
+      "cardsOwned": 100,
+      "reward": "Hero Pack",
+      "achievement": "Legendary Collector",
+      "description": "Collect 100 Base Set cards"
+    },
+    {
+      "cardsOwned": 140,
+      "reward": "Mythic Pack + Exclusive Title: 'Base Set Master'",
+      "achievement": "Base Set Complete",
+      "description": "Collect all 140 Base Set cards"
+    }
+  ],
+  
+  "elementMilestones": [
+    {
+      "element": "Fire",
+      "cardsOwned": 25,
+      "reward": "Fire Element Booster",
+      "achievement": "Ember Legion Champion",
+      "description": "Collect all 25 Fire cards"
+    },
+    {
+      "element": "Water",
+      "cardsOwned": 25,
+      "reward": "Water Element Booster",
+      "achievement": "Tidal Order Champion",
+      "description": "Collect all 25 Water cards"
+    },
+    {
+      "element": "Earth",
+      "cardsOwned": 25,
+      "reward": "Earth Element Booster",
+      "achievement": "Stone Compact Champion",
+      "description": "Collect all 25 Earth cards"
+    }
+  ],
+  
+  "packsAvailable": [
+    "welcome-pack",
+    "standard-pack",
+    "element-booster-fire",
+    "element-booster-water",
+    "element-booster-earth",
+    "rare-pack",
+    "epic-pack",
+    "hero-pack",
+    "legendary-pack",
+    "mythic-pack"
+  ],
+  
+  "starterBoxes": [
+    "fire-starter-box",
+    "water-starter-box",
+    "earth-starter-box"
+  ],
+  
+  "legalInFormats": ["Standard", "Unlimited"],
+  "rotationDate": null,
+  
+  "designNotes": "Base Set focuses on teaching core mechanics (HP/Mana/ATK/DEF, abilities, deck building). Elements are visual flavor only for MVP (no counter-play until Phase 2). Rarity distribution favors Commons/Uncommons (70%) to ensure F2P accessibility.",
+  
+  "releaseSchedule": {
+    "mvp": "2026-06-01",
+    "phase1.1": "Series 2 (Elemental Fury, +80 cards) - 2026-09-01",
+    "phase2": "Series 3 (Heroes Ascended, +100 cards) - 2027-01-01"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "productId": "element-booster-earth",
+  "productName": "Earth Element Booster",
+  "productType": "element-booster",
+  "series": "base-set",
+  "element": "Earth",
+  "description": "Stand your ground! 5 Earth element cards with increased chances for rare Earth heroes and units.",
+  "price": {
+    "gold": 1500,
+    "gems": 150,
+    "realMoney": {
+      "usd": 1.49
+    }
+  },
+  "cardsPerPack": 5,
+  "cardPool": "base-set-earth-only",
+  "guarantees": [
+    {
+      "slot": 5,
+      "minimumRarity": "Uncommon",
+      "element": "Earth",
+      "description": "Last card is guaranteed Earth Uncommon+"
+    }
+  ],
+  "rarityDistribution": {
+    "Common": {
+      "weight": 60,
+      "percentChance": 60
+    },
+    "Uncommon": {
+      "weight": 28,
+      "percentChance": 28
+    },
+    "Rare": {
+      "weight": 9,
+      "percentChance": 9
+    },
+    "Epic": {
+      "weight": 2.5,
+      "percentChance": 2.5
+    },
+    "Legendary": {
+      "weight": 0.5,
+      "percentChance": 0.5
+    }
+  },
+  "specialFeatures": {
+    "shinyChance": 12,
+    "heroBoost": true,
+    "elementRestriction": "Earth"
+  },
+  "pitySystem": {
+    "enabled": true,
+    "epicGuaranteeAfter": 10,
+    "legendaryGuaranteeAfter": 50,
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
+  },
+  "availability": {
+    "unlockLevel": 5,
+    "purchaseLimit": null,
+    "requiresProgression": false
+  },
+  "collectionMilestoneReward": {
+    "trigger": "complete-all-earth-25-cards",
+    "rewardQuantity": 1,
+    "message": "Congratulations on completing the Earth collection! Here's a bonus Earth Element Booster."
+  }
+}

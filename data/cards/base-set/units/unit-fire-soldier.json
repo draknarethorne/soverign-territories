@@ -1,0 +1,33 @@
+﻿{
+    "cardId":  "UNIT_FIRE_SOLDIER",
+    "collectionNumber":  "BS-006",
+    "name":  "Fire Soldier",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Common",
+                   "stars":  0,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  30,
+                  "mana":  20,
+                  "attack":  20,
+                  "defense":  8,
+                  "moveRange":  2,
+                  "attackRange":  1
+              },
+    "tacticSlots":  1,
+    "lore":  "Standard infantry of the Ember Legion, trained in close combat.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-01-tutorial",
+                                              "location-02-goblin-camp"
+                                          ]
+                    }
+}
