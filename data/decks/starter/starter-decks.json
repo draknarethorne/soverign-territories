@@ -1,0 +1,114 @@
+{
+  "$schema": "../../../data/schemas/starter-deck-schema.json",
+  "title": "Starter Decks - Fire, Water, Earth",
+  "description": "Starter deck configurations for tutorial. References card IDs only (single source of truth).",
+  "version": "2.0.0",
+  "lastUpdated": "2026-01-11",
+  
+  "starterDecks": [
+    {
+      "deckId": "STARTER_FIRE",
+      "deckName": "Fire Starter Deck",
+      "element": "Fire",
+      "playstyle": "Aggressive",
+      "description": "High attack, low defense. Win fast or lose fast.",
+      "recommendedFor": "Players who like offensive tactics and fast games",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cardIds": [
+        "HERO_ARIA_FLAME_KNIGHT",
+        "UNIT_EMBER_LEGIONNAIRE",
+        "UNIT_PHOENIX_HATCHLING",
+        "UNIT_FLAME_IMP",
+        "UNIT_GOBLIN_RAIDER",
+        "UNIT_FIRE_SOLDIER",
+        "UNIT_FLAME_ARCHER",
+        "UNIT_FIRE_SCOUT",
+        "UNIT_SCORCH_ELEMENTAL",
+        "UNIT_FIRE_SHAMAN",
+        "TACTIC_FIREBALL",
+        "TACTIC_FLAME_SHIELD",
+        "TACTIC_INFERNO",
+        "BUILDING_FORGE",
+        "WORKER_FIRE_MINER"
+      ],
+      "tutorialReward": true,
+      "unlockLevel": 1
+    },
+    {
+      "deckId": "STARTER_WATER",
+      "deckName": "Water Starter Deck",
+      "element": "Water",
+      "playstyle": "Defensive",
+      "description": "High defense, healing focus. Control the board and outlast opponents.",
+      "recommendedFor": "Players who prefer strategic control and durability",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cardIds": [
+        "HERO_THALOR_TIDE_GUARDIAN",
+        "UNIT_FROST_PALADIN",
+        "UNIT_WATER_ELEMENTAL",
+        "UNIT_ELVEN_ARCHER",
+        "UNIT_SEA_SERPENT",
+        "UNIT_FROST_SOLDIER",
+        "UNIT_WATER_SCOUT",
+        "UNIT_AQUA_HEALER",
+        "UNIT_ICE_SPRITE",
+        "UNIT_TIDAL_MAGE",
+        "TACTIC_TIDAL_WAVE",
+        "TACTIC_FROST_BARRIER",
+        "TACTIC_HEALING_RAIN",
+        "BUILDING_AQUIFER",
+        "WORKER_WATER_GATHERER"
+      ],
+      "tutorialReward": true,
+      "unlockLevel": 1
+    },
+    {
+      "deckId": "STARTER_EARTH",
+      "deckName": "Earth Starter Deck",
+      "element": "Earth",
+      "playstyle": "Balanced",
+      "description": "Balanced stats with strong economy focus. Build resources and overwhelm.",
+      "recommendedFor": "Players who want a mix of offense, defense, and economy",
+      "totalCards": 15,
+      "rarityPoints": 31,
+      "cardIds": [
+        "HERO_GAIA_STONE_SENTINEL",
+        "UNIT_ROCK_GOLEM",
+        "UNIT_EARTH_SHAMAN",
+        "UNIT_STONE_WARRIOR",
+        "UNIT_VINE_BEAST",
+        "UNIT_EARTH_SOLDIER",
+        "UNIT_STONE_SCOUT",
+        "UNIT_CRYSTAL_SPRITE",
+        "UNIT_BOULDER_ELEMENTAL",
+        "UNIT_DRUID_HEALER",
+        "TACTIC_EARTHQUAKE",
+        "TACTIC_STONE_WALL",
+        "TACTIC_NATURE_GROWTH",
+        "BUILDING_QUARRY",
+        "WORKER_EARTH_MINER"
+      ],
+      "tutorialReward": true,
+      "unlockLevel": 1
+    }
+  ],
+  
+  "tutorialFlow": {
+    "step1": {
+      "description": "Player chooses one starter deck (Fire, Water, or Earth)",
+      "reward": "Chosen starter deck (15 cards)"
+    },
+    "step2": {
+      "description": "Complete tutorial battle with starter deck",
+      "reward": "Welcome Pack (3 additional heroes from other elements)"
+    }
+  },
+  
+  "notes": {
+    "singleSourceOfTruth": "This file references card IDs ONLY. Full card data (stats, abilities, lore) is stored in data/cards/base-set/",
+    "runtime": "StarterDeckManager loads this file, then CardManager fetches full card data by ID",
+    "noDuplication": "Card stats/abilities are NOT duplicated here to ensure single source of truth"
+  }
+}
