@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_MARKET",
+    "collectionNumber": "BS-036",
+    "name": "Market",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 40,
+        "defense": 10
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_GOLD_GENERATION",
+            "name": "Gold Generation",
+            "type": "Passive",
+            "description": "Generates gold through trade and commerce (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Where merchants gather, prosperity follows.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

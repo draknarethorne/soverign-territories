@@ -1,0 +1,34 @@
+{
+    "cardId": "EQUIPMENT_WOODEN_SWORD",
+    "collectionNumber": "BS-072",
+    "name": "Wooden Sword",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "attackBonus": 5,
+        "defenseBonus": 0,
+        "healthBonus": 0,
+        "manaBonus": 0
+    },
+    "equipSlot": "Weapon",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_BASIC_WEAPON",
+            "name": "Basic Weapon",
+            "type": "Passive",
+            "description": "Grants +5 attack to equipped hero."
+        }
+    ],
+    "lore": "A simple wooden training sword. Every warrior's first weapon on their path to glory.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

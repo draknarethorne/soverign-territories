@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_STONE_DEFENDER",
+    "collectionNumber": "BS-027",
+    "name": "Stone Defender",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 40,
+        "mana": 15,
+        "attack": 16,
+        "defense": 18,
+        "moveRange": 1,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Living walls of stone that shield allies from harm.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-19-fortress-walls"
+        ]
+    }
+}

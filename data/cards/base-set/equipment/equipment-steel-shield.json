@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_STEEL_SHIELD",
+    "collectionNumber": "BS-081",
+    "name": "Steel Shield",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 12,
+        "healthBonus": 0,
+        "manaBonus": 0
+    },
+    "equipSlot": "Shield",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_DAMAGE_BLOCK",
+            "name": "Damage Block",
+            "type": "Passive",
+            "description": "Grants +12 defense and blocks 10% of incoming damage."
+        }
+    ],
+    "lore": "A sturdy steel shield bearing the marks of countless battles. Its bearer stands firm against any assault.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

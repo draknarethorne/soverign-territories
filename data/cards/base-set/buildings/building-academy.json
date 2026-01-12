@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_ACADEMY",
+    "collectionNumber": "BS-051",
+    "name": "Academy",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 55,
+        "defense": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_RESEARCH",
+            "name": "Research",
+            "type": "Passive",
+            "description": "Enables research of new technologies and upgrades (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Knowledge is power, and here the brightest minds unlock tomorrow's victories.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

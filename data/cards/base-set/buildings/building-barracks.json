@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_BARRACKS",
+    "collectionNumber": "BS-039",
+    "name": "Barracks",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 70,
+        "defense": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_TRAIN_INFANTRY",
+            "name": "Train Infantry",
+            "type": "Passive",
+            "description": "Enables training of infantry units (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Where common soldiers are forged into disciplined warriors.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

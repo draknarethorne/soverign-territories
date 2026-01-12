@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_ROCK_HURLER",
+    "collectionNumber": "BS-030",
+    "name": "Rock Hurler",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 32,
+        "mana": 18,
+        "attack": 24,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Giants who hurl boulders at distant enemies with devastating force.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-22-canyon-siege"
+        ]
+    }
+}

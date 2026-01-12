@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_FISHERMAN",
+    "collectionNumber": "BS-087",
+    "name": "Fisherman",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 12,
+        "defense": 1,
+        "productionRate": 8
+    },
+    "resourceType": "Food",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FISHERMAN_PRODUCTION",
+            "name": "Cast Nets",
+            "type": "Passive",
+            "description": "Generates 8 Food/hour (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "With nets and patience, fishermen bring bounty from river and sea. Coastal settlements prize their reliable catch and knowledge of the waters.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

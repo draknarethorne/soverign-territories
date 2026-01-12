@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_BLACKSMITH",
+    "collectionNumber": "BS-044",
+    "name": "Blacksmith",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 60,
+        "defense": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_UPGRADE_WEAPONS",
+            "name": "Upgrade Weapons",
+            "type": "Passive",
+            "description": "Enables weapon upgrades for increased damage (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The ring of hammer on anvil signals another weapon perfected.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

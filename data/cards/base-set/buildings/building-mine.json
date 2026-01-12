@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_MINE",
+    "collectionNumber": "BS-035",
+    "name": "Mine",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 60,
+        "defense": 18
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_ORE_PRODUCTION",
+            "name": "Ore Production",
+            "type": "Passive",
+            "description": "Generates ore resources for crafting and construction (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Deep beneath the earth, valuable ores await the miner's pick.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

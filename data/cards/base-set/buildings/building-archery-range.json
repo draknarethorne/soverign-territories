@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_ARCHERY_RANGE",
+    "collectionNumber": "BS-040",
+    "name": "Archery Range",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 60,
+        "defense": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_TRAIN_ARCHERS",
+            "name": "Train Archers",
+            "type": "Passive",
+            "description": "Enables training of archer units (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Precise aim and steady hands are honed through endless practice.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

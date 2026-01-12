@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_KEEP",
+    "collectionNumber": "BS-049",
+    "name": "Keep",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 90,
+        "defense": 28
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_COMMAND_CENTER",
+            "name": "Command Center",
+            "type": "Passive",
+            "description": "Serves as the strategic command center for territory operations (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The heart of the fortress, where strategy becomes victory.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

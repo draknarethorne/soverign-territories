@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_TEMPLE",
+    "collectionNumber": "BS-037",
+    "name": "Temple",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 50,
+        "defense": 16
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MANA_REGENERATION",
+            "name": "Mana Regeneration",
+            "type": "Passive",
+            "description": "Regenerates mana for spellcasters over time (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Sacred ground where the divine and mortal realms converge.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

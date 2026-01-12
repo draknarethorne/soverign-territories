@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_CRYSTAL_GUARDIAN",
+    "collectionNumber": "BS-028",
+    "name": "Crystal Guardian",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 48,
+        "mana": 28,
+        "attack": 26,
+        "defense": 15,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 2,
+    "lore": "Sentinels from the Crystal Caves, reflect magic back at casters.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "rare-pack"
+        ],
+        "campaignDrops": [
+            "location-20-crystal-spire"
+        ]
+    }
+}

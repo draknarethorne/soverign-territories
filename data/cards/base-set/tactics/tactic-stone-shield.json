@@ -1,0 +1,36 @@
+{
+    "cardId": "TACTIC_STONE_SHIELD",
+    "collectionNumber": "BS-060",
+    "name": "Stone Shield",
+    "type": "Tactic",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_STONE_SHIELD",
+            "name": "Stone Shield",
+            "type": "Active",
+            "manaCost": 20,
+            "cooldown": 1,
+            "description": "Summon a shield of living stone around target unit, granting +30 Defense for 3 turns."
+        }
+    ],
+    "lore": "The mountain's strength becomes the warrior's armor.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-02",
+            "location-05"
+        ]
+    }
+}

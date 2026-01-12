@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_ELVEN_ARCHER",
+    "collectionNumber": "BS-014",
+    "name": "Elven Archer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 22,
+        "mana": 20,
+        "attack": 24,
+        "defense": 6,
+        "moveRange": 3,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Swift elven archers from the Mist Forests, strike from afar.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-05-forest-ambush"
+        ]
+    }
+}

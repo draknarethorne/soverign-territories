@@ -1,0 +1,36 @@
+{
+    "cardId": "TACTIC_ICE_SHARD",
+    "collectionNumber": "BS-055",
+    "name": "Ice Shard",
+    "type": "Tactic",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_ICE_SHARD",
+            "name": "Ice Shard",
+            "type": "Active",
+            "manaCost": 20,
+            "cooldown": 0,
+            "description": "Launch a shard of ice at target enemy, dealing 40 damage and reducing their movement speed by 50% for 1 turn."
+        }
+    ],
+    "lore": "Frozen shards cut through armor and flesh, leaving frostbite in their wake.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-01",
+            "location-03"
+        ]
+    }
+}

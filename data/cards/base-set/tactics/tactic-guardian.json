@@ -1,0 +1,35 @@
+{
+    "cardId": "TACTIC_GUARDIAN",
+    "collectionNumber": "BS-070",
+    "name": "Guardian",
+    "type": "Tactic",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_GUARDIAN",
+            "name": "Guardian",
+            "type": "Active",
+            "manaCost": 15,
+            "cooldown": 1,
+            "description": "Target unit taunts all enemies, forcing them to attack this unit for 2 turns."
+        }
+    ],
+    "lore": "A true guardian stands between their allies and certain death.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": [
+            "location-02",
+            "location-05"
+        ]
+    }
+}

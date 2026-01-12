@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_WALL",
+    "collectionNumber": "BS-047",
+    "name": "Wall",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 100,
+        "defense": 30
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_DEFENSE_BONUS",
+            "name": "Defense Bonus",
+            "type": "Passive",
+            "description": "Grants defensive bonuses to all units within the territory (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Stone and mortar stand as the first line against invasion.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

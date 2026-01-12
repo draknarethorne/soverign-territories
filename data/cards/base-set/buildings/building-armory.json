@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_ARMORY",
+    "collectionNumber": "BS-045",
+    "name": "Armory",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 55,
+        "defense": 22
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_STORE_EQUIPMENT",
+            "name": "Store Equipment",
+            "type": "Passive",
+            "description": "Increases equipment storage capacity (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Racks of weapons and armor stand ready for the next campaign.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

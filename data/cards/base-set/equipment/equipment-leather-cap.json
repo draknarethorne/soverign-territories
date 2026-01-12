@@ -1,0 +1,34 @@
+{
+    "cardId": "EQUIPMENT_LEATHER_CAP",
+    "collectionNumber": "BS-082",
+    "name": "Leather Cap",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 4,
+        "healthBonus": 5,
+        "manaBonus": 0
+    },
+    "equipSlot": "Helmet",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEAD_PROTECTION",
+            "name": "Head Protection",
+            "type": "Passive",
+            "description": "Grants +4 defense and +5 health to equipped hero."
+        }
+    ],
+    "lore": "A simple leather cap. Protects the head from minor blows and keeps the sun out of your eyes.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

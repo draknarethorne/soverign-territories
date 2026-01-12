@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_CARPENTER",
+    "collectionNumber": "BS-091",
+    "name": "Carpenter",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 15,
+        "defense": 3,
+        "productionRate": 6
+    },
+    "resourceType": "Lumber",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_CARPENTER_PRODUCTION",
+            "name": "Master Craftsman",
+            "type": "Passive",
+            "description": "Generates 6 Lumber/hour. Crafts construction projects faster than untrained workers (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Skilled artisans who transform raw timber into refined structures. While they gather less wood, their expertise speeds up building construction throughout your territory.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

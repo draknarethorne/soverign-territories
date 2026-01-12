@@ -1,0 +1,35 @@
+{
+    "cardId": "TACTIC_CHARGE",
+    "collectionNumber": "BS-065",
+    "name": "Charge",
+    "type": "Tactic",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_CHARGE",
+            "name": "Charge",
+            "type": "Active",
+            "manaCost": 15,
+            "cooldown": 1,
+            "description": "Target unit may move and attack in the same turn, gaining momentum to strike swiftly."
+        }
+    ],
+    "lore": "Speed and aggression turn the tide of battle before the enemy can respond.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": [
+            "location-01",
+            "location-02"
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_PLATE_ARMOR",
+    "collectionNumber": "BS-078",
+    "name": "Plate Armor",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 15,
+        "healthBonus": 30,
+        "manaBonus": 0
+    },
+    "equipSlot": "Armor",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEAVY_ARMOR",
+            "name": "Heavy Armor",
+            "type": "Passive",
+            "description": "Grants +15 defense and +30 health. Reduces movement range by 1 due to weight."
+        }
+    ],
+    "lore": "Full plate armor forged from the finest steel. Nearly impenetrable, but only the strongest warriors can move freely in it.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

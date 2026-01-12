@@ -1,0 +1,35 @@
+{
+    "cardId": "TACTIC_SHIELD_WALL",
+    "collectionNumber": "BS-066",
+    "name": "Shield Wall",
+    "type": "Tactic",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_SHIELD_WALL",
+            "name": "Shield Wall",
+            "type": "Active",
+            "manaCost": 20,
+            "cooldown": 2,
+            "description": "All allied units lock shields together, gaining +20 Defense for 2 turns."
+        }
+    ],
+    "lore": "United we stand, a wall of steel that no foe can break.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": [
+            "location-02",
+            "location-04"
+        ]
+    }
+}

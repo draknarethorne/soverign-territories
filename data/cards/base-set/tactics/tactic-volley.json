@@ -1,0 +1,35 @@
+{
+    "cardId": "TACTIC_VOLLEY",
+    "collectionNumber": "BS-068",
+    "name": "Volley",
+    "type": "Tactic",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "manaCost": 25
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_VOLLEY",
+            "name": "Volley",
+            "type": "Active",
+            "manaCost": 25,
+            "cooldown": 2,
+            "description": "All allied archer units unleash a coordinated barrage, dealing 30 damage to all enemy units."
+        }
+    ],
+    "lore": "The sky darkens with arrows, and death rains from above.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": [
+            "location-05",
+            "location-07"
+        ]
+    }
+}

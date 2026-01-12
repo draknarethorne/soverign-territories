@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_QUARRYMAN",
+    "collectionNumber": "BS-093",
+    "name": "Quarryman",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 18,
+        "defense": 4,
+        "productionRate": 7
+    },
+    "resourceType": "Ore",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_QUARRYMAN_PRODUCTION",
+            "name": "Stone Extraction",
+            "type": "Passive",
+            "description": "Generates 7 Ore/hour. Specializes in quarrying stone for construction (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Working open-pit quarries under the sun, these laborers extract building stone and valuable minerals. Their work provides the foundation for castles and fortifications.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

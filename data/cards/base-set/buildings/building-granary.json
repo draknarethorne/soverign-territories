@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_GRANARY",
+    "collectionNumber": "BS-033",
+    "name": "Granary",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 50,
+        "defense": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FOOD_PRODUCTION",
+            "name": "Food Production",
+            "type": "Passive",
+            "description": "Generates food resources for your territory (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Stores the harvest that sustains armies and empires alike.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

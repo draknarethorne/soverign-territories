@@ -1,0 +1,36 @@
+{
+    "cardId": "TACTIC_FREEZE",
+    "collectionNumber": "BS-058",
+    "name": "Freeze",
+    "type": "Tactic",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "manaCost": 30
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FREEZE",
+            "name": "Freeze",
+            "type": "Active",
+            "manaCost": 30,
+            "cooldown": 2,
+            "description": "Encase target enemy in ice, immobilizing them completely for 2 turns."
+        }
+    ],
+    "lore": "Frozen in time, warriors become monuments to their own hubris.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-04",
+            "location-07"
+        ]
+    }
+}

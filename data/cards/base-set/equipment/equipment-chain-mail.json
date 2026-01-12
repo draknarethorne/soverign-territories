@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_CHAIN_MAIL",
+    "collectionNumber": "BS-077",
+    "name": "Chain Mail",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 12,
+        "healthBonus": 20,
+        "manaBonus": 0
+    },
+    "equipSlot": "Armor",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_CHAIN_PROTECTION",
+            "name": "Chain Protection",
+            "type": "Passive",
+            "description": "Grants +12 defense and +20 health to equipped hero."
+        }
+    ],
+    "lore": "Interlocking metal rings provide excellent protection. The standard armor of professional soldiers.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

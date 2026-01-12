@@ -1,0 +1,36 @@
+{
+    "cardId": "TACTIC_EARTHQUAKE",
+    "collectionNumber": "BS-061",
+    "name": "Earthquake",
+    "type": "Tactic",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "manaCost": 40
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_EARTHQUAKE",
+            "name": "Earthquake",
+            "type": "Active",
+            "manaCost": 40,
+            "cooldown": 3,
+            "description": "Shatter the earth beneath your foes, dealing 50 damage to all enemy units and stunning them for 1 turn."
+        }
+    ],
+    "lore": "When the earth trembles, even the mightiest fortresses crumble to dust.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-07",
+            "location-09"
+        ]
+    }
+}

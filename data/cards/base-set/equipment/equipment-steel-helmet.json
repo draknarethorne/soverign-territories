@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_STEEL_HELMET",
+    "collectionNumber": "BS-083",
+    "name": "Steel Helmet",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 8,
+        "healthBonus": 15,
+        "manaBonus": 0
+    },
+    "equipSlot": "Helmet",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_REINFORCED_HELM",
+            "name": "Reinforced Helm",
+            "type": "Passive",
+            "description": "Grants +8 defense and +15 health to equipped hero."
+        }
+    ],
+    "lore": "A well-crafted steel helmet with a protective visor. Essential gear for any warrior facing serious combat.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

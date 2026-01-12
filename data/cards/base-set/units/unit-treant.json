@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_TREANT",
+    "collectionNumber": "BS-026",
+    "name": "Treant",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 42,
+        "mana": 24,
+        "attack": 20,
+        "defense": 16,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Ancient tree spirits from the Verdant Grove, roots bind enemies.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-18-ancient-forest"
+        ]
+    }
+}

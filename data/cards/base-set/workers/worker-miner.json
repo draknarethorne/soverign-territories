@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_MINER",
+    "collectionNumber": "BS-092",
+    "name": "Miner",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 20,
+        "defense": 5,
+        "productionRate": 6
+    },
+    "resourceType": "Ore",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MINER_PRODUCTION",
+            "name": "Deep Delving",
+            "type": "Passive",
+            "description": "Generates 6 Ore/hour (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Toughest of all workers, miners brave dark tunnels and cave-ins to extract precious metals. Their hardy constitution is forged by years underground.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

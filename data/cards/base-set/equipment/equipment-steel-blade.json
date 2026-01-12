@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_STEEL_BLADE",
+    "collectionNumber": "BS-074",
+    "name": "Steel Blade",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "attackBonus": 15,
+        "defenseBonus": 0,
+        "healthBonus": 10,
+        "manaBonus": 0
+    },
+    "equipSlot": "Weapon",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_CRITICAL_STRIKE",
+            "name": "Critical Strike",
+            "type": "Passive",
+            "description": "Grants +15 attack and +10 health. Increases critical hit chance by 10%."
+        }
+    ],
+    "lore": "A masterwork blade of tempered steel. Its perfectly balanced edge can find weakness in any defense.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

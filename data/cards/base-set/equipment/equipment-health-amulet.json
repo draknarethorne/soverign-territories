@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_HEALTH_AMULET",
+    "collectionNumber": "BS-084",
+    "name": "Health Amulet",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 0,
+        "healthBonus": 25,
+        "manaBonus": 0
+    },
+    "equipSlot": "Accessory",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEALTH_REGENERATION",
+            "name": "Health Regeneration",
+            "type": "Passive",
+            "description": "Grants +25 health and regenerates 2 health per turn."
+        }
+    ],
+    "lore": "An amulet pulsing with gentle life energy. Wearing it fills the bearer with vitality and accelerated healing.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

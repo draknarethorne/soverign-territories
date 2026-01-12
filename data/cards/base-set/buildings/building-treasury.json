@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_TREASURY",
+    "collectionNumber": "BS-038",
+    "name": "Treasury",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 55,
+        "defense": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_GOLD_STORAGE",
+            "name": "Gold Storage",
+            "type": "Passive",
+            "description": "Increases maximum gold storage capacity (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Vaults secured by ancient magic protect the realm's wealth.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

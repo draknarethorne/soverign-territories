@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_EARTH_SHAMAN",
+    "collectionNumber": "BS-029",
+    "name": "Earth Shaman",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 30,
+        "mana": 32,
+        "attack": 18,
+        "defense": 10,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 2,
+    "lore": "Tribal mystics who commune with earth spirits for aid.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-21-tribal-grounds"
+        ]
+    }
+}

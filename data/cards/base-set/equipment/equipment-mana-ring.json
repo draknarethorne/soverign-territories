@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_MANA_RING",
+    "collectionNumber": "BS-085",
+    "name": "Mana Ring",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 0,
+        "healthBonus": 0,
+        "manaBonus": 20
+    },
+    "equipSlot": "Accessory",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MANA_REGENERATION",
+            "name": "Mana Regeneration",
+            "type": "Passive",
+            "description": "Grants +20 mana and regenerates 5 mana per turn."
+        }
+    ],
+    "lore": "A ring carved with arcane runes that glow faintly blue. It draws ambient magical energy to sustain the wearer's spellcasting.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

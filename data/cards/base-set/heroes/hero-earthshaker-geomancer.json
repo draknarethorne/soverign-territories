@@ -1,0 +1,49 @@
+{
+    "cardId": "HERO_EARTHSHAKER_GEOMANCER",
+    "collectionNumber": "BS-012",
+    "name": "Earthshaker Geomancer",
+    "type": "Hero",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Epic",
+        "stars": 3,
+        "points": 8
+    },
+    "stats": {
+        "health": 90,
+        "mana": 70,
+        "attack": 40,
+        "defense": 18,
+        "moveRange": 3,
+        "attackRange": 2
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_STONE_SPIKES",
+            "name": "Stone Spikes",
+            "type": "Active",
+            "manaCost": 35,
+            "cooldown": 3,
+            "description": "Summon stone spikes in a line, dealing 60 damage to all enemies hit."
+        },
+        {
+            "abilityId": "ABILITY_EARTH_BLESSING",
+            "name": "Earth's Blessing",
+            "type": "Passive",
+            "description": "Regenerate 5 HP per turn for all allied units (Phase 2)."
+        }
+    ],
+    "tacticSlots": 3,
+    "lore": "Master of geomancy, bends earth and stone to his will from the Terran Highlands.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "hero-pack"
+        ],
+        "campaignDrops": [
+            "location-16-crystal-caves-boss"
+        ]
+    }
+}

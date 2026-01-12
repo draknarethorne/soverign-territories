@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_PROSPECTOR",
+    "collectionNumber": "BS-094",
+    "name": "Prospector",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 14,
+        "defense": 2,
+        "productionRate": 5
+    },
+    "resourceType": "Ore",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_PROSPECTOR_PRODUCTION",
+            "name": "Vein Discovery",
+            "type": "Passive",
+            "description": "Generates 5 Ore/hour. Has a chance to discover rare mineral veins for bonus resources (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Wandering geologists with keen eyes for hidden wealth. Though they produce less ore consistently, prospectors occasionally strike rich deposits that yield exceptional rewards.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_HUNTER",
+    "collectionNumber": "BS-088",
+    "name": "Hunter",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 14,
+        "defense": 3,
+        "productionRate": 12
+    },
+    "resourceType": "Food",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HUNTER_PRODUCTION",
+            "name": "Track Prey",
+            "type": "Passive",
+            "description": "Generates 12 Food/hour (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Skilled trackers who venture into forests and plains, hunters provide fresh game and valuable pelts. Their wilderness expertise makes them slightly hardier than other workers.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

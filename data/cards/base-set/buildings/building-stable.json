@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_STABLE",
+    "collectionNumber": "BS-041",
+    "name": "Stable",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 65,
+        "defense": 18
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_TRAIN_CAVALRY",
+            "name": "Train Cavalry",
+            "type": "Passive",
+            "description": "Enables training of cavalry units (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Swift steeds and skilled riders form the pride of any army.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

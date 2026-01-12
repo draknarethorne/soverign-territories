@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EARTH_SOLDIER",
+    "collectionNumber": "BS-023",
+    "name": "Earth Soldier",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 35,
+        "mana": 18,
+        "attack": 18,
+        "defense": 12,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Sturdy infantry from the Mountain Holds, built like the rocks they defend.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

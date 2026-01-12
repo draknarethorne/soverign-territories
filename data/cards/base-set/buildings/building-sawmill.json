@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_SAWMILL",
+    "collectionNumber": "BS-034",
+    "name": "Sawmill",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 45,
+        "defense": 12
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_LUMBER_PRODUCTION",
+            "name": "Lumber Production",
+            "type": "Passive",
+            "description": "Generates lumber resources for construction (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The rhythmic sound of falling timber echoes through the forest.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_GATE",
+    "collectionNumber": "BS-048",
+    "name": "Gate",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 80,
+        "defense": 25
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_ENTRY_CONTROL",
+            "name": "Entry Control",
+            "type": "Passive",
+            "description": "Controls access to the territory, slowing enemy advances (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The threshold between peace and war, safety and danger.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

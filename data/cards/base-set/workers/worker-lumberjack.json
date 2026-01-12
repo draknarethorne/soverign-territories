@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_LUMBERJACK",
+    "collectionNumber": "BS-089",
+    "name": "Lumberjack",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 18,
+        "defense": 4,
+        "productionRate": 8
+    },
+    "resourceType": "Lumber",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_LUMBERJACK_PRODUCTION",
+            "name": "Fell Trees",
+            "type": "Passive",
+            "description": "Generates 8 Lumber/hour (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Strong and resilient, lumberjacks swing their axes from sunrise to sunset. The timber they harvest builds everything from humble homes to mighty warships.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

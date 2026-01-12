@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_SEA_SERPENT",
+    "collectionNumber": "BS-016",
+    "name": "Sea Serpent",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 50,
+        "mana": 35,
+        "attack": 32,
+        "defense": 12,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Massive serpent from the deep ocean, strikes with tidal fury.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water",
+            "rare-pack"
+        ],
+        "campaignDrops": [
+            "location-07-kraken-depths-boss"
+        ]
+    }
+}

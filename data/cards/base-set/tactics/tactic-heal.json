@@ -1,0 +1,35 @@
+{
+    "cardId": "TACTIC_HEAL",
+    "collectionNumber": "BS-067",
+    "name": "Heal",
+    "type": "Tactic",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 20
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEAL",
+            "name": "Heal",
+            "type": "Active",
+            "manaCost": 20,
+            "cooldown": 1,
+            "description": "Restore 40 HP to target allied unit through battlefield medicine."
+        }
+    ],
+    "lore": "A skilled healer is worth a hundred swords on the battlefield.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": [
+            "location-01",
+            "location-03"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_GOLEM",
+    "collectionNumber": "BS-025",
+    "name": "Stone Golem",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 60,
+        "mana": 20,
+        "attack": 28,
+        "defense": 20,
+        "moveRange": 1,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Animated constructs of pure stone, slow but nearly indestructible.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "rare-pack"
+        ],
+        "campaignDrops": [
+            "location-17-golem-quarry-boss"
+        ]
+    }
+}

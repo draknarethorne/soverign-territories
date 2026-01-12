@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_FORESTER",
+    "collectionNumber": "BS-090",
+    "name": "Forester",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 16,
+        "defense": 2,
+        "productionRate": 10
+    },
+    "resourceType": "Lumber",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FORESTER_PRODUCTION",
+            "name": "Sustainable Harvest",
+            "type": "Passive",
+            "description": "Generates 10 Lumber/hour. Plants saplings to ensure future timber supplies (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Unlike simple woodcutters, foresters understand the balance of nature. They harvest sustainably and replant, ensuring the woods thrive for generations to come.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "cardId": "TACTIC_MIST_CLOAK",
+    "collectionNumber": "BS-059",
+    "name": "Mist Cloak",
+    "type": "Tactic",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "manaCost": 15
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MIST_CLOAK",
+            "name": "Mist Cloak",
+            "type": "Active",
+            "manaCost": 15,
+            "cooldown": 1,
+            "description": "Shroud target allied unit in mist, granting +50% evasion chance for 2 turns."
+        }
+    ],
+    "lore": "Those who walk in the mist cannot be touched by mortal blades.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-01",
+            "location-04"
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_IRON_SWORD",
+    "collectionNumber": "BS-073",
+    "name": "Iron Sword",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 10,
+        "defenseBonus": 0,
+        "healthBonus": 5,
+        "manaBonus": 0
+    },
+    "equipSlot": "Weapon",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_IRON_WEAPON",
+            "name": "Iron Weapon",
+            "type": "Passive",
+            "description": "Grants +10 attack and +5 health to equipped hero."
+        }
+    ],
+    "lore": "Forged in the fires of a skilled blacksmith, this reliable blade has seen many battles.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_MERMAID_HEALER",
+    "collectionNumber": "BS-019",
+    "name": "Mermaid Healer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 20,
+        "mana": 30,
+        "attack": 12,
+        "defense": 8,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 1,
+    "lore": "Mystical healers from the Azure Lagoon, restore vitality with song.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-10-healing-springs"
+        ]
+    }
+}

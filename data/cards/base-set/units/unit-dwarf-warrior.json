@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_DWARF_WARRIOR",
+    "collectionNumber": "BS-024",
+    "name": "Dwarf Warrior",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 38,
+        "mana": 16,
+        "attack": 22,
+        "defense": 14,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Dwarven champions with warhammers, defenders of the Deep Mines.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-16-dwarven-stronghold"
+        ]
+    }
+}

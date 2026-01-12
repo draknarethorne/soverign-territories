@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_MERCHANT",
+    "collectionNumber": "BS-095",
+    "name": "Merchant",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 12,
+        "defense": 1,
+        "productionRate": 15
+    },
+    "resourceType": "Gold",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MERCHANT_PRODUCTION",
+            "name": "Trade Routes",
+            "type": "Passive",
+            "description": "Generates 15 Gold/hour from trade and commerce (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Savvy traders who turn goods into gold through shrewd bargaining and extensive trade networks. Though fragile, their economic contribution is unmatched by any other worker.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

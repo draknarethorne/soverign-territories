@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_FROST_MAGE",
+    "collectionNumber": "BS-022",
+    "name": "Frost Mage",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 28,
+        "mana": 35,
+        "attack": 26,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 2,
+    "lore": "Ice wizards from the Frozen Wastes, freeze enemies in their tracks.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-13-ice-caverns"
+        ]
+    }
+}

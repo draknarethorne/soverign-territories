@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_WATCH_TOWER",
+    "collectionNumber": "BS-046",
+    "name": "Watch Tower",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 40,
+        "defense": 10
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_SCOUT_RANGE",
+            "name": "Scout Range",
+            "type": "Passive",
+            "description": "Increases vision range to spot approaching enemies (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Vigilant eyes scan the horizon for threats to the realm.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

@@ -3,7 +3,11 @@
   "cardType": "Hero",
   "seriesId": "base-set",
   "heroIds": [
-    "HERO_MARINA_TIDAL_SORCERESS"
+    "HERO_AQUA_STORM_SAGE",
+    "HERO_CORAL_WAVE_CALLER",
+    "HERO_LEVIATHAN_OCEAN_TYRANT",
+    "HERO_MARINA_SEA_WITCH",
+    "HERO_THALOR_TIDE_GUARDIAN"
   ],
   "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
 }

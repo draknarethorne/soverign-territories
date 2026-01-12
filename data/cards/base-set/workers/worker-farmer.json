@@ -1,0 +1,31 @@
+{
+    "cardId": "WORKER_FARMER",
+    "collectionNumber": "BS-086",
+    "name": "Farmer",
+    "type": "Worker",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 15,
+        "defense": 2,
+        "productionRate": 10
+    },
+    "resourceType": "Food",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FARMER_PRODUCTION",
+            "name": "Harvest Fields",
+            "type": "Passive",
+            "description": "Generates 10 Food/hour (Phase 2 economy feature)"
+        }
+    ],
+    "lore": "Tending the fields from dawn to dusk, farmers are the backbone of any thriving settlement. Their steady harvests keep armies fed and populations growing.",
+    "acquisition": {
+        "packSources": ["standard-pack"],
+        "campaignDrops": []
+    }
+}

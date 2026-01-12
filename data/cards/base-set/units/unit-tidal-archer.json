@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_TIDAL_ARCHER",
+    "collectionNumber": "BS-017",
+    "name": "Tidal Archer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 24,
+        "mana": 18,
+        "attack": 20,
+        "defense": 7,
+        "moveRange": 3,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Elite marksmen of the Coral Reefs, rain water arrows from afar.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-08-tidal-fortress"
+        ]
+    }
+}

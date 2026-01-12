@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_FIRE_STAFF",
+    "collectionNumber": "BS-075",
+    "name": "Fire Staff",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "attackBonus": 12,
+        "defenseBonus": 0,
+        "healthBonus": 0,
+        "manaBonus": 15
+    },
+    "equipSlot": "Weapon",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_FIRE_MASTERY",
+            "name": "Fire Mastery",
+            "type": "Passive",
+            "description": "Grants +12 attack and +15 mana. Increases Fire spell damage by 20%."
+        }
+    ],
+    "lore": "A staff crowned with an eternal flame. Pyromancers covet this ancient relic for its amplification of fire magic.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

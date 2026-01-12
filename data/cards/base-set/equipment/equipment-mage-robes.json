@@ -1,0 +1,35 @@
+{
+    "cardId": "EQUIPMENT_MAGE_ROBES",
+    "collectionNumber": "BS-079",
+    "name": "Mage Robes",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 5,
+        "healthBonus": 0,
+        "manaBonus": 25
+    },
+    "equipSlot": "Armor",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_ARCANE_VESTMENTS",
+            "name": "Arcane Vestments",
+            "type": "Passive",
+            "description": "Grants +5 defense and +25 mana to equipped hero."
+        }
+    ],
+    "lore": "Enchanted robes woven with arcane threads. Light protection, but the magical essence empowers spellcasting.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "epic-pack"
+        ],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "cardId": "BUILDING_ALTAR",
+    "collectionNumber": "BS-050",
+    "name": "Altar",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 50,
+        "defense": 14
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEAL_UNITS",
+            "name": "Heal Units",
+            "type": "Passive",
+            "description": "Provides healing to wounded units over time (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Divine blessings flow forth to mend the broken and restore the fallen.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

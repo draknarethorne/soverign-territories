@@ -1,0 +1,34 @@
+{
+    "cardId": "EQUIPMENT_WOODEN_SHIELD",
+    "collectionNumber": "BS-080",
+    "name": "Wooden Shield",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 6,
+        "healthBonus": 0,
+        "manaBonus": 0
+    },
+    "equipSlot": "Shield",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_BASIC_BLOCK",
+            "name": "Basic Block",
+            "type": "Passive",
+            "description": "Grants +6 defense to equipped hero."
+        }
+    ],
+    "lore": "A simple wooden shield reinforced with iron bands. Better than nothing in a fight.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

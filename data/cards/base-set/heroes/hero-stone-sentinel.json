@@ -1,0 +1,49 @@
+{
+    "cardId": "HERO_STONE_SENTINEL",
+    "collectionNumber": "BS-011",
+    "name": "Stone Sentinel",
+    "type": "Hero",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Epic",
+        "stars": 3,
+        "points": 8
+    },
+    "stats": {
+        "health": 120,
+        "mana": 40,
+        "attack": 35,
+        "defense": 25,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_EARTHQUAKE",
+            "name": "Earthquake",
+            "type": "Active",
+            "manaCost": 30,
+            "cooldown": 4,
+            "description": "Deal 40 damage to all enemies in a 3x3 area. Stun for 1 turn."
+        },
+        {
+            "abilityId": "ABILITY_STONE_SKIN",
+            "name": "Stone Skin",
+            "type": "Passive",
+            "description": "All Earth units gain +20% DEF (Phase 2)."
+        }
+    ],
+    "tacticSlots": 3,
+    "lore": "An ancient guardian carved from living mountain stone, protector of the Deep Caverns.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "hero-pack"
+        ],
+        "campaignDrops": [
+            "location-15-stone-titan-boss"
+        ]
+    }
+}
