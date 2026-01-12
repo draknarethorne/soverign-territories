@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_WATER_LANCER",
+    "collectionNumber": "BS-139",
+    "name": "Water Lancer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 33,
+        "mana": 28,
+        "attack": 26,
+        "defense": 12,
+        "moveRange": 4,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Elite mounted warriors who deliver devastating charging attacks like crashing tidal waves.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

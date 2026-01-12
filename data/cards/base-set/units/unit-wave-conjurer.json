@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_WAVE_CONJURER",
+    "collectionNumber": "BS-137",
+    "name": "Wave Conjurer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 21,
+        "mana": 35,
+        "attack": 20,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 1,
+    "lore": "Novice summoner capable of manifesting minor water elementals and spirits.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-03-coastal-raid",
+            "location-04-harbor-defense"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EARTH_ARCHER",
+    "collectionNumber": "BS-150",
+    "name": "Earth Archer",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 26,
+        "mana": 16,
+        "attack": 17,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Skilled marksmen who defend mountain passes with arrows tipped in obsidian.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

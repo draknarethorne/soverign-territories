@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_INFERNO_WARLOCK",
+    "collectionNumber": "BS-112",
+    "name": "Inferno Warlock",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 30,
+        "mana": 50,
+        "attack": 34,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Dark practitioners who have made pacts with primordial fire spirits, wielding forbidden flame magic.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-20-forbidden-pyre",
+            "location-24-demon-flame-altar"
+        ]
+    }
+}

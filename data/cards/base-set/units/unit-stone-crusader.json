@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_CRUSADER",
+    "collectionNumber": "BS-145",
+    "name": "Stone Crusader",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 40,
+        "mana": 22,
+        "attack": 23,
+        "defense": 15,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Sacred warriors who pledge their lives to protect the earthen sanctuaries from corruption.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-16-deep-mines"
+        ]
+    }
+}

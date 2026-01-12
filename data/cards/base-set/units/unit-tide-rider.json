@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TIDE_RIDER",
+    "collectionNumber": "BS-138",
+    "name": "Tide Rider",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 28,
+        "mana": 24,
+        "attack": 22,
+        "defense": 11,
+        "moveRange": 4,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Swift cavalry mounted on aquatic steeds, riding the waves into battle.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

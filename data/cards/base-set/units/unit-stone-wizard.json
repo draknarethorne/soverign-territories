@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_WIZARD",
+    "collectionNumber": "BS-159",
+    "name": "Stone Wizard",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 27,
+        "mana": 38,
+        "attack": 23,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Scholarly mages who study the ancient runes carved into mountain stones, unlocking their power.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-16-deep-mines"
+        ]
+    }
+}

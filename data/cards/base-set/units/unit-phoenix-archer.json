@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_PHOENIX_ARCHER",
+    "collectionNumber": "BS-107",
+    "name": "Phoenix Archer",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 30,
+        "mana": 0,
+        "attack": 30,
+        "defense": 9,
+        "moveRange": 3,
+        "attackRange": 5
+    },
+    "tacticSlots": 2,
+    "lore": "Blessed by the Phoenix herself, their arrows transform into blazing firebirds that seek out enemies unerringly.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-19-phoenix-nest",
+            "location-23-fire-sanctuary-elite"
+        ]
+    }
+}

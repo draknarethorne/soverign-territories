@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_MAGMA_WARRIOR",
+    "collectionNumber": "BS-101",
+    "name": "Magma Warrior",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 48,
+        "mana": 0,
+        "attack": 31,
+        "defense": 15,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Forged from living magma and bound to humanoid form, these warriors are nearly indestructible on the battlefield.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-18-magma-core",
+            "location-22-volcanic-depths"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_GRANITE_LONGBOWMAN",
+    "collectionNumber": "BS-154",
+    "name": "Granite Longbowman",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 27,
+        "mana": 17,
+        "attack": 18,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Stalwart archers who provide covering fire from elevated positions with longbows of petrified wood.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

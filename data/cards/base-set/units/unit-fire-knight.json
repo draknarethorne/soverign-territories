@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_FIRE_KNIGHT",
+    "collectionNumber": "BS-096",
+    "name": "Fire Knight",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 32,
+        "mana": 0,
+        "attack": 22,
+        "defense": 10,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Armored warriors sworn to protect the Flame Throne, these knights form the backbone of Fire's infantry legions.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-01-fire-zone",
+            "location-05-fire-fortress"
+        ]
+    }
+}

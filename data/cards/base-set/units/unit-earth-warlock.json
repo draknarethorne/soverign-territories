@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EARTH_WARLOCK",
+    "collectionNumber": "BS-160",
+    "name": "Earth Warlock",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 32,
+        "mana": 50,
+        "attack": 31,
+        "defense": 11,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Dark spellcasters who channel primal earth magic, corrupting the ground beneath their enemies.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

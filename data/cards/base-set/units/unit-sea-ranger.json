@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_SEA_RANGER",
+    "collectionNumber": "BS-131",
+    "name": "Sea Ranger",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 28,
+        "mana": 30,
+        "attack": 28,
+        "defense": 10,
+        "moveRange": 3,
+        "attackRange": 5
+    },
+    "tacticSlots": 2,
+    "lore": "Master scouts of the ocean, wielding enchanted arrows that pierce through armor with ease.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

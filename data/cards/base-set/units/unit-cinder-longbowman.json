@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_CINDER_LONGBOWMAN",
+    "collectionNumber": "BS-106",
+    "name": "Cinder Longbowman",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 25,
+        "mana": 0,
+        "attack": 21,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Skilled with traditional longbows, their arrows leave trails of smoldering embers as they arc toward their targets.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-04-fire-range",
+            "location-08-fire-citadel"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_CLERIC",
+    "collectionNumber": "BS-165",
+    "name": "Stone Cleric",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 30,
+        "mana": 36,
+        "attack": 13,
+        "defense": 12,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Holy healers who channel earth's regenerative power to mend wounds and restore fallen allies.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-15-cavern-assault",
+            "location-16-deep-mines"
+        ]
+    }
+}

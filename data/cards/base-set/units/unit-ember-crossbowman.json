@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EMBER_CROSSBOWMAN",
+    "collectionNumber": "BS-103",
+    "name": "Ember Crossbowman",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 26,
+        "mana": 0,
+        "attack": 22,
+        "defense": 8,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Equipped with heavy crossbows that fire bolts tipped with alchemical flames, effective against armored foes.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-03-fire-armory",
+            "location-09-fire-barracks"
+        ]
+    }
+}

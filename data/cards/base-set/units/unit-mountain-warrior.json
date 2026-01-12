@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_MOUNTAIN_WARRIOR",
+    "collectionNumber": "BS-149",
+    "name": "Mountain Warrior",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 49,
+        "mana": 30,
+        "attack": 28,
+        "defense": 18,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Legendary fighters from the highest peaks, as immovable and mighty as the mountains themselves.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

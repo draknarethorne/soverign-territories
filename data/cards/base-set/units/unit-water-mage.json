@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_WATER_MAGE",
+    "collectionNumber": "BS-132",
+    "name": "Water Mage",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 20,
+        "mana": 36,
+        "attack": 22,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Apprentice spellcasters learning the fundamental arts of water magic.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-03-coastal-raid",
+            "location-04-harbor-defense"
+        ]
+    }
+}

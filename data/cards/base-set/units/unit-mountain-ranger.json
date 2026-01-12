@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_MOUNTAIN_RANGER",
+    "collectionNumber": "BS-155",
+    "name": "Mountain Ranger",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 32,
+        "mana": 26,
+        "attack": 27,
+        "defense": 11,
+        "moveRange": 2,
+        "attackRange": 5
+    },
+    "tacticSlots": 2,
+    "lore": "Master archers who rain explosive arrows that shatter into rocky shrapnel on impact.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

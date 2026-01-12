@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_INFERNO_DRAGOON",
+    "collectionNumber": "BS-116",
+    "name": "Inferno Dragoon",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 38,
+        "mana": 0,
+        "attack": 30,
+        "defense": 12,
+        "moveRange": 5,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "The fastest and most feared cavalry unit, mounted on drakes bred for speed and ferocity in battle.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-20-dragon-lair",
+            "location-22-drake-breeding-grounds"
+        ]
+    }
+}

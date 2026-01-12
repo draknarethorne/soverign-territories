@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_RIDER",
+    "collectionNumber": "BS-162",
+    "name": "Stone Rider",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 32,
+        "mana": 22,
+        "attack": 21,
+        "defense": 13,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Mounted warriors who ride massive stone rams across the rocky terrain with surprising speed.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

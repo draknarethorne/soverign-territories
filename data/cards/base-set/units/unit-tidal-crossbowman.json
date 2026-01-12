@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TIDAL_CROSSBOWMAN",
+    "collectionNumber": "BS-127",
+    "name": "Tidal Crossbowman",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 24,
+        "mana": 22,
+        "attack": 20,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Expert crossbow wielders who strike with the force of ocean currents.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-03-coastal-raid",
+            "location-04-harbor-defense"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_STONE_CROSSBOWMAN",
+    "collectionNumber": "BS-151",
+    "name": "Stone Crossbowman",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 28,
+        "mana": 18,
+        "attack": 19,
+        "defense": 10,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 1,
+    "lore": "Fortress defenders armed with heavy crossbows that fire stone-tipped bolts.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

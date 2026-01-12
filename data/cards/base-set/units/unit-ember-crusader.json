@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_EMBER_CRUSADER",
+    "collectionNumber": "BS-097",
+    "name": "Ember Crusader",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 38,
+        "mana": 0,
+        "attack": 26,
+        "defense": 12,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Elite warriors who have proven themselves in the crucible of battle, leading Fire's vanguard with blazing conviction.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-08-fire-citadel",
+            "location-12-volcanic-keep"
+        ]
+    }
+}

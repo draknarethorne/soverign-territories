@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TERRA_SNIPER",
+    "collectionNumber": "BS-152",
+    "name": "Terra Sniper",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 30,
+        "mana": 22,
+        "attack": 25,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 5
+    },
+    "tacticSlots": 1,
+    "lore": "Elite scouts who can pick off targets from incredible distances with earth-enhanced accuracy.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-15-cavern-assault",
+            "location-16-deep-mines"
+        ]
+    }
+}

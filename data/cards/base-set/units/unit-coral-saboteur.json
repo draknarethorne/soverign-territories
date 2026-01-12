@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_CORAL_SABOTEUR",
+    "collectionNumber": "BS-142",
+    "name": "Coral Saboteur",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 18,
+        "mana": 22,
+        "attack": 16,
+        "defense": 6,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Stealthy infiltrator who sets cunning traps using coral and kelp to ensnare enemies.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-03-coastal-raid",
+            "location-04-harbor-defense"
+        ]
+    }
+}

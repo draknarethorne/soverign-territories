@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_CORAL_TEMPLAR",
+    "collectionNumber": "BS-123",
+    "name": "Coral Templar",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 38,
+        "mana": 28,
+        "attack": 26,
+        "defense": 14,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Warriors forged in the coral reefs, their armor grown from living sea formations.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

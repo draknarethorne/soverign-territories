@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_AQUA_WARRIOR",
+    "collectionNumber": "BS-125",
+    "name": "Aqua Warrior",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 45,
+        "mana": 34,
+        "attack": 29,
+        "defense": 16,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Master combatant of the aquatic realms, equally deadly on land or sea.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

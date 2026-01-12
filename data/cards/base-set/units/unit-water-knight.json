@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_WATER_KNIGHT",
+    "collectionNumber": "BS-120",
+    "name": "Water Knight",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 30,
+        "mana": 22,
+        "attack": 20,
+        "defense": 11,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Armored knight sworn to protect the ocean realms with honor and strength.",
+    "acquisition": {
+        "packSources": [
+            "water-starter-box",
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-03-coastal-raid",
+            "location-04-harbor-defense"
+        ]
+    }
+}

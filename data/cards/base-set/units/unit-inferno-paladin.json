@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_INFERNO_PALADIN",
+    "collectionNumber": "BS-098",
+    "name": "Inferno Paladin",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 45,
+        "mana": 0,
+        "attack": 30,
+        "defense": 14,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Champions blessed by the eternal flame, their armor forged in dragonfire. They resist all but the coldest magics.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-15-fire-temple",
+            "location-20-dragon-lair"
+        ]
+    }
+}

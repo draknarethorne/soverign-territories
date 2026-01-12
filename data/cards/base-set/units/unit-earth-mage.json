@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EARTH_MAGE",
+    "collectionNumber": "BS-156",
+    "name": "Earth Mage",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 24,
+        "mana": 34,
+        "attack": 21,
+        "defense": 8,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Apprentice spellcasters who manipulate stone and earth to strike distant enemies.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

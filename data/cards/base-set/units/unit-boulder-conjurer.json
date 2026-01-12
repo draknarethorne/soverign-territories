@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_BOULDER_CONJURER",
+    "collectionNumber": "BS-161",
+    "name": "Boulder Conjurer",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 25,
+        "mana": 32,
+        "attack": 19,
+        "defense": 8,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 1,
+    "lore": "Novice summoners who conjure floating boulders to hurl at nearby foes.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

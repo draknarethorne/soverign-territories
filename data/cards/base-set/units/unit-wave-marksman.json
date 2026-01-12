@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_WAVE_MARKSMAN",
+    "collectionNumber": "BS-129",
+    "name": "Wave Marksman",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "points": 2
+    },
+    "stats": {
+        "health": 25,
+        "mana": 24,
+        "attack": 24,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Skilled archers who harness the rhythm of waves to guide their shots.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

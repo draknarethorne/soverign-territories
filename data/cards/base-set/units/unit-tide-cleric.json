@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TIDE_CLERIC",
+    "collectionNumber": "BS-141",
+    "name": "Tide Cleric",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 26,
+        "mana": 38,
+        "attack": 14,
+        "defense": 11,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 2,
+    "lore": "Holy healer who channels restorative ocean energies to mend wounds of allied Water units.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

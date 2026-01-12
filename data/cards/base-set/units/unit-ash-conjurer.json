@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_ASH_CONJURER",
+    "collectionNumber": "BS-113",
+    "name": "Ash Conjurer",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 23,
+        "mana": 33,
+        "attack": 22,
+        "defense": 6,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 1,
+    "lore": "Mystics who summon clouds of scorching ash and embers to obscure the battlefield and burn foes.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-06-ash-wastes",
+            "location-11-ash-caverns"
+        ]
+    }
+}

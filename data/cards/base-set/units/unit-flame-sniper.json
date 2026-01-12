@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_FLAME_SNIPER",
+    "collectionNumber": "BS-104",
+    "name": "Flame Sniper",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 28,
+        "mana": 0,
+        "attack": 28,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 5
+    },
+    "tacticSlots": 2,
+    "lore": "Elite sharpshooters capable of striking enemies from extreme distances with pinpoint precision and explosive force.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-13-fire-watchtower",
+            "location-17-fire-overlook"
+        ]
+    }
+}

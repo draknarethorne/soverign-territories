@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EARTH_KNIGHT",
+    "collectionNumber": "BS-144",
+    "name": "Earth Knight",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "points": 1
+    },
+    "stats": {
+        "health": 34,
+        "mana": 18,
+        "attack": 19,
+        "defense": 13,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Elite heavy infantry clad in stone-forged armor, defenders of the mountain fortresses.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

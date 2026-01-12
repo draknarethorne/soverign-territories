@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_PYROMANCER",
+    "collectionNumber": "BS-109",
+    "name": "Pyromancer",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 26,
+        "mana": 40,
+        "attack": 28,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 2,
+    "lore": "Masters of combustion magic, they can ignite the very air around their enemies with a gesture.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-12-fire-academy-advanced",
+            "location-15-fire-temple"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_OCEAN_SORCERER",
+    "collectionNumber": "BS-134",
+    "name": "Ocean Sorcerer",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 26,
+        "mana": 48,
+        "attack": 30,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Powerful spellcaster who draws upon the vast magical energies of the deep ocean.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

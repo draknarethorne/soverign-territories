@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_EMBER_RIDER",
+    "collectionNumber": "BS-114",
+    "name": "Ember Rider",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 30,
+        "mana": 0,
+        "attack": 24,
+        "defense": 10,
+        "moveRange": 4,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Swift cavalry mounted on fire-breathing steeds, capable of rapid flanking maneuvers and quick strikes.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-09-fire-stables",
+            "location-13-cavalry-grounds"
+        ]
+    }
+}

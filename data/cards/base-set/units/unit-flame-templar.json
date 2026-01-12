@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_FLAME_TEMPLAR",
+    "collectionNumber": "BS-099",
+    "name": "Flame Templar",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 40,
+        "mana": 0,
+        "attack": 28,
+        "defense": 13,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Holy warriors of the Fire faith, wielding blessed blades that burn with righteous fury against their enemies.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-10-sacred-forge",
+            "location-14-fire-sanctuary"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "cardId": "UNIT_ASH_BERSERKER",
+    "collectionNumber": "BS-100",
+    "name": "Ash Berserker",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "points": 2
+    },
+    "stats": {
+        "health": 35,
+        "mana": 0,
+        "attack": 32,
+        "defense": 8,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Frenzied warriors who trade armor for raw aggression, charging into battle wreathed in cinders and ash.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-06-ash-wastes",
+            "location-11-fire-borderlands"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TERRA_SORCERER",
+    "collectionNumber": "BS-158",
+    "name": "Terra Sorcerer",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 30,
+        "mana": 46,
+        "attack": 29,
+        "defense": 10,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Powerful mages who command earthquakes and summon massive stone constructs to battle.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

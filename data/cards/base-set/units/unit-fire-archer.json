@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_FIRE_ARCHER",
+    "collectionNumber": "BS-102",
+    "name": "Fire Archer",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 24,
+        "mana": 0,
+        "attack": 20,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Trained marksmen who rain flaming arrows upon enemies from defensive positions across the battlefield.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-02-fire-outpost",
+            "location-07-fire-garrison"
+        ]
+    }
+}

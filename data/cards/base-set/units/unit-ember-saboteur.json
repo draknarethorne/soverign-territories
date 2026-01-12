@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_EMBER_SABOTEUR",
+    "collectionNumber": "BS-118",
+    "name": "Ember Saboteur",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 20,
+        "mana": 0,
+        "attack": 18,
+        "defense": 5,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Stealthy operatives who set explosive traps and incendiary devices behind enemy lines before melting away.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-07-fire-hideout",
+            "location-12-sabotage-camp"
+        ]
+    }
+}

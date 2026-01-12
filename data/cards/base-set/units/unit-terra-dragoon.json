@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_TERRA_DRAGOON",
+    "collectionNumber": "BS-164",
+    "name": "Terra Dragoon",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 2,
+        "points": 4
+    },
+    "stats": {
+        "health": 40,
+        "mana": 28,
+        "attack": 27,
+        "defense": 15,
+        "moveRange": 4,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Swift riders mounted on crystal-backed drakes, combining speed with earth's defensive might.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

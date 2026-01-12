@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_OCEAN_PALADIN",
+    "collectionNumber": "BS-122",
+    "name": "Ocean Paladin",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "points": 4
+    },
+    "stats": {
+        "health": 42,
+        "mana": 32,
+        "attack": 28,
+        "defense": 15,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Holy defender of the deep seas, blessed with divine water resistance and unwavering resolve.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

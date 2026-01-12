@@ -1,0 +1,33 @@
+{
+    "cardId": "UNIT_FIRE_MAGE",
+    "collectionNumber": "BS-108",
+    "name": "Fire Mage",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "points": 1
+    },
+    "stats": {
+        "health": 22,
+        "mana": 35,
+        "attack": 24,
+        "defense": 6,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Apprentice spellcasters who have learned to channel raw flame into destructive bolts of magical fire.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-05-fire-academy",
+            "location-10-fire-library"
+        ]
+    }
+}
