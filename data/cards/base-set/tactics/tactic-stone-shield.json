@@ -1,0 +1,31 @@
+{
+    "cardId": "TACTIC_STONE_SHIELD",
+    "collectionNumber": "BS-168",
+    "name": "Stone Shield",
+    "type": "Tactic",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "maxStars": 3,
+        "points": 1
+    },
+    "manaCost": 20,
+    "effect": {
+        "type": "Defensive Buff",
+        "description": "Target friendly unit gains +15 Defense for 2 turns. Cannot be dispelled.",
+        "duration": 2,
+        "targetType": "Single Ally"
+    },
+    "lore": "The mountain's endurance flows through you, turning flesh to stone.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-05-earth-zone"
+        ]
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "cardId": "HERO_TITAN_MOUNTAIN_LORD",
+    "collectionNumber": "BS-013",
+    "name": "Titan, Mountain Lord",
+    "type": "Hero",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Legendary",
+        "stars": 5,
+        "maxStars": 7,
+        "points": 32
+    },
+    "stats": {
+        "health": 90,
+        "mana": 50,
+        "attack": 55,
+        "defense": 18,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_MOUNTAIN_CRUSH",
+            "name": "Mountain Crush",
+            "type": "Active",
+            "manaCost": 40,
+            "cooldown": 4,
+            "description": "Deal 80 damage to target enemy. Stun adjacent enemies for 1 turn."
+        },
+        {
+            "abilityId": "ABILITY_IMMOVABLE",
+            "name": "Immovable",
+            "type": "Passive",
+            "description": "All Earth units gain +20% Defense. Cannot be pushed or displaced."
+        }
+    ],
+    "tacticSlots": 5,
+    "lore": "Ancient guardian of the mountain peaks, Titan's strength is as unyielding as the stone itself. Legends say he carved the first valleys with his bare hands.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "hero-pack"
+        ],
+        "campaignDrops": [
+            "location-30-mountain-king-boss"
+        ]
+    }
+}

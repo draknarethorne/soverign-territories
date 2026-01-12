@@ -5,9 +5,9 @@
     "type": "Hero",
     "element": "Earth",
     "rarity": {
-        "tier": "Mythic",
-        "stars": 6,
-        "maxStars": 8,
+        "tier": "Legendary",
+        "stars": 5,
+        "maxStars": 7,
         "points": 32
     },
     "stats": {

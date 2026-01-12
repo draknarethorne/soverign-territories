@@ -1,0 +1,30 @@
+{
+    "cardId": "TACTIC_ROCK_SLIDE",
+    "collectionNumber": "BS-169",
+    "name": "Rock Slide",
+    "type": "Tactic",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "manaCost": 30,
+    "effect": {
+        "type": "Area Damage",
+        "description": "Deal 40 damage to all enemies in a 2x2 area. Reduce their Movement Range by 1 for 1 turn.",
+        "targetType": "Area of Effect",
+        "areaSize": "2x2"
+    },
+    "lore": "Boulders cascade down the mountainside, crushing all who stand in their path.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-25-crumbling-cliffs"
+        ]
+    }
+}

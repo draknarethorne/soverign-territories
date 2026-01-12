@@ -1,0 +1,50 @@
+{
+    "cardId": "HERO_GRANITE_STONE_GUARDIAN",
+    "collectionNumber": "BS-015",
+    "name": "Granite, Stone Guardian",
+    "type": "Hero",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Epic",
+        "stars": 3,
+        "maxStars": 6,
+        "points": 8
+    },
+    "stats": {
+        "health": 85,
+        "mana": 40,
+        "attack": 40,
+        "defense": 20,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_SHIELD_BASH",
+            "name": "Shield Bash",
+            "type": "Active",
+            "manaCost": 25,
+            "cooldown": 2,
+            "description": "Deal 50 damage to target enemy. Push them back 1 tile."
+        },
+        {
+            "abilityId": "ABILITY_STONE_SKIN",
+            "name": "Stone Skin",
+            "type": "Passive",
+            "description": "Takes 20% reduced damage from all sources. Immune to critical hits."
+        }
+    ],
+    "tacticSlots": 3,
+    "lore": "Hewn from living rock and bound by ancient oaths, Granite stands as an eternal sentinel. His shield has turned aside a thousand blades without a single scratch.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "hero-pack"
+        ],
+        "campaignDrops": [
+            "location-15-stone-fortress"
+        ]
+    }
+}

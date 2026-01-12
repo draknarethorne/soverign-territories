@@ -1,0 +1,50 @@
+{
+    "cardId": "HERO_GAIA_EARTH_MOTHER",
+    "collectionNumber": "BS-014",
+    "name": "Gaia, Earth Mother",
+    "type": "Hero",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Epic",
+        "stars": 4,
+        "maxStars": 6,
+        "points": 16
+    },
+    "stats": {
+        "health": 75,
+        "mana": 70,
+        "attack": 35,
+        "defense": 15,
+        "moveRange": 3,
+        "attackRange": 2
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_NATURES_BLESSING",
+            "name": "Nature's Blessing",
+            "type": "Active",
+            "manaCost": 35,
+            "cooldown": 3,
+            "description": "Restore 50 HP to all friendly Earth units. Cleanse 1 debuff."
+        },
+        {
+            "abilityId": "ABILITY_FERTILE_GROUND",
+            "name": "Fertile Ground",
+            "type": "Passive",
+            "description": "Allied units on Earth terrain regenerate 10 HP per turn."
+        }
+    ],
+    "tacticSlots": 4,
+    "lore": "Channeling the life force of the planet itself, Gaia nurtures her followers with the boundless vitality of nature. Where she walks, the earth blooms.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "hero-pack"
+        ],
+        "campaignDrops": [
+            "location-20-ancient-grove"
+        ]
+    }
+}
