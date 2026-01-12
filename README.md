@@ -51,7 +51,8 @@ A multi-genre fusion designed for **collectors**, **strategists**, and **time-co
 | Component | Status | Progress | Location |
 |-----------|--------|----------|----------|
 | **🎨 Game Design** | ✅ Complete | 100% | [`docs/game-bible.md`](docs/game-bible.md) |
-| **📋 Card Data** | 🟡 In Progress | 30/140 | [`data/cards/`](data/cards/) |
+| **📋 Card Data** | 🟡 In Progress | 131/174 | [`data/cards/base-set/`](data/cards/base-set/) |
+| **🎁 Phase 2 Expansion** | 🔵 Planned | 48 cards | [`data/cards/phase-2-expansion/`](data/cards/phase-2-expansion/) |
 | **📦 Pack Systems** | ✅ Complete | 16/16 | [`data/products/packs/`](data/products/packs/) |
 | **🎁 Reward Systems** | ✅ Complete | 100% | [`data/products/rewards/`](data/products/rewards/) |
 | **📐 JSON Schemas** | ✅ Complete | 33 schemas | [`data/schemas/`](data/schemas/) |
@@ -59,12 +60,14 @@ A multi-genre fusion designed for **collectors**, **strategists**, and **time-co
 | **🖥️ Nakama Server** | 🔴 Not Started | 0% | `server/` (planned) |
 
 **Recent Updates** (Jan 11, 2026):
+- ✅ **Base Set Restructure**: 131-card battle-focused MVP (Fire/Water/Earth balanced)
+- ✅ **Element Parity Achieved**: All 3 elements now have 5 heroes, balanced units/tactics
+- ✅ **Rarity System Overhaul**: maxStars fusion progression, native star variability
+- ✅ **Phase 2 Expansion Created**: Deferred 48 economy cards (buildings/equipment/workers)
+- ✅ **Mythic Tier Deferred**: Base set focuses Common→Legendary, Mythics for expansions
 - ✅ **Major Architecture Overhaul**: Separated runtime data from documentation
-- ✅ **Migrated 90+ JSON files** to industry-standard structure (`data/` directory)
 - ✅ **Created 33 validation schemas** for all game systems
-- ✅ **Hero saturation control** in daily login rewards (specialized pack system)
 - ✅ **Single source of truth** architecture (each card = 1 JSON file)
-- ✅ **Professional documentation** with navigation guides and quick-starts
 
 ---
 
