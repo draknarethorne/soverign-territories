@@ -1,0 +1,13 @@
+{
+  "element": "Fire",
+  "cardType": "Hero",
+  "seriesId": "base-set",
+  "heroIds": [
+    "HERO_ARIA_FLAME_KNIGHT",
+    "HERO_RAGNAR_INFERNO_BERSERKER",
+    "HERO_CINDER_FLAME_MAGE",
+    "HERO_BLAZE_DRAGON_RIDER",
+    "HERO_EMBER_PHOENIX_GUARDIAN"
+  ],
+  "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
+}

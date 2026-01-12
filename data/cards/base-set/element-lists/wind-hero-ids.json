@@ -1,0 +1,9 @@
+{
+  "element": "Wind",
+  "cardType": "Hero",
+  "seriesId": "base-set",
+  "heroIds": [
+    "HERO_ZEPHYR_WIND_DANCER"
+  ],
+  "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
+}
