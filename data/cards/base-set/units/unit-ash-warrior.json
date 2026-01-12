@@ -1,4 +1,4 @@
-﻿{
+{
     "cardId":  "UNIT_ASH_WARRIOR",
     "collectionNumber":  "BS-011",
     "name":  "Ash Warrior",
@@ -7,6 +7,7 @@
     "rarity":  {
                    "tier":  "Common",
                    "stars":  0,
+        "maxStars": 3,
                    "points":  1
                },
     "stats":  {

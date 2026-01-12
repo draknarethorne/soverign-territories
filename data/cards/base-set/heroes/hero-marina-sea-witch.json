@@ -5,9 +5,10 @@
     "type":  "Hero",
     "element":  "Water",
     "rarity":  {
-                   "tier":  "Rare",
-                   "stars":  2,
-                   "points":  4
+                   "tier":  "Legendary",
+                   "stars":  5,
+                   "maxStars":  7,
+                   "points":  16
                },
     "stats":  {
                   "health":  65,

@@ -5,9 +5,10 @@
     "type": "Hero",
     "element": "Earth",
     "rarity": {
-        "tier": "Epic",
-        "stars": 3,
-        "points": 8
+        "tier": "Mythic",
+        "stars": 6,
+        "maxStars": 8,
+        "points": 32
     },
     "stats": {
         "health": 90,

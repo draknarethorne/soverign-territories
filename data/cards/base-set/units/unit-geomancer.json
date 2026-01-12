@@ -6,8 +6,9 @@
     "element": "Earth",
     "rarity": {
         "tier": "Uncommon",
-        "stars": 1,
-        "points": 2
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
     },
     "stats": {
         "health": 28,

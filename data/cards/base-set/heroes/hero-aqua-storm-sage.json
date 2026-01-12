@@ -6,7 +6,8 @@
     "element":  "Water",
     "rarity":  {
                    "tier":  "Epic",
-                   "stars":  3,
+                   "stars":  4,
+                   "maxStars":  6,
                    "points":  8
                },
     "stats":  {

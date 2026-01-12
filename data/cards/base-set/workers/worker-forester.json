@@ -6,7 +6,8 @@
     "element": "Neutral",
     "rarity": {
         "tier": "Common",
-        "stars": 0,
+        "stars": 1,
+        "maxStars": 3,
         "points": 1
     },
     "stats": {

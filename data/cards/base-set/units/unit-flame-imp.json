@@ -1,4 +1,4 @@
-﻿{
+{
     "cardId":  "UNIT_FLAME_IMP",
     "collectionNumber":  "BS-008",
     "name":  "Flame Imp",
@@ -7,6 +7,7 @@
     "rarity":  {
                    "tier":  "Common",
                    "stars":  0,
+        "maxStars": 3,
                    "points":  1
                },
     "stats":  {

@@ -5,9 +5,10 @@
     "type":  "Hero",
     "element":  "Fire",
     "rarity":  {
-                   "tier":  "Uncommon",
-                   "stars":  1,
-                   "points":  1
+                   "tier":  "Legendary",
+                   "stars":  5,
+                   "maxStars":  7,
+                   "points":  16
                },
     "stats":  {
                   "health":  50,

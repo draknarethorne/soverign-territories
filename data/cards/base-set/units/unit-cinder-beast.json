@@ -1,4 +1,4 @@
-﻿{
+{
     "cardId":  "UNIT_CINDER_BEAST",
     "collectionNumber":  "BS-012",
     "name":  "Cinder Beast",
@@ -7,6 +7,7 @@
     "rarity":  {
                    "tier":  "Common",
                    "stars":  0,
+        "maxStars": 3,
                    "points":  1
                },
     "stats":  {

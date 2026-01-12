@@ -7,7 +7,8 @@
     "rarity": {
         "tier": "Rare",
         "stars": 3,
-        "points": 4
+        "maxStars": 5,
+        "points": 8
     },
     "stats": {
         "health": 26,
