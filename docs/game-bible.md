@@ -83,6 +83,17 @@ Owner: [User] ("The Architect")
 
 > **Design Note**: The MVP focuses on validating the core loop (card collection + deck-building + tactical campaign battles). Territory conquest and AFK empire automation are Phase 2-3 expansions if/when the foundation succeeds.
 
+### MVP Firewall (Authoritative)
+
+To prevent scope drift, apply this interpretation rule across all sections in this document:
+
+- `docs/game-bible.md` defines vision, pillars, and player experience targets.
+- `docs/mvp/solo-dev-realistic-mvp.md` defines authoritative solo-dev MVP schedule/scope.
+- `docs/design/*.md` defines canonical formulas and system-rule details.
+- `docs/specs/*.json` defines implementation contracts for scripts, tools, and runtime validation.
+
+If this file conflicts with canonical MVP/design/spec files on implementation detail, canonical files win.
+
 ## Overview
 
 Sovereign Territories is a **multi-genre hybrid strategy game** that blends the best mechanics from decades of gaming:

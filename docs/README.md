@@ -1,6 +1,8 @@
 # 📚 Sovereign Territories Documentation
 
-> **Tagline**: "Build the Deck. Rule the Map. Automate the Empire."
+> **Primary MVP Tagline**: "Build the Deck. Conquer the Campaign. Level Your Heroes."
+> 
+> **Future Vision Tagline (Phase 2-3)**: "Build the Deck. Rule the Map. Automate the Empire."
 
 Welcome to the comprehensive documentation for **Sovereign Territories** - a hybrid strategy game merging Pokemon TCG deck-building, Risk-style conquest, and Heroes of Might and Magic tactical combat.
 
@@ -8,12 +10,13 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 
 ## 🎯 Quick Start
 
-**New to the project?** Start here:
-1. 📖 Read [game-bible.md](game-bible.md) - Master design document (4,194 lines)
-2. 🎮 Review [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) - 8-week MVP roadmap
-3. 🎓 Walk through [mvp/tutorial-flow.md](mvp/tutorial-flow.md) - Player onboarding (28 steps, 0-60 min)
-4. 🔍 Browse [specs/](specs/) - 33 JSON schemas + 34 markdown companions
-5. 💻 Start coding with [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md)
+**New to the project?** Start here (in this order):
+1. 📖 Read [game-bible.md](game-bible.md) - Vision and design principles (not implementation detail source)
+2. 🎯 Read [mvp/solo-dev-realistic-mvp.md](mvp/solo-dev-realistic-mvp.md) - **Authoritative MVP timeline and scope** (16-24 weeks)
+3. 🗺️ Read [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) - Feature/dependency breakdown (8-week plan is aspirational only)
+4. 🎓 Walk through [mvp/tutorial-flow.md](mvp/tutorial-flow.md) - Player onboarding (28 steps, 0-60 min)
+5. 🔍 Browse [specs/](specs/) - machine-readable source of truth for system contracts
+6. 💻 Start coding with [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md)
 
 ---
 
@@ -24,18 +27,29 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 ![TODOs](https://img.shields.io/badge/TODOs-87_consolidated-yellow)
 ![MVP Ready](https://img.shields.io/badge/MVP-Ready_for_Unity-brightgreen)
 
-**Last Major Update**: December 30, 2025 (Documentation cleanup complete)
+**Last Major Update**: July 27, 2026 (MVP-first canonicalization pass started)
 
-**Recent Changes**:
-- ✅ Condensed game-bible.md from 6,807 → 4,194 lines (38% reduction)
-- ✅ Reorganized docs into mvp/, design/, archive/ folders
-- ✅ Consolidated 87 TODOs into design-todos-phase2-3.md
-- ✅ Created unity-implementation-guide.md with C# code examples
-- ✅ Archived redundant mvp-scope.md (superseded by mvp-scope-final.md)
+**Current Canonicalization Focus**:
+- ✅ Preserve ambition, but enforce MVP firewall and phase boundaries
+- ✅ Keep `game-bible.md` as vision doc; move executable rules to focused design/spec docs
+- ✅ Use `mvp/solo-dev-realistic-mvp.md` as authoritative schedule baseline
+- ✅ Use JSON schemas + focused design docs as implementation truth for tooling and scripts
+- 🔄 Normalize tone and monetization language to player-respect principles
 
 ---
 
 ## 📖 Core Documentation
+
+### ✅ Canonical Source of Truth Matrix
+
+| Topic | Primary Source | Secondary Source | Rule |
+|------|-----------------|------------------|------|
+| Vision, pillars, long-term direction | [game-bible.md](game-bible.md) | `docs/game-bible-review.md` | Vision only, avoid hard implementation formulas here |
+| MVP timeline/scope reality | [mvp/solo-dev-realistic-mvp.md](mvp/solo-dev-realistic-mvp.md) | [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) | Solo-dev doc wins on schedule and scope conflicts |
+| Tutorial flow | [mvp/tutorial-flow.md](mvp/tutorial-flow.md) | [mvp/tutorial-gap-resolutions.md](mvp/tutorial-gap-resolutions.md) | Tutorial docs own exact onboarding sequence |
+| Progression/deck constraints | [design/deck-progression-rules.md](design/deck-progression-rules.md) | `game-bible.md` refs only | Keep formulas in one canonical design doc |
+| Data contracts | [specs/*.json](specs/) | [specs/*.md](specs/) | Schemas are implementation contract for scripts/tools |
+| Combat formulas by phase | [design/combat-calculation-spec.md](design/combat-calculation-spec.md) | `game-bible.md` summary | Design spec owns exact formulas |
 
 ### 🎮 Master Design
 | Document | Purpose | Status | Lines |
@@ -58,7 +72,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 ### Essential MVP Documents
 | Document | Purpose | Status | Phase |
 |----------|---------|--------|-------|
-| [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) | 8-week roadmap, week-by-week deliverables | ✅ Authoritative | MVP |
+| [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) | 8-week decomposition template, dependencies, deliverables | ✅ Supporting | MVP |
 | [mvp/tutorial-flow.md](mvp/tutorial-flow.md) | 28-step player journey (0-60 min) | ✅ Complete | MVP |
 | [mvp/tutorial-gap-resolutions.md](mvp/tutorial-gap-resolutions.md) | 9 critical design decisions resolved | ✅ Complete | MVP |
 | [mvp/unity-implementation-guide.md](mvp/unity-implementation-guide.md) | C# code examples, project structure | ✅ Ready | MVP |

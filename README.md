@@ -8,9 +8,11 @@
 ![Nakama](https://img.shields.io/badge/Nakama-3.x-green)
 ![Platforms](https://img.shields.io/badge/Platforms-iOS%20%7C%20Android%20%7C%20PC-blue)
 
-**"Build the Deck. Rule the Map. Automate the Empire."**
+> Primary MVP tagline: "Build the Deck. Conquer the Campaign. Level Your Heroes."
+>
+> Future Vision (Phase 2-3): "Build the Deck. Rule the Map. Automate the Empire."
 
-*A hybrid strategy game merging Risk-style territorial conquest, Pokemon TCG deck-building, and Heroes of Might and Magic tactical combat with AFK progression.*
+*A hybrid strategy game centered on campaign-first card tactics for MVP, with territorial conquest and AFK empire systems planned for later phases.*
 
 [🎯 Game Bible](docs/game-bible.md) • [📚 Documentation](docs/) • [🔧 Quick Start](#-quick-start) • [🏗️ Architecture](#-project-structure)
 
@@ -126,10 +128,11 @@ soverign-territories/
 ### For Game Designers
 
 1. **📖 Read the Vision**: [`docs/game-bible.md`](docs/game-bible.md) - 5,800+ line master design doc
-2. **🎯 Review MVP Scope**: [`docs/mvp/mvp-scope-final.md`](docs/mvp/mvp-scope-final.md) - 8-week roadmap
-3. **🎴 Browse Cards**: [`docs/codex/base-set/COMPLETE-CARD-LIST.md`](docs/codex/base-set/COMPLETE-CARD-LIST.md) - All 140 Base Set cards
-4. **📦 Check Packs**: [`data/products/packs/`](data/products/packs/) - 16 pack definitions with drop rates
-5. **🧭 Navigation**: [`docs/QUICK-START.md`](docs/QUICK-START.md) - Where to find everything
+2. **🎯 Review MVP Scope**: [`docs/mvp/solo-dev-realistic-mvp.md`](docs/mvp/solo-dev-realistic-mvp.md) - authoritative 16-24 week solo-dev roadmap
+3. **🗺️ Dependency Breakdown**: [`docs/mvp/mvp-scope-final.md`](docs/mvp/mvp-scope-final.md) - aspirational 8-week decomposition template
+4. **🎴 Browse Cards**: [`docs/codex/base-set/COMPLETE-CARD-LIST.md`](docs/codex/base-set/COMPLETE-CARD-LIST.md) - All 140 Base Set cards
+5. **📦 Check Packs**: [`data/products/packs/`](data/products/packs/) - 16 pack definitions with drop rates
+6. **🧭 Navigation**: [`docs/QUICK-START.md`](docs/QUICK-START.md) - Where to find everything
 
 ### For Developers
 
@@ -243,7 +246,7 @@ soverign-territories/
 - Industry analysis, competitive research
 - F2P economy balancing, progression curves
 
-### 🔵 Phase 1: MVP (8 Weeks - Ready to Start)
+### 🔵 Phase 1: MVP (16-24 Weeks Solo Dev - Ready to Start)
 **Week 1-2**: Core Systems
 - Card data loading, deck builder, collection tracker
 - Battle manager (turn system, damage calculation)
