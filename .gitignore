@@ -27,6 +27,18 @@ go.work.sum
 # env file
 .env
 
+# local development environments
+.venv/
+venv/
+
+# node tool caches
+node_modules/
+npm-debug.log*
+
+# generated reports/artifacts
+*.sarif
+reports/
+
 # Editor/IDE
 # .idea/
 # .vscode/

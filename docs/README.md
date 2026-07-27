@@ -1,10 +1,11 @@
 # 📚 Sovereign Territories Documentation
 
 > **Primary MVP Tagline**: "Build the Deck. Conquer the Campaign. Level Your Heroes."
-> 
+>
 > **Future Vision Tagline (Phase 2-3)**: "Build the Deck. Rule the Map. Automate the Empire."
 
-Welcome to the comprehensive documentation for **Sovereign Territories** - a hybrid strategy game merging Pokemon TCG deck-building, Risk-style conquest, and Heroes of Might and Magic tactical combat.
+Welcome to the comprehensive documentation for **Sovereign Territories** - a hybrid strategy game
+merging Pokemon TCG deck-building, Risk-style conquest, and Heroes of Might and Magic tactical combat.
 
 ---
 
@@ -35,7 +36,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 - ✅ Use `mvp/solo-dev-realistic-mvp.md` as authoritative schedule baseline
 - ✅ Use JSON schemas + focused design docs as implementation truth for tooling and scripts
 - 🔄 Normalize tone and monetization language to player-respect principles
-- 🔄 Roll out cross-repo quality baseline (pre-commit, markdownlint, governance guides)
+- ✅ Cross-repo quality baseline added (pre-commit, markdownlint, governance guides)
 
 **Latest Audit**: [AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md](AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md)
 
@@ -120,6 +121,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 docs/
 ├── game-bible.md (4,194 lines - master reference)
 ├── README.md (this file - documentation hub)
+├── AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md (current audit + carry-forward plan)
 │
 ├── mvp/ (MVP-critical documents)
 │   ├── mvp-scope-final.md (8-week roadmap)
@@ -144,13 +146,24 @@ docs/
 │   ├── assets.md (visual guide)
 │   └── design-todos-phase2-3.md (87 consolidated TODOs)
 │
+├── quality + governance
+│   ├── QUALITY-GATES.md (local/CI quality contract)
+│   ├── CHANGE-MANAGEMENT.md (design → schema → tooling sync policy)
+│   └── RELEASE-CHECKLIST.md (publish-time readiness checklist)
+│
 ├── assets/examples/ (28 JPEGs - battle maps, cards, UI mockups)
 │
 └── archive/ (completed/superseded documents)
+    ├── README.md (archive index and naming rules)
     ├── mvp-scope.md (superseded by mvp-scope-final.md)
     ├── bible-reorganization-plan.md (condensing complete)
     ├── reorganization-status.md (replaced by this README)
-    └── documentation-status-report.md (cleanup complete)
+    ├── documentation-status-report.md (cleanup complete)
+    ├── AUDIT-BASE-SET-INVENTORY-JAN2026-SUPERSEDED.md
+    ├── AUDIT-DATA-DIRECTORY-JAN2026-SUPERSEDED.md
+    ├── AUDIT-STARTER-CARDS-JAN2026-SUPERSEDED.md
+    ├── DOCUMENTATION-AUDIT-JAN2026-SUPERSEDED.md
+    └── COMPLETION-DATA-DOCS-SEPARATION-JAN2026-HISTORICAL.md
 ```
 
 ---
@@ -281,7 +294,7 @@ docs/
 
 ## 🚀 Getting Started (Unity Developers)
 
-**Week 1-2: Core Foundation**
+### Week 1-2: Core Foundation
 1. Create Unity 2021 LTS project
 2. Set up folder structure (Scripts/, Prefabs/, Scenes/, Resources/)
 3. Create CardData.cs ScriptableObject (see unity-implementation-guide.md)

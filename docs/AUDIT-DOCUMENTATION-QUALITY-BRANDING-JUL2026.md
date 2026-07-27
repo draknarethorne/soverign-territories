@@ -41,7 +41,27 @@ This audit records:
 
 ---
 
-## ⚠️ Remaining gaps (post-realignment)
+## ✅ Phase 1 execution update (completed)
+
+The planned Phase 1 baseline has now been implemented in-repo:
+
+- ✅ `.pre-commit-config.yaml`
+- ✅ `.markdownlint.json`
+- ✅ `.editorconfig`
+- ✅ `PSScriptAnalyzerSettings.psd1`
+- ✅ `scripts/Invoke-QualityChecks.ps1`
+- ✅ `scripts/Invoke-PrePushValidation.ps1`
+- ✅ `.github/workflows/quality.yml`
+- ✅ `CONTRIBUTING.md`
+- ✅ `SECURITY.md`
+- ✅ `.github/CODEOWNERS`
+- ✅ `docs/QUALITY-GATES.md`
+- ✅ `docs/CHANGE-MANAGEMENT.md`
+- ✅ `docs/RELEASE-CHECKLIST.md`
+
+---
+
+## ⚠️ Remaining gaps (post-phase-1)
 
 ### 1) Lint/style debt still present
 
@@ -49,16 +69,14 @@ This audit records:
 - This is primarily formatting debt, not architecture logic debt.
 - Recommend handling as **separate style-only pass** to avoid mixing behavior and formatting changes.
 
-### 2) Quality toolchain gap vs other Draknare repositories
+### 2) Quality hardening is now active (next step = tighten over time)
 
 Current Sovereign Territories repo state:
 
-- ❌ No `.pre-commit-config.yaml`
-- ❌ No `.markdownlint.json`
-- ❌ No root `.editorconfig`
-- ❌ No `PSScriptAnalyzerSettings.psd1`
-- ❌ No `CONTRIBUTING.md` / `SECURITY.md` / `CODEOWNERS`
-- ✅ Has a schema validation workflow: `.github/workflows/validate-schemas.yml`
+- ✅ Baseline quality toolchain present
+- ✅ Quality CI workflow present (`.github/workflows/quality.yml`)
+- ✅ Existing schema validation workflow retained (`.github/workflows/validate-schemas.yml`)
+- 🔄 Next: retire lint/style debt in structured batches and tighten relaxed markdown rules incrementally
 
 ### 3) Metadata and brand consistency gap
 
@@ -160,7 +178,9 @@ Suggested minimum guide set for this repository:
 
 ### Recommended About description (Sovereign Territories)
 
-> Campaign-first hybrid strategy card game: deck-building + tactical 8x8 battles now, territorial conquest and empire automation in later phases. Built in the Draknare Thorne / Thorne / Viper quality style.
+> Campaign-first hybrid strategy card game: deck-building + tactical 8x8 battles now,
+> territorial conquest and empire automation in later phases.
+> Built in the Draknare Thorne / Thorne / Viper quality style.
 
 ### Recommended repository topics
 
@@ -188,12 +208,28 @@ For each repo in `draknarethorne`:
 
 ## 🔜 Next execution steps (carry-forward plan)
 
-1. Create quality baseline files (`.pre-commit-config.yaml`, `.markdownlint.json`, `.editorconfig`, `PSScriptAnalyzerSettings.psd1`).
-2. Add governance docs (`CONTRIBUTING.md`, `SECURITY.md`, `CODEOWNERS`, `docs/QUALITY-GATES.md`).
-3. Add/upgrade CI workflow to run pre-commit gates on push/PR.
-4. Run first all-files quality pass and capture initial debt report.
-5. Execute lint/style remediation in isolated documentation-only batches.
-6. Update GitHub About + topics for `soverign-territories` and then harmonize across org repos.
+1. Run first all-files quality pass and capture initial debt report.
+2. Execute lint/style remediation in isolated documentation-only batches.
+3. Tighten markdownlint rules as debt is reduced.
+4. Update GitHub About + topics for `soverign-territories` and then harmonize across org repos.
+
+---
+
+## 🗂️ Audit directory sweep decisions (July 27, 2026)
+
+To reduce active-doc noise and remove stale/contradictory baseline assumptions from root `docs/`, the following were moved to `docs/archive/`:
+
+- `AUDIT-BASE-SET-INVENTORY-JAN2026.md` → `archive/AUDIT-BASE-SET-INVENTORY-JAN2026-SUPERSEDED.md`
+- `AUDIT-DATA-DIRECTORY-JAN2026.md` → `archive/AUDIT-DATA-DIRECTORY-JAN2026-SUPERSEDED.md`
+- `AUDIT-STARTER-CARDS-JAN2026.md` → `archive/AUDIT-STARTER-CARDS-JAN2026-SUPERSEDED.md`
+- `DOCUMENTATION-AUDIT-JAN2026.md` → `archive/DOCUMENTATION-AUDIT-JAN2026-SUPERSEDED.md`
+- `COMPLETION-DATA-DOCS-SEPARATION-JAN2026.md` → `archive/COMPLETION-DATA-DOCS-SEPARATION-JAN2026-HISTORICAL.md`
+
+Rationale:
+
+- these files are historically valuable but no longer canonical for current MVP architecture and quality policy,
+- several assumptions are now outdated relative to July 2026 canonicalization,
+- archive naming now explicitly signals superseded vs historical reference status.
 
 ---
 
@@ -201,5 +237,5 @@ For each repo in `draknarethorne`:
 
 - **Date**: July 27, 2026
 - **Auditor mode**: Sovereign Beast Mode (design architecture + documentation)
-- **Status**: Completed (documentation + plan), implementation tasks queued
-- **Blocking risk**: None for MVP architectural direction; moderate for quality/tooling consistency until Phase 1 quality baseline is applied
+- **Status**: Phase 1 baseline implemented; lint/style retirement and metadata harmonization in progress
+- **Blocking risk**: None for MVP architectural direction; low-to-moderate for quality consistency until lint debt batches are completed

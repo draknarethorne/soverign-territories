@@ -1,0 +1,13 @@
+# Default ownership
+* @draknarethorne
+
+# Documentation and design canon
+/docs/ @draknarethorne
+
+# Data contracts and runtime data
+/data/ @draknarethorne
+
+# Automation and quality gates
+/.github/ @draknarethorne
+/scripts/ @draknarethorne
+/tools/ @draknarethorne

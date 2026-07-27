@@ -14,7 +14,7 @@
 
 *A hybrid strategy game centered on campaign-first card tactics for MVP, with territorial conquest and AFK empire systems planned for later phases.*
 
-[🎯 Game Bible](docs/game-bible.md) • [📚 Documentation](docs/) • [🔧 Quick Start](#-quick-start) • [🏗️ Architecture](#-project-structure)
+[🎯 Game Bible](docs/game-bible.md) • [📚 Documentation](docs/) • [🔧 Quick Start](docs/QUICK-START.md) • [🏗️ Architecture](docs/PROJECT-STRUCTURE-ANALYSIS.md)
 
 </div>
 
@@ -309,7 +309,7 @@ Once the Unity project begins, we'll accept:
 
 ## 🔗 Links
 
-- **Repository**: [github.com/scottmelmer/soverign-territories](https://github.com/scottmelmer/soverign-territories)
+- **Repository**: [github.com/draknarethorne/soverign-territories](https://github.com/draknarethorne/soverign-territories)
 - **Game Bible**: [docs/game-bible.md](docs/game-bible.md)
 - **Quick Start**: [docs/QUICK-START.md](docs/QUICK-START.md)
 - **Architecture**: [docs/PROJECT-STRUCTURE-ANALYSIS.md](docs/PROJECT-STRUCTURE-ANALYSIS.md)
@@ -318,9 +318,9 @@ Once the Unity project begins, we'll accept:
 
 <div align="center">
 
-**Built with ❤️ by a solo developer dreaming big**
+Built with ❤️ by a solo developer dreaming big
 
-*"The best TCG meets the best strategy meets the best tactics - with none of the grind."*
+"The best TCG meets the best strategy meets the best tactics - with none of the grind."
 
 ![Unity](https://img.shields.io/badge/Made%20with-Unity-black?logo=unity)
 ![C#](https://img.shields.io/badge/Powered%20by-C%23-purple?logo=csharp)
