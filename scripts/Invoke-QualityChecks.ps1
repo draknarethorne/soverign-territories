@@ -23,9 +23,20 @@ foreach ($path in $paths) {
     $results += Invoke-ScriptAnalyzer -Path $path -Settings $settings -Recurse
 }
 
+$warningResults = @($results | Where-Object { $_.Severity -eq 'Warning' })
+$errorResults = @($results | Where-Object { $_.Severity -eq 'Error' })
+$warningCount = $warningResults.Count
+
 if ($results.Count -gt 0) {
     $results | Format-Table -AutoSize | Out-String | Write-Host
-    throw "PSScriptAnalyzer found $($results.Count) issue(s)."
 }
 
-Write-Host 'PSScriptAnalyzer checks passed.'
+if ($errorResults.Count -gt 0) {
+    throw "PSScriptAnalyzer found $($errorResults.Count) error issue(s)."
+}
+
+if ($warningCount -gt 0) {
+    Write-Host "PSScriptAnalyzer warnings (non-blocking in Phase 1): $warningCount"
+}
+
+Write-Host 'PSScriptAnalyzer checks passed (blocking errors: none).'

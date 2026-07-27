@@ -38,22 +38,22 @@ Write-Host "`n[Phase 2] Copying files to new structure..." -ForegroundColor Gree
 # Copy card JSONs (organized by type)
 if (Test-Path "docs/codex/base-set/cards") {
     Write-Host "  Copying card files..." -ForegroundColor Gray
-    
+
     Get-ChildItem "docs/codex/base-set/cards/hero-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
         Copy-Item $_.FullName -Destination "data/cards/base-set/heroes/" -Force
         Write-Host "    → $($_.Name) → heroes/" -ForegroundColor DarkGray
     }
-    
+
     Get-ChildItem "docs/codex/base-set/cards/unit-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
         Copy-Item $_.FullName -Destination "data/cards/base-set/units/" -Force
         Write-Host "    → $($_.Name) → units/" -ForegroundColor DarkGray
     }
-    
+
     Get-ChildItem "docs/codex/base-set/cards/tactic-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
         Copy-Item $_.FullName -Destination "data/cards/base-set/tactics/" -Force
         Write-Host "    → $($_.Name) → tactics/" -ForegroundColor DarkGray
     }
-    
+
     Get-ChildItem "docs/codex/base-set/cards/building-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
         Copy-Item $_.FullName -Destination "data/cards/base-set/buildings/" -Force
         Write-Host "    → $($_.Name) → buildings/" -ForegroundColor DarkGray

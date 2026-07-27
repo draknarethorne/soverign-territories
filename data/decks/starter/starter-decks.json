@@ -4,7 +4,7 @@
   "description": "Starter deck configurations for tutorial. References card IDs only (single source of truth).",
   "version": "2.0.0",
   "lastUpdated": "2026-01-11",
-  
+
   "starterDecks": [
     {
       "deckId": "STARTER_FIRE",
@@ -94,7 +94,7 @@
       "unlockLevel": 1
     }
   ],
-  
+
   "tutorialFlow": {
     "step1": {
       "description": "Player chooses one starter deck (Fire, Water, or Earth)",
@@ -105,7 +105,7 @@
       "reward": "Welcome Pack (3 additional heroes from other elements)"
     }
   },
-  
+
   "notes": {
     "singleSourceOfTruth": "This file references card IDs ONLY. Full card data (stats, abilities, lore) is stored in data/cards/base-set/",
     "runtime": "StarterDeckManager loads this file, then CardManager fetches full card data by ID",

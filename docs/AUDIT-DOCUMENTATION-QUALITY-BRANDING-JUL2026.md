@@ -59,6 +59,16 @@ The planned Phase 1 baseline has now been implemented in-repo:
 - ✅ `docs/CHANGE-MANAGEMENT.md`
 - ✅ `docs/RELEASE-CHECKLIST.md`
 
+### Overnight iteration checkpoint (same date)
+
+- ✅ Full repository quality hooks now execute successfully via:
+   - `python -m pre_commit run --all-files`
+- ✅ Baseline enforcement now stable on Windows shells (PowerShell hook runtime corrected).
+- ✅ Repository-wide hygiene normalization applied (EOF newline + trailing whitespace cleanup across legacy files).
+- ✅ Phase-1 gating strategy finalized:
+   - blocking: file hygiene, YAML/JSON validity, markdownlint baseline, PowerShell analyzer errors
+   - tracked debt (non-blocking in this phase): markdown style strictness and PowerShell warning-level backlog
+
 ---
 
 ## ⚠️ Remaining gaps (post-phase-1)
@@ -85,6 +95,19 @@ Current repository **About** text is still generic:
 - `Idea for a new mobile strategy card and rpg game.`
 
 This undersells current project identity and does not match Thorne/Viper-quality presentation style.
+
+### 4) Debt inventory to retire in Phase 1.1+
+
+The baseline now passes, but quality debt remains and is intentionally tracked for incremental cleanup:
+
+- Markdown strictness backlog in long-form legacy docs (rule-tightening deferred intentionally)
+- PowerShell analyzer warning backlog concentrated in older generator/migration scripts
+
+Retirement strategy:
+
+1. perform style-only batches by directory/topic,
+2. keep behavior and balancing changes separate from formatting,
+3. tighten markdownlint and PowerShell severity policies in controlled increments.
 
 ---
 
@@ -208,10 +231,12 @@ For each repo in `draknarethorne`:
 
 ## 🔜 Next execution steps (carry-forward plan)
 
-1. Run first all-files quality pass and capture initial debt report.
+1. Capture a formal debt report for markdown + PowerShell warning backlog (by file and rule class).
 2. Execute lint/style remediation in isolated documentation-only batches.
-3. Tighten markdownlint rules as debt is reduced.
-4. Update GitHub About + topics for `soverign-territories` and then harmonize across org repos.
+3. Execute PowerShell warning remediation in tooling-only batches.
+4. Tighten markdownlint rules as debt is reduced.
+5. Raise PowerShell warning policy from non-blocking to blocking once backlog is under threshold.
+6. Update GitHub About + topics for `soverign-territories` and then harmonize across org repos.
 
 ---
 

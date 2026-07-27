@@ -33,34 +33,34 @@ foreach ($line in $lines) {
         $currentElement = $matches[1]
         Write-Host "`nProcessing $currentElement cards..." -ForegroundColor Yellow
     }
-    
+
     # Track current card type
     if ($line -match '^### (Heroes|Units|Tactics|Buildings)') {
         $currentType = $matches[1] -replace 's$', ''  # Singular form
     }
-    
+
     # Parse card line
     if ($line -match $cardPattern) {
         $collectionNumber = $matches[1]
         $cardId = $matches[2]
-        
+
         # Split line by pipes and clean up
         $fields = $line -split '\|' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
-        
+
         # Parse based on card type
         $card = @{
             cardId = $cardId
             collectionNumber = $collectionNumber
             series = "base-set"
         }
-        
+
         # Determine element (Neutral if BS-121+)
         if ($collectionNumber -match 'BS-1[2-4]\d') {
             $card.element = "Neutral"
         } else {
             $card.element = $currentElement
         }
-        
+
         # Parse fields based on type
         if ($currentType -eq "Hero") {
             $card.type = "Hero"
@@ -77,7 +77,7 @@ foreach ($line in $lines) {
         elseif ($currentType -eq "Unit") {
             $card.type = "Unit"
             $card.name = $fields[2]
-            
+
             # Check if rarity is specified (Uncommon/Rare units)
             if ($fields.Count -gt 9) {
                 $card.rarity = $fields[3]
@@ -115,7 +115,7 @@ foreach ($line in $lines) {
             $card.defense = [int]$fields[5]
             $card.effect = $fields[6]
         }
-        
+
         # Calculate rarity points
         $rarityPoints = switch ($card.rarity) {
             "Common" { 1 }
@@ -127,19 +127,19 @@ foreach ($line in $lines) {
             default { 1 }
         }
         $card.rarityPoints = $rarityPoints
-        
+
         # Add metadata
         $card.createdDate = (Get-Date -Format "yyyy-MM-dd")
         $card.version = "1.0"
-        
+
         # Generate filename (lowercase, hyphens)
         $filename = "$($cardId.ToLower()).json"
         $filepath = Join-Path $OutputDir $filename
-        
+
         # Convert to JSON and save
         $json = $card | ConvertTo-Json -Depth 5
         $json | Set-Content -Path $filepath -Encoding UTF8
-        
+
         $cardCount++
         Write-Host "  [$cardCount] $collectionNumber - $($card.name) ($($card.rarity))" -ForegroundColor Gray
     }

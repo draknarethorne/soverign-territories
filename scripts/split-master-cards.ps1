@@ -28,10 +28,10 @@ foreach ($card in $masterData.cards) {
     # Generate filename from cardId (lowercase with hyphens)
     $filename = $card.cardId.ToLower().Replace("_", "-") + ".json"
     $filepath = Join-Path $OutputDir $filename
-    
+
     # Save individual card JSON
     $card | ConvertTo-Json -Depth 10 | Set-Content -Path $filepath -Encoding UTF8
-    
+
     $cardCount++
     $rarityStars = if ($card.rarity.stars) { ("*" * $card.rarity.stars) } else { "" }
     Write-Host "  [$cardCount] $($card.collectionNumber) - $($card.name) ($($card.rarity.tier) $rarityStars)" -ForegroundColor Gray

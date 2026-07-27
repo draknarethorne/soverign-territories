@@ -5,9 +5,9 @@
   "releaseDate": "2026-06-01",
   "totalCards": 140,
   "description": "The foundational card series for Sovereign Territories, featuring Fire, Water, Earth, Lightning, Wind, and Frost elements. This set establishes the core mechanics and introduces the world's primary heroes and factions.",
-  
+
   "worldLore": "In the Sovereign Realms, six elemental powers vie for dominance. The Ember Legion commands flames from the Ashen Citadel, while the Tidal Order guards the Coral Depths. The Stone Compact holds the Verdant Highlands, the Volt Covenant rules the Storm Peaks, the Sky Clans soar above the Sky Isles, and the Frost Brotherhood endures in the Frozen Wastes. You will choose your faction and lead them to victory.",
-  
+
   "cardBreakdown": {
     "byRarity": {
       "Common": 56,
@@ -33,7 +33,7 @@
       "Building": 14
     }
   },
-  
+
   "collectionMilestones": [
     {
       "cardsOwned": 10,
@@ -72,7 +72,7 @@
       "description": "Collect all 140 Base Set cards"
     }
   ],
-  
+
   "elementMilestones": [
     {
       "element": "Fire",
@@ -96,7 +96,7 @@
       "description": "Collect all 25 Earth cards"
     }
   ],
-  
+
   "packsAvailable": [
     "welcome-pack",
     "standard-pack",
@@ -109,18 +109,18 @@
     "legendary-pack",
     "mythic-pack"
   ],
-  
+
   "starterBoxes": [
     "fire-starter-box",
     "water-starter-box",
     "earth-starter-box"
   ],
-  
+
   "legalInFormats": ["Standard", "Unlimited"],
   "rotationDate": null,
-  
+
   "designNotes": "Base Set focuses on teaching core mechanics (HP/Mana/ATK/DEF, abilities, deck building). Elements are visual flavor only for MVP (no counter-play until Phase 2). Rarity distribution favors Commons/Uncommons (70%) to ensure F2P accessibility.",
-  
+
   "releaseSchedule": {
     "mvp": "2026-06-01",
     "phase1.1": "Series 2 (Elemental Fury, +80 cards) - 2026-09-01",

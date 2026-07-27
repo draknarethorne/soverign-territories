@@ -42,17 +42,17 @@ if (-not (Test-Path $cardListPath)) {
     Write-ValidationError "COMPLETE-CARD-LIST.md not found at $cardListPath"
 } else {
     $cardListContent = Get-Content $cardListPath -Raw
-    
+
     # Count collection numbers
     $collectionNumbers = [regex]::Matches($cardListContent, 'BS-(\d{3})')
     $uniqueNumbers = $collectionNumbers | ForEach-Object { $_.Value } | Sort-Object -Unique
-    
+
     if ($uniqueNumbers.Count -ne 140) {
         Write-ValidationError "Expected 140 unique collection numbers, found $($uniqueNumbers.Count)"
     } else {
         Write-ValidationSuccess "All 140 collection numbers present (BS-001 to BS-140)"
     }
-    
+
     # Check for gaps
     for ($i = 1; $i -le 140; $i++) {
         $expected = "BS-{0:D3}" -f $i
@@ -60,7 +60,7 @@ if (-not (Test-Path $cardListPath)) {
             Write-ValidationError "Missing collection number: $expected"
         }
     }
-    
+
     # Validate rarity distribution
     $rarityMatches = @{
         Common = ([regex]::Matches($cardListContent, '\| Common \|')).Count
@@ -69,7 +69,7 @@ if (-not (Test-Path $cardListPath)) {
         Epic = ([regex]::Matches($cardListContent, '\| Epic \|')).Count
         Legendary = ([regex]::Matches($cardListContent, '\| Legendary \|')).Count
     }
-    
+
     $expectedRarities = @{
         Common = 56
         Uncommon = 42
@@ -77,7 +77,7 @@ if (-not (Test-Path $cardListPath)) {
         Epic = 12
         Legendary = 4
     }
-    
+
     foreach ($rarity in $expectedRarities.Keys) {
         $actual = $rarityMatches[$rarity]
         $expected = $expectedRarities[$rarity]
@@ -105,14 +105,14 @@ foreach ($box in $starterBoxes) {
         Write-ValidationError "Missing starter box: $box"
     } else {
         $boxData = Get-Content $boxPath -Raw | ConvertFrom-Json
-        
+
         # Validate fixed contents
         if ($boxData.totalCards -ne 15) {
             Write-ValidationError "$box: Expected 15 cards, found $($boxData.totalCards)"
         } else {
             Write-ValidationSuccess "$box: Contains 15 cards"
         }
-        
+
         # Validate all card references exist in card list
         foreach ($card in $boxData.fixedContents) {
             if (-not ($cardListContent -match $card.collectionNumber)) {
@@ -142,7 +142,7 @@ foreach ($pack in $packs) {
         Write-ValidationError "Missing pack: $pack"
     } else {
         $packData = Get-Content $packPath -Raw | ConvertFrom-Json
-        
+
         # Validate basic structure
         if (-not $packData.productId) {
             Write-ValidationError "$pack: Missing productId"
@@ -150,17 +150,17 @@ foreach ($pack in $packs) {
         if (-not $packData.cardsPerPack) {
             Write-ValidationError "$pack: Missing cardsPerPack"
         }
-        
+
         # Validate rarity distribution adds up to reasonable percentage
         $totalWeight = 0
         foreach ($rarity in $packData.rarityDistribution.PSObject.Properties) {
             $totalWeight += $rarity.Value.weight
         }
-        
+
         if ($totalWeight -lt 95 -or $totalWeight -gt 105) {
             Write-ValidationWarning "$pack: Rarity distribution weights sum to $totalWeight% (expected ~100%)"
         }
-        
+
         Write-ValidationSuccess "$pack: Structure valid"
     }
 }

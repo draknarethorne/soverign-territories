@@ -19,6 +19,11 @@ Configured in `.pre-commit-config.yaml`:
 - markdown linting via `.markdownlint.json`
 - PowerShell analysis via `scripts/Invoke-QualityChecks.ps1`
 
+PowerShell policy in Phase 1:
+
+- blocking: `Error` severity findings
+- non-blocking (tracked debt): `Warning` severity findings
+
 ### Pre-push hook
 
 - `scripts/Invoke-PrePushValidation.ps1` runs schema self-validation checks
@@ -39,6 +44,9 @@ Configured in `.pre-commit-config.yaml`:
 Legacy documentation debt exists. Until style remediation is complete, markdownlint rules are selectively relaxed in `.markdownlint.json`.
 
 These exceptions are intentional and temporary; they will be tightened by staged cleanup.
+
+Legacy PowerShell formatting/style debt also exists in older generator and migration scripts.
+Warnings are currently non-blocking while we retire that debt in scoped batches.
 
 ## Planned next phases
 

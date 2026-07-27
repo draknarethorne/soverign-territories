@@ -162,13 +162,13 @@ foreach ($hero in $fireHeroes) {
     $json = New-CardJson @hero
     $elementFolder = $hero.Element.ToLower()
     $outputPath = Join-Path $outputBasePath "$elementFolder\$($hero.CardId).json"
-    
+
     # Create directory if not exists
     $dir = Split-Path $outputPath -Parent
     if (-not (Test-Path $dir)) {
         New-Item -ItemType Directory -Path $dir -Force | Out-Null
     }
-    
+
     # Write JSON file
     Set-Content -Path $outputPath -Value $json -Encoding UTF8
     Write-Host "✅ Generated: $($hero.CollectionNumber) - $($hero.Name)"

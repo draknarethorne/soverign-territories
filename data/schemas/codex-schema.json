@@ -4,20 +4,20 @@
   "description": "JSON schema for validating card definitions in the codex",
   "type": "object",
   "required": ["cardId", "collectionNumber", "series", "name", "type", "element", "rarity", "stats"],
-  
+
   "properties": {
     "cardId": {
       "type": "string",
       "pattern": "^(HERO|UNIT|TACTIC|BUILDING)_[A-Z_]+$",
       "description": "Unique identifier (e.g., HERO_ARIA_FLAME_KNIGHT)"
     },
-    
+
     "collectionNumber": {
       "type": "string",
       "pattern": "^[A-Z]{2,4}-[0-9]{3}$",
       "description": "Series collection number (e.g., BS-001)"
     },
-    
+
     "series": {
       "type": "object",
       "required": ["seriesId", "seriesName", "cardNumber", "totalCards"],
@@ -29,26 +29,26 @@
         "releaseDate": {"type": "string", "format": "date"}
       }
     },
-    
+
     "name": {
       "type": "string",
       "minLength": 3,
       "maxLength": 50,
       "description": "Human-readable card name (e.g., Aria, Flame Knight)"
     },
-    
+
     "type": {
       "type": "string",
       "enum": ["Hero", "Unit", "Tactic", "Building"],
       "description": "Card type"
     },
-    
+
     "element": {
       "type": "string",
       "enum": ["Fire", "Water", "Earth", "Lightning", "Wind", "Frost", "Neutral", "Dark", "Light", "Arcane"],
       "description": "Elemental affiliation"
     },
-    
+
     "rarity": {
       "type": "object",
       "required": ["tier", "stars", "points"],
@@ -70,7 +70,7 @@
         }
       }
     },
-    
+
     "stats": {
       "type": "object",
       "required": ["health", "mana", "attack", "defense"],
@@ -84,7 +84,7 @@
         "flying": {"type": "boolean"}
       }
     },
-    
+
     "abilities": {
       "type": "array",
       "items": {
@@ -101,19 +101,19 @@
         }
       }
     },
-    
+
     "tacticSlots": {
       "type": "integer",
       "minimum": 0,
       "maximum": 5,
       "description": "Number of tactic cards this unit can equip"
     },
-    
+
     "lore": {
       "type": "string",
       "description": "Card backstory/flavor text"
     },
-    
+
     "art": {
       "type": "object",
       "properties": {
@@ -123,7 +123,7 @@
         "voicelineActor": {"type": "string"}
       }
     },
-    
+
     "gameplay": {
       "type": "object",
       "properties": {
@@ -137,7 +137,7 @@
         }
       }
     },
-    
+
     "acquisition": {
       "type": "object",
       "properties": {
@@ -146,7 +146,7 @@
         "dailyLoginRewards": {"type": "array", "items": {"type": "string"}}
       }
     },
-    
+
     "meta": {
       "type": "object",
       "properties": {

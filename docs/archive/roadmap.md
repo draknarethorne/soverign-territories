@@ -35,4 +35,3 @@ This document outlines a phased approach for research, prototyping, and implemen
 - `docs/specs/*.json` authoritative schemas
 - Minimal server simulation and client prototype
 - Telemetry dashboards and automated playtest harness
-
