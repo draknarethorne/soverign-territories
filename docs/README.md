@@ -35,6 +35,9 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 - ✅ Use `mvp/solo-dev-realistic-mvp.md` as authoritative schedule baseline
 - ✅ Use JSON schemas + focused design docs as implementation truth for tooling and scripts
 - 🔄 Normalize tone and monetization language to player-respect principles
+- 🔄 Roll out cross-repo quality baseline (pre-commit, markdownlint, governance guides)
+
+**Latest Audit**: [AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md](AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md)
 
 ---
 
@@ -318,7 +321,7 @@ docs/
 - Code: @Soverign-Code-Mode agent (GPT-5.1-Codex)
 - Unity: @Soverign-Unity-Builder agent (GPT-4o)
 
-**Last Documentation Audit**: December 30, 2025  
+**Last Documentation Audit**: July 27, 2026  
 **Next Planned Update**: Post-MVP playtest feedback (Week 9)
 
 ---
