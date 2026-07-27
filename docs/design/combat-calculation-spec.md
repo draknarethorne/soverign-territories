@@ -1,7 +1,7 @@
 # Combat System Calculations
 
 **Last Updated**: January 10, 2026  
-**Status**: MVP uses HP/Mana/ATK/DEF with ability system, Phase 2 adds elemental counters, Phase 3 adds status effects  
+**Status**: MVP uses deterministic HP/Mana/ATK/DEF combat with no elemental counters or crit RNG; Phase 2 adds elemental counters, Phase 3 adds status effects  
 **Related**: [game-bible.md](game-bible.md) Section 8, [starter-cards.json](../specs/starter-cards.json), [deck-progression-rules.md](deck-progression-rules.md)
 
 ---
@@ -107,78 +107,40 @@ Damage = 40 - 30 = 10 damage
 
 ### Unit Death (MVP)
 
-**MVP uses "One-Hit Removal"**:
-- Any damage removes unit from battlefield (simplified for MVP)
-- No HP tracking (simplifies UI, speeds up battles)
-- Tactical focus: positioning, card advantage, not HP management
+**MVP uses HP-based unit survival**:
+- Units keep Health values during battle.
+- Unit dies only when Health reaches 0.
+- No one-hit removal shortcut in MVP.
 
 **Example**:
 ```
 Goblin Raider attacks Elven Archer
 - Damage = 10 - 10 = 1 (minimum)
-- Elven Archer is removed from battlefield (killed)
-- Goblin Raider survives (attacker doesn't take counter-damage in MVP)
+- Elven Archer Health: 25 -> 24 (survives)
 ```
 
-**Phase 2 Change**: Units have Health pools, survive multiple attacks (see below).
+This aligns MVP playtesting with core hero/unit survivability and healer/tactic decision-making.
 
 ---
 
-### Critical Hits (MVP - Simple)
+### Critical Hits (MVP)
 
-**Formula**:
-```
-Critical Chance = 10% (flat rate for all units)
-Critical Damage = 1.5× normal damage
-```
+Critical-hit RNG is **disabled in MVP**.
 
-**Example**:
-```
-Fire Mage (Attack 40) attacks Dragon Knight (Defense 30)
-Normal Damage = 40 - 30 = 10
-Critical Damage = 10 × 1.5 = 15 damage
-(10% chance to crit on each attack)
-```
+- Reason: keep early balancing deterministic and easier to tune.
+- Result: all damage outcomes are predictable from visible stats.
 
-**Phase 3 Change**: Critical chance based on Speed stat (see Advanced Combat).
+**Phase 3 Change**: critical-hit systems may be introduced with explicit counterplay and caps.
 
 ---
 
 ### Rarity Budget (Anti-Pay-to-Win)
 
-**Purpose**: Prevent whales from fielding all-Legendary decks.
+Canonical rarity-point costs and deck-budget formulas are maintained in:
 
-**Rarity Point Costs**:
-- Common: 1 point
-- Uncommon: 2 points
-- Rare: 4 points
-- Epic: 8 points
-- Legendary: 16 points
-- Mythic: 32 points
+- `docs/design/deck-progression-rules.md`
 
-**Deck Budget by Player Level**:
-- Level 1-5: 60 points (1 Epic + 19 Commons = 1×8 + 19×1 = 27 points)
-- Level 10: 80 points (2 Epics + 18 Commons = 2×8 + 18×1 = 34 points)
-- Level 20: 120 points (3 Epics + 17 Commons = 3×8 + 17×1 = 41 points)
-- Level 30: 200 points (2 Legendaries + 18 Commons = 2×16 + 18×1 = 50 points)
-
-**Example F2P Deck** (Level 1, 60-point budget):
-```
-1× Epic Fire Mage (8 points, Attack 40, Defense 15)
-19× Common Goblins/Archers (19 points, Attack 10-15, Defense 5-10)
-Total: 27 points (fits budget)
-```
-
-**Example Whale Deck** (Level 1, 60-point budget):
-```
-INVALID: 6× Legendary Dragons (6×16 = 96 points) - EXCEEDS BUDGET
-VALID: 3× Legendary Dragons (3×16 = 48 points) + 12× Commons (12 points) = 60 points
-
-Whale has 3 strong units (Legendary Dragons) but only 15 total cards (vs F2P's 20)
-Whale loses card advantage, F2P can swarm with numbers
-```
-
-**Verdict**: Rarity Budget prevents pay-to-win. Whales have stronger individual cards but fewer total cards.
+Use that document as the authoritative source for implementation and validation.
 
 ---
 
@@ -503,10 +465,10 @@ Crit Chance = (80 - 20) / 10 = 6% → 6% crit chance
 ## Implementation Roadmap
 
 ### MVP (Week 1-8)
-- ✅ Simple Attack/Defense stats (1-100 scale)
-- ✅ One-hit removal (no Health pools)
-- ✅ 10% flat critical chance
-- ✅ Rarity Budget (60-200 points by level)
+- ✅ Deterministic HP/Mana/Attack/Defense stats
+- ✅ HP-based combat (units die at 0 HP)
+- ✅ No critical-hit RNG
+- ✅ Rarity Budget (from deck-progression canonical rules)
 - ✅ PvP Matchmaking (Deck Power brackets)
 - ❌ No elemental interactions
 - ❌ No status effects

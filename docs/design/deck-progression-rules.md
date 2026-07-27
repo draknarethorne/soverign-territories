@@ -52,15 +52,15 @@ Rarity Budget = 64 + (Player Level × 4)
 
 | Rarity | Stars | Points | Example Cards |
 |--------|-------|--------|---------------|
-| Common | 0★ | 1 point | Fire Scout, Aqua Healer, Scorch Elemental |
-| Uncommon | 1★ | 1 point | Goblin Raider, Sea Serpent, Earth Warrior |
+| Common | 1★ | 1 point | Fire Scout, Aqua Healer, Scorch Elemental |
+| Uncommon | 1★ | 2 points | Goblin Raider, Sea Serpent, Earth Warrior |
 | Rare | 2★ | 4 points | Ember Legionnaire, Frost Paladin, Rock Golem |
 | Epic | 3★ | 8 points | Aria (Flame Knight), Thalor (Tide Guardian), Gaia (Stone Sentinel) |
 | Legendary | 5★ | 16 points | Ragnarok (God of Thunder), Merlin (Archmage Eternal) |
 | Mythic | 6★ | 32 points | Terra (World Shaper), Malakar (Demon Overlord) |
 
 **Why This System**:
-- **Common/Uncommon = Same Cost** (1 point): Encourages variety, both are filler cards
+- **Uncommon = 2× Common**: preserves meaningful rarity separation early
 - **Rare = 4× Common** (4 points): Specialized units cost more but aren't overpowered
 - **Epic = 8× Common** (8 points): Heroes are powerful, limit 1 per deck
 - **Legendary/Mythic = 16-32× Common**: Late-game chase cards, very expensive
@@ -87,18 +87,18 @@ Rarity Budget = 64 + (Player Level × 4)
 
 ### **Card Limits**
 
-1. **Hero Limit**: **1 unique hero per deck** (cannot have 2× Aria, 2× Thalor, etc.)
-   - **Why**: Heroes are powerful, unique personalities. Deck should feel like "Aria's army", not "3 Arias".
+1. **Hero Limit (MVP)**: **Exactly 1 hero card per deck**.
+  Why: simplifies balancing and preserves clear deck identity. Phase 2+ may introduce multi-hero formats as explicit alternate modes.
 
-2. **3-of Rule**: **Max 3 copies of same card** (applies to non-heroes)
+1. **3-of Rule**: **Max 3 copies of same card** (applies to non-heroes)
    - **Example**: Can have 3× Ember Legionnaire, but not 4×
    - **Why**: Prevents mono-card decks (all Goblin Raiders), encourages variety
 
-3. **Rarity Budget**: **Total rarity points ≤ Player Level budget**
+1. **Rarity Budget**: **Total rarity points ≤ Player Level budget**
    - **Example**: Level 10 player (104 points) cannot field deck worth 105 points
    - **Why**: Prevents pay-to-win (whales can't buy all Legendaries and dominate)
 
-4. **Deck Size Minimum**: **Must use at least 10 cards** (even if max is 50)
+1. **Deck Size Minimum**: **Must use at least 10 cards** (even if max is 50)
    - **Why**: Prevents edge case (Level 30 player with 3-card deck)
 
 ---
@@ -115,9 +115,9 @@ public bool ValidateDeck(Deck deck, int playerLevel)
     if (deck.Cards.Count < 10 || deck.Cards.Count > maxDeckSize)
         return false;
     
-    // Rule 2: Only 1 unique hero
-    var heroes = deck.Cards.Where(c => c.Type == CardType.Hero).Distinct();
-    if (heroes.Count() > 1)
+    // Rule 2: Exactly 1 hero for MVP
+    var heroes = deck.Cards.Where(c => c.Type == CardType.Hero).ToList();
+    if (heroes.Count != 1)
         return false;
     
     // Rule 3: Max 3 copies of same card
@@ -143,9 +143,9 @@ public bool ValidateDeck(Deck deck, int playerLevel)
 - **Example Composition** (Level 10, 30 cards):
   - 1× Aria, Flame Knight (Epic 3★, 8 pts)
   - 3× Ember Legionnaire (Rare 2★, 12 pts)
-  - 3× Goblin Raider (Uncommon 1★, 3 pts)
-  - 23× Fire Soldier (Uncommon 1★, 23 pts)
-  - **Total**: 30 cards, 46 rarity points ✅
+  - 3× Goblin Raider (Uncommon 1★, 6 pts)
+  - 23× Fire Soldier (Uncommon 1★, 46 pts)
+  - **Total**: 30 cards, 72 rarity points ✅
 
 **Strengths**: Fast victories (turns 1-10)  
 **Weaknesses**: Weak to control (Water decks), loses if battle drags past turn 15
@@ -159,8 +159,8 @@ public bool ValidateDeck(Deck deck, int playerLevel)
   - 3× Frost Paladin (Rare 2★, 12 pts)
   - 3× Water Elemental (Rare 2★, 12 pts)
   - 3× Aqua Healer (Common 0★, 3 pts)
-  - 20× Frost Soldier (Uncommon 1★, 20 pts)
-  - **Total**: 30 cards, 55 rarity points ✅
+  - 20× Frost Soldier (Uncommon 1★, 40 pts)
+  - **Total**: 30 cards, 75 rarity points ✅
 
 **Strengths**: Survives aggro, heals through damage  
 **Weaknesses**: Slow to close out games, weak to large-scale AOE
@@ -173,9 +173,9 @@ public bool ValidateDeck(Deck deck, int playerLevel)
   - 1× Gaia, Stone Sentinel (Epic 3★, 8 pts)
   - 3× Rock Golem (Rare 2★, 12 pts)
   - 3× Stone Guardian (Rare 2★, 12 pts)
-  - 3× Earth Warrior (Uncommon 1★, 3 pts)
-  - 20× Boulder Beast (Uncommon 1★, 20 pts)
-  - **Total**: 30 cards, 55 rarity points ✅
+  - 3× Earth Warrior (Uncommon 1★, 6 pts)
+  - 20× Boulder Beast (Uncommon 1★, 40 pts)
+  - **Total**: 30 cards, 78 rarity points ✅
 
 **Strengths**: Versatile, no hard counters  
 **Weaknesses**: No clear win condition, requires skilled play
@@ -190,8 +190,8 @@ public bool ValidateDeck(Deck deck, int playerLevel)
   - 2× Ember Legionnaire (Fire Rare, 8 pts)
   - 2× Frost Paladin (Water Rare, 8 pts)
   - 2× Rock Golem (Earth Rare, 8 pts)
-  - 32× Mixed Commons/Uncommons (32 pts)
-  - **Total**: 40 cards, 80 rarity points ✅
+  - 16× Commons + 16× Uncommons (48 pts)
+  - **Total**: 40 cards, 96 rarity points ✅
 
 **Strengths**: Counters all mono-element decks (Phase 2 synergy bonus)  
 **Weaknesses**: No element-specific bonuses (Fire Aura only buffs Fire units)

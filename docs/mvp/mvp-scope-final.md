@@ -33,14 +33,26 @@
 
 ---
 
+## ✅ July 2026 Baseline Re-Alignment (Authoritative Override)
+
+To stay consistent with current project direction and solo-dev constraints:
+
+- **MVP baseline** = tutorial + pack opening + deck building + deterministic tactical combat + linear PvE campaign + foundational progression.
+- **Phase 1.1 stretch** = async arena, scroll crafting, and expanded monetization loops.
+- **MVP completion does not require** live/async PvP, battle pass, VIP systems, or advanced map conquest layers.
+
+If this document conflicts with `solo-dev-realistic-mvp.md`, use the solo-dev file as scheduling/scope authority.
+
+---
+
 ## MVP Philosophy
 
 **Core Focus**: Prove the game loop works before adding complexity.
 - ✅ Tutorial (discovery-based, 5-minute onboarding, achievement rewards)
 - ✅ Deck building (6-slot formation, tactic attachment, star ranks)
 - ✅ Pack opening (Standard/Element/Epic Packs, collector appeal)
-- ✅ **Crafting System** (scroll-based, targeted card acquisition, fixes RNG hell) ⭐ NEW - MVP Critical
-- ✅ **Async Arena PvP** (matchmade battles, Colosseum Tokens, skill-based rewards) ⭐ NEW - MVP Critical
+- ⚠️ **Crafting System** (scroll-based, targeted card acquisition) - Phase 1.1 stretch if core MVP is stable
+- ⚠️ **Async Arena PvP** (matchmade battles, Colosseum Tokens) - Phase 1.1 stretch if core MVP is stable
 - ✅ Campaign Mode (60-80 battles, 4 Territories, 9 Realms, boss fights)
 - ✅ Combat (8×8 tactical grid, auto-battle + manual, tactic AI control)
 - ❌ No Food/Lumber/Ore economy (Phase 2)
@@ -48,7 +60,7 @@
 - ❌ No alliances (Phase 3)
 - ❌ No Territory/World Maps (Phase 3)
 
-**Success Metric**: Player completes tutorial, builds custom deck, wins 10 battles, crafts 1 card, plays 3 Arena matches, buys 1 pack with earned Gold. If this feels fun, proceed to Phase 1.1.
+**Success Metric**: Player completes tutorial, builds custom deck, wins 10 battles, and buys 1 pack with earned Gold. If this feels fun, proceed to Phase 1.1 stretch features.
 
 ---
 
@@ -138,6 +150,7 @@
 **Deck Builder** (6-Slot Battle Formation):
 - ✅ **6-Slot System**: Select 6 cards from 20-50 card collection for battle
 - ✅ **No Stacking**: Each slot = 1 individual card (can't stack 10 Knights into 1 slot)
+- ✅ **MVP Hero Rule**: Exactly 1 hero in the 6-slot formation (5 support cards)
 - ✅ **Star Rank Progression**: Same card name can be different star ranks (Knight 1★ vs Knight 3★)
 - ✅ **Tactic Attachment**: Attach tactics = star rank (3★ card = 3 tactic slots)
 - ✅ **Collection View**: Grid of owned cards, sorted by star rank/rarity/element
@@ -146,11 +159,11 @@
 - ✅ **Deck Validation**: Can use same card name at different star ranks (Knight 1★ + Knight 3★ = valid)
 
 **Why Deck Size Matters** (20-50 card collection, 6 active):
-- **Variety**: Choose 6 Fire heroes OR 6 Water heroes (element synergy builds)
+- **Variety**: Choose 1 hero identity and rotate support packages around it
 - **Counter Builds**: Anti-tank deck vs boss, anti-swarm vs hordes
 - **Star Rank Options**: Use Knight 3★ OR Knight 1★ depending on tactic budget
 - **Future (Phase 2)**: Reserve/Draw system - if unit dies in battle, draw replacement from deck
-- **Future (Phase 2)**: Multi-hero armies - split 50-card deck across 3 heroes on Realm Map
+- **Future (Phase 2)**: Multi-hero armies - explicit mode expansion, not MVP baseline
 
 **Battle Formation Screen** (Pre-Battle):
 ```
@@ -479,7 +492,7 @@ TERRITORY 4: Shadowlands (Final)
 
 ---
 
-### Week 7: Scroll-Based Crafting System ⭐ NEW - Competitive Critical
+### Week 7: Scroll-Based Crafting System ⭐ Phase 1.1 Stretch
 
 **Purpose**: Fix RNG hell - players can target specific cards instead of relying only on pack luck (Hearthstone dust parity)
 
@@ -535,7 +548,7 @@ TERRITORY 4: Shadowlands (Final)
 
 ---
 
-### Week 8: Async Arena PvP System ⭐ NEW - Competitive Critical
+### Week 8: Async Arena PvP System ⭐ Phase 1.1 Stretch
 
 **Purpose**: Add daily engagement loop + skill-based rewards (Clash of Clans async PvP parity)
 
@@ -668,18 +681,20 @@ TERRITORY 4: Shadowlands (Final)
 
 **Core Systems**:
 - ✅ Tutorial (28 steps, 0-60 minutes)
-- ✅ Card system (~100 cards, simple Attack/Defense stats)
+- ✅ Card system (~100 cards, HP/Mana/Attack/Defense baseline)
 - ✅ Deck building (6 Trainer Decks, drag-drop builder)
 - ✅ Combat (8×8 battle map, manual + auto-battle)
 - ✅ Campaign Mode (72 stages, 8 worlds, 3-star rating)
 - ✅ Daily Challenge (bonus rewards, login incentive)
-- ✅ Pack Market (Standard/Element/Epic/Mega packs, IAP integration)
-- ✅ Battle Pass ($4.99/month, exclusive rewards)
-- ✅ Stamina Refills ($0.99-$9.99, whale monetization)
-- ✅ Stamina system (10 per battle, 240 refill/day)
 - ✅ Pack Market (Standard/Element/Epic Packs, Gold only)
+- ✅ Stamina system (10 per battle, 240 refill/day)
 - ✅ Daily login (7-day reward cycle)
 - ✅ Player leveling (Level 1-5 progression)
+
+**Phase 1.1 Stretch Add-ons**:
+- ⚠️ Scroll crafting system
+- ⚠️ Async Arena PvP
+- ⚠️ IAP/advanced monetization modules (Battle Pass, refill offers)
 
 **Total Content**:
 - ✅ 100 cards (6 Epics, 30 Units, 20 Buildings, 20 Tactics, 14 Equipment, 10 Workers)

@@ -319,11 +319,20 @@ Sovereign Territories combines multiple proven gameplay systems into a cohesive 
 - Respects player time (no 6-hour grinding sessions required)
 - Retention via convenience ("I can progress while at work")
 - Appeals to older demographics (30-50 year olds with jobs/families)
-- Monetization via speed-ups (whales pay to progress faster, not stronger)
+- Monetization via optional convenience (high-engagement spenders progress faster, not stronger)
 
 ## Monetization
 
 Sovereign Territories follows a **"pay-for-speed" and "pay-for-look-and-feel"** model, ensuring **zero pay-to-win**. Paying players progress faster and look cooler, but never gain gameplay advantages over free players.
+
+### MVP Monetization Baseline (Scope Guardrail)
+
+For MVP execution, treat monetization as conservative and non-blocking:
+
+- MVP success is judged by gameplay fun and retention, not aggressive monetization depth.
+- Cosmetics and convenience are preferred over competitive power.
+- Battle pass / VIP depth / advanced purchase ladders can be introduced in Phase 1.1+ after core loop validation.
+- If this section conflicts with MVP planning documents, use `docs/mvp/solo-dev-realistic-mvp.md` as authority.
 
 ### Pay-for-Speed (Convenience)
 **Philosophy**: Time is money, but skill determines victory
@@ -389,33 +398,31 @@ Sovereign Territories follows a **"pay-for-speed" and "pay-for-look-and-feel"** 
 ### Pricing Strategy
 **Target Audiences**:
 - **Free Players (70%)**: Fully viable, can reach top 10% with skill and time
-- **Minnows (20%)**: $5-20/month on VIP 1-2, battle pass, occasional pack
-- **Dolphins (8%)**: $20-100/month on VIP 3-4, cosmetics, stamina refills
-- **Whales (2%)**: $100-500+/month on VIP 5, all cosmetics, max convenience
+- **Light Spenders (20%)**: $5-20/month on optional convenience and cosmetics
+- **Mid Spenders (8%)**: $20-100/month on expanded convenience and cosmetics
+- **High-Engagement Spenders (2%)**: $100-500+/month on optional acceleration and collection goals
 
 **Revenue Projections** (for 10,000 DAU):
-- Free players: $0 (but drive retention, content for whales)
-- Minnows: $10/month average × 2,000 = $20,000/month
-- Dolphins: $50/month average × 800 = $40,000/month
-- Whales: $200/month average × 200 = $40,000/month
+- Free players: $0 (but drive retention and healthy ecosystem)
+- Light spenders: $10/month average × 2,000 = $20,000/month
+- Mid spenders: $50/month average × 800 = $40,000/month
+- High-engagement spenders: $200/month average × 200 = $40,000/month
 - **Total**: ~$100,000/month = $1.2M annual revenue
 
 **Fair Monetization Metrics**:
 - **Conversion Rate**: 5-10% (industry standard: 2-5%, we aim higher via battle pass value)
 - **ARPU** (Average Revenue Per User): $10/month
 - **ARPPU** (Average Revenue Per Paying User): $20-30/month (VIP 2-3 sweet spot)
-- **Whale Contribution**: 40-60% of revenue (standard for F2P)
+- **Top-spender contribution**: 40-60% of revenue (common in F2P, monitored with fairness guardrails)
 
-### Anti-Whale Protections
+### Fairness Safeguards
 **Prevent Pay-to-Win Creep**:
 1. **Spending Caps**: 
    - Max 5 stamina refills per day ($5 ceiling)
    - No "unlimited gem bundles" (prevents runaway spending)
    - VIP 5 cap at $100 lifetime (can't buy VIP 6 for $1000)
 
-2. **Ranked Matchmaking**: 
-   - Elo-based, not spend-based (whales fight whales at high Elo)
-   - Free players at 2500 Elo beat whales at 2000 Elo
+2. **Ranked Matchmaking**: Elo-based, not spend-based. High-power rosters naturally cluster at similar ratings, and free players at higher Elo can beat spenders at lower Elo.
 
 3. **Skill Ceiling**: 
    - Deck-building knowledge > card quantity
@@ -1052,6 +1059,10 @@ Stars show **current power level** within the rarity tier:
 ---
 
 ## Card Leveling and Combining System
+
+> **Canonical Rule Note**: Exact progression, deck budget, and rarity-point implementation rules are canonicalized in `docs/design/deck-progression-rules.md`.
+> 
+> If examples in this section conflict with canonical progression docs, use canonical docs for implementation.
 
 ### Leveling Mechanics by Rarity
 

@@ -64,3 +64,19 @@ How to use
 1. Read the `*.md` companion document for intent and examples.
 2. Use the `*.json` file for codegen and runtime validation.
 3. Add breaking changes behind feature flags when possible; update `schemaVersion` and migration docs.
+
+Schema change protocol (required)
+
+When changing gameplay behavior that touches data contracts, follow this order:
+
+1. Update the canonical design rule in `docs/design/*.md`.
+2. Update the corresponding schema in `docs/specs/*.json`.
+3. Update companion notes in `docs/specs/*.md` (examples, migration notes).
+4. Update affected generators/importers/validators (`tools/` and `scripts/`).
+5. Re-run local validation (`ajv` / CI checks) before merging.
+
+Guardrails
+
+- Do not ship behavior that depends on prose in `docs/game-bible.md` alone.
+- Runtime and tooling logic must derive from schema + canonical design docs.
+- Any breaking schema update must include migration guidance in the companion `*.md`.

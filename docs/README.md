@@ -72,6 +72,7 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 ### Essential MVP Documents
 | Document | Purpose | Status | Phase |
 |----------|---------|--------|-------|
+| [mvp/solo-dev-realistic-mvp.md](mvp/solo-dev-realistic-mvp.md) | Authoritative scope and timeline baseline (16-24 weeks) | ✅ Authoritative | MVP |
 | [mvp/mvp-scope-final.md](mvp/mvp-scope-final.md) | 8-week decomposition template, dependencies, deliverables | ✅ Supporting | MVP |
 | [mvp/tutorial-flow.md](mvp/tutorial-flow.md) | 28-step player journey (0-60 min) | ✅ Complete | MVP |
 | [mvp/tutorial-gap-resolutions.md](mvp/tutorial-gap-resolutions.md) | 9 critical design decisions resolved | ✅ Complete | MVP |
@@ -81,10 +82,10 @@ Welcome to the comprehensive documentation for **Sovereign Territories** - a hyb
 1. Launch → Account → EULA
 2. Open 20 starter cards (4 packs × 5 cards)
 3. Choose Balanced Explorer deck (11 cards)
-4. Move army on Realm Map (40 locations, fog of war)
+4. Progress a linear campaign path (lightweight map presentation)
 5. Trigger battle → Place cards on 8×8 grid
 6. Win battle → Rewards (Gold, XP, +1 card)
-7. Return to map → Loop (fight more battles)
+7. Return to campaign progression loop (fight more battles)
 
 ---
 
@@ -187,9 +188,9 @@ docs/
 - **Authentication**: Nakama accounts (email, Google, Apple, Steam)
 
 **MVP Scope** (Local only):
-- **Save System**: PlayerPrefs (local save, no cloud sync)
-- **No Backend**: All gameplay client-side
-- **No IAP**: Monetization deferred to Phase 3
+- **Save System**: Local-first save flow (PlayerPrefs acceptable for prototype)
+- **Backend**: Optional for MVP baseline; required for Phase 1.1 async PvP rollout
+- **IAP**: Optional stretch for Phase 1.1 (not required for MVP completion)
 
 ---
 
@@ -198,16 +199,13 @@ docs/
 ### Card System
 - **6 Rarity Tiers**: Common (1★) → Uncommon (1-2★) → Rare (2-3★) → Epic (3-4★) → Legendary (5★) → Mythic (6★)
 - **6 Card Types**: Heroes, Units, Buildings, Workers, Tactics, Equipment
-- **Rarity Budget**: Deck building constraint (Common=1pt, Mythic=32pt, max 100pts/deck)
+- **Rarity Budget**: Deck building constraint (see canonical values in `design/deck-progression-rules.md`)
 - **Battle vs Economy Cards**: Separate pools (10-50 battle cards, 10-15 economy cards)
 
 ### Progression
 - **Dual System**: Player Level (account-wide, deck size) vs Castle Level (per-territory, building slots)
-- **Player Level Unlocks**:
-  - Level 10: Alliance join, PvE events
-  - Level 15: Matchmade Colosseum PvP (1v1/3v3)
-  - Level 20: Active PvP Maps (opt-in open-world)
-  - Level 30: Alliance Wars (50v50)
+- **MVP unlock focus**: campaign progression, deck growth, and card upgrades
+- **Post-MVP unlock focus**: alliances, expanded PvP modes, and territorial systems
 
 ### Economy
 - **Currencies**: Gold (earned), Gems (premium), Stamina (battle stamina)
@@ -217,19 +215,20 @@ docs/
 
 ### Combat (MVP)
 - **Grid**: 8×8 tactical grid (3 rows player, 3 rows enemy, 2 middle)
-- **Stats**: Attack/Defense only (MVP), Health/Mana/Stamina in Phase 2
-- **Formula**: Damage = Attacker's Attack - Defender's Defense (1-hit removal in MVP)
-- **Placement**: Deploy 10-50 cards before battle, auto-battle or manual control
+- **Stats**: HP/Mana/Attack/Defense in MVP baseline (elemental/status systems post-MVP)
+- **Formula**: Damage = Attacker's Attack - Defender's Defense (minimum 1)
+- **Determinism**: no elemental counters or crit RNG in MVP baseline
+- **Placement**: 6-unit battle formation with tactical positioning
 
 ---
 
 ## 🎮 Game Modes
 
 **MVP** (Realm Map PvE):
-- 40-location map with fog of war
+- Linear campaign progression with lightweight map framing
 - NPC battles (monsters, bandits, bosses)
-- Movement Points system (10 MP, 1 per move)
-- Stamina cost (20 Stamina per battle, max 100)
+- Optional movement/exploration presentation (defer full map complexity)
+- Stamina cost baseline: 10 per battle (canonical values in MVP docs)
 
 **Phase 2** (Campaign & Expeditions):
 - 3 chapters with narrative arcs
