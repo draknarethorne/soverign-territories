@@ -20,3 +20,11 @@ This folder stores superseded and historical documents preserved for traceabilit
 Current active audit and quality roadmap live in:
 
 - `docs/AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md`
+
+## Reconciliation reference
+
+Archive placement is not evidence that an archived document has been fully reconciled
+with the active plan. The evidence-based disposition, retained insights, and required
+carry-forward corrections are recorded in:
+
+- `docs/working/archive-canon-reconciliation-jul2026.md`

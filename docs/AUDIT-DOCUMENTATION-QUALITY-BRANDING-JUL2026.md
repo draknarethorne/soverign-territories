@@ -258,9 +258,43 @@ Rationale:
 
 ---
 
+## Semantic reconciliation update
+
+The quality baseline and archive moves do **not** prove documentation truth or MVP
+feasibility. A subsequent evidence pass read every archived document and compared its
+claims to the active canonical sources.
+
+### Findings
+
+- Archived reports often used ready/complete claims while retaining incompatible combat,
+   scope, map, monetization, and schedule assumptions.
+- Active canonical documents also retained substantial drift, including a feature-heavy
+   solo MVP, exploration and persistent-health tutorials, and mismatched schema paths.
+- Runtime schemas are located in `data/schemas/`; references that designate
+   `docs/specs/` as the machine-readable contract are stale.
+
+### Corrective work completed
+
+- Created `docs/working/archive-canon-reconciliation-jul2026.md` with a disposition for
+   every archived document, retained insights, active-document actions, and readiness gates.
+- Replaced the active MVP scope, dependency, combat, deck, tutorial, map-mode, Bible, and
+   documentation-hub sources with a shared local-first baseline.
+- Reduced the feasible baseline to a small card subset, a one-hero six-card formation,
+   deterministic 8×8 PvE, a short authored campaign, local saves, and playtesting.
+
+### Remaining blocking evidence
+
+- Validate the selected starter collection, campaign encounters, and reward data against
+   actual `data/` files and `data/schemas/` contracts.
+- Confirm the remaining implementation/design documents and schema companions do not
+   reintroduce contradictory MVP requirements.
+- Complete a prototype and external playtest before claiming implementation readiness.
+
 ## Audit status
 
-- **Date**: July 27, 2026
+- **Date**: July 2026
 - **Auditor mode**: Sovereign Beast Mode (design architecture + documentation)
-- **Status**: Phase 1 baseline implemented; lint/style retirement and metadata harmonization in progress
-- **Blocking risk**: None for MVP architectural direction; low-to-moderate for quality consistency until lint debt batches are completed
+- **Status**: Quality baseline passes; semantic reconciliation is active and implementation
+   readiness remains unverified.
+- **Blocking risk**: Scope/data-contract coherence remains a blocker until the readiness
+   gates in the reconciliation document are satisfied.

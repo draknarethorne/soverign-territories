@@ -11,7 +11,7 @@ Use this checklist before tagging project milestones or major documentation base
 
 ## 2) Data + schema contract readiness
 
-- [ ] Schema files under `docs/specs/*.json` validate.
+- [ ] Schema files under `data/schemas/*.json` validate.
 - [ ] Companion spec docs updated where required.
 - [ ] Runtime data references canonical IDs and current structures.
 

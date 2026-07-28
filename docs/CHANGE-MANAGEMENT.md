@@ -7,7 +7,7 @@ This document defines the required sequence for design/system changes so docs, s
 When a gameplay/system rule changes, update all impacted layers in order:
 
 1. **Design canon** (`docs/design/*.md`, `docs/mvp/*.md`, or `docs/game-bible.md` summary)
-2. **Schema contracts** (`docs/specs/*.json` and companion docs)
+2. **Schema contracts** (`data/schemas/*.json` and any companion documentation)
 3. **Runtime/supporting data** (`data/**` as needed)
 4. **Scripts/tooling** (`scripts/**`, `tools/**`, workflows)
 5. **Validation and quality checks** (local hooks + CI)

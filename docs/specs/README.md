@@ -1,6 +1,8 @@
-# Specs directory
+# Legacy specifications directory
 
-This folder contains machine-readable JSON Schemas and companion human-readable notes for engineers.
+This folder contains historical and human-readable specification material. The
+machine-readable runtime schemas are authoritative in `data/schemas/` at the repository
+root. Do not add or modify runtime JSON contracts here.
 
 Files:
 
@@ -70,8 +72,8 @@ Schema change protocol (required)
 When changing gameplay behavior that touches data contracts, follow this order:
 
 1. Update the canonical design rule in `docs/design/*.md`.
-2. Update the corresponding schema in `docs/specs/*.json`.
-3. Update companion notes in `docs/specs/*.md` (examples, migration notes).
+2. Update the corresponding schema in `data/schemas/*.json`.
+3. Update companion notes where they exist (examples, migration notes).
 4. Update affected generators/importers/validators (`tools/` and `scripts/`).
 5. Re-run local validation (`ajv` / CI checks) before merging.
 

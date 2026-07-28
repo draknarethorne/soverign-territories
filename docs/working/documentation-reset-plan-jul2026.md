@@ -20,7 +20,7 @@ This reset enforces a practical split:
 - `docs/game-bible.md` = **vision and principles**
 - `docs/mvp/*` = **build-order and delivery reality**
 - `docs/design/*` = **system-level executable design rules**
-- `docs/specs/*.json` = **data contract for scripts/tools/runtime validation**
+- `data/schemas/*.json` = **data contract for scripts/tools/runtime validation**
 
 ---
 
@@ -43,7 +43,7 @@ This reset enforces a practical split:
 
 ### 4) Schema/tooling authority
 
-- **Authoritative data contracts**: `docs/specs/*.json`
+- **Authoritative data contracts**: `data/schemas/*.json`
 - Scripts in `scripts/` and validators/generators/importers in `tools/` must treat schema files as source of truth.
 
 ---
@@ -92,7 +92,7 @@ This reset enforces a practical split:
 When changing a game rule that affects data:
 
 1. Update design source (`docs/design/*.md`) first.
-2. Update schema contract (`docs/specs/*.json`) second.
+2. Update schema contract (`data/schemas/*.json`) second.
 3. Update generators/importers/validators/scripts third.
 4. Run validation scripts and data audits.
 5. Only then update high-level narrative references in `game-bible.md`.
@@ -123,6 +123,13 @@ A document is archive-candidate if any of the following are true:
 2. MVP contributors can follow a scope-safe path from docs without accidentally implementing Phase 2-3 systems.
 3. Schema/tooling changes are traceable from design rule -> schema -> script/tool.
 4. `game-bible.md` reads as coherent vision narrative, not conflicting implementation spec.
+
+## Reconciliation prerequisite
+
+Documentation readiness cannot be inferred from archive moves or passing lint. Before
+claiming this reset is complete, apply the dispositions and feasibility gates in
+`docs/working/archive-canon-reconciliation-jul2026.md` and correct the active canonical
+sources it identifies.
 
 ---
 

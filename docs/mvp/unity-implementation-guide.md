@@ -1,8 +1,12 @@
 # Sovereign Territories - Unity Implementation Guide
 
-**Version**: 1.0  
-**Last Updated**: December 30, 2025  
-**Purpose**: Technical reference for Unity developers implementing the MVP
+**Version**: 1.0 (legacy implementation reference)
+**Last Updated**: July 2026 scope note
+**Purpose**: Technical examples only; do not implement from this guide until it has been reconciled with the canonical MVP documents.
+
+> **Scope warning:** This guide contains pre-reset examples that may assume map,
+> tutorial, or content features outside the July 2026 MVP. The MVP authority is
+> `solo-dev-realistic-mvp.md`; its delivery order is `mvp-scope-final.md`.
 
 ---
 
@@ -14,10 +18,10 @@
 **Backend**: Local save only for MVP (Nakama integration Phase 3)
 
 **Related Documents**:
-- [mvp-scope-final.md](mvp-scope-final.md) - 8-week implementation roadmap
-- [tutorial-flow.md](tutorial-flow.md) - Exact player journey for tutorial
+- [mvp-scope-final.md](mvp-scope-final.md) - MVP dependency and acceptance plan
+- [tutorial-flow.md](tutorial-flow.md) - MVP onboarding sequence
 - [game-bible.md](../game-bible.md) - Master design reference
-- [docs/specs/](../specs/) - JSON schemas for all game systems
+- [data/schemas/](../../data/schemas/) - authoritative runtime JSON schemas
 
 ---
 
