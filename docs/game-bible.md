@@ -154,7 +154,7 @@ world. This is the heart of the game.*
 
 > **MVP expression:** Heroes, Units, Tactics (small validated set). Buildings/Workers exist
 > as art/identity only. · **Future expression:** All six types fully functional. ·
-> **Authority:** [`../data/schemas/card-schema.json`](../data/schemas/card-schema.json)
+> **Authority:** [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json)
 
 - **Heroes** — Unique commanders who anchor a formation. Immortal in spirit (defeated heroes
   recover), they grant identity and, in later phases, lead independent armies. *Thor calls
@@ -171,7 +171,12 @@ world. This is the heart of the game.*
 - **Equipment** — Gear that bolts onto heroes for power and spectacle: a blade that glows,
   armor that turns a silhouette into a legend.
 
-### 2.2 Rarity & customization — the seven tiers
+**Creature taxonomy.** Alongside its mechanical role, every character card carries a
+*creature type* — **Humanoid, Dragon, Beast, Elemental, Undead, Construct, Spirit** — plus a
+*race* and an *archetype*. Non-human, non-hero creatures (an Elder Dragon, a Dire Wolf) are
+**Units** by role but **Dragon** or **Beast** by creature type. This taxonomy is deliberately
+**extensible**: as new card ideas emerge, both roles and creature types can grow (see Section
+13).
 
 > **MVP expression:** Rarities exist as identity + budget cost. · **Future expression:**
 > Full fusion, star ranks, skill trees, shinies. · **Authority:**
@@ -659,6 +664,25 @@ excitement without permanent loss.
 - **No power creep** — new cards are *different*, not strictly *better*.
 - **Community content** — a long-term dream of modding and creator collaboration, cosmetic
   and PvE-safe.
+
+### One Base Set, ten elements *(structure)*
+
+> **Status:** Proposed · **Authority:**
+> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md)
+
+The launch collection is a **single Base Set** that spans **all ten elements** from day one —
+no day-one expansion split. Balance is held by a symmetric per-element template (see the
+ideation blueprint). True **expansions** arrive later as new *themes* (Storm Rising, Valhalla,
+Cyber Dominion) and may introduce **new card types and mechanics** as the design evolves.
+
+**Ideas on the horizon** *(vision, unscheduled)*:
+
+- **Consumable cards** — one-shot cards that grant temporary buffs (e.g., a boost to AFK
+  rewards, a short-lived avatar/stat bonus, a battle banner).
+- New **creature types** and **archetypes** as fresh mechanics are discovered.
+
+The taxonomy is a living thing: the codex expects it to grow, and the schema is built to
+absorb new roles without a rewrite.
 
 ---
 

@@ -113,26 +113,81 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
   alongside `class`, `creatureType`, `race`, `sex`, and `companion`.
 - **Thorne naming is canonical** for the Drakn bloodline (the ten heroines + Draknare Thorne).
   Other heroes use names fitting their role/origin. `ST-###` IDs are adjustable.
+- **Single Base Set, all 10 elements from launch** — no day-one expansion split. Balance is
+  held by a symmetric per-element template (see the blueprint below). Real expansions arrive
+  later as new *themes*.
+- **Card taxonomy** — card `type` is a **mechanical role** with six values today
+  (Hero, Unit, Building, Worker, Tactic, Equipment) and is **extensible** (future roles such
+  as Consumable). `creatureType` is a separate flavor/mechanics axis: **Humanoid, Dragon,
+  Beast, Elemental, Undead, Construct, Spirit** (extensible).
+- **Elder Dragons** = card `type: Unit`, `creatureType: Dragon`, `race: Dragon` (Mythic,
+  aerial). **Beasts** (e.g., Dire Wolf) = `type: Unit`, `creatureType: Beast`. Non-hero
+  creatures are Units by role, differentiated by creature type and archetype.
 
 **Applied so far (this branch):**
 
 - `data/schemas/codex-schema.json` — 10-element enum, Transcendent tier, points `[1,2,4,8,16,32,64]`,
-  0–8 stars, `maxStars`, `tacticSlots` up to 8, and `archetype/class/creatureType/race/sex/companion` fields.
-- `docs/game-bible.md` — seven-tier ladder, ten-element table, and the Drakn Line / Thorne subsection (2.9).
+  0–8 stars, `maxStars`, `tacticSlots` up to 8, six-role `type` enum + widened `cardId` pattern,
+  and `archetype/class/creatureType/race/sex/companion` fields.
+- `docs/game-bible.md` — seven-tier ladder, ten-element table, creature-taxonomy note, the Drakn
+  Line / Thorne subsection (2.9), and the single-Base-Set + evolving-taxonomy + Consumable ideas.
 - `docs/design/deck-progression-rules.md` — Transcendent cost (64) + apex/format notes + 10-element note.
 - `docs/design/combat-calculation-spec.md` — 10-element cycle proposal with open decisions (Phase 2).
 - `prompts/_hero-template.txt` — 10-element art palette.
 
 **Tracked follow-ups (not yet done):**
 
-- **Card type for dragons:** the schema `type` enum is `Hero/Unit/Tactic/Building`; decide how
-  Elder Dragons are typed (Unit, Hero, or a new type) before authoring their card JSON.
+- **Collection numbers:** the existing Base Set uses `BS-###` and `TYPE_NAME` cardIds; the roster
+  uses `ST-###`. Fold the 30 marquee cards into the Base Set's `BS-###` scheme (or adopt `ST-###`
+  set-wide) before authoring JSON.
 - **Schema vocabulary normalization:** secondary schemas (`pack`, `trainer-deck`, `equipment`,
-  `reward`, `achievement`, legacy flat `card-schema.json`) still carry older/lowercase element
-  and rarity enums. They need Transcendent and the new elements, and a single canonical casing
-  (card data is TitleCase; `codex-schema.json` is authoritative).
-- **Card JSON authoring:** create `data/cards/` entries for ST-001–ST-030 once type/naming is locked.
+  `reward`, `achievement`, legacy flat `card-schema.json`) still carry older/lowercase element/rarity
+  enums; align to the canonical vocabulary and a single casing (card data is TitleCase;
+  `codex-schema.json` is authoritative).
+- **Card JSON authoring:** create `data/cards/` entries for the marquee 30, then fill element parity
+  per the blueprint below (authored in waves with balance review).
 - **Element art refresh:** existing `Frost` cards map to `Ice`; `Dark`/`Arcane` map to `Darkness`.
+
+---
+
+## Base Set composition blueprint
+
+> **Status:** Proposed balance framework for the single 10-element Base Set. Counts are tunable;
+> the point is a **symmetric per-element template** so the set stays balanced. Authored in waves.
+
+**Per element (×10 elements):**
+
+| Role | Count | Rarity spread | Notes |
+| --- | ---: | --- | --- |
+| Hero — female marquee | 1 | Transcendent | Drakn heroine (the "face" of the element) |
+| Hero — male | 1 | Mythic | signature male hero |
+| Hero — support | 1 | Epic | additional element hero |
+| Elder Dragon | 1 | Mythic | `Unit` · `creatureType: Dragon` (aligned to the heroine) |
+| Units | 8 | 3 Common · 2 Uncommon · 2 Rare · 1 Epic | mixed creatureType (Humanoid/Beast/Elemental/…) and archetype |
+| Tactics | 4 | 2 Common · 1 Uncommon · 1 Rare/Epic | element-themed spells |
+| **Per-element subtotal** | **16** | | **×10 = 160 element cards** |
+
+**Shared Neutral pool (element-agnostic, authored once):**
+
+| Role | Count | Notes |
+| --- | ---: | --- |
+| Buildings | ~12 | economy + military (Granary, Sawmill, Mine, Barracks, …) — art-only in MVP |
+| Workers | ~8 | resource producers (Farmer, Miner, Lumberjack, …) — art-only in MVP |
+| Equipment | ~14 | weapons / armor / accessories |
+| Neutral tactics | ~4 | element-agnostic (Charge, Heal, Shield Wall, …) |
+| **Shared subtotal** | **~38** | |
+
+**Base Set total ≈ 198 cards** (160 element + ~38 shared). Large but coherent as a single set,
+and in the same ballpark as the prior 174-card base set — expanded for 10-element parity.
+
+**Balance rules of thumb:**
+
+- Every element gets the **same role/rarity template**, so no element is mechanically favored.
+- Creature-type and archetype variety lives **within** each element's 8 units.
+- Neutral economy/equipment is shared, keeping the elemental identity focused on heroes, dragons,
+  units, and tactics.
+- Expansions add new units/creatures/mechanics (and possibly new card types) on top — never by
+  reworking this foundation.
 
 ---
 

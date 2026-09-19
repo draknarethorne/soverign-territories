@@ -8,8 +8,8 @@
   "properties": {
     "cardId": {
       "type": "string",
-      "pattern": "^(HERO|UNIT|TACTIC|BUILDING)_[A-Z_]+$",
-      "description": "Unique identifier (e.g., HERO_ARIA_FLAME_KNIGHT)"
+      "pattern": "^(HERO|UNIT|BUILDING|WORKER|TACTIC|EQUIPMENT)_[A-Z_]+$",
+      "description": "Unique identifier (e.g., HERO_ARIA_FLAME_KNIGHT, WORKER_FARMER)"
     },
 
     "collectionNumber": {
@@ -39,8 +39,8 @@
 
     "type": {
       "type": "string",
-      "enum": ["Hero", "Unit", "Tactic", "Building"],
-      "description": "Card type"
+      "enum": ["Hero", "Unit", "Building", "Worker", "Tactic", "Equipment"],
+      "description": "Mechanical card role (extensible; future roles such as Consumable may be added)"
     },
 
     "archetype": {
@@ -55,7 +55,7 @@
 
     "creatureType": {
       "type": "string",
-      "description": "Broad taxonomy (e.g., Humanoid, Dragon, Beast)"
+      "description": "Creature taxonomy — canonical values: Humanoid, Dragon, Beast, Elemental, Undead, Construct, Spirit (extensible as new card ideas emerge)"
     },
 
     "race": {
