@@ -149,9 +149,11 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 
 **Tracked follow-ups (not yet done):**
 
-- **Collection numbers:** adopt **`ST-###`** set-wide and rename the series from "Base Set" to a
-  story-branded name (see decision above). Renumber/rename the existing `BS-###` cards and update
-  `data/manifests/*` + `data/collection/*` as a migration before/with authoring the marquee 30.
+- **Collection numbers:** the series is **Sovereign Dawn** with **`SD-###`**. The marquee 30 are
+  authored as `SD-001`–`SD-030`; the existing `BS-###` cards are renumbered/renamed and
+  `data/manifests/*` + `data/collection/*` updated as a migration.
+- **Bonded pets:** author pet cards for Rare+ owners (male heroes' pets — Reaper, Elemental,
+  Treant, etc. — and unit pets) beyond the dragons already in the marquee 30.
 - **Schema vocabulary normalization:** secondary schemas (`pack`, `trainer-deck`, `equipment`,
   `reward`, `achievement`, legacy flat `card-schema.json`) still carry older/lowercase element/rarity
   enums; align to the canonical vocabulary and a single casing (card data is TitleCase;

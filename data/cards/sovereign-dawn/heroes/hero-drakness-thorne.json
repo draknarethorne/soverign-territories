@@ -1,0 +1,63 @@
+{
+  "cardId": "HERO_DRAKNESS_THORNE",
+  "collectionNumber": "SD-001",
+  "series": {
+    "seriesId": "sovereign-dawn",
+    "seriesName": "Sovereign Dawn",
+    "cardNumber": 1,
+    "totalCards": 198
+  },
+  "name": "Drakness Thorne",
+  "type": "Hero",
+  "archetype": "Summoner / Spawner",
+  "class": "Necromancer",
+  "creatureType": "Humanoid",
+  "race": "Dark Elf",
+  "sex": "Female",
+  "companion": "Umbrath",
+  "element": "Darkness",
+  "rarity": {
+    "tier": "Transcendent",
+    "stars": 7,
+    "maxStars": 8,
+    "points": 64
+  },
+  "stats": {
+    "health": 140,
+    "mana": 100,
+    "attack": 80,
+    "defense": 30,
+    "moveRange": 3,
+    "attackRange": 3
+  },
+  "pairing": {
+    "petCardId": "UNIT_UMBRATH",
+    "pairBonus": "When paired with Umbrath, Drakness assumes her Sundered form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-001-drakness-umbrath-combined"
+  },
+  "abilities": [
+    {
+      "abilityId": "ABILITY_SOUL_HARVEST",
+      "name": "Soul Harvest",
+      "type": "Active",
+      "manaCost": 35,
+      "cooldown": 3,
+      "description": "Deal 90 shadow damage to a target; if it dies this turn, raise a Basic shade token."
+    },
+    {
+      "abilityId": "ABILITY_SHADOW_SOVEREIGN",
+      "name": "Shadow Sovereign",
+      "type": "Passive",
+      "description": "Allied Darkness cards gain +10% attack (Phase 2)."
+    }
+  ],
+  "tacticSlots": 7,
+  "lore": "First of the Sundered — the Darkness that remained when the shard-storm broke. Where she walks, the dead lean closer to listen.",
+  "acquisition": {
+    "packSources": [],
+    "campaignDrops": []
+  },
+  "meta": {
+    "designNotes": "First-pass stats; balance TBD. Transcendent marquee heroine (Darkness). Flagship pairing with Umbrath (UNIT_UMBRATH)."
+  }
+}

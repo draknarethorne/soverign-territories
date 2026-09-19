@@ -81,12 +81,15 @@ Before there were ten territories, there was one dominion, and it belonged to sh
 
 **Draknare Thorne** was its sovereign — a shadow-knight whose banner fell across the world
 like a long dusk. **Drakness Thorne** stood with him, a necromancer whose art could call the
-dead to whisper and the living to kneel. Two powers of Darkness, bound by *something* — an
-oath, a love, a rivalry. The codex does not yet name which; perhaps all three.
+dead to whisper and the living to kneel. Two powers of Darkness, drawn together as shadow is
+drawn to shadow — and what began as attraction became *union*: of hearts, and fatally, of
+*magics*.
 
-What passed between them is the thing the world now calls **the Sundering**. In a single
-silent instant, the primordial force that Darkness had hoarded for an age did not die — it
-*scattered*, into ten shards, one for every face that magic can wear.
+What passed between them is the thing the world now calls **the Sundering**. For when a
+shadow-sovereign's dominion-magic entwined with a necromancer's death-magic at the height of
+passion, no working could hold the seam. Creation met un-creation; the spell meant to make
+*one* overflowed and *shattered into ten*. The Sundering was, in truth, a **birth** — the
+most catastrophic act of creation the world had ever known.
 
 Drakness, already Darkness, kept her throne. But from the nine shards that spun out into the
 dark, **nine sisters awoke** — each a sovereign of a single element, each a caster to the
@@ -373,6 +376,42 @@ their role and origin — the Thorne name belongs to the Drakn.
 Because Transcendent cards sit far above standard rarity budgets, they are treated as
 **apex chase and showcase cards**; how (or whether) they enter standard competitive formats
 is an open design decision owned by the deck-progression rules, not an MVP concern.
+
+### 2.10 Bonded Pets & Pairing *(design signature · proposed)*
+
+> **MVP expression:** Art/identity only — a card may depict its pet. · **Future expression:**
+> A pairing mechanic that transforms art and grants a bonus. · **Status:** Proposed ·
+> **Authority:** [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json)
+> (`pairing`), [`design/combat-calculation-spec.md`](design/combat-calculation-spec.md) (mechanics).
+
+Every **Rare-or-above** card — all named heroes at any level, and Rare+ units — can have a
+**bonded pet**: a companion that exists as *its own collectible card*. The Transcendent
+heroines and their Elder Dragons are the flagship pairing (Drakness ↔ Umbrath), but the system
+reaches all the way down to a Rare pikeman and his war hound.
+
+**How pairing works** *(proposed)*:
+
+- Collect both the card and its bonded pet.
+- **Pair them** in a formation, and the magic answers — the card's **art transforms** to its
+  *combined* variant, and both gain a **pairing bonus**.
+
+**Two candidate models** (one open decision):
+
+- **Companion attach** — the pet bonds to its owner like equipment: it does **not** consume a
+  formation slot, grants a passive bonus, and appears in the combined art. *Simple, low slot
+  cost, collection-forward.*
+- **Paired duo** — the card and pet each take a slot, but fielded together they unlock a
+  **strong synergy** (shared ability, big stat swing) plus the combined art. *More tactical,
+  higher commitment.*
+
+**Why it works**:
+
+- **Collector hook** — every marquee card implies a second card to chase (its pet).
+- **Deck identity** — pairing rewards theme-building, not just raw rarity.
+- **Spectacle** — the art *changes* when you pair: a visible payoff for collecting both.
+
+Exact bonus values, slot rules, and which model wins are a **Phase 2 combat decision**; in the
+MVP a pet is art and flavor only.
 
 ---
 

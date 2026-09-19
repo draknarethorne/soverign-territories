@@ -1,0 +1,57 @@
+{
+  "cardId": "UNIT_UMBRATH",
+  "collectionNumber": "SD-021",
+  "series": {
+    "seriesId": "sovereign-dawn",
+    "seriesName": "Sovereign Dawn",
+    "cardNumber": 21,
+    "totalCards": 198
+  },
+  "name": "Umbrath",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Male",
+  "element": "Darkness",
+  "rarity": {
+    "tier": "Mythic",
+    "stars": 6,
+    "maxStars": 8,
+    "points": 32
+  },
+  "stats": {
+    "health": 190,
+    "mana": 70,
+    "attack": 90,
+    "defense": 35,
+    "moveRange": 5,
+    "attackRange": 2,
+    "flying": true
+  },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNESS_THORNE",
+    "pairBonus": "Bonded to Drakness. When paired, unlocks her Sundered combined form.",
+    "combinedArtAsset": "sd-001-drakness-umbrath-combined"
+  },
+  "abilities": [
+    {
+      "abilityId": "ABILITY_UMBRAL_BREATH",
+      "name": "Umbral Breath",
+      "type": "Active",
+      "manaCost": 40,
+      "cooldown": 3,
+      "description": "Exhale devouring shadow: 100 damage to all enemies in a 3-tile line."
+    }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Darkness — oldest of the shard-born wyrms, bonded to Drakness since the night the crown broke.",
+  "acquisition": {
+    "packSources": [],
+    "campaignDrops": []
+  },
+  "meta": {
+    "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Darkness). Bonded to Drakness (HERO_DRAKNESS_THORNE)."
+  }
+}

@@ -74,6 +74,17 @@
       "description": "Bonded pet/companion or aligned creature (e.g., Dragon, Reaper, n/a)"
     },
 
+    "pairing": {
+      "type": "object",
+      "description": "Bonded-pet pairing (Rare+ cards). Pairing a card with its bonded pet transforms the art and grants a bonus; exact mechanics are a Phase 2 decision.",
+      "properties": {
+        "petCardId": {"type": "string", "description": "cardId of this card's bonded pet (owner side)"},
+        "pairsWith": {"type": "string", "description": "cardId of the owner this pet bonds to (pet side)"},
+        "pairBonus": {"type": "string", "description": "Description of the pairing bonus (values TBD)"},
+        "combinedArtAsset": {"type": "string", "description": "Art shown when the pair is active"}
+      }
+    },
+
     "element": {
       "type": "string",
       "enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"],
