@@ -1,0 +1,28 @@
+{
+  "cardId": "HERO_IGNIS_EMBERSTRIDE",
+  "collectionNumber": "SD-012",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 12, "totalCards": 198 },
+  "name": "Ignis Emberstride",
+  "type": "Hero",
+  "archetype": "Melee / Striker",
+  "class": "Warrior",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Male",
+  "companion": "Elemental",
+  "element": "Fire",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 160, "mana": 50, "attack": 85, "defense": 35, "moveRange": 3, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_FIRE_ELEMENTAL",
+    "pairBonus": "Combined with his bound Fire Elemental (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-012-ignis-elemental-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_EMBER_CLEAVE", "name": "Ember Cleave", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 90 fire damage and apply burn (10 damage/turn for 2 turns)." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A sellsword who walked into Draknora's wildfire and walked out carrying a piece of it.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Fire). Bonded pet Fire Elemental (to be authored)." }
+}

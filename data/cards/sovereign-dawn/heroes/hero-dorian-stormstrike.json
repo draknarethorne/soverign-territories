@@ -1,0 +1,28 @@
+{
+  "cardId": "HERO_DORIAN_STORMSTRIKE",
+  "collectionNumber": "SD-018",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 18, "totalCards": 198 },
+  "name": "Dorian Stormstrike",
+  "type": "Hero",
+  "archetype": "Melee / Striker",
+  "class": "Monk",
+  "creatureType": "Humanoid",
+  "race": "Celestial",
+  "sex": "Male",
+  "companion": "Gryphon",
+  "element": "Lightning",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 155, "mana": 60, "attack": 88, "defense": 30, "moveRange": 4, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_GRYPHON",
+    "pairBonus": "Combined with his Gryphon (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-018-dorian-gryphon-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_THUNDER_FLURRY", "name": "Thunder Flurry", "type": "Active", "manaCost": 25, "cooldown": 2, "description": "Strike three times for 35 lightning damage each." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A wandering monk who caught one of Drakneta's stray bolts and never stopped moving since.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Lightning). Bonded pet Gryphon (to be authored)." }
+}

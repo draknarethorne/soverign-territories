@@ -1,0 +1,28 @@
+{
+  "cardId": "HERO_CORIN_TIDEWALKER",
+  "collectionNumber": "SD-015",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 15, "totalCards": 198 },
+  "name": "Corin Tidewalker",
+  "type": "Hero",
+  "archetype": "Specialist / Hybrid",
+  "class": "Beast Lord",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Male",
+  "companion": "Shark",
+  "element": "Water",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 150, "mana": 60, "attack": 78, "defense": 32, "moveRange": 4, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_SHARK",
+    "pairBonus": "Combined with his bonded Shark (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-015-corin-shark-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_TIDE_SUMMON", "name": "Tide Summon", "type": "Active", "manaCost": 25, "cooldown": 3, "description": "Summon a Basic shark token and deal 60 water damage to a target." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A fisher who followed Draknisa's tide too far out and came back speaking to the deep.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Water). Bonded pet Shark (to be authored)." }
+}

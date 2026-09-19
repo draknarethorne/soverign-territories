@@ -395,14 +395,15 @@ reaches all the way down to a Rare pikeman and his war hound.
 - **Pair them** in a formation, and the magic answers — the card's **art transforms** to its
   *combined* variant, and both gain a **pairing bonus**.
 
-**Two candidate models** (one open decision):
+**Candidate models** (open decision — the author leans toward *fusion combine*):
 
-- **Companion attach** — the pet bonds to its owner like equipment: it does **not** consume a
-  formation slot, grants a passive bonus, and appears in the combined art. *Simple, low slot
-  cost, collection-forward.*
+- **Fusion combine** *(leaning)* — like card evolution, you *use* the pet to evolve the owner
+  into a **single combined card** that carries the combined art and merged power. One card,
+  one slot, one big payoff.
+- **Companion attach** — the pet bonds to its owner like equipment: no extra formation slot, a
+  passive bonus, and the combined art.
 - **Paired duo** — the card and pet each take a slot, but fielded together they unlock a
-  **strong synergy** (shared ability, big stat swing) plus the combined art. *More tactical,
-  higher commitment.*
+  **strong synergy** (shared ability, big stat swing) plus the combined art.
 
 **Why it works**:
 

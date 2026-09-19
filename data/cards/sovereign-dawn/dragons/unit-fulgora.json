@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_FULGORA",
+  "collectionNumber": "SD-028",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 28, "totalCards": 198 },
+  "name": "Fulgora",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Female",
+  "element": "Lightning",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 182, "mana": 74, "attack": 94, "defense": 32, "moveRange": 6, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNETA_THORNE",
+    "pairBonus": "Bonded to Drakneta. When combined, unlocks her Sundered storm-form.",
+    "combinedArtAsset": "sd-008-drakneta-fulgora-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_STORM_BREATH", "name": "Storm Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale chain lightning: 100 damage that arcs to up to 3 enemies in a line." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Lightning, shard-born, bonded to Drakneta since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Lightning), bonded to Drakneta." }
+}

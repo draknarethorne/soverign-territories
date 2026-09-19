@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNIRA_THORNE",
+  "collectionNumber": "SD-004",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 4, "totalCards": 198 },
+  "name": "Draknira Thorne",
+  "type": "Hero",
+  "archetype": "Caster / Magic",
+  "class": "Wizard",
+  "creatureType": "Humanoid",
+  "race": "High Elf",
+  "sex": "Female",
+  "companion": "Glaciora",
+  "element": "Ice",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 130, "mana": 100, "attack": 85, "defense": 25, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "petCardId": "UNIT_GLACIORA",
+    "pairBonus": "When combined with Glaciora, Draknira crystallizes into her Sundered rime-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-004-draknira-glaciora-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_GLACIAL_SPIRE", "name": "Glacial Spire", "type": "Active", "manaCost": 30, "cooldown": 2, "description": "Deal 85 ice damage to a target and slow it (-1 move) for 2 turns." },
+    { "abilityId": "ABILITY_FROST_CROWN", "name": "Frost Crown", "type": "Passive", "description": "Enemies adjacent to Draknira suffer -10% speed (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Ice given a crown and a will. She speaks softly, and the room forgets to breathe.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Ice), paired to Glaciora." }
+}

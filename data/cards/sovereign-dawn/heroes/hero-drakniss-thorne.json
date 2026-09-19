@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNISS_THORNE",
+  "collectionNumber": "SD-006",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 6, "totalCards": 198 },
+  "name": "Drakniss Thorne",
+  "type": "Hero",
+  "archetype": "Support / Healer",
+  "class": "Cleric",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Female",
+  "companion": "Lumira",
+  "element": "Light",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 135, "mana": 100, "attack": 60, "defense": 30, "moveRange": 3, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_LUMIRA",
+    "pairBonus": "When combined with Lumira, Drakniss kindles into her Sundered dawn-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-006-drakniss-lumira-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_DAWN_MERCY", "name": "Dawn Mercy", "type": "Active", "manaCost": 25, "cooldown": 2, "description": "Heal 100 HP to a target ally and cleanse one debuff." },
+    { "abilityId": "ABILITY_HALO", "name": "Halo", "type": "Passive", "description": "Allied cards gain +10% defense (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Light given a crown and a will. She is the only sister the shadow-father cannot look upon.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Light), paired to Lumira." }
+}

@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_LYRAN_FROSTFALL",
+  "collectionNumber": "SD-014",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 14, "totalCards": 198 },
+  "name": "Lyran Frostfall",
+  "type": "Hero",
+  "archetype": "Defense / Tank",
+  "class": "Knight",
+  "creatureType": "Humanoid",
+  "race": "High Elf",
+  "sex": "Male",
+  "companion": "Frost Owl",
+  "element": "Ice",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 185, "mana": 55, "attack": 68, "defense": 46, "moveRange": 3, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_FROST_OWL",
+    "pairBonus": "Combined with his Frost Owl (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-014-lyran-frostowl-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_FROST_WALL", "name": "Frost Wall", "type": "Active", "manaCost": 20, "cooldown": 3, "description": "Taunt all enemies and gain +30% defense for 2 turns." },
+    { "abilityId": "ABILITY_RIME_GUARD", "name": "Rime Guard", "type": "Passive", "description": "Enemies that attack Lyran are slowed (-1 move) for 1 turn (Phase 2)." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The last knight of a court that froze solid the night the crown broke; he alone thawed.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Ice). Bonded pet Frost Owl (to be authored)." }
+}

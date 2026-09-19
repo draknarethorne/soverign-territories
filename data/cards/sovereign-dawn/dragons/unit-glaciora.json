@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_GLACIORA",
+  "collectionNumber": "SD-024",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 24, "totalCards": 198 },
+  "name": "Glaciora",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Female",
+  "element": "Ice",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 190, "mana": 70, "attack": 86, "defense": 36, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNIRA_THORNE",
+    "pairBonus": "Bonded to Draknira. When combined, unlocks her Sundered rime-form.",
+    "combinedArtAsset": "sd-004-draknira-glaciora-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_FROST_BREATH", "name": "Frost Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale a cone of frost: 95 damage and slow to all enemies in a 3-tile line." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Ice, shard-born, bonded to Draknira since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Ice), bonded to Draknira." }
+}

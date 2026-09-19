@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_AQUARIA",
+  "collectionNumber": "SD-025",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 25, "totalCards": 198 },
+  "name": "Aquaria",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Female",
+  "element": "Water",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 190, "mana": 70, "attack": 86, "defense": 35, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNISA_THORNE",
+    "pairBonus": "Bonded to Draknisa. When combined, unlocks her Sundered tide-form.",
+    "combinedArtAsset": "sd-005-draknisa-aquaria-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_TIDAL_BREATH", "name": "Tidal Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale a torrent: 95 damage and push all enemies in a 3-tile line back 1 tile." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Water, shard-born, bonded to Draknisa since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Water), bonded to Draknisa." }
+}

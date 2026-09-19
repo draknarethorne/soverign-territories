@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_TORVALD_STONEBREAKER",
+  "collectionNumber": "SD-017",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 17, "totalCards": 198 },
+  "name": "Torvald Stonebreaker",
+  "type": "Hero",
+  "archetype": "Melee / Striker",
+  "class": "Berserker",
+  "creatureType": "Humanoid",
+  "race": "Barbarian",
+  "sex": "Male",
+  "companion": "Dire Bear",
+  "element": "Earth",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 165, "mana": 45, "attack": 88, "defense": 34, "moveRange": 3, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_DIRE_BEAR",
+    "pairBonus": "Combined with his Dire Bear (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-017-torvald-direbear-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_QUAKE_SMASH", "name": "Quake Smash", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 95 earth damage and knock the target back 1 tile." },
+    { "abilityId": "ABILITY_BLOODRAGE", "name": "Bloodrage", "type": "Passive", "description": "Gains attack as his HP falls (up to +40% below 30% HP) (Phase 2)." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A clan-chief of the high crags who swore fealty to Draknara's stone after she moved a mountain to save his people.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Earth). Bonded pet Dire Bear (to be authored)." }
+}

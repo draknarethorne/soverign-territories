@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNARA_THORNE",
+  "collectionNumber": "SD-007",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 7, "totalCards": 198 },
+  "name": "Draknara Thorne",
+  "type": "Hero",
+  "archetype": "Specialist / Hybrid",
+  "class": "Shaman",
+  "creatureType": "Humanoid",
+  "race": "Barbarian",
+  "sex": "Female",
+  "companion": "Terrador",
+  "element": "Earth",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 140, "mana": 90, "attack": 75, "defense": 35, "moveRange": 3, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_TERRADOR",
+    "pairBonus": "When combined with Terrador, Draknara hardens into her Sundered stone-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-007-draknara-terrador-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_STONE_COVENANT", "name": "Stone Covenant", "type": "Active", "manaCost": 30, "cooldown": 3, "description": "Shield an ally for 60 and deal 50 earth damage to a target." },
+    { "abilityId": "ABILITY_ANCESTORS", "name": "Call of Ancestors", "type": "Passive", "description": "When an ally is defeated, raise a Basic stone token (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Earth given a crown and a will. She keeps the oldest grudge and the deepest roots.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Earth), paired to Terrador." }
+}

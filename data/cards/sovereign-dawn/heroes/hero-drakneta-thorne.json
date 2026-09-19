@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNETA_THORNE",
+  "collectionNumber": "SD-008",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 8, "totalCards": 198 },
+  "name": "Drakneta Thorne",
+  "type": "Hero",
+  "archetype": "Summoner / Spawner",
+  "class": "Summoner",
+  "creatureType": "Humanoid",
+  "race": "Celestial",
+  "sex": "Female",
+  "companion": "Fulgora",
+  "element": "Lightning",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 135, "mana": 100, "attack": 78, "defense": 28, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "petCardId": "UNIT_FULGORA",
+    "pairBonus": "When combined with Fulgora, Drakneta ignites into her Sundered storm-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-008-drakneta-fulgora-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_STORM_CALL", "name": "Storm Call", "type": "Active", "manaCost": 35, "cooldown": 3, "description": "Summon a Basic spark token and deal 70 lightning damage to a target." },
+    { "abilityId": "ABILITY_CHARGED_CROWN", "name": "Charged Crown", "type": "Passive", "description": "Allied Lightning cards gain +10% attack (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Lightning given a crown and a will. She was the first to laugh when the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Lightning), paired to Fulgora." }
+}

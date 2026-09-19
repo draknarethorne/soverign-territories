@@ -123,18 +123,22 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 - **Elder Dragons** = card `type: Unit`, `creatureType: Dragon`, `race: Dragon` (Mythic,
   aerial). **Beasts** (e.g., Dire Wolf) = `type: Unit`, `creatureType: Beast`. Non-hero
   creatures are Units by role, differentiated by creature type and archetype.
-- **ST-### numbering, set-wide.** The base series adopts **`ST-###`** collection numbers
-  (Sovereign Territories branding) instead of `BS-###`, and is renamed from the placeholder
-  "Base Set" to a story-branded name (candidate pool: **Sovereign Dawn**, **Awakening**,
-  **Shadow Sovereign**). Existing cards will be renumbered/renamed as a migration.
+- **Series = Sovereign Dawn, `SD-###` numbering.** The launch series is **Sovereign Dawn**
+  with **`SD-###`** collection numbers (replacing the placeholder "Base Set" / `BS-###`).
+  Existing `BS-###` cards are renumbered/renamed as a migration.
 - **Basic (0) tier.** A foundation/token tier below Common (0 rarity points) for spawned
   minions and humble filler; not a pack-collectible rarity. Full ladder is 0–7 (Basic →
   Transcendent).
+- **Bonded pets & pairing.** Any **Rare-or-above** card can have a **bonded pet** that exists
+  as its own card. **Leaning:** a *fusion-combine* model — like card evolution, you use the pet
+  to evolve the owner into a **single combined card** (combined art + merged power). Exact rules
+  next iteration. Schema support: `pairing` on `codex-schema.json`.
 - **Vocabularies.** Canonical value pools for class, archetype, race, creature type, rarity,
   and the series name pool live in [`ideation_lists.md`](ideation_lists.md).
-- **Story canon (draft).** The Drakn origin — the **Sundering** that split one shadow dominion
-  into ten elemental sisters — is drafted in the game bible's Prologue and explains why there
-  are ten Drakn heroines, one Drakn son (Draknare), and a world at war over territory.
+- **Story canon (draft).** The Drakn origin — the **Sundering** — is framed as a *union of
+  magics*: Draknare and Drakness's bond of shadow-and-death magic overflowed and birthed the
+  nine elemental sisters (Drakness remaining the tenth, Darkness). Drafted in the bible Prologue;
+  explains ten heroines, one Drakn son, and the war over territory.
 
 **Applied so far (this branch):**
 

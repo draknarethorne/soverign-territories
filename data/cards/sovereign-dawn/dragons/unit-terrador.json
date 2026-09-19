@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_TERRADOR",
+  "collectionNumber": "SD-027",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 27, "totalCards": 198 },
+  "name": "Terrador",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Male",
+  "element": "Earth",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 200, "mana": 66, "attack": 88, "defense": 40, "moveRange": 4, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNARA_THORNE",
+    "pairBonus": "Bonded to Draknara. When combined, unlocks her Sundered stone-form.",
+    "combinedArtAsset": "sd-007-draknara-terrador-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_SEISMIC_BREATH", "name": "Seismic Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale grinding stone: 100 damage to enemies in a 3-tile line with a chance to stun." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Earth, shard-born, bonded to Draknara since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Earth), bonded to Draknara." }
+}

@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNISA_THORNE",
+  "collectionNumber": "SD-005",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 5, "totalCards": 198 },
+  "name": "Draknisa Thorne",
+  "type": "Hero",
+  "archetype": "Control / Disruptor",
+  "class": "Enchanter",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Female",
+  "companion": "Aquaria",
+  "element": "Water",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 130, "mana": 100, "attack": 70, "defense": 28, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "petCardId": "UNIT_AQUARIA",
+    "pairBonus": "When combined with Aquaria, Draknisa flows into her Sundered tide-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-005-draknisa-aquaria-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_TIDE_BIND", "name": "Tide Bind", "type": "Active", "manaCost": 25, "cooldown": 2, "description": "Root a target for 1 turn and deal 60 water damage." },
+    { "abilityId": "ABILITY_MIRROR_DEPTHS", "name": "Mirror Depths", "type": "Passive", "description": "15% chance to reflect an enemy tactic back at its caster (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Water given a crown and a will. She never raises her voice; the tide does it for her.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Water), paired to Aquaria." }
+}

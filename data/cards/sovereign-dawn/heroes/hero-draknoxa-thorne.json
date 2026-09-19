@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNOXA_THORNE",
+  "collectionNumber": "SD-010",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 10, "totalCards": 198 },
+  "name": "Draknoxa Thorne",
+  "type": "Hero",
+  "archetype": "Control / Disruptor",
+  "class": "Alchemist",
+  "creatureType": "Humanoid",
+  "race": "Dark Elf",
+  "sex": "Female",
+  "companion": "Venomis",
+  "element": "Poison",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 130, "mana": 100, "attack": 70, "defense": 28, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "petCardId": "UNIT_VENOMIS",
+    "pairBonus": "When combined with Venomis, Draknoxa distills into her Sundered plague-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-010-draknoxa-venomis-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_VENOM_BLOOM", "name": "Venom Bloom", "type": "Active", "manaCost": 30, "cooldown": 2, "description": "Deal 40 damage and apply poison (15 damage/turn for 3 turns)." },
+    { "abilityId": "ABILITY_TOXIC_CROWN", "name": "Toxic Crown", "type": "Passive", "description": "Enemies adjacent to Draknoxa take 5 poison damage each turn (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Poison given a crown and a will. The youngest shard, and the patient one.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Poison), paired to Venomis." }
+}
