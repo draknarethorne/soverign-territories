@@ -43,8 +43,19 @@ Examples:
 | Epic | 8 |
 | Legendary | 16 |
 | Mythic | 32 |
+| Transcendent | 64 |
 
 The rarity budget is calculated as the sum of selected deck card costs. A 20-card MVP starter deck uses a **40-point budget**. This permits a clear starter hero and varied supports while preventing a full high-rarity deck.
+
+> **Transcendent (apex tier).** Transcendent is the seventh, rarest tier — home of the ten
+> Drakn story heroines. At **64 points**, a single Transcendent card exceeds the 40-point
+> starter budget and most standard budgets, so Transcendents are treated as **apex chase and
+> showcase cards**. Whether they enter standard competitive formats — and under what special
+> budget or restricted format — is an open decision, not an MVP requirement.
+>
+> **Elements.** The game uses a **10-element** identity model (Darkness, Fire, Grass, Ice,
+> Water, Light, Earth, Lightning, Wind, Poison, plus Neutral). Elements are cosmetic identity
+> for deck legality in the MVP; strength/weakness cycles are a Phase 2 combat-spec decision.
 
 ### Valid starter example
 
@@ -82,7 +93,8 @@ The MVP can grant cards and show player progress, but it does **not** need to un
 | Deck-size growth | 1.1 | Define content acquisition pace and a budget curve that preserves the copy limit. |
 | Fusion/equipment | 1.1 | Define upgrade caps and acquisition economy after baseline balance data. |
 | Multi-hero formats | 2+ | Define formation roles, budget trade-offs, and encounter balance. |
-| Element synergies/counters | 2+ | Define rules in combat spec; elements have no mechanical MVP effect. |
+| Element synergies/counters | 2+ | Finalize the 10-element cycle chart in the combat spec; elements have no mechanical MVP effect. |
+| Transcendent format legality | 2+ | Decide if/how 64-point Transcendent cards enter standard or special formats. |
 | PvP/ranked budgets | 1.1+ | Define matchmaking and anti-pay-to-win rules from measured collection data. |
 
 ## Contract ownership

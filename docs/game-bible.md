@@ -171,19 +171,21 @@ world. This is the heart of the game.*
 - **Equipment** — Gear that bolts onto heroes for power and spectacle: a blade that glows,
   armor that turns a silhouette into a legend.
 
-### 2.2 Rarity & customization — the six tiers
+### 2.2 Rarity & customization — the seven tiers
 
 > **MVP expression:** Rarities exist as identity + budget cost. · **Future expression:**
 > Full fusion, star ranks, skill trees, shinies. · **Authority:**
 > [`design/deck-progression-rules.md`](design/deck-progression-rules.md)
 
-Six tiers form the collector's ladder — **Common, Uncommon, Rare, Epic, Legendary,
-Mythic**. Our visual grammar is Pokémon-clean:
+Seven tiers form the collector's ladder — **Common, Uncommon, Rare, Epic, Legendary,
+Mythic**, and the apex **Transcendent**. Transcendent is the rarest, most sought-after
+tier: it is reserved for the ten story heroines of the **Drakn Line** (see 2.9), each bonded
+to an Elder Dragon. Our visual grammar is Pokémon-clean:
 
-- **Element determines frame colour** — Fire is red-orange, Water is blue, Earth is
-  brown-green, Lightning is gold-violet, Wind is cyan-white, Frost is pale ice.
+- **Element determines frame colour** — each of the ten elements owns a palette (see the
+  element table below).
 - **Rarity determines frame complexity & effect** — from a Common's clean matte border to a
-  Mythic's living, screen-touching aura.
+  Transcendent's living, screen-touching aura.
 - **Stars show progression** within a tier — white stars with an element-coloured glow.
 
 **Why it works**:
@@ -193,8 +195,32 @@ Mythic**. Our visual grammar is Pokémon-clean:
 - **Accessibility** — colourblind players still read rarity by frame complexity.
 - **Future-proof** — new elements are new colours; new rarities are new effect tiers.
 
-> 💡 The exact star ranges, fusion costs, stat multipliers, and drop rates are owned by the
-> deck-progression and card schemas so the codex never drifts from the math.
+> 💡 The exact star ranges, fusion costs, stat multipliers, drop rates, and rarity-budget
+> costs are owned by the deck-progression rules and the card schema so the codex never
+> drifts from the math.
+
+#### The ten elements
+
+> **Status:** Proposed (10-element expansion) · **Authority:**
+> [`design/combat-calculation-spec.md`](design/combat-calculation-spec.md) (cycles),
+> [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json) (contract)
+
+| Element | Frame colour | Accent |
+| --- | --- | --- |
+| Darkness | deep purple | magenta |
+| Fire | red-orange | ember gold |
+| Grass | verdant green | leaf gold |
+| Ice | pale ice-blue | white |
+| Water | blue | teal |
+| Light | radiant white-gold | soft yellow |
+| Earth | brown-green | stone amber |
+| Lightning | gold | violet |
+| Wind | cyan | white |
+| Poison | sickly green-violet | acid green |
+
+*Neutral* remains a non-elemental identity for element-agnostic cards (basic tactics,
+generic units). Elements are **visual identity only** in the MVP; their strength/weakness
+cycles are a designed Phase 2 system (see Section 7 and the combat spec).
 
 ### 2.3 Card anatomy
 
@@ -270,6 +296,27 @@ playable hero immediately and a meaningful choice of path — never a "bad luck"
 The full vision offers curated decks (perfect synergy for beginners) and element decks
 (higher variance for veterans). The MVP delivers a single, guaranteed-legal starter so no
 one is ever stranded without a formation.
+
+### 2.9 The Drakn Line & the Thorne name *(story canon)*
+
+> **Status:** Vision (Transcendent tier) · **Authority:**
+> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md) (roster),
+> [`design/deck-progression-rules.md`](design/deck-progression-rules.md) (tier cost)
+
+At the summit of the collection stand the **ten Drakn heroines** — the story's central
+figures and the game's most coveted cards, each a **Transcendent** (the seventh, apex
+rarity). One heroine anchors each of the ten elements, and each is bonded to an **Elder
+Dragon** of the same element that surfaces in her "combined" card art and haunts the
+background of her signature series.
+
+The surname **Thorne** is canonical for the Drakn bloodline (Drakness Thorne, Draknora
+Thorne, and their sisters), and a single male shadow-knight, **Draknare Thorne**, carries
+the name into the front line. Other heroes across the game bear their own names fitting
+their role and origin — the Thorne name belongs to the Drakn.
+
+Because Transcendent cards sit far above standard rarity budgets, they are treated as
+**apex chase and showcase cards**; how (or whether) they enter standard competitive formats
+is an open design decision owned by the deck-progression rules, not an MVP concern.
 
 ---
 

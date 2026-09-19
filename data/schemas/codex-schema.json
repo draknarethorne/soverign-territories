@@ -43,10 +43,41 @@
       "description": "Card type"
     },
 
+    "archetype": {
+      "type": "string",
+      "description": "Combat/role differentiation (e.g., Summoner / Spawner, Defense / Tank, Aerial / Flying)"
+    },
+
+    "class": {
+      "type": "string",
+      "description": "Class fantasy (e.g., Necromancer, Paladin, Elder Dragon)"
+    },
+
+    "creatureType": {
+      "type": "string",
+      "description": "Broad taxonomy (e.g., Humanoid, Dragon, Beast)"
+    },
+
+    "race": {
+      "type": "string",
+      "description": "Race/lineage (e.g., Dark Elf, Human, n/a)"
+    },
+
+    "sex": {
+      "type": "string",
+      "enum": ["Male", "Female", "None"],
+      "description": "Character sex; None for non-character cards"
+    },
+
+    "companion": {
+      "type": "string",
+      "description": "Bonded pet/companion or aligned creature (e.g., Dragon, Reaper, n/a)"
+    },
+
     "element": {
       "type": "string",
-      "enum": ["Fire", "Water", "Earth", "Lightning", "Wind", "Frost", "Neutral", "Dark", "Light", "Arcane"],
-      "description": "Elemental affiliation"
+      "enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"],
+      "description": "Elemental affiliation (10-element model; Neutral = non-elemental cards)"
     },
 
     "rarity": {
@@ -55,18 +86,24 @@
       "properties": {
         "tier": {
           "type": "string",
-          "enum": ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]
+          "enum": ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic", "Transcendent"]
         },
         "stars": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 6,
-          "description": "Visual star rating (0-6)"
+          "maximum": 8,
+          "description": "Visual star rating (0-8)"
+        },
+        "maxStars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "description": "Maximum attainable star rank for this card"
         },
         "points": {
           "type": "integer",
-          "enum": [1, 4, 8, 16, 32],
-          "description": "Rarity budget cost"
+          "enum": [1, 2, 4, 8, 16, 32, 64],
+          "description": "Rarity budget cost (Uncommon = 2, Transcendent = 64)"
         }
       }
     },
@@ -105,8 +142,8 @@
     "tacticSlots": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 5,
-      "description": "Number of tactic cards this unit can equip"
+      "maximum": 8,
+      "description": "Number of tactic cards this unit can equip (scales with star rank, up to 8)"
     },
 
     "lore": {

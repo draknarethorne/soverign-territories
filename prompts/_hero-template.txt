@@ -1,0 +1,21 @@
+=== HERO — edit per card (this is the VARIABLE block; pair with _series-footer.txt) ===
+Subject: A young [ELEMENT] [sorceress / warrior / etc.], confident and commanding, mid-[action].
+Element & palette: [ELEMENT] — dominant [PRIMARY COLOR] with [ACCENT COLOR] glow.
+Outfit: elegant layered fantasy attire in [COLOR], [material / finish], with glowing [COLOR] accents; secured at the shoulders.
+Accents: silver with [COLOR]-jeweled bracelets, necklace, and circlet.
+Weapon: an ornate [weapon] raised in her [left / right] hand, [signature detail] wreathed in bright [COLOR] glow.
+Spell / pose: opposite arm bent at the elbow, hand cupped, channeling a ball of [COLOR] energy and [smoke / sparks / mist] as she casts.
+Environment: [location], swirling [COLOR] and black smoke, a soft [COLOR] gradient haze rising behind her.
+Footwear: [COLOR] [heels / boots] with glowing [COLOR] straps.
+
+--- Element palette (from the Codex; keep card art on-theme) ---
+Darkness   primary deep purple        / accent magenta
+Fire       primary red-orange         / accent ember gold
+Grass      primary verdant green      / accent leaf gold
+Ice        primary pale ice-blue      / accent white
+Water      primary blue               / accent teal
+Light      primary radiant white-gold / accent soft yellow
+Earth      primary brown-green        / accent stone amber
+Lightning  primary gold               / accent violet
+Wind       primary cyan               / accent white
+Poison     primary green-violet       / accent acid green

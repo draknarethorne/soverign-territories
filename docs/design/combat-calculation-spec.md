@@ -84,9 +84,35 @@ No random seed is needed until a later phase introduces a deliberately designed 
 | --- | --- | --- |
 | More abilities and tactical effects | 1.1 | Define effect vocabulary, targeting, UI, and balance limits. |
 | Fusion/equipment/persistent health | 1.1+ | Prove the simple combat/reward loop first. |
-| Elemental interactions and terrain | 2+ | Publish multiplier, stacking, and counterplay rules; rebalance the card set. |
+| Elemental interactions and terrain | 2+ | Finalize the 10-element cycle chart (see below), publish multipliers/stacking/counterplay, and rebalance the card set. |
 | Status effects and critical RNG | 2+ | Define duration, cleanse, caps, accessibility, and deterministic replay behavior. |
 | Async/live PvP | 1.1+ | Define authoritative backend, cheating model, matchmaking, and privacy/operations plan. |
+
+## Elemental cycles — Phase 2 proposal (not MVP)
+
+> **Status:** Proposed · elements are visual-only until this chart is finalized and the card
+> set is rebalanced. The 10 elements are: Darkness, Fire, Grass, Ice, Water, Light, Earth,
+> Lightning, Wind, Poison (plus Neutral for element-agnostic cards).
+
+The current design intent groups the ten elements into strength/weakness relationships:
+
+- **Duality** — **Light ⟷ Darkness**: mutual opposites, each strong against the other.
+- **Primal triangle** — **Fire / Water / Earth**: a rock-paper-scissors cycle.
+- **Storm quad** — **Ice / Lightning / Wind / Poison**: a four-element cycle.
+
+**Open decisions before this becomes canonical**:
+
+1. **Grass placement.** Grass is not yet in a cycle. Recommended option: fold Grass into the
+   primal group to form a **Fire → Grass → Water → Earth → Fire** four-cycle (cleanly
+   covering all four), or pair it opposite another element.
+2. **Direction of the primal cycle.** Confirm who beats whom (e.g., Water > Fire > Earth >
+   Water) and the exact multiplier (1.25× vs 1.5×).
+3. **Structure of the storm group.** Confirm whether Ice/Lightning/Wind/Poison is a single
+   4-cycle or two dual pairs.
+4. **Neutral behavior.** Confirm Neutral deals/receives normal damage to all elements.
+
+Until these are decided and the card set is rebalanced, MVP combat treats elements as
+identity only.
 
 ## Data and implementation notes
 
