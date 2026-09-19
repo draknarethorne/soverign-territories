@@ -50,6 +50,8 @@ document disagree on an implementation detail, the canonical document wins.
 
 ## 🗺️ Table of Contents
 
+- Prologue — The Sundering *(story)*
+
 1. Core Philosophy
 2. The Card System (Assets & Collection)
 3. The Map Hierarchy (The World)
@@ -67,6 +69,53 @@ document disagree on an implementation detail, the canonical document wins.
 15. Edge Cases & Resilience
 16. Delivery Roadmap
 17. Inspirations & Credits
+
+---
+
+## 📖 Prologue — The Sundering *(story canon · draft)*
+
+> **Status:** Draft lore — the shape of the myth is set; the finer details are still being
+> forged. Card roster and elements: [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md).
+
+Before there were ten territories, there was one dominion, and it belonged to shadow.
+
+**Draknare Thorne** was its sovereign — a shadow-knight whose banner fell across the world
+like a long dusk. **Drakness Thorne** stood with him, a necromancer whose art could call the
+dead to whisper and the living to kneel. Two powers of Darkness, bound by *something* — an
+oath, a love, a rivalry. The codex does not yet name which; perhaps all three.
+
+What passed between them is the thing the world now calls **the Sundering**. In a single
+silent instant, the primordial force that Darkness had hoarded for an age did not die — it
+*scattered*, into ten shards, one for every face that magic can wear.
+
+Drakness, already Darkness, kept her throne. But from the nine shards that spun out into the
+dark, **nine sisters awoke** — each a sovereign of a single element, each a caster to the
+marrow:
+
+- **Draknora** of Fire · **Drakniya** of Grass · **Draknira** of Ice · **Draknisa** of Water
+- **Drakniss** of Light · **Draknara** of Earth · **Drakneta** of Lightning
+- **Draknava** of Wind · and **Draknoxa** of Poison.
+
+Ten sisters of the Drakn name, and one **Draknare** — the shadow-father, the first cause and
+the only Drakn son. This is why the line runs ten daughters deep and but a single male: the
+sisters are the *shards*, and he is the *hand that broke the whole*.
+
+With the shards fell the **Elder Dragons** — one to each element, ancient and bonded to the
+sister who shares their nature (Umbrath to Drakness, Pyraxis to Draknora, on down the line).
+They surface in each heroine's "combined" card and shadow the background of her series.
+
+The Sundering fractured the world into **Sovereign Territories** — elemental domains that
+will not sit still. Each sister is compelled by the shard within her to claim, to hold, to
+*expand*; for a sundered crown remembers it was once whole, and every shard aches to be the
+one that rules the rest. And so the sisters war — sometimes against each other, sometimes
+against the shadow that made them.
+
+*You arrive at the dawn of that war.*
+
+> 💡 **Design hook (open):** the Sundering explains **why** the map is elemental and **why**
+> conquest is the endgame — each Transcendent heroine is a faction identity, her Elder Dragon
+> her ultimate, and territory the prize. How tightly the story binds to mechanics is still
+> the author's to decide.
 
 ---
 
@@ -185,7 +234,9 @@ world. This is the heart of the game.*
 Seven tiers form the collector's ladder — **Common, Uncommon, Rare, Epic, Legendary,
 Mythic**, and the apex **Transcendent**. Transcendent is the rarest, most sought-after
 tier: it is reserved for the ten story heroines of the **Drakn Line** (see 2.9), each bonded
-to an Elder Dragon. Our visual grammar is Pokémon-clean:
+to an Elder Dragon. Beneath the ladder sits a humble **Basic (0)** tier for foundation and
+token cards (e.g., spawned minions) that carry no rarity-budget cost. Our visual grammar is
+Pokémon-clean:
 
 - **Element determines frame colour** — each of the ten elements owns a palette (see the
   element table below).

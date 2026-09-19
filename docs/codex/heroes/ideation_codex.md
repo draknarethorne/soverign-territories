@@ -123,6 +123,18 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 - **Elder Dragons** = card `type: Unit`, `creatureType: Dragon`, `race: Dragon` (Mythic,
   aerial). **Beasts** (e.g., Dire Wolf) = `type: Unit`, `creatureType: Beast`. Non-hero
   creatures are Units by role, differentiated by creature type and archetype.
+- **ST-### numbering, set-wide.** The base series adopts **`ST-###`** collection numbers
+  (Sovereign Territories branding) instead of `BS-###`, and is renamed from the placeholder
+  "Base Set" to a story-branded name (candidate pool: **Sovereign Dawn**, **Awakening**,
+  **Shadow Sovereign**). Existing cards will be renumbered/renamed as a migration.
+- **Basic (0) tier.** A foundation/token tier below Common (0 rarity points) for spawned
+  minions and humble filler; not a pack-collectible rarity. Full ladder is 0–7 (Basic →
+  Transcendent).
+- **Vocabularies.** Canonical value pools for class, archetype, race, creature type, rarity,
+  and the series name pool live in [`ideation_lists.md`](ideation_lists.md).
+- **Story canon (draft).** The Drakn origin — the **Sundering** that split one shadow dominion
+  into ten elemental sisters — is drafted in the game bible's Prologue and explains why there
+  are ten Drakn heroines, one Drakn son (Draknare), and a world at war over territory.
 
 **Applied so far (this branch):**
 
@@ -137,9 +149,9 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 
 **Tracked follow-ups (not yet done):**
 
-- **Collection numbers:** the existing Base Set uses `BS-###` and `TYPE_NAME` cardIds; the roster
-  uses `ST-###`. Fold the 30 marquee cards into the Base Set's `BS-###` scheme (or adopt `ST-###`
-  set-wide) before authoring JSON.
+- **Collection numbers:** adopt **`ST-###`** set-wide and rename the series from "Base Set" to a
+  story-branded name (see decision above). Renumber/rename the existing `BS-###` cards and update
+  `data/manifests/*` + `data/collection/*` as a migration before/with authoring the marquee 30.
 - **Schema vocabulary normalization:** secondary schemas (`pack`, `trainer-deck`, `equipment`,
   `reward`, `achievement`, legacy flat `card-schema.json`) still carry older/lowercase element/rarity
   enums; align to the canonical vocabulary and a single casing (card data is TitleCase;

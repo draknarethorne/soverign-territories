@@ -37,6 +37,7 @@ Examples:
 
 | Rarity | Cost |
 | --- | ---: |
+| Basic | 0 |
 | Common | 1 |
 | Uncommon | 2 |
 | Rare | 4 |
@@ -47,6 +48,9 @@ Examples:
 
 The rarity budget is calculated as the sum of selected deck card costs. A 20-card MVP starter deck uses a **40-point budget**. This permits a clear starter hero and varied supports while preventing a full high-rarity deck.
 
+> **Basic (0) tier.** Basic is the foundation/token tier below Common — e.g., spawned minions
+> or the humblest filler. It costs **0** budget points and is not a pack-collectible rarity.
+>
 > **Transcendent (apex tier).** Transcendent is the seventh, rarest tier — home of the ten
 > Drakn story heroines. At **64 points**, a single Transcendent card exceeds the 40-point
 > starter budget and most standard budgets, so Transcendents are treated as **apex chase and
