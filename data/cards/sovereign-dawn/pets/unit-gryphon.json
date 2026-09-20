@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_GRYPHON",
+  "collectionNumber": "SD-038",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 38, "totalCards": 198 },
+  "name": "Gryphon",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Beast",
+  "creatureType": "Gryphon",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Lightning",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 90, "mana": 30, "attack": 72, "defense": 20, "moveRange": 6, "attackRange": 1, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DORIAN_STORMSTRIKE",
+    "pairBonus": "Bonded to Dorian. When combined, they strike from the storm as one.",
+    "combinedArtAsset": "sd-018-dorian-gryphon-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_THUNDER_DIVE", "name": "Thunder Dive", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Dive for 70 lightning damage with a 10% chance to stun." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A storm-crowned hunter of the high peaks that races Drakneta's lightning for sport.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Dorian (Lightning)." }
+}

@@ -1,9 +1,9 @@
 {
   "seriesId": "sovereign-dawn",
   "seriesName": "Sovereign Dawn",
-  "subset": "Marquee 30 — Transcendent heroines, Mythic heroes, Elder Dragons",
+  "subset": "Marquee 30 (SD-001..030) + 10 bonded male pets (SD-031..040)",
   "seriesTotalCards": 198,
-  "note": "Provisional. Full Sovereign Dawn set (~198 cards) per the ideation blueprint in docs/codex/heroes/ideation_codex.md. Remaining cards and the BS-### -> SD-### migration are tracked follow-ups.",
+  "note": "Provisional. 40 cards authored so far (30 marquee + 10 male pets). Full Sovereign Dawn set (~198 cards) per the ideation blueprint in docs/codex/heroes/ideation_codex.md. Remaining element cards and the BS-### -> SD-### base-set migration are tracked follow-ups.",
   "marqueeCardIds": [
     "HERO_DRAKNESS_THORNE",
     "HERO_DRAKNORA_THORNE",
@@ -35,5 +35,17 @@
     "UNIT_FULGORA",
     "UNIT_ZEPHYROS",
     "UNIT_VENOMIS"
+  ],
+  "bondedPetCardIds": [
+    "UNIT_REAPER",
+    "UNIT_FIRE_ELEMENTAL",
+    "UNIT_TREANT",
+    "UNIT_FROST_OWL",
+    "UNIT_SHARK",
+    "UNIT_ANGEL",
+    "UNIT_DIRE_BEAR",
+    "UNIT_GRYPHON",
+    "UNIT_GIANT_EAGLE",
+    "UNIT_BASILISK"
   ]
 }

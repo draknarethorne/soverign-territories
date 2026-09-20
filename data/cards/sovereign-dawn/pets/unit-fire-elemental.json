@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_FIRE_ELEMENTAL",
+  "collectionNumber": "SD-032",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 32, "totalCards": 198 },
+  "name": "Fire Elemental",
+  "type": "Unit",
+  "archetype": "Caster / Magic",
+  "class": "Elemental",
+  "creatureType": "Elemental",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Fire",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 75, "mana": 40, "attack": 66, "defense": 15, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "pairsWith": "HERO_IGNIS_EMBERSTRIDE",
+    "pairBonus": "Bonded to Ignis. When combined, wreathes his blade in living flame.",
+    "combinedArtAsset": "sd-012-ignis-elemental-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_MAGMA_LASH", "name": "Magma Lash", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 65 fire damage to a target and apply burn (10 damage/turn for 2 turns)." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A splinter of Draknora's wildfire that took a shape and a loyalty of its own.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Ignis (Fire)." }
+}

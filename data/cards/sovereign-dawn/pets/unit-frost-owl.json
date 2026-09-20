@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_FROST_OWL",
+  "collectionNumber": "SD-034",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 34, "totalCards": 198 },
+  "name": "Frost Owl",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Beast",
+  "creatureType": "Frost Owl",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Ice",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 70, "mana": 30, "attack": 60, "defense": 16, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_LYRAN_FROSTFALL",
+    "pairBonus": "Bonded to Lyran. When combined, scouts the field and chills his enemies.",
+    "combinedArtAsset": "sd-014-lyran-frostowl-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_RIME_DIVE", "name": "Rime Dive", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Dive for 58 ice damage and slow the target (-1 move) for 1 turn." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A silent hunter of the frozen court that chose to stay when the rest of the court did not.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Lyran (Ice)." }
+}

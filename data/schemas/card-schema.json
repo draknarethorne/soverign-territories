@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Card",
+  "description": "DEPRECATED legacy flat card schema. The authoritative card contract is data/schemas/codex-schema.json (TitleCase, nested rarity, pairing). Do not author new cards against this file.",
   "type": "object",
   "required": ["id","name","type","rarity","level","stats","schemaVersion"],
   "properties": {

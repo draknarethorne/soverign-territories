@@ -153,15 +153,19 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 
 **Tracked follow-ups (not yet done):**
 
-- **Collection numbers:** the series is **Sovereign Dawn** with **`SD-###`**. The marquee 30 are
-  authored as `SD-001`–`SD-030`; the existing `BS-###` cards are renumbered/renamed and
-  `data/manifests/*` + `data/collection/*` updated as a migration.
-- **Bonded pets:** author pet cards for Rare+ owners (male heroes' pets — Reaper, Elemental,
-  Treant, etc. — and unit pets) beyond the dragons already in the marquee 30.
-- **Schema vocabulary normalization:** secondary schemas (`pack`, `trainer-deck`, `equipment`,
-  `reward`, `achievement`, legacy flat `card-schema.json`) still carry older/lowercase element/rarity
-  enums; align to the canonical vocabulary and a single casing (card data is TitleCase;
-  `codex-schema.json` is authoritative).
+- **Collection numbers:** the series is **Sovereign Dawn** with **`SD-###`**. The marquee 30
+  (`SD-001`–`SD-030`) and 10 male bonded pets (`SD-031`–`SD-040`) are authored. The existing
+  `BS-###` base-set cards still need the Sovereign Dawn migration (below).
+- **Bonded pets:** ✅ the 10 male heroes' pets (Reaper, Fire Elemental, Treant, Frost Owl,
+  Shark, Angel, Dire Bear, Gryphon, Giant Eagle, Basilisk) are authored as `SD-031`–`SD-040`
+  and wired to their owners. Remaining: pets for Rare+ *units* (per the pairing rule) as the
+  element pool is built out.
+- **Sovereign Dawn data migration (deliberate pass):** migrate the existing base-set cards +
+  manifests + product boxes/packs + collection checklist from `base-set`/`Base Set`/`BS-###`
+  to `sovereign-dawn`/`Sovereign Dawn`/`SD-041+`; add `series` objects; map `Frost` → `Ice`;
+  and normalize secondary-schema element/rarity enums to a single canonical casing (card data
+  is TitleCase; `codex-schema.json` is authoritative). Scripted + validated as its own step to
+  keep the cross-references (boxes/packs/checklist) intact.
 - **Card JSON authoring:** create `data/cards/` entries for the marquee 30, then fill element parity
   per the blueprint below (authored in waves with balance review).
 - **Element art refresh:** existing `Frost` cards map to `Ice`; `Dark`/`Arcane` map to `Darkness`.

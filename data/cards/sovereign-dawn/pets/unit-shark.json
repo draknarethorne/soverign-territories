@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_SHARK",
+  "collectionNumber": "SD-035",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 35, "totalCards": 198 },
+  "name": "Shark",
+  "type": "Unit",
+  "archetype": "Melee / Striker",
+  "class": "Beast",
+  "creatureType": "Shark",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Water",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 95, "mana": 20, "attack": 70, "defense": 18, "moveRange": 4, "attackRange": 1 },
+  "pairing": {
+    "pairsWith": "HERO_CORIN_TIDEWALKER",
+    "pairBonus": "Bonded to Corin. When combined, hunts the wounded across the tide.",
+    "combinedArtAsset": "sd-015-corin-shark-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_FRENZY_BITE", "name": "Frenzy Bite", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 72 damage; +30% damage against targets below 50% HP." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A great grey shadow that answers Corin's call from the deep places of Draknisa's tide.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Corin (Water)." }
+}
