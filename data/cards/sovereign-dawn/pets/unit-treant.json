@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_TREANT",
+  "collectionNumber": "SD-033",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 33, "totalCards": 198 },
+  "name": "Treant",
+  "type": "Unit",
+  "archetype": "Defense / Tank",
+  "class": "Beast",
+  "creatureType": "Treant",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Grass",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 120, "mana": 20, "attack": 52, "defense": 30, "moveRange": 2, "attackRange": 1 },
+  "pairing": {
+    "pairsWith": "HERO_NIZARAS_FEATHERSTONE",
+    "pairBonus": "Bonded to Nizaras. When combined, roots the battlefield in his favor.",
+    "combinedArtAsset": "sd-013-nizaras-treant-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_ROOT_SLAM", "name": "Root Slam", "type": "Active", "manaCost": 20, "cooldown": 3, "description": "Deal 55 damage and root the target for 1 turn." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A warden of Drakniya's grove that walks only when the grove is threatened.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Nizaras (Grass)." }
+}

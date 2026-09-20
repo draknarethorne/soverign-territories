@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_NIZARAS_FEATHERSTONE",
+  "collectionNumber": "SD-013",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 13, "totalCards": 198 },
+  "name": "Nizaras Featherstone",
+  "type": "Hero",
+  "archetype": "Specialist / Hybrid",
+  "class": "Rogue",
+  "creatureType": "Humanoid",
+  "race": "Wood Elf",
+  "sex": "Male",
+  "companion": "Treant",
+  "element": "Grass",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 150, "mana": 60, "attack": 78, "defense": 32, "moveRange": 4, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_TREANT",
+    "pairBonus": "Combined with his warden Treant (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-013-nizaras-treant-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_THORN_AMBUSH", "name": "Thorn Ambush", "type": "Active", "manaCost": 20, "cooldown": 3, "description": "Strike from concealment for 100 damage and apply bleed (10 damage/turn for 2 turns)." },
+    { "abilityId": "ABILITY_UNDERGROWTH", "name": "Undergrowth", "type": "Passive", "description": "Gain +15% evasion during the first 2 turns of battle (Phase 2)." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A poacher turned protector, sworn to Drakniya's grove after it spared his life.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Grass). Bonded pet Treant (to be authored)." }
+}

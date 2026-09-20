@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_BASILISK",
+  "collectionNumber": "SD-040",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 40, "totalCards": 198 },
+  "name": "Basilisk",
+  "type": "Unit",
+  "archetype": "Assassin / Burst DPS",
+  "class": "Beast",
+  "creatureType": "Basilisk",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Poison",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 88, "mana": 30, "attack": 74, "defense": 17, "moveRange": 3, "attackRange": 2 },
+  "pairing": {
+    "pairsWith": "HERO_MALAKOR_VENOMCALLER",
+    "pairBonus": "Bonded to Malakor. When combined, a single glance ends the wounded.",
+    "combinedArtAsset": "sd-020-malakor-basilisk-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_PETRIFYING_GAZE", "name": "Petrifying Gaze", "type": "Active", "manaCost": 20, "cooldown": 3, "description": "Deal 60 poison damage and reduce the target's defense by 20% for 2 turns." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A serpent-king of the poisoned fens that Malakor charmed with a draught of Draknoxa's own making.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Malakor (Poison)." }
+}

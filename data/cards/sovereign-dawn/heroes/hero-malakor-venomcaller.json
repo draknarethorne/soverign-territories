@@ -1,0 +1,28 @@
+{
+  "cardId": "HERO_MALAKOR_VENOMCALLER",
+  "collectionNumber": "SD-020",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 20, "totalCards": 198 },
+  "name": "Malakor Venomcaller",
+  "type": "Hero",
+  "archetype": "Assassin / Burst DPS",
+  "class": "Assassin",
+  "creatureType": "Humanoid",
+  "race": "Orc",
+  "sex": "Male",
+  "companion": "Basilisk",
+  "element": "Poison",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 130, "mana": 55, "attack": 95, "defense": 22, "moveRange": 4, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_BASILISK",
+    "pairBonus": "Combined with his Basilisk (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-020-malakor-basilisk-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_TOXIC_EXECUTE", "name": "Toxic Execute", "type": "Active", "manaCost": 25, "cooldown": 3, "description": "Deal 110 damage to a target; +50% damage if the target is already poisoned." }
+  ],
+  "tacticSlots": 6,
+  "lore": "An exile who drank Draknoxa's brew to survive and now carries her patience in his veins.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Poison). Bonded pet Basilisk (to be authored)." }
+}

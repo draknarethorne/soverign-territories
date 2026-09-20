@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_SYLVANYA",
+  "collectionNumber": "SD-023",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 23, "totalCards": 198 },
+  "name": "Sylvanya",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Female",
+  "element": "Grass",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 190, "mana": 70, "attack": 84, "defense": 36, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNIYA_THORNE",
+    "pairBonus": "Bonded to Drakniya. When combined, unlocks her Sundered grove-form.",
+    "combinedArtAsset": "sd-003-drakniya-sylvanya-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_SPORE_BREATH", "name": "Spore Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale a cloud of spores: 90 damage and poison to all enemies in a 3-tile line." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Grass, shard-born, bonded to Drakniya since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Grass), bonded to Drakniya." }
+}

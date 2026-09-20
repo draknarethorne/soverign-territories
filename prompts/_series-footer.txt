@@ -1,0 +1,8 @@
+=== SERIES STYLE — do not edit (shared across all Sovereign Territories hero cards) ===
+Full-body shot, head to toe, subject centered for trading-card framing, with headroom above and footroom below.
+Diffused studio lighting with a soft rim light, photorealistic, dreamlike futurism, painterly fantasy finish.
+Hair styled naturally, flowing slightly in a gentle breeze.
+Elegant, alluring, heroic, and fully costumed; powerful and composed.
+Cohesive color grade, sharp focus on the face, clean edges, high detail, portrait aspect ratio for card art (5:7).
+
+Negative prompt: extra limbs, extra fingers, deformed hands, fused fingers, mangled anatomy, asymmetrical eyes, cross-eyed, blurry, lowres, jpeg artifacts, watermark, signature, text, logo, nudity, nsfw.

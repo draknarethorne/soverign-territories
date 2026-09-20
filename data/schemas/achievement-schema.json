@@ -27,7 +27,7 @@
     },
     "rarity": {
       "type": "string",
-      "enum": ["common", "rare", "epic", "legendary"],
+      "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic", "transcendent"],
       "description": "Achievement rarity"
     },
     "requirements": {

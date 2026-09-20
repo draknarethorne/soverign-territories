@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNAVA_THORNE",
+  "collectionNumber": "SD-009",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 9, "totalCards": 198 },
+  "name": "Draknava Thorne",
+  "type": "Hero",
+  "archetype": "Support / Healer",
+  "class": "Bard",
+  "creatureType": "Humanoid",
+  "race": "Wood Elf",
+  "sex": "Female",
+  "companion": "Zephyros",
+  "element": "Wind",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 135, "mana": 100, "attack": 62, "defense": 30, "moveRange": 3, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_ZEPHYROS",
+    "pairBonus": "When combined with Zephyros, Draknava rises into her Sundered gale-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-009-draknava-zephyros-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_GALE_ANTHEM", "name": "Gale Anthem", "type": "Active", "manaCost": 25, "cooldown": 3, "description": "Grant all allies +20% attack for 2 turns." },
+    { "abilityId": "ABILITY_TAILWIND", "name": "Tailwind", "type": "Passive", "description": "Allied cards gain +1 move range (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Wind given a crown and a will. Her songs travel farther than any army.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Wind), paired to Zephyros." }
+}

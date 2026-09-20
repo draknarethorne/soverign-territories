@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNORA_THORNE",
+  "collectionNumber": "SD-002",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 2, "totalCards": 198 },
+  "name": "Draknora Thorne",
+  "type": "Hero",
+  "archetype": "Caster / Magic",
+  "class": "Magician",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Female",
+  "companion": "Pyraxis",
+  "element": "Fire",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 130, "mana": 100, "attack": 85, "defense": 25, "moveRange": 3, "attackRange": 3 },
+  "pairing": {
+    "petCardId": "UNIT_PYRAXIS",
+    "pairBonus": "When combined with Pyraxis, Draknora ascends to her Sundered pyre-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-002-draknora-pyraxis-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_PYRE_LANCE", "name": "Pyre Lance", "type": "Active", "manaCost": 30, "cooldown": 2, "description": "Deal 90 fire damage to a target and 20 splash to adjacent enemies." },
+    { "abilityId": "ABILITY_EMBER_CROWN", "name": "Ember Crown", "type": "Passive", "description": "Allied Fire cards gain +10% attack (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Fire given a crown and a will. Her temper is the reason winters come late.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Fire), paired to Pyraxis." }
+}

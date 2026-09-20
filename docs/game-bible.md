@@ -50,6 +50,8 @@ document disagree on an implementation detail, the canonical document wins.
 
 ## 🗺️ Table of Contents
 
+- Prologue — The Sundering *(story)*
+
 1. Core Philosophy
 2. The Card System (Assets & Collection)
 3. The Map Hierarchy (The World)
@@ -67,6 +69,56 @@ document disagree on an implementation detail, the canonical document wins.
 15. Edge Cases & Resilience
 16. Delivery Roadmap
 17. Inspirations & Credits
+
+---
+
+## 📖 Prologue — The Sundering *(story canon · draft)*
+
+> **Status:** Draft lore — the shape of the myth is set; the finer details are still being
+> forged. Card roster and elements: [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md).
+
+Before there were ten territories, there was one dominion, and it belonged to shadow.
+
+**Draknare Thorne** was its sovereign — a shadow-knight whose banner fell across the world
+like a long dusk. **Drakness Thorne** stood with him, a necromancer whose art could call the
+dead to whisper and the living to kneel. Two powers of Darkness, drawn together as shadow is
+drawn to shadow — and what began as attraction became *union*: of hearts, and fatally, of
+*magics*.
+
+What passed between them is the thing the world now calls **the Sundering**. For when a
+shadow-sovereign's dominion-magic entwined with a necromancer's death-magic at the height of
+passion, no working could hold the seam. Creation met un-creation; the spell meant to make
+*one* overflowed and *shattered into ten*. The Sundering was, in truth, a **birth** — the
+most catastrophic act of creation the world had ever known.
+
+Drakness, already Darkness, kept her throne. But from the nine shards that spun out into the
+dark, **nine sisters awoke** — each a sovereign of a single element, each a caster to the
+marrow:
+
+- **Draknora** of Fire · **Drakniya** of Grass · **Draknira** of Ice · **Draknisa** of Water
+- **Drakniss** of Light · **Draknara** of Earth · **Drakneta** of Lightning
+- **Draknava** of Wind · and **Draknoxa** of Poison.
+
+Ten sisters of the Drakn name, and one **Draknare** — the shadow-father, the first cause and
+the only Drakn son. This is why the line runs ten daughters deep and but a single male: the
+sisters are the *shards*, and he is the *hand that broke the whole*.
+
+With the shards fell the **Elder Dragons** — one to each element, ancient and bonded to the
+sister who shares their nature (Umbrath to Drakness, Pyraxis to Draknora, on down the line).
+They surface in each heroine's "combined" card and shadow the background of her series.
+
+The Sundering fractured the world into **Sovereign Territories** — elemental domains that
+will not sit still. Each sister is compelled by the shard within her to claim, to hold, to
+*expand*; for a sundered crown remembers it was once whole, and every shard aches to be the
+one that rules the rest. And so the sisters war — sometimes against each other, sometimes
+against the shadow that made them.
+
+*You arrive at the dawn of that war.*
+
+> 💡 **Design hook (open):** the Sundering explains **why** the map is elemental and **why**
+> conquest is the endgame — each Transcendent heroine is a faction identity, her Elder Dragon
+> her ultimate, and territory the prize. How tightly the story binds to mechanics is still
+> the author's to decide.
 
 ---
 
@@ -154,7 +206,7 @@ world. This is the heart of the game.*
 
 > **MVP expression:** Heroes, Units, Tactics (small validated set). Buildings/Workers exist
 > as art/identity only. · **Future expression:** All six types fully functional. ·
-> **Authority:** [`../data/schemas/card-schema.json`](../data/schemas/card-schema.json)
+> **Authority:** [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json)
 
 - **Heroes** — Unique commanders who anchor a formation. Immortal in spirit (defeated heroes
   recover), they grant identity and, in later phases, lead independent armies. *Thor calls
@@ -171,19 +223,28 @@ world. This is the heart of the game.*
 - **Equipment** — Gear that bolts onto heroes for power and spectacle: a blade that glows,
   armor that turns a silhouette into a legend.
 
-### 2.2 Rarity & customization — the six tiers
+**Creature taxonomy.** Alongside its mechanical role, every character card carries a
+*creature type* — **Humanoid, Dragon, Beast, Elemental, Undead, Construct, Spirit** — plus a
+*race* and an *archetype*. Non-human, non-hero creatures (an Elder Dragon, a Dire Wolf) are
+**Units** by role but **Dragon** or **Beast** by creature type. This taxonomy is deliberately
+**extensible**: as new card ideas emerge, both roles and creature types can grow (see Section
+13).
 
 > **MVP expression:** Rarities exist as identity + budget cost. · **Future expression:**
 > Full fusion, star ranks, skill trees, shinies. · **Authority:**
 > [`design/deck-progression-rules.md`](design/deck-progression-rules.md)
 
-Six tiers form the collector's ladder — **Common, Uncommon, Rare, Epic, Legendary,
-Mythic**. Our visual grammar is Pokémon-clean:
+Seven tiers form the collector's ladder — **Common, Uncommon, Rare, Epic, Legendary,
+Mythic**, and the apex **Transcendent**. Transcendent is the rarest, most sought-after
+tier: it is reserved for the ten story heroines of the **Drakn Line** (see 2.9), each bonded
+to an Elder Dragon. Beneath the ladder sits a humble **Basic (0)** tier for foundation and
+token cards (e.g., spawned minions) that carry no rarity-budget cost. Our visual grammar is
+Pokémon-clean:
 
-- **Element determines frame colour** — Fire is red-orange, Water is blue, Earth is
-  brown-green, Lightning is gold-violet, Wind is cyan-white, Frost is pale ice.
+- **Element determines frame colour** — each of the ten elements owns a palette (see the
+  element table below).
 - **Rarity determines frame complexity & effect** — from a Common's clean matte border to a
-  Mythic's living, screen-touching aura.
+  Transcendent's living, screen-touching aura.
 - **Stars show progression** within a tier — white stars with an element-coloured glow.
 
 **Why it works**:
@@ -193,8 +254,32 @@ Mythic**. Our visual grammar is Pokémon-clean:
 - **Accessibility** — colourblind players still read rarity by frame complexity.
 - **Future-proof** — new elements are new colours; new rarities are new effect tiers.
 
-> 💡 The exact star ranges, fusion costs, stat multipliers, and drop rates are owned by the
-> deck-progression and card schemas so the codex never drifts from the math.
+> 💡 The exact star ranges, fusion costs, stat multipliers, drop rates, and rarity-budget
+> costs are owned by the deck-progression rules and the card schema so the codex never
+> drifts from the math.
+
+#### The ten elements
+
+> **Status:** Proposed (10-element expansion) · **Authority:**
+> [`design/combat-calculation-spec.md`](design/combat-calculation-spec.md) (cycles),
+> [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json) (contract)
+
+| Element | Frame colour | Accent |
+| --- | --- | --- |
+| Darkness | deep purple | magenta |
+| Fire | red-orange | ember gold |
+| Grass | verdant green | leaf gold |
+| Ice | pale ice-blue | white |
+| Water | blue | teal |
+| Light | radiant white-gold | soft yellow |
+| Earth | brown-green | stone amber |
+| Lightning | gold | violet |
+| Wind | cyan | white |
+| Poison | sickly green-violet | acid green |
+
+*Neutral* remains a non-elemental identity for element-agnostic cards (basic tactics,
+generic units). Elements are **visual identity only** in the MVP; their strength/weakness
+cycles are a designed Phase 2 system (see Section 7 and the combat spec).
 
 ### 2.3 Card anatomy
 
@@ -270,6 +355,64 @@ playable hero immediately and a meaningful choice of path — never a "bad luck"
 The full vision offers curated decks (perfect synergy for beginners) and element decks
 (higher variance for veterans). The MVP delivers a single, guaranteed-legal starter so no
 one is ever stranded without a formation.
+
+### 2.9 The Drakn Line & the Thorne name *(story canon)*
+
+> **Status:** Vision (Transcendent tier) · **Authority:**
+> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md) (roster),
+> [`design/deck-progression-rules.md`](design/deck-progression-rules.md) (tier cost)
+
+At the summit of the collection stand the **ten Drakn heroines** — the story's central
+figures and the game's most coveted cards, each a **Transcendent** (the seventh, apex
+rarity). One heroine anchors each of the ten elements, and each is bonded to an **Elder
+Dragon** of the same element that surfaces in her "combined" card art and haunts the
+background of her signature series.
+
+The surname **Thorne** is canonical for the Drakn bloodline (Drakness Thorne, Draknora
+Thorne, and their sisters), and a single male shadow-knight, **Draknare Thorne**, carries
+the name into the front line. Other heroes across the game bear their own names fitting
+their role and origin — the Thorne name belongs to the Drakn.
+
+Because Transcendent cards sit far above standard rarity budgets, they are treated as
+**apex chase and showcase cards**; how (or whether) they enter standard competitive formats
+is an open design decision owned by the deck-progression rules, not an MVP concern.
+
+### 2.10 Bonded Pets & Pairing *(design signature · proposed)*
+
+> **MVP expression:** Art/identity only — a card may depict its pet. · **Future expression:**
+> A pairing mechanic that transforms art and grants a bonus. · **Status:** Proposed ·
+> **Authority:** [`../data/schemas/codex-schema.json`](../data/schemas/codex-schema.json)
+> (`pairing`), [`design/combat-calculation-spec.md`](design/combat-calculation-spec.md) (mechanics).
+
+Every **Rare-or-above** card — all named heroes at any level, and Rare+ units — can have a
+**bonded pet**: a companion that exists as *its own collectible card*. The Transcendent
+heroines and their Elder Dragons are the flagship pairing (Drakness ↔ Umbrath), but the system
+reaches all the way down to a Rare pikeman and his war hound.
+
+**How pairing works** *(proposed)*:
+
+- Collect both the card and its bonded pet.
+- **Pair them** in a formation, and the magic answers — the card's **art transforms** to its
+  *combined* variant, and both gain a **pairing bonus**.
+
+**Candidate models** (open decision — the author leans toward *fusion combine*):
+
+- **Fusion combine** *(leaning)* — like card evolution, you *use* the pet to evolve the owner
+  into a **single combined card** that carries the combined art and merged power. One card,
+  one slot, one big payoff.
+- **Companion attach** — the pet bonds to its owner like equipment: no extra formation slot, a
+  passive bonus, and the combined art.
+- **Paired duo** — the card and pet each take a slot, but fielded together they unlock a
+  **strong synergy** (shared ability, big stat swing) plus the combined art.
+
+**Why it works**:
+
+- **Collector hook** — every marquee card implies a second card to chase (its pet).
+- **Deck identity** — pairing rewards theme-building, not just raw rarity.
+- **Spectacle** — the art *changes* when you pair: a visible payoff for collecting both.
+
+Exact bonus values, slot rules, and which model wins are a **Phase 2 combat decision**; in the
+MVP a pet is art and flavor only.
 
 ---
 
@@ -612,6 +755,25 @@ excitement without permanent loss.
 - **No power creep** — new cards are *different*, not strictly *better*.
 - **Community content** — a long-term dream of modding and creator collaboration, cosmetic
   and PvE-safe.
+
+### One Base Set, ten elements *(structure)*
+
+> **Status:** Proposed · **Authority:**
+> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md)
+
+The launch collection is a **single Base Set** that spans **all ten elements** from day one —
+no day-one expansion split. Balance is held by a symmetric per-element template (see the
+ideation blueprint). True **expansions** arrive later as new *themes* (Storm Rising, Valhalla,
+Cyber Dominion) and may introduce **new card types and mechanics** as the design evolves.
+
+**Ideas on the horizon** *(vision, unscheduled)*:
+
+- **Consumable cards** — one-shot cards that grant temporary buffs (e.g., a boost to AFK
+  rewards, a short-lived avatar/stat bonus, a battle banner).
+- New **creature types** and **archetypes** as fresh mechanics are discovered.
+
+The taxonomy is a living thing: the codex expects it to grow, and the schema is built to
+absorb new roles without a rewrite.
 
 ---
 

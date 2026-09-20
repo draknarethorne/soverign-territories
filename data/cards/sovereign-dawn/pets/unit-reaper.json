@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_REAPER",
+  "collectionNumber": "SD-031",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 31, "totalCards": 198 },
+  "name": "Reaper",
+  "type": "Unit",
+  "archetype": "Assassin / Burst DPS",
+  "class": "Reaper",
+  "creatureType": "Reaper",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Darkness",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 80, "mana": 30, "attack": 68, "defense": 18, "moveRange": 4, "attackRange": 1 },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNARE_THORNE",
+    "pairBonus": "Bonded to Draknare. When combined, punishes attackers who strike the shadow-father.",
+    "combinedArtAsset": "sd-011-draknare-reaper-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_SOUL_REAP", "name": "Soul Reap", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 70 shadow damage; heal Draknare for 20 if he is on the field." }
+  ],
+  "tacticSlots": 3,
+  "lore": "Draknare's shadow made a scythe of itself the night the crown broke; it has never left his side.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Draknare (Darkness)." }
+}

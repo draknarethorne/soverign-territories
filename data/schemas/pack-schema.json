@@ -45,7 +45,7 @@
         "properties": {
           "rarity": {
             "type": "string",
-            "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic"],
+            "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic", "transcendent"],
             "description": "Card rarity tier"
           },
           "probability": {

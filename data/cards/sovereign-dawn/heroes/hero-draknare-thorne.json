@@ -1,0 +1,63 @@
+{
+  "cardId": "HERO_DRAKNARE_THORNE",
+  "collectionNumber": "SD-011",
+  "series": {
+    "seriesId": "sovereign-dawn",
+    "seriesName": "Sovereign Dawn",
+    "cardNumber": 11,
+    "totalCards": 198
+  },
+  "name": "Draknare Thorne",
+  "type": "Hero",
+  "archetype": "Defense / Tank",
+  "class": "Shadow Knight",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Male",
+  "companion": "Reaper",
+  "element": "Darkness",
+  "rarity": {
+    "tier": "Mythic",
+    "stars": 6,
+    "maxStars": 8,
+    "points": 32
+  },
+  "stats": {
+    "health": 180,
+    "mana": 60,
+    "attack": 70,
+    "defense": 45,
+    "moveRange": 3,
+    "attackRange": 1
+  },
+  "pairing": {
+    "petCardId": "UNIT_REAPER",
+    "pairBonus": "When paired with his Reaper, Draknare draws enemy focus while the Reaper punishes attackers (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-011-draknare-reaper-combined"
+  },
+  "abilities": [
+    {
+      "abilityId": "ABILITY_DUSK_BULWARK",
+      "name": "Dusk Bulwark",
+      "type": "Active",
+      "manaCost": 20,
+      "cooldown": 3,
+      "description": "Taunt all enemies and gain +30% defense for 2 turns."
+    },
+    {
+      "abilityId": "ABILITY_FIRST_CAUSE",
+      "name": "First Cause",
+      "type": "Passive",
+      "description": "The hand that broke the whole: heal 5% max HP whenever a Darkness ally is defeated."
+    }
+  ],
+  "tacticSlots": 6,
+  "lore": "The shadow-father and the only Drakn son — first cause of the Sundering, and the last to forgive himself for it.",
+  "acquisition": {
+    "packSources": [],
+    "campaignDrops": []
+  },
+  "meta": {
+    "designNotes": "First-pass stats; balance TBD. Mythic marquee male hero (Darkness). Bonded pet Reaper (UNIT_REAPER, to be authored)."
+  }
+}

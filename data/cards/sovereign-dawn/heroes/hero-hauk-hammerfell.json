@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_HAUK_HAMMERFELL",
+  "collectionNumber": "SD-016",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 16, "totalCards": 198 },
+  "name": "Hauk Hammerfell",
+  "type": "Hero",
+  "archetype": "Defense / Tank",
+  "class": "Paladin",
+  "creatureType": "Humanoid",
+  "race": "Human",
+  "sex": "Male",
+  "companion": "Angel",
+  "element": "Light",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 185, "mana": 55, "attack": 68, "defense": 46, "moveRange": 3, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_ANGEL",
+    "pairBonus": "Combined with his guardian Angel (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-016-hauk-angel-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_AEGIS_OF_DAWN", "name": "Aegis of Dawn", "type": "Active", "manaCost": 20, "cooldown": 3, "description": "Shield all allies for 40 for 2 turns." },
+    { "abilityId": "ABILITY_CONSECRATE", "name": "Consecrate", "type": "Passive", "description": "Adjacent allies heal 5 HP each turn (Phase 2)." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A crusader who took Drakniss's dawn as an oath and has not knelt to the dark since.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Light). Bonded pet Angel (to be authored)." }
+}

@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_DIRE_BEAR",
+  "collectionNumber": "SD-037",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 37, "totalCards": 198 },
+  "name": "Dire Bear",
+  "type": "Unit",
+  "archetype": "Melee / Striker",
+  "class": "Beast",
+  "creatureType": "Dire Bear",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Earth",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 130, "mana": 20, "attack": 74, "defense": 26, "moveRange": 3, "attackRange": 1 },
+  "pairing": {
+    "pairsWith": "HERO_TORVALD_STONEBREAKER",
+    "pairBonus": "Bonded to Torvald. When combined, the two rampage as one.",
+    "combinedArtAsset": "sd-017-torvald-direbear-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_MAUL", "name": "Maul", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Deal 78 damage and stun the target on a critical (Phase 2)." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A mountain of fur and fury from Draknara's highlands that adopted Torvald, not the other way around.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Torvald (Earth)." }
+}

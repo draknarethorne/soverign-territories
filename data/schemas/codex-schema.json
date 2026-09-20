@@ -8,8 +8,8 @@
   "properties": {
     "cardId": {
       "type": "string",
-      "pattern": "^(HERO|UNIT|TACTIC|BUILDING)_[A-Z_]+$",
-      "description": "Unique identifier (e.g., HERO_ARIA_FLAME_KNIGHT)"
+      "pattern": "^(HERO|UNIT|BUILDING|WORKER|TACTIC|EQUIPMENT)_[A-Z_]+$",
+      "description": "Unique identifier (e.g., HERO_ARIA_FLAME_KNIGHT, WORKER_FARMER)"
     },
 
     "collectionNumber": {
@@ -39,14 +39,56 @@
 
     "type": {
       "type": "string",
-      "enum": ["Hero", "Unit", "Tactic", "Building"],
-      "description": "Card type"
+      "enum": ["Hero", "Unit", "Building", "Worker", "Tactic", "Equipment"],
+      "description": "Mechanical card role (extensible; future roles such as Consumable may be added)"
+    },
+
+    "archetype": {
+      "type": "string",
+      "description": "Combat/role differentiation (e.g., Summoner / Spawner, Defense / Tank, Aerial / Flying)"
+    },
+
+    "class": {
+      "type": "string",
+      "description": "Class fantasy (e.g., Necromancer, Paladin, Elder Dragon)"
+    },
+
+    "creatureType": {
+      "type": "string",
+      "description": "Creature taxonomy — canonical values: Humanoid, Dragon, Beast, Elemental, Undead, Construct, Spirit (extensible as new card ideas emerge)"
+    },
+
+    "race": {
+      "type": "string",
+      "description": "Race/lineage (e.g., Dark Elf, Human, n/a)"
+    },
+
+    "sex": {
+      "type": "string",
+      "enum": ["Male", "Female", "None"],
+      "description": "Character sex; None for non-character cards"
+    },
+
+    "companion": {
+      "type": "string",
+      "description": "Bonded pet/companion or aligned creature (e.g., Dragon, Reaper, n/a)"
+    },
+
+    "pairing": {
+      "type": "object",
+      "description": "Bonded-pet pairing (Rare+ cards). Pairing a card with its bonded pet transforms the art and grants a bonus; exact mechanics are a Phase 2 decision.",
+      "properties": {
+        "petCardId": {"type": "string", "description": "cardId of this card's bonded pet (owner side)"},
+        "pairsWith": {"type": "string", "description": "cardId of the owner this pet bonds to (pet side)"},
+        "pairBonus": {"type": "string", "description": "Description of the pairing bonus (values TBD)"},
+        "combinedArtAsset": {"type": "string", "description": "Art shown when the pair is active"}
+      }
     },
 
     "element": {
       "type": "string",
-      "enum": ["Fire", "Water", "Earth", "Lightning", "Wind", "Frost", "Neutral", "Dark", "Light", "Arcane"],
-      "description": "Elemental affiliation"
+      "enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"],
+      "description": "Elemental affiliation (10-element model; Neutral = non-elemental cards)"
     },
 
     "rarity": {
@@ -55,18 +97,24 @@
       "properties": {
         "tier": {
           "type": "string",
-          "enum": ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]
+          "enum": ["Basic", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic", "Transcendent"]
         },
         "stars": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 6,
-          "description": "Visual star rating (0-6)"
+          "maximum": 8,
+          "description": "Visual star rating (0-8)"
+        },
+        "maxStars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8,
+          "description": "Maximum attainable star rank for this card"
         },
         "points": {
           "type": "integer",
-          "enum": [1, 4, 8, 16, 32],
-          "description": "Rarity budget cost"
+          "enum": [0, 1, 2, 4, 8, 16, 32, 64],
+          "description": "Rarity budget cost (Basic = 0, Uncommon = 2, Transcendent = 64)"
         }
       }
     },
@@ -105,8 +153,8 @@
     "tacticSlots": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 5,
-      "description": "Number of tactic cards this unit can equip"
+      "maximum": 8,
+      "description": "Number of tactic cards this unit can equip (scales with star rank, up to 8)"
     },
 
     "lore": {

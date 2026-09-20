@@ -1,0 +1,28 @@
+{
+  "cardId": "HERO_ZEPHYR_GALEHEART",
+  "collectionNumber": "SD-019",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 19, "totalCards": 198 },
+  "name": "Zephyr Galeheart",
+  "type": "Hero",
+  "archetype": "Melee / Striker",
+  "class": "Warrior",
+  "creatureType": "Humanoid",
+  "race": "High Elf",
+  "sex": "Male",
+  "companion": "Giant Eagle",
+  "element": "Wind",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 160, "mana": 50, "attack": 85, "defense": 33, "moveRange": 4, "attackRange": 1 },
+  "pairing": {
+    "petCardId": "UNIT_GIANT_EAGLE",
+    "pairBonus": "Combined with his Giant Eagle (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-019-zephyr-eagle-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_GALE_STRIKE", "name": "Gale Strike", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Dash to a target, deal 90 wind damage, and reposition one tile behind it." }
+  ],
+  "tacticSlots": 6,
+  "lore": "A skyborne duelist who rides Draknava's winds like a road only he can see.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Wind). Bonded pet Giant Eagle (to be authored)." }
+}

@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_LUMIRA",
+  "collectionNumber": "SD-026",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 26, "totalCards": 198 },
+  "name": "Lumira",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Female",
+  "element": "Light",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 188, "mana": 72, "attack": 84, "defense": 36, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNISS_THORNE",
+    "pairBonus": "Bonded to Drakniss. When combined, unlocks her Sundered dawn-form.",
+    "combinedArtAsset": "sd-006-drakniss-lumira-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_RADIANT_BREATH", "name": "Radiant Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale holy light: 90 damage to enemies in a 3-tile line and heal allies in that line for 30." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Light, shard-born, bonded to Drakniss since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Light), bonded to Drakniss." }
+}

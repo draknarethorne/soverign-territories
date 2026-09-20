@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_ANGEL",
+  "collectionNumber": "SD-036",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 36, "totalCards": 198 },
+  "name": "Angel",
+  "type": "Unit",
+  "archetype": "Support / Healer",
+  "class": "Cleric",
+  "creatureType": "Angel",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Light",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 85, "mana": 40, "attack": 48, "defense": 22, "moveRange": 4, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_HAUK_HAMMERFELL",
+    "pairBonus": "Bonded to Hauk. When combined, shields the paladin's line in dawnlight.",
+    "combinedArtAsset": "sd-016-hauk-angel-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_GUARDIAN_LIGHT", "name": "Guardian Light", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Heal an ally for 60 and grant +15% defense for 1 turn." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A herald of Drakniss's dawn that keeps watch over the one mortal it deemed worthy.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Hauk (Light)." }
+}

@@ -1,0 +1,29 @@
+{
+  "cardId": "HERO_DRAKNIYA_THORNE",
+  "collectionNumber": "SD-003",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 3, "totalCards": 198 },
+  "name": "Drakniya Thorne",
+  "type": "Hero",
+  "archetype": "Support / Healer",
+  "class": "Druid",
+  "creatureType": "Humanoid",
+  "race": "Wood Elf",
+  "sex": "Female",
+  "companion": "Sylvanya",
+  "element": "Grass",
+  "rarity": { "tier": "Transcendent", "stars": 7, "maxStars": 8, "points": 64 },
+  "stats": { "health": 135, "mana": 100, "attack": 60, "defense": 30, "moveRange": 3, "attackRange": 2 },
+  "pairing": {
+    "petCardId": "UNIT_SYLVANYA",
+    "pairBonus": "When combined with Sylvanya, Drakniya blooms into her Sundered grove-form (combined art + bonus TBD).",
+    "combinedArtAsset": "sd-003-drakniya-sylvanya-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_VERDANT_BLOOM", "name": "Verdant Bloom", "type": "Active", "manaCost": 25, "cooldown": 2, "description": "Heal 80 HP to the lowest-HP ally and grant regeneration for 2 turns." },
+    { "abilityId": "ABILITY_WILD_GROWTH", "name": "Wild Growth", "type": "Passive", "description": "Allied cards heal 5 HP each turn (Phase 2)." }
+  ],
+  "tacticSlots": 7,
+  "lore": "One of the nine Sundered — Grass given a crown and a will. Where she kneels, the ruined earth remembers how to live.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Grass), paired to Sylvanya." }
+}

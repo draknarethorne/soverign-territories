@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_ZEPHYROS",
+  "collectionNumber": "SD-029",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 29, "totalCards": 198 },
+  "name": "Zephyros",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Male",
+  "element": "Wind",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 184, "mana": 72, "attack": 88, "defense": 33, "moveRange": 6, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNAVA_THORNE",
+    "pairBonus": "Bonded to Draknava. When combined, unlocks her Sundered gale-form.",
+    "combinedArtAsset": "sd-009-draknava-zephyros-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_GALE_BREATH", "name": "Gale Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale a shrieking gale: 95 damage and scatter enemy formation in a 3-tile line." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Wind, shard-born, bonded to Draknava since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Wind), bonded to Draknava." }
+}

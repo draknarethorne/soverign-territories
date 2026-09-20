@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_GIANT_EAGLE",
+  "collectionNumber": "SD-039",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 39, "totalCards": 198 },
+  "name": "Giant Eagle",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Beast",
+  "creatureType": "Giant Eagle",
+  "race": "n/a",
+  "sex": "None",
+  "element": "Wind",
+  "rarity": { "tier": "Rare", "stars": 3, "maxStars": 5, "points": 4 },
+  "stats": { "health": 82, "mana": 28, "attack": 68, "defense": 18, "moveRange": 6, "attackRange": 1, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_ZEPHYR_GALEHEART",
+    "pairBonus": "Bonded to Zephyr. When combined, the sky itself carries their charge.",
+    "combinedArtAsset": "sd-019-zephyr-eagle-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_SKY_TALON", "name": "Sky Talon", "type": "Active", "manaCost": 20, "cooldown": 2, "description": "Swoop for 66 wind damage and reposition one tile after striking." }
+  ],
+  "tacticSlots": 3,
+  "lore": "A titan of the upper winds that answers only to Zephyr and the currents Draknava sings.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Rare bonded pet of Zephyr (Wind)." }
+}

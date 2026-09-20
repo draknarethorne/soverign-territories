@@ -1,0 +1,27 @@
+{
+  "cardId": "UNIT_PYRAXIS",
+  "collectionNumber": "SD-022",
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 22, "totalCards": 198 },
+  "name": "Pyraxis",
+  "type": "Unit",
+  "archetype": "Aerial / Flying",
+  "class": "Elder Dragon",
+  "creatureType": "Dragon",
+  "race": "Dragon",
+  "sex": "Male",
+  "element": "Fire",
+  "rarity": { "tier": "Mythic", "stars": 6, "maxStars": 8, "points": 32 },
+  "stats": { "health": 185, "mana": 70, "attack": 92, "defense": 33, "moveRange": 5, "attackRange": 2, "flying": true },
+  "pairing": {
+    "pairsWith": "HERO_DRAKNORA_THORNE",
+    "pairBonus": "Bonded to Draknora. When combined, unlocks her Sundered pyre-form.",
+    "combinedArtAsset": "sd-002-draknora-pyraxis-combined"
+  },
+  "abilities": [
+    { "abilityId": "ABILITY_PYRE_BREATH", "name": "Pyre Breath", "type": "Active", "manaCost": 40, "cooldown": 3, "description": "Exhale a cone of fire: 100 damage to all enemies in a 3-tile line." }
+  ],
+  "tacticSlots": 6,
+  "lore": "The Elder Dragon of Fire, shard-born, bonded to Draknora since the night the crown broke.",
+  "acquisition": { "packSources": [], "campaignDrops": [] },
+  "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Fire), bonded to Draknora." }
+}
