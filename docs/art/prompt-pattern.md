@@ -51,14 +51,44 @@ Overall, [aesthetic] aesthetic.
 
 ## What each stage references / preserves / changes
 
-| Stage | Reference | Preserve | Change | Background | Template |
+Group names match your `Drakness_Qwen_<group>` / `Drakness_X_<group>` workflows. Templates live in
+[`prompts/_templates/`](../../prompts/_templates/); per-hero prompts go in `prompts/<Hero>/`.
+
+| Group | Reference | Preserve | Change | Background | Template |
 | --- | --- | --- | --- | --- | --- |
-| **A-pose** | source photo | likeness | build full base + bikini underlayer | studio | [`_TEMPLATE_APose.txt`](../../prompts/_TEMPLATE_APose.txt) |
-| **Head/close-up** | A-pose | face + hair | framing (chest-up) | studio | your `_qwen_a_head.txt` |
-| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | [`_TEMPLATE_Hair.txt`](../../prompts/_TEMPLATE_Hair.txt) |
-| **Pose/Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | [`_TEMPLATE_Pose.txt`](../../prompts/_TEMPLATE_Pose.txt) |
-| **Edit** (armor/clothing) | A-pose (bikini base) | face + body + hair | apply wardrobe + weapon | studio | [`_TEMPLATE_Edit.txt`](../../prompts/_TEMPLATE_Edit.txt) |
-| **Final** | near-final | everything | scene + spell + pose/wind | in-world | [`_TEMPLATE_Final.txt`](../../prompts/_TEMPLATE_Final.txt) |
+| **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | [`_TEMPLATE_Pose.txt`](../../prompts/_templates/_TEMPLATE_Pose.txt) |
+| **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | [`_TEMPLATE_Head.txt`](../../prompts/_templates/_TEMPLATE_Head.txt) |
+| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | [`_TEMPLATE_Hair.txt`](../../prompts/_templates/_TEMPLATE_Hair.txt) |
+| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | [`_TEMPLATE_Motion.txt`](../../prompts/_templates/_TEMPLATE_Motion.txt) |
+| **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | [`_TEMPLATE_Clothing.txt`](../../prompts/_templates/_TEMPLATE_Clothing.txt) |
+| **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | [`_TEMPLATE_Armor.txt`](../../prompts/_templates/_TEMPLATE_Armor.txt) |
+| **Final** | near-final | everything | scene + spell + pose/wind | in-world | [`_TEMPLATE_Final.txt`](../../prompts/_templates/_TEMPLATE_Final.txt) |
+| **Weapons** *(utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | [`_TEMPLATE_Weapons.txt`](../../prompts/_templates/_TEMPLATE_Weapons.txt) |
+| **Background** *(utility)* | — | — | a standalone scene plate | — | [`_TEMPLATE_Background.txt`](../../prompts/_templates/_TEMPLATE_Background.txt) |
+| **Pets** *(utility)* | — | — | a summon/companion (multi-image ref) | plain | [`_TEMPLATE_Pets.txt`](../../prompts/_templates/_TEMPLATE_Pets.txt) |
+
+## Craft notes & theme alignment
+
+Improvements from reviewing the Drakness prompts — apply these for more consistent output:
+
+- **Set the figure once, at A-pose.** Define bust/waist/hips/legs/skin in `X_Pose` only. Downstream
+  edits should **preserve** proportions (via the fidelity + "maintain outfit" lines), not re-issue
+  "enhance breasts" — re-sculpting downstream fights the fidelity line and drifts the body.
+- **Don't duplicate blocks.** Qwen reads instructions once; a repeated pose block (seen in Motion) adds
+  nothing and can confuse. One block each.
+- **Natural language, no weights.** Qwen-Image-Edit follows plain sentences — skip SD-style `(())`
+  weighting or `:1.2` syntax.
+- **Always negate rendered text.** Keep `text, wording, watermark, logo` in every negative (card art).
+- **One canonical eye string per hero** (from card `art.palette.eyeColor`) — reuse it verbatim across
+  stages so eyes stay consistent.
+- **Theme alignment (Drakness = Darkness / Necromancer / Dark Elf):**
+  - *Skin* — "very tan" doesn't fit a Dark Elf; consider a **dusky / ashen** or **pale gothic**
+    complexion (your call; set it once at A-pose).
+  - *Render* — the photoreal "fashion photography" framing is great for consistent A-pose/edit plates,
+    but the **Final** card may read better with a light **cinematic dark-fantasy / painterly** cue.
+  - *Motifs* — weave the same cues everywhere: amethyst necrotic glow, gothic filigree, skull accents,
+    drifting shadow/smoke. Keeps the set feeling like one character, not a fashion shoot.
+
 
 ## Section cues — how to help the model parse (your question)
 

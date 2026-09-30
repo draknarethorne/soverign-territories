@@ -1,6 +1,7 @@
-=== [HERO] · Hairstyle [VARIANT] — Edit (Qwen img2img) ===
+=== [HERO] · Hairstyle [VARIANT] (group: Hair) — Edit (Qwen img2img) ===
 Incoming image: an A-pose of [HERO]. Change ONLY the hairstyle; keep face, body, and outfit from the
-incoming image. Produces an A-pose hair variant you can feed into Pose / Edit / Final. Denoise ~0.4-0.6.
+incoming image. Produces an A-pose hair variant to feed into Motion / Clothing / Armor / Final.
+Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
@@ -15,12 +16,13 @@ physical body shape, proportions, and eye colour.
 
 Maintain the existing outfit expressly.
 
-Hair: [hairstyle change - e.g. parted above the right ear, pulled over the top, blowing to the left,
-right ear exposed].
-Breeze: [minimal, direction].
-[EYE] eyes.
+Hair: [hairstyle change - e.g. parted above the right ear, pulled over the top, blowing left, right
+ear exposed].
+Breeze: [minimal / moderate, direction].
+Eyes: [EYE].
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, extra feet, crowns, head gear, pauldrons, shoulder armor.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons,
+shoulder armor, text, wording, watermark, logo.
