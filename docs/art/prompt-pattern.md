@@ -81,6 +81,8 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
   wash) so a heavily-made-up source photo doesn't leak through. Each outfit then adds a **`Makeup:`**
   line - eyeshadow matched to the feel (soft shimmer for light looks, smoky for dark armor). Fantasy /
   Final carry the heaviest makeup + glowing eyes.
+- **Nails = fingernails *and* toenails.** Toes show in open-toed heels (the A-Pose wears them), so set
+  both at the A-Pose and restate per outfit; harmless to state under boots (just won't show).
 - **Fantasy comes at the end.** Eyeshadow, blush, glowing eyes, necrotic glow, and any painterly
   treatment go in the optional **Fantasy** pass and/or the **Final** scene - never the baseline.
 
