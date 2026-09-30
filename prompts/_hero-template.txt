@@ -29,14 +29,14 @@ Draknoxa   Poison     Control / Disruptor  Alchemist    Radiant Acid Green    Vi
 
 
 
---- Original Element palette (from the Codex; keep card art on-theme) ---
-Darkness   primary deep purple        / accent magenta
-Fire       primary red-orange         / accent ember gold
-Grass      primary verdant green      / accent leaf gold
-Ice        primary pale ice-blue      / accent white
-Water      primary blue               / accent teal
-Light      primary radiant white-gold / accent soft yellow
-Earth      primary brown-green        / accent stone amber
-Lightning  primary gold               / accent violet
-Wind       primary cyan               / accent white
-Poison     primary green-violet       / accent acid green
+--- Element palette quick reference (canonical — matches the Codex table above) ---
+Darkness   primary Midnight Violet      / accent Vibrant Amethyst, Polished Silver
+Fire       primary Flame Red            / accent Burnished Gold, Vibrant Orange
+Grass      primary Emerald Green        / accent Forest Sage, Moss Gold
+Ice        primary Glacial Blue         / accent Frost White, Shimmering Silver
+Water      primary Deep Oceanic Blue    / accent Aquamarine, Polished Brass
+Light      primary Luminous Ivory White / accent Radiant Gold, Polished Steel
+Earth      primary Terracotta Ochre     / accent Rich Bronze, Warm Sand
+Lightning  primary Electric Gold        / accent Bright Gold, Arc White
+Wind       primary Sky Cerulean         / accent Gossamer Silver, Breeze Teal
+Poison     primary Radiant Acid Green   / accent Vibrant Acid Lime, Tarnished Brass
