@@ -1,0 +1,7 @@
+{
+  "element": "Neutral",
+  "cardType": "Hero",
+  "seriesId": "sovereign-dawn",
+  "heroIds": [],
+  "_note": "ID references only. Sovereign Dawn has no Neutral heroes. Full hero metadata lives in data/cards/sovereign-dawn/heroes/*.json files."
+}

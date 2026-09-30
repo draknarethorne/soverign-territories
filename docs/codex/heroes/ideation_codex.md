@@ -166,8 +166,9 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
   (pack + element-list renames); resolved the `UNIT_TREANT` collision (legacy → `UNIT_GROVE_TREANT`);
   rebuilt the 219-entry checklist and series-manifest breakdowns; rebuilt the earth/water starter
   boxes (were referencing phantom cardIds). Scripted + schema-validated (0 invalid of 219).
-  Remaining structural option: physically consolidate `data/cards/base-set/` + `phase-2-expansion/`
-  into `data/cards/sovereign-dawn/`.
+  Directories consolidated via `git mv` — all cards now live under `data/cards/sovereign-dawn/`
+  (`heroes`, `units`, `dragons`, `pets`, `tactics`, `buildings`, `equipment`, `workers`,
+  `element-lists`); the former `base-set/` and `phase-2-expansion/` folders are removed.
 - **Card JSON authoring:** create `data/cards/` entries for the marquee 30, then fill element parity
   per the blueprint below (authored in waves with balance review).
 - **Element art refresh:** existing `Frost` cards map to `Ice`; `Dark`/`Arcane` map to `Darkness`.

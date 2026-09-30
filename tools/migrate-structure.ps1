@@ -8,10 +8,10 @@ Write-Host "Phase 1-3: Create new structure, copy files, update references`n" -F
 Write-Host "[Phase 1] Creating new directory structure..." -ForegroundColor Green
 
 $directories = @(
-    "data/cards/base-set/heroes",
-    "data/cards/base-set/units",
-    "data/cards/base-set/tactics",
-    "data/cards/base-set/buildings",
+    "data/cards/sovereign-dawn/heroes",
+    "data/cards/sovereign-dawn/units",
+    "data/cards/sovereign-dawn/tactics",
+    "data/cards/sovereign-dawn/buildings",
     "data/products/packs",
     "data/products/boxes",
     "data/products/rewards",
@@ -40,22 +40,22 @@ if (Test-Path "docs/codex/base-set/cards") {
     Write-Host "  Copying card files..." -ForegroundColor Gray
 
     Get-ChildItem "docs/codex/base-set/cards/hero-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
-        Copy-Item $_.FullName -Destination "data/cards/base-set/heroes/" -Force
+        Copy-Item $_.FullName -Destination "data/cards/sovereign-dawn/heroes/" -Force
         Write-Host "    → $($_.Name) → heroes/" -ForegroundColor DarkGray
     }
 
     Get-ChildItem "docs/codex/base-set/cards/unit-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
-        Copy-Item $_.FullName -Destination "data/cards/base-set/units/" -Force
+        Copy-Item $_.FullName -Destination "data/cards/sovereign-dawn/units/" -Force
         Write-Host "    → $($_.Name) → units/" -ForegroundColor DarkGray
     }
 
     Get-ChildItem "docs/codex/base-set/cards/tactic-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
-        Copy-Item $_.FullName -Destination "data/cards/base-set/tactics/" -Force
+        Copy-Item $_.FullName -Destination "data/cards/sovereign-dawn/tactics/" -Force
         Write-Host "    → $($_.Name) → tactics/" -ForegroundColor DarkGray
     }
 
     Get-ChildItem "docs/codex/base-set/cards/building-*.json" -ErrorAction SilentlyContinue | ForEach-Object {
-        Copy-Item $_.FullName -Destination "data/cards/base-set/buildings/" -Force
+        Copy-Item $_.FullName -Destination "data/cards/sovereign-dawn/buildings/" -Force
         Write-Host "    → $($_.Name) → buildings/" -ForegroundColor DarkGray
     }
 }
@@ -105,10 +105,10 @@ if (Test-Path "scripts") {
 # Phase 3: Summary
 Write-Host "`n[Phase 3] Migration Summary" -ForegroundColor Green
 
-$heroCount = (Get-ChildItem "data/cards/base-set/heroes/*.json" -ErrorAction SilentlyContinue).Count
-$unitCount = (Get-ChildItem "data/cards/base-set/units/*.json" -ErrorAction SilentlyContinue).Count
-$tacticCount = (Get-ChildItem "data/cards/base-set/tactics/*.json" -ErrorAction SilentlyContinue).Count
-$buildingCount = (Get-ChildItem "data/cards/base-set/buildings/*.json" -ErrorAction SilentlyContinue).Count
+$heroCount = (Get-ChildItem "data/cards/sovereign-dawn/heroes/*.json" -ErrorAction SilentlyContinue).Count
+$unitCount = (Get-ChildItem "data/cards/sovereign-dawn/units/*.json" -ErrorAction SilentlyContinue).Count
+$tacticCount = (Get-ChildItem "data/cards/sovereign-dawn/tactics/*.json" -ErrorAction SilentlyContinue).Count
+$buildingCount = (Get-ChildItem "data/cards/sovereign-dawn/buildings/*.json" -ErrorAction SilentlyContinue).Count
 $totalCards = $heroCount + $unitCount + $tacticCount + $buildingCount
 
 Write-Host "`nFiles Migrated:" -ForegroundColor Cyan
@@ -123,8 +123,8 @@ Write-Host "  Rewards: $rewardCount" -ForegroundColor White
 Write-Host "  Scripts: $scriptCount (moved to tools/)" -ForegroundColor White
 
 Write-Host "`nNew Structure:" -ForegroundColor Cyan
-Write-Host "  data/cards/base-set/heroes/     ← Hero cards" -ForegroundColor Gray
-Write-Host "  data/cards/base-set/units/      ← Unit cards" -ForegroundColor Gray
+Write-Host "  data/cards/sovereign-dawn/heroes/     ← Hero cards" -ForegroundColor Gray
+Write-Host "  data/cards/sovereign-dawn/units/      ← Unit cards" -ForegroundColor Gray
 Write-Host "  data/products/packs/            ← Pack definitions" -ForegroundColor Gray
 Write-Host "  tools/generators/               ← Build scripts" -ForegroundColor Gray
 

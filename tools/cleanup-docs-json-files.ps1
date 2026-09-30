@@ -63,8 +63,8 @@ if (Test-Path "docs/specs/starter-cards.json") {
 Write-Host "PHASE 4: Moving Special Card Data..." -ForegroundColor Yellow
 
 if (Test-Path "docs/specs/cards/fire/fire-heroes.json") {
-    New-Item -ItemType Directory -Force -Path "data/cards/base-set/element-lists" | Out-Null
-    Copy-Item "docs/specs/cards/fire/fire-heroes.json" "data/cards/base-set/element-lists/fire-heroes.json"
+    New-Item -ItemType Directory -Force -Path "data/cards/sovereign-dawn/element-lists" | Out-Null
+    Copy-Item "docs/specs/cards/fire/fire-heroes.json" "data/cards/sovereign-dawn/element-lists/fire-heroes.json"
     Write-Host "  Copied fire-heroes.json" -ForegroundColor Gray
 }
 

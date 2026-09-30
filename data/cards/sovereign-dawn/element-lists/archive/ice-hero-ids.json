@@ -5,5 +5,5 @@
   "heroIds": [
     "HERO_FROST_ICE_QUEEN"
   ],
-  "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
+  "_note": "ID references only. Full hero metadata lives in data/cards/sovereign-dawn/heroes/*.json files."
 }

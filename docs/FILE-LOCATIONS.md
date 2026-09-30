@@ -8,7 +8,7 @@
 
 | What | Where | Count | Status |
 |------|-------|-------|--------|
-| **🎴 Individual Cards** | [`data/cards/base-set/`](../data/cards/base-set/) | 30/140 | 🟡 21% |
+| **🎴 Individual Cards** | [`data/cards/sovereign-dawn/`](../data/cards/sovereign-dawn/) | 30/140 | 🟡 21% |
 | **📦 Packs** | [`data/products/packs/`](../data/products/packs/) | 16 | ✅ Complete |
 | **📦 Starter Boxes** | [`data/products/boxes/`](../data/products/boxes/) | 3 | ✅ Complete |
 | **🎁 Rewards** | [`data/products/rewards/`](../data/products/rewards/) | 1 | ✅ Complete |
@@ -22,12 +22,12 @@
 
 ## 🎴 Individual Card Files (Single Source of Truth)
 
-### 📂 Location: `data/cards/base-set/`
+### 📂 Location: `data/cards/sovereign-dawn/`
 
 Cards are organized by type in subdirectories:
 
 ```
-data/cards/base-set/
+data/cards/sovereign-dawn/
 ├── heroes/              # Hero cards (10/25 complete)
 │   ├── hero-aria-flame-knight.json             (BS-001, Epic Fire)
 │   ├── hero-ragnar-inferno-berserker.json      (BS-002, Rare Fire)
@@ -69,7 +69,7 @@ data/cards/base-set/
 
 ### ✅ Complete Card Example
 
-**File**: [`data/cards/base-set/heroes/hero-aria-flame-knight.json`](../data/cards/base-set/heroes/hero-aria-flame-knight.json)
+**File**: [`data/cards/sovereign-dawn/heroes/hero-aria-flame-knight.json`](../data/cards/sovereign-dawn/heroes/hero-aria-flame-knight.json)
 
 ```json
 {
@@ -247,8 +247,8 @@ data/schemas/
 ### 🔍 Find a Specific Card
 
 1. **By Collection Number**: Check [`docs/codex/base-set/COMPLETE-CARD-LIST.md`](codex/base-set/COMPLETE-CARD-LIST.md) (table with all 140 cards)
-2. **By Type**: Browse [`data/cards/base-set/{heroes,units,tactics,buildings}/`](../data/cards/base-set/)
-3. **By Element**: Use element-lists in [`data/cards/base-set/element-lists/`](../data/cards/base-set/element-lists/)
+2. **By Type**: Browse [`data/cards/sovereign-dawn/{heroes,units,tactics,buildings}/`](../data/cards/sovereign-dawn/)
+3. **By Element**: Use element-lists in [`data/cards/sovereign-dawn/element-lists/`](../data/cards/sovereign-dawn/element-lists/)
 
 ### 📦 Find Pack Drop Rates
 

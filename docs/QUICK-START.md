@@ -7,10 +7,10 @@
 ## 📍 Where Everything Lives
 
 ### 🎴 Cards
-**Location**: [`data/cards/base-set/`](../data/cards/base-set/)
+**Location**: [`data/cards/sovereign-dawn/`](../data/cards/sovereign-dawn/)
 
 ```
-data/cards/base-set/
+data/cards/sovereign-dawn/
 ├── heroes/        # 10 hero cards (BS-001 to BS-005, BS-026 to BS-030)
 ├── units/         # 16 unit cards (BS-006 to BS-021)
 ├── tactics/       # 3 tactic cards (BS-022 to BS-024)
@@ -18,9 +18,9 @@ data/cards/base-set/
 ```
 
 **Quick Access**:
-- Fire Hero Aria: [`hero-aria-flame-knight.json`](../data/cards/base-set/heroes/hero-aria-flame-knight.json)
-- Fire Unit: [`unit-fire-soldier.json`](../data/cards/base-set/units/unit-fire-soldier.json)
-- Fire Tactic: [`tactic-fireball.json`](../data/cards/base-set/tactics/tactic-fireball.json)
+- Fire Hero Aria: [`hero-aria-flame-knight.json`](../data/cards/sovereign-dawn/heroes/hero-aria-flame-knight.json)
+- Fire Unit: [`unit-fire-soldier.json`](../data/cards/sovereign-dawn/units/unit-fire-soldier.json)
+- Fire Tactic: [`tactic-fireball.json`](../data/cards/sovereign-dawn/tactics/tactic-fireball.json)
 
 ### 📦 Packs
 **Location**: [`data/products/packs/`](../data/products/packs/)
@@ -53,10 +53,10 @@ Human-readable table of all 140 Base Set cards
 ### View All Cards
 ```bash
 # PowerShell
-Get-ChildItem data/cards/base-set -Recurse -Filter "*.json"
+Get-ChildItem data/cards/sovereign-dawn -Recurse -Filter "*.json"
 
 # Or browse in VS Code
-Explorer: data/cards/base-set/
+Explorer: data/cards/sovereign-dawn/
 ```
 
 ### View All Packs
@@ -79,7 +79,7 @@ Get-ChildItem data/products/packs -Filter "*.json"
 - Example: [`standard-pack.json`](../data/products/packs/standard-pack.json) has `"cardPool": "base-set-all"` (not a list of 140 card IDs)
 
 ### ✅ Correct Pattern
-**Card File** ([`hero-aria-flame-knight.json`](../data/cards/base-set/heroes/hero-aria-flame-knight.json)):
+**Card File** ([`hero-aria-flame-knight.json`](../data/cards/sovereign-dawn/heroes/hero-aria-flame-knight.json)):
 ```json
 {
   "cardId": "HERO_ARIA_FLAME_KNIGHT",
@@ -104,7 +104,7 @@ List<string> cardIds = PackOpener.OpenPack("standard-pack"); // ["HERO_ARIA", "U
 
 // CardManager fetches full card data
 foreach (string id in cardIds) {
-    CardData card = CardManager.GetCard(id); // Loads from data/cards/base-set/
+    CardData card = CardManager.GetCard(id); // Loads from data/cards/sovereign-dawn/
     Debug.Log($"{card.name}: {card.stats.health} HP");
 }
 ```

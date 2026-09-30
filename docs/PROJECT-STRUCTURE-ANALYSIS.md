@@ -375,10 +375,10 @@ soverign-territories/
 ### Phase 1: Create New Structure (Non-Breaking)
 ```powershell
 # Create new directories
-New-Item -ItemType Directory -Path "data/cards/base-set/heroes"
-New-Item -ItemType Directory -Path "data/cards/base-set/units"
-New-Item -ItemType Directory -Path "data/cards/base-set/tactics"
-New-Item -ItemType Directory -Path "data/cards/base-set/buildings"
+New-Item -ItemType Directory -Path "data/cards/sovereign-dawn/heroes"
+New-Item -ItemType Directory -Path "data/cards/sovereign-dawn/units"
+New-Item -ItemType Directory -Path "data/cards/sovereign-dawn/tactics"
+New-Item -ItemType Directory -Path "data/cards/sovereign-dawn/buildings"
 New-Item -ItemType Directory -Path "data/products/packs"
 New-Item -ItemType Directory -Path "data/products/boxes"
 New-Item -ItemType Directory -Path "data/products/rewards"
@@ -390,10 +390,10 @@ New-Item -ItemType Directory -Path "tools/generators"
 ### Phase 2: Copy Files (Keep Originals)
 ```powershell
 # Copy card JSONs to new location
-Copy-Item "docs/codex/base-set/cards/hero-*.json" -Destination "data/cards/base-set/heroes/"
-Copy-Item "docs/codex/base-set/cards/unit-*.json" -Destination "data/cards/base-set/units/"
-Copy-Item "docs/codex/base-set/cards/tactic-*.json" -Destination "data/cards/base-set/tactics/"
-Copy-Item "docs/codex/base-set/cards/building-*.json" -Destination "data/cards/base-set/buildings/"
+Copy-Item "docs/codex/base-set/cards/hero-*.json" -Destination "data/cards/sovereign-dawn/heroes/"
+Copy-Item "docs/codex/base-set/cards/unit-*.json" -Destination "data/cards/sovereign-dawn/units/"
+Copy-Item "docs/codex/base-set/cards/tactic-*.json" -Destination "data/cards/sovereign-dawn/tactics/"
+Copy-Item "docs/codex/base-set/cards/building-*.json" -Destination "data/cards/sovereign-dawn/buildings/"
 
 # Copy product JSONs
 Copy-Item "docs/products/packs/*.json" -Destination "data/products/packs/"
@@ -406,14 +406,14 @@ Copy-Item "docs/products/rewards/*.json" -Destination "data/products/rewards/"
 # Modify scripts to point to /data instead of /docs
 # Example: split-master-cards.ps1
 $InputFile = "data/manifests/BASE_SET_MASTER_CARDS.json"   # OLD: docs/codex/...
-$OutputDir = "data/cards/base-set/heroes"                  # OLD: docs/codex/base-set/cards
+$OutputDir = "data/cards/sovereign-dawn/heroes"                  # OLD: docs/codex/base-set/cards
 ```
 
 ### Phase 4: Generate Reference Docs
 ```powershell
 # Create tool to generate docs from data
 .\tools\generators\generate-card-list-md.ps1 `
-  -InputDir "data/cards/base-set/" `
+  -InputDir "data/cards/sovereign-dawn/" `
   -OutputFile "docs/reference/complete-card-list.md"
 
 # Output: Human-readable Markdown generated from JSON source of truth
@@ -446,7 +446,7 @@ var cardFiles = Resources.LoadAll<TextAsset>("Cards/BaseSet/Heroes");
 ## Build Pipeline Integration
 
 ### Development Workflow
-1. **Edit Data**: Modify `/data/cards/base-set/heroes/hero-aria-flame-knight.json`
+1. **Edit Data**: Modify `/data/cards/sovereign-dawn/heroes/hero-aria-flame-knight.json`
 2. **Validate**: Run `.\tools\validators\validate-card-schema.ps1`
 3. **Sync to Unity**: Run `.\tools\generators\sync-data-to-unity.ps1`
    - Copies `/data/` → `/src/unity/Assets/Resources/`
@@ -523,7 +523,7 @@ jobs:
 
 | Aspect | Current (Conflated) | Proposed (Separated) |
 |--------|---------------------|----------------------|
-| **Card Data** | `docs/codex/base-set/cards/*.json` | `data/cards/base-set/heroes/*.json` |
+| **Card Data** | `docs/codex/base-set/cards/*.json` | `data/cards/sovereign-dawn/heroes/*.json` |
 | **Pack Data** | `docs/products/packs/*.json` | `data/products/packs/*.json` |
 | **Documentation** | Mixed with data in `/docs` | Pure `.md` in `/docs`, JSONs in `/data` |
 | **Unity Loading** | Unclear (docs not in Assets/) | Clear (Resources/ synced from data/) |

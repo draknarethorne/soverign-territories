@@ -179,5 +179,5 @@
     "WORKER_PROSPECTOR",
     "WORKER_QUARRYMAN"
   ],
-  "_note": "This manifest contains ONLY card IDs. Full card metadata lives in data/cards/base-set/{type}/*.json files (single source of truth)."
+  "_note": "This manifest contains ONLY card IDs. Full card metadata lives in data/cards/sovereign-dawn/{type}/*.json files (single source of truth)."
 }

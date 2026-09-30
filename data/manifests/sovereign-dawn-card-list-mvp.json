@@ -157,5 +157,5 @@
       "_note": "Excludes UNIT_FIRE_ARCHER, UNIT_EMBER_WOLF, UNIT_PYRO_SPRITE, UNIT_CINDER_LONGBOWMAN (moved to expansion)"
     }
   },
-  "_note": "MVP Base Set for initial release. Full card metadata in data/cards/base-set/{type}/*.json files."
+  "_note": "MVP Base Set for initial release. Full card metadata in data/cards/sovereign-dawn/{type}/*.json files."
 }

@@ -5,5 +5,5 @@
   "heroIds": [
     "HERO_KAEL_STORM_WARDEN"
   ],
-  "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
+  "_note": "ID references only. Full hero metadata lives in data/cards/sovereign-dawn/heroes/*.json files."
 }

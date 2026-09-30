@@ -9,5 +9,5 @@
     "HERO_GAIA_EARTH_MOTHER",
     "HERO_GRANITE_STONE_GUARDIAN"
   ],
-  "_note": "ID references only. Full hero metadata lives in data/cards/base-set/heroes/*.json files."
+  "_note": "ID references only. Full hero metadata lives in data/cards/sovereign-dawn/heroes/*.json files."
 }
