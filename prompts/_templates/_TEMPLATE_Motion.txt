@@ -28,4 +28,5 @@ Eyes: [EYE].
 negative prompt:
 
 extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns,
-head gear, text, wording, watermark, logo.
+head gear, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording,
+watermark, logo.

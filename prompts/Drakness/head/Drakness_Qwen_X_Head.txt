@@ -1,0 +1,29 @@
+=== Drakness Thorne · Head / Close-up (group: X_Head) — Edit (Qwen img2img) ===
+Incoming image: an A-pose (or hair variant) of Drakness. Tight close-up; keep face, expression, and
+hair from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional beauty glamour shot. 85mm portrait photography, razor-sharp
+optical focus, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop.
+
+Beautifully slim, trim, alluring woman; looking at the camera with a confident smile.
+Close-up from the chest up. Keep high fidelity to face, expression, and hairstyle from the reference.
+Wearing only a string bikini top with thin straps.
+
+Figure: generous bust, softly emphasized and centered (upper-chest framing only).
+
+Eyes: natural violet-indigo irises with intricate radial fibers, Midnight Violet limbal rings, crisp
+corneal catchlights.
+Hair: obsidian-black with subtle dark espresso and deep plum micro-highlights, catching the light
+with tone-on-tone dimension.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, plants, lights, extra limbs, extra digits, deformed hands, extra
+clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust,
+text, wording, watermark, logo.

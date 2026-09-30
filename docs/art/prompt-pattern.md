@@ -131,12 +131,34 @@ figure, long slender legs, hourglass, seductive / sultry / alluring, contrappost
 
 ## Negative baseline (+ stage extras)
 
-`extra people, extra limbs, extra digits, extra feet, text, watermark, logo, studio equipment`
+`extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes,
+green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo, studio equipment`
 
 - **Edit / Hair / Pose** often add: `crowns, head gear, pauldrons, shoulder armor` —
   **but remove `pauldrons, shoulder armor` when the outfit is meant to have them** (as your Armor_Bone does).
 - **Motion** often adds: `mismatched footwear`.
 - **Final** adds: `altered face, altered armor, altered hairstyle, duplicate or second weapon`.
+
+## Persistence anchors (make attributes stick)
+
+Some attributes drift when the model redraws (the bust / eye-colour problem). Lock them:
+
+- **Restate** the critical attributes (eye colour, bust/figure, skin) in every edit - keep them
+  **last** so they're the final word.
+- **Negate the off-values** (strongest lever): `recolored eyes, blue eyes, green eyes, brown eyes`
+  keeps violet; `flat chest, small bust` keeps the figure. Baked into every template negative.
+- **Lower denoise** when you can - less redraw means more of the reference persists.
+
+## Glamour boosters (sprinkle into pose / expression blocks)
+
+Concrete phrases that add glamour without changing the wardrobe:
+
+- **Gaze:** chin slightly down, eyes up to camera (model gaze); an inviting, confident look.
+- **Line:** long neck, shoulders back, chest lifted; a confident S-curve / contrapposto; weight on
+  the back leg; pointed toes.
+- **Detail:** hair swept over one shoulder; slightly parted lips; crisp catchlights in the eyes.
+- **Light:** soft rim / back light for a glamour edge; a faint dewy skin sheen.
+- **Energy:** mid-motion, caught candidly; relaxed but poised.
 
 ## Migrating your existing `.json` prompts
 
