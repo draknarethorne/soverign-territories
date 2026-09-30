@@ -1,0 +1,39 @@
+=== [HERO] · [STAGE e.g. Elegant Gown / Bone Armor] — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of [HERO] in the base bikini underlayer. Apply the [OUTFIT] (and [WEAPON])
+onto her; keep her face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+Bracket values come from the hero's card JSON (art.palette / class / element). Replace every [BRACKET].
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. Background: [BACKGROUND e.g. basic
+cream studio drop]. 85mm portrait photography, razor-sharp optical focus, soft depth of field
+falloff, raw photographic capture.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
+asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Wearing [OUTFIT] in [PRIMARY] with [ACCENTS] accents. [coverage / design notes].
+
+[accessories - bracelets / necklace / earrings / rings, in [ACCENTS]].
+[footwear - heels with [ACCENTS] detail].
+
+Breeze [direction].
+Face remains focused on camera.
+Facial expression [expression].
+[LIP] lipstick.
+[NAIL] fingernails.
+[EYE] eyes (or [CAST EYE] when casting).
+
+[pose / motion - short lines, e.g. walking toward camera, one foot stepping forward, hips and
+shoulders positioned for the step].
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, extra feet, text, watermark, logo, studio equipment,
+crowns, head gear, pauldrons, shoulder armor.
