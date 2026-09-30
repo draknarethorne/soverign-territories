@@ -1,0 +1,26 @@
+=== [HERO] · Hairstyle [VARIANT] — Edit (Qwen img2img) ===
+Incoming image: an A-pose of [HERO]. Change ONLY the hairstyle; keep face, body, and outfit from the
+incoming image. Produces an A-pose hair variant you can feed into Pose / Edit / Final. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot. 85mm portrait photography, razor-sharp optical
+focus, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, and eye colour.
+
+Maintain the existing outfit expressly.
+
+Hair: [hairstyle change - e.g. parted above the right ear, pulled over the top, blowing to the left,
+right ear exposed].
+Breeze: [minimal, direction].
+[EYE] eyes.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, extra feet, crowns, head gear, pauldrons, shoulder armor.

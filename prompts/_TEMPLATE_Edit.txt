@@ -1,15 +1,16 @@
-=== [HERO] · [STAGE e.g. Elegant Gown / Bone Armor] — Edit (Qwen/FireRed img2img) ===
-Incoming image: an A-pose of [HERO] in the base bikini underlayer. Apply the [OUTFIT] (and [WEAPON])
-onto her; keep her face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== [HERO] · [STAGE e.g. Bone Armor / Elegant Gown] — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of [HERO] (chosen hairstyle) in the base bikini underlayer. Apply the
+[OUTFIT] (and [WEAPON]); keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
-Bracket values come from the hero's card JSON (art.palette / class / element). Replace every [BRACKET].
+Replace every [BRACKET] from the hero's card JSON. Blank lines separate wardrobe slots - keep them.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. Background: [BACKGROUND e.g. basic
-cream studio drop]. 85mm portrait photography, razor-sharp optical focus, soft depth of field
-falloff, raw photographic capture.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
 asymmetrical body language.
@@ -17,23 +18,30 @@ asymmetrical body language.
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
 physical body shape, proportions, eye colour and hair colour.
 
-Wearing [OUTFIT] in [PRIMARY] with [ACCENTS] accents. [coverage / design notes].
+Wearing [TORSO / main piece] in [PRIMARY] with [ACCENTS], [coverage notes].
 
-[accessories - bracelets / necklace / earrings / rings, in [ACCENTS]].
-[footwear - heels with [ACCENTS] detail].
+Arms: [bracers / pauldrons / gauntlets, or none].
+
+Jewelry: [necklace / earrings / rings / piercings] in [ACCENTS].
+
+Back: [cape / cloak / wings, or none].
+
+Legs & feet: [greaves / stockings / footwear] in [PRIMARY]/[ACCENTS].
+
+Holding [WEAPON] - [material, detail, which hand].
+
+Overall, [aesthetic] aesthetic.
 
 Breeze [direction].
-Face remains focused on camera.
-Facial expression [expression].
+Face remains focused on camera, [expression].
 [LIP] lipstick.
 [NAIL] fingernails.
 [EYE] eyes (or [CAST EYE] when casting).
 
-[pose / motion - short lines, e.g. walking toward camera, one foot stepping forward, hips and
-shoulders positioned for the step].
+Pose: [short lines - e.g. walking toward camera, one foot stepping forward, hips and shoulders set].
 
 ----------------------------------------------------------------
 negative prompt:
 
 extra people, extra limbs, extra digits, extra feet, text, watermark, logo, studio equipment,
-crowns, head gear, pauldrons, shoulder armor.
+crowns, head gear[, pauldrons, shoulder armor <- REMOVE these two if the outfit is meant to have them].

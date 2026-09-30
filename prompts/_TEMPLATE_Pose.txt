@@ -1,0 +1,30 @@
+=== [HERO] · Pose/Motion [VARIANT] — Edit (Qwen img2img) ===
+Incoming image: an A-pose of [HERO] (with the chosen hairstyle). Change ONLY the pose/motion; keep
+face, body, hair, and outfit from the incoming image. Builds a reusable pose you can feed into Final.
+Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Maintain the existing outfit and hairstyle expressly.
+
+A candid editorial shot, dynamic natural movement, mid-motion, asymmetrical body language.
+
+Pose: [the pose - short lines, e.g. body position adjusts, hips and shoulders positioned, arms
+adjust to the body, one foot stepping forward].
+Breeze: [direction or none].
+Face [focus / expression].
+[EYE] eyes.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, extra feet, mismatched footwear, crowns, head gear.
