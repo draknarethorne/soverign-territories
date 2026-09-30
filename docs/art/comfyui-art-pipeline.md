@@ -61,6 +61,10 @@ flowchart LR
 face, hair, and outfit, so the final prompt only adds the scene (background), the spell/VFX,
 the weapon, and small stance corrections.
 
+**Prompt rule:** only **re-describe what should change** from the input image. Everything you
+don't mention is meant to carry through. Prompts repeat a lot across stages on purpose — that
+repetition holds the look steady while one thing changes.
+
 ---
 
 ## 4. Final card scene — definition checklist
@@ -83,7 +87,24 @@ identity straight from the hero's card JSON (`art.palette`, `class`, `archetype`
 
 ---
 
-## 5. Status & open questions
+## 5. Current constraints & future direction
+
+**Current (novice / single-image phase):**
+
+- One input image + one prompt per workflow; outputs are hand-carried stage to stage to reach final.
+- Single model family (Qwen image-edit) for now, to get **consistent output** through a repeatable
+  manual end-to-end flow before adding variables.
+- Running workflows out-of-order in the ComfyUI GUI — not yet wired into a single graph.
+
+**Planned:**
+
+- **Multi-image input** — feed separate reference images (e.g. a weapon, an armor set) into one
+  scene once comfortable, instead of carrying everything in a single image.
+- **Model comparisons** — run the same prompts through **Flux** and **FireRed** img2img (and other
+  non-Qwen flows) to compare output; save those workflows under `workflows/<Hero>/` for reference.
+- **GUI auto-wiring** — connect stages into fewer graphs as ComfyUI familiarity grows.
+
+## 6. Status & open questions
 
 - ✅ Drakness has extensive experiments across pose, hair, armor, clothing, and motion.
 - ⬜ **Missing:** the locked "intro" definition for SD-001 (armor, weapon, spell, stance, background).
