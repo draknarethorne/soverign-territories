@@ -24,6 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Grass given a crown and a will. Where she kneels, the ruined earth remembers how to live.",
+  "art": {
+    "palette": {
+      "primaryColor": "Emerald Green",
+      "accentColors": ["Forest Sage", "Moss Gold"],
+      "eyeColor": "Deep forest-emerald iris with dark pine limbal ring, radiating sage striations, and warm gold flecks"
+    }
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Grass), paired to Sylvanya." }
 }

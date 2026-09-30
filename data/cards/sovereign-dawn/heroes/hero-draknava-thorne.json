@@ -24,6 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Wind given a crown and a will. Her songs travel farther than any army.",
+  "art": {
+    "palette": {
+      "primaryColor": "Sky Cerulean",
+      "accentColors": ["Gossamer Silver", "Breeze Teal"],
+      "eyeColor": "Sky cerulean iris with slate blue limbal ring, radiating gossamer silver striations, and breeze teal flecks"
+    }
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Wind), paired to Zephyros." }
 }

@@ -168,7 +168,16 @@
         "portraitAsset": {"type": "string"},
         "fullArtAsset": {"type": "string"},
         "shinyPortrait": {"type": "string"},
-        "voicelineActor": {"type": "string"}
+        "voicelineActor": {"type": "string"},
+        "palette": {
+          "type": "object",
+          "description": "Signature colour spec for art direction",
+          "properties": {
+            "primaryColor": {"type": "string"},
+            "accentColors": {"type": "array", "items": {"type": "string"}},
+            "eyeColor": {"type": "string"}
+          }
+        }
       }
     },
 

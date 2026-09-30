@@ -24,6 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Earth given a crown and a will. She keeps the oldest grudge and the deepest roots.",
+  "art": {
+    "palette": {
+      "primaryColor": "Terracotta Ochre",
+      "accentColors": ["Rich Bronze", "Warm Sand"],
+      "eyeColor": "Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks"
+    }
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Earth), paired to Terrador." }
 }

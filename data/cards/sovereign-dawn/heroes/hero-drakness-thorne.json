@@ -53,6 +53,13 @@
   ],
   "tacticSlots": 7,
   "lore": "First of the Sundered — the Darkness that remained when the shard-storm broke. Where she walks, the dead lean closer to listen.",
+  "art": {
+    "palette": {
+      "primaryColor": "Midnight Violet",
+      "accentColors": ["Vibrant Amethyst", "Polished Silver"],
+      "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks"
+    }
+  },
   "acquisition": {
     "packSources": [],
     "campaignDrops": []

@@ -1,8 +1,26 @@
-=== SERIES STYLE — do not edit (shared across all Sovereign Territories hero cards) ===
-Full-body shot, head to toe, subject centered for trading-card framing, with headroom above and footroom below.
-Diffused studio lighting with a soft rim light, photorealistic, dreamlike futurism, painterly fantasy finish.
-Hair styled naturally, flowing slightly in a gentle breeze.
-Elegant, alluring, heroic, and fully costumed; powerful and composed.
-Cohesive color grade, sharp focus on the face, clean edges, high detail, portrait aspect ratio for card art (5:7).
+prompt:
 
-Negative prompt: extra limbs, extra fingers, deformed hands, fused fingers, mangled anatomy, asymmetrical eyes, cross-eyed, blurry, lowres, jpeg artifacts, watermark, signature, text, logo, nudity, nsfw.
+Breeze flowing any direction.
+Face remains focused on camera.
+Facial expression is seductive and smiling.  
+Lips are lushes and active with the expression and non-neutral.
+Enhance her breasts.
+Long, slender legs.
+Light Violet fingernails.
+Light Violet lipstick.
+Violet eyes.
+
+Walking towards the camera.
+Body position adjusts.
+Hips and shoulders positioned for the step.
+Arms adjust to the body position.
+One foot stepping forward to the side.
+
+
+----------------------------------------------------------------
+
+Negative prompt: 
+
+extra limbs, extra fingers, deformed hands, fused fingers, mangled anatomy, asymmetrical eyes, cross-eyed, blurry, lowres, jpeg artifacts, watermark, signature, text, logo.
+
+extra people, studio equipment, plants, lights, extra limbs, extra digits, extra clothing, chairs, cups, tables, guitars, logos, wording, extra hair

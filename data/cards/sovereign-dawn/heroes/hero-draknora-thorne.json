@@ -24,6 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Fire given a crown and a will. Her temper is the reason winters come late.",
+  "art": {
+    "palette": {
+      "primaryColor": "Flame Red",
+      "accentColors": ["Burnished Gold", "Vibrant Orange"],
+      "eyeColor": "Molten amber iris with dark charcoal limbal ring, radiating crimson striations, and fiery gold flecks"
+    }
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Fire), paired to Pyraxis." }
 }
