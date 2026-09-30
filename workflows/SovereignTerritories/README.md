@@ -14,16 +14,20 @@ One tuned workflow per pipeline step, named `ST_<Model>_<Stage>`. Tuned for an *
 
 | ST workflow | Forked from | Model | Pipeline role | denoise | steps | scaling |
 | --- | --- | --- | --- | --- | --- | --- |
-| **ST_Qwen_A_Pose** | `image_qwen_image_edit_2511` | Qwen-Image-Edit **2511** | A-pose base (your current) | **1.0** | 4 (Lightning) | add portrait target |
+| **ST_Qwen_A_Pose** | **your `X_Qwen_A_Pose`** (ComfyUI built-in 2511 template, Turbo toggle) | Qwen-Image-Edit **2511** fp8mixed + Lightning | A-pose base (your current) | **1.0** | 4 (Turbo) / 40 (off) | add portrait target |
 | **ST_Qwen_B_Pose** | `image_qwen_image_2_1_image_edit` | Qwen-Image **2.1** (int8) | A-pose base (new candidate) | **1.0** | 25 (or 4 w/ Lightning) | `ResolutionSelector` (built-in) |
-| **ST_Qwen_Edit** | `image_qwen_image_edit_2511` | Qwen-Image-Edit **2511** | Edit: hair → armor → stance | **0.5** | 4–8 | match A-pose |
+| **ST_Qwen_Edit** | **your `X_Qwen_A_Pose`** | Qwen-Image-Edit **2511** fp8mixed | Edit: hair → armor → stance | **0.5** | 4 (Turbo) | match A-pose |
 | **ST_FireRed_Final** | `image_firered_image_edit1_1` | FireRed-1.1 | Final render (low-drift) | **0.7** | 8 (Lightning) | + upscale |
 | **ST_Flux_Polish** | `image_flux2_klein_image_edit_4b_distilled` | Flux.2 Klein **4B** | Polish (skin/texture) | **0.3** | 8–12 | — |
 | **ST_Qwen_Polish** | `image_qwen_image_edit_2511_int8` | Qwen-Image-Edit **2511 int8** | Polish (Qwen alt) | **0.3** | 8 | — |
+| **ST_MageFlow_Edit** | `image_mage_flow_edit_turbo_int8` | MageFlow Turbo **int8** | Fast edit alt (8 GB speed) | **0.5** | Turbo | — |
+| **ST_Flux_Final** | `image_flux2_fp8` | Flux.2 dev fp8mixed +Turbo v2 | Final (max quality) ⚠️ borderline 8 GB | **0.7** | 20 | 1 MP |
 
 **Why these:** A-pose + Edit share the **same model** (only denoise differs) → no cross-model drift
-in the exploration chain. FireRed shares Qwen's VAE/encoder → a faithful higher-fidelity final.
-Flux Klein-4B is the only Flux "look" that fits 8 GB. Two polish options (Flux vs Qwen) to compare.
+in the exploration chain. **ST_Qwen_A_Pose / ST_Qwen_Edit are copies of your own workflow** — they
+keep the **Turbo toggle** (4-step draft ↔ 40-step overnight quality) that the downloaded templates
+*don't* have. FireRed shares Qwen's VAE/encoder → a faithful higher-fidelity final. Flux Klein-4B is
+the only Flux "look" that comfortably fits 8 GB; Flux.2 fp8 is the aspirational max-quality final.
 
 ---
 
@@ -40,6 +44,10 @@ Flux Klein-4B is the only Flux "look" that fits 8 GB. Two polish options (Flux v
 - **ST_Flux_Polish** — denoise **~0.3** (enhance, don't redraw). Klein-4B fits 8 GB; the full Flux.2
   dev polish is heavier/borderline — use this as the feasible version.
 - **ST_Qwen_Polish** — denoise **~0.3**. int8, stays in the Qwen family (least drift for a polish pass).
+- **ST_MageFlow_Edit** — denoise **~0.5**. int8 Turbo, built for speed on small GPUs; a fast alternative
+  to ST_Qwen_Edit — test its quality vs Qwen.
+- **ST_Flux_Final** — denoise **~0.7**, 20 steps. ⚠️ fp8mixed Flux.2 is **borderline on 8 GB** (expect
+  offload/slower); use for a max-quality final only if it fits, else stick with FireRed.
 
 ## Parameters worth exposing (promote to the top level in the GUI)
 
@@ -64,5 +72,44 @@ don't have to open the subgraph each run:
 
 Then we lock the winners, delete the losers, and this becomes the standard set for SD-001…SD-010.
 
-*(Optional extra to test later: a MageFlow Turbo int8 edit — very fast on 8 GB. Say the word and
-I'll add `ST_MageFlow_Edit`.)*
+---
+
+## Models to download (check what you already have)
+
+Most templates embed Hugging Face URLs in their in-graph "Model Links" note, so ComfyUI desktop can
+often auto-fetch missing files. Full list by type:
+
+**Diffusion / UNet**
+
+- `qwen_image_edit_2511_fp8mixed.safetensors` — ST_Qwen_A_Pose, ST_Qwen_Edit *(you have this)*
+- `qwen_image_2.1_int8_convrot.safetensors` — ST_Qwen_B_Pose
+- `qwen_image_edit_2511_int8_convrot.safetensors` — ST_Qwen_Polish
+- `FireRed-Image-Edit-1.1-transformer.safetensors` — ST_FireRed_Final
+- `flux-2-klein-4b-fp8.safetensors` — ST_Flux_Polish
+- `mage_flow_edit_turbo_int8_convrot.safetensors` — ST_MageFlow_Edit
+- `flux2_dev_fp8mixed.safetensors` — ST_Flux_Final
+
+**Text encoders**
+
+- `qwen_2.5_vl_7b_fp8_scaled.safetensors` — all Qwen 2511 + FireRed *(you have this)*
+- `qwen3vl_8b_int8_convrot.safetensors` — ST_Qwen_B_Pose (2.1)
+- `qwen_3_4b.safetensors` — ST_Flux_Polish (klein-4B)
+- `qwen3vl_4b_bf16.safetensors` — ST_MageFlow_Edit
+- `mistral_3_small_flux2_fp8.safetensors` — ST_Flux_Final
+
+**VAE**
+
+- `qwen_image_vae.safetensors` — all Qwen 2511 + FireRed *(you have this)*
+- `qwen_image_2.1_vae_bf16.safetensors` — ST_Qwen_B_Pose
+- `flux2-vae.safetensors` — ST_Flux_Polish, ST_Flux_Final
+- `mage_flow_vae_bf16.safetensors` — ST_MageFlow_Edit
+
+**LoRA**
+
+- `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors` — ST_Qwen_A_Pose/Edit *(you have this)*
+- `FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors` — ST_FireRed_Final
+- `Flux2TurboComfyv2.safetensors` — ST_Flux_Final
+
+*Already covered by your current Qwen workflow: the 2511 fp8mixed model, `qwen_2.5_vl_7b`, `qwen_image_vae`,
+and the 4-step Lightning LoRA. The **new** downloads are the 2.1, FireRed, Flux Klein-4B, MageFlow, and
+Flux.2-fp8 stacks.*
