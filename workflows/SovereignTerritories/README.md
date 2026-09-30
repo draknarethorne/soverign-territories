@@ -63,6 +63,23 @@ don't have to open the subgraph each run:
 
 ---
 
+## Swapping models? Keep the shipped stack
+
+Rule of thumb: **use each template's shipped models.** The UNet + text encoder + VAE + LoRA are
+tested together; mixing across families (e.g. a Flux VAE into a Qwen graph) usually breaks
+colour/latents. Don't download third-party models to "mix in."
+
+Safe swaps (same-family, usually no new download):
+
+- **Quant of the *same* model** — e.g. Qwen 2511 `fp8mixed` ↔ `bf16` ↔ `int8`. Lighter quant for
+  8 GB; heavier for an overnight quality run. `ST_Qwen_A_Pose` already ships **both** fp8mixed + bf16.
+- **Turbo / Lightning LoRA on/off** — designed to toggle (fast draft ↔ full quality).
+
+Avoid swapping the VAE, text encoder, or base-model family. Your bigger quality levers are
+**denoise, steps, and scaling**, not component swaps.
+
+---
+
 ## Suggested bake-off (minimise GPU time)
 
 1. **A-pose base:** run **ST_Qwen_A_Pose** vs **ST_Qwen_B_Pose** on the same reference → pick the
