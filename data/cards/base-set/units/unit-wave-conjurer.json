@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WAVE_CONJURER",
-    "collectionNumber": "BS-137",
+    "collectionNumber": "SD-187",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 187, "totalCards": 219 },
     "name": "Wave Conjurer",
     "type": "Unit",
     "element": "Water",

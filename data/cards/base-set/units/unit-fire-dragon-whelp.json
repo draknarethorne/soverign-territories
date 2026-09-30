@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_FIRE_DRAGON_WHELP",
-    "collectionNumber":  "BS-021",
+    "collectionNumber":  "SD-074",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 74, "totalCards": 219 },
     "name":  "Fire Dragon Whelp",
     "type":  "Unit",
     "element":  "Fire",

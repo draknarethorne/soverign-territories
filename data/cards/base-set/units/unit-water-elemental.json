@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_ELEMENTAL",
-    "collectionNumber": "BS-015",
+    "collectionNumber": "SD-063",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 63, "totalCards": 219 },
     "name": "Water Elemental",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TERRA_SORCERER",
-    "collectionNumber": "BS-158",
+    "collectionNumber": "SD-208",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 208, "totalCards": 219 },
     "name": "Terra Sorcerer",
     "type": "Unit",
     "element": "Earth",

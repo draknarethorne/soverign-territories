@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDAL_CROSSBOWMAN",
-    "collectionNumber": "BS-127",
+    "collectionNumber": "SD-177",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 177, "totalCards": 219 },
     "name": "Tidal Crossbowman",
     "type": "Unit",
     "element": "Water",

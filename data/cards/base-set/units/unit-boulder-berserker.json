@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_BOULDER_BERSERKER",
-    "collectionNumber": "BS-148",
+    "collectionNumber": "SD-198",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 198, "totalCards": 219 },
     "name": "Boulder Berserker",
     "type": "Unit",
     "element": "Earth",

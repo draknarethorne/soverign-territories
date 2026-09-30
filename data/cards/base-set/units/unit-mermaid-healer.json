@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MERMAID_HEALER",
-    "collectionNumber": "BS-019",
+    "collectionNumber": "SD-071",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 71, "totalCards": 219 },
     "name": "Mermaid Healer",
     "type": "Unit",
     "element": "Water",

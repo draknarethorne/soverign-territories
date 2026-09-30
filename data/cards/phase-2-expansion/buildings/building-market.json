@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_MARKET",
-    "collectionNumber": "BS-036",
+    "collectionNumber": "SD-099",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 99, "totalCards": 219 },
     "name": "Market",
     "type": "Building",
     "element": "Neutral",

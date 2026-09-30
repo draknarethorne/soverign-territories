@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_SOLDIER",
-    "collectionNumber": "BS-013",
+    "collectionNumber": "SD-057",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 57, "totalCards": 219 },
     "name": "Water Soldier",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_EMBER_LEGIONNAIRE",
-    "collectionNumber":  "BS-020",
+    "collectionNumber":  "SD-072",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 72, "totalCards": 219 },
     "name":  "Ember Legionnaire",
     "type":  "Unit",
     "element":  "Fire",

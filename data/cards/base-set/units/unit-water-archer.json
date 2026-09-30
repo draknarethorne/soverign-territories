@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_ARCHER",
-    "collectionNumber": "BS-126",
+    "collectionNumber": "SD-176",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 176, "totalCards": 219 },
     "name": "Water Archer",
     "type": "Unit",
     "element": "Water",

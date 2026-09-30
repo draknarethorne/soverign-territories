@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_AQUA_WARLOCK",
-    "collectionNumber": "BS-136",
+    "collectionNumber": "SD-186",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 186, "totalCards": 219 },
     "name": "Aqua Warlock",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_MAGE_ROBES",
-    "collectionNumber": "BS-079",
+    "collectionNumber": "SD-129",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 129, "totalCards": 219 },
     "name": "Mage Robes",
     "type": "Equipment",
     "element": "Neutral",

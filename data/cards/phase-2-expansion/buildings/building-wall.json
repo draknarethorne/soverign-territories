@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_WALL",
-    "collectionNumber": "BS-047",
+    "collectionNumber": "SD-110",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 110, "totalCards": 219 },
     "name": "Wall",
     "type": "Building",
     "element": "Neutral",

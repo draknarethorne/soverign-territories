@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_FISHERMAN",
-    "collectionNumber": "BS-087",
+    "collectionNumber": "SD-137",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 137, "totalCards": 219 },
     "name": "Fisherman",
     "type": "Worker",
     "element": "Neutral",

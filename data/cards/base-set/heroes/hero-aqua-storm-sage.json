@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_AQUA_STORM_SAGE",
-    "collectionNumber":  "BS-030",
+    "collectionNumber":  "SD-092",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 92, "totalCards": 219 },
     "name":  "Aqua, Storm Sage",
     "type":  "Hero",
     "element":  "Water",

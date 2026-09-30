@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TERRA_DRAGOON",
-    "collectionNumber": "BS-164",
+    "collectionNumber": "SD-214",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 214, "totalCards": 219 },
     "name": "Terra Dragoon",
     "type": "Unit",
     "element": "Earth",

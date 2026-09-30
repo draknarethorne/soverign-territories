@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_DEFENDER",
-    "collectionNumber": "BS-027",
+    "collectionNumber": "SD-087",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 87, "totalCards": 219 },
     "name": "Stone Defender",
     "type": "Unit",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_INFERNO_PALADIN",
-    "collectionNumber": "BS-098",
+    "collectionNumber": "SD-148",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 148, "totalCards": 219 },
     "name": "Inferno Paladin",
     "type": "Unit",
     "element": "Fire",

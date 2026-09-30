@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_SAWMILL",
-    "collectionNumber": "BS-034",
+    "collectionNumber": "SD-097",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 97, "totalCards": 219 },
     "name": "Sawmill",
     "type": "Building",
     "element": "Neutral",

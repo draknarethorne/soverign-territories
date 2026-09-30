@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MUD_ELEMENTAL",
-    "collectionNumber": "BS-031",
+    "collectionNumber": "SD-094",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 94, "totalCards": 219 },
     "name": "Mud Elemental",
     "type": "Unit",
     "element": "Earth",

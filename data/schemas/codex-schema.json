@@ -3,7 +3,14 @@
   "title": "Sovereign Territories Card Schema",
   "description": "JSON schema for validating card definitions in the codex",
   "type": "object",
-  "required": ["cardId", "collectionNumber", "series", "name", "type", "element", "rarity", "stats"],
+  "required": ["cardId", "collectionNumber", "series", "name", "type", "element", "rarity"],
+
+  "allOf": [
+    {
+      "if": { "required": ["type"], "properties": { "type": { "enum": ["Hero", "Unit"] } } },
+      "then": { "required": ["stats"], "properties": { "stats": { "required": ["health", "mana", "attack", "defense"] } } }
+    }
+  ],
 
   "properties": {
     "cardId": {
@@ -15,7 +22,7 @@
     "collectionNumber": {
       "type": "string",
       "pattern": "^[A-Z]{2,4}-[0-9]{3}$",
-      "description": "Series collection number (e.g., BS-001)"
+      "description": "Series collection number (e.g., SD-001)"
     },
 
     "series": {
@@ -121,7 +128,6 @@
 
     "stats": {
       "type": "object",
-      "required": ["health", "mana", "attack", "defense"],
       "properties": {
         "health": {"type": "integer", "minimum": 1, "maximum": 200},
         "mana": {"type": "integer", "minimum": 0, "maximum": 100},

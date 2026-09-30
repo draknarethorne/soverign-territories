@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_WATCH_TOWER",
-    "collectionNumber": "BS-046",
+    "collectionNumber": "SD-109",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 109, "totalCards": 219 },
     "name": "Watch Tower",
     "type": "Building",
     "element": "Neutral",

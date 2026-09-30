@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TERRA_SHAMAN",
-    "collectionNumber": "BS-167",
+    "collectionNumber": "SD-217",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 217, "totalCards": 219 },
     "name": "Terra Shaman",
     "type": "Unit",
     "element": "Earth",

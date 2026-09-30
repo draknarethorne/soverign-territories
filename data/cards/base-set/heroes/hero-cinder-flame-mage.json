@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_CINDER_FLAME_MAGE",
-    "collectionNumber":  "BS-003",
+    "collectionNumber":  "SD-043",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 43, "totalCards": 219 },
     "name":  "Cinder, Flame Mage",
     "type":  "Hero",
     "element":  "Fire",

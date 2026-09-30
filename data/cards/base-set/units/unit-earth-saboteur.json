@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EARTH_SABOTEUR",
-    "collectionNumber": "BS-166",
+    "collectionNumber": "SD-216",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 216, "totalCards": 219 },
     "name": "Earth Saboteur",
     "type": "Unit",
     "element": "Earth",

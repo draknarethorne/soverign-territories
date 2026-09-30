@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_ARIA_FLAME_KNIGHT",
-    "collectionNumber":  "BS-001",
+    "collectionNumber":  "SD-041",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 41, "totalCards": 219 },
     "name":  "Aria, Flame Knight",
     "type":  "Hero",
     "element":  "Fire",

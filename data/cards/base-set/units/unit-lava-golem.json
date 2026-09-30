@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_LAVA_GOLEM",
-    "collectionNumber":  "BS-010",
+    "collectionNumber":  "SD-050",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 50, "totalCards": 219 },
     "name":  "Lava Golem",
     "type":  "Unit",
     "element":  "Fire",

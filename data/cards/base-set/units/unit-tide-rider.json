@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDE_RIDER",
-    "collectionNumber": "BS-138",
+    "collectionNumber": "SD-188",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 188, "totalCards": 219 },
     "name": "Tide Rider",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_ALTAR",
-    "collectionNumber": "BS-050",
+    "collectionNumber": "SD-113",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 113, "totalCards": 219 },
     "name": "Altar",
     "type": "Building",
     "element": "Neutral",

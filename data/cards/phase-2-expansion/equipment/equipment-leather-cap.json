@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_LEATHER_CAP",
-    "collectionNumber": "BS-082",
+    "collectionNumber": "SD-132",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 132, "totalCards": 219 },
     "name": "Leather Cap",
     "type": "Equipment",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EMBER_WIZARD",
-    "collectionNumber": "BS-111",
+    "collectionNumber": "SD-161",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 161, "totalCards": 219 },
     "name": "Ember Wizard",
     "type": "Unit",
     "element": "Fire",

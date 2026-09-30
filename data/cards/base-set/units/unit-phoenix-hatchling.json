@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_PHOENIX_HATCHLING",
-    "collectionNumber":  "BS-017",
+    "collectionNumber":  "SD-066",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 66, "totalCards": 219 },
     "name":  "Phoenix Hatchling",
     "type":  "Unit",
     "element":  "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_OCEAN_SNIPER",
-    "collectionNumber": "BS-128",
+    "collectionNumber": "SD-178",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 178, "totalCards": 219 },
     "name": "Ocean Sniper",
     "type": "Unit",
     "element": "Water",

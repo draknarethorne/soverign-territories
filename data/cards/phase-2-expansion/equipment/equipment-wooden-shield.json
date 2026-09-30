@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_WOODEN_SHIELD",
-    "collectionNumber": "BS-080",
+    "collectionNumber": "SD-130",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 130, "totalCards": 219 },
     "name": "Wooden Shield",
     "type": "Equipment",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FLAME_TEMPLAR",
-    "collectionNumber": "BS-099",
+    "collectionNumber": "SD-149",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 149, "totalCards": 219 },
     "name": "Flame Templar",
     "type": "Unit",
     "element": "Fire",

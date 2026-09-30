@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_MERCHANT",
-    "collectionNumber": "BS-095",
+    "collectionNumber": "SD-145",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 145, "totalCards": 219 },
     "name": "Merchant",
     "type": "Worker",
     "element": "Neutral",

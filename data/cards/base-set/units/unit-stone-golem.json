@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_GOLEM",
-    "collectionNumber": "BS-025",
+    "collectionNumber": "SD-082",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 82, "totalCards": 219 },
     "name": "Stone Golem",
     "type": "Unit",
     "element": "Earth",

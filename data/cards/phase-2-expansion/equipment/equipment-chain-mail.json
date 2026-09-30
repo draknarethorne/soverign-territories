@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_CHAIN_MAIL",
-    "collectionNumber": "BS-077",
+    "collectionNumber": "SD-127",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 127, "totalCards": 219 },
     "name": "Chain Mail",
     "type": "Equipment",
     "element": "Neutral",

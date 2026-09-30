@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_MAGE",
-    "collectionNumber": "BS-132",
+    "collectionNumber": "SD-182",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 182, "totalCards": 219 },
     "name": "Water Mage",
     "type": "Unit",
     "element": "Water",

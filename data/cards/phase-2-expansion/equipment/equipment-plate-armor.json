@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_PLATE_ARMOR",
-    "collectionNumber": "BS-078",
+    "collectionNumber": "SD-128",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 128, "totalCards": 219 },
     "name": "Plate Armor",
     "type": "Equipment",
     "element": "Neutral",

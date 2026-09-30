@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_GEOMANCER",
-    "collectionNumber": "BS-157",
+    "collectionNumber": "SD-207",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 207, "totalCards": 219 },
     "name": "Geomancer",
     "type": "Unit",
     "element": "Earth",

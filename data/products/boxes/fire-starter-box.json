@@ -2,7 +2,7 @@
   "productId": "fire-starter-box",
   "productName": "Fire Starter Box",
   "productType": "starter-box",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "element": "Fire",
   "description": "Begin your journey with the Ember Legion! This pre-constructed deck features Aria, Flame Knight and a balanced Fire army.",
   "price": {
@@ -16,61 +16,61 @@
   "fixedContents": [
     {
       "cardId": "HERO_ARIA_FLAME_KNIGHT",
-      "collectionNumber": "BS-001",
+      "collectionNumber": "SD-041",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_FIRE_SOLDIER",
-      "collectionNumber": "BS-006",
+      "collectionNumber": "SD-046",
       "quantity": 3,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_EMBER_SCOUT",
-      "collectionNumber": "BS-007",
+      "collectionNumber": "SD-047",
       "quantity": 2,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_FLAME_IMP",
-      "collectionNumber": "BS-008",
+      "collectionNumber": "SD-048",
       "quantity": 2,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_SCORCH_ELEMENTAL",
-      "collectionNumber": "BS-009",
+      "collectionNumber": "SD-049",
       "quantity": 2,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_LAVA_GOLEM",
-      "collectionNumber": "BS-010",
+      "collectionNumber": "SD-050",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_GOBLIN_RAIDER",
-      "collectionNumber": "BS-016",
+      "collectionNumber": "SD-064",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "UNIT_PHOENIX_HATCHLING",
-      "collectionNumber": "BS-017",
+      "collectionNumber": "SD-066",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "TACTIC_FIREBALL",
-      "collectionNumber": "BS-022",
+      "collectionNumber": "SD-077",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "TACTIC_FLAME_SHIELD",
-      "collectionNumber": "BS-023",
+      "collectionNumber": "SD-079",
       "quantity": 1,
       "guaranteed": true
     }

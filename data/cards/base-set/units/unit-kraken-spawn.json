@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_KRAKEN_SPAWN",
-    "collectionNumber": "BS-021",
+    "collectionNumber": "SD-075",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 75, "totalCards": 219 },
     "name": "Kraken Spawn",
     "type": "Unit",
     "element": "Water",

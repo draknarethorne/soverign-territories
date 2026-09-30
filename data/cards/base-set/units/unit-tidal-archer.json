@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDAL_ARCHER",
-    "collectionNumber": "BS-017",
+    "collectionNumber": "SD-067",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 67, "totalCards": 219 },
     "name": "Tidal Archer",
     "type": "Unit",
     "element": "Water",

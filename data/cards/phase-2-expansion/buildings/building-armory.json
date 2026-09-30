@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_ARMORY",
-    "collectionNumber": "BS-045",
+    "collectionNumber": "SD-108",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 108, "totalCards": 219 },
     "name": "Armory",
     "type": "Building",
     "element": "Neutral",

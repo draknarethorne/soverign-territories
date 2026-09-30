@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_RIDER",
-    "collectionNumber": "BS-162",
+    "collectionNumber": "SD-212",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 212, "totalCards": 219 },
     "name": "Stone Rider",
     "type": "Unit",
     "element": "Earth",

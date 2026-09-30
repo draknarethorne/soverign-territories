@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FIRE_LANCER",
-    "collectionNumber": "BS-115",
+    "collectionNumber": "SD-165",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 165, "totalCards": 219 },
     "name": "Fire Lancer",
     "type": "Unit",
     "element": "Fire",

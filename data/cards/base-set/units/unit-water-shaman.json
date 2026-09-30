@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_SHAMAN",
-    "collectionNumber": "BS-143",
+    "collectionNumber": "SD-193",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 193, "totalCards": 219 },
     "name": "Water Shaman",
     "type": "Unit",
     "element": "Water",

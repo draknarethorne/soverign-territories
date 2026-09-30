@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FLAME_SORCERER",
-    "collectionNumber": "BS-110",
+    "collectionNumber": "SD-160",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 160, "totalCards": 219 },
     "name": "Flame Sorcerer",
     "type": "Unit",
     "element": "Fire",

@@ -2,7 +2,7 @@
   "productId": "element-booster-earth",
   "productName": "Earth Element Booster",
   "productType": "element-booster",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "element": "Earth",
   "description": "Stand your ground! 5 Earth element cards with increased chances for rare Earth heroes and units.",
   "price": {
@@ -13,7 +13,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-earth-only",
+  "cardPool": "sovereign-dawn-earth-only",
   "guarantees": [
     {
       "slot": 5,
@@ -53,7 +53,7 @@
     "enabled": true,
     "epicGuaranteeAfter": 10,
     "legendaryGuaranteeAfter": 50,
-    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-ice"]
   },
   "availability": {
     "unlockLevel": 5,

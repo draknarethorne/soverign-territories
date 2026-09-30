@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_STEEL_BLADE",
-    "collectionNumber": "BS-074",
+    "collectionNumber": "SD-124",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 124, "totalCards": 219 },
     "name": "Steel Blade",
     "type": "Equipment",
     "element": "Neutral",

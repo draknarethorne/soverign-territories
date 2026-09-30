@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_PHOENIX_ARCHER",
-    "collectionNumber": "BS-107",
+    "collectionNumber": "SD-157",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 157, "totalCards": 219 },
     "name": "Phoenix Archer",
     "type": "Unit",
     "element": "Fire",

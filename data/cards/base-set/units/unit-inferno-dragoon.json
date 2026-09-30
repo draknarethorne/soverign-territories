@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_INFERNO_DRAGOON",
-    "collectionNumber": "BS-116",
+    "collectionNumber": "SD-166",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 166, "totalCards": 219 },
     "name": "Inferno Dragoon",
     "type": "Unit",
     "element": "Fire",

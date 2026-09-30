@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_CROSSBOWMAN",
-    "collectionNumber": "BS-151",
+    "collectionNumber": "SD-201",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 201, "totalCards": 219 },
     "name": "Stone Crossbowman",
     "type": "Unit",
     "element": "Earth",

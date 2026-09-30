@@ -1,6 +1,7 @@
 {
     "cardId": "HERO_GRANITE_STONE_GUARDIAN",
-    "collectionNumber": "BS-015",
+    "collectionNumber": "SD-061",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 61, "totalCards": 219 },
     "name": "Granite, Stone Guardian",
     "type": "Hero",
     "element": "Earth",

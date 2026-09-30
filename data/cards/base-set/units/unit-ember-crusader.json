@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EMBER_CRUSADER",
-    "collectionNumber": "BS-097",
+    "collectionNumber": "SD-147",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 147, "totalCards": 219 },
     "name": "Ember Crusader",
     "type": "Unit",
     "element": "Fire",

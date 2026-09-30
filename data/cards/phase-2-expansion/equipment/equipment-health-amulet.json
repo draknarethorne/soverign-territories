@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_HEALTH_AMULET",
-    "collectionNumber": "BS-084",
+    "collectionNumber": "SD-134",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 134, "totalCards": 219 },
     "name": "Health Amulet",
     "type": "Equipment",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MOUNTAIN_WARRIOR",
-    "collectionNumber": "BS-149",
+    "collectionNumber": "SD-199",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 199, "totalCards": 219 },
     "name": "Mountain Warrior",
     "type": "Unit",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CORAL_SABOTEUR",
-    "collectionNumber": "BS-142",
+    "collectionNumber": "SD-192",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 192, "totalCards": 219 },
     "name": "Coral Saboteur",
     "type": "Unit",
     "element": "Water",

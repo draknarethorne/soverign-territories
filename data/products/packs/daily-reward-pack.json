@@ -2,7 +2,7 @@
   "productId": "daily-reward-pack",
   "productName": "Daily Reward Pack",
   "productType": "reward-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Daily login reward pack. Lower hero drop rates to prevent hero saturation.",
   "price": {
     "gold": 0,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 5,

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CINDER_LONGBOWMAN",
-    "collectionNumber": "BS-106",
+    "collectionNumber": "SD-156",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 156, "totalCards": 219 },
     "name": "Cinder Longbowman",
     "type": "Unit",
     "element": "Fire",

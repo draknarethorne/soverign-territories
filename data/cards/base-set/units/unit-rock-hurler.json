@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_ROCK_HURLER",
-    "collectionNumber": "BS-030",
+    "collectionNumber": "SD-093",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 93, "totalCards": 219 },
     "name": "Rock Hurler",
     "type": "Unit",
     "element": "Earth",

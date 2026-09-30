@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_SCORCH_ELEMENTAL",
-    "collectionNumber":  "BS-009",
+    "collectionNumber":  "SD-049",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 49, "totalCards": 219 },
     "name":  "Scorch Elemental",
     "type":  "Unit",
     "element":  "Fire",

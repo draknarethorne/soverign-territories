@@ -1,7 +1,7 @@
 {
   "cardId": "UNIT_REAPER",
   "collectionNumber": "SD-031",
-  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 31, "totalCards": 198 },
+  "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 31, "totalCards": 219 },
   "name": "Reaper",
   "type": "Unit",
   "archetype": "Assassin / Burst DPS",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDE_WIZARD",
-    "collectionNumber": "BS-135",
+    "collectionNumber": "SD-185",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 185, "totalCards": 219 },
     "name": "Tide Wizard",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_KNIGHT",
-    "collectionNumber": "BS-120",
+    "collectionNumber": "SD-170",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 170, "totalCards": 219 },
     "name": "Water Knight",
     "type": "Unit",
     "element": "Water",

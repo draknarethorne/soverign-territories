@@ -1,7 +1,7 @@
 {
   "element": "Water",
   "cardType": "Hero",
-  "seriesId": "base-set",
+  "seriesId": "sovereign-dawn",
   "heroIds": [
     "HERO_AQUA_STORM_SAGE",
     "HERO_CORAL_WAVE_CALLER",

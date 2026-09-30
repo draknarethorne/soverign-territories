@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_SHIELD_WALL",
-    "collectionNumber": "BS-066",
+    "collectionNumber": "SD-120",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 120, "totalCards": 219 },
     "name": "Shield Wall",
     "type": "Tactic",
     "element": "Neutral",

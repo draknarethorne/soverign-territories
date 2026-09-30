@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_RAGNAR_INFERNO_BERSERKER",
-    "collectionNumber":  "BS-002",
+    "collectionNumber":  "SD-042",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 42, "totalCards": 219 },
     "name":  "Ragnar, Inferno Berserker",
     "type":  "Hero",
     "element":  "Fire",

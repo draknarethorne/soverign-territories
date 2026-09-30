@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_WORKSHOP",
-    "collectionNumber": "BS-043",
+    "collectionNumber": "SD-106",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 106, "totalCards": 219 },
     "name": "Workshop",
     "type": "Building",
     "element": "Neutral",

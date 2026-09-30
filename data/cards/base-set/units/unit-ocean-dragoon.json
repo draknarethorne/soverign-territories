@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_OCEAN_DRAGOON",
-    "collectionNumber": "BS-140",
+    "collectionNumber": "SD-190",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 190, "totalCards": 219 },
     "name": "Ocean Dragoon",
     "type": "Unit",
     "element": "Water",

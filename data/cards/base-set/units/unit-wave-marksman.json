@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WAVE_MARKSMAN",
-    "collectionNumber": "BS-129",
+    "collectionNumber": "SD-179",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 179, "totalCards": 219 },
     "name": "Wave Marksman",
     "type": "Unit",
     "element": "Water",

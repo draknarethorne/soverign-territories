@@ -1,6 +1,7 @@
 {
     "cardId":  "TACTIC_FIREBALL",
-    "collectionNumber":  "BS-022",
+    "collectionNumber":  "SD-077",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 77, "totalCards": 219 },
     "name":  "Fireball",
     "type":  "Tactic",
     "element":  "Fire",

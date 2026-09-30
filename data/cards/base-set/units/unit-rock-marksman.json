@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_ROCK_MARKSMAN",
-    "collectionNumber": "BS-153",
+    "collectionNumber": "SD-203",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 203, "totalCards": 219 },
     "name": "Rock Marksman",
     "type": "Unit",
     "element": "Earth",

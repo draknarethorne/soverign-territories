@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_DWARF_WARRIOR",
-    "collectionNumber": "BS-024",
+    "collectionNumber": "SD-080",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 80, "totalCards": 219 },
     "name": "Dwarf Warrior",
     "type": "Unit",
     "element": "Earth",

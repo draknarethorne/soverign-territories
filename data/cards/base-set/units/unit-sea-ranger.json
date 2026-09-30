@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_SEA_RANGER",
-    "collectionNumber": "BS-131",
+    "collectionNumber": "SD-181",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 181, "totalCards": 219 },
     "name": "Sea Ranger",
     "type": "Unit",
     "element": "Water",

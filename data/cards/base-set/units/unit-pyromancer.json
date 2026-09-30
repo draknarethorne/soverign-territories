@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_PYROMANCER",
-    "collectionNumber": "BS-109",
+    "collectionNumber": "SD-159",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 159, "totalCards": 219 },
     "name": "Pyromancer",
     "type": "Unit",
     "element": "Fire",

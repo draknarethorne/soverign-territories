@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_GRANARY",
-    "collectionNumber": "BS-033",
+    "collectionNumber": "SD-096",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 96, "totalCards": 219 },
     "name": "Granary",
     "type": "Building",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId":  "BUILDING_FORGE",
-    "collectionNumber":  "BS-025",
+    "collectionNumber":  "SD-083",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 83, "totalCards": 219 },
     "name":  "Forge",
     "type":  "Building",
     "element":  "Fire",

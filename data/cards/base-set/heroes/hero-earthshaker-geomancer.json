@@ -1,6 +1,7 @@
 {
     "cardId": "HERO_EARTHSHAKER_GEOMANCER",
-    "collectionNumber": "BS-012",
+    "collectionNumber": "SD-053",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 53, "totalCards": 219 },
     "name": "Earthshaker Geomancer",
     "type": "Hero",
     "element": "Earth",

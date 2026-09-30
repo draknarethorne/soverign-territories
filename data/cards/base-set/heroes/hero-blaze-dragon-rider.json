@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_BLAZE_DRAGON_RIDER",
-    "collectionNumber":  "BS-004",
+    "collectionNumber":  "SD-044",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 44, "totalCards": 219 },
     "name":  "Blaze, Dragon Rider",
     "type":  "Hero",
     "element":  "Fire",

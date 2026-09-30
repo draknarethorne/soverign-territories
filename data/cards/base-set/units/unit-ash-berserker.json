@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_ASH_BERSERKER",
-    "collectionNumber": "BS-100",
+    "collectionNumber": "SD-150",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 150, "totalCards": 219 },
     "name": "Ash Berserker",
     "type": "Unit",
     "element": "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_INFERNO_GUARD",
-    "collectionNumber":  "BS-019",
+    "collectionNumber":  "SD-070",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 70, "totalCards": 219 },
     "name":  "Inferno Guard",
     "type":  "Unit",
     "element":  "Fire",

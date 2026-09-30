@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_GRANITE_LONGBOWMAN",
-    "collectionNumber": "BS-154",
+    "collectionNumber": "SD-204",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 204, "totalCards": 219 },
     "name": "Granite Longbowman",
     "type": "Unit",
     "element": "Earth",

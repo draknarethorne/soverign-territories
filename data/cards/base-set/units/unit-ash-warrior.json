@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_ASH_WARRIOR",
-    "collectionNumber":  "BS-011",
+    "collectionNumber":  "SD-052",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 52, "totalCards": 219 },
     "name":  "Ash Warrior",
     "type":  "Unit",
     "element":  "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_MINE",
-    "collectionNumber": "BS-035",
+    "collectionNumber": "SD-098",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 98, "totalCards": 219 },
     "name": "Mine",
     "type": "Building",
     "element": "Neutral",

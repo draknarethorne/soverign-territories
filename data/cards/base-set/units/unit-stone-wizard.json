@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_WIZARD",
-    "collectionNumber": "BS-159",
+    "collectionNumber": "SD-209",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 209, "totalCards": 219 },
     "name": "Stone Wizard",
     "type": "Unit",
     "element": "Earth",

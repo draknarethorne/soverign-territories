@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_HEALING_WAVE",
-    "collectionNumber": "BS-056",
+    "collectionNumber": "SD-116",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 116, "totalCards": 219 },
     "name": "Healing Wave",
     "type": "Tactic",
     "element": "Water",

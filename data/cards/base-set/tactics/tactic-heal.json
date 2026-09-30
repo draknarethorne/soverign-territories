@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_HEAL",
-    "collectionNumber": "BS-067",
+    "collectionNumber": "SD-121",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 121, "totalCards": 219 },
     "name": "Heal",
     "type": "Tactic",
     "element": "Neutral",

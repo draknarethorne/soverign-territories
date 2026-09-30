@@ -1,6 +1,7 @@
 {
     "cardId":  "TACTIC_FLAME_SHIELD",
-    "collectionNumber":  "BS-023",
+    "collectionNumber":  "SD-079",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 79, "totalCards": 219 },
     "name":  "Flame Shield",
     "type":  "Tactic",
     "element":  "Fire",

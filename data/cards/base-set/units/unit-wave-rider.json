@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WAVE_RIDER",
-    "collectionNumber": "BS-020",
+    "collectionNumber": "SD-073",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 73, "totalCards": 219 },
     "name": "Wave Rider",
     "type": "Unit",
     "element": "Water",

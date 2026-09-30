@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TERRA_SNIPER",
-    "collectionNumber": "BS-152",
+    "collectionNumber": "SD-202",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 202, "totalCards": 219 },
     "name": "Terra Sniper",
     "type": "Unit",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDE_CRUSADER",
-    "collectionNumber": "BS-121",
+    "collectionNumber": "SD-171",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 171, "totalCards": 219 },
     "name": "Tide Crusader",
     "type": "Unit",
     "element": "Water",

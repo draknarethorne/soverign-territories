@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MAGMA_WARRIOR",
-    "collectionNumber": "BS-101",
+    "collectionNumber": "SD-151",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 151, "totalCards": 219 },
     "name": "Magma Warrior",
     "type": "Unit",
     "element": "Fire",

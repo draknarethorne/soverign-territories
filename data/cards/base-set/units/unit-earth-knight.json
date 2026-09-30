@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EARTH_KNIGHT",
-    "collectionNumber": "BS-144",
+    "collectionNumber": "SD-194",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 194, "totalCards": 219 },
     "name": "Earth Knight",
     "type": "Unit",
     "element": "Earth",

@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_LEVIATHAN_OCEAN_TYRANT",
-    "collectionNumber":  "BS-029",
+    "collectionNumber":  "SD-090",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 90, "totalCards": 219 },
     "name":  "Leviathan, Ocean Tyrant",
     "type":  "Hero",
     "element":  "Water",

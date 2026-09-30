@@ -1,7 +1,7 @@
 {
   "element": "Wind",
   "cardType": "Hero",
-  "seriesId": "base-set",
+  "seriesId": "sovereign-dawn",
   "heroIds": [
     "HERO_ZEPHYR_WIND_DANCER"
   ],

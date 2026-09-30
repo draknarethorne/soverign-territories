@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CRYSTAL_GUARDIAN",
-    "collectionNumber": "BS-028",
+    "collectionNumber": "SD-089",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 89, "totalCards": 219 },
     "name": "Crystal Guardian",
     "type": "Unit",
     "element": "Earth",

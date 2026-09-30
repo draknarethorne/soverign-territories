@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FIRE_ARCHER",
-    "collectionNumber": "BS-102",
+    "collectionNumber": "SD-152",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 152, "totalCards": 219 },
     "name": "Fire Archer",
     "type": "Unit",
     "element": "Fire",

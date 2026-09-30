@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EARTH_SOLDIER",
-    "collectionNumber": "BS-023",
+    "collectionNumber": "SD-078",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 78, "totalCards": 219 },
     "name": "Earth Soldier",
     "type": "Unit",
     "element": "Earth",

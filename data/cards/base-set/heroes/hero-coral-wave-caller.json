@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_CORAL_WAVE_CALLER",
-    "collectionNumber":  "BS-028",
+    "collectionNumber":  "SD-088",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 88, "totalCards": 219 },
     "name":  "Coral, Wave Caller",
     "type":  "Hero",
     "element":  "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_ICE_SHARD",
-    "collectionNumber": "BS-055",
+    "collectionNumber": "SD-115",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 115, "totalCards": 219 },
     "name": "Ice Shard",
     "type": "Tactic",
     "element": "Water",

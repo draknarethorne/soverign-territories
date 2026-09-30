@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_TREASURY",
-    "collectionNumber": "BS-038",
+    "collectionNumber": "SD-101",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 101, "totalCards": 219 },
     "name": "Treasury",
     "type": "Building",
     "element": "Neutral",

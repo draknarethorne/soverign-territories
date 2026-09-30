@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_CHARGE",
-    "collectionNumber": "BS-065",
+    "collectionNumber": "SD-119",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 119, "totalCards": 219 },
     "name": "Charge",
     "type": "Tactic",
     "element": "Neutral",

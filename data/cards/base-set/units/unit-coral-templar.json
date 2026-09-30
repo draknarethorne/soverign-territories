@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CORAL_TEMPLAR",
-    "collectionNumber": "BS-123",
+    "collectionNumber": "SD-173",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 173, "totalCards": 219 },
     "name": "Coral Templar",
     "type": "Unit",
     "element": "Water",

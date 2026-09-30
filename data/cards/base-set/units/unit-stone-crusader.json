@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_CRUSADER",
-    "collectionNumber": "BS-145",
+    "collectionNumber": "SD-195",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 195, "totalCards": 219 },
     "name": "Stone Crusader",
     "type": "Unit",
     "element": "Earth",

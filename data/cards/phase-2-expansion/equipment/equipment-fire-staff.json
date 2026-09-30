@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_FIRE_STAFF",
-    "collectionNumber": "BS-075",
+    "collectionNumber": "SD-125",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 125, "totalCards": 219 },
     "name": "Fire Staff",
     "type": "Equipment",
     "element": "Neutral",

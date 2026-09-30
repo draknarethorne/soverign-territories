@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WAVE_BERSERKER",
-    "collectionNumber": "BS-124",
+    "collectionNumber": "SD-174",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 174, "totalCards": 219 },
     "name": "Wave Berserker",
     "type": "Unit",
     "element": "Water",

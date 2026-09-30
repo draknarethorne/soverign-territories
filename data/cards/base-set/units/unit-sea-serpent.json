@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_SEA_SERPENT",
-    "collectionNumber": "BS-016",
+    "collectionNumber": "SD-065",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 65, "totalCards": 219 },
     "name": "Sea Serpent",
     "type": "Unit",
     "element": "Water",

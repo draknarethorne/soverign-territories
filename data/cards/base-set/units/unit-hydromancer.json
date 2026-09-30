@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_HYDROMANCER",
-    "collectionNumber": "BS-133",
+    "collectionNumber": "SD-183",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 183, "totalCards": 219 },
     "name": "Hydromancer",
     "type": "Unit",
     "element": "Water",

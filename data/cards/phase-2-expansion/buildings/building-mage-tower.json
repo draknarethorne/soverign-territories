@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_MAGE_TOWER",
-    "collectionNumber": "BS-042",
+    "collectionNumber": "SD-105",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 105, "totalCards": 219 },
     "name": "Mage Tower",
     "type": "Building",
     "element": "Neutral",

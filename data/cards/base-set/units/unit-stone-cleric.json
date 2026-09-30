@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_STONE_CLERIC",
-    "collectionNumber": "BS-165",
+    "collectionNumber": "SD-215",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 215, "totalCards": 219 },
     "name": "Stone Cleric",
     "type": "Unit",
     "element": "Earth",

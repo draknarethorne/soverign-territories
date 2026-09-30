@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_EARTHQUAKE",
-    "collectionNumber": "BS-061",
+    "collectionNumber": "SD-118",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 118, "totalCards": 219 },
     "name": "Earthquake",
     "type": "Tactic",
     "element": "Earth",

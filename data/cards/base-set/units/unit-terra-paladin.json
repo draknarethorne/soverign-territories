@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TERRA_PALADIN",
-    "collectionNumber": "BS-146",
+    "collectionNumber": "SD-196",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 196, "totalCards": 219 },
     "name": "Terra Paladin",
     "type": "Unit",
     "element": "Earth",

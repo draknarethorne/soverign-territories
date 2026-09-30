@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_FARMER",
-    "collectionNumber": "BS-086",
+    "collectionNumber": "SD-136",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 136, "totalCards": 219 },
     "name": "Farmer",
     "type": "Worker",
     "element": "Neutral",

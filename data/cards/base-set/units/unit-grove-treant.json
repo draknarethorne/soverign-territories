@@ -1,7 +1,8 @@
 {
-    "cardId": "UNIT_TREANT",
-    "collectionNumber": "BS-026",
-    "name": "Treant",
+    "cardId": "UNIT_GROVE_TREANT",
+    "collectionNumber": "SD-085",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 85, "totalCards": 219 },
+    "name": "Grove Treant",
     "type": "Unit",
     "element": "Earth",
     "rarity": {

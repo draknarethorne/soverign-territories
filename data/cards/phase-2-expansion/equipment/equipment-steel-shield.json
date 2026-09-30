@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_STEEL_SHIELD",
-    "collectionNumber": "BS-081",
+    "collectionNumber": "SD-131",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 131, "totalCards": 219 },
     "name": "Steel Shield",
     "type": "Equipment",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_ACADEMY",
-    "collectionNumber": "BS-051",
+    "collectionNumber": "SD-114",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 114, "totalCards": 219 },
     "name": "Academy",
     "type": "Building",
     "element": "Neutral",

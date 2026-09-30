@@ -2,7 +2,7 @@
   "productId": "hero-pack",
   "productName": "Hero Pack",
   "productType": "specialty-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Build your leadership! Guaranteed 2 heroes from the Base Set.",
   "price": {
     "gold": 4000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 1,

@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_FIRE_SOLDIER",
-    "collectionNumber":  "BS-006",
+    "collectionNumber":  "SD-046",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 46, "totalCards": 219 },
     "name":  "Fire Soldier",
     "type":  "Unit",
     "element":  "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_STEEL_HELMET",
-    "collectionNumber": "BS-083",
+    "collectionNumber": "SD-133",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 133, "totalCards": 219 },
     "name": "Steel Helmet",
     "type": "Equipment",
     "element": "Neutral",

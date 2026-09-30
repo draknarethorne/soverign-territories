@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_WATER_LANCER",
-    "collectionNumber": "BS-139",
+    "collectionNumber": "SD-189",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 189, "totalCards": 219 },
     "name": "Water Lancer",
     "type": "Unit",
     "element": "Water",

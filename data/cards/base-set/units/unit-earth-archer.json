@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EARTH_ARCHER",
-    "collectionNumber": "BS-150",
+    "collectionNumber": "SD-200",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 200, "totalCards": 219 },
     "name": "Earth Archer",
     "type": "Unit",
     "element": "Earth",

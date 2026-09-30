@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FLAME_SNIPER",
-    "collectionNumber": "BS-104",
+    "collectionNumber": "SD-154",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 154, "totalCards": 219 },
     "name": "Flame Sniper",
     "type": "Unit",
     "element": "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MOUNTAIN_RANGER",
-    "collectionNumber": "BS-155",
+    "collectionNumber": "SD-205",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 205, "totalCards": 219 },
     "name": "Mountain Ranger",
     "type": "Unit",
     "element": "Earth",

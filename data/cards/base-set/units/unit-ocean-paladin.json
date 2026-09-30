@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_OCEAN_PALADIN",
-    "collectionNumber": "BS-122",
+    "collectionNumber": "SD-172",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 172, "totalCards": 219 },
     "name": "Ocean Paladin",
     "type": "Unit",
     "element": "Water",

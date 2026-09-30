@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FIRE_SHAMAN",
-    "collectionNumber": "BS-119",
+    "collectionNumber": "SD-169",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 169, "totalCards": 219 },
     "name": "Fire Shaman",
     "type": "Unit",
     "element": "Fire",

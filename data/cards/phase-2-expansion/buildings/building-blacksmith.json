@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_BLACKSMITH",
-    "collectionNumber": "BS-044",
+    "collectionNumber": "SD-107",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 107, "totalCards": 219 },
     "name": "Blacksmith",
     "type": "Building",
     "element": "Neutral",

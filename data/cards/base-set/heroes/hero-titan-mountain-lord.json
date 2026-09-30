@@ -1,6 +1,7 @@
 {
     "cardId": "HERO_TITAN_MOUNTAIN_LORD",
-    "collectionNumber": "BS-013",
+    "collectionNumber": "SD-055",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 55, "totalCards": 219 },
     "name": "Titan, Mountain Lord",
     "type": "Hero",
     "element": "Earth",

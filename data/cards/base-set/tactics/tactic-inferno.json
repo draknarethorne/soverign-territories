@@ -1,6 +1,7 @@
 {
     "cardId":  "TACTIC_INFERNO",
-    "collectionNumber":  "BS-024",
+    "collectionNumber":  "SD-081",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 81, "totalCards": 219 },
     "name":  "Inferno",
     "type":  "Tactic",
     "element":  "Fire",

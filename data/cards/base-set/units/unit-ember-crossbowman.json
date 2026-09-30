@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EMBER_CROSSBOWMAN",
-    "collectionNumber": "BS-103",
+    "collectionNumber": "SD-153",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 153, "totalCards": 219 },
     "name": "Ember Crossbowman",
     "type": "Unit",
     "element": "Fire",

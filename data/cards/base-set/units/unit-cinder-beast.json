@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_CINDER_BEAST",
-    "collectionNumber":  "BS-012",
+    "collectionNumber":  "SD-054",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 54, "totalCards": 219 },
     "name":  "Cinder Beast",
     "type":  "Unit",
     "element":  "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_AQUA_WARRIOR",
-    "collectionNumber": "BS-125",
+    "collectionNumber": "SD-175",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 175, "totalCards": 219 },
     "name": "Aqua Warrior",
     "type": "Unit",
     "element": "Water",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_ELVEN_ARCHER",
-    "collectionNumber": "BS-014",
+    "collectionNumber": "SD-059",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 59, "totalCards": 219 },
     "name": "Elven Archer",
     "type": "Unit",
     "element": "Water",

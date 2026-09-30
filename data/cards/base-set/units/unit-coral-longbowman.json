@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CORAL_LONGBOWMAN",
-    "collectionNumber": "BS-130",
+    "collectionNumber": "SD-180",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 180, "totalCards": 219 },
     "name": "Coral Longbowman",
     "type": "Unit",
     "element": "Water",

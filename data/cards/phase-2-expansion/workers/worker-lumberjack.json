@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_LUMBERJACK",
-    "collectionNumber": "BS-089",
+    "collectionNumber": "SD-139",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 139, "totalCards": 219 },
     "name": "Lumberjack",
     "type": "Worker",
     "element": "Neutral",

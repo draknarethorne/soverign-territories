@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_THALOR_TIDE_GUARDIAN",
-    "collectionNumber":  "BS-026",
+    "collectionNumber":  "SD-084",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 84, "totalCards": 219 },
     "name":  "Thalor, Tide Guardian",
     "type":  "Hero",
     "element":  "Water",

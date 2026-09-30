@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FLAME_CLERIC",
-    "collectionNumber": "BS-117",
+    "collectionNumber": "SD-167",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 167, "totalCards": 219 },
     "name": "Flame Cleric",
     "type": "Unit",
     "element": "Fire",

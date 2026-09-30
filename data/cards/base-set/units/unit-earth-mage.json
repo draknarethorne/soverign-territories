@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EARTH_MAGE",
-    "collectionNumber": "BS-156",
+    "collectionNumber": "SD-206",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 206, "totalCards": 219 },
     "name": "Earth Mage",
     "type": "Unit",
     "element": "Earth",

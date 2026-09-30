@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_BOULDER_CONJURER",
-    "collectionNumber": "BS-161",
+    "collectionNumber": "SD-211",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 211, "totalCards": 219 },
     "name": "Boulder Conjurer",
     "type": "Unit",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_FLAME_IMP",
-    "collectionNumber":  "BS-008",
+    "collectionNumber":  "SD-048",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 48, "totalCards": 219 },
     "name":  "Flame Imp",
     "type":  "Unit",
     "element":  "Fire",

@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_LEATHER_ARMOR",
-    "collectionNumber": "BS-076",
+    "collectionNumber": "SD-126",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 126, "totalCards": 219 },
     "name": "Leather Armor",
     "type": "Equipment",
     "element": "Neutral",

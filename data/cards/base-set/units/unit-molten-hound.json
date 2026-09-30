@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_MOLTEN_HOUND",
-    "collectionNumber":  "BS-013",
+    "collectionNumber":  "SD-056",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 56, "totalCards": 219 },
     "name":  "Molten Hound",
     "type":  "Unit",
     "element":  "Fire",

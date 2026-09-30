@@ -2,7 +2,7 @@
   "productId": "epic-pack",
   "productName": "Epic Pack",
   "productType": "premium-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Power up! All 5 cards are guaranteed Epic or better.",
   "price": {
     "gold": 5000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": "all",

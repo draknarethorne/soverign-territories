@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_ROCK_SLIDE",
-    "collectionNumber": "BS-169",
+    "collectionNumber": "SD-219",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 219, "totalCards": 219 },
     "name": "Rock Slide",
     "type": "Tactic",
     "element": "Earth",

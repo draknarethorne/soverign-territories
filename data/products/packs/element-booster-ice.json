@@ -1,10 +1,10 @@
 {
-  "productId": "element-booster-frost",
-  "productName": "Frost Element Booster",
+  "productId": "element-booster-ice",
+  "productName": "Ice Element Booster",
   "productType": "element-booster",
-  "series": "base-set",
-  "element": "Frost",
-  "description": "Embrace the ice! 5 Frost element cards with increased chances for rare Frost heroes and units.",
+  "series": "sovereign-dawn",
+  "element": "Ice",
+  "description": "Embrace the ice! 5 Ice element cards with increased chances for rare Ice heroes and units.",
   "price": {
     "gold": 1500,
     "gems": 150,
@@ -13,13 +13,13 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-frost-only",
+  "cardPool": "sovereign-dawn-ice-only",
   "guarantees": [
     {
       "slot": 5,
       "minimumRarity": "Uncommon",
-      "element": "Frost",
-      "description": "Last card is guaranteed Frost Uncommon+"
+      "element": "Ice",
+      "description": "Last card is guaranteed Ice Uncommon+"
     }
   ],
   "rarityDistribution": {
@@ -47,13 +47,13 @@
   "specialFeatures": {
     "shinyChance": 12,
     "heroBoost": true,
-    "elementRestriction": "Frost"
+    "elementRestriction": "Ice"
   },
   "pitySystem": {
     "enabled": true,
     "epicGuaranteeAfter": 10,
     "legendaryGuaranteeAfter": 50,
-    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-ice"]
   },
   "availability": {
     "unlockLevel": 10,
@@ -63,6 +63,6 @@
   "collectionMilestoneReward": {
     "trigger": "complete-all-frost-15-cards",
     "rewardQuantity": 1,
-    "message": "Congratulations on completing the Frost collection! Here's a bonus Frost Element Booster."
+    "message": "Congratulations on completing the Ice collection! Here's a bonus Ice Element Booster."
   }
 }

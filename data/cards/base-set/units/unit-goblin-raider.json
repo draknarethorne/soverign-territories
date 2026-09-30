@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_GOBLIN_RAIDER",
-    "collectionNumber":  "BS-016",
+    "collectionNumber":  "SD-064",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 64, "totalCards": 219 },
     "name":  "Goblin Raider",
     "type":  "Unit",
     "element":  "Fire",

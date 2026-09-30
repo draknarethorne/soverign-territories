@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EMBER_SABOTEUR",
-    "collectionNumber": "BS-118",
+    "collectionNumber": "SD-168",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 168, "totalCards": 219 },
     "name": "Ember Saboteur",
     "type": "Unit",
     "element": "Fire",

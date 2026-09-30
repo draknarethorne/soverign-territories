@@ -2,7 +2,7 @@
   "productId": "element-booster-fire",
   "productName": "Fire Element Booster",
   "productType": "element-booster",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "element": "Fire",
   "description": "Harness the flames! 5 Fire element cards with increased chances for rare Fire heroes and units.",
   "price": {
@@ -13,7 +13,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-fire-only",
+  "cardPool": "sovereign-dawn-fire-only",
   "guarantees": [
     {
       "slot": 5,
@@ -53,7 +53,7 @@
     "enabled": true,
     "epicGuaranteeAfter": 10,
     "legendaryGuaranteeAfter": 50,
-    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-ice"]
   },
   "availability": {
     "unlockLevel": 5,

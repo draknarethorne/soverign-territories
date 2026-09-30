@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_WOODEN_SWORD",
-    "collectionNumber": "BS-072",
+    "collectionNumber": "SD-122",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 122, "totalCards": 219 },
     "name": "Wooden Sword",
     "type": "Equipment",
     "element": "Neutral",

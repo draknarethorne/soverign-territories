@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_CORAL_GUARDIAN",
-    "collectionNumber": "BS-018",
+    "collectionNumber": "SD-068",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 68, "totalCards": 219 },
     "name": "Coral Guardian",
     "type": "Unit",
     "element": "Water",

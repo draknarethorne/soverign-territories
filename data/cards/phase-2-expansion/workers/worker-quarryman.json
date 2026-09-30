@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_QUARRYMAN",
-    "collectionNumber": "BS-093",
+    "collectionNumber": "SD-143",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 143, "totalCards": 219 },
     "name": "Quarryman",
     "type": "Worker",
     "element": "Neutral",

@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_CARPENTER",
-    "collectionNumber": "BS-091",
+    "collectionNumber": "SD-141",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 141, "totalCards": 219 },
     "name": "Carpenter",
     "type": "Worker",
     "element": "Neutral",

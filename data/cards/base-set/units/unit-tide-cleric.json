@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_TIDE_CLERIC",
-    "collectionNumber": "BS-141",
+    "collectionNumber": "SD-191",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 191, "totalCards": 219 },
     "name": "Tide Cleric",
     "type": "Unit",
     "element": "Water",

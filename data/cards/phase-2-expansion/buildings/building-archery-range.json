@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_ARCHERY_RANGE",
-    "collectionNumber": "BS-040",
+    "collectionNumber": "SD-103",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 103, "totalCards": 219 },
     "name": "Archery Range",
     "type": "Building",
     "element": "Neutral",

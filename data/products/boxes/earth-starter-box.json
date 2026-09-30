@@ -2,9 +2,9 @@
   "productId": "earth-starter-box",
   "productName": "Earth Starter Box",
   "productType": "starter-box",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "element": "Earth",
-  "description": "Join the Stone Compact! This pre-constructed deck features Gaia, Stone Sentinel and a durable Earth army.",
+  "description": "Join the Stone Compact! A pre-constructed deck led by Stone Sentinel and a durable Earth army.",
   "price": {
     "gold": 0,
     "gems": 0,
@@ -15,86 +15,99 @@
   "acquisition": "tutorial-reward",
   "fixedContents": [
     {
-      "cardId": "HERO_GAIA_STONE_SENTINEL",
-      "collectionNumber": "BS-051",
+      "cardId": "HERO_STONE_SENTINEL",
+      "collectionNumber": "SD-051",
       "quantity": 1,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_EARTH_WARRIOR",
-      "collectionNumber": "BS-056",
+      "cardId": "UNIT_EARTH_SOLDIER",
+      "collectionNumber": "SD-078",
       "quantity": 3,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_BOULDER_BEAST",
-      "collectionNumber": "BS-057",
+      "cardId": "UNIT_DWARF_WARRIOR",
+      "collectionNumber": "SD-080",
       "quantity": 2,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_STONE_SCOUT",
-      "collectionNumber": "BS-058",
+      "cardId": "UNIT_STONE_DEFENDER",
+      "collectionNumber": "SD-087",
       "quantity": 2,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_CLAY_GOLEM",
-      "collectionNumber": "BS-060",
-      "quantity": 2,
-      "guaranteed": true
-    },
-    {
-      "cardId": "UNIT_GRANITE_SOLDIER",
-      "collectionNumber": "BS-061",
+      "cardId": "UNIT_ROCK_HURLER",
+      "collectionNumber": "SD-093",
       "quantity": 1,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_ROCK_GOLEM",
-      "collectionNumber": "BS-066",
+      "cardId": "UNIT_MUD_ELEMENTAL",
+      "collectionNumber": "SD-094",
       "quantity": 1,
       "guaranteed": true
     },
     {
-      "cardId": "TACTIC_EARTHQUAKE",
-      "collectionNumber": "BS-072",
+      "cardId": "UNIT_STONE_GOLEM",
+      "collectionNumber": "SD-082",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_CRYSTAL_GUARDIAN",
+      "collectionNumber": "SD-089",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_GROVE_TREANT",
+      "collectionNumber": "SD-085",
       "quantity": 1,
       "guaranteed": true
     },
     {
       "cardId": "TACTIC_STONE_SHIELD",
-      "collectionNumber": "BS-073",
-      "quantity": 2,
+      "collectionNumber": "SD-218",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "TACTIC_EARTHQUAKE",
+      "collectionNumber": "SD-118",
+      "quantity": 1,
       "guaranteed": true
     }
   ],
   "totalCards": 15,
   "rarityBreakdown": {
     "Epic": 1,
-    "Uncommon": 3,
-    "Common": 9,
-    "Rare": 2
+    "Common": 10,
+    "Rare": 3,
+    "Uncommon": 1
   },
   "recommendedDeck": {
-    "hero": "HERO_GAIA_STONE_SENTINEL",
+    "hero": "HERO_STONE_SENTINEL",
     "units": [
-      "UNIT_EARTH_WARRIOR",
-      "UNIT_EARTH_WARRIOR",
-      "UNIT_EARTH_WARRIOR",
-      "UNIT_BOULDER_BEAST",
-      "UNIT_BOULDER_BEAST",
-      "UNIT_STONE_SCOUT",
-      "UNIT_STONE_SCOUT",
-      "UNIT_CLAY_GOLEM",
-      "UNIT_CLAY_GOLEM",
-      "UNIT_GRANITE_SOLDIER",
-      "UNIT_ROCK_GOLEM"
+      "HERO_STONE_SENTINEL",
+      "UNIT_EARTH_SOLDIER",
+      "UNIT_EARTH_SOLDIER",
+      "UNIT_EARTH_SOLDIER",
+      "UNIT_DWARF_WARRIOR",
+      "UNIT_DWARF_WARRIOR",
+      "UNIT_STONE_DEFENDER",
+      "UNIT_STONE_DEFENDER",
+      "UNIT_ROCK_HURLER",
+      "UNIT_MUD_ELEMENTAL",
+      "UNIT_STONE_GOLEM",
+      "UNIT_CRYSTAL_GUARDIAN",
+      "UNIT_GROVE_TREANT"
     ],
     "tactics": [
-      "TACTIC_EARTHQUAKE",
       "TACTIC_STONE_SHIELD",
-      "TACTIC_STONE_SHIELD"
+      "TACTIC_EARTHQUAKE"
     ]
   },
   "tutorialFlow": {

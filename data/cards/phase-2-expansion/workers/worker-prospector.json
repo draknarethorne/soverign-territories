@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_PROSPECTOR",
-    "collectionNumber": "BS-094",
+    "collectionNumber": "SD-144",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 144, "totalCards": 219 },
     "name": "Prospector",
     "type": "Worker",
     "element": "Neutral",

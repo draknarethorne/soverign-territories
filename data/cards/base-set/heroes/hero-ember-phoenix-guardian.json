@@ -1,6 +1,7 @@
 ﻿{
     "cardId":  "HERO_EMBER_PHOENIX_GUARDIAN",
-    "collectionNumber":  "BS-005",
+    "collectionNumber":  "SD-045",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 45, "totalCards": 219 },
     "name":  "Ember, Phoenix Guardian",
     "type":  "Hero",
     "element":  "Fire",

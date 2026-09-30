@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_IRON_SWORD",
-    "collectionNumber": "BS-073",
+    "collectionNumber": "SD-123",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 123, "totalCards": 219 },
     "name": "Iron Sword",
     "type": "Equipment",
     "element": "Neutral",

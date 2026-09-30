@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_EMBER_RIDER",
-    "collectionNumber": "BS-114",
+    "collectionNumber": "SD-164",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 164, "totalCards": 219 },
     "name": "Ember Rider",
     "type": "Unit",
     "element": "Fire",

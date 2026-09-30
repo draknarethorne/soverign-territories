@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_FLAME_SENTINEL",
-    "collectionNumber":  "BS-018",
+    "collectionNumber":  "SD-069",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 69, "totalCards": 219 },
     "name":  "Flame Sentinel",
     "type":  "Unit",
     "element":  "Fire",

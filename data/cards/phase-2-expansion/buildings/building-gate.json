@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_GATE",
-    "collectionNumber": "BS-048",
+    "collectionNumber": "SD-111",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 111, "totalCards": 219 },
     "name": "Gate",
     "type": "Building",
     "element": "Neutral",

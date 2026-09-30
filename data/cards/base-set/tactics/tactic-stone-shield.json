@@ -1,6 +1,7 @@
 {
     "cardId": "TACTIC_STONE_SHIELD",
-    "collectionNumber": "BS-168",
+    "collectionNumber": "SD-218",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 218, "totalCards": 219 },
     "name": "Stone Shield",
     "type": "Tactic",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_MOUNTAIN_GIANT",
-    "collectionNumber": "BS-032",
+    "collectionNumber": "SD-095",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 95, "totalCards": 219 },
     "name": "Mountain Giant",
     "type": "Unit",
     "element": "Earth",

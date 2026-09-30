@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_PYRO_SPRITE",
-    "collectionNumber":  "BS-014",
+    "collectionNumber":  "SD-060",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 60, "totalCards": 219 },
     "name":  "Pyro Sprite",
     "type":  "Unit",
     "element":  "Fire",

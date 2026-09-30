@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_OCEAN_SORCERER",
-    "collectionNumber": "BS-134",
+    "collectionNumber": "SD-184",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 184, "totalCards": 219 },
     "name": "Ocean Sorcerer",
     "type": "Unit",
     "element": "Water",

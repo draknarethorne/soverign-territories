@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FIRE_KNIGHT",
-    "collectionNumber": "BS-096",
+    "collectionNumber": "SD-146",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 146, "totalCards": 219 },
     "name": "Fire Knight",
     "type": "Unit",
     "element": "Fire",

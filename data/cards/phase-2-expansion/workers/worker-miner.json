@@ -1,6 +1,7 @@
 {
     "cardId": "WORKER_MINER",
-    "collectionNumber": "BS-092",
+    "collectionNumber": "SD-142",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 142, "totalCards": 219 },
     "name": "Miner",
     "type": "Worker",
     "element": "Neutral",

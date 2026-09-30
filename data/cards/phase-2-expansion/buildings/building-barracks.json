@@ -1,6 +1,7 @@
 {
     "cardId": "BUILDING_BARRACKS",
-    "collectionNumber": "BS-039",
+    "collectionNumber": "SD-102",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 102, "totalCards": 219 },
     "name": "Barracks",
     "type": "Building",
     "element": "Neutral",

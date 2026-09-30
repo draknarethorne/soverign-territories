@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_GRANITE_TEMPLAR",
-    "collectionNumber": "BS-147",
+    "collectionNumber": "SD-197",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 197, "totalCards": 219 },
     "name": "Granite Templar",
     "type": "Unit",
     "element": "Earth",

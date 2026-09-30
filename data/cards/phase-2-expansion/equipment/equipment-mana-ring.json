@@ -1,6 +1,7 @@
 {
     "cardId": "EQUIPMENT_MANA_RING",
-    "collectionNumber": "BS-085",
+    "collectionNumber": "SD-135",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 135, "totalCards": 219 },
     "name": "Mana Ring",
     "type": "Equipment",
     "element": "Neutral",

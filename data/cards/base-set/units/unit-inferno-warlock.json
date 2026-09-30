@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_INFERNO_WARLOCK",
-    "collectionNumber": "BS-112",
+    "collectionNumber": "SD-162",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 162, "totalCards": 219 },
     "name": "Inferno Warlock",
     "type": "Unit",
     "element": "Fire",

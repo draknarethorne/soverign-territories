@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_EMBER_WOLF",
-    "collectionNumber":  "BS-015",
+    "collectionNumber":  "SD-062",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 62, "totalCards": 219 },
     "name":  "Ember Wolf",
     "type":  "Unit",
     "element":  "Fire",

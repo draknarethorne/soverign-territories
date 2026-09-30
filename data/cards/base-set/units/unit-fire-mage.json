@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FIRE_MAGE",
-    "collectionNumber": "BS-108",
+    "collectionNumber": "SD-158",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 158, "totalCards": 219 },
     "name": "Fire Mage",
     "type": "Unit",
     "element": "Fire",

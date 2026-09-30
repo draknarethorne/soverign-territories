@@ -1,6 +1,7 @@
 {
     "cardId": "UNIT_FROST_MAGE",
-    "collectionNumber": "BS-022",
+    "collectionNumber": "SD-076",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 76, "totalCards": 219 },
     "name": "Frost Mage",
     "type": "Unit",
     "element": "Water",

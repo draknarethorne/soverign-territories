@@ -1,6 +1,7 @@
 {
     "cardId": "HERO_GAIA_EARTH_MOTHER",
-    "collectionNumber": "BS-014",
+    "collectionNumber": "SD-058",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 58, "totalCards": 219 },
     "name": "Gaia, Earth Mother",
     "type": "Hero",
     "element": "Earth",

@@ -1,6 +1,7 @@
 {
     "cardId":  "UNIT_EMBER_SCOUT",
-    "collectionNumber":  "BS-007",
+    "collectionNumber":  "SD-047",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 47, "totalCards": 219 },
     "name":  "Ember Scout",
     "type":  "Unit",
     "element":  "Fire",
