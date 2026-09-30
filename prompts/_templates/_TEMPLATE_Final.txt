@@ -1,9 +1,10 @@
-=== [HERO] · Intro Final Scene — Final (ST_FireRed_Final, img2img) ===
+=== [HERO] · Intro Final Scene (group: Final) — Final (ST_FireRed_Final, img2img) ===
 Incoming image: the near-final [HERO] (chosen outfit/armor, hair, [WEAPON]). This pass adds ONLY the
 scene, atmosphere, spell glow, and small pose/wind. Do NOT redraw her - carry everything from the
 incoming image. Only the overrides below change. Denoise ~0.5-0.7.
 
-Bracket values come from the hero's card JSON (art.palette / class / element). Replace every [BRACKET].
+Optional render shift: for a card look, add a light "cinematic dark-fantasy, painterly" style cue -
+test it; keep it subtle so likeness holds.
 
 ----------------------------------------------------------------
 prompt:
@@ -19,8 +20,7 @@ chin lifted, free hand raised and open as she channels].
 A [ACCENT] glow runs along [weapon detail].
 
 Eyes [CAST EYE] mid-cast (override the incoming eye colour).
-[LIP] lipstick (override).
-[NAIL] fingernails (override).
+[LIP] lipstick (override). [NAIL] fingernails (override).
 
 Environment: [ENVIRONMENT], with [atmosphere], a soft [ACCENT] haze rising behind her.
 A light breeze lifts [hair / cape].
@@ -31,9 +31,9 @@ Full-body hero framing, slight low camera angle for an imposing, regal presence.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio
-equipment, modern objects, cluttered background, altered face, altered armor, altered hairstyle.
+extra people, extra limbs, extra fingers, deformed hands, duplicate or second weapon, text, wording,
+watermark, logo, modern objects, cluttered background, altered face, altered armor, altered hairstyle.
 
 ----------------------------------------------------------------
-(future - multi-image) Once the hero's companion/dragon exists, add it as a SECOND reference image to
-keep it consistent, and extend this prompt with the companion's placement only.
+(future - multi-image) Add the hero's companion/summon (see _TEMPLATE_Pets.txt) or a background plate
+(_TEMPLATE_Background.txt) as a SECOND reference image, and extend this prompt with its placement only.

@@ -1,0 +1,22 @@
+=== [HERO] · Head / Close-up (group: X_Head) — Edit (Qwen img2img) ===
+Incoming image: an A-pose (or hair variant) of [HERO]. Tight close-up; keep face, expression, and
+hair from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene, professional beauty shot. Background: a basic cream-coloured studio backdrop.
+
+Close-up from the chest up. Keep high fidelity to face, expression, and hairstyle from the reference.
+
+Figure: generous bust, softly emphasized (upper-chest framing only).
+Alluring, confident smile; looking to camera.
+
+Eyes: [EYE], intricate radial fibers, crisp catchlights.
+Hair: [HAIR], micro-highlights catching the light.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, plants, lights, extra limbs, extra digits, deformed hands, extra
+clothing, extra hair, text, wording, watermark, logo.
