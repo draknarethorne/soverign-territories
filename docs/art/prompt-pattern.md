@@ -71,6 +71,26 @@ Overall, [aesthetic] aesthetic.
 - **Test one change at a time.** e.g. split Background first, run it, confirm it's still clean, then
   add slot lead-ins. Don't change five things at once or you won't know what helped.
 
+## Figure & glamour phrasing (tasteful equivalents)
+
+Keep the art-direction intent (attractive, curvy, glamorous, revealing fantasy wardrobe) with
+professional wording. Swap overtly explicit lines for these - the model still leans the same way and
+the instruction isn't dropped:
+
+| Intent | Instead of | Use |
+| --- | --- | --- |
+| Fuller bust | "enlarge / enhance her breasts" | full, hourglass figure; generous bust, softly emphasized |
+| Visible detail | "nipples hard" | thin, form-defining fabric *(or omit)* |
+| Revealing top | "breasts exposed / uncovered", "cleavage exposed" | plunging, low-cut neckline; bold décolletage |
+| Revealing overall | "skimpy, hips bare" | revealing, high-cut design; bare midriff and high leg |
+| Alluring look | "seductive", "come-to-me eyes and lips" | alluring, confident smile; an inviting gaze |
+| Alluring hand | "hand in erotic / seductive position" | free hand posed gracefully at her hip; an elegant, alluring gesture |
+| Sultry brows | "brows sensual" | expressive, sultry brows |
+| Glamour pose | "back arched, hips swayed, leaning forward" | *keep - standard contrapposto / glamour posing* |
+
+Fine to keep as-is (standard fantasy art): bare midriff, high slit, low-cut, bikini armor, full
+figure, long slender legs, hourglass, seductive / sultry / alluring, contrapposto poses.
+
 ## Negative baseline (+ stage extras)
 
 `extra people, extra limbs, extra digits, extra feet, text, watermark, logo, studio equipment`
