@@ -191,6 +191,29 @@ When an outfit feels flat for the catwalk, add one or two - not all:
 - **Movement** - fabric and hair caught mid-step so it doesn't look static.
 - **Footwear that elongates** - heels that extend the leg line, coordinated with the palette.
 
+## Body & head orientation (break the forward-facing lock)
+
+Vague direction ("face any direction") makes the model default to the safe pose - upright, facing
+camera. To get variety, **name a concrete angle**, and specify three axes separately (they can
+differ - that's what makes a pose glamorous, not flat):
+
+- **Body / torso:** front - **3/4 turn (~45 deg)** - profile (side) - 3/4 back - back to camera.
+- **Head / face:** to camera - turned 3/4 - profile - **over the shoulder** - tilted up / down.
+- **Gaze / eyeline:** to camera - off-camera into the distance - down - up.
+
+**Key:** drop "Face remains focused on camera" when you want a turned head - that line locks it
+forward. The classic glamour look is **body 3/4, head turned to camera, chin slightly down, eyes to
+camera** - not flat front-on.
+
+Ready orientations to drop in:
+
+- **Classic 3/4:** body angled ~45 deg to camera, weight on the back leg; head turned to camera, chin
+  down; eyes to camera.
+- **Over-the-shoulder:** back toward camera, head turned over the shoulder, eyes to camera; hand at the hip.
+- **Profile:** full side profile, chin lifted, gaze off-camera into the distance.
+- **Aloof editorial:** body front, face turned to 3/4, eyes off-camera.
+- **Contrapposto walk:** mid-step, hips and shoulders counter-rotated (S-curve), head leading the turn.
+
 ## Migrating your existing `.json` prompts
 
 They already follow most of this. To standardise: lift each positive prompt into the matching
