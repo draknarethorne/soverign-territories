@@ -1,0 +1,39 @@
+=== [HERO] · Intro Final Scene — Final (ST_FireRed_Final, img2img) ===
+Incoming image: the near-final [HERO] (chosen outfit/armor, hair, [WEAPON]). This pass adds ONLY the
+scene, atmosphere, spell glow, and small pose/wind. Do NOT redraw her - carry everything from the
+incoming image. Only the overrides below change. Denoise ~0.5-0.7.
+
+Bracket values come from the hero's card JSON (art.palette / class / element). Replace every [BRACKET].
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body
+shape and proportions, hairstyle, [OUTFIT/ARMOR], and the [WEAPON]. Keep all of these unchanged.
+
+She stands mid-cast, commanding and composed. Adjust the pose only: [pose note - e.g. weight shifted,
+chin lifted, free hand raised and open as she channels].
+
+[SPELL VFX] gathers around her [hand / weapon] - swirling [PRIMARY]-and-[ACCENT] energy, ribbons of
+[smoke / light], and [element motif, e.g. spectral shades] around her.
+A [ACCENT] glow runs along [weapon detail].
+
+Eyes [CAST EYE] mid-cast (override the incoming eye colour).
+[LIP] lipstick (override).
+[NAIL] fingernails (override).
+
+Environment: [ENVIRONMENT], with [atmosphere], a soft [ACCENT] haze rising behind her.
+A light breeze lifts [hair / cape].
+
+Palette: [PRIMARY] dominant with [ACCENTS]; all glow is [ACCENT].
+Full-body hero framing, slight low camera angle for an imposing, regal presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio
+equipment, modern objects, cluttered background, altered face, altered armor, altered hairstyle.
+
+----------------------------------------------------------------
+(future - multi-image) Once the hero's companion/dragon exists, add it as a SECOND reference image to
+keep it consistent, and extend this prompt with the companion's placement only.
