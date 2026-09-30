@@ -1,0 +1,35 @@
+=== Drakness Thorne · Motion: Fluid (group: Motion) — Edit (Qwen img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
+
+Candid high-fashion editorial photography, dynamic fluid movement, unposed seductive glamour, mid-motion, glamour stance, shifted weight, non-rigid posture, full body in motion, high fluid energy.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color and hair color.
+
+Maintain existing outfit expressly.
+
+Breeze flowing any direction.
+Her visage is dynamic, intensely expressive, and caught in an seductive emotional shift.
+Her features alternate between an erotic grins to a seductive smile.
+Her lushes lips are active and non-neutral, her brow line is happy and her eyes track the viewer with seductive stare.
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Long, slender legs.
+
+Head re-positions for the motion.
+Chest facing any direction.
+One hand touches the ground.
+One hand touches her body.
+One knee bending.
+One leg straddled to side.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo

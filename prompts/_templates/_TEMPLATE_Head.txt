@@ -19,4 +19,5 @@ Hair: [HAIR], micro-highlights catching the light.
 negative prompt:
 
 extra people, studio equipment, plants, lights, extra limbs, extra digits, deformed hands, extra
-clothing, extra hair, text, wording, watermark, logo.
+clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust,
+text, wording, watermark, logo.

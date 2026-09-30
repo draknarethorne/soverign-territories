@@ -34,4 +34,5 @@ Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
 negative prompt:
 
 extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra
-fingers, deformed hands, extra clothing, extra hair, text, wording, watermark, logo.
+fingers, deformed hands, extra clothing, extra hair, recolored eyes, blue eyes, green eyes, brown
+eyes, flat chest, small bust, text, wording, watermark, logo.

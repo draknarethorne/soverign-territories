@@ -44,4 +44,5 @@ Pose: [short lines - walking toward camera, one foot forward, hips and shoulders
 negative prompt:
 
 extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
-wording, watermark, logo[, pauldrons, shoulder armor <- REMOVE these two if the armor has them].
+wording, watermark, logo, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small
+bust[, pauldrons, shoulder armor <- REMOVE these two if the armor has them].

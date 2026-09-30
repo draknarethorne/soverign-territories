@@ -1,0 +1,40 @@
+=== Drakness Thorne · Motion: Catwalk (group: Motion) — Edit (Qwen img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color and hair color.
+
+Maintain existing outfit expressly.
+
+Breeze flowing any direction.
+Face remains focused on camera.
+Expression: alluring, confident smile.
+Lips full and expressive.
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Long, slender legs.
+
+Walking towards the camera.
+Body position adjusts.
+Hips and shoulders positioned for the step.
+Arms swinging with the walk.
+One foot stepping forward more.
+Face remains focused on camera.
+Walking towards the camera.
+Body position adjusts.
+Hips and shoulders positioned for the step.
+Arms swinging with the walk.
+One foot stepping forward more.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo
