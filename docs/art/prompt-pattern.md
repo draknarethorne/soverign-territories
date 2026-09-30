@@ -77,6 +77,10 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
   **natural, minimal makeup** (lips, nails, eye colour only; no heavy eyeshadow/blush). The goal is
   to judge the wardrobe and pose, not the fantasy. Default lips/nails to a **light** tone (e.g. Light
   Violet); use Deep or Red only when you intentionally match a darker outfit.
+- **Makeup ladder.** The A-Pose is a **bare-face reset** (natural lips + a light `[ACCENT]` eyeshadow
+  wash) so a heavily-made-up source photo doesn't leak through. Each outfit then adds a **`Makeup:`**
+  line - eyeshadow matched to the feel (soft shimmer for light looks, smoky for dark armor). Fantasy /
+  Final carry the heaviest makeup + glowing eyes.
 - **Fantasy comes at the end.** Eyeshadow, blush, glowing eyes, necrotic glow, and any painterly
   treatment go in the optional **Fantasy** pass and/or the **Final** scene - never the baseline.
 
