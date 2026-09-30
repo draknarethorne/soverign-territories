@@ -39,9 +39,9 @@ Darkness · Fire · Grass · Ice · Water · Light · Earth · Lightning · Wind
 
 ## Card series (base + expansion name pool)
 
-- **Base Series** — the launch set (ST-### numbering; see the base-set decision in
-  [`ideation_codex.md`](ideation_codex.md)).
-- Expansion name pool: **Sovereign Dawn** · **Nether Realm** · **Primal Wilds** ·
+- **Sovereign Dawn** — the launch series (`SD-###` numbering; 219 cards; see the series
+  decision in [`ideation_codex.md`](ideation_codex.md)).
+- Expansion name pool: **Nether Realm** · **Primal Wilds** ·
   **Celestial Gate** · **Awakening** · **Shadow Sovereign**.
 
 ## Classes

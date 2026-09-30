@@ -154,18 +154,20 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
 **Tracked follow-ups (not yet done):**
 
 - **Collection numbers:** the series is **Sovereign Dawn** with **`SD-###`**. The marquee 30
-  (`SD-001`–`SD-030`) and 10 male bonded pets (`SD-031`–`SD-040`) are authored. The existing
-  `BS-###` base-set cards still need the Sovereign Dawn migration (below).
+  (`SD-001`–`SD-030`) and 10 male bonded pets (`SD-031`–`SD-040`) are authored. ✅ The former
+  `BS-###` base-set cards are migrated to `SD-041`–`SD-219` (219 cards total).
 - **Bonded pets:** ✅ the 10 male heroes' pets (Reaper, Fire Elemental, Treant, Frost Owl,
   Shark, Angel, Dire Bear, Gryphon, Giant Eagle, Basilisk) are authored as `SD-031`–`SD-040`
   and wired to their owners. Remaining: pets for Rare+ *units* (per the pairing rule) as the
   element pool is built out.
-- **Sovereign Dawn data migration (deliberate pass):** migrate the existing base-set cards +
-  manifests + product boxes/packs + collection checklist from `base-set`/`Base Set`/`BS-###`
-  to `sovereign-dawn`/`Sovereign Dawn`/`SD-041+`; add `series` objects; map `Frost` → `Ice`;
-  and normalize secondary-schema element/rarity enums to a single canonical casing (card data
-  is TitleCase; `codex-schema.json` is authoritative). Scripted + validated as its own step to
-  keep the cross-references (boxes/packs/checklist) intact.
+- **Sovereign Dawn data migration (deliberate pass):** ✅ **done.** Migrated the 179 legacy
+  cards + manifests + product boxes/packs + collection checklist from `base-set`/`Base Set`/`BS-###`
+  to `sovereign-dawn`/`Sovereign Dawn`/`SD-041`–`SD-219`; added `series` objects; mapped `Frost` → `Ice`
+  (pack + element-list renames); resolved the `UNIT_TREANT` collision (legacy → `UNIT_GROVE_TREANT`);
+  rebuilt the 219-entry checklist and series-manifest breakdowns; rebuilt the earth/water starter
+  boxes (were referencing phantom cardIds). Scripted + schema-validated (0 invalid of 219).
+  Remaining structural option: physically consolidate `data/cards/base-set/` + `phase-2-expansion/`
+  into `data/cards/sovereign-dawn/`.
 - **Card JSON authoring:** create `data/cards/` entries for the marquee 30, then fill element parity
   per the blueprint below (authored in waves with balance review).
 - **Element art refresh:** existing `Frost` cards map to `Ice`; `Dark`/`Arcane` map to `Darkness`.
