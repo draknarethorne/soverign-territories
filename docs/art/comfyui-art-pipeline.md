@@ -87,7 +87,51 @@ identity straight from the hero's card JSON (`art.palette`, `class`, `archetype`
 
 ---
 
-## 5. Current constraints & future direction
+## 5. Model strategy (per stage)
+
+We keep a benchmark harness of single-image A-pose workflows (one per model) under
+`workflows/Experimental/` — same pose prompt, different model — to compare **speed vs output
+quality** before committing a model to a stage.
+
+### Two latent "families" (this drives everything)
+
+- **Qwen family** — the current `Qwen-Image-Edit` **and `FireRed`** share the *same* text
+  encoder (`qwen_2.5_vl`) and the *same* VAE (`qwen_image_vae`); FireRed only swaps the
+  transformer. So **FireRed is a higher-fidelity sibling of Qwen in the same latent space** —
+  Qwen → FireRed causes **minimal identity/colour drift.**
+- **Flux family** — Flux.1 / Flux.2 use different encoders (T5 / Mistral) and different VAEs.
+  Higher quality ceiling, but they **reinterpret** the image more → more drift from the Qwen look.
+  Treat a Flux final as a deliberate *re-render* and hold likeness with a character LoRA/reference.
+
+### Recommended model per stage
+
+| Stage | Job | Model | Why |
+| --- | --- | --- | --- |
+| 1–4 Exploration | Volume + speed | **Qwen 4-step** (current) | ~1–2 min; most outputs discarded. |
+| 5 Final — stay on-model | Quality, low drift | **FireRed 1.1** (8-step) | Shares Qwen VAE+encoder → upgrades fidelity, keeps her *her*. |
+| 5 Final — max quality | Highest ceiling | **Flux.2 dev** (Turbo, ~20 steps) | Best of the Flux set; deliberate re-render. |
+| 6 Polish | Skin / texture / eyes / light | **Flux.2 Polish** | Dedicated finishing pass (subsurface, 85mm). |
+| Future: swap weapon/armor region | Inpaint | **Flux.1 Fill dev** | Fill/inpaint model for the multi-image plan. |
+| — | — | **JoyAI** deprioritised | int8 everywhere + 40 steps, no LoRA → slower *and* a quality compromise. |
+
+### Denoise is the key lever
+
+All current workflows run **denoise = 1.0** (full redraw), which is why the look drifts between
+stages. Tune it by intent:
+
+- **"Change one thing" stages** (hair → armor → stance): **~0.4–0.7** — change the target, hold the rest.
+- **Polish pass**: **~0.2–0.4** — enhance texture without redrawing identity.
+- **Base A-pose**: **1.0** — a full generation is wanted here.
+
+### Before investing deeper in one Qwen version
+
+New **Qwen-Image-Edit 2511 / 2512** templates (and other unused templates) are worth a quick,
+**timeboxed** bake-off on the A-pose harness *now* — switching the base model later means
+regenerating work. Pick the version, then go deep; don't let template-shopping stall progress.
+
+---
+
+## 6. Current constraints & future direction
 
 **Current (novice / single-image phase):**
 
@@ -100,13 +144,16 @@ identity straight from the hero's card JSON (`art.palette`, `class`, `archetype`
 
 - **Multi-image input** — feed separate reference images (e.g. a weapon, an armor set) into one
   scene once comfortable, instead of carrying everything in a single image.
-- **Model comparisons** — run the same prompts through **Flux** and **FireRed** img2img (and other
-  non-Qwen flows) to compare output; save those workflows under `workflows/<Hero>/` for reference.
+- **Model comparisons** — ✅ benchmark harness in `workflows/Experimental/` (Qwen, FireRed, Flux.1,
+  Flux.2, JoyAI) compares speed/quality on a shared A-pose; per-stage picks in §5. Next: run the
+  newer Qwen 2511/2512 templates through the same harness.
 - **GUI auto-wiring** — connect stages into fewer graphs as ComfyUI familiarity grows.
 
-## 6. Status & open questions
+## 7. Status & open questions
 
 - ✅ Drakness has extensive experiments across pose, hair, armor, clothing, and motion.
+- ✅ Model benchmark harness assembled (`workflows/Experimental/`).
+- ⬜ **Decide the base Qwen version** — bake off Image-Edit 2511 vs 2512 (+ unused templates) before going deeper.
 - ⬜ **Missing:** the locked "intro" definition for SD-001 (armor, weapon, spell, stance, background).
 - ⬜ A repeatable **final-scene workflow** template that other heroes can reuse.
 - ⬜ Convention for naming/storing **final** (approved) art vs experiments.
