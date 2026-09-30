@@ -75,7 +75,8 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
 - **Baseline = photoreal "catwalk" glamour.** Every cream-background stage (Pose, Hair, Motion,
   Clothing, Armor) should read like a **real supermodel photo** of the hero in the outfit -
   **natural, minimal makeup** (lips, nails, eye colour only; no heavy eyeshadow/blush). The goal is
-  to judge the wardrobe and pose, not the fantasy.
+  to judge the wardrobe and pose, not the fantasy. Default lips/nails to a **light** tone (e.g. Light
+  Violet); use Deep or Red only when you intentionally match a darker outfit.
 - **Fantasy comes at the end.** Eyeshadow, blush, glowing eyes, necrotic glow, and any painterly
   treatment go in the optional **Fantasy** pass and/or the **Final** scene - never the baseline.
 

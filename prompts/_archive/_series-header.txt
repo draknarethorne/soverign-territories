@@ -4,6 +4,6 @@ Photo-realistic scene.  It's a professional full body shot.  Adjust the backgrou
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color and hair color. 
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color and hair color.
 
 [describe outfit]

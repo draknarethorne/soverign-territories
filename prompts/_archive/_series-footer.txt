@@ -2,7 +2,7 @@ prompt:
 
 Breeze flowing any direction.
 Face remains focused on camera.
-Facial expression is seductive and smiling.  
+Facial expression is seductive and smiling.
 Lips are lushes and active with the expression and non-neutral.
 Enhance her breasts.
 Long, slender legs.
@@ -19,7 +19,7 @@ One foot stepping forward to the side.
 
 ----------------------------------------------------------------
 
-Negative prompt: 
+Negative prompt:
 
 extra limbs, extra fingers, deformed hands, fused fingers, mangled anatomy, asymmetrical eyes, cross-eyed, blurry, lowres, jpeg artifacts, watermark, signature, text, logo.
 

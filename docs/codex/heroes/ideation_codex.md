@@ -149,7 +149,7 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
   Line / Thorne subsection (2.9), and the single-Base-Set + evolving-taxonomy + Consumable ideas.
 - `docs/design/deck-progression-rules.md` — Transcendent cost (64) + apex/format notes + 10-element note.
 - `docs/design/combat-calculation-spec.md` — 10-element cycle proposal with open decisions (Phase 2).
-- `prompts/_hero-template.txt` — 10-element art palette.
+- `prompts/_templates/_hero-template.txt` — 10-element art palette.
 
 **Tracked follow-ups (not yet done):**
 
