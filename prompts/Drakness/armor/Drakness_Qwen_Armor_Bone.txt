@@ -1,0 +1,50 @@
+=== Drakness Thorne · Armor: Bone (group: Armor) — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the bone armor +
+scythe; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
+asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Wearing a two-piece skeletal armor bikini - weathered natural bone cups, vertebrae halter strap,
+high-cut skeletal hip bones, vibrant amethyst centerpiece; bare stomach and midriff, revealing
+high-cut with bold décolletage, legs exposed.
+
+Arms: matching bone bracers; matching pauldrons with dragon-claw spikes.
+
+Jewelry: silver chain necklace with a small polished bone skull pendant; matching skull earrings and
+rings; matching small bellybutton ring.
+
+Back: simple black leather cape with a bone-coloured gothic pattern hanging behind her.
+
+Legs & feet: slender skeletal bone-spine greaves, delicate skeletal plate, midnight-black silk
+stockings, medium-small skeletal bone-coloured runes, stiletto sabatons.
+
+Holding an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black
+shaft, polished silver blade with gothic patterns, in one hand.
+
+Overall, luxurious necromancer aesthetic. A little D&D armor flair is fine; keep the outfit revealing.
+
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Breeze flowing any direction.
+Face remains focused on camera; alluring, confident smile; full, expressive lips.
+Deep Violet lipstick. Midnight Violet fingernails. Violet eyes.
+
+Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step;
+arms adjust to the body; one foot stepping forward to the side.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
+wording, watermark, logo.

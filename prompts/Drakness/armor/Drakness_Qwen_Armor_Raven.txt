@@ -1,0 +1,53 @@
+=== Drakness Thorne · Armor: Raven (group: Armor) — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the raven armor;
+keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
+asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Wearing revealing Iridescent Shadow Steel bikini armor with Necrotic-Violet and Tarnished Silver
+ornate designs, bare midriff; silver chains with a simple design and minimal gems drape from the
+underside of the breast plate.
+
+Arms: matching bicep bands and bracers.
+
+Back: raven-feather pauldrons with silver accents resting on the shoulders.
+
+Jewelry: ultra-thin Tarnished Silver and Amethyst runic choker; matching earrings with small gems
+and rings; matching small bellybutton ring with a gem.
+
+Drapes: flowing sheer Iridescent Shadow waist-drapes with delicate Amethyst and silver glowing
+fibre-optic threads woven throughout.
+
+Legs & feet: Iridescent Shadow Steel thigh-high plated high-heel boots with Necrotic-Violet and
+Tarnished Silver ornate designs; matching upper-left thigh band.
+
+Belt & kit: thin Amethyst and Tarnished Silver belt at the waist; a small ornate dagger with sheath
+high on the right; a small Midnight-Violet ornate satchel on the left; a skull design at the hip.
+
+Overall, luxurious necromancer aesthetic. A little D&D armor flair is fine; keep the outfit revealing.
+
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Breeze flowing any direction.
+Face remains focused on camera; alluring, confident smile; full, expressive lips.
+Deep Violet lipstick. Midnight Violet fingernails. Violet eyes.
+
+Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step;
+arms adjust to the body; one foot stepping forward to the side.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
+wording, watermark, logo.

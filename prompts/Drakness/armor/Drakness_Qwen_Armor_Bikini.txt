@@ -1,0 +1,45 @@
+=== Drakness Thorne · Armor: Bikini (group: Armor) — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the body-chain
+bikini armor; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
+asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Wearing a draped silver body-chain bikini top and bottom - Midnight Violet disc bra cups, Vibrant
+Amethyst and Polished Silver accents, swinging Amethyst chain hip straps; bare stomach and flanks,
+revealing high-cut with bold décolletage, legs exposed.
+
+Arms: matching bracelets - remove armor from the wrists.
+
+Jewelry: necklace with a small polished silver skull pendant; matching earrings with small gems and
+rings; matching small bellybutton ring.
+
+Legs & feet: slender closed-toe high heels, ornate silver accents, small Vibrant Amethyst cabochons,
+delicate silver gothic buckles.
+
+Overall, luxurious necromancer aesthetic.
+
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Breeze flowing any direction.
+Face remains focused on camera; alluring, confident smile; full, expressive lips.
+Deep Violet lipstick. Midnight Violet fingernails. Violet eyes.
+
+Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step;
+arms adjust to the body; one foot stepping forward to the side.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons,
+shoulder armor, text, wording, watermark, logo.
