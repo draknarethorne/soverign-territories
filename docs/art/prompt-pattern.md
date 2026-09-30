@@ -166,6 +166,30 @@ Concrete phrases that add glamour without changing the wardrobe:
 - **Detail:** hair swept over one shoulder; slightly parted lips; crisp catchlights in the eyes.
 - **Light:** soft rim / back light for a glamour edge; a faint dewy skin sheen.
 - **Energy:** mid-motion, caught candidly; relaxed but poised.
+- **Mouth (always name it):** pick a state so teeth/opening stay consistent - *lips softly together*
+  (demure/regal), *lips slightly parted* (editorial glamour - the flattering default), *a soft smile
+  with a hint of teeth* (upbeat), or *open / laughing* (playful). Vague = random teeth.
+
+## Expression by purpose
+
+Match the face to the outfit's job:
+
+- **Elegant / regal** (gown, formal armor) - composed; lips softly together or barely parted; serene.
+- **Editorial glamour** (catwalk, most looks) - confident; lips slightly parted; direct model gaze.
+- **Playful / upbeat** - soft smile with a hint of teeth.
+- **Sultry / come-hither** (motion variants) - lidded eyes; lips parted; chin down.
+- **Fierce / commanding** (final, casting) - intense; jaw set; a slight knowing curl.
+
+## Outfit polish (runway details that elevate a look)
+
+When an outfit feels flat for the catwalk, add one or two - not all:
+
+- **One statement piece** (a bold choker, a dramatic pauldron, the signature weapon) as the focal point.
+- **Cohesive metals / palette** - keep silver + amethyst consistent so it reads as one designed look.
+- **Texture contrast** - matte vs. sheen, sheer vs. solid, hard armor vs. soft drape.
+- **Silhouette lines** - a high slit or high-cut leg to elongate; a defined waist; a train or cape for movement.
+- **Movement** - fabric and hair caught mid-step so it doesn't look static.
+- **Footwear that elongates** - heels that extend the leg line, coordinated with the palette.
 
 ## Migrating your existing `.json` prompts
 
