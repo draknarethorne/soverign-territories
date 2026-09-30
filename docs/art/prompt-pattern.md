@@ -62,6 +62,7 @@ Group names match your `Drakness_Qwen_<group>` / `Drakness_X_<group>` workflows.
 | **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | [`_TEMPLATE_Motion.txt`](../../prompts/_templates/_TEMPLATE_Motion.txt) |
 | **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | [`_TEMPLATE_Clothing.txt`](../../prompts/_templates/_TEMPLATE_Clothing.txt) |
 | **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | [`_TEMPLATE_Armor.txt`](../../prompts/_templates/_TEMPLATE_Armor.txt) |
+| **Fantasy** *(optional, pre-final)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | [`_TEMPLATE_Fantasy.txt`](../../prompts/_templates/_TEMPLATE_Fantasy.txt) |
 | **Final** | near-final | everything | scene + spell + pose/wind | in-world | [`_TEMPLATE_Final.txt`](../../prompts/_templates/_TEMPLATE_Final.txt) |
 | **Weapons** *(utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | [`_TEMPLATE_Weapons.txt`](../../prompts/_templates/_TEMPLATE_Weapons.txt) |
 | **Background** *(utility)* | — | — | a standalone scene plate | — | [`_TEMPLATE_Background.txt`](../../prompts/_templates/_TEMPLATE_Background.txt) |
@@ -70,6 +71,13 @@ Group names match your `Drakness_Qwen_<group>` / `Drakness_X_<group>` workflows.
 ## Craft notes & theme alignment
 
 Improvements from reviewing the Drakness prompts — apply these for more consistent output:
+
+- **Baseline = photoreal "catwalk" glamour.** Every cream-background stage (Pose, Hair, Motion,
+  Clothing, Armor) should read like a **real supermodel photo** of the hero in the outfit -
+  **natural, minimal makeup** (lips, nails, eye colour only; no heavy eyeshadow/blush). The goal is
+  to judge the wardrobe and pose, not the fantasy.
+- **Fantasy comes at the end.** Eyeshadow, blush, glowing eyes, necrotic glow, and any painterly
+  treatment go in the optional **Fantasy** pass and/or the **Final** scene - never the baseline.
 
 - **Set the figure once, at A-pose.** Define bust/waist/hips/legs/skin in `X_Pose` only. Downstream
   edits should **preserve** proportions (via the fidelity + "maintain outfit" lines), not re-issue
