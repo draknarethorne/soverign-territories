@@ -1,0 +1,37 @@
+=== Drakness Thorne · Armor: Raven Stance (group: Armor) — Edit (Qwen/FireRed img2img) ===
+Incoming image: a Raven-armor plate of Drakness. Keep the outfit, face, body, and hair from the
+incoming image; only change the stance/expression. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
+razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Keep the background the same as the incoming image.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
+asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
+physical body shape, proportions, eye colour and hair colour.
+
+Maintain the existing raven armor (Iridescent Shadow Steel bikini armor, raven-feather pauldrons,
+runic choker, sheer waist-drapes, thigh-high plated high-heel boots, belt with dagger and satchel)
+expressly.
+
+Overall, luxurious necromancer aesthetic.
+
+Figure: full, hourglass figure; generous bust, softly emphasized.
+Expression: dynamic, alluring, unpredictable; a leering, confident look; full, expressive lips.
+Deep Violet lipstick. Midnight Violet fingernails. Violet eyes.
+Random slight breeze.
+
+Pose: a confident stance - weight shifted, hips swayed, chest angled to camera, back gently arched;
+free hand posed at her hip, the other in an elegant, alluring gesture.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
+wording, watermark, logo.

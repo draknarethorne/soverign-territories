@@ -32,6 +32,24 @@ only Flux "look" that comfortably fits 8 GB; Flux.2 fp8 is the aspirational max-
 
 ---
 
+## Which ST workflow per process step
+
+You drive the *stage* with the prompt + denoise inside the **same** Qwen edit workflow, so you really
+only keep a couple open. Map:
+
+| Process step (prompt group) | ST workflow | denoise |
+| --- | --- | --- |
+| **X_Pose** (A-pose base) | **ST_Qwen_A_Pose** *(or ST_Qwen_B_Pose to test 2.1)* | 1.0 |
+| **X_Head / Hair / Motion / Clothing / Armor** (all baseline edits) | **ST_Qwen_Edit** *(or ST_MageFlow_Edit for speed)* | ~0.4-0.6 |
+| **Fantasy** pass | **ST_Qwen_Edit** *(low denoise)* or **ST_FireRed_Final** | ~0.4 |
+| **Final** scene | **ST_FireRed_Final** *(or ST_Flux_Final for max quality)* | ~0.7 |
+| **Polish** | **ST_Flux_Polish** or **ST_Qwen_Polish** | ~0.3 |
+
+**Bottom line:** two Qwen workflows (A_Pose @1.0, Edit @~0.5) cover every baseline step *and* Fantasy;
+FireRed handles Final; Flux/Qwen polish at the end. That's the full set — nothing missing.
+
+---
+
 ## Defaults to set per file (in ComfyUI)
 
 - **ST_Qwen_A_Pose** — denoise **1.0** (full generation). Enable the **4-step Lightning LoRA** for
