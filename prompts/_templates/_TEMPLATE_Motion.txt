@@ -18,8 +18,11 @@ physical body shape, proportions, eye colour and hair colour.
 
 Maintain the existing outfit and hairstyle expressly.
 
-Pose: [short lines - e.g. weight shifted, hips swayed, back gently arched, chest angled to camera,
-one foot forward; free hand posed gracefully at her hip, the other in an elegant, alluring gesture].
+Body: [front / 3/4 turn ~45deg / profile / back-to-camera]. Head: [to camera / turned 3/4 / over the
+shoulder / tilted]. Gaze: [to camera / off-camera]. (Name concrete angles - "any direction" defaults
+to forward; drop "face to camera" when you want a turned head.)
+Pose: [short lines - e.g. weight shifted, hips and shoulders counter-rotated (S-curve), back gently
+arched, one foot forward; free hand at her hip, the other in an elegant, alluring gesture].
 Expression: alluring, confident; an inviting gaze; lips [softly together / slightly parted / soft
 teeth - name it]; expressive, sultry brows.
 Breeze: [direction or none].
