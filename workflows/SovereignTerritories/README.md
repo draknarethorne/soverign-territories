@@ -14,9 +14,9 @@ One tuned workflow per pipeline step, named `ST_<Model>_<Stage>`. Tuned for an *
 
 | ST workflow | Forked from | Model | Pipeline role | denoise | steps | scaling |
 | --- | --- | --- | --- | --- | --- | --- |
-| **ST_Qwen_A_Pose** | **your `X_Qwen_A_Pose`** (ComfyUI built-in 2511 template, Turbo toggle) | Qwen-Image-Edit **2511** fp8mixed + Lightning | A-pose base (your current) | **1.0** | 4 (Turbo) / 40 (off) | add portrait target |
+| **ST_Qwen_A_Pose** | your `X_Qwen_A_Pose` = `image_qwen_image_edit_2511` (Turbo toggle) | Qwen-Image-Edit **2511** fp8mixed + Lightning | A-pose base (your current) | **1.0** | 4 (Turbo) / 40 (off) | add portrait target |
 | **ST_Qwen_B_Pose** | `image_qwen_image_2_1_image_edit` | Qwen-Image **2.1** (int8) | A-pose base (new candidate) | **1.0** | 25 (or 4 w/ Lightning) | `ResolutionSelector` (built-in) |
-| **ST_Qwen_Edit** | **your `X_Qwen_A_Pose`** | Qwen-Image-Edit **2511** fp8mixed | Edit: hair → armor → stance | **0.5** | 4 (Turbo) | match A-pose |
+| **ST_Qwen_Edit** | your `X_Qwen_A_Pose` (= `image_qwen_image_edit_2511`) | Qwen-Image-Edit **2511** fp8mixed | Edit: hair → armor → stance | **0.5** | 4 (Turbo) | match A-pose |
 | **ST_FireRed_Final** | `image_firered_image_edit1_1` | FireRed-1.1 | Final render (low-drift) | **0.7** | 8 (Lightning) | + upscale |
 | **ST_Flux_Polish** | `image_flux2_klein_image_edit_4b_distilled` | Flux.2 Klein **4B** | Polish (skin/texture) | **0.3** | 8–12 | — |
 | **ST_Qwen_Polish** | `image_qwen_image_edit_2511_int8` | Qwen-Image-Edit **2511 int8** | Polish (Qwen alt) | **0.3** | 8 | — |
@@ -24,10 +24,11 @@ One tuned workflow per pipeline step, named `ST_<Model>_<Stage>`. Tuned for an *
 | **ST_Flux_Final** | `image_flux2_fp8` | Flux.2 dev fp8mixed +Turbo v2 | Final (max quality) ⚠️ borderline 8 GB | **0.7** | 20 | 1 MP |
 
 **Why these:** A-pose + Edit share the **same model** (only denoise differs) → no cross-model drift
-in the exploration chain. **ST_Qwen_A_Pose / ST_Qwen_Edit are copies of your own workflow** — they
-keep the **Turbo toggle** (4-step draft ↔ 40-step overnight quality) that the downloaded templates
-*don't* have. FireRed shares Qwen's VAE/encoder → a faithful higher-fidelity final. Flux Klein-4B is
-the only Flux "look" that comfortably fits 8 GB; Flux.2 fp8 is the aspirational max-quality final.
+in the exploration chain. **ST_Qwen_A_Pose / ST_Qwen_Edit are copies of your working 2511 workflow —
+which is the same as the downloaded `image_qwen_image_edit_2511` template** (same `cdb2cf24` subgraph
++ **Turbo toggle**: 4-step draft ↔ 40-step overnight). Your saved copy just also carries your A-pose
+prompt. FireRed shares Qwen's VAE/encoder → a faithful higher-fidelity final. Flux Klein-4B is the
+only Flux "look" that comfortably fits 8 GB; Flux.2 fp8 is the aspirational max-quality final.
 
 ---
 
