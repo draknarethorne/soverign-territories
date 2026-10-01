@@ -176,6 +176,76 @@ Scaling matters because the model runs best at its **trained resolution**: overs
 8 GB and waste time; undersized inputs lose detail. The ~1 MP bucket is the sweet spot, and in your
 Qwen workflow it's handled for you.
 
+### Polish vs Final vs Upscale (they do different jobs)
+
+These three are easy to conflate — they are **not** the same thing, and only one changes resolution:
+
+| Step | Workflow(s) | What it does | Resolution |
+|---|---|---|---|
+| **Polish** | `ST_Qwen_Polish`, `ST_Flux_Polish` | Low-denoise diffusion pass to refine **skin / eyes / micro-detail** | still ~1 MP |
+| **Final** | `ST_FireRed_Final`, `ST_Flux_Final` | Terminal **look / stylization** render — produces the approved image | still ~1 MP |
+| **Upscale** | *(new — not built yet)* | **Enlarges pixels** via an ESRGAN model (no diffusion) | **raises resolution** |
+
+So **Polish is not the upscaler**, and neither is Final — both work at ~1 MP. Upscaling is a **separate,
+final step** you run *after* you've picked the keeper. You don't always run Polish *and* Final; a Final
+pass often doubles as polish. Typical order:
+
+```
+edits (A-pose → hair → motion → armor → stance)   ~1 MP, iterate here
+        └─► (optional) Polish                      ~1 MP, detail only
+              └─► Final (FireRed or Flux)           ~1 MP, the approved image
+                    └─► Upscale (ESRGAN)            enlarges → downscale to master → ship
+```
+
+### Upscaling: when & how (8 GB-safe)
+
+**When:** once, at the very end, on the one approved card. Never during iteration — upscaling early just
+runs every stage slower and gets redone next stage.
+
+**Source sizes don't need to match.** The ~1 MP normalizer conforms every photo (1122×1402, 941×1254,
+1170×1580…) to the same working bucket at stage one, so a mixed source set is fine. The only thing that
+varies is **aspect** — snap it by **cropping each source to your chosen card aspect (5:7) before loading**.
+That one manual crop is the only prep worth doing.
+
+**How, on an RTX 3050 8 GB — use ESRGAN, not a latent hi-res pass:**
+
+| Method | What it is | 8 GB verdict |
+|---|---|---|
+| **ESRGAN model upscale** (`UpscaleModelLoader` → `ImageUpscaleWithModel`, e.g. 4x-UltraSharp) | small dedicated CNN, auto-tiles | ✅ light & safe — no diffusion model loads |
+| **Latent hi-res-fix** (upscale latent → KSampler) | re-runs the full UNet at 2×+ | ⚠️ the OOM risk on Qwen/Flux fp8 |
+
+**The upscale workflow (build this in ComfyUI as a standalone `ST_Upscale`):**
+
+```
+LoadImage → UpscaleModelLoader (4x-UltraSharp) → ImageUpscaleWithModel
+          → ImageScale (downscale to target master, e.g. 1600×2368) → SaveImage
+```
+
+No checkpoint/UNet loads, so it barely touches VRAM — one of the most 8 GB-friendly graphs you can run.
+"Upscale 4× then shrink to target" yields the crispest result.
+
+**When it becomes a problem:** a non-tiled 4× of anything over ~1 MP can spike VRAM → drop to 2× or use a
+**tiled** upscaler (Ultimate SD Upscale) to keep VRAM flat. A **latent hi-res pass at ≥2×** on Qwen/Flux
+will likely OOM — if you want re-rendered detail, keep the bump small (1.3–1.5×) at low denoise (~0.25),
+or skip it; ESRGAN is enough for card art.
+
+### Mobile delivery spec (Sovereign Territories)
+
+Plan every heroine against this so cards work full-screen, in the landscape split view, and as avatars:
+
+- **Master aspect:** one portrait ratio for all heroes — **5:7** recommended (uniform card frame + layout).
+- **Master resolution:** finish/upscale to a high-DPI master (**≥ 1600×2368**, more is fine), then let the
+  app downscale per context. Keep the ~1 MP **working plate** separate from the **final master** — never
+  ship the working plate for the detailed full-screen view.
+- **Safe zone:** compose **face + upper body in the top ~60%**; treat the **bottom third as sacrificial**
+  (legs/feet, fine to sit behind a stats/skills overlay). Small margins at all edges so crops never clip
+  the face.
+- **Avatars = dedicated headshots**, not crops of the body plate (use the `X_Head` stage) — full
+  resolution and proper framing.
+- **Keep art UI-free;** overlay stats/skills/spells at runtime.
+- **Downscale-only is lossless-perceptually:** the landscape split view (card scaled down) is the easy
+  case; the portrait full-screen view is what demands the high master resolution.
+
 ### Before investing deeper in one Qwen version
 
 New **Qwen-Image-Edit 2511 / 2512** templates (and other unused templates) are worth a quick,
