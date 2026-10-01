@@ -243,7 +243,14 @@ or skip it; ESRGAN is enough for card art.
 
 Plan every heroine against this so cards work full-screen, in the landscape split view, and as avatars:
 
-- **Master aspect:** one portrait ratio for all heroes — **5:7** recommended (uniform card frame + layout).
+- **Master aspect:** one portrait ratio for all heroes. The Qwen edit only outputs its **native buckets**,
+  so pick one and stay on it: **2:3** (~800×1184) or **3:4** (~880×1184). **3:4 is the pragmatic default**
+  — a clean native bucket close to card proportions. You **can't** get an exact 5:7 out of the Qwen edit;
+  if you want a precise card aspect, enforce it at the **final crop/upscale**, not the source.
+- **Crop raw sources to that aspect, not an exact size.** The ~1 MP normalizer rebuilds the pixels, so
+  only the aspect matters — crop every source to 2:3 or 3:4 and keep it **larger than the working bucket**
+  (≥ ~1200×1600) so it's downscaled, never upscaled. Mismatched source sizes are fine; mismatched source
+  *aspects* are what make heroines come out different shapes.
 - **Master resolution:** finish/upscale to a high-DPI master (**≥ 1600×2368**, more is fine), then let the
   app downscale per context. Keep the ~1 MP **working plate** separate from the **final master** — never
   ship the working plate for the detailed full-screen view.
