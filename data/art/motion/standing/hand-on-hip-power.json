@@ -1,0 +1,16 @@
+{
+  "id": "motion/standing/hand-on-hip-power",
+  "kind": "motion",
+  "name": "Hand-on-Hip Power Pose",
+  "editorial": "A candid high-fashion editorial shot, confident power stance.",
+  "breeze": "Light breeze.",
+  "body": "standing tall, weight on one leg, shoulders squared to the camera.",
+  "head": "level, facing the camera directly.",
+  "gaze": "direct, confident eyes to camera.",
+  "expression": "bold, confident, a hint of a smirk.",
+  "pose": "one hand firmly on the hip, elbow out; the other arm relaxed at her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

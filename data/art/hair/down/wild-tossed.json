@@ -1,0 +1,14 @@
+{
+  "id": "hair/down/wild-tossed",
+  "kind": "hair",
+  "name": "Wild Tossed",
+  "a_pose_style": "tossed wildly to one side, parted above the ear, full of movement",
+  "breeze": "Moderate breeze towards her.",
+  "hair_change": "Hair parted just above left ear, tossed wildly from left over top. Hair blowing wildly left and right.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Wild"
+}

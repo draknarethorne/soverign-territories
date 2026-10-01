@@ -1,0 +1,17 @@
+{
+  "id": "motion/standing/side-profile-elegant",
+  "kind": "motion",
+  "name": "Elegant Side Profile",
+  "editorial": "A candid high-fashion editorial shot, elegant glamour posing.",
+  "breeze": "Light breeze.",
+  "body": "full side profile to the camera, long neck, shoulders back, chest lifted.",
+  "head": "in profile, chin lifted.",
+  "gaze": "off-camera into the distance.",
+  "expression": "composed, serene; lips softly together; expressive, sultry brows.",
+  "pose": "one foot forward for an elegant line; arms relaxed with a graceful hand.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_Profile"
+}

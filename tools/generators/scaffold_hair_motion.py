@@ -1,0 +1,409 @@
+#!/usr/bin/env python3
+"""Author the Hair + Motion component libraries (data/art/hair/, data/art/motion/)
+and the matching Drakness base-set cards (data/art/base-set/drakness/{hair,motion}/).
+
+Existing variants are transcribed faithfully from the hand-crafted
+prompts/Drakness/{hair,motion}/*.txt files (sourceVariant traces each one). A handful
+of near-identical duplicates are consolidated (noted per entry). New entries add
+popular fashion hairstyles / glamour-shot motion poses not in the original set.
+
+Idempotent: re-running overwrites with the same content (no drift).
+"""
+import json
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+HERO_SLUG = "drakness"
+HERO_ART = f"data/art/heroes/{HERO_SLUG}-thorne.json"
+
+# ---------------------------------------------------------------------------
+# HAIR — family -> list of (slug, name, a_pose_style, breeze, hair_change, extras, source)
+# ---------------------------------------------------------------------------
+HAIR = {
+    "down": [
+        ("center-part-wavy", None, None, None, None, None, None),  # already authored; skip
+        ("natural", "Natural (no restyle)",
+         "left natural, loose and relaxed",
+         "No breeze.", "Hair is natural.", [],
+         "Drakness_Qwen_Hair_Natural"),
+        ("nearly-straight", "Nearly Straight, Same Length",
+         "nearly straight, hanging beside the breasts, same length throughout",
+         "No breeze.", "Hair is nearly-straight, hanging beside breasts, same length.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight"),
+        ("semi-to-curly", "Semi-Straight to Curly",
+         "semi-straight through the upper length, turning soft and curly toward the ends",
+         "No breeze.", "Hair is semi-straight until middle of breasts, then curly and hanging beside breasts.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Semi"),
+        ("drifting-back", "Drifting Back",
+         "drifting backward on both sides with a slight swirl, as if caught mid-breeze",
+         "Breeze blowing towards her.", "Hair is drifting backwards, equally on both sides, slight swirls.",
+         ["Shoulders exposed."], "Drakness_Qwen_Hair_Flowing"),
+        ("wild-tossed", "Wild Tossed",
+         "tossed wildly to one side, parted above the ear, full of movement",
+         "Moderate breeze towards her.",
+         "Hair parted just above left ear, tossed wildly from left over top. Hair blowing wildly left and right.",
+         [], "Drakness_Qwen_Hair_Wild"),
+        # --- new additions (popular fashion) ---
+        ("beach-waves", "Beach Waves",
+         "falling in soft, tousled beach waves with a relaxed, lived-in texture",
+         "Light breeze drifting over her shoulders.",
+         "Hair falls in soft, tousled beach waves, loosely tumbling past the shoulders with a relaxed, lived-in texture.",
+         [], None),
+        ("half-up-half-down", "Half-Up, Half-Down",
+         "half gathered back at the crown, the rest left down in soft waves",
+         "Minimal breeze.",
+         "The top half is gathered back and secured, the rest left down in soft waves cascading past the shoulders.",
+         [], None),
+        ("wet-look-slicked-back", "Wet-Look Slicked Back",
+         "sleek and wet-look, slicked straight back off the face with a high-shine finish",
+         "No breeze.",
+         "Hair is sleek and wet-look, slicked straight back off the face with a high-shine, polished finish.",
+         [], None),
+        ("finger-waves-retro", "Retro Finger Waves",
+         "set in classic finger waves, close to the head with smooth, defined ridges",
+         "No breeze.",
+         "Hair is styled in classic finger waves, a retro glamour set close to the head with smooth, defined ridges.",
+         [], None),
+    ],
+    "framed": [
+        ("below-clavicles-framed", "Framed, Below Clavicles",
+         "sleek and semi-straight, length below the clavicles, sides cut tapered with tendrils framing her face",
+         "Very slight breeze blowing at her.",
+         "Hairstyle is sleek and semi-straight, hair length below clavicles, sides cut tapered tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Short"),
+        ("top-of-breasts-framed", "Framed, Top of Breasts",
+         "sleek and semi-straight, length to the top of the breasts, sides cut tapered with tendrils framing her face",
+         "No breeze.",
+         "Hairstyle is sleek and semi-straight, hair length to top of breasts with sides cut tapered tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Short_00002"),
+        ("bottom-of-breasts-framed", "Framed, Bottom of Breasts",
+         "sleek and semi-straight, length to the bottom of the breasts, sides cut tapered with tendrils framing her face",
+         "No breeze.",
+         "Hairstyle is sleek and semi-straight, hair length to bottom of breasts with sides cut tapered tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Frame_Basic + Drakness_Qwen_Hair_Straight_Shoulders (consolidated, near-identical)"),
+        ("sides-of-breasts-framed", "Framed, Sides of Breasts",
+         "sleek and semi-straight, length to the sides of the breasts, sides cut tapered at the eyes with tendrils framing her face",
+         "Very slight breeze flowing at her.",
+         "Hairstyle is sleek and semi-straight, hair length to sides of breasts, sides cut tapered at eyes with tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Frame_Breasts"),
+        ("biceps-length-framed", "Framed, Biceps Length",
+         "sleek and semi-straight, length to the middle of the biceps, sides cut tapered at the eyes with tendrils framing her face",
+         "Very slight breeze flowing at her.",
+         "Hairstyle is sleek and semi-straight, hair length to middle of biceps, sides cut tapered at eyes with tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Frame"),
+        ("very-bottom-tapered-framed", "Framed, Very Bottom Tapered",
+         "sleek and semi-straight, length to the very bottom of the breasts, sides cut tapered at the cheeks with tendrils framing her face",
+         "Very slight breeze flowing at her.",
+         "Hairstyle is sleek and semi-straight, hair length to very bottom of breasts, sides cut tapered at cheeks with tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Tapered"),
+        ("bangs-tapered", "Tapered Bangs",
+         "sleek and semi-straight with bangs cut tapered at the cheeks, tendrils framing her face",
+         "Very slight breeze flowing at her.",
+         "Hairstyle is sleek and semi-straight, hair length to very bottom of breasts, bangs cut tapered at cheeks with tendrils framing her face, hair contours her body.",
+         ["Bold décolletage."], "Drakness_Qwen_Hair_Straight_Bangs"),
+        # --- new additions ---
+        ("curtain-bangs-framed", "Curtain Bangs",
+         "long, sleek layers with soft curtain bangs parted at the centre, framing both sides of her face",
+         "Light breeze.",
+         "Hairstyle is sleek, long layers with soft curtain bangs parted at the centre, framing both sides of her face.",
+         [], None),
+        ("layered-face-framing", "Layered Face-Framing",
+         "long soft layers with face-framing pieces swept forward at the cheekbones",
+         "Light breeze.",
+         "Hairstyle has long, soft layers with face-framing pieces swept forward at the cheekbones, adding movement around the face.",
+         [], None),
+    ],
+    "pulled-back": [
+        ("center-pulled", "Center Pulled Back",
+         "pin straight, pulled behind and resting in front of the shoulders",
+         "No breeze.", "Hair is pin straight, pulled behind and hanging in front of shoulders.",
+         ["Bold décolletage."],
+         "Drakness_Qwen_Hair_Straight_Back + Drakness_Qwen_Hair_Straight_Back_00002 + Drakness_Qwen_Hair_Straight_Pulled (consolidated, near-identical trio)"),
+        ("swept-left", "Swept Left",
+         "parted just above the right ear and pulled over the top, blowing left, right ear exposed",
+         "Minimal breeze flowing to left.",
+         "Hair parted just above right ear, pulled from right over top. Hair blowing to the left. Right ear exposed.",
+         [], "Drakness_Qwen_Hair_Left"),
+        ("swept-right", "Swept Right",
+         "pulled behind the left shoulder and over the top of the head to the right, blowing right, left ear exposed",
+         "Minimal breeze flowing to right.",
+         "Hair pulled back behind her left shoulder and over top of her head to the right. Hair blowing to the right. Left ear exposed.",
+         [], "Drakness_Qwen_Hair_Right"),
+        # --- new additions ---
+        ("side-swept-over-shoulder", "Side-Swept Over Shoulder",
+         "swept entirely to one side, draped forward over the shoulder in a glamorous sweep",
+         "Light breeze.",
+         "Hair is swept entirely to one side, draped forward over the shoulder in a glamorous red-carpet sweep.",
+         [], None),
+        ("sleek-middle-part-tucked", "Sleek Middle Part, Tucked",
+         "sleek with a precise middle part, tucked smoothly behind both ears",
+         "No breeze.",
+         "Hair is sleek with a precise middle part, tucked smoothly behind both ears.",
+         [], None),
+    ],
+    "updo": [
+        ("pony-tail", None, None, None, None, None, None),  # already authored; skip
+        ("high-bun", "High Bun",
+         "swept up into a sleek high bun at the crown, smooth and polished",
+         "No breeze.", "Hair is swept up into a sleek high bun at the crown, smooth and polished.",
+         [], None),
+        ("sleek-low-bun", "Sleek Low Bun",
+         "gathered into a sleek, low chignon bun at the nape of the neck, smooth and refined",
+         "No breeze.", "Hair is gathered into a sleek, low chignon bun at the nape of the neck, smooth and refined.",
+         [], None),
+        ("space-buns", "Space Buns",
+         "parted down the middle and styled into two symmetrical space buns",
+         "No breeze.", "Hair is parted down the middle and styled into two symmetrical space buns, playful and trendy.",
+         [], None),
+    ],
+    "braided": [
+        ("fishtail-braid", "Fishtail Braid",
+         "styled in a loose fishtail braid cascading over one shoulder, soft tendrils framing the face",
+         "No breeze.", "Hair is styled in a loose fishtail braid cascading over one shoulder, soft tendrils framing the face.",
+         [], None),
+        ("braided-crown", "Braided Crown",
+         "woven into a delicate braided crown encircling the head, the length left flowing beneath it",
+         "No breeze.", "Hair is woven into a delicate braided crown encircling the head, with the length left flowing beneath it.",
+         [], None),
+        ("side-braid", "Loose Side Braid",
+         "gathered into a single loose side braid draped over one shoulder",
+         "No breeze.", "Hair is gathered into a single loose side braid draped over one shoulder.",
+         [], None),
+    ],
+}
+
+# ---------------------------------------------------------------------------
+# MOTION — family -> list of (slug, name, editorial, breeze, body, head, gaze,
+#                             expression, pose, extras, source)
+# ---------------------------------------------------------------------------
+MOTION = {
+    "standing": [
+        ("three-quarter-glamour", "Classic 3/4 Glamour Stance",
+         "A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing.",
+         "Light breeze.",
+         "angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve.",
+         "turned back toward the camera, chin slightly down.", "eyes to camera.",
+         "alluring, confident; lips slightly parted; expressive, sultry brows.",
+         "one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.",
+         [], "Drakness_Qwen_Motion_ThreeQuarter"),
+        ("side-profile-elegant", "Elegant Side Profile",
+         "A candid high-fashion editorial shot, elegant glamour posing.",
+         "Light breeze.",
+         "full side profile to the camera, long neck, shoulders back, chest lifted.",
+         "in profile, chin lifted.", "off-camera into the distance.",
+         "composed, serene; lips softly together; expressive, sultry brows.",
+         "one foot forward for an elegant line; arms relaxed with a graceful hand.",
+         [], "Drakness_Qwen_Motion_Profile"),
+        ("over-the-shoulder-glance", "Over-the-Shoulder Glance",
+         "A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing.",
+         "Light breeze.",
+         "3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back.",
+         "turned over the shoulder toward the camera, chin slightly down.", "eyes to camera.",
+         "alluring, confident; lips slightly parted; expressive, sultry brows.",
+         "one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.",
+         [], "Drakness_Qwen_Motion_OverShoulder"),
+        ("unpredictable-seductive", "Unpredictable Seductive Pose",
+         "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions.",
+         "Random slight breeze.",
+         "chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position.",
+         "following the body's unpredictable shift.", "seductive, unpredictable.",
+         "seductive and unpredictable; lips lush and active, non-neutral.",
+         "hands in unpredictable positions, touching her body.",
+         [], "Drakness_Qwen_Motion_Pose"),
+        # --- new additions ---
+        ("hand-on-hip-power", "Hand-on-Hip Power Pose",
+         "A candid high-fashion editorial shot, confident power stance.",
+         "Light breeze.",
+         "standing tall, weight on one leg, shoulders squared to the camera.",
+         "level, facing the camera directly.", "direct, confident eyes to camera.",
+         "bold, confident, a hint of a smirk.",
+         "one hand firmly on the hip, elbow out; the other arm relaxed at her side.",
+         [], None),
+        ("seated-elegant", "Seated Elegant Glamour",
+         "A candid high-fashion editorial shot, refined seated glamour.",
+         "No breeze.",
+         "seated elegantly, legs crossed at the knee, spine long and upright.",
+         "tilted slightly, chin level.", "to camera.",
+         "composed, alluring half-smile.",
+         "one hand resting on the knee, the other draped gracefully at her side.",
+         [], None),
+    ],
+    "walking": [
+        ("catwalk-confident", "Confident Catwalk Walk",
+         "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.",
+         "Breeze flowing any direction.",
+         "walking towards the camera, body position adjusting with the stride.",
+         "facing forward, matching the walk.", "remains focused on camera.",
+         "alluring, confident smile, lips slightly parted; lips full and expressive.",
+         "hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.",
+         [], "Drakness_Qwen_Motion_Catwalk"),
+        ("high-energy-stride", "High-Energy Stride",
+         "Candid high-fashion editorial shot, dynamic fluid movement, unposed seductive glamour photography, mid-motion, asymmetrical stance, shifted weight, non-rigid posture, full body in motion, high energy.",
+         "Strong breeze flowing any direction.",
+         "angled 3/4 to the camera, mid-stride, having a great time.",
+         "turned to a 3/4 angle, chin up; neck and shoulders follow the turn.", "bright and engaged with the camera.",
+         "a bright, confident smile with a hint of teeth; lips full and expressive.",
+         "arms swinging with the energy of the stride.",
+         [], "Drakness_Qwen_Motion_High"),
+        # --- new addition ---
+        ("strut-runway", "Bold Runway Strut",
+         "A candid high-fashion editorial shot, bold runway strut, powerful stride.",
+         "Breeze flowing any direction.",
+         "striding forward with purpose, hips rolling with each step, shoulders back.",
+         "level, facing forward.", "fixed ahead, confident.",
+         "fierce, focused, lips softly together.",
+         "arms swinging in rhythm with the stride; one foot placed directly in front of the other.",
+         [], None),
+    ],
+    "dynamic": [
+        ("arching-twist", "Arching Twist",
+         "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.",
+         "Very light breeze flowing at her.",
+         "entire body shifting and twisting, centre of gravity pronounced, breaking stiff vertical lines with organic body language; chest facing the camera at a slight angle and leaning forward; back arching; hips swayed; both feet on the ground, one foot far forward angled towards camera, one heel slightly raised.",
+         "following the twist of the body.", "an inviting gaze.",
+         "alluring, confident, unpredictable; lips full and expressive, slightly parted.",
+         "one hand placed on her hip, the other in an elegant, alluring gesture away from her body.",
+         [], "Drakness_Qwen_Motion_Arching"),
+        ("fluid-floor-reach", "Fluid Floor Reach",
+         "Candid high-fashion editorial photography, dynamic fluid movement, unposed seductive glamour, mid-motion, glamour stance, shifted weight, non-rigid posture, full body in motion, high fluid energy.",
+         "Breeze flowing any direction.",
+         "twisting through a 3/4 turn toward the camera; one knee bending, one leg straddled to the side.",
+         "turned over the shoulder toward the camera.", "tracking the viewer.",
+         "dynamic, intensely expressive, caught in a seductive emotional shift; features alternating between a playful, alluring grin and a seductive smile; lips active and non-neutral, brow line happy.",
+         "one hand touches the ground, the other touches her body.",
+         [], "Drakness_Qwen_Motion_Fluid"),
+        ("mild-energy-touch", "Mild-Energy Touch",
+         "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.",
+         "Random slight breeze.",
+         "legs in full-motion, only the toes of her shoes touching the ground.",
+         "tilted and turned to a soft 3/4, chin slightly down.", "seductive, unpredictable.",
+         "seductive and unpredictable; lips full and expressive, slightly parted.",
+         "hands in unpredictable positions touching her body.",
+         [], "Drakness_Qwen_Motion_Mild"),
+        # --- new additions ---
+        ("hair-flip-toss", "Hair Flip / Toss",
+         "A candid high-fashion editorial shot, dynamic motion-capture moment.",
+         "Strong gust, mid-toss.",
+         "caught mid-motion as her hair whips through the air.",
+         "thrown back slightly with the toss.", "eyes closed or just reopening, mid-movement.",
+         "playful, exhilarated, lips parted.",
+         "one hand lifted near the hair, body leaning into the motion.",
+         [], None),
+        ("twirl-spin", "Twirl / Spin",
+         "A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow.",
+         "Motion-generated breeze, swirling around her.",
+         "captured mid-twirl, torso rotating, skirt or drape flaring outward.",
+         "turned with the spin, following the motion.", "bright, joyful, glancing toward the camera.",
+         "joyful, carefree, laughing smile.",
+         "arms extended slightly for balance, caught mid-spin.",
+         [], None),
+        ("kneeling-glamour", "Kneeling Glamour Pose",
+         "A candid high-fashion editorial shot, low dynamic glamour pose.",
+         "No breeze.",
+         "lowered into a graceful kneeling pose, one knee down, the other leg bent with foot planted.",
+         "level, facing the camera.", "direct, alluring eyes to camera.",
+         "sultry, composed half-smile.",
+         "one hand resting on the raised knee, the other braced lightly on the ground.",
+         [], None),
+    ],
+    "romantic": [
+        ("blowing-kiss-full-body", "Blowing a Kiss (Full Body)",
+         "Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions.",
+         "No breeze.",
+         "full head-to-toe shot, feet placed on the floor in glamour positions, legs exposed.",
+         "position varies.", "remains focused on camera.",
+         "glamorous, confident.",
+         "one hand blowing a kiss, the other in an elegant, alluring gesture.",
+         ["Bold décolletage.", "Straight hair, same length, behind her shoulders.", "Bright Red lipstick (override)."],
+         "Drakness_Qwen_Motion_Kiss"),
+        ("blowing-kiss-closeup", "Blowing a Kiss (Close-Up)",
+         "Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions.",
+         "No breeze.",
+         "close-up shot from thighs to head, legs exposed.",
+         "position varies.", "remains focused on camera.",
+         "glamorous, confident.",
+         "one hand blowing a kiss, the other in an elegant, alluring gesture.",
+         ["Bold décolletage.", "Straight hair, same length, behind her shoulders.", "Bright Red lipstick (override)."],
+         "Drakness_Qwen_Motion_Kiss_CloseUp"),
+    ],
+}
+
+
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def label_of(slug):
+    return "".join(w.capitalize() for w in slug.split("-"))
+
+
+hair_written, motion_written = [], []
+
+for family, entries in HAIR.items():
+    for slug, name, a_pose, breeze, hair_change, extras, source in entries:
+        if name is None:
+            hair_written.append(f"hair/{family}/{slug}")  # already authored, skip
+            continue
+        comp = {
+            "id": f"hair/{family}/{slug}",
+            "kind": "hair",
+            "name": name,
+            "a_pose_style": a_pose,
+            "breeze": breeze,
+            "hair_change": hair_change,
+            "extras": extras,
+            "compatibleStages": ["pose", "hair"],
+        }
+        if source:
+            comp["sourceVariant"] = source
+        write_json(ROOT / f"data/art/hair/{family}/{slug}.json", comp)
+        hair_written.append(f"hair/{family}/{slug}")
+
+        card = {
+            "artId": f"{HERO_SLUG}-hair-{slug}",
+            "kind": "base-set",
+            "stage": "hair",
+            "heroArt": HERO_ART,
+            "component": f"data/art/hair/{family}/{slug}.json",
+            "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+            "output": f"prompts/art/base-set/Drakness/hair/Drakness_Hair_{label_of(slug)}.txt",
+            "denoise": "~0.4-0.6",
+        }
+        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/hair/{slug}.json", card)
+
+for family, entries in MOTION.items():
+    for slug, name, editorial, breeze, body, head, gaze, expression, pose, extras, source in entries:
+        comp = {
+            "id": f"motion/{family}/{slug}",
+            "kind": "motion",
+            "name": name,
+            "editorial": editorial,
+            "breeze": breeze,
+            "body": body,
+            "head": head,
+            "gaze": gaze,
+            "expression": expression,
+            "pose": pose,
+            "extras": extras,
+            "compatibleStages": ["motion"],
+        }
+        if source:
+            comp["sourceVariant"] = source
+        write_json(ROOT / f"data/art/motion/{family}/{slug}.json", comp)
+        motion_written.append(f"motion/{family}/{slug}")
+
+        card = {
+            "artId": f"{HERO_SLUG}-motion-{slug}",
+            "kind": "base-set",
+            "stage": "motion",
+            "heroArt": HERO_ART,
+            "component": f"data/art/motion/{family}/{slug}.json",
+            "template": "data/art/base-set/_templates/heroes/motion-human.txt",
+            "output": f"prompts/art/base-set/Drakness/motion/Drakness_Motion_{label_of(slug)}.txt",
+            "denoise": "~0.4-0.6",
+        }
+        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/motion/{slug}.json", card)
+
+print(f"Hair components: {len(hair_written)} (incl. 2 already-authored); cards written for new ones")
+print(f"Motion components: {len(motion_written)}; cards written")

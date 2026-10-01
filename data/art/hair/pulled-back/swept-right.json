@@ -1,0 +1,14 @@
+{
+  "id": "hair/pulled-back/swept-right",
+  "kind": "hair",
+  "name": "Swept Right",
+  "a_pose_style": "pulled behind the left shoulder and over the top of the head to the right, blowing right, left ear exposed",
+  "breeze": "Minimal breeze flowing to right.",
+  "hair_change": "Hair pulled back behind her left shoulder and over top of her head to the right. Hair blowing to the right. Left ear exposed.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Right"
+}

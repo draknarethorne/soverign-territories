@@ -1,0 +1,16 @@
+{
+  "id": "hair/down/semi-to-curly",
+  "kind": "hair",
+  "name": "Semi-Straight to Curly",
+  "a_pose_style": "semi-straight through the upper length, turning soft and curly toward the ends",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is semi-straight until middle of breasts, then curly and hanging beside breasts.",
+  "extras": [
+    "Bold décolletage."
+  ],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Straight_Semi"
+}

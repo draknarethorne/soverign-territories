@@ -1,0 +1,16 @@
+{
+  "id": "hair/pulled-back/center-pulled",
+  "kind": "hair",
+  "name": "Center Pulled Back",
+  "a_pose_style": "pin straight, pulled behind and resting in front of the shoulders",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is pin straight, pulled behind and hanging in front of shoulders.",
+  "extras": [
+    "Bold décolletage."
+  ],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Straight_Back + Drakness_Qwen_Hair_Straight_Back_00002 + Drakness_Qwen_Hair_Straight_Pulled (consolidated, near-identical trio)"
+}

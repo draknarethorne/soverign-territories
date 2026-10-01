@@ -1,0 +1,17 @@
+{
+  "id": "motion/dynamic/mild-energy-touch",
+  "kind": "motion",
+  "name": "Mild-Energy Touch",
+  "editorial": "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.",
+  "breeze": "Random slight breeze.",
+  "body": "legs in full-motion, only the toes of her shoes touching the ground.",
+  "head": "tilted and turned to a soft 3/4, chin slightly down.",
+  "gaze": "seductive, unpredictable.",
+  "expression": "seductive and unpredictable; lips full and expressive, slightly parted.",
+  "pose": "hands in unpredictable positions touching her body.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_Mild"
+}

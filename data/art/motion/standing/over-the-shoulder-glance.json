@@ -1,0 +1,17 @@
+{
+  "id": "motion/standing/over-the-shoulder-glance",
+  "kind": "motion",
+  "name": "Over-the-Shoulder Glance",
+  "editorial": "A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing.",
+  "breeze": "Light breeze.",
+  "body": "3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back.",
+  "head": "turned over the shoulder toward the camera, chin slightly down.",
+  "gaze": "eyes to camera.",
+  "expression": "alluring, confident; lips slightly parted; expressive, sultry brows.",
+  "pose": "one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_OverShoulder"
+}

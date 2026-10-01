@@ -1,0 +1,16 @@
+{
+  "id": "motion/dynamic/hair-flip-toss",
+  "kind": "motion",
+  "name": "Hair Flip / Toss",
+  "editorial": "A candid high-fashion editorial shot, dynamic motion-capture moment.",
+  "breeze": "Strong gust, mid-toss.",
+  "body": "caught mid-motion as her hair whips through the air.",
+  "head": "thrown back slightly with the toss.",
+  "gaze": "eyes closed or just reopening, mid-movement.",
+  "expression": "playful, exhilarated, lips parted.",
+  "pose": "one hand lifted near the hair, body leaning into the motion.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}
