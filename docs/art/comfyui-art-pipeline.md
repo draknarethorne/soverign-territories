@@ -128,6 +128,54 @@ the bottom and raise by ~0.05 only if the change isn't fully taking. Defaults: h
 **0.55**, final/FireRed polish **0.6**. The first value that fully applies the change is the right one —
 every extra step past that just erodes face, eyes, and body.
 
+> **Tip:** `denoise` isn't exposed outside the subgraph by default. Open the subgraph, select the
+> KSampler, and **promote** the `denoise` (and ideally `steps` + `seed`) widget to the parent so it's
+> editable on the outer node per-run. Do it once per ST workflow and save.
+
+### Steps: Turbo (4) vs non-Turbo (40)
+
+**Steps = how many refinement passes the sampler takes** to turn noise into a finished image. More
+passes = more chances to sharpen and converge. The catch: steps are **matched to the Lightning/Turbo
+LoRA**, a distilled shortcut trained to finish in ~4 passes.
+
+- **4-step Turbo (Lightning LoRA on):** ~10× faster (big on an 8 GB 3050), clean output, very stable
+  per seed, slightly softer micro-detail. **Use for all iteration** — A-pose, hair, armor, stance.
+- **40-step non-Turbo (LoRA off):** slower, slightly finer skin/fabric texture *if* tuned, more
+  variation. **Use only for the final hero render** (why `ST_FireRed_Final` / `ST_Flux_Final` exist).
+- **Don't mix them:** 4 steps *without* Lightning = blurry/unfinished; 40 steps *with* Lightning =
+  burnt/oversaturated.
+
+Steps interact with denoise: **effective work ≈ steps × denoise.** At 0.55 denoise, 4 steps do ~2
+steps' worth of repaint — which is exactly why the Lightning LoRA matters at these low-denoise edits.
+Drop the LoRA and you'd have to push steps up to compensate.
+
+### Image size & scaling (why you never set an output size)
+
+In the Qwen-Image-Edit 2511 workflow you **don't** specify an output size — and you don't need a
+separate scale node. Every Qwen edit workflow (A-pose, Edit, Polish, and all the Drakness files)
+contains a **`FluxKontextImageScale`** node that automatically snaps the incoming image to the
+nearest supported Qwen resolution bucket (~1 megapixel, standard aspect ratios). Flow:
+
+1. **Load image** → `FluxKontextImageScale` conforms it to a ~1 MP bucket.
+2. `VAEEncode` → latent at that size → `KSampler` denoises at that size → `VAEDecode`.
+3. **Output = that bucket size.** Feed it into the next stage and it's already a bucket size, so it
+   passes through unchanged → **size stays stable across the whole chain.**
+
+What this means in practice:
+
+- The **one thing that sets the canvas is the aspect ratio of the very first photo** you feed the
+  A-pose. Want tall card art? Start from a **portrait** reference; every downstream stage inherits it.
+- You **don't** need to add `ImageScaleToTotalPixels` to the Qwen workflow — it would be redundant with
+  `FluxKontextImageScale` (and could fight the buckets). That node appears in the **Flux / MageFlow /
+  FireRed** ST files precisely *because* those model families don't ship the Kontext scaler and need an
+  explicit ~1 MP normalizer.
+- `ST_Qwen_B_Pose` is the exception: it uses an **`EmptyLatentImage`** (text-to-image style), so there
+  you *do* set width/height directly — it's a fresh generation, not an edit of an incoming image.
+
+Scaling matters because the model runs best at its **trained resolution**: oversized inputs risk OOM on
+8 GB and waste time; undersized inputs lose detail. The ~1 MP bucket is the sweet spot, and in your
+Qwen workflow it's handled for you.
+
 ### Before investing deeper in one Qwen version
 
 New **Qwen-Image-Edit 2511 / 2512** templates (and other unused templates) are worth a quick,
