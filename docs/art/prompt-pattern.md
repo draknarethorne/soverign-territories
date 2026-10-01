@@ -100,6 +100,19 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
 - **Set the figure once, at A-pose.** Define bust/waist/hips/legs/skin in `X_Pose` only. Downstream
   edits should **preserve** proportions (via the fidelity + "maintain outfit" lines), not re-issue
   "enhance breasts" — re-sculpting downstream fights the fidelity line and drifts the body.
+- **Fidelity preserve-list (what every downstream stage must hold from the A-pose).** The
+  `Maintain strict fidelity to...` line carries identity through each edit at ~0.5–0.7 denoise. It must
+  list: **facial likeness, facial bone structure, body shape, proportions, eye colour, iris pattern,
+  hair colour, skin tone, and any existing tattoos / body markings / beauty marks.** Rules:
+  - **Anything set once at the A-pose that can drift must be in this line** — skin tone and iris pattern
+    were both silent gaps that let the tan wash out and the signature iris simplify downstream.
+  - **Signature marks (tattoo, birthmark, beauty mark) must be *defined* at the A-pose** (there's a
+    `Distinguishing marks:` slot in `_TEMPLATE_Pose`) **and** named in the fidelity line, or the first
+    edit will drop them. The generic "any existing …" clause preserves them when present, harmlessly
+    when absent.
+  - **Don't bloat it.** The line works by *concentrating* attention — every term dilutes the rest. Only
+    add attributes that are both signature identity *and* actually drift; don't turn it into a laundry
+    list of per-stage things (makeup, outfit, nails) that are meant to change.
 - **Don't duplicate blocks.** Qwen reads instructions once; a repeated pose block (seen in Motion) adds
   nothing and can confuse. One block each.
 - **Natural language, no weights.** Qwen-Image-Edit follows plain sentences — skip SD-style `(())`
