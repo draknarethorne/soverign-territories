@@ -8,7 +8,7 @@ prompt:
 
 Photo-realistic scene, dreamlike futurism. Professional full-body shot, head to toe. Diffused studio lighting, 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, hair colour, and skin tone.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
 Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Midnight Violet over a matte underlayer, with delicate Vibrant Amethyst glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
 

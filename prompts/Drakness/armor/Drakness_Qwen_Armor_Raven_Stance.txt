@@ -10,7 +10,7 @@ Keep the background the same as the incoming image.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, hair colour, and skin tone.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
 Maintain the existing raven armor (Iridescent Shadow Steel bikini armor, raven-feather pauldrons, runic choker, sheer waist-drapes, thigh-high plated high-heel boots, belt with dagger and satchel)
 expressly.
