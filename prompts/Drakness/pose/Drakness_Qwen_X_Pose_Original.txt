@@ -13,14 +13,14 @@ Beautifully slim and fit woman standing in a standard model A-pose, looking at t
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, and hairstyle silhouette.
 
 Figure: full, hourglass figure; generous bust, softly emphasized and centered; slender hips; extra-long, slender legs.
-Skin: warm sun-kissed golden tan complexion, evenly tanned, no pale areas.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
-Wearing only a skimpy Midnight Violet string bikini top with thin straps, a high-cut Midnight Violet thong bottom with thin straps and no ties, and Midnight Violet open-toed high heels with basic straps.
+Wearing only a skimpy Midnight Violet triangle bikini top with smooth straps, a seamless high-cut Midnight Violet thong bottom with a smooth solid waistband, no side ties, no extra bands, and Midnight Violet open-toed high heels.
 
 Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft amethyst tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
-Eyes: violet irises with fine radial fibers and Midnight Violet limbal rings, both eyes matched; black lush lashes; black eyebrows.
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, both eyes matched, crisp catchlights; black lush lashes; black eyebrows.
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; dimples; mouth closed.
-Hair: rich obsidian-black with subtle plum and espresso highlights, retaining the exact cut and volume; very slight lift from a light breeze from below.
+Hair: rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights, retaining the exact cut and volume; very slight lift from a light breeze from below.
 
 ----------------------------------------------------------------
 negative prompt:
