@@ -17,7 +17,7 @@ Standing A-pose: upright, feet set apart, arms relaxed slightly away from the si
 Figure: full, hourglass figure; generous bust, softly emphasized and centered; slender hips; long, slender legs.
 Skin: warm tan.
 
-Wearing only a Midnight Violet skimpy string bikini top and matching high-cut string thong bottom - midriff, abdomen, and hips bare, no bow-ties; matching Midnight Violet open-toed high heels.
+Wearing only a Midnight Violet skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Midnight Violet open-toed high heels.
 
 Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a light wash of Vibrant Amethyst eyeshadow, soft natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
 Eyes: violet irises with fine radial fibers and Midnight Violet limbal rings, both eyes matched; black lush lashes.
@@ -27,4 +27,4 @@ Hair: rich obsidian-black with subtle plum and espresso highlights, retaining th
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, cups, tables, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, cups, tables, extra limbs, extra digits, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.
