@@ -15,7 +15,7 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
 
 Figure: full, hourglass figure; generous bust, softly emphasized and centered; slender hips; long, slender legs.
-Skin: warm tan.
+Skin: warm sun-kissed golden tan complexion, evenly tanned, no pale areas.
 
 Wearing only a Midnight Violet skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Midnight Violet open-toed high heels.
 
@@ -27,4 +27,4 @@ Hair: rich obsidian-black with subtle plum and espresso highlights, retaining th
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, cups, tables, extra limbs, extra digits, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, heavy blush, flushed cheeks, rosy cheeks, over-rouged, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, cups, tables, extra limbs, extra digits, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.

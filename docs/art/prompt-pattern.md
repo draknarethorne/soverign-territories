@@ -81,6 +81,17 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
   wash) so a heavily-made-up source photo doesn't leak through. Each outfit then adds a **`Makeup:`**
   line - eyeshadow matched to the feel (soft shimmer for light looks, smoky for dark armor). Fantasy /
   Final carry the heaviest makeup + glowing eyes.
+- **Blush compounds; eyeshadow & lipstick swap.** This is the key rule. **No stage resets blush**, so it
+  *accumulates* down the chain — a noticeable base flush deepens into over-rouged cheeks by the Final.
+  Keep the **A-Pose blush barely-there** ("only the faintest hint of natural blush") and add
+  over-rouged terms to the negative. Eyeshadow and lipstick are **replacements** — the last stage that
+  names them wins — so escalating A-Pose "light wash" → Armor "smoky" is *replacing*, not stacking, and
+  is safe. Introduce real blush only at the **Fantasy/Final** stage, where it's intentional.
+- **Hair & Motion carry makeup from the incoming image — keep it that way.** Hair stages set **no**
+  makeup (good); Motion sets no blush/eyeshadow (a few set lipstick, which merely swaps). Don't add a
+  `Makeup:` line to Hair/Motion — they should inherit the A-Pose face so nothing compounds before the
+  outfit stage. (`Kiss` deliberately uses Bright Red lipstick — a palette deviation, fine for that shot
+  only.)
 - **Nails = fingernails *and* toenails.** Toes show in open-toed heels (the A-Pose wears them), so set
   both at the A-Pose and restate per outfit; harmless to state under boots (just won't show).
 - **Fantasy comes at the end.** Eyeshadow, blush, glowing eyes, necrotic glow, and any painterly
