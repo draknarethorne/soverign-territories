@@ -17,4 +17,4 @@ Hair: rich chestnut-brown hair with warm honey and moss-gold all-over highlights
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, mismatched eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, mismatched eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, backlight, rim light, text, watermark, logo.

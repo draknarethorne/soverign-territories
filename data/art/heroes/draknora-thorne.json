@@ -12,7 +12,20 @@
       "eyeColorGlamour": "Molten amber irises with radiating crimson striations and a dark charcoal limbal ring",
       "hairColor": "Rich auburn-brown hair with warm copper and burnished-gold all-over highlights, full dimensional colour like a fashion editorial",
       "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
-      "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned, no pale areas"
+      "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ]
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

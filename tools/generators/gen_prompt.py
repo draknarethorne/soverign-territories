@@ -40,6 +40,8 @@ def tokens_for(hero):
         decap(phy["legs"]),
     ])
     skin = decap(pal["skinTone"])
+    eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
+    skin_neg = ", ".join(pal.get("skinColorNegatives", []))
     return {
         "HERO": hero["name"],
         "PRIMARY": primary,
@@ -50,6 +52,8 @@ def tokens_for(hero):
         "EYE": decap(pal["eyeColorGlamour"]),
         "HAIR": decap(pal["hairColor"]),
         "HAIRSTYLE": decap(pal["hairStyle"]),
+        "EYE_NEG": eye_neg,
+        "SKIN_NEG": skin_neg,
     }
 
 
@@ -73,8 +77,8 @@ def generate(card_path):
     for key, val in toks.items():
         out = out.replace("{{" + key + "}}", val)
 
-    # Base-set card may remove specific negative-prompt terms that would otherwise
-    # contradict its design (e.g. a pale-skinned heroine fighting a 'pale skin' negative).
+    # Rare escape hatch: base-set card may still remove a specific negative term
+    # that neither the universal template nor the hero's own data accounts for.
     for term in overrides.get("negativeRemove", []):
         out = out.replace(term + ", ", "").replace(", " + term, "")
 
