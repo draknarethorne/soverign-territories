@@ -1,0 +1,17 @@
+{
+  "id": "motion/walking/high-energy-stride",
+  "kind": "motion",
+  "name": "High-Energy Stride",
+  "editorial": "Candid high-fashion editorial shot, dynamic fluid movement, unposed seductive glamour photography, mid-motion, asymmetrical stance, shifted weight, non-rigid posture, full body in motion, high energy.",
+  "breeze": "Strong breeze flowing any direction.",
+  "body": "angled 3/4 to the camera, mid-stride, having a great time.",
+  "head": "turned to a 3/4 angle, chin up; neck and shoulders follow the turn.",
+  "gaze": "bright and engaged with the camera.",
+  "expression": "a bright, confident smile with a hint of teeth; lips full and expressive.",
+  "pose": "arms swinging with the energy of the stride.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_High"
+}

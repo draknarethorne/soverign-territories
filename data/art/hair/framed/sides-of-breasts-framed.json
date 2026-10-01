@@ -1,0 +1,16 @@
+{
+  "id": "hair/framed/sides-of-breasts-framed",
+  "kind": "hair",
+  "name": "Framed, Sides of Breasts",
+  "a_pose_style": "sleek and semi-straight, length to the sides of the breasts, sides cut tapered at the eyes with tendrils framing her face",
+  "breeze": "Very slight breeze flowing at her.",
+  "hair_change": "Hairstyle is sleek and semi-straight, hair length to sides of breasts, sides cut tapered at eyes with tendrils framing her face, hair contours her body.",
+  "extras": [
+    "Bold décolletage."
+  ],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Straight_Frame_Breasts"
+}

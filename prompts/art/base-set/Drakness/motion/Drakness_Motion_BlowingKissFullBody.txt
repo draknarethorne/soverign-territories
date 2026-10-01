@@ -1,0 +1,31 @@
+=== Drakness Thorne · Motion (group: Motion) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain the existing outfit and hairstyle expressly.
+
+Body: full head-to-toe shot, feet placed on the floor in glamour positions, legs exposed.
+Head: position varies.
+Gaze: remains focused on camera.
+Expression: glamorous, confident.
+No breeze.
+Pose: one hand blowing a kiss, the other in an elegant, alluring gesture.
+Bold décolletage.
+Straight hair, same length, behind her shoulders.
+Bright Red lipstick (override).
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, text, wording, watermark, logo.

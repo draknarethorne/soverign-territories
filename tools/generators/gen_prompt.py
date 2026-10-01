@@ -41,7 +41,7 @@ def resolve_hairstyle(pal):
     with a one-line swap, instead of every hero inlining the same text."""
     if "hairStyleComponent" in pal:
         component = load_json(ROOT / pal["hairStyleComponent"])
-        return component["aPoseStyle"]
+        return component["a_pose_style"]
     return pal["hairStyle"]
 
 
@@ -74,10 +74,33 @@ def tokens_for(hero):
         "EYE": decap(pal["eyeColorGlamour"]),
         "HAIR": decap(pal["hairColor"]),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
+        "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
         "HERO_NEG": hero_neg,
     }
+
+
+_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes"}
+
+
+def resolve_component_tokens(card):
+    """A base-set card may reference a reusable component (data/art/hair/*.json,
+    data/art/motion/*.json, ...). Every non-metadata field becomes a token of the
+    same name, UPPERCASED (snake_case fields -> TOKEN_NAME); list fields (e.g.
+    'extras') join with newlines. Lets Hair/Motion/Armor stages compose a prompt
+    from hero data + a reusable, hero-agnostic component."""
+    ref = card.get("component")
+    if not ref:
+        return {}
+    component = load_json(ROOT / ref)
+    toks = {}
+    for key, val in component.items():
+        if key in _COMPONENT_META_KEYS:
+            continue
+        token = key.upper()
+        toks[token] = "\n".join(val) if isinstance(val, list) else val
+    return toks
 
 
 def generate(card_path):
@@ -90,6 +113,7 @@ def generate(card_path):
             hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
     toks = tokens_for(hero)
+    toks.update(resolve_component_tokens(card))
 
     needed = set(re.findall(r"{{(\w+)}}", template))
     missing = needed - set(toks)

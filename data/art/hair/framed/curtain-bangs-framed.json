@@ -1,0 +1,13 @@
+{
+  "id": "hair/framed/curtain-bangs-framed",
+  "kind": "hair",
+  "name": "Curtain Bangs",
+  "a_pose_style": "long, sleek layers with soft curtain bangs parted at the centre, framing both sides of her face",
+  "breeze": "Light breeze.",
+  "hair_change": "Hairstyle is sleek, long layers with soft curtain bangs parted at the centre, framing both sides of her face.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

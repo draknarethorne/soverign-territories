@@ -1,0 +1,13 @@
+{
+  "id": "hair/framed/layered-face-framing",
+  "kind": "hair",
+  "name": "Layered Face-Framing",
+  "a_pose_style": "long soft layers with face-framing pieces swept forward at the cheekbones",
+  "breeze": "Light breeze.",
+  "hair_change": "Hairstyle has long, soft layers with face-framing pieces swept forward at the cheekbones, adding movement around the face.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

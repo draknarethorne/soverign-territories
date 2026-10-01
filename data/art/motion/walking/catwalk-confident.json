@@ -1,0 +1,17 @@
+{
+  "id": "motion/walking/catwalk-confident",
+  "kind": "motion",
+  "name": "Confident Catwalk Walk",
+  "editorial": "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.",
+  "breeze": "Breeze flowing any direction.",
+  "body": "walking towards the camera, body position adjusting with the stride.",
+  "head": "facing forward, matching the walk.",
+  "gaze": "remains focused on camera.",
+  "expression": "alluring, confident smile, lips slightly parted; lips full and expressive.",
+  "pose": "hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_Catwalk"
+}

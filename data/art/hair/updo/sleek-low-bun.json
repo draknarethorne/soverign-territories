@@ -1,0 +1,13 @@
+{
+  "id": "hair/updo/sleek-low-bun",
+  "kind": "hair",
+  "name": "Sleek Low Bun",
+  "a_pose_style": "gathered into a sleek, low chignon bun at the nape of the neck, smooth and refined",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is gathered into a sleek, low chignon bun at the nape of the neck, smooth and refined.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "hair/down/natural",
+  "kind": "hair",
+  "name": "Natural (no restyle)",
+  "a_pose_style": "left natural, loose and relaxed",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is natural.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Natural"
+}

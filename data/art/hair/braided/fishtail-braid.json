@@ -1,0 +1,13 @@
+{
+  "id": "hair/braided/fishtail-braid",
+  "kind": "hair",
+  "name": "Fishtail Braid",
+  "a_pose_style": "styled in a loose fishtail braid cascading over one shoulder, soft tendrils framing the face",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is styled in a loose fishtail braid cascading over one shoulder, soft tendrils framing the face.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

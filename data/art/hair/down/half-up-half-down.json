@@ -1,0 +1,13 @@
+{
+  "id": "hair/down/half-up-half-down",
+  "kind": "hair",
+  "name": "Half-Up, Half-Down",
+  "a_pose_style": "half gathered back at the crown, the rest left down in soft waves",
+  "breeze": "Minimal breeze.",
+  "hair_change": "The top half is gathered back and secured, the rest left down in soft waves cascading past the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

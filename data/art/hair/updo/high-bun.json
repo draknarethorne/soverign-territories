@@ -1,0 +1,13 @@
+{
+  "id": "hair/updo/high-bun",
+  "kind": "hair",
+  "name": "High Bun",
+  "a_pose_style": "swept up into a sleek high bun at the crown, smooth and polished",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is swept up into a sleek high bun at the crown, smooth and polished.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}
