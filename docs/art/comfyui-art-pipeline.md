@@ -123,6 +123,11 @@ stages. Tune it by intent:
 - **Polish pass**: **~0.2–0.4** — enhance texture without redrawing identity.
 - **Base A-pose**: **1.0** — a full generation is wanted here.
 
+**Where to start within a range: start low, climb.** Lower denoise preserves identity, so begin at
+the bottom and raise by ~0.05 only if the change isn't fully taking. Defaults: hair **0.45**, armor/outfit
+**0.55**, final/FireRed polish **0.6**. The first value that fully applies the change is the right one —
+every extra step past that just erodes face, eyes, and body.
+
 ### Before investing deeper in one Qwen version
 
 New **Qwen-Image-Edit 2511 / 2512** templates (and other unused templates) are worth a quick,
