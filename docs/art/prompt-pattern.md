@@ -214,6 +214,19 @@ Ready orientations to drop in:
 - **Aloof editorial:** body front, face turned to 3/4, eyes off-camera.
 - **Contrapposto walk:** mid-step, hips and shoulders counter-rotated (S-curve), head leading the turn.
 
+## Dynamism & variety (how to actually get it)
+
+Variety comes from the **seed**, not from vague words:
+
+- **Seed = randomness.** Same prompt + different seed = a different result. Roll / randomize the seed
+  and batch a few, then pick. "Any direction" does *not* randomize - it defaults to forward.
+- **Variety = a library of concrete poses**, not one vague prompt (see the directional pose files).
+- **Denoise** = how far it moves from the input: higher = more change, lower = more faithful (~0.5-0.7
+  for a real pose change).
+- **CFG / guidance:** slightly lower lets the model add its own motion; higher sticks to the words.
+- **Energy words help inside a concrete frame:** mid-motion, caught candidly, off-balance, wind-caught,
+  unposed - but still name the body / head / gaze angle.
+
 ## Migrating your existing `.json` prompts
 
 They already follow most of this. To standardise: lift each positive prompt into the matching
