@@ -57,7 +57,17 @@
     "palette": {
       "primaryColor": "Midnight Violet",
       "accentColors": ["Vibrant Amethyst", "Polished Silver"],
-      "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks"
+      "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks",
+      "hairColor": "Rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights",
+      "skinTone": "Warm deep sun-kissed golden-bronze tan"
+    },
+    "physique": {
+      "build": "Lithe, slender, elf-like, elongated proportions",
+      "bust": "Full",
+      "hips": "Shapely feminine, gently curved (not wide)",
+      "legs": "Very long, slender; slim tapering thighs",
+      "raceAlignment": "Human, aligned to dark-elf characteristics (slender, elongated) — no pointed ears in glamour shots",
+      "distinguishingMarks": []
     }
   },
   "acquisition": {
