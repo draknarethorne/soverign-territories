@@ -21,7 +21,7 @@ Distinguishing marks: [none — or describe a signature tattoo / birthmark / bea
 
 Wearing only a simple [PRIMARY] seamless high-cut thong bikini underlayer (the base for later wardrobe edits), smooth solid waistband, no side ties, no straps, no extra bands; midriff and hips bare. Matching [PRIMARY] open-toed high heels.
 
-Makeup: natural and fresh-faced - reset any heavy makeup from the source; a light wash of [ACCENT] eyeshadow, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or light [PRIMARY].
+Makeup: natural and fresh-faced - reset any heavy makeup from the source; a barely-there neutral eyeshadow with only the faintest soft [ACCENT] tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or light [PRIMARY].
 Eyes: [EYE], crisp catchlights, both eyes matched; [black] lush lashes.
 Lips: natural [LIP] satin - keep lips natural here (outfit stages add colour); alluring, confident closed-mouth smile; dimples; looking to camera.
 Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
@@ -29,4 +29,4 @@ Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, heavy eyeshadow, bold eye makeup, dramatic eyeshadow, vibrant eyeshadow, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
