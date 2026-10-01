@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic scene. Professional full-body glamour shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
-Background: a basic cream-coloured studio backdrop.
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
 
 Beautifully slim and fit woman standing in a standard model A-pose, looking at the camera with an alluring, confident smile.
 
@@ -20,7 +20,7 @@ Wearing only a skimpy Midnight Violet string bikini top with thin straps, a high
 Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a light wash of Vibrant Amethyst eyeshadow, soft natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
 Eyes: violet irises with fine radial fibers and Midnight Violet limbal rings, both eyes matched; black lush lashes; black eyebrows.
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; dimples; mouth closed.
-Hair: rich obsidian-black with subtle plum and espresso highlights, retaining the exact cut and volume; a soft side glow; very slight lift from a light breeze from below.
+Hair: rich obsidian-black with subtle plum and espresso highlights, retaining the exact cut and volume; very slight lift from a light breeze from below.
 
 ----------------------------------------------------------------
 negative prompt:
