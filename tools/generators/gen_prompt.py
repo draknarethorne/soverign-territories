@@ -39,7 +39,7 @@ def tokens_for(hero):
         "slim, tapering thighs",
         decap(phy["legs"]),
     ])
-    skin = decap(pal["skinTone"]) + " complexion, evenly tanned, no pale areas"
+    skin = decap(pal["skinTone"])
     return {
         "HERO": hero["name"],
         "PRIMARY": primary,
@@ -72,6 +72,11 @@ def generate(card_path):
     out = template
     for key, val in toks.items():
         out = out.replace("{{" + key + "}}", val)
+
+    # Base-set card may remove specific negative-prompt terms that would otherwise
+    # contradict its design (e.g. a pale-skinned heroine fighting a 'pale skin' negative).
+    for term in overrides.get("negativeRemove", []):
+        out = out.replace(term + ", ", "").replace(", " + term, "")
 
     leftover = re.findall(r"{{\w+}}", out)
     if leftover:

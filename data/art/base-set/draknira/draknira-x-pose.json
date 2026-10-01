@@ -1,0 +1,15 @@
+{
+  "artId": "draknira-x-pose",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/draknira-thorne.json",
+  "template": "data/art/base-set/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/art/base-set/Draknira/poses/Draknira_X_Pose.txt",
+  "denoise": "~1.0",
+  "notes": "Draknira Thorne pose — generated alongside Drakness as the initial baseline for all 10 female heroes.",
+  "overrides": {
+    "negativeRemove": [
+      "pale skin"
+    ]
+  }
+}

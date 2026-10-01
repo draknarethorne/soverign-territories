@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNAVA_THORNE",
+  "name": "Draknava Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Sky Cerulean",
+      "accentColors": [
+        "Gossamer Silver",
+        "Breeze Teal"
+      ],
+      "eyeColor": "Sky cerulean iris with slate blue limbal ring, radiating gossamer silver striations, and breeze teal flecks",
+      "eyeColorGlamour": "Sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring",
+      "hairColor": "Silvery ash-blonde hair, soft and sultry with a breezy, airy sheen",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to wood-elf characteristics (slender, nature-toned) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Draknava Thorne (Wind, Wood Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

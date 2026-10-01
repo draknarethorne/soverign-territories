@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNARA_THORNE",
+  "name": "Draknara Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Terracotta Ochre",
+      "accentColors": [
+        "Rich Bronze",
+        "Warm Sand"
+      ],
+      "eyeColor": "Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks",
+      "eyeColorGlamour": "Rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring",
+      "hairColor": "Rich bronze-brown hair with warm terracotta and caramel all-over highlights, full dimensional colour like a fashion editorial",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to barbarian characteristics (strong, grounded) — glamour build stays family-standard for now"
+    }
+  },
+  "notes": "Core ART hero definition for Draknara Thorne (Earth, Barbarian). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

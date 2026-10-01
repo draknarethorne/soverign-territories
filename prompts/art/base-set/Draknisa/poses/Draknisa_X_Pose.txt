@@ -1,4 +1,4 @@
-=== Drakness Thorne · A-Pose Base (group: X_Pose) — Build (img2img) ===
+=== Draknisa Thorne · A-Pose Base (group: X_Pose) — Build (img2img) ===
 Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. Set figure, skin, eyes, and hair here; downstream stages preserve them.
 Denoise ~1.0.
 
@@ -15,14 +15,14 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
 
 Figure: lithe, slender, long-limbed build; full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
-Skin: warm sun-kissed olive tan.
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
 
-Wearing only a Midnight Violet skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Midnight Violet open-toed high heels.
+Wearing only a Deep Oceanic Blue skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Deep Oceanic Blue open-toed high heels.
 
-Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft amethyst tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft aquamarine tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Blue.
+Eyes: deep sapphire irises with radiating aquamarine striations and an oceanic indigo limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; alluring, confident closed-mouth smile; dimples; looking to camera.
-Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension; styled center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured (override the source hairstyle); a very slight lift from a light breeze below.
+Hair: deep blue-black hair with glossy aquamarine-sheened all-over highlights, full dimensional colour like a fashion editorial, tone-on-tone dimension; styled center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length (override the source hairstyle); a very slight lift from a light breeze below.
 
 ----------------------------------------------------------------
 negative prompt:

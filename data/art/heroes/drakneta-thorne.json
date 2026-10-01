@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNETA_THORNE",
+  "name": "Drakneta Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Electric Gold",
+      "accentColors": [
+        "Bright Gold",
+        "Arc White"
+      ],
+      "eyeColor": "Electric cobalt-topaz iris with midnight indigo limbal ring, radiating arc-cyan striations, and spark-white flecks",
+      "eyeColorGlamour": "Electric cobalt-topaz irises with radiating arc-cyan striations and a midnight indigo limbal ring",
+      "hairColor": "Electric golden-blonde hair, sultry and sleek with subtle silvery-white crackling highlights",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to celestial characteristics (luminous, ethereal) — glamour build stays family-standard for now"
+    }
+  },
+  "notes": "Core ART hero definition for Drakneta Thorne (Lightning, Celestial). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

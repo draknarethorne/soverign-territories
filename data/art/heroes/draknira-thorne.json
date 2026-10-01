@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNIRA_THORNE",
+  "name": "Draknira Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Glacial Blue",
+      "accentColors": [
+        "Frost White",
+        "Shimmering Silver"
+      ],
+      "eyeColor": "Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks",
+      "eyeColorGlamour": "Glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring",
+      "hairColor": "Icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Cool fair porcelain complexion, evenly toned, smooth and blemish-free"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to high-elf characteristics (slender, elegant) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Draknira Thorne (Ice, High Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}
