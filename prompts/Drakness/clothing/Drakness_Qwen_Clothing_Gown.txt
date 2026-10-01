@@ -1,24 +1,18 @@
 === Drakness Thorne · Clothing: Gown (group: Clothing) — Edit (Qwen/FireRed img2img) ===
-Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the full-length
-gown; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the full-length gown; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
-razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
 Background: a basic cream-coloured studio backdrop.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, post-motion,
-asymmetrical body language, seductive low-energy fashion photography.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, post-motion, asymmetrical body language, seductive low-energy fashion photography.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
-physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
 
-Wearing a form-fitting full-length Midnight Violet evening gown with Vibrant Amethyst and Polished
-Silver accents and swirls - covering the mid-section entirely; thin straps, straight across the top;
-modest décolletage, breasts partially exposed; slit on both sides to the knee.
+Wearing a form-fitting full-length Midnight Violet evening gown with Vibrant Amethyst and Polished Silver accents and swirls - covering the mid-section entirely; thin straps, straight across the top; modest décolletage, breasts partially exposed; slit on both sides to the knee.
 
 Arms: simple silver bracelets.
 
@@ -31,12 +25,9 @@ Breeze flowing any direction.
 Face remains focused on camera; a composed, elegant smile, lips softly together; full, expressive lips.
 Makeup: elegant smoky Vibrant Amethyst eyeshadow. Deep Violet lipstick. Midnight Violet fingernails and toenails. Violet eyes.
 
-Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step;
-arms adjust to the body; one foot stepping forward to the side; the gown's hem and side slits sway
-with the step.
+Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step; arms adjust to the body; one foot stepping forward to the side; the gown's hem and side slits sway with the step.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
-wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text, wording, watermark, logo.

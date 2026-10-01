@@ -1,20 +1,16 @@
 === Drakness Thorne · Clothing: Gown Pose (group: Clothing) — Edit (Qwen/FireRed img2img) ===
-Incoming image: a Gown plate of Drakness. Keep the gown, face, body, and hair from the incoming
-image; only change the stance/expression. Denoise ~0.4-0.6.
+Incoming image: a Gown plate of Drakness. Keep the gown, face, body, and hair from the incoming image; only change the stance/expression. Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
-razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
 Background: a basic cream-coloured studio backdrop.
 
-A candid high-fashion editorial shot, expressive glamour pose, post-motion, asymmetrical body
-language, seductive low-energy fashion photography.
+A candid high-fashion editorial shot, expressive glamour pose, post-motion, asymmetrical body language, seductive low-energy fashion photography.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
-physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
 
 Maintain the existing full-length Midnight Violet gown and heels expressly.
 
@@ -24,13 +20,9 @@ Face adjusts to the body position but remains focused on the camera.
 Expression: glamorous smile; full, expressive lips; sultry brows.
 Makeup: soft Vibrant Amethyst shimmer eyeshadow. Light Violet lipstick. Midnight Violet fingernails and toenails. Symmetric violet eyes.
 
-Pose: a confident glamour pose - leaning forward, hips flexed to one side, back arched, bold
-décolletage; one hand on her body, the other in an elegant, alluring gesture with the fingers;
-elbows away from the body; legs exposed; feet apart, one foot forward; the dress moving very
-slightly.
+Pose: a confident glamour pose - leaning forward, hips flexed to one side, back arched, bold décolletage; one hand on her body, the other in an elegant, alluring gesture with the fingers; elbows away from the body; legs exposed; feet apart, one foot forward; the dress moving very slightly.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
-wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text, wording, watermark, logo.

@@ -1,23 +1,18 @@
 === [HERO] · [VARIANT e.g. Bone / Raven / Iridescent] (group: Armor) — Edit (Qwen/FireRed img2img) ===
-Incoming image: an A-pose of [HERO] (chosen hair) in the bikini underlayer. Apply the armor (and
-[WEAPON]); keep face, body, and hair from the incoming image. Denoise ~0.5-0.7. Blank lines = slots.
+Incoming image: an A-pose of [HERO] (chosen hair) in the bikini underlayer. Apply the armor (and [WEAPON]); keep face, body, and hair from the incoming image. Denoise ~0.5-0.7. Blank lines = slots.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
-razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
 Background: a basic cream-coloured studio backdrop.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion,
-asymmetrical body language.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
-physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
 
-Wearing [TORSO - e.g. two-piece skeletal armor bikini] in [PRIMARY]/[material] with [ACCENTS],
-[coverage - bare midriff, revealing high-cut], [centerpiece detail].
+Wearing [TORSO - e.g. two-piece skeletal armor bikini] in [PRIMARY]/[material] with [ACCENTS], [coverage - bare midriff, revealing high-cut], [centerpiece detail].
 
 Arms: [bracers / pauldrons / gauntlets, or "remove armor from wrists"].
 
@@ -35,8 +30,7 @@ Overall, [aesthetic, e.g. luxurious necromancer] aesthetic. A little D&D flair i
 
 Figure: full, hourglass figure; generous bust, softly emphasized.
 Breeze [direction].
-Expression: alluring, confident smile [name the mouth - lips softly together / slightly parted / soft
-teeth, to match the outfit]; expressive, sultry brows.
+Expression: alluring, confident smile [name the mouth - lips softly together / slightly parted / soft teeth, to match the outfit]; expressive, sultry brows.
 Makeup: [ACCENT] eyeshadow to match the outfit - soft shimmer for light looks, smoky for dark armor.
 Lips: [LIP]. Fingernails and toenails: [NAIL]. Eyes: [EYE].
 
@@ -45,6 +39,4 @@ Pose: [short lines - walking toward camera, one foot forward, hips and shoulders
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text,
-wording, watermark, logo, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small
-bust[, pauldrons, shoulder armor <- REMOVE these two if the armor has them].
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text, wording, watermark, logo, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust[, pauldrons, shoulder armor <- REMOVE these two if the armor has them].

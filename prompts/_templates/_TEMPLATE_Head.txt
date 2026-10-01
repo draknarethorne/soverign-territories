@@ -1,6 +1,5 @@
 === [HERO] · Head / Close-up (group: X_Head) — Edit (Qwen img2img) ===
-Incoming image: an A-pose (or hair variant) of [HERO]. Tight close-up; keep face, expression, and
-hair from the incoming image. Denoise ~0.4-0.6.
+Incoming image: an A-pose (or hair variant) of [HERO]. Tight close-up; keep face, expression, and hair from the incoming image. Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
@@ -18,6 +17,4 @@ Hair: [HAIR], micro-highlights catching the light.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, extra limbs, extra digits, deformed hands, extra
-clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust,
-text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.

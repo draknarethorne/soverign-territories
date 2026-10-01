@@ -1,24 +1,18 @@
 === [HERO] · Fantasy Pass [VARIANT] (group: Fantasy) — Edit (Qwen/FireRed img2img) ===
-Incoming image: a near-final PHOTOREAL plate of [HERO] (chosen outfit/hair/pose on cream). This step
-turns the "real supermodel" look into the fantasy hero - add makeup, glowing eyes, and subtle magic -
-while keeping face, body, outfit, hair, and pose from the incoming image. Optional step that sits
-between the photoreal baseline and the Final scene. Denoise ~0.4-0.6.
+Incoming image: a near-final PHOTOREAL plate of [HERO] (chosen outfit/hair/pose on cream). This step turns the "real supermodel" look into the fantasy hero - add makeup, glowing eyes, and subtle magic - while keeping face, body, outfit, hair, and pose from the incoming image. Optional step that sits between the photoreal baseline and the Final scene. Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
 
 Keep the subject from the reference image - face, body, outfit, hair, and pose - unchanged.
 
-Stylize toward dark-fantasy: add [ACCENT] eyeshadow, subtle contour and blush, [LIP] lips; eyes shift
-to [CAST EYE], luminous. Skin keeps its tone with a faint [ACCENT] sheen.
+Stylize toward dark-fantasy: add [ACCENT] eyeshadow, subtle contour and blush, [LIP] lips; eyes shift to [CAST EYE], luminous. Skin keeps its tone with a faint [ACCENT] sheen.
 
-Subtle magic begins to gather - a faint [PRIMARY] / [ACCENT] glow at the fingertips and accents, a
-wisp of [element motif] - kept light (the full spell and scene come at Final).
+Subtle magic begins to gather - a faint [PRIMARY] / [ACCENT] glow at the fingertips and accents, a wisp of [element motif] - kept light (the full spell and scene come at Final).
 
 Background: [keep cream, or a soft [PRIMARY] gradient haze].
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, text, wording, watermark, logo, altered
-face, altered outfit, altered hairstyle, heavy scene, busy background.
+extra people, extra limbs, extra digits, deformed hands, text, wording, watermark, logo, altered face, altered outfit, altered hairstyle, heavy scene, busy background.

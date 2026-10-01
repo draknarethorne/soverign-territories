@@ -1,36 +1,26 @@
 === [HERO] · Pose/Motion [VARIANT] (group: Motion) — Edit (Qwen img2img) ===
-Incoming image: an A-pose of [HERO] (chosen hair). Change ONLY the pose/motion; keep face, body,
-hair, and outfit from the incoming image. Builds a reusable pose to feed into Final. Denoise ~0.4-0.6.
+Incoming image: an A-pose of [HERO] (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Builds a reusable pose to feed into Final. Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography,
-razor-sharp optical focus, soft depth of field falloff.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
 
 Background: a basic cream-coloured studio backdrop.
 
-A candid editorial shot, dynamic natural movement, mid-motion, asymmetrical body language, confident
-contrapposto posing.
+A candid editorial shot, dynamic natural movement, mid-motion, asymmetrical body language, confident contrapposto posing.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
-physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
 
 Maintain the existing outfit and hairstyle expressly.
 
-Body: [front / 3/4 turn ~45deg / profile / back-to-camera]. Head: [to camera / turned 3/4 / over the
-shoulder / tilted]. Gaze: [to camera / off-camera]. (Name concrete angles - "any direction" defaults
-to forward; drop "face to camera" when you want a turned head.)
-Pose: [short lines - e.g. weight shifted, hips and shoulders counter-rotated (S-curve), back gently
-arched, one foot forward; free hand at her hip, the other in an elegant, alluring gesture].
-Expression: alluring, confident; an inviting gaze; lips [softly together / slightly parted / soft
-teeth - name it]; expressive, sultry brows.
+Body: [front / 3/4 turn ~45deg / profile / back-to-camera]. Head: [to camera / turned 3/4 / over the shoulder / tilted]. Gaze: [to camera / off-camera]. (Name concrete angles - "any direction" defaults to forward; drop "face to camera" when you want a turned head.)
+Pose: [short lines - e.g. weight shifted, hips and shoulders counter-rotated (S-curve), back gently arched, one foot forward; free hand at her hip, the other in an elegant, alluring gesture].
+Expression: alluring, confident; an inviting gaze; lips [softly together / slightly parted / soft teeth - name it]; expressive, sultry brows.
 Breeze: [direction or none].
 Eyes: [EYE].
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns,
-head gear, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording,
-watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.
