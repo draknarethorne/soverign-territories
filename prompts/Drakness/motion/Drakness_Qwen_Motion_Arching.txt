@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop. Even soft neutral frontal st
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color, iris pattern, hair color, skin tone, and any existing tattoos, body markings, or beauty marks.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
 Maintain existing outfit expressly.
 
@@ -18,7 +18,7 @@ Very light breeze flowing at her.
 Expression: alluring, confident, unpredictable.
 An inviting gaze.
 Lips full and expressive, slightly parted.
-Figure: full, hourglass figure; generous bust, softly emphasized.
+Figure: lithe, slender, elf-like build; full bust, softly emphasized and centered.
 Long, slender legs.
 Violet eyes.
 
