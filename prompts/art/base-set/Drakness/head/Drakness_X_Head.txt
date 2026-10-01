@@ -12,7 +12,7 @@ Close-up framed from the upper chest up; the head and face fill the frame; the s
 Keep high fidelity to facial likeness, bone structure, expression, hairstyle, body, and wardrobe from the incoming image.
 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
-Hair: rich black hair with warm espresso and mahogany balayage, face-framing highlights that catch the light, tone-on-tone dimension.
+Hair: rich black hair with warm espresso depth and noticeable, subdued deep plum-amethyst face-framing streaks that catch the light, tone-on-tone dimension.
 
 ----------------------------------------------------------------
 negative prompt:
