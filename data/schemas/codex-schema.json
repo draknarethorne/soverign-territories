@@ -182,6 +182,7 @@
             "primaryColor": {"type": "string"},
             "accentColors": {"type": "array", "items": {"type": "string"}},
             "eyeColor": {"type": "string"},
+            "eyeColorGlamour": {"type": "string"},
             "hairColor": {"type": "string"},
             "hairStyle": {"type": "string"},
             "skinTone": {"type": "string"}
