@@ -22,9 +22,9 @@ Wearing only a Midnight Violet skimpy triangle bikini top and matching seamless 
 Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft amethyst tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, both eyes matched, crisp catchlights; black lush lashes.
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; alluring, confident closed-mouth smile; dimples; looking to camera.
-Hair: rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights, tone-on-tone dimension; styled center-parted, long and softly wavy, falling down both sides past the shoulders (override the source hairstyle); a very slight lift from a light breeze below.
+Hair: rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights, tone-on-tone dimension; styled center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured (override the source hairstyle); a very slight lift from a light breeze below.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, flattened breasts, wide-set breasts, thick thighs, wide hips, boyish figure, stick-like, pale skin, heavy makeup, over-rouged cheeks, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, flattened breasts, wide-set breasts, hair covering breasts, thick thighs, wide hips, boyish figure, stick-like, pale skin, heavy makeup, over-rouged cheeks, backlight, rim light, text, watermark, logo.
