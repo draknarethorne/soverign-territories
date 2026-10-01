@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/drakness-thorne.json",
-  "template": "data/art/base-set/_templates/pose.tmpl.txt",
+  "template": "data/art/base-set/_templates/heroes/pose-female-human.txt",
   "output": "prompts/art/base-set/Drakness/poses/Drakness_X_Pose_Variant.txt",
   "denoise": "~1.0",
   "overrides": {
