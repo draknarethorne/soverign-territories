@@ -214,6 +214,19 @@ Ready orientations to drop in:
 - **Aloof editorial:** body front, face turned to 3/4, eyes off-camera.
 - **Contrapposto walk:** mid-step, hips and shoulders counter-rotated (S-curve), head leading the turn.
 
+## Denoise in plain terms
+
+Denoise (img2img) = **how much of the input image to repaint**:
+
+- **1.0** - ignore the input, generate fresh. Use for the **A-Pose base**.
+- **~0.5-0.7** - a big change while keeping identity. Use to **apply an outfit / armor**.
+- **~0.4-0.6** - change **one** thing (hair, pose, a stance).
+- **~0.2-0.4** - enhance without redrawing. Use for **polish / fantasy**.
+- **0.0** - return the input unchanged.
+
+Feel it: if the change didn't take (outfit not applied) **raise** it; if the face / identity drifted
+too far **lower** it. It's one dial between *faithful to the input* (low) and *changed / creative* (high).
+
 ## Dynamism & variety (how to actually get it)
 
 Variety comes from the **seed**, not from vague words:
