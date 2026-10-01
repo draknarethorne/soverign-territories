@@ -86,9 +86,9 @@ HEROINES = {
     ),
 }
 
-HAIR_STYLE = ("Center-parted and swept behind the shoulders, long and softly wavy, length "
-              "reaching just below the bust-line but kept off the breasts so the chest and "
-              "décolletage stay unobscured — shared Drak-sister standard length")
+# Default A-pose hairstyle is now a component reference (data/art/hair/center-part-wavy.json),
+# not an inline string — see hairStyleComponent below. A hero can get a unique/signature
+# A-pose hairstyle by pointing at a different data/art/hair/*.json component instead.
 
 PHYSIQUE = {
     "build": "Lithe, slender, long-limbed build",
@@ -117,7 +117,7 @@ for slug, h in HEROINES.items():
                 "eyeColor": pal["eyeColor"],
                 "eyeColorGlamour": h["eyeColorGlamour"],
                 "hairColor": h["hairColor"],
-                "hairStyle": HAIR_STYLE,
+                "hairStyleComponent": "data/art/hair/center-part-wavy.json",
                 "skinTone": h["skinTone"],
             },
             "physique": {**PHYSIQUE, "raceAlignment": h["raceAlignment"]},
@@ -145,7 +145,7 @@ for slug, h in HEROINES.items():
         }
         if stage == "pose" and h.get("negativeRemove"):
             base_set_card["overrides"] = {"negativeRemove": h["negativeRemove"]}
-        card_path = ROOT / f"data/art/base-set/{slug}/{slug}-x-{stage}.json"
+        card_path = ROOT / f"data/art/base-set/{slug}/{stage}/{slug}-x-{stage}.json"
         card_path.parent.mkdir(parents=True, exist_ok=True)
         card_path.write_text(json.dumps(base_set_card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 

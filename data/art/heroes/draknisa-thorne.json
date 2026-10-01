@@ -11,7 +11,6 @@
       "eyeColor": "Deep sapphire iris with oceanic indigo limbal ring, radiating aquamarine striations, and pearl-white flecks",
       "eyeColorGlamour": "Deep sapphire irises with radiating aquamarine striations and an oceanic indigo limbal ring",
       "hairColor": "Deep blue-black hair with glossy aquamarine-sheened all-over highlights, full dimensional colour like a fashion editorial",
-      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
       "skinTone": "Warm sun-kissed medium tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "green eyes",
@@ -26,7 +25,8 @@
         "pale skin",
         "fair skin",
         "washed-out skin"
-      ]
+      ],
+      "hairStyleComponent": "data/art/hair/center-part-wavy.json"
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",
