@@ -1,29 +1,23 @@
 === [HERO] · Hairstyle [VARIANT] (group: Hair) — Edit (Qwen img2img) ===
-Incoming image: an A-pose of [HERO]. Change ONLY the hairstyle; keep face, body, and outfit from the
-incoming image. Produces an A-pose hair variant to feed into Motion / Clothing / Armor / Final.
+Incoming image: an A-pose of [HERO]. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Produces an A-pose hair variant to feed into Motion / Clothing / Armor / Final.
 Denoise ~0.4-0.6.
 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot. 85mm portrait photography, razor-sharp optical
-focus, soft depth of field falloff.
+Photo-realistic scene. Professional full-body shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
 
 Background: a basic cream-coloured studio backdrop.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall
-physical body shape, proportions, and eye colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, and eye colour.
 
 Maintain the existing outfit expressly.
 
-Hair: [hairstyle change - e.g. parted above the right ear, pulled over the top, blowing left, right
-ear exposed].
+Hair: [hairstyle change - e.g. parted above the right ear, pulled over the top, blowing left, right ear exposed].
 Breeze: [minimal / moderate, direction].
 Eyes: [EYE].
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons,
-shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text,
-wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.

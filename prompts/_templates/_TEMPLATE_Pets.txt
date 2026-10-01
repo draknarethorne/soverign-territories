@@ -1,13 +1,10 @@
 === [HERO] · Pet/Summon: [NAME e.g. Skeleton Knight / Skeletal Mage] (group: Pets) — Build (Qwen) ===
-Purpose: generate a consistent minion/companion to feed as a SECOND reference image in the Final
-(multi-image), keeping it identical across cards. Denoise ~0.7-1.0.
+Purpose: generate a consistent minion/companion to feed as a SECOND reference image in the Final (multi-image), keeping it identical across cards. Denoise ~0.7-1.0.
 
 ----------------------------------------------------------------
 prompt:
 
-Full-body [CREATURE - e.g. skeletal knight in blackened plate / skeletal mage in tattered robes] on
-a plain cream backdrop, centered, sharp focus. On-theme [ELEMENT / CLASS - necromantic], [ACCENTS]
-detailing, [PRIMARY] necrotic glow at the eyes and joints.
+Full-body [CREATURE - e.g. skeletal knight in blackened plate / skeletal mage in tattered robes] on a plain cream backdrop, centered, sharp focus. On-theme [ELEMENT / CLASS - necromantic], [ACCENTS] detailing, [PRIMARY] necrotic glow at the eyes and joints.
 
 A single figure - no human, no background.
 
