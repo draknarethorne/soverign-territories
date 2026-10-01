@@ -224,6 +224,16 @@ LoadImage → UpscaleModelLoader (4x-UltraSharp) → ImageUpscaleWithModel
 No checkpoint/UNet loads, so it barely touches VRAM — one of the most 8 GB-friendly graphs you can run.
 "Upscale 4× then shrink to target" yields the crispest result.
 
+> **⚠️ TODO — no upscaler exists yet.** None of the downloaded `workflows/Templates` include an upscale
+> workflow, and no `ST_Upscale` has been built. **Before final art rendering**, either:
+> 1. **Find one** — ComfyUI ships a built-in *Image → Upscale* example (Workflow ▸ Browse Templates), or
+>    grab a community *Ultimate SD Upscale* / ESRGAN graph, **or**
+> 2. **Build the `ST_Upscale` chain above** (LoadImage → UpscaleModelLoader → ImageUpscaleWithModel →
+>    ImageScale → SaveImage).
+>
+> Either way you must **download an ESRGAN upscale model** (e.g. `4x-UltraSharp.pth`) into
+> `ComfyUI/models/upscale_models/`. Revisit at the upscale stage — don't block iteration on it now.
+
 **When it becomes a problem:** a non-tiled 4× of anything over ~1 MP can spike VRAM → drop to 2× or use a
 **tiled** upscaler (Ultimate SD Upscale) to keep VRAM flat. A **latent hi-res pass at ≥2×** on Qwen/Flux
 will likely OOM — if you want re-rendered detail, keep the bump small (1.3–1.5×) at low denoise (~0.25),
