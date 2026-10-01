@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNORA_THORNE",
+  "name": "Draknora Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Flame Red",
+      "accentColors": [
+        "Burnished Gold",
+        "Vibrant Orange"
+      ],
+      "eyeColor": "Molten amber iris with dark charcoal limbal ring, radiating crimson striations, and fiery gold flecks",
+      "eyeColorGlamour": "Molten amber irises with radiating crimson striations and a dark charcoal limbal ring",
+      "hairColor": "Rich auburn-brown hair with warm copper and burnished-gold all-over highlights, full dimensional colour like a fashion editorial",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned, no pale areas"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Core ART hero definition for Draknora Thorne (Fire, Human). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

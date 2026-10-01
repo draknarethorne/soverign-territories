@@ -1,0 +1,27 @@
+{
+  "heroId": "HERO_DRAKNOXA_THORNE",
+  "name": "Draknoxa Thorne",
+  "art": {
+    "palette": {
+      "primaryColor": "Radiant Acid Green",
+      "accentColors": [
+        "Vibrant Acid Lime",
+        "Tarnished Brass"
+      ],
+      "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic violet striations, and chartreuse flecks",
+      "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic violet striations and a blackened moss limbal ring",
+      "hairColor": "Rich black hair with cool espresso depth and noticeable, vibrant deep acid-lime bold face-framing streaks that catch the light",
+      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
+      "skinTone": "Pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to dark-elf characteristics (slender, elongated) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Draknoxa Thorne (Poison, Dark Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}
