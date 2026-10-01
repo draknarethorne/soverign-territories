@@ -2,9 +2,9 @@
   "artId": "drakness-x-pose",
   "kind": "base-set",
   "stage": "pose",
-  "heroArt": "data/art/hero/drakness/drakness.json",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
   "template": "data/art/base-set/_templates/pose.tmpl.txt",
   "output": "prompts/art/base-set/Drakness/poses/Drakness_X_Pose.txt",
   "denoise": "~1.0",
-  "notes": "Pilot art-source card for the Drakness A-pose. Traits are pulled from the ART hero definition (data/art/hero/drakness/drakness.json); the pose template holds shared static content. Model-agnostic: the same generated .txt feeds the Qwen-2511 (A) or Qwen-2.1 (B) workflow. Hand-crafted source for comparison: prompts/Drakness/pose/Drakness_Qwen_X_Pose.txt."
+  "notes": "Pilot art-source card for the Drakness A-pose. Traits are pulled from the ART hero definition (data/art/heroes/drakness-thorne.json); the pose template holds shared static content. Model-agnostic: the same generated .txt feeds the Qwen-2511 (A) or Qwen-2.1 (B) workflow. Hand-crafted source for comparison: prompts/Drakness/pose/Drakness_Qwen_X_Pose.txt."
 }
