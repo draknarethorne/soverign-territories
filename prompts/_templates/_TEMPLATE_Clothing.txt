@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop. Even soft neutral frontal st
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, hair colour, and skin tone.
 
 Wearing a [form-fitting / flowing] [gown / dress] in [PRIMARY] with [ACCENTS] accents and swirls, [coverage - e.g. plunging low-cut neckline, bold décolletage, slit to mid-thigh], delicate [ACCENT] and silver glowing fibre-optic threads woven throughout.
 

@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop. Even soft neutral frontal st
 
 A candid high-fashion editorial shot, expressive glamour pose, post-motion, asymmetrical body language, seductive low-energy fashion photography.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, hair colour, and skin tone.
 
 Maintain the existing full-length Midnight Violet gown and heels expressly.
 
