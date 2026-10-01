@@ -1,0 +1,13 @@
+{
+  "artId": "drakness-x-pose-variant",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/hero/drakness/drakness.json",
+  "template": "data/art/base-set/_templates/pose.tmpl.txt",
+  "output": "prompts/art/base-set/Drakness/poses/Drakness_X_Pose_Variant.txt",
+  "denoise": "~1.0",
+  "overrides": {
+    "palette": { "skinTone": "Warm sun-kissed olive tan" }
+  },
+  "notes": "DEMO: same art hero definition as drakness-x-pose, with ONE overridden attribute (skinTone). Shows how a base-set card inherits the core hero and overrides a single trait. Diff against Drakness_X_Pose.txt should show only the Skin line differs."
+}
