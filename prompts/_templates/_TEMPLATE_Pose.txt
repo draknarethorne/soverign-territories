@@ -15,7 +15,7 @@ Maintain strict fidelity to the reference image's facial likeness and facial bon
 
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
 
-Figure: full, hourglass figure; generous bust, softly emphasized and centered; slender waist and hips; long, slender legs.
+Figure: full, hourglass figure; generous bust, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed); slender waist and hips; long, slender legs.
 Skin: warm sun-kissed golden tan complexion, evenly tanned, no pale areas (set once here; revisit only if the Final needs a darker dark-elf tone).
 Distinguishing marks: [none — or describe a signature tattoo / birthmark / beauty mark + location]. Define any here at the A-pose; downstream fidelity then preserves them.
 
@@ -24,9 +24,9 @@ Wearing only a simple [PRIMARY] seamless high-cut thong bikini underlayer (the b
 Makeup: natural and fresh-faced - reset any heavy makeup from the source; a barely-there neutral eyeshadow with only the faintest soft [ACCENT] tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or light [PRIMARY].
 Eyes: [EYE], crisp catchlights, both eyes matched; [black] lush lashes.
 Lips: natural [LIP] satin - keep lips natural here (outfit stages add colour); alluring, confident closed-mouth smile; dimples; looking to camera.
-Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
+Hair: [HAIR], tone-on-tone dimension; [HAIRSTYLE - e.g. center-parted, long and softly wavy, falling down both sides past the shoulders] (override the source hairstyle).
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, heavy eyeshadow, bold eye makeup, dramatic eyeshadow, vibrant eyeshadow, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, flattened breasts, wide-set breasts, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, heavy eyeshadow, bold eye makeup, dramatic eyeshadow, vibrant eyeshadow, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.

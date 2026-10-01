@@ -12,7 +12,7 @@ Beautifully slim and fit woman standing in a standard model A-pose, looking at t
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, and hairstyle silhouette.
 
-Figure: lithe, slender, elf-like build with elongated proportions; full bust, softly emphasized and centered; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; extra-long, slender legs.
+Figure: lithe, slender, elf-like build with elongated proportions; full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; extra-long, slender legs.
 Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
 Wearing only a skimpy Midnight Violet triangle bikini top with smooth straps, a seamless high-cut Midnight Violet thong bottom with a smooth solid waistband, no side ties, no extra bands, and Midnight Violet open-toed high heels.
@@ -20,7 +20,7 @@ Wearing only a skimpy Midnight Violet triangle bikini top with smooth straps, a 
 Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft amethyst tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Violet.
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, both eyes matched, crisp catchlights; black lush lashes; black eyebrows.
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; dimples; mouth closed.
-Hair: rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights, retaining the exact cut and volume; very slight lift from a light breeze from below.
+Hair: rich obsidian-black with distinct ribbons of vibrant amethyst highlights and subtle espresso lowlights, tone-on-tone dimension; styled center-parted, long and softly wavy, falling down both sides past the shoulders (override the source hairstyle); very slight lift from a light breeze from below.
 
 ----------------------------------------------------------------
 negative prompt:
