@@ -133,6 +133,48 @@ metadata and flags.
 }
 ```
 
+### 4.5 Reference resolution — three ways to fill any slot
+
+Any slot (outfit, weapon, hair, scene, pet, pose) can be supplied **three ways**, and the generator
+treats them uniformly:
+
+| Mode | In the look/card JSON | Resolves to |
+|---|---|---|
+| **inline** | `{ "inline": "left hand holding an ornate black-and-steel staff..." }` | the literal text, used as-is |
+| **ref** | `{ "ref": "weapons/staff/amethyst-skull" }` | the referenced component's text, pulled in |
+| **image** | `{ "image": "assets/weapons/amethyst-skull.png" }` | a ComfyUI multi-image input (long term) + optional text anchor |
+
+**Overrides / alterations** stack on a `ref` (or `image`):
+
+```jsonc
+"weapon": { "ref": "weapons/staff/amethyst-skull",
+            "add": { "effect": "glowing amethyst mist swirling at the top" },
+            "set": { "hand": "left" } }
+```
+
+This covers every case you raised: *reference the base staff and add glow*, *the staff is already in
+the incoming image and you only add the effect*, or *describe the whole staff inline on the fly*.
+
+**Validation is a hard requirement.** When resolving, a missing `ref` id or `image` path is a
+**fatal error** that names the bad token — so a typo like `armor/bone/skelletal-reaper` fails the
+build loudly instead of silently dropping the outfit. The generator can optionally **scaffold a stub
+`.json`** for a genuinely-missing ref (behind a `--scaffold` flag); a spelling error you just fix by
+hand.
+
+### 4.6 Everything is an "art-source" — heroes, weapons, pets, poses, backgrounds
+
+The same card schema can describe **any** renderable thing: a hero, a weapon-only card, a pet-only
+card, a bikini A-pose, a headshot, a background plate. The only differences are *which template* and
+*which slots* apply. Consequences:
+
+- The **"Base Set"** becomes a **library of cream-background base images** (A-poses, headshots) that
+  everything else edits from.
+- A thing may never become a *true framed card*: a full-screen image with a thin border + element +
+  card-number overlay at runtime keeps borders lean. **"Card-ness" is a render choice, not a data
+  distinction.**
+- A **signature weapon** can have its own art-source card (own view + stats + animation) and look
+  identical when it appears on a hero card.
+
 ## 5. Composition model — "looks" / build sheets
 
 A **look** names which components combine for a given output, so a prompt = `hero + look + template`:
@@ -147,6 +189,37 @@ A **look** names which components combine for a given output, so a prompt = `her
 The generator fills the hero's palette into the component tokens, drops them into the template's
 injection points, and writes the `.txt`. Weapon-only or pet-only renders are just a look that uses
 the `_TEMPLATE_Weapons` / `_TEMPLATE_Pets` template with a single component.
+
+### 5.1 Reuse an assembled base image vs. regenerate
+
+A look declares its **incoming image** and **what changes** — mirroring img2img denoise intent:
+
+```jsonc
+// reuse the already-assembled Bone-armor image; only restyle pose + background
+{ "incoming": "image:drakness/bone-armor-keeper", "change": ["pose", "background"], "denoise": 0.45 }
+
+// start from a bikini A-pose and overwrite the outfit
+{ "incoming": "stage:a-pose", "change": ["outfit"], "denoise": 0.6 }
+```
+
+So "I already have armor assembled, just adjust pose/background" and "this is a bikini pose, overwrite
+the outfit" are the **same** mechanism with a different `incoming` + `change` — no special-casing.
+
+### 5.2 Variants & boosts (base, shiny, foil, glow)
+
+A **variant** is a base look + a thin alteration layer — reusing the same base image where possible:
+
+```jsonc
+{ "base": "looks/drakness-bone-final",
+  "variant": "foil",
+  "boosts": { "finish": "holographic foil sheen", "glow": "amethyst edge glow",
+              "lighting": "higher depth and contrast" },
+  "reuseBaseImage": true }
+```
+
+Variants cover shiny / glossy / glowing / holographic card boosts and small alterations (background,
+makeup, lighting depth/contrast) **without** re-authoring the base. `reuseBaseImage: true` = a light
+img2img pass over the existing render; `false` = regenerate.
 
 ## 6. Template changes (what this means for the templates)
 
@@ -174,6 +247,11 @@ negative prompt:
 
 Where `{{LIGHTING}}`, `{{FIDELITY}}`, `{{NEGATIVE_BASE}}` are **single-sourced** (one definition the
 generator injects everywhere). Change the fidelity line once → it cascades to every generated prompt.
+
+**Slot tokens resolve to flat text.** Structure the slot as `[PLACEMENT], [ITEM], [EFFECT]` so it
+composes cleanly. e.g. `Weapon: {{WEAPON}}` with the `ref` + override from §4.5 resolves to:
+
+> `Weapon: left hand holding, ornate black-and-steel long staff with a clear ornate skull at the top, glowing amethyst mist swirling at the top.`
 
 **Naming / directory alignment (your point):** make template ↔ output path mechanical:
 
@@ -216,6 +294,10 @@ A **pre-commit guard** ("regenerate and check clean") makes drift *uncommittable
 - **Phase 2:** component library for **outfits + weapons**; generate **Armor / Clothing** stages.
 - **Phase 3:** **looks / build sheets** (compose components); **scenes + pets** for Final.
 - **Phase 4:** `inject-workflows` into ComfyUI `.json` + the drift guard.
+- **Phase 5:** **variants & boosts** (foil / shiny / glow, `reuseBaseImage`) + per-type focused
+  generators (`gen-weapon`, `gen-pose`, `gen-hair`) sharing one resolver library.
+- **Phase 6:** **ComfyUI multi-image inputs** — reference already-generated component images as
+  inputs (so a signature weapon/pet image appears identically on a hero card without re-describing it).
 
 ## 10. What to adjust NOW (so we don't rework the other 29)
 
@@ -229,6 +311,8 @@ These are cheap, done by hand, and future-proof the structure:
 4. **Decide `eyeColorGlamour`** (store vs. strip) — affects the card schema.
 5. **Keep the hero card lean** — resist inlining outfit prose; when we build components, outfits move
    out to `data/art-components/`.
+6. **Write slots as `[PLACEMENT], [ITEM], [EFFECT]`** (structured, not one freeform blob) so a slot
+   can later be filled inline, by `ref`, or by `image` without reshaping the template.
 
 ## 11. Open questions
 
@@ -237,6 +321,11 @@ These are cheap, done by hand, and future-proof the structure:
 - **Hero-agnostic vs signature** — some outfits are signature to one hero; mark with an `owner` field?
 - **Pose library** — do poses become components too (`poses/*.json`), or stay inline per stage?
 - **Component granularity** — is "jewelry" its own component or a slot inside the outfit?
+- **Reference modes before multi-image** — do we allow `image` refs now as text-anchors only, wiring
+  the actual ComfyUI multi-image input in Phase 6?
+- **Variant storage** — variants as their own files, or inline `boosts` diffs on a base look?
+- **Art-source ↔ game card** — do weapons/pets carry game **stats** too (an Epic Weapon with its own
+  card + stats + animation)? If so, art-source and game-card schemas should share a base.
 
 ---
 
