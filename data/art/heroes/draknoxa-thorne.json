@@ -11,7 +11,6 @@
       "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic violet striations, and chartreuse flecks",
       "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic violet striations and a blackened moss limbal ring",
       "hairColor": "Rich black hair with cool espresso depth and noticeable, vibrant deep acid-lime bold face-framing streaks that catch the light",
-      "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
       "skinTone": "Pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free",
       "eyeColorNegatives": [
         "blue eyes",
@@ -25,7 +24,8 @@
         "ruddy skin",
         "sunburnt skin",
         "overly tanned skin"
-      ]
+      ],
+      "hairStyleComponent": "data/art/hair/center-part-wavy.json"
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

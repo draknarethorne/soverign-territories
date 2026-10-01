@@ -34,6 +34,17 @@ def cleanup(text):
     return text
 
 
+def resolve_hairstyle(pal):
+    """HAIRSTYLE comes either from a referenced component (data/art/hair/*.json,
+    field 'aPoseStyle') or, for back-compat, a plain 'hairStyle' string on the hero.
+    A component reference lets a hero carry a unique/signature A-pose hairstyle
+    with a one-line swap, instead of every hero inlining the same text."""
+    if "hairStyleComponent" in pal:
+        component = load_json(ROOT / pal["hairStyleComponent"])
+        return component["aPoseStyle"]
+    return pal["hairStyle"]
+
+
 def tokens_for(hero):
     pal = hero["art"]["palette"]
     phy = hero["art"]["physique"]
@@ -62,7 +73,7 @@ def tokens_for(hero):
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
         "HAIR": decap(pal["hairColor"]),
-        "HAIRSTYLE": decap(pal["hairStyle"]),
+        "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
         "HERO_NEG": hero_neg,

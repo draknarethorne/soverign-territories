@@ -1,0 +1,11 @@
+{
+  "id": "motion/catwalk",
+  "kind": "motion",
+  "name": "Catwalk Walk",
+  "breeze": "Breeze flowing any direction.",
+  "expression": "Face remains focused on camera. Expression: alluring, confident smile, lips slightly parted. Lips full and expressive.",
+  "pose": "Walking towards the camera. Body position adjusts. Hips and shoulders positioned for the step. Arms swinging with the walk. One foot stepping forward more.",
+  "compatibleStages": ["motion"],
+  "status": "SKETCH — not yet wired to a generator. Proves the reference pattern, same as hair/pony-tail.json.",
+  "notes": "Hero-agnostic motion component — the pose/movement/expression description only. Physique restatement (figure/legs) and palette (eyes) come from the hero's own data via the template, not from this component."
+}
