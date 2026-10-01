@@ -12,7 +12,20 @@
       "eyeColorGlamour": "Sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring",
       "hairColor": "Silvery ash-blonde hair, soft and sultry with a breezy, airy sheen",
       "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
-      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas"
+      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ]
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

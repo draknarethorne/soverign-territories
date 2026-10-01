@@ -12,7 +12,21 @@
       "eyeColorGlamour": "Radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring",
       "hairColor": "Luminous golden-blonde hair, soft and sultry with a gentle radiant sheen",
       "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
-      "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned, no pale areas"
+      "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ]
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

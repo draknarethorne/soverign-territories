@@ -12,7 +12,19 @@
       "eyeColorGlamour": "Rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring",
       "hairColor": "Rich bronze-brown hair with warm terracotta and caramel all-over highlights, full dimensional colour like a fashion editorial",
       "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
-      "skinTone": "Deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas"
+      "skinTone": "Deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ]
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

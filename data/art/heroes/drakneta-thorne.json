@@ -12,7 +12,20 @@
       "eyeColorGlamour": "Electric cobalt-topaz irises with radiating arc-cyan striations and a midnight indigo limbal ring",
       "hairColor": "Electric golden-blonde hair, sultry and sleek with subtle silvery-white crackling highlights",
       "hairStyle": "Center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured — shared Drak-sister standard length",
-      "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas"
+      "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ]
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",
