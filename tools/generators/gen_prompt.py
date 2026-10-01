@@ -55,7 +55,12 @@ def tokens_for(hero):
 
 def generate(card_path):
     card = load_json(ROOT / card_path)
-    hero = load_json(ROOT / card["heroFile"])
+    hero = load_json(ROOT / card["heroArt"])
+    # Base-set card may override any palette/physique attribute from the hero definition.
+    overrides = card.get("overrides", {})
+    for section in ("palette", "physique"):
+        if section in overrides:
+            hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
     toks = tokens_for(hero)
 
