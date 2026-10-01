@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop. Even soft neutral frontal st
 
 Candid high-fashion editorial photography, dynamic fluid movement, unposed seductive glamour, mid-motion, glamour stance, shifted weight, non-rigid posture, full body in motion, high fluid energy.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color and hair color.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye color, hair color, and skin tone.
 
 Maintain existing outfit expressly.
 

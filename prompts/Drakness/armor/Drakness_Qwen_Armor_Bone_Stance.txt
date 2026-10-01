@@ -10,7 +10,7 @@ Keep the background the same as the incoming image.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour and hair colour.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, hair colour, and skin tone.
 
 Maintain the existing bone armor (bone cups, vertebrae strap, dragon-claw pauldrons, cape, bone greaves, silk stockings, sabatons) and the reaper scythe expressly.
 
