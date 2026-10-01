@@ -181,7 +181,21 @@
           "properties": {
             "primaryColor": {"type": "string"},
             "accentColors": {"type": "array", "items": {"type": "string"}},
-            "eyeColor": {"type": "string"}
+            "eyeColor": {"type": "string"},
+            "hairColor": {"type": "string"},
+            "skinTone": {"type": "string"}
+          }
+        },
+        "physique": {
+          "type": "object",
+          "description": "Signature body/race-aligned traits for art direction (set once, preserved across all art stages)",
+          "properties": {
+            "build": {"type": "string"},
+            "bust": {"type": "string"},
+            "hips": {"type": "string"},
+            "legs": {"type": "string"},
+            "raceAlignment": {"type": "string"},
+            "distinguishingMarks": {"type": "array", "items": {"type": "string"}}
           }
         }
       }
