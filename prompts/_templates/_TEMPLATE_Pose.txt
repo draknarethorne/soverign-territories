@@ -7,7 +7,7 @@ Fill [BRACKETS] from the hero's card JSON (art.palette / class / element / race)
 prompt:
 
 Modify the subject from the reference image into a clean, full-length character concept portrait.
-Professional full-body studio beauty photography, 85mm lens, high anatomical definition, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
 Background: a solid, seamless cream-coloured studio backdrop.
 
@@ -28,4 +28,4 @@ Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
