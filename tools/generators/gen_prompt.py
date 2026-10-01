@@ -26,6 +26,14 @@ def decap(s):
     return (s[0].lower() + s[1:]) if s else s
 
 
+def cleanup(text):
+    """Collapse artifacts left by empty tokens (e.g. an empty HERO_NEG between two
+    literal commas): ', , ' -> ', ', and a stray '.  ' -> '. '."""
+    while ", ," in text:
+        text = text.replace(", ,", ",")
+    return text
+
+
 def tokens_for(hero):
     pal = hero["art"]["palette"]
     phy = hero["art"]["physique"]
@@ -42,6 +50,9 @@ def tokens_for(hero):
     skin = decap(pal["skinTone"])
     eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
     skin_neg = ", ".join(pal.get("skinColorNegatives", []))
+    # Generic, PERMANENT hero-specific negatives beyond eye/skin (e.g. a hero who must
+    # never show wings/fangs/a tail). May be empty; cleanup() below removes the slack.
+    hero_neg = ", ".join(hero["art"].get("negatives", []))
     return {
         "HERO": hero["name"],
         "PRIMARY": primary,
@@ -54,6 +65,7 @@ def tokens_for(hero):
         "HAIRSTYLE": decap(pal["hairStyle"]),
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
+        "HERO_NEG": hero_neg,
     }
 
 
@@ -76,11 +88,20 @@ def generate(card_path):
     out = template
     for key, val in toks.items():
         out = out.replace("{{" + key + "}}", val)
+    out = cleanup(out)
 
     # Rare escape hatch: base-set card may still remove a specific negative term
     # that neither the universal template nor the hero's own data accounts for.
     for term in overrides.get("negativeRemove", []):
         out = out.replace(term + ", ", "").replace(", " + term, "")
+
+    # Per-render addition: this specific card/stage bans something extra (e.g. an
+    # armor variant that must never show bracers, or a crown-free stance).
+    add = overrides.get("negativeAdd", [])
+    if add:
+        out = out.rstrip()
+        if out.endswith("."):
+            out = out[:-1] + ", " + ", ".join(add) + ".\n"
 
     leftover = re.findall(r"{{\w+}}", out)
     if leftover:
