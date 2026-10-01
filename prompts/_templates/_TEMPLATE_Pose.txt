@@ -16,7 +16,7 @@ Maintain strict fidelity to the reference image's facial likeness and facial bon
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
 
 Figure: full, hourglass figure; generous bust, softly emphasized and centered; slender waist and hips; long, slender legs.
-Skin: warm tan (set once here; revisit only if the Final needs a darker dark-elf tone).
+Skin: warm sun-kissed golden tan complexion, evenly tanned, no pale areas (set once here; revisit only if the Final needs a darker dark-elf tone).
 
 Wearing only a simple [PRIMARY] seamless high-cut thong bikini underlayer (the base for later wardrobe edits), smooth solid waistband, no side ties, no straps, no extra bands; midriff and hips bare. Matching [PRIMARY] open-toed high heels.
 
@@ -28,4 +28,4 @@ Hair: [HAIR], retaining the reference cut and volume, tone-on-tone dimension.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, heavy blush, flushed cheeks, rosy cheeks, over-rouged, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
+extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.
