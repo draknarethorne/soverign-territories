@@ -236,6 +236,55 @@ python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --st
 
 ---
 
+## Field-name vocabulary (master inventory) — why field names must stay consistent
+
+`resolve_components_tokens()` joins ALL of a piece's content fields into one token per slot (see
+above). That simplicity creates one sharp edge: when a rich multi-field piece (e.g. a `motion`
+component with its own `body`/`head`/`gaze`/`expression`/`pose` fields) is referenced for a slot,
+and the SAME card also declares another slot whose own piece has a field with an **identical
+field name**, that name is treated as an intentional override — the explicit slot's value is
+substituted **in place of** the rich piece's same-named field, everywhere it appears. This is how
+a scene can swap out just a motion's facial expression without touching the motion itself, and
+without the two ever both appearing and contradicting each other (e.g. "alluring... fierce").
+
+This only works if field names mean the same thing everywhere they're used. The table below is
+the master inventory — the authoritative list of shared field names and what owns each one.
+**When adding a new piece kind, reuse one of these names if the concept matches; don't invent a
+synonym** (e.g. use `expression`, not `mood` or `face`, for facial expression text).
+
+| Field name | Meaning | Used by (piece kind) |
+| --- | --- | --- |
+| `description` | The single catch-all content field for a simple piece (jewelry, footwear, cape, effect, background) | `wardrobe/*`, `backgrounds/*`, `heroes/*/armor,clothing,weapons,effects` |
+| `editorial` | The overall shot framing/style line | `motion/*` |
+| `breeze` | Ambient wind/movement flavor | `motion/*` |
+| `body` | Torso/body positioning | `motion/*` |
+| `head` | Head angle/tilt | `motion/*` |
+| `gaze` | Where the eyes are looking | `motion/*` |
+| `expression` | Facial expression — **overridable** | `motion/*` (embedded default), `motion/expressions/*` (standalone, override source) |
+| `pose` | Limb/hand positioning detail | `motion/*` |
+| `mood` | A short tonal tag, distinct from `description` | some multi-field `backgrounds/*` pieces |
+
+**Worked example — overriding an expression** (`_sets/drakn-sisters/draknora/scene/draknora-dragon-flight.json`):
+
+```jsonc
+"components": {
+  "pose": "data/art/motion/standing/side-profile-elegant.json",       // embeds its own "expression": "composed, serene; ..."
+  "expression": "data/art/motion/expressions/fierce-focused.json"     // "expression": "fierce, intensely focused; ..."
+}
+```
+
+Because the `expression` slot's own piece has a field literally named `expression`, that value
+is registered as an override. When the `pose` slot's piece is joined, its own `expression` field
+is replaced by the override — the generated `{{POSE}}` token reads "...off-camera into the
+distance. **fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the
+threat.** one foot forward..." instead of the motion's default "composed, serene...". No template
+change was needed — the substitution happens inside `resolve_components_tokens()`, before the
+token is ever written. Standalone expression pieces live in `motion/expressions/` (currently
+`composed-serene`, `alluring-confident`, `composed-commanding` — one extracted from each existing
+motion's own default — plus `fierce-focused` as a genuinely new, contrasting option).
+
+---
+
 ## Relationship to `data/cards/sovereign-dawn/`
 
 `data/cards/sovereign-dawn/<category>/*.json` is the real game-data card (stats/abilities/lore) —

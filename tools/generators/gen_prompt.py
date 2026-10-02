@@ -135,15 +135,37 @@ def resolve_components_tokens(card):
     the piece has (joined with spaces if more than one) -- this is what lets a
     scene reference a rich multi-field motion component (body/head/gaze/pose/...)
     for its 'pose' slot without exploding into a dozen new per-field template
-    tokens. Keep the template's token surface flat and small; let pieces be rich."""
+    tokens. Keep the template's token surface flat and small; let pieces be rich.
+
+    Field-name override rule: if a slot's OWN piece has a field with the SAME name
+    as the slot itself (e.g. a dedicated expression piece: slot 'expression' ->
+    field 'expression'), that value becomes an override -- any OTHER slot's piece
+    with a field of that same name gets it SUBSTITUTED IN PLACE, not just dropped.
+    So a motion's embedded 'expression' field (e.g. 'composed, serene') is silently
+    replaced by an explicit components.expression override (e.g. 'fierce,
+    focused') inside the motion's own joined {{POSE}} text -- no new template line
+    needed, and no risk of both showing up and contradicting each other. This only
+    works because field names are kept consistent across piece types (a motion's
+    'expression' field and a standalone expression piece's 'expression' field mean
+    the same thing) -- don't rename a field differently in a new piece type
+    without checking whether it needs to participate in this."""
     slots = card.get("components")
     if not slots:
         return {}
-    toks = {}
+    piece_content = {}
     for slot, ref in slots.items():
         piece = load_json(ROOT / ref)
-        content = {k: v for k, v in piece.items() if k not in _COMPONENT_META_KEYS}
-        parts = ["\n".join(val) if isinstance(val, list) else val for val in content.values()]
+        piece_content[slot] = {k: v for k, v in piece.items() if k not in _COMPONENT_META_KEYS}
+
+    overrides = {slot: content[slot] for slot, content in piece_content.items() if slot in content}
+
+    toks = {}
+    for slot, content in piece_content.items():
+        parts = []
+        for key, val in content.items():
+            if key != slot and key in overrides:
+                val = overrides[key]
+            parts.append("\n".join(val) if isinstance(val, list) else val)
         toks[slot.upper()] = " ".join(p for p in parts if p)
     return toks
 
