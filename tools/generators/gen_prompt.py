@@ -170,6 +170,17 @@ def generate(card_path):
         if key not in _CARD_META_KEYS and isinstance(val, str):
             toks[key.upper()] = val
 
+    # Pieces can embed hero-level tokens (e.g. {{PRIMARY}}, {{ACCENT_SOFT}}) in their
+    # own text -- this is what makes a wardrobe/ piece genuinely reusable across every
+    # hero (same piece file, each hero's own colour) instead of duplicated per-hero.
+    # One pass is enough: hero-level tokens (inserted first, from tokens_for) never
+    # themselves contain further placeholders.
+    for key, val in toks.items():
+        for other_key, other_val in toks.items():
+            if other_key != key:
+                val = val.replace("{{" + other_key + "}}", other_val)
+        toks[key] = val
+
     needed = set(re.findall(r"{{(\w+)}}", template))
     missing = needed - set(toks)
     if missing:

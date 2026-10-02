@@ -1,0 +1,18 @@
+{
+  "artId": "drakness-scene-elegant-casting",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Elegant Casting",
+  "pose": "Her hair flows slightly in a light breeze, keeping the same style and shape, just a wisp of wind toward her.",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "holding": "data/art/wardrobe/weapons/ornate-staff.json",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
+    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_ElegantCasting.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Same wearing/holding wardrobe pieces as Draknora's draknora-elegant-casting.json -- proves cross-hero reuse: identical piece files, each hero's own palette via nested-token resolution. Effects/background reuse Drakness's existing signature pieces from the Bone Armor scene."
+}
