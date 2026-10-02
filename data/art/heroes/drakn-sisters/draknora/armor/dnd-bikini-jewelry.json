@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry",
+  "kind": "jewelry",
+  "name": "D&D-Flair Armor — Jewelry (Draknora signature)",
+  "description": "gold bracelet, necklace, arm bands, anklets, earrings, and belly ring, all aligned to the armor's gold trim",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature piece, richer than the shared wardrobe/jewelry/sets/silver-gem-set.json (adds arm bands and anklets) — grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Fire_Dragon.json."
+}

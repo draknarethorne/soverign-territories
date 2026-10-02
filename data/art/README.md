@@ -86,10 +86,9 @@ data/art/
 ├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
 │   │   ├── <slug>-thorne.json      identity (palette/physique) — unchanged for all 10
-│   │   └── drakness/               ✅ hero-SIGNATURE pieces, unique to one named hero, living
-│   │       ├── armor/<slug>.json   alongside her identity file (not nested inside it)
-│   │       ├── clothing/<slug>.json
-│   │       └── weapons/<slug>.json
+│   │   ├── drakness/               ✅ hero-SIGNATURE pieces: armor/, clothing/, weapons/, effects/
+│   │   └── draknora/               ✅ hero-SIGNATURE pieces: armor/, weapons/, effects/, and her
+│   │                               first companion/ piece (pyraxis-flight.json)
 │   ├── drakn-bound/                ⬜ GROUP: the 10 male heroes bound to the sisters in the story
 │   │                               (Draknare Thorne, Hauk Hammerfell, ...) — reserved, not yet
 │   │                               populated.
@@ -110,19 +109,25 @@ data/art/
 │   │                               bundled into any one complete "look." This is the library a
 │   │                               card's components dict pulls interchangeable slot-fillers from.
 │   ├── jewelry/necklaces/*.json    (2: bone-skull-pendant, ornate-gem-pendant)
+│   ├── jewelry/sets/*.json         (1: silver-gem-set, token-parameterized)
 │   ├── capes/*.json                (1: simple-black-leather)
 │   ├── bracelets/*.json            (1: simple-silver)
+│   ├── footwear/*.json             (1: glowing-strap-heels, token-parameterized)
 │   └── accessories/*.json          (1: midnight-violet-satchel — Raven's bag, not yet wired;
 │                                   Raven needs its own template shape, see below)
 │
-├── dragons/                        ⬜ CATEGORY: future. Same shape — group folders (e.g.
-│                                   elder-dragons/) + a matching _sets/elder-dragons/.
+├── dragons/                        🔶 CATEGORY: one real entry seeded — elder-dragons/pyraxis.json
+│   └── elder-dragons/              (Fire-aligned, Draknora's companion per the codex's Element
+│                                   Alignment table). Not yet wired as a hero's bonded pet — only
+│                                   referenced today via a hero's own companion/ placement piece
+│                                   (see heroes/ below). A matching _sets/elder-dragons/ is future.
 ├── pets/                           ⬜ CATEGORY: future.
 ├── buildings/                      ⬜ CATEGORY: future.
-└── backgrounds/                    🔶 CATEGORY: one skeletal example seeded (forests/ancient-grove.json)
-                                    — reusable scene components, usable across every other category,
-                                    blended into a hero's final card prompt once that assembly step
-                                    exists. Not yet wired into the generator.
+└── backgrounds/                    🔶 CATEGORY: skeletal examples seeded (forests/, dungeons/,
+                                    elemental/, cityscape/) — reusable scene components, usable
+                                    across every other category, blended into a hero's final card
+                                    prompt once that assembly step exists. Not yet wired into the
+                                    generator except via the scene stage (see below).
 ```
 
 **"Universal" was retired.** It broke down once dragons/buildings were on the horizon — armor/
@@ -134,7 +139,13 @@ non-racial), and `hair` moved under `races/human/cosmetics/`.
 **Different complete outfits can need different slot sets** — Bone Armor uses
 Wearing/Arms/Jewelry/Back/Legs&feet/Holding; the archived Raven outfit instead has Drapes and
 Belt&kit (no Holding at all). That's expected, not a bug: a new outfit shape may need its own
-template variant rather than forcing every outfit through one fixed slot list.
+template variant rather than forcing every outfit through one fixed slot list. The **scene** stage
+already has three template variants for this reason: `scene-human.txt` (preserve everything from a
+prior stage, only add atmosphere), `scene-with-outfit-human.txt` (describe the outfit directly —
+the A-pose-in, full-scene-out path, used when there's no separate armor/clothing stage image to
+preserve yet), and `scene-with-companion-human.txt` (adds a `{{COMPANION}}` line for a bonded
+pet/dragon). A **companion** is its own piece, deliberately separate from `background` — the
+dragon's identity/placement is one reusable concern, the environment it flies through is another.
 
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
 everything under `prompts/` is already generated art output (no sibling non-art content to

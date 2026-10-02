@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknora/effects/casting-flame-extend",
+  "kind": "effects",
+  "name": "Fire Casting, Extended Hand (Draknora signature)",
+  "description": "She extends her left hand towards the camera, a small glowing fire spell forming in her palm, gradient heat haze shimmering around her.",
+  "compatibleStages": ["scene"],
+  "notes": "A second signature casting variant for Draknora, distinct from effects/casting-flame-orb.json (cupped-at-side pose) — grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Dragon_1.json. Different combat scenes call for different poses, same as multiple signature outfits (Bone/Raven for Drakness)."
+}
