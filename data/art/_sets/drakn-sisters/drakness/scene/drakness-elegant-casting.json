@@ -6,6 +6,7 @@
   "name": "Elegant Casting",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "+a faint, knowing smile, teeth just barely visible.",
     "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
@@ -16,5 +17,5 @@
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_ElegantCasting.txt",
   "denoise": "~0.5-0.7",
-  "notes": "Same wearing/holding wardrobe pieces as Draknora's draknora-elegant-casting.json -- proves cross-hero reuse: identical piece files, each hero's own palette via nested-token resolution. Effects/background reuse Drakness's existing signature pieces from the Bone Armor scene. Pose now references the real motion/standing/commanding-cast.json component instead of a hand-typed literal string, per the intent of the motion library."
+  "notes": "Same wearing/holding wardrobe pieces as Draknora's draknora-elegant-casting.json -- proves cross-hero reuse: identical piece files, each hero's own palette via nested-token resolution. Effects/background reuse Drakness's existing signature pieces from the Bone Armor scene. Pose now references the real motion/standing/commanding-cast.json component instead of a hand-typed literal string, per the intent of the motion library. Also demonstrates EXTEND mode: components.expression='+...' appends to commanding-cast's own default expression ('composed, commanding, lips softly together.') instead of replacing it -- the proven default stays, only the new detail is added."
 }
