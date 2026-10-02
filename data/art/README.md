@@ -287,6 +287,18 @@ a quick final scene-level tweak, or for authoring an entire scene from scratch w
 reusable pieces at all (see the worked example below and `_sets/drakn-sisters/drakneta/scene/
 drakneta-castle-spellcast.json`).
 
+**A literal value can EXTEND the default instead of fully replacing it** — prefix it with `+`, e.g.
+`"expression": "+a faint, knowing smile, teeth just barely visible."`. The fragment is appended
+after whatever the default would otherwise have been (the motion's own `defaultExpression`/
+`defaultGaze`, or another slot's value for that canonical field) instead of replacing it outright
+— a plain literal or a piece reference (no `+`) is still a full replace, as before. This is for
+tuning a scene from a proven, already-"validated" default (the same reuse philosophy as hair and
+motion) by adding just the one small thing that's different this time, instead of re-authoring
+the whole expression/gaze from scratch for a minor variation. See `_sets/drakn-sisters/drakness/
+scene/drakness-elegant-casting.json` — `commanding-cast.json`'s own default expression ("composed,
+commanding, lips softly together.") stays, with "a faint, knowing smile, teeth just barely
+visible." appended after it.
+
 **Worked example — overriding an expression** (`_sets/drakn-sisters/draknora/scene/draknora-dragon-flight.json`):
 
 ```jsonc

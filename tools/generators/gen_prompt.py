@@ -158,6 +158,9 @@ def _is_literal_ref(ref):
     return not (ref.lower().endswith(".json") and path.exists())
 
 
+_EXTEND_PREFIX = "+"
+
+
 def resolve_components_tokens(card):
     """A base-set card may compose a prompt from SEVERAL named-slot pieces instead
     of one complete component -- 'components': {'wearing': '<path>', 'jewelry':
@@ -189,13 +192,26 @@ def resolve_components_tokens(card):
     showing up and contradicting each other, and no template changes required.
     Non-overridable fields (body, head, pose, ...) can never be hijacked this way
     even if a future slot happens to share a field name -- only fields explicitly
-    opted into the registry participate."""
+    opted into the registry participate.
+
+    Override vs extend: a literal override value that starts with "+" (e.g.
+    "+teeth just visible, a faint smirk.") EXTENDS whatever the default would
+    otherwise have been (the motion's own defaultExpression/defaultGaze, or
+    another slot's value for that canonical field) instead of replacing it --
+    appended after it. A plain literal or a piece reference (no "+") is a full
+    replace, as before. Lets a scene reuse a proven, "validated" default and only
+    tweak the one small thing that's different this time, instead of re-authoring
+    the whole expression/gaze from scratch for a minor variation."""
     slots = card.get("components")
     if not slots:
         return {}
 
     piece_content = {}
+    extensions = {}
     for slot, ref in slots.items():
+        if isinstance(ref, str) and ref.startswith(_EXTEND_PREFIX):
+            extensions[slot] = ref[len(_EXTEND_PREFIX):].strip()
+            continue
         if _is_literal_ref(ref):
             piece_content[slot] = {slot: ref}
             continue
@@ -207,6 +223,18 @@ def resolve_components_tokens(card):
                 sys.exit(f"ERROR: unknown field '{field}' in {ref} -- "
                          f"add it to data/art/_schema/field-vocabulary.json")
         piece_content[slot] = {k: _resolve_field_value(k, v) for k, v in content.items()}
+
+    # An extend-mode slot has no content of its own yet -- its base is whatever
+    # other slot's piece carries that canonical field (e.g. the "pose" slot's
+    # motion carries defaultExpression). No base found just falls back to the
+    # fragment alone, which is harmless.
+    for slot, fragment in extensions.items():
+        base = ""
+        for other_slot, content in piece_content.items():
+            for field, val in content.items():
+                if _FIELD_ALIASES.get(field, field) == slot:
+                    base = val
+        piece_content[slot] = {slot: (base + " " + fragment).strip() if base else fragment}
 
     overrides = {}
     for slot, content in piece_content.items():
