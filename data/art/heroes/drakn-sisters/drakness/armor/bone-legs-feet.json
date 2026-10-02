@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/bone-legs-feet",
+  "kind": "legs_feet",
+  "name": "Bone Armor — Legs & Feet (Drakness signature)",
+  "description": "slender skeletal bone-spine greaves, delicate skeletal plate, midnight-black silk stockings, medium-small skeletal bone-coloured runes, stiletto sabatons",
+  "compatibleStages": ["armor"],
+  "notes": "Hero-signature piece, unique to Drakness's Bone Armor outfit."
+}
