@@ -1,0 +1,17 @@
+{
+  "artId": "drakness-scene-enchanted-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Enchanted Evening",
+  "base_description": "Drakness in her Midnight Violet evening gown (see clothing/gown.json), hair and makeup already set",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "background": "data/art/backgrounds/evening/moonlit-terrace.json"
+  },
+  "template": "data/art/_templates/heroes/scene-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_EnchantedEvening.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "The TWO-STAGE path: assumes you've already picked/rendered her Clothing: Gown image (data/art/_sets/drakn-sisters/drakness/clothing/gown.json) and feed THAT in, rather than an A-pose. Preserves outfit/hair entirely (scene-human.txt), only adds a soft ambient glow + an enchanting evening backdrop + a calmer pose. Complements the Elegant Casting scene, which is the single-stage A-pose-to-full-scene path for a combat/casting look."
+}
