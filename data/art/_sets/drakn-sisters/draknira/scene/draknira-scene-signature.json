@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
-    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "effects": "Fine ice crystals drift and glitter in the air around her, faint {{ACCENT_SOFT}} frost-light tracing her silhouette.",
     "companion": "her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-blue and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in shimmering silver",
     "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
   },

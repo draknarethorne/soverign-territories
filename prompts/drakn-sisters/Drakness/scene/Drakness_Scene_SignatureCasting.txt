@@ -7,7 +7,7 @@ prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle, armor, and held weapon. Keep all of these unchanged.
 
-She stands mid-cast, commanding and composed. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.
+She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.
 
 Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.
 

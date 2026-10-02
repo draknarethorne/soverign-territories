@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "name": "Signature Casting",
   "base_description": "the \"Bone\" Drakness - necromancer in bone-plate armor with a flowing cape, holding a scythe",
-  "pose": "She stands mid-cast, commanding and composed. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.",
+  "pose": "She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.",
   "components": {
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
     "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"

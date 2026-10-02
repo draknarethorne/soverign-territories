@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
-    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "effects": "Soft rays of {{ACCENT_SOFT}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.",
     "companion": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel",
     "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
   },

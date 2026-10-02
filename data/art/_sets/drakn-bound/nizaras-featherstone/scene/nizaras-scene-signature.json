@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-bound/nizaras-featherstone.json",
   "name": "Signature",
   "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, a faint, knowing smile, utterly at ease in the undergrowth.",
-  "effects": "Even, natural daylight; no additional magical effects.",
+  "effects": "Loose leaves and faint pollen drift and swirl gently around him, stirred by the grove's living magic.",
   "components": {
     "wearing": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
     "jewelry": "none, unadorned",
