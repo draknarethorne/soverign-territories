@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/seductive-unpredictable",
+  "kind": "gaze",
+  "name": "Seductive, Unpredictable",
+  "gaze": "seductive, unpredictable.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted -- identical defaultGaze was duplicated verbatim across mild-energy-touch and unpredictable-seductive."
+}

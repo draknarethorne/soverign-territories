@@ -113,6 +113,22 @@ _FIELD_ALIASES = {"defaultGaze": "gaze", "defaultExpression": "expression"}
 _FIELD_VOCAB = load_json(ROOT / "data/art/_schema/field-vocabulary.json")
 
 
+def _resolve_field_value(key, val):
+    """A field's value (e.g. a motion's defaultGaze/defaultExpression) may itself
+    be a path to a shared motion/gaze or motion/expressions piece -- for a default
+    that's genuinely reused across several motions -- instead of inline literal
+    text -- for a one-off default unique to that motion. Resolve a path reference
+    down to its own plain-text value; a literal string passes through unchanged.
+    This is the read-side counterpart to _is_literal_ref (the write/override side
+    used by components.<slot>) -- same path-or-literal duality, single source of
+    truth instead of copy-pasted duplicate text drifting apart over time."""
+    if not (isinstance(val, str) and val.lower().endswith(".json") and (ROOT / val).exists()):
+        return val
+    canonical = _FIELD_ALIASES.get(key, key)
+    piece = load_json(ROOT / val)
+    return piece.get(canonical, val)
+
+
 def resolve_component_tokens(card):
     """A base-set card may reference a reusable component (data/art/hair/*.json,
     data/art/motion/*.json, ...). Every non-metadata field becomes a token of the
@@ -129,6 +145,7 @@ def resolve_component_tokens(card):
         if key in _COMPONENT_META_KEYS:
             continue
         token = _FIELD_ALIASES.get(key, key).upper()
+        val = _resolve_field_value(key, val)
         toks[token] = "\n".join(val) if isinstance(val, list) else val
     return toks
 
@@ -189,7 +206,7 @@ def resolve_components_tokens(card):
             if canonical not in _FIELD_VOCAB:
                 sys.exit(f"ERROR: unknown field '{field}' in {ref} -- "
                          f"add it to data/art/_schema/field-vocabulary.json")
-        piece_content[slot] = content
+        piece_content[slot] = {k: _resolve_field_value(k, v) for k, v in content.items()}
 
     overrides = {}
     for slot, content in piece_content.items():

@@ -6,8 +6,8 @@
   "breeze": "No breeze.",
   "body": "full head-to-toe shot, feet placed on the floor in glamour positions, legs exposed.",
   "head": "position varies.",
-  "defaultGaze": "remains focused on camera.",
-  "defaultExpression": "glamorous, confident.",
+  "defaultGaze": "data/art/motion/gaze/focused-on-camera.json",
+  "defaultExpression": "data/art/motion/expressions/glamorous-confident.json",
   "pose": "one hand blowing a kiss, the other in an elegant, alluring gesture.",
   "extras": [
     "Bold décolletage.",

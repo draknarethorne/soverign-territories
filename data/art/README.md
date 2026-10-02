@@ -167,6 +167,17 @@ or a brand-new one, or just a literal inline string) — and that value is subst
 of the motion's own default, with no risk of both appearing and contradicting each other (e.g.
 "alluring... fierce"). See "Field-name vocabulary" below for exactly how this is enforced.
 
+**A motion's own default may itself point at a shared `motion/gaze/` or `motion/expressions/`
+piece, instead of inlining literal text** — when an audit found the same `defaultGaze`/
+`defaultExpression` string duplicated verbatim across several unrelated motions (e.g. "eyes to
+camera." on both `over-the-shoulder-glance` and `three-quarter-glamour`), the duplicated value was
+extracted into one shared piece and every motion that used it now references that piece by path
+instead of repeating the text — single source of truth, no drift if it's ever tweaked later. A
+motion whose gaze/expression is genuinely one-off keeps it as inline literal text; only genuinely
+*repeated* text gets extracted. This is the same path-or-literal duality `components.<slot>`
+already has, just on the read side (`_resolve_field_value()` in `gen_prompt.py`) instead of the
+override side (`_is_literal_ref()`).
+
 **Known gap: most of the motion/wardrobe library has female pronouns baked in** ("her"/"she"),
 since it was authored for the Drakn sisters first. `wardrobe/effects/soft-ambient-glow.json` was
 caught and fixed (needed for Angelo Prime's scene); the rest of `motion/` has not been swept yet —
@@ -264,10 +275,10 @@ don't invent a synonym** (e.g. use `expression`, not `mood` or `face`, for facia
 | `body` | no | Torso/weight stance | `motion/*` |
 | `head` | no | Head angle/tilt | `motion/*` |
 | `pose` | no | Limb/hand positioning detail (also the *slot* name for the whole motion bundle — deliberately non-overridable so that name collision can never hijack it) | `motion/*` |
-| `gaze` | **yes** | Where the eyes look | `motion/expressions`-style standalone pieces, or a literal inline string |
+| `gaze` | **yes** | Where the eyes look | `motion/gaze/*` standalone pieces, or a literal inline string |
 | `expression` | **yes** | Facial/emotional read | `motion/expressions/*` standalone pieces, or a literal inline string |
-| `defaultGaze` | no (aliases to `gaze`) | The gaze a motion implies by default | `motion/*` |
-| `defaultExpression` | no (aliases to `expression`) | The expression a motion implies by default | `motion/*` |
+| `defaultGaze` | no (aliases to `gaze`) | The gaze a motion implies by default — literal text, or a path to a `motion/gaze/*.json` piece if the same default repeats across motions | `motion/*` |
+| `defaultExpression` | no (aliases to `expression`) | The expression a motion implies by default — literal text, or a path to a `motion/expressions/*.json` piece if the same default repeats across motions | `motion/*` |
 | `extras` | no | Freeform additive list — general tags that don't claim a reserved field name | `motion/*` |
 | `mood` | no | A short tonal tag, distinct from `description` (currently excluded from generated output) | some multi-field `backgrounds/*` pieces |
 
@@ -291,9 +302,13 @@ is joined, its `defaultExpression` field — recognized via its canonical alias 
 replaced by the override: the generated `{{POSE}}` token reads "...off-camera into the distance.
 **fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the threat.** one foot
 forward..." instead of the motion's default "composed, serene...". No template change was needed.
-Standalone expression pieces live in `motion/expressions/` (currently `composed-serene`,
-`alluring-confident`, `composed-commanding` — one extracted from each existing motion's own
-default — plus `fierce-focused` as a genuinely new, contrasting option).
+Standalone expression pieces live in `motion/expressions/` (`composed-serene`, `alluring-confident`,
+`composed-commanding`, `glamorous-confident` — one extracted from each repeated motion default —
+plus `fierce-focused` as a genuinely new, contrasting option). Standalone gaze pieces live in
+`motion/gaze/` (`focused-on-camera`, `eyes-to-camera`, `seductive-unpredictable` — each one
+extracted because the exact same `defaultGaze` text was duplicated verbatim across 2-3 motions).
+Gaze/expression text unique to one motion stays inline — extraction only happens for genuine,
+verified duplication, not speculatively.
 
 ---
 

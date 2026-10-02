@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/glamorous-confident",
+  "kind": "expression",
+  "name": "Glamorous, Confident",
+  "expression": "glamorous, confident.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted -- identical defaultExpression was duplicated verbatim across blowing-kiss-closeup and blowing-kiss-full-body."
+}
