@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing",
+  "kind": "wearing",
+  "name": "D&D-Flair Armor — Wearing (Draknora signature)",
+  "description": "skimpy D&D-flair armor, cloth top and bottom in a bikini-like cut with matching ornate pieces; legs bare, stomach and belly button bare with jewelry",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature piece, unique to Draknora's Dragon Flight outfit — grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Fire_Dragon.json and Draknora_Qwen_Dragon_1.json."
+}

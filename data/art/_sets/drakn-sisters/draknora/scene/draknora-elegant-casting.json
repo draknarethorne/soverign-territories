@@ -7,6 +7,8 @@
   "pose": "Her hair flows slightly in a light breeze, keeping the same style and shape, just a wisp of wind toward her.",
   "components": {
     "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
     "effects": "data/art/heroes/drakn-sisters/draknora/effects/casting-flame-orb.json",
     "background": "data/art/backgrounds/elemental/rising-flames.json"
