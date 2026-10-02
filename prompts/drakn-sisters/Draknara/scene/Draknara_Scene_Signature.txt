@@ -1,5 +1,5 @@
-=== Draknara Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Draknara Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with bronze-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Terracotta Ochre high heels with glowing bronze straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a grounded, intense stare, the weight of the earth in her gaze. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright bronze glow around a skull-shaped bronze jewel at the top.
 
 a faint bronze glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing bronze, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of terracotta-ochre and rich-bronze scales, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in warm sand.
 
 Environment: a sun-dappled ancient forest grove, towering moss-covered trees, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
 

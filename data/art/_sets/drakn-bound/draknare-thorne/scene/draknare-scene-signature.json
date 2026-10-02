@@ -4,13 +4,14 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-bound/draknare-thorne.json",
   "name": "Signature",
-  "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance.",
+  "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression cold and unreadable, shadow pooling faintly at his feet.",
   "effects": "Even, natural torchlight; no additional magical effects.",
   "components": {
-    "wearing": "data/art/wardrobe/armor/plate-tank.json",
+    "wearing": "heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",
+    "companion": "his bonded Reaper, a towering spectral reaper cloaked in tattered black robes, scythe in hand, looming silently in the shadows behind him",
     "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

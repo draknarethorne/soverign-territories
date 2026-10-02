@@ -4,13 +4,14 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-bound/zephyr-galeheart.json",
   "name": "Signature",
-  "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.",
+  "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression bright and eager, hair whipping in the wind.",
   "effects": "A light wind catches his hair and cloak-edge.",
   "components": {
-    "wearing": "data/art/wardrobe/armor/leather-striker.json",
+    "wearing": "fitted Sky Cyan-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/zephyr-galeheart/weapons/gale-saber.json",
+    "companion": "his bonded Giant Eagle, a soaring raptor with wind-swept feathers, circling high above him",
     "background": "data/art/backgrounds/cityscape/city-skyline-dusk.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

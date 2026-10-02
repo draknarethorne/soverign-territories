@@ -19,6 +19,8 @@ Holding {{HOLDING}}.
 
 {{EFFECTS}}
 
+Companion: {{COMPANION}}.
+
 Environment: {{BACKGROUND}}.
 
 Figure: {{FIGURE}}.

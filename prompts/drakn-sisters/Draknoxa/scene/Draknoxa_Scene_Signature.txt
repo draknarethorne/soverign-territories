@@ -1,5 +1,5 @@
-=== Draknoxa Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Draknoxa Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with lime-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Radiant Acid Green high heels with glowing lime straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a sharp, calculating stare, a faint cunning smirk. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright lime glow around a skull-shaped lime jewel at the top.
 
 a faint lime glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing lime, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of acid-green and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime.
 
 Environment: a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
 

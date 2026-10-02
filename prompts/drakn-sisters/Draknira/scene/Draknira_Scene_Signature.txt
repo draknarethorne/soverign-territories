@@ -1,5 +1,5 @@
-=== Draknira Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Draknira Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with white-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Glacial Blue high heels with glowing white straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a cool, calculating stare, utterly composed. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright white glow around a skull-shaped white jewel at the top.
 
 a faint white glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing white, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-blue and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in shimmering silver.
 
 Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
 

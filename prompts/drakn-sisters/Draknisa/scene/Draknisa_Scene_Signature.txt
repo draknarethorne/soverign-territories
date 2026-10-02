@@ -1,5 +1,5 @@
-=== Draknisa Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Draknisa Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with aquamarine-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Deep Oceanic Blue high heels with glowing aquamarine straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a sly, knowing smile, eyes half-lidded with control. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright aquamarine glow around a skull-shaped aquamarine jewel at the top.
 
 a faint aquamarine glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing aquamarine, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Aquaria, visible over the moonlit water beyond the terrace, an Elder Dragon of deep oceanic-blue and aquamarine scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished brass.
 
 Environment: an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low.
 

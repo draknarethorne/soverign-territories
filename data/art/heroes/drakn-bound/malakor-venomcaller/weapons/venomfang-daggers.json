@@ -2,7 +2,7 @@
   "id": "heroes/drakn-bound/malakor-venomcaller/weapons/venomfang-daggers",
   "kind": "holding",
   "name": "Venomfang Daggers (Malakor signature)",
-  "description": "a pair of {{ACCENT_SOFT}}-edged daggers slick with venom, one in each hand, {{PRIMARY}}-wrapped grips",
+  "description": "a pair of {{ACCENT_SOFT}}-edged daggers, one in each hand, {{PRIMARY}}-wrapped grips, a sickly green glow seeping from the blades, venom dripping faintly from the tips",
   "compatibleStages": ["armor", "scene"],
   "notes": "Hero-signature weapon, unique to Malakor Venomcaller — first-pass invented, fitting his Assassin class, Poison element, and surname. Replaces the shared wardrobe/weapons/paired-daggers.json default for this hero specifically."
 }

@@ -4,13 +4,14 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-bound/torvald-stonebreaker.json",
   "name": "Signature",
-  "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.",
-  "effects": "Even, natural daylight; no additional magical effects.",
+  "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression wild and eager, a berserker's grin baring his teeth.",
+  "effects": "A fine haze of dust drifts around his feet.",
   "components": {
-    "wearing": "data/art/wardrobe/armor/leather-striker.json",
+    "wearing": "fitted Terracotta Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",
+    "companion": "his bonded Dire Bear, a massive shaggy bear with claws like daggers, standing at his side",
     "background": "data/art/backgrounds/forests/ancient-grove.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

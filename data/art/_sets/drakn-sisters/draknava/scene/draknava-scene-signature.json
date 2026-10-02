@@ -6,14 +6,16 @@
   "name": "Signature",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
     "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
     "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "companion": "her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of sky-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk",
     "background": "data/art/backgrounds/cityscape/city-skyline-dusk.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknava/scene/Draknava_Scene_Signature.txt",
   "denoise": "~0.5-0.7",
   "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknava's own Sky Cerulean/Gossamer Silver palette, plus the existing cityscape-dusk background (windy skyline fits Wind/Bard). Shortcut per explicit instruction."
