@@ -47,34 +47,35 @@ data/art/
 │   │                               generate prompts. Testing/working folders; which real card
 │   │                               series (if any) consumes a group's output is tracked on the
 │   │                               data/cards/ side, not here.
-│   ├── drakn-sisters/
+│   ├── drakn-sisters/              ✅ 91 cards (10 heroes × pose/head, 44 hair, 25 motion for Drakness)
 │   │   └── <slug>/<stage>/<family>/*.json
-│   ├── angel-primes/
+│   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
 │   │   └── <slug>/<stage>/<family>/*.json
-│   └── drakn-bound/                (future, once the 10 male heroes get art-ified)
+│   └── drakn-bound/                ⬜ future, once the 10 male heroes get art-ified
 │
 ├── heroes/                         CATEGORY: humanoid hero definitions + reusable components.
-│   ├── components/                Reusable STYLE traits, usable by any hero in any group.
-│   │   ├── hair/<family>/*.json
-│   │   ├── motion/<family>/*.json
-│   │   ├── armor/<family>/*.json      (future)
-│   │   ├── clothing/<family>/*.json   (future)
-│   │   └── weapons/<family>/*.json    (future)
-│   ├── drakn-sisters/              GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
+│   ├── components/                ✅ Reusable STYLE traits, usable by any hero in any group.
+│   │   ├── hair/<family>/*.json        (44)
+│   │   ├── motion/<family>/*.json      (25)
+│   │   ├── armor/<family>/*.json      ⬜ (future)
+│   │   ├── clothing/<family>/*.json   ⬜ (future)
+│   │   └── weapons/<family>/*.json    ⬜ (future)
+│   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
 │   │   └── <slug>-thorne.json
-│   ├── drakn-bound/                GROUP: the 10 male heroes bound to the sisters in the story
+│   ├── drakn-bound/                ⬜ GROUP: the 10 male heroes bound to the sisters in the story
 │   │                               (Draknare Thorne, Hauk Hammerfell, ...) — reserved, not yet
 │   │                               populated.
-│   └── angel-primes/               GROUP: Angelo Prime / Angelica Prime — calibration test-bed
+│   └── angel-primes/               ✅ GROUP: Angelo Prime / Angelica Prime — calibration test-bed
 │       └── <slug>.json             heroes, not part of any real card series.
 │
-├── dragons/                        CATEGORY: future. Same shape — components/ + group folders
+├── dragons/                        ⬜ CATEGORY: future. Same shape — components/ + group folders
 │                                   (e.g. elder-dragons/) + a matching _sets/elder-dragons/.
-├── pets/                           CATEGORY: future.
-├── buildings/                      CATEGORY: future.
-└── backgrounds/                    CATEGORY: future (forests/, castles/, dungeons/, ...) — reusable
-                                    scene components, usable across every other category, blended
-                                    into a hero's final card prompt once that assembly step exists.
+├── pets/                           ⬜ CATEGORY: future.
+├── buildings/                      ⬜ CATEGORY: future.
+└── backgrounds/                    🔶 CATEGORY: one skeletal example seeded (forests/ancient-grove.json)
+                                    — reusable scene components, usable across every other category,
+                                    blended into a hero's final card prompt once that assembly step
+                                    exists. Not yet wired into the generator.
 ```
 
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
@@ -115,6 +116,17 @@ definitions-layer style file), and `template` (a stage template). `tools/generat
 resolves all three, fills `{{TOKENS}}`, and writes the result to `output` under `prompts/`. The
 generator itself has **zero hardcoded paths** — every path is a string field on the card JSON, so
 moving/renaming folders only ever means updating path strings, never generator logic.
+
+**CLI filtering** — no-args generates everything under `_sets/`; composable flags narrow it down:
+
+```bash
+python tools/generators/gen_prompt.py                                     # everything
+python tools/generators/gen_prompt.py <card.json>                         # one exact file
+python tools/generators/gen_prompt.py --group drakn-sisters               # one group
+python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
+python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair
+python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair --family down
+```
 
 ---
 
