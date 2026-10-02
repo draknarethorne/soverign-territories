@@ -1,0 +1,13 @@
+{
+  "id": "hair/down/voluminous-blowout",
+  "kind": "hair",
+  "name": "Voluminous Blowout",
+  "a_pose_style": "a big, bouncy, glossy supermodel blowout, full volume from the roots",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is styled in a voluminous, glossy blowout - big, bouncy body from the roots with a smooth, polished shine.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

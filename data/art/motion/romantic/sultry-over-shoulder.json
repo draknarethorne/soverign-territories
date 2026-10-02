@@ -1,0 +1,16 @@
+{
+  "id": "motion/romantic/sultry-over-shoulder",
+  "kind": "motion",
+  "name": "Sultry Over-the-Shoulder",
+  "editorial": "A candid high-fashion editorial shot, sultry intimate glamour moment.",
+  "breeze": "No breeze.",
+  "body": "back to the camera, weight shifted onto one leg, spine softly curved, back exposed.",
+  "head": "turned over the shoulder toward the camera, chin low.",
+  "gaze": "sultry, smouldering gaze to camera.",
+  "expression": "sultry, lips softly parted.",
+  "pose": "one hand trailing along her own shoulder or hip, caught mid-glance.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "hair/updo/twisted-half-up",
+  "kind": "hair",
+  "name": "Twisted Half-Up",
+  "a_pose_style": "the top section twisted back and secured, the rest left down",
+  "breeze": "Light breeze.",
+  "hair_change": "The top section of hair is twisted back and secured at the crown, the rest left down in soft waves.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

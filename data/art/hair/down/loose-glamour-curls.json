@@ -1,0 +1,13 @@
+{
+  "id": "hair/down/loose-glamour-curls",
+  "kind": "hair",
+  "name": "Loose Glamour Curls",
+  "a_pose_style": "soft, cascading curls with a polished, glamorous finish",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair falls in soft, cascading curls, polished and glamorous rather than tousled, with a healthy shine.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

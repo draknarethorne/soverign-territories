@@ -1,0 +1,13 @@
+{
+  "id": "hair/down/sleek-side-part",
+  "kind": "hair",
+  "name": "Sleek Side Part",
+  "a_pose_style": "sleek and straight with a deep side part",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is sleek and straight with a deep side part, smooth and glass-like with a glossy finish.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

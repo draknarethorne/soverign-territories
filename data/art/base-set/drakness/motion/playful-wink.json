@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-playful-wink",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/motion/romantic/playful-wink.json",
+  "template": "data/art/base-set/_templates/heroes/motion-human.txt",
+  "output": "prompts/art/base-set/Drakness/motion/Drakness_Motion_PlayfulWink.txt",
+  "denoise": "~0.4-0.6"
+}
