@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/gown-legs-feet",
+  "kind": "legs_feet",
+  "name": "Evening Gown — Legs & Feet (Drakness signature)",
+  "description": "Midnight-Violet evening high heels with high straps",
+  "compatibleStages": ["clothing"],
+  "notes": "Hero-signature piece, unique to Drakness's Evening Gown outfit."
+}

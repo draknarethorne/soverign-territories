@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/gown-wearing",
+  "kind": "wearing",
+  "name": "Evening Gown — Wearing (Drakness signature)",
+  "description": "a form-fitting full-length Midnight Violet evening gown with Vibrant Amethyst and Polished Silver accents and swirls - covering the mid-section entirely; thin straps, straight across the top; modest décolletage, breasts partially exposed; slit on both sides to the knee",
+  "compatibleStages": ["clothing"],
+  "notes": "Hero-signature piece, unique to Drakness's Evening Gown outfit — grounded in prompts/_archive/Drakness/clothing/Drakness_Qwen_Clothing_Gown.txt."
+}

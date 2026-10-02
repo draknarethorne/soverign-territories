@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/jewelry/necklaces/ornate-gem-pendant",
+  "kind": "jewelry",
+  "name": "Ornate Gem Pendant Necklace",
+  "description": "necklace with a small ornate pendant; matching earrings with small gems, anklet, and rings",
+  "compatibleStages": ["armor", "clothing"],
+  "notes": "Reusable wardrobe piece, grounded in prompts/_archive/Drakness/clothing/Drakness_Qwen_Clothing_Gown.txt. Interchangeable with any other wardrobe/jewelry/necklaces/ entry."
+}

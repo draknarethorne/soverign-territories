@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/reaper-scythe",
+  "kind": "holding",
+  "name": "Ornate Reaper Scythe (Drakness signature)",
+  "description": "an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black shaft, polished silver blade with gothic patterns, in one hand",
+  "compatibleStages": ["armor", "final"],
+  "notes": "Hero-signature weapon, unique to Drakness — grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Bone.txt. Lives under weapons/ (a new kind alongside armor/clothing in the hero-signature tier) rather than armor/, since a held weapon is conceptually distinct from worn armor pieces."
+}

@@ -120,6 +120,33 @@ def resolve_component_tokens(card):
     return toks
 
 
+def resolve_components_tokens(card):
+    """A base-set card may compose a prompt from SEVERAL named-slot pieces instead
+    of one complete component -- 'components': {'wearing': '<path>', 'jewelry':
+    '<path>', 'back': '<path>', ...}. This is how a full outfit (armor/clothing) is
+    assembled from small, independently reusable pieces (a necklace, a cape, a
+    weapon) instead of re-describing jewelry inline in every complete-outfit file.
+    The token takes the SLOT's name (not the piece file's own field name) -- e.g.
+    components.jewelry -> {{JEWELRY}} -- so any interchangeable piece can fill that
+    slot. A piece file's single content field (by convention 'description') becomes
+    that token directly; a piece with several content fields gets them namespaced
+    as SLOT_FIELD."""
+    slots = card.get("components")
+    if not slots:
+        return {}
+    toks = {}
+    for slot, ref in slots.items():
+        piece = load_json(ROOT / ref)
+        content = {k: v for k, v in piece.items() if k not in _COMPONENT_META_KEYS}
+        if len(content) == 1:
+            (val,) = content.values()
+            toks[slot.upper()] = "\n".join(val) if isinstance(val, list) else val
+        else:
+            for key, val in content.items():
+                toks[f"{slot.upper()}_{key.upper()}"] = "\n".join(val) if isinstance(val, list) else val
+    return toks
+
+
 def generate(card_path):
     card = load_json(ROOT / card_path)
     hero = load_json(ROOT / card["heroArt"])
@@ -131,6 +158,14 @@ def generate(card_path):
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
     toks = tokens_for(hero)
     toks.update(resolve_component_tokens(card))
+    toks.update(resolve_components_tokens(card))
+    # Literal, per-card one-off strings that aren't reusable pieces on their own
+    # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
+    _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",
+                        "template", "output", "denoise", "overrides", "notes"}
+    for key, val in card.items():
+        if key not in _CARD_META_KEYS and isinstance(val, str):
+            toks[key.upper()] = val
 
     needed = set(re.findall(r"{{(\w+)}}", template))
     missing = needed - set(toks)

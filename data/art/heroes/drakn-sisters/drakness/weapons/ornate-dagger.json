@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/ornate-dagger",
+  "kind": "holding",
+  "name": "Small Ornate Dagger (Drakness signature)",
+  "description": "a small ornate dagger with its sheath, worn high on the hip",
+  "compatibleStages": ["armor", "final"],
+  "notes": "Hero-signature weapon, unique to Drakness — grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Raven.txt (originally a belt-kit accessory there; reusable here as an alternate 'holding' choice for any of her armor outfits, e.g. swapped in for the scythe on Bone Armor without touching the armor's own wearing/arms/legs_feet pieces)."
+}
