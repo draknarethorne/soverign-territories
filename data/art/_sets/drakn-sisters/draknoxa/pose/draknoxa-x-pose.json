@@ -1,0 +1,10 @@
+{
+  "artId": "draknoxa-x-pose",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/poses/Draknoxa_X_Pose.txt",
+  "denoise": "~1.0",
+  "notes": "Draknoxa Thorne pose — generated alongside Drakness as the initial baseline for all 10 female heroes."
+}

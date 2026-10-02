@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-center-pulled",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/heroes/components/hair/pulled-back/center-pulled.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/hair/pulled-back/Drakness_Hair_PulledBack_CenterPulled.txt",
+  "denoise": "~0.4-0.6"
+}

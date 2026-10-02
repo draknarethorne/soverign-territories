@@ -138,14 +138,14 @@ for slug, h in HEROINES.items():
             "kind": "base-set",
             "stage": stage,
             "heroArt": f"data/art/heroes/drakn-sisters/{slug}-thorne.json",
-            "template": f"data/art/base-set/_templates/heroes/{tmpl}",
-            "output": f"prompts/art/base-set/{h['cap']}/{outdir}/{h['cap']}_{outname}.txt",
+            "template": f"data/art/_templates/heroes/{tmpl}",
+            "output": f"prompts/drakn-sisters/{h['cap']}/{outdir}/{h['cap']}_{outname}.txt",
             "denoise": "~1.0" if stage == "pose" else "~0.4-0.6",
             "notes": f"{card['name']} {stage} — generated alongside Drakness as the initial baseline for all 10 female heroes.",
         }
         if stage == "pose" and h.get("negativeRemove"):
             base_set_card["overrides"] = {"negativeRemove": h["negativeRemove"]}
-        card_path = ROOT / f"data/art/base-set/{slug}/{stage}/{slug}-x-{stage}.json"
+        card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{stage}/{slug}-x-{stage}.json"
         card_path.parent.mkdir(parents=True, exist_ok=True)
         card_path.write_text(json.dumps(base_set_card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 

@@ -1,0 +1,13 @@
+{
+  "artId": "drakness-x-pose-ponytail-test",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/poses/Drakness_X_Pose_PonytailTest.txt",
+  "denoise": "~1.0",
+  "overrides": {
+    "palette": { "hairStyleComponent": "data/art/heroes/components/hair/updo/pony-tail.json" }
+  },
+  "notes": "ARCHITECTURE TEST — proves a hero can carry a unique/signature A-pose hairstyle via a one-line component swap, with zero changes to the hero def, template, or generator. Everything else (eyes, skin, figure, hair COLOUR) stays identical to the base drakness-x-pose; only the hairSTYLE component changes (center-part-wavy -> pony-tail)."
+}

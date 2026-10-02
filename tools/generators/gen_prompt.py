@@ -149,5 +149,5 @@ def generate(card_path):
 
 
 if __name__ == "__main__":
-    card = sys.argv[1] if len(sys.argv) > 1 else "data/art/base-set/drakness/drakness-x-pose.json"
+    card = sys.argv[1] if len(sys.argv) > 1 else "data/art/_sets/drakn-sisters/drakness/pose/drakness-x-pose.json"
     generate(card)

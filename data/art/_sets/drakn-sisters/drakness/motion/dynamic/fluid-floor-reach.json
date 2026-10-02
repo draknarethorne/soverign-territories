@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-fluid-floor-reach",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/heroes/components/motion/dynamic/fluid-floor-reach.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/motion/dynamic/Drakness_Motion_Dynamic_FluidFloorReach.txt",
+  "denoise": "~0.4-0.6"
+}

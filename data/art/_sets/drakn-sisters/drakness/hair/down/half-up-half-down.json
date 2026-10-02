@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-half-up-half-down",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/heroes/components/hair/down/half-up-half-down.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/hair/down/Drakness_Hair_Down_HalfUpHalfDown.txt",
+  "denoise": "~0.4-0.6"
+}
