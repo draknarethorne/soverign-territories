@@ -1,0 +1,10 @@
+{
+  "artId": "sylvanya-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/dragons/elder-dragons/sylvanya.json",
+  "template": "data/art/_templates/dragons/head-dragon.txt",
+  "output": "prompts/elder-dragons/Sylvanya/head/Sylvanya_X_Head.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Text-to-image head/close-up, constructed entirely from the dragon's own description."
+}

@@ -101,6 +101,19 @@ def tokens_for(hero):
     }
 
 
+def tokens_for_dragon(dragon):
+    """A dragon identity (data/art/dragons/elder-dragons/*.json) has no 'art' section
+    -- no palette/physique, since it's not a humanoid hero. Its tokens are just its
+    own name/description/element, for the dragon archetype's own text-to-image
+    templates (no incoming reference image to edit -- a dragon is generated entirely
+    from its description, unlike a hero's img2img pipeline)."""
+    return {
+        "DRAGON": dragon["name"],
+        "DESCRIPTION": dragon["description"],
+        "ELEMENT": dragon.get("element", ""),
+    }
+
+
 _COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood"}
 
 
@@ -264,7 +277,8 @@ def generate(card_path):
         if section in overrides:
             hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
-    toks = tokens_for(hero)
+    # A dragon identity has no 'art' section (not humanoid) -- its own, simpler token set.
+    toks = tokens_for_dragon(hero) if "art" not in hero else tokens_for(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
     # Literal, per-card one-off strings that aren't reusable pieces on their own
