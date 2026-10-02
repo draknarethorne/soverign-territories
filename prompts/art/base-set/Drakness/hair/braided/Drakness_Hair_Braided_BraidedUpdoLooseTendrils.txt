@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 Very light breeze.
-Very long, slender legs.
+
 Hair is woven into an elaborate braided updo at the crown, with wispy tendrils deliberately left loose at the temples and nape, an exotic, alluring fantasy-glamour look.
 
+
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

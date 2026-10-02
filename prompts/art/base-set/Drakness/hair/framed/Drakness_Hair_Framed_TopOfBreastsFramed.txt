@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 No breeze.
-Very long, slender legs.
+
 Hairstyle is sleek and semi-straight, hair length to top of breasts with sides cut tapered tendrils framing her face, hair contours her body.
 Bold décolletage.
+
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

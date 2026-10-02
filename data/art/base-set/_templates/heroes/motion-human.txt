@@ -14,16 +14,22 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Maintain the existing outfit and hairstyle expressly.
 
+{{BREEZE}}
+
 Figure: {{FIGURE}}.
 
 Body: {{BODY}}
+
 Head: {{HEAD}}
+
 Gaze: {{GAZE}}
+
 Expression: {{EXPRESSION}}
-{{BREEZE}}
+
+Eyes: {{EYE}}.
+
 Pose: {{POSE}}
 {{EXTRAS}}
-Eyes: {{EYE}}.
 
 ----------------------------------------------------------------
 negative prompt:

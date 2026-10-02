@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 Minimal breeze flowing to right.
-Very long, slender legs.
+
 Hair pulled back behind her left shoulder and over top of her head to the right. Hair blowing to the right. Left ear exposed.
 
+
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 Light breeze.
-Very long, slender legs.
+
 Hair is gathered into a high, sleek ponytail at the crown, smooth and polished with every strand pulled back cleanly.
 
+
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
