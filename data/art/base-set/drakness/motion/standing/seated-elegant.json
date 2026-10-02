@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-seated-elegant",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/motion/standing/seated-elegant.json",
+  "template": "data/art/base-set/_templates/heroes/motion-human.txt",
+  "output": "prompts/art/base-set/Drakness/motion/standing/Drakness_Motion_SeatedElegant.txt",
+  "denoise": "~0.4-0.6"
+}

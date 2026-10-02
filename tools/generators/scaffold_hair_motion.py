@@ -471,10 +471,10 @@ for family, entries in HAIR.items():
             "heroArt": HERO_ART,
             "component": f"data/art/hair/{family}/{slug}.json",
             "template": "data/art/base-set/_templates/heroes/hair-human.txt",
-            "output": f"prompts/art/base-set/Drakness/hair/Drakness_Hair_{label_of(slug)}.txt",
+            "output": f"prompts/art/base-set/Drakness/hair/{family}/Drakness_Hair_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
-        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/hair/{slug}.json", card)
+        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/hair/{family}/{slug}.json", card)
 
 for family, entries in MOTION.items():
     for slug, name, editorial, breeze, body, head, gaze, expression, pose, extras, source in entries:
@@ -504,10 +504,10 @@ for family, entries in MOTION.items():
             "heroArt": HERO_ART,
             "component": f"data/art/motion/{family}/{slug}.json",
             "template": "data/art/base-set/_templates/heroes/motion-human.txt",
-            "output": f"prompts/art/base-set/Drakness/motion/Drakness_Motion_{label_of(slug)}.txt",
+            "output": f"prompts/art/base-set/Drakness/motion/{family}/Drakness_Motion_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
-        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/motion/{slug}.json", card)
+        write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/motion/{family}/{slug}.json", card)
 
 print(f"Hair components: {len(hair_written)} (incl. 2 already-authored); cards written for new ones")
 print(f"Motion components: {len(motion_written)}; cards written")

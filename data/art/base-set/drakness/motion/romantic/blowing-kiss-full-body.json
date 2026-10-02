@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-blowing-kiss-full-body",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/motion/romantic/blowing-kiss-full-body.json",
+  "template": "data/art/base-set/_templates/heroes/motion-human.txt",
+  "output": "prompts/art/base-set/Drakness/motion/romantic/Drakness_Motion_BlowingKissFullBody.txt",
+  "denoise": "~0.4-0.6"
+}

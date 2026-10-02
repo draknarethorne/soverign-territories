@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-pony-tail",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/hair/updo/pony-tail.json",
+  "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+  "output": "prompts/art/base-set/Drakness/hair/updo/Drakness_Hair_PonyTail.txt",
+  "denoise": "~0.4-0.6"
+}
