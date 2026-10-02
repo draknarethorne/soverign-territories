@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/draknare-thorne/weapons/cursed-blade",
+  "kind": "holding",
+  "name": "Cursed Shadowblade (Draknare signature)",
+  "description": "an ornate {{PRIMARY}} longsword wreathed in creeping shadow, {{ACCENT_SOFT}} runes glowing faintly along the fuller, in his right hand; a round {{PRIMARY}}-toned shield with {{ACCENT_SOFT}} trim strapped to his left forearm",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Draknare Thorne — first-pass invented (no archived source material), fitting his Shadow Knight class. Replaces the shared wardrobe/weapons/broadsword-and-shield.json default for this hero specifically."
+}

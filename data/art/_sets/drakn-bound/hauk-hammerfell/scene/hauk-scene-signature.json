@@ -10,7 +10,7 @@
     "wearing": "data/art/wardrobe/armor/plate-tank.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/broadsword-and-shield.json",
+    "holding": "data/art/heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer.json",
     "background": "data/art/backgrounds/evening/moonlit-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

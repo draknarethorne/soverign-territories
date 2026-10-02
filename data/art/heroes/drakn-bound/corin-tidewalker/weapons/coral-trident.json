@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/corin-tidewalker/weapons/coral-trident",
+  "kind": "holding",
+  "name": "Coral Trident (Corin signature)",
+  "description": "a long trident tipped with jagged {{ACCENT_SOFT}} coral tines, {{PRIMARY}}-wrapped haft",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Corin Tidewalker — first-pass invented, fitting his Beast Lord class and Water element. Replaces the shared wardrobe/weapons/trident.json default for this hero specifically."
+}

@@ -82,12 +82,15 @@ data/art/
 │   │                               generate prompts. Testing/working folders; which real card
 │   │                               series (if any) consumes a group's output is tracked on the
 │   │                               data/cards/ side, not here.
-│   ├── drakn-sisters/              ✅ 94 cards (10 heroes × pose/head, 44 hair + 25 motion + 2
-│   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness)
+│   ├── drakn-sisters/              ✅ 101 cards (10 heroes × pose/head, 44 hair + 25 motion + 2
+│   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness; all 10 now have a
+│   │                               signature scene — 3 bespoke [Drakness/Draknora/Drakneta],
+│   │                               7 first-pass minimal reusing proven wardrobe defaults)
 │   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
 │   │   └── <slug>/<stage>/<family>/*.json
-│   ├── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — first-pass
-│   │   └── <slug>/<stage>/*.json   minimal scaffold, 3 archetype-grouped default wardrobe sets
+│   ├── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — each now
+│   │   └── <slug>/<stage>/*.json   has its OWN signature weapon (heroes/drakn-bound/<slug>/weapons/),
+│   │                               not just the shared archetype-group default
 │   └── elder-dragons/              ✅ 20 cards (10 dragons × pose/head) — text-to-image only, no
 │       └── <slug>/<stage>/*.json   scene stage yet (dragons aren't humanoid, no outfit/companion
 │                                   concept applies to them the way it does a hero)

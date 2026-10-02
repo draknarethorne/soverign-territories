@@ -11,7 +11,7 @@
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/trident.json"
+    "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",
   "output": "prompts/drakn-bound/Corin/armor/Corin_Armor_Default.txt",

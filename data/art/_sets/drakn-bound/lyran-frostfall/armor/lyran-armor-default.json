@@ -11,7 +11,7 @@
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/broadsword-and-shield.json"
+    "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",
   "output": "prompts/drakn-bound/Lyran/armor/Lyran_Armor_Default.txt",

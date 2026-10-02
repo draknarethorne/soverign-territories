@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/ignis-emberstride/weapons/ember-blade",
+  "kind": "holding",
+  "name": "Ember Blade (Ignis signature)",
+  "description": "a heavy two-handed broadsword, its {{ACCENT_SOFT}}-edged blade wreathed in flickering {{PRIMARY}} flame, {{PRIMARY}}-wrapped hilt",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Ignis Emberstride — first-pass invented, fitting his Warrior class and 'Ember Cleave' ability (data/cards/sovereign-dawn/heroes/hero-ignis-emberstride.json). Replaces the shared wardrobe/weapons/greatsword.json default for this hero specifically."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists",
+  "kind": "holding",
+  "name": "Storm-Wrapped Fists (Dorian signature)",
+  "description": "nothing — his hands and forearms wrapped in {{PRIMARY}}-toned cloth bindings, faint {{ACCENT_SOFT}} arcs of lightning crackling between his knuckles, fighting unarmed",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature fighting style, unique to Dorian Stormstrike — a Monk fights unarmed, so this replaces the generic wardrobe/weapons/greatsword.json default (a mismatch flagged in the earlier drakn-bound pass) with his own wrapped-fists description, fitting his Lightning element."
+}
