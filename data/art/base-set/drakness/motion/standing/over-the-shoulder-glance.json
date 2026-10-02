@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "motion",
   "heroArt": "data/art/heroes/drakness-thorne.json",
-  "component": "data/art/motion/standing/over-the-shoulder-glance.json",
+  "component": "data/art/heroes/components/motion/standing/over-the-shoulder-glance.json",
   "template": "data/art/base-set/_templates/heroes/motion-human.txt",
   "output": "prompts/art/base-set/Drakness/motion/standing/Drakness_Motion_Standing_OverTheShoulderGlance.txt",
   "denoise": "~0.4-0.6"

@@ -22,6 +22,11 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 
 ## 2. Where things live
 
+> **Structure reference:** [`data/art/README.md`](../../data/art/README.md) is the authoritative
+> explanation of how `data/art/` is organized (definitions vs. assembly layers, categories, groups,
+> sets). Read that before adding a new hero/component/set folder — the table below will be updated
+> to match once the current reorg lands.
+
 | Location | Purpose |
 | --- | --- |
 | `workflows/<Hero>/` | **The real work.** ComfyUI workflow exports, one per experiment. Named `<Hero>_Qwen_<Category>_<Variant>.json` (e.g. `Drakness_Qwen_Armor_Elegant.json`). |
