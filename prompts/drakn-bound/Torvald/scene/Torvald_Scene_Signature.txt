@@ -1,0 +1,29 @@
+=== Torvald Stonebreaker · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Torvald Stonebreaker (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Terracotta Brown-toned banded leather armor across the chest and shoulders, grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Terracotta Brown-toned combat boots with grey buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.
+
+Holding a heavy two-handed grey-edged greatsword, gripped in both hands, Terracotta Brown-wrapped hilt.
+
+Even, natural daylight; no additional magical effects.
+
+Environment: a sun-dappled ancient forest grove, towering moss-covered trees, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
+
+Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, text, wording, watermark, logo.

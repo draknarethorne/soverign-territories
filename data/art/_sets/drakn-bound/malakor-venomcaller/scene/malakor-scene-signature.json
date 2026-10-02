@@ -1,0 +1,20 @@
+{
+  "artId": "malakor-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/malakor-venomcaller.json",
+  "name": "Signature",
+  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move.",
+  "effects": "A faint toxic-green mist curls low around his feet.",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/leather-rogue.json",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "holding": "data/art/wardrobe/weapons/paired-daggers.json",
+    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Malakor/scene/Malakor_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the rogue-group default wardrobe set + the existing ossuary background (dark, toxic-fitting)."
+}

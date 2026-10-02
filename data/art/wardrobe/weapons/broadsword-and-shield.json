@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/broadsword-and-shield",
+  "kind": "holding",
+  "name": "Broadsword & Shield (Tank default)",
+  "description": "a broad-bladed {{ACCENT_SOFT}}-edged sword in his right hand, a round {{PRIMARY}}-toned shield with {{ACCENT_SOFT}} trim strapped to his left forearm",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Default holding set for Defense/Tank archetype male heroes — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. Combined weapon+shield in one piece to avoid needing a new template slot. First-pass invented default."
+}

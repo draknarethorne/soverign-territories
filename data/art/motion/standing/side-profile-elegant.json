@@ -6,7 +6,7 @@
   "breeze": "Light breeze.",
   "body": "full side profile to the camera, long neck, shoulders back, chest lifted.",
   "head": "in profile, chin lifted.",
-  "defaultGaze": "off-camera into the distance.",
+  "defaultGaze": "off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile.",
   "defaultExpression": "data/art/motion/expressions/composed-serene.json",
   "pose": "one foot forward for an elegant line; arms relaxed with a graceful hand.",
   "extras": [],

@@ -1,0 +1,29 @@
+=== Dorian Stormstrike · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Dorian Stormstrike (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Arc Blue-toned banded leather armor across the chest and shoulders, gold stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Arc Blue-toned combat boots with gold buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.
+
+Holding a heavy two-handed gold-edged greatsword, gripped in both hands, Arc Blue-wrapped hilt.
+
+A faint arc of electric-gold static crackles around his hands.
+
+Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+
+Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim, athletic waist; long, agile legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, text, wording, watermark, logo.

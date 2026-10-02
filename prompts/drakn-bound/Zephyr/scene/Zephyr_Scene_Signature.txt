@@ -1,0 +1,29 @@
+=== Zephyr Galeheart · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Zephyr Galeheart (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Sky Cyan-toned banded leather armor across the chest and shoulders, white stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Sky Cyan-toned combat boots with white buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.
+
+Holding a heavy two-handed white-edged greatsword, gripped in both hands, Sky Cyan-wrapped hilt.
+
+A light wind catches his hair and cloak-edge.
+
+Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
+
+Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, lean legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, text, wording, watermark, logo.

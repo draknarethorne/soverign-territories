@@ -1,0 +1,8 @@
+{
+  "id": "dragons/elder-dragons/terrador",
+  "kind": "dragon",
+  "name": "Terrador",
+  "description": "an Elder Dragon of terracotta-ochre and rich-bronze scales, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in warm sand",
+  "element": "Earth",
+  "notes": "Skeletal identity, first pass -- aligned to Draknara Thorne (Earth) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknara's own palette (Terracotta Ochre / Rich Bronze / Warm Sand)."
+}

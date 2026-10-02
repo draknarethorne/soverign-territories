@@ -1,0 +1,29 @@
+=== Ignis Emberstride · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Ignis Emberstride (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Ember Red-toned banded leather armor across the chest and shoulders, bronze stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Ember Red-toned combat boots with bronze buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance.
+
+Holding a heavy two-handed bronze-edged greatsword, gripped in both hands, Ember Red-wrapped hilt.
+
+Heat haze shimmers faintly in the air around him.
+
+Environment: a soft gradient of rising flames glowing upward behind them, warm amber and red light washing across the ground.
+
+Figure: athletic, broad-shouldered, powerfully muscled build; defined, battle-scarred chest and core, strong and toned; trim, athletic waist; long, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, text, wording, watermark, logo.
