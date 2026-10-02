@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/composed-commanding",
+  "kind": "expression",
+  "name": "Composed, Commanding",
+  "expression": "composed, commanding, lips softly together.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted from motion/standing/commanding-cast.json's own default expression — a standalone, swappable option now that expression is its own piece type."
+}
