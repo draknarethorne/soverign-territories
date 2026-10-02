@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-semi-to-curly",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/hair/down/semi-to-curly.json",
+  "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+  "output": "prompts/art/base-set/Drakness/hair/down/Drakness_Hair_SemiToCurly.txt",
+  "denoise": "~0.4-0.6"
+}

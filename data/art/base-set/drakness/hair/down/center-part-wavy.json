@@ -1,0 +1,11 @@
+{
+  "artId": "drakness-hair-center-part-wavy",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/hair/down/center-part-wavy.json",
+  "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+  "output": "prompts/art/base-set/Drakness/hair/down/Drakness_Hair_CenterPartWavy.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Hair-stage card for the X_Pose default style — re-asserts it with no change, useful as a baseline/control."
+}

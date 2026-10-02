@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-below-clavicles-framed",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/hair/framed/below-clavicles-framed.json",
+  "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+  "output": "prompts/art/base-set/Drakness/hair/framed/Drakness_Hair_BelowClaviclesFramed.txt",
+  "denoise": "~0.4-0.6"
+}
