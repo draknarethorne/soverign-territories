@@ -26,7 +26,7 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/heroes/components/hair/down/center-part-wavy.json"
+      "hairStyleComponent": "data/art/universal/hair/down/center-part-wavy.json"
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",

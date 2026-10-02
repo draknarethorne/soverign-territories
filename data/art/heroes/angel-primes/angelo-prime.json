@@ -14,7 +14,7 @@
       "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/heroes/components/hair/down/natural.json"
+      "hairStyleComponent": "data/art/universal/hair/down/natural.json"
     },
     "physique": {
       "build": "Athletic, broad-shouldered, well-proportioned build",
