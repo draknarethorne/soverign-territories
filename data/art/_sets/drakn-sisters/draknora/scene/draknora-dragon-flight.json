@@ -17,5 +17,5 @@
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_DragonFlight.txt",
   "denoise": "~0.5-0.7",
-  "notes": "Our first companion-bearing scene -- decomposes Draknora's own D&D-flair armor/jewelry/sword (hero-signature) + Pyraxis her aligned Elder Dragon (companion, separate from the environment) + a reused universal footwear piece, grounded in prompts/_archive/Draknora/final/{Draknora_Qwen_Dragon_1,Draknora_Qwen_Fire_Dragon}.json. The generic unnamed dragon in the archive is named here (Pyraxis) per the codex's Element Alignment table (Fire)."
+  "notes": "Our first companion-bearing scene -- decomposes Draknora's own D&D-flair armor/jewelry/sword (hero-signature) + Pyraxis her aligned Elder Dragon (companion, separate from the environment) + a reused universal footwear piece, grounded in prompts/_archive/Draknora/final/{Draknora_Qwen_Dragon_1,Draknora_Qwen_Fire_Dragon}.json. The generic unnamed dragon in the archive is named here (Pyraxis) per the codex's Element Alignment table (Fire). Pose reuses the existing motion/standing/side-profile-elegant.json (gaze 'off-camera into the distance' fits looking toward an approaching dragon) instead of a hand-typed literal."
 }

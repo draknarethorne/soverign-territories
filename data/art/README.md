@@ -140,12 +140,27 @@ non-racial), and `hair` moved under `races/human/cosmetics/`.
 Wearing/Arms/Jewelry/Back/Legs&feet/Holding; the archived Raven outfit instead has Drapes and
 Belt&kit (no Holding at all). That's expected, not a bug: a new outfit shape may need its own
 template variant rather than forcing every outfit through one fixed slot list. The **scene** stage
-already has three template variants for this reason: `scene-human.txt` (preserve everything from a
-prior stage, only add atmosphere), `scene-with-outfit-human.txt` (describe the outfit directly —
-the A-pose-in, full-scene-out path, used when there's no separate armor/clothing stage image to
-preserve yet), and `scene-with-companion-human.txt` (adds a `{{COMPANION}}` line for a bonded
-pet/dragon). A **companion** is its own piece, deliberately separate from `background` — the
-dragon's identity/placement is one reusable concern, the environment it flies through is another.
+has four template variants for this reason: `scene-human.txt` (preserve everything from a prior
+stage, only add atmosphere — the **two-stage** path: feed in an already-rendered clothing/armor
+image), `scene-with-outfit-human.txt` (describe the outfit directly — the **single-stage**,
+A-pose-in/full-scene-out path), `scene-with-companion-human.txt` (adds `{{COMPANION}}` for a bonded
+pet/dragon), and `scene-minimal-human.txt` (wearing/pose/effects/background only — no
+jewelry/weapon/companion slots, for lower-priority content like the Angel Primes test-bed where
+footwear is baked into the one bundled `wearing` piece instead of decomposed). A **companion** is
+its own piece, deliberately separate from `background` — the dragon's identity/placement is one
+reusable concern, the environment it flies through is another.
+
+**Motion component tokens join into ONE token per slot, not one-per-field** — a rich motion
+component (editorial/breeze/body/head/gaze/expression/pose) referenced for a scene's `pose` slot
+becomes a single combined `{{POSE}}` line, not seven new template tokens. This keeps the template
+token surface flat regardless of how rich the underlying piece is — the fix for "pose" previously
+being a hand-typed literal string on several scene cards instead of a real, reusable
+`motion/standing/...` component (now corrected).
+
+**Known gap: most of the motion/wardrobe library has female pronouns baked in** ("her"/"she"),
+since it was authored for the Drakn sisters first. `wardrobe/effects/soft-ambient-glow.json` was
+caught and fixed (needed for Angelo Prime's scene); the rest of `motion/` has not been swept yet —
+pick pronoun-neutral pieces when building a male hero's scene until a proper cleanup pass happens.
 
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
 everything under `prompts/` is already generated art output (no sibling non-art content to

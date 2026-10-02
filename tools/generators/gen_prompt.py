@@ -131,9 +131,11 @@ def resolve_components_tokens(card):
     weapon) instead of re-describing jewelry inline in every complete-outfit file.
     The token takes the SLOT's name (not the piece file's own field name) -- e.g.
     components.jewelry -> {{JEWELRY}} -- so any interchangeable piece can fill that
-    slot. A piece file's single content field (by convention 'description') becomes
-    that token directly; a piece with several content fields gets them namespaced
-    as SLOT_FIELD."""
+    slot. Always exactly ONE token per slot, regardless of how many content fields
+    the piece has (joined with spaces if more than one) -- this is what lets a
+    scene reference a rich multi-field motion component (body/head/gaze/pose/...)
+    for its 'pose' slot without exploding into a dozen new per-field template
+    tokens. Keep the template's token surface flat and small; let pieces be rich."""
     slots = card.get("components")
     if not slots:
         return {}
@@ -141,12 +143,8 @@ def resolve_components_tokens(card):
     for slot, ref in slots.items():
         piece = load_json(ROOT / ref)
         content = {k: v for k, v in piece.items() if k not in _COMPONENT_META_KEYS}
-        if len(content) == 1:
-            (val,) = content.values()
-            toks[slot.upper()] = "\n".join(val) if isinstance(val, list) else val
-        else:
-            for key, val in content.items():
-                toks[f"{slot.upper()}_{key.upper()}"] = "\n".join(val) if isinstance(val, list) else val
+        parts = ["\n".join(val) if isinstance(val, list) else val for val in content.values()]
+        toks[slot.upper()] = " ".join(p for p in parts if p)
     return toks
 
 
