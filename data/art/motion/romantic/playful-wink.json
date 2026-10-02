@@ -1,0 +1,16 @@
+{
+  "id": "motion/romantic/playful-wink",
+  "kind": "motion",
+  "name": "Playful Wink",
+  "editorial": "A candid high-fashion editorial shot, flirty playful romantic energy.",
+  "breeze": "Light breeze.",
+  "body": "standing with a playful, relaxed posture, weight on one hip.",
+  "head": "tilted slightly, chin down, playful.",
+  "gaze": "a wink to camera.",
+  "expression": "playful, flirty, a bright, mischievous smile.",
+  "pose": "one hand near her chin or hair, caught in a playful gesture.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

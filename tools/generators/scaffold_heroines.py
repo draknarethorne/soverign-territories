@@ -92,7 +92,7 @@ HEROINES = {
 
 PHYSIQUE = {
     "build": "Lithe, slender, long-limbed build",
-    "bust": "Full bust, softly emphasized, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed)",
+    "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
     "hips": "Shapely feminine hips, gently curved (not wide)",
     "legs": "Very long, slender legs",
     "distinguishingMarks": [],

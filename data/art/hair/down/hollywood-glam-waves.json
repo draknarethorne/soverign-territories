@@ -1,0 +1,13 @@
+{
+  "id": "hair/down/hollywood-glam-waves",
+  "kind": "hair",
+  "name": "Old Hollywood Glam Waves",
+  "a_pose_style": "set in deep, glossy old-Hollywood waves, swept to one side",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is set in deep, glossy old-Hollywood glamour waves, swept to one side with soft, rounded curls.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

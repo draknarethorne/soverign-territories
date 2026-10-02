@@ -21,4 +21,4 @@ Eyes: {{EYE}}.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, flat chest, small bust, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

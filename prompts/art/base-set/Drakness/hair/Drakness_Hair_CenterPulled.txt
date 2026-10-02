@@ -21,4 +21,4 @@ Eyes: deep violet irises with radiating amethyst striations and an obsidian limb
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
