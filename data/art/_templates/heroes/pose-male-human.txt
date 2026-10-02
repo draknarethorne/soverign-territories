@@ -1,0 +1,35 @@
+=== {{HERO}} · A-Pose Base (group: X_Pose) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. Set figure, skin, eyes, and hair here; downstream stages preserve them.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+
+Background: a solid, seamless cream-coloured studio backdrop.
+
+Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
+
+Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
+
+Figure: {{FIGURE}}.
+
+Skin: {{SKIN}}.
+
+Wearing: only a {{PRIMARY}} fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; matching {{PRIMARY}} bare feet.
+
+Hair: {{HAIR}}, tone-on-tone dimension; styled {{HAIRSTYLE}} (override the source hairstyle); a very slight lift from a light breeze below.
+
+Grooming: natural and fresh-faced - reset any heavy styling from the source photo; clean, well-groomed appearance; fingernails natural or {{NAIL}}.
+
+Eyes: {{EYE}}, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights.
+
+Expression: confident, relaxed closed-mouth smile; looking to camera.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, {{EYE_NEG}}, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, {{SKIN_NEG}}, {{HERO_NEG}}, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

@@ -58,14 +58,23 @@ def tokens_for(hero):
     phy = hero["art"]["physique"]
     primary = pal["primaryColor"]
     accent = pal["accentColors"][0]
-    figure = "; ".join([
-        decap(phy["build"]),
-        decap(phy["bust"]),
-        "slim waist",
-        decap(phy["hips"]),
-        "slim, tapering thighs",
-        decap(phy["legs"]),
-    ])
+    if "bust" in phy:
+        figure = "; ".join([
+            decap(phy["build"]),
+            decap(phy["bust"]),
+            "slim waist",
+            decap(phy["hips"]),
+            "slim, tapering thighs",
+            decap(phy["legs"]),
+        ])
+    else:
+        # Male physique schema: build/chest/waist/legs (no bust/hips).
+        figure = "; ".join([
+            decap(phy["build"]),
+            decap(phy["chest"]),
+            decap(phy["waist"]),
+            decap(phy["legs"]),
+        ])
     skin = decap(pal["skinTone"])
     eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
     skin_neg = ", ".join(pal.get("skinColorNegatives", []))
