@@ -2,7 +2,7 @@
   "artId": "drakness-hair-loose-romantic-bun",
   "kind": "base-set",
   "stage": "hair",
-  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/heroes/components/hair/updo/loose-romantic-bun.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
   "output": "prompts/art/base-set/Drakness/hair/updo/Drakness_Hair_Updo_LooseRomanticBun.txt",

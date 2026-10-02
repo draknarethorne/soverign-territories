@@ -2,7 +2,7 @@
   "artId": "draknara-x-pose",
   "kind": "base-set",
   "stage": "pose",
-  "heroArt": "data/art/heroes/draknara-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
   "template": "data/art/base-set/_templates/heroes/pose-female-human.txt",
   "output": "prompts/art/base-set/Draknara/poses/Draknara_X_Pose.txt",
   "denoise": "~1.0",

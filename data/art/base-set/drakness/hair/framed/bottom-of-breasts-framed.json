@@ -2,7 +2,7 @@
   "artId": "drakness-hair-bottom-of-breasts-framed",
   "kind": "base-set",
   "stage": "hair",
-  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/heroes/components/hair/framed/bottom-of-breasts-framed.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
   "output": "prompts/art/base-set/Drakness/hair/framed/Drakness_Hair_Framed_BottomOfBreastsFramed.txt",

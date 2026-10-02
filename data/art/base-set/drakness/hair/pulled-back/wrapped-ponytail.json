@@ -2,7 +2,7 @@
   "artId": "drakness-hair-wrapped-ponytail",
   "kind": "base-set",
   "stage": "hair",
-  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/heroes/components/hair/pulled-back/wrapped-ponytail.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
   "output": "prompts/art/base-set/Drakness/hair/pulled-back/Drakness_Hair_PulledBack_WrappedPonytail.txt",

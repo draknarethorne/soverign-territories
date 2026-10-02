@@ -2,7 +2,7 @@
   "artId": "draknora-x-head",
   "kind": "base-set",
   "stage": "head",
-  "heroArt": "data/art/heroes/draknora-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
   "template": "data/art/base-set/_templates/heroes/head-human.txt",
   "output": "prompts/art/base-set/Draknora/head/Draknora_X_Head.txt",
   "denoise": "~0.4-0.6",

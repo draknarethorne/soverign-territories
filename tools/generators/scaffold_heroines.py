@@ -126,7 +126,7 @@ for slug, h in HEROINES.items():
                  "Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this.",
     }
 
-    art_hero_path = ROOT / f"data/art/heroes/{slug}-thorne.json"
+    art_hero_path = ROOT / f"data/art/heroes/drakn-sisters/{slug}-thorne.json"
     art_hero_path.write_text(json.dumps(art_hero, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     for stage, tmpl, outdir, outname in [
@@ -137,7 +137,7 @@ for slug, h in HEROINES.items():
             "artId": f"{slug}-x-{stage}",
             "kind": "base-set",
             "stage": stage,
-            "heroArt": f"data/art/heroes/{slug}-thorne.json",
+            "heroArt": f"data/art/heroes/drakn-sisters/{slug}-thorne.json",
             "template": f"data/art/base-set/_templates/heroes/{tmpl}",
             "output": f"prompts/art/base-set/{h['cap']}/{outdir}/{h['cap']}_{outname}.txt",
             "denoise": "~1.0" if stage == "pose" else "~0.4-0.6",

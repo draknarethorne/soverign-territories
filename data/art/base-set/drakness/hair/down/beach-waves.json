@@ -2,7 +2,7 @@
   "artId": "drakness-hair-beach-waves",
   "kind": "base-set",
   "stage": "hair",
-  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/heroes/components/hair/down/beach-waves.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
   "output": "prompts/art/base-set/Drakness/hair/down/Drakness_Hair_Down_BeachWaves.txt",

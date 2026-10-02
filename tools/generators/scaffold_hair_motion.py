@@ -14,7 +14,7 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERO_SLUG = "drakness"
-HERO_ART = f"data/art/heroes/{HERO_SLUG}-thorne.json"
+HERO_ART = f"data/art/heroes/drakn-sisters/{HERO_SLUG}-thorne.json"
 
 # ---------------------------------------------------------------------------
 # HAIR — family -> list of (slug, name, a_pose_style, breeze, hair_change, extras, source)
