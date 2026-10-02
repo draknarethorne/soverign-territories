@@ -320,6 +320,46 @@ python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --st
 python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair --family down
 ```
 
+**Cleanup is a safe two-phase plan/apply, like `terraform plan`/`apply`** — `--cleanup` alone only
+*previews* `.txt` files that no longer match any current card's output (e.g. leftovers from a
+renamed `artId`/`output`, exactly what happened when Drakness/Draknora/Drakneta's bespoke scenes
+were renamed to the canonical `Signature` naming); nothing is deleted until you also pass `--yes`.
+Scoped to the **exact directories** that received an output this run — not the whole group — so a
+narrow `--slug`/`--stage` run can never flag a sibling hero's untouched files as orphans just
+because they weren't part of that run (an earlier draft of this scoped by group only, which a
+quick test caught doing exactly that — fixed before it shipped). Never touches `prompts/_archive/`.
+
+```bash
+python tools/generators/gen_prompt.py --cleanup                            # preview only, safe
+python tools/generators/gen_prompt.py --cleanup --yes                      # actually delete
+```
+
+---
+
+## Future direction: organizing templates by rarity/card-type (documented, not built yet)
+
+Noticed while building signature scenes: a Transcendent/Mythic **signature** card (companion,
+elemental effects, hero-specific weapon) is a fundamentally richer *kind* of card than a Common/
+Uncommon **unit** card will be — they probably shouldn't share a template file long-term, the way
+`scene-combat-human.txt` already diverged from the caster-oriented scene templates for a different
+*reason* (non-caster vs caster). As the roster grows past heroes into units/buildings/tactics,
+template naming/organization will likely need a second axis beyond "archetype" (`heroes/`,
+`dragons/`) — something like **card tier/type**, so it's clear at a glance which templates are
+rich "signature/hero" cards (full effects, companions, backgrounds) vs. simpler mass-produced
+card types, vs. the existing `pose-*`/`head-*`/`armor-*` **studio-background test** stages (cream
+backdrop, no scene) that exist purely to validate a look before it reaches a real card. Concretely,
+once that content exists, expect to need: **building** card templates (architecture, not a figure),
+**unit/troop** templates (likely simpler than hero signature scenes — fewer unique effects), and
+eventual **foil/"shiny"/alternate-art** variants (extra shimmer/glow effects layered on an existing
+signature scene — possibly the *same* template with an added effects field, possibly its own
+variant; genuinely undecided until that content exists to design against). Also worth doing once
+there's enough signature-scene content to look for patterns: "mining" the signature `.json` files
+for genuinely-repeated phrasing/effects and pushing those back into shared `wardrobe/`/`backgrounds/`
+pieces, the same way `motion/gaze/`, `motion/expressions/`, and the archetype-grouped male wardrobe
+defaults were extracted this session — only once duplication is *verified*, not speculatively.
+**Deliberately deferred** — there isn't yet enough built in each of these areas to design the right
+split with confidence; forcing a taxonomy now risks guessing wrong and reshuffling later for nothing.
+
 ---
 
 ## Field-name vocabulary (master inventory) — why field names must stay consistent

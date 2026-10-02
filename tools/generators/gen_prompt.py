@@ -13,8 +13,13 @@ Usage:
     python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
     python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair
     python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair --family down
+    python tools/generators/gen_prompt.py --cleanup                         # PREVIEW orphaned .txt output (safe)
+    python tools/generators/gen_prompt.py --cleanup --yes                   # actually delete them
 Filters compose (all default to "any"); omitting all of them generates every card under
-data/art/_sets/.
+data/art/_sets/. --cleanup is a two-phase plan/apply, like `terraform plan`/`apply`: alone it
+only lists prompts/<group>/ .txt files that no longer match a current card's output (e.g.
+leftovers from a renamed artId) -- add --yes to actually delete them. Scoped to groups touched
+this run; never touches prompts/_archive/.
 """
 import argparse
 import json
@@ -331,6 +336,29 @@ def generate(card_path):
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(out, encoding="utf-8")
     print(f"wrote {card['output']}")
+    return card["output"]
+
+
+def cleanup_orphans(expected_outputs, apply=False):
+    """Two-phase plan/apply, like `terraform plan`/`apply`: always finds candidate
+    orphans -- any .txt sitting in a directory that received at least one output THIS
+    run, but which isn't itself one of the outputs just (re)generated (e.g. a stale
+    file left behind after a card's artId/output was renamed). Deliberately scoped to
+    the EXACT directories touched (not the whole group) -- a narrow --slug/--stage run
+    must never flag a sibling hero's untouched files as orphans just because they
+    weren't part of this run. Only DELETES when apply=True; otherwise a safe,
+    side-effect-free preview. Never touches prompts/_archive/ (not generator-tracked)."""
+    dirs_touched = {(ROOT / out).parent for out in expected_outputs}
+    found = []
+    for d in dirs_touched:
+        for txt in d.glob("*.txt"):
+            rel = str(txt.relative_to(ROOT)).replace("\\", "/")
+            if rel not in expected_outputs:
+                found.append((rel, txt))
+    if apply:
+        for _, txt in found:
+            txt.unlink()
+    return [rel for rel, _ in found]
 
 
 def iter_card_paths(group="*", slug="*", stage="*", family=None):
@@ -348,6 +376,15 @@ def main():
     parser.add_argument("--slug", default="*", help="a hero/entity slug within the group")
     parser.add_argument("--stage", default="*", help="e.g. pose, head, hair, motion")
     parser.add_argument("--family", default=None, help="e.g. down, walking, romantic")
+    parser.add_argument("--cleanup", action="store_true",
+                        help="Check for .txt files under prompts/<group>/ (for any group touched "
+                             "this run) that no longer match a current card's output -- e.g. "
+                             "leftovers from a renamed artId/output. By DEFAULT this only PREVIEWS "
+                             "what it would remove (safe, no deletions) -- pass --yes too to "
+                             "actually delete. Never touches prompts/_archive/.")
+    parser.add_argument("--yes", action="store_true",
+                        help="Combined with --cleanup, actually deletes the orphaned files found. "
+                             "Without this, --cleanup only lists them (dry-run).")
     args = parser.parse_args()
 
     if args.card:
@@ -359,15 +396,29 @@ def main():
         sys.exit("No cards matched the given filters.")
 
     ok = fail = 0
+    expected_outputs = set()
     for p in paths:
         rel = str(p.relative_to(ROOT))
         try:
-            generate(rel)
+            out = generate(rel)
+            expected_outputs.add(out)
             ok += 1
         except SystemExit as e:
             print(f"FAILED {rel}: {e}")
             fail += 1
     print(f"ok={ok} fail={fail}")
+
+    if args.cleanup:
+        found = cleanup_orphans(expected_outputs, apply=args.yes)
+        if found:
+            verb = "removed" if args.yes else "would remove"
+            print(f"cleanup: {verb} {len(found)} orphaned file(s):")
+            for r in found:
+                print(f"  - {r}")
+            if not args.yes:
+                print("cleanup: this was a preview -- re-run with --cleanup --yes to actually delete these.")
+        else:
+            print("cleanup: no orphaned files found")
 
 
 if __name__ == "__main__":

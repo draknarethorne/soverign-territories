@@ -8,6 +8,7 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "companion": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
     "background": "data/art/backgrounds/evening/moonlit-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-human.txt",

@@ -13,6 +13,8 @@ Preserve the subject from the reference image exactly - facial likeness and bone
 
 Eyes glowing {{ACCENT_SOFT}}, luminous, mid-cast (override the incoming eye colour).
 
+Companion: {{COMPANION}}.
+
 Environment: {{BACKGROUND}}.
 A light breeze lifts her cape and a few strands of her hair.
 
