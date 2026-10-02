@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/dungeons/ossuary-violet-sky",
+  "kind": "background",
+  "name": "Ossuary Under a Violet-Black Sky",
+  "description": "a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind her; a skeletal figure rising from the ground nearby",
+  "mood": "necromantic, foreboding, regal",
+  "compatibleStages": ["scene"],
+  "notes": "Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_SD-001_Final.txt, extended with the 'skeleton rising from the ground' detail from this session's conversation."
+}
