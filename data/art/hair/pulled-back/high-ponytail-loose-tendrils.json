@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/high-ponytail-loose-tendrils",
+  "kind": "hair",
+  "name": "High Ponytail with Loose Tendrils",
+  "a_pose_style": "gathered into a high, sleek ponytail with a few long tendrils left loose to frame the temples and cheekbones",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is gathered into a high, sleek ponytail, with a few long tendrils deliberately left loose to frame the temples and cheekbones, seductive and exotic.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

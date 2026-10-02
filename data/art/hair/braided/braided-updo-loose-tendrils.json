@@ -1,0 +1,13 @@
+{
+  "id": "hair/braided/braided-updo-loose-tendrils",
+  "kind": "hair",
+  "name": "Braided Updo with Loose Tendrils",
+  "a_pose_style": "an elaborate braided updo at the crown, with wispy tendrils left loose at the temples and nape",
+  "breeze": "Very light breeze.",
+  "hair_change": "Hair is woven into an elaborate braided updo at the crown, with wispy tendrils deliberately left loose at the temples and nape, an exotic, alluring fantasy-glamour look.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

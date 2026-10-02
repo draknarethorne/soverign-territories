@@ -5,6 +5,6 @@
   "heroArt": "data/art/heroes/drakness-thorne.json",
   "component": "data/art/hair/braided/braided-crown.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
-  "output": "prompts/art/base-set/Drakness/hair/braided/Drakness_Hair_BraidedCrown.txt",
+  "output": "prompts/art/base-set/Drakness/hair/braided/Drakness_Hair_Braided_BraidedCrown.txt",
   "denoise": "~0.4-0.6"
 }
