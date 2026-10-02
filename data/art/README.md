@@ -73,7 +73,9 @@ data/art/
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
 │                                   non-caster martial heroes)
-│   └── dragons/                    (future — a dragon archetype's own templates)
+│   └── dragons/                    ✅ Archetype: Elder Dragon (pose-dragon.txt, head-dragon.txt) —
+│                                   text-to-image, NOT img2img (no incoming reference to edit;
+│                                   a dragon is generated entirely from its own description).
 │
 ├── _sets/                          ASSEMBLY: one folder per GROUP, same name as its definitions-
 │   │                               layer twin below — the recipe .json files that actually
@@ -84,8 +86,11 @@ data/art/
 │   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness)
 │   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
 │   │   └── <slug>/<stage>/<family>/*.json
-│   └── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — first-pass
-│       └── <slug>/<stage>/*.json   minimal scaffold, 3 archetype-grouped default wardrobe sets
+│   ├── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — first-pass
+│   │   └── <slug>/<stage>/*.json   minimal scaffold, 3 archetype-grouped default wardrobe sets
+│   └── elder-dragons/              ✅ 20 cards (10 dragons × pose/head) — text-to-image only, no
+│       └── <slug>/<stage>/*.json   scene stage yet (dragons aren't humanoid, no outfit/companion
+│                                   concept applies to them the way it does a hero)
 │
 ├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
@@ -130,11 +135,12 @@ data/art/
 │   └── elder-dragons/              aligned by element to the female Drakn sisters per the codex's
 │                                   Element Alignment table. Only Pyraxis is grounded in archived
 │                                   content; the other 9 are first-pass invented, colour-grounded
-│                                   in their paired hero's own palette. Not yet wired as a hero's
-│                                   bonded pet beyond Pyraxis's companion/ placement piece — a
-│                                   dragon doesn't have its own pose/scene archetype templates yet
-│                                   (dragons aren't humanoid), so these are companion/background
-│                                   identities only, not independently renderable subjects.
+│                                   in their paired hero's own palette. Each now has its own
+│                                   text-to-image A-pose/Head via _sets/elder-dragons/ (see
+│                                   _templates/dragons/) — but no outfit/scene stage yet, since a
+│                                   dragon doesn't wear armor/clothing the way a humanoid hero does;
+│                                   Pyraxis is additionally referenced as a companion/ placement
+│                                   piece inside Draknora's own scene (two different concerns).
 ├── pets/                           ⬜ CATEGORY: future.
 ├── buildings/                      ⬜ CATEGORY: future.
 └── backgrounds/                    ✅ CATEGORY: forests/, dungeons/, elemental/, cityscape/,
@@ -258,6 +264,14 @@ piece fill the same slot in many different outfits. `tools/generators/gen_prompt
 everything, fills `{{TOKENS}}`, and writes the result to `output` under `prompts/`. The generator
 itself has **zero hardcoded paths** — every path is a string field on the card JSON, so
 moving/renaming folders only ever means updating path strings, never generator logic.
+
+**`heroArt` doesn't have to be a humanoid hero** — if the loaded JSON has no `art` key (a dragon
+identity, e.g. `dragons/elder-dragons/pyraxis.json`), `generate()` branches to
+`tokens_for_dragon()` instead of `tokens_for()`, producing a much smaller token set (`{{DRAGON}}`,
+`{{DESCRIPTION}}`, `{{ELEMENT}}`) for the dragon archetype's own text-to-image templates
+(`_templates/dragons/pose-dragon.txt`, `head-dragon.txt` — no incoming reference image, no
+"maintain fidelity to the reference image" line, since there's no existing dragon photo to edit
+from; the whole image is generated from the identity file's own `description`).
 
 Example — swapping a weapon without touching the armor at all:
 
