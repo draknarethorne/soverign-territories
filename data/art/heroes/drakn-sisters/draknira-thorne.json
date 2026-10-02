@@ -26,7 +26,7 @@
         "sunburnt skin",
         "overly tanned skin"
       ],
-      "hairStyleComponent": "data/art/universal/hair/down/center-part-wavy.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
     },
     "physique": {
       "build": "Lithe, slender, long-limbed build",
