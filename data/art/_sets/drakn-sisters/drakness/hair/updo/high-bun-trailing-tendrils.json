@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "hair",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "component": "data/art/heroes/components/hair/updo/high-bun-trailing-tendrils.json",
+  "component": "data/art/universal/hair/updo/high-bun-trailing-tendrils.json",
   "template": "data/art/_templates/heroes/hair-human.txt",
   "output": "prompts/drakn-sisters/Drakness/hair/updo/Drakness_Hair_Updo_HighBunTrailingTendrils.txt",
   "denoise": "~0.4-0.6"

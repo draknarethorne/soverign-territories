@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "hair",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "component": "data/art/heroes/components/hair/framed/bangs-tapered.json",
+  "component": "data/art/universal/hair/framed/bangs-tapered.json",
   "template": "data/art/_templates/heroes/hair-human.txt",
   "output": "prompts/drakn-sisters/Drakness/hair/framed/Drakness_Hair_Framed_BangsTapered.txt",
   "denoise": "~0.4-0.6"

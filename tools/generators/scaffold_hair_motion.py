@@ -489,7 +489,7 @@ for family, entries in HAIR.items():
         }
         if source:
             comp["sourceVariant"] = source
-        write_json(ROOT / f"data/art/heroes/components/hair/{family}/{slug}.json", comp)
+        write_json(ROOT / f"data/art/universal/hair/{family}/{slug}.json", comp)
         hair_written.append(f"hair/{family}/{slug}")
 
         card = {
@@ -497,7 +497,7 @@ for family, entries in HAIR.items():
             "kind": "base-set",
             "stage": "hair",
             "heroArt": HERO_ART,
-            "component": f"data/art/heroes/components/hair/{family}/{slug}.json",
+            "component": f"data/art/universal/hair/{family}/{slug}.json",
             "template": "data/art/_templates/heroes/hair-human.txt",
             "output": f"prompts/drakn-sisters/Drakness/hair/{family}/Drakness_Hair_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
@@ -522,7 +522,7 @@ for family, entries in MOTION.items():
         }
         if source:
             comp["sourceVariant"] = source
-        write_json(ROOT / f"data/art/heroes/components/motion/{family}/{slug}.json", comp)
+        write_json(ROOT / f"data/art/universal/motion/{family}/{slug}.json", comp)
         motion_written.append(f"motion/{family}/{slug}")
 
         card = {
@@ -530,7 +530,7 @@ for family, entries in MOTION.items():
             "kind": "base-set",
             "stage": "motion",
             "heroArt": HERO_ART,
-            "component": f"data/art/heroes/components/motion/{family}/{slug}.json",
+            "component": f"data/art/universal/motion/{family}/{slug}.json",
             "template": "data/art/_templates/heroes/motion-human.txt",
             "output": f"prompts/drakn-sisters/Drakness/motion/{family}/Drakness_Motion_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",

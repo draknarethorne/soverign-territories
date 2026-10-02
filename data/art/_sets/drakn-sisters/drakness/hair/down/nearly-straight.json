@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "hair",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "component": "data/art/heroes/components/hair/down/nearly-straight.json",
+  "component": "data/art/universal/hair/down/nearly-straight.json",
   "template": "data/art/_templates/heroes/hair-human.txt",
   "output": "prompts/drakn-sisters/Drakness/hair/down/Drakness_Hair_Down_NearlyStraight.txt",
   "denoise": "~0.4-0.6"
