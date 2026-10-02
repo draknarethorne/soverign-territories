@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/high-ponytail-sleek",
+  "kind": "hair",
+  "name": "Sleek High Ponytail",
+  "a_pose_style": "gathered into a high, sleek ponytail at the crown, smooth and polished with no loose strands",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is gathered into a high, sleek ponytail at the crown, smooth and polished with every strand pulled back cleanly.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}
