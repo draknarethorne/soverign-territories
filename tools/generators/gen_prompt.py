@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """Generate a prompt .txt from an art-source card + hero card + stage template.
 
-Pilot scope: X_Pose. Reads an art-source card (data/art/base-set/<hero>/<art>.json),
-pulls traits from the referenced hero card, fills the {{TOKEN}} slots in the template,
-and writes the output .txt. Model-agnostic — the output feeds any ComfyUI workflow.
+Reads a card (data/art/_sets/<group>/<slug>/<stage>/[<family>/]<name>.json), pulls traits
+from the referenced hero def, fills the {{TOKEN}} slots in the template, and writes the
+output .txt under prompts/<group>/<Hero>/... Model-agnostic — the output feeds any ComfyUI
+workflow.
 
 Usage:
-    python tools/generators/gen_prompt.py [art-card.json]
-Defaults to the Drakness X-Pose card.
+    python tools/generators/gen_prompt.py                                   # everything
+    python tools/generators/gen_prompt.py <card.json>                       # one exact file
+    python tools/generators/gen_prompt.py --group drakn-sisters             # one group
+    python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
+    python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair
+    python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness --stage hair --family down
+Filters compose (all default to "any"); omitting all of them generates every card under
+data/art/_sets/.
 """
+import argparse
 import json
 import pathlib
 import re
@@ -148,6 +156,42 @@ def generate(card_path):
     print(f"wrote {card['output']}")
 
 
+def iter_card_paths(group="*", slug="*", stage="*", family=None):
+    """Glob data/art/_sets/<group>/<slug>/<stage>/[<family>/]*.json. "**" absorbs the
+    optional family level, since some stages (pose, head) have no family subfolder."""
+    base = ROOT / "data/art/_sets"
+    pattern = f"{group}/{slug}/{stage}/{family}/**/*.json" if family else f"{group}/{slug}/{stage}/**/*.json"
+    return sorted(base.glob(pattern))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("card", nargs="?", help="Path to one exact card JSON (back-compat).")
+    parser.add_argument("--group", default="*", help="e.g. drakn-sisters, angel-primes")
+    parser.add_argument("--slug", default="*", help="a hero/entity slug within the group")
+    parser.add_argument("--stage", default="*", help="e.g. pose, head, hair, motion")
+    parser.add_argument("--family", default=None, help="e.g. down, walking, romantic")
+    args = parser.parse_args()
+
+    if args.card:
+        generate(args.card)
+        return
+
+    paths = iter_card_paths(args.group, args.slug, args.stage, args.family)
+    if not paths:
+        sys.exit("No cards matched the given filters.")
+
+    ok = fail = 0
+    for p in paths:
+        rel = str(p.relative_to(ROOT))
+        try:
+            generate(rel)
+            ok += 1
+        except SystemExit as e:
+            print(f"FAILED {rel}: {e}")
+            fail += 1
+    print(f"ok={ok} fail={fail}")
+
+
 if __name__ == "__main__":
-    card = sys.argv[1] if len(sys.argv) > 1 else "data/art/_sets/drakn-sisters/drakness/pose/drakness-x-pose.json"
-    generate(card)
+    main()
