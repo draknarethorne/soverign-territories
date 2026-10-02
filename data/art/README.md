@@ -224,6 +224,22 @@ a signature scene. This first pass is deliberately bare-bones (one armor set, on
 each) — the Iridescent/Raven-style per-hero decomposition the Drakn sisters have can follow later,
 per-hero, as each one gets real design attention.
 
+**Signature scenes: gaze toward camera, and an "effects" layer for every one** — two rules
+enforced across every signature scene after an audit found violations: (1) the pose's `body`/`gaze`
+should keep the face substantially toward camera — a true side-profile motion hides too much of
+the face for a card meant to represent that hero (this is why Draknora's Dragon Flight switched
+from `motion/standing/side-profile-elegant.json` to `three-quarter-glamour.json` — a 3/4 turn
+still reads as dynamic but keeps most of the face visible; pure off-camera/profile motions are
+fine for glamour-library variety, just not for a hero's signature card). (2) every signature scene
+should have *something* in its `effects` slot beyond a flat "no additional magical effects" —
+swirling leaves, drifting ice crystals, dust, mist, static, whatever fits the hero's element —
+literal text is fine, it doesn't need to be a shared reusable piece unless the same effect is
+likely to recur elsewhere. A hero-specific detail tied to a *specific worn item* (e.g. Draknora's
+"flames around her glowing sandals") belongs in the scene's `effects` slot, not on the footwear
+piece itself — the footwear (`wardrobe/footwear/glowing-strap-heels.json`) is shared across many
+heroes in their own palette, so baking in a permanent flame effect there would leak onto every
+other hero wearing it; the effect is a property of *this scene*, not of the shoes.
+
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
 everything under `prompts/` is already generated art output (no sibling non-art content to
 disambiguate from, so no `_sets/` wrapper needed there):

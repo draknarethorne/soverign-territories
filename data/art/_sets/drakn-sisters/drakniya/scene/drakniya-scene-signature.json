@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
-    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "effects": "Loose leaves and faint {{ACCENT_SOFT}} motes of pollen drift and swirl gently around her, stirred by living magic.",
     "companion": "her aligned Elder Dragon, Sylvanya, visible in the distance beyond the trees, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold",
     "background": "data/art/backgrounds/forests/ancient-grove.json"
   },

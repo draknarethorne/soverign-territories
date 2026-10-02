@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-bound/hauk-hammerfell.json",
   "name": "Signature",
   "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression resolute and warm, a faint righteous confidence in his eyes.",
-  "effects": "Soft, radiant moonlight; no additional magical effects.",
+  "effects": "Soft motes of golden light drift gently around him, faint radiant warmth emanating from his armor.",
   "components": {
     "wearing": "heavy Radiant Gold-toned plate armor over the chest and shoulders, Ivory White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a radiant sunburst emblem emblazoned over the chest plate, gold filigree tracing the edges",
     "jewelry": "none, unadorned",
