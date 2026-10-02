@@ -10,7 +10,7 @@
     "wearing": "data/art/wardrobe/armor/plate-tank.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/broadsword-and-shield.json",
+    "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",
     "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

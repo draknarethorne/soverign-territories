@@ -11,7 +11,7 @@
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/broadsword-and-shield.json"
+    "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",
   "output": "prompts/drakn-bound/Draknare/armor/Draknare_Armor_Default.txt",

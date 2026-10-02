@@ -10,7 +10,7 @@
     "wearing": "data/art/wardrobe/armor/leather-rogue.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
-    "holding": "data/art/wardrobe/weapons/paired-daggers.json",
+    "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",
     "background": "data/art/backgrounds/forests/ancient-grove.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

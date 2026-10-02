@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers",
+  "kind": "holding",
+  "name": "Thorn Daggers (Nizaras signature)",
+  "description": "a pair of curved {{ACCENT_SOFT}} thorn-edged daggers, one in each hand, {{PRIMARY}}-wrapped grips, vine-like serrations along the blades",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Nizaras Featherstone — first-pass invented, fitting his Rogue class and Grass element. Replaces the shared wardrobe/weapons/paired-daggers.json default for this hero specifically."
+}

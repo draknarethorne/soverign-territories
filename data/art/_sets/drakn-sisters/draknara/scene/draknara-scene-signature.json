@@ -1,0 +1,20 @@
+{
+  "artId": "draknara-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "holding": "data/art/wardrobe/weapons/ornate-staff.json",
+    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "background": "data/art/backgrounds/forests/ancient-grove.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces (gown, jewelry set, heels, ornate staff, ambient glow) in Draknara's own Terracotta Ochre/Rich Bronze palette, plus the existing ancient-grove background (fits Earth/Shaman thematically). Shortcut per explicit instruction: no unique signature item yet beyond the shared defaults -- can be swapped for something more bespoke later."
+}
