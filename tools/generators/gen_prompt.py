@@ -114,7 +114,7 @@ def tokens_for_dragon(dragon):
     }
 
 
-_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood"}
+_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood", "element"}
 
 
 # A motion's own default gaze/expression are stored under these names so the

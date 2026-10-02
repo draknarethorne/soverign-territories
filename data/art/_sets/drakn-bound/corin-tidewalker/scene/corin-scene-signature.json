@@ -4,13 +4,14 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-bound/corin-tidewalker.json",
   "name": "Signature",
-  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move.",
+  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, his expression calm and weathered, eyes scanning like a hunter at sea.",
   "effects": "Fine sea-spray drifts faintly in the air around him.",
   "components": {
-    "wearing": "data/art/wardrobe/armor/leather-rogue.json",
+    "wearing": "close-fitting Deep Teal-toned light leather armor, Seafoam Green accent straps across the chest and hips, built for silent movement; scale-like overlapping plates across the torso, a shell-shaped clasp at the collar",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json",
+    "companion": "his bonded Shark, a massive sleek predator circling in the shallows at his feet",
     "background": "data/art/backgrounds/cityscape/city-skyline-dusk.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

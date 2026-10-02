@@ -1,5 +1,5 @@
-=== Draknava Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Draknava Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with silver-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Sky Cerulean high heels with glowing silver straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a playful, knowing smile, eyes bright with mischief. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright silver glow around a skull-shaped silver jewel at the top.
 
 a faint silver glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing silver, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of sky-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk.
 
 Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
 

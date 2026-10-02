@@ -6,7 +6,7 @@
   "name": "Default",
   "aesthetic": "disciplined knight aesthetic",
   "components": {
-    "wearing": "data/art/wardrobe/armor/plate-tank.json",
+    "wearing": "heavy Glacial Blue-toned plate armor over the chest and shoulders, Frost White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; frost patterns etched into the pauldrons, a crest of interlocking icicles at the collar",
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",

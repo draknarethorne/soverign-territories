@@ -4,13 +4,14 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-bound/malakor-venomcaller.json",
   "name": "Signature",
-  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move.",
+  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, his expression cold and calculating, a thin, predatory smile.",
   "effects": "A faint toxic-green mist curls low around his feet.",
   "components": {
-    "wearing": "data/art/wardrobe/armor/leather-rogue.json",
+    "wearing": "close-fitting Venom Green-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/malakor-venomcaller/weapons/venomfang-daggers.json",
+    "companion": "his bonded Basilisk, a serpentine reptile with venom-slick scales and piercing eyes, coiled at his feet",
     "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",

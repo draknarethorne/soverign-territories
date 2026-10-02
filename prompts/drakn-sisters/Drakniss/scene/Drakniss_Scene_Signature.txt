@@ -1,5 +1,5 @@
-=== Drakniss Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Drakniss Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with gold-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Luminous Ivory White high heels with glowing gold straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a serene, warm smile, eyes soft with compassion. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright gold glow around a skull-shaped gold jewel at the top.
 
 a faint gold glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing gold, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel.
 
 Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
 

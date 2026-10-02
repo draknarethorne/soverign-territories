@@ -1,5 +1,5 @@
-=== Drakniya Thorne · Scene (Outfit + Effects): Signature (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Drakniya Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,13 +13,15 @@ Wearing a layered ethereal gown of sheer fabric that flows around her - frosted 
 Jewelry: Polished Silver with sage-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Emerald Green high heels with glowing sage straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a calm, knowing smile, eyes gentle and patient. one arm raised and channeling energy, the other hand cupped at her side.
 
 Holding an ornate staff in one hand, raised, with a bright sage glow around a skull-shaped sage jewel at the top.
 
 a faint sage glow lingers softly, ambient and understated, nothing overtly magical.
 
 Eyes glowing sage, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Sylvanya, visible in the distance beyond the trees, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold.
 
 Environment: a sun-dappled ancient forest grove, towering moss-covered trees, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
 
