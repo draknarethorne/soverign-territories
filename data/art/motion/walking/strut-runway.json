@@ -6,8 +6,8 @@
   "breeze": "Breeze flowing any direction.",
   "body": "striding forward with purpose, hips rolling with each step, shoulders back.",
   "head": "level, facing forward.",
-  "gaze": "fixed ahead, confident.",
-  "expression": "fierce, focused, lips softly together.",
+  "defaultGaze": "fixed ahead, confident.",
+  "defaultExpression": "fierce, focused, lips softly together.",
   "pose": "arms swinging in rhythm with the stride; one foot placed directly in front of the other.",
   "extras": [],
   "compatibleStages": [

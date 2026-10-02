@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "walking away from the camera, weight shifting with the stride, back and shoulders in view.",
   "head": "turned back over the shoulder toward the camera, mid-stride.",
-  "gaze": "glancing back to camera.",
-  "expression": "alluring, a soft knowing smile.",
+  "defaultGaze": "glancing back to camera.",
+  "defaultExpression": "alluring, a soft knowing smile.",
   "pose": "one hand trailing lightly at her side, caught mid-step as she glances back.",
   "extras": [],
   "compatibleStages": [

@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "walking slowly and deliberately towards the camera, hips swaying prominently with each step.",
   "head": "level, chin slightly lowered, facing the camera.",
-  "gaze": "sultry, half-lidded gaze to camera.",
-  "expression": "sultry, composed, lips softly together.",
+  "defaultGaze": "sultry, half-lidded gaze to camera.",
+  "defaultExpression": "sultry, composed, lips softly together.",
   "pose": "arms relaxed and barely moving, weight settling into each slow step.",
   "extras": [],
   "compatibleStages": [

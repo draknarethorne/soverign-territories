@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "full side profile to the camera, long neck, shoulders back, chest lifted.",
   "head": "in profile, chin lifted.",
-  "gaze": "off-camera into the distance.",
-  "expression": "composed, serene; lips softly together; expressive, sultry brows.",
+  "defaultGaze": "off-camera into the distance.",
+  "defaultExpression": "composed, serene; lips softly together; expressive, sultry brows.",
   "pose": "one foot forward for an elegant line; arms relaxed with a graceful hand.",
   "extras": [],
   "compatibleStages": [

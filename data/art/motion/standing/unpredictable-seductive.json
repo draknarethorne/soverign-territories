@@ -6,8 +6,8 @@
   "breeze": "Random slight breeze.",
   "body": "chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position.",
   "head": "following the body's unpredictable shift.",
-  "gaze": "seductive, unpredictable.",
-  "expression": "seductive and unpredictable; lips lush and active, non-neutral.",
+  "defaultGaze": "seductive, unpredictable.",
+  "defaultExpression": "seductive and unpredictable; lips lush and active, non-neutral.",
   "pose": "hands in unpredictable positions, touching her body.",
   "extras": [],
   "compatibleStages": [

@@ -6,8 +6,8 @@
   "breeze": "Breeze flowing any direction.",
   "body": "twisting through a 3/4 turn toward the camera; one knee bending, one leg straddled to the side.",
   "head": "turned over the shoulder toward the camera.",
-  "gaze": "tracking the viewer.",
-  "expression": "dynamic, intensely expressive, caught in a seductive emotional shift; features alternating between a playful, alluring grin and a seductive smile; lips active and non-neutral, brow line happy.",
+  "defaultGaze": "tracking the viewer.",
+  "defaultExpression": "dynamic, intensely expressive, caught in a seductive emotional shift; features alternating between a playful, alluring grin and a seductive smile; lips active and non-neutral, brow line happy.",
   "pose": "one hand touches the ground, the other touches her body.",
   "extras": [],
   "compatibleStages": [

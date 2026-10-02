@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "standing softly, weight settled on one leg, chest open toward camera.",
   "head": "tilted slightly, chin soft.",
-  "gaze": "soft, romantic gaze to camera.",
-  "expression": "soft, romantic, lips slightly parted.",
+  "defaultGaze": "soft, romantic gaze to camera.",
+  "defaultExpression": "soft, romantic, lips slightly parted.",
   "pose": "one hand resting gently at her collarbone, the other relaxed at her side.",
   "extras": [],
   "compatibleStages": [

@@ -6,8 +6,8 @@
   "breeze": "Strong breeze flowing towards her.",
   "body": "standing softly, head tilted back slightly, basking in the breeze.",
   "head": "tilted back gently, eyes soft or closed.",
-  "gaze": "soft, dreamy, eyes closed or half-lidded.",
-  "expression": "serene, dreamy, soft closed-mouth smile.",
+  "defaultGaze": "soft, dreamy, eyes closed or half-lidded.",
+  "defaultExpression": "serene, dreamy, soft closed-mouth smile.",
   "pose": "arms relaxed at her sides, hair caught fully in the wind.",
   "extras": [],
   "compatibleStages": [
