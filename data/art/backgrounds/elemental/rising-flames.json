@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/elemental/rising-flames",
+  "kind": "background",
+  "name": "Soft Rising Flames",
+  "description": "a soft gradient of rising flames glowing upward behind her, warm amber and red light washing across the ground",
+  "mood": "fiery, dramatic, elemental",
+  "compatibleStages": ["scene"],
+  "notes": "Grounded in the archived prompts/_archive/Draknora/final/Draknora_FireRed_Elegant_2.json experiment ('soft gradient flames going up in background'). Fire-element specific — other elements (ice, nature, lightning) would need their own sibling pieces here, same pattern."
+}
