@@ -3,9 +3,9 @@
 **Status:** Living document · **Last updated:** 2026-10-02
 
 This is the authoritative explanation of how `data/art/` is organized. Read this before adding any
-new hero, component, or card-production folder — the goal is that we never have to reshuffle
-directories again as heroes, dragons, pets, buildings, armor, weapons, and new card productions
-get added.
+new hero, race, component, or card-production folder — the goal is that we never have to reshuffle
+directories again as heroes, races, dragons, pets, buildings, armor, weapons, and new card
+productions get added.
 
 Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-pipeline.md) and
 [`docs/art/prompt-pattern.md`](../../docs/art/prompt-pattern.md).
@@ -15,8 +15,21 @@ Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-
 ## The two layers (this is the core idea — everything else is detail)
 
 1. **Definitions** — reusable facts: who a hero *is* (palette/physique), and reusable style
-   components (a hairstyle, a motion/pose, eventually armor/clothing/weapons). These files don't
-   generate anything by themselves. They're set-agnostic — any group can point at them.
+   components (hairstyles, motion/poses, eventually armor/clothing/weapons). These files don't
+   generate anything by themselves. Within definitions there's a **specificity spectrum**, most
+   generic to most specific — pick the narrowest tier a component actually needs, default to the
+   widest:
+   - **`universal/<kind>/<family>/`** — usable by absolutely anyone, any race, any hero ("a long
+     sword", "a kite shield", a hairstyle any humanoid could wear). The default home for a new
+     component unless it has a real reason to be narrower. Hair/motion currently live here.
+   - **`races/<race-slug>/<kind>/<family>/`** — shared by every hero/NPC of that race, narrower
+     than universal but not locked to one named character (a Dark Elf-specific hair texture, an
+     Ogre-scaled armor silhouette).
+   - **`heroes/<group>/<hero-slug>/<kind>/`** — signature items unique to ONE named hero (e.g. a
+     hero's own signature weapon), living alongside that hero's identity file in the same group
+     folder (`heroes/drakn-sisters/drakness/armor/` next to `heroes/drakn-sisters/drakness-thorne.json`).
+   A hero can draw from all three tiers at once — most of her look might be universal/race-shared,
+   with one or two deliberately unique signature pieces.
 2. **Assembly** (`_sets/<group>/`) — the testing/working folder where a group's hero definition +
    an optional component + a stage template get pulled together into an actual generated prompt.
    Each `_sets/` folder is named **identically to the definitions-layer group it mirrors**
@@ -53,23 +66,36 @@ data/art/
 │   │   └── <slug>/<stage>/<family>/*.json
 │   └── drakn-bound/                ⬜ future, once the 10 male heroes get art-ified
 │
-├── heroes/                         CATEGORY: humanoid hero definitions + reusable components.
-│   ├── components/                ✅ Reusable STYLE traits, usable by any hero in any group.
-│   │   ├── hair/<family>/*.json        (44)
-│   │   ├── motion/<family>/*.json      (25)
-│   │   ├── armor/<family>/*.json      ⬜ (future)
-│   │   ├── clothing/<family>/*.json   ⬜ (future)
-│   │   └── weapons/<family>/*.json    ⬜ (future)
+├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
 │   │   └── <slug>-thorne.json
+│   │   └── <slug>/<kind>/*.json    ⬜ signature items unique to that one hero (future, e.g.
+│   │                               drakness/armor/ for a weapon only she carries)
 │   ├── drakn-bound/                ⬜ GROUP: the 10 male heroes bound to the sisters in the story
 │   │                               (Draknare Thorne, Hauk Hammerfell, ...) — reserved, not yet
 │   │                               populated.
 │   └── angel-primes/               ✅ GROUP: Angelo Prime / Angelica Prime — calibration test-bed
 │       └── <slug>.json             heroes, not part of any real card series.
 │
-├── dragons/                        ⬜ CATEGORY: future. Same shape — components/ + group folders
-│                                   (e.g. elder-dragons/) + a matching _sets/elder-dragons/.
+├── races/                          🔶 CATEGORY: shared by every hero/NPC of a race — narrower than
+│   │                               universal, not locked to one named hero. One skeletal example
+│   │                               seeded (dark-elf/hair/down/midnight-cascade.json, not yet wired
+│   │                               to any hero's hairStyleComponent).
+│   └── dark-elf/
+│       └── hair/<family>/*.json    (and eventually motion/, armor/, clothing/, weapons/ — same
+│                                   kind folders as universal/, just race-scoped)
+│
+├── universal/                      ✅ CATEGORY: usable by absolutely anyone, any race, any hero —
+│   │                               the default home for a new component unless it has a real
+│   │                               reason to be narrower (race-scoped or hero-signature).
+│   ├── hair/<family>/*.json        (44)
+│   ├── motion/<family>/*.json      (25)
+│   ├── armor/<family>/*.json      ⬜ (future)
+│   ├── clothing/<family>/*.json   ⬜ (future)
+│   └── weapons/<family>/*.json    ⬜ (future)
+│
+├── dragons/                        ⬜ CATEGORY: future. Same shape — group folders (e.g.
+│                                   elder-dragons/) + a matching _sets/elder-dragons/.
 ├── pets/                           ⬜ CATEGORY: future.
 ├── buildings/                      ⬜ CATEGORY: future.
 └── backgrounds/                    🔶 CATEGORY: one skeletal example seeded (forests/ancient-grove.json)
@@ -100,8 +126,9 @@ Definitions never get mirrored into `prompts/` — they aren't "generated," they
 
 | Term | Meaning | Example |
 | --- | --- | --- |
-| **category** | What *kind* of subject | `heroes`, `dragons`, `pets`, `buildings`, `backgrounds` |
-| **group** | A themed roster, same name used on both layers | `heroes/drakn-sisters/` (definitions) ↔ `_sets/drakn-sisters/` (assembly) |
+| **category** | What *kind* of subject | `heroes`, `races`, `universal`, `dragons`, `pets`, `buildings`, `backgrounds` |
+| **group** | A themed hero roster, same name used on both layers | `heroes/drakn-sisters/` (definitions) ↔ `_sets/drakn-sisters/` (assembly) |
+| **specificity tier** | How widely a component can be reused | `universal` (anyone) → `races/<race>` (a race) → `heroes/<group>/<hero-slug>` (one hero's signature item) |
 | **component** | A reusable style trait, referenced by a `_sets/` card | a hairstyle, a motion pose |
 | **stage** | Which generation step | `pose`, `head`, `hair`, `motion` |
 | **family** | A sub-grouping of a component or card, for navigability | `down`, `walking`, `romantic` |
