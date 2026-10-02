@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-braided-updo-loose-tendrils",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "component": "data/art/hair/braided/braided-updo-loose-tendrils.json",
+  "template": "data/art/base-set/_templates/heroes/hair-human.txt",
+  "output": "prompts/art/base-set/Drakness/hair/braided/Drakness_Hair_Braided_BraidedUpdoLooseTendrils.txt",
+  "denoise": "~0.4-0.6"
+}

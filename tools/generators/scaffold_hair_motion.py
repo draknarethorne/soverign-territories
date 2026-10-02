@@ -170,6 +170,12 @@ HAIR = {
          "Light breeze.",
          "Hair is gathered into a ponytail with a thin strand wrapped neatly around the base, hiding the elastic.",
          [], None),
+        # --- new addition (exotic tendril look) ---
+        ("high-ponytail-loose-tendrils", "High Ponytail with Loose Tendrils",
+         "gathered into a high, sleek ponytail with a few long tendrils left loose to frame the temples and cheekbones",
+         "Light breeze.",
+         "Hair is gathered into a high, sleek ponytail, with a few long tendrils deliberately left loose to frame the temples and cheekbones, seductive and exotic.",
+         [], None),
     ],
     "updo": [
         ("pony-tail", None, None, None, None, None, None),  # already authored; skip
@@ -195,6 +201,12 @@ HAIR = {
          "Light breeze.",
          "The top section of hair is twisted back and secured at the crown, the rest left down in soft waves.",
          [], None),
+        # --- new addition (exotic tendril look) ---
+        ("high-bun-trailing-tendrils", "High Bun with Trailing Tendrils",
+         "swept up into a high bun with several long, loose tendrils escaping to trail along the neck and temples",
+         "Very light breeze.",
+         "Hair is swept up into a high bun, with several long, loose tendrils deliberately left loose to trail along the neck and temples, an exotic, alluring fantasy-glamour look.",
+         [], None),
     ],
     "braided": [
         ("fishtail-braid", "Fishtail Braid",
@@ -208,6 +220,12 @@ HAIR = {
         ("side-braid", "Loose Side Braid",
          "gathered into a single loose side braid draped over one shoulder",
          "No breeze.", "Hair is gathered into a single loose side braid draped over one shoulder.",
+         [], None),
+        # --- new addition (exotic tendril look) ---
+        ("braided-updo-loose-tendrils", "Braided Updo with Loose Tendrils",
+         "an elaborate braided updo at the crown, with wispy tendrils left loose at the temples and nape",
+         "Very light breeze.",
+         "Hair is woven into an elaborate braided updo at the crown, with wispy tendrils deliberately left loose at the temples and nape, an exotic, alluring fantasy-glamour look.",
          [], None),
     ],
 }
@@ -471,7 +489,7 @@ for family, entries in HAIR.items():
             "heroArt": HERO_ART,
             "component": f"data/art/hair/{family}/{slug}.json",
             "template": "data/art/base-set/_templates/heroes/hair-human.txt",
-            "output": f"prompts/art/base-set/Drakness/hair/{family}/Drakness_Hair_{label_of(slug)}.txt",
+            "output": f"prompts/art/base-set/Drakness/hair/{family}/Drakness_Hair_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
         write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/hair/{family}/{slug}.json", card)
@@ -504,7 +522,7 @@ for family, entries in MOTION.items():
             "heroArt": HERO_ART,
             "component": f"data/art/motion/{family}/{slug}.json",
             "template": "data/art/base-set/_templates/heroes/motion-human.txt",
-            "output": f"prompts/art/base-set/Drakness/motion/{family}/Drakness_Motion_{label_of(slug)}.txt",
+            "output": f"prompts/art/base-set/Drakness/motion/{family}/Drakness_Motion_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
         write_json(ROOT / f"data/art/base-set/{HERO_SLUG}/motion/{family}/{slug}.json", card)
