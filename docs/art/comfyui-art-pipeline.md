@@ -1,7 +1,7 @@
 # ComfyUI Art Pipeline — Hero Card Art
 
 **Status:** Living document · **Scope:** How we generate Sovereign Dawn hero card art
-**Owner:** Draknare Thorne · **Last updated:** 2026-09-30
+**Owner:** Draknare Thorne · **Last updated:** 2026-10-02 (paths/status refreshed against `data/art/README.md`, which is now the day-to-day authoritative reference — update there first)
 
 This describes *how we manage* the art-generation process — the stages, what each one
 produces, and how images are hand-carried from one workflow to the next. It is a
@@ -30,10 +30,11 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 | Location | Purpose |
 | --- | --- |
 | `workflows/<Hero>/` | **The real work.** ComfyUI workflow exports, one per experiment. Named `<Hero>_Qwen_<Category>_<Variant>.json` (e.g. `Drakness_Qwen_Armor_Elegant.json`). |
-| `data/art/base-set/_templates/heroes/*.txt` | **Canonical prompt templates** (Pose, Head, Hair, Motion) — `{{TOKEN}}` placeholders filled by `tools/generators/gen_prompt.py`. See [`prompt-pattern.md`](prompt-pattern.md) for block order/wording conventions. |
-| `data/art/heroes/`, `data/art/hair/`, `data/art/motion/`, `data/art/base-set/` | **Generator source of truth** — hero defs, reusable hair/motion components, and the base-set cards that glue a hero + component + template together. |
-| `prompts/art/base-set/<Hero>/<stage>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
-| `prompts/_archive/` | **Historical reference only** — the old `[BRACKETS]`/hand-copied template system and the original hand-crafted Drakness prompts. No longer live; Armor/Clothing/Weapons/Final still only exist here until componentized. |
+| `data/art/_templates/<archetype>/*.txt` | **Canonical prompt templates** (Pose, Head, Hair, Motion, Armor, Clothing, Scene) — `{{TOKEN}}` placeholders filled by `tools/generators/gen_prompt.py`. `heroes/` is the humanoid archetype; `dragons/` is the Elder Dragon archetype (text-to-image). See [`prompt-pattern.md`](prompt-pattern.md) for block order/wording conventions. |
+| `data/art/heroes/`, `data/art/races/`, `data/art/wardrobe/`, `data/art/motion/`, `data/art/dragons/`, `data/art/backgrounds/` | **Generator source of truth** — hero/dragon identities, reusable hair/motion/wardrobe pieces, backgrounds. |
+| `data/art/_sets/<group>/<slug>/<stage>/*.json` | **Assembly cards** — glue a hero/dragon + component(s) + template together. One folder per roster group (`drakn-sisters`, `drakn-bound`, `elder-dragons`, `angel-primes`). |
+| `prompts/<group>/<Hero>/<stage>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
+| `prompts/_archive/` | **Historical reference only** — the old `[BRACKETS]`/hand-copied template system and the original hand-crafted Drakness prompts. No longer live. |
 | `data/cards/sovereign-dawn/heroes/<hero>.json` | **Canon source** — element, class, archetype, `art.palette` (primary/accent/eye), companion, lore. The art must stay on-theme with this. |
 | `assets/examples/` | Reference/example images. |
 

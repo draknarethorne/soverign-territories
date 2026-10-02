@@ -2,17 +2,19 @@
 
 One consistent block order for every stage's prompt, so results are predictable across heroes and
 cards. **The generator (`tools/generators/gen_prompt.py`) is the canonical production path** — it
-compiles a hero definition (`data/art/heroes/<hero>-thorne.json`) + a reusable component
-(`data/art/hair|motion/<family>/<slug>.json`, when the stage has one) + a stage template
-(`data/art/base-set/_templates/heroes/*.txt`) into the final prompt `.txt` under
-`prompts/art/base-set/<Hero>/<stage>/<family>/`. Edit the **template / component / card**, never a
+compiles a hero/dragon definition (`data/art/heroes/<group>/<slug>-thorne.json` or
+`data/art/dragons/elder-dragons/<slug>.json`) + reusable component(s) (`data/art/{races,wardrobe,
+motion}/**/*.json`, via a card's `component`/`components` field) + a stage template
+(`data/art/_templates/<archetype>/*.txt`) into the final prompt `.txt` under
+`prompts/<group>/<Hero>/<stage>/<family>/`. Edit the **template / component / card**, never a
 generated `.txt` by hand — regenerate instead: `python tools/generators/gen_prompt.py <card.json>`.
+See [`data/art/README.md`](../../data/art/README.md) for the full directory/architecture reference.
 
 > The old hand-copied `[BRACKETS]`-per-hero system (`prompts/_templates/`, `prompts/<Hero>/`) is
 > retired and archived under `prompts/_archive/` — good historical reference for wording, but no
-> longer live. Armor, Clothing, and Weapons aren't componentized yet and still only exist as
-> hand-crafted reference files in the archive; componentizing them the same way Hair/Motion were
-> done is the planned next step (see the open questions in `docs/art/comfyui-art-pipeline.md`).
+> longer live. Armor, Clothing, and Scene are now fully componentized (see the stage table below) —
+> Fantasy/Weapons(standalone)/Background(standalone)/Pets(standalone) utility stages remain
+> archive-only, not yet needed as their own generator stage.
 
 ## Golden rules
 
@@ -80,32 +82,33 @@ Overall, [aesthetic] aesthetic.
 ## What each stage references / preserves / changes
 
 Group names match the `Drakness_Qwen_<group>` / `Drakness_X_<group>` ComfyUI workflows.
-**Componentized stages** (Pose, Head, Hair, Motion) generate from
-`data/art/base-set/_templates/heroes/*.txt` via `gen_prompt.py`, output to
-`prompts/art/base-set/<Hero>/<stage>/<family>/`. **Not-yet-componentized stages** (Clothing, Armor,
-Weapons, Fantasy, Final, Background, Pets) still only exist as hand-crafted reference text, archived
-under `prompts/_archive/` — treat as reference wording, not a live template.
+**Componentized stages** (Pose, Head, Hair, Motion, Clothing, Armor, Scene) generate from
+`data/art/_templates/<archetype>/*.txt` via `gen_prompt.py`, output to
+`prompts/<group>/<Hero>/<stage>/<family>/`. **Not yet their own generator stage** (Fantasy,
+standalone Weapons/Background/Pets plates) still only exist as hand-crafted reference text,
+archived under `prompts/_archive/` — treat as reference wording, not a live template.
 
 | Group | Reference | Preserve | Change | Background | Status | Template |
 | --- | --- | --- | --- | --- | --- | --- |
-| **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | ✅ componentized | [`pose-female-human.txt`](../../data/art/base-set/_templates/heroes/pose-female-human.txt) |
-| **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | ✅ componentized | [`head-human.txt`](../../data/art/base-set/_templates/heroes/head-human.txt) |
-| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | ✅ componentized (44 styles) | [`hair-human.txt`](../../data/art/base-set/_templates/heroes/hair-human.txt) |
-| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | ✅ componentized (25 poses) | [`motion-human.txt`](../../data/art/base-set/_templates/heroes/motion-human.txt) |
-| **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | ⬜ not yet componentized | archived: [`_TEMPLATE_Clothing.txt`](../../prompts/_archive/_TEMPLATE_Clothing.txt) |
-| **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | ⬜ not yet componentized | archived: [`_TEMPLATE_Armor.txt`](../../prompts/_archive/_TEMPLATE_Armor.txt) |
-| **Fantasy** *(optional, pre-final)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | ⬜ not yet componentized | archived: [`_TEMPLATE_Fantasy.txt`](../../prompts/_archive/_TEMPLATE_Fantasy.txt) |
-| **Final** | near-final | everything | scene + spell + pose/wind | in-world | ⬜ not yet componentized | archived: [`_TEMPLATE_Final.txt`](../../prompts/_archive/_TEMPLATE_Final.txt) |
-| **Weapons** *(utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | ⬜ not yet componentized | archived: [`_TEMPLATE_Weapons.txt`](../../prompts/_archive/_TEMPLATE_Weapons.txt) |
-| **Background** *(utility)* | — | — | a standalone scene plate | — | ⬜ not yet componentized | archived: [`_TEMPLATE_Background.txt`](../../prompts/_archive/_TEMPLATE_Background.txt) |
-| **Pets** *(utility)* | — | — | a summon/companion (multi-image ref) | plain | ⬜ not yet componentized | archived: [`_TEMPLATE_Pets.txt`](../../prompts/_archive/_TEMPLATE_Pets.txt) |
+| **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | ✅ componentized | [`pose-female-human.txt`](../../data/art/_templates/heroes/pose-female-human.txt) / [`pose-male-human.txt`](../../data/art/_templates/heroes/pose-male-human.txt) |
+| **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | ✅ componentized | [`head-human.txt`](../../data/art/_templates/heroes/head-human.txt) |
+| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | ✅ componentized (44 styles) | [`hair-human.txt`](../../data/art/_templates/heroes/hair-human.txt) |
+| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | ✅ componentized (26 poses, 'faceless' — gaze/expression are their own overridable concern) | [`motion-human.txt`](../../data/art/_templates/heroes/motion-human.txt) |
+| **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | ✅ componentized | [`clothing-human.txt`](../../data/art/_templates/heroes/clothing-human.txt) |
+| **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | ✅ componentized | [`armor-human.txt`](../../data/art/_templates/heroes/armor-human.txt) |
+| **Scene** (final card art) | A-pose, or a prior stage's output | likeness (+ outfit, for the two-stage path) | full scene: background, pose, effects, weapon/companion | in-world | ✅ componentized — 5 template variants for different outfit shapes (preserve/direct-describe/+companion/minimal/combat) | [`scene-human.txt`](../../data/art/_templates/heroes/scene-human.txt), [`scene-with-outfit-human.txt`](../../data/art/_templates/heroes/scene-with-outfit-human.txt), [`scene-with-companion-human.txt`](../../data/art/_templates/heroes/scene-with-companion-human.txt), [`scene-minimal-human.txt`](../../data/art/_templates/heroes/scene-minimal-human.txt), [`scene-combat-human.txt`](../../data/art/_templates/heroes/scene-combat-human.txt) |
+| **Dragon Pose/Head** | none — text-to-image | n/a | full dragon, generated from its own description | studio | ✅ componentized | [`pose-dragon.txt`](../../data/art/_templates/dragons/pose-dragon.txt), [`head-dragon.txt`](../../data/art/_templates/dragons/head-dragon.txt) |
+| **Fantasy** *(optional, pre-scene)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | ⬜ not yet componentized | archived: [`_TEMPLATE_Fantasy.txt`](../../prompts/_archive/_TEMPLATE_Fantasy.txt) |
+| **Weapons** *(standalone utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | ⬜ not yet componentized as its own stage (signature weapons instead live as `holding` pieces under `heroes/<group>/<slug>/weapons/`) | archived: [`_TEMPLATE_Weapons.txt`](../../prompts/_archive/_TEMPLATE_Weapons.txt) |
+| **Background** *(standalone utility)* | — | — | a standalone scene plate | — | ⬜ not yet componentized as its own stage (backgrounds instead live under `data/art/backgrounds/`, wired into the Scene stage) | archived: [`_TEMPLATE_Background.txt`](../../prompts/_archive/_TEMPLATE_Background.txt) |
+| **Pets** *(standalone utility)* | — | — | a summon/companion (multi-image ref) | plain | ⬜ not yet componentized as its own stage (dragons/bonded pets instead described inline or via `companion`/`dragons/` pieces) | archived: [`_TEMPLATE_Pets.txt`](../../prompts/_archive/_TEMPLATE_Pets.txt) |
 
 ## Component library, reuse, and the twin-pair convention
 
 Hair and Motion styles are **hero-agnostic, reusable components** —
-`data/art/hair/<family>/<slug>.json` and `data/art/motion/<family>/<slug>.json`. A base-set card
-(`data/art/base-set/<hero>/<stage>/<family>/<slug>.json`) just points a hero + a component at a
-template; any hero can reference any style with a one-line swap.
+`data/art/races/human/cosmetics/hair/<family>/<slug>.json` and `data/art/motion/<family>/<slug>.json`.
+An assembly card (`data/art/_sets/<group>/<slug>/<stage>/<family>/<slug>.json`) just points a hero
++ a component at a template; any hero can reference any style with a one-line swap.
 
 **Twin-pair convention.** Many styles should exist as a **plain** version and a **decorated** version
 of the same base style (e.g. a ponytail with vs. without loose face-framing tendrils), so the choice
@@ -331,12 +334,14 @@ Variety comes from the **seed**, not from vague words:
 ## Adding a new hairstyle / motion pose
 
 1. Add an entry to `tools/generators/scaffold_hair_motion.py` (preferred for anything following an
-   existing family's pattern), or hand-author the component + base-set card JSON directly for a
-   one-off.
-2. Run the script — it writes the component (`data/art/hair|motion/<family>/<slug>.json`) and the
-   Drakness base-set card (`data/art/base-set/drakness/<stage>/<family>/<slug>.json`). It's
-   idempotent: re-running overwrites existing entries with identical content and only adds new ones.
+   existing family's pattern, though its output paths predate the `_sets`/`races` reorg and may
+   need a quick check before trusting it), or hand-author the component + assembly card JSON
+   directly for a one-off.
+2. Run the script — it writes the component (`data/art/races/human/cosmetics/hair|motion/<family>/
+   <slug>.json`) and the Drakness assembly card (`data/art/_sets/drakn-sisters/drakness/<stage>/
+   <family>/<slug>.json`). It's idempotent: re-running overwrites existing entries with identical
+   content and only adds new ones.
 3. Generate: `python tools/generators/gen_prompt.py <card.json>`, or loop over
-   `data/art/base-set/drakness/<stage>/**/*.json` to regenerate everything for that stage.
+   `data/art/_sets/drakn-sisters/drakness/<stage>/**/*.json` to regenerate everything for that stage.
 4. Validate before committing: no `{{UNRESOLVED}}` tokens, no stray `", ,"`, all JSON still valid,
    and X_Pose/X_Head (hand-authored, not script-managed) still generate cleanly.
