@@ -1,0 +1,8 @@
+{
+  "id": "dragons/elder-dragons/lumira",
+  "kind": "dragon",
+  "name": "Lumira",
+  "description": "an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel",
+  "element": "Light",
+  "notes": "Skeletal identity, first pass -- aligned to Drakniss Thorne (Light) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Drakniss's own palette (Luminous Ivory White / Radiant Gold / Polished Steel)."
+}

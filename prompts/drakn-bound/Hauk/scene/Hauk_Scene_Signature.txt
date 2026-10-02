@@ -1,0 +1,29 @@
+=== Hauk Hammerfell · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Hauk Hammerfell (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing heavy Radiant Gold-toned plate armor over the chest and shoulders, white trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Radiant Gold-toned combat boots with white buckles, laced to the shin.
+
+He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance.
+
+Holding a broad-bladed white-edged sword in his right hand, a round Radiant Gold-toned shield with white trim strapped to his left forearm.
+
+Soft, radiant moonlight; no additional magical effects.
+
+Environment: an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low.
+
+Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, text, wording, watermark, logo.

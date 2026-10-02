@@ -1,0 +1,20 @@
+{
+  "artId": "hauk-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/hauk-hammerfell.json",
+  "name": "Signature",
+  "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance.",
+  "effects": "Soft, radiant moonlight; no additional magical effects.",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/plate-tank.json",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "holding": "data/art/wardrobe/weapons/broadsword-and-shield.json",
+    "background": "data/art/backgrounds/evening/moonlit-terrace.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Hauk/scene/Hauk_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the tank-group default wardrobe set + the existing moonlit-terrace background."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/armor/plate-tank",
+  "kind": "wearing",
+  "name": "Heavy Plate Armor (Tank default)",
+  "description": "heavy {{PRIMARY}}-toned plate armor over the chest and shoulders, {{ACCENT_SOFT}} trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Default armor set for Defense/Tank archetype male heroes (Shadow Knight, Knight, Paladin) — embeds {{PRIMARY}}/{{ACCENT_SOFT}}, reusable across any tank-type hero in their own palette. First-pass invented default, not grounded in archived content (no archived male-hero material exists yet)."
+}

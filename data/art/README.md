@@ -69,7 +69,10 @@ data/art/
 ├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders.
 │   └── heroes/                     Archetype: humanoid. (pose-female-human.txt, pose-male-human.txt,
 │                                   head-human.txt, hair-human.txt, motion-human.txt, armor-human.txt,
-│                                   clothing-human.txt)
+│                                   clothing-human.txt, scene-human.txt, scene-with-outfit-human.txt,
+│                                   scene-with-companion-human.txt, scene-minimal-human.txt,
+│                                   scene-combat-human.txt — no casting-eyes-glow line, for
+│                                   non-caster martial heroes)
 │   └── dragons/                    (future — a dragon archetype's own templates)
 │
 ├── _sets/                          ASSEMBLY: one folder per GROUP, same name as its definitions-
@@ -81,17 +84,19 @@ data/art/
 │   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness)
 │   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
 │   │   └── <slug>/<stage>/<family>/*.json
-│   └── drakn-bound/                ⬜ future, once the 10 male heroes get art-ified
+│   └── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — first-pass
+│       └── <slug>/<stage>/*.json   minimal scaffold, 3 archetype-grouped default wardrobe sets
 │
 ├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
 │   │   ├── <slug>-thorne.json      identity (palette/physique) — unchanged for all 10
-│   │   ├── drakness/               ✅ hero-SIGNATURE pieces: armor/, clothing/, weapons/, effects/
+│   │   ├── drakness/               ✅ hero-SIGNATURE pieces: armor/ (bone, iridescent, raven),
+│   │   │                           clothing/, weapons/, effects/
 │   │   └── draknora/               ✅ hero-SIGNATURE pieces: armor/, weapons/, effects/, and her
 │   │                               first companion/ piece (pyraxis-flight.json)
-│   ├── drakn-bound/                ⬜ GROUP: the 10 male heroes bound to the sisters in the story
-│   │                               (Draknare Thorne, Hauk Hammerfell, ...) — reserved, not yet
-│   │                               populated.
+│   ├── drakn-bound/                ✅ GROUP: the 10 male heroes bound to the sisters in the story.
+│   │   └── <slug>.json             identity (palette/physique, male build/chest/waist/legs schema)
+│   │                               — first-pass invented palettes, no archived source material.
 │   └── angel-primes/               ✅ GROUP: Angelo Prime / Angelica Prime — calibration test-bed
 │       └── <slug>.json             heroes, not part of any real card series.
 │
@@ -108,26 +113,36 @@ data/art/
 │   │                               heroes, and races — jewelry/capes/bracelets/accessories, not
 │   │                               bundled into any one complete "look." This is the library a
 │   │                               card's components dict pulls interchangeable slot-fillers from.
+│   ├── armor/*.json                (iridescent-bikini, plate-tank, leather-striker, leather-rogue
+│   │                               — the 3 are archetype-group defaults for male heroes)
+│   ├── arms/*.json                 (1: matching-bracelets, token-parameterized)
 │   ├── jewelry/necklaces/*.json    (2: bone-skull-pendant, ornate-gem-pendant)
 │   ├── jewelry/sets/*.json         (1: silver-gem-set, token-parameterized)
-│   ├── capes/*.json                (1: simple-black-leather)
+│   ├── capes/*.json                (2: simple-black-leather, sheer-glowing-cloak)
 │   ├── bracelets/*.json            (1: simple-silver)
-│   ├── footwear/*.json             (1: glowing-strap-heels, token-parameterized)
+│   ├── footwear/*.json             (2: glowing-strap-heels, combat-boots — both token-parameterized)
+│   ├── weapons/*.json              (broadsword-and-shield, greatsword, paired-daggers, trident —
+│   │                               archetype/thematic defaults for male heroes)
 │   └── accessories/*.json          (1: midnight-violet-satchel — Raven's bag, not yet wired;
 │                                   Raven needs its own template shape, see below)
 │
-├── dragons/                        🔶 CATEGORY: one real entry seeded — elder-dragons/pyraxis.json
-│   └── elder-dragons/              (Fire-aligned, Draknora's companion per the codex's Element
-│                                   Alignment table). Not yet wired as a hero's bonded pet — only
-│                                   referenced today via a hero's own companion/ placement piece
-│                                   (see heroes/ below). A matching _sets/elder-dragons/ is future.
+├── dragons/                        ✅ CATEGORY: all 10 Elder Dragons seeded (elder-dragons/*.json),
+│   └── elder-dragons/              aligned by element to the female Drakn sisters per the codex's
+│                                   Element Alignment table. Only Pyraxis is grounded in archived
+│                                   content; the other 9 are first-pass invented, colour-grounded
+│                                   in their paired hero's own palette. Not yet wired as a hero's
+│                                   bonded pet beyond Pyraxis's companion/ placement piece — a
+│                                   dragon doesn't have its own pose/scene archetype templates yet
+│                                   (dragons aren't humanoid), so these are companion/background
+│                                   identities only, not independently renderable subjects.
 ├── pets/                           ⬜ CATEGORY: future.
 ├── buildings/                      ⬜ CATEGORY: future.
-└── backgrounds/                    🔶 CATEGORY: skeletal examples seeded (forests/, dungeons/,
-                                    elemental/, cityscape/) — reusable scene components, usable
-                                    across every other category, blended into a hero's final card
-                                    prompt once that assembly step exists. Not yet wired into the
-                                    generator except via the scene stage (see below).
+└── backgrounds/                    ✅ CATEGORY: forests/, dungeons/, elemental/, cityscape/,
+                                    evening/, castle/ (6 families, 1 piece each so far) — reusable
+                                    scene components, wired into the generator via the scene stage.
+                                    Background choice doesn't have to match a hero's element 1:1
+                                    (e.g. Draknora/Fire uses a cityscape-dusk background) — it's as
+                                    much about scene story as elemental theming.
 ```
 
 **"Universal" was retired.** It broke down once dragons/buildings were on the horizon — armor/
@@ -179,9 +194,26 @@ already has, just on the read side (`_resolve_field_value()` in `gen_prompt.py`)
 override side (`_is_literal_ref()`).
 
 **Known gap: most of the motion/wardrobe library has female pronouns baked in** ("her"/"she"),
-since it was authored for the Drakn sisters first. `wardrobe/effects/soft-ambient-glow.json` was
-caught and fixed (needed for Angelo Prime's scene); the rest of `motion/` has not been swept yet —
-pick pronoun-neutral pieces when building a male hero's scene until a proper cleanup pass happens.
+since it was authored for the Drakn sisters first. Fixed so far: `wardrobe/effects/soft-ambient-glow.json`,
+`backgrounds/dungeons/ossuary-violet-sky.json`, `backgrounds/cityscape/city-skyline-dusk.json`,
+`backgrounds/elemental/rising-flames.json` — each caught only when a male hero's card actually
+reused the piece and surfaced the mismatch in generated output. The rest of `motion/` (poses
+themselves, not just backgrounds) has not been swept — pick pronoun-neutral pieces, or write a
+fresh literal, when building a male hero's scene until a proper cleanup pass happens.
+
+**Archetype-grouped defaults for the male roster** — rather than inventing 10 unique armor/weapon
+sets, the 10 `drakn-bound` heroes share 3 default wardrobe groups by class archetype: **Tank**
+(`wardrobe/armor/plate-tank.json` + `wardrobe/weapons/broadsword-and-shield.json` — Draknare,
+Lyran, Hauk), **Striker** (`leather-striker.json` + `weapons/greatsword.json` — Ignis, Torvald,
+Dorian, Zephyr), **Rogue** (`leather-rogue.json` + `weapons/paired-daggers.json` — Nizaras,
+Malakor; Corin uses the same armor with `weapons/trident.json` instead, fitting his Beast Lord/
+Water theme). All embed `{{PRIMARY}}`/`{{ACCENT_SOFT}}` so each hero renders in his own palette.
+A new `scene-combat-human.txt` template variant exists alongside the 4 caster-oriented scene
+templates — it drops the hardcoded "Eyes glowing {{ACCENT_SOFT}}, luminous, mid-cast" line (and
+the bust-related negative-prompt terms), which doesn't fit a non-caster martial hero standing in
+a signature scene. This first pass is deliberately bare-bones (one armor set, one signature scene
+each) — the Iridescent/Raven-style per-hero decomposition the Drakn sisters have can follow later,
+per-hero, as each one gets real design attention.
 
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
 everything under `prompts/` is already generated art output (no sibling non-art content to

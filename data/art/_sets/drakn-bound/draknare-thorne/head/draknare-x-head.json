@@ -1,0 +1,10 @@
+{
+  "artId": "draknare-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-bound/draknare-thorne.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-bound/Draknare/head/Draknare_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Draknare Thorne head/close-up — first-pass minimal scaffold."
+}

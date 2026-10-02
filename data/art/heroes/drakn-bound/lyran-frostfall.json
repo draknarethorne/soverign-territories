@@ -1,0 +1,26 @@
+{
+  "heroId": "HERO_LYRAN_FROSTFALL",
+  "name": "Lyran Frostfall",
+  "art": {
+    "palette": {
+      "primaryColor": "Glacial Blue",
+      "accentColors": ["Frost White", "Steel Grey"],
+      "eyeColor": "Glacial cyan iris with deep navy limbal ring, faint frost striations",
+      "eyeColorGlamour": "Glacial cyan irises with faint frost striations and a deep navy limbal ring",
+      "hairColor": "Platinum-blonde hair, short and neatly combed",
+      "skinTone": "Fair, cool-toned complexion, evenly toned",
+      "eyeColorNegatives": ["brown eyes", "green eyes", "amber eyes", "red eyes"],
+      "skinColorNegatives": ["ruddy skin", "sunburnt skin", "overly tanned skin"],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+    },
+    "physique": {
+      "build": "Tall, broad-shouldered, powerfully built build",
+      "chest": "Broad, armored chest and core, strong and imposing",
+      "waist": "Solid, braced waist",
+      "legs": "Long, powerful legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "High Elf presentation — tall, elegant features; subtle pointed ears"
+    }
+  },
+  "notes": "Core ART hero definition for Lyran Frostfall (Ice, Knight, Defense/Tank). First-pass palette/physique, no archived source material — Ice colour family parallels Draknira's own Glacial Blue as a male variant."
+}

@@ -1,0 +1,26 @@
+{
+  "heroId": "HERO_DORIAN_STORMSTRIKE",
+  "name": "Dorian Stormstrike",
+  "art": {
+    "palette": {
+      "primaryColor": "Arc Blue",
+      "accentColors": ["Electric Gold", "Storm Grey"],
+      "eyeColor": "Electric cobalt iris with midnight-indigo limbal ring, faint arc-cyan striations",
+      "eyeColorGlamour": "Electric cobalt irises with faint arc-cyan striations and a midnight-indigo limbal ring",
+      "hairColor": "Jet-black hair, short and neatly cropped",
+      "skinTone": "Warm golden-tan complexion, evenly toned",
+      "eyeColorNegatives": ["brown eyes", "green eyes", "grey eyes", "red eyes"],
+      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+    },
+    "physique": {
+      "build": "Lean, athletic, well-muscled build",
+      "chest": "Defined, toned chest and core",
+      "waist": "Trim, athletic waist",
+      "legs": "Long, agile legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Celestial presentation — luminous, ethereal features; glamour build stays family-standard for now"
+    }
+  },
+  "notes": "Core ART hero definition for Dorian Stormstrike (Lightning, Monk, Melee/Striker). First-pass palette/physique, no archived source material — Lightning colour family parallels Drakneta's own Electric Gold as a distinct male variant (Arc Blue primary instead of the identical gold, so the siblings-by-element read as related but not twinned)."
+}

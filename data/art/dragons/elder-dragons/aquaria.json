@@ -1,0 +1,8 @@
+{
+  "id": "dragons/elder-dragons/aquaria",
+  "kind": "dragon",
+  "name": "Aquaria",
+  "description": "an Elder Dragon of deep oceanic-blue and aquamarine scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished brass",
+  "element": "Water",
+  "notes": "Skeletal identity, first pass -- aligned to Draknisa Thorne (Water) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknisa's own palette (Deep Oceanic Blue / Aquamarine / Polished Brass)."
+}

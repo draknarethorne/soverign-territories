@@ -1,0 +1,10 @@
+{
+  "artId": "ignis-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-bound/ignis-emberstride.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-bound/Ignis/head/Ignis_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Ignis Emberstride head/close-up — first-pass minimal scaffold."
+}

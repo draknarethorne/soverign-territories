@@ -1,0 +1,34 @@
+=== Draknare Thorne · Armor: Default (group: Armor) — Edit (img2img) ===
+Incoming image: an A-pose of Draknare Thorne (chosen hair) in the bikini underlayer. Apply the armor; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing heavy Obsidian Black-toned plate armor over the chest and shoulders, silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves.
+
+Arms: bare forearms, no additional arm pieces.
+
+Jewelry: none, unadorned.
+
+Back: no cape or back piece.
+
+Legs & feet: sturdy Obsidian Black-toned combat boots with silver buckles, laced to the shin.
+
+Holding a broad-bladed silver-edged sword in his right hand, a round Obsidian Black-toned shield with silver trim strapped to his left forearm.
+
+Overall, grim shadow-knight aesthetic.
+
+Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
+
+Eyes: deep violet irises with faint shadow striations and an obsidian limbal ring.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -1,0 +1,11 @@
+{
+  "id": "hair/short/textured-crop",
+  "kind": "hair",
+  "name": "Short Textured Crop (male standard)",
+  "a_pose_style": "short textured crop, cropped close at the sides and back, slightly longer and tousled on top",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair settles into a short textured crop, close at the sides and back, tousled on top.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "notes": "First-pass shared default A-pose hairstyle for the 10 male heroes — a bare-bones initial pass; races with a longer-hair convention (Wood Elf, High Elf) may want their own style later."
+}

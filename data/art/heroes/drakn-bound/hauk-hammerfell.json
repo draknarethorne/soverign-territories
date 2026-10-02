@@ -1,0 +1,26 @@
+{
+  "heroId": "HERO_HAUK_HAMMERFELL",
+  "name": "Hauk Hammerfell",
+  "art": {
+    "palette": {
+      "primaryColor": "Radiant Gold",
+      "accentColors": ["Ivory White", "Polished Bronze"],
+      "eyeColor": "Radiant amber-gold iris with warm bronze limbal ring, faint golden striations",
+      "eyeColorGlamour": "Radiant amber-gold irises with faint golden striations and a warm bronze limbal ring",
+      "hairColor": "Golden-blonde hair, short and neatly combed",
+      "skinTone": "Warm, sun-kissed complexion, evenly toned",
+      "eyeColorNegatives": ["blue eyes", "green eyes", "grey eyes", "violet eyes"],
+      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+    },
+    "physique": {
+      "build": "Tall, broad-shouldered, powerfully built build",
+      "chest": "Broad, armored chest and core, strong and imposing",
+      "waist": "Solid, braced waist",
+      "legs": "Long, powerful legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Core ART hero definition for Hauk Hammerfell (Light, Paladin, Defense/Tank). First-pass palette/physique, no archived source material — Light colour family parallels Drakniss's own palette as a male variant."
+}
