@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "strolling casually, body relaxed and unposed, weight shifting naturally with each step.",
   "head": "level, relaxed, facing forward.",
-  "gaze": "soft, easy gaze to camera.",
-  "expression": "relaxed, natural smile.",
+  "defaultGaze": "soft, easy gaze to camera.",
+  "defaultExpression": "relaxed, natural smile.",
   "pose": "arms swinging loosely and naturally with the stroll.",
   "extras": [],
   "compatibleStages": [

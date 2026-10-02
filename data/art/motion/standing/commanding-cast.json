@@ -6,10 +6,13 @@
   "breeze": "Light breeze.",
   "body": "standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell.",
   "head": "level, chin lifted.",
-  "gaze": "focused forward, intense.",
-  "expression": "composed, commanding, lips softly together.",
+  "defaultGaze": "focused forward, intense.",
+  "defaultExpression": "composed, commanding, lips softly together.",
   "pose": "one arm raised and channeling energy, the other hand cupped at her side.",
   "extras": [],
-  "compatibleStages": ["motion", "scene"],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
   "notes": "Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_SD-001_Final.txt + Drakness_FireRed_Elegant.txt ('She stands mid-cast, commanding and composed... weight shifted, chin lifted, her free hand raised and open as she channels'). First casting-type motion in the library — a real gap, not a one-off scene string; reusable by any hero's casting scene or the standalone Motion stage."
 }

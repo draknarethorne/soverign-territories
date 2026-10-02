@@ -6,8 +6,8 @@
   "breeze": "No breeze.",
   "body": "arms wrapped softly around herself, shoulders slightly drawn in, a tender, vulnerable stance.",
   "head": "tilted gently downward, then lifting toward camera.",
-  "gaze": "soft, intimate gaze to camera.",
-  "expression": "tender, soft, a gentle closed-mouth smile.",
+  "defaultGaze": "soft, intimate gaze to camera.",
+  "defaultExpression": "tender, soft, a gentle closed-mouth smile.",
   "pose": "hands resting gently on her own upper arms, in a soft self-embrace.",
   "extras": [],
   "compatibleStages": [

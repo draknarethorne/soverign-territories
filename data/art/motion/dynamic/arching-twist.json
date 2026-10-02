@@ -6,8 +6,8 @@
   "breeze": "Very light breeze flowing at her.",
   "body": "entire body shifting and twisting, centre of gravity pronounced, breaking stiff vertical lines with organic body language; chest facing the camera at a slight angle and leaning forward; back arching; hips swayed; both feet on the ground, one foot far forward angled towards camera, one heel slightly raised.",
   "head": "following the twist of the body.",
-  "gaze": "an inviting gaze.",
-  "expression": "alluring, confident, unpredictable; lips full and expressive, slightly parted.",
+  "defaultGaze": "an inviting gaze.",
+  "defaultExpression": "alluring, confident, unpredictable; lips full and expressive, slightly parted.",
   "pose": "one hand placed on her hip, the other in an elegant, alluring gesture away from her body.",
   "extras": [],
   "compatibleStages": [

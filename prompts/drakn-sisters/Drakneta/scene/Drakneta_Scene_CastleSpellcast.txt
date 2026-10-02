@@ -1,0 +1,31 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Castle Spellcast (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a layered, ethereal outfit of sheer, frosted Electric Gold fabric over a matte underlayer, with delicate gold glowing fibre-optic threads woven throughout, secured at the shoulders, nothing covering her head; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible.
+
+Jewelry: Polished Silver with gold-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Electric Gold high heels with glowing gold straps.
+
+She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling gold lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.
+
+Holding an ornate staff, upright, touching the ground, a gold lightning glow around the jewel at its top.
+
+Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.
+
+Eyes glowing gold, luminous, mid-cast.
+
+Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -6,8 +6,8 @@
   "breeze": "No breeze.",
   "body": "lowered into a graceful kneeling pose, one knee down, the other leg bent with foot planted.",
   "head": "level, facing the camera.",
-  "gaze": "direct, alluring eyes to camera.",
-  "expression": "sultry, composed half-smile.",
+  "defaultGaze": "direct, alluring eyes to camera.",
+  "defaultExpression": "sultry, composed half-smile.",
   "pose": "one hand resting on the raised knee, the other braced lightly on the ground.",
   "extras": [],
   "compatibleStages": [

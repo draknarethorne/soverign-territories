@@ -6,8 +6,8 @@
   "breeze": "Motion-generated breeze, swirling around her.",
   "body": "captured mid-twirl, torso rotating, skirt or drape flaring outward.",
   "head": "turned with the spin, following the motion.",
-  "gaze": "bright, joyful, glancing toward the camera.",
-  "expression": "joyful, carefree, laughing smile.",
+  "defaultGaze": "bright, joyful, glancing toward the camera.",
+  "defaultExpression": "joyful, carefree, laughing smile.",
   "pose": "arms extended slightly for balance, caught mid-spin.",
   "extras": [],
   "compatibleStages": [

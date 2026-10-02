@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/castle/ancient-stone-hall",
+  "kind": "background",
+  "name": "Ancient Castle Stone Hall",
+  "description": "an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture",
+  "mood": "regal, ancient, magical",
+  "compatibleStages": ["scene"],
+  "notes": "Grounded in prompts/_archive/Drakneta/Final/Drakneta_FireRed_Elegant_2.json ('standing on an old castle stone floor... it's truly magic how it all looks'). First castle-family background piece."
+}
