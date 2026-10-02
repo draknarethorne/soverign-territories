@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-hand-on-hip-power",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/heroes/components/motion/standing/hand-on-hip-power.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/motion/standing/Drakness_Motion_Standing_HandOnHipPower.txt",
+  "denoise": "~0.4-0.6"
+}
