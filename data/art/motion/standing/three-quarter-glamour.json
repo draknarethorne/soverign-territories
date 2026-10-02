@@ -6,8 +6,8 @@
   "breeze": "Light breeze.",
   "body": "angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve.",
   "head": "turned back toward the camera, chin slightly down.",
-  "defaultGaze": "eyes to camera.",
-  "defaultExpression": "alluring, confident; lips slightly parted; expressive, sultry brows.",
+  "defaultGaze": "data/art/motion/gaze/eyes-to-camera.json",
+  "defaultExpression": "data/art/motion/expressions/alluring-confident.json",
   "pose": "one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.",
   "extras": [],
   "compatibleStages": [

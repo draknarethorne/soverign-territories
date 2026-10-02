@@ -7,7 +7,7 @@
   "body": "standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell.",
   "head": "level, chin lifted.",
   "defaultGaze": "focused forward, intense.",
-  "defaultExpression": "composed, commanding, lips softly together.",
+  "defaultExpression": "data/art/motion/expressions/composed-commanding.json",
   "pose": "one arm raised and channeling energy, the other hand cupped at her side.",
   "extras": [],
   "compatibleStages": [
