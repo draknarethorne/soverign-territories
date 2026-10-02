@@ -36,9 +36,12 @@ def decap(s):
 
 def cleanup(text):
     """Collapse artifacts left by empty tokens (e.g. an empty HERO_NEG between two
-    literal commas): ', , ' -> ', ', and a stray '.  ' -> '. '."""
+    literal commas): ', , ' -> ', ', and an empty token right before the trailing
+    period (', .' -> '.', when HERO_NEG is the last item in a negative list)."""
     while ", ," in text:
         text = text.replace(", ,", ",")
+    while ", ." in text:
+        text = text.replace(", .", ".")
     return text
 
 
@@ -98,7 +101,7 @@ def tokens_for(hero):
     }
 
 
-_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes"}
+_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood"}
 
 
 def resolve_component_tokens(card):
