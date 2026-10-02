@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "motion",
   "heroArt": "data/art/heroes/drakness-thorne.json",
-  "component": "data/art/motion/dynamic/hair-flip-toss.json",
+  "component": "data/art/heroes/components/motion/dynamic/hair-flip-toss.json",
   "template": "data/art/base-set/_templates/heroes/motion-human.txt",
   "output": "prompts/art/base-set/Drakness/motion/dynamic/Drakness_Motion_Dynamic_HairFlipToss.txt",
   "denoise": "~0.4-0.6"
