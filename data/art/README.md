@@ -15,24 +15,24 @@ Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-
 ## The two layers (this is the core idea — everything else is detail)
 
 1. **Definitions** — reusable facts: who a hero *is* (palette/physique), and reusable style
-   components (hairstyles, motion/poses, eventually armor/clothing/weapons). These files don't
-   generate anything by themselves. Within definitions there's a **specificity spectrum**, most
-   generic to most specific — pick the narrowest tier a component actually needs, default to the
-   widest:
-   - **`universal/<kind>/<family>/`** — usable by absolutely anyone, any race, any hero ("a long
-     sword", "a kite shield", a hairstyle any humanoid could wear). The default home for a new
-     component unless it has a real reason to be narrower. Hair/motion currently live here.
+   pieces (hairstyles, motion/poses, armor/clothing/weapons). These files don't generate anything
+   by themselves. Within definitions there's a **specificity spectrum**, most generic to most
+   specific — pick the narrowest tier a piece actually needs, default to the widest:
+   - **`wardrobe/<kind>/<family>/`** — cross-cutting pieces usable across outfits, heroes, and
+     races ("a long sword", "a kite shield", a plain necklace style any outfit could use). The
+     default home for a new piece unless it has a real reason to be narrower.
    - **`races/<race-slug>/<kind>/<family>/`** — shared by every hero/NPC of that race, narrower
-     than universal but not locked to one named character (a Dark Elf-specific hair texture, an
-     Ogre-scaled armor silhouette).
+     than wardrobe but not locked to one named character (a Dark Elf-specific hair texture, an
+     Ogre-scaled armor silhouette). Hair currently lives here (`races/human/cosmetics/hair/`).
    - **`heroes/<group>/<hero-slug>/<kind>/`** — signature items unique to ONE named hero (e.g. a
      hero's own signature weapon), living alongside that hero's identity file in the same group
      folder (`heroes/drakn-sisters/drakness/armor/` next to `heroes/drakn-sisters/drakness-thorne.json`).
-   A hero can draw from all three tiers at once — most of her look might be universal/race-shared,
-   with one or two deliberately unique signature pieces.
+   A hero can draw from all three tiers at once — most of her look might be wardrobe/race-shared,
+   with one or two deliberately unique signature pieces. `motion` sits outside this spectrum
+   entirely (its own top-level category) since poses are action, not appearance.
 2. **Assembly** (`_sets/<group>/`) — the testing/working folder where a group's hero definition +
-   an optional component + a stage template get pulled together into an actual generated prompt.
-   Each `_sets/` folder is named **identically to the definitions-layer group it mirrors**
+   components + a stage template get pulled together into an actual generated prompt. Each
+   `_sets/` folder is named **identically to the definitions-layer group it mirrors**
    (`_sets/drakn-sisters/` ↔ `heroes/drakn-sisters/`) — no separate "-set" word needed once it's
    already under `_sets/`. This is deliberately **not** a 1:1 mirror of a game card series — a real
    series (like Sovereign Dawn) can pull from several groups (drakn-sisters today; drakn-bound and
@@ -44,6 +44,22 @@ Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-
 Only the **assembly** layer's `tools/generators/gen_prompt.py` output is ever regenerated/committed
 as a finished prompt. Everything in the **definitions** layer is only ever *referenced*.
 
+### Decomposed pieces vs. one complete chunk — which do I use?
+
+Some things (Figure, Eyes, Lips, Expression) are always a single inline template line — there's
+only ever one of them per render, nothing to swap independently, no reuse benefit. Other things
+(jewelry, a cape, a held weapon) are worth pulling into their **own small piece file**, referenced
+by *slot name* from a card's `components` dict (see below), specifically when:
+
+- it's plausible you'd **swap it independently** while keeping the rest of the outfit (a different
+  weapon with the same armor — this is exactly what `bone-scythe.json` / `bone-dagger.json` prove), or
+- it's plausible the **same piece gets reused** across more than one outfit or hero (a generic
+  bracelet, a cape, a necklace style).
+
+If neither is true — the piece only ever exists as part of one specific design and swapping it
+would stop being "that outfit" — just write it as part of that outfit's own `wearing`/`arms`/etc.
+piece under the hero's signature folder. Don't decompose further than the reuse actually needs.
+
 ---
 
 ## Directory map
@@ -52,7 +68,8 @@ as a finished prompt. Everything in the **definitions** layer is only ever *refe
 data/art/
 ├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders.
 │   └── heroes/                     Archetype: humanoid. (pose-female-human.txt, pose-male-human.txt,
-│                                   head-human.txt, hair-human.txt, motion-human.txt)
+│                                   head-human.txt, hair-human.txt, motion-human.txt, armor-human.txt,
+│                                   clothing-human.txt)
 │   └── dragons/                    (future — a dragon archetype's own templates)
 │
 ├── _sets/                          ASSEMBLY: one folder per GROUP, same name as its definitions-
@@ -60,17 +77,19 @@ data/art/
 │   │                               generate prompts. Testing/working folders; which real card
 │   │                               series (if any) consumes a group's output is tracked on the
 │   │                               data/cards/ side, not here.
-│   ├── drakn-sisters/              ✅ 91 cards (10 heroes × pose/head, 44 hair, 25 motion for Drakness)
-│   │   └── <slug>/<stage>/<family>/*.json
+│   ├── drakn-sisters/              ✅ 94 cards (10 heroes × pose/head, 44 hair + 25 motion + 2
+│   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness)
 │   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
 │   │   └── <slug>/<stage>/<family>/*.json
 │   └── drakn-bound/                ⬜ future, once the 10 male heroes get art-ified
 │
 ├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
-│   │   └── <slug>-thorne.json
-│   │   └── <slug>/<kind>/*.json    ⬜ signature items unique to that one hero (future, e.g.
-│   │                               drakness/armor/ for a weapon only she carries)
+│   │   ├── <slug>-thorne.json      identity (palette/physique) — unchanged for all 10
+│   │   └── drakness/               ✅ hero-SIGNATURE pieces, unique to one named hero, living
+│   │       ├── armor/<slug>.json   alongside her identity file (not nested inside it)
+│   │       ├── clothing/<slug>.json
+│   │       └── weapons/<slug>.json
 │   ├── drakn-bound/                ⬜ GROUP: the 10 male heroes bound to the sisters in the story
 │   │                               (Draknare Thorne, Hauk Hammerfell, ...) — reserved, not yet
 │   │                               populated.
@@ -78,21 +97,23 @@ data/art/
 │       └── <slug>.json             heroes, not part of any real card series.
 │
 ├── races/                          🔶 CATEGORY: shared by every hero/NPC of a race — narrower than
-│   │                               universal, not locked to one named hero. One skeletal example
-│   │                               seeded (dark-elf/hair/down/midnight-cascade.json, not yet wired
-│   │                               to any hero's hairStyleComponent).
-│   └── dark-elf/
-│       └── hair/<family>/*.json    (and eventually motion/, armor/, clothing/, weapons/ — same
-│                                   kind folders as universal/, just race-scoped)
+│   │                               wardrobe, not locked to one named hero.
+│   ├── dark-elf/
+│   │   └── hair/<family>/*.json    one skeletal example (midnight-cascade.json), not yet wired
+│   │                               to any hero's hairStyleComponent
+│   └── human/                      ✅ the Drakn sisters' race — hair moved here from the retired
+│       └── cosmetics/              "universal" bucket, since every current style was designed
+│           └── hair/<family>/*.json    for human presentation specifically (44)
 │
-├── universal/                      ✅ CATEGORY: usable by absolutely anyone, any race, any hero —
-│   │                               the default home for a new component unless it has a real
-│   │                               reason to be narrower (race-scoped or hero-signature).
-│   ├── hair/<family>/*.json        (44)
-│   ├── motion/<family>/*.json      (25)
-│   ├── armor/<family>/*.json      ⬜ (future)
-│   ├── clothing/<family>/*.json   ⬜ (future)
-│   └── weapons/<family>/*.json    ⬜ (future)
+├── wardrobe/                       ✅ CATEGORY: cross-cutting PIECES, reusable across outfits,
+│   │                               heroes, and races — jewelry/capes/bracelets/accessories, not
+│   │                               bundled into any one complete "look." This is the library a
+│   │                               card's components dict pulls interchangeable slot-fillers from.
+│   ├── jewelry/necklaces/*.json    (2: bone-skull-pendant, ornate-gem-pendant)
+│   ├── capes/*.json                (1: simple-black-leather)
+│   ├── bracelets/*.json            (1: simple-silver)
+│   └── accessories/*.json          (1: midnight-violet-satchel — Raven's bag, not yet wired;
+│                                   Raven needs its own template shape, see below)
 │
 ├── dragons/                        ⬜ CATEGORY: future. Same shape — group folders (e.g.
 │                                   elder-dragons/) + a matching _sets/elder-dragons/.
@@ -103,6 +124,17 @@ data/art/
                                     blended into a hero's final card prompt once that assembly step
                                     exists. Not yet wired into the generator.
 ```
+
+**"Universal" was retired.** It broke down once dragons/buildings were on the horizon — armor/
+weapons/clothing aren't universal to the whole game, only to humanoid characters, and even within
+that scope the content that actually exists was written for human presentation specifically.
+`motion` became its own top-level category instead (poses are action, not appearance — genuinely
+non-racial), and `hair` moved under `races/human/cosmetics/`.
+
+**Different complete outfits can need different slot sets** — Bone Armor uses
+Wearing/Arms/Jewelry/Back/Legs&feet/Holding; the archived Raven outfit instead has Drapes and
+Belt&kit (no Holding at all). That's expected, not a bug: a new outfit shape may need its own
+template variant rather than forcing every outfit through one fixed slot list.
 
 `prompts/` mirrors the **`_sets/`** contents exactly — one level flatter than `data/art/`, since
 everything under `prompts/` is already generated art output (no sibling non-art content to
@@ -126,23 +158,44 @@ Definitions never get mirrored into `prompts/` — they aren't "generated," they
 
 | Term | Meaning | Example |
 | --- | --- | --- |
-| **category** | What *kind* of subject | `heroes`, `races`, `universal`, `dragons`, `pets`, `buildings`, `backgrounds` |
+| **category** | What *kind* of subject | `heroes`, `races`, `wardrobe`, `motion`, `dragons`, `pets`, `buildings`, `backgrounds` |
 | **group** | A themed hero roster, same name used on both layers | `heroes/drakn-sisters/` (definitions) ↔ `_sets/drakn-sisters/` (assembly) |
-| **specificity tier** | How widely a component can be reused | `universal` (anyone) → `races/<race>` (a race) → `heroes/<group>/<hero-slug>` (one hero's signature item) |
-| **component** | A reusable style trait, referenced by a `_sets/` card | a hairstyle, a motion pose |
-| **stage** | Which generation step | `pose`, `head`, `hair`, `motion` |
+| **specificity tier** | How widely a piece can be reused | `wardrobe` (any outfit/hero/race) → `races/<race>` (a race) → `heroes/<group>/<hero-slug>` (one hero's signature piece) |
+| **component** | A single complete reusable trait, referenced by a card's `component` field | a hairstyle, a motion pose |
+| **slot / piece** | One named part of a composed outfit, referenced by a card's `components` dict | `wearing`, `jewelry`, `holding` |
+| **stage** | Which generation step | `pose`, `head`, `hair`, `motion`, `armor`, `clothing` |
 | **family** | A sub-grouping of a component or card, for navigability | `down`, `walking`, `romantic` |
 
 ---
 
 ## How a card actually gets generated
 
-A `_sets/` card JSON (e.g. `data/art/_sets/drakn-sisters/drakness/hair/down/beach-waves.json`)
-has three pointers: `heroArt` (a definitions-layer hero file), `component` (optional, a
-definitions-layer style file), and `template` (a stage template). `tools/generators/gen_prompt.py`
-resolves all three, fills `{{TOKENS}}`, and writes the result to `output` under `prompts/`. The
-generator itself has **zero hardcoded paths** — every path is a string field on the card JSON, so
+A `_sets/` card JSON has pointers: `heroArt` (a definitions-layer hero file), a stage `template`,
+and **either** `component` (one complete reusable trait — hair, motion) **or** `components` (a
+dict of named slots, each pointing at its own small piece file — armor, clothing). A piece file's
+single content field (by convention `description`) becomes the token named after its *slot*
+(`components.jewelry` → `{{JEWELRY}}`), not the piece's own field name — that's what lets the same
+piece fill the same slot in many different outfits. `tools/generators/gen_prompt.py` resolves
+everything, fills `{{TOKENS}}`, and writes the result to `output` under `prompts/`. The generator
+itself has **zero hardcoded paths** — every path is a string field on the card JSON, so
 moving/renaming folders only ever means updating path strings, never generator logic.
+
+Example — swapping a weapon without touching the armor at all:
+
+```jsonc
+// data/art/_sets/drakn-sisters/drakness/armor/bone-scythe.json
+"components": {
+  "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
+  "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
+  "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
+  "back": "data/art/wardrobe/capes/simple-black-leather.json",
+  "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
+  "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json"
+}
+```
+
+`bone-dagger.json` is identical except the last line points at `weapons/ornate-dagger.json` —
+verified byte-identical generated output except the one `Holding:` line.
 
 **CLI filtering** — no-args generates everything under `_sets/`; composable flags narrow it down:
 
