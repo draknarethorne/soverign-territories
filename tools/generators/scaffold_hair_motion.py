@@ -170,7 +170,17 @@ HAIR = {
          "Light breeze.",
          "Hair is gathered into a ponytail with a thin strand wrapped neatly around the base, hiding the elastic.",
          [], None),
-        # --- new addition (exotic tendril look) ---
+        # --- ponytail plain/tendril twins: same base style, pick per-shot/per-hero ---
+        ("low-ponytail-loose-tendrils", "Low Ponytail with Loose Tendrils",
+         "swept back into a sleek, low ponytail at the nape with a few long tendrils left loose to frame the temples and cheekbones",
+         "Light breeze.",
+         "Hair is swept back into a sleek, low ponytail gathered at the nape of the neck, with a few long tendrils deliberately left loose to frame the temples and cheekbones, seductive and exotic.",
+         [], None),
+        ("high-ponytail-sleek", "Sleek High Ponytail",
+         "gathered into a high, sleek ponytail at the crown, smooth and polished with no loose strands",
+         "Light breeze.",
+         "Hair is gathered into a high, sleek ponytail at the crown, smooth and polished with every strand pulled back cleanly.",
+         [], None),
         ("high-ponytail-loose-tendrils", "High Ponytail with Loose Tendrils",
          "gathered into a high, sleek ponytail with a few long tendrils left loose to frame the temples and cheekbones",
          "Light breeze.",

@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/low-ponytail-loose-tendrils",
+  "kind": "hair",
+  "name": "Low Ponytail with Loose Tendrils",
+  "a_pose_style": "swept back into a sleek, low ponytail at the nape with a few long tendrils left loose to frame the temples and cheekbones",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is swept back into a sleek, low ponytail gathered at the nape of the neck, with a few long tendrils deliberately left loose to frame the temples and cheekbones, seductive and exotic.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}
