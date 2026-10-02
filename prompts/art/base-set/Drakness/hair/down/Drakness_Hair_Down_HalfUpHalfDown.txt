@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 Minimal breeze.
-Very long, slender legs.
+
 The top half is gathered back and secured, the rest left down in soft waves cascading past the shoulders.
 
+
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

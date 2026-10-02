@@ -14,16 +14,22 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Maintain the existing outfit and hairstyle expressly.
 
+Motion-generated breeze, swirling around her.
+
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 Body: captured mid-twirl, torso rotating, skirt or drape flaring outward.
+
 Head: turned with the spin, following the motion.
+
 Gaze: bright, joyful, glancing toward the camera.
+
 Expression: joyful, carefree, laughing smile.
-Motion-generated breeze, swirling around her.
-Pose: arms extended slightly for balance, caught mid-spin.
 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Pose: arms extended slightly for balance, caught mid-spin.
+
 
 ----------------------------------------------------------------
 negative prompt:

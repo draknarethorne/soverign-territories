@@ -25,7 +25,10 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 | Location | Purpose |
 | --- | --- |
 | `workflows/<Hero>/` | **The real work.** ComfyUI workflow exports, one per experiment. Named `<Hero>_Qwen_<Category>_<Variant>.json` (e.g. `Drakness_Qwen_Armor_Elegant.json`). |
-| `prompts/` | **Ideation scratch only** — loose text notes for standard poses/palettes. Not the production prompts. |
+| `data/art/base-set/_templates/heroes/*.txt` | **Canonical prompt templates** (Pose, Head, Hair, Motion) — `{{TOKEN}}` placeholders filled by `tools/generators/gen_prompt.py`. See [`prompt-pattern.md`](prompt-pattern.md) for block order/wording conventions. |
+| `data/art/heroes/`, `data/art/hair/`, `data/art/motion/`, `data/art/base-set/` | **Generator source of truth** — hero defs, reusable hair/motion components, and the base-set cards that glue a hero + component + template together. |
+| `prompts/art/base-set/<Hero>/<stage>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
+| `prompts/_archive/` | **Historical reference only** — the old `[BRACKETS]`/hand-copied template system and the original hand-crafted Drakness prompts. No longer live; Armor/Clothing/Weapons/Final still only exist here until componentized. |
 | `data/cards/sovereign-dawn/heroes/<hero>.json` | **Canon source** — element, class, archetype, `art.palette` (primary/accent/eye), companion, lore. The art must stay on-theme with this. |
 | `assets/examples/` | Reference/example images. |
 

@@ -14,16 +14,22 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Maintain the existing outfit and hairstyle expressly.
 
+Strong gust, mid-toss.
+
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 Body: caught mid-motion as her hair whips through the air.
+
 Head: thrown back slightly with the toss.
+
 Gaze: eyes closed or just reopening, mid-movement.
+
 Expression: playful, exhilarated, lips parted.
-Strong gust, mid-toss.
-Pose: one hand lifted near the hair, body leaning into the motion.
 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
+Pose: one hand lifted near the hair, body leaning into the motion.
+
 
 ----------------------------------------------------------------
 negative prompt:

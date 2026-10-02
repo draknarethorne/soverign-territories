@@ -14,18 +14,24 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Maintain the existing outfit and hairstyle expressly.
 
+No breeze.
+
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 Body: close-up shot from thighs to head, legs exposed.
+
 Head: position varies.
+
 Gaze: remains focused on camera.
+
 Expression: glamorous, confident.
-No breeze.
+
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+
 Pose: one hand blowing a kiss, the other in an elegant, alluring gesture.
 Bold décolletage.
 Straight hair, same length, behind her shoulders.
 Bright Red lipstick (override).
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
 
 ----------------------------------------------------------------
 negative prompt:

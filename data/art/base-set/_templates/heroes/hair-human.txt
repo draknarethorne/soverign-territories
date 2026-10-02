@@ -13,10 +13,13 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 Maintain existing outfit expressly.
 
 {{BREEZE}}
-{{LEGS}}.
+
 {{HAIR_CHANGE}}
 {{EXTRAS}}
+
 Eyes: {{EYE}}.
+
+{{LEGS}}.
 
 ----------------------------------------------------------------
 negative prompt:

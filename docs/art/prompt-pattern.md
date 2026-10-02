@@ -1,37 +1,65 @@
 # Prompt Pattern — Hero Card Art
 
-One consistent block order for every stage's prompt, so results are predictable and you copy **one
-template per stage** and only swap bracketed values per hero. Works with the Qwen / FireRed / Flux
-img2img flows in [`workflows/SovereignTerritories/`](../../workflows/SovereignTerritories/README.md).
+One consistent block order for every stage's prompt, so results are predictable across heroes and
+cards. **The generator (`tools/generators/gen_prompt.py`) is the canonical production path** — it
+compiles a hero definition (`data/art/heroes/<hero>-thorne.json`) + a reusable component
+(`data/art/hair|motion/<family>/<slug>.json`, when the stage has one) + a stage template
+(`data/art/base-set/_templates/heroes/*.txt`) into the final prompt `.txt` under
+`prompts/art/base-set/<Hero>/<stage>/<family>/`. Edit the **template / component / card**, never a
+generated `.txt` by hand — regenerate instead: `python tools/generators/gen_prompt.py <card.json>`.
 
-> Your existing prompts already give solid output and mostly follow this order — the refinements
-> below are **incremental** (split background out, add a preserve block, formalise wardrobe slots),
-> not a revamp.
+> The old hand-copied `[BRACKETS]`-per-hero system (`prompts/_templates/`, `prompts/<Hero>/`) is
+> retired and archived under `prompts/_archive/` — good historical reference for wording, but no
+> longer live. Armor, Clothing, and Weapons aren't componentized yet and still only exist as
+> hand-crafted reference files in the archive; componentizing them the same way Hair/Motion were
+> done is the planned next step (see the open questions in `docs/art/comfyui-art-pipeline.md`).
 
 ## Golden rules
 
 1. **One prompt = one stage.** Refer to the incoming image; describe ONLY what changes.
 2. The **reference-fidelity** line is mandatory on every edit/final prompt — it anchors face, body, hair.
-3. Pull palette, eye, and class from the hero's **card JSON** (`art.palette`, `class`, `element`).
-4. Keep the block order **identical** across heroes/stages → consistent behaviour.
-5. **Blank line between blocks** is your delimiter (keep doing this — it works).
-6. Negatives = shared **baseline** + **stage-specific**; never negate something the outfit intentionally has.
-7. `[BRACKETS]` = per-hero values. Copy the template, find/replace, done — don't rewrite structure.
+3. Hero-specific values (palette, eye colour, physique) come from `data/art/heroes/<hero>-thorne.json`,
+   not from hand-typed values in a prompt.
+4. Keep the block order **identical** across heroes/stages → consistent behaviour (see below).
+5. **Blank line between blocks** is your delimiter (keep doing this — it works, and it's what makes a
+   generated prompt easy to scan: one field, one paragraph).
+6. Negatives = **three tiers**: universal (baked into the template), hero-derived (`eyeColorNegatives`,
+   `skinColorNegatives`, `negatives` on the hero def), and a rare per-card override
+   (`overrides.negativeAdd` / `negativeRemove`). Never hand-edit a generated negative line directly.
+7. `{{TOKENS}}` are filled by the generator. Add a new style/pose by adding a **component JSON**, not
+   by writing a new `.txt` from scratch.
 
 ## Block order (positive prompt)
 
-1. **Camera & quality** — realism, shot type, lens/focus (85mm, sharp, soft DoF). *(No background here.)*
-2. **Background / Environment** — studio backdrop for A-pose/edit intermediates; the in-world scene for final.
-3. **Shot style / energy** — editorial / glamour / mid-motion *(optional; edit & motion stages)*.
-4. **Reference fidelity** — "Maintain strict fidelity to the reference image's facial likeness, bone
-   structure, body shape, proportions, eye colour and hair colour."
-5. **Preserve** — for intermediate edits only: "Maintain the existing outfit/hairstyle expressly."
-6. **Wardrobe** *(A-pose / Edit)* — one blank-line group per garment slot (below).
-7. **Face & detail overrides** — expression, lips, nails, eyes (`[CAST EYE]` glowing when casting), breeze.
-8. **Pose / motion** — the movement/pose adjustment (short lines).
-9. **Spell VFX** *(final only)* — magic, glow around hand/weapon.
+Universal shape, top to bottom:
 
-### Wardrobe slots (block 6) — keep the blank lines
+1. **Camera & quality** — realism, shot type, lens/focus (85mm, sharp, soft DoF). *(No background here.)*
+2. **Background / Environment** — studio backdrop for base/edit stages; the in-world scene for final.
+3. **Shot style / energy** *(optional)* — editorial / glamour / mid-motion (edit & motion stages).
+4. **Reference fidelity** — "Maintain strict fidelity to the reference image's facial likeness, bone
+   structure, body shape, proportions, eye colour, iris pattern, hair colour, skin tone, tattoos/marks."
+5. **Preserve** *(edit stages only)* — "Maintain the existing outfit/hairstyle expressly."
+6. **Breeze** *(when present)* — environmental; stated before the anatomical attributes it affects.
+7. **Anatomical attributes, head-down** — this is the part that must stay consistent across stages:
+   - **Figure** (whole-body shape/proportions)
+   - **Skin** / general **Body** description (whole-body — skin tone at the Build stage; the literal
+     body-positioning sentence at the Motion stage)
+   - **Wearing** (clothing — spans the whole body; sits between the body-level attributes above and
+     the head-down detail below)
+   - **Hair** (topmost of the head-down group — always before Makeup/Eyes/Lips)
+   - **Makeup** (face-wide)
+   - **Eyes**
+   - **Lips**
+   - **Legs** *(only when Figure isn't restated in full — a short reinforcement line, e.g. Hair stage)*
+8. **Pose / motion specifics** *(Motion only)* — Head / Gaze / Expression, then the capstone `Pose:`
+   line last — deliberately last, since it's what the stage is actually for.
+9. **Spell VFX** *(final only, not yet componentized)* — magic, glow around hand/weapon.
+
+Each stage only includes the fields it actually needs — Hair stage has no Figure/Makeup line (it never
+restates bust/face), Head stage only restates Hair + Eyes. What's shared must keep the same relative
+order; what's stage-specific can simply be absent.
+
+### Wardrobe slots — keep the blank lines (Armor/Clothing, not yet componentized)
 
 ```
 Wearing [TORSO / main piece] in [PRIMARY] with [ACCENTS], [coverage notes].
@@ -51,22 +79,45 @@ Overall, [aesthetic] aesthetic.
 
 ## What each stage references / preserves / changes
 
-Group names match your `Drakness_Qwen_<group>` / `Drakness_X_<group>` workflows. Templates live in
-[`prompts/_templates/`](../../prompts/_templates/); per-hero prompts go in `prompts/<Hero>/`.
+Group names match the `Drakness_Qwen_<group>` / `Drakness_X_<group>` ComfyUI workflows.
+**Componentized stages** (Pose, Head, Hair, Motion) generate from
+`data/art/base-set/_templates/heroes/*.txt` via `gen_prompt.py`, output to
+`prompts/art/base-set/<Hero>/<stage>/<family>/`. **Not-yet-componentized stages** (Clothing, Armor,
+Weapons, Fantasy, Final, Background, Pets) still only exist as hand-crafted reference text, archived
+under `prompts/_archive/` — treat as reference wording, not a live template.
 
-| Group | Reference | Preserve | Change | Background | Template |
-| --- | --- | --- | --- | --- | --- |
-| **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | [`_TEMPLATE_Pose.txt`](../../prompts/_templates/_TEMPLATE_Pose.txt) |
-| **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | [`_TEMPLATE_Head.txt`](../../prompts/_templates/_TEMPLATE_Head.txt) |
-| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | [`_TEMPLATE_Hair.txt`](../../prompts/_templates/_TEMPLATE_Hair.txt) |
-| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | [`_TEMPLATE_Motion.txt`](../../prompts/_templates/_TEMPLATE_Motion.txt) |
-| **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | [`_TEMPLATE_Clothing.txt`](../../prompts/_templates/_TEMPLATE_Clothing.txt) |
-| **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | [`_TEMPLATE_Armor.txt`](../../prompts/_templates/_TEMPLATE_Armor.txt) |
-| **Fantasy** *(optional, pre-final)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | [`_TEMPLATE_Fantasy.txt`](../../prompts/_templates/_TEMPLATE_Fantasy.txt) |
-| **Final** | near-final | everything | scene + spell + pose/wind | in-world | [`_TEMPLATE_Final.txt`](../../prompts/_templates/_TEMPLATE_Final.txt) |
-| **Weapons** *(utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | [`_TEMPLATE_Weapons.txt`](../../prompts/_templates/_TEMPLATE_Weapons.txt) |
-| **Background** *(utility)* | — | — | a standalone scene plate | — | [`_TEMPLATE_Background.txt`](../../prompts/_templates/_TEMPLATE_Background.txt) |
-| **Pets** *(utility)* | — | — | a summon/companion (multi-image ref) | plain | [`_TEMPLATE_Pets.txt`](../../prompts/_templates/_TEMPLATE_Pets.txt) |
+| Group | Reference | Preserve | Change | Background | Status | Template |
+| --- | --- | --- | --- | --- | --- | --- |
+| **X_Pose** (A-pose base) | source photo | likeness | build full base + figure + bikini underlayer | studio | ✅ componentized | [`pose-female-human.txt`](../../data/art/base-set/_templates/heroes/pose-female-human.txt) |
+| **X_Head** (close-up) | A-pose | face + hair | framing (chest-up) | studio | ✅ componentized | [`head-human.txt`](../../data/art/base-set/_templates/heroes/head-human.txt) |
+| **Hair** | A-pose | outfit + face + body | hairstyle only | studio | ✅ componentized (44 styles) | [`hair-human.txt`](../../data/art/base-set/_templates/heroes/hair-human.txt) |
+| **Motion** | A-pose (chosen hair) | outfit + hair + face | pose/motion only | studio | ✅ componentized (25 poses) | [`motion-human.txt`](../../data/art/base-set/_templates/heroes/motion-human.txt) |
+| **Clothing** | A-pose (bikini base) | face + body + hair | apply gown/dress | studio | ⬜ not yet componentized | archived: [`_TEMPLATE_Clothing.txt`](../../prompts/_archive/_TEMPLATE_Clothing.txt) |
+| **Armor** | A-pose (bikini base) | face + body + hair | apply armor + weapon | studio | ⬜ not yet componentized | archived: [`_TEMPLATE_Armor.txt`](../../prompts/_archive/_TEMPLATE_Armor.txt) |
+| **Fantasy** *(optional, pre-final)* | photoreal near-final | face + outfit + hair + pose | add fantasy makeup + glowing eyes + subtle magic | cream / soft gradient | ⬜ not yet componentized | archived: [`_TEMPLATE_Fantasy.txt`](../../prompts/_archive/_TEMPLATE_Fantasy.txt) |
+| **Final** | near-final | everything | scene + spell + pose/wind | in-world | ⬜ not yet componentized | archived: [`_TEMPLATE_Final.txt`](../../prompts/_archive/_TEMPLATE_Final.txt) |
+| **Weapons** *(utility)* | — | — | a standalone weapon prop (multi-image ref) | plain | ⬜ not yet componentized | archived: [`_TEMPLATE_Weapons.txt`](../../prompts/_archive/_TEMPLATE_Weapons.txt) |
+| **Background** *(utility)* | — | — | a standalone scene plate | — | ⬜ not yet componentized | archived: [`_TEMPLATE_Background.txt`](../../prompts/_archive/_TEMPLATE_Background.txt) |
+| **Pets** *(utility)* | — | — | a summon/companion (multi-image ref) | plain | ⬜ not yet componentized | archived: [`_TEMPLATE_Pets.txt`](../../prompts/_archive/_TEMPLATE_Pets.txt) |
+
+## Component library, reuse, and the twin-pair convention
+
+Hair and Motion styles are **hero-agnostic, reusable components** —
+`data/art/hair/<family>/<slug>.json` and `data/art/motion/<family>/<slug>.json`. A base-set card
+(`data/art/base-set/<hero>/<stage>/<family>/<slug>.json`) just points a hero + a component at a
+template; any hero can reference any style with a one-line swap.
+
+**Twin-pair convention.** Many styles should exist as a **plain** version and a **decorated** version
+of the same base style (e.g. a ponytail with vs. without loose face-framing tendrils), so the choice
+is made per-shot/per-hero at generation time instead of being baked into one fixed variant. Apply this
+plain + decorated pattern whenever it's natural for the style family.
+
+**Descriptive vs. reference-bound components (future).** Today every component is purely descriptive
+— full text, because there's no other source of truth for what it looks like, and natural variance
+across renders is fine (even desirable for common-tier, mass-produced items). Once multi-image /
+reference conditioning is available, a component can *graduate* to a locked signature asset by adding
+an `assetImage` + binding-instruction field — opt-in, per hero/per-item, never required. Non-hero cards
+should generally stay descriptive-only; natural variance there is thematically correct, not a bug.
 
 ## Craft notes & theme alignment
 
@@ -162,22 +213,35 @@ figure, long slender legs, hourglass, seductive / sultry / alluring, contrappost
 
 ## Negative baseline (+ stage extras)
 
-`extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes,
-green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo, studio equipment`
+`extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, flat chest,
+small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size,
+text, wording, watermark, logo, studio equipment`
+
+Eye-colour negatives (`blue eyes, green eyes, ...`) and skin-tone negatives are **hero-derived, not a
+fixed list** — each hero's def (`eyeColorNegatives`, `skinColorNegatives`) omits whatever family
+matches her own iris/skin, so a hero is never banned from having her own colouring. (This is a real
+bug we hit and fixed: a hero with forest-green/emerald eyes was being blocked by a universal "green
+eyes" negative baked into the shared template.)
 
 - **Edit / Hair / Pose** often add: `crowns, head gear, pauldrons, shoulder armor` —
-  **but remove `pauldrons, shoulder armor` when the outfit is meant to have them** (as your Armor_Bone does).
+  **but remove `pauldrons, shoulder armor` when the outfit is meant to have them** (as Armor_Bone
+  does, via `overrides.negativeRemove` on that specific card).
 - **Motion** often adds: `mismatched footwear`.
 - **Final** adds: `altered face, altered armor, altered hairstyle, duplicate or second weapon`.
+- **Bust/cleavage drift** is the other recurring failure mode — fixed by restating the figure with
+  explicit, technical wording (push-up-bra-style contour, narrow décolletage, explicit "not
+  flattened/reduced" negation) everywhere Figure is restated (Pose, Motion), *and* negating the drift
+  terms above in the same stages.
 
 ## Persistence anchors (make attributes stick)
 
 Some attributes drift when the model redraws (the bust / eye-colour problem). Lock them:
 
-- **Restate** the critical attributes (eye colour, bust/figure, skin) in every edit - keep them
-  **last** so they're the final word.
-- **Negate the off-values** (strongest lever): `recolored eyes, blue eyes, green eyes, brown eyes`
-  keeps violet; `flat chest, small bust` keeps the figure. Baked into every template negative.
+- **Restate** the critical attributes (eye colour, bust/figure, skin) in every stage that touches
+  them, in the stage's established block position (see Block order above) — consistent positioning
+  matters more than being literally last.
+- **Negate the off-values** (strongest lever): hero-derived eye/skin negatives keep her own colouring;
+  `flat chest, small bust, narrow bust, wide cleavage gap` keep the figure. Baked into every template.
 - **Lower denoise** when you can - less redraw means more of the reference persists.
 
 ## Glamour boosters (sprinkle into pose / expression blocks)
@@ -264,9 +328,15 @@ Variety comes from the **seed**, not from vague words:
 - **Energy words help inside a concrete frame:** mid-motion, caught candidly, off-balance, wind-caught,
   unposed - but still name the body / head / gaze angle.
 
-## Migrating your existing `.json` prompts
+## Adding a new hairstyle / motion pose
 
-They already follow most of this. To standardise: lift each positive prompt into the matching
-template, pull `background` out of the camera line into block 2, group wardrobe into the slots above,
-and replace hero specifics with `[BRACKETS]`. Then per new hero you copy the template and find/replace
-from their card JSON — no rewriting.
+1. Add an entry to `tools/generators/scaffold_hair_motion.py` (preferred for anything following an
+   existing family's pattern), or hand-author the component + base-set card JSON directly for a
+   one-off.
+2. Run the script — it writes the component (`data/art/hair|motion/<family>/<slug>.json`) and the
+   Drakness base-set card (`data/art/base-set/drakness/<stage>/<family>/<slug>.json`). It's
+   idempotent: re-running overwrites existing entries with identical content and only adds new ones.
+3. Generate: `python tools/generators/gen_prompt.py <card.json>`, or loop over
+   `data/art/base-set/drakness/<stage>/**/*.json` to regenerate everything for that stage.
+4. Validate before committing: no `{{UNRESOLVED}}` tokens, no stray `", ,"`, all JSON still valid,
+   and X_Pose/X_Head (hand-authored, not script-managed) still generate cleanly.
