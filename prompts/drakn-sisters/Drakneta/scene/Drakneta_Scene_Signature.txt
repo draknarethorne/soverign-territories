@@ -1,5 +1,5 @@
-=== Drakneta Thorne · Scene (Outfit + Effects): Castle Spellcast (group: Scene) — Edit (img2img) ===
-Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+=== Drakneta Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -20,6 +20,8 @@ Holding an ornate staff, upright, touching the ground, a gold lightning glow aro
 Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.
 
 Eyes glowing gold, luminous, mid-cast.
+
+Companion: her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning.
 
 Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
 
