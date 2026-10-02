@@ -2,7 +2,7 @@
   "artId": "drakness-hair-high-ponytail-loose-tendrils",
   "kind": "base-set",
   "stage": "hair",
-  "heroArt": "data/art/heroes/drakness-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "component": "data/art/heroes/components/hair/pulled-back/high-ponytail-loose-tendrils.json",
   "template": "data/art/base-set/_templates/heroes/hair-human.txt",
   "output": "prompts/art/base-set/Drakness/hair/pulled-back/Drakness_Hair_PulledBack_HighPonytailLooseTendrils.txt",

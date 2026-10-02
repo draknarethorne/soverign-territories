@@ -2,7 +2,7 @@
   "artId": "drakniss-x-pose",
   "kind": "base-set",
   "stage": "pose",
-  "heroArt": "data/art/heroes/drakniss-thorne.json",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
   "template": "data/art/base-set/_templates/heroes/pose-female-human.txt",
   "output": "prompts/art/base-set/Drakniss/poses/Drakniss_X_Pose.txt",
   "denoise": "~1.0",
