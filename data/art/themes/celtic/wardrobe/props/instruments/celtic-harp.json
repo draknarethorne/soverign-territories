@@ -1,0 +1,8 @@
+{
+  "id": "themes/celtic/wardrobe/props/instruments/celtic-harp",
+  "kind": "holding",
+  "name": "Celtic Harp",
+  "description": "a small carved Celtic harp cradled against the shoulder in the crook of one arm, its strings shimmering with {{ACCENT_SOFT}} light, a knotwork pattern carved along the frame, the other hand lightly plucking the strings",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["celtic", "prop", "instrument", "harp", "bard"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/headwear/circlets/silver-circlet",
+  "kind": "headwear",
+  "name": "Silver Circlet",
+  "description": "a slim silver circlet resting on the brow, set with a small {{ACCENT_SOFT}} gem, the hair flowing freely beneath it",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["headwear", "circlet", "dnd", "core"]
+}

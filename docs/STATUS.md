@@ -10,7 +10,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 | Area | State |
 | --- | --- |
-| Art pipeline | Working. `data/art/` identities + components + templates compile to prompts via `tools/generators/gen_prompt.py`. Rendering is manual in ComfyUI. |
+| Art pipeline | Working. `data/art/` identities + components + templates compile to prompts via `tools/generators/gen_prompt.py`. Rendering is manual in ComfyUI. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving); each Drakn sister has one themed scene and hairstyle. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
 | Gameplay cards | `data/cards/sovereign-dawn/`: 219 cards, ids `SD-001`..`SD-219`. `SD-041`+ is legacy content (Fire/Water/Earth + Neutral). |
 | Validation | `tools/validators/validate_data.py` (schemas + card/art links) and its mutation self-test run in pre-commit and CI. |
@@ -80,6 +80,8 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
 - **Shiny/foil (C2).** Same scene card plus an `effects` layer, or its own variant; decide with C1.
 - **Beyond-card art:** frames, icons, map tiles, battle UI, menus. Rendering quality is checked by hand with
   [art/output-qa-checklist.md](art/output-qa-checklist.md); the generator cannot judge images.
+- **Thorne Art Studio:** a Windows tool for editing art JSON, previewing prompts and driving ComfyUI; assessed in
+  [art/thorne-art-studio-proposal.md](art/thorne-art-studio-proposal.md). Build the command-line pieces first.
 - Unity project scaffolding; mining signature pieces back into shared wardrobe/background components.
 
 ## Readiness gates

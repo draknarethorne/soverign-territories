@@ -1,0 +1,9 @@
+{
+  "id": "themes/celtic",
+  "kind": "theme",
+  "name": "Celtic",
+  "type": "culture",
+  "description": "Celtic: emerald and moss gowns with knotwork trim, silver triskele jewelry, laced boots, harps and bardic motifs, woad-spiral face accents, misty standing-stone moors.",
+  "realm": "fantasy",
+  "tags": ["celtic", "knotwork", "bard", "moor", "emerald"]
+}

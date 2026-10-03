@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/bows/longbow",
+  "kind": "holding",
+  "name": "Longbow",
+  "description": "a tall recurved longbow of pale wood with a {{PRIMARY}}-wrapped grip, in one hand, the string drawn gently",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "bow", "ranged", "dnd", "core"]
+}

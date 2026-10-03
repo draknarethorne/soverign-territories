@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/swords/longsword",
+  "kind": "holding",
+  "name": "Longsword",
+  "description": "a straight double-edged longsword with an {{ACCENT_SOFT}} crossguard and a {{PRIMARY}}-wrapped grip, in one hand",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "sword", "dnd", "core"]
+}

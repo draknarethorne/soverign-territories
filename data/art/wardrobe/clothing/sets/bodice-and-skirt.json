@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/bodice-and-skirt",
+  "kind": "wearing",
+  "name": "Laced Bodice and Skirt",
+  "description": "a laced {{PRIMARY}} bodice with {{ACCENT_SOFT}} lacing over a white chemise, and a long layered skirt with a side slit",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["clothing", "bodice", "tavern", "dnd", "core"]
+}

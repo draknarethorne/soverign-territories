@@ -1,0 +1,9 @@
+{
+  "id": "themes/greek",
+  "kind": "theme",
+  "name": "Greek",
+  "type": "culture",
+  "description": "Classical Greek: draped chitons and peplos gowns, gold laurel, sandals, marble temples on sea cliffs, oracle and sea-god motifs.",
+  "realm": "fantasy",
+  "tags": ["greek", "classical", "mediterranean", "marble", "gold"]
+}

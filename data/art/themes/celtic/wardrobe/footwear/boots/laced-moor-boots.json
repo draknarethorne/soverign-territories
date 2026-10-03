@@ -1,0 +1,8 @@
+{
+  "id": "themes/celtic/wardrobe/footwear/boots/laced-moor-boots",
+  "kind": "legs_feet",
+  "name": "Laced Moor Boots",
+  "description": "soft ankle-high {{PRIMARY}} leather moor boots laced up the front with {{ACCENT_SOFT}} cord",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["celtic", "footwear", "boots"]
+}

@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/arms/matching-bracelets",
-  "kind": "arms",
-  "name": "Matching Bracelets",
-  "description": "delicate matching {{ACCENT_SOFT}} bracelets at the wrists, otherwise bare forearms",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{ACCENT_SOFT}}. Grounded in the repeated 'Arms: matching bracelets - remove armor from the wrists' instruction found verbatim across prompts/_archive/Drakness/armor/{Bikini,Iridescent,Elegant}.txt (an img2img editing instruction, rewritten here as plain declarative description for the new one-shot generation model)."
-}

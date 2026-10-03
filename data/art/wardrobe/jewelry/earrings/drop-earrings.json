@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/jewelry/earrings/drop-earrings",
+  "kind": "jewelry",
+  "name": "Drop Earrings",
+  "description": "long gold drop earrings set with a small {{ACCENT_SOFT}} gem, swaying below the jaw",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["jewelry", "earrings", "core"]
+}

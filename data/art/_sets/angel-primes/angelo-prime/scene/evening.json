@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/heroes/angel-primes/angelo-prime/wearing/simple-evening-wear.json",
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-minimal-human.txt",

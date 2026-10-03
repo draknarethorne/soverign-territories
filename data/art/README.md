@@ -62,6 +62,67 @@ piece under the hero's signature folder. Don't decompose further than the reuse 
 
 ---
 
+## Scopes, themes and kinds: where does a new piece go?
+
+Every piece has two coordinates: a **kind** (what it is) and a **scope** (how widely it applies). Every scope uses
+the same internal layout, `<kind>/<family>/<piece>.json`, so a piece can move between scopes without changing shape.
+
+| Scope | Folder | Put a piece here when |
+| --- | --- | --- |
+| core | `wardrobe/`, `cosmetics/`, `backgrounds/` | it works in any theme, or it is the standard D&D fantasy default |
+| race | `races/<race>/` | it exists because of anatomy (hair texture, skin, ears, horns) |
+| theme | `themes/<theme>/` | it belongs to a culture or event pack (Greek, Roman, Thanksgiving, ...) |
+| hero | `heroes/<group>/<slug>/` | it is one named hero's signature item |
+
+Rules of thumb: theme beats race (a Greek gown is `themes/greek/` even for a dark elf; the dark elf's skin and hair
+live in the race); hero beats everything (a signature weapon stays with its hero); when unsure, start in the narrowest
+scope and promote it to core the second time it is reused.
+
+**Theme first, not kind first.** A themed deck is one unit (outfit, jewelry, makeup, hair, background): putting
+`themes/greek/` on the outside means one folder to add, version, ship or retire (an event pack like Thanksgiving is
+switched on for a period and then removed), and a tool can list "everything in this theme". Kind-first
+(`wardrobe/armor/roman/`) would scatter one theme across a dozen folders.
+
+**Kinds** (folder under a scope, token slot a card fills):
+
+| Kind folder | Slot | Notes |
+| --- | --- | --- |
+| `wardrobe/armor`, `wardrobe/clothing` | `wearing` | body garment; armor families by material (plate, leather, mail, robes) |
+| `wardrobe/headwear` | `headwear` | optional line: omitted when a card sets none |
+| `wardrobe/jewelry`, `accessories`, `footwear`, `capes` | `jewelry`, `legs_feet`, `back`, ... | |
+| `wardrobe/weapons`, `wardrobe/props` | `holding` | weapons vs held non-weapons (book, harp, cornucopia) |
+| `wardrobe/swimwear` | `underlayer` | what the A-pose wears |
+| `wardrobe/effects` | `effects`, `eye_effect` | |
+| `cosmetics/makeup` | `makeup` | replaces the default studio face-styling line; optional line in scenes |
+| `races/*/cosmetics/hair`, `themes/*/cosmetics/hair` | `component` on a hair card | |
+| `backgrounds/<realm>/` | `background` | realm folder is mandatory (fantasy, modern, studio) |
+
+**A theme manifest** (`themes/<theme>/theme.json`, `type`: `culture` or `event`) names the pack. A theme's pieces use
+`{{PRIMARY}}` / `{{ACCENT_SOFT}}` so each hero renders them in her own colours; an event that needs its own season
+palette sets `overrides.palette` on the card (see `drakniya-scene-thanksgiving.json`).
+
+**Piece ids equal their paths** under `wardrobe/`, `cosmetics/` and `themes/` (validator-enforced), so a move can never
+leave a stale id. To move or rename a piece safely use the reference-aware tool, never plain `mv`:
+
+```bash
+python tools/art/art_refs.py where-used wardrobe/weapons/swords/greatsword
+python tools/art/art_refs.py move wardrobe/footwear/boots/combat-boots wardrobe/footwear/boots/knee/combat-boots --dry-run
+```
+
+A pure move must leave every generated prompt byte-identical; regenerate and check `git status prompts/`.
+
+**Optional template lines.** A template line starting with `?` (e.g. `?Headwear: {{HEADWEAR}}.`) is printed only when
+every token in it has a value, so slots like headwear or makeup cost nothing for cards that do not use them.
+
+## Where rendered images live (convention)
+
+The prompt file path is the identity of an image. A rendered PNG sits at the same path under `assets/art/` with the
+extension changed: `prompts/drakn-sisters/Drakniya/scene/Drakniya_Scene_Thanksgiving.txt` becomes
+`assets/art/drakn-sisters/Drakniya/scene/Drakniya_Scene_Thanksgiving.png`. Because the card's `output` field already
+defines the prompt path, the image path is derived, not stored twice; a tool (or the validator, later) can check that
+it exists, and Unity import can mirror the folder. Large binaries should use Git LFS or external storage. Still to
+decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fields point at these.
+
 ## Directory map
 
 ```text
@@ -122,27 +183,33 @@ data/art/
 │       └── cosmetics/              "universal" bucket, since every current style was designed
 │           └── hair/<family>/*.json    for human presentation specifically (44)
 │
-├── wardrobe/                       ✅ CATEGORY: cross-cutting PIECES, reusable across outfits,
-│   │                               heroes, and races — jewelry/capes/bracelets/accessories, not
-│   │                               bundled into any one complete "look." This is the library a
-│   │                               card's components dict pulls interchangeable slot-fillers from.
-│   ├── armor/*.json                (iridescent-bikini, plate-tank, leather-striker, leather-rogue
-│   │                               — the 3 are archetype-group defaults for male heroes)
-│   ├── arms/*.json                 (1: matching-bracelets, token-parameterized)
-│   ├── jewelry/necklaces/*.json    (2: bone-skull-pendant, ornate-gem-pendant)
-│   ├── jewelry/sets/*.json         (1: silver-gem-set, token-parameterized)
-│   ├── capes/*.json                (2: simple-black-leather, sheer-glowing-cloak)
-│   ├── bracelets/*.json            (1: simple-silver)
-│   ├── footwear/*.json             (2: glowing-strap-heels, combat-boots — both token-parameterized)
-│   ├── swimwear/*.json             (A-pose UNDERLAYERS, swappable: triangle-bikini (default),
-│   │                               swim-brief (default male), multicolor, high-waist, bandeau,
+├── wardrobe/                       ✅ CORE wardrobe: generic pieces + the standard D&D fantasy set, laid
+│   │                               out <kind>/<family>/<piece>.json. A card's components pull
+│   │                               interchangeable slot-fillers from here (see "Scopes" below).
+│   ├── armor/{plate,leather,mail,robes,bikini}/
+│   ├── clothing/{gowns,dresses,sets,robes}/
+│   ├── headwear/{helms,circlets,crowns,hoods,hats}/
+│   ├── weapons/{swords,daggers,polearms,staves,bows,wands,blunt,axes,shields}/
+│   ├── props/{tomes,...}/          held items that are NOT weapons (books, instruments, vessels)
+│   ├── jewelry/{necklaces,sets,bracelets,earrings,anklets,belts,rings}/
+│   ├── footwear/{boots,heels,sandals,barefoot}/
+│   ├── capes/{cloaks,short-capes,mantles}/
+│   ├── accessories/{bags,quivers,bracers,gloves}/
+│   ├── swimwear/*.json             A-pose UNDERLAYERS, swappable (triangle-bikini default,
+│   │                               swim-brief default male, multicolor, high-waist, bandeau,
 │   │                               sporty, one-piece, board-shorts, athletic-trunks)
-│   ├── clothing/*.json             (ethereal-sheer-gown, fitted-cocktail-dress, long-evening-gown,
-│   │                               flowing-sundress, tailored-dress-shirt-set)
-│   ├── weapons/*.json              (broadsword-and-shield, greatsword, paired-daggers, trident —
-│   │                               archetype/thematic defaults for male heroes)
-│   └── accessories/*.json          (1: midnight-violet-satchel — Raven's bag, not yet wired;
-│                                   Raven needs its own template shape, see below)
+│   └── effects/{ambient,eyes}/
+│
+├── cosmetics/                      ✅ CORE cosmetics not tied to a race: makeup/<family>/*.json
+│                                   (soft-glam, smoky-eye, statement-lip). Core human hair stays
+│                                   under races/human/cosmetics/hair/.
+│
+├── themes/                         ✅ THEME PACKS, one self-contained folder per culture or event:
+│   │                               greek, roman, egyptian, norse, celtic (culture) and
+│   │                               thanksgiving (event). Each has a theme.json manifest and
+│   │                               the same layout as the core: wardrobe/<kind>/<family>/,
+│   │                               cosmetics/{hair,makeup}/<family>/, backgrounds/<realm>/<family>/.
+│   └── <theme>/theme.json          (schema: _schema/theme.schema.json)
 │
 ├── dragons/                        ✅ CATEGORY: all 10 Elder Dragons seeded (elder-dragons/*.json),
 │   └── elder-dragons/              aligned by element to the female Drakn sisters per the codex's
@@ -236,10 +303,10 @@ fresh literal, when building a male hero's scene until a proper cleanup pass hap
 
 **Archetype-grouped defaults for the male roster** — rather than inventing 10 unique armor/weapon
 sets, the 10 `drakn-bound` heroes share 3 default wardrobe groups by class archetype: **Tank**
-(`wardrobe/armor/plate-tank.json` + `wardrobe/weapons/broadsword-and-shield.json` — Draknare,
-Lyran, Hauk), **Striker** (`leather-striker.json` + `weapons/greatsword.json` — Ignis, Torvald,
-Dorian, Zephyr), **Rogue** (`leather-rogue.json` + `weapons/paired-daggers.json` — Nizaras,
-Malakor; Corin uses the same armor with `weapons/trident.json` instead, fitting his Beast Lord/
+(`wardrobe/armor/plate/plate-tank.json` + `wardrobe/weapons/swords/broadsword-and-shield.json` — Draknare,
+Lyran, Hauk), **Striker** (`leather/leather-striker.json` + `swords/greatsword.json` — Ignis, Torvald,
+Dorian, Zephyr), **Rogue** (`leather/leather-rogue.json` + `daggers/paired-daggers.json` — Nizaras,
+Malakor; Corin uses the same armor with `polearms/trident.json` instead, fitting his Beast Lord/
 Water theme). All embed `{{PRIMARY}}`/`{{ACCENT_SOFT}}` so each hero renders in his own palette.
 A new `scene-combat-human.txt` template variant exists alongside the 4 caster-oriented scene
 templates — it drops the hardcoded "Eyes glowing {{ACCENT_SOFT}}, luminous, mid-cast" line (and
@@ -260,7 +327,7 @@ swirling leaves, drifting ice crystals, dust, mist, static, whatever fits the he
 literal text is fine, it doesn't need to be a shared reusable piece unless the same effect is
 likely to recur elsewhere. A hero-specific detail tied to a *specific worn item* (e.g. Draknora's
 "flames around her glowing sandals") belongs in the scene's `effects` slot, not on the footwear
-piece itself — the footwear (`wardrobe/footwear/glowing-strap-heels.json`) is shared across many
+piece itself — the footwear (`wardrobe/footwear/heels/glowing-strap-heels.json`) is shared across many
 heroes in their own palette, so baking in a permanent flame effect there would leak onto every
 other hero wearing it; the effect is a property of *this scene*, not of the shoes.
 
@@ -325,7 +392,7 @@ Example — swapping a weapon without touching the armor at all:
   "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
   "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
   "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
-  "back": "data/art/wardrobe/capes/simple-black-leather.json",
+  "back": "data/art/wardrobe/capes/short-capes/simple-black-leather.json",
   "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
   "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json"
 }

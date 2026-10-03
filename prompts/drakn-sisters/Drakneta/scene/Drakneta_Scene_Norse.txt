@@ -1,0 +1,37 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Norse Storm Shieldmaiden (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing Norse shieldmaiden armor - a riveted mail shirt over a Electric Gold padded tunic, a leather corset belt with cyan knotwork studs, fur-trimmed leather pauldrons and wrapped leather arm guards.
+
+Headwear: a braided silver circlet with small rune plaques across the brow, a thin plait of hair falling at each temple, the face and eyes clear.
+
+Jewelry: Norse silver jewelry - a heavy twisted torc at the neck, a pair of oval tortoise brooches at the chest, a silver arm ring and a pendant of cyan rune stones on a leather cord.
+Legs & feet: calf-high Electric Gold leather boots lined and cuffed with thick fur and bound with cyan leather cross-lacing.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a fierce, focused look and a hint of a battle-ready grin. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+Holding a heavy short-hafted war hammer in one hand, its iron head etched with cyan lightning runes, crackling arcs of cyan lightning jumping from the head, the haft wrapped in Electric Gold leather.
+
+Forks of cyan lightning flicker across the night sky and arc between the roof beams of the longhall behind her.
+
+Eyes: irises softly aglow with cyan light, brightest near the pupil and fading to the natural electric cobalt-topaz irises at the rim, iris detail still visible, a gentle cyan catchlight, no light spilling beyond the eyelids.
+
+Makeup: Norse war paint - a bold dark kohl band across the eyes with a small cyan rune painted on one cheekbone, wind-flushed cheeks and a natural lip.
+
+Environment: a high-fantasy Norse fjord village at night, a great timber longhall with carved dragon-head gables and glowing windows, snow-dusted pines and dark water, green and violet aurora rippling across a starry sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/capes/simple-black-leather",
-  "kind": "back",
-  "name": "Simple Black Leather Cape",
-  "description": "a simple black leather cape with a bone-coloured gothic pattern hanging behind her",
-  "compatibleStages": ["armor", "clothing"],
-  "notes": "Reusable wardrobe piece, grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Bone.txt."
-}

@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/makeup/bold/statement-lip",
+  "kind": "makeup",
+  "name": "Statement Lip",
+  "description": "a bold statement lip in a deep {{PRIMARY}}-matched tone with minimal eye makeup - clean winged liner, soft neutral lids and a light blush",
+  "compatibleStages": ["pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["makeup", "bold", "lip", "core"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "themes/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora",
+  "kind": "background",
+  "name": "Fjord Longhall under Aurora",
+  "description": "a high-fantasy Norse fjord village at night, a great timber longhall with carved dragon-head gables and glowing windows, snow-dusted pines and dark water, green and violet aurora rippling across a starry sky",
+  "mood": "wintry, mythic, wild",
+  "compatibleStages": ["scene"],
+  "tags": ["norse", "longhall", "fjord", "aurora", "snow"]
+}

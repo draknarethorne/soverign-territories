@@ -1,0 +1,12 @@
+{
+  "id": "themes/thanksgiving/cosmetics/hair/braided/harvest-braid-with-leaves",
+  "kind": "hair",
+  "name": "Harvest Braid with Leaves",
+  "a_pose_style": "hair parted in the centre and worn loose and long in front of the shoulders beside the chest, with one soft side braid woven with small autumn leaves and wheat stalks starting at the temple, the face and eyes completely clear",
+  "a_pose_negatives": ["ponytail", "bun", "bangs", "hair across the face", "hair covering eyes"],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted and loose with one soft temple braid woven with small autumn leaves and wheat, falling in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "tags": ["thanksgiving", "hair", "braided", "leaves"]
+}

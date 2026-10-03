@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/accessories/quivers/quiver",
+  "kind": "accessory",
+  "name": "Back Quiver",
+  "description": "a leather quiver on the back with a few {{ACCENT_SOFT}}-fletched arrows rising over one shoulder",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["accessory", "quiver", "ranged", "dnd", "core"]
+}

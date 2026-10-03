@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/capes/cloaks/hooded-travel-cloak",
+  "kind": "back",
+  "name": "Hooded Travel Cloak",
+  "description": "a long {{PRIMARY}} travel cloak with {{ACCENT_SOFT}} clasps at the throat, the hood thrown back on the shoulders",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["cloak", "travel", "dnd", "core"]
+}

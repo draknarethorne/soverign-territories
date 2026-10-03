@@ -1,0 +1,8 @@
+{
+  "id": "themes/celtic/wardrobe/headwear/circlets/knotwork-silver-circlet",
+  "kind": "headwear",
+  "name": "Knotwork Silver Circlet",
+  "description": "a slim silver Celtic circlet worked with interlaced knotwork across the brow, a small {{ACCENT_SOFT}} gem at the centre, the hair flowing freely beneath",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["celtic", "headwear", "circlet", "knotwork"]
+}

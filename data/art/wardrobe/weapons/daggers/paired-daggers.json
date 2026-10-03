@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/daggers/paired-daggers",
+  "kind": "holding",
+  "name": "Paired Daggers (Rogue default)",
+  "description": "a pair of {{ACCENT_SOFT}}-edged daggers, one in each hand, {{PRIMARY}}-wrapped grips",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Default holding piece for Specialist/Assassin archetype male heroes — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. First-pass invented default."
+}

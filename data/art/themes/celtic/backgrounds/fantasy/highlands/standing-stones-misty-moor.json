@@ -1,0 +1,9 @@
+{
+  "id": "themes/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor",
+  "kind": "background",
+  "name": "Standing Stones on a Misty Moor",
+  "description": "a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud",
+  "mood": "mystic, windswept, ancient",
+  "compatibleStages": ["scene"],
+  "tags": ["celtic", "standing-stones", "moor", "mist"]
+}

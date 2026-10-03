@@ -1,0 +1,9 @@
+{
+  "id": "themes/norse",
+  "kind": "theme",
+  "name": "Norse",
+  "type": "culture",
+  "description": "Norse / Viking: fur-trimmed wool kirtles, shieldmaiden mail, torcs and brooches, rune-carved staves and hammers, braided hair, longhalls under northern lights.",
+  "realm": "fantasy",
+  "tags": ["norse", "viking", "fur", "runes", "cold"]
+}

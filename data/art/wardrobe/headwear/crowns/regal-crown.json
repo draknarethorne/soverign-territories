@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/headwear/crowns/regal-crown",
+  "kind": "headwear",
+  "name": "Regal Crown",
+  "description": "a regal gold crown of upswept points set with {{ACCENT_SOFT}} jewels, sitting above the hairline",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["headwear", "crown", "royal", "dnd", "core"]
+}

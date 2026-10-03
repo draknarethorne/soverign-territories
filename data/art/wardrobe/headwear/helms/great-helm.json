@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/headwear/helms/great-helm",
+  "kind": "headwear",
+  "name": "Great Helm (visor raised)",
+  "description": "a steel great helm with a {{ACCENT_SOFT}} crest, the visor raised so the face is fully visible",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["headwear", "helm", "dnd", "core"]
+}

@@ -1,0 +1,37 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Thanksgiving Harvest (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a flowing mid-length harvest dress in warm Burnt Pumpkin Orange with a fitted laced bodice, soft sleeves, an embroidered gold leaf pattern along the hem and a woven wheat-coloured sash.
+
+Headwear: a crown of real-looking autumn leaves in red, orange and gold with a few small acorns and wheat stalks woven in, sitting on the crown of the head, the face and eyes fully clear.
+
+Jewelry: copper and gold jewelry in the shape of oak leaves and acorns - a delicate leaf necklace with a small acorn pendant, matching leaf earrings and a thin copper bracelet set with gold amber.
+Legs & feet: warm brown leather ankle boots with a stacked heel, worn leather laces and a subtle gold stitched leaf motif.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a calm, warm smile, eyes gentle and grateful. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Holding a large woven wicker cornucopia carried at the hip in one arm, overflowing with pumpkins, apples, grapes, small gourds and wheat, a gold glow of living nature around it.
+
+red, orange and gold autumn leaves drift and swirl gently through the air around them, a few caught in the light, with a faint warm gold glow
+
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+
+Makeup: warm autumn makeup - copper and gold-toned eyeshadow, soft bronzed cheeks with a peachy blush, defined lashes and a warm berry-brown lip.
+
+Environment: a warm high-fantasy harvest feast hall, long oak tables heaped with roast fowl, pumpkins, fruit and bread, golden candlelight and hanging garlands of wheat and autumn leaves, a great stone hearth glowing behind and tall windows showing an orchard in autumn colour.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

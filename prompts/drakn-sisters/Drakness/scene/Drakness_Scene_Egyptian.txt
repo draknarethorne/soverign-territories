@@ -1,0 +1,37 @@
+=== Drakness Thorne · Scene (Outfit + Effects): Egyptian Necropolis (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a fitted Egyptian kalasiris sheath gown of fine pleated Midnight Violet linen with sheer panels, a plunging neckline held by broad shoulder straps, a gold-beaded amethyst sash at the hip.
+
+Headwear: a slim gold Egyptian diadem across the brow with a rearing cobra uraeus at the front, a trailing amethyst bead strand at each temple, the face and eyes fully clear.
+
+Jewelry: an Egyptian usekh broad collar of gold and amethyst beaded rows resting on the chest, matching wide gold cuffs, a pair of serpent armlets and gold hoop earrings.
+Legs & feet: simple gold-trimmed Egyptian papyrus sandals with a thin strap between the toes and a gold anklet, the toes bare.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a calm, imperious stare, utterly sure of her command over the dead. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a tall black-and-gold Egyptian was scepter in one hand, topped with a carved jackal-headed god, the forked base at the ground, a cold amethyst glow in the jackal's eyes.
+
+Cold amethyst necromantic mist curls low around her feet and between the columns, faint spectral glyphs drifting upward.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: dramatic Egyptian makeup - thick winged black kohl liner extending toward the temples, gold-washed lids with a amethyst accent, defined brows and a warm terracotta lip.
+
+Environment: a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/footwear/sandals/leather-sandals",
+  "kind": "legs_feet",
+  "name": "Leather Strap Sandals",
+  "description": "flat leather strap sandals in {{PRIMARY}} with thin {{ACCENT_SOFT}} buckles, the toes bare",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["footwear", "sandals", "core"]
+}

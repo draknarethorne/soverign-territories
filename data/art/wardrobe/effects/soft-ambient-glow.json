@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/effects/soft-ambient-glow",
-  "kind": "effects",
-  "name": "Soft Ambient Glow",
-  "description": "a faint {{ACCENT_SOFT}} glow lingers softly, ambient and understated, nothing overtly magical.",
-  "compatibleStages": ["scene"],
-  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{ACCENT_SOFT}}. For quieter, non-combat scenes (an evening portrait) where a full casting effect would be too much."
-}

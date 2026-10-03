@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/headwear/hats/wizard-hat",
+  "kind": "headwear",
+  "name": "Wizard Hat",
+  "description": "a tall pointed {{PRIMARY}} wizard hat with a wide brim and an {{ACCENT_SOFT}} band, tilted slightly so the face and eyes stay clear",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["headwear", "hat", "caster", "dnd", "core"]
+}

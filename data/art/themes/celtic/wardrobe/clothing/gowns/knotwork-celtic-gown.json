@@ -1,0 +1,8 @@
+{
+  "id": "themes/celtic/wardrobe/clothing/gowns/knotwork-celtic-gown",
+  "kind": "wearing",
+  "name": "Knotwork Celtic Gown",
+  "description": "a long Celtic gown of {{PRIMARY}} wool with wide trailing sleeves, {{ACCENT_SOFT}} Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["celtic", "gown", "knotwork", "plaid"]
+}

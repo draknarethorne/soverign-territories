@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/armor/leather-rogue",
-  "kind": "wearing",
-  "name": "Light Leather Armor (Rogue default)",
-  "description": "close-fitting {{PRIMARY}}-toned light leather armor, {{ACCENT_SOFT}} accent straps across the chest and hips, built for silent movement",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Default armor set for Specialist/Assassin archetype male heroes (Rogue, Beast Lord, Assassin) — embeds {{PRIMARY}}/{{ACCENT_SOFT}}, reusable across any rogue-type hero in their own palette. First-pass invented default, not grounded in archived content."
-}

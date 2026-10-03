@@ -7,7 +7,7 @@
   "base_description": "Draknora in her Flame Red ethereal gown (see clothing/gown.json), hair and makeup already set",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
     "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
   },

@@ -1,0 +1,8 @@
+{
+  "id": "themes/roman/wardrobe/weapons/swords/gladius-and-scutum",
+  "kind": "holding",
+  "name": "Gladius and Scutum",
+  "description": "a short Roman gladius sword in the right hand and a curved rectangular scutum shield painted {{PRIMARY}} with an {{ACCENT_SOFT}} lightning-wing emblem on the left arm",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["roman", "weapon", "sword", "shield"]
+}

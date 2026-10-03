@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/footwear/combat-boots",
-  "kind": "legs_feet",
-  "name": "Combat Boots",
-  "description": "sturdy {{PRIMARY}}-toned combat boots with {{ACCENT_SOFT}} buckles, laced to the shin",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Default footwear for male heroes across all three archetype groups (tank/striker/rogue) — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. First-pass invented default."
-}

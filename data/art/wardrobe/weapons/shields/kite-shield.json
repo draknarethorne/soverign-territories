@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/shields/kite-shield",
+  "kind": "holding",
+  "name": "Kite Shield",
+  "description": "a tall kite shield strapped to the left forearm, a {{PRIMARY}} field with a {{ACCENT_SOFT}} border and boss",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "shield", "dnd", "core"]
+}

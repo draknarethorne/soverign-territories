@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/robes/silk-robe",
+  "kind": "wearing",
+  "name": "Silk Robe",
+  "description": "a loose floor-length {{PRIMARY}} silk robe tied at the waist with an {{ACCENT_SOFT}} sash, the front softly open",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["clothing", "robe", "silk", "core"]
+}

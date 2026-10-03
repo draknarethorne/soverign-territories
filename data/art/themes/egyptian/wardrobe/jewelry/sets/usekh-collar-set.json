@@ -1,0 +1,8 @@
+{
+  "id": "themes/egyptian/wardrobe/jewelry/sets/usekh-collar-set",
+  "kind": "jewelry",
+  "name": "Usekh Broad Collar Set",
+  "description": "an Egyptian usekh broad collar of gold and {{ACCENT_SOFT}} beaded rows resting on the chest, matching wide gold cuffs, a pair of serpent armlets and gold hoop earrings",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["egyptian", "jewelry", "collar", "gold"]
+}

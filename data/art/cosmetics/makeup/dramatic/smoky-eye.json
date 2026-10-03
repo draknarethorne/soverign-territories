@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/makeup/dramatic/smoky-eye",
+  "kind": "makeup",
+  "name": "Smoky Eye",
+  "description": "a smoky eye - charcoal-to-{{ACCENT_SOFT}} blended eyeshadow, defined lower lashes and winged liner, softly sculpted cheeks and a muted neutral lip",
+  "compatibleStages": ["pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["makeup", "dramatic", "core"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/jewelry/belts/ornate-belt",
+  "kind": "jewelry",
+  "name": "Ornate Belt",
+  "description": "a wide ornate belt of {{PRIMARY}} leather with a large {{ACCENT_SOFT}} buckle sitting low on the hips",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["jewelry", "belt", "core"]
+}

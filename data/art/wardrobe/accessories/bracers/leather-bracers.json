@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/accessories/bracers/leather-bracers",
+  "kind": "accessory",
+  "name": "Leather Bracers",
+  "description": "laced {{PRIMARY}} leather bracers on both forearms with {{ACCENT_SOFT}} studs",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["accessory", "bracers", "dnd", "core"]
+}

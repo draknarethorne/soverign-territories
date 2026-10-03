@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/travelers-tunic",
+  "kind": "wearing",
+  "name": "Traveler's Tunic and Trousers",
+  "description": "a belted {{PRIMARY}} tunic with rolled sleeves over fitted dark trousers tucked into boots, {{ACCENT_SOFT}} stitching at the collar",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["clothing", "tunic", "traveler", "dnd", "core"]
+}

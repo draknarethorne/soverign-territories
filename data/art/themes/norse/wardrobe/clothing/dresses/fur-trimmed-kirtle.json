@@ -1,0 +1,8 @@
+{
+  "id": "themes/norse/wardrobe/clothing/dresses/fur-trimmed-kirtle",
+  "kind": "wearing",
+  "name": "Fur-Trimmed Wool Kirtle",
+  "description": "a Norse wool kirtle in {{PRIMARY}} with {{ACCENT_SOFT}} woven-border trim at the neck and hem, a laced bodice, fur cuffs and a fur-lined collar, a belt hung with a small knife and keys",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["norse", "dress", "kirtle", "fur"]
+}

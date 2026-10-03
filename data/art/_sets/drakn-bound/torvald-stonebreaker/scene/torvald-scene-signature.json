@@ -9,7 +9,7 @@
   "components": {
     "wearing": "fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest",
     "jewelry": "none, unadorned",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",
     "companion": "his bonded Dire Bear, a massive shaggy bear with claws like daggers, standing at his side",
     "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"

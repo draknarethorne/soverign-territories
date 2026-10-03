@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/armor/leather/leather-striker",
+  "kind": "wearing",
+  "name": "Banded Leather Armor (Striker default)",
+  "description": "fitted {{PRIMARY}}-toned banded leather armor across the chest and shoulders, {{ACCENT_SOFT}} stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Default armor set for Melee/Striker archetype male heroes (Warrior, Berserker, Monk) — embeds {{PRIMARY}}/{{ACCENT_SOFT}}, reusable across any striker-type hero in their own palette. First-pass invented default, not grounded in archived content."
+}

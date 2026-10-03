@@ -1,0 +1,8 @@
+{
+  "id": "themes/norse/wardrobe/armor/mail/shieldmaiden-mail-set",
+  "kind": "wearing",
+  "name": "Shieldmaiden Mail Set",
+  "description": "Norse shieldmaiden armor - a riveted mail shirt over a {{PRIMARY}} padded tunic, a leather corset belt with {{ACCENT_SOFT}} knotwork studs, fur-trimmed leather pauldrons and wrapped leather arm guards",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["norse", "armor", "mail", "shieldmaiden"]
+}

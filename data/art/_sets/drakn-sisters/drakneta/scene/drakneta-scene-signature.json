@@ -10,7 +10,7 @@
   "effects": "Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.",
   "components": {
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
-    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "companion": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },

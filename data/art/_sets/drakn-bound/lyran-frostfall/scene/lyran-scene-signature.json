@@ -9,7 +9,7 @@
   "components": {
     "wearing": "heavy Glacial Blue-toned plate armor over the chest and shoulders, Frost White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; frost patterns etched into the pauldrons, a crest of interlocking icicles at the collar",
     "jewelry": "none, unadorned",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",
     "companion": "his bonded Frost Owl, a great owl with ice-pale feathers and glowing blue eyes, perched nearby watching the scene",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"

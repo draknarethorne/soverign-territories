@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
     "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
-    "back": "data/art/wardrobe/capes/simple-black-leather.json",
+    "back": "data/art/wardrobe/capes/short-capes/simple-black-leather.json",
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/ornate-dagger.json"
   },

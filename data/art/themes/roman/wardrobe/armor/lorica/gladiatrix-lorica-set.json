@@ -1,0 +1,8 @@
+{
+  "id": "themes/roman/wardrobe/armor/lorica/gladiatrix-lorica-set",
+  "kind": "wearing",
+  "name": "Gladiatrix Lorica Set",
+  "description": "Roman gladiatrix armor - a sculpted bronze-and-{{PRIMARY}} lorica cuirass with {{ACCENT_SOFT}} edging over a short tunic skirt of leather strips (pteruges), segmented shoulder guards and a broad belt",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["roman", "armor", "lorica", "gladiator"]
+}

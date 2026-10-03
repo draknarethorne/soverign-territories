@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/weapons/trident",
-  "kind": "holding",
-  "name": "Trident (Beast Lord default)",
-  "description": "a long {{ACCENT_SOFT}}-tined trident, gripped in one hand, {{PRIMARY}}-wrapped haft",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Thematic holding piece for Water-aligned Specialist/Beast Lord archetype heroes (e.g. Corin Tidewalker) — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. First-pass invented default."
-}

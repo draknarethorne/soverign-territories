@@ -1,0 +1,8 @@
+{
+  "id": "themes/roman/cosmetics/makeup/rouged/roman-kohl-and-rouge",
+  "kind": "makeup",
+  "name": "Roman Kohl and Rouge",
+  "description": "classic Roman makeup - dark kohl-lined eyes with a subtle {{ACCENT_SOFT}} shadow, defined brows, rouged cheekbones and a deep rose lip",
+  "compatibleStages": ["pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["roman", "makeup", "kohl", "rouge"]
+}

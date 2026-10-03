@@ -9,7 +9,7 @@
   "components": {
     "wearing": "fitted Arc Blue-toned banded leather armor across the chest and shoulders, Electric Gold stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; prayer-cloth wraps at the wrists and waist, faint lightning-bolt embroidery along the hem",
     "jewelry": "none, unadorned",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists.json",
     "companion": "his bonded Gryphon, a majestic eagle-lion hybrid with storm-grey feathers, perched on a nearby ledge, wings mantled",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"

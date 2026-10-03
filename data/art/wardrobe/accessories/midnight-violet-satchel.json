@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/accessories/midnight-violet-satchel",
-  "kind": "accessory",
-  "name": "Midnight Violet Ornate Satchel",
-  "description": "a small Midnight-Violet ornate satchel at the hip",
-  "compatibleStages": ["armor", "clothing"],
-  "notes": "Reusable wardrobe piece, grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Raven.txt ('Belt & kit' line). Not yet wired into any card — Raven's full outfit (Drapes, Belt & kit slots) needs its own armor template variant, different from the Bone-shaped one (Wearing/Arms/Jewelry/Back/Legs&feet/Holding) built so far. Different complete outfits can need different slot sets/templates — that's expected, not a bug."
-}

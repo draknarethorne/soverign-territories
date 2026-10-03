@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/armor/iridescent-bikini",
-  "kind": "wearing",
-  "name": "Iridescent Body-Chain Bikini",
-  "description": "a draped silver body-chain bikini top - {{PRIMARY}}-toned iridescent disc bra cups with {{ACCENT_SOFT}} and polished-silver gothic-inspired design, matching bikini bottom, swinging chain hip straps, a minimalist front plate shield motif; bare stomach and flanks, revealing high-cut with bold décolletage, legs exposed",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. Grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Iridescent.txt, generalized from Drakness's fixed 'Iridescent-Shadow/Necrotic-Violet' naming to her own tokens so any hero can wear this in their own palette."
-}

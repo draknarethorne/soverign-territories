@@ -1,0 +1,9 @@
+{
+  "id": "themes/thanksgiving/backgrounds/fantasy/feast/harvest-feast-hall",
+  "kind": "background",
+  "name": "Harvest Feast Hall",
+  "description": "a warm high-fantasy harvest feast hall, long oak tables heaped with roast fowl, pumpkins, fruit and bread, golden candlelight and hanging garlands of wheat and autumn leaves, a great stone hearth glowing behind and tall windows showing an orchard in autumn colour",
+  "mood": "warm, abundant, festive",
+  "compatibleStages": ["scene"],
+  "tags": ["thanksgiving", "feast", "harvest", "candlelit", "autumn"]
+}

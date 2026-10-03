@@ -1,0 +1,37 @@
+=== Draknara Thorne · Scene (Outfit + Effects): Roman Gladiatrix (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing Roman gladiatrix armor - a sculpted bronze-and-Deep Burnt Sienna lorica cuirass with turquoise edging over a short tunic skirt of leather strips (pteruges), segmented shoulder guards and a broad belt.
+
+Headwear: a polished bronze Roman galea helm with cheek guards and a tall turquoise horsehair crest, worn pushed back so the whole face and forehead stay visible, the hair showing beneath.
+
+Jewelry: Roman gold jewelry - a pair of ornate fibula brooches pinning the garment at the shoulder, a serpent armlet, a gem-set pendant on a chain and earrings with turquoise stones.
+Legs & feet: open Roman caligae sandals of Deep Burnt Sienna leather laced up the shin with turquoise studs, the toes bare.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a grounded, intense stare, the weight of the arena in her gaze. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+Holding a short Roman gladius sword in the right hand and a curved rectangular scutum shield painted Deep Burnt Sienna with an turquoise lightning-wing emblem on the left arm.
+
+Fine motes of turquoise arena dust swirl around her feet, stirred by unseen earth magic.
+
+Eyes: irises softly aglow with turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: classic Roman makeup - dark kohl-lined eyes with a subtle turquoise shadow, defined brows, rouged cheekbones and a deep rose lip.
+
+Environment: a grand high-fantasy Roman forum at dusk, towering marble colonnades and a domed temple, bronze braziers burning along the steps, banners with eagle standards, warm torch glow on pale stone.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/wands/arcane-wand",
+  "kind": "holding",
+  "name": "Arcane Wand",
+  "description": "a slender wand of dark wood in one hand, its tip glowing with a small {{ACCENT_SOFT}} light",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "wand", "caster", "dnd", "core"]
+}

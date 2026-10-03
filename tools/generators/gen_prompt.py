@@ -90,6 +90,27 @@ def cleanup(text):
     return text
 
 
+def apply_optional_lines(template, toks):
+    """A template line starting with '?' is optional: kept (without the '?') only if every token
+    in it has a non-empty value, otherwise dropped. Lets a template offer slots like Headwear that
+    most cards never fill, without printing an empty 'Headwear: .' line."""
+    out, dropped = [], False
+    for line in template.split("\n"):
+        if line.startswith("?"):
+            names = re.findall(r"{{(\w+)}}", line)
+            if all(toks.get(n) for n in names):
+                out.append(line[1:])
+            else:
+                dropped = True
+            continue
+        out.append(line)
+    text = "\n".join(out)
+    if dropped:
+        while "\n\n\n" in text:
+            text = text.replace("\n\n\n", "\n\n")
+    return text
+
+
 def resolve_hairstyle(pal):
     """HAIRSTYLE comes either from a referenced component (data/art/hair/*.json,
     field 'aPoseStyle') or, for back-compat, a plain 'hairStyle' string on the hero.
@@ -414,6 +435,11 @@ def generate(card_path):
     toks = tokens_for_dragon(hero) if "art" not in hero else tokens_for(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
+    # A makeup piece (components.makeup) replaces the default studio face-styling line everywhere,
+    # and also feeds scene templates through the optional {{MAKEUP_LINE}}.
+    if toks.get("MAKEUP"):
+        toks["MAKEUP_LINE"] = "Makeup: " + toks["MAKEUP"].rstrip(".") + "."
+        toks["FACE_STYLE"] = toks["MAKEUP_LINE"]
     # Literal, per-card one-off strings that aren't reusable pieces on their own
     # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
     _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",
@@ -433,6 +459,7 @@ def generate(card_path):
                 val = val.replace("{{" + other_key + "}}", other_val)
         toks[key] = val
 
+    template = apply_optional_lines(template, toks)
     needed = set(re.findall(r"{{(\w+)}}", template))
     missing = needed - set(toks)
     if missing:

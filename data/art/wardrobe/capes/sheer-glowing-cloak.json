@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/capes/sheer-glowing-cloak",
-  "kind": "back",
-  "name": "Sheer Glowing Cloak",
-  "description": "an ethereal cloak of translucent sheer draping behind her, attached at the shoulders, frosted {{PRIMARY}} fabric over a matte underlayer, delicate {{ACCENT_SOFT}} and silver glowing fibre-optic threads woven throughout, polished-silver clasps on the shoulders",
-  "compatibleStages": ["armor", "scene"],
-  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. Grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Iridescent.txt's 'Back:' cloak, generalized to any hero's own palette. Same glowing-fibre-optic language family as wardrobe/clothing/ethereal-sheer-gown.json, but a cape/back piece instead of a full wearing piece."
-}

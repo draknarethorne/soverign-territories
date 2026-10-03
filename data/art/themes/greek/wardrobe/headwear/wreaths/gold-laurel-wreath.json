@@ -1,0 +1,8 @@
+{
+  "id": "themes/greek/wardrobe/headwear/wreaths/gold-laurel-wreath",
+  "kind": "headwear",
+  "name": "Gold Laurel Wreath",
+  "description": "a delicate gold laurel wreath resting on the crown of the head, the leaves fine and detailed, the hair flowing beneath it",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["greek", "headwear", "wreath", "laurel"]
+}

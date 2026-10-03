@@ -1,0 +1,12 @@
+{
+  "id": "themes/roman/cosmetics/hair/updo/roman-tutulus-updo",
+  "kind": "hair",
+  "name": "Roman Tutulus Updo",
+  "a_pose_style": "a Roman tutulus updo, parted in the centre, the hair swept up and back into a high rolled knot at the crown with a pinned braided coil behind it and fine curled ringlets framing each temple, the face and eyes completely clear",
+  "a_pose_negatives": ["ponytail", "bangs", "hair across the face"],
+  "breeze": "No breeze.",
+  "hair_change": "Hair is swept into a centre-parted Roman tutulus updo with a high rolled knot, a pinned braided coil and curled ringlets at the temples.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "tags": ["roman", "hair", "updo", "tutulus"]
+}

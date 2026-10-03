@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/tailored-dress-shirt-set",
+  "kind": "wearing",
+  "name": "Tailored Shirt and Trousers (male)",
+  "description": "a tailored {{PRIMARY}} dress shirt with the collar open and sleeves rolled, and slim dark trousers with an {{ACCENT_SOFT}} belt",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["tailored", "formal-lite", "male"]
+}

@@ -6,9 +6,9 @@
   "name": "Iridescent",
   "aesthetic": "luxurious necromancer aesthetic",
   "components": {
-    "wearing": "data/art/wardrobe/armor/iridescent-bikini.json",
-    "arms": "data/art/wardrobe/arms/matching-bracelets.json",
-    "back": "data/art/wardrobe/capes/sheer-glowing-cloak.json",
+    "wearing": "data/art/wardrobe/armor/bikini/iridescent-bikini.json",
+    "arms": "data/art/wardrobe/jewelry/bracelets/matching-bracelets.json",
+    "back": "data/art/wardrobe/capes/cloaks/sheer-glowing-cloak.json",
     "jewelry": "a necklace with a small polished-silver skull pendant; matching earrings and rings; a small bellybutton ring",
     "legs_feet": "slender high-heel ankle wear, multiple thin {{PRIMARY}} leather straps, ornate silver accents and buckles",
     "holding": "nothing in hand, fingers relaxed at her side"

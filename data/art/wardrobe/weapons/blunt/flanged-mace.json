@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/blunt/flanged-mace",
+  "kind": "holding",
+  "name": "Flanged Mace",
+  "description": "a heavy flanged mace with a {{PRIMARY}}-wrapped haft and a polished steel head, in one hand",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "mace", "dnd", "core"]
+}

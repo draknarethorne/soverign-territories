@@ -10,7 +10,7 @@
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/ignis-emberstride/weapons/ember-blade.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",

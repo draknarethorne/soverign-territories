@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/props/tomes/spellbook",
+  "kind": "holding",
+  "name": "Spellbook",
+  "description": "a heavy leather-bound spellbook open in one hand, its pages glowing faintly {{ACCENT_SOFT}}, a ribbon bookmark trailing",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["prop", "book", "caster", "dnd", "core"],
+  "notes": "props/ = held items that are not weapons (books, instruments, lanterns, harvest baskets)."
+}

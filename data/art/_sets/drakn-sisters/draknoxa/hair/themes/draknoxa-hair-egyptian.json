@@ -1,0 +1,11 @@
+{
+  "artId": "draknoxa-hair-egyptian",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "component": "data/art/themes/egyptian/cosmetics/hair/braided/gold-beaded-braids.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/hair/themes/Draknoxa_Hair_Egyptian.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Egyptian theme hairstyle."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "themes/celtic/cosmetics/hair/braided/celtic-braids-loose",
+  "kind": "hair",
+  "name": "Celtic Braids, Loose",
+  "a_pose_style": "hair parted in the centre and worn loose and long in front of the shoulders beside the chest, with a few slim Celtic plaits woven through it and small silver rings and green ribbons tied into the plaits, the face and eyes completely clear",
+  "a_pose_negatives": ["ponytail", "bun", "bangs", "hair across the face", "hair covering eyes"],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted and loose with a few slim Celtic plaits, silver rings and ribbons woven through, falling in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "tags": ["celtic", "hair", "braided", "loose"]
+}

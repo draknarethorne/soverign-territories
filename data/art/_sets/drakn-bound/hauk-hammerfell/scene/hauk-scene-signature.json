@@ -9,7 +9,7 @@
   "components": {
     "wearing": "heavy Radiant Gold-toned plate armor over the chest and shoulders, Ivory White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a radiant sunburst emblem emblazoned over the chest plate, gold filigree tracing the edges",
     "jewelry": "none, unadorned",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer.json",
     "companion": "his bonded Angel, a radiant winged figure in gleaming armor, hovering just behind him, wings spread wide",
     "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"

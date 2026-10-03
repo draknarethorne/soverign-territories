@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/accessories/bags/belt-pouch",
+  "kind": "accessory",
+  "name": "Belt Pouch",
+  "description": "a small {{PRIMARY}} leather belt pouch on a cord at the hip",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["accessory", "bag", "dnd", "core"]
+}

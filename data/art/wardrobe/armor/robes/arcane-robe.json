@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/armor/robes/arcane-robe",
+  "kind": "wearing",
+  "name": "Arcane Robe",
+  "description": "a long {{PRIMARY}} arcane robe with wide sleeves, {{ACCENT_SOFT}} embroidered runes along the hem and cuffs, a high collar and a sash at the waist",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["armor", "robe", "caster", "dnd", "core"]
+}

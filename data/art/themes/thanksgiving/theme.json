@@ -1,0 +1,10 @@
+{
+  "id": "themes/thanksgiving",
+  "kind": "theme",
+  "name": "Thanksgiving",
+  "type": "event",
+  "description": "Autumn harvest event pack for Thanksgiving: warm-toned harvest dresses, leaf and acorn jewelry, brown boots, autumn leaf crowns, cornucopias, falling leaves and a candlelit harvest feast hall.",
+  "realm": "fantasy",
+  "tags": ["thanksgiving", "autumn", "harvest", "event", "seasonal"],
+  "notes": "Event themes are switched on for a period; all pieces stay inside this folder so the whole pack can be added, shipped or retired as a unit."
+}

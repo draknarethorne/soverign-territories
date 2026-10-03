@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/dresses/fitted-cocktail-dress",
+  "kind": "wearing",
+  "name": "Fitted Cocktail Dress",
+  "description": "a fitted knee-length {{PRIMARY}} cocktail dress with a sweetheart neckline, thin shoulder straps and {{ACCENT_SOFT}} seam detailing, softly flared at the hem",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["dress", "cocktail", "formal-lite", "female"]
+}

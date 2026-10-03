@@ -1,0 +1,9 @@
+{
+  "id": "cosmetics/makeup/natural/soft-glam",
+  "kind": "makeup",
+  "name": "Soft Glam",
+  "description": "a soft glam finish - a blended {{ACCENT_SOFT}}-toned eyeshadow with a touch of shimmer, defined lashes, a light blush and a natural satin lip",
+  "compatibleStages": ["pose", "head", "hair", "motion", "armor", "clothing", "scene"],
+  "tags": ["makeup", "natural", "core"],
+  "notes": "Core makeup scope: cosmetics/makeup/<family>/. Select with components.makeup; it replaces the default studio face-styling line."
+}

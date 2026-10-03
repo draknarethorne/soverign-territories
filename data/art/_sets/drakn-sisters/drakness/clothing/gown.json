@@ -7,7 +7,7 @@
   "aesthetic": "elegant, composed, necromancer-adjacent evening look",
   "components": {
     "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/gown-wearing.json",
-    "arms": "data/art/wardrobe/bracelets/simple-silver.json",
+    "arms": "data/art/wardrobe/jewelry/bracelets/simple-silver.json",
     "jewelry": "data/art/wardrobe/jewelry/necklaces/ornate-gem-pendant.json",
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/clothing/gown-legs-feet.json"
   },

@@ -1,0 +1,8 @@
+{
+  "id": "themes/roman/wardrobe/props/braziers/vestal-flame-brazier",
+  "kind": "holding",
+  "name": "Vestal Flame Brazier",
+  "description": "a small bronze brazier on a chain raised in one hand, a sacred {{ACCENT_SOFT}}-tinted flame dancing in it, sparks drifting upward",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["roman", "prop", "flame", "vestal", "fire"]
+}

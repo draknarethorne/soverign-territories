@@ -1,0 +1,9 @@
+{
+  "id": "themes/egyptian",
+  "kind": "theme",
+  "name": "Egyptian",
+  "type": "culture",
+  "description": "Ancient Egyptian: kalasiris sheath gowns, broad collars, gold diadems with the uraeus, kohl-winged eyes, torchlit temple halls, jackal-god and sacred-vessel motifs.",
+  "realm": "fantasy",
+  "tags": ["egyptian", "ancient", "gold", "desert", "temple"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/jewelry/rings/signet-rings",
+  "kind": "jewelry",
+  "name": "Signet and Gem Rings",
+  "description": "a gold signet ring on one hand and a slim band set with an {{ACCENT_SOFT}} gem on the other",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["jewelry", "rings", "core"]
+}

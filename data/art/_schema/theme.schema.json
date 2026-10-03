@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Theme Manifest",
+  "description": "data/art/themes/<theme>/theme.json: describes one theme pack (a culture such as Greek, or an event such as Thanksgiving). The pack's pieces live beside it in the same <kind>/<family>/ layout as the core library (wardrobe/, cosmetics/, backgrounds/<realm>/).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "name", "type", "description"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^themes/[a-z0-9-]+$", "description": "'themes/' + the folder name"},
+    "kind": {"const": "theme"},
+    "name": {"type": "string", "minLength": 1},
+    "type": {"enum": ["culture", "event"], "description": "culture = a lasting world style; event = a seasonal/holiday pack that can be switched on for a period"},
+    "description": {"type": "string", "minLength": 10},
+    "realm": {"enum": ["fantasy", "modern"], "description": "Realm its scenes use (default fantasy)"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "string"}
+  }
+}

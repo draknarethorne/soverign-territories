@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/staves/ornate-staff",
+  "kind": "holding",
+  "name": "Ornate Elemental Staff",
+  "description": "an ornate staff in one hand, raised, with a bright {{ACCENT_SOFT}} glow around a skull-shaped {{ACCENT_SOFT}} jewel at the top",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{ACCENT_SOFT}} for the jewel glow. Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_Elegant.txt."
+}

@@ -58,6 +58,8 @@ def art_piece_files():
             continue  # identity, not a piece
         if parts[0] == "dragons":
             continue
+        if parts[0] == "themes" and len(parts) == 3 and parts[2] == "theme.json":
+            continue  # theme manifest, not a piece
         out.append(p)
     return out
 
@@ -71,6 +73,7 @@ REGISTRY = [
     ("art hero identities", hero_identity_files, ART_SCHEMAS / "hero-identity.schema.json"),
     ("art dragon identities", lambda: rglob("data/art/dragons/**/*.json"), ART_SCHEMAS / "dragon-identity.schema.json"),
     ("art pieces", art_piece_files, ART_SCHEMAS / "art-piece.schema.json"),
+    ("art themes", lambda: rglob("data/art/themes/*/theme.json"), ART_SCHEMAS / "theme.schema.json"),
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
 ]
 
@@ -207,8 +210,9 @@ def check_art_cards(report):
         # Realm rule: a scene's background folder must match its realm (default: fantasy), so a
         # modern or studio background can never slip into canon art without an explicit opt-in.
         bg = d.get("components", {}).get("background", "")
-        if bg.startswith("data/art/backgrounds/") and d["stage"] == "scene":
-            bg_realm = bg.split("/")[3]
+        if bg.startswith("data/art/") and "/backgrounds/" in bg and d["stage"] == "scene":
+            parts = bg.split("/")
+            bg_realm = parts[parts.index("backgrounds") + 1]
             realm = pathlib.PurePosixPath(d.get("components", {}).get("realm", "data/art/realms/fantasy.json")).stem
             if bg_realm != realm:
                 report.error(where, f"scene realm is '{realm}' but background {bg} is under backgrounds/{bg_realm}/ "
@@ -223,10 +227,24 @@ def check_art_cards(report):
 
 
 def check_piece_refs(report):
-    for f in rglob("data/art/backgrounds/**/*.json"):
-        realm_dir = f.relative_to(ROOT / "data/art/backgrounds").parts[0]
-        if realm_dir not in ("fantasy", "modern", "studio"):
+    for f in rglob("data/art/**/backgrounds/**/*.json"):
+        parts = f.relative_to(ROOT / "data/art").parts
+        realm_dir = parts[parts.index("backgrounds") + 1]
+        if realm_dir not in ("fantasy", "modern", "studio") or len(parts) <= parts.index("backgrounds") + 2:
             report.error(rel(f), "backgrounds must live under fantasy/, modern/ or studio/ (that folder is the realm)")
+    # Core wardrobe and theme pieces: the id is the path, so a move can never leave a stale id behind.
+    for f in rglob("data/art/wardrobe/**/*.json") + rglob("data/art/themes/*/**/*.json") + rglob("data/art/cosmetics/**/*.json"):
+        if f.name == "theme.json":
+            continue
+        expected = f.relative_to(ROOT / "data/art").with_suffix("").as_posix()
+        actual = load(f).get("id")
+        if actual != expected:
+            report.error(rel(f), f"id {actual!r} must equal its path {expected!r}")
+    for f in rglob("data/art/themes/*"):
+        if f.is_dir() and not (f / "theme.json").exists():
+            report.error(rel(f), "theme folder has no theme.json")
+        elif f.is_dir() and load(f / "theme.json").get("id") != f"themes/{f.name}":
+            report.error(rel(f / "theme.json"), f"id must be 'themes/{f.name}'")
     for f in art_piece_files():
         d = load(f)
         for field in ("defaultGaze", "defaultExpression"):

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/polearms/spear",
+  "kind": "holding",
+  "name": "Spear",
+  "description": "a long ash-wood spear with a leaf-shaped steel head and a {{ACCENT_SOFT}} tassel below the blade, planted at the side in one hand",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "spear", "polearm", "dnd", "core"]
+}

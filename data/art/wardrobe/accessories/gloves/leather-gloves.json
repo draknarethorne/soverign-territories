@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/accessories/gloves/leather-gloves",
+  "kind": "accessory",
+  "name": "Leather Gloves",
+  "description": "fitted {{PRIMARY}} leather gloves reaching the wrist with {{ACCENT_SOFT}} stitching",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["accessory", "gloves", "dnd", "core"]
+}

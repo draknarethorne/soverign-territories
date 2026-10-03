@@ -9,7 +9,7 @@
   "components": {
     "wearing": "close-fitting Venom Green-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder",
     "jewelry": "none, unadorned",
-    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/malakor-venomcaller/weapons/venomfang-daggers.json",
     "companion": "his bonded Basilisk, a serpentine reptile with venom-slick scales and piercing eyes, coiled at his feet",
     "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"

@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/bracelets/simple-silver",
-  "kind": "arms",
-  "name": "Simple Silver Bracelets",
-  "description": "simple silver bracelets",
-  "compatibleStages": ["armor", "clothing"],
-  "notes": "Reusable wardrobe piece, grounded in prompts/_archive/Drakness/clothing/Drakness_Qwen_Clothing_Gown.txt. Generic enough to reuse across many outfits/heroes."
-}

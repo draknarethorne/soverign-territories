@@ -10,6 +10,8 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Wearing {{WEARING}}.
 
+?Headwear: {{HEADWEAR}}.
+
 Jewelry: {{JEWELRY}}.
 Legs & feet: {{LEGS_FEET}}.
 
@@ -20,6 +22,8 @@ Holding {{HOLDING}}.
 {{EFFECTS}}
 
 {{EYE_EFFECT}}
+
+?{{MAKEUP_LINE}}
 
 Environment: {{BACKGROUND}}.
 

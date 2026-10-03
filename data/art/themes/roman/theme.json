@@ -1,0 +1,9 @@
+{
+  "id": "themes/roman",
+  "kind": "theme",
+  "name": "Roman",
+  "type": "culture",
+  "description": "Imperial Roman: stola and palla gowns, segmented armor, crested helms, forum colonnades, vestal flame and gladiator motifs.",
+  "realm": "fantasy",
+  "tags": ["roman", "imperial", "legion", "forum", "gold"]
+}

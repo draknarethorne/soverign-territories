@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
     "expression": "a sharp, calculating stare, a faint cunning smirk.",
-    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
-    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
     "effects": "Faint tendrils of {{ACCENT_SOFT}} toxic mist curl and drift low around her feet, glowing faintly in the dark.",
     "companion": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of acid-green and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",

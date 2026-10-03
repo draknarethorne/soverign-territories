@@ -9,7 +9,7 @@
     "expression": "data/art/motion/expressions/fierce-focused.json",
     "wearing": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing.json",
     "jewelry": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry.json",
-    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword.json",
     "effects": "data/art/heroes/drakn-sisters/draknora/effects/casting-flame-extend.json",
     "companion": "data/art/heroes/drakn-sisters/draknora/companion/pyraxis-flight.json",

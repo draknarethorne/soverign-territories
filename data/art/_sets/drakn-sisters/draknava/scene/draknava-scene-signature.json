@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
     "expression": "a playful, knowing smile, eyes bright with mischief.",
-    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
-    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
     "effects": "A playful swirl of wind catches loose leaves and her hair, {{ACCENT_SOFT}} light glinting within the breeze.",
     "companion": "her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of deep-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk",

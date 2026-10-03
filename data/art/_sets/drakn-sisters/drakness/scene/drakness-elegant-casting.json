@@ -7,10 +7,10 @@
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
     "expression": "+a faint, knowing smile, teeth just barely visible.",
-    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
-    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
-    "holding": "data/art/wardrobe/weapons/ornate-staff.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
     "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },

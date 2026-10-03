@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/headwear/hoods/hooded-cowl",
+  "kind": "headwear",
+  "name": "Hooded Cowl",
+  "description": "a soft {{PRIMARY}} hood drawn loosely over the head, framing the face, which stays fully visible, the hair showing at the sides",
+  "compatibleStages": ["armor", "clothing", "scene"],
+  "tags": ["headwear", "hood", "rogue", "dnd", "core"]
+}

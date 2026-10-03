@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/armor/mail/chainmail-hauberk",
+  "kind": "wearing",
+  "name": "Chainmail Hauberk",
+  "description": "a chainmail hauberk of riveted steel rings over a padded {{PRIMARY}} gambeson, a leather belt at the waist with {{ACCENT_SOFT}} buckles, a mail coif resting at the collar",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["armor", "mail", "dnd", "core"]
+}

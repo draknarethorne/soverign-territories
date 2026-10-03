@@ -1,0 +1,9 @@
+{
+  "id": "themes/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit",
+  "kind": "background",
+  "name": "Torchlit Hypostyle Hall",
+  "description": "a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke",
+  "mood": "ancient, sacred, mysterious",
+  "compatibleStages": ["scene"],
+  "tags": ["egyptian", "temple", "torchlit", "columns"]
+}

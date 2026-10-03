@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/weapons/axes/battle-axe",
+  "kind": "holding",
+  "name": "Battle Axe",
+  "description": "a broad double-bladed battle axe with a {{PRIMARY}}-wrapped haft and {{ACCENT_SOFT}} engraving on the blades, gripped in both hands",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["weapon", "axe", "dnd", "core"]
+}

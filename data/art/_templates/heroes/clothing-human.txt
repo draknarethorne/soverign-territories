@@ -12,6 +12,8 @@ Maintain strict fidelity to the reference image's facial likeness, facial bone s
 
 Wearing {{WEARING}}.
 
+?Headwear: {{HEADWEAR}}.
+
 Arms: {{ARMS}}.
 
 Jewelry: {{JEWELRY}}.

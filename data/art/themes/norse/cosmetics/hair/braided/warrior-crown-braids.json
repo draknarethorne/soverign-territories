@@ -1,0 +1,12 @@
+{
+  "id": "themes/norse/cosmetics/hair/braided/warrior-crown-braids",
+  "kind": "hair",
+  "name": "Warrior Crown Braids",
+  "a_pose_style": "hair parted in the centre with two thick warrior braids starting at the temples and wrapping back over the head like a crown, the remaining length worn loose and falling in front of the shoulders beside the chest, the face and eyes completely clear",
+  "a_pose_negatives": ["ponytail", "bangs", "hair across the face", "hair covering eyes"],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with two thick temple braids wrapped back like a crown and the rest left loose in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "tags": ["norse", "hair", "braided", "crown-braids"]
+}

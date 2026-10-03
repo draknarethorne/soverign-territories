@@ -1,8 +1,0 @@
-{
-  "id": "wardrobe/clothing/flowing-sundress",
-  "kind": "wearing",
-  "name": "Flowing Sundress",
-  "description": "a light, flowing mid-length {{PRIMARY}} sundress with a fitted bodice, wide straps and a loose skirt trimmed in {{ACCENT_SOFT}}, moving softly with the air",
-  "compatibleStages": ["clothing", "scene"],
-  "tags": ["dress", "sundress", "casual", "female"]
-}

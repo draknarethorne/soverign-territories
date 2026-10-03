@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/capes/mantles/fur-mantle",
+  "kind": "back",
+  "name": "Fur Mantle",
+  "description": "a thick fur mantle draped across the shoulders and down the back, held by a {{ACCENT_SOFT}} chain across the chest",
+  "compatibleStages": ["armor", "scene"],
+  "tags": ["mantle", "fur", "cold", "core"]
+}
