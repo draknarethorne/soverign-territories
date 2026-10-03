@@ -9,7 +9,7 @@
   "holding": "a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched {{PRIMARY}} metal, a ball of crackling {{ACCENT_SOFT}} lightning suspended in the ring",
   "effects": "Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.",
   "components": {
-    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "companion": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"

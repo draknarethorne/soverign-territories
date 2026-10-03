@@ -8,7 +8,7 @@
     "pose": "data/art/motion/standing/commanding-cast.json",
     "expression": "a sly, knowing smile, eyes half-lidded with control.",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json",
     "effects": "Soft droplets of water hang suspended in the air around her, faint {{ACCENT_SOFT}} light rippling through them like moonlit tide.",
@@ -18,5 +18,5 @@
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/scene/Draknisa_Scene_Signature.txt",
   "denoise": "~0.5-0.7",
-  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknisa's own Deep Oceanic Blue/Aquamarine palette, plus the existing moonlit-terrace background (moonlit water fits Water/Enchanter). Shortcut per explicit instruction."
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknisa's own Deep Oceanic Blue/Deep Teal palette, plus the existing moonlit-terrace background (moonlit water fits Water/Enchanter). Shortcut per explicit instruction."
 }

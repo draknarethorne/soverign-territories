@@ -236,7 +236,7 @@ def tokens_for(hero):
         "PRIMARY": primary,
         "METAL": pal.get("metal", accent.split()[-1].lower()),
         "ACCENT_SOFT": accent.split()[-1].lower(),
-        "NAIL": "Light " + primary.split()[-1],
+        "NAIL": pal.get("nailColor", "Light " + primary.split()[-1]),
         "FIGURE": figure,
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),

@@ -14,7 +14,7 @@
       "hairColor": "Icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen",
       "hairHighlights": "data/art/cosmetics/highlights/roots/root-shadow.json",
       "hairHighlightColor": "cool smoky ash-grey",
-      "hairColorNegatives": ["all-over grey hair", "fully dyed hair"],
+      "hairColorNegatives": ["all-over grey hair", "all-over cyan hair", "all-over blue hair", "fully dyed hair"],
       "skinTone": "Cool fair porcelain complexion, evenly toned, smooth and blemish-free",
       "eyeColorNegatives": [
         "green eyes",

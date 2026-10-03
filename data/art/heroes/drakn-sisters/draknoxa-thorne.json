@@ -14,7 +14,7 @@
       "hairColor": "Deep dark burgundy-black hair with a rich red tint and cool espresso depth",
       "hairHighlights": "data/art/cosmetics/highlights/underlayer/peekaboo-underlayer.json",
       "hairHighlightColor": "acid-lime",
-      "hairColorNegatives": ["all-over lime-green hair", "all-over green hair", "fully dyed hair"],
+      "hairColorNegatives": ["all-over lime-green hair", "all-over green hair", "all-over magenta hair", "all-over pink hair", "fully dyed hair"],
       "skinTone": "Pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free",
       "eyeColorNegatives": [
         "blue eyes",

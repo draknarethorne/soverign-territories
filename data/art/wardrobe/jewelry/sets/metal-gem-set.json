@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/jewelry/sets/metal-gem-set",
+  "kind": "jewelry",
+  "name": "Signature-Metal & Gem Jewelry Set",
+  "description": "{{METAL}} with {{ACCENT_SOFT}}-jewelled bracelets, necklace, and belly-button ring",
+  "compatibleStages": ["clothing", "armor", "scene"],
+  "notes": "Same set as silver-gem-set.json but in the hero's own signature metal (palette.metal) instead of fixed silver."
+}

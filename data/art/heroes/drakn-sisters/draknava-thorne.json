@@ -13,8 +13,8 @@
       "eyeColorGlamour": "Silver-grey irises with radiating pale jade striations and a deep slate limbal ring",
       "hairColor": "Soft silvery ash hair, soft and sultry with a breezy, airy sheen",
       "hairHighlights": "data/art/cosmetics/highlights/tonal/pearl-glaze.json",
-      "hairHighlightColor": "lavender",
-      "hairColorNegatives": ["all-over purple hair", "all-over lilac hair", "fully dyed hair"],
+      "hairHighlightColor": "pale seafoam",
+      "hairColorNegatives": ["all-over green hair", "all-over purple hair", "all-over lilac hair", "fully dyed hair"],
       "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "blue eyes",

@@ -8,7 +8,7 @@
     "pose": "data/art/motion/standing/commanding-cast.json",
     "expression": "a playful, knowing smile, eyes bright with mischief.",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
     "effects": "A playful swirl of wind catches loose leaves and her hair, {{ACCENT_SOFT}} light glinting within the breeze.",
