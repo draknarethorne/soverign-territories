@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/painted/balayage",
+  "kind": "highlights",
+  "name": "Balayage",
+  "description": "hand-painted {{HIGHLIGHT_COLOR}} balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "balayage", "painted", "natural"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/gradient/ombre-to-ends",
+  "kind": "highlights",
+  "name": "Ombré to the ends",
+  "description": "a smooth ombré gradient, the base colour at the roots melting gradually into {{HIGHLIGHT_COLOR}} through the lower lengths and ends",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "ombre", "gradient"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/underlayer/peekaboo-underlayer",
+  "kind": "highlights",
+  "name": "Peekaboo underlayer",
+  "description": "a peekaboo underlayer of fine deep {{HIGHLIGHT_COLOR}} strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "peekaboo", "underlayer", "subdued"]
+}

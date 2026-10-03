@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Deep sapphire iris with oceanic indigo limbal ring, radiating deep teal striations, and pearl-white flecks",
       "eyeColorGlamour": "Deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring",
-      "hairColor": "Dark chocolate-brown hair with deep teal and sea-blue ombré highlights through the lengths and ends, full dimensional colour like a fashion editorial",
+      "hairColor": "Dark chocolate-brown hair, glossy and deep",
+      "hairHighlights": "data/art/cosmetics/highlights/tips/dip-dye-tips.json",
+      "hairHighlightColor": "teal",
+      "hairColorNegatives": ["all-over teal hair", "all-over blue hair", "fully dyed hair"],
       "skinTone": "Warm sun-kissed medium tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "green eyes",

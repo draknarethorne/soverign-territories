@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Molten amber iris with dark charcoal limbal ring, radiating crimson striations, and fiery gold flecks",
       "eyeColorGlamour": "Molten amber irises with radiating crimson striations and a dark charcoal limbal ring",
-      "hairColor": "Vivid copper-red hair with warm burnished-gold and amber all-over highlights, full dimensional colour like a fashion editorial",
+      "hairColor": "Vivid copper-red hair, warm and glossy",
+      "hairHighlights": "data/art/cosmetics/highlights/gradient/ombre-to-ends.json",
+      "hairHighlightColor": "warm burnished gold",
+      "hairColorNegatives": ["all-over blonde hair", "fully dyed hair"],
       "skinTone": "Warm sun-bronzed olive tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "blue eyes",

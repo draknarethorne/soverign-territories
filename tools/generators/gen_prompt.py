@@ -111,6 +111,16 @@ def apply_optional_lines(template, toks):
     return text
 
 
+def resolve_hair(pal):
+    """Base hair colour, plus an optional highlight-style piece (hairHighlights) whose
+    {{HIGHLIGHT_COLOR}} is filled from hairHighlightColor. No highlights -> hairColor unchanged."""
+    base = pal["hairColor"]
+    if "hairHighlights" in pal:
+        style = load_json(ROOT / pal["hairHighlights"])["description"]
+        base += ", " + style.replace("{{HIGHLIGHT_COLOR}}", pal["hairHighlightColor"])
+    return base
+
+
 def resolve_hairstyle(pal):
     """HAIRSTYLE comes either from a referenced component (data/art/hair/*.json,
     field 'aPoseStyle') or, for back-compat, a plain 'hairStyle' string on the hero.
@@ -230,7 +240,8 @@ def tokens_for(hero):
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
         "EYE_SOFT": soft_eye(pal["eyeColorGlamour"]),
-        "HAIR": decap(pal["hairColor"]),
+        "HAIR": decap(resolve_hair(pal)),
+        "HAIR_NEG": ", ".join(pal.get("hairColorNegatives", [])),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
         "FACE_STYLE": FACE_STYLE["female" if "bust" in phy else "male"],

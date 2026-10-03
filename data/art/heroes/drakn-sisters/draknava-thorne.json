@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Sky cerulean iris with slate blue limbal ring, radiating gossamer silver striations, and breeze teal flecks",
       "eyeColorGlamour": "Sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring",
-      "hairColor": "Soft silvery-lilac ash hair with pale pearl highlights, soft and sultry with a breezy, airy sheen",
+      "hairColor": "Soft silvery ash hair, soft and sultry with a breezy, airy sheen",
+      "hairHighlights": "data/art/cosmetics/highlights/tonal/pearl-glaze.json",
+      "hairHighlightColor": "lavender",
+      "hairColorNegatives": ["all-over purple hair", "all-over lilac hair", "fully dyed hair"],
       "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "brown eyes",

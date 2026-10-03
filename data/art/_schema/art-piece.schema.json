@@ -9,7 +9,7 @@
     "id": {"type": "string", "minLength": 3},
     "kind": {
       "type": "string",
-      "enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "hair", "motion", "expression", "gaze", "view", "framing", "realm", "headwear", "makeup"]
+      "enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "hair", "motion", "expression", "gaze", "view", "framing", "realm", "headwear", "makeup", "highlights"]
     },
     "tags": {"type": "array", "items": {"type": "string"}, "description": "Free-form search/ideation tags (e.g. studio, profile, swimwear); never rendered into a prompt."},
     "name": {"type": "string", "minLength": 1},
@@ -40,7 +40,7 @@
   },
   "allOf": [
     {
-      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup"]}}},
+      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup", "highlights"]}}},
       "then": {"required": ["description"]}
     },
     {

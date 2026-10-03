@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks",
       "eyeColorGlamour": "Rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring",
-      "hairColor": "Rich bronze-brown hair with warm terracotta and caramel all-over highlights, full dimensional colour like a fashion editorial",
+      "hairColor": "Medium bronze-brown hair, rich and warm",
+      "hairHighlights": "data/art/cosmetics/highlights/fine/babylights.json",
+      "hairHighlightColor": "warm caramel",
+      "hairColorNegatives": ["all-over blonde hair", "fully dyed hair"],
       "skinTone": "Deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "blue eyes",

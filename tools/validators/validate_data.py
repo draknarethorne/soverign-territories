@@ -269,6 +269,12 @@ def check_piece_refs(report):
                 report.error(rel(f), f"{field} {val} does not exist")
     for f in hero_identity_files():
         ref = load(f).get("art", {}).get("palette", {}).get("hairStyleComponent")
+        pal = load(f).get("art", {}).get("palette", {})
+        if "hairHighlights" in pal:
+            if not (ROOT / pal["hairHighlights"]).exists():
+                report.error(rel(f), f"hairHighlights {pal['hairHighlights']} does not exist")
+            if "hairHighlightColor" not in pal:
+                report.error(rel(f), "hairHighlights needs hairHighlightColor")
         if ref and not (ROOT / ref).exists():
             report.error(rel(f), f"hairStyleComponent {ref} does not exist")
 

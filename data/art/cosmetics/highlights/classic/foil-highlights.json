@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/classic/foil-highlights",
+  "kind": "highlights",
+  "name": "Classic foil highlights",
+  "description": "classic evenly woven {{HIGHLIGHT_COLOR}} foil highlights running through the lengths, bright and luminous, with a polished glossy finish",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "foils", "classic", "bright"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/tips/dip-dye-tips",
+  "kind": "highlights",
+  "name": "Dip-dye tips",
+  "description": "a soft dip-dye of deep {{HIGHLIGHT_COLOR}} on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "dip-dye", "tips", "subdued"]
+}

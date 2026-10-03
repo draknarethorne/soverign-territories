@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/roots/root-shadow",
+  "kind": "highlights",
+  "name": "Root shadow",
+  "description": "a soft smudged {{HIGHLIGHT_COLOR}} root shadow at the crown blending seamlessly into the lighter base colour through the lengths",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "root-shadow", "smudged", "dimension"]
+}

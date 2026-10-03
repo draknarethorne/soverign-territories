@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks",
       "eyeColorGlamour": "Radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring",
-      "hairColor": "Luminous golden-blonde hair, soft and sultry with a gentle radiant sheen",
+      "hairColor": "Pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen",
+      "hairHighlights": "data/art/cosmetics/highlights/classic/foil-highlights.json",
+      "hairHighlightColor": "bright sun-gold",
+      "hairColorNegatives": ["all-over yellow hair", "fully dyed hair"],
       "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
         "blue eyes",

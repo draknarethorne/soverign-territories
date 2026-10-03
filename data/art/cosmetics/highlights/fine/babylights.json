@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/fine/babylights",
+  "kind": "highlights",
+  "name": "Babylights",
+  "description": "fine, sun-kissed {{HIGHLIGHT_COLOR}} babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "babylights", "fine", "natural"]
+}

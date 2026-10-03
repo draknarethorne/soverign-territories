@@ -9,7 +9,10 @@
       ],
       "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic violet striations, and chartreuse flecks",
       "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic violet striations and a blackened moss limbal ring",
-      "hairColor": "Deep dark burgundy-black hair with a rich red tint and cool espresso depth, with noticeable, vibrant deep acid-lime bold face-framing streaks that catch the light",
+      "hairColor": "Deep dark burgundy-black hair with a rich red tint and cool espresso depth",
+      "hairHighlights": "data/art/cosmetics/highlights/underlayer/peekaboo-underlayer.json",
+      "hairHighlightColor": "acid-lime",
+      "hairColorNegatives": ["all-over lime-green hair", "all-over green hair", "fully dyed hair"],
       "skinTone": "Pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free",
       "eyeColorNegatives": [
         "blue eyes",

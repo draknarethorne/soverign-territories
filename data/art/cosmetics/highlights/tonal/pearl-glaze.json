@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/tonal/pearl-glaze",
+  "kind": "highlights",
+  "name": "Pearl glaze",
+  "description": "a sheer pearlescent glaze of pale {{HIGHLIGHT_COLOR}} glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "glaze", "tonal", "pearlescent", "subdued"]
+}

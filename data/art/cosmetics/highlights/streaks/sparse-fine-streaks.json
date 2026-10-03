@@ -1,0 +1,8 @@
+{
+  "id": "cosmetics/highlights/streaks/sparse-fine-streaks",
+  "kind": "highlights",
+  "name": "Sparse fine streaks",
+  "description": "only a handful of thin, sharp {{HIGHLIGHT_COLOR}} streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "streaks", "sparse", "fine", "subdued"]
+}
