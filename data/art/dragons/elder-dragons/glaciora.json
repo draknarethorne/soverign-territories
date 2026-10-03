@@ -1,0 +1,7 @@
+{
+  "id": "dragons/elder-dragons/glaciora",
+  "kind": "dragon",
+  "cardId": "UNIT_GLACIORA",
+  "description": "an Elder Dragon of glacial-blue and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in shimmering silver",
+  "notes": "Skeletal identity, first pass -- aligned to Draknira Thorne (Ice) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknira's own palette (Glacial Blue / Frost White / Shimmering Silver)."
+}

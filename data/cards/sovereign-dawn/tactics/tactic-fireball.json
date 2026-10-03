@@ -1,0 +1,39 @@
+{
+    "cardId":  "TACTIC_FIREBALL",
+    "collectionNumber":  "SD-077",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 77, "totalCards": 219 },
+    "name":  "Fireball",
+    "type":  "Tactic",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Rare",
+                   "stars":  2,
+        "maxStars": 5,
+                   "points":  4
+               },
+    "stats":  {
+                  "manaCost":  25
+              },
+    "abilities":  [
+                      {
+                          "abilityId":  "ABILITY_FIREBALL_CAST",
+                          "name":  "Fireball",
+                          "type":  "Active",
+                          "manaCost":  25,
+                          "cooldown":  0,
+                          "description":  "Deal 50 damage to target enemy (range 5)."
+                      }
+                  ],
+    "lore":  "Classic fire spell, hurls a blazing projectile at distant foes.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "fire-starter-box",
+                                            "standard-pack",
+                                            "element-booster-fire",
+                                            "rare-pack"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-12-volcano-heart"
+                                          ]
+                    }
+}

@@ -24,20 +24,21 @@ PowerShell policy in Phase 1:
 - blocking: `Error` severity findings
 - non-blocking (tracked debt): `Warning` severity findings
 
-### Pre-push hook
+### Data validation hook (pre-commit and pre-push)
 
-- `scripts/Invoke-PrePushValidation.ps1` runs schema self-validation checks
+- `tools/validators/validate_data.py` validates every schema-covered JSON file (gameplay cards, art identities, art pieces, art assembly cards) against its own schema and enforces cross-file integrity (card <-> art identity link is bidirectional, referenced pieces exist, generated outputs are unique)
+- `tools/validators/test_validate_data.py` is a mutation self-test that corrupts a temp copy of `data/` and asserts the validator catches each case, so the gate cannot silently go dead
+- the coverage report lists areas with no fitting schema yet (tracked debt, not hidden)
 
 ### CI quality workflow
 
 - `.github/workflows/quality.yml`
-- installs and runs pre-commit hooks in clean environment
+- installs and runs pre-commit hooks in clean environment (including the data validation hook)
 - runs on push/PR to `main`
 
-### Existing schema workflow
+### Retired: legacy schema workflow
 
-- `.github/workflows/validate-schemas.yml`
-- retained to preserve existing schema contract checks
+- `.github/workflows/validate-schemas.yml` and the old pre-push script were removed: they only watched `docs/specs/*.json` (schemas moved to `data/schemas/`) and validated each schema against itself, so they never checked a single real card
 
 ## Temporary policy exceptions
 

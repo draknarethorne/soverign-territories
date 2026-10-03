@@ -1,0 +1,33 @@
+=== Draknisa Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Oceanic Blue over a matte underlayer, with delicate teal glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Jewelry: Polished Silver with teal-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Deep Oceanic Blue high heels with glowing teal straps.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a sly, knowing smile, eyes half-lidded with control. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a slender polished brass staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of brass, a soft teal glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft.
+
+Soft droplets of water hang suspended in the air around her, faint teal light rippling through them like moonlit tide.
+
+Eyes: irises softly aglow with teal light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle teal catchlight, no light spilling beyond the eyelids.
+
+Companion: her aligned Elder Dragon, Aquaria, visible over the moonlit water beyond the terrace, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished brass.
+
+Environment: an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_GATE",
+    "collectionNumber": "SD-111",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 111, "totalCards": 219 },
+    "name": "Gate",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "health": 80,
+        "defense": 25
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_ENTRY_CONTROL",
+            "name": "Entry Control",
+            "type": "Passive",
+            "description": "Controls access to the territory, slowing enemy advances (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The threshold between peace and war, safety and danger.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

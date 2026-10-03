@@ -1,0 +1,31 @@
+=== Draknare Thorne · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknare Thorne (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Obsidian Black-toned combat boots with silver buckles, laced to the shin.
+
+He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression cold and unreadable, shadow pooling faintly at his feet.
+
+Holding an ornate Obsidian Black longsword wreathed in creeping shadow, silver runes glowing faintly along the fuller, in his right hand; a round Obsidian Black-toned shield with silver trim strapped to his left forearm.
+
+Wisps of shadow curl and drift low around his feet, faint embers of violet light flickering within the dark.
+
+Companion: his bonded Reaper, a towering spectral reaper cloaked in tattered black robes, scythe in hand, looming silently in the shadows behind him.
+
+Environment: a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+
+Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, text, wording, watermark, logo.

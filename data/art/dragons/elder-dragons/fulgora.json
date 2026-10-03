@@ -1,0 +1,7 @@
+{
+  "id": "dragons/elder-dragons/fulgora",
+  "kind": "dragon",
+  "cardId": "UNIT_FULGORA",
+  "description": "an Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning",
+  "notes": "Skeletal identity, first pass -- aligned to Drakneta Thorne (Lightning) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Drakneta's own palette (Electric Gold / Bright Gold / Arc White)."
+}

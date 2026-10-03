@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_AQUA_WARRIOR",
+    "collectionNumber": "SD-175",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 175, "totalCards": 219 },
+    "name": "Aqua Warrior",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "maxStars": 5,
+        "points": 8
+    },
+    "stats": {
+        "health": 45,
+        "mana": 34,
+        "attack": 29,
+        "defense": 16,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Master combatant of the aquatic realms, equally deadly on land or sea.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

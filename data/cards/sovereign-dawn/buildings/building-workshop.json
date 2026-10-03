@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_WORKSHOP",
+    "collectionNumber": "SD-106",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 106, "totalCards": 219 },
+    "name": "Workshop",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "maxStars": 4,
+        "points": 2
+    },
+    "stats": {
+        "health": 50,
+        "defense": 16
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_CRAFT_EQUIPMENT",
+            "name": "Craft Equipment",
+            "type": "Passive",
+            "description": "Enables crafting of equipment for heroes and units (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Skilled artisans create the tools and gear that turn the tide of battle.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

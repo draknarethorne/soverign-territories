@@ -1,0 +1,40 @@
+{
+  "cardId": "HERO_DRAKNIRA_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Glacial Blue",
+      "accentColors": [
+        "Frost White",
+        "Shimmering Silver"
+      ],
+      "eyeColor": "Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks",
+      "eyeColorGlamour": "Glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring",
+      "hairColor": "Icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen",
+      "skinTone": "Cool fair porcelain complexion, evenly toned, smooth and blemish-free",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "ruddy skin",
+        "sunburnt skin",
+        "overly tanned skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to high-elf characteristics (slender, elegant) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Draknira Thorne (Ice, High Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

@@ -2,7 +2,7 @@
   "productId": "weekly-reward-pack",
   "productName": "Weekly Reward Pack",
   "productType": "reward-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Weekly login reward pack. Improved hero rates with Epic and Legendary heroes available.",
   "price": {
     "gold": 0,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 5,

@@ -1,0 +1,16 @@
+{
+  "id": "hair/down/nearly-straight",
+  "kind": "hair",
+  "name": "Nearly Straight, Same Length",
+  "a_pose_style": "nearly straight, hanging beside the breasts, same length throughout",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is nearly-straight, hanging beside breasts, same length.",
+  "extras": [
+    "Bold décolletage."
+  ],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Straight"
+}

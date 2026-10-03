@@ -1,0 +1,33 @@
+=== Draknora Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing skimpy D&D-flair armor, cloth top and bottom in a bikini-like cut with matching ornate pieces; legs bare, stomach and belly button bare with jewelry.
+
+Jewelry: gold bracelet, necklace, arm bands, anklets, earrings, and belly ring, all aligned to the armor's gold trim.
+Legs & feet: bright Flame Red high heels with glowing gold straps.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the threat. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Holding an ornate sword in her right hand, its blade wreathed in flickering Flame Red flame, gold light pulsing along the fuller.
+
+She extends her left hand towards the camera, a small glowing fire spell forming in her palm, gradient heat haze shimmering around her; faint flames lick and swirl around her glowing heeled sandals, casting warm light across the ground.
+
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+
+Companion: her aligned Elder Dragon, Pyraxis, flying over the city behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light.
+
+Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

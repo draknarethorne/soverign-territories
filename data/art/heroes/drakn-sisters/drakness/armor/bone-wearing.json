@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/bone-wearing",
+  "kind": "wearing",
+  "name": "Bone Armor — Wearing (Drakness signature)",
+  "description": "a two-piece skeletal armor bikini - weathered natural bone cups, vertebrae halter strap, high-cut skeletal hip bones, vibrant amethyst centerpiece; bare stomach and midriff, revealing high-cut with bold décolletage, legs exposed",
+  "compatibleStages": ["armor"],
+  "notes": "Hero-signature piece, unique to Drakness's Bone Armor outfit — grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Bone.txt."
+}

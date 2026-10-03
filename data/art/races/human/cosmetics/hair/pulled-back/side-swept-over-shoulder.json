@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/side-swept-over-shoulder",
+  "kind": "hair",
+  "name": "Side-Swept Over Shoulder",
+  "a_pose_style": "swept entirely to one side, draped forward over the shoulder in a glamorous sweep",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is swept entirely to one side, draped forward over the shoulder in a glamorous red-carpet sweep.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

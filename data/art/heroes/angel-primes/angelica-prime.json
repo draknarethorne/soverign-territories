@@ -1,0 +1,29 @@
+{
+  "testBed": true,
+  "name": "Angelica Prime",
+  "art": {
+    "palette": {
+      "primaryColor": "Soft Pearl White",
+      "accentColors": [
+        "Warm Champagne Gold",
+        "Dove Grey"
+      ],
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/natural.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, well-proportioned build",
+      "bust": "Full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Calibration test-bed hero — NOT part of any real card series (group: angel-primes). Eyes/hair/skin are deliberately adaptive wording (enhance the reference photo's own likeness rather than impose a fixed look), with empty eye/skin negative lists, so this hero validates pose/hair/motion prompt changes against any arbitrary input photo. Physique stays a fixed description, same convention as the Drakn sisters. Palette (Soft Pearl White / Warm Champagne Gold / Dove Grey) is a fixed, generic 'angel' wardrobe scheme governing only the test outfit, not the subject's natural colouring."
+}

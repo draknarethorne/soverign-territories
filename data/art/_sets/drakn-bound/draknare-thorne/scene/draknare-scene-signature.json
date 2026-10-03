@@ -1,0 +1,21 @@
+{
+  "artId": "draknare-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/draknare-thorne.json",
+  "name": "Signature",
+  "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression cold and unreadable, shadow pooling faintly at his feet.",
+  "effects": "Wisps of shadow curl and drift low around his feet, faint embers of violet light flickering within the dark.",
+  "components": {
+    "wearing": "heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",
+    "companion": "his bonded Reaper, a towering spectral reaper cloaked in tattered black robes, scythe in hand, looming silently in the shadows behind him",
+    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Draknare/scene/Draknare_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the tank-group default wardrobe set + the existing ossuary background (fits Darkness thematically). Uses the new scene-combat-human.txt template (no casting-eyes-glow line, correct for a non-caster martial hero)."
+}

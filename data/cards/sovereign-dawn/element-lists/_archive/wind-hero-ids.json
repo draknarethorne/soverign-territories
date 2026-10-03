@@ -1,0 +1,9 @@
+{
+  "element": "Wind",
+  "cardType": "Hero",
+  "seriesId": "sovereign-dawn",
+  "heroIds": [
+    "HERO_ZEPHYR_WIND_DANCER"
+  ],
+  "_note": "ID references only. Full hero metadata lives in data/cards/sovereign-dawn/heroes/*.json files."
+}

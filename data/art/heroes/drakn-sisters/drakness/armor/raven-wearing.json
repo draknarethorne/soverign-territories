@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/raven-wearing",
+  "kind": "wearing",
+  "name": "Raven Armor (Drakness signature)",
+  "description": "revealing Iridescent Shadow Steel bikini armor with Necrotic-Violet and Tarnished Silver ornate designs, bare midriff, silver chains with a simple design and minimal gems draping from the underside of the breastplate; flowing sheer Iridescent-Shadow waist-drapes with delicate Amethyst and silver glowing fibre-optic threads woven throughout; a thin Amethyst and Tarnished Silver belt at the waist with a small ornate satchel and a skull design at the hip",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature armor, unique to Drakness's necromancer aesthetic — NOT generalized to other heroes (unlike Iridescent/matching-bracelets), since the raven-feather/runic/dagger-and-satchel flavor is specifically Darkness-themed. Grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Raven.txt. Pauldrons, choker, boots, and the dagger are deliberately kept as separate slots (back/jewelry/legs_feet/holding) rather than folded in here."
+}

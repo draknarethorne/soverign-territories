@@ -2,7 +2,7 @@
   "productId": "rare-pack",
   "productName": "Rare Pack",
   "productType": "premium-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Accelerate your collection! All 5 cards are guaranteed Rare or better.",
   "price": {
     "gold": 3000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": "all",

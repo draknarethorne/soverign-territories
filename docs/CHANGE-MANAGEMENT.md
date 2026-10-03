@@ -56,4 +56,4 @@ Requirements:
 - Do not mix architecture behavior changes with broad formatting-only rewrites.
 - Keep style debt remediation in isolated commits.
 - Prefer additive migration notes over destructive rewrites when preserving historical context.
-- Archive superseded docs with `-SUPERSEDED` or `-HISTORICAL` suffixes.
+- Move superseded docs to `docs/_archive/` with `-SUPERSEDED` or `-HISTORICAL` suffixes.

@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_ARMORY",
+    "collectionNumber": "SD-108",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 108, "totalCards": 219 },
+    "name": "Armory",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "health": 55,
+        "defense": 22
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_STORE_EQUIPMENT",
+            "name": "Store Equipment",
+            "type": "Passive",
+            "description": "Increases equipment storage capacity (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Racks of weapons and armor stand ready for the next campaign.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

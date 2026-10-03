@@ -1,0 +1,16 @@
+{
+  "id": "motion/walking/relaxed-stroll",
+  "kind": "motion",
+  "name": "Relaxed Stroll",
+  "editorial": "A candid high-fashion editorial shot, relaxed casual stroll, soft natural movement.",
+  "breeze": "Light breeze.",
+  "body": "strolling casually, body relaxed and unposed, weight shifting naturally with each step.",
+  "head": "level, relaxed, facing forward.",
+  "defaultGaze": "soft, easy gaze to camera.",
+  "defaultExpression": "relaxed, natural smile.",
+  "pose": "arms swinging loosely and naturally with the stroll.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

@@ -1,0 +1,33 @@
+=== Drakness Thorne · Clothing: Dress (group: Clothing) — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair) in the bikini underlayer. Apply the evening dress; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a skimpy Midnight Violet bikini-strap evening gown with Vibrant Amethyst and Polished Silver ornate design - plunging, low-cut neckline with bold décolletage; belly and mid-section covered; slit on the right side up to mid-thigh; delicate Amethyst and silver glowing fibre-optic threads woven throughout. Remove pauldrons.
+
+Arms: simple silver bracelets.
+
+Jewelry: necklace with a small ornate pendant; matching earrings with small gems, anklet, and rings.
+
+Legs & feet: Midnight-Amethyst pointed closed-toe high heels.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, lifted and pressed closely together at the centre with a push-up-bra contour, forming a narrow décolletage (not a wide gap).
+Breeze flowing any direction.
+Face remains focused on camera; alluring, confident smile, lips slightly parted; full, expressive lips.
+Makeup: soft Vibrant Amethyst shimmer eyeshadow, natural definition. Light Violet lipstick. Midnight Violet fingernails and toenails. Violet eyes.
+
+Pose: walking towards the camera; body position adjusts; hips and shoulders positioned for the step; arms adjust to the body; one foot stepping forward to the side.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, text, wording, watermark, logo.

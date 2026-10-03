@@ -1,0 +1,34 @@
+{
+    "cardId": "UNIT_ASH_BERSERKER",
+    "collectionNumber": "SD-150",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 150, "totalCards": 219 },
+    "name": "Ash Berserker",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "stats": {
+        "health": 35,
+        "mana": 0,
+        "attack": 32,
+        "defense": 8,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Frenzied warriors who trade armor for raw aggression, charging into battle wreathed in cinders and ash.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-06-ash-wastes",
+            "location-11-fire-borderlands"
+        ]
+    }
+}

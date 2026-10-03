@@ -107,7 +107,7 @@
   },
 
   "notes": {
-    "singleSourceOfTruth": "This file references card IDs ONLY. Full card data (stats, abilities, lore) is stored in data/cards/base-set/",
+    "singleSourceOfTruth": "This file references card IDs ONLY. Full card data (stats, abilities, lore) is stored in data/cards/sovereign-dawn/",
     "runtime": "StarterDeckManager loads this file, then CardManager fetches full card data by ID",
     "noDuplication": "Card stats/abilities are NOT duplicated here to ensure single source of truth"
   }

@@ -1,0 +1,32 @@
+=== [HERO] · A-Pose Base (group: X_Pose) — Build (Qwen img2img) ===
+Incoming image: a real or AI source (face/person) for [HERO]. Build the clean full-body A-pose base that every later stage edits. This is the ONE place to set figure, skin, eyes, and hair - downstream stages PRESERVE these, they do not re-sculpt them. Denoise ~1.0.
+
+Fill [BRACKETS] from the hero's card JSON (art.palette / class / element / race).
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length character concept portrait.
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a solid, seamless cream-coloured studio backdrop.
+
+Maintain strict fidelity to the reference image's facial likeness and facial bone structure.
+
+Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
+
+Figure: full, hourglass figure; generous bust, pushed together and centered with a small cleavage gap, natural rounded form (not flattened or smashed); slender waist and hips; long, slender legs.
+Skin: warm sun-kissed golden tan complexion, evenly tanned, no pale areas (set once here; revisit only if the Final needs a darker dark-elf tone).
+Distinguishing marks: [none — or describe a signature tattoo / birthmark / beauty mark + location]. Define any here at the A-pose; downstream fidelity then preserves them.
+
+Wearing only a simple [PRIMARY] seamless high-cut thong bikini underlayer (the base for later wardrobe edits), smooth solid waistband, no side ties, no straps, no extra bands; midriff and hips bare. Matching [PRIMARY] open-toed high heels.
+
+Makeup: natural and fresh-faced - reset any heavy makeup from the source; a barely-there neutral eyeshadow with only the faintest soft [ACCENT] tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or light [PRIMARY].
+Eyes: [EYE], crisp catchlights, both eyes matched; [black] lush lashes.
+Lips: natural [LIP] satin - keep lips natural here (outfit stages add colour); alluring, confident closed-mouth smile; dimples; looking to camera.
+Hair: [HAIR], tone-on-tone dimension; [HAIRSTYLE - default: center-parted and swept behind the shoulders, long and softly wavy, length to just below the bust-line, kept off the breasts so the chest stays unobscured] (override the source hairstyle).
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, plants, lights, chairs, tables, extra limbs, extra digits, extra fingers, deformed hands, extra clothing, side ties, string ties, bikini side-ties, bow-ties, knotted straps, side straps, multiple straps, extra straps, extra bands, extra hair, hair covering breasts, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, flattened breasts, wide-set breasts, pale skin, fair skin, washed-out skin, heavy blush, flushed cheeks, rosy cheeks, over-rouged, heavy eyeshadow, bold eye makeup, dramatic eyeshadow, vibrant eyeshadow, backlight, back lighting, rim light, rim lighting, silhouette, glowing outline, halo, lens flare, bloom, text, wording, watermark, logo.

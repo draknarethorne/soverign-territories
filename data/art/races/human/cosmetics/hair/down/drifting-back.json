@@ -1,0 +1,16 @@
+{
+  "id": "hair/down/drifting-back",
+  "kind": "hair",
+  "name": "Drifting Back",
+  "a_pose_style": "drifting backward on both sides with a slight swirl, as if caught mid-breeze",
+  "breeze": "Breeze blowing towards her.",
+  "hair_change": "Hair is drifting backwards, equally on both sides, slight swirls.",
+  "extras": [
+    "Shoulders exposed."
+  ],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "sourceVariant": "Drakness_Qwen_Hair_Flowing"
+}

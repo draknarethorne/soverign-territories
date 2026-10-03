@@ -1,0 +1,34 @@
+{
+    "cardId":  "UNIT_MOLTEN_HOUND",
+    "collectionNumber":  "SD-056",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 56, "totalCards": 219 },
+    "name":  "Molten Hound",
+    "type":  "Unit",
+    "element":  "Fire",
+    "rarity":  {
+                   "tier":  "Common",
+                   "stars":  0,
+        "maxStars": 3,
+                   "points":  1
+               },
+    "stats":  {
+                  "health":  26,
+                  "mana":  22,
+                  "attack":  23,
+                  "defense":  6,
+                  "moveRange":  3,
+                  "attackRange":  1
+              },
+    "tacticSlots":  1,
+    "lore":  "Loyal hounds forged from flames, swift and deadly.",
+    "acquisition":  {
+                        "packSources":  [
+                                            "standard-pack",
+                                            "element-booster-fire"
+                                        ],
+                        "campaignDrops":  [
+                                              "location-15-hunter-grounds",
+                                              "location-19-crimson-kennels"
+                                          ]
+                    }
+}

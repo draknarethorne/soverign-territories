@@ -1,0 +1,18 @@
+=== {{DRAGON}} · Head (group: Head) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic creature photography. Close-up portrait shot of an Elder Dragon's head and upper neck, 85mm lens, razor-sharp optical focus on the eyes, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting, no backlight or rim light.
+
+{{DRAGON}}, {{DESCRIPTION}}.
+
+Head facing the camera, eyes alert and intelligent, nostrils faintly steaming, jaw closed — a clear reference close-up of the head, horns, and facial scale detail.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, deformed anatomy, mismatched scales, humanoid features, human face, text, wording, watermark, logo.

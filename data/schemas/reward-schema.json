@@ -28,7 +28,7 @@
     },
     "rarity": {
       "type": "string",
-      "enum": ["common", "uncommon", "rare", "epic", "legendary"],
+      "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic", "transcendent"],
       "description": "Item rarity (if applicable)"
     },
     "isGuaranteed": {

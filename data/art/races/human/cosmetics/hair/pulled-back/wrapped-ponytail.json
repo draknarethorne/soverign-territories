@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/wrapped-ponytail",
+  "kind": "hair",
+  "name": "Wrapped Ponytail",
+  "a_pose_style": "a polished ponytail with a strand wrapped neatly around the base",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair is gathered into a ponytail with a thin strand wrapped neatly around the base, hiding the elastic.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

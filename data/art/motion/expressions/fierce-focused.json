@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/fierce-focused",
+  "kind": "expression",
+  "name": "Fierce, Focused",
+  "expression": "fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the threat.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "New expression, not a motion's default — demonstrates the override: a scene can swap in a completely different mood than whichever motion it references without touching the motion itself."
+}

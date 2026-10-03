@@ -1,0 +1,31 @@
+=== Torvald Stonebreaker · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Torvald Stonebreaker (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Deep Rust Brown-toned combat boots with grey buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression wild and eager, a berserker's grin baring his teeth.
+
+Holding a massive two-handed greataxe, its Deep Rust Brown-toned stone head bound in grey iron bands, gripped in both hands, faint earthen tremors humming from the stone, fine dust sifting from its edge with every motion.
+
+A fine haze of dust drifts around his feet.
+
+Companion: his bonded Dire Bear, a massive shaggy bear with claws like daggers, standing at his side.
+
+Environment: a sun-dappled ancient forest grove, towering moss-covered trees, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
+
+Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, text, wording, watermark, logo.

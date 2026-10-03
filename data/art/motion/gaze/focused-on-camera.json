@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/focused-on-camera",
+  "kind": "gaze",
+  "name": "Focused on Camera",
+  "gaze": "remains focused on camera.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted -- identical defaultGaze was duplicated verbatim across blowing-kiss-closeup, blowing-kiss-full-body, and catwalk-confident."
+}

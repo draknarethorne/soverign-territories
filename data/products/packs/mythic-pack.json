@@ -2,7 +2,7 @@
   "productId": "mythic-pack",
   "productName": "Mythic Pack - Demon Overlord",
   "productType": "mythic-choice-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Ultimate power! Choose Malakar, Demon Overlord (Epic) plus 4 Epic+ cards. The crown jewel of Base Set.",
   "price": {
     "gold": 20000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 1,
@@ -52,10 +52,10 @@
     "unlockLevel": 30,
     "purchaseLimit": 1,
     "requiresProgression": true,
-    "progressionRequirement": "complete-140-base-set-cards"
+    "progressionRequirement": "complete-140-sovereign-dawn-cards"
   },
   "milestoneReward": {
-    "trigger": "complete-140-base-set-cards",
+    "trigger": "complete-140-sovereign-dawn-cards",
     "rewardQuantity": 1,
     "message": "Congratulations! You've collected all 140 Base Set cards! Claim your Mythic Pack featuring Malakar, Demon Overlord!"
   },

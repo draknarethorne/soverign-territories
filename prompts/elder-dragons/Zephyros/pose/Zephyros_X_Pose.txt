@@ -1,0 +1,18 @@
+=== Zephyros · A-Pose (group: Pose) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic creature photography. Professional full-body shot of an Elder Dragon, head to tail, 85mm lens, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting, no backlight or rim light.
+
+Zephyros, an Elder Dragon of deep-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk.
+
+Standing in a neutral three-quarter stance, all four legs grounded, wings folded loosely at its sides, head held level and facing the camera, tail curled gently to one side — a clear reference pose showing the full body, scale texture, and wing structure.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, text, wording, watermark, logo.

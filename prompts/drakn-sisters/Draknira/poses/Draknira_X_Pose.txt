@@ -1,0 +1,35 @@
+=== Draknira Thorne · A-Pose Base (group: X_Pose) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. Set figure, skin, eyes, and hair here; downstream stages preserve them.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+
+Background: a solid, seamless cream-coloured studio backdrop.
+
+Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
+
+Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
+
+Wearing: only a Glacial Blue skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Glacial Blue open-toed high heels.
+
+Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, tone-on-tone dimension; styled center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured (override the source hairstyle); a very slight lift from a light breeze below.
+
+Makeup: natural and fresh-faced - reset any heavy makeup from the source photo; a barely-there neutral eyeshadow with only the faintest soft white tint, only the faintest hint of natural blush, groomed brows, subtle neutral definition; fingernails and toenails natural or Light Blue.
+
+Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+
+Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick; alluring, confident closed-mouth smile; dimples; looking to camera.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, hair covering breasts, all-over purple hair, fully dyed hair, thick thighs, wide hips, boyish figure, stick-like, ruddy skin, sunburnt skin, overly tanned skin, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

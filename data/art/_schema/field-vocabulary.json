@@ -1,0 +1,62 @@
+{
+  "description": {
+    "overridable": false,
+    "owners": ["wardrobe", "backgrounds", "heroes/*/armor,clothing,weapons,effects"],
+    "notes": "Catch-all single content field for a simple, single-purpose piece (jewelry, footwear, cape, weapon, effect, background)."
+  },
+  "editorial": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Overall shot framing/style line."
+  },
+  "breeze": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Ambient wind/movement flavor."
+  },
+  "body": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Torso/weight stance."
+  },
+  "head": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Head angle/tilt."
+  },
+  "pose": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Limb/hand positioning detail. Also used as the SLOT name for the whole motion bundle on scene cards -- deliberately marked non-overridable so that slot/field name collision can never silently hijack it."
+  },
+  "gaze": {
+    "overridable": true,
+    "owners": ["motion (as defaultGaze)", "motion/gaze (standalone)"],
+    "notes": "Where the eyes look. Independently overridable via components.gaze -- a file reference or literal inline text."
+  },
+  "expression": {
+    "overridable": true,
+    "owners": ["motion (as defaultExpression)", "motion/expressions (standalone)"],
+    "notes": "Facial/emotional read. Independently overridable via components.expression -- a file reference or literal inline text."
+  },
+  "defaultGaze": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Motion-internal: the gaze a motion implies by default (canonical alias: gaze). Folded into the pose join unless the card declares its own components.gaze, which replaces it in place."
+  },
+  "defaultExpression": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Motion-internal: the expression a motion implies by default (canonical alias: expression). Folded into the pose join unless the card declares its own components.expression, which replaces it in place."
+  },
+  "mood": {
+    "overridable": false,
+    "owners": ["backgrounds (some multi-field pieces)"],
+    "notes": "Short tonal tag. Currently excluded from generated output (treated as metadata, not content) -- see _COMPONENT_META_KEYS in gen_prompt.py."
+  },
+  "extras": {
+    "overridable": false,
+    "owners": ["motion"],
+    "notes": "Freeform additive list -- general tags that don't claim a reserved field name. Always additive, never participates in the override mechanism."
+  }
+}

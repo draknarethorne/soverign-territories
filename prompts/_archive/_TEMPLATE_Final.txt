@@ -1,0 +1,31 @@
+=== [HERO] · Intro Final Scene (group: Final) — Final (ST_FireRed_Final, img2img) ===
+Incoming image: the near-final [HERO] (chosen outfit/armor, hair, [WEAPON]). This pass adds ONLY the scene, atmosphere, spell glow, and small pose/wind. Do NOT redraw her - carry everything from the incoming image. Only the overrides below change. Denoise ~0.5-0.7.
+
+Optional render shift: for a card look, add a light "cinematic dark-fantasy, painterly" style cue - test it; keep it subtle so likeness holds.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle, [OUTFIT/ARMOR], and the [WEAPON]. Keep all of these unchanged.
+
+She stands mid-cast, commanding and composed. Adjust the pose only: [pose note - e.g. weight shifted, chin lifted, free hand raised and open as she channels].
+
+[SPELL VFX] gathers around her [hand / weapon] - swirling [PRIMARY]-and-[ACCENT] energy, ribbons of [smoke / light], and [element motif, e.g. spectral shades] around her.
+A [ACCENT] glow runs along [weapon detail].
+
+Eyes [CAST EYE] mid-cast (override the incoming eye colour).
+[LIP] lipstick (override). [NAIL] fingernails (override).
+
+Environment: [ENVIRONMENT], with [atmosphere], a soft [ACCENT] haze rising behind her.
+A light breeze lifts [hair / cape].
+
+Palette: [PRIMARY] dominant with [ACCENTS]; all glow is [ACCENT].
+Full-body hero framing, slight low camera angle for an imposing, regal presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, deformed hands, duplicate or second weapon, text, wording, watermark, logo, modern objects, cluttered background, altered face, altered armor, altered hairstyle.
+
+----------------------------------------------------------------
+(future - multi-image) Add the hero's companion/summon (see _TEMPLATE_Pets.txt) or a background plate (_TEMPLATE_Background.txt) as a SECOND reference image, and extend this prompt with its placement only.

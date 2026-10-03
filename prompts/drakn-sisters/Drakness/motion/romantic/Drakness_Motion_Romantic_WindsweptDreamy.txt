@@ -1,0 +1,37 @@
+=== Drakness Thorne · Motion (group: Motion) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+A candid high-fashion editorial shot, dreamy romantic moment, wind-caught hair.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain the existing outfit and hairstyle expressly.
+
+Strong breeze flowing towards her.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+Body: standing softly, head tilted back slightly, basking in the breeze.
+
+Head: tilted back gently, eyes soft or closed.
+
+Gaze: soft, dreamy, eyes closed or half-lidded.
+
+Expression: serene, dreamy, soft closed-mouth smile.
+
+Eyes: deep violet irises, natural and unchanged from the incoming image.
+
+Pose: arms relaxed at her sides, hair caught fully in the wind.
+
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

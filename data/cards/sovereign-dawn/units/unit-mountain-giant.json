@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_MOUNTAIN_GIANT",
+    "collectionNumber": "SD-095",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 95, "totalCards": 219 },
+    "name": "Mountain Giant",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "maxStars": 5,
+        "points": 8
+    },
+    "stats": {
+        "health": 70,
+        "mana": 22,
+        "attack": 35,
+        "defense": 18,
+        "moveRange": 1,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Colossal beings from the tallest peaks, shake the earth with every step.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth",
+            "rare-pack"
+        ],
+        "campaignDrops": [
+            "location-24-summit-clash-boss"
+        ]
+    }
+}

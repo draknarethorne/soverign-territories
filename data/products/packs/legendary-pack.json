@@ -2,7 +2,7 @@
   "productId": "legendary-pack",
   "productName": "Legendary Pack",
   "productType": "ultra-premium-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Legendary power! Guaranteed Legendary card plus 4 Epic+ cards.",
   "price": {
     "gold": 10000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 5,
@@ -50,7 +50,7 @@
     "requiresProgression": false
   },
   "milestoneReward": {
-    "trigger": "complete-100-base-set-cards",
+    "trigger": "complete-100-sovereign-dawn-cards",
     "rewardQuantity": 1,
     "message": "100 Base Set cards collected! Here's a Legendary Pack to help you complete the set."
   }

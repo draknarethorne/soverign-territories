@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_KEEP",
+    "collectionNumber": "SD-112",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 112, "totalCards": 219 },
+    "name": "Keep",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "maxStars": 4,
+        "points": 2
+    },
+    "stats": {
+        "health": 90,
+        "defense": 28
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_COMMAND_CENTER",
+            "name": "Command Center",
+            "type": "Passive",
+            "description": "Serves as the strategic command center for territory operations (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "The heart of the fortress, where strategy becomes victory.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

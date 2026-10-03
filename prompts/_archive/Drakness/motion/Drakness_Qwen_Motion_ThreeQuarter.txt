@@ -1,0 +1,28 @@
+=== Drakness Thorne · Pose: Three-Quarter (group: Motion) — Edit (Qwen img2img) ===
+Incoming image: an A-pose of Drakness (chosen hair). Change ONLY the pose to a classic 3/4 glamour stance; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain the existing outfit and hairstyle expressly.
+
+Body: angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve.
+Head: turned back toward the camera, chin slightly down.
+Gaze: eyes to camera.
+Expression: alluring, confident; lips slightly parted; expressive, sultry brows.
+Light breeze.
+Pose: one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+Eyes: violet.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo.

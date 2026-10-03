@@ -1,0 +1,18 @@
+{
+  "id": "motion/standing/commanding-cast",
+  "kind": "motion",
+  "name": "Commanding Cast",
+  "editorial": "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast.",
+  "breeze": "Light breeze.",
+  "body": "standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell.",
+  "head": "level, chin lifted.",
+  "defaultGaze": "focused forward, intense.",
+  "defaultExpression": "data/art/motion/expressions/composed-commanding.json",
+  "pose": "one arm raised and channeling energy, the other hand cupped at her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "notes": "Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_SD-001_Final.txt + Drakness_FireRed_Elegant.txt ('She stands mid-cast, commanding and composed... weight shifted, chin lifted, her free hand raised and open as she channels'). First casting-type motion in the library — a real gap, not a one-off scene string; reusable by any hero's casting scene or the standalone Motion stage."
+}

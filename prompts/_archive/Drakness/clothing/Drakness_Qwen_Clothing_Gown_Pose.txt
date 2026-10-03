@@ -1,0 +1,28 @@
+=== Drakness Thorne · Clothing: Gown Pose (group: Clothing) — Edit (Qwen/FireRed img2img) ===
+Incoming image: a Gown plate of Drakness. Keep the gown, face, body, and hair from the incoming image; only change the stance/expression. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+A candid high-fashion editorial shot, expressive glamour pose, post-motion, asymmetrical body language, seductive low-energy fashion photography.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain the existing full-length Midnight Violet gown and heels expressly.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, lifted and pressed closely together at the centre with a push-up-bra contour, forming a narrow décolletage (not a wide gap).
+No breeze.
+Face adjusts to the body position but remains focused on the camera.
+Expression: glamorous smile; full, expressive lips; sultry brows.
+Makeup: soft Vibrant Amethyst shimmer eyeshadow. Light Violet lipstick. Midnight Violet fingernails and toenails. Symmetric violet eyes.
+
+Pose: a confident glamour pose - leaning forward, hips flexed to one side, back arched, bold décolletage; one hand on her body, the other in an elegant, alluring gesture with the fingers; elbows away from the body; legs exposed; feet apart, one foot forward; the dress moving very slightly.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text, wording, watermark, logo.

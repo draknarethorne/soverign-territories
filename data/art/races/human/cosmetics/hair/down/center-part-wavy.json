@@ -1,0 +1,11 @@
+{
+  "id": "hair/down/center-part-wavy",
+  "kind": "hair",
+  "name": "Center-Part Soft Wavy (Drak-sister standard)",
+  "a_pose_style": "center-parted and swept behind the shoulders, long and softly wavy, length reaching just below the bust-line but kept off the breasts so the chest and décolletage stay unobscured",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair settles into a center part, long and softly wavy, swept behind the shoulders.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "notes": "The shared default A-pose hairstyle used by all 10 Drak sisters today. 'a_pose_style' fits the X_Pose template's \"styled {{HAIRSTYLE}} (override the source hairstyle)\" slot. 'hair_change'/'breeze'/'extras' serve the Hair-stage template (same component, two consumers)."
+}

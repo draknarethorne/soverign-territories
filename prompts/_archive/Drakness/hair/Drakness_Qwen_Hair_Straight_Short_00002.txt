@@ -1,0 +1,24 @@
+=== Drakness Thorne · Hair: Straight Short 00002 (group: Hair) — Edit (Qwen img2img) ===
+Incoming image: an A-pose of Drakness. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain existing outfit expressly.
+
+No breeze.
+Long, slender legs.
+Hairstyle is sleek and semi-straight, hair length to top of breasts with sides cut tapered tendrils framing her face, hair contours her body.
+Bold décolletage.
+Violet eyes.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust, text, wording, watermark, logo

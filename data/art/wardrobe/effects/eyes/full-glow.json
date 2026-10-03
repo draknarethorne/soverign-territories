@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/eyes/full-glow",
+  "kind": "effects",
+  "name": "Eyes: full glow (power peak)",
+  "description": "Eyes: fully glowing {{ACCENT_SOFT}}, irises and pupils blazing with luminous {{ACCENT_SOFT}} light and no visible pupil, a faint {{ACCENT_SOFT}} glow reaching the lashes and upper cheeks (override the incoming eye colour).",
+  "compatibleStages": ["scene"],
+  "notes": "Level 3 of 4. Climactic casts only; this overrides the eye colour and will dominate the face."
+}

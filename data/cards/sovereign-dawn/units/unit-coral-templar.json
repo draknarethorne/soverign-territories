@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_CORAL_TEMPLAR",
+    "collectionNumber": "SD-173",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 173, "totalCards": 219 },
+    "name": "Coral Templar",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "stats": {
+        "health": 38,
+        "mana": 28,
+        "attack": 26,
+        "defense": 14,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Warriors forged in the coral reefs, their armor grown from living sea formations.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

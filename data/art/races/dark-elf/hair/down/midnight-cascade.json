@@ -1,0 +1,11 @@
+{
+  "id": "races/dark-elf/hair/down/midnight-cascade",
+  "kind": "hair",
+  "name": "Midnight Cascade (Dark Elf)",
+  "a_pose_style": "falling in sleek, near-black cascading layers with a faint violet-sheen dimension unique to dark-elf hair, longer and glossier than a typical human cut",
+  "breeze": "Light breeze.",
+  "hair_change": "Hair falls in sleek, near-black cascading layers with a faint violet-sheen dimension, longer and glossier than a typical human cut.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "notes": "Skeleton example for the races/ category tier (shared by every Dark Elf hero/NPC, not hero-exclusive and not as generic as universal/hair/). Not yet wired to any hero's hairStyleComponent -- demonstrates the shape only: data/art/races/<race-slug>/<kind>/<family>/<slug>.json, same pattern as universal/."
+}

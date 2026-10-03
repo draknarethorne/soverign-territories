@@ -1,0 +1,22 @@
+{
+  "artId": "drakniss-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a serene, warm smile, eyes soft with compassion.",
+    "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",
+    "effects": "Soft rays of {{ACCENT_SOFT}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.",
+    "companion": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel",
+    "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/scene/Drakniss_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Drakniss's own Luminous Ivory White/Radiant Gold palette, plus the existing castle-hall background (radiant hall fits Light/Cleric). Shortcut per explicit instruction."
+}

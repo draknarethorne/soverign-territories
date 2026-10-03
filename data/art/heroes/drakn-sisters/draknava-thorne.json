@@ -1,0 +1,39 @@
+{
+  "cardId": "HERO_DRAKNAVA_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Deep Cerulean",
+      "accentColors": [
+        "Gossamer Silver",
+        "Breeze Teal"
+      ],
+      "eyeColor": "Sky cerulean iris with slate blue limbal ring, radiating gossamer silver striations, and breeze teal flecks",
+      "eyeColorGlamour": "Sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring",
+      "hairColor": "Silvery ash-blonde hair, soft and sultry with a breezy, airy sheen",
+      "skinTone": "Light sun-kissed fair tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to wood-elf characteristics (slender, nature-toned) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Draknava Thorne (Wind, Wood Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

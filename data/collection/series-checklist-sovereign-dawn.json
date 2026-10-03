@@ -1,0 +1,1759 @@
+{
+  "seriesId": "sovereign-dawn",
+  "seriesName": "Sovereign Dawn",
+  "totalCards": 219,
+  "checklist": [
+    {
+      "collectionNumber": "SD-001",
+      "cardId": "HERO_DRAKNESS_THORNE",
+      "name": "Drakness Thorne",
+      "element": "Darkness",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-002",
+      "cardId": "HERO_DRAKNORA_THORNE",
+      "name": "Draknora Thorne",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-003",
+      "cardId": "HERO_DRAKNIYA_THORNE",
+      "name": "Drakniya Thorne",
+      "element": "Grass",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-004",
+      "cardId": "HERO_DRAKNIRA_THORNE",
+      "name": "Draknira Thorne",
+      "element": "Ice",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-005",
+      "cardId": "HERO_DRAKNISA_THORNE",
+      "name": "Draknisa Thorne",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-006",
+      "cardId": "HERO_DRAKNISS_THORNE",
+      "name": "Drakniss Thorne",
+      "element": "Light",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-007",
+      "cardId": "HERO_DRAKNARA_THORNE",
+      "name": "Draknara Thorne",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-008",
+      "cardId": "HERO_DRAKNETA_THORNE",
+      "name": "Drakneta Thorne",
+      "element": "Lightning",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-009",
+      "cardId": "HERO_DRAKNAVA_THORNE",
+      "name": "Draknava Thorne",
+      "element": "Wind",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-010",
+      "cardId": "HERO_DRAKNOXA_THORNE",
+      "name": "Draknoxa Thorne",
+      "element": "Poison",
+      "type": "Hero",
+      "rarity": "Transcendent"
+    },
+    {
+      "collectionNumber": "SD-011",
+      "cardId": "HERO_DRAKNARE_THORNE",
+      "name": "Draknare Thorne",
+      "element": "Darkness",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-012",
+      "cardId": "HERO_IGNIS_EMBERSTRIDE",
+      "name": "Ignis Emberstride",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-013",
+      "cardId": "HERO_NIZARAS_FEATHERSTONE",
+      "name": "Nizaras Featherstone",
+      "element": "Grass",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-014",
+      "cardId": "HERO_LYRAN_FROSTFALL",
+      "name": "Lyran Frostfall",
+      "element": "Ice",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-015",
+      "cardId": "HERO_CORIN_TIDEWALKER",
+      "name": "Corin Tidewalker",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-016",
+      "cardId": "HERO_HAUK_HAMMERFELL",
+      "name": "Hauk Hammerfell",
+      "element": "Light",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-017",
+      "cardId": "HERO_TORVALD_STONEBREAKER",
+      "name": "Torvald Stonebreaker",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-018",
+      "cardId": "HERO_DORIAN_STORMSTRIKE",
+      "name": "Dorian Stormstrike",
+      "element": "Lightning",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-019",
+      "cardId": "HERO_ZEPHYR_GALEHEART",
+      "name": "Zephyr Galeheart",
+      "element": "Wind",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-020",
+      "cardId": "HERO_MALAKOR_VENOMCALLER",
+      "name": "Malakor Venomcaller",
+      "element": "Poison",
+      "type": "Hero",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-021",
+      "cardId": "UNIT_UMBRATH",
+      "name": "Umbrath",
+      "element": "Darkness",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-022",
+      "cardId": "UNIT_PYRAXIS",
+      "name": "Pyraxis",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-023",
+      "cardId": "UNIT_SYLVANYA",
+      "name": "Sylvanya",
+      "element": "Grass",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-024",
+      "cardId": "UNIT_GLACIORA",
+      "name": "Glaciora",
+      "element": "Ice",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-025",
+      "cardId": "UNIT_AQUARIA",
+      "name": "Aquaria",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-026",
+      "cardId": "UNIT_LUMIRA",
+      "name": "Lumira",
+      "element": "Light",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-027",
+      "cardId": "UNIT_TERRADOR",
+      "name": "Terrador",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-028",
+      "cardId": "UNIT_FULGORA",
+      "name": "Fulgora",
+      "element": "Lightning",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-029",
+      "cardId": "UNIT_ZEPHYROS",
+      "name": "Zephyros",
+      "element": "Wind",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-030",
+      "cardId": "UNIT_VENOMIS",
+      "name": "Venomis",
+      "element": "Poison",
+      "type": "Unit",
+      "rarity": "Mythic"
+    },
+    {
+      "collectionNumber": "SD-031",
+      "cardId": "UNIT_REAPER",
+      "name": "Reaper",
+      "element": "Darkness",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-032",
+      "cardId": "UNIT_FIRE_ELEMENTAL",
+      "name": "Fire Elemental",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-033",
+      "cardId": "UNIT_TREANT",
+      "name": "Treant",
+      "element": "Grass",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-034",
+      "cardId": "UNIT_FROST_OWL",
+      "name": "Frost Owl",
+      "element": "Ice",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-035",
+      "cardId": "UNIT_SHARK",
+      "name": "Shark",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-036",
+      "cardId": "UNIT_ANGEL",
+      "name": "Angel",
+      "element": "Light",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-037",
+      "cardId": "UNIT_DIRE_BEAR",
+      "name": "Dire Bear",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-038",
+      "cardId": "UNIT_GRYPHON",
+      "name": "Gryphon",
+      "element": "Lightning",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-039",
+      "cardId": "UNIT_GIANT_EAGLE",
+      "name": "Giant Eagle",
+      "element": "Wind",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-040",
+      "cardId": "UNIT_BASILISK",
+      "name": "Basilisk",
+      "element": "Poison",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-041",
+      "cardId": "HERO_ARIA_FLAME_KNIGHT",
+      "name": "Aria, Flame Knight",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-042",
+      "cardId": "HERO_RAGNAR_INFERNO_BERSERKER",
+      "name": "Ragnar, Inferno Berserker",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-043",
+      "cardId": "HERO_CINDER_FLAME_MAGE",
+      "name": "Cinder, Flame Mage",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-044",
+      "cardId": "HERO_BLAZE_DRAGON_RIDER",
+      "name": "Blaze, Dragon Rider",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-045",
+      "cardId": "HERO_EMBER_PHOENIX_GUARDIAN",
+      "name": "Ember, Phoenix Guardian",
+      "element": "Fire",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-046",
+      "cardId": "UNIT_FIRE_SOLDIER",
+      "name": "Fire Soldier",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-047",
+      "cardId": "UNIT_EMBER_SCOUT",
+      "name": "Ember Scout",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-048",
+      "cardId": "UNIT_FLAME_IMP",
+      "name": "Flame Imp",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-049",
+      "cardId": "UNIT_SCORCH_ELEMENTAL",
+      "name": "Scorch Elemental",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-050",
+      "cardId": "UNIT_LAVA_GOLEM",
+      "name": "Lava Golem",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-051",
+      "cardId": "HERO_STONE_SENTINEL",
+      "name": "Stone Sentinel",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-052",
+      "cardId": "UNIT_ASH_WARRIOR",
+      "name": "Ash Warrior",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-053",
+      "cardId": "HERO_EARTHSHAKER_GEOMANCER",
+      "name": "Earthshaker Geomancer",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-054",
+      "cardId": "UNIT_CINDER_BEAST",
+      "name": "Cinder Beast",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-055",
+      "cardId": "HERO_TITAN_MOUNTAIN_LORD",
+      "name": "Titan, Mountain Lord",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-056",
+      "cardId": "UNIT_MOLTEN_HOUND",
+      "name": "Molten Hound",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-057",
+      "cardId": "UNIT_WATER_SOLDIER",
+      "name": "Water Soldier",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-058",
+      "cardId": "HERO_GAIA_EARTH_MOTHER",
+      "name": "Gaia, Earth Mother",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-059",
+      "cardId": "UNIT_ELVEN_ARCHER",
+      "name": "Elven Archer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-060",
+      "cardId": "UNIT_PYRO_SPRITE",
+      "name": "Pyro Sprite",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-061",
+      "cardId": "HERO_GRANITE_STONE_GUARDIAN",
+      "name": "Granite, Stone Guardian",
+      "element": "Earth",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-062",
+      "cardId": "UNIT_EMBER_WOLF",
+      "name": "Ember Wolf",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-063",
+      "cardId": "UNIT_WATER_ELEMENTAL",
+      "name": "Water Elemental",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-064",
+      "cardId": "UNIT_GOBLIN_RAIDER",
+      "name": "Goblin Raider",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-065",
+      "cardId": "UNIT_SEA_SERPENT",
+      "name": "Sea Serpent",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-066",
+      "cardId": "UNIT_PHOENIX_HATCHLING",
+      "name": "Phoenix Hatchling",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-067",
+      "cardId": "UNIT_TIDAL_ARCHER",
+      "name": "Tidal Archer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-068",
+      "cardId": "UNIT_CORAL_GUARDIAN",
+      "name": "Coral Guardian",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-069",
+      "cardId": "UNIT_FLAME_SENTINEL",
+      "name": "Flame Sentinel",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-070",
+      "cardId": "UNIT_INFERNO_GUARD",
+      "name": "Inferno Guard",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-071",
+      "cardId": "UNIT_MERMAID_HEALER",
+      "name": "Mermaid Healer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-072",
+      "cardId": "UNIT_EMBER_LEGIONNAIRE",
+      "name": "Ember Legionnaire",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-073",
+      "cardId": "UNIT_WAVE_RIDER",
+      "name": "Wave Rider",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-074",
+      "cardId": "UNIT_FIRE_DRAGON_WHELP",
+      "name": "Fire Dragon Whelp",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-075",
+      "cardId": "UNIT_KRAKEN_SPAWN",
+      "name": "Kraken Spawn",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-076",
+      "cardId": "UNIT_FROST_MAGE",
+      "name": "Frost Mage",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-077",
+      "cardId": "TACTIC_FIREBALL",
+      "name": "Fireball",
+      "element": "Fire",
+      "type": "Tactic",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-078",
+      "cardId": "UNIT_EARTH_SOLDIER",
+      "name": "Earth Soldier",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-079",
+      "cardId": "TACTIC_FLAME_SHIELD",
+      "name": "Flame Shield",
+      "element": "Fire",
+      "type": "Tactic",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-080",
+      "cardId": "UNIT_DWARF_WARRIOR",
+      "name": "Dwarf Warrior",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-081",
+      "cardId": "TACTIC_INFERNO",
+      "name": "Inferno",
+      "element": "Fire",
+      "type": "Tactic",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-082",
+      "cardId": "UNIT_STONE_GOLEM",
+      "name": "Stone Golem",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-083",
+      "cardId": "BUILDING_FORGE",
+      "name": "Forge",
+      "element": "Fire",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-084",
+      "cardId": "HERO_THALOR_TIDE_GUARDIAN",
+      "name": "Thalor, Tide Guardian",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-085",
+      "cardId": "UNIT_GROVE_TREANT",
+      "name": "Grove Treant",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-086",
+      "cardId": "HERO_MARINA_SEA_WITCH",
+      "name": "Marina, Sea Witch",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-087",
+      "cardId": "UNIT_STONE_DEFENDER",
+      "name": "Stone Defender",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-088",
+      "cardId": "HERO_CORAL_WAVE_CALLER",
+      "name": "Coral, Wave Caller",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-089",
+      "cardId": "UNIT_CRYSTAL_GUARDIAN",
+      "name": "Crystal Guardian",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-090",
+      "cardId": "HERO_LEVIATHAN_OCEAN_TYRANT",
+      "name": "Leviathan, Ocean Tyrant",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Legendary"
+    },
+    {
+      "collectionNumber": "SD-091",
+      "cardId": "UNIT_EARTH_SHAMAN",
+      "name": "Earth Shaman",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-092",
+      "cardId": "HERO_AQUA_STORM_SAGE",
+      "name": "Aqua, Storm Sage",
+      "element": "Water",
+      "type": "Hero",
+      "rarity": "Epic"
+    },
+    {
+      "collectionNumber": "SD-093",
+      "cardId": "UNIT_ROCK_HURLER",
+      "name": "Rock Hurler",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-094",
+      "cardId": "UNIT_MUD_ELEMENTAL",
+      "name": "Mud Elemental",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-095",
+      "cardId": "UNIT_MOUNTAIN_GIANT",
+      "name": "Mountain Giant",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-096",
+      "cardId": "BUILDING_GRANARY",
+      "name": "Granary",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-097",
+      "cardId": "BUILDING_SAWMILL",
+      "name": "Sawmill",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-098",
+      "cardId": "BUILDING_MINE",
+      "name": "Mine",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-099",
+      "cardId": "BUILDING_MARKET",
+      "name": "Market",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-100",
+      "cardId": "BUILDING_TEMPLE",
+      "name": "Temple",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-101",
+      "cardId": "BUILDING_TREASURY",
+      "name": "Treasury",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-102",
+      "cardId": "BUILDING_BARRACKS",
+      "name": "Barracks",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-103",
+      "cardId": "BUILDING_ARCHERY_RANGE",
+      "name": "Archery Range",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-104",
+      "cardId": "BUILDING_STABLE",
+      "name": "Stable",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-105",
+      "cardId": "BUILDING_MAGE_TOWER",
+      "name": "Mage Tower",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-106",
+      "cardId": "BUILDING_WORKSHOP",
+      "name": "Workshop",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-107",
+      "cardId": "BUILDING_BLACKSMITH",
+      "name": "Blacksmith",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-108",
+      "cardId": "BUILDING_ARMORY",
+      "name": "Armory",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-109",
+      "cardId": "BUILDING_WATCH_TOWER",
+      "name": "Watch Tower",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-110",
+      "cardId": "BUILDING_WALL",
+      "name": "Wall",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-111",
+      "cardId": "BUILDING_GATE",
+      "name": "Gate",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-112",
+      "cardId": "BUILDING_KEEP",
+      "name": "Keep",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-113",
+      "cardId": "BUILDING_ALTAR",
+      "name": "Altar",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-114",
+      "cardId": "BUILDING_ACADEMY",
+      "name": "Academy",
+      "element": "Neutral",
+      "type": "Building",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-115",
+      "cardId": "TACTIC_ICE_SHARD",
+      "name": "Ice Shard",
+      "element": "Water",
+      "type": "Tactic",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-116",
+      "cardId": "TACTIC_HEALING_WAVE",
+      "name": "Healing Wave",
+      "element": "Water",
+      "type": "Tactic",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-117",
+      "cardId": "TACTIC_FREEZE",
+      "name": "Freeze",
+      "element": "Water",
+      "type": "Tactic",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-118",
+      "cardId": "TACTIC_EARTHQUAKE",
+      "name": "Earthquake",
+      "element": "Earth",
+      "type": "Tactic",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-119",
+      "cardId": "TACTIC_CHARGE",
+      "name": "Charge",
+      "element": "Neutral",
+      "type": "Tactic",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-120",
+      "cardId": "TACTIC_SHIELD_WALL",
+      "name": "Shield Wall",
+      "element": "Neutral",
+      "type": "Tactic",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-121",
+      "cardId": "TACTIC_HEAL",
+      "name": "Heal",
+      "element": "Neutral",
+      "type": "Tactic",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-122",
+      "cardId": "EQUIPMENT_WOODEN_SWORD",
+      "name": "Wooden Sword",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-123",
+      "cardId": "EQUIPMENT_IRON_SWORD",
+      "name": "Iron Sword",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-124",
+      "cardId": "EQUIPMENT_STEEL_BLADE",
+      "name": "Steel Blade",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-125",
+      "cardId": "EQUIPMENT_FIRE_STAFF",
+      "name": "Fire Staff",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-126",
+      "cardId": "EQUIPMENT_LEATHER_ARMOR",
+      "name": "Leather Armor",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-127",
+      "cardId": "EQUIPMENT_CHAIN_MAIL",
+      "name": "Chain Mail",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-128",
+      "cardId": "EQUIPMENT_PLATE_ARMOR",
+      "name": "Plate Armor",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-129",
+      "cardId": "EQUIPMENT_MAGE_ROBES",
+      "name": "Mage Robes",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-130",
+      "cardId": "EQUIPMENT_WOODEN_SHIELD",
+      "name": "Wooden Shield",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-131",
+      "cardId": "EQUIPMENT_STEEL_SHIELD",
+      "name": "Steel Shield",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-132",
+      "cardId": "EQUIPMENT_LEATHER_CAP",
+      "name": "Leather Cap",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-133",
+      "cardId": "EQUIPMENT_STEEL_HELMET",
+      "name": "Steel Helmet",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-134",
+      "cardId": "EQUIPMENT_HEALTH_AMULET",
+      "name": "Health Amulet",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-135",
+      "cardId": "EQUIPMENT_MANA_RING",
+      "name": "Mana Ring",
+      "element": "Neutral",
+      "type": "Equipment",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-136",
+      "cardId": "WORKER_FARMER",
+      "name": "Farmer",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-137",
+      "cardId": "WORKER_FISHERMAN",
+      "name": "Fisherman",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-138",
+      "cardId": "WORKER_HUNTER",
+      "name": "Hunter",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-139",
+      "cardId": "WORKER_LUMBERJACK",
+      "name": "Lumberjack",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-140",
+      "cardId": "WORKER_FORESTER",
+      "name": "Forester",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-141",
+      "cardId": "WORKER_CARPENTER",
+      "name": "Carpenter",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-142",
+      "cardId": "WORKER_MINER",
+      "name": "Miner",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-143",
+      "cardId": "WORKER_QUARRYMAN",
+      "name": "Quarryman",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-144",
+      "cardId": "WORKER_PROSPECTOR",
+      "name": "Prospector",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-145",
+      "cardId": "WORKER_MERCHANT",
+      "name": "Merchant",
+      "element": "Neutral",
+      "type": "Worker",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-146",
+      "cardId": "UNIT_FIRE_KNIGHT",
+      "name": "Fire Knight",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-147",
+      "cardId": "UNIT_EMBER_CRUSADER",
+      "name": "Ember Crusader",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-148",
+      "cardId": "UNIT_INFERNO_PALADIN",
+      "name": "Inferno Paladin",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-149",
+      "cardId": "UNIT_FLAME_TEMPLAR",
+      "name": "Flame Templar",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-150",
+      "cardId": "UNIT_ASH_BERSERKER",
+      "name": "Ash Berserker",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-151",
+      "cardId": "UNIT_MAGMA_WARRIOR",
+      "name": "Magma Warrior",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-152",
+      "cardId": "UNIT_FIRE_ARCHER",
+      "name": "Fire Archer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-153",
+      "cardId": "UNIT_EMBER_CROSSBOWMAN",
+      "name": "Ember Crossbowman",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-154",
+      "cardId": "UNIT_FLAME_SNIPER",
+      "name": "Flame Sniper",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-155",
+      "cardId": "UNIT_INFERNO_MARKSMAN",
+      "name": "Inferno Marksman",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-156",
+      "cardId": "UNIT_CINDER_LONGBOWMAN",
+      "name": "Cinder Longbowman",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-157",
+      "cardId": "UNIT_PHOENIX_ARCHER",
+      "name": "Phoenix Archer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-158",
+      "cardId": "UNIT_FIRE_MAGE",
+      "name": "Fire Mage",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-159",
+      "cardId": "UNIT_PYROMANCER",
+      "name": "Pyromancer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-160",
+      "cardId": "UNIT_FLAME_SORCERER",
+      "name": "Flame Sorcerer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-161",
+      "cardId": "UNIT_EMBER_WIZARD",
+      "name": "Ember Wizard",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-162",
+      "cardId": "UNIT_INFERNO_WARLOCK",
+      "name": "Inferno Warlock",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-163",
+      "cardId": "UNIT_ASH_CONJURER",
+      "name": "Ash Conjurer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-164",
+      "cardId": "UNIT_EMBER_RIDER",
+      "name": "Ember Rider",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-165",
+      "cardId": "UNIT_FIRE_LANCER",
+      "name": "Fire Lancer",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-166",
+      "cardId": "UNIT_INFERNO_DRAGOON",
+      "name": "Inferno Dragoon",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-167",
+      "cardId": "UNIT_FLAME_CLERIC",
+      "name": "Flame Cleric",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-168",
+      "cardId": "UNIT_EMBER_SABOTEUR",
+      "name": "Ember Saboteur",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-169",
+      "cardId": "UNIT_FIRE_SHAMAN",
+      "name": "Fire Shaman",
+      "element": "Fire",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-170",
+      "cardId": "UNIT_WATER_KNIGHT",
+      "name": "Water Knight",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-171",
+      "cardId": "UNIT_TIDE_CRUSADER",
+      "name": "Tide Crusader",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-172",
+      "cardId": "UNIT_OCEAN_PALADIN",
+      "name": "Ocean Paladin",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-173",
+      "cardId": "UNIT_CORAL_TEMPLAR",
+      "name": "Coral Templar",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-174",
+      "cardId": "UNIT_WAVE_BERSERKER",
+      "name": "Wave Berserker",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-175",
+      "cardId": "UNIT_AQUA_WARRIOR",
+      "name": "Aqua Warrior",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-176",
+      "cardId": "UNIT_WATER_ARCHER",
+      "name": "Water Archer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-177",
+      "cardId": "UNIT_TIDAL_CROSSBOWMAN",
+      "name": "Tidal Crossbowman",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-178",
+      "cardId": "UNIT_OCEAN_SNIPER",
+      "name": "Ocean Sniper",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-179",
+      "cardId": "UNIT_WAVE_MARKSMAN",
+      "name": "Wave Marksman",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-180",
+      "cardId": "UNIT_CORAL_LONGBOWMAN",
+      "name": "Coral Longbowman",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-181",
+      "cardId": "UNIT_SEA_RANGER",
+      "name": "Sea Ranger",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-182",
+      "cardId": "UNIT_WATER_MAGE",
+      "name": "Water Mage",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-183",
+      "cardId": "UNIT_HYDROMANCER",
+      "name": "Hydromancer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-184",
+      "cardId": "UNIT_OCEAN_SORCERER",
+      "name": "Ocean Sorcerer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-185",
+      "cardId": "UNIT_TIDE_WIZARD",
+      "name": "Tide Wizard",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-186",
+      "cardId": "UNIT_AQUA_WARLOCK",
+      "name": "Aqua Warlock",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-187",
+      "cardId": "UNIT_WAVE_CONJURER",
+      "name": "Wave Conjurer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-188",
+      "cardId": "UNIT_TIDE_RIDER",
+      "name": "Tide Rider",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-189",
+      "cardId": "UNIT_WATER_LANCER",
+      "name": "Water Lancer",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-190",
+      "cardId": "UNIT_OCEAN_DRAGOON",
+      "name": "Ocean Dragoon",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-191",
+      "cardId": "UNIT_TIDE_CLERIC",
+      "name": "Tide Cleric",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-192",
+      "cardId": "UNIT_CORAL_SABOTEUR",
+      "name": "Coral Saboteur",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-193",
+      "cardId": "UNIT_WATER_SHAMAN",
+      "name": "Water Shaman",
+      "element": "Water",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-194",
+      "cardId": "UNIT_EARTH_KNIGHT",
+      "name": "Earth Knight",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-195",
+      "cardId": "UNIT_STONE_CRUSADER",
+      "name": "Stone Crusader",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-196",
+      "cardId": "UNIT_TERRA_PALADIN",
+      "name": "Terra Paladin",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-197",
+      "cardId": "UNIT_GRANITE_TEMPLAR",
+      "name": "Granite Templar",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-198",
+      "cardId": "UNIT_BOULDER_BERSERKER",
+      "name": "Boulder Berserker",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-199",
+      "cardId": "UNIT_MOUNTAIN_WARRIOR",
+      "name": "Mountain Warrior",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-200",
+      "cardId": "UNIT_EARTH_ARCHER",
+      "name": "Earth Archer",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-201",
+      "cardId": "UNIT_STONE_CROSSBOWMAN",
+      "name": "Stone Crossbowman",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-202",
+      "cardId": "UNIT_TERRA_SNIPER",
+      "name": "Terra Sniper",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-203",
+      "cardId": "UNIT_ROCK_MARKSMAN",
+      "name": "Rock Marksman",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-204",
+      "cardId": "UNIT_GRANITE_LONGBOWMAN",
+      "name": "Granite Longbowman",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-205",
+      "cardId": "UNIT_MOUNTAIN_RANGER",
+      "name": "Mountain Ranger",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-206",
+      "cardId": "UNIT_EARTH_MAGE",
+      "name": "Earth Mage",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-207",
+      "cardId": "UNIT_GEOMANCER",
+      "name": "Geomancer",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-208",
+      "cardId": "UNIT_TERRA_SORCERER",
+      "name": "Terra Sorcerer",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-209",
+      "cardId": "UNIT_STONE_WIZARD",
+      "name": "Stone Wizard",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-210",
+      "cardId": "UNIT_EARTH_WARLOCK",
+      "name": "Earth Warlock",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-211",
+      "cardId": "UNIT_BOULDER_CONJURER",
+      "name": "Boulder Conjurer",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-212",
+      "cardId": "UNIT_STONE_RIDER",
+      "name": "Stone Rider",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-213",
+      "cardId": "UNIT_EARTH_LANCER",
+      "name": "Earth Lancer",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-214",
+      "cardId": "UNIT_TERRA_DRAGOON",
+      "name": "Terra Dragoon",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Rare"
+    },
+    {
+      "collectionNumber": "SD-215",
+      "cardId": "UNIT_STONE_CLERIC",
+      "name": "Stone Cleric",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-216",
+      "cardId": "UNIT_EARTH_SABOTEUR",
+      "name": "Earth Saboteur",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-217",
+      "cardId": "UNIT_TERRA_SHAMAN",
+      "name": "Terra Shaman",
+      "element": "Earth",
+      "type": "Unit",
+      "rarity": "Uncommon"
+    },
+    {
+      "collectionNumber": "SD-218",
+      "cardId": "TACTIC_STONE_SHIELD",
+      "name": "Stone Shield",
+      "element": "Earth",
+      "type": "Tactic",
+      "rarity": "Common"
+    },
+    {
+      "collectionNumber": "SD-219",
+      "cardId": "TACTIC_ROCK_SLIDE",
+      "name": "Rock Slide",
+      "element": "Earth",
+      "type": "Tactic",
+      "rarity": "Uncommon"
+    }
+  ]
+}

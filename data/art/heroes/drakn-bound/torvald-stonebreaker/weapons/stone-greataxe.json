@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe",
+  "kind": "holding",
+  "name": "Stone Greataxe (Torvald signature)",
+  "description": "a massive two-handed greataxe, its {{PRIMARY}}-toned stone head bound in {{ACCENT_SOFT}} iron bands, gripped in both hands, faint earthen tremors humming from the stone, fine dust sifting from its edge with every motion",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Torvald Stonebreaker — first-pass invented, fitting his Berserker class, Earth element, and surname. Replaces the shared wardrobe/weapons/greatsword.json default for this hero specifically."
+}

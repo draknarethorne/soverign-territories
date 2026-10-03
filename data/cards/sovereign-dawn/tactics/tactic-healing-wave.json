@@ -1,0 +1,38 @@
+{
+    "cardId": "TACTIC_HEALING_WAVE",
+    "collectionNumber": "SD-116",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 116, "totalCards": 219 },
+    "name": "Healing Wave",
+    "type": "Tactic",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 2
+    },
+    "stats": {
+        "manaCost": 25
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEALING_WAVE",
+            "name": "Healing Wave",
+            "type": "Active",
+            "manaCost": 25,
+            "cooldown": 1,
+            "description": "Channel healing waters to restore 50 HP to target allied unit."
+        }
+    ],
+    "lore": "The cleansing waters of the sacred springs can mend even the gravest wounds.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water"
+        ],
+        "campaignDrops": [
+            "location-02",
+            "location-05"
+        ]
+    }
+}

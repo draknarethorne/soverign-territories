@@ -1,0 +1,16 @@
+{
+  "id": "motion/romantic/tender-embrace-self",
+  "kind": "motion",
+  "name": "Tender Self-Embrace",
+  "editorial": "A candid high-fashion editorial shot, soft intimate romantic moment.",
+  "breeze": "No breeze.",
+  "body": "arms wrapped softly around herself, shoulders slightly drawn in, a tender, vulnerable stance.",
+  "head": "tilted gently downward, then lifting toward camera.",
+  "defaultGaze": "soft, intimate gaze to camera.",
+  "defaultExpression": "tender, soft, a gentle closed-mouth smile.",
+  "pose": "hands resting gently on her own upper arms, in a soft self-embrace.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

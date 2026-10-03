@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_TIDE_WIZARD",
+    "collectionNumber": "SD-185",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 185, "totalCards": 219 },
+    "name": "Tide Wizard",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "stats": {
+        "health": 23,
+        "mana": 40,
+        "attack": 24,
+        "defense": 8,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 2,
+    "lore": "Sage practitioners who synchronize their spells with the ebb and flow of tides.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-04-harbor-defense",
+            "location-05-deepwater-fortress"
+        ]
+    }
+}

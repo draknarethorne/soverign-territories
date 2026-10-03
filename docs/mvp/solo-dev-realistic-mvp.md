@@ -91,4 +91,4 @@ Add **one** stretch system at a time only after the baseline is stable and playt
 
 ## Readiness statement
 
-This is a **planning baseline**, not an implementation-readiness claim. Readiness requires the reconciliation gates in `docs/working/archive-canon-reconciliation-jul2026.md`, a verified data subset, and agreement across the canonical MVP, combat, deck, and tutorial documents.
+This is a **planning baseline**, not an implementation-readiness claim. Readiness requires the gates in `docs/STATUS.md`, a verified data subset, and agreement across the canonical MVP, combat, deck, and tutorial documents.

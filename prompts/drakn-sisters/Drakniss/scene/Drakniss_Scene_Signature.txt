@@ -1,0 +1,33 @@
+=== Drakniss Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Luminous Ivory White over a matte underlayer, with delicate gold glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Jewelry: Polished Silver with gold-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Luminous Ivory White high heels with glowing gold straps.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a serene, warm smile, eyes soft with compassion. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a tall ivory-and-gold processional staff in one hand, topped with a radiant sunburst halo of golden rays around a small glowing ivory orb, a soft gold light haloing the top, a short ribbon of Luminous Ivory White silk tied below the halo.
+
+Soft rays of gold radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.
+
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+
+Companion: her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel.
+
+Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

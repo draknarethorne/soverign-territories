@@ -1,0 +1,20 @@
+{
+  "artId": "draknare-armor-default",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-bound/draknare-thorne.json",
+  "name": "Default",
+  "aesthetic": "grim shadow-knight aesthetic",
+  "components": {
+    "wearing": "heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes",
+    "arms": "bare forearms, no additional arm pieces",
+    "jewelry": "none, unadorned",
+    "back": "no cape or back piece",
+    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/drakn-bound/Draknare/armor/Draknare_Armor_Default.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Default Defense/Tank archetype armor set — first-pass minimal scaffold, reusing wardrobe/armor/plate-tank.json + wardrobe/weapons/broadsword-and-shield.json (shared across the tank-group male heroes)."
+}

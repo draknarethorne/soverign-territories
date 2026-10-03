@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/effects/casting-amethyst",
+  "kind": "effects",
+  "name": "Necromantic Casting Glow (Drakness signature)",
+  "description": "Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.",
+  "compatibleStages": ["scene"],
+  "notes": "Hero-signature casting effect, tied to Drakness's Darkness/Necromancer class and amethyst palette — grounded in prompts/_archive/Drakness/final/Drakness_FireRed_SD-001_Final.txt."
+}

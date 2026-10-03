@@ -1,0 +1,26 @@
+prompt:
+
+Breeze flowing any direction.
+Face remains focused on camera.
+Facial expression is seductive and smiling.
+Lips are lushes and active with the expression and non-neutral.
+Enhance her breasts.
+Long, slender legs.
+Light Violet fingernails.
+Light Violet lipstick.
+Violet eyes.
+
+Walking towards the camera.
+Body position adjusts.
+Hips and shoulders positioned for the step.
+Arms adjust to the body position.
+One foot stepping forward to the side.
+
+
+----------------------------------------------------------------
+
+Negative prompt:
+
+extra limbs, extra fingers, deformed hands, fused fingers, mangled anatomy, asymmetrical eyes, cross-eyed, blurry, lowres, jpeg artifacts, watermark, signature, text, logo.
+
+extra people, studio equipment, plants, lights, extra limbs, extra digits, extra clothing, chairs, cups, tables, guitars, logos, wording, extra hair

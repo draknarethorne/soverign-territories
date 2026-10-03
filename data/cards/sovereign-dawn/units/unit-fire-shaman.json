@@ -1,0 +1,34 @@
+{
+    "cardId": "UNIT_FIRE_SHAMAN",
+    "collectionNumber": "SD-169",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 169, "totalCards": 219 },
+    "name": "Fire Shaman",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "stats": {
+        "health": 26,
+        "mana": 35,
+        "attack": 20,
+        "defense": 9,
+        "moveRange": 2,
+        "attackRange": 2
+    },
+    "tacticSlots": 2,
+    "lore": "Tribal mystics who invoke ancient fire spirits to strengthen allies with elemental blessings and battle totems.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-10-tribal-grounds",
+            "location-15-spirit-shrine"
+        ]
+    }
+}

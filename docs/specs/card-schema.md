@@ -1,6 +1,6 @@
 # Card Schema — notes and examples
 
-This document explains intent, key fields, and engine expectations for `card-schema.json`.
+This document explains intent, key fields, and engine expectations for `codex-schema.json`.
 
 Key intent
 
@@ -18,7 +18,7 @@ Important fields and engine notes
 
 Examples
 
-- See `card-schema.json` for validation. Minimal example:
+- See `data/schemas/codex-schema.json` for validation. Minimal example:
 
 ```json
 {

@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/composed-serene",
+  "kind": "expression",
+  "name": "Composed, Serene",
+  "expression": "composed, serene; lips softly together; expressive, sultry brows.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted from motion/standing/side-profile-elegant.json's own default expression — a standalone, swappable option now that expression is its own piece type."
+}

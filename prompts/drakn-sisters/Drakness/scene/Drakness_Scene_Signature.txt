@@ -1,0 +1,27 @@
+=== Drakness Thorne · Final Scene: Signature (group: Scene) — Edit (img2img) ===
+Incoming image: the "Bone" Drakness - necromancer in bone-plate armor with a flowing cape, holding a scythe. This final pass ONLY adds the scene (background, atmosphere, spell glow) and small pose/wind adjustments. Do NOT redraw her, her armor, hair, or weapon — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle, armor, and held weapon. Keep all of these unchanged.
+
+She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.
+
+Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Companion: her aligned Elder Dragon, Umbrath, looming in the shadows of the ossuary behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light.
+
+Environment: a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+A light breeze lifts her cape and a few strands of her hair.
+
+Palette: Midnight Violet dominant, with amethyst accents; all glow is amethyst.
+Full-body hero framing, slight low camera angle for an imposing, regal presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle.

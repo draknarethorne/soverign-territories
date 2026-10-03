@@ -1,0 +1,16 @@
+{
+  "id": "motion/romantic/windswept-dreamy",
+  "kind": "motion",
+  "name": "Windswept Dreamy Moment",
+  "editorial": "A candid high-fashion editorial shot, dreamy romantic moment, wind-caught hair.",
+  "breeze": "Strong breeze flowing towards her.",
+  "body": "standing softly, head tilted back slightly, basking in the breeze.",
+  "head": "tilted back gently, eyes soft or closed.",
+  "defaultGaze": "soft, dreamy, eyes closed or half-lidded.",
+  "defaultExpression": "serene, dreamy, soft closed-mouth smile.",
+  "pose": "arms relaxed at her sides, hair caught fully in the wind.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

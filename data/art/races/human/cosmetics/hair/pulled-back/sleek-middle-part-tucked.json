@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/sleek-middle-part-tucked",
+  "kind": "hair",
+  "name": "Sleek Middle Part, Tucked",
+  "a_pose_style": "sleek with a precise middle part, tucked smoothly behind both ears",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is sleek with a precise middle part, tucked smoothly behind both ears.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

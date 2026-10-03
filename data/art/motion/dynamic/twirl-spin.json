@@ -1,0 +1,16 @@
+{
+  "id": "motion/dynamic/twirl-spin",
+  "kind": "motion",
+  "name": "Twirl / Spin",
+  "editorial": "A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow.",
+  "breeze": "Motion-generated breeze, swirling around her.",
+  "body": "captured mid-twirl, torso rotating, skirt or drape flaring outward.",
+  "head": "turned with the spin, following the motion.",
+  "defaultGaze": "bright, joyful, glancing toward the camera.",
+  "defaultExpression": "joyful, carefree, laughing smile.",
+  "pose": "arms extended slightly for balance, caught mid-spin.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_EARTH_SABOTEUR",
+    "collectionNumber": "SD-216",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 216, "totalCards": 219 },
+    "name": "Earth Saboteur",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "health": 22,
+        "mana": 18,
+        "attack": 15,
+        "defense": 7,
+        "moveRange": 3,
+        "attackRange": 1
+    },
+    "tacticSlots": 1,
+    "lore": "Cunning scouts who set earthen traps and stone mines to disrupt enemy advances.",
+    "acquisition": {
+        "packSources": [
+            "earth-starter-box",
+            "standard-pack",
+            "element-booster-earth"
+        ],
+        "campaignDrops": [
+            "location-14-mountain-pass",
+            "location-15-cavern-assault"
+        ]
+    }
+}

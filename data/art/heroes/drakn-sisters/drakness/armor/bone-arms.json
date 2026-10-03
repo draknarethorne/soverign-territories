@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/bone-arms",
+  "kind": "arms",
+  "name": "Bone Armor — Arms (Drakness signature)",
+  "description": "matching bone bracers; matching pauldrons with dragon-claw spikes",
+  "compatibleStages": ["armor"],
+  "notes": "Hero-signature piece, unique to Drakness's Bone Armor outfit."
+}

@@ -1,0 +1,34 @@
+{
+    "cardId": "UNIT_FLAME_SNIPER",
+    "collectionNumber": "SD-154",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 154, "totalCards": 219 },
+    "name": "Flame Sniper",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 2,
+        "maxStars": 4,
+        "points": 4
+    },
+    "stats": {
+        "health": 28,
+        "mana": 0,
+        "attack": 28,
+        "defense": 7,
+        "moveRange": 2,
+        "attackRange": 5
+    },
+    "tacticSlots": 2,
+    "lore": "Elite sharpshooters capable of striking enemies from extreme distances with pinpoint precision and explosive force.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-13-fire-watchtower",
+            "location-17-fire-overlook"
+        ]
+    }
+}

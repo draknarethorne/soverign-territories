@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_MAGE_TOWER",
+    "collectionNumber": "SD-105",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 105, "totalCards": 219 },
+    "name": "Mage Tower",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "maxStars": 4,
+        "points": 2
+    },
+    "stats": {
+        "health": 55,
+        "defense": 12
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_TRAIN_MAGES",
+            "name": "Train Mages",
+            "type": "Passive",
+            "description": "Enables training of mage units (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Arcane knowledge flows through these mystical halls.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

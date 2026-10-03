@@ -1,0 +1,38 @@
+{
+  "cardId": "HERO_DRAKNARA_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Deep Burnt Sienna",
+      "accentColors": [
+        "Vivid Turquoise",
+        "Polished Copper"
+      ],
+      "eyeColor": "Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks",
+      "eyeColorGlamour": "Rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring",
+      "hairColor": "Rich bronze-brown hair with warm terracotta and caramel all-over highlights, full dimensional colour like a fashion editorial",
+      "skinTone": "Deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to barbarian characteristics (strong, grounded) — glamour build stays family-standard for now"
+    }
+  },
+  "notes": "Core ART hero definition for Draknara Thorne (Earth, Barbarian). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

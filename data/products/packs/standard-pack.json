@@ -2,7 +2,7 @@
   "productId": "standard-pack",
   "productName": "Standard Pack",
   "productType": "booster-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "The foundation of your collection! 5 cards from the Base Set with a guaranteed Uncommon+ card.",
   "price": {
     "gold": 1000,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 5,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 5,
@@ -51,7 +51,7 @@
     "enabled": true,
     "epicGuaranteeAfter": 10,
     "legendaryGuaranteeAfter": 50,
-    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-frost"]
+    "trackedAcrossPacks": ["standard-pack", "element-booster-fire", "element-booster-water", "element-booster-earth", "element-booster-lightning", "element-booster-wind", "element-booster-ice"]
   },
   "availability": {
     "unlockLevel": 1,

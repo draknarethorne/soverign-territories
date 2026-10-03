@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/footwear/glowing-strap-heels",
+  "kind": "legs_feet",
+  "name": "Glowing-Strap High Heels",
+  "description": "bright {{PRIMARY}} high heels with glowing {{ACCENT_SOFT}} straps",
+  "compatibleStages": ["clothing", "armor", "scene"],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{PRIMARY}}/{{ACCENT_SOFT}}. Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_Elegant.txt. Footwear is a good example of the 'sometimes pluggable, sometimes bundled' judgment call — kept separate here since open-toe/closed-toe/platform variants are plausible swaps."
+}

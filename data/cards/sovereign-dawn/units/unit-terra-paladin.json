@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_TERRA_PALADIN",
+    "collectionNumber": "SD-196",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 196, "totalCards": 219 },
+    "name": "Terra Paladin",
+    "type": "Unit",
+    "element": "Earth",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "maxStars": 5,
+        "points": 8
+    },
+    "stats": {
+        "health": 46,
+        "mana": 28,
+        "attack": 27,
+        "defense": 17,
+        "moveRange": 2,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Champions blessed by the ancient stone spirits, their armor resonates with earth's resilience.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-earth",
+            "battle-booster"
+        ],
+        "campaignDrops": [
+            "location-16-deep-mines",
+            "location-17-crystal-caves"
+        ]
+    }
+}

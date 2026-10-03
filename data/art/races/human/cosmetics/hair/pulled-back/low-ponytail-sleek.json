@@ -1,0 +1,13 @@
+{
+  "id": "hair/pulled-back/low-ponytail-sleek",
+  "kind": "hair",
+  "name": "Sleek Low Ponytail",
+  "a_pose_style": "swept back into a sleek, low ponytail at the nape of the neck",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is swept back into a sleek, low ponytail gathered at the nape of the neck, smooth and glossy.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

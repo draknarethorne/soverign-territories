@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_ALTAR",
+    "collectionNumber": "SD-113",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 113, "totalCards": 219 },
+    "name": "Altar",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Uncommon",
+        "stars": 1,
+        "maxStars": 4,
+        "points": 2
+    },
+    "stats": {
+        "health": 50,
+        "defense": 14
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_HEAL_UNITS",
+            "name": "Heal Units",
+            "type": "Passive",
+            "description": "Provides healing to wounded units over time (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Divine blessings flow forth to mend the broken and restore the fallen.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknora/weapons/flame-sword",
+  "kind": "holding",
+  "name": "Flame Sword (Draknora signature)",
+  "description": "an ornate sword in her right hand, its blade wreathed in flickering {{PRIMARY}} flame, {{ACCENT_SOFT}} light pulsing along the fuller",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Draknora's Dragon Flight outfit — grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Dragon_1.json ('She holding a sword in her right hand'), with the flame actually described now (the archive's plain sword didn't match the piece's own 'Flame Sword' name — caught when the generated output showed a bare, non-flaming blade)."
+}

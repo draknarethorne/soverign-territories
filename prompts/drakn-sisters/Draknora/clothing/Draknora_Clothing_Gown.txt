@@ -1,0 +1,30 @@
+=== Draknora Thorne · Clothing: Ethereal Gown (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Flame Red over a matte underlayer, with delicate gold glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Arms: simple silver bracelets.
+
+Jewelry: Polished Silver with gold-jewelled bracelets, necklace, and belly-button ring.
+
+Legs & feet: bright Flame Red high heels with glowing gold straps.
+
+Overall, warm, elegant, fire-toned evening look.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+Eyes: molten amber irises, natural and unchanged from the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

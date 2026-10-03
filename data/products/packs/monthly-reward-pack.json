@@ -2,7 +2,7 @@
   "productId": "monthly-reward-pack",
   "productName": "Monthly Reward Pack",
   "productType": "reward-pack",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "description": "Monthly login reward pack. Premium rewards with chances at Epic, Legendary, and special Mythic heroes.",
   "price": {
     "gold": 0,
@@ -12,7 +12,7 @@
     }
   },
   "cardsPerPack": 7,
-  "cardPool": "base-set-all",
+  "cardPool": "sovereign-dawn-all",
   "guarantees": [
     {
       "slot": 1,

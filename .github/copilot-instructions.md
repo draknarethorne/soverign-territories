@@ -1,252 +1,58 @@
 # Sovereign Territories - Copilot Instructions
 
-## Project Overview
+Card-driven tactical strategy game (Unity/C#, planned). Tagline: "Build the Deck. Conquer the Campaign. Level Your Heroes."
+The first release is **Sovereign Dawn** (cards `SD-001`..`SD-219`): a local-first PvE vertical slice. PvP, alliances,
+territory maps, AFK economy and backend (Nakama) are later-phase vision, not current scope.
 
-**Sovereign Territories** is a hybrid strategy game merging:
-- **Risk-style territorial conquest** (global map, alliance wars)
-- **Pokemon TCG deck-building** (collect cards, build decks, rarity progression)
-- **Heroes of Might and Magic tactical combat** (hero-led armies, turn-based battles)
-- **AFK progression** (place economy cards on tiles for passive income)
+## Start here
 
-**Core Tagline**: "Build the Deck. Rule the Map. Automate the Empire."
+- [docs/STATUS.md](../docs/STATUS.md) - current state, decisions, open questions, next work. Read before design or data work.
+- [docs/README.md](../docs/README.md) - which document owns which topic.
+- [data/art/README.md](../data/art/README.md) - the art/prompt pipeline.
 
----
+Rules live in `docs/mvp/`, `docs/design/` (combat, deck, tutorial) and win over `docs/game-bible.md`, which is vision.
+If a number or rule here disagrees with those docs, the docs win.
 
-## Technical Stack
+## Repo map
 
-### Frontend
-- **Engine**: Unity 2021+ LTS
-- **Language**: C# (.NET Standard 2.1)
-- **Platforms**: Mobile (iOS/Android) + PC (Steam)
-- **Art Style**: 2.5D isometric maps, 2D tactical battles (stylized painterly)
-- **UI Framework**: Unity UI Toolkit (recommended) or UGUI
+| Path | Contents |
+| --- | --- |
+| `data/cards/sovereign-dawn/` | Gameplay cards (the primary record of every card) |
+| `data/schemas/` | Runtime JSON schemas; `codex-schema.json` is the card schema (`card-schema.json` is deprecated) |
+| `data/art/` | Art identities, components, templates, art schemas (`data/art/_schema/`) |
+| `data/decks`, `data/products`, `data/manifests` | Starter decks, packs, manifests (currently out of sync; see STATUS.md) |
+| `prompts/` | **Generated** ComfyUI prompts; never edit by hand, regenerate |
+| `workflows/` | ComfyUI workflow JSON |
+| `tools/generators/gen_prompt.py` | Prompt generator |
+| `tools/validators/` | `validate_data.py` and its mutation self-test |
+| `docs/specs/` | Narrative notes for schemas (not the contracts) |
+| `src/` | Reserved for Unity; not created yet |
 
-### Backend
-- **Server**: Nakama 3.x (open-source game server)
-- **Database**: PostgreSQL (Nakama default)
-- **Real-time**: WebSockets for chat, matchmaking, live battles
-- **Authentication**: Nakama accounts (email, Google, Apple, Steam)
-- **Analytics**: Unity Analytics + custom Nakama metrics
+## Data rules
 
-### Infrastructure
-- **Version Control**: Git (GitHub)
-- **CI/CD**: GitHub Actions (planned)
-- **Deployment**: Docker containers for Nakama
-- **Cloud**: TBD (AWS, Google Cloud, or Azure)
+- A card is defined once in `data/cards/**`; art is linked by `cardId` (card `art.artIdentity` <-> art `cardId`).
+  Gameplay and art data never define the same attribute.
+- `cardId` is the stable machine id; `collectionNumber` (`SD-###`) is the human number. Products reference ids or pools,
+  never copies of card definitions.
+- 10 elements (Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison, plus Neutral), released in stages.
+  8 rarity tiers: Basic 0, Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 16, Mythic 32, Transcendent 64 budget points.
+- Order of change: design rule -> schema -> validator/tooling -> implementation -> tests.
+- After data or art changes run `python tools/validators/validate_data.py` and `python tools/validators/test_validate_data.py`.
+  Commit hooks run `pre-commit` (markdownlint, validators).
 
----
+## C# conventions (when Unity work starts)
 
-## Project Structure
+- PascalCase for types/methods, camelCase for fields/locals; namespaces `SovereignTerritories.<Area>`.
+- ScriptableObjects for data, no heavy logic in `Update()`, `async/await` for I/O.
+- Game rules come from `docs/design/combat-calculation-spec.md` and `deck-progression-rules.md`, not from the game bible.
 
-```
-soverign-territories/
-├── docs/
-│   ├── game-bible.md          # Master design document (5,800+ lines)
-│   ├── specs/                 # JSON schemas for game systems
-│   │   ├── card-schema.json
-│   │   ├── pack-schema.json
-│   │   ├── tactic-schema.json
-│   │   └── equipment-schema.json
-│   └── architecture/          # Technical architecture docs (planned)
-├── src/                       # Unity project (to be created)
-│   ├── Assets/
-│   │   ├── Scripts/
-│   │   │   ├── Cards/         # Card system (CardData, CardManager)
-│   │   │   ├── Battle/        # Combat system (BattleManager, TurnSystem)
-│   │   │   ├── Map/           # Map rendering (GlobalMap, CountyMap, BattleMap)
-│   │   │   ├── Economy/       # AFK production (BuildingManager, ResourceManager)
-│   │   │   ├── Deck/          # Deck building (DeckBuilder, RarityBudget)
-│   │   │   ├── Network/       # Nakama integration (NakamaClient, Matchmaking)
-│   │   │   └── UI/            # UI controllers (MainMenu, BattleUI, MapUI)
-│   │   ├── Prefabs/
-│   │   ├── Scenes/
-│   │   └── Resources/
-│   ├── Packages/
-│   └── ProjectSettings/
-├── server/                    # Nakama server config (planned)
-│   ├── data/                  # Nakama Lua/TypeScript modules
-│   ├── docker-compose.yml
-│   └── nakama-config.yml
-└── .github/
-    ├── copilot-instructions.md   # This file (always active)
-    └── agents/
-        ├── Soverign-Beast-Mode.agent.md  # Design agent
-        └── Soverign-Code-Mode.agent.md   # Code agent
-```
+## Working style
 
----
-
-## Code Standards
-
-### C# Conventions
-- **Naming**: PascalCase for classes/methods, camelCase for fields/locals
-- **Namespaces**: `SovereignTerritories.Cards`, `SovereignTerritories.Battle`, etc.
-- **Comments**: XML docs for public APIs, inline comments for complex logic
-- **Error Handling**: Use try-catch for Nakama calls, null-checks for Unity references
-- **Async**: Use `async/await` for network calls, avoid blocking main thread
-
-**Example**:
-```csharp
-namespace SovereignTerritories.Cards
-{
-    /// <summary>
-    /// Represents a single card in the game (hero, unit, building, etc.)
-    /// </summary>
-    public class CardData
-    {
-        public string CardId { get; set; }
-        public CardType Type { get; set; }
-        public Rarity Rarity { get; set; }
-        public Element Element { get; set; }
-        public int Attack { get; set; }
-        public int Health { get; set; }
-        
-        /// <summary>
-        /// Calculates rarity point cost for deck budget system
-        /// </summary>
-        public int GetRarityPoints()
-        {
-            return Rarity switch
-            {
-                Rarity.Common => 1,
-                Rarity.Uncommon => 2,
-                Rarity.Rare => 4,
-                Rarity.Epic => 8,
-                Rarity.Legendary => 16,
-                Rarity.Mythic => 32,
-                _ => 0
-            };
-        }
-    }
-}
-```
-
-### Unity Best Practices
-- **MonoBehaviour**: Use for scene objects, avoid heavy logic in Update()
-- **ScriptableObjects**: Use for data (CardData, BuildingData, TacticData)
-- **Singletons**: Use for managers (CardManager, BattleManager), lazy initialization
-- **Prefabs**: Create prefabs for reusable UI elements, cards, units
-- **Addressables**: Use for dynamic asset loading (card art, themes)
-
-### Nakama Integration
-- **Client Wrapper**: Create `NakamaClient` singleton for all server calls
-- **Error Handling**: Handle network failures gracefully (retry, offline mode)
-- **Authentication**: Store session token securely (PlayerPrefs encrypted)
-- **Matchmaking**: Use Nakama's matchmaker for PvP, custom logic for PvE
-
----
-
-## Key Game Systems (Reference)
-
-### Card System
-- **6 Rarity Tiers**: Common (1★), Uncommon (1-2★), Rare (2-3★), Epic (3-4★), Legendary (5★), Mythic (6★)
-- **Card Types**: Heroes, Units, Buildings, Workers, Tactics, Equipment
-- **Separation**: Battle Cards (10-50, combat) vs Economy Cards (10-15, AFK income)
-- **Rarity Budget**: Prevents all-Legendary decks (Common=1pt, Mythic=32pt)
-
-### Progression
-- **Dual System**: Player Level (account-wide, deck size) vs Castle Level (per-territory, building slots)
-- **Player Level Unlocks**: 
-  - Level 10: Alliance join, PvE events
-  - Level 15: Matchmade Arena PvP (1v1/3v3)
-  - Level 20: Active PvP Maps (opt-in open-world)
-  - Level 30: Alliance Wars (50v50)
-
-### Pack System
-- **Tier 1**: Universal Packs (Standard, 5 cards, 3-4 Battle + 1-2 Economy)
-- **Tier 2**: Specialized Boosters (Battle-only, Economy-only)
-- **Tier 3**: Premium Theme Packs (Element, Faction, Seasonal)
-- **Pity System**: Legendary every 50 packs, Epic every 10 packs
-
-### Map Hierarchy
-- **Global Map**: 200-500 territories, 3-month seasons, alliance wars
-- **State Map**: 50-100 hexes, 1-month campaigns, castle sieges
-- **County Map**: 20-40 tiles, PvE exploration, multi-hero armies
-- **Battle Map**: 8x8 tactical grid, turn-based combat, formations
-
----
-
-## Communication Style
-
-### General Preferences
-- **Concise**: 1-3 sentences for simple questions
-- **Structured**: Use tables, bullets, headers for complex topics
-- **Technical**: Provide code examples, file paths, specific line numbers
-- **No Fluff**: Skip unnecessary pleasantries, emojis (unless user uses them)
-
-### When Writing Code
-- Include brief comments explaining "why", not "what"
-- Show usage examples for public APIs
-- Note edge cases and error handling
-- Reference game-bible.md sections for design context
-
-### When Discussing Design
-- Reference game-bible.md sections and line numbers
-- Consider F2P fairness (80-90% content accessible)
-- Balance monetization with player experience
-- Think cross-system (how does this affect economy, PvP, progression?)
-
----
-
-## File Management
-
-### Always Use Absolute Paths
-- ✅ `c:\Soverign-Territories\soverign-territories\docs\game-bible.md`
-- ❌ `docs/game-bible.md` (relative paths can fail)
-
-### Before Editing Files
-1. Use `read_file` to check current content
-2. Use `grep_search` to find exact text for replacement
-3. Include 3-5 lines of context before/after for `replace_string_in_file`
-
-### Git Workflow
-- **Design changes** (game-bible.md): Commit immediately after major updates
-- **Code changes** (src/**): Run tests first, then commit if passing
-- **Commit messages**: 50-char summary + detailed bullets with rationale
-
----
-
-## Design Philosophy (Core Pillars)
-
-1. **F2P Respect**: 80-90% of content accessible without spending
-2. **Opt-In PvP**: No forced raids, bracketed matchmaking, anti-griefing
-3. **AFK Progression**: Economy cards generate passive income (respects player time)
-4. **Collector Appeal**: 6 rarities, thematic decks, seasonal exclusives
-5. **Strategic Depth**: Deck building, formations, multi-hero armies, resource management
-
----
-
-## Quick Reference
-
-### Key Files
-- **Master Design**: `docs/game-bible.md` (5,800+ lines, single source of truth)
-- **Schemas**: `docs/specs/*.json` (data validation, JSON structures)
-- **Design Agent**: `.github/agents/Soverign-Beast-Mode.agent.md` (game design, auto-commits)
-- **Code Agent**: `.github/agents/Soverign-Code-Mode.agent.md` (implementation, tests)
-
-### Common Tasks
-- **Design question**: Read game-bible.md, reference industry examples
-- **Code implementation**: Create C# class, write unit tests, check errors
-- **Balance analysis**: Consider F2P fairness, whale spending, edge cases
-- **Git commit**: Stage files, descriptive message, push to remote
-
----
-
-## Boundaries
-
-### What Copilot Should Do
-- ✅ Answer questions about project structure, tech stack, design
-- ✅ Write code following C# conventions and Unity best practices
-- ✅ Suggest improvements to design or implementation
-- ✅ Reference game-bible.md for design context
-- ✅ Use specialized agents for deep work (design vs code)
-
-### What Copilot Should NOT Do
-- ❌ Make major design decisions without user approval
-- ❌ Create art assets (describe them for artist reference)
-- ❌ Commit code that doesn't compile or pass tests
-- ❌ Debate user's core vision (support and refine, don't obstruct)
-
----
-
-**Remember**: You are the technical partner for Sovereign Territories. Know the design (game-bible.md), follow the code standards (C# + Unity), and use specialized agents (@Soverign-Beast-Mode for design, @Soverign-Code-Mode for implementation) for deep work. Keep responses concise, structured, and actionable.
+- Be concise; use tables and bullets for complex topics; no emojis unless the user uses them.
+- Use absolute paths with file tools. Read a file before editing it.
+- Documentation: one home per fact. Move superseded files with `git mv` into the nearest `_archive` folder (the repo-wide
+  archive convention: `docs/_archive`, `data/_archive`, `prompts/_archive`).
+- **Ignore every `_archive` folder** when reading documentation, data, or prompts, and do not cite or link to it,
+  unless the user explicitly asks for archived material. Folders like `data/art/_templates`, `_sets`, `_schema` are active.
+- Do not make major design decisions without user approval, and do not commit code that fails the validators.
+- Do not create art assets; describe them for the artist or generate prompts through the pipeline.

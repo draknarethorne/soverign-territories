@@ -1,0 +1,34 @@
+{
+    "cardId": "UNIT_FIRE_LANCER",
+    "collectionNumber": "SD-165",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 165, "totalCards": 219 },
+    "name": "Fire Lancer",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "maxStars": 5,
+        "points": 8
+    },
+    "stats": {
+        "health": 35,
+        "mana": 0,
+        "attack": 28,
+        "defense": 11,
+        "moveRange": 4,
+        "attackRange": 1
+    },
+    "tacticSlots": 2,
+    "lore": "Elite heavy cavalry wielding blazing lances, their devastating charges can shatter enemy formations.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-16-fire-cavalry-command",
+            "location-19-lance-academy"
+        ]
+    }
+}

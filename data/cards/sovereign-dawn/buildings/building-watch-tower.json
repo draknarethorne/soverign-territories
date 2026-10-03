@@ -1,0 +1,33 @@
+{
+    "cardId": "BUILDING_WATCH_TOWER",
+    "collectionNumber": "SD-109",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 109, "totalCards": 219 },
+    "name": "Watch Tower",
+    "type": "Building",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 0,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "health": 40,
+        "defense": 10
+    },
+    "abilities": [
+        {
+            "abilityId": "ABILITY_SCOUT_RANGE",
+            "name": "Scout Range",
+            "type": "Passive",
+            "description": "Increases vision range to spot approaching enemies (Phase 2 economy feature)."
+        }
+    ],
+    "lore": "Vigilant eyes scan the horizon for threats to the realm.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

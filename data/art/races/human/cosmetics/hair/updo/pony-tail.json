@@ -1,0 +1,12 @@
+{
+  "id": "hair/updo/pony-tail",
+  "kind": "hair",
+  "name": "Long Pony Tail",
+  "a_pose_style": "swept back into a high, sleek pony tail, center-parted at the crown, smooth and glossy",
+  "breeze": "Breeze blowing left.",
+  "hair_change": "Hair pulled back into a long pony tail.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "sourceVariant": "Drakness_Qwen_Hair_Pony",
+  "notes": "Hero-agnostic hairstyle component — any hero can reference this. Her own hairColor (texture, colour) still comes from her heroArt def; this component supplies only the SHAPE change."
+}

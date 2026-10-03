@@ -1,0 +1,40 @@
+{
+  "cardId": "HERO_DRAKNIYA_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Emerald Green",
+      "accentColors": [
+        "Forest Sage",
+        "Moss Gold"
+      ],
+      "eyeColor": "Deep forest-emerald iris with dark pine limbal ring, radiating sage striations, and warm gold flecks",
+      "eyeColorGlamour": "Deep forest-emerald irises with radiating sage striations and a dark pine limbal ring",
+      "hairColor": "Honey-blonde hair with rich chestnut-brown lowlights and soft moss-gold dimension, all-over multi-tonal colour like a fashion editorial",
+      "skinTone": "Warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to wood-elf characteristics (slender, nature-toned) — no pointed ears in glamour shots"
+    }
+  },
+  "notes": "Core ART hero definition for Drakniya Thorne (Grass, Wood Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

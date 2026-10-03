@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_AQUA_WARLOCK",
+    "collectionNumber": "SD-186",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 186, "totalCards": 219 },
+    "name": "Aqua Warlock",
+    "type": "Unit",
+    "element": "Water",
+    "rarity": {
+        "tier": "Rare",
+        "stars": 3,
+        "maxStars": 5,
+        "points": 8
+    },
+    "stats": {
+        "health": 28,
+        "mana": 52,
+        "attack": 32,
+        "defense": 10,
+        "moveRange": 2,
+        "attackRange": 4
+    },
+    "tacticSlots": 2,
+    "lore": "Dark practitioner of forbidden water magics, wielding devastating aquatic curses.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack",
+            "element-booster-water",
+            "premium-theme-pack-water"
+        ],
+        "campaignDrops": [
+            "location-05-deepwater-fortress",
+            "location-06-sunken-temple"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+=== Zephyr Galeheart · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Zephyr Galeheart (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Deep Sky Cyan-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Deep Sky Cyan-toned combat boots with white buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression bright and eager, hair whipping in the wind.
+
+Holding a curved single-edged saber, its white-edged blade trailing wisps of Deep Sky Cyan wind, Deep Sky Cyan-wrapped hilt, gripped in one hand.
+
+A light wind catches his hair and cloak-edge.
+
+Companion: his bonded Giant Eagle, a soaring raptor with wind-swept feathers, circling high above him.
+
+Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
+
+Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, lean legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, text, wording, watermark, logo.

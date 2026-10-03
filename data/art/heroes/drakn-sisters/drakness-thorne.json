@@ -1,0 +1,40 @@
+{
+  "cardId": "HERO_DRAKNESS_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Midnight Violet",
+      "accentColors": [
+        "Vibrant Amethyst",
+        "Polished Silver"
+      ],
+      "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks",
+      "eyeColorGlamour": "Deep violet irises with radiating amethyst striations and an obsidian limbal ring",
+      "hairColor": "Rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light",
+      "skinTone": "Warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "raceAlignment": "Human, aligned to dark-elf characteristics (slender, elongated) — no pointed ears in glamour shots",
+      "distinguishingMarks": []
+    }
+  },
+  "notes": "Art-direction identity for SD-001 Drakness Thorne. Name, sex, element, race and class live on the gameplay card (cardId); this file owns only her look (palette, physique) and is the source of truth for art generation. Assembly cards, templates and gen_prompt.py reference THIS file."
+}

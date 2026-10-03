@@ -1,0 +1,16 @@
+{
+  "id": "motion/walking/slow-sensual-walk",
+  "kind": "motion",
+  "name": "Slow Sensual Walk",
+  "editorial": "A candid high-fashion editorial shot, slow sensual movement, deliberate pacing.",
+  "breeze": "Light breeze.",
+  "body": "walking slowly and deliberately towards the camera, hips swaying prominently with each step.",
+  "head": "level, chin slightly lowered, facing the camera.",
+  "defaultGaze": "sultry, half-lidded gaze to camera.",
+  "defaultExpression": "sultry, composed, lips softly together.",
+  "pose": "arms relaxed and barely moving, weight settling into each slow step.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

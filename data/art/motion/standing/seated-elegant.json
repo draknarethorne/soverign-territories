@@ -1,0 +1,16 @@
+{
+  "id": "motion/standing/seated-elegant",
+  "kind": "motion",
+  "name": "Seated Elegant Glamour",
+  "editorial": "A candid high-fashion editorial shot, refined seated glamour.",
+  "breeze": "No breeze.",
+  "body": "seated elegantly, legs crossed at the knee, spine long and upright.",
+  "head": "tilted slightly, chin level.",
+  "defaultGaze": "to camera.",
+  "defaultExpression": "composed, alluring half-smile.",
+  "pose": "one hand resting on the knee, the other draped gracefully at her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ]
+}

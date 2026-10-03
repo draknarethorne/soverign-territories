@@ -1,0 +1,31 @@
+=== Corin Tidewalker · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Corin Tidewalker (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing close-fitting Deep Teal-toned light leather armor, Seafoam Green accent straps across the chest and hips, built for silent movement; scale-like overlapping plates across the torso, a shell-shaped clasp at the collar.
+
+Jewelry: none, unadorned.
+Legs & feet: sturdy Deep Teal-toned combat boots with green buckles, laced to the shin.
+
+He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, his expression calm and weathered, eyes scanning like a hunter at sea.
+
+Holding a long trident tipped with jagged green coral tines, Deep Teal-wrapped haft, faint blue-green bioluminescence glimmering along the tines, droplets of water trailing from it.
+
+Fine sea-spray drifts faintly in the air around him.
+
+Companion: his bonded Shark, a massive sleek predator circling in the shallows at his feet.
+
+Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
+
+Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, strong legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, grey eyes, amber eyes, violet eyes, text, wording, watermark, logo.

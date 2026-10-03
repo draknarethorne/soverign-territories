@@ -1,0 +1,7 @@
+{
+  "id": "dragons/elder-dragons/sylvanya",
+  "kind": "dragon",
+  "cardId": "UNIT_SYLVANYA",
+  "description": "an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold",
+  "notes": "Skeletal identity, first pass -- aligned to Drakniya Thorne (Grass) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Drakniya's own palette (Emerald Green / Forest Sage / Moss Gold)."
+}

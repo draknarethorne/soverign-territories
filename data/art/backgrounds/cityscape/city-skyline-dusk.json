@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/cityscape/city-skyline-dusk",
+  "kind": "background",
+  "name": "City Skyline at Dusk",
+  "description": "a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene",
+  "mood": "epic, adventurous, cinematic",
+  "compatibleStages": ["scene"],
+  "notes": "Grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Fire_Dragon.json ('a dragon flying over the city'). Deliberately describes only the environment — the dragon itself is a companion/ piece (heroes/drakn-sisters/draknora/companion/pyraxis-flight.json), kept separate since environment and companion are two different reusable concerns."
+}

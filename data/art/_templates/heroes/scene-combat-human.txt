@@ -1,0 +1,31 @@
+=== {{HERO}} · Scene (Outfit + Combat): {{NAME}} (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing {{WEARING}}.
+
+Jewelry: {{JEWELRY}}.
+Legs & feet: {{LEGS_FEET}}.
+
+{{POSE}}
+
+Holding {{HOLDING}}.
+
+{{EFFECTS}}
+
+Companion: {{COMPANION}}.
+
+Environment: {{BACKGROUND}}.
+
+Figure: {{FIGURE}}.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, text, wording, watermark, logo.

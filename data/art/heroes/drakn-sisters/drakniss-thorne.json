@@ -1,0 +1,40 @@
+{
+  "cardId": "HERO_DRAKNISS_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Luminous Ivory White",
+      "accentColors": [
+        "Radiant Gold",
+        "Polished Steel"
+      ],
+      "eyeColor": "Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks",
+      "eyeColorGlamour": "Radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring",
+      "hairColor": "Luminous golden-blonde hair, soft and sultry with a gentle radiant sheen",
+      "skinTone": "Warm radiant fair-golden tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Core ART hero definition for Drakniss Thorne (Light, Human). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

@@ -1,0 +1,39 @@
+{
+  "cardId": "HERO_DRAKNETA_THORNE",
+  "art": {
+    "palette": {
+      "primaryColor": "Electric Gold",
+      "accentColors": [
+        "Arc Cyan",
+        "Bright Gold"
+      ],
+      "eyeColor": "Electric cobalt-topaz iris with midnight indigo limbal ring, radiating arc-cyan striations, and spark-white flecks",
+      "eyeColorGlamour": "Electric cobalt-topaz irises with radiating arc-cyan striations and a midnight indigo limbal ring",
+      "hairColor": "Electric golden-blonde hair, sultry and sleek with subtle silvery-white crackling highlights",
+      "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json"
+    },
+    "physique": {
+      "build": "Lithe, slender, long-limbed build",
+      "bust": "Full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described)",
+      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "legs": "Very long, slender legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to celestial characteristics (luminous, ethereal) — glamour build stays family-standard for now"
+    }
+  },
+  "notes": "Core ART hero definition for Drakneta Thorne (Lightning, Celestial). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."
+}

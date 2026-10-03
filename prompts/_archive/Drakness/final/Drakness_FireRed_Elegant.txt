@@ -1,0 +1,33 @@
+=== Drakness Thorne · Elegant Ethereal Gown — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of Drakness in the base bikini underlayer. Apply the ethereal gown and the ornate staff onto her; keep her face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+(Follows the Edit pattern in docs/art/prompt-pattern.md. Palette from SD-001 card: Midnight Violet primary; Vibrant Amethyst + Polished Silver accents; violet iris, glowing amethyst when casting.)
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene, dreamlike futurism. Professional full-body shot, head to toe. Diffused studio lighting, 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Midnight Violet over a matte underlayer, with delicate Vibrant Amethyst glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Polished Silver with Amethyst-jewelled bracelets, necklace, and belly-button ring.
+Bright Midnight Violet high heels with glowing Amethyst straps.
+
+Breeze coming gently towards her, lifting the fabric and a wisp of hair.
+Face focused on camera.
+Facial expression seductive and smiling.
+Deep Violet lipstick.
+Light Violet fingernails.
+Violet eyes, glowing amethyst while casting.
+
+Holding an ornate staff in her left hand, raised, with a bright Amethyst glow around a skull-shaped Amethyst jewel at the top.
+Her free arm bent at the elbow, hand cupped, fusing a ball of Amethyst fumes and dark smoke as she casts a spell.
+
+Environment: a castle dungeon with glowing swirls of Amethyst and black smoke around her, a soft Midnight Violet gradient haze rising behind her.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, extra feet, crowns, head gear, pauldrons, shoulder armor, text, watermark, logo, studio equipment.

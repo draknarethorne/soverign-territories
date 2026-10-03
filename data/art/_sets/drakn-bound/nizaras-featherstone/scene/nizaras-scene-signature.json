@@ -1,0 +1,21 @@
+{
+  "artId": "nizaras-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/nizaras-featherstone.json",
+  "name": "Signature",
+  "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, a faint, knowing smile, utterly at ease in the undergrowth.",
+  "effects": "Loose leaves and faint pollen drift and swirl gently around him, stirred by the grove's living magic.",
+  "components": {
+    "wearing": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",
+    "companion": "his bonded Treant, an ancient tree-guardian with bark-like skin and leafy limbs, standing watch among the grove behind him",
+    "background": "data/art/backgrounds/forests/ancient-grove.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Nizaras/scene/Nizaras_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the rogue-group default wardrobe set + the existing ancient-grove background (fits Grass thematically)."
+}

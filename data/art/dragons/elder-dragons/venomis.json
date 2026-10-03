@@ -1,0 +1,7 @@
+{
+  "id": "dragons/elder-dragons/venomis",
+  "kind": "dragon",
+  "cardId": "UNIT_VENOMIS",
+  "description": "an Elder Dragon of acid-green and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
+  "notes": "Skeletal identity, first pass -- aligned to Draknoxa Thorne (Poison) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknoxa's own palette (Radiant Acid Green / Vibrant Acid Lime / Tarnished Brass)."
+}

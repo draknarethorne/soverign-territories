@@ -1,0 +1,14 @@
+=== [HERO] · Background: [SCENE NAME] (group: Background) — Build (any model) ===
+Purpose: generate a reusable environment plate you can condition the Final against, or feed as a reference image. Denoise ~1.0 (fresh scene).
+
+----------------------------------------------------------------
+prompt:
+
+[ENVIRONMENT - e.g. a shadowed ossuary / bone-strewn battlefield] under a [sky], atmospheric, cinematic dark-fantasy, volumetric haze, [PRIMARY] / [ACCENT] lighting, drifting smoke, depth of field.
+
+Environment only - no characters.
+
+----------------------------------------------------------------
+negative prompt:
+
+people, characters, text, wording, watermark, logo, modern objects.

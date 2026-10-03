@@ -1,0 +1,35 @@
+{
+    "cardId": "UNIT_FIRE_MAGE",
+    "collectionNumber": "SD-158",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 158, "totalCards": 219 },
+    "name": "Fire Mage",
+    "type": "Unit",
+    "element": "Fire",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "health": 22,
+        "mana": 35,
+        "attack": 24,
+        "defense": 6,
+        "moveRange": 2,
+        "attackRange": 3
+    },
+    "tacticSlots": 1,
+    "lore": "Apprentice spellcasters who have learned to channel raw flame into destructive bolts of magical fire.",
+    "acquisition": {
+        "packSources": [
+            "fire-starter-box",
+            "standard-pack",
+            "element-booster-fire"
+        ],
+        "campaignDrops": [
+            "location-05-fire-academy",
+            "location-10-fire-library"
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "motion/gaze/eyes-to-camera",
+  "kind": "gaze",
+  "name": "Eyes to Camera",
+  "gaze": "eyes to camera.",
+  "compatibleStages": ["motion", "scene"],
+  "notes": "Extracted -- identical defaultGaze was duplicated verbatim across over-the-shoulder-glance and three-quarter-glamour."
+}

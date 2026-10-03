@@ -1,0 +1,37 @@
+{
+  "cardId": "HERO_IGNIS_EMBERSTRIDE",
+  "art": {
+    "palette": {
+      "primaryColor": "Ember Red",
+      "accentColors": [
+        "Burnished Bronze",
+        "Charcoal Black"
+      ],
+      "eyeColor": "Molten amber iris with dark charcoal limbal ring, faint ember striations",
+      "eyeColorGlamour": "Molten amber irises with faint ember striations and a dark charcoal limbal ring",
+      "hairColor": "Dark auburn hair, short and windswept",
+      "skinTone": "Warm sun-bronzed complexion, evenly tanned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+    },
+    "physique": {
+      "build": "Athletic, broad-shouldered, powerfully muscled build",
+      "chest": "Defined, battle-scarred chest and core, strong and toned",
+      "waist": "Trim, athletic waist",
+      "legs": "Long, powerful legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human — standard human presentation"
+    }
+  },
+  "notes": "Core ART hero definition for Ignis Emberstride (Fire, Warrior, Melee/Striker). First-pass palette/physique, no archived source material — Fire/ember colour family parallels Draknora's own Flame Red as a male variant, not identical."
+}

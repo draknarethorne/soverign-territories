@@ -1,0 +1,17 @@
+{
+  "id": "motion/standing/unpredictable-seductive",
+  "kind": "motion",
+  "name": "Unpredictable Seductive Pose",
+  "editorial": "A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions.",
+  "breeze": "Random slight breeze.",
+  "body": "chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position.",
+  "head": "following the body's unpredictable shift.",
+  "defaultGaze": "data/art/motion/gaze/seductive-unpredictable.json",
+  "defaultExpression": "seductive and unpredictable; lips lush and active, non-neutral.",
+  "pose": "hands in unpredictable positions, touching her body.",
+  "extras": [],
+  "compatibleStages": [
+    "motion"
+  ],
+  "sourceVariant": "Drakness_Qwen_Motion_Pose"
+}

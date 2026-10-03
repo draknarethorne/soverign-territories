@@ -1,0 +1,16 @@
+=== [HERO] · Weapon: [WEAPON NAME] (group: Weapons) — Build/Edit (Qwen) ===
+Purpose: generate a clean, consistent weapon you can later feed as a SECOND reference image (multi-image) so the weapon stays identical across poses. Denoise ~0.7-1.0 for a fresh prop; ~0.4 to refine an existing one.
+
+----------------------------------------------------------------
+prompt:
+
+Product shot of a single [WEAPON - e.g. ornate reaper scythe] on a plain cream backdrop, centered, full length, sharp focus, even studio lighting.
+
+Design: [material - e.g. black shaft, polished silver blade with gothic patterns], [accent - small bone skull emblem at the top], [ACCENTS] detailing, on-theme [ELEMENT / CLASS, e.g. necromantic].
+
+The weapon only - no hands, no person.
+
+----------------------------------------------------------------
+negative prompt:
+
+person, hands, extra weapons, duplicate, text, wording, watermark, logo, cluttered background.

@@ -1,0 +1,13 @@
+{
+  "id": "hair/updo/loose-romantic-bun",
+  "kind": "hair",
+  "name": "Loose Romantic Bun",
+  "a_pose_style": "a soft, loose bun with face-framing tendrils, romantic and undone",
+  "breeze": "No breeze.",
+  "hair_change": "Hair is gathered into a soft, loose bun with a few face-framing tendrils left loose, romantic and effortless.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ]
+}

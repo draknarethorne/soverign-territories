@@ -1,0 +1,36 @@
+{
+    "cardId": "EQUIPMENT_LEATHER_ARMOR",
+    "collectionNumber": "SD-126",
+    "series": { "seriesId": "sovereign-dawn", "seriesName": "Sovereign Dawn", "cardNumber": 126, "totalCards": 219 },
+    "name": "Leather Armor",
+    "type": "Equipment",
+    "element": "Neutral",
+    "rarity": {
+        "tier": "Common",
+        "stars": 1,
+        "maxStars": 3,
+        "points": 1
+    },
+    "stats": {
+        "attackBonus": 0,
+        "defenseBonus": 8,
+        "healthBonus": 10,
+        "manaBonus": 0
+    },
+    "equipSlot": "Armor",
+    "abilities": [
+        {
+            "abilityId": "ABILITY_BASIC_PROTECTION",
+            "name": "Basic Protection",
+            "type": "Passive",
+            "description": "Grants +8 defense and +10 health to equipped hero."
+        }
+    ],
+    "lore": "Supple leather armor offering basic protection without restricting movement. A scout's favorite.",
+    "acquisition": {
+        "packSources": [
+            "standard-pack"
+        ],
+        "campaignDrops": []
+    }
+}

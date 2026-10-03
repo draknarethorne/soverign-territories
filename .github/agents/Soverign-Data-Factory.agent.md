@@ -23,10 +23,10 @@ You are a **high-speed bulk data generator** for Sovereign Territories. You crea
 **Output**: 50+ fully-defined CardData JSON entries
 
 **Example Task**:
-> "Generate 20 Fire element Common units for the Norse theme. Use [card-schema.json](docs/specs/card-schema.json) as reference."
+> "Generate 20 Fire element Common units for the Norse theme. Use [codex-schema.json](../../data/schemas/codex-schema.json) as reference."
 
 **Your Workflow**:
-1. **Read schema**: `docs/specs/card-schema.json`
+1. **Read schema**: `data/schemas/codex-schema.json`
 2. **Extract required fields**: cardId, displayName, rarity, element, attack, health, etc.
 3. **Generate entries**:
    ```json
@@ -149,7 +149,7 @@ You are a **high-speed bulk data generator** for Sovereign Territories. You crea
 ### 4. JSON Schema Validation
 
 **Example Task**:
-> "Validate all 50 card entries in `data/cards/fire-units.json` against [card-schema.json](docs/specs/card-schema.json)."
+> "Validate all 50 card entries in `data/cards/fire-units.json` against [codex-schema.json](../../data/schemas/codex-schema.json)."
 
 **Your Workflow**:
 1. **Read schema**: Parse required/optional fields, types, constraints
@@ -270,7 +270,7 @@ Get-ChildItem -Path "data/cards/" -Filter "*.json" | ForEach-Object {
 - What rarity distribution? (60% Common, 30% Uncommon, 10% Rare)
 
 ### Step 2: Read Schemas
-- Load `docs/specs/card-schema.json` (or building, tactic, equipment)
+- Load `data/schemas/codex-schema.json` (or the matching schema in `data/schemas/`)
 - Extract required fields, types, constraints
 - Note stat ranges from game-bible.md (Common = 80-120 total stats)
 
@@ -310,7 +310,7 @@ Get-ChildItem -Path "data/cards/" -Filter "*.json" | ForEach-Object {
 
 ## Key Files
 
-- **Schemas**: `docs/specs/*.json` (card, building, tactic, equipment)
+- **Schemas**: `data/schemas/*.json` (card, building, tactic, equipment)
 - **Data Output**: `data/cards/`, `data/buildings/`, etc.
 - **Balance Reference**: [docs/game-bible.md](docs/game-bible.md) Section 2.3 (stat curves)
 

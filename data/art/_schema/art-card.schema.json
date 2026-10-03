@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Assembly Card",
+  "description": "A recipe under data/art/_sets/<group>/<slug>/<stage>/ that combines an identity (heroArt), a stage template, and pieces into one generated prompt (output). Any extra string field is a literal one-off token for the template (the generator treats them that way), so extras are allowed but must be strings. Cross-file integrity (paths exist, outputs unique, link back to a card) is enforced by tools/validators/validate_data.py.",
+  "type": "object",
+  "required": ["artId", "kind", "stage", "heroArt", "template", "output", "denoise"],
+  "properties": {
+    "artId": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "kind": {"const": "base-set"},
+    "stage": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "scene"]},
+    "heroArt": {"type": "string", "pattern": "^data/art/(heroes|dragons)/.+\\.json$", "description": "Art identity file (which in turn links to the gameplay card)"},
+    "template": {"type": "string", "pattern": "^data/art/_templates/.+\\.txt$"},
+    "output": {"type": "string", "pattern": "^prompts/[^/]+/.+\\.txt$"},
+    "denoise": {"type": "string"},
+    "notes": {"type": "string"},
+    "component": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "One whole reusable piece (hair, motion)"},
+    "components": {
+      "type": "object",
+      "description": "Named slots -> piece path, literal text, or '+literal' to extend a default",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "palette": {"type": "object"},
+        "physique": {"type": "object"},
+        "negativeAdd": {"type": "array", "items": {"type": "string"}},
+        "negativeRemove": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "additionalProperties": {"type": "string"}
+}

@@ -1,0 +1,42 @@
+=== [HERO] · [VARIANT e.g. Bone / Raven / Iridescent] (group: Armor) — Edit (Qwen/FireRed img2img) ===
+Incoming image: an A-pose of [HERO] (chosen hair) in the bikini underlayer. Apply the armor (and [WEAPON]); keep face, body, and hair from the incoming image. Denoise ~0.5-0.7. Blank lines = slots.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing [TORSO - e.g. two-piece skeletal armor bikini] in [PRIMARY]/[material] with [ACCENTS], [coverage - bare midriff, revealing high-cut], [centerpiece detail].
+
+Arms: [bracers / pauldrons / gauntlets, or "remove armor from wrists"].
+
+Jewelry: [choker / necklace with skull pendant / earrings / rings / bellybutton ring] in [ACCENTS].
+
+Back: [cape / cloak / feather pauldrons / sheer drapes] in [PRIMARY], [attachment].
+
+Legs & feet: [greaves / stockings / plated high-heel boots] in [PRIMARY]/[ACCENTS], [rune/buckle detail].
+
+Belt & kit: [belt / dagger / satchel / hip skull], optional.
+
+Holding [WEAPON] - [material, detail, which hand].
+
+Overall, [aesthetic, e.g. luxurious necromancer] aesthetic. A little D&D flair is fine; keep it revealing.
+
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, lifted and pressed closely together at the centre with a push-up-bra contour, forming a narrow décolletage (not a wide gap).
+Breeze [direction].
+Expression: alluring, confident smile [name the mouth - lips softly together / slightly parted / soft teeth, to match the outfit]; expressive, sultry brows.
+Makeup: [ACCENT] eyeshadow to match the outfit - soft shimmer for light looks, smoky for dark armor.
+Lips: [LIP]. Fingernails and toenails: [NAIL]. Eyes: [EYE].
+
+Pose: [short lines - walking toward camera, one foot forward, hips and shoulders set].
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, text, wording, watermark, logo, recolored eyes, blue eyes, green eyes, brown eyes, flat chest, small bust[, pauldrons, shoulder armor <- REMOVE these two if the armor has them].

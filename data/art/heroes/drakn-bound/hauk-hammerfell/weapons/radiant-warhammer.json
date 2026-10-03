@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer",
+  "kind": "holding",
+  "name": "Radiant Warhammer (Hauk signature)",
+  "description": "a heavy warhammer, its {{PRIMARY}}-toned head wreathed in {{ACCENT_SOFT}} radiant light, in his right hand; a round {{PRIMARY}}-toned shield with {{ACCENT_SOFT}} trim strapped to his left forearm",
+  "compatibleStages": ["armor", "scene"],
+  "notes": "Hero-signature weapon, unique to Hauk Hammerfell — first-pass invented, fitting his Paladin class, Light element, and surname. Replaces the shared wardrobe/weapons/broadsword-and-shield.json default for this hero specifically."
+}

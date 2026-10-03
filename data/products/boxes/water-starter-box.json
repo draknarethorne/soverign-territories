@@ -2,9 +2,9 @@
   "productId": "water-starter-box",
   "productName": "Water Starter Box",
   "productType": "starter-box",
-  "series": "base-set",
+  "series": "sovereign-dawn",
   "element": "Water",
-  "description": "Command the Tidal Order! This pre-constructed deck features Thalor, Tide Guardian and a defensive Water army.",
+  "description": "Command the Tidal Order! A pre-constructed deck led by Thalor, Tide Guardian and a defensive Water army.",
   "price": {
     "gold": 0,
     "gems": 0,
@@ -16,85 +16,98 @@
   "fixedContents": [
     {
       "cardId": "HERO_THALOR_TIDE_GUARDIAN",
-      "collectionNumber": "BS-026",
+      "collectionNumber": "SD-084",
       "quantity": 1,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_WATER_SCOUT",
-      "collectionNumber": "BS-031",
-      "quantity": 2,
-      "guaranteed": true
-    },
-    {
-      "cardId": "UNIT_AQUA_HEALER",
-      "collectionNumber": "BS-032",
-      "quantity": 2,
-      "guaranteed": true
-    },
-    {
-      "cardId": "UNIT_FROST_SOLDIER",
-      "collectionNumber": "BS-033",
+      "cardId": "UNIT_WATER_SOLDIER",
+      "collectionNumber": "SD-057",
       "quantity": 3,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_TIDAL_WARRIOR",
-      "collectionNumber": "BS-035",
+      "cardId": "UNIT_TIDAL_ARCHER",
+      "collectionNumber": "SD-067",
       "quantity": 2,
       "guaranteed": true
     },
     {
-      "cardId": "UNIT_REEF_GUARDIAN",
-      "collectionNumber": "BS-036",
-      "quantity": 1,
-      "guaranteed": true
-    },
-    {
-      "cardId": "UNIT_TIDAL_KNIGHT",
-      "collectionNumber": "BS-044",
-      "quantity": 1,
-      "guaranteed": true
-    },
-    {
-      "cardId": "TACTIC_TIDAL_WAVE",
-      "collectionNumber": "BS-047",
-      "quantity": 1,
-      "guaranteed": true
-    },
-    {
-      "cardId": "TACTIC_AQUA_SHIELD",
-      "collectionNumber": "BS-048",
+      "cardId": "UNIT_MERMAID_HEALER",
+      "collectionNumber": "SD-071",
       "quantity": 2,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_WAVE_RIDER",
+      "collectionNumber": "SD-073",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_WATER_ELEMENTAL",
+      "collectionNumber": "SD-063",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_SEA_SERPENT",
+      "collectionNumber": "SD-065",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_CORAL_GUARDIAN",
+      "collectionNumber": "SD-068",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "UNIT_KRAKEN_SPAWN",
+      "collectionNumber": "SD-075",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "TACTIC_ICE_SHARD",
+      "collectionNumber": "SD-115",
+      "quantity": 1,
+      "guaranteed": true
+    },
+    {
+      "cardId": "TACTIC_HEALING_WAVE",
+      "collectionNumber": "SD-116",
+      "quantity": 1,
       "guaranteed": true
     }
   ],
   "totalCards": 15,
   "rarityBreakdown": {
     "Epic": 1,
-    "Uncommon": 3,
     "Common": 9,
+    "Uncommon": 3,
     "Rare": 2
   },
   "recommendedDeck": {
     "hero": "HERO_THALOR_TIDE_GUARDIAN",
     "units": [
-      "UNIT_FROST_SOLDIER",
-      "UNIT_FROST_SOLDIER",
-      "UNIT_FROST_SOLDIER",
-      "UNIT_WATER_SCOUT",
-      "UNIT_WATER_SCOUT",
-      "UNIT_AQUA_HEALER",
-      "UNIT_AQUA_HEALER",
-      "UNIT_TIDAL_WARRIOR",
-      "UNIT_TIDAL_WARRIOR",
-      "UNIT_REEF_GUARDIAN",
-      "UNIT_TIDAL_KNIGHT"
+      "HERO_THALOR_TIDE_GUARDIAN",
+      "UNIT_WATER_SOLDIER",
+      "UNIT_WATER_SOLDIER",
+      "UNIT_WATER_SOLDIER",
+      "UNIT_TIDAL_ARCHER",
+      "UNIT_TIDAL_ARCHER",
+      "UNIT_MERMAID_HEALER",
+      "UNIT_MERMAID_HEALER",
+      "UNIT_WAVE_RIDER",
+      "UNIT_WATER_ELEMENTAL",
+      "UNIT_SEA_SERPENT",
+      "UNIT_CORAL_GUARDIAN",
+      "UNIT_KRAKEN_SPAWN"
     ],
     "tactics": [
-      "TACTIC_TIDAL_WAVE",
-      "TACTIC_AQUA_SHIELD",
-      "TACTIC_AQUA_SHIELD"
+      "TACTIC_ICE_SHARD",
+      "TACTIC_HEALING_WAVE"
     ]
   },
   "tutorialFlow": {

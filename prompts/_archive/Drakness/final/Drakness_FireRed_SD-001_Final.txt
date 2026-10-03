@@ -1,0 +1,33 @@
+=== SD-001 · Drakness Thorne — Intro Final Scene (ST_FireRed_Final, img2img) ===
+
+Base / incoming image: the "Bone" Drakness — necromancer in bone-plate armor with a flowing cape, holding a scythe. This final pass ONLY adds the scene (background, atmosphere, spell glow) and small pose / wind adjustments. Do NOT redraw her, her armor, hair, or the scythe — carry them from the incoming image. Only the overrides listed below (eyes, lips, nails) change from the base.
+
+Suggested denoise: ~0.5-0.7 (keep the subject; restyle the scene). Feed the chosen Bone-armor image.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle, bone-plate armor, cape, and the scythe. Keep all of these unchanged.
+
+She stands mid-cast, commanding and composed. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.
+
+Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her.
+A cold violet glow runs along the edge of the scythe blade.
+
+Eyes glowing amethyst, luminous, mid-cast (override the incoming eye colour).
+Deep violet lipstick (override).
+Midnight Violet fingernails (override).
+
+Environment: a shadowed ossuary and bone-strewn ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind her.
+A light breeze lifts the cape and a few strands of her hair.
+
+Palette: Midnight Violet dominant, with Vibrant Amethyst and Polished Silver accents; all glow is amethyst / violet.
+Full-body hero framing, slight low camera angle for an imposing, regal presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, staff, text, watermark, logo, studio equipment, modern objects, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle from the reference.
+
+----------------------------------------------------------------
+(future - multi-image) Once Umbrath (her Elder Dragon companion) exists, add it as a SECOND reference image to keep the dragon consistent, and extend this prompt with the dragon's placement only.

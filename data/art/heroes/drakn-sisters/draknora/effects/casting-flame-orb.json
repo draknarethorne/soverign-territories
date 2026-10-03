@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknora/effects/casting-flame-orb",
+  "kind": "effects",
+  "name": "Fire Casting Orb (Draknora signature)",
+  "description": "Her free arm bends at the elbow, hand cupped, showing a ball of fire fusing in her palm as she casts a spell, molten amber and Flame Red light flickering within it.",
+  "compatibleStages": ["scene"],
+  "notes": "Hero-signature casting effect, tied to Draknora's Fire element and Flame Red / amber palette — grounded in the archived prompts/_archive/Draknora/final/Draknora_FireRed_Elegant_2.json experiment, rewritten against her current locked palette (data/art/heroes/drakn-sisters/draknora-thorne.json) rather than the experiment's own wording."
+}
