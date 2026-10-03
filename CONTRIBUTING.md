@@ -8,7 +8,7 @@ Thanks for contributing to `soverign-territories`.
 2. Install repository-managed development tools.
 3. Install Git hooks.
 4. Keep changes focused and scoped.
-5. Update docs/specs/scripts together when system rules change.
+5. Update docs/schemas/scripts together when system rules change.
 6. Run local quality checks.
 7. Ensure CI is green.
 8. Open a pull request with a clear summary.

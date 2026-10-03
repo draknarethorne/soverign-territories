@@ -38,7 +38,7 @@ PowerShell policy in Phase 1:
 
 ### Retired: legacy schema workflow
 
-- `.github/workflows/validate-schemas.yml` and `scripts/Invoke-PrePushValidation.ps1` were removed: they only watched `docs/specs/*.json` (schemas moved to `data/schemas/`) and validated each schema against itself, so they never checked a single real card
+- `.github/workflows/validate-schemas.yml` and the old pre-push script were removed: they only watched `docs/specs/*.json` (schemas moved to `data/schemas/`) and validated each schema against itself, so they never checked a single real card
 
 ## Temporary policy exceptions
 

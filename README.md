@@ -22,7 +22,7 @@ long-term aspirations—not current MVP commitments.
 
 The repository has baseline quality checks, but quality checks alone cannot prove that a
 game plan, data subset, and implementation scope agree. The evidence and readiness gates
-are documented in [the archive-to-canon reconciliation](docs/working/archive-canon-reconciliation-jul2026.md).
+are in [docs/STATUS.md](docs/STATUS.md).
 
 ## MVP baseline
 

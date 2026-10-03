@@ -15,16 +15,7 @@ This folder stores superseded and historical documents preserved for traceabilit
 - `DOCUMENTATION-AUDIT-JAN2026-SUPERSEDED.md`
 - `COMPLETION-DATA-DOCS-SEPARATION-JAN2026-HISTORICAL.md`
 
-## Active audit reference
+## Status
 
-Current active audit and quality roadmap live in:
-
-- `docs/AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md`
-
-## Reconciliation reference
-
-Archive placement is not evidence that an archived document has been fully reconciled
-with the active plan. The evidence-based disposition, retained insights, and required
-carry-forward corrections are recorded in:
-
-- `docs/working/archive-canon-reconciliation-jul2026.md`
+This folder is frozen: no new files. Superseded docs are now deleted (git history keeps them).
+Current state and decisions live in `docs/STATUS.md`. Nothing here is current authority.

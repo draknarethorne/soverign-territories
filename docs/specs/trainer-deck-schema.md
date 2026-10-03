@@ -210,8 +210,8 @@ Trainer Decks are **pre-built 20-card decks** given to new players during the tu
 - `isTutorialDeck` true for first 6 decks (tutorial options)
 
 **Cross-Schema Validation**:
-- All `cardId` in `cardList` must exist in card-schema.json
-- `element` must match valid elements in card-schema.json
+- All `cardId` in `cardList` must exist in codex-schema.json
+- `element` must match valid elements in codex-schema.json
 - `guaranteedEpic` card (if specific) must have rarity = Epic
 
 ---
@@ -236,7 +236,7 @@ Trainer Decks are **pre-built 20-card decks** given to new players during the tu
 
 ## Related Schemas
 
-- **[card-schema.json](card-schema.json)** - Defines individual cards in `cardList`
+- **[codex-schema.json](../../data/schemas/codex-schema.json)** - Defines individual cards in `cardList`
 - **[starter-deck-schema.json](starter-deck-schema.json)** - Simpler precon decks for post-tutorial unlocks
 - **[pack-schema.json](pack-schema.json)** - Random card packs (contrast with fixed Trainer Decks)
 - **[tutorial-schema.json](tutorial-schema.json)** - Step 6 (Trainer Deck selection)

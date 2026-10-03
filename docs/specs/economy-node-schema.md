@@ -280,7 +280,7 @@ Economy Nodes are **placeable resource generators** on the Realm Map and Territo
 - `currentStoredAmount` cannot exceed `maxCapacity`
 
 **Cross-Schema Validation**:
-- `deployedCards` must exist in card-schema.json
+- `deployedCards` must exist in codex-schema.json
 - `occupyingPlayerId` must exist in player-schema.json
 - `resourceType` must match resource-schema.json types
 
@@ -307,7 +307,7 @@ Economy Nodes are **placeable resource generators** on the Realm Map and Territo
 
 ## Related Schemas
 
-- **[card-schema.json](card-schema.json)** - Defines Worker/Building cards deployable to nodes
+- **[codex-schema.json](../../data/schemas/codex-schema.json)** - Defines Worker/Building cards deployable to nodes
 - **[resource-schema.json](resource-schema.json)** - Defines Food/Lumber/Ore inventory
 - **[map-schema.json](map-schema.json)** - Defines Realm/Territory maps containing nodes
 - **[deployment-schema.json](deployment-schema.json)** - General deployment rules (may overlap)

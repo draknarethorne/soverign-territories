@@ -48,6 +48,10 @@ Examples:
 
 The rarity budget is calculated as the sum of selected deck card costs. A 20-card MVP starter deck uses a **40-point budget**. This permits a clear starter hero and varied supports while preventing a full high-rarity deck.
 
+> **Starter heroes are Rare-Legendary (decision, Oct 2026).** A Mythic hero (32) plus 19 Commons already costs 51, so
+> bound heroes and Elder Dragons (Mythic) and Drakn sisters (Transcendent) are earned through packs, rewards, or story
+> beats, not placed in starter decks. The 40-point budget is unchanged.
+>
 > **Basic (0) tier.** Basic is the foundation/token tier below Common — e.g., spawned minions
 > or the humblest filler. It costs **0** budget points and is not a pack-collectible rarity.
 >
