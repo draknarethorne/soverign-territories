@@ -26,7 +26,7 @@ Gaze: soft, romantic gaze to camera.
 
 Expression: soft, romantic, lips slightly parted.
 
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Eyes: deep violet irises, natural and unchanged from the incoming image.
 
 Pose: one hand resting gently at her collarbone, the other relaxed at her side.
 

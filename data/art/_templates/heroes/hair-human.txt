@@ -17,7 +17,7 @@ Maintain existing outfit expressly.
 {{HAIR_CHANGE}}
 {{EXTRAS}}
 
-Eyes: {{EYE}}.
+Eyes: {{EYE_SOFT}}, natural and unchanged from the incoming image.
 
 {{LEGS}}.
 

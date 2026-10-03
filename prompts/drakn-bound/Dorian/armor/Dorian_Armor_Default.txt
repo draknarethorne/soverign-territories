@@ -26,7 +26,7 @@ Overall, disciplined monk aesthetic.
 
 Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim, athletic waist; long, agile legs.
 
-Eyes: electric cobalt irises with faint arc-cyan striations and a midnight-indigo limbal ring.
+Eyes: electric cobalt irises, natural and unchanged from the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

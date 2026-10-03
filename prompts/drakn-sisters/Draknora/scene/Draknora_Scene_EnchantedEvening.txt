@@ -11,7 +11,7 @@ A candid high-fashion editorial shot, dynamic natural movement, confident contra
 
 a faint gold glow lingers softly, ambient and understated, nothing overtly magical.
 
-Eyes glowing gold, luminous, mid-cast (override the incoming eye colour).
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
 
 Companion: her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light.
 

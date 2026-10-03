@@ -19,7 +19,7 @@ Holding {{HOLDING}}.
 
 {{EFFECTS}}
 
-Eyes glowing {{ACCENT_SOFT}}, luminous, mid-cast.
+{{EYE_EFFECT}}
 
 Environment: {{BACKGROUND}}.
 

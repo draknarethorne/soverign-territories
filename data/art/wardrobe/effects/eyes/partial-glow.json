@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/effects/eyes/partial-glow",
+  "kind": "effects",
+  "name": "Eyes: partial glow (mid-cast)",
+  "description": "Eyes: irises softly aglow with {{ACCENT_SOFT}} light, brightest near the pupil and fading to the natural {{EYE_SOFT}} at the rim, iris detail still visible, a gentle {{ACCENT_SOFT}} catchlight, no light spilling beyond the eyelids.",
+  "compatibleStages": ["scene"],
+  "notes": "Level 2 of 4. DEFAULT for scene templates (generator DEFAULT_EYE_EFFECT)."
+}

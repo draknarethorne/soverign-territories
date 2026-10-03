@@ -11,7 +11,7 @@ Preserve the subject from the reference image exactly - facial likeness and bone
 
 {{EFFECTS}}
 
-Eyes glowing {{ACCENT_SOFT}}, luminous, mid-cast (override the incoming eye colour).
+{{EYE_EFFECT}}
 
 Companion: {{COMPANION}}.
 

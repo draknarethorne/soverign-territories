@@ -26,7 +26,7 @@ Gaze: direct, confident eyes to camera.
 
 Expression: bold, confident, a hint of a smirk.
 
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Eyes: deep violet irises, natural and unchanged from the incoming image.
 
 Pose: one hand firmly on the hip, elbow out; the other arm relaxed at her side.
 

@@ -11,7 +11,7 @@ She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust
 
 Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.
 
-Eyes glowing amethyst, luminous, mid-cast (override the incoming eye colour).
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
 
 Companion: her aligned Elder Dragon, Umbrath, looming in the shadows of the ossuary behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light.
 

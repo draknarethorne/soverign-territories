@@ -7,7 +7,7 @@ Use this checklist before tagging project milestones or major documentation base
 - [ ] `docs/README.md` source-of-truth matrix is accurate.
 - [ ] `docs/game-bible.md` reflects current vision framing.
 - [ ] MVP baseline docs are aligned (`docs/mvp/*`).
-- [ ] Any superseded docs are moved to `docs/archive/`.
+- [ ] Any superseded docs are moved to `docs/_archive/`.
 
 ## 2) Data + schema contract readiness
 

@@ -97,5 +97,6 @@ exploration, economy deployment, backend services.
 
 ## Documentation rule
 
-One home per fact; delete superseded docs instead of keeping both. Git history is the archive. `docs/archive/` is frozen
-and gets no new files.
+One home per fact. Superseded docs are moved (`git mv`) into an `_archive` folder, never kept beside the current
+version; `_archive` content is a recycle bin that is ignored as documentation and purged later (see
+[README.md](README.md#the-_archive-convention)).
