@@ -5,6 +5,18 @@
   "type": "object",
   "additionalProperties": false,
   "required": ["art"],
+  "allOf": [
+    {
+      "$comment": "Female card heroes need signature cosmetic colours; test beds (no cardId, reference-photo driven) are exempt.",
+      "if": {
+        "required": ["cardId", "art"],
+        "properties": {"art": {"required": ["physique"], "properties": {"physique": {"required": ["bust"]}}}}
+      },
+      "then": {
+        "properties": {"art": {"properties": {"palette": {"required": ["lipColor", "eyeshadowColor", "blushColor", "nailColor"]}}}}
+      }
+    }
+  ],
   "anyOf": [
     {"required": ["cardId"]},
     {"required": ["testBed", "name"], "properties": {"testBed": {"const": true}}}
@@ -36,7 +48,10 @@
             "eyeColorGlamour": {"type": "string"},
             "hairColor": {"type": "string", "description": "Base hair colour only; highlights come from hairHighlights"},
             "metal": {"type": "string", "description": "The hero's signature metal (e.g. 'platinum'); feeds {{METAL}} in the metallic underlayer"},
-            "nailColor": {"type": "string", "description": "Optional nail colour; default is 'Light <last word of primaryColor>'"},
+            "nailColor": {"type": "string", "description": "Fingernail and toenail colour ({{NAIL}}); default is 'Light <last word of primaryColor>'"},
+            "lipColor": {"type": "string", "description": "Signature lip tint ({{LIP}}), used as 'subtle <lipColor>-tinted satin'; default berry"},
+            "eyeshadowColor": {"type": "string", "description": "Signature eyeshadow tone ({{EYESHADOW}}); default is the last word of the first accent colour"},
+            "blushColor": {"type": "string", "description": "Signature blush tone ({{BLUSH}}); default unspecified"},
             "hairHighlights": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "Highlight-style piece (cosmetics/highlights/<family>/*.json); its {{HIGHLIGHT_COLOR}} is filled from hairHighlightColor"},
             "hairHighlightColor": {"type": "string"},
             "hairColorNegatives": {"type": "array", "items": {"type": "string"}},

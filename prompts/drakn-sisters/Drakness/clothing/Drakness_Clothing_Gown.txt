@@ -24,7 +24,7 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, natural studio eyes, not glowing.
 
-Makeup: soft and natural, with a subtly blended amethyst-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+Makeup: soft and natural, with a subtly blended amethyst-toned eyeshadow, a light natural rosy-plum blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
 ----------------------------------------------------------------
 negative prompt:

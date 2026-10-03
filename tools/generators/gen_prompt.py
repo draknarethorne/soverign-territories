@@ -189,11 +189,21 @@ def default_slot(slot, stage, sex):
 
 # One shared studio face-styling line for every cream-backdrop stage, so makeup stays
 # present-but-subtle and identical from the full-body shot to the close-up.
-FACE_STYLE = {
-    "female": "Makeup: soft and natural, with a subtly blended {{ACCENT_SOFT}}-toned eyeshadow, a light natural blush, "
-              "groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.",
-    "male": "Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.",
-}
+def blush_phrase(blush):
+    return f"a light natural {blush} blush" if blush else "a light natural blush"
+
+
+def face_style(female, eyeshadow, blush):
+    if not female:
+        return "Grooming: natural, clean and well-groomed, groomed brows, no cosmetics."
+    return (f"Makeup: soft and natural, with a subtly blended {eyeshadow}-toned eyeshadow, {blush_phrase(blush)}, "
+            "groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.")
+
+
+# Default makeup line for scenes (their templates print {{MAKEUP_LINE}} only when it has a value):
+# the hero's signature cosmetics, so lips, nails and eyeshadow stay on-palette away from the studio shots.
+SCENE_MAKEUP = ("Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush}, subtle {lip}-tinted satin lips, "
+                "fingernails and toenails natural or {nail}; present, never heavy.")
 
 
 # Bust bans only make sense for the female physique; a male hero gets none.
@@ -208,6 +218,7 @@ def tokens_for(hero):
     phy = hero["art"]["physique"]
     primary = pal["primaryColor"]
     accent = pal["accentColors"][0]
+    eyeshadow = pal.get("eyeshadowColor", accent.split()[-1].lower())
     if "bust" in phy:
         figure = "; ".join([
             decap(phy["build"]),
@@ -237,6 +248,9 @@ def tokens_for(hero):
         "METAL": pal.get("metal", accent.split()[-1].lower()),
         "ACCENT_SOFT": accent.split()[-1].lower(),
         "NAIL": pal.get("nailColor", "Light " + primary.split()[-1]),
+        "LIP": pal.get("lipColor", "berry"),
+        "EYESHADOW": eyeshadow,
+        "BLUSH": pal.get("blushColor", "natural"),
         "FIGURE": figure,
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
@@ -245,7 +259,7 @@ def tokens_for(hero):
         "HAIR_NEG": ", ".join(pal.get("hairColorNegatives", [])),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
-        "FACE_STYLE": FACE_STYLE["female" if "bust" in phy else "male"],
+        "FACE_STYLE": face_style("bust" in phy, eyeshadow, pal.get("blushColor")),
         "FIGURE_NEG": FIGURE_NEG["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,
@@ -455,6 +469,11 @@ def generate(card_path):
     if toks.get("MAKEUP"):
         toks["MAKEUP_LINE"] = "Makeup: " + toks["MAKEUP"].rstrip(".") + "."
         toks["FACE_STYLE"] = toks["MAKEUP_LINE"]
+    elif "art" in hero and sex == "female":
+        pal = hero["art"]["palette"]
+        toks["MAKEUP_LINE"] = SCENE_MAKEUP.format(
+            eyeshadow=toks["EYESHADOW"], blush=blush_phrase(pal.get("blushColor")),
+            lip=toks["LIP"], nail=toks["NAIL"])
     # Literal, per-card one-off strings that aren't reusable pieces on their own
     # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
     _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",

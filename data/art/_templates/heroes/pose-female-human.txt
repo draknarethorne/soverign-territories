@@ -29,7 +29,7 @@ Hairstyle: {{HAIRSTYLE}} (fully replace the source photo's hairstyle).
 
 Eyes: {{EYE}}, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
 
-Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+Lips: natural, subtle {{LIP}}-tinted satin - keep lips natural, no heavy lipstick.
 
 Expression: {{EXPRESSION}}.
 
