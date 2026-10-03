@@ -3,6 +3,9 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
+  "components": {
+    "underlayer": "data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json"
+  },
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "output": "prompts/angel-primes/Angelica/poses/Angelica_X_Pose.txt",
   "denoise": "~1.0",

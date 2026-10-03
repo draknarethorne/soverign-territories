@@ -1,0 +1,9 @@
+{
+  "id": "shots/views/head/front",
+  "kind": "view",
+  "name": "Head: front (default)",
+  "description": "View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.",
+  "compatibleStages": ["head"],
+  "tags": ["head", "front", "default"],
+  "notes": "Left/right in every view piece is camera-relative (frame-left / frame-right). The standard X Head view."
+}

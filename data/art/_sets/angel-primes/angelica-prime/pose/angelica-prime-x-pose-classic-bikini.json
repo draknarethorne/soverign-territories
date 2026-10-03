@@ -1,0 +1,14 @@
+{
+  "artId": "angelica-prime-x-pose-classic-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
+  "name": "Classic Bikini",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/triangle-bikini.json"
+  },
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/Angelica/poses/alt/Angelica_X_Pose_Classic_Bikini.txt",
+  "denoise": "~1.0",
+  "notes": "Same A-pose as the standard X, but with the plain pearl-white triangle bikini (the default underlayer other heroes use)."
+}

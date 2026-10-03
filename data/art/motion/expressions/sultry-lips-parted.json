@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/sultry-lips-parted",
+  "kind": "expression",
+  "name": "Sultry, Lips Parted",
+  "expression": "a sultry, smouldering expression - lips slightly parted, brows relaxed and softly arched, eyes intense and half-focused on the camera but fully open",
+  "compatibleStages": ["head", "pose", "motion"],
+  "tags": ["sultry", "lips-parted", "smoulder"]
+}

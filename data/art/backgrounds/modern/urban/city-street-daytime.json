@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/modern/urban/city-street-daytime",
+  "kind": "background",
+  "name": "Modern: city street, daytime",
+  "description": "a busy modern city street in daylight, glass-fronted shops and parked cars along the pavement, pedestrians softly out of focus, natural overcast light",
+  "mood": "candid, urban, real",
+  "compatibleStages": ["scene"],
+  "tags": ["modern", "urban", "street", "fun-test"],
+  "notes": "Not canon. For realism experiments only; pair with components.realm = realms/modern.json."
+}

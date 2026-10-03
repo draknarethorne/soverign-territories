@@ -16,6 +16,8 @@ Preserve the subject from the reference image exactly - facial likeness and bone
 Companion: {{COMPANION}}.
 
 Environment: {{BACKGROUND}}.
+
+{{REALM}}.
 A light breeze lifts her cape and a few strands of her hair.
 
 Palette: {{PRIMARY}} dominant, with {{ACCENT_SOFT}} accents; all glow is {{ACCENT_SOFT}}.
@@ -24,4 +26,4 @@ Full-body hero framing, slight low camera angle for an imposing, regal presence.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle, {{HERO_NEG}}.
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, {{REALM_NEG}}, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle, {{HERO_NEG}}.

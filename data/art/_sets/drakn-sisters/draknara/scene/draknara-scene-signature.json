@@ -13,7 +13,7 @@
     "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",
     "effects": "Fine motes of {{ACCENT_SOFT}} dust and drifting leaf litter swirl gently around her feet, stirred by unseen earth magic.",
     "companion": "her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of deep burnt-sienna and rich-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in polished copper",
-    "background": "data/art/backgrounds/forests/ancient-grove.json"
+    "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Signature.txt",

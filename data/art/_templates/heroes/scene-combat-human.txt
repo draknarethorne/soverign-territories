@@ -23,9 +23,11 @@ Companion: {{COMPANION}}.
 
 Environment: {{BACKGROUND}}.
 
+{{REALM}}.
+
 Figure: {{FIGURE}}.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{REALM_NEG}}, text, wording, watermark, logo.

@@ -21,11 +21,13 @@ Fine snowflakes drift and swirl gently in the cold air around him, catching the 
 
 Companion: his bonded Frost Owl, a great owl with ice-pale feathers and glowing blue eyes, perched nearby watching the scene.
 
-Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+Environment: an ancient high-fantasy castle great hall, weathered flagstone floor, towering carved pillars and tall arched windows, hanging banners and iron torch sconces casting warm light, a sense of old magic lingering in the stonework.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.

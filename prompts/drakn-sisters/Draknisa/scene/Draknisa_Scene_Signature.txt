@@ -23,11 +23,13 @@ Eyes: irises softly aglow with teal light, brightest near the pupil and fading t
 
 Companion: her aligned Elder Dragon, Aquaria, visible over the moonlit water beyond the terrace, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished brass.
 
-Environment: an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low.
+Environment: an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

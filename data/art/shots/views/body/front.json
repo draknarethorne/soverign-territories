@@ -1,0 +1,9 @@
+{
+  "id": "shots/views/body/front",
+  "kind": "view",
+  "name": "Body: front (default)",
+  "description": "View: front-facing, the whole body squarely facing the camera, head level, looking straight into the lens.",
+  "compatibleStages": ["pose"],
+  "tags": ["turnaround", "front", "full-body"],
+  "notes": "Left/right in every view piece is camera-relative (frame-left / frame-right), never the subject's own left/right."
+}

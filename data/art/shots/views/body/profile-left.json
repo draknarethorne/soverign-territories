@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/body/profile-left",
+  "kind": "view",
+  "name": "Body: side profile, facing frame-left",
+  "description": "View: full side profile, the whole body turned 90 degrees to face frame-left, the head in clean profile looking ahead toward frame-left; same A-pose arms and stance.",
+  "compatibleStages": ["pose"],
+  "tags": ["turnaround", "profile", "full-body"]
+}

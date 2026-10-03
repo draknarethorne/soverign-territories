@@ -13,7 +13,7 @@
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",
     "effects": "Soft rays of {{ACCENT_SOFT}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.",
     "companion": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of luminous ivory-white and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished steel",
-    "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
+    "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakniss/scene/Drakniss_Scene_Signature.txt",

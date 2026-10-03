@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
-Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting; keep the even lighting from the incoming image, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
 
@@ -24,7 +24,7 @@ Head: tilted and turned to a soft 3/4, chin slightly down.
 
 Gaze: seductive, unpredictable.
 
-Expression: an alluring, confident, relaxed expression - a soft closed-mouth smile with dimples, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely)
+Expression: seductive and unpredictable; lips full and expressive, slightly parted.
 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, natural studio eyes, not glowing.
 

@@ -1,0 +1,9 @@
+{
+  "id": "wardrobe/swimwear/swim-brief",
+  "kind": "wearing",
+  "name": "Swim Brief (standard male X Pose underlayer)",
+  "description": "only a {{PRIMARY}} fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "brief", "default", "male"],
+  "notes": "Default male A-pose underlayer. (The old inline text said 'matching bare feet' with a colour; fixed.)"
+}

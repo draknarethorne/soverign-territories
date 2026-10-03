@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/camp/adventurers-campfire",
+  "kind": "background",
+  "name": "Adventurers' Campfire",
+  "description": "an adventurers' camp at night in a high-fantasy wilderness, a crackling campfire and canvas tents, bedrolls and packs, a ring of pine trees, a starry sky with a low moon",
+  "mood": "rugged, intimate, quiet",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "camp", "night", "neutral"],
+  "notes": "Element-neutral wilderness setting."
+}

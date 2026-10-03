@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight",
-    "background": "data/art/backgrounds/evening/moonlit-terrace.json"
+    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_EnchantedEvening.txt",

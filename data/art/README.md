@@ -68,11 +68,15 @@ piece under the hero's signature folder. Don't decompose further than the reuse 
 data/art/
 ├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders.
 │   └── heroes/                     Archetype: humanoid. (pose-female-human.txt, pose-male-human.txt,
-│                                   head-human.txt, hair-human.txt, motion-human.txt, armor-human.txt,
-│                                   clothing-human.txt, scene-human.txt, scene-with-outfit-human.txt,
+│                                   pose-view-human.txt (turnaround from the A-pose),
+│                                   head-human.txt (any angle/framing/expression), hair-human.txt,
+│                                   motion-human.txt, armor-human.txt, clothing-human.txt,
+│                                   scene-human.txt, scene-with-outfit-human.txt,
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
-│                                   non-caster martial heroes)
+│                                   non-caster martial heroes). Naming: `<stage>-<archetype>.txt`;
+│                                   a SHOT (cream studio) is any non-scene stage, a SCENE adds a
+│                                   realm, background and effects.
 │   └── dragons/                    ✅ Archetype: Elder Dragon (pose-dragon.txt, head-dragon.txt) —
 │                                   text-to-image, NOT img2img (no incoming reference to edit;
 │                                   a dragon is generated entirely from its own description).
@@ -130,6 +134,11 @@ data/art/
 │   ├── capes/*.json                (2: simple-black-leather, sheer-glowing-cloak)
 │   ├── bracelets/*.json            (1: simple-silver)
 │   ├── footwear/*.json             (2: glowing-strap-heels, combat-boots — both token-parameterized)
+│   ├── swimwear/*.json             (A-pose UNDERLAYERS, swappable: triangle-bikini (default),
+│   │                               swim-brief (default male), multicolor, high-waist, bandeau,
+│   │                               sporty, one-piece, board-shorts, athletic-trunks)
+│   ├── clothing/*.json             (ethereal-sheer-gown, fitted-cocktail-dress, long-evening-gown,
+│   │                               flowing-sundress, tailored-dress-shirt-set)
 │   ├── weapons/*.json              (broadsword-and-shield, greatsword, paired-daggers, trident —
 │   │                               archetype/thematic defaults for male heroes)
 │   └── accessories/*.json          (1: midnight-violet-satchel — Raven's bag, not yet wired;
@@ -147,12 +156,26 @@ data/art/
 │                                   piece inside Draknora's own scene (two different concerns).
 ├── pets/                           ⬜ CATEGORY: future.
 ├── buildings/                      ⬜ CATEGORY: future.
-└── backgrounds/                    ✅ CATEGORY: forests/, dungeons/, elemental/, cityscape/,
-                                    evening/, castle/ (6 families, 1 piece each so far) — reusable
-                                    scene components, wired into the generator via the scene stage.
-                                    Background choice doesn't have to match a hero's element 1:1
-                                    (e.g. Draknora/Fire uses a cityscape-dusk background) — it's as
-                                    much about scene story as elemental theming.
+├── realms/                         ✅ CATEGORY: the WORLD a scene lives in — fantasy.json (canon, the
+│                                   default for every scene) and modern.json (fun tests, not canon).
+│                                   A realm supplies the setting sentence ({{REALM}}) and the bans
+│                                   that keep the other world out ({{REALM_NEG}}: modern objects,
+│                                   cars, neon ... for fantasy).
+├── shots/                          ✅ CATEGORY: what makes a STUDIO SHOT (cream backdrop, flat light)
+│   ├── views/body/*.json           different from a scene: camera/subject orientation for the
+│   ├── views/head/*.json           reference library — front, 3/4, profile, back, looking down, chin
+│   └── framing/*.json              up, over the shoulder ... (left/right are camera-relative), and
+│                                   how tight a head shot is (bust-up, face close-up, chest and hair).
+└── backgrounds/                    ✅ CATEGORY: split by REALM, and the folder IS the realm:
+    ├── fantasy/                    canon scene backgrounds (D&D-style: castle/, cityscape/ (a medieval
+    │                               citadel, never a modern city), dungeons/, elemental/, evening/,
+    │                               forests/, frozen/, coast/, mountains/, highlands/, canyon/, swamp/,
+    │                               temple/, tavern/, camp/ — one or more per element).
+    ├── studio/                     cream-even (default for every cream-backdrop stage),
+    │                               cream-beauty-light, white-high-key, grey-seamless — the lighting
+    │                               lives in the piece, not buried in templates.
+    └── modern/                     real-world locations (city street, cornfield, kitchen, rooftop) for
+                                    realism experiments only, never game art.
 ```
 
 **"Universal" was retired.** It broke down once dragons/buildings were on the horizon — armor/
@@ -205,8 +228,8 @@ override side (`_is_literal_ref()`).
 
 **Known gap: most of the motion/wardrobe library has female pronouns baked in** ("her"/"she"),
 since it was authored for the Drakn sisters first. Fixed so far: `wardrobe/effects/soft-ambient-glow.json`,
-`backgrounds/dungeons/ossuary-violet-sky.json`, `backgrounds/cityscape/city-skyline-dusk.json`,
-`backgrounds/elemental/rising-flames.json` — each caught only when a male hero's card actually
+`backgrounds/fantasy/dungeons/ossuary-violet-sky.json`, `backgrounds/fantasy/cityscape/citadel-skyline-dusk.json`,
+`backgrounds/fantasy/elemental/rising-flames.json` — each caught only when a male hero's card actually
 reused the piece and surfaced the mismatch in generated output. The rest of `motion/` (poses
 themselves, not just backgrounds) has not been swept — pick pronoun-neutral pieces, or write a
 fresh literal, when building a male hero's scene until a proper cleanup pass happens.
@@ -364,6 +387,52 @@ split with confidence; forcing a taxonomy now risks guessing wrong and reshuffli
 
 ---
 
+## Tag slots: templates are thin shells, pieces carry the text
+
+The direction of travel: a template holds only what is truly specific to a stage; everything reusable is a
+`{{SLOT}}` filled by a proven piece. A card overrides any slot with `components.<slot>` (a piece path, a literal, or
+`+literal` to extend). A slot a card leaves empty falls back to `SLOT_DEFAULTS` in `gen_prompt.py` (by stage, and by
+sex where it differs), so existing cards need no change.
+
+| Slot / token | What it is | Pieces | Default |
+| --- | --- | --- | --- |
+| `background` | Where the subject stands; for cream stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `cream-even` for every cream stage; **required** on scenes |
+| `realm` | World rule + bans (`{{REALM}}`, `{{REALM_NEG}}`) | `realms/*.json` | `fantasy` on scenes |
+| `view` | Camera/subject orientation | `shots/views/body/*`, `shots/views/head/*` | front |
+| `framing` | How tight a head shot is | `shots/framing/*` | `bust-up` |
+| `expression` | Facial read | `motion/expressions/*` | per stage and sex (above) |
+| `underlayer` | What the A-pose wears | `wardrobe/swimwear/*`, hero `wearing/` pieces | triangle bikini / swim brief |
+| `eye_effect` | Scene eye glow | `wardrobe/effects/eyes/*` | `partial-glow` |
+
+Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) purely for finding and ideation;
+tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` token (the realm uses this).
+
+**Shots vs scenes.** A *shot* is a cream studio render (pose, head, hair, motion, armor, clothing) for clearly
+seeing the subject, an outfit or an armor piece; it may still include motion (a catwalk, a battle stance). A *scene*
+adds a realm, background and effects. Canon scenes are always the `fantasy` realm; the validator rejects a scene
+whose background folder doesn't match its realm, so a modern location can only appear if a card explicitly sets
+`components.realm` to `realms/modern.json` (the Angel Primes' `scene/modern/` cards, for fun).
+
+**Template folders were deliberately not split** (e.g. `shots/` vs `scenes/`): that would mean rewriting ~300 card
+paths for no behaviour change. Split when buildings/units/armor-only renders add a second axis of templates.
+
+## The reference-shot library (built from the A-pose)
+
+Every hero's X Pose is the baseline; a library of studio references is derived from it so a specific close-up or
+angle can later be fed in as an image reference instead of re-describing the face with JSON. Generate a hero's whole
+library with one command, then `gen_prompt.py` to produce prompts:
+
+```bash
+python tools/generators/scaffold_shot_library.py --group angel-primes --slug angelica-prime --hero Angelica \
+    --underlayer data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json
+python tools/generators/gen_prompt.py --group angel-primes --slug angelica-prime
+```
+
+Per hero: 6 body views (3/4 L/R, profile L/R, back, back-glance), 8 head views (3/4 L/R, profile L/R, looking down,
+chin up, over shoulder, tilt), 2 extra head framings (face close-up, chest and hair) and 4 head expressions.
+The Angel Primes are the test bed for all of this (colourful underlayers make direction changes visible); sisters
+and bound heroes only need their signature armor, motion, hair and poses, plus the library where it is useful.
+
 ## Eyes, makeup, expression and hair: what each stage says
 
 Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
@@ -373,7 +442,7 @@ Glow is only ever added in `scene` stages.
 | --- | --- | --- | --- |
 | Studio eyes | `{{EYE}}` | pose, head, hair, motion, armor, clothing | Iris colour + striations + limbal ring, always "natural, not glowing"; `glowing eyes` is in those negatives. |
 | Studio makeup/grooming | `{{FACE_STYLE}}` | pose, head, hair, motion, armor, clothing | One line in `gen_prompt.py` (`FACE_STYLE`): subtle eyeshadow in the hero's accent colour, light blush; "present, never heavy". Males get a grooming line. |
-| Expression | `{{EXPRESSION}}` | pose | Per-sex default (`DEFAULT_EXPRESSION`: `motion/expressions/studio-glamour.json` / `studio-confident.json`). Override on a pose card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
+| Expression | `{{EXPRESSION}}` | pose, head | Defaults in `SLOT_DEFAULTS` (see below): pose = per-sex studio glamour/confident; head = `studio-glamour-smile` (lips, cheeks, dimples). Override on a card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
 | Hairstyle | `{{HAIRSTYLE}}`, `{{HAIRSTYLE_NEG}}` | pose | From the hero's `hairStyleComponent`. `hair/down/center-part-natural.json` takes the hair down, centre-parted, keeping the source's natural texture; its `a_pose_negatives` (ponytail, bun, updo, ...) go into the negative prompt. |
 | Scene eye glow | `{{EYE_EFFECT}}` | scene templates | Chosen with `components.eye_effect`; default `partial-glow`. |
 | (Soft iris-only eyes) | `{{EYE_SOFT}}` | inside the eye-effect pieces | Not used by the studio stages. |

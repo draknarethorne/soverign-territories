@@ -204,6 +204,15 @@ def check_art_cards(report):
             # would silently put a file path into the prompt. Catch it here instead.
             if looks_like_path(val) and not (ROOT / val).exists():
                 report.error(where, f"{slot} looks like a path but {val} does not exist (would be rendered as literal text)")
+        # Realm rule: a scene's background folder must match its realm (default: fantasy), so a
+        # modern or studio background can never slip into canon art without an explicit opt-in.
+        bg = d.get("components", {}).get("background", "")
+        if bg.startswith("data/art/backgrounds/") and d["stage"] == "scene":
+            bg_realm = bg.split("/")[3]
+            realm = pathlib.PurePosixPath(d.get("components", {}).get("realm", "data/art/realms/fantasy.json")).stem
+            if bg_realm != realm:
+                report.error(where, f"scene realm is '{realm}' but background {bg} is under backgrounds/{bg_realm}/ "
+                                    f"(set components.realm to match, or pick a {realm} background)")
         out = d.get("output")
         if out:
             if out.split("/")[1] != group:
@@ -214,6 +223,10 @@ def check_art_cards(report):
 
 
 def check_piece_refs(report):
+    for f in rglob("data/art/backgrounds/**/*.json"):
+        realm_dir = f.relative_to(ROOT / "data/art/backgrounds").parts[0]
+        if realm_dir not in ("fantasy", "modern", "studio"):
+            report.error(rel(f), "backgrounds must live under fantasy/, modern/ or studio/ (that folder is the realm)")
     for f in art_piece_files():
         d = load(f)
         for field in ("defaultGaze", "defaultExpression"):

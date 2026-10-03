@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/head/looking-down",
+  "kind": "view",
+  "name": "Head: looking down",
+  "description": "View: head facing the camera and tilted gently down, the chin lowered and the gaze cast softly downward so the lashes and eyelids are emphasised, the eyes still visible.",
+  "compatibleStages": ["head"],
+  "tags": ["head", "downcast", "lashes"]
+}

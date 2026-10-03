@@ -1,9 +1,0 @@
-{
-  "id": "backgrounds/evening/moonlit-terrace",
-  "kind": "background",
-  "name": "Moonlit Terrace",
-  "description": "an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low",
-  "mood": "enchanting, romantic, composed",
-  "compatibleStages": ["scene"],
-  "notes": "Generic 'enchanting evening' background, hero-agnostic — fits any elegant evening portrait regardless of outfit or element."
-}

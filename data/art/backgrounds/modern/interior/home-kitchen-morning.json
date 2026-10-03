@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/modern/interior/home-kitchen-morning",
+  "kind": "background",
+  "name": "Modern: home kitchen, morning",
+  "description": "a bright modern home kitchen in the morning, white cabinets, a stone countertop and a window with soft natural daylight, a few everyday items on the counter",
+  "mood": "homely, candid, relaxed",
+  "compatibleStages": ["scene"],
+  "tags": ["modern", "interior", "kitchen", "fun-test"],
+  "notes": "Not canon. For realism experiments only; pair with components.realm = realms/modern.json."
+}

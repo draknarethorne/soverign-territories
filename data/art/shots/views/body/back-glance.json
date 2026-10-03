@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/body/back-glance",
+  "kind": "view",
+  "name": "Body: rear view, glancing back",
+  "description": "View: seen from behind, the torso facing away from the camera, the head turned over the shoulder so the face is in three-quarter profile glancing back toward the camera; same A-pose arms and stance.",
+  "compatibleStages": ["pose"],
+  "tags": ["turnaround", "back", "over-shoulder", "full-body"]
+}

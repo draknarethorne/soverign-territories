@@ -1,0 +1,9 @@
+{
+  "id": "heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini",
+  "kind": "wearing",
+  "name": "Angelic Pastel Bikini (Angelica test-bed underlayer)",
+  "description": "only a decorative multi-coloured triangle bikini in {{PRIMARY}} with iridescent pastel colour-blocked panels in soft rose, sky blue, mint and lilac, {{ACCENT_SOFT}} edging, a small {{ACCENT_SOFT}} feather emblem at the centre of the top and a small {{ACCENT_SOFT}} ring at each hip; no extra straps; midriff, abdomen, and hips bare; matching open-toed high heels in {{ACCENT_SOFT}}",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "bikini", "decorative", "angel", "test-bed"],
+  "notes": "Colourful and asymmetric on purpose, so a change of view (3/4, profile, back) is obvious in the render."
+}

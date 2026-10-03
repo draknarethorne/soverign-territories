@@ -1,0 +1,9 @@
+{
+  "id": "shots/framing/chest-and-hair",
+  "kind": "framing",
+  "name": "Chest and hair medium close-up",
+  "description": "Medium close-up framed from the top of the head to the mid-chest: the face, the full bust and the whole length of the hair falling beside it are all visible, showing the hair's highlights and ends",
+  "compatibleStages": ["head"],
+  "tags": ["medium-close-up", "bust", "hair-length", "highlights"],
+  "notes": "Shows how far the hair falls and where the colour/highlights sit, which later poses otherwise have to guess."
+}

@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/wardrobe/weapons/ornate-staff.json",
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
-    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+    "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_ElegantCasting.txt",

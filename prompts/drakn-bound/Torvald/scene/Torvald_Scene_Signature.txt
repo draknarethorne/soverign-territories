@@ -21,11 +21,13 @@ A fine haze of dust drifts around his feet.
 
 Companion: his bonded Dire Bear, a massive shaggy bear with claws like daggers, standing at his side.
 
-Environment: a sun-dappled ancient forest grove, towering moss-covered trees, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
+Environment: a sun-dappled enchanted forest grove in a high-fantasy realm, towering moss-covered trees and mossy standing stones, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.

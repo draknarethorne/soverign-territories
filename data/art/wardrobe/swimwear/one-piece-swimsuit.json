@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/one-piece-swimsuit",
+  "kind": "wearing",
+  "name": "One-Piece Swimsuit",
+  "description": "only a {{PRIMARY}} fitted one-piece swimsuit with a deep plunging neckline and {{ACCENT_SOFT}} edging, high-cut at the hips, the back low; arms and legs bare; matching {{PRIMARY}} open-toed heels",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "one-piece", "female"]
+}

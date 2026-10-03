@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/coast/sea-cliff-harbor-moonrise",
+  "kind": "background",
+  "name": "Sea-Cliff Harbor at Moonrise",
+  "description": "a high-fantasy sea-cliff harbor at moonrise, a stone lighthouse tower, wooden sailing ships with lantern-lit masts, waves breaking against black rocks, silver moonlight on the water",
+  "mood": "tidal, romantic, mysterious",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "water", "coast", "night"],
+  "notes": "Water-element setting."
+}

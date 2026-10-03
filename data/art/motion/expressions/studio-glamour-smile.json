@@ -1,0 +1,9 @@
+{
+  "id": "motion/expressions/studio-glamour-smile",
+  "kind": "expression",
+  "name": "Studio Glamour Smile (head default)",
+  "expression": "a warm, radiant glamour smile - lips softly parted with a hint of teeth, cheeks lifted and defined, dimples showing if present, eyes bright and engaged with the camera, the lips, cheeks and smile lines clearly visible",
+  "compatibleStages": ["head", "pose", "motion"],
+  "tags": ["smile", "glamour", "default-head"],
+  "notes": "Default for the head template via SLOT_DEFAULTS. Built to show off lips, cheeks and dimples."
+}

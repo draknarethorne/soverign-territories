@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/modern/urban/rooftop-sunset",
+  "kind": "background",
+  "name": "Modern: rooftop terrace, sunset",
+  "description": "a modern city rooftop terrace at sunset, a glass balustrade and a skyline of towers glowing orange behind, soft warm backlit haze",
+  "mood": "glamorous, urban, golden",
+  "compatibleStages": ["scene"],
+  "tags": ["modern", "urban", "rooftop", "sunset", "fun-test"],
+  "notes": "Not canon. For realism experiments only; pair with components.realm = realms/modern.json."
+}

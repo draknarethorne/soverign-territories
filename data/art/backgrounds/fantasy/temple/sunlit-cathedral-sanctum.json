@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/temple/sunlit-cathedral-sanctum",
+  "kind": "background",
+  "name": "Sunlit Cathedral Sanctum",
+  "description": "the sanctum of a high-fantasy cathedral, soaring white stone arches, tall stained-glass windows casting colored light, gold-inlaid floors, drifting incense and soft rays of sunlight",
+  "mood": "holy, luminous, serene",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "light", "temple", "sacred"],
+  "notes": "Light-element setting."
+}

@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json",
     "companion": "his bonded Shark, a massive sleek predator circling in the shallows at his feet",
-    "background": "data/art/backgrounds/cityscape/city-skyline-dusk.json"
+    "background": "data/art/backgrounds/fantasy/cityscape/citadel-skyline-dusk.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Corin/scene/Corin_Scene_Signature.txt",

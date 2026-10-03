@@ -1,0 +1,9 @@
+{
+  "id": "shots/framing/face-closeup",
+  "kind": "framing",
+  "name": "Face close-up",
+  "description": "Tight beauty close-up framed from just above the hairline to the collarbones: the face fills the frame, lips, cheeks, dimples, brows and eyes in razor-sharp detail, the hair framing the face and falling out of frame",
+  "compatibleStages": ["head"],
+  "tags": ["close-up", "face-only", "facial-detail"],
+  "notes": "Reference shot for facial features (lips, cheeks, dimples, iris detail) when a face needs to be forced into a pose via multi-image."
+}

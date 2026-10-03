@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/tavern/hearth-tavern-interior",
+  "kind": "background",
+  "name": "Hearth Tavern Interior",
+  "description": "the interior of a cozy high-fantasy tavern, heavy oak beams and a roaring stone hearth, wooden tables with tankards and candles, hanging lanterns, warm amber firelight",
+  "mood": "warm, lively, adventurous",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "tavern", "interior", "neutral"],
+  "notes": "Element-neutral social/downtime setting."
+}

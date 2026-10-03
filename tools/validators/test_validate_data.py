@@ -68,6 +68,10 @@ CASES = [
      lambda r: edit(r / "data/cards/sovereign-dawn/heroes/hero-draknora-thorne.json", lambda d: d.update({"collectionNumber": "SD-001"})), "collectionNumber"),
     ("unknown field on a reusable piece",
      lambda r: edit(r / "data/art/wardrobe/footwear/glowing-strap-heels.json", lambda d: d.update({"colour": "red"})), "colour"),
+    ("modern background slipping into a canon (fantasy-realm) scene",
+     lambda r: edit(r / SCENE, lambda d: d["components"].update({"background": "data/art/backgrounds/modern/urban/city-street-daytime.json"})), "scene realm"),
+    ("background piece outside fantasy/modern/studio",
+     lambda r: shutil.copy(r / "data/art/backgrounds/studio/cream-even.json", r / "data/art/backgrounds/stray.json"), "fantasy/, modern/ or studio/"),
 ]
 
 

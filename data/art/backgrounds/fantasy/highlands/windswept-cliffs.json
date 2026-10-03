@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/highlands/windswept-cliffs",
+  "kind": "background",
+  "name": "Windswept Highland Cliffs",
+  "description": "windswept high-fantasy highland cliffs above a sea of clouds, tall standing stones and a lone ruined watchtower, long grass and banners streaming in the wind, bright open sky",
+  "mood": "airy, free, sweeping",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "wind", "cliffs", "sky"],
+  "notes": "Wind-element setting."
+}

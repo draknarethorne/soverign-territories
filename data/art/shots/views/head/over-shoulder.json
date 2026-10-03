@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/head/over-shoulder",
+  "kind": "view",
+  "name": "Head: over the shoulder",
+  "description": "View: the shoulders turned away from the camera and the head turned back over one shoulder, the face in three-quarter profile glancing toward the camera, the nape of the neck and the fall of the hair visible.",
+  "compatibleStages": ["head"],
+  "tags": ["head", "over-shoulder", "hair-fall"]
+}

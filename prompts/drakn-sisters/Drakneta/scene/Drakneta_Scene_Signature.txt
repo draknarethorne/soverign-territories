@@ -23,11 +23,13 @@ Eyes: irises softly aglow with cyan light, brightest near the pupil and fading t
 
 Companion: her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning.
 
-Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+Environment: an ancient high-fantasy castle great hall, weathered flagstone floor, towering carved pillars and tall arched windows, hanging banners and iron torch sconces casting warm light, a sense of old magic lingering in the stonework.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

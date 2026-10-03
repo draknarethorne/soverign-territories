@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/long-evening-gown",
+  "kind": "wearing",
+  "name": "Long Evening Gown",
+  "description": "a floor-length {{PRIMARY}} evening gown in flowing satin, a deep V neckline, a high thigh slit and {{ACCENT_SOFT}} beaded trim at the waist, a short train sweeping behind",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["gown", "evening", "formal", "female"]
+}

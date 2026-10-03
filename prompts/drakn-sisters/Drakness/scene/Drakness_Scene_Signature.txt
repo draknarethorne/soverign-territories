@@ -15,7 +15,9 @@ Eyes: irises softly aglow with amethyst light, brightest near the pupil and fadi
 
 Companion: her aligned Elder Dragon, Umbrath, looming in the shadows of the ossuary behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light.
 
-Environment: a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+Environment: a shadowed fantasy ossuary of ancient crypt arches and bone-strewn ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 A light breeze lifts her cape and a few strands of her hair.
 
 Palette: Midnight Violet dominant, with amethyst accents; all glow is amethyst.
@@ -24,4 +26,4 @@ Full-body hero framing, slight low camera angle for an imposing, regal presence.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle.
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle.

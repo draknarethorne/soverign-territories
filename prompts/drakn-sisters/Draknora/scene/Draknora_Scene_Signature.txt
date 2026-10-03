@@ -21,13 +21,15 @@ She extends her left hand towards the camera, a small glowing fire spell forming
 
 Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
 
-Companion: her aligned Elder Dragon, Pyraxis, flying over the city behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light.
+Companion: her aligned Elder Dragon, Pyraxis, flying over the citadel's towers behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light.
 
-Environment: a photo-realistic city skyline stretching out behind them, warm dusk light, fitting a D&D-style fantasy scene.
+Environment: the skyline of a medieval high-fantasy walled citadel at dusk behind them, slate-roofed stone towers and timber-framed houses climbing to a distant keep and cathedral spires, banners stirring on the battlements, lantern and torch light glowing in the windows and streets below, warm last light on the rooftops.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

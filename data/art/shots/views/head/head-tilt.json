@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/head/head-tilt",
+  "kind": "view",
+  "name": "Head: playful tilt",
+  "description": "View: head facing the camera and tilted a few degrees to one side, shoulders square, the eyes looking into the lens with a relaxed, engaging air.",
+  "compatibleStages": ["head"],
+  "tags": ["head", "tilt", "playful"]
+}

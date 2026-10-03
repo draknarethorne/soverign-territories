@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/malakor-venomcaller/weapons/venomfang-daggers.json",
     "companion": "his bonded Basilisk, a serpentine reptile with venom-slick scales and piercing eyes, coiled at his feet",
-    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+    "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Malakor/scene/Malakor_Scene_Signature.txt",

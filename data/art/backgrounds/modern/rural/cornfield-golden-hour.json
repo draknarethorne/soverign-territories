@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/modern/rural/cornfield-golden-hour",
+  "kind": "background",
+  "name": "Modern: cornfield, golden hour",
+  "description": "the edge of a tall green cornfield on a country farm road at golden hour, low warm sunlight, a distant farmhouse and a pale evening sky",
+  "mood": "warm, rural, candid",
+  "compatibleStages": ["scene"],
+  "tags": ["modern", "rural", "cornfield", "golden-hour", "fun-test"],
+  "notes": "Not canon. For realism experiments only; pair with components.realm = realms/modern.json."
+}

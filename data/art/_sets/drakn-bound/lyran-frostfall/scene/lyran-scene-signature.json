@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",
     "companion": "his bonded Frost Owl, a great owl with ice-pale feathers and glowing blue eyes, perched nearby watching the scene",
-    "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
+    "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Lyran/scene/Lyran_Scene_Signature.txt",

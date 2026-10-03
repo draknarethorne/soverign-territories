@@ -9,7 +9,7 @@
   "components": {
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
     "companion": "her aligned Elder Dragon, Umbrath, looming in the shadows of the ossuary behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light",
-    "background": "data/art/backgrounds/dungeons/ossuary-violet-sky.json"
+    "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_Signature.txt",

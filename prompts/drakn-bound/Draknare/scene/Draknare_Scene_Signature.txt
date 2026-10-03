@@ -21,11 +21,13 @@ Wisps of shadow curl and drift low around his feet, faint embers of violet light
 
 Companion: his bonded Reaper, a towering spectral reaper cloaked in tattered black robes, scythe in hand, looming silently in the shadows behind him.
 
-Environment: a shadowed ossuary and bone-strewn dungeon ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+Environment: a shadowed fantasy ossuary of ancient crypt arches and bone-strewn ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.

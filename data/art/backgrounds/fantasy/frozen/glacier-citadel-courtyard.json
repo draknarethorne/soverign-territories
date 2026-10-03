@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/frozen/glacier-citadel-courtyard",
+  "kind": "background",
+  "name": "Glacier Citadel Courtyard",
+  "description": "the courtyard of a high-fantasy citadel carved into a glacier, pale blue ice walls and frost-rimed stone arches, drifting snow, cold blue light from a pale sky",
+  "mood": "cold, majestic, still",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "ice", "citadel", "cold"],
+  "notes": "Ice-element setting."
+}

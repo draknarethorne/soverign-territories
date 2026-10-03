@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/studio/white-high-key",
+  "kind": "background",
+  "name": "Studio: white high-key backdrop",
+  "description": "a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection; no backlight or rim light",
+  "compatibleStages": ["pose", "head", "armor", "clothing"],
+  "tags": ["studio", "white", "high-key", "catalog"],
+  "notes": "Catalogue/inventory style: useful when an armor or outfit render should read crisply for UI use."
+}

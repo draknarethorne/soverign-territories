@@ -14,11 +14,13 @@ A candid high-fashion editorial shot, dynamic natural movement, confident contra
 
 a faint gold glow lingers softly, ambient and understated, nothing overtly magical.
 
-Environment: an elegant moonlit terrace, soft silver moonlight washing over stone balustrades, a faint warm glow from distant windows, a gentle evening haze drifting low.
+Environment: an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.

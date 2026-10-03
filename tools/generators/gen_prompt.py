@@ -117,16 +117,44 @@ def soft_eye(glamour):
     return decap(m.group(1) if m else glamour)
 
 
-# Scene templates carry {{EYE_EFFECT}}; a card picks one via components.eye_effect,
-# otherwise this default applies. Pieces live in data/art/wardrobe/effects/eyes/.
-DEFAULT_EYE_EFFECT = "data/art/wardrobe/effects/eyes/partial-glow.json"
-
-# Pose templates carry {{EXPRESSION}}; a card overrides it via components.expression
-# (a motion/expressions piece or a literal), otherwise this per-sex default applies.
-DEFAULT_EXPRESSION = {
-    "female": "data/art/motion/expressions/studio-glamour.json",
-    "male": "data/art/motion/expressions/studio-confident.json",
+# A template token that a card does not fill (components.<slot>) falls back to a default
+# piece, chosen by the card's stage and, where it differs, the hero's sex. Templates stay thin
+# shells; the proven text lives in data/art pieces. Override per card with components.<slot>
+# (a piece path, a literal, or '+literal' to extend).
+SLOT_DEFAULTS = {
+    "eye_effect": {"*": "data/art/wardrobe/effects/eyes/partial-glow.json"},
+    "background": {
+        stage: "data/art/backgrounds/studio/cream-even.json"
+        for stage in ("pose", "head", "hair", "motion", "armor", "clothing")
+    },
+    "realm": {"scene": "data/art/realms/fantasy.json"},
+    "framing": {"*": "data/art/shots/framing/bust-up.json"},
+    "view": {
+        "head": "data/art/shots/views/head/front.json",
+        "pose": "data/art/shots/views/body/front.json",
+    },
+    "expression": {
+        "head": "data/art/motion/expressions/studio-glamour-smile.json",
+        "pose": {
+            "female": "data/art/motion/expressions/studio-glamour.json",
+            "male": "data/art/motion/expressions/studio-confident.json",
+        },
+    },
+    "underlayer": {
+        "pose": {
+            "female": "data/art/wardrobe/swimwear/triangle-bikini.json",
+            "male": "data/art/wardrobe/swimwear/swim-brief.json",
+        },
+    },
 }
+
+
+def default_slot(slot, stage, sex):
+    entry = SLOT_DEFAULTS[slot]
+    value = entry.get(stage, entry.get("*"))
+    if isinstance(value, dict):
+        value = value[sex]
+    return value
 
 # One shared studio face-styling line for every cream-backdrop stage, so makeup stays
 # present-but-subtle and identical from the full-body shot to the close-up.
@@ -134,6 +162,13 @@ FACE_STYLE = {
     "female": "Makeup: soft and natural, with a subtly blended {{ACCENT_SOFT}}-toned eyeshadow, a light natural blush, "
               "groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.",
     "male": "Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.",
+}
+
+
+# Bust bans only make sense for the female physique; a male hero gets none.
+FIGURE_NEG = {
+    "female": "flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size",
+    "male": "",
 }
 
 
@@ -178,6 +213,7 @@ def tokens_for(hero):
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
         "FACE_STYLE": FACE_STYLE["female" if "bust" in phy else "male"],
+        "FIGURE_NEG": FIGURE_NEG["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
@@ -199,7 +235,7 @@ def tokens_for_dragon(dragon):
     }
 
 
-_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood", "element"}
+_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood", "element", "tags"}
 
 
 # A motion's own default gaze/expression are stored under these names so the
@@ -343,6 +379,10 @@ def resolve_components_tokens(card):
 
     toks = {}
     for slot, content in piece_content.items():
+        # A piece's 'negatives' list feeds a separate {{<SLOT>_NEG}} token, not the slot's own text.
+        neg = content.pop("negatives", None)
+        if neg is not None:
+            toks[slot.upper() + "_NEG"] = ", ".join(neg)
         parts = []
         for key, val in content.items():
             canonical = _FIELD_ALIASES.get(key, key)
@@ -362,11 +402,14 @@ def generate(card_path):
         if section in overrides:
             hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
-    if "{{EYE_EFFECT}}" in template:
-        card.setdefault("components", {}).setdefault("eye_effect", DEFAULT_EYE_EFFECT)
-    if "{{EXPRESSION}}" in template and "art" in hero:
+    sex = None
+    if "art" in hero:
         sex = "female" if "bust" in hero["art"]["physique"] else "male"
-        card.setdefault("components", {}).setdefault("expression", DEFAULT_EXPRESSION[sex])
+        for slot in SLOT_DEFAULTS:
+            if "{{" + slot.upper() + "}}" in template:
+                default = default_slot(slot, card["stage"], sex)
+                if default:
+                    card.setdefault("components", {}).setdefault(slot, default)
     # A dragon identity has no 'art' section (not humanoid) -- its own, simpler token set.
     toks = tokens_for_dragon(hero) if "art" not in hero else tokens_for(hero)
     toks.update(resolve_component_tokens(card))

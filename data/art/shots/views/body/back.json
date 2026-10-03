@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/body/back",
+  "kind": "view",
+  "name": "Body: rear view",
+  "description": "View: rear view, the whole body turned fully away so the back faces the camera, the head facing straight away, the hair falling down the back; same A-pose arms and stance.",
+  "compatibleStages": ["pose"],
+  "tags": ["turnaround", "back", "full-body"]
+}

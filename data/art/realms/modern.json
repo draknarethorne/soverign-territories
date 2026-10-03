@@ -1,0 +1,10 @@
+{
+  "id": "realms/modern",
+  "kind": "realm",
+  "name": "Realm: modern real world (fun tests only, not canon)",
+  "description": "Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph",
+  "negatives": ["fantasy architecture", "castle", "medieval setting", "magic effects", "glowing effects", "dragons", "fantasy creatures"],
+  "compatibleStages": ["scene"],
+  "tags": ["realm", "modern", "fun-test", "not-canon"],
+  "notes": "Opt in per scene card with components.realm. For 'how real does she look on a city street / in a cornfield / in a kitchen' experiments; never used for game art."
+}

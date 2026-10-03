@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/body/three-quarter-right",
+  "kind": "view",
+  "name": "Body: three-quarter, toward frame-right",
+  "description": "View: three-quarter view, the whole body turned about 45 degrees toward frame-right, the head turned the same way with the eyes still looking toward the camera; same A-pose arms and stance.",
+  "compatibleStages": ["pose"],
+  "tags": ["turnaround", "three-quarter", "full-body"]
+}

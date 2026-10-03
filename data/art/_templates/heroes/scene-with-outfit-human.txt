@@ -23,9 +23,11 @@ Holding {{HOLDING}}.
 
 Environment: {{BACKGROUND}}.
 
+{{REALM}}.
+
 Figure: {{FIGURE}}.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{REALM_NEG}}, {{FIGURE_NEG}}, text, wording, watermark, logo.

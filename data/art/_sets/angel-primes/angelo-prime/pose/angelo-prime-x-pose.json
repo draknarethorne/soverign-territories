@@ -3,6 +3,9 @@
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/angel-primes/angelo-prime.json",
+  "components": {
+    "underlayer": "data/art/heroes/angel-primes/angelo-prime/wearing/angelic-pastel-trunks.json"
+  },
   "template": "data/art/_templates/heroes/pose-male-human.txt",
   "output": "prompts/angel-primes/Angelo/poses/Angelo_X_Pose.txt",
   "denoise": "~1.0",

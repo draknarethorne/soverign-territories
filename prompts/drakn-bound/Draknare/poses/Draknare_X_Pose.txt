@@ -7,9 +7,9 @@ prompt:
 
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
-Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
 
-Background: a solid, seamless cream-coloured studio backdrop.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
 
@@ -19,7 +19,7 @@ Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and
 
 Skin: pale, cool-toned complexion, evenly toned.
 
-Wearing: only a Obsidian Black fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; matching Obsidian Black bare feet.
+Wearing: only a Obsidian Black fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet.
 
 Hair: rich black hair, short and neatly cropped, tone-on-tone dimension; styled short textured crop, cropped close at the sides and back, slightly longer and tousled on top (override the source hairstyle); a very slight lift from a light breeze below.
 

@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/swamp/glowing-fen",
+  "kind": "background",
+  "name": "Glowing Fen",
+  "description": "a murky high-fantasy fen at dusk, twisted dead trees and still black water, glowing toxic-green mushrooms and drifting marsh lights, low creeping mist, a crumbling stone causeway",
+  "mood": "toxic, eerie, alluring",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "poison", "swamp", "mist"],
+  "notes": "Poison-element setting."
+}

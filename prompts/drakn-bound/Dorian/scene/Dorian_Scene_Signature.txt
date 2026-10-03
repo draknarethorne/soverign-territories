@@ -21,11 +21,13 @@ A faint arc of electric-gold static crackles around his hands.
 
 Companion: his bonded Gryphon, a majestic eagle-lion hybrid with storm-grey feathers, perched on a nearby ledge, wings mantled.
 
-Environment: an old castle stone hall, weathered stone floor and towering pillars, warm diffused studio-like light, a sense of old magic lingering in the architecture.
+Environment: an ancient high-fantasy castle great hall, weathered flagstone floor, towering carved pillars and tall arched windows, hanging banners and iron torch sconces casting warm light, a sense of old magic lingering in the stonework.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
 
 Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim, athletic waist; long, agile legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.

@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",
     "companion": "his bonded Dire Bear, a massive shaggy bear with claws like daggers, standing at his side",
-    "background": "data/art/backgrounds/forests/ancient-grove.json"
+    "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Torvald/scene/Torvald_Scene_Signature.txt",

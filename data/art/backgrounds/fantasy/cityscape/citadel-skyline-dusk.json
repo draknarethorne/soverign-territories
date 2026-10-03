@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/cityscape/citadel-skyline-dusk",
+  "kind": "background",
+  "name": "Fantasy Citadel Skyline at Dusk",
+  "description": "the skyline of a medieval high-fantasy walled citadel at dusk behind them, slate-roofed stone towers and timber-framed houses climbing to a distant keep and cathedral spires, banners stirring on the battlements, lantern and torch light glowing in the windows and streets below, warm last light on the rooftops",
+  "mood": "epic, adventurous, cinematic",
+  "compatibleStages": ["scene"],
+  "notes": "Replaces the old generic city-skyline-dusk, which could render as a modern city. Environment only; a dragon is a separate companion/ piece (heroes/drakn-sisters/draknora/companion/pyraxis-flight.json)."
+}

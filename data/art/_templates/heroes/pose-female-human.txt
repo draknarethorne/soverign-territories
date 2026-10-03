@@ -7,9 +7,9 @@ prompt:
 
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
-Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, even soft neutral frontal studio lighting, flat clean key light with no backlight or rim light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
 
-Background: a solid, seamless cream-coloured studio backdrop.
+Background: {{BACKGROUND}}.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
 
@@ -19,7 +19,7 @@ Figure: {{FIGURE}}.
 
 Skin: {{SKIN}}.
 
-Wearing: only a {{PRIMARY}} skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels.
+Wearing: {{UNDERLAYER}}.
 
 Hair: {{HAIR}}, tone-on-tone dimension; a very slight lift from a light breeze below.
 

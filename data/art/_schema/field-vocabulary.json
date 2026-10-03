@@ -58,5 +58,10 @@
     "overridable": false,
     "owners": ["motion"],
     "notes": "Freeform additive list -- general tags that don't claim a reserved field name. Always additive, never participates in the override mechanism."
+  },
+  "negatives": {
+    "overridable": false,
+    "owners": ["realms"],
+    "notes": "List of terms banned while this piece is in use. Emitted as a separate {{<SLOT>_NEG}} token (e.g. realm -> REALM_NEG), never merged into the slot's own text."
   }
 }

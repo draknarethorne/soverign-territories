@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword.json",
     "effects": "data/art/heroes/drakn-sisters/draknora/effects/casting-flame-orb.json",
-    "background": "data/art/backgrounds/elemental/rising-flames.json"
+    "background": "data/art/backgrounds/fantasy/elemental/rising-flames.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_ElegantCasting.txt",

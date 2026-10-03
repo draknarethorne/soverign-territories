@@ -1,0 +1,32 @@
+=== Angelica Prime · Clothing: Cocktail Dress (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Angelica Prime (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a fitted knee-length Soft Pearl White cocktail dress with a sweetheart neckline, thin shoulder straps and gold seam detailing, softly flared at the hem.
+
+Arms: simple silver bracelets.
+
+Jewelry: Polished Silver with gold-jewelled bracelets, necklace, and belly-button ring.
+
+Legs & feet: bright Soft Pearl White high heels with glowing gold straps.
+
+Overall, polished, elegant evening-out look.
+
+Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; long, slender legs.
+
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, natural studio eyes, not glowing.
+
+Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

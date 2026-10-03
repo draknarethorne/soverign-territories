@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/forests/ancient-grove",
+  "kind": "background",
+  "name": "Ancient Grove",
+  "description": "a sun-dappled enchanted forest grove in a high-fantasy realm, towering moss-covered trees and mossy standing stones, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist",
+  "mood": "serene, mystical, untouched",
+  "compatibleStages": ["final"],
+  "notes": "Skeleton example for the backgrounds category — not yet wired into the generator (no final-scene template exists yet). Demonstrates the shape: data/art/backgrounds/<family>/<slug>.json, same pattern as heroes/components/."
+}

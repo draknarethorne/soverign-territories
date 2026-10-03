@@ -1,0 +1,8 @@
+{
+  "id": "shots/views/head/three-quarter-left",
+  "kind": "view",
+  "name": "Head: three-quarter, toward frame-left",
+  "description": "View: three-quarter view, the head and shoulders turned about 45 degrees toward frame-left, the eyes still looking into the camera.",
+  "compatibleStages": ["head"],
+  "tags": ["head", "three-quarter"]
+}

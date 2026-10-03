@@ -1,0 +1,26 @@
+=== Angelica Prime · Scene: Modern Kitchen (fun test) (group: Scene) — Edit (img2img) ===
+Incoming image: an A-pose of Angelica Prime (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a fitted knee-length Soft Pearl White cocktail dress with a sweetheart neckline, thin shoulder straps and gold seam detailing, softly flared at the hem.
+
+A candid high-fashion editorial shot, soft romantic portraiture. Light breeze. standing softly, weight settled on one leg, chest open toward camera. tilted slightly, chin soft. soft, romantic gaze to camera. soft, romantic, lips slightly parted. one hand resting gently at her collarbone, the other relaxed at her side.
+
+Soft natural window light only, no magical or glowing effects.
+
+Environment: a bright modern home kitchen in the morning, white cabinets, a stone countertop and a window with soft natural daylight, a few everyday items on the counter.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph.
+
+Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.

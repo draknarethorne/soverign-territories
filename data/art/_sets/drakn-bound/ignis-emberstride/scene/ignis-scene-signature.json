@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/ignis-emberstride/weapons/ember-blade.json",
     "companion": "his bonded Fire Elemental, a towering figure of living flame and molten rock, embers drifting from its form beside him",
-    "background": "data/art/backgrounds/elemental/rising-flames.json"
+    "background": "data/art/backgrounds/fantasy/elemental/rising-flames.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Ignis/scene/Ignis_Scene_Signature.txt",

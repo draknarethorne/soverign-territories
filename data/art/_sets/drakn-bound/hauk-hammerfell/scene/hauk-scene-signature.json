@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer.json",
     "companion": "his bonded Angel, a radiant winged figure in gleaming armor, hovering just behind him, wings spread wide",
-    "background": "data/art/backgrounds/evening/moonlit-terrace.json"
+    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Hauk/scene/Hauk_Scene_Signature.txt",

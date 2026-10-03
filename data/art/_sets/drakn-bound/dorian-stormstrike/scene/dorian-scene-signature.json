@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists.json",
     "companion": "his bonded Gryphon, a majestic eagle-lion hybrid with storm-grey feathers, perched on a nearby ledge, wings mantled",
-    "background": "data/art/backgrounds/castle/ancient-stone-hall.json"
+    "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-combat-human.txt",
   "output": "prompts/drakn-bound/Dorian/scene/Dorian_Scene_Signature.txt",

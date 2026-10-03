@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/sporty-bikini",
+  "kind": "wearing",
+  "name": "Sporty Crop-Top Bikini",
+  "description": "only a {{PRIMARY}} sporty crop-style bikini top with a racerback cut and {{ACCENT_SOFT}} trim, and matching low-rise boy-short bottoms; midriff bare; matching {{PRIMARY}} open-toed heels",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "bikini", "sporty", "female"]
+}

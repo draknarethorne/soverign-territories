@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/high-waist-bikini",
+  "kind": "wearing",
+  "name": "High-Waist Bikini",
+  "description": "only a {{PRIMARY}} retro high-waisted bikini - a halter-neck top and a high-waisted bottom with {{ACCENT_SOFT}} piping along the waistband, smooth and fitted; midriff partly bare; matching {{PRIMARY}} open-toed heels",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "bikini", "retro", "female"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/evening/moonlit-terrace",
+  "kind": "background",
+  "name": "Moonlit Terrace",
+  "description": "an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low",
+  "mood": "enchanting, romantic, composed",
+  "compatibleStages": ["scene"],
+  "notes": "Generic 'enchanting evening' background, hero-agnostic — fits any elegant evening portrait regardless of outfit or element."
+}

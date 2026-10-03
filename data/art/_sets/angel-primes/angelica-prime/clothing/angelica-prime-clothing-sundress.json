@@ -1,0 +1,18 @@
+{
+  "artId": "angelica-prime-clothing-sundress",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
+  "name": "Sundress",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/flowing-sundress.json",
+    "arms": "bare arms, no bracelets",
+    "jewelry": "a simple thin necklace",
+    "legs_feet": "strappy flat sandals in a matching tone"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "aesthetic": "light, relaxed, sunny casual look",
+  "output": "prompts/angel-primes/Angelica/clothing/Angelica_Clothing_Sundress.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Clothing library test; arms/jewelry/footwear are literal one-offs rather than pieces."
+}
