@@ -12,11 +12,11 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff.json",
     "effects": "Fine ice crystals drift and glitter in the air around her, faint {{ACCENT_SOFT}} frost-light tracing her silhouette.",
-    "companion": "her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-blue and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in shimmering silver",
+    "companion": "her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_Signature.txt",
   "denoise": "~0.5-0.7",
-  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknira's own Glacial Blue/Frost White palette, plus the existing castle-hall background (cold stone fits Ice/Wizard). Shortcut per explicit instruction."
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknira's own Glacial Cyan/Frost White palette, plus the existing castle-hall background (cold stone fits Ice/Wizard). Shortcut per explicit instruction."
 }

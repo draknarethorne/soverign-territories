@@ -269,13 +269,13 @@ Pokémon-clean:
 | Darkness | Midnight Violet | Vibrant Amethyst, Polished Silver |
 | Fire | Flame Red | Burnished Gold, Vibrant Orange |
 | Grass | Emerald Green | Forest Sage, Moss Gold |
-| Ice | Glacial Blue | Frost White, Shimmering Silver |
-| Water | Deep Oceanic Blue | Aquamarine, Polished Brass |
-| Light | Luminous Ivory White | Radiant Gold, Polished Steel |
-| Earth | Terracotta Ochre | Rich Bronze, Warm Sand |
-| Lightning | Electric Gold | Bright Gold, Arc White |
-| Wind | Sky Cerulean | Gossamer Silver, Breeze Teal |
-| Poison | Radiant Acid Green | Vibrant Acid Lime, Tarnished Brass |
+| Ice | Glacial Cyan | Frost White, Brushed Chrome |
+| Water | Deep Oceanic Blue | Deep Teal, Polished Platinum |
+| Light | Radiant Rose Gold | Radiant Gold, Polished White Gold |
+| Earth | Deep Burnt Sienna | Vivid Turquoise, Antique Bronze |
+| Lightning | Electric Gold | Arc White, Bright Gold |
+| Wind | Windswept Jade | Gossamer Silver, Polished Nickel |
+| Poison | Toxic Orchid Magenta | Vibrant Acid Lime, Tarnished Brass |
 
 *Neutral* remains a non-elemental identity for element-agnostic cards (basic tactics,
 generic units). Elements are **visual identity only** in the MVP; their strength/weakness
@@ -387,13 +387,13 @@ element palette above and are stored in each heroine's art identity file
 | Darkness | Drakness | Midnight Violet | Vibrant Amethyst, Polished Silver | Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks |
 | Fire | Draknora | Flame Red | Burnished Gold, Vibrant Orange | Molten amber iris with dark charcoal limbal ring, radiating crimson striations, and fiery gold flecks |
 | Grass | Drakniya | Emerald Green | Forest Sage, Moss Gold | Deep forest-emerald iris with dark pine limbal ring, radiating sage striations, and warm gold flecks |
-| Ice | Draknira | Glacial Blue | Frost White, Shimmering Silver | Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks |
-| Water | Draknisa | Deep Oceanic Blue | Aquamarine, Polished Brass | Deep sapphire iris with oceanic indigo limbal ring, radiating aquamarine striations, and pearl-white flecks |
-| Light | Drakniss | Luminous Ivory White | Radiant Gold, Polished Steel | Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks |
-| Earth | Draknara | Terracotta Ochre | Rich Bronze, Warm Sand | Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks |
-| Lightning | Drakneta | Electric Gold | Bright Gold, Arc White | Electric cobalt-topaz iris with midnight indigo limbal ring, radiating arc-cyan striations, and spark-white flecks |
-| Wind | Draknava | Sky Cerulean | Gossamer Silver, Breeze Teal | Sky cerulean iris with slate blue limbal ring, radiating gossamer silver striations, and breeze teal flecks |
-| Poison | Draknoxa | Radiant Acid Green | Vibrant Acid Lime, Tarnished Brass | Acid lime-emerald iris with blackened moss limbal ring, radiating toxic violet striations, and chartreuse flecks |
+| Ice | Draknira | Glacial Cyan | Frost White, Brushed Chrome | Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks |
+| Water | Draknisa | Deep Oceanic Blue | Deep Teal, Polished Platinum | Deep sapphire iris with oceanic indigo limbal ring, radiating deep teal striations, and pearl-white flecks |
+| Light | Drakniss | Radiant Rose Gold | Radiant Gold, Polished White Gold | Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks |
+| Earth | Draknara | Deep Burnt Sienna | Vivid Turquoise, Antique Bronze | Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks |
+| Lightning | Drakneta | Electric Gold | Arc White, Bright Gold | Deep warm espresso-brown iris with dark umber limbal ring, radiating electric-gold striations, and spark-white flecks |
+| Wind | Draknava | Windswept Jade | Gossamer Silver, Polished Nickel | Silver-grey iris with deep slate limbal ring, radiating pale jade striations, and breeze teal flecks |
+| Poison | Draknoxa | Toxic Orchid Magenta | Vibrant Acid Lime, Tarnished Brass | Acid lime-emerald iris with blackened moss limbal ring, radiating toxic magenta striations, and chartreuse flecks |
 
 ### 2.10 Bonded Pets & Pairing *(design signature · proposed)*
 

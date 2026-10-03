@@ -20,7 +20,7 @@ Hair: jet-black hair, short and neatly cropped, tone-on-tone dimension.
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
-Eyes: electric cobalt irises with faint arc-cyan striations and a midnight-indigo limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+Eyes: electric cobalt irises with faint arc-white striations and a midnight-indigo limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

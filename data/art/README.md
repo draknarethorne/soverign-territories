@@ -519,6 +519,32 @@ chin up, over shoulder, tilt), 2 extra head framings (face close-up, chest and h
 The Angel Primes are the test bed for all of this (colourful underlayers make direction changes visible); sisters
 and bound heroes only need their signature armor, motion, hair and poses, plus the library where it is useful.
 
+## Element palette and signature metal
+
+Each sister's `palette.primaryColor` is her element's frame colour (it will also drive card borders and effects), so the
+ten primaries are chosen to overlap as little as possible and to read as their element. Bound heroes follow their
+element's hue (Dorian is a darker "Storm Gold" so he is not a twin of Drakneta).
+
+| Element | Primary | Signature metal |
+| --- | --- | --- |
+| Darkness | Midnight Violet | polished silver |
+| Fire | Flame Red | burnished copper |
+| Grass | Emerald Green | antique gold |
+| Ice | Glacial Cyan | brushed chrome |
+| Water | Deep Oceanic Blue | polished platinum |
+| Light | Radiant Rose Gold | radiant rose gold |
+| Earth | Deep Burnt Sienna | antique bronze |
+| Lightning | Electric Gold | bright gold |
+| Wind | Windswept Jade | polished nickel |
+| Poison | Toxic Orchid Magenta | tarnished brass |
+
+- The primary is rendered with a **metallic finish**: `palette.metal` fills `{{METAL}}`, and `art.defaultUnderlayer`
+  (every sister uses `wardrobe/swimwear/metallic-triangle-bikini.json`) gives the A-pose a signature colour that carries
+  into outfits.
+- To dial it down for one card, set `components.underlayer` to a plain piece such as
+  `wardrobe/swimwear/triangle-bikini.json`; outfits and scenes can also override colour directly in their own pieces.
+- Eyes avoid repeating the primary where it would blur the identity (Draknava silver-grey, Drakneta espresso-brown).
+
 ## Eyes, makeup, expression and hair: what each stage says
 
 Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.

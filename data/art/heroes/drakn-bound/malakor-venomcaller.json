@@ -2,7 +2,7 @@
   "cardId": "HERO_MALAKOR_VENOMCALLER",
   "art": {
     "palette": {
-      "primaryColor": "Venom Green",
+      "primaryColor": "Toxic Orchid Magenta",
       "accentColors": [
         "Tarnished Brass",
         "Charcoal Black"
@@ -33,5 +33,5 @@
       "raceAlignment": "Orc presentation — strong jaw, pronounced brow; tusks kept subtle in glamour shots"
     }
   },
-  "notes": "Core ART hero definition for Malakor Venomcaller (Poison, Assassin, Assassin/Burst DPS). First-pass palette/physique, no archived source material — Poison colour family parallels Draknoxa's own Radiant Acid Green as a male variant."
+  "notes": "Core ART hero definition for Malakor Venomcaller (Poison, Assassin, Assassin/Burst DPS). First-pass palette/physique, no archived source material — Poison colour family parallels Draknoxa's own Toxic Orchid Magenta as a male variant."
 }

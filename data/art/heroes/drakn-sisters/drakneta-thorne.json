@@ -1,22 +1,24 @@
 {
   "cardId": "HERO_DRAKNETA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Electric Gold",
       "accentColors": [
-        "Arc Cyan",
+        "Arc White",
         "Bright Gold"
       ],
-      "eyeColor": "Electric cobalt-topaz iris with midnight indigo limbal ring, radiating arc-cyan striations, and spark-white flecks",
-      "eyeColorGlamour": "Electric cobalt-topaz irises with radiating arc-cyan striations and a midnight indigo limbal ring",
+      "metal": "bright gold",
+      "eyeColor": "Deep warm espresso-brown iris with dark umber limbal ring, radiating electric-gold striations, and spark-white flecks",
+      "eyeColorGlamour": "Deep warm espresso-brown irises with radiating electric-gold striations and a dark umber limbal ring",
       "hairColor": "Light golden-brown dark-blonde hair, sleek and sultry",
       "hairHighlights": "data/art/cosmetics/highlights/streaks/sparse-fine-streaks.json",
       "hairHighlightColor": "electric white-silver",
       "hairColorNegatives": ["all-over blue hair", "all-over cyan hair", "fully dyed hair"],
       "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas",
       "eyeColorNegatives": [
+        "blue eyes",
         "green eyes",
-        "brown eyes",
         "grey eyes",
         "hazel eyes",
         "red eyes",

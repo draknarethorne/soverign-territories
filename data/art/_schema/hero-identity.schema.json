@@ -23,6 +23,7 @@
       "required": ["palette", "physique"],
       "properties": {
         "negatives": {"type": "array", "items": {"type": "string"}, "description": "Permanent hero-specific negative-prompt terms"},
+        "defaultUnderlayer": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "A-pose underlayer piece used when a pose card sets none (the hero's signature look); override per card with components.underlayer"},
         "palette": {
           "type": "object",
           "additionalProperties": false,
@@ -34,6 +35,7 @@
             "eyeColor": {"type": "string"},
             "eyeColorGlamour": {"type": "string"},
             "hairColor": {"type": "string", "description": "Base hair colour only; highlights come from hairHighlights"},
+            "metal": {"type": "string", "description": "The hero's signature metal (e.g. 'platinum'); feeds {{METAL}} in the metallic underlayer"},
             "hairHighlights": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "Highlight-style piece (cosmetics/highlights/<family>/*.json); its {{HIGHLIGHT_COLOR}} is filled from hairHighlightColor"},
             "hairHighlightColor": {"type": "string"},
             "hairColorNegatives": {"type": "array", "items": {"type": "string"}},

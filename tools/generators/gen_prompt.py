@@ -234,6 +234,7 @@ def tokens_for(hero):
     return {
         "HERO": hero["name"],
         "PRIMARY": primary,
+        "METAL": pal.get("metal", accent.split()[-1].lower()),
         "ACCENT_SOFT": accent.split()[-1].lower(),
         "NAIL": "Light " + primary.split()[-1],
         "FIGURE": figure,
@@ -440,6 +441,9 @@ def generate(card_path):
         for slot in SLOT_DEFAULTS:
             if "{{" + slot.upper() + "}}" in template:
                 default = default_slot(slot, card["stage"], sex)
+                # A hero can carry her own default underlayer (her signature metallic look).
+                if slot == "underlayer" and hero["art"].get("defaultUnderlayer"):
+                    default = hero["art"]["defaultUnderlayer"]
                 if default:
                     card.setdefault("components", {}).setdefault(slot, default)
     # A dragon identity has no 'art' section (not humanoid) -- its own, simpler token set.

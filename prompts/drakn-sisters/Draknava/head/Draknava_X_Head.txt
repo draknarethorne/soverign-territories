@@ -20,9 +20,9 @@ Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer 
 
 Makeup: soft and natural, with a subtly blended silver-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
-Eyes: sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

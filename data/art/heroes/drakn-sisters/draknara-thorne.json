@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNARA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Deep Burnt Sienna",
       "accentColors": [
         "Vivid Turquoise",
-        "Polished Copper"
+        "Antique Bronze"
       ],
+      "metal": "antique bronze",
       "eyeColor": "Rich malachite-hazel iris with dark umber limbal ring, radiating terracotta striations, and warm amber flecks",
       "eyeColorGlamour": "Rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring",
       "hairColor": "Medium bronze-brown hair, rich and warm",

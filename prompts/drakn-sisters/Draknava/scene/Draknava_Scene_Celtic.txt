@@ -8,12 +8,12 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a long Celtic gown of Deep Cerulean wool with wide trailing sleeves, silver Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder.
+Wearing a long Celtic gown of Windswept Jade wool with wide trailing sleeves, silver Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder.
 
 Headwear: a slim silver Celtic circlet worked with interlaced knotwork across the brow, a small silver gem at the centre, the hair flowing freely beneath.
 
 Jewelry: Celtic silver jewelry - a triskele pendant on a braided chain, a penannular brooch pinning the mantle, knotwork arm cuffs and drop earrings set with silver stones.
-Legs & feet: soft ankle-high Deep Cerulean leather moor boots laced up the front with silver cord.
+Legs & feet: soft ankle-high Windswept Jade leather moor boots laced up the front with silver cord.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a playful, knowing smile, eyes bright with mischief. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
@@ -21,7 +21,7 @@ Holding a small carved Celtic harp cradled against the shoulder in the crook of 
 
 A playful swirl of wind carries drifting mist and loose heather blossoms around her, silver light glinting within the breeze.
 
-Eyes: irises softly aglow with silver light, brightest near the pupil and fading to the natural sky cerulean irises at the rim, iris detail still visible, a gentle silver catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with silver light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle silver catchlight, no light spilling beyond the eyelids.
 
 Makeup: Celtic makeup - a soft smoky green-grey eye, a delicate silver woad spiral painted at one temple and a small triskele dot on the cheekbone, a natural flushed lip.
 
@@ -34,4 +34,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

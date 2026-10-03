@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNORA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Flame Red",
       "accentColors": [
         "Burnished Gold",
         "Vibrant Orange"
       ],
+      "metal": "burnished copper",
       "eyeColor": "Molten amber iris with dark charcoal limbal ring, radiating crimson striations, and fiery gold flecks",
       "eyeColorGlamour": "Molten amber irises with radiating crimson striations and a dark charcoal limbal ring",
       "hairColor": "Vivid copper-red hair, warm and glossy",

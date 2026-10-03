@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNESS_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Midnight Violet",
       "accentColors": [
         "Vibrant Amethyst",
         "Polished Silver"
       ],
+      "metal": "polished silver",
       "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks",
       "eyeColorGlamour": "Deep violet irises with radiating amethyst striations and an obsidian limbal ring",
       "hairColor": "Rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light",

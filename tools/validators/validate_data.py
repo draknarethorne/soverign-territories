@@ -270,6 +270,9 @@ def check_piece_refs(report):
     for f in hero_identity_files():
         ref = load(f).get("art", {}).get("palette", {}).get("hairStyleComponent")
         pal = load(f).get("art", {}).get("palette", {})
+        du = load(f).get("art", {}).get("defaultUnderlayer")
+        if du and not (ROOT / du).exists():
+            report.error(rel(f), f"defaultUnderlayer {du} does not exist")
         if "hairHighlights" in pal:
             if not (ROOT / pal["hairHighlights"]).exists():
                 report.error(rel(f), f"hairHighlights {pal['hairHighlights']} does not exist")

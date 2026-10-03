@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNISA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Deep Oceanic Blue",
       "accentColors": [
         "Deep Teal",
-        "Polished Brass"
+        "Polished Platinum"
       ],
+      "metal": "polished platinum",
       "eyeColor": "Deep sapphire iris with oceanic indigo limbal ring, radiating deep teal striations, and pearl-white flecks",
       "eyeColorGlamour": "Deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring",
       "hairColor": "Dark chocolate-brown hair, glossy and deep",

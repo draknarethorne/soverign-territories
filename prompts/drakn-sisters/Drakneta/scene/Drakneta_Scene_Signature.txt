@@ -8,18 +8,18 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered, ethereal outfit of sheer, frosted Electric Gold fabric over a matte underlayer, with delicate cyan glowing fibre-optic threads woven throughout, secured at the shoulders, nothing covering her head; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible.
+Wearing a layered, ethereal outfit of sheer, frosted Electric Gold fabric over a matte underlayer, with delicate white glowing fibre-optic threads woven throughout, secured at the shoulders, nothing covering her head; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible.
 
-Jewelry: Polished Silver with cyan-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Electric Gold high heels with glowing cyan straps.
+Jewelry: Polished Silver with white-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Electric Gold high heels with glowing white straps.
 
-She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling cyan lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.
+She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling white lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.
 
-Holding a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched Electric Gold metal, a ball of crackling cyan lightning suspended in the ring.
+Holding a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched Electric Gold metal, a ball of crackling white lightning suspended in the ring.
 
 Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.
 
-Eyes: irises softly aglow with cyan light, brightest near the pupil and fading to the natural electric cobalt-topaz irises at the rim, iris detail still visible, a gentle cyan catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with white light, brightest near the pupil and fading to the natural deep warm espresso-brown irises at the rim, iris detail still visible, a gentle white catchlight, no light spilling beyond the eyelids.
 
 Companion: her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning.
 
@@ -32,4 +32,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

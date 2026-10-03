@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing heavy Radiant Gold-toned plate armor over the chest and shoulders, Ivory White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a radiant sunburst emblem emblazoned over the chest plate, gold filigree tracing the edges.
+Wearing heavy Radiant Rose Gold-toned plate armor over the chest and shoulders, Ivory White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a radiant sunburst emblem emblazoned over the chest plate, gold filigree tracing the edges.
 
 Arms: bare forearms, no additional arm pieces.
 
@@ -18,9 +18,9 @@ Jewelry: none, unadorned.
 
 Back: no cape or back piece.
 
-Legs & feet: sturdy Radiant Gold-toned combat boots with white buckles, laced to the shin.
+Legs & feet: sturdy Radiant Rose Gold-toned combat boots with white buckles, laced to the shin.
 
-Holding a heavy warhammer, its Radiant Gold-toned head wreathed in white radiant light, in his right hand; a round Radiant Gold-toned shield with white trim strapped to his left forearm.
+Holding a heavy warhammer, its Radiant Rose Gold-toned head wreathed in white radiant light, in his right hand; a round Radiant Rose Gold-toned shield with white trim strapped to his left forearm.
 
 Overall, radiant paladin aesthetic.
 

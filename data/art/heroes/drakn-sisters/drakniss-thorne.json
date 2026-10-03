@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNISS_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
-      "primaryColor": "Luminous Ivory White",
+      "primaryColor": "Radiant Rose Gold",
       "accentColors": [
         "Radiant Gold",
-        "Polished Steel"
+        "Polished White Gold"
       ],
+      "metal": "radiant rose gold",
       "eyeColor": "Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks",
       "eyeColorGlamour": "Radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring",
       "hairColor": "Pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen",

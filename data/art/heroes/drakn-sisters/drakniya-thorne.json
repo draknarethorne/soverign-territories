@@ -1,12 +1,14 @@
 {
   "cardId": "HERO_DRAKNIYA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
       "primaryColor": "Emerald Green",
       "accentColors": [
         "Forest Sage",
         "Moss Gold"
       ],
+      "metal": "antique gold",
       "eyeColor": "Deep forest-emerald iris with dark pine limbal ring, radiating sage striations, and warm gold flecks",
       "eyeColorGlamour": "Deep forest-emerald irises with radiating sage striations and a dark pine limbal ring",
       "hairColor": "Honey-blonde hair with rich chestnut-brown lowlights",

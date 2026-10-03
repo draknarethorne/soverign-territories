@@ -19,15 +19,15 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 
 Skin: warm golden tan complexion, evenly tanned, no pale areas.
 
-Wearing: only a Electric Gold skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Electric Gold open-toed high heels.
+Wearing: only a Electric Gold skimpy triangle bikini top and matching seamless high-cut thong bottom in a lustrous satin-metallic finish with a subtle bright gold sheen and a hairline bright gold edge trim - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Electric Gold open-toed high heels with bright gold accents.
 
 Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour, tone-on-tone dimension; a very slight lift from a light breeze below.
 
 Hairstyle: hair fully let down and loose, parted in the exact centre and framing the face, the hair falling forward over the front of both shoulders and hanging down just beside the breasts (not covering them) so its full length, ends and highlights are visible, keeping the subject's own natural texture (straight, wavy or curly); the part, forehead, eyes and cheeks stay completely clear of hair and the chest and décolletage stay unobscured (fully replace the source photo's hairstyle).
 
-Makeup: soft and natural, with a subtly blended cyan-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
+Makeup: soft and natural, with a subtly blended white-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
 
-Eyes: electric cobalt-topaz irises with radiating arc-cyan striations and a midnight indigo limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+Eyes: deep warm espresso-brown irises with radiating electric-gold striations and a dark umber limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
 
 Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
 
@@ -36,4 +36,4 @@ Expression: an alluring, confident, relaxed expression - a soft closed-mouth smi
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, all-over blue hair, all-over cyan hair, fully dyed hair, thick thighs, wide hips, boyish figure, stick-like, pale skin, fair skin, washed-out skin, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, all-over blue hair, all-over cyan hair, fully dyed hair, thick thighs, wide hips, boyish figure, stick-like, pale skin, fair skin, washed-out skin, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

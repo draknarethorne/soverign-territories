@@ -8,20 +8,20 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Cerulean over a matte underlayer, with delicate silver glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Windswept Jade over a matte underlayer, with delicate silver glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: Polished Silver with silver-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Deep Cerulean high heels with glowing silver straps.
+Legs & feet: bright Windswept Jade high heels with glowing silver straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a playful, knowing smile, eyes bright with mischief. one arm raised and channeling energy, the other hand cupped at her side.
 
-Holding a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing silver strings, small silver wind-chimes and long ribbons of Deep Cerulean silk streaming from it in the breeze, a faint silver shimmer in the air around the strings.
+Holding a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing silver strings, small silver wind-chimes and long ribbons of Windswept Jade silk streaming from it in the breeze, a faint silver shimmer in the air around the strings.
 
 A playful swirl of wind catches loose leaves and her hair, silver light glinting within the breeze.
 
-Eyes: irises softly aglow with silver light, brightest near the pupil and fading to the natural sky cerulean irises at the rim, iris detail still visible, a gentle silver catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with silver light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle silver catchlight, no light spilling beyond the eyelids.
 
-Companion: her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of deep-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk.
+Companion: her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk.
 
 Environment: the skyline of a medieval high-fantasy walled citadel at dusk behind them, slate-roofed stone towers and timber-framed houses climbing to a distant keep and cathedral spires, banners stirring on the battlements, lantern and torch light glowing in the windows and streets below, warm last light on the rooftops.
 
@@ -32,4 +32,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

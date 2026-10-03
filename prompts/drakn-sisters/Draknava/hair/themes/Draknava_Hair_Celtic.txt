@@ -17,7 +17,7 @@ A very slight lift from a light breeze below.
 Hair is centre-parted and loose with a few slim Celtic plaits, silver rings and ribbons woven through, falling in front of the shoulders.
 
 
-Eyes: sky cerulean irises with radiating gossamer silver striations and a slate blue limbal ring, natural studio eyes, not glowing.
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring, natural studio eyes, not glowing.
 
 Makeup: soft and natural, with a subtly blended silver-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
@@ -26,4 +26,4 @@ Very long, slender legs.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

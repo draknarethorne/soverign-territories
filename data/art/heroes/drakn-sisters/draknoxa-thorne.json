@@ -1,14 +1,16 @@
 {
   "cardId": "HERO_DRAKNOXA_THORNE",
   "art": {
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
     "palette": {
-      "primaryColor": "Radiant Acid Green",
+      "primaryColor": "Toxic Orchid Magenta",
       "accentColors": [
         "Vibrant Acid Lime",
         "Tarnished Brass"
       ],
-      "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic violet striations, and chartreuse flecks",
-      "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic violet striations and a blackened moss limbal ring",
+      "metal": "tarnished brass",
+      "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic magenta striations, and chartreuse flecks",
+      "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring",
       "hairColor": "Deep dark burgundy-black hair with a rich red tint and cool espresso depth",
       "hairHighlights": "data/art/cosmetics/highlights/underlayer/peekaboo-underlayer.json",
       "hairHighlightColor": "acid-lime",

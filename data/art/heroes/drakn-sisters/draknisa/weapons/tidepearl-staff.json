@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknisa/weapons/tidepearl-staff",
   "kind": "holding",
   "name": "Tidepearl Staff (Draknisa signature)",
-  "description": "a slender polished brass staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of brass, a soft {{ACCENT_SOFT}} glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft",
+  "description": "a slender polished platinum staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of platinum, a soft {{ACCENT_SOFT}} glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft",
   "compatibleStages": ["scene"],
   "notes": "Water/Enchanter signature item: a charm focus, not a weapon."
 }

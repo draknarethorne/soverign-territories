@@ -2,7 +2,7 @@
   "cardId": "HERO_LYRAN_FROSTFALL",
   "art": {
     "palette": {
-      "primaryColor": "Glacial Blue",
+      "primaryColor": "Glacial Cyan",
       "accentColors": [
         "Frost White",
         "Steel Grey"
@@ -33,5 +33,5 @@
       "raceAlignment": "High Elf presentation — tall, elegant features; subtle pointed ears"
     }
   },
-  "notes": "Core ART hero definition for Lyran Frostfall (Ice, Knight, Defense/Tank). First-pass palette/physique, no archived source material — Ice colour family parallels Draknira's own Glacial Blue as a male variant."
+  "notes": "Core ART hero definition for Lyran Frostfall (Ice, Knight, Defense/Tank). First-pass palette/physique, no archived source material — Ice colour family parallels Draknira's own Glacial Cyan as a male variant."
 }
