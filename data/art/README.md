@@ -279,6 +279,11 @@ run from any A-pose with no earlier art. Its pose can be a motion piece, a liter
 The validator enforces the naming so the two kinds can never be mixed up. Today the only staged scenes are the two
 `*-scene-staged-enchanted-evening` cards.
 
+**Scene naming, uniform for every scene card** (validator-enforced): file name = artId = `<hero>-scene-<name>.json`
+(`<hero>` is the first word of the hero's folder, e.g. `corin-scene-signature` for `corin-tidewalker`), and the output is
+`prompts/<group>/<Hero>/scene/<Hero>_Scene_<Name>.txt`. Staged scenes insert `staged` after `scene`
+(`drakness-scene-staged-enchanted-evening` -> `Drakness_Scene_Staged_EnchantedEvening.txt`).
+
 **Motion component tokens join into ONE token per slot, not one-per-field** — a rich motion
 component (editorial/breeze/body/head/pose) referenced for a scene's `pose` slot becomes a single
 combined `{{POSE}}` line, not several new template tokens. This keeps the template token surface

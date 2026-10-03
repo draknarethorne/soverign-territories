@@ -17,6 +17,7 @@ Usage:  python tools/validators/validate_data.py        # exit 1 on any error
 import collections
 import json
 import pathlib
+import re
 import sys
 
 from jsonschema import Draft7Validator, validators
@@ -220,6 +221,14 @@ def check_art_cards(report):
         # Staged vs complete scenes: a staged scene expects a pre-rendered stage image, so it must say
         # so in its name (and use the staged template); every other scene must be complete from the A-pose.
         if d["stage"] == "scene":
+            slug = f.relative_to(ROOT / "data/art/_sets").parts[1]
+            hero = pathlib.PurePosixPath(d.get("output", "")).name
+            if f.stem != d["artId"]:
+                report.error(where, f"scene file name must equal its artId ({d['artId']}.json)")
+            if not (d["artId"].startswith(slug.split("-")[0] + "-") and "-scene-" in d["artId"]):
+                report.error(where, f"scene artId must look like '<hero>-scene-<name>' (got {d['artId']})")
+            if not re.fullmatch(r"[A-Z][A-Za-z]*_Scene_(Staged_)?[A-Za-z0-9_]+\.txt", hero):
+                report.error(where, f"scene output name must look like '<Hero>_Scene_<Name>.txt' (got {hero})")
             is_staged_tpl = pathlib.PurePosixPath(d["template"]).name.startswith("scene-staged-")
             if ("-staged-" in d["artId"]) != is_staged_tpl or ("_Staged_" in d.get("output", "")) != is_staged_tpl:
                 report.error(where, "staged scenes must use a scene-staged-* template AND have '-staged-' in the artId "

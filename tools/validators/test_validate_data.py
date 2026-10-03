@@ -78,6 +78,8 @@ CASES = [
      lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/scene-staged-human.txt"})), "staged scenes must use"),
     ("staged-looking name on a complete scene",
      lambda r: edit(r / SCENE, lambda d: d.update({"artId": "drakness-scene-staged-signature"})), "staged scenes must use"),
+    ("scene file name no longer matching its artId",
+     lambda r: (r / SCENE).rename((r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
      lambda r: (r / "data/art/themes/stray").mkdir(), "no theme.json"),
 ]
