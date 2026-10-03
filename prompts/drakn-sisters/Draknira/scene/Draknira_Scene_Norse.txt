@@ -1,4 +1,4 @@
-=== Draknira Thorne · Scene (Outfit + Effects): Norse Frost Seeress (group: Scene) — Edit (img2img) ===
+=== Draknira Thorne · Scene (Outfit + Effects): Norse Frost Seeress (group: Scene, complete from the A-pose) — Edit (img2img) ===
 Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------

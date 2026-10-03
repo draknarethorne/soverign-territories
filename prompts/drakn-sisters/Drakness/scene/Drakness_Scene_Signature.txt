@@ -1,13 +1,23 @@
-=== Drakness Thorne · Final Scene: Signature (group: Scene) — Edit (img2img) ===
-Incoming image: the "Bone" Drakness - necromancer in bone-plate armor with a flowing cape, holding a scythe. This final pass ONLY adds the scene (background, atmosphere, spell glow) and small pose/wind adjustments. Do NOT redraw her, her armor, hair, or weapon — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+=== Drakness Thorne · Scene (Outfit + Companion): Signature (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
 
-Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle, armor, and held weapon. Keep all of these unchanged.
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
 
-She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a two-piece skeletal armor bikini - weathered natural bone cups, vertebrae halter strap, high-cut skeletal hip bones, vibrant amethyst centerpiece; bare stomach and midriff, revealing high-cut with bold décolletage, legs exposed.
+
+Jewelry: silver chain necklace with a small polished bone skull pendant; matching skull earrings and rings; matching small bellybutton ring.
+Arms: matching bone bracers; matching pauldrons with dragon-claw spikes.
+Back: a simple black leather cape with a bone-coloured gothic pattern hanging behind her.
+Legs & feet: slender skeletal bone-spine greaves, delicate skeletal plate, midnight-black silk stockings, medium-small skeletal bone-coloured runes, stiletto sabatons.
+
+She stands mid-cast, commanding and composed, her gaze toward the camera, weight shifted, chin lifted, her free hand raised and open as she channels.
+
+Holding an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black shaft, polished silver blade with gothic patterns, in one hand.
 
 Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.
 
@@ -18,12 +28,10 @@ Companion: her aligned Elder Dragon, Umbrath, looming in the shadows of the ossu
 Environment: a shadowed fantasy ossuary of ancient crypt arches and bone-strewn ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-A light breeze lifts her cape and a few strands of her hair.
 
-Palette: Midnight Violet dominant, with amethyst accents; all glow is amethyst.
-Full-body hero framing, slight low camera angle for an imposing, regal presence.
+Figure: lithe, slender, long-limbed build; full, voluptuous bust, emphasized and enhanced - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered armor, altered hairstyle.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

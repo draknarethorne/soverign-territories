@@ -1,4 +1,4 @@
-=== Angelo Prime · Scene: Evening (group: Scene) — Edit (img2img) ===
+=== Angelo Prime · Scene: Evening (group: Scene, complete from the A-pose) — Edit (img2img) ===
 Incoming image: an A-pose of Angelo Prime (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------

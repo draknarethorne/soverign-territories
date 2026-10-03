@@ -4,15 +4,20 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "name": "Signature",
-  "base_description": "the \"Bone\" Drakness - necromancer in bone-plate armor with a flowing cape, holding a scythe",
-  "pose": "She stands mid-cast, commanding and composed, her gaze toward the camera. Adjust the pose only: weight shifted, chin lifted, her free hand raised and open as she channels.",
   "components": {
+    "pose": "She stands mid-cast, commanding and composed, her gaze toward the camera, weight shifted, chin lifted, her free hand raised and open as she channels.",
+    "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
+    "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
+    "back": "data/art/wardrobe/capes/short-capes/simple-black-leather.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json",
     "effects": "data/art/heroes/drakn-sisters/drakness/effects/casting-amethyst.json",
     "companion": "her aligned Elder Dragon, Umbrath, looming in the shadows of the ossuary behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light",
     "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },
-  "template": "data/art/_templates/heroes/scene-human.txt",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_Signature.txt",
   "denoise": "~0.5-0.7",
-  "notes": "The first full 'scene' assembly -- hero + armor/weapon preserved from a prior stage (not regenerated here) + effects + background + pose tweak, grounded in prompts/_archive/Drakness/final/Drakness_FireRed_SD-001_Final.txt. Weapon kept as the existing Reaper Scythe (the archive itself preserves the scythe and bans 'staff' in its negative prompt) rather than inventing a new skull-topped staff -- easy to swap later if a genuinely new signature weapon is wanted."
+  "notes": "COMPLETE scene: with the A-pose in the bikini as the incoming image, this card fully describes the Bone armor, scythe, cape, effects, dragon and background (it replaces the old staged version that assumed a pre-rendered Bone armor image)."
 }

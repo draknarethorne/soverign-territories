@@ -1,4 +1,4 @@
-=== Drakness Thorne · Scene (Outfit + Effects): Egyptian Necropolis (group: Scene) — Edit (img2img) ===
+=== Drakness Thorne · Scene (Outfit + Effects): Egyptian Necropolis (group: Scene, complete from the A-pose) — Edit (img2img) ===
 Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------

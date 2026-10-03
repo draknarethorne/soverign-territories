@@ -1,4 +1,4 @@
-=== Malakor Venomcaller · Scene (Outfit + Combat): Signature (group: Scene) — Edit (img2img) ===
+=== Malakor Venomcaller · Scene (Outfit + Combat): Signature (group: Scene, complete from the A-pose) — Edit (img2img) ===
 Incoming image: an A-pose of Malakor Venomcaller (chosen hair). Apply the outfit and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------

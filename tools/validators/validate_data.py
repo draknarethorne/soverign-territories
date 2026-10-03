@@ -217,6 +217,13 @@ def check_art_cards(report):
             if bg_realm != realm:
                 report.error(where, f"scene realm is '{realm}' but background {bg} is under backgrounds/{bg_realm}/ "
                                     f"(set components.realm to match, or pick a {realm} background)")
+        # Staged vs complete scenes: a staged scene expects a pre-rendered stage image, so it must say
+        # so in its name (and use the staged template); every other scene must be complete from the A-pose.
+        if d["stage"] == "scene":
+            is_staged_tpl = pathlib.PurePosixPath(d["template"]).name.startswith("scene-staged-")
+            if ("-staged-" in d["artId"]) != is_staged_tpl or ("_Staged_" in d.get("output", "")) != is_staged_tpl:
+                report.error(where, "staged scenes must use a scene-staged-* template AND have '-staged-' in the artId "
+                                    "and '_Staged_' in the output name; complete scenes must have none of these")
         out = d.get("output")
         if out:
             if out.split("/")[1] != group:

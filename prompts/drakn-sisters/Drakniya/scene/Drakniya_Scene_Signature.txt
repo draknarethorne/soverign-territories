@@ -1,4 +1,4 @@
-=== Drakniya Thorne · Scene (Outfit + Companion): Signature (group: Scene) — Edit (img2img) ===
+=== Drakniya Thorne · Scene (Outfit + Companion): Signature (group: Scene, complete from the A-pose) — Edit (img2img) ===
 Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------

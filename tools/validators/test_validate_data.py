@@ -74,6 +74,10 @@ CASES = [
      lambda r: shutil.copy(r / "data/art/backgrounds/studio/cream-even.json", r / "data/art/backgrounds/stray.json"), "fantasy/, modern/ or studio/"),
     ("piece id no longer equal to its path (stale id after a move)",
      lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"id": "wardrobe/weapons/greatsword"})), "must equal its path"),
+    ("complete scene card switched to the staged template without being renamed",
+     lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/scene-staged-human.txt"})), "staged scenes must use"),
+    ("staged-looking name on a complete scene",
+     lambda r: edit(r / SCENE, lambda d: d.update({"artId": "drakness-scene-staged-signature"})), "staged scenes must use"),
     ("theme folder without a theme.json manifest",
      lambda r: (r / "data/art/themes/stray").mkdir(), "no theme.json"),
 ]

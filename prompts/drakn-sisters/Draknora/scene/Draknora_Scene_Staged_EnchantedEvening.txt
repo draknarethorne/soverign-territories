@@ -1,4 +1,4 @@
-=== Draknora Thorne · Final Scene: Enchanted Evening (group: Scene) — Edit (img2img) ===
+=== Draknora Thorne · STAGED Scene (needs a pre-rendered stage image): Enchanted Evening (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknora in her Flame Red ethereal gown (see clothing/gown.json), hair and makeup already set. This final pass ONLY adds the scene (background, atmosphere, spell glow) and small pose/wind adjustments. Do NOT redraw her, her armor, hair, or weapon — carry them from the incoming image. Only the eyes (glow override) change from the base.
 Denoise ~0.5-0.7.
 

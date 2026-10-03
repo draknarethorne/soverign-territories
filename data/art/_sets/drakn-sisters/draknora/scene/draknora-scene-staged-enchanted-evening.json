@@ -1,5 +1,5 @@
 {
-  "artId": "draknora-scene-enchanted-evening",
+  "artId": "draknora-scene-staged-enchanted-evening",
   "kind": "base-set",
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
@@ -11,8 +11,8 @@
     "companion": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
     "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
   },
-  "template": "data/art/_templates/heroes/scene-human.txt",
-  "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_EnchantedEvening.txt",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_Staged_EnchantedEvening.txt",
   "denoise": "~0.5-0.7",
   "notes": "Same two-stage pattern as Drakness's enchanted-evening.json: feed in her clothing/gown.json image, not an A-pose. Reuses the identical pose/effects/background pieces as Drakness's version -- fourth/fifth proof of cross-hero reuse, this time for the 'quiet evening' mood rather than casting."
 }

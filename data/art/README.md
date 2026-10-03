@@ -132,7 +132,7 @@ data/art/
 │                                   pose-view-human.txt (turnaround from the A-pose),
 │                                   head-human.txt (any angle/framing/expression), hair-human.txt,
 │                                   motion-human.txt, armor-human.txt, clothing-human.txt,
-│                                   scene-human.txt, scene-with-outfit-human.txt,
+│                                   scene-staged-human.txt, scene-with-outfit-human.txt,
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
 │                                   non-caster martial heroes). Naming: `<stage>-<archetype>.txt`;
@@ -255,15 +255,29 @@ non-racial), and `hair` moved under `races/human/cosmetics/`.
 Wearing/Arms/Jewelry/Back/Legs&feet/Holding; the archived Raven outfit instead has Drapes and
 Belt&kit (no Holding at all). That's expected, not a bug: a new outfit shape may need its own
 template variant rather than forcing every outfit through one fixed slot list. The **scene** stage
-has four template variants for this reason: `scene-human.txt` (preserve everything from a prior
+has five template variants for this reason (see "Complete vs staged scenes" below): `scene-staged-human.txt` (preserve everything from a prior
 stage, only add atmosphere — the **two-stage** path: feed in an already-rendered clothing/armor
 image), `scene-with-outfit-human.txt` (describe the outfit directly — the **single-stage**,
 A-pose-in/full-scene-out path), `scene-with-companion-human.txt` (adds `{{COMPANION}}` for a bonded
-pet/dragon), and `scene-minimal-human.txt` (wearing/pose/effects/background only — no
+pet/dragon), `scene-combat-human.txt` (martial heroes, no casting-eyes line) and `scene-minimal-human.txt` (wearing/pose/effects/background only — no
 jewelry/weapon/companion slots, for lower-priority content like the Angel Primes test-bed where
 footwear is baked into the one bundled `wearing` piece instead of decomposed). A **companion** is
 its own piece, deliberately separate from `background` — the dragon's identity/placement is one
 reusable concern, the environment it flies through is another.
+
+### Complete vs staged scenes
+
+Every scene card is one of two kinds, readable from its **name** (no folders, no opening the file):
+
+| Kind | Incoming image | How to tell | Used for |
+| --- | --- | --- | --- |
+| **Complete** (default) | the hero's A-pose in the bikini | no marker; template is `scene-with-outfit`, `-with-companion`, `-combat` or `-minimal` | every `*-scene-signature` and every themed scene |
+| **Staged** | a pre-rendered stage image (an armor or clothing render) | `-staged-` in the artId and file name, `_Staged_` in the output name, template `scene-staged-human.txt` | experiments that reuse an existing render |
+
+A complete scene fully describes the result in JSON (outfit, pose, effects, companion, background, realm), so it can be
+run from any A-pose with no earlier art. Its pose can be a motion piece, a literal, or `+literal` to adjust a default.
+The validator enforces the naming so the two kinds can never be mixed up. Today the only staged scenes are the two
+`*-scene-staged-enchanted-evening` cards.
 
 **Motion component tokens join into ONE token per slot, not one-per-field** — a rich motion
 component (editorial/breeze/body/head/pose) referenced for a scene's `pose` slot becomes a single
