@@ -26,7 +26,7 @@ Overall, cunning rogue aesthetic.
 
 Figure: lean, agile, wiry-muscled build; lean, toned chest and core; narrow, agile waist; long, lean legs built for quick movement.
 
-Eyes: verdant green irises with faint golden striations and a mossy-brown limbal ring.
+Eyes: verdant green irises, natural and unchanged from the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

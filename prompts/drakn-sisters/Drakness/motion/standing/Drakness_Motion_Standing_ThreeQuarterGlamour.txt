@@ -26,7 +26,7 @@ Gaze: eyes to camera.
 
 Expression: alluring, confident; lips slightly parted; expressive, sultry brows.
 
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Eyes: deep violet irises, natural and unchanged from the incoming image.
 
 Pose: one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 

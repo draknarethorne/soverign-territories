@@ -71,7 +71,17 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 - [Quality gates](QUALITY-GATES.md)
 - [Change management](CHANGE-MANAGEMENT.md)
 - [Release checklist](RELEASE-CHECKLIST.md)
-- [Archive index](archive/README.md) (frozen; superseded docs are deleted, not archived)
+- [Archive index](_archive/README.md)
+
+## The `_archive` convention
+
+Every archive folder in the repo is named `_archive` (`docs/_archive`, `data/_archive`, `prompts/_archive`, ...). It is a
+recycle bin: content stays reachable without digging through git, until a later purge. Rules:
+
+- Nothing under an `_archive` folder is current, and it is **not** read as documentation or data unless explicitly
+  requested (assistants, searches, link checks, and validators skip it).
+- Move superseded material there with `git mv`; do not edit it afterwards, and do not link to it from current docs.
+- Active folders that start with an underscore (`data/art/_templates`, `_sets`, `_schema`) are **not** archives.
 
 ## Readiness rule
 

@@ -26,7 +26,7 @@ Gaze: tracking the viewer.
 
 Expression: dynamic, intensely expressive, caught in a seductive emotional shift; features alternating between a playful, alluring grin and a seductive smile; lips active and non-neutral, brow line happy.
 
-Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Eyes: deep violet irises, natural and unchanged from the incoming image.
 
 Pose: one hand touches the ground, the other touches her body.
 

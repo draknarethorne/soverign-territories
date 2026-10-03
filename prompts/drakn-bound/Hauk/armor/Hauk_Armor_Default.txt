@@ -26,7 +26,7 @@ Overall, radiant paladin aesthetic.
 
 Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
 
-Eyes: radiant amber-gold irises with faint golden striations and a warm bronze limbal ring.
+Eyes: radiant amber-gold irises, natural and unchanged from the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

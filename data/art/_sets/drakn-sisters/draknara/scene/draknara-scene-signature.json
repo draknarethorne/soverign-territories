@@ -10,13 +10,13 @@
     "wearing": "data/art/wardrobe/clothing/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/glowing-strap-heels.json",
-    "holding": "data/art/wardrobe/weapons/ornate-staff.json",
+    "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",
     "effects": "Fine motes of {{ACCENT_SOFT}} dust and drifting leaf litter swirl gently around her feet, stirred by unseen earth magic.",
-    "companion": "her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of terracotta-ochre and rich-bronze scales, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in warm sand",
+    "companion": "her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of deep burnt-sienna and rich-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in polished copper",
     "background": "data/art/backgrounds/forests/ancient-grove.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Signature.txt",
   "denoise": "~0.5-0.7",
-  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces (gown, jewelry set, heels, ornate staff, ambient glow) in Draknara's own Terracotta Ochre/Rich Bronze palette, plus the existing ancient-grove background (fits Earth/Shaman thematically). Shortcut per explicit instruction: no unique signature item yet beyond the shared defaults -- can be swapped for something more bespoke later."
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces (gown, jewelry set, heels, ambient glow) in Draknara's own Deep Burnt Sienna/Vivid Turquoise palette, with her own spirit-totem signature staff, plus the existing ancient-grove background (fits Earth/Shaman thematically)."
 }

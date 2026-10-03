@@ -2,13 +2,13 @@
   "cardId": "HERO_TORVALD_STONEBREAKER",
   "art": {
     "palette": {
-      "primaryColor": "Terracotta Brown",
+      "primaryColor": "Deep Rust Brown",
       "accentColors": [
         "Iron Grey",
         "Warm Sand"
       ],
-      "eyeColor": "Deep umber iris with dark iron limbal ring, faint terracotta striations",
-      "eyeColorGlamour": "Deep umber irises with faint terracotta striations and a dark iron limbal ring",
+      "eyeColor": "Deep umber iris with dark iron limbal ring, faint rust striations",
+      "eyeColorGlamour": "Deep umber irises with faint rust striations and a dark iron limbal ring",
       "hairColor": "Dark brown hair, short and rugged",
       "skinTone": "Deep sun-weathered tan complexion, evenly toned",
       "eyeColorNegatives": [

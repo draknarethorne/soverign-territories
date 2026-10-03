@@ -101,6 +101,18 @@ def resolve_hairstyle(pal):
     return pal["hairStyle"]
 
 
+def soft_eye(glamour):
+    """Iris colour only (e.g. 'Deep violet irises'), dropping striations/limbal-ring detail.
+    Used by stages that preserve the incoming eyes, where the full glamour line over-emphasises them."""
+    m = re.match(r"(.*?\biris(?:es)?)\b", glamour)
+    return decap(m.group(1) if m else glamour)
+
+
+# Scene templates carry {{EYE_EFFECT}}; a card picks one via components.eye_effect,
+# otherwise this default applies. Pieces live in data/art/wardrobe/effects/eyes/.
+DEFAULT_EYE_EFFECT = "data/art/wardrobe/effects/eyes/partial-glow.json"
+
+
 def tokens_for(hero):
     pal = hero["art"]["palette"]
     phy = hero["art"]["physique"]
@@ -137,6 +149,7 @@ def tokens_for(hero):
         "FIGURE": figure,
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
+        "EYE_SOFT": soft_eye(pal["eyeColorGlamour"]),
         "HAIR": decap(pal["hairColor"]),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "LEGS": phy["legs"],
@@ -323,6 +336,8 @@ def generate(card_path):
         if section in overrides:
             hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
+    if "{{EYE_EFFECT}}" in template:
+        card.setdefault("components", {}).setdefault("eye_effect", DEFAULT_EYE_EFFECT)
     # A dragon identity has no 'art' section (not humanoid) -- its own, simpler token set.
     toks = tokens_for_dragon(hero) if "art" not in hero else tokens_for(hero)
     toks.update(resolve_component_tokens(card))

@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknara/weapons/totem-staff",
+  "kind": "holding",
+  "name": "Spirit Totem Staff (Draknara signature)",
+  "description": "a tall carved wooden spirit-totem staff in one hand, planted upright, its shaft wrapped in strips of {{PRIMARY}} and {{ACCENT_SOFT}} cloth that hang and sway, woven leather cords, feathers, beads and small stone charms dangling from it, topped with a carved totem face encircled by a ring of feathers and a spiral sun-and-earth shaman symbol, a faint {{ACCENT_SOFT}} glow in the totem's carved eyes",
+  "compatibleStages": ["scene"],
+  "notes": "Earth/Shaman signature item: reads as a shaman's totem, not a necromancer's skull staff."
+}

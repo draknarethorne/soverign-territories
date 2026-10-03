@@ -26,7 +26,7 @@ Overall, deadly assassin aesthetic.
 
 Figure: powerful, broad-shouldered, heavily muscled build; broad, heavily muscled chest and core; solid, thick waist; thick, powerful legs.
 
-Eyes: acid-green irises with faint toxic-violet striations and a blackened limbal ring.
+Eyes: acid-green irises, natural and unchanged from the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknira/weapons/frost-crystal-staff",
+  "kind": "holding",
+  "name": "Frost Crystal Staff (Draknira signature)",
+  "description": "a tall slender staff of pale silvery wood in one hand, frost creeping down the shaft, crowned with a large faceted ice crystal held in a claw of silver tines, a cold {{ACCENT_SOFT}} light glowing inside the crystal, fine ice shards drifting from it",
+  "compatibleStages": ["scene"],
+  "notes": "Ice/Wizard signature item: classic arcane focus."
+}

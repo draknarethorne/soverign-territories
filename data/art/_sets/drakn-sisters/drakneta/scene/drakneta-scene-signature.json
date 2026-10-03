@@ -6,7 +6,7 @@
   "name": "Signature",
   "wearing": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{ACCENT_SOFT}} glowing fibre-optic threads woven throughout, secured at the shoulders, nothing covering her head; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
   "pose": "She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling {{ACCENT_SOFT}} lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.",
-  "holding": "an ornate staff, upright, touching the ground, a {{ACCENT_SOFT}} lightning glow around the jewel at its top",
+  "holding": "a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched {{PRIMARY}} metal, a ball of crackling {{ACCENT_SOFT}} lightning suspended in the ring",
   "effects": "Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.",
   "components": {
     "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",

@@ -10,7 +10,7 @@ Background: a basic cream-coloured studio backdrop. Even soft neutral frontal st
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing fitted Sky Cyan-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
+Wearing fitted Deep Sky Cyan-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
 
 Arms: bare forearms, no additional arm pieces.
 
@@ -18,15 +18,15 @@ Jewelry: none, unadorned.
 
 Back: no cape or back piece.
 
-Legs & feet: sturdy Sky Cyan-toned combat boots with white buckles, laced to the shin.
+Legs & feet: sturdy Deep Sky Cyan-toned combat boots with white buckles, laced to the shin.
 
-Holding a curved single-edged saber, its white-edged blade trailing wisps of Sky Cyan wind, Sky Cyan-wrapped hilt, gripped in one hand.
+Holding a curved single-edged saber, its white-edged blade trailing wisps of Deep Sky Cyan wind, Deep Sky Cyan-wrapped hilt, gripped in one hand.
 
 Overall, swift warrior aesthetic.
 
 Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, lean legs.
 
-Eyes: pale sky-blue irises with faint cyan striations and a silver limbal ring.
+Eyes: pale sky-blue irises, natural and unchanged from the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

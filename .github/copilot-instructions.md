@@ -50,6 +50,9 @@ If a number or rule here disagrees with those docs, the docs win.
 
 - Be concise; use tables and bullets for complex topics; no emojis unless the user uses them.
 - Use absolute paths with file tools. Read a file before editing it.
-- Documentation: one home per fact. Delete superseded docs instead of archiving (`docs/archive/` is frozen).
+- Documentation: one home per fact. Move superseded files with `git mv` into the nearest `_archive` folder (the repo-wide
+  archive convention: `docs/_archive`, `data/_archive`, `prompts/_archive`).
+- **Ignore every `_archive` folder** when reading documentation, data, or prompts, and do not cite or link to it,
+  unless the user explicitly asks for archived material. Folders like `data/art/_templates`, `_sets`, `_schema` are active.
 - Do not make major design decisions without user approval, and do not commit code that fails the validators.
 - Do not create art assets; describe them for the artist or generate prompts through the pipeline.

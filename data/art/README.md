@@ -364,6 +364,29 @@ split with confidence; forcing a taxonomy now risks guessing wrong and reshuffli
 
 ---
 
+## Eyes: three levels of emphasis
+
+Eye detail is deliberately **not** repeated at full strength in every stage, so it never takes over the face:
+
+| Stage | Token | What it says |
+| --- | --- | --- |
+| `pose`, `head` (set the eyes) | `{{EYE}}` | Full glamour line: iris colour, striations, limbal ring. |
+| `hair`, `motion`, `armor`, `clothing` (preserve the eyes) | `{{EYE_SOFT}}` | Iris colour only ("natural and unchanged"). Derived from `eyeColorGlamour` by `soft_eye()`. |
+| `scene` templates | `{{EYE_EFFECT}}` | A glow level for the action, chosen with `components.eye_effect`. |
+
+Scene glow pieces live in `data/art/wardrobe/effects/eyes/`: `natural` (no glow), `iris-kindling` (glow just starting at the
+iris rim), `partial-glow` (**default**, mid-cast, iris detail kept), `full-glow` (power peak, overrides the eye colour and
+dominates the face). Override per scene card: `"eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json"`.
+`scene-combat-human.txt` has no eye line (martial heroes).
+
+## Signature items match the character
+
+A signature weapon should read as the hero's class at a glance (a Shaman's totem staff with hanging cloth and a shaman
+symbol, a Druid's living-wood staff, a Cleric's sunburst staff), never a generic "skull staff". Each sister's staff lives in
+`heroes/drakn-sisters/<slug>/weapons/`; `wardrobe/weapons/ornate-staff.json` (skull jewel) is only for Necromancer scenes.
+
+---
+
 ## Field-name vocabulary (master inventory) — why field names must stay consistent
 
 `data/art/_schema/field-vocabulary.json` is the **enforced**, authoritative registry of every

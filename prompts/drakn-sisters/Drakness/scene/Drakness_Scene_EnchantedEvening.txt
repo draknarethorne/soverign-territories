@@ -11,7 +11,7 @@ A candid high-fashion editorial shot, dynamic natural movement, confident contra
 
 a faint amethyst glow lingers softly, ambient and understated, nothing overtly magical.
 
-Eyes glowing amethyst, luminous, mid-cast (override the incoming eye colour).
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
 
 Companion: her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight.
 
