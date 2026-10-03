@@ -5,13 +5,10 @@
 
 ## Current status
 
-The project is in design and pre-implementation reconciliation. Quality gates pass at their
-current baseline, but that does **not** establish implementation readiness. Canonical
-scope, data-contract location, starter content, and feasibility must agree before the MVP
-is described as ready for Unity work.
-
-See `working/archive-canon-reconciliation-jul2026.md` for evidence, active corrections,
-and the readiness gates.
+Design and art are ahead of gameplay data; there is no Unity project yet. Starter decks,
+packs, and manifests are out of sync with the current card set. [STATUS.md](STATUS.md) is
+the single working document: current state, decisions made, open decisions, next work,
+data debt, and the readiness gates.
 
 ## Read in this order
 
@@ -24,8 +21,7 @@ and the readiness gates.
 5. [Deck and Formation Rules](design/deck-progression-rules.md) — legality, one-hero
    formation, copy limit, and rarity budget.
 6. [MVP Tutorial Flow](mvp/tutorial-flow.md) — short onboarding sequence.
-7. [Archive-to-Canon Reconciliation](working/archive-canon-reconciliation-jul2026.md) —
-   archive dispositions and readiness evidence.
+7. [Project Status](STATUS.md) — what is true now, what is decided, what is next.
 
 ## Canonical source matrix
 
@@ -40,7 +36,8 @@ and the readiness gates.
 | Runtime data contracts | `../data/schemas/*.json` | Schemas, validators, and runtime tooling are authoritative. |
 | Art-direction pipeline | `../data/art/README.md` | Authoritative for how card art is produced (identity files, components, templates, `gen_prompt.py`). |
 | Hero/dragon vision roster | `codex/heroes/ideation_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline. **Ideation-tier vision**, not MVP scope — a subset ships first. |
-| Art ↔ gameplay seam | `working/art-gameplay-reconciliation-oct2026.md` | Ordered plan to reconcile art data vs gameplay data vs schemas. |
+| Current state, decisions, backlog | `STATUS.md` | Wins on "what is done / open / next". Rules still live in the rows above. |
+| Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
 
 ## Phases
 
@@ -60,7 +57,7 @@ and the readiness gates.
 ## Data and tooling
 
 - Runtime game data: `../data/`
-- Machine-readable schemas: `../data/schemas/` (35 schema files currently present)
+- Machine-readable schemas: `../data/schemas/` (narrative notes for them in `specs/`)
 - Cards: `../data/cards/`
 - Products/rewards: `../data/products/`
 - Art-direction source + pipeline: `../data/art/` (see `../data/art/README.md`); generated prompts in `../prompts/`
@@ -71,14 +68,11 @@ When a game rule changes, follow: design rule → schema → validator/tooling �
 
 ## Governance and audit trail
 
-- [Documentation/quality audit](AUDIT-DOCUMENTATION-QUALITY-BRANDING-JUL2026.md)
-- [Documentation reset plan](working/documentation-reset-plan-jul2026.md)
 - [Quality gates](QUALITY-GATES.md)
 - [Change management](CHANGE-MANAGEMENT.md)
-- [Archive index](archive/README.md)
+- [Release checklist](RELEASE-CHECKLIST.md)
+- [Archive index](archive/README.md) (frozen; superseded docs are deleted, not archived)
 
 ## Readiness rule
 
-Do not use "MVP ready" until the five readiness gates in the reconciliation document are
-checked. The present plan is intentionally honest about unresolved data-subset and
-cross-document work.
+Do not use "MVP ready" until the readiness gates in [STATUS.md](STATUS.md) are checked.

@@ -278,7 +278,7 @@ You are a **visual design critic and art direction specialist** for Sovereign Te
 
 - **Visual Assets**: `assets/examples/*.jpg` (28 example images)
 - **Style Guide**: [docs/assets.md](docs/assets.md)
-- **Card Specs**: `docs/specs/card-schema.json`
+- **Card Specs**: `data/schemas/codex-schema.json`
 
 ---
 

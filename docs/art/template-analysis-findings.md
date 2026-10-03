@@ -1,8 +1,7 @@
 # Template Analysis — Findings
 
 **Status:** Pass 1–3 complete · **Last updated:** 2026-09-30
-**Companion to:** [`template-analysis-plan.md`](template-analysis-plan.md) ·
-[`comfyui-art-pipeline.md`](comfyui-art-pipeline.md)
+**Companion to:** [`comfyui-art-pipeline.md`](comfyui-art-pipeline.md)
 **Rig filter:** NVIDIA RTX 3050, **8 GB VRAM** (the deciding constraint)
 
 Extracted from the 23 templates in `workflows/Templates/`. Values inside subgraphs are marked

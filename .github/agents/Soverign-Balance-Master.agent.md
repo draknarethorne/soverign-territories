@@ -195,8 +195,8 @@ If a system is broken, say so clearly:
 ## Key Files
 
 - **Balance Reference**: [docs/game-bible.md](docs/game-bible.md) (Sections 5, 9, 10)
-- **Card Data**: `docs/specs/card-schema.json` (stat ranges, rarity tiers)
-- **Economy Specs**: `docs/specs/building-schema.json` (production rates)
+- **Card Data**: `data/schemas/codex-schema.json` (stat ranges, rarity tiers)
+- **Economy Specs**: `data/schemas/economy-node-schema.json` (production rates)
 
 ---
 

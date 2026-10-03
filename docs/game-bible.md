@@ -40,7 +40,7 @@ document disagree on an implementation detail, the canonical document wins.
 | Onboarding sequence | [`mvp/tutorial-flow.md`](mvp/tutorial-flow.md) |
 | Map/mode phase gates | [`design/map-tier-progression.md`](design/map-tier-progression.md), [`design/gameplay-modes-spec.md`](design/gameplay-modes-spec.md) |
 | Runtime data contracts | [`../data/schemas/*.json`](../data/schemas) |
-| Archive reconciliation & readiness | [`working/archive-canon-reconciliation-jul2026.md`](working/archive-canon-reconciliation-jul2026.md) |
+| Project state, open decisions, readiness gates | [`STATUS.md`](STATUS.md) |
 
 > 💡 **A note on numbers.** Where this codex mentions specific values (drop rates, costs,
 > stat curves, map sizes), treat them as *illustrative texture* that communicates intent.
@@ -855,8 +855,8 @@ not.**
 The full vision is feasible **as staged work**. A part-time, first-game solo MVP is feasible
 as a *contained tactical vertical slice* — it is **not** feasible as a launch-day card
 service with 100+ cards, online PvP, AFK economies, world maps, and social warfare. The
-reconciliation record and readiness gates live in
-[`working/archive-canon-reconciliation-jul2026.md`](working/archive-canon-reconciliation-jul2026.md).
+current state and readiness gates live in
+[`STATUS.md`](STATUS.md).
 
 ---
 

@@ -18,8 +18,9 @@
   surface in **"combined" cards** and appear in the **background of certain female-hero
   series**.
 
-**Art-tracking legend:** `Head Shot` / `A Pose` / `Game Pose` mark whether that art asset
-exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
+**Art tracking is retired.** The `Head Shot` / `A Pose` / `Game Pose` / `Art Progress` columns below were a manual
+checklist and are no longer maintained (all show `FALSE`/`0%` although art identities and prompts exist for every card).
+The source of truth is `data/art/` plus `prompts/`; the validator reports coverage.
 
 ---
 
@@ -230,6 +231,6 @@ and in the same ballpark as the prior 174-card base set — expanded for 10-elem
 - **Combined cards:** Define how a female hero + her aligned Elder Dragon fuse into a
   "combined" card (stats, art, deck legality).
 - **Class vs. archetype:** Confirm whether `Class` (Necromancer, Druid, etc.) and
-  `Archetype` (Summoner / Spawner, etc.) both persist as card fields in `card-schema.json`.
+  `Archetype` (Summoner / Spawner, etc.) both persist as card fields in `codex-schema.json`.
 - **Naming:** Confirm the `ST-###` ID scheme and the `<Name> Thorne` convention for the
   Drakn line as canonical.

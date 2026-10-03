@@ -442,7 +442,7 @@ FILES CHANGED:
 
 - **Project Root**: `src/` (Unity project - to be created)
 - **Design Specs**: [docs/game-bible.md](docs/game-bible.md)
-- **Schemas**: `docs/specs/*.json` (data validation)
+- **Schemas**: `data/schemas/*.json` (data validation)
 
 ---
 

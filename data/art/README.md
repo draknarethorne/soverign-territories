@@ -474,4 +474,4 @@ Schema can't express: the card↔art link is bidirectional; every path a card re
 non-existent `.json` path as *literal prompt text*, so a typo would otherwise silently leak a file path into a prompt);
 generated `output` paths are unique; `cardId`/`collectionNumber` are unique. `test_validate_data.py` mutation-tests all
 of this so the gate cannot silently go dead. Areas with no fitting schema yet are listed as PENDING in its coverage
-report. Full plan and status: [`docs/working/art-gameplay-reconciliation-oct2026.md`](../../docs/working/art-gameplay-reconciliation-oct2026.md).
+report. Current status and backlog: [`docs/STATUS.md`](../../docs/STATUS.md).
