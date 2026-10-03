@@ -1,16 +1,28 @@
 {
-  "heroId": "HERO_DRAKNARE_THORNE",
-  "name": "Draknare Thorne",
+  "cardId": "HERO_DRAKNARE_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Obsidian Black",
-      "accentColors": ["Tarnished Silver", "Deep Amethyst"],
+      "accentColors": [
+        "Tarnished Silver",
+        "Deep Amethyst"
+      ],
       "eyeColor": "Deep violet iris with obsidian limbal ring, faint shadow striations",
       "eyeColorGlamour": "Deep violet irises with faint shadow striations and an obsidian limbal ring",
       "hairColor": "Rich black hair, short and neatly cropped",
       "skinTone": "Pale, cool-toned complexion, evenly toned",
-      "eyeColorNegatives": ["blue eyes", "green eyes", "brown eyes", "hazel eyes", "amber eyes"],
-      "skinColorNegatives": ["ruddy skin", "sunburnt skin", "overly tanned skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "hazel eyes",
+        "amber eyes"
+      ],
+      "skinColorNegatives": [
+        "ruddy skin",
+        "sunburnt skin",
+        "overly tanned skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNIYA_THORNE",
-  "name": "Drakniya Thorne",
+  "cardId": "HERO_DRAKNIYA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Emerald Green",

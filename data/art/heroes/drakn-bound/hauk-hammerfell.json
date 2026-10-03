@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_HAUK_HAMMERFELL",
-  "name": "Hauk Hammerfell",
+  "cardId": "HERO_HAUK_HAMMERFELL",
   "art": {
     "palette": {
       "primaryColor": "Radiant Gold",
-      "accentColors": ["Ivory White", "Polished Bronze"],
+      "accentColors": [
+        "Ivory White",
+        "Polished Bronze"
+      ],
       "eyeColor": "Radiant amber-gold iris with warm bronze limbal ring, faint golden striations",
       "eyeColorGlamour": "Radiant amber-gold irises with faint golden striations and a warm bronze limbal ring",
       "hairColor": "Golden-blonde hair, short and neatly combed",
       "skinTone": "Warm, sun-kissed complexion, evenly toned",
-      "eyeColorNegatives": ["blue eyes", "green eyes", "grey eyes", "violet eyes"],
-      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

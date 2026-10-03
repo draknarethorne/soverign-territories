@@ -20,7 +20,7 @@ Use this checklist before tagging project milestones or major documentation base
 - [ ] pre-commit hooks installed locally.
 - [ ] `pre-commit run --all-files --show-diff-on-failure` passes.
 - [ ] `scripts/Invoke-QualityChecks.ps1` passes.
-- [ ] `scripts/Invoke-PrePushValidation.ps1` passes.
+- [ ] `python tools/validators/validate_data.py` passes.
 - [ ] GitHub Actions quality workflows are green.
 
 ## 4) Governance + security docs

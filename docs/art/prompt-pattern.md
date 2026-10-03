@@ -172,7 +172,7 @@ Improvements from reviewing the Drakness prompts — apply these for more consis
 - **Natural language, no weights.** Qwen-Image-Edit follows plain sentences — skip SD-style `(())`
   weighting or `:1.2` syntax.
 - **Always negate rendered text.** Keep `text, wording, watermark, logo` in every negative (card art).
-- **One canonical eye string per hero** (from card `art.palette.eyeColor`) — reuse it verbatim across
+- **One canonical eye string per hero** (from the art identity's `palette.eyeColor`) — reuse it verbatim across
   stages so eyes stay consistent.
 - **Theme alignment (Drakness = Darkness / Necromancer / Dark Elf):**
   - *Skin* — "very tan" doesn't fit a Dark Elf; consider a **dusky / ashen** or **pale gothic**

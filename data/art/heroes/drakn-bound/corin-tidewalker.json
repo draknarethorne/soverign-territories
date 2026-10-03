@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_CORIN_TIDEWALKER",
-  "name": "Corin Tidewalker",
+  "cardId": "HERO_CORIN_TIDEWALKER",
   "art": {
     "palette": {
       "primaryColor": "Deep Teal",
-      "accentColors": ["Seafoam Green", "Driftwood Tan"],
+      "accentColors": [
+        "Seafoam Green",
+        "Driftwood Tan"
+      ],
       "eyeColor": "Deep teal iris with dark navy limbal ring, faint seafoam striations",
       "eyeColorGlamour": "Deep teal irises with faint seafoam striations and a dark navy limbal ring",
       "hairColor": "Sun-streaked brown hair, short and wind-tousled",
       "skinTone": "Sun-weathered tan complexion, evenly toned",
-      "eyeColorNegatives": ["brown eyes", "grey eyes", "amber eyes", "violet eyes"],
-      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "eyeColorNegatives": [
+        "brown eyes",
+        "grey eyes",
+        "amber eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

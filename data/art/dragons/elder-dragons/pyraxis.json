@@ -1,8 +1,7 @@
 {
   "id": "dragons/elder-dragons/pyraxis",
   "kind": "dragon",
-  "name": "Pyraxis",
+  "cardId": "UNIT_PYRAXIS",
   "description": "an Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze",
-  "element": "Fire",
   "notes": "Skeletal identity for the dragons/ category's first real entry — grounded in docs/codex/heroes/ideation_codex.md's Element Alignment table (ST-022 Pyraxis, Fire) and the archived prompts/_archive/Draknora/final/Draknora_Qwen_Fire_Dragon.json / Draknora_Qwen_Dragon_1.json experiments, which show a generic unnamed fire dragon flying toward Draknora — Draknora is the Fire-element Drakn sister, so Pyraxis is her aligned companion. Not yet wired into a card as a hero's bonded pet; only referenced today via Draknora's own companion/ placement piece."
 }

@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNORA_THORNE",
-  "name": "Draknora Thorne",
+  "cardId": "HERO_DRAKNORA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Flame Red",

@@ -34,6 +34,46 @@ def load_json(path):
     return json.loads(pathlib.Path(path).read_text(encoding="utf-8-sig"))
 
 
+_CARD_INDEX = None
+
+
+def card_index():
+    """cardId -> parsed gameplay card, for every card under data/cards/. Built once.
+    Gameplay cards are the primary record of a card; art identities link to them by
+    cardId and pull identity attributes (name, element, sex, ...) from here rather
+    than duplicating them."""
+    global _CARD_INDEX
+    if _CARD_INDEX is None:
+        _CARD_INDEX = {}
+        for p in sorted((ROOT / "data/cards").rglob("*.json")):
+            d = load_json(p)
+            if isinstance(d, dict) and "cardId" in d:
+                _CARD_INDEX[d["cardId"]] = d
+    return _CARD_INDEX
+
+
+def load_identity(rel_path):
+    """Load an art identity (data/art/heroes|dragons/**) and resolve its cardId link.
+    The card-owned attributes become fields of the returned dict (name, element, sex,
+    race, class) so callers see one merged view; the identity's own fields (palette,
+    physique, description) are never overwritten by the card. A test-bed identity
+    (testBed: true) has no card and carries its own name. A dangling cardId is a hard
+    error -- a broken link must never silently produce a prompt."""
+    ident = load_json(ROOT / rel_path)
+    cid = ident.get("cardId")
+    if cid is None:
+        if not ident.get("testBed"):
+            sys.exit(f"ERROR: {rel_path} has no cardId and is not a testBed identity")
+        return ident
+    card = card_index().get(cid)
+    if card is None:
+        sys.exit(f"ERROR: {rel_path} links to cardId '{cid}' but no such card exists under data/cards/")
+    for field in ("name", "element", "sex", "race", "class"):
+        if field in card:
+            ident.setdefault(field, card[field])
+    return ident
+
+
 def decap(s):
     """Lower-case the first letter for mid-sentence injection."""
     return (s[0].lower() + s[1:]) if s else s
@@ -108,10 +148,11 @@ def tokens_for(hero):
 
 def tokens_for_dragon(dragon):
     """A dragon identity (data/art/dragons/elder-dragons/*.json) has no 'art' section
-    -- no palette/physique, since it's not a humanoid hero. Its tokens are just its
-    own name/description/element, for the dragon archetype's own text-to-image
-    templates (no incoming reference image to edit -- a dragon is generated entirely
-    from its description, unlike a hero's img2img pipeline)."""
+    -- no palette/physique, since it's not a humanoid hero. Its tokens are its
+    name/element (pulled from its gameplay card by load_identity) and its own
+    description, for the dragon archetype's text-to-image templates (no incoming
+    reference image to edit -- a dragon is generated entirely from its description,
+    unlike a hero's img2img pipeline)."""
     return {
         "DRAGON": dragon["name"],
         "DESCRIPTION": dragon["description"],
@@ -275,7 +316,7 @@ def resolve_components_tokens(card):
 
 def generate(card_path):
     card = load_json(ROOT / card_path)
-    hero = load_json(ROOT / card["heroArt"])
+    hero = load_identity(card["heroArt"])
     # Base-set card may override any palette/physique attribute from the hero definition.
     overrides = card.get("overrides", {})
     for section in ("palette", "physique"):

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Dragon Identity",
+  "description": "Art-direction identity of an Elder Dragon (data/art/dragons/elder-dragons/<slug>.json). Name and element are pulled from the gameplay card named by cardId; only the visual description lives here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "cardId", "description"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^dragons/.+$"},
+    "kind": {"const": "dragon"},
+    "cardId": {
+      "type": "string",
+      "pattern": "^UNIT_[A-Z_]+$",
+      "description": "Link to the gameplay card. The card's art.artIdentity must point back at this file."
+    },
+    "description": {"type": "string", "minLength": 20, "description": "Visual description that drives the text-to-image prompt"},
+    "notes": {"type": "string"}
+  }
+}

@@ -23,6 +23,7 @@
   ],
   "tacticSlots": 6,
   "lore": "A skyborne duelist who rides Draknava's winds like a road only he can see.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/zephyr-galeheart.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Wind). Bonded pet Giant Eagle (to be authored)." }
 }

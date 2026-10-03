@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNAVA_THORNE",
-  "name": "Draknava Thorne",
+  "cardId": "HERO_DRAKNAVA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Sky Cerulean",

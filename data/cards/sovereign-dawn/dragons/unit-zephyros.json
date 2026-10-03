@@ -22,6 +22,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The Elder Dragon of Wind, shard-born, bonded to Draknava since the night the crown broke.",
+  "art": { "artIdentity": "data/art/dragons/elder-dragons/zephyros.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Wind), bonded to Draknava." }
 }

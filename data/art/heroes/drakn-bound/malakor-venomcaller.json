@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_MALAKOR_VENOMCALLER",
-  "name": "Malakor Venomcaller",
+  "cardId": "HERO_MALAKOR_VENOMCALLER",
   "art": {
     "palette": {
       "primaryColor": "Venom Green",
-      "accentColors": ["Tarnished Brass", "Charcoal Black"],
+      "accentColors": [
+        "Tarnished Brass",
+        "Charcoal Black"
+      ],
       "eyeColor": "Acid-green iris with blackened limbal ring, faint toxic-violet striations",
       "eyeColorGlamour": "Acid-green irises with faint toxic-violet striations and a blackened limbal ring",
       "hairColor": "Black hair, short and slicked back",
       "skinTone": "Deep olive-toned complexion, evenly toned",
-      "eyeColorNegatives": ["blue eyes", "brown eyes", "grey eyes", "amber eyes"],
-      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "amber eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

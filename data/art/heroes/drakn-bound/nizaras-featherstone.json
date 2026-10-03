@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_NIZARAS_FEATHERSTONE",
-  "name": "Nizaras Featherstone",
+  "cardId": "HERO_NIZARAS_FEATHERSTONE",
   "art": {
     "palette": {
       "primaryColor": "Forest Green",
-      "accentColors": ["Moss Brown", "Pale Gold"],
+      "accentColors": [
+        "Moss Brown",
+        "Pale Gold"
+      ],
       "eyeColor": "Verdant green iris with mossy-brown limbal ring, faint golden striations",
       "eyeColorGlamour": "Verdant green irises with faint golden striations and a mossy-brown limbal ring",
       "hairColor": "Dark umber hair with a faint mossy-green sheen, short and tousled",
       "skinTone": "Light olive complexion, evenly toned",
-      "eyeColorNegatives": ["blue eyes", "brown eyes", "grey eyes", "red eyes"],
-      "skinColorNegatives": ["pale skin", "ruddy skin", "overly tanned skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "red eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "ruddy skin",
+        "overly tanned skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

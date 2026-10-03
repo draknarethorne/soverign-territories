@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNESS_THORNE",
-  "name": "Drakness Thorne",
+  "cardId": "HERO_DRAKNESS_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Midnight Violet",
@@ -37,5 +36,5 @@
       "distinguishingMarks": []
     }
   },
-  "notes": "Core ART hero definition — source of truth for art generation (palette + physique). Base-set cards, templates, and the Sovereign Dawn game card reference THIS. The SD-001 game card should eventually keep only game data (stats/abilities/lore) plus any art attributes it intentionally OVERRIDES for the card series."
+  "notes": "Art-direction identity for SD-001 Drakness Thorne. Name, sex, element, race and class live on the gameplay card (cardId); this file owns only her look (palette, physique) and is the source of truth for art generation. Assembly cards, templates and gen_prompt.py reference THIS file."
 }

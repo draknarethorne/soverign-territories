@@ -36,15 +36,20 @@ repos:
         files: \.(ps1|psm1|psd1)$
         pass_filenames: false
 
-      - id: pre-push-quick-validation
-        name: Pre-push schema and docs validation
-        entry: powershell.exe
-        args:
-          - -NoProfile
-          - -ExecutionPolicy
-          - Bypass
-          - -File
-          - scripts/Invoke-PrePushValidation.ps1
-        language: system
+      - id: validate-data
+        name: Validate data (schemas + card<->art links)
+        entry: python tools/validators/validate_data.py
+        language: python
+        additional_dependencies: [jsonschema]
         pass_filenames: false
-        stages: [pre-push]
+        files: ^(data/|tools/validators/)
+        stages: [pre-commit, pre-push]
+
+      - id: validate-data-selftest
+        name: Validator self-test (mutation tests)
+        entry: python tools/validators/test_validate_data.py
+        language: python
+        additional_dependencies: [jsonschema]
+        pass_filenames: false
+        files: ^(tools/validators/|data/schemas/codex-schema\.json|data/art/_schema/)
+        stages: [pre-commit, pre-push]

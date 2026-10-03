@@ -24,6 +24,7 @@
   ],
   "tacticSlots": 6,
   "lore": "A crusader who took Drakniss's dawn as an oath and has not knelt to the dark since.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/hauk-hammerfell.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Light). Bonded pet Angel (to be authored)." }
 }

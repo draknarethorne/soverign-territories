@@ -35,7 +35,8 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 | `data/art/_sets/<group>/<slug>/<stage>/*.json` | **Assembly cards** — glue a hero/dragon + component(s) + template together. One folder per roster group (`drakn-sisters`, `drakn-bound`, `elder-dragons`, `angel-primes`). |
 | `prompts/<group>/<Hero>/<stage>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
 | `prompts/_archive/` | **Historical reference only** — the old `[BRACKETS]`/hand-copied template system and the original hand-crafted Drakness prompts. No longer live. |
-| `data/cards/sovereign-dawn/heroes/<hero>.json` | **Canon source** — element, class, archetype, `art.palette` (primary/accent/eye), companion, lore. The art must stay on-theme with this. |
+| `data/cards/sovereign-dawn/heroes/<hero>.json` | **Canon source** — name, element, class, archetype, race, sex, companion, lore, plus `art.artIdentity` linking to the art identity. Created FIRST; the art is built for the card. |
+| `data/art/heroes/<group>/<slug>.json`, `data/art/dragons/**` | **Art identity** — palette/physique (heroes) or description (dragons). Links back to its card by `cardId` and pulls name/element/sex from it. Owns the look; the card owns the mechanics. |
 | `assets/examples/` | Reference/example images. |
 
 Workflow **categories** (from the file names): `X_Pose` / `A_*` (base pose), `Hair`,
@@ -79,14 +80,15 @@ repetition holds the look steady while one thing changes.
 ## 4. Final card scene — definition checklist
 
 For each hero, lock these before building the final-scene workflow. Pull palette and
-identity straight from the hero's card JSON (`art.palette`, `class`, `archetype`, `element`, `companion`).
+identity straight from the hero's card JSON (`class`, `archetype`, `element`, `companion`) and the
+linked art identity (`palette`, `physique`).
 
 - **Armor / outfit** — the canonical "intro" look (one chosen set, not an experiment).
 - **Weapon** — type, material, where it sits / how it's held.
 - **Spell / VFX** — the signature effect, tied to element and class.
 - **Stance** — final body pose and camera framing.
 - **Background** — environment + atmosphere/haze, on-palette.
-- **Palette** — primary + accent + eye color from the card's `art.palette`.
+- **Palette** — primary + accent + eye color from the hero's art identity `palette`.
 - **Companion (optional)** — whether the bonded pet appears / is hinted (see `pairing`).
 
 > Example canon anchor — **SD-001 Drakness Thorne**: Darkness element · Necromancer ·

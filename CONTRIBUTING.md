@@ -44,7 +44,8 @@ Run all local gates:
 Run focused checks while iterating:
 
 - `pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/Invoke-QualityChecks.ps1`
-- `pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/Invoke-PrePushValidation.ps1`
+- `python tools/validators/validate_data.py` (schemas + card<->art link integrity)
+- `python tools/validators/test_validate_data.py` (proves the validator can still fail)
 
 Local hooks improve feedback speed. CI is the non-bypassable source of truth.
 
