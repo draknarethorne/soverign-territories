@@ -26,9 +26,11 @@ Overall, radiant paladin aesthetic.
 
 Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
 
-Eyes: radiant amber-gold irises, natural and unchanged from the incoming image.
+Eyes: radiant amber-gold irises with faint golden striations and a warm bronze limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

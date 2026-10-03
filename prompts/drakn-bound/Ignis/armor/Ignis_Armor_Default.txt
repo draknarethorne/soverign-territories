@@ -26,9 +26,11 @@ Overall, battle-ready warrior aesthetic.
 
 Figure: athletic, broad-shouldered, powerfully muscled build; defined, battle-scarred chest and core, strong and toned; trim, athletic waist; long, powerful legs.
 
-Eyes: molten amber irises, natural and unchanged from the incoming image.
+Eyes: molten amber irises with faint ember striations and a dark charcoal limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

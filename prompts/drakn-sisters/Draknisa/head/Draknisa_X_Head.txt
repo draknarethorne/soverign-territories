@@ -14,9 +14,11 @@ Keep high fidelity to facial likeness, bone structure, expression, hairstyle, bo
 
 Hair: deep blue-black hair with glossy deep-teal-sheened all-over highlights, full dimensional colour like a fashion editorial, tone-on-tone dimension.
 
+Makeup: soft and natural, with a subtly blended teal-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+
 Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, mismatched eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, mismatched eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, backlight, rim light, text, watermark, logo.

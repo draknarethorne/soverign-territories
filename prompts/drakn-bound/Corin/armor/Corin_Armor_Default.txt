@@ -26,9 +26,11 @@ Overall, rugged beast-master aesthetic.
 
 Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, strong legs.
 
-Eyes: deep teal irises, natural and unchanged from the incoming image.
+Eyes: deep teal irises with faint seafoam striations and a dark navy limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, grey eyes, amber eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, brown eyes, grey eyes, amber eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

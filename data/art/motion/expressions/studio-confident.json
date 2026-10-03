@@ -1,0 +1,8 @@
+{
+  "id": "motion/expressions/studio-confident",
+  "kind": "expression",
+  "name": "Studio Confident (A-pose default, male)",
+  "expression": "a confident, relaxed closed-mouth smile, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely)",
+  "compatibleStages": ["pose", "motion", "scene"],
+  "notes": "Default for pose-male-human.txt via DEFAULT_EXPRESSION in gen_prompt.py. Override per pose card with components.expression."
+}

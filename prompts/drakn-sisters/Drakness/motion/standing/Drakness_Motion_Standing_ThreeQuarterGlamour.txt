@@ -24,9 +24,11 @@ Head: turned back toward the camera, chin slightly down.
 
 Gaze: eyes to camera.
 
-Expression: alluring, confident; lips slightly parted; expressive, sultry brows.
+Expression: an alluring, confident, relaxed expression - a soft closed-mouth smile with dimples, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely)
 
-Eyes: deep violet irises, natural and unchanged from the incoming image.
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring, natural studio eyes, not glowing.
+
+Makeup: soft and natural, with a subtly blended amethyst-toned eyeshadow, a light natural blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
 Pose: one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
@@ -34,4 +36,4 @@ Pose: one foot forward and lightly crossed; a hand resting at the hip, the other
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

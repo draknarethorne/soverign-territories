@@ -101,6 +101,15 @@ def resolve_hairstyle(pal):
     return pal["hairStyle"]
 
 
+def resolve_hairstyle_negatives(pal):
+    """Optional 'a_pose_negatives' list on the hair component (e.g. ponytail, bun) so a
+    style that must fully replace the source photo's hair can ban what leaks through."""
+    if "hairStyleComponent" in pal:
+        component = load_json(ROOT / pal["hairStyleComponent"])
+        return ", ".join(component.get("a_pose_negatives", []))
+    return ""
+
+
 def soft_eye(glamour):
     """Iris colour only (e.g. 'Deep violet irises'), dropping striations/limbal-ring detail.
     Used by stages that preserve the incoming eyes, where the full glamour line over-emphasises them."""
@@ -111,6 +120,21 @@ def soft_eye(glamour):
 # Scene templates carry {{EYE_EFFECT}}; a card picks one via components.eye_effect,
 # otherwise this default applies. Pieces live in data/art/wardrobe/effects/eyes/.
 DEFAULT_EYE_EFFECT = "data/art/wardrobe/effects/eyes/partial-glow.json"
+
+# Pose templates carry {{EXPRESSION}}; a card overrides it via components.expression
+# (a motion/expressions piece or a literal), otherwise this per-sex default applies.
+DEFAULT_EXPRESSION = {
+    "female": "data/art/motion/expressions/studio-glamour.json",
+    "male": "data/art/motion/expressions/studio-confident.json",
+}
+
+# One shared studio face-styling line for every cream-backdrop stage, so makeup stays
+# present-but-subtle and identical from the full-body shot to the close-up.
+FACE_STYLE = {
+    "female": "Makeup: soft and natural, with a subtly blended {{ACCENT_SOFT}}-toned eyeshadow, a light natural blush, "
+              "groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.",
+    "male": "Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.",
+}
 
 
 def tokens_for(hero):
@@ -152,6 +176,8 @@ def tokens_for(hero):
         "EYE_SOFT": soft_eye(pal["eyeColorGlamour"]),
         "HAIR": decap(pal["hairColor"]),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
+        "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
+        "FACE_STYLE": FACE_STYLE["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
@@ -338,6 +364,9 @@ def generate(card_path):
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
     if "{{EYE_EFFECT}}" in template:
         card.setdefault("components", {}).setdefault("eye_effect", DEFAULT_EYE_EFFECT)
+    if "{{EXPRESSION}}" in template and "art" in hero:
+        sex = "female" if "bust" in hero["art"]["physique"] else "male"
+        card.setdefault("components", {}).setdefault("expression", DEFAULT_EXPRESSION[sex])
     # A dragon identity has no 'art' section (not humanoid) -- its own, simpler token set.
     toks = tokens_for_dragon(hero) if "art" not in hero else tokens_for(hero)
     toks.update(resolve_component_tokens(card))

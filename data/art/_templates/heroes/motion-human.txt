@@ -26,7 +26,9 @@ Gaze: {{GAZE}}
 
 Expression: {{EXPRESSION}}
 
-Eyes: {{EYE_SOFT}}, natural and unchanged from the incoming image.
+Eyes: {{EYE}}, natural studio eyes, not glowing.
+
+{{FACE_STYLE}}
 
 Pose: {{POSE}}
 {{EXTRAS}}
@@ -34,4 +36,4 @@ Pose: {{POSE}}
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, {{EYE_NEG}}, {{HERO_NEG}}, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -26,9 +26,11 @@ Overall, swift warrior aesthetic.
 
 Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, lean legs.
 
-Eyes: pale sky-blue irises, natural and unchanged from the incoming image.
+Eyes: pale sky-blue irises with faint cyan striations and a silver limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, brown eyes, green eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -21,6 +21,7 @@
     "description": {"type": "string", "minLength": 3},
 
     "a_pose_style": {"type": "string"},
+    "a_pose_negatives": {"type": "array", "items": {"type": "string"}},
     "hair_change": {"type": "string"},
 
     "editorial": {"type": "string"},

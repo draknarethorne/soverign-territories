@@ -26,9 +26,11 @@ Overall, fierce berserker aesthetic.
 
 Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
 
-Eyes: deep umber irises, natural and unchanged from the incoming image.
+Eyes: deep umber irises with faint rust striations and a dark iron limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

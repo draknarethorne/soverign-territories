@@ -26,9 +26,11 @@ Overall, cunning rogue aesthetic.
 
 Figure: lean, agile, wiry-muscled build; lean, toned chest and core; narrow, agile waist; long, lean legs built for quick movement.
 
-Eyes: verdant green irises, natural and unchanged from the incoming image.
+Eyes: verdant green irises with faint golden striations and a mossy-brown limbal ring, natural studio eyes, not glowing.
+
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

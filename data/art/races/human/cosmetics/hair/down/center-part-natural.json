@@ -1,0 +1,12 @@
+{
+  "id": "hair/down/center-part-natural",
+  "kind": "hair",
+  "name": "Center-Part, Taken Down, Natural Texture (Drak-sister standard)",
+  "a_pose_style": "hair fully let down and loose, parted in the exact centre and falling straight down on each side of the face and over the shoulders, keeping the subject's own natural texture (straight, wavy or curly) and the length reaching just below the bust-line, but kept off the breasts so the chest and décolletage stay unobscured",
+  "a_pose_negatives": ["ponytail", "bun", "updo", "braids", "hair tied back", "hair pulled up", "pinned-up hair", "bangs", "side part"],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair settles into a centre part, taken down loose and falling on each side of the face and over the shoulders, natural texture kept.",
+  "extras": [],
+  "compatibleStages": ["pose", "hair"],
+  "notes": "Replaces center-part-wavy as the A-pose default: it keeps the source's own texture instead of forcing waves, and bans the usual leak-through styles (ponytail/bun/updo) via a_pose_negatives."
+}

@@ -13,7 +13,7 @@ Background: a solid, seamless cream-coloured studio backdrop.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
 
-Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight.
+Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
 Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, strong legs.
 
@@ -23,13 +23,13 @@ Wearing: only a Deep Teal fitted swim brief, low-rise and body-skimming fit; che
 
 Hair: sun-streaked brown hair, short and wind-tousled, tone-on-tone dimension; styled short textured crop, cropped close at the sides and back, slightly longer and tousled on top (override the source hairstyle); a very slight lift from a light breeze below.
 
-Grooming: natural and fresh-faced - reset any heavy styling from the source photo; clean, well-groomed appearance; fingernails natural or Light Teal.
+Grooming: natural, clean and well-groomed, groomed brows, no cosmetics. Reset any heavy styling from the source photo. Fingernails natural or Light Teal.
 
 Eyes: deep teal irises with faint seafoam striations and a dark navy limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights.
 
-Expression: confident, relaxed closed-mouth smile; looking to camera.
+Expression: a confident, relaxed closed-mouth smile, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, brown eyes, grey eyes, amber eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, pale skin, fair skin, washed-out skin, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, brown eyes, grey eyes, amber eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, pale skin, fair skin, washed-out skin, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

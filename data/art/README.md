@@ -364,20 +364,25 @@ split with confidence; forcing a taxonomy now risks guessing wrong and reshuffli
 
 ---
 
-## Eyes: three levels of emphasis
+## Eyes, makeup, expression and hair: what each stage says
 
-Eye detail is deliberately **not** repeated at full strength in every stage, so it never takes over the face:
+Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.
+Glow is only ever added in `scene` stages.
 
-| Stage | Token | What it says |
-| --- | --- | --- |
-| `pose`, `head` (set the eyes) | `{{EYE}}` | Full glamour line: iris colour, striations, limbal ring. |
-| `hair`, `motion`, `armor`, `clothing` (preserve the eyes) | `{{EYE_SOFT}}` | Iris colour only ("natural and unchanged"). Derived from `eyeColorGlamour` by `soft_eye()`. |
-| `scene` templates | `{{EYE_EFFECT}}` | A glow level for the action, chosen with `components.eye_effect`. |
+| Concern | Token | Used in | Notes |
+| --- | --- | --- | --- |
+| Studio eyes | `{{EYE}}` | pose, head, hair, motion, armor, clothing | Iris colour + striations + limbal ring, always "natural, not glowing"; `glowing eyes` is in those negatives. |
+| Studio makeup/grooming | `{{FACE_STYLE}}` | pose, head, hair, motion, armor, clothing | One line in `gen_prompt.py` (`FACE_STYLE`): subtle eyeshadow in the hero's accent colour, light blush; "present, never heavy". Males get a grooming line. |
+| Expression | `{{EXPRESSION}}` | pose | Per-sex default (`DEFAULT_EXPRESSION`: `motion/expressions/studio-glamour.json` / `studio-confident.json`). Override on a pose card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
+| Hairstyle | `{{HAIRSTYLE}}`, `{{HAIRSTYLE_NEG}}` | pose | From the hero's `hairStyleComponent`. `hair/down/center-part-natural.json` takes the hair down, centre-parted, keeping the source's natural texture; its `a_pose_negatives` (ponytail, bun, updo, ...) go into the negative prompt. |
+| Scene eye glow | `{{EYE_EFFECT}}` | scene templates | Chosen with `components.eye_effect`; default `partial-glow`. |
+| (Soft iris-only eyes) | `{{EYE_SOFT}}` | inside the eye-effect pieces | Not used by the studio stages. |
 
 Scene glow pieces live in `data/art/wardrobe/effects/eyes/`: `natural` (no glow), `iris-kindling` (glow just starting at the
 iris rim), `partial-glow` (**default**, mid-cast, iris detail kept), `full-glow` (power peak, overrides the eye colour and
 dominates the face). Override per scene card: `"eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json"`.
-`scene-combat-human.txt` has no eye line (martial heroes).
+`scene-combat-human.txt` has no eye line (martial heroes). These alternatives exist for ideation: try them, then settle
+which suits which art.
 
 ## Signature items match the character
 
