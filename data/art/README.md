@@ -97,16 +97,17 @@ data/art/
 │
 ├── heroes/                         CATEGORY: humanoid hero definitions, grouped by roster.
 │   ├── drakn-sisters/              ✅ GROUP: the 10 Thorne sisters (an actual Sovereign Dawn roster).
-│   │   ├── <slug>-thorne.json      identity (palette/physique) — unchanged for all 10
+│   │   ├── <slug>-thorne.json      art identity (palette/physique); links to its card by cardId
 │   │   ├── drakness/               ✅ hero-SIGNATURE pieces: armor/ (bone, iridescent, raven),
 │   │   │                           clothing/, weapons/, effects/
 │   │   └── draknora/               ✅ hero-SIGNATURE pieces: armor/, weapons/, effects/, and her
 │   │                               first companion/ piece (pyraxis-flight.json)
 │   ├── drakn-bound/                ✅ GROUP: the 10 male heroes bound to the sisters in the story.
-│   │   └── <slug>.json             identity (palette/physique, male build/chest/waist/legs schema)
-│   │                               — first-pass invented palettes, no archived source material.
+│   │   └── <slug>.json             art identity (palette/physique, male build/chest/waist/legs schema),
+│   │                               linked to its card by cardId — first-pass invented palettes, no
+│   │                               archived source material.
 │   └── angel-primes/               ✅ GROUP: Angelo Prime / Angelica Prime — calibration test-bed
-│       └── <slug>.json             heroes, not part of any real card series.
+│       └── <slug>.json             heroes (testBed: true, no card), not part of any real card series.
 │
 ├── races/                          🔶 CATEGORY: shared by every hero/NPC of a race — narrower than
 │   │                               wardrobe, not locked to one named hero.
@@ -284,10 +285,11 @@ everything, fills `{{TOKENS}}`, and writes the result to `output` under `prompts
 itself has **zero hardcoded paths** — every path is a string field on the card JSON, so
 moving/renaming folders only ever means updating path strings, never generator logic.
 
-**`heroArt` doesn't have to be a humanoid hero** — if the loaded JSON has no `art` key (a dragon
-identity, e.g. `dragons/elder-dragons/pyraxis.json`), `generate()` branches to
+**`heroArt` doesn't have to be a humanoid hero** — if the loaded identity is a dragon (no `art`
+key, e.g. `dragons/elder-dragons/pyraxis.json`), `generate()` branches to
 `tokens_for_dragon()` instead of `tokens_for()`, producing a much smaller token set (`{{DRAGON}}`,
-`{{DESCRIPTION}}`, `{{ELEMENT}}`) for the dragon archetype's own text-to-image templates
+`{{DESCRIPTION}}`, `{{ELEMENT}}`; name and element come from the dragon's card via `cardId`) for the
+dragon archetype's own text-to-image templates
 (`_templates/dragons/pose-dragon.txt`, `head-dragon.txt` — no incoming reference image, no
 "maintain fidelity to the reference image" line, since there's no existing dragon photo to edit
 from; the whole image is generated from the identity file's own `description`).
@@ -429,16 +431,47 @@ verified duplication, not speculatively.
 
 ---
 
-## Relationship to `data/cards/sovereign-dawn/`
+## Relationship to `data/cards/sovereign-dawn/` — the card ↔ art link
 
-`data/cards/sovereign-dawn/<category>/*.json` is the real game-data card (stats/abilities/lore) —
-a separate system the generator does **not** read from today (that wiring was ideation-only; work
-pivoted to focus on the art pipeline directly). A real card series pulls from one or more
-`_sets/<group>/` folders (Sovereign Dawn currently only draws from `drakn-sisters`; `drakn-bound`
-and `elder-dragons` join later) — that series↔group mapping is tracked via asset-ID references on
-the card JSON (e.g. `combinedArtAsset`), not via art-side directory nesting. Known duplication to
-reconcile later: some physical traits are currently duplicated between a hero's game card and its
-`data/art/heroes/<group>/` definition. Eventual plan: the art definition becomes the source of
-truth for physical traits, the game card references it, and a specific `_sets/` card can still
-override an attribute via `overrides.palette` / `overrides.physique` (already supported by the
-generator) when a card series needs a deliberate deviation.
+A card is **defined first in the codex** (`data/cards/sovereign-dawn/<category>/*.json`, validated by
+`data/schemas/codex-schema.json`); the art is then built *for* that card. The two are separate pipelines with
+separate schemas and **never both define the same attribute**. They meet at one link, keyed on `cardId`:
+
+```text
+data/cards/.../hero-drakness-thorne.json            data/art/heroes/drakn-sisters/drakness-thorne.json
+  cardId: HERO_DRAKNESS_THORNE        <──────────     cardId: HERO_DRAKNESS_THORNE
+  name, element, sex, race, class,    ──────────>     art: { palette, physique }   (look only)
+  rarity, stats, abilities, lore                      (name/element/sex/race/class are PULLED from the card)
+  art: { artIdentity: "data/art/heroes/drakn-sisters/drakness-thorne.json",
+         portraitAsset / fullArtAsset / shinyPortrait }   <- references to rendered output (see C1 plan)
+```
+
+- **The card owns** identity and mechanics: name, element, sex, race, class, rarity, stats, abilities, lore, companion.
+- **The art identity owns** look: palette, physique, hairstyle. `gen_prompt.py` resolves `cardId` through
+  `load_identity()` and pulls `name`/`element`/`sex`/`race`/`class` from the card, so they exist in exactly one place.
+  A dangling `cardId` is a hard generation error.
+- **An attribute both sides need lives on the card** and the art side reads it through the link (e.g. the card's `sex`
+  decides female vs male physique; the validator checks the identity's physique shape agrees).
+- **Dragons** link the same way (`cardId: UNIT_PYRAXIS`) and take `name`/`element` from their card; only the visual
+  `description` lives in `data/art/dragons/`.
+- **Test-bed heroes** (`angel-primes`) have no card by design: `testBed: true` plus their own `name`.
+- A specific `_sets/` card can still deviate for one render via `overrides.palette` / `overrides.physique`.
+
+### Adding a new card (the workflow)
+
+1. Define the card in the codex. Validate: `python tools/validators/validate_data.py`.
+2. Create its art identity (`data/art/heroes|dragons/…`) with `cardId`, then set the card's `art.artIdentity` to that path
+   (the link must point **both** ways or the validator fails).
+3. Add assembly cards under `data/art/_sets/<group>/<slug>/…` (pose, head, armor, signature scene) pointing `heroArt` at
+   the identity.
+4. `python tools/generators/gen_prompt.py` → prompts; render in ComfyUI; record outputs in the card's `*Asset` fields.
+
+### What the validator enforces (`tools/validators/validate_data.py`, a pre-commit/CI gate)
+
+Schemas, per file class: gameplay cards → `codex-schema.json`; and in `data/art/_schema/`: `hero-identity`,
+`dragon-identity`, `art-piece` (required fields vary by `kind`), `art-card` (the `_sets/` recipes). Plus the rules JSON
+Schema can't express: the card↔art link is bidirectional; every path a card references exists (the generator treats a
+non-existent `.json` path as *literal prompt text*, so a typo would otherwise silently leak a file path into a prompt);
+generated `output` paths are unique; `cardId`/`collectionNumber` are unique. `test_validate_data.py` mutation-tests all
+of this so the gate cannot silently go dead. Areas with no fitting schema yet are listed as PENDING in its coverage
+report. Full plan and status: [`docs/working/art-gameplay-reconciliation-oct2026.md`](../../docs/working/art-gameplay-reconciliation-oct2026.md).

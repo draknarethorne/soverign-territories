@@ -379,7 +379,8 @@ is an open design decision owned by the deck-progression rules, not an MVP conce
 
 **Heroine signature palettes.** Each heroine defines her element's canonical art direction —
 her primary colour, accents, and a signature iris. These colours are the source of the
-element palette above and are stored per-card in `art.palette`.
+element palette above and are stored in each heroine's art identity file
+(`data/art/heroes/drakn-sisters/<slug>-thorne.json`), which links to her card by `cardId`.
 
 | Element | Heroine | Primary | Accent | Signature iris |
 | --- | --- | --- | --- | --- |
@@ -773,15 +774,26 @@ excitement without permanent loss.
 - **Community content** — a long-term dream of modding and creator collaboration, cosmetic
   and PvE-safe.
 
-### One Base Set, ten elements *(structure)*
+### Staged element rollout, one symmetric template *(structure)*
 
-> **Status:** Proposed · **Authority:**
+> **Status:** Decided Oct 2026 · **Authority:**
 > [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md)
 
-The launch collection is a **single Base Set** that spans **all ten elements** from day one —
-no day-one expansion split. Balance is held by a symmetric per-element template (see the
-ideation blueprint). True **expansions** arrive later as new *themes* (Storm Rising, Valhalla,
-Cyber Dominion) and may introduce **new card types and mechanics** as the design evolves.
+The game is designed for **ten elements**, but it does **not** launch with all ten. Each element
+is built from the same symmetric per-element template (see the ideation blueprint), and elements
+are released in stages, introduced the way long-running TCGs add new types over generations:
+
+| Release | Elements | Notes |
+| --- | --- | --- |
+| MVP / first playable | **Grass, Fire, Water** | The classic trio; the minimum for a meaningful starter deck. |
+| First public push *(preferred)* | Grass, Fire, Water **+ Darkness, Light** | Five elements make the first public release more interesting; chosen if a complete card set per element is achievable. |
+| Expansion 1 *(if the MVP ships as three)* | Darkness, Light | Follows quickly after the trio. |
+| Later expansions | Earth, Ice, Lightning, Wind, Poison | Order and grouping TBD, driven by the Sundering storyline as it is written. |
+
+Which of the two first-release shapes (3 vs 5) ships depends on how much work a complete, balanced
+card set per element turns out to be. The art pipeline already supports all ten elements, so
+this is a content-and-balance decision, not an art constraint. True **expansions** may also
+introduce new themes (Storm Rising, Valhalla, Cyber Dominion), **new card types and mechanics**.
 
 **Ideas on the horizon** *(vision, unscheduled)*:
 

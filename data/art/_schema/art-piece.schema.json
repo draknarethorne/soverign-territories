@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Piece",
+  "description": "A reusable art piece: wardrobe, hero-signature item, background, hairstyle, motion, expression or gaze. Required content fields depend on kind. Field names are the shared vocabulary in data/art/_schema/field-vocabulary.json -- reuse them, never invent synonyms.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "name", "compatibleStages"],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "kind": {
+      "type": "string",
+      "enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "hair", "motion", "expression", "gaze"]
+    },
+    "name": {"type": "string", "minLength": 1},
+    "compatibleStages": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "scene", "final"]}},
+    "notes": {"type": "string"},
+    "sourceVariant": {"type": "string"},
+    "status": {"type": "string"},
+    "mood": {"type": "string"},
+
+    "description": {"type": "string", "minLength": 3},
+
+    "a_pose_style": {"type": "string"},
+    "hair_change": {"type": "string"},
+
+    "editorial": {"type": "string"},
+    "breeze": {"type": "string"},
+    "body": {"type": "string"},
+    "head": {"type": "string"},
+    "pose": {"type": "string"},
+    "defaultGaze": {"type": "string"},
+    "defaultExpression": {"type": "string"},
+    "extras": {"type": "array", "items": {"type": "string"}},
+
+    "expression": {"type": "string", "minLength": 3},
+    "gaze": {"type": "string", "minLength": 3}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background"]}}},
+      "then": {"required": ["description"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "hair"}}},
+      "then": {"required": ["a_pose_style", "breeze", "hair_change", "extras"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "motion"}}},
+      "then": {"required": ["editorial", "breeze", "body", "head", "pose", "defaultGaze", "defaultExpression", "extras"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "expression"}}},
+      "then": {"required": ["expression"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "gaze"}}},
+      "then": {"required": ["gaze"]}
+    }
+  ]
+}

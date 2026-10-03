@@ -32,8 +32,5 @@ jobs:
         shell: powershell
         run: Install-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Scope CurrentUser -Force
 
-      - name: Install schema validation tools
-        run: npm install -g ajv-cli json-schema-to-typescript
-
       - name: Run pre-commit quality gates
         run: pre-commit run --all-files --show-diff-on-failure

@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Hero Identity",
+  "description": "Art-direction identity of a humanoid hero (data/art/heroes/<group>/<slug>.json). Name, sex, element, race and class are NOT stored here -- they are pulled from the gameplay card named by cardId. Only look (palette, physique) lives here. A hero with no card (test-bed) sets testBed:true and carries its own name.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["art"],
+  "anyOf": [
+    {"required": ["cardId"]},
+    {"required": ["testBed", "name"], "properties": {"testBed": {"const": true}}}
+  ],
+  "properties": {
+    "cardId": {
+      "type": "string",
+      "pattern": "^HERO_[A-Z_]+$",
+      "description": "Link to the gameplay card (data/cards/**). The card's art.artIdentity must point back at this file."
+    },
+    "testBed": {"type": "boolean", "description": "True for calibration heroes with no gameplay card"},
+    "name": {"type": "string", "description": "Only for testBed heroes; card-linked heroes take name from the card"},
+    "art": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["palette", "physique"],
+      "properties": {
+        "negatives": {"type": "array", "items": {"type": "string"}, "description": "Permanent hero-specific negative-prompt terms"},
+        "palette": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primaryColor", "accentColors", "eyeColor", "eyeColorGlamour", "hairColor", "skinTone"],
+          "anyOf": [{"required": ["hairStyleComponent"]}, {"required": ["hairStyle"]}],
+          "properties": {
+            "primaryColor": {"type": "string"},
+            "accentColors": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "eyeColor": {"type": "string"},
+            "eyeColorGlamour": {"type": "string"},
+            "hairColor": {"type": "string"},
+            "hairStyleComponent": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "Path to the default A-pose hairstyle piece"},
+            "hairStyle": {"type": "string", "description": "Back-compat literal hairstyle; prefer hairStyleComponent"},
+            "skinTone": {"type": "string"},
+            "eyeColorNegatives": {"type": "array", "items": {"type": "string"}},
+            "skinColorNegatives": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "physique": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["build", "legs", "raceAlignment", "distinguishingMarks"],
+          "oneOf": [
+            {"required": ["bust", "hips"], "not": {"anyOf": [{"required": ["chest"]}, {"required": ["waist"]}]}},
+            {"required": ["chest", "waist"], "not": {"anyOf": [{"required": ["bust"]}, {"required": ["hips"]}]}}
+          ],
+          "properties": {
+            "build": {"type": "string"},
+            "bust": {"type": "string"},
+            "hips": {"type": "string"},
+            "chest": {"type": "string"},
+            "waist": {"type": "string"},
+            "legs": {"type": "string"},
+            "raceAlignment": {"type": "string"},
+            "distinguishingMarks": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}

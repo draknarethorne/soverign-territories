@@ -22,6 +22,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The Elder Dragon of Ice, shard-born, bonded to Draknira since the night the crown broke.",
+  "art": { "artIdentity": "data/art/dragons/elder-dragons/glaciora.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Ice), bonded to Draknira." }
 }

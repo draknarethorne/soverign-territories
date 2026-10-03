@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_IGNIS_EMBERSTRIDE",
-  "name": "Ignis Emberstride",
+  "cardId": "HERO_IGNIS_EMBERSTRIDE",
   "art": {
     "palette": {
       "primaryColor": "Ember Red",
-      "accentColors": ["Burnished Bronze", "Charcoal Black"],
+      "accentColors": [
+        "Burnished Bronze",
+        "Charcoal Black"
+      ],
       "eyeColor": "Molten amber iris with dark charcoal limbal ring, faint ember striations",
       "eyeColorGlamour": "Molten amber irises with faint ember striations and a dark charcoal limbal ring",
       "hairColor": "Dark auburn hair, short and windswept",
       "skinTone": "Warm sun-bronzed complexion, evenly tanned",
-      "eyeColorNegatives": ["blue eyes", "green eyes", "grey eyes", "violet eyes"],
-      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {

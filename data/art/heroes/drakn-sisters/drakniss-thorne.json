@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNISS_THORNE",
-  "name": "Drakniss Thorne",
+  "cardId": "HERO_DRAKNISS_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Luminous Ivory White",

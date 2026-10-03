@@ -53,6 +53,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The shadow-father and the only Drakn son — first cause of the Sundering, and the last to forgive himself for it.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/draknare-thorne.json" },
   "acquisition": {
     "packSources": [],
     "campaignDrops": []

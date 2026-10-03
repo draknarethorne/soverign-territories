@@ -24,6 +24,7 @@
   ],
   "tacticSlots": 6,
   "lore": "A poacher turned protector, sworn to Drakniya's grove after it spared his life.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/nizaras-featherstone.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Grass). Bonded pet Treant (to be authored)." }
 }

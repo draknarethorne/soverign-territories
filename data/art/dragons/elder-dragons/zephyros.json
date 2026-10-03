@@ -1,8 +1,7 @@
 {
   "id": "dragons/elder-dragons/zephyros",
   "kind": "dragon",
-  "name": "Zephyros",
+  "cardId": "UNIT_ZEPHYROS",
   "description": "an Elder Dragon of sky-cerulean and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of breeze-teal silk",
-  "element": "Wind",
   "notes": "Skeletal identity, first pass -- aligned to Draknava Thorne (Wind) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknava's own palette (Sky Cerulean / Gossamer Silver / Breeze Teal)."
 }

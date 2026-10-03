@@ -6,7 +6,8 @@ root. Do not add or modify runtime JSON contracts here.
 
 Files:
 
-- card-schema.json — authoritative JSON Schema for cards.
+- card-schema.json — DEPRECATED legacy card schema; the authoritative card schema is
+  `data/schemas/codex-schema.json` (art-side schemas live in `data/art/_schema/`).
 - card-schema.md — narrative notes for card schema.
 - map-schema.json — authoritative JSON Schema for maps and tiles.
 - map-schema.md — narrative notes for map schema.

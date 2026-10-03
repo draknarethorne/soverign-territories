@@ -24,13 +24,7 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Ice given a crown and a will. She speaks softly, and the room forgets to breathe.",
-  "art": {
-    "palette": {
-      "primaryColor": "Glacial Blue",
-      "accentColors": ["Frost White", "Shimmering Silver"],
-      "eyeColor": "Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks"
-    }
-  },
+  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknira-thorne.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Ice), paired to Glaciora." }
 }

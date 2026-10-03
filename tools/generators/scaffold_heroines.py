@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""One-time scaffold: generate art-hero defs + base-set X_Pose/X_Head cards for the
+"""DEPRECATED one-time scaffold -- do not re-run. It emits the pre-cardId identity shape
+(heroId + name) and references paths that no longer exist (data/art/hair/). Identities now
+link to their gameplay card by cardId; see data/art/_schema/hero-identity.schema.json.
+
+Original purpose: generate art-hero defs + base-set X_Pose/X_Head cards for the
 9 remaining Drak sisters, mirroring the Drakness pattern. Run once, then regenerate
 prompts with gen_prompt.py. Safe to delete after running (kept only if reused later).
 """

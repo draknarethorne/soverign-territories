@@ -24,6 +24,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The last knight of a court that froze solid the night the crown broke; he alone thawed.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/lyran-frostfall.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Ice). Bonded pet Frost Owl (to be authored)." }
 }

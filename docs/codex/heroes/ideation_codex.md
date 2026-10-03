@@ -113,9 +113,13 @@ exists (`TRUE`/`FALSE`); `Art Progress` is overall completion for the card.
   alongside `class`, `creatureType`, `race`, `sex`, and `companion`.
 - **Thorne naming is canonical** for the Drakn bloodline (the ten heroines + Draknare Thorne).
   Other heroes use names fitting their role/origin. `ST-###` IDs are adjustable.
-- **Single Base Set, all 10 elements from launch** — no day-one expansion split. Balance is
-  held by a symmetric per-element template (see the blueprint below). Real expansions arrive
-  later as new *themes*.
+- **Staged element rollout (revised Oct 2026; supersedes "all 10 elements from launch").** All ten
+  elements are *designed* and their art pipeline is proven, but they release in stages: **Grass,
+  Fire, Water** first (MVP), with **Darkness + Light** either folded into the first public push
+  (five elements) or following as the first expansion; the remaining elements arrive in later
+  expansions in an order driven by the story. Balance is still held by the symmetric per-element
+  template (see the blueprint below) -- it now describes one element's worth of content, repeated per
+  release. Real expansions also arrive later as new *themes*.
 - **Card taxonomy** — card `type` is a **mechanical role** with six values today
   (Hero, Unit, Building, Worker, Tactic, Equipment) and is **extensible** (future roles such
   as Consumable). `creatureType` is a separate flavor/mechanics axis: **Humanoid, Dragon,

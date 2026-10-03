@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNETA_THORNE",
-  "name": "Drakneta Thorne",
+  "cardId": "HERO_DRAKNETA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Electric Gold",

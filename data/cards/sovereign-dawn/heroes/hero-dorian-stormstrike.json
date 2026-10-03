@@ -23,6 +23,7 @@
   ],
   "tacticSlots": 6,
   "lore": "A wandering monk who caught one of Drakneta's stray bolts and never stopped moving since.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/dorian-stormstrike.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Lightning). Bonded pet Gryphon (to be authored)." }
 }

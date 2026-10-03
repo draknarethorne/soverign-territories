@@ -47,6 +47,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The Elder Dragon of Darkness — oldest of the shard-born wyrms, bonded to Drakness since the night the crown broke.",
+  "art": { "artIdentity": "data/art/dragons/elder-dragons/umbrath.json" },
   "acquisition": {
     "packSources": [],
     "campaignDrops": []

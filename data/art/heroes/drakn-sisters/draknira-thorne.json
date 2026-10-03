@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNIRA_THORNE",
-  "name": "Draknira Thorne",
+  "cardId": "HERO_DRAKNIRA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Glacial Blue",

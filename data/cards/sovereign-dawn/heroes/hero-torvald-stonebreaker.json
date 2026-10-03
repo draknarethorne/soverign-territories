@@ -24,6 +24,7 @@
   ],
   "tacticSlots": 6,
   "lore": "A clan-chief of the high crags who swore fealty to Draknara's stone after she moved a mountain to save his people.",
+  "art": { "artIdentity": "data/art/heroes/drakn-bound/torvald-stonebreaker.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic male hero (Earth). Bonded pet Dire Bear (to be authored)." }
 }

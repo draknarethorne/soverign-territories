@@ -24,13 +24,7 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Light given a crown and a will. She is the only sister the shadow-father cannot look upon.",
-  "art": {
-    "palette": {
-      "primaryColor": "Luminous Ivory White",
-      "accentColors": ["Radiant Gold", "Polished Steel"],
-      "eyeColor": "Radiant topaz-gold iris with warm bronze limbal ring, radiating solar champagne striations, and ivory flecks"
-    }
-  },
+  "art": { "artIdentity": "data/art/heroes/drakn-sisters/drakniss-thorne.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Light), paired to Lumira." }
 }

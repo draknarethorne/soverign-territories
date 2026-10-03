@@ -1,6 +1,5 @@
 {
-  "heroId": "HERO_DRAKNOXA_THORNE",
-  "name": "Draknoxa Thorne",
+  "cardId": "HERO_DRAKNOXA_THORNE",
   "art": {
     "palette": {
       "primaryColor": "Radiant Acid Green",

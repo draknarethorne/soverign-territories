@@ -24,13 +24,7 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Water given a crown and a will. She never raises her voice; the tide does it for her.",
-  "art": {
-    "palette": {
-      "primaryColor": "Deep Oceanic Blue",
-      "accentColors": ["Aquamarine", "Polished Brass"],
-      "eyeColor": "Deep sapphire iris with oceanic indigo limbal ring, radiating aquamarine striations, and pearl-white flecks"
-    }
-  },
+  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknisa-thorne.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Water), paired to Aquaria." }
 }

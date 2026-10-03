@@ -22,6 +22,7 @@
   ],
   "tacticSlots": 6,
   "lore": "The Elder Dragon of Grass, shard-born, bonded to Drakniya since the night the crown broke.",
+  "art": { "artIdentity": "data/art/dragons/elder-dragons/sylvanya.json" },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Mythic Elder Dragon (Grass), bonded to Drakniya." }
 }

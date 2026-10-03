@@ -1,16 +1,27 @@
 {
-  "heroId": "HERO_TORVALD_STONEBREAKER",
-  "name": "Torvald Stonebreaker",
+  "cardId": "HERO_TORVALD_STONEBREAKER",
   "art": {
     "palette": {
       "primaryColor": "Terracotta Brown",
-      "accentColors": ["Iron Grey", "Warm Sand"],
+      "accentColors": [
+        "Iron Grey",
+        "Warm Sand"
+      ],
       "eyeColor": "Deep umber iris with dark iron limbal ring, faint terracotta striations",
       "eyeColorGlamour": "Deep umber irises with faint terracotta striations and a dark iron limbal ring",
       "hairColor": "Dark brown hair, short and rugged",
       "skinTone": "Deep sun-weathered tan complexion, evenly toned",
-      "eyeColorNegatives": ["blue eyes", "green eyes", "grey eyes", "violet eyes"],
-      "skinColorNegatives": ["pale skin", "fair skin", "washed-out skin"],
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
