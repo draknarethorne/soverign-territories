@@ -73,7 +73,8 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
 
 ## Deferred
 
-- **Asset delivery (C1).** Chain stops at "a text prompt exists." Needs: where rendered PNGs live and how they are named,
+- **Asset delivery (C1).** Chain stops at "a text prompt exists." Options for automating it through the ComfyUI API are in
+  [art/comfyui-automation-proposal.md](art/comfyui-automation-proposal.md). Needs: where rendered PNGs live and how they are named,
   how the card's `portraitAsset`/`fullArtAsset`/`shinyPortrait` fields point at them, how Unity loads them (provisional
   card-art target 512x768, 2:3), and a validator check that referenced files exist. Includes a tool that injects prompts into
   `workflows/**.json` instead of copy-paste.
