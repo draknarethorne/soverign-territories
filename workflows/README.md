@@ -54,6 +54,22 @@ python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine fi
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
 ```
 
+### Hand-curated workflows
+
+Generated workflows are rebuilt from prompts, so a hand edit to one would be overwritten. Anything you tune by hand lives in
+`workflows/_curated/<set>/<Hero>/` instead. `make` and `deploy` never touch that folder.
+
+| You want to | Run | What happens |
+| --- | --- | --- |
+| Start from a generated workflow and tune it | `fork NAME --as Tag` (`bin\fork.cmd`) | Copies it to `_curated` as `NAME_Tag` (its save prefix follows the new name, and it records what it came from), and puts it in DEV |
+| Keep what you did in ComfyUI | `pull --hero H` (`bin\pull-dev.cmd`) | A workflow that exists only in the workspace is kept as curated; edits to a curated one are captured |
+| Put curated workflows in another workspace | `deploy --curated --hero H` (`bin\deploy-curated.cmd`) | Copies the ones the workspace lacks; a copy there that differs is skipped, never overwritten, unless you add `--overwrite` |
+| See what is where | `status --hero H` | Shows `curated`, `curated-changed` (pull it) and `curated-missing` (deploy it) next to the generated counts, and `install-only` for anything not yet kept |
+
+Name a curated workflow with the hero first (`Drakness_...`) so the tool can route it; the generated names are
+`<Hero>_<Engine>_<Stage>_<Name>`, so adding a tag at the end never collides. If a curated idea turns out to be worth
+automating, move what it does into a motion, transition, template or card piece, regenerate, and retire the curated copy.
+
 ### Video (MiniMax)
 
 `data/animation/_sets/<group>/<hero>/*.json` cards turn a finished image into a short video prompt. A card names the hero,

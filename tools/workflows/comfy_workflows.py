@@ -19,7 +19,11 @@ Commands
   promote --to uat|prod [--from dev|uat] <filters>
                                        MOVE approved workflows up a tier: capture the source workspace copy into the repo
                                        master, copy it to the next tier, then take it out of the source workspace (backed up)
-  pull    [targets] [filters]          workspace -> repo (new files; --force also replaces repo copies)
+  pull    [targets] [filters]          workspace -> repo. Files we did not generate are kept as CURATED workflows
+                                       (workflows/_curated/<set>/<Hero>/); later edits to a curated file are captured too.
+                                       --force also replaces generated repo copies.
+  fork    NAME --as TAG                copy a generated workflow to _curated as NAME_TAG and put it in dev, to hand-edit in ComfyUI
+  deploy  ... --curated                also copy curated workflows a workspace lacks (a differing workspace copy is never overwritten)
   inputs  [--fix]                      which A-pose image each hero's workflows read
 
 targets:  (none) = dev   |   --to dev|uat|prod   |   -w <Workspace> (repeatable)
@@ -46,6 +50,7 @@ WF = ROOT / "workflows"
 PROMPTS = ROOT / "prompts"
 CFG_PATH = WF / "workspaces.json"
 BACKUPS = WF / ".sync" / "backup"
+CURATED = WF / "_curated"
 TIERS = ("dev", "uat", "prod")
 
 
@@ -474,9 +479,25 @@ def cmd_list(args):
                   + ", ".join(f"{s} {c}" for s, c in sorted(stages.items())))
 
 
+def curated_files():
+    """{name: (group, hero, path)} for hand-curated workflows in workflows/_curated/<set>/<Hero>/. make and deploy never touch them."""
+    out = {}
+    if CURATED.is_dir():
+        for g in sorted(CURATED.iterdir()):
+            for h in sorted(g.iterdir()) if g.is_dir() else []:
+                for p in sorted(h.glob("*.json")) if h.is_dir() else []:
+                    out[p.name] = (g.name, h.name, p)
+    return out
+
+
+def same_workflow(a, b):
+    """Same graph, whatever the formatting: ComfyUI re-saves files with its own spacing."""
+    return read_wf(a) == read_wf(b)
+
+
 def lint(cfg, repo):
     idx = {i["stem"]: i for i in prompt_index(cfg)}
-    out = []
+    out = [f"{n}: exists both as a generated and a curated workflow (rename the curated one)" for n in sorted(set(repo) & set(curated_files()))]
     for name, (group, hero, p) in repo.items():
         try:
             wf = read_wf(p)
@@ -507,6 +528,7 @@ def lint(cfg, repo):
 def cmd_status(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
+    cur = curated_files()
     groups = hero_groups()
     for ws in pick_targets(cfg, args, "all"):
         if not install_exists(cfg, ws, args.root):
@@ -523,10 +545,17 @@ def cmd_status(args):
                 continue
             if args.hero and h.lower() != args.hero.lower():
                 continue
+            if name in cur:
+                rows["curated" if same_workflow(cur[name][2], inst[name]) else "curated-changed"].append(name)
+                continue
             rows["legacy" if info.get("legacy") else "install-only"].append(name)
-        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "legacy", "unreadable"))
+        for name in selected(cfg, ws, args, cur):
+            if name not in inst:
+                rows["curated-missing"].append(name)
+        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
         print(f"{ws} [{info['status']}]: {counts}")
-        hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull", "legacy": "old hand-made, no generated prompt"}
+        hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull: keeps it as a curated workflow", "curated-changed": "pull: captures your edits",
+                 "curated-missing": "deploy --curated", "legacy": "old hand-made, no generated prompt"}
         for k, names in rows.items():
             if k in hints and names and (args.verbose or len(names) <= 5):
                 print(f"    {k} ({hints[k]}): " + ", ".join(names))
@@ -605,6 +634,24 @@ def cmd_deploy(args):
                     patch_wf(wf, *get_values(read_wf(p)))
                     write_wf(inst[name], wf)
             tally["updated"] += 1
+        if getattr(args, "curated", False):
+            for name, (g, h, p) in selected(cfg, ws, args, curated_files()).items():
+                if name not in inst:
+                    print(f"  curated  {ws}/{name} (new)")
+                    if not args.dry_run:
+                        write_wf(dest / name, read_wf(p))
+                    tally["curated"] += 1
+                elif same_workflow(p, inst[name]):
+                    tally["aligned"] += 1
+                elif args.overwrite:
+                    print(f"  curated  {ws}/{name} (replace)")
+                    if not args.dry_run:
+                        backup(stamp, ws, name, inst[name])
+                        write_wf(inst[name], read_wf(p))
+                    tally["curated"] += 1
+                else:
+                    print(f"  SKIP     {ws}/{name} differs from the curated copy (your edits?): pull it, or use --overwrite")
+                    tally["skipped"] += 1
         print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
 
@@ -670,6 +717,7 @@ def cmd_promote(args):
 def cmd_pull(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
+    cur = curated_files()
     groups = hero_groups()
     for ws in pick_targets(cfg, args, "dev"):
         if not install_exists(cfg, ws, args.root):
@@ -706,14 +754,57 @@ def cmd_pull(args):
                 continue
             if args.match and args.match.lower() not in name.lower():
                 continue
+            if name in cur:  # a hand-curated workflow: the workspace is where it is edited, so keep the repo copy in step
+                if same_workflow(cur[name][2], p):
+                    skipped += 1
+                    continue
+                print(f"  update curated  {ws}/{name}")
+                if not args.dry_run:
+                    write_wf(cur[name][2], read_wf(p))
+                done += 1
+                continue
             if name in repo and not args.force:
                 skipped += 1
                 continue
-            print(f"  pull   {ws}/{name} -> workflows/{groups[h]}/{h}/")
+            if name in repo:
+                dst = repo_path(cfg, groups[h], h, name)
+            else:
+                dst = CURATED / groups[h] / h / name  # not generated by us: keep it as a curated workflow
+            print(f"  pull   {ws}/{name} -> {dst.parent.relative_to(ROOT).as_posix()}/")
             if not args.dry_run:
-                write_wf(repo_path(cfg, groups[h], h, name), read_wf(p))
+                write_wf(dst, read_wf(p))
             done += 1
-        print(f"{ws}: pulled {done}, left {skipped} existing repo copies" + (" (dry run)" if args.dry_run else ""))
+        print(f"{ws}: pulled {done}, left {skipped} unchanged" + (" (dry run)" if args.dry_run else ""))
+
+
+def cmd_fork(args):
+    """Copy a generated workflow to workflows/_curated under a new name, so it can be hand-edited in ComfyUI without being regenerated."""
+    cfg = load_cfg()
+    repo, cur = repo_files(cfg), curated_files()
+    src = args.name if args.name.endswith(".json") else args.name + ".json"
+    if src not in repo:
+        sys.exit(f"No generated workflow named {src} (try: status -v, or the name without .json).")
+    g, h, p = repo[src]
+    new = f"{src[:-5]}_{args.tag}.json"
+    if new in repo or new in cur:
+        sys.exit(f"{new} already exists.")
+    wf = read_wf(p)
+    save = save_node(wf)
+    if save:
+        save["widgets_values"][0] = save["widgets_values"][0].rsplit("/", 1)[0] + "/" + new[:-5]
+        if isinstance(save.get("widgets_values_named"), dict) and "filename_prefix" in save["widgets_values_named"]:
+            save["widgets_values_named"]["filename_prefix"] = save["widgets_values"][0]
+    wf.setdefault("extra", {})["curated"] = {"derivedFrom": src, "tag": args.tag, "date": datetime.date.today().isoformat()}
+    wf["id"] = str(uuid.uuid4())
+    dst = CURATED / g / h / new
+    print(f"  fork  {src} -> {dst.relative_to(ROOT).as_posix()}")
+    if args.dry_run:
+        return
+    write_wf(dst, wf)
+    ws = cfg["dev"][0]
+    if not args.no_deploy and install_exists(cfg, ws, args.root):
+        write_wf(install_dir(cfg, ws, args.root) / new, wf)
+        print(f"  deployed to {ws}: open {new} in ComfyUI, edit it, save it, then run pull to keep your changes")
 
 
 def cmd_make(args):
@@ -832,6 +923,12 @@ def main(argv=None):
     s.add_argument("--all", action="store_true", help="allow a deploy with no filter")
     s.add_argument("--templates", action="store_true", help="deploy the ST?_ stage templates instead of hero workflows")
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
+    s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
+    s = sub.add_parser("fork")
+    common(s)
+    s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
+    s.add_argument("--as", dest="tag", required=True, help="short tag added to the new name, e.g. Hand")
+    s.add_argument("--no-deploy", action="store_true", help="only create the curated copy; do not put it in the dev workspace")
     s = sub.add_parser("promote")
     common(s, False, True)
     s.add_argument("--from", dest="src", choices=list(TIERS), default="dev", help="source tier (default: dev)")
@@ -852,7 +949,7 @@ def main(argv=None):
     common(s)
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork}[args.cmd](args)
 
 
 if __name__ == "__main__":

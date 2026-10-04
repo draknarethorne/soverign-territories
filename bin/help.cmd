@@ -21,7 +21,9 @@ echo    deploy-uat.cmd HERO [STAGE]    repo to the hero or group UAT workspace
 echo    deploy-prod.cmd HERO [STAGE]   repo to the series PROD workspace
 echo    promote-uat.cmd HERO [STAGE]   MOVE approved workflows from DEV to UAT
 echo    promote-prod.cmd HERO [STAGE]  MOVE approved workflows from UAT to PROD
-echo    pull-dev.cmd HERO [STAGE]      bring workflows that only exist in DEV into the repo
+echo    pull-dev.cmd HERO [STAGE]      keep what you made or edited in DEV (new = curated; edits to curated are captured)
+echo    fork.cmd WORKFLOW TAG          copy a generated workflow to hand-edit it (curated), and put it in DEV
+echo    deploy-curated.cmd HERO        copy hand-curated workflows to a workspace that lacks them
 echo    deploy-templates.cmd           put the ST stage templates in DEV
 echo.
 echo  LOOK
