@@ -11,6 +11,7 @@ repos:
       - id: check-yaml
       - id: check-json
       - id: end-of-file-fixer
+        exclude: "^workflows/_archive/"
       - id: trailing-whitespace
         exclude: ".*\\.md$"
 

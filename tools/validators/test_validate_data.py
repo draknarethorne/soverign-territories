@@ -30,6 +30,7 @@ def run_on_copy(mutate):
         cards, identity_of = vd.check_card_art_links(report)
         vd.check_art_cards(report)
         vd.check_piece_refs(report)
+        vd.check_animation_cards(report)
         return report.errors
     finally:
         vd.ROOT = REAL_ROOT
@@ -45,10 +46,15 @@ def edit(path, fn):
 CARD = "data/cards/sovereign-dawn/heroes/hero-drakness-thorne.json"
 IDENT = "data/art/heroes/drakn-sisters/drakness-thorne.json"
 SCENE = "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature.json"
+ANIM = "data/animation/_sets/drakn-sisters/drakness/drakness-anim-x-pose-kiss-toss-laugh.json"
 SIB_SCENE = "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature.json"
 
 CASES = [
     ("baseline is clean", lambda r: None, None),
+    ("animation action pointing at a motion piece that does not exist",
+     lambda r: edit(r / ANIM, lambda d: d["actions"].append({"motion": "data/animation/motions/magic/nope.json"})), "does not exist"),
+    ("animation action with an unknown transition",
+     lambda r: edit(r / ANIM, lambda d: d["actions"].append({"beat": "x", "seconds": 1, "transition": "teleport"})), "transition"),
     ("art direction creeping back onto a gameplay card",
      lambda r: edit(r / CARD, lambda d: d["art"].update({"palette": {"primaryColor": "Red"}})), "palette"),
     ("card art.artIdentity pointing at the wrong file",

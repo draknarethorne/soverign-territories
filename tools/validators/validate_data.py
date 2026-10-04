@@ -249,6 +249,47 @@ def check_art_cards(report):
             outputs[out] = where
 
 
+def check_animation_cards(report):
+    """data/animation/_sets cards: every file they name exists, and every action and transition is usable."""
+    def exists(where, what, path):
+        if not (ROOT / path).exists():
+            report.error(where, f"{what} {path} does not exist")
+    def action(where, item):
+        if isinstance(item, str):
+            return
+        for key in ("motion", "scene"):
+            ref = item.get(key)
+            if ref and ref.endswith(".json"):
+                exists(where, f"action {key}", ref)
+        if not any(k in item for k in ("motion", "scene", "beat")):
+            report.error(where, f"action {item} needs a motion, a scene or a beat")
+        if "seconds" in item and not (isinstance(item["seconds"], (int, float)) and item["seconds"] > 0):
+            report.error(where, f"action seconds must be a positive number (got {item['seconds']!r})")
+        tr = item.get("transition")
+        if tr and re.fullmatch(r"[a-z-]+", tr):
+            exists(where, "transition", f"data/animation/transitions/{tr}.json")
+        for other in item.get("with", []):
+            action(where, other)
+    for f in rglob("data/animation/_sets/**/*.json"):
+        d, where = load(f), rel(f)
+        for key in ("animId", "name", "heroArt", "look", "actions", "template"):
+            if key not in d:
+                report.error(where, f"animation card is missing '{key}'")
+        if d.get("animId") != f.stem:
+            report.error(where, f"animId must equal the file name ({f.stem})")
+        for key in ("heroArt", "look", "template"):
+            if key in d:
+                exists(where, key, d[key])
+        if d.get("source", {}).get("artCard"):
+            exists(where, "source.artCard", d["source"]["artCard"])
+        if not d.get("actions"):
+            report.error(where, "animation card needs at least one action")
+        for item in d.get("actions", []):
+            action(where, item)
+        if "transition" in d and re.fullmatch(r"[a-z-]+", d["transition"]):
+            exists(where, "transition", f"data/animation/transitions/{d['transition']}.json")
+
+
 def check_piece_refs(report):
     for f in rglob("data/art/**/backgrounds/**/*.json"):
         parts = f.relative_to(ROOT / "data/art").parts
@@ -313,6 +354,7 @@ def main():
     cards, identity_of = check_card_art_links(report)
     check_art_cards(report)
     check_piece_refs(report)
+    check_animation_cards(report)
     coverage(report, counts, cards, identity_of)
     if report.errors:
         print(f"\nFAILED: {len(report.errors)} problem(s)")

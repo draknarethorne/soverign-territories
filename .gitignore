@@ -49,6 +49,7 @@ __pycache__/
 
 # Local ComfyUI sync state and backups (per machine)
 workflows/.sync/
+workflows/.test/
 
 # Workflows that must never be committed (NSFW experiments and the general ComfyUI workspace)
 workflows/ComfyUI/

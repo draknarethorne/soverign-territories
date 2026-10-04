@@ -33,10 +33,7 @@
       "status": "planned",
       "role": "UAT: shared workspace for all ten sisters' scenes, so they can be worked in parallel. Studio work stays in each sister's own workspace."
     },
-    "Drakn Bound": {
-      "status": "planned",
-      "role": "UAT: one workspace for all ten bound heroes, studio and scenes."
-    },
+    "Drakn Bound": {"status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
     "Soverign Dawn Series": {
       "status": "planned",
       "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
@@ -49,19 +46,33 @@
       {"groups": ["drakn-sisters"], "class": "scene", "workspace": "Drakn Sisters"},
       {"groups": ["drakn-sisters"], "workspace": "{hero}"}
     ],
-    "prod": [
-      {"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Soverign Dawn Series"}
-    ]
+    "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Soverign Dawn Series"}]
   },
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
   "inputs": {"Drakness": "Drakness_Qwen_X_Pose_00142_.png"},
   "templates": {
-    "poses": "workflows/_templates/Qwen_X_Pose.master.json",
-    "default": "workflows/_templates/Qwen_Edit.master.json"
+    "poses": "workflows/_templates/ST1_Qwen_A_Pose.json",
+    "default": "workflows/_templates/ST2_Qwen_Edit.json",
+    "text": "workflows/_templates/ST0_Qwen_Text.json",
+    "video": "workflows/_templates/ST6_MiniMax_Video.json"
   },
-  "stageFolders": {
-    "scene": "scenes"
+  "engines": {
+    "firered": {
+      "template": "workflows/_templates/ST3_FireRed_Final.json",
+      "turbo": true,
+      "dir": "workflows/.test/firered",
+      "classes": ["scene"],
+      "fxScenes": "*",
+      "fx": "Magic and spell effects: first render every physical effect realistically, with real-world behaviour and texture - real fire, real smoke, real sparks, dust, spray and mist - then layer the magic on top of it: the same smoke, flames and particles also glow from within with luminous light in the colour of her magic, with bright cores, arcs of energy, glowing runes, strong bloom and a subtle lens flare. A spell forming in her hand is a real, tangible presence (swirling, dense, physical) that is also radiantly lit and vivid, like the visual effects of a big-budget fantasy film. The magic light must visibly illuminate and colour her skin, gown, hair and the surroundings. Keep the person, clothing, skin and environment photographic and lifelike."
+    },
+    "minimax": {
+      "template": "workflows/_templates/ST6_MiniMax_Video.json",
+      "turbo": true,
+      "dir": "workflows/.test/minimax",
+      "classes": ["scene"]
+    }
   },
+  "stageFolders": {"scene": "scenes"},
   "skipGroups": ["elder-dragons", "drakn-bound"]
 }

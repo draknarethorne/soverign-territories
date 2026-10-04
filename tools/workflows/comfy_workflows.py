@@ -97,6 +97,8 @@ CLASS_PROBE = ("poses", "scene")  # one stage folder of each class, for routes t
 def stage_ok(args, name_or_stage, is_stage=False):
     """True when a file (or stage folder) passes the --stage and --class filters."""
     stage = name_or_stage if is_stage else stage_of(name_or_stage)
+    if not is_stage and getattr(args, "engine", None) in ENGINES and engine_of(name_or_stage) != args.engine:
+        return False
     return (not args.stage or stage == args.stage) and (not args.cls or class_of(stage) == args.cls)
 
 
@@ -157,17 +159,37 @@ def hero_groups():
     return out
 
 
+def engine_roots(cfg):
+    """{engine: folder holding its generated workflows}. FireRed is a local test engine kept out of git."""
+    roots = {"qwen": WF}
+    for engine in ("firered", "minimax"):
+        if cfg.get("engines", {}).get(engine):
+            roots[engine] = ROOT / cfg["engines"][engine]["dir"]
+    return roots
+
+
+def engine_of(name):
+    return "firered" if "_FireRed_" in name else "minimax" if "_MiniMax_" in name else "qwen"
+
+
+def repo_path(cfg, group, hero, name):
+    return engine_roots(cfg)[engine_of(name)] / group / hero / name
+
+
 def repo_files(cfg):
-    """{name: (group, hero, path)} for every workflow in workflows/<set>/<Hero>/."""
+    """{name: (group, hero, path)} for every workflow in <engine folder>/<set>/<Hero>/."""
     out = {}
-    for g in sorted(WF.iterdir()):
-        if not g.is_dir() or g.name.startswith(("_", ".")):
+    for root in engine_roots(cfg).values():
+        if not root.is_dir():
             continue
-        for h in sorted(g.iterdir()):
-            if h.is_dir():
-                for p in sorted(h.glob("*.json")):
-                    if not excluded(cfg, p.name):
-                        out[p.name] = (g.name, h.name, p)
+        for g in sorted(root.iterdir()):
+            if not g.is_dir() or g.name.startswith(("_", ".")):
+                continue
+            for h in sorted(g.iterdir()):
+                if h.is_dir():
+                    for p in sorted(h.glob("*.json")):
+                        if not excluded(cfg, p.name):
+                            out[p.name] = (g.name, h.name, p)
     return out
 
 
@@ -195,12 +217,12 @@ def hero_of(name):
 
 
 STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
-               "Head": "head", "View": "poses"}
+               "Head": "head", "View": "poses", "Video": "video"}
 
 
 def stage_of(name):
     """Prompt folder a workflow file belongs to: Hero_Qwen_X_Pose -> poses, Hero_Qwen_Scene_Glamour -> scene."""
-    m = re.match(r"^[^_]+_Qwen_(.+?)(?:\.json)?$", name)
+    m = re.match(r"^[^_]+_(?:Qwen|FireRed|MiniMax)_(.+?)(?:\.json)?$", name)
     if not m:
         return "other"
     parts = m.group(1).split("_")
@@ -236,8 +258,13 @@ def node_of(wf, kind):
     return None
 
 
+def save_node(wf):
+    """The node that names the output files: SaveImage for pictures, SaveVideo for animations."""
+    return node_of(wf, "SaveImage") or node_of(wf, "SaveVideo")
+
+
 def get_values(wf):
-    n, s = prompt_node(wf), node_of(wf, "SaveImage")
+    n, s = prompt_node(wf), save_node(wf)
     if not n or not s:
         return None
     return n["widgets_values"][0], n["widgets_values"][1], s["widgets_values"][0]
@@ -245,21 +272,62 @@ def get_values(wf):
 
 def patch_wf(wf, pos, neg, prefix):
     """Set the three in-graph values; return True if anything changed."""
-    n, s = prompt_node(wf), node_of(wf, "SaveImage")
+    n, s = prompt_node(wf), save_node(wf)
     if not n or not s:
-        raise ValueError("workflow has no Qwen prompt subgraph or SaveImage node")
+        raise ValueError("workflow has no prompt subgraph or save node")
     changed = False
     wv = n["widgets_values"]
-    if wv[0] != pos or wv[1] != neg:
-        changed = True
-    wv[0], wv[1] = pos, neg
     named = n.get("widgets_values_named")
+    has_neg = not isinstance(named, dict) or "prompt_1" in named  # FireRed exposes only a positive prompt
+    if wv[0] != pos or (has_neg and wv[1] != neg):
+        changed = True
+    wv[0] = pos
+    if has_neg:
+        wv[1] = neg
     if isinstance(named, dict):
-        named["prompt"], named["prompt_1"] = pos, neg
+        named["prompt"] = pos
+        if has_neg:
+            named["prompt_1"] = neg
     if s["widgets_values"][0] != prefix:
         changed = True
         s["widgets_values"][0] = prefix
+        if isinstance(s.get("widgets_values_named"), dict) and "filename_prefix" in s["widgets_values_named"]:
+            s["widgets_values_named"]["filename_prefix"] = prefix
     return changed
+
+
+def set_turbo(wf, on):
+    """FireRed turbo = the Lightning LoRA, 8 steps and CFG 1; off = 40 steps and CFG 4. One boolean drives all three."""
+    n = prompt_node(wf)
+    if n and isinstance(n["widgets_values"][1], bool):
+        n["widgets_values"][1] = on
+        if isinstance(n.get("widgets_values_named"), dict):
+            n["widgets_values_named"]["value"] = on
+    for sg in wf.get("definitions", {}).get("subgraphs", []):
+        for node in sg["nodes"]:
+            if node["type"] == "PrimitiveBoolean":
+                node["widgets_values"][0] = on
+
+
+def set_video(wf, prompt_text, engine_cfg):
+    """Apply a video prompt's header (Size, Length) and the engine's turbo setting to a MiniMax workflow; return the source image name."""
+    n = prompt_node(wf)
+    named = n.get("widgets_values_named") or {}
+    names = list(named)
+    def put(key, val):
+        if key in named:
+            n["widgets_values"][names.index(key)] = val
+            named[key] = val
+    size = re.search(r"^Size:\s*(\d+)x(\d+)", prompt_text, re.M)
+    secs = re.search(r"^Length:\s*([\d.]+)", prompt_text, re.M)
+    src = re.search(r"^Source image:\s*(\S+)", prompt_text, re.M)
+    if size:
+        put("width", int(size.group(1)))
+        put("height", int(size.group(2)))
+    if secs:
+        put("value_1", float(secs.group(1)))
+    put("value", bool(engine_cfg.get("turbo", True)))  # turbo = 8-step LoRA
+    return src.group(1) if src and not src.group(1).startswith("(") else None
 
 
 def input_image(wf):
@@ -276,18 +344,32 @@ def split_prompt(text):
     return m.group(1).strip(), m.group(2).strip()
 
 
-def prompt_index(cfg):
+ENGINES = {"qwen": "Qwen", "firered": "FireRed", "minimax": "MiniMax"}
+
+
+def engine_prompt(cfg, item, pos):
+    """The positive prompt an engine should get: FireRed adds a magic-effects instruction on the scenes listed in fxScenes."""
+    fr = cfg.get("engines", {}).get("firered", {})
+    m = re.search(r"_Scene_(.+)$", item["stem"])
+    if item.get("engine") == "firered" and fr.get("fx") and m and (fr.get("fxScenes") == "*" or m.group(1) in fr.get("fxScenes", [])):
+        return pos + "\n\n" + fr["fx"]
+    return pos
+
+
+def prompt_index(cfg, engine="qwen"):
     out = []
     for p in sorted(PROMPTS.glob("**/*.txt")):
         rel = p.relative_to(PROMPTS)
         if "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
             continue
         group, hero, stagedir = rel.parts[0], rel.parts[1], rel.parts[2]
+        if (stagedir == "video") != (engine == "minimax"):  # video prompts feed only the MiniMax engine
+            continue
         family = list(rel.parts[3:-1])
         stem = p.stem
         if not stem.startswith(hero + "_"):
             continue
-        name = f"{hero}_Qwen_{stem[len(hero) + 1:]}"
+        name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
         folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "stem": stem, "name": name,
                     "prefix": "/".join([hero, folder] + family + [name])})
@@ -408,15 +490,16 @@ def lint(cfg, repo):
         stem = name[:-5]
         if prefix.rsplit("/", 1)[-1] != stem:
             out.append(f"{hero}/{name}: prefix ends in '{prefix.rsplit('/', 1)[-1]}', expected '{stem}'")
-        m = re.match(r"^(.+?)_Qwen_(.+)$", stem)
+        m = re.match(r"^(.+?)_(?:Qwen|FireRed|MiniMax)_(.+)$", stem)
         item = idx.get(f"{m.group(1)}_{m.group(2)}") if m else None
         if not item:
             continue
         try:
             ppos, pneg = split_prompt(item["path"].read_text(encoding="utf-8"))
+            ppos = engine_prompt(cfg, {**item, "engine": engine_of(name)}, ppos)
         except ValueError:
             continue
-        if pos.strip() != ppos or neg.strip() != pneg:
+        if pos.strip() != ppos or (engine_of(name) == "qwen" and neg.strip() != pneg):
             out.append(f"{hero}/{name}: prompt is out of date (make --match {item['stem']})")
     return out
 
@@ -569,7 +652,7 @@ def cmd_promote(args):
             if args.dry_run:
                 moved["promoted"] += 1
                 continue
-            write_wf(WF / g / h / name, wf)
+            write_wf(repo_path(cfg, g, h, name), wf)
             for w in dests:
                 existing = install_files(cfg, w, args.root).get(name)
                 if existing:
@@ -628,14 +711,22 @@ def cmd_pull(args):
                 continue
             print(f"  pull   {ws}/{name} -> workflows/{groups[h]}/{h}/")
             if not args.dry_run:
-                write_wf(WF / groups[h] / h / name, read_wf(p))
+                write_wf(repo_path(cfg, groups[h], h, name), read_wf(p))
             done += 1
         print(f"{ws}: pulled {done}, left {skipped} existing repo copies" + (" (dry run)" if args.dry_run else ""))
 
 
 def cmd_make(args):
     cfg = load_cfg()
-    items = prompt_index(cfg)
+    engines = {"firered": ["firered"], "minimax": ["minimax"], "both": ["qwen", "firered"]}.get(args.engine, ["qwen"])
+    items = []
+    for engine in engines:
+        its = prompt_index(cfg, engine)
+        for i in its:
+            i["engine"] = engine
+        if engine == "firered" and not (args.stage or args.cls):
+            its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])]
+        items += its
     if args.group:
         items = [i for i in items if i["group"] == args.group]
     if args.hero:
@@ -646,8 +737,9 @@ def cmd_make(args):
         items = [i for i in items if args.match.lower() in i["stem"].lower()]
     tally = {"created": 0, "updated": 0, "unchanged": 0, "missing": 0}
     for it in items:
-        target = WF / it["group"] / it["hero"] / f"{it['name']}.json"
+        target = engine_roots(cfg)[it["engine"]] / it["group"] / it["hero"] / f"{it['name']}.json"
         pos, neg = split_prompt(it["path"].read_text(encoding="utf-8"))
+        pos = engine_prompt(cfg, it, pos)
         if target.exists():
             wf = read_wf(target)
             if patch_wf(wf, pos, neg, it["prefix"]):
@@ -663,15 +755,19 @@ def cmd_make(args):
             if args.verbose:
                 print(f"  missing  {it['group']}/{it['hero']}/{target.name}")
             continue
-        is_apose = re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None
-        master = ROOT / cfg["templates"]["poses" if is_apose else "default"]
+        is_apose = it["engine"] == "qwen" and re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None
+        master = ROOT / (cfg["engines"][it["engine"]]["template"] if it["engine"] in ("firered", "minimax")
+                         else cfg["templates"]["poses" if is_apose else "default"])
         if not master.exists():
             sys.exit(f"Master template not found: {master}")
         wf = read_wf(master)
         patch_wf(wf, pos, neg, it["prefix"])
+        if it["engine"] == "firered":
+            set_turbo(wf, cfg["engines"]["firered"].get("turbo", True))
+        video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
-        want = args.input or (None if is_apose else input_for(cfg, it["hero"], it["stage"]))
+        want = args.input or video or (None if is_apose else input_for(cfg, it["hero"], it["stage"]))
         if ln and want:
             ln["widgets_values"][0] = want
         if not args.dry_run:
@@ -722,6 +818,7 @@ def main(argv=None):
             p.add_argument("--group", help="prompt group, e.g. drakn-sisters, angel-primes")
             p.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing")
             p.add_argument("--class", dest="cls", choices=["studio", "scene"], help="every stage of one class (scene, or all studio stages)")
+            p.add_argument("--engine", choices=["qwen", "firered", "minimax", "both"], help="restrict to one engine's workflows (make: which to build; default qwen)")
             p.add_argument("--match", help="substring of the file name")
 
     common(sub.add_parser("list"))

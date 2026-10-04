@@ -446,7 +446,7 @@ def resolve_components_tokens(card):
     return toks
 
 
-def generate(card_path):
+def generate(card_path, tokens_only=False):
     card = load_json(ROOT / card_path)
     hero = load_identity(card["heroArt"])
     # Base-set card may override any palette/physique attribute from the hero definition.
@@ -501,6 +501,9 @@ def generate(card_path):
             if other_key != key:
                 val = val.replace("{{" + other_key + "}}", other_val)
         toks[key] = val
+
+    if tokens_only:
+        return toks
 
     template = apply_optional_lines(template, toks)
     needed = set(re.findall(r"{{(\w+)}}", template))
