@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknara)",
+  "description": "a floor-length ceremonial spirit-walker robe of {{PRIMARY}} woven cloth and soft hide, painted ochre spirals and {{ACCENT_SOFT}} beadwork on the chest and sleeves, wide fringed sleeves, a mantle of feathers and painted hide, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a wide {{METAL}} belt hung with bone and bead talismans, a hem of long swinging fringe",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknara",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

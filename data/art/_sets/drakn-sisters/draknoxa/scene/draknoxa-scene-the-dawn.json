@@ -1,0 +1,21 @@
+{
+  "artId": "draknoxa-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Slow, languid emergence: she rises upright from the bubbling bog with unhurried, almost lazy grace, one hand lifted with fingers spread and the other trailing at her side, head tilted, gaze to the camera with a slow, knowing smile; full figure from head to toe visible above the mire.",
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/dawn-regalia.json",
+    "headwear": "a {{METAL}} crown of thorned vines and small glass vials set with {{GEM}} stones",
+    "jewelry": "a {{METAL}} vial-and-thorn collar with {{GEM}} stones, long dropper earrings, {{METAL}} cuffs",
+    "legs_feet": "bare feet with {{METAL}} anklets",
+    "effects": "Glowing acid-green and {{MAGIC}} ooze and thick fumes stream off her gown and hair and fall back into the bog in long slow drops, bubbles bursting around her, luminous spores drifting up through the mist.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/dawn/bioluminescent-mire-bog.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "THE DAWN: the sister rising from the Sundering in her element's homeland - first look at her territory. Her dragon is not yet bound, so no companion; native creatures instead. Rise speed and energy differ per sister."
+}

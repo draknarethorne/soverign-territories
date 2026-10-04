@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Drakness signature)",
+  "description": "an ornate floor-length dawn gown of layered {{PRIMARY}} silk and sheer smoke-grey gauze, a fitted corseted bodice embroidered with {{ACCENT_SOFT}} threadwork of crescent moons and bones, a high flared collar of {{METAL}} filigree, long pointed sleeves, and a vast skirt that dissolves into streaming ribbons of shadow-mist trailing behind her; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakness",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

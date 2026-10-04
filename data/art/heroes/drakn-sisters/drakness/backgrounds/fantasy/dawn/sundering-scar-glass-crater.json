@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/dawn/sundering-scar-glass-crater",
+  "kind": "background",
+  "name": "The Sundering Scar",
+  "description": "the Sundering Scar at first light: a vast circular crater of fused black glass cracked open like a shattered mirror, a ten-pointed sigil burned into the ground and glowing violet along its seams, broken obsidian obelisks leaning around the rim, nine long streaks of coloured light arcing away across a pale violet-grey dawn sky, ravens and bats wheeling above, pale wisps of spirits drifting up from the cracks",
+  "mood": "solemn, awe-struck",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakness",
+    "dawn",
+    "homeland"
+  ]
+}

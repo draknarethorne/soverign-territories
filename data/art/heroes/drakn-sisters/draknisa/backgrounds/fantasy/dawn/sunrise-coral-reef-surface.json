@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/dawn/sunrise-coral-reef-surface",
+  "kind": "background",
+  "name": "Sunrise Over the Reef",
+  "description": "the open sea at sunrise above a vivid coral reef: a gold and rose sky, a warm shallow sea so clear the reef is visible below, dolphins leaping, manta rays gliding under the surface, sea turtles, schools of silver fish flashing, jellyfish glowing in the water, seabirds wheeling, a distant island of palms",
+  "mood": "bright, flowing",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknisa",
+    "dawn",
+    "homeland"
+  ]
+}

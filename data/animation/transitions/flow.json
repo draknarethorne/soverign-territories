@@ -1,0 +1,7 @@
+{
+  "id": "transitions/flow",
+  "kind": "transition",
+  "lead": "Without pausing, ",
+  "label": "",
+  "note": "Continue straight on from where the previous action ended; the default join, so nothing skips."
+}

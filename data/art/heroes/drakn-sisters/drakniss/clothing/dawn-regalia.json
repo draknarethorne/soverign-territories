@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Drakniss signature)",
+  "description": "an ornate floor-length dawn gown of ivory and {{PRIMARY}} silk with a fitted bodice embroidered with {{METAL}} sunbursts, a high halo-shaped collar of {{METAL}} rays, long sleeves of sheer gold-dusted gauze, and a skirt of pleated panels that fan out like rays of light behind her; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniss",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/dawn/cloud-sea-sunrise-summit",
+  "kind": "background",
+  "name": "Cloud-Sea Sunrise Summit",
+  "description": "a high mountain summit above a sea of clouds at sunrise: ancient white-stone pillars on the peak, the sun breaking gold across the cloud tops, long rays of light, white doves and golden-winged birds rising into the air, a snow-white deer at the edge of the summit, butterflies of light drifting up",
+  "mood": "radiant, hopeful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniss",
+    "dawn",
+    "homeland"
+  ]
+}

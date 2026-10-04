@@ -1,0 +1,7 @@
+{
+  "id": "transitions/settle",
+  "kind": "transition",
+  "lead": "As the previous motion settles, ",
+  "label": "",
+  "note": "Let the last action finish and come to rest before this one starts."
+}

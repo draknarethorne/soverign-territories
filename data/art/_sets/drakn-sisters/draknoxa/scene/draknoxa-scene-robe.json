@@ -1,0 +1,21 @@
+{
+  "artId": "draknoxa-scene-robe",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Robe",
+  "components": {
+    "pose": "data/art/motion/walking/strut-runway.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/signature-robe.json",
+    "headwear": "a slim {{METAL}} circlet of thorned vines",
+    "jewelry": "a {{METAL}} vial pendant on a chain, dropper earrings, {{METAL}} cuffs",
+    "legs_feet": "soft {{PRIMARY}} slippers with {{METAL}} buckles",
+    "effects": "Thin curls of glowing {{MAGIC}} vapour rise from the open vials at her belt and drift past her, faint green light on the hem of the robe.",
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/sanctum/bayou-stilt-apothecary-veranda.json",
+    "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_Robe.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Signature-robe scene: her ceremonial robe in a sanctum that suits her element and class (after the Dawn)."
+}

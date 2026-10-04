@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/weapons/storm-conduit-rod",
+  "kind": "holding",
+  "name": "Storm Conduit Rod (Drakneta signature)",
+  "description": "a slender {{METAL}} conduit rod in one hand, wound with copper coil and tipped with a forked prong, a {{GEM}} crystal at its heart crackling with {{MAGIC}} arcs, fine tendrils of static running along the shaft",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakneta",
+    "weapon"
+  ],
+  "notes": "Lightning/Summoner focus: a conduit for calling storm-spirits, not a blade."
+}

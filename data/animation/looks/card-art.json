@@ -1,0 +1,13 @@
+{
+  "id": "looks/card-art",
+  "kind": "look",
+  "name": "Fantasy card art",
+  "description": "Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.",
+  "negatives": [
+    "photograph",
+    "flat colours",
+    "morphing face",
+    "flicker",
+    "blur"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknora/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Draknora signature)",
+  "description": "an ornate floor-length dawn gown of {{PRIMARY}} silk and gold-orange gauze, a fitted bodice embroidered with {{ACCENT_SOFT}} flames and phoenix feathers, a high swept collar of {{METAL}} flame-shaped plates, long layered sleeves ending in flame-cut points, and a skirt split into long burning ribbons that whip upward behind her; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknora",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

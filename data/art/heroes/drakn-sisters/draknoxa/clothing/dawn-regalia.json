@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Draknoxa signature)",
+  "description": "an ornate floor-length dawn gown of {{PRIMARY}} and acid-lime silk with a fitted bodice embroidered with {{METAL}} thorns and venom-drop motifs, a high collar of scalloped brass plates, long sleeves of sheer green gauze, and a skirt of ruffled panels and trailing ribbons that drip with glowing venom-green; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknoxa",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

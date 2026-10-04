@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Drakniya)",
+  "description": "a floor-length ceremonial druid-robe of layered {{PRIMARY}} and {{ACCENT_SOFT}} silk cut into overlapping leaf shapes, wide bell sleeves, a mantle of living ivy and small flowers over the shoulders, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a woven {{METAL}} belt hung with seed-pods and small bells, a trailing hem of fern fronds",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniya",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

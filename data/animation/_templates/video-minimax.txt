@@ -1,0 +1,25 @@
+=== {{HERO}} · Video: {{NAME}} (group: Video) — MiniMax H3 image-to-video ===
+Source image: {{SOURCE_IMAGE}}
+Size: {{WIDTH}}x{{HEIGHT}}
+Length: {{SECONDS}}
+
+----------------------------------------------------------------
+prompt:
+
+{{LOOK}}
+
+{{SUBJECT}}
+
+Timeline:
+{{TIMELINE}}
+
+{{CAMERA}}
+
+Audio: {{AUDIO}}
+
+{{CONSTRAINTS}}
+
+----------------------------------------------------------------
+negative prompt:
+
+{{NEGATIVE}}

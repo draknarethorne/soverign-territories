@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/sanctum/mossy-waterfall-grotto-shrine",
+  "kind": "background",
+  "name": "Mossy Waterfall Grotto",
+  "description": "a mossy waterfall grotto sanctuary: a curtain of water falling into a clear emerald pool, ferns and hanging moss on the stone, small carved wooden shrines and lanterns of seed-pod glass hung among the roots, a stag drinking at the pool's edge, sunlight in green shafts through the canopy above",
+  "mood": "serene, sacred",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniya",
+    "robe",
+    "sanctum"
+  ]
+}

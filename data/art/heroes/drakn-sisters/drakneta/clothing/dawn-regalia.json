@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Drakneta signature)",
+  "description": "an ornate floor-length dawn gown of {{PRIMARY}} and arc-white silk with a fitted bodice embroidered with {{METAL}} lightning forks and copper coils, a high winged collar of {{METAL}} plates, long sleeves of sheer white gauze edged in gold wire, and a skirt of rippling ribbons that crackle and whip upward; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakneta",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

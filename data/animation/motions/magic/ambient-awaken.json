@@ -1,0 +1,12 @@
+{
+  "id": "motions/magic/ambient-awaken",
+  "kind": "motion",
+  "name": "Surroundings awaken",
+  "seconds": 2,
+  "beat": "Every light in the scene flickers and flares in answer, drifting {{MAGIC}} particles rising through the air and the setting stirring as if it feels {{her}} power.",
+  "audio": "a low hum, candle flames fluttering",
+  "tags": [
+    "magic",
+    "ambient"
+  ]
+}

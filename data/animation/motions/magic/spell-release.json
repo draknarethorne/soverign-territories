@@ -1,0 +1,12 @@
+{
+  "id": "motions/magic/spell-release",
+  "kind": "motion",
+  "name": "Release the spell",
+  "seconds": 2,
+  "beat": "{{She}} opens {{her}} hand and the gathered magic bursts outward in a soft wave of {{MAGIC}} light, sparks and drifting smoke, the air around {{her}} glittering before it settles.",
+  "audio": "a bright, airy release, then quiet",
+  "tags": [
+    "magic",
+    "release"
+  ]
+}

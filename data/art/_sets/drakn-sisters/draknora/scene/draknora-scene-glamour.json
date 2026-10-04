@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
   "name": "Glamour",
   "components": {
-    "pose": "data/art/motion/walking/catwalk-confident.json",
+    "pose": "data/art/motion/romantic/playful-wink.json",
     "wearing": "data/art/wardrobe/clothing/dresses/fitted-cocktail-dress.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

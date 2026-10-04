@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/dawn/bioluminescent-mire-bog",
+  "kind": "background",
+  "name": "Bioluminescent Mire",
+  "description": "a vast bioluminescent mire at dawn: black glowing water and mangrove roots, bubbling bogs of acid-green and magenta, thick luminous fumes drifting between twisted trees, giant fungus lamps, poison-dart frogs, snakes in the branches, luminous moths and bats in the mist, a sickly gold dawn through the haze",
+  "mood": "eerie, lush",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknoxa",
+    "dawn",
+    "homeland"
+  ]
+}

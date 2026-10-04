@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/sanctum/ice-cave-star-observatory",
+  "kind": "background",
+  "name": "Ice-Cave Star Observatory",
+  "description": "an ice-cave observatory: a vaulted cavern of blue ice with a great brass-and-crystal telescope pointing through a round opening onto a clear polar night of stars, star charts carved into the ice walls, shelves of rime-covered scrolls, soft cold light reflecting off every surface",
+  "mood": "cold, scholarly",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknira",
+    "robe",
+    "sanctum"
+  ]
+}

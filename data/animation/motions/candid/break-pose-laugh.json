@@ -1,0 +1,12 @@
+{
+  "id": "motions/candid/break-pose-laugh",
+  "kind": "motion",
+  "name": "Break the pose and laugh",
+  "seconds": 3,
+  "beat": "{{She}} holds the pose for a heartbeat, then breaks into a real, delighted laugh, shoulders loosening, hair swaying, relaxing out of the pose as if the photo has just been taken, and glances back at the camera.",
+  "audio": "light, warm laughter",
+  "tags": [
+    "candid",
+    "laugh"
+  ]
+}

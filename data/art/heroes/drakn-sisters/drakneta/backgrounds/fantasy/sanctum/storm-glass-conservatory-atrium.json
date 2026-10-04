@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/sanctum/storm-glass-conservatory-atrium",
+  "kind": "background",
+  "name": "Storm-Glass Conservatory",
+  "description": "a storm-glass conservatory atrium: a domed gallery of glass and brass, great glass spheres of captured lightning glowing on stone pedestals, copper wires arcing faint sparks between brass pillars, a view of towering thunderheads and a golden dawn through the dome, polished floor reflecting the light",
+  "mood": "charged, ceremonial",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakneta",
+    "robe",
+    "sanctum"
+  ]
+}

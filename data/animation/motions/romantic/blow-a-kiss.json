@@ -1,0 +1,12 @@
+{
+  "id": "motions/romantic/blow-a-kiss",
+  "kind": "motion",
+  "name": "Blow a kiss",
+  "seconds": 3,
+  "beat": "{{She}} lifts one hand to {{her}} lips, blows a kiss toward the camera with a playful glance, then lets the hand fall and finishes with a warm smile.",
+  "audio": "a soft, airy kiss sound",
+  "tags": [
+    "romantic",
+    "gesture"
+  ]
+}

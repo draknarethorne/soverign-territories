@@ -17,8 +17,8 @@
       "browColor": "golden-brown",
       "magicColor": "white-hot electric",
       "gemColor": "citrine",
-      "eyeColor": "Deep warm espresso-brown iris with dark umber limbal ring, radiating electric-gold striations, and spark-white flecks",
-      "eyeColorGlamour": "Deep warm espresso-brown irises with radiating electric-gold striations and a dark umber limbal ring",
+      "eyeColor": "Dark storm-charcoal, almost black iris with a thin bright electric-gold limbal ring, radiating white-hot gold striations, and spark-white flecks",
+      "eyeColorGlamour": "Dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring",
       "hairColor": "Light golden-brown dark-blonde hair, sleek and sultry",
       "hairHighlights": "data/art/cosmetics/highlights/streaks/sparse-fine-streaks.json",
       "hairHighlightColor": "electric white-silver",
@@ -30,7 +30,10 @@
         "grey eyes",
         "hazel eyes",
         "red eyes",
-        "violet eyes"
+        "violet eyes",
+        "amber eyes",
+        "topaz eyes",
+        "light brown eyes"
       ],
       "skinColorNegatives": [
         "pale skin",

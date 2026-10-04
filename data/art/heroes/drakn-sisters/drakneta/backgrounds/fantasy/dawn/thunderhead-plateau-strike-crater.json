@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/dawn/thunderhead-plateau-strike-crater",
+  "kind": "background",
+  "name": "Thunderhead Plateau",
+  "description": "a high windswept plateau under towering thunderheads at dawn: a smoking crater of fused glassy rock where lightning has struck, bolts forking across a bruised-gold sky, a break of sunlight on the horizon, great eagles riding the storm, wild horses galloping across the plain, static glowing on tall grass",
+  "mood": "electric, tense",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakneta",
+    "dawn",
+    "homeland"
+  ]
+}

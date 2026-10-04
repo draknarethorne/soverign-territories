@@ -1,0 +1,12 @@
+{
+  "id": "motions/candid/hair-toss",
+  "kind": "motion",
+  "name": "Toss the hair",
+  "seconds": 2,
+  "beat": "{{She}} tosses {{her}} hair back with a quick turn of the head, the strands floating and settling, and meets the camera with a confident smile.",
+  "audio": "a soft whoosh of air",
+  "tags": [
+    "candid",
+    "hair"
+  ]
+}

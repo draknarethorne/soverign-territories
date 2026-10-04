@@ -1,0 +1,38 @@
+{
+  "animId": "drakness-anim-x-pose-kiss-toss-laugh",
+  "kind": "animation",
+  "name": "KissTossLaugh",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakness/pose/drakness-x-pose.json",
+    "image": "Drakness_Qwen_X_Pose_00142_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "transition": "flow",
+  "actions": [
+    {
+      "motion": "data/animation/motions/romantic/blow-a-kiss.json",
+      "seconds": 2
+    },
+    {
+      "motion": "data/animation/motions/candid/hair-toss.json"
+    },
+    {
+      "motion": "data/animation/motions/candid/break-pose-laugh.json",
+      "with": [
+        {
+          "motion": "data/animation/motions/magic/eyes-glow.json"
+        }
+      ],
+      "transition": "settle"
+    },
+    "{{She}} gives the camera one last playful wink."
+  ],
+  "camera": "Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Chains reusable motions (kiss, toss, laugh while her eyes glow) and ends on a literal action typed straight into the card."
+}

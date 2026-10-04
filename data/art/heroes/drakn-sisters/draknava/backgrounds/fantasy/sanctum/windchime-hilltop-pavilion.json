@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/sanctum/windchime-hilltop-pavilion",
+  "kind": "background",
+  "name": "Windchime Hilltop Pavilion",
+  "description": "an open-air hilltop music pavilion: a white colonnaded gazebo hung with wind chimes, silk banners and small harps, over rolling green highlands and a wide morning sky, a breeze moving through the colonnade, swallows nesting in the eaves",
+  "mood": "light, musical",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknava",
+    "robe",
+    "sanctum"
+  ]
+}

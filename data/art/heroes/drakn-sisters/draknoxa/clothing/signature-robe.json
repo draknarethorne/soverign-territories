@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknoxa)",
+  "description": "a floor-length ceremonial apothecary robe of {{PRIMARY}} and acid-lime silk with {{METAL}} thorn and venom-drop embroidery, wide sleeves, a high collar of scalloped brass plates, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a wide {{METAL}} belt hung with small glass vials and keys, a hem of ruffled panels",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknoxa",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

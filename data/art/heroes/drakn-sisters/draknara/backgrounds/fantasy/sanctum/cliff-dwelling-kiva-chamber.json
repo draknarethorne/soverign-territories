@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/sanctum/cliff-dwelling-kiva-chamber",
+  "kind": "background",
+  "name": "Cliff-Dwelling Kiva",
+  "description": "a round cliff-dwelling kiva chamber of smooth stone: a central fire-pit with rising smoke, painted spirals and animal figures on the walls, hanging bead strings and feather bundles, a skylight opening to a clear morning sky, woven blankets and clay pots around the edge",
+  "mood": "warm, ancestral",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknara",
+    "robe",
+    "sanctum"
+  ]
+}

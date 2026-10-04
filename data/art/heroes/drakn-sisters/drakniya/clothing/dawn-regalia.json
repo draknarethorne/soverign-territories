@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Drakniya signature)",
+  "description": "an ornate floor-length dawn gown of layered {{PRIMARY}} and {{ACCENT_SOFT}} silk cut into leaf shapes, a fitted bodice embroidered with {{METAL}} ivy and seed-pearls, sleeves of sheer green gauze wrapped with living vines in small bloom, and a skirt of overlapping petals that opens like a blossom around her; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniya",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

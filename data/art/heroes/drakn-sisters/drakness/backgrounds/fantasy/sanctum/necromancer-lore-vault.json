@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/sanctum/necromancer-lore-vault",
+  "kind": "background",
+  "name": "Necromancer's Lore Vault",
+  "description": "a circular black-marble vault of death-lore: towering curved shelves of bound grimoires and scrolls, a vast armillary of silver bones turning slowly at the centre, floating violet candle flames, a carved ossuary lectern, moths drifting through the still air, narrow slits of dawn light cutting through the dark",
+  "mood": "hushed, ceremonial",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakness",
+    "robe",
+    "sanctum"
+  ]
+}

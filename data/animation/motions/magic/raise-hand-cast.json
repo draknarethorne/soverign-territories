@@ -1,0 +1,12 @@
+{
+  "id": "motions/magic/raise-hand-cast",
+  "kind": "motion",
+  "name": "Raise hand and gather magic",
+  "seconds": 3,
+  "beat": "{{She}} raises one hand, palm up, and {{MAGIC}} smoke and radiant light begin to gather above {{her}} palm, curling and glowing from within, lighting {{her}} face and arm in {{MAGIC}}.",
+  "audio": "a soft swell of energy, a faint crackle",
+  "tags": [
+    "magic",
+    "hand"
+  ]
+}

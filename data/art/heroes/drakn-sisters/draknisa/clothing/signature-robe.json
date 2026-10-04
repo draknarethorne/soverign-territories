@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknisa)",
+  "description": "a floor-length ceremonial tidecaller robe of {{PRIMARY}} and deep-teal silk with wave-patterned {{METAL}} embroidery, wide sleeves of sheer sea-foam gauze, a high collar of layered shell plates, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a {{METAL}} belt of linked pearls, a long train that ripples like water",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknisa",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

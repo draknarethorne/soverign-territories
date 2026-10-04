@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknira/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Draknira signature)",
+  "description": "an ornate floor-length dawn gown of {{PRIMARY}} and frost-white silk with a fitted bodice embroidered in {{METAL}} snowflake geometry, a high collar of layered ice-crystal plates, long sheer sleeves of rime-edged gauze, and a skirt that falls into a long train of frost-feathered ribbons; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknira",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

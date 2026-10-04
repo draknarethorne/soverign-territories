@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/dawn/primeval-forest-awakening",
+  "kind": "background",
+  "name": "Primeval Forest Awakening",
+  "description": "a primeval forest valley waking at dawn: colossal moss-hung trees, roots uncoiling and flowers bursting open all around, ferns unfurling, shafts of gold light through the canopy, a stag and doe at the edge of a clearing, foxes, owls, hummingbirds and clouds of fireflies and butterflies lifting into the air",
+  "mood": "lush, joyful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniya",
+    "dawn",
+    "homeland"
+  ]
+}

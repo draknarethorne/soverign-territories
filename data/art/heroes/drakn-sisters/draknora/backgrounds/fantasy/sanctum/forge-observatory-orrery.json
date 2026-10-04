@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/sanctum/forge-observatory-orrery",
+  "kind": "background",
+  "name": "Forge Observatory",
+  "description": "a bronze-domed forge observatory: a great orrery of molten brass rings turning at the centre, a glowing hearth-pit set into the floor, walls lined with copper gears and bellows, runes glowing orange in the stone, a round skylight opening to a dawn sky, warm drifting embers",
+  "mood": "warm, ceremonial",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknora",
+    "robe",
+    "sanctum"
+  ]
+}

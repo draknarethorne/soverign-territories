@@ -1,0 +1,12 @@
+{
+  "id": "motions/magic/eyes-glow",
+  "kind": "motion",
+  "name": "Eyes ignite",
+  "seconds": 2,
+  "beat": "{{Her}} eyes ignite with a steady {{MAGIC}} glow, the light brightening from the irises outward while {{she}} holds the camera's gaze, a faint {{MAGIC}} reflection spreading across {{her}} cheeks.",
+  "audio": "a low, rising shimmer",
+  "tags": [
+    "magic",
+    "eyes"
+  ]
+}

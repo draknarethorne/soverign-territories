@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/dawn-regalia",
+  "kind": "wearing",
+  "name": "Dawn Regalia (Draknava signature)",
+  "description": "an ornate floor-length dawn gown of {{PRIMARY}} and gossamer-silver silk with a fitted bodice embroidered with {{METAL}} feathers and swirling wind-lines, a high collar of layered feather-cut plates, long sleeves of sheer silver gauze, and a skirt of layered scarves and streaming ribbons that spiral upward around her; sweetheart neckline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknava",
+    "dawn",
+    "regalia"
+  ],
+  "notes": "Worn in the Dawn scene: a highly decorative, flowing gown built to move while rising from the Sundering."
+}

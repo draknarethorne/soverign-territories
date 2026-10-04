@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/swimwear/push-up-bikini",
+  "kind": "wearing",
+  "name": "Push-Up Bikini",
+  "description": "only a {{PRIMARY}} push-up bikini in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a top with molded, lined cups set close together at the centre front that lift the bust and press it together into a deep, tight cleavage, held by slim shoulder straps; and a matching seamless high-cut bottom with a smooth solid waistband; midriff and abdomen bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "bikini",
+    "push-up",
+    "female"
+  ],
+  "notes": "Cut test: lined push-up cups with a solid waistband (the bra-and-panty look). Same colour and metallic finish as the signature bikini so only the cut differs."
+}

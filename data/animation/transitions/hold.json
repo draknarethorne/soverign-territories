@@ -1,0 +1,7 @@
+{
+  "id": "transitions/hold",
+  "kind": "transition",
+  "lead": "After a brief held beat, ",
+  "label": "",
+  "note": "A short pause on the final pose before the next action."
+}

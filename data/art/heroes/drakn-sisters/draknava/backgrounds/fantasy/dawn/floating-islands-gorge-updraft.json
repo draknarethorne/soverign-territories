@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/dawn/floating-islands-gorge-updraft",
+  "kind": "background",
+  "name": "Floating Islands Gorge",
+  "description": "a vast green gorge between floating islands at dawn: waterfalls pouring off the edges into drifting cloud, ancient stone arches linking the islands, pale gold sunrise on the cloud tops, eagles, falcons and flocks of swallows streaming through the air, leaves and feathers spiralling in the wind",
+  "mood": "airy, soaring",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknava",
+    "dawn",
+    "homeland"
+  ]
+}

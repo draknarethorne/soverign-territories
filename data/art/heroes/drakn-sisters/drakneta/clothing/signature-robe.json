@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Drakneta)",
+  "description": "a floor-length ceremonial stormcaller robe of {{PRIMARY}} and arc-white silk with {{METAL}} lightning-fork and copper-coil embroidery, wide sleeves of sheer white gauze, a high winged collar of {{METAL}}, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a sash of woven gold wire with a spark clasp, a long hem edged in gold wire",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakneta",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

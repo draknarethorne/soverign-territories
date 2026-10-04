@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknora/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknora)",
+  "description": "a floor-length ceremonial magus-robe of {{PRIMARY}} silk with a lining of {{ACCENT_SOFT}}, wide layered sleeves of gold-orange gauze, a high standing collar embroidered with {{METAL}} phoenix feathers, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a wide {{METAL}} sash with a flame clasp, a hem licked with embroidered flames",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknora",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

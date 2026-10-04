@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknira/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknira)",
+  "description": "a floor-length ceremonial archmage robe of frost-white and {{PRIMARY}} brocade woven with {{METAL}} snowflake geometry, wide sleeves lined in pale cyan, a high standing collar of white fur and ice-crystal clasps, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a {{METAL}} sash with a crystal clasp, a long trailing train edged in rime",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknira",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

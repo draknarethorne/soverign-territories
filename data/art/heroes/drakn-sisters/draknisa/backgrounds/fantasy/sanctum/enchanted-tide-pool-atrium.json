@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/sanctum/enchanted-tide-pool-atrium",
+  "kind": "background",
+  "name": "Enchanted Tide-Pool Atrium",
+  "description": "an enchanted tide-pool atrium: a circular marble courtyard half-flooded with shallow glowing water, coral columns, a chandelier of shells and glass floats, jellyfish lanterns drifting at different heights, sea-glass windows, small fish moving through the pools, soft rippling light on the walls",
+  "mood": "serene, flowing",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknisa",
+    "robe",
+    "sanctum"
+  ]
+}

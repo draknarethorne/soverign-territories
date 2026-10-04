@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/dawn/red-rock-canyon-eruption",
+  "kind": "background",
+  "name": "Red-Rock Canyon Eruption",
+  "description": "a vast red-rock canyon at desert dawn: towering sandstone walls and mesas lit gold, the canyon floor split open with boulders and slabs of stone lifting and falling, a great plume of dust, condors and hawks soaring in the thermals, bighorn sheep on the ledges, lizards and a coyote scrambling clear",
+  "mood": "raw, powerful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknara",
+    "dawn",
+    "homeland"
+  ]
+}

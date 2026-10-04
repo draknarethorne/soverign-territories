@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/sanctum/rose-window-cloister-chapel",
+  "kind": "background",
+  "name": "Rose-Window Cloister Chapel",
+  "description": "a white-stone cloister chapel: arched colonnades around a still reflecting pool, a great rose window casting coloured light across the floor, white doves on the arches, golden candles, flowering vines on the pillars, soft sunrise light through the arches",
+  "mood": "peaceful, sacred",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniss",
+    "robe",
+    "sanctum"
+  ]
+}

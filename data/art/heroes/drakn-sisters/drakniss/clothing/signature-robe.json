@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Drakniss)",
+  "description": "a floor-length ceremonial sunrobe of ivory and {{PRIMARY}} silk with {{METAL}} sun embroidery, wide bell sleeves, a halo collar of {{METAL}} rays, an open front over a fitted ivory bodice and long slit skirt, a {{METAL}} sash with a sunburst clasp, a trailing hem of pleated gold-dusted gauze",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakniss",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

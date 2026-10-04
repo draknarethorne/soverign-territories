@@ -1,0 +1,15 @@
+{
+  "id": "looks/cinematic-photoreal",
+  "kind": "look",
+  "name": "Cinematic photoreal",
+  "description": "Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.",
+  "negatives": [
+    "cartoon",
+    "anime",
+    "painting",
+    "3d render",
+    "plastic skin",
+    "morphing face",
+    "flicker"
+  ]
+}

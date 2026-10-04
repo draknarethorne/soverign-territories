@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Draknava)",
+  "description": "a floor-length ceremonial bard's windsilk robe of {{PRIMARY}} and gossamer-silver silk with {{METAL}} embroidery of feathers and written music, wide flowing sleeves, a high collar of layered feather-cut plates, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a {{METAL}} sash hung with small silver bells, a long hem of floating scarves",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknava",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}

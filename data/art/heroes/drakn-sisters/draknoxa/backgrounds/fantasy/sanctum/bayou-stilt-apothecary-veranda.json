@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/sanctum/bayou-stilt-apothecary-veranda",
+  "kind": "background",
+  "name": "Bayou Stilt Apothecary",
+  "description": "an open lantern-lit veranda of a stilt-house apothecary above a glowing black bayou: bundles of dried herbs and glass jars of luminous venoms hung from the beams, a copper still bubbling in the corner, fireflies and luminous moths over the water, mangrove roots below, a gold dawn through the hanging moss",
+  "mood": "murky, intimate",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknoxa",
+    "robe",
+    "sanctum"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/dawn/shattering-ice-shelf-polar-sea",
+  "kind": "background",
+  "name": "Shattering Ice Shelf",
+  "description": "a frozen polar sea at dawn: a vast ice shelf cracking apart in every direction, towering blue-white ice cliffs, a pale pink-gold sunrise on the horizon, breaching whales and narwhals in the open water between the floes, seals, snowy owls circling and arctic foxes bounding across the ice",
+  "mood": "vast, crystalline",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknira",
+    "dawn",
+    "homeland"
+  ]
+}

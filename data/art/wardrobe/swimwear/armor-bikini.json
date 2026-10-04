@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/swimwear/armor-bikini",
+  "kind": "wearing",
+  "name": "Fantasy Armor Bikini",
+  "description": "only a fantasy armor bikini of {{METAL}} with thin {{PRIMARY}} leather straps: a sculpted metal bra of two curved cups set close together at the centre front, lifting the bust into a deep, tight cleavage, joined by thin leather straps; and a low-slung belt of two small metal plates, one at the front and one at the back, on thin leather straps at the hips; midriff and abdomen bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "armor",
+    "fantasy",
+    "bikini",
+    "female"
+  ],
+  "notes": "Cut test: the classic fantasy metal bikini."
+}

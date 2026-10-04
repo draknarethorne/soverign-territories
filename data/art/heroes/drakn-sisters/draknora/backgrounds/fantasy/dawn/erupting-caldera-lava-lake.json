@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/dawn/erupting-caldera-lava-lake",
+  "kind": "background",
+  "name": "Erupting Caldera",
+  "description": "the heart of an erupting volcano at dawn: a vast caldera of black rock and glowing lava lake, fountains of lava arcing high and falling back in curtains, rivers of fire running down the crater walls, a smoke-dark sky lit orange by sunrise, fire salamanders and glowing lava lizards clinging to the rocks, ember-winged ash birds wheeling overhead",
+  "mood": "violent, awakening",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "draknora",
+    "dawn",
+    "homeland"
+  ]
+}

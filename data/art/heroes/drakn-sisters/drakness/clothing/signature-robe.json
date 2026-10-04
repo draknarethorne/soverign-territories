@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/signature-robe",
+  "kind": "wearing",
+  "name": "Signature Robe (Drakness)",
+  "description": "a floor-length ceremonial shroud-robe of {{PRIMARY}} velvet lined in {{ACCENT_SOFT}} silk, wide bell sleeves, a high standing collar edged in {{METAL}} thread embroidered with moths, crescent moons and ribs, an open front over a fitted {{PRIMARY}} bodice and long slit skirt, a heavy {{METAL}} chain belt hung with tiny skull beads, a long trailing hem",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "drakness",
+    "robe",
+    "signature"
+  ],
+  "notes": "Ceremonial signature robe in her element and class, worn in her Robe scene."
+}
