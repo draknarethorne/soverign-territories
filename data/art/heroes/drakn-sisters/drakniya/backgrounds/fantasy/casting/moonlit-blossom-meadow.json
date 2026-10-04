@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/casting/moonlit-blossom-meadow",
+  "kind": "background",
+  "name": "Moonlit Blossom Meadow",
+  "description": "a moonlit high-fantasy forest meadow of oversized glowing blossoms and tall grass, ancient trees ringing the clearing, drifting fireflies and soft silver light, a faint mist lying low over the flowers",
+  "mood": "enchanted, lush",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniya", "casting", "grass"]
+}

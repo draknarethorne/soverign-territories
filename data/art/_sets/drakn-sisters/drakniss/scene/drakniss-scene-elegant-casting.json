@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A column of {{MAGIC}} light pours down into her palms, golden motes and soft rays radiating outward.",
-    "background": "data/art/backgrounds/fantasy/temple/sunlit-cathedral-sanctum.json"
+    "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/casting/ruined-sunlit-colonnade.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakniss/scene/Drakniss_Scene_ElegantCasting.txt",

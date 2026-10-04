@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/evening/storm-watch-tower-terrace",
+  "kind": "background",
+  "name": "Storm-Watch Tower Terrace",
+  "description": "an elegant stone terrace atop a high-fantasy watchtower at dusk, brass lanterns glowing along the balustrade, distant lightning flickering silently inside far-off clouds, a deep indigo sky with a few early stars and a cool breeze",
+  "mood": "charged, romantic, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["drakneta", "evening", "lightning", "terrace"]
+}

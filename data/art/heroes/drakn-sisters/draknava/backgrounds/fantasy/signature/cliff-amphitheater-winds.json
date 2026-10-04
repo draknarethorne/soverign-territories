@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds",
+  "kind": "background",
+  "name": "Cliff-Top Amphitheater of Winds",
+  "description": "an open-air stone amphitheater on a high-fantasy cliff top above a sea of clouds, curved tiers and a round stage, long ribbons and banners streaming in a strong wind, windchimes and carved wind-sigils on the pillars, bright open sky",
+  "mood": "free, lively, airy",
+  "compatibleStages": ["scene"],
+  "tags": ["draknava", "signature", "wind", "bard"]
+}

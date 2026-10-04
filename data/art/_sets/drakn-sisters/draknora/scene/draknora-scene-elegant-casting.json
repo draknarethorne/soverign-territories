@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "Rolling {{MAGIC}} flames and a glowing ball of fire spin around her hands, embers streaming on the wind.",
-    "background": "data/art/backgrounds/fantasy/elemental/rising-flames.json"
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/casting/black-stone-arena-lava-cracks.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_ElegantCasting.txt",

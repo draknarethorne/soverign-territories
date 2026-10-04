@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/evening/seaside-marble-terrace",
+  "kind": "background",
+  "name": "Seaside Marble Terrace",
+  "description": "an elegant white marble terrace above the sea at moonrise, balustrades draped with sea-roses and strings of pearl lanterns, a fountain murmuring beside it, silver moonlight on gentle waves and a soft sea mist drifting in",
+  "mood": "romantic, serene, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["draknisa", "evening", "water", "terrace"]
+}

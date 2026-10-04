@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/fire-volcanic-cavern",
+  "kind": "background",
+  "name": "Volcanic Cavern Lair",
+  "description": "a vast volcanic cavern of black basalt with rivers of glowing lava and rising heat shimmer, a shaft of ember-orange light from a distant vent",
+  "mood": "hot, vast, dangerous",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "fire", "dragon"]
+}

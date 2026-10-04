@@ -95,7 +95,9 @@ switched on for a period and then removed), and a tool can list "everything in t
 | `wardrobe/effects` | `effects`, `eye_effect` | |
 | `cosmetics/makeup` | `makeup` | replaces the default studio face-styling line; optional line in scenes |
 | `races/*/cosmetics/hair`, `themes/*/cosmetics/hair` | `component` on a hair card | |
-| `backgrounds/<realm>/` | `background` | realm folder is mandatory (fantasy, modern, studio) |
+| `backgrounds/<realm>/` | `background` | realm folder is mandatory (fantasy, modern, studio); dragon lairs live in `backgrounds/fantasy/lairs/` |
+| `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` | `background` | a hero's own signature, throne (glamour), casting and evening settings; one scene = one unique background |
+| `hoards/` | `hoard` | what a dragon has collected (`{{HOARD}}` in the lair template) |
 
 **A theme manifest** (`themes/<theme>/theme.json`, `type`: `culture` or `event`) names the pack. A theme's pieces use
 `{{PRIMARY}}` / `{{ACCENT_SOFT}}` so each hero renders them in her own colours; an event that needs its own season

@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/evening/marble-terrace-golden-sunset",
+  "kind": "background",
+  "name": "Marble Terrace at Golden Sunset",
+  "description": "an elegant white marble terrace at golden sunset, carved balustrades wreathed in white roses, a fountain glittering in warm light, distant domes and spires glowing rose-gold, a soft honey-colored haze in the air",
+  "mood": "romantic, glowing, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniss", "evening", "light", "terrace"]
+}

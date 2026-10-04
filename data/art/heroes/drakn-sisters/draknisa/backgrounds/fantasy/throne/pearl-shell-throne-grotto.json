@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/throne/pearl-shell-throne-grotto",
+  "kind": "background",
+  "name": "Pearl Shell Throne Grotto",
+  "description": "a high-fantasy sea-cave grotto with a great throne of pearl-lined shell and pale coral on a rocky dais behind, glittering tide pools, strands of pearls draped from the rocks, soft blue-green light rippling across the cave walls",
+  "mood": "regal, luminous, serene",
+  "compatibleStages": ["scene"],
+  "tags": ["draknisa", "throne", "glamour", "water"]
+}

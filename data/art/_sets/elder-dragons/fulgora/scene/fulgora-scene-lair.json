@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon crouches on a broken pillar above its treasure, wings half-spread against the storm, head raised and turned toward the camera with a fierce, electric gaze.",
-    "background": "the ruined stone temple of a high mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns",
-    "hoard": "heaps of gold and copper coils, glassy fulgurite formations fused by lightning, tuning forks and bronze bells, silver ingots, citrine gems and a few crackling crystals",
+    "background": "data/art/backgrounds/fantasy/lairs/lightning-storm-peak-temple.json",
+    "hoard": "data/art/hoards/lightning-hoard.json",
     "effects": "A few small sparks of static dance across the hoard - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

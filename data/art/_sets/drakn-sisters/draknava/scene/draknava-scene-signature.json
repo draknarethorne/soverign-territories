@@ -12,8 +12,8 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
     "effects": "A playful swirl of wind catches loose leaves and her hair, {{MAGIC}} light glinting within the breeze.",
-    "companion": "her aligned Elder Dragon, Zephyros, flying over the skyline behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
-    "background": "data/art/backgrounds/fantasy/cityscape/citadel-skyline-dusk.json"
+    "companion": "her aligned Elder Dragon, Zephyros, flying through the clouds behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
+    "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknava/scene/Draknava_Scene_Signature.txt",

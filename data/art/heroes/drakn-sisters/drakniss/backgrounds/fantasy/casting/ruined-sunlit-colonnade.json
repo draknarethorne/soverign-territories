@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/casting/ruined-sunlit-colonnade",
+  "kind": "background",
+  "name": "Ruined Sunlit Colonnade",
+  "description": "a ruined high-fantasy marble colonnade open to the sky, shafts of brilliant golden light pouring through the broken roof, drifting motes of dust, white stone columns wrapped in vines and a bright halo of sun behind",
+  "mood": "luminous, uplifting",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniss", "casting", "light"]
+}

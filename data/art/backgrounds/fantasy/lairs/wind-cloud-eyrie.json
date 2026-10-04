@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/wind-cloud-eyrie",
+  "kind": "background",
+  "name": "Cloud Eyrie Lair",
+  "description": "a mountaintop eyrie above a sea of clouds, broken wind-carved stone arches, banners and streamers whipping in a bright open sky",
+  "mood": "free, airy, bright",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "wind", "dragon"]
+}

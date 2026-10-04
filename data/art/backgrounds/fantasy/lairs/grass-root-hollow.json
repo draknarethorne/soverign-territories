@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/grass-root-hollow",
+  "kind": "background",
+  "name": "Root Hollow Lair",
+  "description": "a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mossy roots and standing stones, shafts of golden light through the canopy, soft ferns and wildflowers",
+  "mood": "ancient, gentle, green",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "grass", "dragon"]
+}

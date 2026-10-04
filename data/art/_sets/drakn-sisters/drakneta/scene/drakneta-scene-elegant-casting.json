@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "Forked bolts of {{MAGIC}} lightning arc from her fingertips and crackle around a sphere of energy in her hand, static lifting her hair.",
-    "background": "data/art/backgrounds/fantasy/mountains/storm-peak-ruins.json"
+    "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/casting/summit-sigil-lightning.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/scene/Drakneta_Scene_ElegantCasting.txt",

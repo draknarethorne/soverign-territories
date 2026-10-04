@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/signature/spirit-totem-grove",
+  "kind": "background",
+  "name": "Spirit Totem Grove",
+  "description": "a sacred high-fantasy spirit grove of standing stones and tall carved totem poles hung with feathers, beads and bone-and-stone wind chimes, low ancestral fires glowing between the stones, earthy mist and warm dust-gold light through the trees",
+  "mood": "ancestral, grounded, mystical",
+  "compatibleStages": ["scene"],
+  "tags": ["draknara", "signature", "earth", "shaman"]
+}

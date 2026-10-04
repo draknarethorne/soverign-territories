@@ -1,0 +1,8 @@
+{
+  "id": "hoards/wind-hoard",
+  "kind": "hoard",
+  "name": "Wind Hoard",
+  "description": "drifts of feathers and silk sails, wind chimes and silver bells, shining kites and pennants, glass lenses and polished silver trinkets, jade and cloud-glass gems",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "wind", "dragon"]
+}

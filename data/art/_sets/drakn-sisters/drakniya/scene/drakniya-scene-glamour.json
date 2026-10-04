@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
     "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around her - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"
+    "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/throne/living-root-throne.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Drakniya/scene/Drakniya_Scene_Glamour.txt",

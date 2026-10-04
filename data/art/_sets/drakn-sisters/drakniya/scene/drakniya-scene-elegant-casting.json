@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
     "effects": "Vines, blossoms and glowing {{MAGIC}} seeds spiral up her arms and unfurl between her palms, petals streaming on the wind.",
-    "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"
+    "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/casting/moonlit-blossom-meadow.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakniya/scene/Drakniya_Scene_ElegantCasting.txt",

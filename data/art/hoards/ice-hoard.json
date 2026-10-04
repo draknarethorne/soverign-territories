@@ -1,0 +1,8 @@
+{
+  "id": "hoards/ice-hoard",
+  "kind": "hoard",
+  "name": "Ice Hoard",
+  "description": "coins, crowns and jewelled goblets frozen inside blocks of clear ice, frost-rimed swords and shields, heaps of uncut diamonds and snowflake crystals, a few glittering frozen relics",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "ice", "dragon"]
+}

@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/boots/knee-high-boots.json",
     "effects": "A few fine motes of {{MAGIC}} dust drift around her feet in the warm light - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/canyon/ancient-canyon-ruins.json"
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/throne/red-rock-totem-throne.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Glamour.txt",

@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/casting/standing-stone-ring-canyon",
+  "kind": "background",
+  "name": "Standing Stone Ring in the Canyon",
+  "description": "the floor of a deep red-rock canyon in a high-fantasy realm, a ring of tall standing stones with glowing carved runes, cracked earth and drifting dust, towering canyon walls with warm light slanting across them",
+  "mood": "powerful, primal",
+  "compatibleStages": ["scene"],
+  "tags": ["draknara", "casting", "earth"]
+}

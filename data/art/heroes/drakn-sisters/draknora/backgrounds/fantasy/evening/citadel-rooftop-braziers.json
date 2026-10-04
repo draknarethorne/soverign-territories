@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/evening/citadel-rooftop-braziers",
+  "kind": "background",
+  "name": "Citadel Rooftop Terrace with Braziers",
+  "description": "an elegant citadel rooftop terrace at sunset with carved stone balustrades, tall iron braziers glowing with warm flame, silk banners moving in the breeze, a sea of rooftops and a deep orange sky beyond",
+  "mood": "warm, romantic, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["draknora", "evening", "fire", "terrace"]
+}

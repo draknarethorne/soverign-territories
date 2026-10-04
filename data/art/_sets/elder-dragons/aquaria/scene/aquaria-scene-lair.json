@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon rests half-submerged in a still tide pool, coils draped over a mound of treasure, head raised and turned toward the camera with a calm, regal gaze, water streaming from its wings.",
-    "background": "a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools, luminous blue-green bioluminescence on the cave walls",
-    "hoard": "strands and heaps of pearls, shipwreck treasure chests spilling coins, barnacled anchors and ship's bells, coral crowns, sapphires and sea-glass, old bottles and rusted cutlasses",
+    "background": "data/art/backgrounds/fantasy/lairs/water-sea-cave-grotto.json",
+    "hoard": "data/art/hoards/water-hoard.json",
     "effects": "A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

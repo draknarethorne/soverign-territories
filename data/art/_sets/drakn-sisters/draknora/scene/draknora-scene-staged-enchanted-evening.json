@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
-    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/evening/citadel-rooftop-braziers.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_Staged_EnchantedEvening.txt",

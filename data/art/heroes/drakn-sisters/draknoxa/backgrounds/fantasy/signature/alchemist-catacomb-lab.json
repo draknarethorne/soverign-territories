@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/signature/alchemist-catacomb-lab",
+  "kind": "background",
+  "name": "Alchemist's Catacomb Laboratory",
+  "description": "a vaulted high-fantasy alchemist's laboratory in old catacombs, shelves of corked vials and glass flasks, bubbling alembics and coiled copper pipes, lit by glowing lime and magenta liquids, wisps of toxic mist curling along the stone floor",
+  "mood": "dangerous, inventive",
+  "compatibleStages": ["scene"],
+  "tags": ["draknoxa", "signature", "poison", "alchemist"]
+}

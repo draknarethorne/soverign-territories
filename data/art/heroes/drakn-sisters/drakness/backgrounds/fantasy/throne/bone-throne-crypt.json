@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/throne/bone-throne-crypt",
+  "kind": "background",
+  "name": "Bone Throne of the Crypt",
+  "description": "a high-fantasy crypt hall with a towering throne of fused bone and black iron on a stepped dais behind, violet candles burning in skull sconces, pale mist curling across the flagstones, dark gothic arches fading into shadow",
+  "mood": "regal, seductive, dark",
+  "compatibleStages": ["scene"],
+  "tags": ["drakness", "throne", "glamour", "darkness"]
+}

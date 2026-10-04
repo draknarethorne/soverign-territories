@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A few faint tendrils of {{MAGIC}} mist curl near her feet, glowing softly - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/swamp/glowing-fen.json"
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/throne/thorned-iron-conservatory-throne.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_Glamour.txt",

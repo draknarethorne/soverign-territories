@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
     "effects": "Swirling stones, dust and motes of {{MAGIC}} light lift off the ground around her hands, tremors rippling the earth.",
-    "background": "data/art/backgrounds/fantasy/canyon/ancient-canyon-ruins.json"
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/casting/standing-stone-ring-canyon.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_ElegantCasting.txt",

@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/casting/storm-eye-cliff",
+  "kind": "background",
+  "name": "Cliff at the Eye of the Storm",
+  "description": "a high-fantasy windswept cliff top at the heart of a great spiral of storm clouds, torn banners and loose leaves whirling past, tall standing stones leaning in the gale, shafts of bright light breaking through the cloud",
+  "mood": "wild, exhilarating",
+  "compatibleStages": ["scene"],
+  "tags": ["draknava", "casting", "wind"]
+}

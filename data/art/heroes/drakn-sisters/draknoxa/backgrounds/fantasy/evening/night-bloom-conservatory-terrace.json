@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/evening/night-bloom-conservatory-terrace",
+  "kind": "background",
+  "name": "Night-Bloom Conservatory Terrace",
+  "description": "an elegant terrace of black wrought iron and glass beside a conservatory at night, vines of luminous night-blooming flowers curling up the balustrade, a soft magenta-and-lime glow and a gentle mist drifting low under a dark starry sky",
+  "mood": "alluring, mysterious, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["draknoxa", "evening", "poison", "terrace"]
+}

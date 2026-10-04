@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/evening/canyon-rim-lantern-terrace",
+  "kind": "background",
+  "name": "Canyon Rim Lantern Terrace",
+  "description": "an elegant stone terrace on a canyon rim at dusk, carved sandstone balustrades and hanging paper-and-brass lanterns, woven rugs and potted desert blooms, the canyon glowing rose and amber far below",
+  "mood": "warm, romantic, earthy",
+  "compatibleStages": ["scene"],
+  "tags": ["draknara", "evening", "earth", "terrace"]
+}

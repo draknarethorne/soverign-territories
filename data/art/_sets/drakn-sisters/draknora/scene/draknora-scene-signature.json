@@ -13,7 +13,7 @@
     "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword.json",
     "effects": "data/art/heroes/drakn-sisters/draknora/effects/casting-flame-extend.json",
     "companion": "data/art/heroes/drakn-sisters/draknora/companion/pyraxis-flight.json",
-    "background": "data/art/backgrounds/fantasy/cityscape/citadel-skyline-dusk.json"
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_Signature.txt",

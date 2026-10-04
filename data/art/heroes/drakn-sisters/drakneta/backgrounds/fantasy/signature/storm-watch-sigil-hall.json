@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall",
+  "kind": "background",
+  "name": "Storm-Watch Sigil Hall",
+  "description": "a ruined high-fantasy storm-watch hall with tall arched windows opening onto raging storm clouds, a large ring-shaped summoning sigil etched in the floor, copper lightning rods and coils along the walls, bolts of lightning flashing outside",
+  "mood": "electric, tense",
+  "compatibleStages": ["scene"],
+  "tags": ["drakneta", "signature", "lightning", "hall"]
+}

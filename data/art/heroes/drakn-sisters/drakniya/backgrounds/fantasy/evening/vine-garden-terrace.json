@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/evening/vine-garden-terrace",
+  "kind": "background",
+  "name": "Vine-Draped Garden Terrace",
+  "description": "an elegant garden terrace at dusk with a weathered stone balustrade wrapped in flowering vines, glowing night-blooming flowers, strings of fairy lanterns and fireflies, a soft green-gold twilight sky and a gentle breeze moving the petals",
+  "mood": "romantic, lush, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniya", "evening", "grass", "terrace"]
+}

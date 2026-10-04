@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/signature/heart-tree-glade",
+  "kind": "background",
+  "name": "Heart-Tree Glade",
+  "description": "a sun-dappled high-fantasy glade around a colossal ancient heart-tree with a hollow like a living dais, blossoms and glowing seed-pods hanging from its boughs, mossy standing stones, rings of mushrooms, ferns and wildflowers and shafts of golden light",
+  "mood": "alive, nurturing, mystical",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniya", "signature", "grass", "druid"]
+}

@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
     "effects": "A playful breeze lifts her hair and hem, faint {{MAGIC}} light glinting in the wind - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/highlands/windswept-cliffs.json"
+    "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/throne/cloud-silk-throne-sky.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Draknava/scene/Draknava_Scene_Glamour.txt",

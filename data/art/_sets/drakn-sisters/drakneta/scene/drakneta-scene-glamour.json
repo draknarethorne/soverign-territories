@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A few small {{MAGIC}} sparks of static dance along her fingertips and the ends of her hair - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/mountains/storm-peak-ruins.json"
+    "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/throne/copper-coil-storm-throne.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/scene/Drakneta_Scene_Glamour.txt",

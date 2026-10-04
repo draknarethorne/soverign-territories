@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/darkness-crypt-vault",
+  "kind": "background",
+  "name": "Crypt Vault Lair",
+  "description": "a vast crypt-vault beneath a ruined cathedral, ancient stone arches and sarcophagi, a faint violet glow filtering through cracked windows, drifting black smoke",
+  "mood": "cold, shadowed, ominous",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "darkness", "dragon"]
+}

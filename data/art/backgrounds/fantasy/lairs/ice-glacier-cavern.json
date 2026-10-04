@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/ice-glacier-cavern",
+  "kind": "background",
+  "name": "Glacier Cavern Lair",
+  "description": "a vaulted ice cavern deep beneath a glacier, towering blue ice columns, shafts of pale light filtering down through the ice",
+  "mood": "cold, crystalline, still",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "ice", "dragon"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/lightning-storm-peak-temple",
+  "kind": "background",
+  "name": "Storm-Peak Temple Lair",
+  "description": "the ruined stone temple of a high mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns",
+  "mood": "stormy, fierce",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "lightning", "dragon"]
+}

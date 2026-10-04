@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/casting/black-stone-arena-lava-cracks",
+  "kind": "background",
+  "name": "Black Stone Arena with Lava Cracks",
+  "description": "a scorched ancient arena of black stone in a high-fantasy realm, glowing lava cracks splitting the floor, pillars of flame rising at the edges, broken columns and a glowing red sky behind",
+  "mood": "dramatic, intense",
+  "compatibleStages": ["scene"],
+  "tags": ["draknora", "casting", "fire"]
+}

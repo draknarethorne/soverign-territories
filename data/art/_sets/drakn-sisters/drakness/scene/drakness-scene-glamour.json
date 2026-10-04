@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A few soft wisps of {{MAGIC}} mist curl low around her feet, a faint {{MAGIC}} shimmer in the night air - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+    "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/throne/bone-throne-crypt.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_Glamour.txt",

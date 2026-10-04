@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "Swirling {{MAGIC}} necromantic mist rises from the ground and spirals up her raised arm, faint spectral glyphs drifting upward.",
-    "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
+    "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/casting/spectral-glyph-graveyard.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/Drakness_Scene_ElegantCasting.txt",

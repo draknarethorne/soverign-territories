@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/throne/living-root-throne",
+  "kind": "background",
+  "name": "Living Root Throne",
+  "description": "a high-fantasy forest clearing with a great throne woven from living roots, moss and flowering vines behind, petals scattered on the mossy steps, glowing fireflies and soft green light filtering through a canopy of ancient trees",
+  "mood": "regal, lush, romantic",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniya", "throne", "glamour", "grass"]
+}

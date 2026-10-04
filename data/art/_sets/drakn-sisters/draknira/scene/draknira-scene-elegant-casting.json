@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "Glittering ice shards and spirals of {{MAGIC}} frost-light burst from her hands, frost creeping across the ground.",
-    "background": "data/art/backgrounds/fantasy/frozen/glacier-citadel-courtyard.json"
+    "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/casting/frozen-lake-aurora.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_ElegantCasting.txt",

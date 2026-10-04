@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/throne/golden-sunburst-throne",
+  "kind": "background",
+  "name": "Golden Sunburst Throne",
+  "description": "a high-fantasy white marble throne hall with a golden sunburst throne on a stepped dais behind, a great halo of stained glass glowing above it, rose-gold drapes, polished floors reflecting warm light and a few white roses scattered on the steps",
+  "mood": "regal, radiant, warm",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniss", "throne", "glamour", "light"]
+}

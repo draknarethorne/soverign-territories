@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/casting/toxic-swamp-ruin",
+  "kind": "background",
+  "name": "Toxic Swamp Ruin",
+  "description": "a crumbling high-fantasy stone ruin sunk in a toxic swamp at night, still black water, twisted dead trees, glowing toxic mushrooms and drifting marsh lights, thick mist coiling between the broken arches",
+  "mood": "sinister, atmospheric",
+  "compatibleStages": ["scene"],
+  "tags": ["draknoxa", "casting", "poison"]
+}

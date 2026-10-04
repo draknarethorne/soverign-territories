@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/throne/molten-iron-throne-hall",
+  "kind": "background",
+  "name": "Molten Iron Throne Hall",
+  "description": "a high-fantasy volcanic throne hall with a great throne of forged iron and cooled lava rock on a dais behind, glowing lava channels in the floor, iron braziers and hanging chains, heat shimmer and drifting embers in warm amber light",
+  "mood": "regal, fiery, bold",
+  "compatibleStages": ["scene"],
+  "tags": ["draknora", "throne", "glamour", "fire"]
+}

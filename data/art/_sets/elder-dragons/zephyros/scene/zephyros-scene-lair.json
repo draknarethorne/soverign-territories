@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon perches on a wind-carved stone arch with wings half-spread, tail trailing in the breeze, head raised and turned toward the camera with a free, playful gaze.",
-    "background": "a mountaintop eyrie above a sea of clouds, broken wind-carved stone arches, banners and streamers whipping in a bright open sky",
-    "hoard": "drifts of feathers and silk sails, wind chimes and silver bells, shining kites and pennants, glass lenses and polished silver trinkets, jade and cloud-glass gems",
+    "background": "data/art/backgrounds/fantasy/lairs/wind-cloud-eyrie.json",
+    "hoard": "data/art/hoards/wind-hoard.json",
     "effects": "A few feathers and wisps of cloud drift past on the breeze - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

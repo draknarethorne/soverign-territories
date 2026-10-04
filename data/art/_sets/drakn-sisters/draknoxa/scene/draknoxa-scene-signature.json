@@ -13,7 +13,7 @@
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
     "effects": "Faint tendrils of {{MAGIC}} toxic mist curl and drift low around her feet, glowing faintly in the dark.",
     "companion": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
-    "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/signature/alchemist-catacomb-lab.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_Signature.txt",

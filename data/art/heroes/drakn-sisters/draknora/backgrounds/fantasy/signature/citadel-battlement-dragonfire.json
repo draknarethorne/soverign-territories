@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire",
+  "kind": "background",
+  "name": "Citadel Battlement at Dragonfire Dusk",
+  "description": "the highest battlement of a high-fantasy citadel at sunset, tall towers and banners behind, a sky streaked with fire and drifting ember smoke, forges glowing in the city far below, scorched stone and iron braziers burning along the parapet",
+  "mood": "fierce, epic",
+  "compatibleStages": ["scene"],
+  "tags": ["draknora", "signature", "fire", "dragon"]
+}

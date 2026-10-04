@@ -1,0 +1,8 @@
+{
+  "id": "hoards/poison-hoard",
+  "kind": "hoard",
+  "name": "Poison Hoard",
+  "description": "shelves and heaps of glass vials, alembics and corked potion flasks, venom-etched daggers, jars of strange specimens, tarnished brass goblets, uncut pink tourmalines and poisoned jewels",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "poison", "dragon"]
+}

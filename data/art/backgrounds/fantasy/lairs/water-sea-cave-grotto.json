@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/water-sea-cave-grotto",
+  "kind": "background",
+  "name": "Sea-Cave Grotto Lair",
+  "description": "a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools, luminous blue-green bioluminescence on the cave walls",
+  "mood": "serene, deep, luminous",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "water", "dragon"]
+}

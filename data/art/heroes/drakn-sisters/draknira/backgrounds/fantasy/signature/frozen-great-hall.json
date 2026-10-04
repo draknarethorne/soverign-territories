@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/signature/frozen-great-hall",
+  "kind": "background",
+  "name": "Frozen Great Hall",
+  "description": "the great hall of a high-fantasy ice citadel, towering pillars carved from blue ice, a frost-rimed dais, tall arched windows onto a pale winter sky, snow drifting in through broken panes and frost creeping over the stone floor",
+  "mood": "cold, imperious, still",
+  "compatibleStages": ["scene"],
+  "tags": ["draknira", "signature", "ice", "hall"]
+}

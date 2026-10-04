@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/casting/spectral-glyph-graveyard",
+  "kind": "background",
+  "name": "Spectral Glyph Graveyard",
+  "description": "a windswept high-fantasy graveyard at night under a swirling violet sky, a ring of glowing spectral glyphs etched into the ground, leaning headstones and iron fences, pale ghostly wisps drifting between the graves",
+  "mood": "eerie, dramatic",
+  "compatibleStages": ["scene"],
+  "tags": ["drakness", "casting", "darkness"]
+}

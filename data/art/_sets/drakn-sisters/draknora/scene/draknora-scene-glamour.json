@@ -11,7 +11,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A few warm {{MAGIC}} embers drift upward around her, a faint ember glow catching the hem of her dress - understated, nothing busy.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/elemental/rising-flames.json"
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/throne/molten-iron-throne-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-glamour-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_Glamour.txt",

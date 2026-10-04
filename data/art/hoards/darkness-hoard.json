@@ -1,0 +1,8 @@
+{
+  "id": "hoards/darkness-hoard",
+  "kind": "hoard",
+  "name": "Darkness Hoard",
+  "description": "black pearls and polished obsidian, tarnished silver crowns and candelabra, heaps of amethysts, cursed relics and ancient tomes, old coins and grave-goods",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "darkness", "dragon"]
+}

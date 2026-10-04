@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/poison-fetid-fen-grotto",
+  "kind": "background",
+  "name": "Fetid Fen Grotto Lair",
+  "description": "a fetid fen grotto of twisted roots and still black water, glowing toxic mushrooms and drifting marsh lights, low creeping mist",
+  "mood": "toxic, murky, sly",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "poison", "dragon"]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/signature/tidal-sea-temple-terrace",
+  "kind": "background",
+  "name": "Tidal Sea-Temple Terrace",
+  "description": "a high-fantasy sea-temple terrace at night, carved stone balustrades above a harbor of moonlit surf, great arcs of tidal water rising and hanging in the air, floating spheres of water catching the moonlight, a lighthouse glowing in the distance",
+  "mood": "mystical, flowing",
+  "compatibleStages": ["scene"],
+  "tags": ["draknisa", "signature", "water", "terrace"]
+}

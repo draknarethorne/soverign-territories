@@ -1,0 +1,8 @@
+{
+  "id": "hoards/grass-hoard",
+  "kind": "hoard",
+  "name": "Grass Hoard",
+  "description": "heaps of mossy gold coins wrapped in living vines, emeralds and peridots, carved wooden idols and antlers, baskets of glowing seeds, fairy lanterns and ancient seed-vaults",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "grass", "dragon"]
+}

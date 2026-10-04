@@ -1,0 +1,8 @@
+{
+  "id": "hoards/fire-hoard",
+  "kind": "hoard",
+  "name": "Fire Hoard",
+  "description": "heaps of gold coins and molten-edged ingots, forged swords and cracked shields, ember-glowing crystals, scorched obsidian and half-melted golden statues",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "fire", "dragon"]
+}

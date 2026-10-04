@@ -1,0 +1,8 @@
+{
+  "id": "hoards/light-hoard",
+  "kind": "hoard",
+  "name": "Light Hoard",
+  "description": "piles of gold and rose-gold coins, jewelled reliquaries and chalices, shards of stained glass, polished mirrors and golden candelabra, radiant crowns and sunburst medallions",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "light", "dragon"]
+}

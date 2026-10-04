@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon lies nested among enormous roots, moss and flowers growing along its back, head raised and turned toward the camera with a gentle, ancient gaze.",
-    "background": "a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mossy roots and standing stones, shafts of golden light through the canopy, soft ferns and wildflowers",
-    "hoard": "heaps of mossy gold coins wrapped in living vines, emeralds and peridots, carved wooden idols and antlers, baskets of glowing seeds, fairy lanterns and ancient seed-vaults",
+    "background": "data/art/backgrounds/fantasy/lairs/grass-root-hollow.json",
+    "hoard": "data/art/hoards/grass-hoard.json",
     "effects": "A few drifting leaves and soft motes of pollen glow in the sunbeams - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

@@ -1,0 +1,8 @@
+{
+  "id": "hoards/earth-hoard",
+  "kind": "hoard",
+  "name": "Earth Hoard",
+  "description": "mounds of raw gemstones and cut geodes, gold nuggets and ore carts, antique bronze statues, carved stone tablets, turquoise and amber, ancient mining tools",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "earth", "dragon"]
+}

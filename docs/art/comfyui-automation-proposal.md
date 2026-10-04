@@ -111,9 +111,12 @@ Today a prompt and its workflow are matched by hand. The names already follow a 
 1. **Find.** Derive the workflow name from the prompt name. If the file exists, open it and refresh only what changed (the
    positive and negative text when the prompt hash differs). Anything you tuned by hand, such as seed, LoRA toggle, or the
    chosen input image, is kept.
-2. **Create.** If it does not exist, copy the stage's template workflow and patch four values: positive text, negative text,
-   the `LoadImage` file (the previous stage's output by convention, or an input named on the card) and the `SaveImage`
-   prefix. Write it to `workflows/<Hero>/` so it opens in ComfyUI like any other workflow.
+2. **Create.** If it does not exist, copy the stage's template workflow and set the four values that must always agree:
+   **positive prompt, negative prompt, `SaveImage` filename prefix, and the workflow file name.** The prefix ends in the
+   workflow's own name (`<Hero>/<stage folder>/<WorkflowName>`, e.g. `Draknara/scenes/Draknara_Qwen_Scene_Signature`),
+   so the file, its prefix and its rendered images can never drift apart. A fifth value, the `LoadImage` file, is set from
+   the previous stage's output by convention (or an input named on the card). Write the result to `workflows/<Hero>/` so it
+   opens in ComfyUI like any other workflow.
 3. **Queue.** Open it and press Queue, or hand it to the runner in A.
 
 What I found in the repo that makes this practical:

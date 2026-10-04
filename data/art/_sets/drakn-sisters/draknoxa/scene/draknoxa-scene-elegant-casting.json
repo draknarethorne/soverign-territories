@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "Curling tendrils of {{MAGIC}} toxic mist coil around her hands and a glowing droplet hangs between her fingertips.",
-    "background": "data/art/backgrounds/fantasy/swamp/glowing-fen.json"
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/casting/toxic-swamp-ruin.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_ElegantCasting.txt",

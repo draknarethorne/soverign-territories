@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A ribbon of glowing {{MAGIC}} water spirals around her body and arms, droplets glittering on the wind.",
-    "background": "data/art/backgrounds/fantasy/coast/sea-cliff-harbor-moonrise.json"
+    "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/casting/storm-tide-sea-cliff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/scene/Draknisa_Scene_ElegantCasting.txt",

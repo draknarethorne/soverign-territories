@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/throne/cloud-silk-throne-sky",
+  "kind": "background",
+  "name": "Cloud-Silk Throne in the Sky",
+  "description": "a high-fantasy sky terrace on a mountain peak with a graceful throne of pale stone behind, draped with billowing silk canopies and streaming ribbons, banners snapping in the wind, clouds drifting below in soft light",
+  "mood": "regal, airy, playful",
+  "compatibleStages": ["scene"],
+  "tags": ["draknava", "throne", "glamour", "wind"]
+}

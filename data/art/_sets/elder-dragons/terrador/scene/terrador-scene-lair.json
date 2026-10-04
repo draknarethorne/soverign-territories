@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon lies like a mountain on a bed of ore, heavy limbs folded beneath it, head raised and turned toward the camera with a slow, unshakable gaze.",
-    "background": "a deep cavern of giant crystal geodes and carved stone halls, warm dust-gold light from glowing veins of ore, hanging stalactites",
-    "hoard": "mounds of raw gemstones and cut geodes, gold nuggets and ore carts, antique bronze statues, carved stone tablets, turquoise and amber, ancient mining tools",
+    "background": "data/art/backgrounds/fantasy/lairs/earth-crystal-geode-cavern.json",
+    "hoard": "data/art/hoards/earth-hoard.json",
     "effects": "A few fine motes of dust drift in the warm light - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

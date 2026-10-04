@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/throne/glacier-ice-throne",
+  "kind": "background",
+  "name": "Glacier Ice Throne",
+  "description": "a high-fantasy ice-palace chamber with a great throne carved from clear glacial ice on a stepped dais behind, hoarfrost glittering on every edge, columns of blue ice and a cold pale light pouring through frozen windows",
+  "mood": "regal, crystalline, cold",
+  "compatibleStages": ["scene"],
+  "tags": ["draknira", "throne", "glamour", "ice"]
+}

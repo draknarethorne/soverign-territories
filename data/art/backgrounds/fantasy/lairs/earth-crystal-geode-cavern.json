@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/earth-crystal-geode-cavern",
+  "kind": "background",
+  "name": "Crystal Geode Cavern Lair",
+  "description": "a deep cavern of giant crystal geodes and carved stone halls, warm dust-gold light from glowing veins of ore, hanging stalactites",
+  "mood": "ancient, solid, warm",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "earth", "dragon"]
+}

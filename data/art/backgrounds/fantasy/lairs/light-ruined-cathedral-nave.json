@@ -1,0 +1,9 @@
+{
+  "id": "backgrounds/fantasy/lairs/light-ruined-cathedral-nave",
+  "kind": "background",
+  "name": "Ruined Cathedral Nave Lair",
+  "description": "the ruined nave of a vast cathedral open to the sky, soaring white stone arches, tall stained-glass windows casting colored light, golden shafts of sun and drifting incense",
+  "mood": "sacred, radiant",
+  "compatibleStages": ["scene"],
+  "tags": ["lair", "light", "dragon"]
+}

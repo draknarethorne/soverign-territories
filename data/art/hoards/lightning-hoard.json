@@ -1,0 +1,8 @@
+{
+  "id": "hoards/lightning-hoard",
+  "kind": "hoard",
+  "name": "Lightning Hoard",
+  "description": "heaps of gold and copper coils, glassy fulgurite formations fused by lightning, tuning forks and bronze bells, silver ingots, citrine gems and a few crackling crystals",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "lightning", "dragon"]
+}

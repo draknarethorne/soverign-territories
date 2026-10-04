@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Venomis, a distant silhouette drifting through faint toxic mist beyond the terrace, toxic-orchid-magenta scales glowing softly",
-    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/evening/night-bloom-conservatory-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/scene/Draknoxa_Scene_Staged_EnchantedEvening.txt",

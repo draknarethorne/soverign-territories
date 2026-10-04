@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/casting/frozen-lake-aurora",
+  "kind": "background",
+  "name": "Frozen Lake under Aurora",
+  "description": "a vast frozen lake in a high-fantasy winter realm, jagged ice spires rising from the surface, snow swirling across the ice, a shimmering aurora of pale green and cyan across a star-filled sky",
+  "mood": "stark, magical",
+  "compatibleStages": ["scene"],
+  "tags": ["draknira", "casting", "ice"]
+}

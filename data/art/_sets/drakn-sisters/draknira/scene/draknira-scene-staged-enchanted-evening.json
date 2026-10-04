@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Glaciora, a distant silhouette crossing the frosty dusk sky beyond the terrace, glacial-cyan scales glittering",
-    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+    "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/evening/ice-palace-aurora-balcony.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_Staged_EnchantedEvening.txt",

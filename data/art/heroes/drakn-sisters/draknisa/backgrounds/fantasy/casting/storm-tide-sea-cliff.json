@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/casting/storm-tide-sea-cliff",
+  "kind": "background",
+  "name": "Storm-Tide Sea Cliff",
+  "description": "a wind-lashed high-fantasy sea cliff at storm-tide, towering waves breaking against black rocks and throwing silver spray, a pale moon through racing clouds, a ruined stone stair leading down toward the water",
+  "mood": "wild, dramatic",
+  "compatibleStages": ["scene"],
+  "tags": ["draknisa", "casting", "water"]
+}

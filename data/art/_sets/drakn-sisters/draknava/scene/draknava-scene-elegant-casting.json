@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "A shimmering cyclone of wind, visible as streaming ribbons of cloud and {{MAGIC}} light, spirals around her with leaves and petals caught in it.",
-    "background": "data/art/backgrounds/fantasy/highlands/windswept-cliffs.json"
+    "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/casting/storm-eye-cliff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknava/scene/Draknava_Scene_ElegantCasting.txt",

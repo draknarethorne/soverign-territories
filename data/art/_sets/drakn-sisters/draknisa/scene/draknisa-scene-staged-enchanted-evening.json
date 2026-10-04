@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
     "companion": "her aligned Elder Dragon, Aquaria, a distant silhouette skimming the moonlit sea beyond the terrace, deep-teal scales glinting",
-    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+    "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/evening/seaside-marble-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/scene/Draknisa_Scene_Staged_EnchantedEvening.txt",

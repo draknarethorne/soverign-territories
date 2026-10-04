@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/casting/summit-sigil-lightning",
+  "kind": "background",
+  "name": "Summit Sigil under Lightning",
+  "description": "a bare high-fantasy mountain summit with a ring of black standing stones and a glowing sigil etched in the rock, towering storm clouds above and bolts of lightning striking the surrounding peaks, wind-torn banners and rain-slick stone",
+  "mood": "violent, exhilarating",
+  "compatibleStages": ["scene"],
+  "tags": ["drakneta", "casting", "lightning"]
+}

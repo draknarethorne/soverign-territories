@@ -1,0 +1,8 @@
+{
+  "id": "hoards/water-hoard",
+  "kind": "hoard",
+  "name": "Water Hoard",
+  "description": "strands and heaps of pearls, shipwreck treasure chests spilling coins, barnacled anchors and ship's bells, coral crowns, sapphires and sea-glass, old bottles and rusted cutlasses",
+  "compatibleStages": ["scene"],
+  "tags": ["hoard", "water", "dragon"]
+}

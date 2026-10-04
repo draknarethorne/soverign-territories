@@ -6,8 +6,8 @@
   "name": "Lair",
   "components": {
     "pose": "The dragon lies curled on a shelf of blue ice, tail wrapped around its treasure, head raised and turned toward the camera with a cool, imperious gaze, frost-breath drifting from its nostrils.",
-    "background": "a vaulted ice cavern deep beneath a glacier, towering blue ice columns, shafts of pale light filtering down through the ice",
-    "hoard": "coins, crowns and jewelled goblets frozen inside blocks of clear ice, frost-rimed swords and shields, heaps of uncut diamonds and snowflake crystals, a few glittering frozen relics",
+    "background": "data/art/backgrounds/fantasy/lairs/ice-glacier-cavern.json",
+    "hoard": "data/art/hoards/ice-hoard.json",
     "effects": "A few fine ice crystals glitter in the air above the hoard - understated, nothing busy."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",

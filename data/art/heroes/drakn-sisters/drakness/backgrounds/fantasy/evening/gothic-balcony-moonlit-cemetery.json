@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/evening/gothic-balcony-moonlit-cemetery",
+  "kind": "background",
+  "name": "Gothic Balcony over a Moonlit Cemetery",
+  "description": "an elegant gothic stone balcony with carved balustrades and trailing black roses, overlooking a moonlit cemetery of white mausoleums, candles flickering in iron lanterns, a silver moon and a gentle violet haze drifting low",
+  "mood": "romantic, gothic, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["drakness", "evening", "darkness", "terrace"]
+}

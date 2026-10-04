@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/signature/sunburst-temple-altar",
+  "kind": "background",
+  "name": "Sunburst Temple Altar",
+  "description": "the sanctum of a high-fantasy sun temple, a great sunburst rose window blazing behind a white-and-gold altar, tall stained-glass windows, gleaming marble statues and gold-inlaid floors, soft rays of light and drifting incense",
+  "mood": "sacred, radiant",
+  "compatibleStages": ["scene"],
+  "tags": ["drakniss", "signature", "light", "cleric"]
+}

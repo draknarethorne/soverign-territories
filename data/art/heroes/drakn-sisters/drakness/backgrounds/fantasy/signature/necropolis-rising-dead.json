@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/signature/necropolis-rising-dead",
+  "kind": "background",
+  "name": "Necropolis of the Rising Dead",
+  "description": "a vast high-fantasy necropolis court under a violet-black sky, rows of cracked tombs and leaning gravestones, skeletal hands and half-risen skeletons clawing out of the earth in the mist, rib-cage arches of giant bone, drifting black smoke and a soft amethyst haze",
+  "mood": "ominous, commanding",
+  "compatibleStages": ["scene"],
+  "tags": ["drakness", "signature", "darkness", "necromancer"]
+}

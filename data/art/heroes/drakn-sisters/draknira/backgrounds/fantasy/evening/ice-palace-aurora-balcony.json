@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/evening/ice-palace-aurora-balcony",
+  "kind": "background",
+  "name": "Ice Palace Balcony under Aurora",
+  "description": "an elegant balcony of pale carved stone and ice on a high-fantasy palace, frosted balustrades and glowing lanterns, a snowy mountain valley below and a soft aurora rippling across the night sky",
+  "mood": "romantic, hushed, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["draknira", "evening", "ice", "terrace"]
+}

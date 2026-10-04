@@ -1,0 +1,9 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/evening/sky-terrace-twilight",
+  "kind": "background",
+  "name": "Sky Terrace at Twilight",
+  "description": "an elegant stone terrace perched on a cliff above the clouds at twilight, balustrades hung with silk streamers and glowing paper lanterns, a rose-and-lavender sky with the first stars, a gentle breeze moving the fabric",
+  "mood": "dreamy, romantic, enchanting",
+  "compatibleStages": ["scene"],
+  "tags": ["draknava", "evening", "wind", "terrace"]
+}
