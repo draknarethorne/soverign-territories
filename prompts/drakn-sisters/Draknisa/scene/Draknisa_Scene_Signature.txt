@@ -8,10 +8,13 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Oceanic Blue over a matte underlayer, with delicate aqua glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Oceanic Blue over a matte underlayer, with delicate aqua glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: polished platinum with aquamarine-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Deep Oceanic Blue high heels with glowing teal straps.
+Legs & feet: bright Deep Oceanic Blue high heels with glowing aqua straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a sly, knowing smile, eyes half-lidded with control. one arm raised and channeling energy, the other hand cupped at her side.
 
@@ -21,7 +24,7 @@ Soft droplets of water hang suspended in the air around her, faint aqua light ri
 
 Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, fingernails and toenails natural or Light Blue; present, never heavy.
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
 
 Companion: her aligned Elder Dragon, Aquaria, visible over the moonlit water beyond the terrace, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum.
 
@@ -34,4 +37,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

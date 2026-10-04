@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
 Wearing a light, flowing mid-length Emerald Green sundress with a fitted bodice, wide straps and a loose skirt trimmed in sage, moving softly with the air.
 
 Jewelry: antique gold with peridot-jewelled bracelets, necklace, and belly-button ring.
@@ -19,7 +22,7 @@ A few drifting leaves and soft bright emerald-green motes of pollen glow in the 
 
 Eyes: the natural deep forest-emerald irises kept intact, with a faint bright emerald-green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, fingernails and toenails natural or Light Green; present, never heavy.
+Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
 
 Environment: a sun-dappled enchanted forest grove in a high-fantasy realm, towering moss-covered trees and mossy standing stones, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

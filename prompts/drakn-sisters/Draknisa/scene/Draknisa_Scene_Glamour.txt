@@ -8,10 +8,13 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
 Wearing a loose floor-length Deep Oceanic Blue silk robe tied at the waist with an teal sash, the front softly open.
 
 Jewelry: polished platinum with aquamarine-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Deep Oceanic Blue high heels with glowing teal straps.
+Legs & feet: bright Deep Oceanic Blue high heels with glowing aqua straps.
 
 A candid high-fashion editorial shot, soft romantic portraiture. Light breeze. standing softly, weight settled on one leg, chest open toward camera. tilted slightly, chin soft. soft, romantic gaze to camera. soft, romantic, lips slightly parted. one hand resting gently at her collarbone, the other relaxed at her side.
 
@@ -19,7 +22,7 @@ A few droplets of water hang in the sea air around her, faint aqua light ripplin
 
 Eyes: the natural deep sapphire irises kept intact, with a faint aqua glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, fingernails and toenails natural or Light Blue; present, never heavy.
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
 
 Environment: a high-fantasy sea-cliff harbor at moonrise, a stone lighthouse tower, wooden sailing ships with lantern-lit masts, waves breaking against black rocks, silver moonlight on the water.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

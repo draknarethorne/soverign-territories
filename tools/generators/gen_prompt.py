@@ -204,7 +204,7 @@ def face_style(female, eyeshadow, blush, brow=None):
 # Default makeup line for scenes (their templates print {{MAKEUP_LINE}} only when it has a value):
 # the hero's signature cosmetics, so lips, nails and eyeshadow stay on-palette away from the studio shots.
 SCENE_MAKEUP = ("Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush}, subtle {lip}-tinted satin lips, "
-                "fingernails and toenails natural or {nail}; present, never heavy.")
+                "groomed {brow} brows, {lash} lashes, fingernails and toenails natural or {nail}; present, never heavy.")
 
 
 # Bust bans only make sense for the female physique; a male hero gets none.
@@ -478,7 +478,7 @@ def generate(card_path):
         pal = hero["art"]["palette"]
         toks["MAKEUP_LINE"] = SCENE_MAKEUP.format(
             eyeshadow=toks["EYESHADOW"], blush=blush_phrase(pal.get("blushColor")),
-            lip=toks["LIP"], nail=toks["NAIL"])
+            lip=toks["LIP"], nail=toks["NAIL"], brow=toks["BROW"], lash=toks["LASH"])
     # Literal, per-card one-off strings that aren't reusable pieces on their own
     # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
     _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",

@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: dark umber hair with a faint mossy-green sheen, short and tousled - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: light olive complexion, evenly toned.
+
 Wearing close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders.
 
 Legs & feet: sturdy Forest Green-toned combat boots with brown buckles, laced to the shin.
@@ -29,4 +32,4 @@ Figure: lean, agile, wiry-muscled build; lean, toned chest and core; narrow, agi
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, bald, shaved head, thinning hair, pale skin, ruddy skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

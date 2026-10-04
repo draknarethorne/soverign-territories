@@ -8,10 +8,13 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a peekaboo underlayer of fine deep acid-lime strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
 Wearing a floor-length Toxic Orchid Magenta evening gown in flowing satin, a deep V neckline, a high thigh slit and lime beaded trim at the waist, a short train sweeping behind.
 
 Jewelry: tarnished brass with pink tourmaline-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Toxic Orchid Magenta high heels with glowing lime straps.
+Legs & feet: bright Toxic Orchid Magenta high heels with glowing toxic lime straps.
 
 A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
 
@@ -19,7 +22,7 @@ A few faint tendrils of toxic lime mist curl near her feet, glowing softly - und
 
 Eyes: the natural acid lime-emerald irises kept intact, with a faint toxic lime glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, fingernails and toenails natural or Light Magenta; present, never heavy.
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, groomed dark burgundy-black brows, black lashes, fingernails and toenails natural or Light Magenta; present, never heavy.
 
 Environment: a murky high-fantasy fen at dusk, twisted dead trees and still black water, glowing toxic-green mushrooms and drifting marsh lights, low creeping mist, a crumbling stone causeway.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

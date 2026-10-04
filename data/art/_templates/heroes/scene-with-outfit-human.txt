@@ -8,6 +8,9 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: {{HAIR}} - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: {{SKIN}}.
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.
@@ -19,7 +22,7 @@ Legs & feet: {{LEGS_FEET}}.
 
 {{POSE}}
 
-Holding {{HOLDING}}.
+?Holding {{HOLDING}}.
 
 {{EFFECTS}}
 
@@ -36,4 +39,4 @@ Figure: {{FIGURE}}.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{REALM_NEG}}, {{FIGURE_NEG}}, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, bald, shaved head, thinning hair, {{SKIN_NEG}}, {{REALM_NEG}}, {{FIGURE_NEG}}, text, wording, watermark, logo.

@@ -8,10 +8,13 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Emerald Green over a matte underlayer, with delicate bright emerald-green glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Emerald Green over a matte underlayer, with delicate bright emerald-green glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: antique gold with peridot-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Emerald Green high heels with glowing sage straps.
+Legs & feet: bright Emerald Green high heels with glowing bright emerald-green straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a calm, knowing smile, eyes gentle and patient. one arm raised and channeling energy, the other hand cupped at her side.
 
@@ -21,7 +24,7 @@ Loose leaves and faint bright emerald-green motes of pollen drift and swirl gent
 
 Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, fingernails and toenails natural or Light Green; present, never heavy.
+Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
 
 Companion: her aligned Elder Dragon, Sylvanya, visible in the distance beyond the trees, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold.
 
@@ -34,4 +37,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

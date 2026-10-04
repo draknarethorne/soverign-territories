@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: jet-black hair, short and neatly cropped - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden-tan complexion, evenly toned.
+
 Wearing fitted Storm Gold-toned banded leather armor across the chest and shoulders, Arc White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; prayer-cloth wraps at the wrists and waist, faint lightning-bolt embroidery along the hem.
 
 Legs & feet: sturdy Storm Gold-toned combat boots with white buckles, laced to the shin.
@@ -29,4 +32,4 @@ Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim,
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

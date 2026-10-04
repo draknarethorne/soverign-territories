@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/elegant-casting-gown",
+  "kind": "wearing",
+  "name": "Elegant Casting Gown (Draknoxa signature)",
+  "description": "a body-hugging {{PRIMARY}} satin corset gown with a plunging neckline and serpent-scale beading, a long mermaid skirt of sheer veiled mesh with a high slit, {{METAL}} buckled straps, long opera gloves, dripping {{GEM}} drops at the waist, no headwear and her hair fully visible",
+  "compatibleStages": ["scene"],
+  "notes": "Alchemist casting outfit: corset gown and gloves, hands-only casting."
+}

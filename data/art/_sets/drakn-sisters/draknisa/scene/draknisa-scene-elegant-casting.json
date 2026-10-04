@@ -1,0 +1,19 @@
+{
+  "artId": "draknisa-scene-elegant-casting",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Elegant Casting",
+  "components": {
+    "pose": "She balances on one leg with the other extended behind her in a dancer's pose, both arms flowing in a wide arc as if guiding a tide, one hand palm-up lifting a ribbon of water that spirals around her body, the other trailing droplets, head tilted, a serene gaze to the camera. Sea wind billows her gown, train and hair. No weapon or staff - casting with her bare hands only.",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/elegant-casting-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "effects": "A ribbon of glowing {{MAGIC}} water spirals around her body and arms, droplets glittering on the wind.",
+    "background": "data/art/backgrounds/fantasy/coast/sea-cliff-harbor-moonrise.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/scene/Draknisa_Scene_ElegantCasting.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Elegant casting: unique gown that fits her magic, hands-only complex casting stance with wind."
+}

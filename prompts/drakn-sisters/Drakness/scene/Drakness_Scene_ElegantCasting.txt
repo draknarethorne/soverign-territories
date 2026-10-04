@@ -8,20 +8,21 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Midnight Violet over a matte underlayer, with delicate amethyst glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
-Jewelry: Polished Silver with amethyst-jewelled bracelets, necklace, and belly-button ring.
+Wearing a sultry floor-length gown of layered black-violet chiffon over Midnight Violet satin, a plunging sweetheart neckline and open back, sheer shadow-lace sleeves that dissolve into drifting wisps of smoke at the cuffs, a high thigh slit, a polished silver filigree collar and waist chain hung with amethyst drops, no headwear and her hair fully visible.
+
+Jewelry: polished silver with amethyst-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Midnight Violet high heels with glowing amethyst straps.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. a faint, knowing smile, teeth just barely visible. one arm raised and channeling energy, the other hand cupped at her side.
+She stands in a wide, sweeping casting stance, front knee bent and back leg extended, torso twisting, one arm swept high with fingers spread as if drawing spirits up from the ground, the other hand curled low in front of her ribs weaving a slow spiral of mist, chin lifted, an imperious gaze locked on the camera. A strong breeze streams her gown, sleeves and hair sideways. No weapon or staff - casting with her bare hands only.
 
-Holding an ornate staff in one hand, raised, with a bright amethyst glow around a skull-shaped amethyst jewel at the top.
-
-Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade.
+Swirling amethyst necromantic mist rises from the ground and spirals up her raised arm, faint spectral glyphs drifting upward.
 
 Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, fingernails and toenails natural or Light Violet; present, never heavy.
+Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, groomed dark espresso-black brows, black lashes, fingernails and toenails natural or Light Violet; present, never heavy.
 
 Environment: a shadowed fantasy ossuary of ancient crypt arches and bone-strewn ground beneath a violet-black sky, drifting black smoke and a soft amethyst haze rising behind them; a skeletal figure rising from the ground nearby.
 
@@ -32,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

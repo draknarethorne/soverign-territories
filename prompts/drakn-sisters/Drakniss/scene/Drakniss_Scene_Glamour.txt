@@ -8,10 +8,13 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
 Wearing a floor-length Radiant Rose Gold evening gown in flowing satin, a deep V neckline, a high thigh slit and gold beaded trim at the waist, a short train sweeping behind.
 
 Jewelry: radiant rose gold with morganite-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Radiant Rose Gold high heels with glowing gold straps.
+Legs & feet: bright Radiant Rose Gold high heels with glowing warm golden-white straps.
 
 A candid high-fashion editorial shot, slow sensual movement, deliberate pacing. Light breeze. walking slowly and deliberately towards the camera, hips swaying prominently with each step. level, chin slightly lowered, facing the camera. sultry, half-lidded gaze to camera. sultry, composed, lips softly together. arms relaxed and barely moving, weight settling into each slow step.
 
@@ -19,7 +22,7 @@ Soft rays of warm golden-white light fall around her, a few golden motes driftin
 
 Eyes: the natural radiant topaz-gold irises kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
 
 Environment: the sanctum of a high-fantasy cathedral, soaring white stone arches, tall stained-glass windows casting colored light, gold-inlaid floors, drifting incense and soft rays of sunlight.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

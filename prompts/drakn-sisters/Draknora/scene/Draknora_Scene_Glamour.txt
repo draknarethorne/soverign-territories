@@ -8,10 +8,13 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+
 Wearing a fitted knee-length Flame Red cocktail dress with a sweetheart neckline, thin shoulder straps and gold seam detailing, softly flared at the hem.
 
 Jewelry: burnished copper with ruby-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Flame Red high heels with glowing gold straps.
+Legs & feet: bright Flame Red high heels with glowing fiery orange-gold straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography. Breeze flowing any direction. walking towards the camera, body position adjusting with the stride. facing forward, matching the walk. remains focused on camera. alluring, confident smile, lips slightly parted; lips full and expressive. hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.
 
@@ -19,7 +22,7 @@ A few warm fiery orange-gold embers drift upward around her, a faint ember glow 
 
 Eyes: the natural molten amber irises kept intact, with a faint fiery orange-gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, fingernails and toenails natural or Light Red; present, never heavy.
+Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, groomed warm auburn-brown brows, dark brown lashes, fingernails and toenails natural or Light Red; present, never heavy.
 
 Environment: a scorched ancient stone courtyard in a high-fantasy realm, a soft gradient of rising flames glowing upward behind them, warm amber and red light washing across the ground.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

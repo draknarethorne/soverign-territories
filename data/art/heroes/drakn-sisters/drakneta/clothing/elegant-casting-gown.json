@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/elegant-casting-gown",
+  "kind": "wearing",
+  "name": "Elegant Casting Gown (Drakneta signature)",
+  "description": "a sleek {{PRIMARY}} metallic-sheen gown with an asymmetric hem, jagged lightning-bolt cut-outs baring the midriff, sheer mesh sleeves piped in {{ACCENT_SOFT}}, a high structured collar, a thigh-high split, {{METAL}} zip and stud detailing, no headwear and her hair fully visible",
+  "compatibleStages": ["scene"],
+  "notes": "Storm-caller casting outfit: lightning cut-outs and metallic sheen, hands-only casting."
+}

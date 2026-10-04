@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
 Wearing a laced Deep Burnt Sienna bodice with turquoise lacing over a white chemise, and a long layered skirt with a side slit.
 
 Jewelry: antique bronze with turquoise-jewelled bracelets, necklace, and belly-button ring.
@@ -19,7 +22,7 @@ A few fine motes of warm turquoise dust drift around her feet in the warm light 
 
 Eyes: the natural rich malachite-hazel irises kept intact, with a faint warm turquoise glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - turquoise-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, fingernails and toenails natural or Light Terracotta; present, never heavy.
+Makeup: soft and natural - turquoise-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, groomed warm bronze-brown brows, dark brown lashes, fingernails and toenails natural or Light Terracotta; present, never heavy.
 
 Environment: a deep red-rock canyon in a high-fantasy realm, carved stone statues and ancient ruined stairways in the cliff walls, warm dust-gold light, scattered boulders.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

@@ -8,20 +8,21 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Flame Red over a matte underlayer, with delicate fiery orange-gold glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
 
-Jewelry: Polished Silver with ruby-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Flame Red high heels with glowing gold straps.
+Wearing a daring backless Flame Red satin halter gown with a deep plunging V, the fitted bodice flaring into a tiered skirt of flame-cut petals graded to gold at the hem, high thigh slits on both sides, a burnished copper chain harness across the waist and ember-glow edging, no headwear and her hair fully visible.
 
-A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+Jewelry: burnished copper with ruby-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Flame Red high heels with glowing fiery orange-gold straps.
 
-Holding an ornate sword in her right hand, its blade wreathed in flickering Flame Red flame, fiery orange-gold light pulsing along the fuller.
+She stands in a dramatic lunge, weight over her front leg, one arm thrown out to the side with an open palm releasing a rolling wave of flame, the other hand drawn back at her shoulder shaping a bright ball of fire between her fingers, torso arched, chin lifted, a fierce, confident gaze to the camera. A hot, gusting wind whips her gown, hem and hair upward. No weapon or staff - casting with her bare hands only.
 
-Her free arm bends at the elbow, hand cupped, showing a ball of fire fusing in her palm as she casts a spell, molten amber and Flame Red light flickering within it.
+Rolling fiery orange-gold flames and a glowing ball of fire spin around her hands, embers streaming on the wind.
 
 Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, fingernails and toenails natural or Light Red; present, never heavy.
+Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, groomed warm auburn-brown brows, dark brown lashes, fingernails and toenails natural or Light Red; present, never heavy.
 
 Environment: a scorched ancient stone courtyard in a high-fantasy realm, a soft gradient of rising flames glowing upward behind them, warm amber and red light washing across the ground.
 
@@ -32,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

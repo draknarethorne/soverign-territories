@@ -2,7 +2,7 @@
   "id": "wardrobe/clothing/gowns/ethereal-sheer-gown",
   "kind": "wearing",
   "name": "Ethereal Sheer Gown",
-  "description": "a layered ethereal gown of sheer fabric that flows around her - frosted bright {{PRIMARY}} over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it",
+  "description": "a layered ethereal gown of sheer fabric that flows around her - frosted bright {{PRIMARY}} over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it",
   "compatibleStages": ["clothing", "scene"],
   "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{PRIMARY}}/{{ACCENT_SOFT}} so each hero renders in her own palette. Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_Elegant.txt (the fuller, cleaner version of the 'Elegant/Translucent' pattern also found across Drakneta/Drakniya/Draknora's archived final-scene prompts), with the specific colours parameterized instead of hardcoded."
 }

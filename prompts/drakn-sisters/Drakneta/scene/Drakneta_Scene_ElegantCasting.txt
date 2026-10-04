@@ -1,0 +1,36 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Elegant Casting (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a sleek Electric Gold metallic-sheen gown with an asymmetric hem, jagged lightning-bolt cut-outs baring the midriff, sheer mesh sleeves piped in white, a high structured collar, a thigh-high split, bright gold zip and stud detailing, no headwear and her hair fully visible.
+
+Jewelry: bright gold with citrine-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Electric Gold high heels with glowing white-hot electric straps.
+
+She stands in a sharp, athletic stance, one arm thrust forward with fingers spread as bolts arc from her fingertips, the other hand held back at her hip gathering a crackling sphere, torso twisted and hips cocked, a bold, smirking gaze to the camera. A violent gust whips her hem, sleeves and hair. No weapon or staff - casting with her bare hands only.
+
+Forked bolts of white-hot electric lightning arc from her fingertips and crackle around a sphere of energy in her hand, static lifting her hair.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural deep warm espresso-brown irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
+
+Environment: ancient ruined stone temple pillars on a high-fantasy mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

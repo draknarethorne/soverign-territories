@@ -8,10 +8,13 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
 Wearing a fitted knee-length Electric Gold cocktail dress with a sweetheart neckline, thin shoulder straps and white seam detailing, softly flared at the hem.
 
 Jewelry: bright gold with citrine-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Electric Gold high heels with glowing white straps.
+Legs & feet: bright Electric Gold high heels with glowing white-hot electric straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions. Random slight breeze. chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position. following the body's unpredictable shift. seductive, unpredictable. seductive and unpredictable; lips lush and active, non-neutral. hands in unpredictable positions, touching her body.
 
@@ -19,7 +22,7 @@ A few small white-hot electric sparks of static dance along her fingertips and t
 
 Eyes: the natural deep warm espresso-brown irises kept intact, with a faint white-hot electric glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, fingernails and toenails natural or Light Gold; present, never heavy.
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
 
 Environment: ancient ruined stone temple pillars on a high-fantasy mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

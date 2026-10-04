@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+
 Wearing a floor-length Midnight Violet evening gown in flowing satin, a deep V neckline, a high thigh slit and amethyst beaded trim at the waist, a short train sweeping behind.
 
 Jewelry: polished silver with amethyst-jewelled bracelets, necklace, and belly-button ring.
@@ -19,7 +22,7 @@ A few soft wisps of amethyst mist curl low around her feet, a faint amethyst shi
 
 Eyes: the natural deep violet irises kept intact, with a faint amethyst glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, fingernails and toenails natural or Light Violet; present, never heavy.
+Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, groomed dark espresso-black brows, black lashes, fingernails and toenails natural or Light Violet; present, never heavy.
 
 Environment: an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

@@ -1,0 +1,36 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Elegant Casting (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Wearing a flowing mermaid-cut gown of translucent Deep Oceanic Blue silk chiffon with wave-like pleats, a plunging neckline over a fitted bodice shimmering with scale-like sequins, a high slit, a trailing train of layered tulle like sea foam, strands of pearls and polished platinum detailing, no headwear and her hair fully visible.
+
+Jewelry: polished platinum with aquamarine-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Deep Oceanic Blue high heels with glowing aqua straps.
+
+She balances on one leg with the other extended behind her in a dancer's pose, both arms flowing in a wide arc as if guiding a tide, one hand palm-up lifting a ribbon of water that spirals around her body, the other trailing droplets, head tilted, a serene gaze to the camera. Sea wind billows her gown, train and hair. No weapon or staff - casting with her bare hands only.
+
+A ribbon of glowing aqua water spirals around her body and arms, droplets glittering on the wind.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
+
+Environment: a high-fantasy sea-cliff harbor at moonrise, a stone lighthouse tower, wooden sailing ships with lantern-lit masts, waves breaking against black rocks, silver moonlight on the water.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

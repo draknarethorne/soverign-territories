@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/elegant-casting-gown",
+  "kind": "wearing",
+  "name": "Elegant Casting Gown (Drakniya signature)",
+  "description": "a romantic {{PRIMARY}} silk-chiffon gown with an off-the-shoulder bodice embroidered with leaves and blossoms, a plunging neckline, a layered petal-shaped skirt with a high slit, living flowers and vines woven at the waist, delicate {{METAL}} leaf accents and {{GEM}} dewdrops, no headwear and her hair fully visible",
+  "compatibleStages": ["scene"],
+  "notes": "Druid casting outfit: petals, vines and blossoms, hands-only casting."
+}

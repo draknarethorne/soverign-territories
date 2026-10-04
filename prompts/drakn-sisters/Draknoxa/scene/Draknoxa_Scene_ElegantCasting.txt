@@ -1,0 +1,36 @@
+=== Draknoxa Thorne · Scene (Outfit + Effects): Elegant Casting (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a peekaboo underlayer of fine deep acid-lime strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
+Wearing a body-hugging Toxic Orchid Magenta satin corset gown with a plunging neckline and serpent-scale beading, a long mermaid skirt of sheer veiled mesh with a high slit, tarnished brass buckled straps, long opera gloves, dripping pink tourmaline drops at the waist, no headwear and her hair fully visible.
+
+Jewelry: tarnished brass with pink tourmaline-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Toxic Orchid Magenta high heels with glowing toxic lime straps.
+
+She stands in a slinking, hip-shifted stance, one hand held out with fingers delicately curled releasing a tendril of toxic mist, the other held at her chest rolling a glowing droplet between her fingertips, chin lowered, a sly, knowing gaze to the camera. A swirling breeze moves her skirt, the mist and her hair. No weapon or staff - casting with her bare hands only.
+
+Curling tendrils of toxic lime toxic mist coil around her hands and a glowing droplet hangs between her fingertips.
+
+Eyes: irises softly aglow with toxic lime light, brightest near the pupil and fading to the natural acid lime-emerald irises at the rim, iris detail still visible, a gentle toxic lime catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, groomed dark burgundy-black brows, black lashes, fingernails and toenails natural or Light Magenta; present, never heavy.
+
+Environment: a murky high-fantasy fen at dusk, twisted dead trees and still black water, glowing toxic-green mushrooms and drifting marsh lights, low creeping mist, a crumbling stone causeway.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

@@ -8,10 +8,13 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Radiant Rose Gold over a matte underlayer, with delicate warm golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, head uncovered. The fabric is translucent, the thin bikini underlayer visible behind it.
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Radiant Rose Gold over a matte underlayer, with delicate warm golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: radiant rose gold with morganite-jewelled bracelets, necklace, and belly-button ring.
-Legs & feet: bright Radiant Rose Gold high heels with glowing gold straps.
+Legs & feet: bright Radiant Rose Gold high heels with glowing warm golden-white straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a serene, warm smile, eyes soft with compassion. one arm raised and channeling energy, the other hand cupped at her side.
 
@@ -21,7 +24,7 @@ Soft rays of warm golden-white radiant light filter down around her, faint motes
 
 Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
 
 Companion: her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold.
 
@@ -34,4 +37,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

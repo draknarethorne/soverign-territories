@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/elegant-casting-gown",
+  "kind": "wearing",
+  "name": "Elegant Casting Gown (Draknava signature)",
+  "description": "an ultra-light {{PRIMARY}} chiffon halter dress of long streaming panels that part to the hip, a cut-out waist and plunging neckline, sheer flowing sleeves ending in trailing ribbons, a {{METAL}} wind-sigil brooch at the collar, silky {{ACCENT_SOFT}} scarves knotted at the waist, no headwear and her hair fully visible",
+  "compatibleStages": ["scene"],
+  "notes": "Wind-bard casting outfit: streaming panels and ribbons, hands-only casting."
+}

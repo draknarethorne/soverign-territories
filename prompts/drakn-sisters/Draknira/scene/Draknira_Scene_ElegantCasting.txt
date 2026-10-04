@@ -1,0 +1,36 @@
+=== Draknira Thorne · Scene (Outfit + Effects): Elegant Casting (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a soft smudged cool smoky ash-grey root shadow at the crown blending seamlessly into the lighter base colour through the lengths - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
+
+Wearing a floor-length gown of icy Glacial Cyan crystal-beaded organza over a nude underlayer, a deep V neckline, sheer sleeves frosted with tiny crystals, a high slit, a cape-like train of frosted tulle, brushed chrome filigree frost patterns along the bodice and hem, no headwear and her hair fully visible.
+
+Jewelry: brushed chrome with diamond-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Glacial Cyan high heels with glowing icy white-cyan straps.
+
+She stands tall in a poised, asymmetrical stance, one hand raised with fingers fanned to scatter a storm of ice shards, the other sweeping low to freeze a spiral of frost across the ground, shoulders squared, a cold, imperious gaze to the camera. A biting wind streams her train, sleeves and hair. No weapon or staff - casting with her bare hands only.
+
+Glittering ice shards and spirals of icy white-cyan frost-light burst from her hands, frost creeping across the ground.
+
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - frost-white-toned eyeshadow, a light natural cool rose blush, subtle icy rose-tinted satin lips, groomed soft ash-brown brows, soft dark brown lashes, fingernails and toenails natural or Light Cyan; present, never heavy.
+
+Environment: the courtyard of a high-fantasy citadel carved into a glacier, pale blue ice walls and frost-rimed stone arches, drifting snow, cold blue light from a pale sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

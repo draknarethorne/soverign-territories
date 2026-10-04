@@ -8,6 +8,9 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
 Wearing a fitted knee-length Soft Pearl White cocktail dress with a sweetheart neckline, thin shoulder straps and gold seam detailing, softly flared at the hem.
 
 A candid high-fashion editorial shot, soft romantic portraiture. Light breeze. standing softly, weight settled on one leg, chest open toward camera. tilted slightly, chin soft. soft, romantic gaze to camera. soft, romantic, lips slightly parted. one hand resting gently at her collarbone, the other relaxed at her side.
@@ -23,4 +26,4 @@ Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, s
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.

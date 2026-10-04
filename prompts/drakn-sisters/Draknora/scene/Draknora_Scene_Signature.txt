@@ -8,10 +8,13 @@ Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait p
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+
 Wearing skimpy D&D-flair armor, cloth top and bottom in a bikini-like cut with matching ornate pieces; legs bare, stomach and belly button bare with jewelry.
 
 Jewelry: gold bracelet, necklace, arm bands, anklets, earrings, and belly ring, all aligned to the armor's gold trim.
-Legs & feet: bright Flame Red high heels with glowing gold straps.
+Legs & feet: bright Flame Red high heels with glowing fiery orange-gold straps.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the threat. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
@@ -21,7 +24,7 @@ She extends her left hand towards the camera, a small glowing fire spell forming
 
 Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, fingernails and toenails natural or Light Red; present, never heavy.
+Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, groomed warm auburn-brown brows, dark brown lashes, fingernails and toenails natural or Light Red; present, never heavy.
 
 Companion: her aligned Elder Dragon, Pyraxis, flying over the citadel's towers behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light.
 
@@ -34,4 +37,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.

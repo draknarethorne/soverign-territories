@@ -8,6 +8,9 @@ Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+
 Wearing a light, flowing mid-length Windswept Jade sundress with a fitted bodice, wide straps and a loose skirt trimmed in silver, moving softly with the air.
 
 Jewelry: polished nickel with jade-jewelled bracelets, necklace, and belly-button ring.
@@ -19,7 +22,7 @@ A playful breeze lifts her hair and hem, faint pale silver-jade light glinting i
 
 Eyes: the natural silver-grey irises kept intact, with a faint pale silver-jade glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, fingernails and toenails natural or Light Jade; present, never heavy.
+Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, groomed soft ash-grey brows, soft grey-brown lashes, fingernails and toenails natural or Light Jade; present, never heavy.
 
 Environment: windswept high-fantasy highland cliffs above a sea of clouds, tall standing stones and a lone ruined watchtower, long grass and banners streaming in the wind, bright open sky.
 
@@ -30,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasize
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

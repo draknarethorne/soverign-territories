@@ -1,0 +1,8 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/elegant-casting-gown",
+  "kind": "wearing",
+  "name": "Elegant Casting Gown (Drakness signature)",
+  "description": "a sultry floor-length gown of layered black-violet chiffon over {{PRIMARY}} satin, a plunging sweetheart neckline and open back, sheer shadow-lace sleeves that dissolve into drifting wisps of smoke at the cuffs, a high thigh slit, a {{METAL}} filigree collar and waist chain hung with {{GEM}} drops, no headwear and her hair fully visible",
+  "compatibleStages": ["scene"],
+  "notes": "Necromancer casting outfit: shadow lace and smoke, hands-only casting."
+}
