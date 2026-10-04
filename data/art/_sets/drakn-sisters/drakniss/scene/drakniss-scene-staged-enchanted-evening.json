@@ -1,0 +1,18 @@
+{
+  "artId": "drakniss-scene-staged-enchanted-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Enchanted Evening",
+  "base_description": "{{HERO}} already staged with her chosen hair, makeup and outfit (an outfit render, or just the metallic bikini A-pose to start)",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
+    "companion": "her aligned Elder Dragon, Lumira, a distant glowing silhouette crossing the twilight sky beyond the terrace, radiant rose-gold scales catching the last light",
+    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+  },
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/scene/Drakniss_Scene_Staged_EnchantedEvening.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "STAGED scene: the incoming image already carries hair, makeup and outfit; this pass adds only the evening scene, ambient glow and her dragon companion."
+}

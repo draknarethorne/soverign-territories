@@ -482,7 +482,10 @@ def generate(card_path):
     # Literal, per-card one-off strings that aren't reusable pieces on their own
     # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
     _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",
-                        "template", "output", "denoise", "overrides", "notes"}
+                        "template", "output", "denoise", "overrides", "notes", "hairFrom"}
+    # hairFrom: "incoming" makes a complete scene take hair from the incoming image instead of the hero's description.
+    if card.get("hairFrom") == "incoming" and "HAIR" in toks:
+        toks["HAIR"] = "the exact hairstyle, colour, highlights and length shown in the incoming image"
     for key, val in card.items():
         if key not in _CARD_META_KEYS and isinstance(val, str):
             toks[key.upper()] = val

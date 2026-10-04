@@ -276,8 +276,11 @@ Every scene card is one of two kinds, readable from its **name** (no folders, no
 
 A complete scene fully describes the result in JSON (outfit, pose, effects, companion, background, realm), so it can be
 run from any A-pose with no earlier art. Its pose can be a motion piece, a literal, or `+literal` to adjust a default.
-The validator enforces the naming so the two kinds can never be mixed up. Today the only staged scenes are the two
-`*-scene-staged-enchanted-evening` cards.
+The validator enforces the naming so the two kinds can never be mixed up. Every sister has a
+`*-scene-staged-enchanted-evening` card: the incoming image already carries hair, makeup and outfit (a finished
+render, or just the metallic bikini A-pose), and the pass adds only the scene, ambient glow, a pose/wind adjustment and
+her dragon companion (the companion line is optional in the template). To use a pre-styled image with a complete scene
+instead, set `"hairFrom": "incoming"` on the card so hair comes from the image, not the hero description.
 
 **Scene naming, uniform for every scene card** (validator-enforced): file name = artId = `<hero>-scene-<name>.json`
 (`<hero>` is the first word of the hero's folder, e.g. `corin-scene-signature` for `corin-tidewalker`), and the output is

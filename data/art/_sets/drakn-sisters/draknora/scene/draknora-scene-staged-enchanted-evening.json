@@ -4,7 +4,7 @@
   "stage": "scene",
   "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
   "name": "Enchanted Evening",
-  "base_description": "Draknora in her Flame Red ethereal gown (see clothing/gown.json), hair and makeup already set",
+  "base_description": "{{HERO}} already staged with her chosen hair, makeup and outfit (an outfit render, or just the metallic bikini A-pose to start)",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
