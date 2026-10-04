@@ -1,0 +1,28 @@
+=== Drakness Thorne · Video: Awakening (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakness_FireRed_Scene_Staged_EnchantedEvening_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakness Thorne, in an elegant gothic stone balcony with carved balustrades and trailing black roses; her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace.
+
+Timeline:
+[0s-2s] Motion: Her eyes ignite with a steady amethyst glow, the light brightening from the irises outward while she holds the camera's gaze, a faint amethyst reflection spreading across her cheeks.
+[2s-5s] Motion: Without pausing, she raises one hand, palm up, and amethyst smoke and radiant light begin to gather above her palm, curling and glowing from within, lighting her face and arm in amethyst.
+[5s-7s] Motion: Blending seamlessly out of the previous action, the amethyst smoke and radiant light swirl into a ring of glowing spectral moths circling her raised hand, then spread through the moonlit balcony as the candle flames flare to match.
+[7s-8s] Motion: As the previous motion settles, every light in the scene flickers and flares in answer, drifting amethyst particles rising through the air and the setting stirring as if it feels her power.
+
+Static camera with a very slow push-in; the framing stays on her full figure from head to toe.
+
+Audio: a low, rising shimmer, a soft swell of energy, then a gentle chime as the moths scatter; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

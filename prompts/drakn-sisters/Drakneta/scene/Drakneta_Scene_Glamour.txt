@@ -20,7 +20,7 @@ A candid high-fashion editorial shot, dynamic natural movement, expressive glamo
 
 A few small white-hot electric sparks of static dance along her fingertips and the ends of her hair - understated, nothing busy.
 
-Eyes: the natural deep warm espresso-brown irises kept intact, with a faint white-hot electric glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural dark storm-charcoal, almost black irises kept intact, with a faint white-hot electric glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
 Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
 
@@ -33,4 +33,4 @@ Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enl
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, cluttered background, busy effects, text, wording, watermark, logo.

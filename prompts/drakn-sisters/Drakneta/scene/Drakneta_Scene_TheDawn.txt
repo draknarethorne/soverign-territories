@@ -1,0 +1,38 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): TheDawn (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of Electric Gold and arc-white silk with a fitted bodice embroidered with bright gold lightning forks and copper coils, a high winged collar of bright gold plates, long sleeves of sheer white gauze edged in gold wire, and a skirt of rippling ribbons that crackle and whip upward; sweetheart neckline.
+
+Headwear: a bright gold crown of lightning-fork spires.
+
+Jewelry: a bright gold coil collar with citrine stones, long spark earrings, bright gold armlets.
+Legs & feet: bare feet, sparks dancing around them.
+
+Fast, snapping ascent: she is hurled upright out of the crater on a flash of lightning, one arm flung high, the other pulled in, hair and ribbons blasted upward, caught at the exact instant of the strike; sharp, startled-then-thrilled expression with eyes on the camera; full figure from head to toe visible.
+
+Forking bolts of white-hot electric lightning arc away from her across the sky and ground, shattered rock and glassy fragments falling back in slow arcs, static crackling over her skin and gown, flash-lit clouds.
+
+Eyes: the natural dark storm-charcoal, almost black irises kept intact, with a faint white-hot electric glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
+
+Environment: a high windswept plateau under towering thunderheads at dawn: a smoking crater of fused glassy rock where lightning has struck, bolts forking across a bruised-gold sky, a break of sunlight on the horizon, great eagles riding the storm, wild horses galloping across the plain, static glowing on tall grass.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

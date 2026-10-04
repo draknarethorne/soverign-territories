@@ -1,0 +1,40 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Robe (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial stormcaller robe of Electric Gold and arc-white silk with bright gold lightning-fork and copper-coil embroidery, wide sleeves of sheer white gauze, a high winged collar of bright gold, an open front over a fitted Electric Gold bodice and long slit skirt, a sash of woven gold wire with a spark clasp, a long hem edged in gold wire.
+
+Headwear: a slim bright gold circlet with a small forked crest.
+
+Jewelry: a bright gold coil pendant, spark earrings, bright gold cuffs.
+Legs & feet: soft arc-white slippers with bright gold stitching.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions. Random slight breeze. chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position. following the body's unpredictable shift. seductive, unpredictable. seductive and unpredictable; lips lush and active, non-neutral. hands in unpredictable positions, touching her body.
+
+Holding a slender bright gold conduit rod in one hand, wound with copper coil and tipped with a forked prong, a citrine crystal at its heart crackling with white-hot electric arcs, fine tendrils of static running along the shaft.
+
+Fine threads of white-hot electric static arc between her fingers and the metal on the robe, a faint crackle of light in the air around her.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
+
+Environment: a storm-glass conservatory atrium: a domed gallery of glass and brass, great glass spheres of captured lightning glowing on stone pedestals, copper wires arcing faint sparks between brass pillars, a view of towering thunderheads and a golden dawn through the dome, polished floor reflecting the light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

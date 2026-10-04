@@ -1,0 +1,40 @@
+=== Draknara Thorne · Scene (Outfit + Effects): Robe (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial spirit-walker robe of Deep Burnt Sienna woven cloth and soft hide, painted ochre spirals and turquoise beadwork on the chest and sleeves, wide fringed sleeves, a mantle of feathers and painted hide, an open front over a fitted Deep Burnt Sienna bodice and long slit skirt, a wide antique bronze belt hung with bone and bead talismans, a hem of long swinging fringe.
+
+Headwear: a feather crown with a antique bronze headband set with turquoise beads.
+
+Jewelry: turquoise bead necklaces with bone talismans, antique bronze cuffs, feather earrings.
+Legs & feet: soft Deep Burnt Sienna moccasin boots with turquoise beading.
+
+A candid high-fashion editorial shot, relaxed casual stroll, soft natural movement. Light breeze. strolling casually, body relaxed and unposed, weight shifting naturally with each step. level, relaxed, facing forward. soft, easy gaze to camera. relaxed, natural smile. arms swinging loosely and naturally with the stroll.
+
+Holding a tall carved wooden spirit-totem staff in one hand, planted upright, its shaft wrapped in strips of Deep Burnt Sienna and turquoise cloth that hang and sway, woven leather cords, feathers, beads and small stone charms dangling from it, topped with a carved totem face encircled by a ring of feathers and a spiral sun-and-earth shaman symbol, a faint warm turquoise glow in the totem's carved eyes.
+
+Smoke from the fire-pit curls upward past her in slow spirals with faint warm turquoise sparks, and the fringe on the robe sways softly.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - warm bronze-taupe-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, groomed warm bronze-brown brows, dark brown lashes, fingernails and toenails natural or Light Terracotta; present, never heavy.
+
+Environment: a round cliff-dwelling kiva chamber of smooth stone: a central fire-pit with rising smoke, painted spirals and animal figures on the walls, hanging bead strings and feather bundles, a skylight opening to a clear morning sky, woven blankets and clay pots around the edge.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

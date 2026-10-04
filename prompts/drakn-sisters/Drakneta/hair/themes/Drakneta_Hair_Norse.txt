@@ -17,7 +17,7 @@ A very slight lift from a light breeze below.
 Hair is centre-parted with two thick temple braids wrapped back like a crown and the rest left loose in front of the shoulders.
 
 
-Eyes: deep warm espresso-brown irises with radiating electric-gold striations and a dark umber limbal ring, natural studio eyes, not glowing.
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring, natural studio eyes, not glowing.
 
 Makeup: soft and natural, with a subtly blended champagne-gold-toned eyeshadow, a light natural golden peach blush, groomed golden-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
@@ -26,4 +26,4 @@ Very long, slender legs.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

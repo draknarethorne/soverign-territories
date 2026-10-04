@@ -1,0 +1,28 @@
+=== Drakness Thorne · Video: KissTossLaugh (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakness_Qwen_X_Pose_00142_.png
+Size: 640x960
+Length: 9
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakness Thorne, wearing only a Midnight Violet string bikini, in a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
+
+Timeline:
+[0s-2s] Motion: She lifts one hand to her lips, blows a kiss toward the camera with a playful glance, then lets the hand fall and finishes with a warm smile.
+[2s-4s] Motion: Without pausing, she tosses her hair back with a quick turn of the head, the strands floating and settling, and meets the camera with a confident smile.
+[4s-7s] Motion: As the previous motion settles, she holds the pose for a heartbeat, then breaks into a real, delighted laugh, shoulders loosening, hair swaying, relaxing out of the pose as if the photo has just been taken, and glances back at the camera; at the same time, her eyes ignite with a steady amethyst glow, the light brightening from the irises outward while she holds the camera's gaze, a faint amethyst reflection spreading across her cheeks.
+[7s-9s] Motion: Without pausing, she gives the camera one last playful wink.
+
+Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.
+
+Audio: a soft, airy kiss sound; a soft whoosh of air; light, warm laughter; a low, rising shimmer
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

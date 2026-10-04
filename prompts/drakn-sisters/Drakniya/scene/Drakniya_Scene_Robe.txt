@@ -1,0 +1,40 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Robe (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial druid-robe of layered Emerald Green and sage silk cut into overlapping leaf shapes, wide bell sleeves, a mantle of living ivy and small flowers over the shoulders, an open front over a fitted Emerald Green bodice and long slit skirt, a woven antique gold belt hung with seed-pods and small bells, a trailing hem of fern fronds.
+
+Headwear: a crown of woven twigs, blossoms and antique gold leaves, with two small curved horns of pale wood.
+
+Jewelry: antique gold leaf pendant, acorn earrings, braided vine bracelets.
+Legs & feet: bare feet, a ring of moss and tiny flowers around them.
+
+A candid high-fashion editorial shot, dreamy romantic moment, wind-caught hair. Strong breeze flowing towards her. standing softly, head tilted back slightly, basking in the breeze. tilted back gently, eyes soft or closed. soft, dreamy, eyes closed or half-lidded. serene, dreamy, soft closed-mouth smile. arms relaxed at her sides, hair caught fully in the wind.
+
+Holding a gnarled living-wood staff in one hand, the bark twisting naturally up the shaft, leafy vines and small blossoms curling along it, the top opening into a cradle of branches holding a glowing bright emerald-green seed-orb, a few fresh green leaves sprouting from the wood.
+
+Fireflies and drifting pollen glow softly around her, a few leaves spiralling in the light, the ivy on her mantle gently stirring.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
+
+Environment: a mossy waterfall grotto sanctuary: a curtain of water falling into a clear emerald pool, ferns and hanging moss on the stone, small carved wooden shrines and lanterns of seed-pod glass hung among the roots, a stag drinking at the pool's edge, sunlight in green shafts through the canopy above.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

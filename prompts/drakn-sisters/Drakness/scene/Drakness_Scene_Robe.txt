@@ -1,0 +1,40 @@
+=== Drakness Thorne · Scene (Outfit + Effects): Robe (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial shroud-robe of Midnight Violet velvet lined in amethyst silk, wide bell sleeves, a high standing collar edged in polished silver thread embroidered with moths, crescent moons and ribs, an open front over a fitted Midnight Violet bodice and long slit skirt, a heavy polished silver chain belt hung with tiny skull beads, a long trailing hem.
+
+Headwear: a sheer Midnight Violet veil falling from a slim polished silver crown of thorns, lifted away from the face.
+
+Jewelry: polished silver reliquary pendant on a long chain, stacked rings on every finger, polished silver cuffs engraved with runes.
+Legs & feet: soft Midnight Violet velvet slippers embroidered in polished silver.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Holding an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black shaft, polished silver blade with gothic patterns, in one hand.
+
+Pale amethyst candle flames float at different heights around her and the hem of the robe stirs as if in a slow draught; faint violet runes glow in the air near her hands.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, groomed dark espresso-black brows, black lashes, fingernails and toenails natural or Light Violet; present, never heavy.
+
+Environment: a circular black-marble vault of death-lore: towering curved shelves of bound grimoires and scrolls, a vast armillary of silver bones turning slowly at the centre, floating violet candle flames, a carved ossuary lectern, moths drifting through the still air, narrow slits of dawn light cutting through the dark.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
