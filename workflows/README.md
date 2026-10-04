@@ -6,11 +6,35 @@ targets**; which workspace is dev, which is acceptance and which makes the final
 
 ```text
 workflows/
-  <set>/<Hero>/<Hero>_Qwen_<Stage>_<Name>.json   set = prompt group (drakn-sisters, angel-primes, ...)
-  _templates/                                    the official ST0-ST4 stage templates; new workflows are cloned from them
-  workspaces.json                                workspaces, routes (dev, uat, prod), defaults and excludes
+  <set>/<Hero>/<Hero>_<Engine>_<Stage>_<Name>.json   generated: Qwen and MiniMax video (tracked in git); set = prompt group
+  _templates/                                    the official ST0-ST6 stage templates; new workflows are cloned from them
+  _curated/<set>/<Hero>/                         hand-tuned workflows; never regenerated (see Hand-curated workflows)
+  .test/firered/<set>/<Hero>/                    generated FireRed test workflows (not in git)
+  workspaces.json                                workspaces, routes (dev, uat, prod), engines, defaults and excludes
   _archive/                                      old layouts and hand-made copies (ignored)
 ```
+
+## Quick reference: the commands you will use most
+
+Run the scripts from a terminal or double-click `bin\menu.cmd` (`bin\help.cmd` lists everything). Add `--dry-run` as the last
+argument to preview. STAGE is optional: `poses`, `head`, `scene`, `hair`, `motion`, `armor`, `clothing`, `video`, or `studio` for
+every studio stage.
+
+| I want to | Run |
+| --- | --- |
+| Check the data is valid | `bin\validate.cmd` |
+| Regenerate art prompts from the JSON | `bin\prompts.cmd` |
+| Build and push a hero's Qwen workflows to dev | `bin\refresh-dev.cmd Draknora scene` |
+| The same for FireRed (local test copies) | `bin\refresh-firered.cmd Draknora scene` |
+| Animate: video prompts, workflows, deploy | `bin\animate.cmd Drakness` |
+| Regenerate only the video prompts | `bin\videoprompts.cmd` |
+| See what is where | `bin\status.cmd --hero Drakness`, `bin\workspaces.cmd` |
+| Move finished studio work to a sister's own workspace | `bin\promote-uat.cmd Drakness studio --dry-run` |
+| Move chosen scenes to the shared scene workspace | `bin\promote-uat.cmd Drakness scene --dry-run` |
+| Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
+| Keep what I made or changed in ComfyUI | `bin\pull-dev.cmd Drakness` |
+| Put the ST templates in dev | `bin\deploy-templates.cmd` |
+| Run every commit hook | `bin\check.cmd` |
 
 ## Dev, UAT, Prod
 
@@ -25,7 +49,8 @@ UAT and prod targets come from the `production` rules in `workspaces.json`: they
 stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a
 scene is studio). The first matching UAT rule wins, so class rules go first: sister scenes route to `Drakn Sisters`, sister
 studio work to the sister's own workspace. `list` shows the studio and scene routes per hero. A workspace that does not
-exist yet is skipped.
+exist yet is skipped. All workspaces share one output
+folder, and the `SaveImage` prefix (`<Hero>/<stage>/...`) sorts renders into hero folders whichever workspace ran them.
 
 ### Stage templates
 
@@ -41,13 +66,16 @@ exist yet is skipped.
 | `ST3_Flux_Final` | Flux final | none |
 | `ST4_Qwen_Polish` | Qwen polish (int8) | none |
 | `ST4_Flux_Polish` | Flux polish | none |
+| `ST6_MiniMax_Video` | MiniMax H3 image to video (portrait, turbo) | `engines.minimax.template` |
 
 ### FireRed test engine (not in git)
 
 Scenes can also be built for FireRed to compare with Qwen. They are generated into `workflows/.test/firered/` (ignored by
 git), named `<Hero>_FireRed_Scene_<Name>.json`, from the template in `workspaces.json` under `engines`. They carry the
 positive prompt only and read the same A-pose as the Qwen scene, and they deploy next to the Qwen ones by the same
-routing. `--engine qwen|firered` limits any command to one engine.
+routing. `--engine qwen|firered` limits any command to one engine. FireRed workflows default to **turbo** (`engines.firered.turbo`;
+untick the switch on one workflow for a slow run) and the engine adds a real-then-magic effects instruction to the prompt
+(`engines.firered.fx`, for the scenes in `fxScenes`, `"*"` meaning all).
 
 ```bash
 python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine firered --create
@@ -98,8 +126,7 @@ python tools/workflows/comfy_workflows.py promote --to uat --hero Drakness --cla
 python tools/workflows/comfy_workflows.py promote --to uat --hero Drakness --class scene --match Glamour --dry-run
 # copy all sister scenes to Drakn Sisters and keep them in dev too
 python tools/workflows/comfy_workflows.py deploy --to uat --group drakn-sisters --class scene --dry-run
-``` All workspaces share one output
-folder, and the `SaveImage` prefix (`<Hero>/<stage>/...`) sorts renders into hero folders whichever workspace ran them.
+```
 
 ## The loop
 
@@ -118,10 +145,13 @@ Run these from a terminal, or double-click `bin\menu.cmd`. `bin\help.cmd` lists 
 
 ```text
 bin\refresh-dev.cmd Draknara scene           prompts + workflows + deploy to dev
+bin\refresh-firered.cmd Draknora scene       the same for FireRed (local test workflows)
+bin\animate.cmd Drakness                     video prompts + MiniMax workflows + deploy to dev
 bin\deploy-dev.cmd | deploy-uat.cmd | deploy-prod.cmd HERO [STAGE]
 bin\promote-uat.cmd | promote-prod.cmd HERO [STAGE]
+bin\fork.cmd | pull-dev.cmd | deploy-curated.cmd      hand-curated workflows
 bin\status.cmd | workspaces.cmd | inputs.cmd
-bin\prompts.cmd | validate.cmd | check.cmd
+bin\prompts.cmd | videoprompts.cmd | validate.cmd | check.cmd
 ```
 
 Add `--dry-run` as the last argument to preview. The tool behind them is `tools/workflows/comfy_workflows.py`.

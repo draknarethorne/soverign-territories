@@ -46,12 +46,32 @@ Start with the [documentation hub](docs/README.md), then read:
 4. [Combat Specification](docs/design/combat-calculation-spec.md) and
    [Deck Rules](docs/design/deck-progression-rules.md) — executable design rules.
 
+## Art and video pipeline
+
+Card art and short video clips are generated from small JSON files, never hand-written prompts. The guides:
+
+- [Tutorial: creating art JSON](docs/art/tutorial-art.md) and [tutorial: creating video JSON](docs/art/tutorial-video.md), by hand or with an AI.
+- [Workflows and launchers](workflows/README.md): the ComfyUI workspaces (dev, UAT, prod), the Qwen, FireRed and MiniMax engines, and
+  hand-curated workflows.
+- [Art structure reference](data/art/README.md) and [status](docs/STATUS.md).
+
+The commands you will run most (from the repo root; `bin\help.cmd` lists every launcher):
+
+```text
+bin\validate.cmd                        # data checks and validator self-tests
+bin\prompts.cmd                         # art JSON -> prompts
+bin\refresh-dev.cmd Draknora scene      # prompts -> workflows -> ComfyUI dev (add --dry-run to preview)
+bin\animate.cmd Drakness                # video cards -> prompts -> MiniMax workflows -> dev
+bin\status.cmd --hero Drakness          # what is where
+```
+
 ## Repository layout
 
 - `data/` — runtime card/product/progression data and schemas.
 - `data/schemas/` — machine-readable contracts for validation and implementation.
+- `data/art/`, `data/animation/` — art and video source JSON; `prompts/` and `workflows/` are generated from them.
 - `docs/` — vision, MVP plan, design rules, governance, and historical records.
-- `scripts/` and `tools/` — validation, generation, and maintenance utilities.
+- `scripts/` and `tools/` — validation, generation, workflow sync and maintenance utilities; `bin/` has the quick launchers.
 - `src/` — reserved for the future Unity client and server modules.
 
 ## Intended technology direction

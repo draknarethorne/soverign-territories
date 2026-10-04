@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-03 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-04 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -10,7 +10,9 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 | Area | State |
 | --- | --- |
-| Art pipeline | Working. `data/art/` identities + components + templates compile to prompts via `tools/generators/gen_prompt.py`. Rendering is manual in ComfyUI. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving); each Drakn sister has one themed scene and hairstyle. |
+| Art pipeline | Working. `data/art/` identities + pieces + templates compile to prompts via `tools/generators/gen_prompt.py`. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving). Every sister has Signature, Glamour, Elegant Casting, Staged Enchanted Evening, **The Dawn** (rising in her homeland) and **Robe** scenes, each with its own background. How to add to it: [art/tutorial-art.md](art/tutorial-art.md). |
+| ComfyUI workflows | Automated. `tools/workflows/comfy_workflows.py` builds workflows from prompts and syncs them across dev, per-sister UAT and series PROD workspaces (`workflows/workspaces.json`, [../workflows/README.md](../workflows/README.md)); `bin/*.cmd` are the quick launchers. Three engines: Qwen (card-art look, tracked in git), FireRed (photoreal, local test copies with a real-then-magic effects instruction) and MiniMax video (tracked). The `ST0`-`ST6` templates are the only masters. Hand-tuned workflows are kept in `workflows/_curated/` and never regenerated. |
+| Video | First pipeline built: `data/animation` cards (actions as `Motion:`/`Scene:` blocks with transitions) -> `gen_animation.py` -> MiniMax H3 workflow from `ST6_MiniMax_Video`. Three Drakness example clips are deployed; none rendered yet. Guide: [art/tutorial-video.md](art/tutorial-video.md). |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
 | Gameplay cards | `data/cards/sovereign-dawn/`: 219 cards, ids `SD-001`..`SD-219`. `SD-041`+ is legacy content (Fire/Water/Earth + Neutral). |
 | Validation | `tools/validators/validate_data.py` (schemas + card/art links) and its mutation self-test run in pre-commit and CI. |
@@ -30,7 +32,14 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   40-point budget. Bound heroes and dragons (Mythic) and sisters (Transcendent) are earned from packs, campaign
   rewards, or story beats; sisters are apex showcase cards. The budget does not change.
 - Player-facing title is **Sovereign**, not "Player".
-- Asset delivery and prompt injection into ComfyUI workflow JSONs are deferred; manual copy-paste is acceptable.
+- **Art and video are data-driven (Oct 2026).** Pieces, cards and animation cards generate prompts; prompts generate workflows. Prompts
+  are never hand-edited. Work is **studio** (cream backdrop: poses, heads, hair, armor) or **scene** (realm, background, effects; video
+  counts as scene); studio goes to a sister's own workspace, scenes to the shared `Drakn Sisters` workspace.
+- **Dev/UAT/Prod workspaces** in ComfyUI: dev builds and proves, UAT is acceptance, PROD is the series workspace. Workflows are
+  promoted (moved) up the tiers.
+- **A hand-made workflow is never overwritten.** Anything tuned by hand is forked or pulled into `workflows/_curated/`; patterns that
+  recur graduate into pieces, motions, transitions or templates.
+- Prompt injection into ComfyUI workflows is automated; delivering rendered images back to cards is still manual (C1).
 
 ## Open decisions
 
@@ -51,6 +60,15 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
    model and the chosen elements.
 4. **G2 Decide O1** with G1's cost in hand.
 5. **Art for the 15 legacy heroes** that lack art identities, plus full sets for Grass, Darkness, Light.
+
+### Art and video track (runs alongside)
+
+- Render and review the first video clips; tune looks, motions and transitions from what the renders show.
+- Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used.
+- Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace) to choose the A-pose look that blends best.
+- Title and key-art scene from the text-to-image templates (`ST0_*_Text`), as a card in the pipeline; an item stage for weapons and armor.
+- Use the other `ST` templates (polish, finals) to generate their own prompts.
+- Documentation audit and launcher check, now with [art/tutorial-art.md](art/tutorial-art.md) and [art/tutorial-video.md](art/tutorial-video.md).
 
 ## Data debt
 
@@ -73,11 +91,10 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
 
 ## Deferred
 
-- **Asset delivery (C1).** Chain stops at "a text prompt exists." Options for automating it through the ComfyUI API are in
-  [art/comfyui-automation-proposal.md](art/comfyui-automation-proposal.md). Needs: where rendered PNGs live and how they are named,
+- **Asset delivery (C1).** The chain now reaches a ready ComfyUI workflow; it stops at the rendered image. Needs: where rendered PNGs live and how they are named,
   how the card's `portraitAsset`/`fullArtAsset`/`shinyPortrait` fields point at them, how Unity loads them (provisional
-  card-art target 512x768, 2:3), and a validator check that referenced files exist. Includes a tool that injects prompts into
-  `workflows/**.json` instead of copy-paste.
+  card-art target 512x768, 2:3), and a validator check that referenced files exist. Running workflows through the ComfyUI API is
+  still an option, see [art/comfyui-automation-proposal.md](art/comfyui-automation-proposal.md).
 - **Shiny/foil (C2).** Same scene card plus an `effects` layer, or its own variant; decide with C1.
 - **Beyond-card art:** frames, icons, map tiles, battle UI, menus. Rendering quality is checked by hand with
   [art/output-qa-checklist.md](art/output-qa-checklist.md); the generator cannot judge images.

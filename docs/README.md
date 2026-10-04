@@ -35,6 +35,8 @@ data debt, and the readiness gates.
 | Tutorial | `mvp/tutorial-flow.md` | Owns required onboarding sequence. |
 | Runtime data contracts | `../data/schemas/*.json` | Schemas, validators, and runtime tooling are authoritative. |
 | Art-direction pipeline | `../data/art/README.md` | Authoritative for how card art is produced (identity files, components, templates, `gen_prompt.py`). |
+| How to create art and video | `art/tutorial-art.md`, `art/tutorial-video.md` | Step-by-step for writing and tuning the art and animation JSON, by hand or with an AI assistant. |
+| ComfyUI workflows and launchers | `../workflows/README.md` | Dev/UAT/Prod workspaces, the Qwen, FireRed and MiniMax engines, hand-curated workflows, the common commands and `../bin/*.cmd`. |
 | Hero/dragon vision roster | `codex/heroes/ideation_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline. **Ideation-tier vision**, not MVP scope — a subset ships first. |
 | Current state, decisions, backlog | `STATUS.md` | Wins on "what is done / open / next". Rules still live in the rows above. |
 | Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
@@ -61,7 +63,8 @@ data debt, and the readiness gates.
 - Cards: `../data/cards/`
 - Products/rewards: `../data/products/`
 - Art-direction source + pipeline: `../data/art/` (see `../data/art/README.md`); generated prompts in `../prompts/`
-- Validation and generation utilities: `../scripts/` and `../tools/`
+- Animation (video) source: `../data/animation/` (see `art/tutorial-video.md`); generated ComfyUI workflows in `../workflows/`
+- Validation, generation and workflow utilities: `../tools/` (validators, generators, `workflows/comfy_workflows.py`); quick launchers in `../bin/`
 
 When a game rule changes, follow: design rule → schema → validator/tooling → implementation
 → tests → high-level reference. Do not implement numeric behavior from the game bible.

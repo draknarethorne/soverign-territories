@@ -1,7 +1,11 @@
 # ComfyUI Automation Proposal
 
-**Status:** Proposal, for decision · **Date:** 2026-10-03 · **Covers:** STATUS items C1 (asset delivery) and the
+**Status:** Partly built · **Date:** 2026-10-03 · **Covers:** STATUS items C1 (asset delivery) and the
 "inject prompts into workflows" deferral.
+
+> **Update (2026-10-04):** the find-or-create materializer is built as `tools/workflows/comfy_workflows.py` (prompts to
+> workflows to dev, UAT and prod workspaces, for Qwen, FireRed and MiniMax video); see [../../workflows/README.md](../../workflows/README.md).
+> Still open: running the workflows through the API and delivering the rendered images back to cards (C1).
 
 The pipeline ends at "a prompt `.txt` exists". Everything after that is copy-paste: paste the prompt, load the input
 image, queue, rename the output, remember which images are now stale. This note describes what the ComfyUI API can do and

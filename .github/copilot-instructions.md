@@ -24,6 +24,10 @@ If a number or rule here disagrees with those docs, the docs win.
 | `prompts/` | **Generated** ComfyUI prompts; never edit by hand, regenerate |
 | `workflows/` | ComfyUI workflow JSON |
 | `tools/generators/gen_prompt.py` | Prompt generator |
+| `data/animation/` | Video cards, motions, transitions and looks; `tools/generators/gen_animation.py` turns cards into video prompts |
+| `tools/workflows/comfy_workflows.py`, `workflows/` | Builds ComfyUI workflows from prompts and syncs them to workspaces; `workflows/_templates` (ST0-ST6) are the only masters, `workflows/_curated` holds hand-tuned ones |
+| `bin/*.cmd` | Quick launchers for the above; `bin/help.cmd` lists them |
+| `docs/art/tutorial-art.md`, `tutorial-video.md` | How to create art and video JSON, by hand or with an AI |
 | `tools/validators/` | `validate_data.py` and its mutation self-test |
 | `docs/specs/` | Narrative notes for schemas (not the contracts) |
 | `src/` | Reserved for Unity; not created yet |

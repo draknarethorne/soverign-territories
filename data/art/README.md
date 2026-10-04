@@ -1,11 +1,12 @@
 # `data/art/` — Structure Reference
 
-**Status:** Living document · **Last updated:** 2026-10-02
+**Status:** Living document · **Last updated:** 2026-10-04
 
 This is the authoritative explanation of how `data/art/` is organized. Read this before adding any
 new hero, race, component, or card-production folder — the goal is that we never have to reshuffle
 directories again as heroes, races, dragons, pets, buildings, armor, weapons, and new card
-productions get added.
+productions get added. **New here? Start with the how-to:** [`docs/art/tutorial-art.md`](../../docs/art/tutorial-art.md)
+(and [`tutorial-video.md`](../../docs/art/tutorial-video.md) for animation); this page is the reference behind it.
 
 Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-pipeline.md) and
 [`docs/art/prompt-pattern.md`](../../docs/art/prompt-pattern.md).
