@@ -1,0 +1,17 @@
+{
+  "artId": "umbrath-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/umbrath.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon looms among its relics, wings half-folded like torn shadow, head lowered then raised toward the camera with a cold, knowing gaze, shadows pooling at its feet.",
+    "background": "a vast crypt-vault beneath a ruined cathedral, ancient stone arches and sarcophagi, a faint violet glow filtering through cracked windows, drifting black smoke",
+    "hoard": "black pearls and polished obsidian, tarnished silver crowns and candelabra, heaps of amethysts, cursed relics and ancient tomes, old coins and grave-goods",
+    "effects": "A few soft wisps of shadow and a faint amethyst haze drift across the hoard - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Umbrath/scene/Umbrath_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

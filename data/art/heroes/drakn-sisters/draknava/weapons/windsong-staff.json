@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknava/weapons/windsong-staff",
   "kind": "holding",
   "name": "Windsong Lyre Staff (Draknava signature)",
-  "description": "a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing {{ACCENT_SOFT}} strings, small silver wind-chimes and long ribbons of {{PRIMARY}} silk streaming from it in the breeze, a faint {{ACCENT_SOFT}} shimmer in the air around the strings",
+  "description": "a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing {{MAGIC}} strings, small silver wind-chimes and long ribbons of {{PRIMARY}} silk streaming from it in the breeze, a faint {{MAGIC}} shimmer in the air around the strings",
   "compatibleStages": ["scene"],
   "notes": "Wind/Bard signature item: a musical instrument as much as a staff."
 }

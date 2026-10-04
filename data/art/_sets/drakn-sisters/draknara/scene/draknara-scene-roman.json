@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/roman/wardrobe/footwear/sandals/caligae-sandals.json",
     "holding": "data/art/themes/roman/wardrobe/weapons/swords/gladius-and-scutum.json",
     "makeup": "data/art/themes/roman/cosmetics/makeup/rouged/roman-kohl-and-rouge.json",
-    "effects": "Fine motes of {{ACCENT_SOFT}} arena dust swirl around her feet, stirred by unseen earth magic.",
+    "effects": "Fine motes of {{MAGIC}} arena dust swirl around her feet, stirred by unseen earth magic.",
     "background": "data/art/themes/roman/backgrounds/fantasy/ruins/forum-colonnade-dusk.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

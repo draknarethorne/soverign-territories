@@ -3,6 +3,7 @@
   "art": {
     "palette": {
       "primaryColor": "Deep Rust Brown",
+      "magicColor": "warm amber",
       "accentColors": [
         "Iron Grey",
         "Warm Sand"

@@ -3,6 +3,7 @@
   "art": {
     "palette": {
       "primaryColor": "Forest Green",
+      "magicColor": "bright leaf-green",
       "accentColors": [
         "Moss Brown",
         "Pale Gold"

@@ -13,7 +13,7 @@
         "properties": {"art": {"required": ["physique"], "properties": {"physique": {"required": ["bust"]}}}}
       },
       "then": {
-        "properties": {"art": {"properties": {"palette": {"required": ["lipColor", "eyeshadowColor", "blushColor", "nailColor"]}}}}
+        "properties": {"art": {"properties": {"palette": {"required": ["lipColor", "eyeshadowColor", "blushColor", "nailColor", "lashColor", "browColor", "magicColor", "gemColor"]}}}}
       }
     }
   ],
@@ -52,6 +52,10 @@
             "lipColor": {"type": "string", "description": "Signature lip tint ({{LIP}}), used as 'subtle <lipColor>-tinted satin'; default berry"},
             "eyeshadowColor": {"type": "string", "description": "Signature eyeshadow tone ({{EYESHADOW}}); default is the last word of the first accent colour"},
             "blushColor": {"type": "string", "description": "Signature blush tone ({{BLUSH}}); default unspecified"},
+            "lashColor": {"type": "string", "description": "Natural lash colour ({{LASH}}), aligned to the hair; default black. Override per scene (overrides.palette) to make lashes pop"},
+            "browColor": {"type": "string", "description": "Natural brow colour ({{BROW}}), aligned to the hair; default unspecified. Override per scene (overrides.palette) to make brows pop"},
+            "magicColor": {"type": "string", "description": "Signature spell/energy/glow colour ({{MAGIC}}): eye glow, weapon light, scene effects; default is the last word of the first accent"},
+            "gemColor": {"type": "string", "description": "Signature gemstone ({{GEM}}) used in jewelry, e.g. 'aquamarine'; default is the last word of the first accent"},
             "hairHighlights": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "Highlight-style piece (cosmetics/highlights/<family>/*.json); its {{HIGHLIGHT_COLOR}} is filled from hairHighlightColor"},
             "hairHighlightColor": {"type": "string"},
             "hairColorNegatives": {"type": "array", "items": {"type": "string"}},

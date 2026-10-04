@@ -1,0 +1,24 @@
+=== Fulgora · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Fulgora, an Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning.
+
+The dragon crouches on a broken pillar above its treasure, wings half-spread against the storm, head raised and turned toward the camera with a fierce, electric gaze.
+
+Lair: the ruined stone temple of a high mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns.
+
+Hoard: heaps of gold and copper coils, glassy fulgurite formations fused by lightning, tuning forks and bronze bells, silver ingots, citrine gems and a few crackling crystals.
+
+A few small sparks of static dance across the hoard - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

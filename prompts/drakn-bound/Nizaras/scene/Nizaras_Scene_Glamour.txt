@@ -1,0 +1,32 @@
+=== Nizaras Featherstone · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Nizaras Featherstone (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders.
+
+Legs & feet: sturdy Forest Green-toned combat boots with brown buckles, laced to the shin.
+
+He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile.
+
+Holding a pair of curved brown thorn-edged daggers, one in each hand, Forest Green-wrapped grips, a faint verdant glow pulsing along the thorny serrations like living sap.
+
+A few drifting leaves and soft bright leaf-green motes of pollen glow in the sunbeams around him - understated, nothing busy.
+
+Eyes: the natural verdant green irises kept intact, with a faint bright leaf-green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a sun-dappled enchanted forest grove in a high-fantasy realm, towering moss-covered trees and mossy standing stones, shafts of golden light filtering through the high canopy, soft ferns and wildflowers underfoot, a faint ground mist.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lean, agile, wiry-muscled build; lean, toned chest and core; narrow, agile waist; long, lean legs built for quick movement.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

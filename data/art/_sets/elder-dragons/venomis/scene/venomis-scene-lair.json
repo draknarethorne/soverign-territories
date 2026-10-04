@@ -1,0 +1,17 @@
+{
+  "artId": "venomis-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/venomis.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon coils among its glassware like a collector guarding a laboratory, neck arched, head raised and turned toward the camera with a sly, appraising gaze, a thin curl of mist rising from its jaws.",
+    "background": "a fetid fen grotto of twisted roots and still black water, glowing toxic mushrooms and drifting marsh lights, low creeping mist",
+    "hoard": "shelves and heaps of glass vials, alembics and corked potion flasks, venom-etched daggers, jars of strange specimens, tarnished brass goblets, uncut pink tourmalines and poisoned jewels",
+    "effects": "A few faint tendrils of toxic mist curl across the hoard, glowing softly - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Venomis/scene/Venomis_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
     "holding": "data/art/themes/greek/wardrobe/weapons/polearms/poseidon-trident.json",
     "makeup": "data/art/themes/greek/cosmetics/makeup/gilded/gilded-goddess.json",
-    "effects": "Soft droplets of water hang suspended in the sea air around her, faint {{ACCENT_SOFT}} light rippling through them.",
+    "effects": "Soft droplets of water hang suspended in the sea air around her, faint {{MAGIC}} light rippling through them.",
     "background": "data/art/themes/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

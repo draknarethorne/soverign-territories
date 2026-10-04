@@ -1,0 +1,32 @@
+=== Draknare Thorne · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknare Thorne (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes.
+
+Legs & feet: sturdy Obsidian Black-toned combat boots with silver buckles, laced to the shin.
+
+He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair.
+
+Holding an ornate Obsidian Black longsword wreathed in creeping shadow, violet shadow runes glowing faintly along the fuller, in his right hand; a round Obsidian Black-toned shield with silver trim strapped to his left forearm.
+
+A few faint wisps of violet shadow shadow curl low around his boots - understated, nothing busy.
+
+Eyes: the natural deep violet irises kept intact, with a faint violet shadow glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: an ancient high-fantasy castle great hall, weathered flagstone floor, towering carved pillars and tall arched windows, hanging banners and iron torch sconces casting warm light, a sense of old magic lingering in the stonework.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: tall, broad-shouldered, powerfully built build; broad, armored chest and core, strong and imposing; solid, braced waist; long, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

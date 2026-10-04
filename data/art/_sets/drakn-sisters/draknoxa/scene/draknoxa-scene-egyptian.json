@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
     "holding": "data/art/themes/egyptian/wardrobe/props/vessels/canopic-jar-flask.json",
     "makeup": "data/art/themes/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json",
-    "effects": "Thin tendrils of {{ACCENT_SOFT}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
+    "effects": "Thin tendrils of {{MAGIC}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
     "background": "data/art/themes/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

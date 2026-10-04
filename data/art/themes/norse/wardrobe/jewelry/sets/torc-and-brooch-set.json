@@ -2,7 +2,7 @@
   "id": "themes/norse/wardrobe/jewelry/sets/torc-and-brooch-set",
   "kind": "jewelry",
   "name": "Torc and Brooch Set",
-  "description": "Norse silver jewelry - a heavy twisted torc at the neck, a pair of oval tortoise brooches at the chest, a silver arm ring and a pendant of {{ACCENT_SOFT}} rune stones on a leather cord",
+  "description": "Norse silver jewelry - a heavy twisted torc at the neck, a pair of oval tortoise brooches at the chest, a silver arm ring and a pendant of {{GEM}} rune stones on a leather cord",
   "compatibleStages": ["armor", "clothing", "scene"],
   "tags": ["norse", "jewelry", "torc", "runes"]
 }

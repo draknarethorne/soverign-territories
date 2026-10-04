@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",
-    "effects": "Soft rays of {{ACCENT_SOFT}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.",
+    "effects": "Soft rays of {{MAGIC}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight.",
     "companion": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },

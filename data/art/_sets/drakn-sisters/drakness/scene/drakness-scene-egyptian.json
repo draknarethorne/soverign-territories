@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
     "holding": "data/art/themes/egyptian/wardrobe/weapons/staves/anubis-was-scepter.json",
     "makeup": "data/art/themes/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json",
-    "effects": "Cold {{ACCENT_SOFT}} necromantic mist curls low around her feet and between the columns, faint spectral glyphs drifting upward.",
+    "effects": "Cold {{MAGIC}} necromantic mist curls low around her feet and between the columns, faint spectral glyphs drifting upward.",
     "background": "data/art/themes/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

@@ -2,7 +2,7 @@
   "id": "wardrobe/jewelry/anklets/gold-anklet",
   "kind": "jewelry",
   "name": "Gold Anklet",
-  "description": "a fine gold chain anklet with a tiny {{ACCENT_SOFT}} charm on the left ankle",
+  "description": "a fine gold chain anklet with a tiny {{GEM}} charm on the left ankle",
   "compatibleStages": ["armor", "clothing", "scene"],
   "tags": ["jewelry", "anklet", "core"]
 }

@@ -193,11 +193,12 @@ def blush_phrase(blush):
     return f"a light natural {blush} blush" if blush else "a light natural blush"
 
 
-def face_style(female, eyeshadow, blush):
+def face_style(female, eyeshadow, blush, brow=None):
+    brows = f"groomed {brow} brows" if brow else "groomed brows"
     if not female:
-        return "Grooming: natural, clean and well-groomed, groomed brows, no cosmetics."
+        return f"Grooming: natural, clean and well-groomed, {brows}, no cosmetics."
     return (f"Makeup: soft and natural, with a subtly blended {eyeshadow}-toned eyeshadow, {blush_phrase(blush)}, "
-            "groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.")
+            f"{brows} and softly defined eyes - present for the character's theme but never heavy or overly accented.")
 
 
 # Default makeup line for scenes (their templates print {{MAKEUP_LINE}} only when it has a value):
@@ -251,6 +252,10 @@ def tokens_for(hero):
         "LIP": pal.get("lipColor", "berry"),
         "EYESHADOW": eyeshadow,
         "BLUSH": pal.get("blushColor", "natural"),
+        "LASH": pal.get("lashColor", "black"),
+        "BROW": pal.get("browColor", "natural"),
+        "MAGIC": pal.get("magicColor", accent.split()[-1].lower()),
+        "GEM": pal.get("gemColor", accent.split()[-1].lower()),
         "FIGURE": figure,
         "SKIN": skin,
         "EYE": decap(pal["eyeColorGlamour"]),
@@ -259,7 +264,7 @@ def tokens_for(hero):
         "HAIR_NEG": ", ".join(pal.get("hairColorNegatives", [])),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
-        "FACE_STYLE": face_style("bust" in phy, eyeshadow, pal.get("blushColor")),
+        "FACE_STYLE": face_style("bust" in phy, eyeshadow, pal.get("blushColor"), pal.get("browColor")),
         "FIGURE_NEG": FIGURE_NEG["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,

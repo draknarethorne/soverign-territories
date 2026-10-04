@@ -1,0 +1,24 @@
+=== Pyraxis · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Pyraxis, an Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze.
+
+The dragon lies coiled across its hoard like a sleeping king, one wing half-spread, head raised and turned toward the camera with a proud, watchful gaze, smoke curling from its nostrils.
+
+Lair: a vast volcanic cavern of black basalt with rivers of glowing lava and rising heat shimmer, a shaft of ember-orange light from a distant vent.
+
+Hoard: heaps of gold coins and molten-edged ingots, forged swords and cracked shields, ember-glowing crystals, scorched obsidian and half-melted golden statues.
+
+A few drifting embers and a soft heat shimmer rise from the hoard - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

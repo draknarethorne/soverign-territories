@@ -1,0 +1,32 @@
+=== Zephyr Galeheart · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Zephyr Galeheart (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
+
+Legs & feet: sturdy Windswept Jade-toned combat boots with white buckles, laced to the shin.
+
+He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, the wind streaming through his hair.
+
+Holding a curved single-edged saber, its white-edged blade trailing wisps of Windswept Jade wind, Windswept Jade-wrapped hilt, gripped in one hand.
+
+A playful breeze lifts his half-cloak, faint pale silver-jade light glinting in the wind - understated, nothing busy.
+
+Eyes: the natural pale sky-blue irises kept intact, with a faint pale silver-jade glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: windswept high-fantasy highland cliffs above a sea of clouds, tall standing stones and a lone ruined watchtower, long grass and banners streaming in the wind, bright open sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, lean legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, amber eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

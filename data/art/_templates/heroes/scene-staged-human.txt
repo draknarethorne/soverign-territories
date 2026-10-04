@@ -20,7 +20,7 @@ Environment: {{BACKGROUND}}.
 {{REALM}}.
 A light breeze lifts her cape and a few strands of her hair.
 
-Palette: {{PRIMARY}} dominant, with {{ACCENT_SOFT}} accents; all glow is {{ACCENT_SOFT}}.
+Palette: {{PRIMARY}} dominant, with {{ACCENT_SOFT}} accents; all glow is {{MAGIC}}.
 Full-body hero framing, slight low camera angle for an imposing, regal presence.
 
 ----------------------------------------------------------------

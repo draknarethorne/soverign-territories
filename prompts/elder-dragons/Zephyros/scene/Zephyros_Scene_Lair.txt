@@ -1,0 +1,24 @@
+=== Zephyros · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Zephyros, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk.
+
+The dragon perches on a wind-carved stone arch with wings half-spread, tail trailing in the breeze, head raised and turned toward the camera with a free, playful gaze.
+
+Lair: a mountaintop eyrie above a sea of clouds, broken wind-carved stone arches, banners and streamers whipping in a bright open sky.
+
+Hoard: drifts of feathers and silk sails, wind chimes and silver bells, shining kites and pennants, glass lenses and polished silver trinkets, jade and cloud-glass gems.
+
+A few feathers and wisps of cloud drift past on the breeze - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

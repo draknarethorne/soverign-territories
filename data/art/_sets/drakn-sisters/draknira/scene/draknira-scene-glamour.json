@@ -1,0 +1,20 @@
+{
+  "artId": "draknira-scene-glamour",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Glamour",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "effects": "A few fine ice crystals glitter in the air around her, faint {{MAGIC}} frost-light on her shoulders - understated, nothing busy.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/frozen/glacier-citadel-courtyard.json"
+  },
+  "template": "data/art/_templates/heroes/scene-glamour-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_Glamour.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Daily-post glamour shot: evening gown, over-the-shoulder glance, element-matched background, light magic only."
+}

@@ -1,0 +1,32 @@
+=== Malakor Venomcaller · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Malakor Venomcaller (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder.
+
+Legs & feet: sturdy Toxic Orchid Magenta-toned combat boots with brass buckles, laced to the shin.
+
+He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile.
+
+Holding a pair of brass-edged daggers, one in each hand, Toxic Orchid Magenta-wrapped grips, a sickly green glow seeping from the blades, venom dripping faintly from the tips.
+
+A few faint tendrils of sickly lime-green mist curl near his boots, glowing softly - understated, nothing busy.
+
+Eyes: the natural acid-green irises kept intact, with a faint sickly lime-green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a murky high-fantasy fen at dusk, twisted dead trees and still black water, glowing toxic-green mushrooms and drifting marsh lights, low creeping mist, a crumbling stone causeway.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: powerful, broad-shouldered, heavily muscled build; broad, heavily muscled chest and core; solid, thick waist; thick, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, amber eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

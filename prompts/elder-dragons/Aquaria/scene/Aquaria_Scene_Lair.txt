@@ -1,0 +1,24 @@
+=== Aquaria · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Aquaria, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum.
+
+The dragon rests half-submerged in a still tide pool, coils draped over a mound of treasure, head raised and turned toward the camera with a calm, regal gaze, water streaming from its wings.
+
+Lair: a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools, luminous blue-green bioluminescence on the cave walls.
+
+Hoard: strands and heaps of pearls, shipwreck treasure chests spilling coins, barnacled anchors and ship's bells, coral crowns, sapphires and sea-glass, old bottles and rusted cutlasses.
+
+A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

@@ -2,7 +2,7 @@
   "id": "heroes/drakn-bound/lyran-frostfall/weapons/frostbrand",
   "kind": "holding",
   "name": "Frostbrand (Lyran signature)",
-  "description": "a longsword with a blade of rippling {{PRIMARY}} ice, {{ACCENT_SOFT}} frost crystallizing along the fuller, in his right hand; a round {{PRIMARY}}-toned shield rimmed with frost strapped to his left forearm",
+  "description": "a longsword with a blade of rippling {{PRIMARY}} ice, {{MAGIC}} frost crystallizing along the fuller, in his right hand; a round {{PRIMARY}}-toned shield rimmed with frost strapped to his left forearm",
   "compatibleStages": ["armor", "scene"],
   "notes": "Hero-signature weapon, unique to Lyran Frostfall — first-pass invented, fitting his Knight class and Ice element. Replaces the shared wardrobe/weapons/broadsword-and-shield.json default for this hero specifically."
 }

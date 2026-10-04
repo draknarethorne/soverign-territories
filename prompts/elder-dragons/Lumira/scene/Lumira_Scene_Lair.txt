@@ -1,0 +1,24 @@
+=== Lumira · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Lumira, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold.
+
+The dragon rests on a dais of gold amid its treasure, wings partly unfurled to catch the light, head raised and turned toward the camera with a serene, luminous gaze.
+
+Lair: the ruined nave of a vast cathedral open to the sky, soaring white stone arches, tall stained-glass windows casting colored light, golden shafts of sun and drifting incense.
+
+Hoard: piles of gold and rose-gold coins, jewelled reliquaries and chalices, shards of stained glass, polished mirrors and golden candelabra, radiant crowns and sunburst medallions.
+
+Soft golden motes drift through the shafts of light like dust in sunlight - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

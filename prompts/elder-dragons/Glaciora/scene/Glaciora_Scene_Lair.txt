@@ -1,0 +1,24 @@
+=== Glaciora · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Glaciora, an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome.
+
+The dragon lies curled on a shelf of blue ice, tail wrapped around its treasure, head raised and turned toward the camera with a cool, imperious gaze, frost-breath drifting from its nostrils.
+
+Lair: a vaulted ice cavern deep beneath a glacier, towering blue ice columns, shafts of pale light filtering down through the ice.
+
+Hoard: coins, crowns and jewelled goblets frozen inside blocks of clear ice, frost-rimed swords and shields, heaps of uncut diamonds and snowflake crystals, a few glittering frozen relics.
+
+A few fine ice crystals glitter in the air above the hoard - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

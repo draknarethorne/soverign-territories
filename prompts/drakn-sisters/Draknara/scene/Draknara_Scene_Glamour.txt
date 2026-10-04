@@ -1,0 +1,33 @@
+=== Draknara Thorne · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a laced Deep Burnt Sienna bodice with turquoise lacing over a white chemise, and a long layered skirt with a side slit.
+
+Jewelry: antique bronze with turquoise-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: supple Deep Burnt Sienna leather knee-high boots with turquoise buckles and a low heel.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. bold, confident, a hint of a smirk. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+A few fine motes of warm turquoise dust drift around her feet in the warm light - understated, nothing busy.
+
+Eyes: the natural rich malachite-hazel irises kept intact, with a faint warm turquoise glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - turquoise-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, fingernails and toenails natural or Light Terracotta; present, never heavy.
+
+Environment: a deep red-rock canyon in a high-fantasy realm, carved stone statues and ancient ruined stairways in the cliff walls, warm dust-gold light, scattered boulders.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

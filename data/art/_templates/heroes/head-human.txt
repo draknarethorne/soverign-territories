@@ -20,7 +20,7 @@ Hair: {{HAIR}}, tone-on-tone dimension.
 
 {{FACE_STYLE}}
 
-Eyes: {{EYE}}, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+Eyes: {{EYE}}, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,24 @@
+=== Umbrath · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Umbrath, an Elder Dragon of obsidian-black and midnight-violet scales, wreathed in creeping shadow, wings like tattered sheets of darkness edged in amethyst light.
+
+The dragon looms among its relics, wings half-folded like torn shadow, head lowered then raised toward the camera with a cold, knowing gaze, shadows pooling at its feet.
+
+Lair: a vast crypt-vault beneath a ruined cathedral, ancient stone arches and sarcophagi, a faint violet glow filtering through cracked windows, drifting black smoke.
+
+Hoard: black pearls and polished obsidian, tarnished silver crowns and candelabra, heaps of amethysts, cursed relics and ancient tomes, old coins and grave-goods.
+
+A few soft wisps of shadow and a faint amethyst haze drift across the hoard - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

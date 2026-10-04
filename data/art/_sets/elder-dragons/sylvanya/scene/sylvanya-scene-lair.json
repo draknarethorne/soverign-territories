@@ -1,0 +1,17 @@
+{
+  "artId": "sylvanya-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/sylvanya.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon lies nested among enormous roots, moss and flowers growing along its back, head raised and turned toward the camera with a gentle, ancient gaze.",
+    "background": "a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mossy roots and standing stones, shafts of golden light through the canopy, soft ferns and wildflowers",
+    "hoard": "heaps of mossy gold coins wrapped in living vines, emeralds and peridots, carved wooden idols and antlers, baskets of glowing seeds, fairy lanterns and ancient seed-vaults",
+    "effects": "A few drifting leaves and soft motes of pollen glow in the sunbeams - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Sylvanya/scene/Sylvanya_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

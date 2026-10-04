@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/norse/wardrobe/footwear/boots/fur-lined-boots.json",
     "holding": "data/art/themes/norse/wardrobe/weapons/staves/rune-carved-staff.json",
     "makeup": "data/art/themes/norse/cosmetics/makeup/warpaint/rune-war-paint.json",
-    "effects": "Fine ice crystals and drifting snow glitter in the air around her, faint {{ACCENT_SOFT}} frost-light tracing her silhouette.",
+    "effects": "Fine ice crystals and drifting snow glitter in the air around her, faint {{MAGIC}} frost-light tracing her silhouette.",
     "background": "data/art/themes/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

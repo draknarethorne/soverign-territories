@@ -1,0 +1,32 @@
+=== Torvald Stonebreaker · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Torvald Stonebreaker (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest.
+
+Legs & feet: sturdy Deep Rust Brown-toned combat boots with grey buckles, laced to the shin.
+
+He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, a light breeze moving his hair.
+
+Holding a massive two-handed greataxe, its Deep Rust Brown-toned stone head bound in grey iron bands, gripped in both hands, faint earthen tremors humming from the stone, fine dust sifting from its edge with every motion.
+
+A few fine motes of warm amber dust drift around his feet in the warm light - understated, nothing busy.
+
+Eyes: the natural deep umber irises kept intact, with a faint warm amber glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a deep red-rock canyon in a high-fantasy realm, carved stone statues and ancient ruined stairways in the cliff walls, warm dust-gold light, scattered boulders.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

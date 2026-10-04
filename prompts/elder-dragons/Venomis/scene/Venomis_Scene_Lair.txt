@@ -1,0 +1,24 @@
+=== Venomis · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Venomis, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime.
+
+The dragon coils among its glassware like a collector guarding a laboratory, neck arched, head raised and turned toward the camera with a sly, appraising gaze, a thin curl of mist rising from its jaws.
+
+Lair: a fetid fen grotto of twisted roots and still black water, glowing toxic mushrooms and drifting marsh lights, low creeping mist.
+
+Hoard: shelves and heaps of glass vials, alembics and corked potion flasks, venom-etched daggers, jars of strange specimens, tarnished brass goblets, uncut pink tourmalines and poisoned jewels.
+
+A few faint tendrils of toxic mist curl across the hoard, glowing softly - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

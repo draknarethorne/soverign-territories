@@ -1,0 +1,17 @@
+{
+  "artId": "fulgora-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/fulgora.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon crouches on a broken pillar above its treasure, wings half-spread against the storm, head raised and turned toward the camera with a fierce, electric gaze.",
+    "background": "the ruined stone temple of a high mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns",
+    "hoard": "heaps of gold and copper coils, glassy fulgurite formations fused by lightning, tuning forks and bronze bells, silver ingots, citrine gems and a few crackling crystals",
+    "effects": "A few small sparks of static dance across the hoard - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Fulgora/scene/Fulgora_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

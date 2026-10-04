@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/norse/wardrobe/footwear/boots/fur-lined-boots.json",
     "holding": "data/art/themes/norse/wardrobe/weapons/hammers/storm-war-hammer.json",
     "makeup": "data/art/themes/norse/cosmetics/makeup/warpaint/rune-war-paint.json",
-    "effects": "Forks of {{ACCENT_SOFT}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
+    "effects": "Forks of {{MAGIC}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
     "background": "data/art/themes/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

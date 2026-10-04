@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
     "holding": "data/art/themes/greek/wardrobe/weapons/staves/oracle-sun-staff.json",
     "makeup": "data/art/themes/greek/cosmetics/makeup/gilded/gilded-goddess.json",
-    "effects": "Soft rays of {{ACCENT_SOFT}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
+    "effects": "Soft rays of {{MAGIC}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
     "background": "data/art/themes/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

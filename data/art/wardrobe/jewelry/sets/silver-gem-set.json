@@ -2,7 +2,7 @@
   "id": "wardrobe/jewelry/sets/silver-gem-set",
   "kind": "jewelry",
   "name": "Silver & Gem Jewelry Set",
-  "description": "Polished Silver with {{ACCENT_SOFT}}-jewelled bracelets, necklace, and belly-button ring",
+  "description": "Polished Silver with {{GEM}}-jewelled bracelets, necklace, and belly-button ring",
   "compatibleStages": ["clothing", "armor", "scene"],
   "notes": "Cross-cutting wardrobe piece, reusable by any hero — embeds {{ACCENT_SOFT}}. Grounded in prompts/_archive/Drakness/final/Drakness_FireRed_Elegant.txt."
 }

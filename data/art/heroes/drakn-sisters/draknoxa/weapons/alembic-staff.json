@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknoxa/weapons/alembic-staff",
   "kind": "holding",
   "name": "Alembic Staff (Draknoxa signature)",
-  "description": "a long tarnished-brass staff in one hand, topped with a sealed glass flask of bubbling {{PRIMARY}} liquid held in a brass cage, small corked vials hanging from the shaft on thin chains, faint {{ACCENT_SOFT}} vapour curling from the flask's stopper",
+  "description": "a long tarnished-brass staff in one hand, topped with a sealed glass flask of bubbling {{PRIMARY}} liquid held in a brass cage, small corked vials hanging from the shaft on thin chains, faint {{MAGIC}} vapour curling from the flask's stopper",
   "compatibleStages": ["scene"],
   "notes": "Poison/Alchemist signature item: the staff is her laboratory."
 }

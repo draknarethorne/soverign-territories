@@ -18,9 +18,9 @@ Expression: a warm, radiant glamour smile - lips softly parted with a hint of te
 
 Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends, tone-on-tone dimension.
 
-Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural warm peach blush, groomed brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural warm peach blush, groomed warm auburn-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 
-Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; dark brown lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

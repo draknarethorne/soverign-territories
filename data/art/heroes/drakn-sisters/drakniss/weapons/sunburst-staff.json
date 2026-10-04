@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/drakniss/weapons/sunburst-staff",
   "kind": "holding",
   "name": "Sunburst Processional Staff (Drakniss signature)",
-  "description": "a tall rose-gold-and-ivory processional staff in one hand, topped with a radiant sunburst halo of golden rays around a small glowing ivory orb, a soft {{ACCENT_SOFT}} light haloing the top, a short ribbon of {{PRIMARY}} silk tied below the halo",
+  "description": "a tall rose-gold-and-ivory processional staff in one hand, topped with a radiant sunburst halo of golden rays around a small glowing ivory orb, a soft {{MAGIC}} light haloing the top, a short ribbon of {{PRIMARY}} silk tied below the halo",
   "compatibleStages": ["scene"],
   "notes": "Light/Cleric signature item: a holy symbol on a staff."
 }

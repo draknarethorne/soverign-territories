@@ -1,0 +1,24 @@
+=== Terrador · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Terrador, an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze.
+
+The dragon lies like a mountain on a bed of ore, heavy limbs folded beneath it, head raised and turned toward the camera with a slow, unshakable gaze.
+
+Lair: a deep cavern of giant crystal geodes and carved stone halls, warm dust-gold light from glowing veins of ore, hanging stalactites.
+
+Hoard: mounds of raw gemstones and cut geodes, gold nuggets and ore carts, antique bronze statues, carved stone tablets, turquoise and amber, ancient mining tools.
+
+A few fine motes of dust drift in the warm light - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

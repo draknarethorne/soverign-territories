@@ -1,0 +1,32 @@
+=== Dorian Stormstrike · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Dorian Stormstrike (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing fitted Storm Gold-toned banded leather armor across the chest and shoulders, Arc White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; prayer-cloth wraps at the wrists and waist, faint lightning-bolt embroidery along the hem.
+
+Legs & feet: sturdy Storm Gold-toned combat boots with white buckles, laced to the shin.
+
+He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, a light breeze moving his hair.
+
+Holding nothing — his hands and forearms wrapped in Storm Gold-toned cloth bindings, faint white-hot electric arcs of lightning crackling between his knuckles, fighting unarmed.
+
+A few small white-hot electric sparks of static dance along his knuckles and the ends of his hair - understated, nothing busy.
+
+Eyes: the natural electric cobalt irises kept intact, with a faint white-hot electric glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: ancient ruined stone temple pillars on a high-fantasy mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim, athletic waist; long, agile legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, brown eyes, green eyes, grey eyes, red eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, busy effects, text, wording, watermark, logo.

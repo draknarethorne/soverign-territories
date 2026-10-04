@@ -3,6 +3,7 @@
   "art": {
     "palette": {
       "primaryColor": "Glacial Cyan",
+      "magicColor": "icy cyan",
       "accentColors": [
         "Frost White",
         "Steel Grey"

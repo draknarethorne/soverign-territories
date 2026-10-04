@@ -1,0 +1,33 @@
+=== Drakniss Thorne · Scene (Glamour): Glamour (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing a floor-length Radiant Rose Gold evening gown in flowing satin, a deep V neckline, a high thigh slit and gold beaded trim at the waist, a short train sweeping behind.
+
+Jewelry: radiant rose gold with morganite-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Radiant Rose Gold high heels with glowing gold straps.
+
+A candid high-fashion editorial shot, slow sensual movement, deliberate pacing. Light breeze. walking slowly and deliberately towards the camera, hips swaying prominently with each step. level, chin slightly lowered, facing the camera. sultry, half-lidded gaze to camera. sultry, composed, lips softly together. arms relaxed and barely moving, weight settling into each slow step.
+
+Soft rays of warm golden-white light fall around her, a few golden motes drifting like dust in sunlight - understated, nothing busy.
+
+Eyes: the natural radiant topaz-gold irises kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+
+Environment: the sanctum of a high-fantasy cathedral, soaring white stone arches, tall stained-glass windows casting colored light, gold-inlaid floors, drifting incense and soft rays of sunlight.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, cluttered background, busy effects, text, wording, watermark, logo.

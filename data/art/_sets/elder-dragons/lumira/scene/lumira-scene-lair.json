@@ -1,0 +1,17 @@
+{
+  "artId": "lumira-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/lumira.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon rests on a dais of gold amid its treasure, wings partly unfurled to catch the light, head raised and turned toward the camera with a serene, luminous gaze.",
+    "background": "the ruined nave of a vast cathedral open to the sky, soaring white stone arches, tall stained-glass windows casting colored light, golden shafts of sun and drifting incense",
+    "hoard": "piles of gold and rose-gold coins, jewelled reliquaries and chalices, shards of stained glass, polished mirrors and golden candelabra, radiant crowns and sunburst medallions",
+    "effects": "Soft golden motes drift through the shafts of light like dust in sunlight - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Lumira/scene/Lumira_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

@@ -3,6 +3,7 @@
   "art": {
     "palette": {
       "primaryColor": "Deep Oceanic Blue",
+      "magicColor": "aqua",
       "accentColors": [
         "Seafoam Green",
         "Driftwood Tan"

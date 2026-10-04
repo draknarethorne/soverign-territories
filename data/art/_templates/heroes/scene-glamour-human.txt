@@ -1,0 +1,38 @@
+=== {{HERO}} · Scene (Glamour): {{NAME}} (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit, glamour pose and a light scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Wearing {{WEARING}}.
+
+?Headwear: {{HEADWEAR}}.
+
+?Jewelry: {{JEWELRY}}.
+?Back: {{BACK}}.
+Legs & feet: {{LEGS_FEET}}.
+
+{{POSE}}
+
+?Holding {{HOLDING}}.
+
+{{EFFECTS}}
+
+{{EYE_EFFECT}}
+
+?{{MAKEUP_LINE}}
+
+Environment: {{BACKGROUND}}.
+
+{{REALM}}.
+
+Figure: {{FIGURE}}.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{REALM_NEG}}, {{FIGURE_NEG}}, cluttered background, busy effects, text, wording, watermark, logo.

@@ -13,7 +13,7 @@
     "legs_feet": "data/art/themes/celtic/wardrobe/footwear/boots/laced-moor-boots.json",
     "holding": "data/art/themes/celtic/wardrobe/props/instruments/celtic-harp.json",
     "makeup": "data/art/themes/celtic/cosmetics/makeup/woad/woad-spiral-accents.json",
-    "effects": "A playful swirl of wind carries drifting mist and loose heather blossoms around her, {{ACCENT_SOFT}} light glinting within the breeze.",
+    "effects": "A playful swirl of wind carries drifting mist and loose heather blossoms around her, {{MAGIC}} light glinting within the breeze.",
     "background": "data/art/themes/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

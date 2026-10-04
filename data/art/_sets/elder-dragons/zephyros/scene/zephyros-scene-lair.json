@@ -1,0 +1,17 @@
+{
+  "artId": "zephyros-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/zephyros.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon perches on a wind-carved stone arch with wings half-spread, tail trailing in the breeze, head raised and turned toward the camera with a free, playful gaze.",
+    "background": "a mountaintop eyrie above a sea of clouds, broken wind-carved stone arches, banners and streamers whipping in a bright open sky",
+    "hoard": "drifts of feathers and silk sails, wind chimes and silver bells, shining kites and pennants, glass lenses and polished silver trinkets, jade and cloud-glass gems",
+    "effects": "A few feathers and wisps of cloud drift past on the breeze - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Zephyros/scene/Zephyros_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

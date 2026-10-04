@@ -12,7 +12,7 @@
     "legs_feet": "data/art/themes/roman/wardrobe/footwear/sandals/caligae-sandals.json",
     "holding": "data/art/themes/roman/wardrobe/props/braziers/vestal-flame-brazier.json",
     "makeup": "data/art/themes/roman/cosmetics/makeup/rouged/roman-kohl-and-rouge.json",
-    "effects": "Embers and sparks of {{ACCENT_SOFT}} fire drift upward between the columns, warm firelight flickering across the marble.",
+    "effects": "Embers and sparks of {{MAGIC}} fire drift upward between the columns, warm firelight flickering across the marble.",
     "background": "data/art/themes/roman/backgrounds/fantasy/ruins/forum-colonnade-dusk.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

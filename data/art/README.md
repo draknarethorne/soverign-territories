@@ -566,6 +566,32 @@ dominates the face). Override per scene card: `"eye_effect": "data/art/wardrobe/
 `scene-combat-human.txt` has no eye line (martial heroes). These alternatives exist for ideation: try them, then settle
 which suits which art.
 
+## Which colour drives what
+
+The primary and accent colours drive broad things (armor, clothing, trim, edging). Fine-grained details have their own
+`palette` properties, so no template or piece has to guess them from the accent:
+
+| Property | Token | Drives |
+| --- | --- | --- |
+| `primaryColor`, `accentColors` | `{{PRIMARY}}`, `{{ACCENT_SOFT}}` | armor, clothing, footwear, shield and blade trim, swimwear |
+| `metal` | `{{METAL}}` | metallic underlayer, jewelry metal |
+| `magicColor` | `{{MAGIC}}` | eye glow, weapon and staff light, spell and scene effects |
+| `gemColor` | `{{GEM}}` | gemstones in jewelry |
+| `lashColor`, `browColor` | `{{LASH}}`, `{{BROW}}` | lashes and brows, natural and aligned to the hair |
+| `lipColor`, `eyeshadowColor`, `blushColor`, `nailColor` | `{{LIP}}`, `{{EYESHADOW}}`, `{{BLUSH}}`, `{{NAIL}}` | makeup and nails |
+
+The cosmetic, lash/brow, magic and gem properties are required for female card heroes (schema-enforced); males default to natural.
+Lashes and brows are deliberately understated. To make them pop in one scene, set `overrides.palette` on that card
+(for example `{"browColor": "bold dark brown"}`) or reference `{{LASH}}` / `{{BROW}}` in the scene's own text.
+
+## Glamour and lair shots (daily posts)
+
+Every card hero has a `<hero>-scene-glamour` card and every Elder Dragon a `<dragon>-scene-lair` card, built for
+publishing one picture a day. Glamour shots (`scene-glamour-human.txt`) use an elegant outfit, an enticing pose for
+the sisters or a powerful stance for the bound heroes, an element-matched background and understated magic (subtle
+iris glow plus a light effect line). Lair shots (`scene-lair-dragon.txt`) are text-to-image: the dragon at rest in a
+lair on the hoard its element would collect. Output names: `<Hero>_Scene_Glamour.txt`, `<Dragon>_Scene_Lair.txt`.
+
 ## Signature items match the character
 
 A signature weapon should read as the hero's class at a glance (a Shaman's totem staff with hanging cloth and a shaman

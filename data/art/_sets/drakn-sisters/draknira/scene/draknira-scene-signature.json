@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff.json",
-    "effects": "Fine ice crystals drift and glitter in the air around her, faint {{ACCENT_SOFT}} frost-light tracing her silhouette.",
+    "effects": "Fine ice crystals drift and glitter in the air around her, faint {{MAGIC}} frost-light tracing her silhouette.",
     "companion": "her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },

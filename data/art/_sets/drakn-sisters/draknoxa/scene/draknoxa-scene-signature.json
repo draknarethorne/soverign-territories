@@ -11,7 +11,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
-    "effects": "Faint tendrils of {{ACCENT_SOFT}} toxic mist curl and drift low around her feet, glowing faintly in the dark.",
+    "effects": "Faint tendrils of {{MAGIC}} toxic mist curl and drift low around her feet, glowing faintly in the dark.",
     "companion": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
     "background": "data/art/backgrounds/fantasy/dungeons/ossuary-violet-sky.json"
   },

@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/drakniya/weapons/living-wood-staff",
   "kind": "holding",
   "name": "Living Wood Staff (Drakniya signature)",
-  "description": "a gnarled living-wood staff in one hand, the bark twisting naturally up the shaft, leafy vines and small blossoms curling along it, the top opening into a cradle of branches holding a glowing {{ACCENT_SOFT}} seed-orb, a few fresh green leaves sprouting from the wood",
+  "description": "a gnarled living-wood staff in one hand, the bark twisting naturally up the shaft, leafy vines and small blossoms curling along it, the top opening into a cradle of branches holding a glowing {{MAGIC}} seed-orb, a few fresh green leaves sprouting from the wood",
   "compatibleStages": ["scene"],
   "notes": "Grass/Druid signature item: grown, not crafted."
 }

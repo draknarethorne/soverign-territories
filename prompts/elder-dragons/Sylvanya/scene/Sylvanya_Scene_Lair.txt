@@ -1,0 +1,24 @@
+=== Sylvanya · Scene (Lair): Lair (group: Scene) — Text-to-Image ===
+Generate entirely from this description — no incoming reference image to edit.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic, cinematic fantasy creature photography. A full-body shot of an Elder Dragon in its lair, 35mm cinematic lens, razor-sharp optical focus on the dragon, soft depth of field falloff, dramatic natural light, raw photographic capture.
+
+Sylvanya, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold.
+
+The dragon lies nested among enormous roots, moss and flowers growing along its back, head raised and turned toward the camera with a gentle, ancient gaze.
+
+Lair: a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mossy roots and standing stones, shafts of golden light through the canopy, soft ferns and wildflowers.
+
+Hoard: heaps of mossy gold coins wrapped in living vines, emeralds and peridots, carved wooden idols and antlers, baskets of glowing seeds, fairy lanterns and ancient seed-vaults.
+
+A few drifting leaves and soft motes of pollen glow in the sunbeams - understated, nothing busy.
+
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra limbs, extra heads, extra wings, deformed anatomy, mismatched scales, humanoid features, human face, people, riders, modern objects, cluttered composition, text, wording, watermark, logo.

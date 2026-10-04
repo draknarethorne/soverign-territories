@@ -1,0 +1,20 @@
+{
+  "artId": "zephyr-scene-glamour",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/zephyr-galeheart.json",
+  "name": "Glamour",
+  "components": {
+    "pose": "He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, the wind streaming through his hair.",
+    "wearing": "fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/zephyr-galeheart/weapons/gale-saber.json",
+    "effects": "A playful breeze lifts his half-cloak, faint {{MAGIC}} light glinting in the wind - understated, nothing busy.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/highlands/windswept-cliffs.json"
+  },
+  "template": "data/art/_templates/heroes/scene-glamour-human.txt",
+  "output": "prompts/drakn-bound/Zephyr/scene/Zephyr_Scene_Glamour.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Daily-post glamour shot: signature armor, heroic three-quarter pose, element-matched background, light magic only."
+}
