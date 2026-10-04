@@ -11,7 +11,7 @@ Professional full-body studio beauty photography, 85mm lens, high anatomical def
 
 Background: {{BACKGROUND}}.
 
-Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions. The one exception is the bust: it follows the Figure line below, enlarged, lifted and pressed together at the centre even where the reference bust is smaller or spread apart.
 
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
@@ -36,4 +36,4 @@ Expression: {{EXPRESSION}}.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, {{EYE_NEG}}, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, hair covering breasts, {{HAIRSTYLE_NEG}}, {{HAIR_NEG}}, thick thighs, wide hips, boyish figure, stick-like, {{SKIN_NEG}}, {{HERO_NEG}}, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, recolored eyes, glowing eyes, {{EYE_NEG}}, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, {{FIGURE_NEG}}, hair covering breasts, {{HAIRSTYLE_NEG}}, {{HAIR_NEG}}, thick thighs, wide hips, boyish figure, stick-like, {{SKIN_NEG}}, {{HERO_NEG}}, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

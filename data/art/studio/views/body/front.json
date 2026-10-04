@@ -1,5 +1,5 @@
 {
-  "id": "shots/views/body/front",
+  "id": "studio/views/body/front",
   "kind": "view",
   "name": "Body: front (default)",
   "description": "View: front-facing, the whole body squarely facing the camera, head level, looking straight into the lens.",

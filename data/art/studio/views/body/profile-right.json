@@ -1,5 +1,5 @@
 {
-  "id": "shots/views/body/profile-right",
+  "id": "studio/views/body/profile-right",
   "kind": "view",
   "name": "Body: side profile, facing frame-right",
   "description": "View: full side profile, the whole body turned 90 degrees to face frame-right, the head in clean profile looking ahead toward frame-right; same A-pose arms and stance.",

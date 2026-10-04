@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
   "name": "Face Close-up",
   "components": {
-    "framing": "data/art/shots/framing/face-closeup.json"
+    "framing": "data/art/studio/framing/face-closeup.json"
   },
   "template": "data/art/_templates/heroes/head-human.txt",
   "output": "prompts/angel-primes/Angelica/head/Angelica_Head_face_closeup.txt",

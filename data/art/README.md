@@ -138,7 +138,7 @@ data/art/
 │                                   scene-with-companion-human.txt, scene-minimal-human.txt,
 │                                   scene-combat-human.txt — no casting-eyes-glow line, for
 │                                   non-caster martial heroes). Naming: `<stage>-<archetype>.txt`;
-│                                   a SHOT (cream studio) is any non-scene stage, a SCENE adds a
+│                                   a STUDIO stage (cream backdrop) is any non-scene stage, a SCENE adds a
 │                                   realm, background and effects.
 │   └── dragons/                    ✅ Archetype: Elder Dragon (pose-dragon.txt, head-dragon.txt) —
 │                                   text-to-image, NOT img2img (no incoming reference to edit;
@@ -230,7 +230,7 @@ data/art/
 │                                   A realm supplies the setting sentence ({{REALM}}) and the bans
 │                                   that keep the other world out ({{REALM_NEG}}: modern objects,
 │                                   cars, neon ... for fantasy).
-├── shots/                          ✅ CATEGORY: what makes a STUDIO SHOT (cream backdrop, flat light)
+├── studio/                         ✅ CATEGORY: what makes a STUDIO render (cream backdrop, flat light)
 │   ├── views/body/*.json           different from a scene: camera/subject orientation for the
 │   ├── views/head/*.json           reference library — front, 3/4, profile, back, looking down, chin
 │   └── framing/*.json              up, over the shoulder ... (left/right are camera-relative), and
@@ -489,8 +489,8 @@ sex where it differs), so existing cards need no change.
 | --- | --- | --- | --- |
 | `background` | Where the subject stands; for cream stages this carries the studio lighting too | `backgrounds/studio/*`, `fantasy/*`, `modern/*` | studio `cream-even` for every cream stage; **required** on scenes |
 | `realm` | World rule + bans (`{{REALM}}`, `{{REALM_NEG}}`) | `realms/*.json` | `fantasy` on scenes |
-| `view` | Camera/subject orientation | `shots/views/body/*`, `shots/views/head/*` | front |
-| `framing` | How tight a head shot is | `shots/framing/*` | `bust-up` |
+| `view` | Camera/subject orientation | `studio/views/body/*`, `studio/views/head/*` | front |
+| `framing` | How tight a head shot is | `studio/framing/*` | `bust-up` |
 | `expression` | Facial read | `motion/expressions/*` | per stage and sex (above) |
 | `underlayer` | What the A-pose wears | `wardrobe/swimwear/*`, hero `wearing/` pieces | triangle bikini / swim brief |
 | `eye_effect` | Scene eye glow | `wardrobe/effects/eyes/*` | `partial-glow` |
@@ -498,23 +498,26 @@ sex where it differs), so existing cards need no change.
 Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) purely for finding and ideation;
 tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` token (the realm uses this).
 
-**Shots vs scenes.** A *shot* is a cream studio render (pose, head, hair, motion, armor, clothing) for clearly
-seeing the subject, an outfit or an armor piece; it may still include motion (a catwalk, a battle stance). A *scene*
-adds a realm, background and effects. Canon scenes are always the `fantasy` realm; the validator rejects a scene
+**Studio vs scene.** Every stage has one of two classes, defined in `data/art/_schema/stages.json` (the validator
+checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`) is a cream-backdrop render for clearly
+seeing the subject, an outfit or an armor piece, and may still include motion (a catwalk, a battle stance); **scene**
+(`scene`, staged scenes included) adds a realm, background and effects. Anything that is not a scene is studio. The
+class also drives workflow routing: sister studio work goes to each sister's own UAT workspace, sister scenes to the
+shared `Drakn Sisters` workspace (see `workflows/README.md`). Canon scenes are always the `fantasy` realm; the validator rejects a scene
 whose background folder doesn't match its realm, so a modern location can only appear if a card explicitly sets
 `components.realm` to `realms/modern.json` (the Angel Primes' `scene/modern/` cards, for fun).
 
-**Template folders were deliberately not split** (e.g. `shots/` vs `scenes/`): that would mean rewriting ~300 card
+**Template folders were deliberately not split** (e.g. `studio/` vs `scenes/`): that would mean rewriting ~300 card
 paths for no behaviour change. Split when buildings/units/armor-only renders add a second axis of templates.
 
-## The reference-shot library (built from the A-pose)
+## The studio reference library (built from the A-pose)
 
 Every hero's X Pose is the baseline; a library of studio references is derived from it so a specific close-up or
 angle can later be fed in as an image reference instead of re-describing the face with JSON. Generate a hero's whole
 library with one command, then `gen_prompt.py` to produce prompts:
 
 ```bash
-python tools/generators/scaffold_shot_library.py --group angel-primes --slug angelica-prime --hero Angelica \
+python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime --hero Angelica \
     --underlayer data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json
 python tools/generators/gen_prompt.py --group angel-primes --slug angelica-prime
 ```

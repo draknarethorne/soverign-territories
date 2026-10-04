@@ -2,7 +2,7 @@
   "id": "wardrobe/swimwear/triangle-bikini",
   "kind": "wearing",
   "name": "Triangle Bikini (standard X Pose underlayer)",
-  "description": "only a {{PRIMARY}} skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels",
+  "description": "only a {{PRIMARY}} string bikini: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together so the bust is lifted and pressed into a deep, tight cleavage, tied with thin string straps at the neck and the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined by thin string ties at the hips - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels",
   "compatibleStages": ["pose"],
   "tags": ["swimwear", "bikini", "default", "female"],
   "notes": "The default A-pose underlayer; text is identical to what the pose template used to hard-code."

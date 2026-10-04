@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
   "name": "Three-Quarter Right",
   "components": {
-    "view": "data/art/shots/views/body/three-quarter-right.json",
+    "view": "data/art/studio/views/body/three-quarter-right.json",
     "underlayer": "data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json"
   },
   "template": "data/art/_templates/heroes/pose-view-human.txt",

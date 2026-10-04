@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
   "name": "Three-Quarter Right",
   "components": {
-    "view": "data/art/shots/views/head/three-quarter-right.json"
+    "view": "data/art/studio/views/head/three-quarter-right.json"
   },
   "template": "data/art/_templates/heroes/head-human.txt",
   "output": "prompts/angel-primes/Angelica/head/Angelica_Head_three_quarter_right.txt",

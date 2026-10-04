@@ -2,7 +2,7 @@
   "id": "wardrobe/swimwear/metallic-triangle-bikini",
   "kind": "wearing",
   "name": "Metallic Triangle Bikini (signature-colour underlayer)",
-  "description": "only a {{PRIMARY}} skimpy triangle bikini top and matching seamless high-cut thong bottom in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together so the bust is lifted and pressed into a deep, tight cleavage, tied with thin string straps at the neck and the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined by thin string ties at the hips - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
   "compatibleStages": ["pose"],
   "tags": ["swimwear", "bikini", "metallic", "signature", "female"],
   "notes": "Each sister's art.defaultUnderlayer: the signature primary colour with a subtle metal sheen, so it pops on the A-pose and carries into outfits. Override with components.underlayer (e.g. the plain triangle-bikini) to dial it down."
