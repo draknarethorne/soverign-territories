@@ -39,7 +39,7 @@ a subgraph node's widget, the input is a `LoadImage` widget, and the output is a
 `Draknara/scenes/Draknara_Qwen_Scene_Signature`. The export step must expose those three, which is the main practical
 risk (see section 4).
 
-## 2. Four approaches
+## 2. Five approaches
 
 ### A. Template-and-patch runner (script outside ComfyUI)
 
@@ -101,6 +101,42 @@ each rendered image: `{prompt_sha256, workflow, seed, model, rendered_at}`. A co
 hash with the current prompt text and lists exactly what is out of date, or feeds that list to the runner. Because prompts
 are generated deterministically, this is cheap, and it turns the long re-pull lists in my change summaries into one command.
 
+### E. Find-or-create workflows by naming convention (the workflow materializer)
+
+Today a prompt and its workflow are matched by hand. The names already follow a rule: the prompt
+`prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Signature.txt` pairs with
+`workflows/Draknara/Draknara_Qwen_Scene_Signature.json` (insert `Qwen` after the hero), and its `SaveImage` prefix is
+`Draknara/scenes/Draknara_Qwen_Scene_Signature`. A tool can apply that rule and either find the workflow or make it:
+
+1. **Find.** Derive the workflow name from the prompt name. If the file exists, open it and refresh only what changed (the
+   positive and negative text when the prompt hash differs). Anything you tuned by hand, such as seed, LoRA toggle, or the
+   chosen input image, is kept.
+2. **Create.** If it does not exist, copy the stage's template workflow and patch four values: positive text, negative text,
+   the `LoadImage` file (the previous stage's output by convention, or an input named on the card) and the `SaveImage`
+   prefix. Write it to `workflows/<Hero>/` so it opens in ComfyUI like any other workflow.
+3. **Queue.** Open it and press Queue, or hand it to the runner in A.
+
+What I found in the repo that makes this practical:
+
+- **One template covers most work.** 58 of the 91 workflows have the same structure: a `LoadImage`, a `SaveImage` and one
+  "Image Edit (Qwen-Image 2511)" subgraph node. In that node `widgets_values[0]` is the positive prompt and `[1]` the
+  negative; model names, the Lightning toggle and the seed follow. The other 33 (Flux, FireRed, MageFlow polish) are
+  one-offs that can stay manual.
+- **Patching the UI-format file is enough for this approach.** It needs no API export, no running server, and keeps
+  the workflow editable. The runner in A still needs an API-format twin of the same template, patched the same way.
+- **Lookup by name rarely hits today.** Only 14 of the 297 current prompts have a same-named workflow, because most
+  workflows were made for earlier prompt names. So "create" will be the common path at first, which is the argument for
+  templates rather than hand-copied workflows.
+- **The stage table is small.** One entry per stage type (pose, head, hair, motion, armor, clothing, scene, staged scene)
+  maps to a template and a default input, for example: scene -> the hero's chosen A-pose; staged scene -> a named
+  outfit render. Dragon prompts need a text-to-image template with no `LoadImage`.
+
+| Pros | Cons |
+| --- | --- |
+| Removes the copy-paste with no server and no API export; the output is a normal workflow file. | Adds many generated workflow files to the repo; keep them out of git or in one folder. |
+| Idempotent: re-running refreshes prompts and keeps your tweaks. | Needs the template and the widget positions pinned, and a check that they still match after a ComfyUI update. |
+| Gives the runner (A) and the staleness check (D) one place to find each prompt's workflow. | Does not queue by itself. |
+
 ### Other options considered
 
 | Option | Verdict |
@@ -116,7 +152,7 @@ Build in this order; each step is useful on its own.
 
 | Step | What | Why first |
 | --- | --- | --- |
-| 1 | **A with D**: `comfy_run.py` plus sidecars and `art_stale.py`, for the A-pose and scene workflows only | Removes the copy-paste and the re-pull bookkeeping; proves the API on your machine. |
+| 1 | **E then A, with D**: the materializer (find or create the workflow from the prompt name), then `comfy_run.py`, sidecars and `art_stale.py`, for the A-pose and scene workflows only | E removes the copy-paste with no server, and gives A and D one lookup; A then queues and collects results. |
 | 2 | **B** (the prompt-reader node) if the id map proves fragile, otherwise skip | Cheap hardening; also gives you click-to-run from the UI by card id. |
 | 3 | **C**: stage graph, contact sheet, approval gate | The real labour saver; needs 1 to exist. |
 | 4 | Link outputs into the cards (`portraitAsset`, `fullArtAsset`) and a validator check that referenced files exist | Closes STATUS C1. |
