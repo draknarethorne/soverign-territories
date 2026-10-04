@@ -29,4 +29,4 @@ Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light na
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

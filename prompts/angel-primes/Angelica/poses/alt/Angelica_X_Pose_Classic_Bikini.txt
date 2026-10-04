@@ -11,7 +11,7 @@ Professional full-body studio beauty photography, 85mm lens, high anatomical def
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
-Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions. The one exception is the bust: it follows the Figure line below, enlarged, lifted and pressed together at the centre even where the reference bust is smaller or spread apart.
 
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
@@ -19,7 +19,7 @@ Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, s
 
 Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
 
-Wearing: only a Soft Pearl White skimpy triangle bikini top and matching seamless high-cut thong bottom - smooth solid waistband, no side ties, no straps, no extra bands; midriff, abdomen, and hips bare; matching Soft Pearl White open-toed high heels.
+Wearing: only a Soft Pearl White string bikini: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together so the bust is lifted and pressed into a deep, tight cleavage, tied with thin string straps at the neck and the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined by thin string ties at the hips - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; matching Soft Pearl White open-toed high heels.
 
 Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour, tone-on-tone dimension; a very slight lift from a light breeze below.
 
@@ -36,4 +36,4 @@ Expression: an alluring, confident, relaxed expression - a soft closed-mouth smi
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, thick thighs, wide hips, boyish figure, stick-like, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, recolored eyes, glowing eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, thick thighs, wide hips, boyish figure, stick-like, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

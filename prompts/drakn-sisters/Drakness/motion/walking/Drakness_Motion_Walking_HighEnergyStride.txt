@@ -16,7 +16,7 @@ Maintain the existing outfit and hairstyle expressly.
 
 Strong breeze flowing any direction.
 
-Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 Body: angled 3/4 to the camera, mid-stride, having a great time.
 
@@ -36,4 +36,4 @@ Pose: arms swinging with the energy of the stride.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

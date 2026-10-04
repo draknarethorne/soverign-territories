@@ -20,7 +20,7 @@ Legs & feet: bright Flame Red high heels with glowing fiery orange-gold straps.
 
 Overall, warm, elegant, fire-toned evening look.
 
-Figure: lithe, slender, long-limbed build; full, very voluptuous bust, emphasized and enlarged - breasts lifted and pressed closely together at the centre with a push-up-bra style contour, forming a narrow, well-defined décolletage (not a wide gap); soft, naturally rounded, full shape throughout (not flattened, reduced, or smaller than described); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing.
 
@@ -29,4 +29,4 @@ Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light na
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
