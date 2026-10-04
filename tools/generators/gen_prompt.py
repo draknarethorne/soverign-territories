@@ -159,10 +159,10 @@ SLOT_DEFAULTS = {
         for stage in ("pose", "head", "hair", "motion", "armor", "clothing")
     },
     "realm": {"scene": "data/art/realms/fantasy.json"},
-    "framing": {"*": "data/art/shots/framing/bust-up.json"},
+    "framing": {"*": "data/art/studio/framing/bust-up.json"},
     "view": {
-        "head": "data/art/shots/views/head/front.json",
-        "pose": "data/art/shots/views/body/front.json",
+        "head": "data/art/studio/views/head/front.json",
+        "pose": "data/art/studio/views/body/front.json",
     },
     "expression": {
         "head": "data/art/motion/expressions/studio-glamour-smile.json",
@@ -209,7 +209,8 @@ SCENE_MAKEUP = ("Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush}
 
 # Bust bans only make sense for the female physique; a male hero gets none.
 FIGURE_NEG = {
-    "female": "flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size",
+    "female": "flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, "
+              "breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups",
     "male": "",
 }
 

@@ -1,0 +1,762 @@
+#!/usr/bin/env python3
+"""Keep prompts, repo workflows and the local ComfyUI workspaces in step.
+
+Repo layout follows the prompts:  workflows/<set>/<Hero>/<Hero>_Qwen_<Stage>_<Name>.json
+(<set> is the prompt group: drakn-sisters, drakn-bound, angel-primes, elder-dragons ...).
+
+ComfyUI workspaces are DEPLOY TARGETS configured in workflows/workspaces.json, in three tiers:
+  dev    where workflows are built and proven (Soverign Territories; the default target of every deploy)
+  uat    acceptance: a hero's own workspace or a group workspace (Drakness, Angel Primes ...)
+  prod   a card-series workspace for the final art ("Soverign Dawn Series"); holds only the cards of that series
+Which workspace serves which hero or set is configured under "production"; nothing is hard-coded.
+
+Commands
+  list                                 workspaces, routes and repo contents
+  status  [targets] [filters] [--lint]      repo vs workspace(s): aligned / stale / missing / install-only / legacy
+  make    [filters] [--create]         prompt -> repo workflow: set positive, negative, filename prefix (and file name)
+  deploy  [targets] [filters]          repo -> workspace (default: dev). Existing workflows only get the three
+                                       prompt values updated, so input image, seed and toggles survive. --overwrite replaces.
+  promote --to uat|prod [--from dev|uat] <filters>
+                                       MOVE approved workflows up a tier: capture the source workspace copy into the repo
+                                       master, copy it to the next tier, then take it out of the source workspace (backed up)
+  pull    [targets] [filters]          workspace -> repo (new files; --force also replaces repo copies)
+  inputs  [--fix]                      which A-pose image each hero's workflows read
+
+targets:  (none) = dev   |   --to dev|uat|prod   |   -w <Workspace> (repeatable)
+filters:  --hero H  --group G  --stage S  --class studio|scene  --match TEXT   (stage = prompt folder: poses, head, scene, hair, motion, armor, clothing)
+          deploy and promote need at least one filter, or --all.
+
+The four values that always agree for a prompt Hero_Stage_Name.txt:
+  positive prompt, negative prompt, SaveImage prefix <Hero>/<stage>/[family/]<Hero>_Qwen_<Stage>_<Name>, workflow file <Hero>_Qwen_<Stage>_<Name>.json
+Nothing is ever deleted, and every overwritten workspace file is first copied to workflows/.sync/backup/.
+"""
+import argparse
+import collections
+import datetime
+import fnmatch
+import json
+import pathlib
+import re
+import shutil
+import sys
+import uuid
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+WF = ROOT / "workflows"
+PROMPTS = ROOT / "prompts"
+CFG_PATH = WF / "workspaces.json"
+BACKUPS = WF / ".sync" / "backup"
+TIERS = ("dev", "uat", "prod")
+
+
+# ---------- configuration ----------
+
+def load_cfg():
+    return json.loads(CFG_PATH.read_text(encoding="utf-8"))
+
+
+def install_dir(cfg, ws, root=None):
+    return pathlib.Path(root or cfg["installsRoot"]) / ws / cfg["workflowsSubpath"]
+
+
+def install_exists(cfg, ws, root=None):
+    return (pathlib.Path(root or cfg["installsRoot"]) / ws / "ComfyUI").is_dir()
+
+
+def excluded(cfg, name):
+    return any(fnmatch.fnmatch(name, pat) for pat in cfg.get("exclude", []))
+
+
+def is_template(cfg, name):
+    return fnmatch.fnmatch(name, cfg.get("stageTemplates", "ST?_*.json"))
+
+
+def template_files(cfg):
+    return {p.name: p for p in sorted((WF / "_templates").glob("*.json")) if is_template(cfg, p.name)}
+
+
+def same_bytes(a, b):
+    return pathlib.Path(a).read_bytes().rstrip() == pathlib.Path(b).read_bytes().rstrip()
+
+
+# ---------- routing: which workspace serves which hero ----------
+
+def stage_classes():
+    """{prompt folder: 'studio' | 'scene'} from data/art/_schema/stages.json."""
+    s = json.loads((ROOT / "data/art/_schema/stages.json").read_text(encoding="utf-8"))
+    return {folder: cls for cls, folders in s["classes"].items() for folder in folders}
+
+
+def class_of(stage):
+    return stage_classes().get(stage)
+
+
+CLASS_PROBE = ("poses", "scene")  # one stage folder of each class, for routes that do not depend on a stage
+
+
+def stage_ok(args, name_or_stage, is_stage=False):
+    """True when a file (or stage folder) passes the --stage and --class filters."""
+    stage = name_or_stage if is_stage else stage_of(name_or_stage)
+    return (not args.stage or stage == args.stage) and (not args.cls or class_of(stage) == args.cls)
+
+
+def route_stage(args):
+    """The stage to route by: the explicit one, else a probe of the chosen class, else None (all)."""
+    return args.stage or (dict(zip(("studio", "scene"), CLASS_PROBE))[args.cls] if args.cls else None)
+
+
+def targets_for(cfg, tier, group, hero, stage=None):
+    """Workspaces that serve this hero and stage for a tier. Dev: the default dev workspace. UAT: first matching rule. Prod: every matching rule.
+
+    A rule may carry "class": "studio" or "scene"; it then applies only to stages of that class."""
+    if tier == "dev":
+        return [cfg["dev"][0]]
+    out = []
+    for r in cfg.get("production", {}).get(tier, []):
+        if "groups" in r and group not in r["groups"]:
+            continue
+        if "heroes" in r and hero not in r["heroes"]:
+            continue
+        if "class" in r and (stage is None or class_of(stage) != r["class"]):
+            continue
+        out.append(r["workspace"].format(hero=hero))
+        if tier == "uat":
+            break
+    return out
+
+
+def holds(cfg, ws, group, hero, stage=None):
+    stages = [stage] if stage else list(CLASS_PROBE)
+    return ws in cfg["dev"] or any(ws in targets_for(cfg, t, group, hero, s) for t in TIERS for s in stages)
+
+
+def tier_workspaces(cfg, tier, hero=None, group=None, stage=None):
+    """Every workspace that serves some (filtered) hero and stage for a tier."""
+    names = []
+    stages = [stage] if stage else list(CLASS_PROBE)
+    for h, g in hero_groups().items():
+        if (hero and h.lower() != hero.lower()) or (group and g != group):
+            continue
+        for s in stages:
+            for w in targets_for(cfg, tier, g, h, s):
+                if w not in names:
+                    names.append(w)
+    return names
+
+
+# ---------- files ----------
+
+def hero_groups():
+    """{hero: group} from prompts/<group>/<Hero>/."""
+    out = {}
+    for g in sorted(PROMPTS.iterdir()):
+        if g.is_dir() and not g.name.startswith(("_", ".")):
+            for h in sorted(g.iterdir()):
+                if h.is_dir() and not h.name.startswith(("_", ".")):
+                    out[h.name] = g.name
+    return out
+
+
+def repo_files(cfg):
+    """{name: (group, hero, path)} for every workflow in workflows/<set>/<Hero>/."""
+    out = {}
+    for g in sorted(WF.iterdir()):
+        if not g.is_dir() or g.name.startswith(("_", ".")):
+            continue
+        for h in sorted(g.iterdir()):
+            if h.is_dir():
+                for p in sorted(h.glob("*.json")):
+                    if not excluded(cfg, p.name):
+                        out[p.name] = (g.name, h.name, p)
+    return out
+
+
+def hero_files(hero):
+    g = hero_groups().get(hero)
+    return sorted((WF / g / hero).glob("*.json")) if g else []
+
+
+def install_files(cfg, ws, root=None):
+    """{name: path} for the workflows saved in a workspace (flat by file name)."""
+    out = {}
+    d = install_dir(cfg, ws, root)
+    if d.is_dir():
+        for p in sorted(d.rglob("*.json")):
+            rel = p.relative_to(d)
+            if any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name):
+                continue
+            out.setdefault(p.name, p)
+    return out
+
+
+def hero_of(name):
+    prefix = name.split("_", 1)[0]
+    return prefix if prefix in hero_groups() else None
+
+
+STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
+               "Head": "head", "View": "poses"}
+
+
+def stage_of(name):
+    """Prompt folder a workflow file belongs to: Hero_Qwen_X_Pose -> poses, Hero_Qwen_Scene_Glamour -> scene."""
+    m = re.match(r"^[^_]+_Qwen_(.+?)(?:\.json)?$", name)
+    if not m:
+        return "other"
+    parts = m.group(1).split("_")
+    if parts[0] == "X":
+        return "head" if len(parts) > 1 and parts[1] == "Head" else "poses"
+    return STAGE_WORDS.get(parts[0], parts[0].lower())
+
+
+def read_wf(p):
+    return json.loads(pathlib.Path(p).read_text(encoding="utf-8"))
+
+
+def write_wf(p, d):
+    p = pathlib.Path(p)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(d, separators=(",", ":"), ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def prompt_node(wf):
+    """The subgraph instance that holds the positive/negative prompt widgets."""
+    sg_ids = {s["id"] for s in wf.get("definitions", {}).get("subgraphs", [])}
+    for n in wf.get("nodes", []):
+        wv = n.get("widgets_values")
+        if n.get("type") in sg_ids and isinstance(wv, list) and len(wv) >= 2 and isinstance(wv[0], str):
+            return n
+    return None
+
+
+def node_of(wf, kind):
+    for n in wf.get("nodes", []):
+        if n.get("type") == kind:
+            return n
+    return None
+
+
+def get_values(wf):
+    n, s = prompt_node(wf), node_of(wf, "SaveImage")
+    if not n or not s:
+        return None
+    return n["widgets_values"][0], n["widgets_values"][1], s["widgets_values"][0]
+
+
+def patch_wf(wf, pos, neg, prefix):
+    """Set the three in-graph values; return True if anything changed."""
+    n, s = prompt_node(wf), node_of(wf, "SaveImage")
+    if not n or not s:
+        raise ValueError("workflow has no Qwen prompt subgraph or SaveImage node")
+    changed = False
+    wv = n["widgets_values"]
+    if wv[0] != pos or wv[1] != neg:
+        changed = True
+    wv[0], wv[1] = pos, neg
+    named = n.get("widgets_values_named")
+    if isinstance(named, dict):
+        named["prompt"], named["prompt_1"] = pos, neg
+    if s["widgets_values"][0] != prefix:
+        changed = True
+        s["widgets_values"][0] = prefix
+    return changed
+
+
+def input_image(wf):
+    n = node_of(wf, "LoadImage")
+    return n["widgets_values"][0] if n else None
+
+
+# ---------- prompts ----------
+
+def split_prompt(text):
+    m = re.search(r"\nprompt:\n\n(.*?)\n\n-{10,}\nnegative prompt:\n\n(.*?)\s*$", text, re.S)
+    if not m:
+        raise ValueError("not a generated prompt file (no prompt:/negative prompt: blocks)")
+    return m.group(1).strip(), m.group(2).strip()
+
+
+def prompt_index(cfg):
+    out = []
+    for p in sorted(PROMPTS.glob("**/*.txt")):
+        rel = p.relative_to(PROMPTS)
+        if "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
+            continue
+        group, hero, stagedir = rel.parts[0], rel.parts[1], rel.parts[2]
+        family = list(rel.parts[3:-1])
+        stem = p.stem
+        if not stem.startswith(hero + "_"):
+            continue
+        name = f"{hero}_Qwen_{stem[len(hero) + 1:]}"
+        folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
+        out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "stem": stem, "name": name,
+                    "prefix": "/".join([hero, folder] + family + [name])})
+    return out
+
+
+# ---------- input images ----------
+
+def infer_input(hero):
+    """The A-pose image most of a hero's non-pose workflows already read."""
+    pat = re.compile(rf"^{re.escape(hero)}_Qwen_X_Pose_\d+_\.png$")
+    seen = collections.Counter()
+    for p in hero_files(hero):
+        if stage_of(p.name) == "poses":
+            continue
+        try:
+            img = input_image(read_wf(p))
+        except ValueError:
+            continue
+        if img and pat.match(img) and not img.endswith("_00001_.png"):
+            seen[img] += 1
+    return seen.most_common(1)[0][0] if seen else None
+
+
+def input_for(cfg, hero, stage):
+    conf = cfg.get("inputs", {}).get(hero)
+    if isinstance(conf, dict):
+        conf = conf.get(stage) or conf.get("default")
+    return conf or infer_input(hero) or f"{hero}_Qwen_X_Pose_00001_.png"
+
+
+# ---------- selection ----------
+
+def pick_targets(cfg, args, default):
+    """Workspaces to act on: -w names, --to tier, else the default ('testing' or all)."""
+    ws = cfg["workspaces"]
+    if args.workspace:
+        bad = [n for n in args.workspace if n not in ws]
+        if bad:
+            sys.exit(f"Unknown workspace(s): {bad}. Known: {list(ws)}")
+        return list(args.workspace)
+    tier = args.to or default
+    if tier == "all":
+        return list(ws)
+    names = [n for n in (tier_workspaces(cfg, tier, args.hero, args.group, route_stage(args)) if tier != "dev" else [cfg["dev"][0]])]
+    unknown = [n for n in names if n not in ws]
+    for n in unknown:
+        print(f"note: '{n}' is a {tier} target but is not listed under workspaces in workspaces.json")
+    return [n for n in names if n in ws]
+
+
+def selected(cfg, ws, args, repo):
+    """Repo files a workspace should hold, after the filters."""
+    out = {}
+    for name, (group, hero, p) in repo.items():
+        if not holds(cfg, ws, group, hero, stage_of(name)):
+            continue
+        if args.hero and hero.lower() != args.hero.lower():
+            continue
+        if args.group and group != args.group:
+            continue
+        if not stage_ok(args, name):
+            continue
+        if args.match and args.match.lower() not in name.lower():
+            continue
+        out[name] = (group, hero, p)
+    return out
+
+
+def classify(repo_p, inst_p):
+    try:
+        rv = get_values(read_wf(repo_p))
+        iv = get_values(read_wf(inst_p))
+    except ValueError:
+        return "unreadable"
+    if rv is None or iv is None:
+        return "unreadable"
+    return "aligned" if rv == iv else "stale"
+
+
+# ---------- commands ----------
+
+def cmd_list(args):
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    print(f"installs root: {cfg['installsRoot']}")
+    print(f"dev workspaces (default deploy target first): {', '.join(cfg['dev'])}")
+    print("workspaces:")
+    for ws, info in cfg["workspaces"].items():
+        found = "found" if install_exists(cfg, ws, args.root) else "MISSING"
+        flags = ",".join(k for k in ("templates", "legacy") if info.get(k))
+        held = sum(1 for n, (g, h, _p) in repo.items() if holds(cfg, ws, g, h, stage_of(n)))
+        print(f"  {ws:22} {info['status']:9} install={found:7} holds={held:3} {flags:16} {info['role']}")
+    print("sets (repo):")
+    for g in sorted({g for g, _, _ in repo.values()}):
+        for h in sorted({h for gg, h, _ in repo.values() if gg == g}):
+            stages = collections.Counter(stage_of(n) for n, (gg, hh, _) in repo.items() if hh == h)
+            def route(tier):
+                studio, scene = targets_for(cfg, tier, g, h, "poses"), targets_for(cfg, tier, g, h, "scene")
+                return (",".join(studio) or "-") if studio == scene else f"studio {','.join(studio) or '-'} / scene {','.join(scene) or '-'}"
+            print(f"  {g}/{h:12} {sum(stages.values()):3}  uat->{route('uat')}  prod->{route('prod')}   "
+                  + ", ".join(f"{s} {c}" for s, c in sorted(stages.items())))
+
+
+def lint(cfg, repo):
+    idx = {i["stem"]: i for i in prompt_index(cfg)}
+    out = []
+    for name, (group, hero, p) in repo.items():
+        try:
+            wf = read_wf(p)
+        except ValueError:
+            out.append(f"{hero}/{name}: unreadable json")
+            continue
+        vals = get_values(wf)
+        if not vals:
+            continue
+        pos, neg, prefix = vals
+        stem = name[:-5]
+        if prefix.rsplit("/", 1)[-1] != stem:
+            out.append(f"{hero}/{name}: prefix ends in '{prefix.rsplit('/', 1)[-1]}', expected '{stem}'")
+        m = re.match(r"^(.+?)_Qwen_(.+)$", stem)
+        item = idx.get(f"{m.group(1)}_{m.group(2)}") if m else None
+        if not item:
+            continue
+        try:
+            ppos, pneg = split_prompt(item["path"].read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        if pos.strip() != ppos or neg.strip() != pneg:
+            out.append(f"{hero}/{name}: prompt is out of date (make --match {item['stem']})")
+    return out
+
+
+def cmd_status(args):
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    groups = hero_groups()
+    for ws in pick_targets(cfg, args, "all"):
+        if not install_exists(cfg, ws, args.root):
+            print(f"{ws}: workspace not found under {args.root or cfg['installsRoot']}")
+            continue
+        info = cfg["workspaces"][ws]
+        inst = install_files(cfg, ws, args.root)
+        rows = collections.defaultdict(list)
+        for name, (g, h, p) in selected(cfg, ws, args, repo).items():
+            rows["missing" if name not in inst else classify(p, inst[name])].append(name)
+        for name in inst:
+            h = hero_of(name)
+            if name in repo or not h or not holds(cfg, ws, groups[h], h, stage_of(name)):
+                continue
+            if args.hero and h.lower() != args.hero.lower():
+                continue
+            rows["legacy" if info.get("legacy") else "install-only"].append(name)
+        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "legacy", "unreadable"))
+        print(f"{ws} [{info['status']}]: {counts}")
+        hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull", "legacy": "old hand-made, no generated prompt"}
+        for k, names in rows.items():
+            if k in hints and names and (args.verbose or len(names) <= 5):
+                print(f"    {k} ({hints[k]}): " + ", ".join(names))
+        if args.templates:
+            tpl, itpl = template_files(cfg), {n: p for n, p in inst.items() if is_template(cfg, n)}
+            st = collections.Counter("missing" if n not in itpl else ("aligned" if same_bytes(p, itpl[n]) else "differs") for n, p in tpl.items())
+            extra = [n for n in itpl if n not in tpl]
+            print(f"    stage templates: {st['aligned']} aligned, {st['differs']} differ, {st['missing']} missing, {len(extra)} only in workspace")
+    if args.lint:
+        for line in lint(cfg, repo):
+            print("    lint: " + line)
+
+
+def backup(stamp, ws, name, src):
+    b = BACKUPS / stamp / ws / name
+    b.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, b)
+
+
+def cmd_deploy(args):
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    if not args.templates and not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
+        sys.exit("Deploy needs a filter (--hero, --group, --stage, --class, --match) or --all, so a whole playground is never pushed by accident.")
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    for ws in pick_targets(cfg, args, "dev"):
+        if not install_exists(cfg, ws, args.root):
+            print(f"{ws}: workspace not created yet under {args.root or cfg['installsRoot']}, skipped")
+            continue
+        dest = install_dir(cfg, ws, args.root)
+        inst = install_files(cfg, ws, args.root)
+        tally = collections.Counter()
+        if args.templates:
+            for name, p in template_files(cfg).items():
+                if name not in inst:
+                    print(f"  template {ws}/{name} (new)")
+                    if not args.dry_run:
+                        shutil.copy2(p, dest / name)
+                    tally["new"] += 1
+                elif same_bytes(p, inst[name]):
+                    tally["aligned"] += 1
+                elif args.overwrite:
+                    print(f"  template {ws}/{name} (replace)")
+                    if not args.dry_run:
+                        backup(stamp, ws, name, inst[name])
+                        shutil.copy2(p, inst[name])
+                    tally["updated"] += 1
+                else:
+                    print(f"  SKIP     {ws}/{name} differs from the repo template; use --overwrite")
+                    tally["skipped"] += 1
+            print(f"{ws} templates: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
+            continue
+        for name, (g, h, p) in selected(cfg, ws, args, repo).items():
+            replace = args.overwrite or cfg["workspaces"][ws].get("legacy", False)
+            if name not in inst:
+                print(f"  new      {ws}/{name}")
+                if not args.dry_run:
+                    write_wf(dest / name, read_wf(p))
+                tally["new"] += 1
+                continue
+            state = classify(p, inst[name])
+            if state == "aligned" and not replace:
+                tally["aligned"] += 1
+                continue
+            if state == "unreadable" and not replace:
+                print(f"  SKIP     {ws}/{name} is not a Qwen workflow in one of the two places; use --overwrite")
+                tally["skipped"] += 1
+                continue
+            print(f"  {'replace ' if replace else 'prompt  '} {ws}/{name}" + ("" if replace else f"  (keeps input {input_image(read_wf(inst[name]))})"))
+            if not args.dry_run:
+                backup(stamp, ws, name, inst[name])
+                if replace:
+                    write_wf(inst[name], read_wf(p))
+                else:
+                    wf = read_wf(inst[name])
+                    patch_wf(wf, *get_values(read_wf(p)))
+                    write_wf(inst[name], wf)
+            tally["updated"] += 1
+        print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
+    print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
+
+
+def cmd_promote(args):
+    """Move approved workflows up a tier without leaving duplicates behind."""
+    cfg = load_cfg()
+    if not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
+        sys.exit("Promote needs a filter (--hero, --group, --stage, --class, --match) or --all.")
+    if args.src == args.to or TIERS.index(args.src) > TIERS.index(args.to):
+        sys.exit(f"Promote goes up: dev -> uat -> prod (got {args.src} -> {args.to}).")
+    repo = repo_files(cfg)
+    groups = hero_groups()
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    moved = collections.Counter()
+    if args.workspace:
+        sources = args.workspace
+    elif args.src == "dev":
+        sources = [cfg["dev"][0]]
+    else:
+        sources = tier_workspaces(cfg, args.src, args.hero, args.group, route_stage(args))
+    for src_ws in sources:
+        if src_ws not in cfg["workspaces"] or not install_exists(cfg, src_ws, args.root):
+            print(f"{src_ws}: source workspace not found, skipped")
+            continue
+        inst = install_files(cfg, src_ws, args.root)
+        for name, p in inst.items():
+            h = hero_of(name)
+            if not h or is_template(cfg, name):
+                continue
+            g = groups[h]
+            if not holds(cfg, src_ws, g, h, stage_of(name)):
+                continue
+            if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group):
+                continue
+            if not stage_ok(args, name) or (args.match and args.match.lower() not in name.lower()):
+                continue
+            dests = [w for w in targets_for(cfg, args.to, g, h, stage_of(name)) if w in cfg["workspaces"] and install_exists(cfg, w, args.root)]
+            if not dests:
+                print(f"  HOLD     {name}: no {args.to} workspace exists yet for {h} (left in {src_ws})")
+                moved["held"] += 1
+                continue
+            wf = read_wf(p)
+            print(f"  promote  {name}: {src_ws} -> {', '.join(dests)}" + ("" if args.keep else f" (leaves {src_ws})"))
+            if args.dry_run:
+                moved["promoted"] += 1
+                continue
+            write_wf(WF / g / h / name, wf)
+            for w in dests:
+                existing = install_files(cfg, w, args.root).get(name)
+                if existing:
+                    backup(stamp, w, name, existing)
+                write_wf(existing or install_dir(cfg, w, args.root) / name, wf)
+            if not args.keep:
+                b = BACKUPS / stamp / (src_ws + " (promoted)") / name
+                b.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(p), str(b))
+            moved["promoted"] += 1
+        print(f"{src_ws}: " + ", ".join(f"{v} {k}" for k, v in moved.items()) + (" (dry run)" if args.dry_run else ""))
+    print("Restart the affected ComfyUI workspaces to see changes.")
+
+
+def cmd_pull(args):
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    groups = hero_groups()
+    for ws in pick_targets(cfg, args, "dev"):
+        if not install_exists(cfg, ws, args.root):
+            print(f"{ws}: workspace not found, skipped")
+            continue
+        info = cfg["workspaces"][ws]
+        done = skipped = 0
+        if args.templates:
+            for name, p in install_files(cfg, ws, args.root).items():
+                if not is_template(cfg, name):
+                    continue
+                dst = WF / "_templates" / name
+                if dst.exists() and not args.force:
+                    skipped += 1
+                    continue
+                print(f"  pull   {ws}/{name} -> workflows/_templates/")
+                if not args.dry_run:
+                    shutil.copy2(p, dst)
+                done += 1
+            print(f"{ws} templates: pulled {done}, left {skipped} existing" + (" (dry run)" if args.dry_run else ""))
+            continue
+        if info.get("pull") is False and not args.force:
+            print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); use --force to override")
+            continue
+        for name, p in install_files(cfg, ws, args.root).items():
+            h = hero_of(name)
+            if not h or is_template(cfg, name) or not holds(cfg, ws, groups[h], h, stage_of(name)):
+                continue
+            if args.hero and h.lower() != args.hero.lower():
+                continue
+            if args.group and groups[h] != args.group:
+                continue
+            if not stage_ok(args, name):
+                continue
+            if args.match and args.match.lower() not in name.lower():
+                continue
+            if name in repo and not args.force:
+                skipped += 1
+                continue
+            print(f"  pull   {ws}/{name} -> workflows/{groups[h]}/{h}/")
+            if not args.dry_run:
+                write_wf(WF / groups[h] / h / name, read_wf(p))
+            done += 1
+        print(f"{ws}: pulled {done}, left {skipped} existing repo copies" + (" (dry run)" if args.dry_run else ""))
+
+
+def cmd_make(args):
+    cfg = load_cfg()
+    items = prompt_index(cfg)
+    if args.group:
+        items = [i for i in items if i["group"] == args.group]
+    if args.hero:
+        items = [i for i in items if i["hero"].lower() == args.hero.lower()]
+    if args.stage or args.cls:
+        items = [i for i in items if stage_ok(args, i["stage"], True)]
+    if args.match:
+        items = [i for i in items if args.match.lower() in i["stem"].lower()]
+    tally = {"created": 0, "updated": 0, "unchanged": 0, "missing": 0}
+    for it in items:
+        target = WF / it["group"] / it["hero"] / f"{it['name']}.json"
+        pos, neg = split_prompt(it["path"].read_text(encoding="utf-8"))
+        if target.exists():
+            wf = read_wf(target)
+            if patch_wf(wf, pos, neg, it["prefix"]):
+                if not args.dry_run:
+                    write_wf(target, wf)
+                tally["updated"] += 1
+                print(f"  updated  {it['group']}/{it['hero']}/{target.name}")
+            else:
+                tally["unchanged"] += 1
+            continue
+        if not args.create:
+            tally["missing"] += 1
+            if args.verbose:
+                print(f"  missing  {it['group']}/{it['hero']}/{target.name}")
+            continue
+        is_apose = re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None
+        master = ROOT / cfg["templates"]["poses" if is_apose else "default"]
+        if not master.exists():
+            sys.exit(f"Master template not found: {master}")
+        wf = read_wf(master)
+        patch_wf(wf, pos, neg, it["prefix"])
+        wf["id"] = str(uuid.uuid4())
+        ln = node_of(wf, "LoadImage")
+        want = args.input or (None if is_apose else input_for(cfg, it["hero"], it["stage"]))
+        if ln and want:
+            ln["widgets_values"][0] = want
+        if not args.dry_run:
+            write_wf(target, wf)
+        tally["created"] += 1
+        print(f"  created  {it['group']}/{it['hero']}/{target.name}  (input: {ln['widgets_values'][0] if ln else '?'})")
+    print("make: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
+    if tally["missing"] and not args.create:
+        print("      (use --create to build the missing workflows from the master template)")
+
+
+def cmd_inputs(args):
+    cfg = load_cfg()
+    placeholder = re.compile(r"^(.+)_Qwen_X_Pose_00001_\.png$")
+    for h in sorted(hero_groups()):
+        if not hero_files(h):
+            continue
+        conf = cfg.get("inputs", {}).get(h)
+        inferred = infer_input(h)
+        print(f"  {h:12} configured={conf or '-':34} inferred={inferred or '-'}")
+        if not args.fix:
+            continue
+        want = input_for(cfg, h, "scene")
+        for p in hero_files(h):
+            if stage_of(p.name) == "poses":
+                continue
+            wf = read_wf(p)
+            ln = node_of(wf, "LoadImage")
+            if ln and placeholder.match(ln["widgets_values"][0]) and want != ln["widgets_values"][0]:
+                print(f"      fix {p.name}: {ln['widgets_values'][0]} -> {want}")
+                if not args.dry_run:
+                    ln["widgets_values"][0] = want
+                    write_wf(p, wf)
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    def common(p, targets=False, filters=False):
+        p.add_argument("--root", help="override installsRoot (testing)")
+        p.add_argument("--dry-run", action="store_true")
+        if targets:
+            p.add_argument("--to", choices=list(TIERS), help="target tier (default: dev)")
+            p.add_argument("-w", "--workspace", action="append", help="a specific workspace (repeatable)")
+        if filters:
+            p.add_argument("--hero")
+            p.add_argument("--group", help="prompt group, e.g. drakn-sisters, angel-primes")
+            p.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing")
+            p.add_argument("--class", dest="cls", choices=["studio", "scene"], help="every stage of one class (scene, or all studio stages)")
+            p.add_argument("--match", help="substring of the file name")
+
+    common(sub.add_parser("list"))
+    s = sub.add_parser("status")
+    common(s, True, True)
+    s.add_argument("--lint", action="store_true")
+    s.add_argument("--templates", action="store_true", help="also compare the ST?_ stage templates")
+    s.add_argument("-v", "--verbose", action="store_true")
+    s = sub.add_parser("deploy")
+    common(s, True, True)
+    s.add_argument("--all", action="store_true", help="allow a deploy with no filter")
+    s.add_argument("--templates", action="store_true", help="deploy the ST?_ stage templates instead of hero workflows")
+    s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
+    s = sub.add_parser("promote")
+    common(s, False, True)
+    s.add_argument("--from", dest="src", choices=list(TIERS), default="dev", help="source tier (default: dev)")
+    s.add_argument("--to", choices=list(TIERS), required=True, help="destination tier")
+    s.add_argument("-w", "--workspace", action="append", help="source workspace(s), when not the default")
+    s.add_argument("--all", action="store_true")
+    s.add_argument("--keep", action="store_true", help="copy instead of move: leave the source workspace copy")
+    s = sub.add_parser("pull")
+    common(s, True, True)
+    s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
+    s.add_argument("--force", action="store_true", help="also replace repo copies")
+    s = sub.add_parser("make")
+    common(s, False, True)
+    s.add_argument("--create", action="store_true", help="also build workflows that do not exist yet")
+    s.add_argument("--input", help="LoadImage file for created workflows")
+    s.add_argument("-v", "--verbose", action="store_true")
+    s = sub.add_parser("inputs")
+    common(s)
+    s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
+    args = ap.parse_args(argv)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs}[args.cmd](args)
+
+
+if __name__ == "__main__":
+    main()

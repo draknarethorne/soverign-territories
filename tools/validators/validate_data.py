@@ -189,6 +189,8 @@ def looks_like_path(value):
 
 def check_art_cards(report):
     outputs = {}
+    stages = load(ART_SCHEMAS / "stages.json")
+    known_folders = {f for fs in stages["classes"].values() for f in fs}
     for f in rglob("data/art/_sets/**/*.json"):
         d = load(f)
         where = rel(f)
@@ -237,6 +239,11 @@ def check_art_cards(report):
         if out:
             if out.split("/")[1] != group:
                 report.error(where, f"output {out} is not under prompts/{group}/")
+            folder = stages["cardStageToFolder"].get(d["stage"], d["stage"])
+            if folder not in known_folders:
+                report.error(where, f"stage folder '{folder}' is in no class (studio or scene) in _schema/stages.json")
+            elif len(out.split("/")) < 4 or out.split("/")[3] != folder:
+                report.error(where, f"output {out} must sit in the '{folder}' folder for stage '{d['stage']}'")
             if out in outputs:
                 report.error(where, f"output {out} is also produced by {outputs[out]} (one would overwrite the other)")
             outputs[out] = where

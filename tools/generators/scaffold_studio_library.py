@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scaffold the reference-shot library for ONE hero, all derived from that hero's A-pose.
+"""Scaffold the studio reference library for ONE hero, all derived from that hero's A-pose.
 
 Writes assembly cards under data/art/_sets/<group>/<slug>/ (re-runnable: it overwrites its own
 files only). Every card is a thin recipe: a template plus tag slots (view / framing /
@@ -15,7 +15,7 @@ Library (per hero):
 The front-facing A-pose and the default glamour-smile head are the hero's existing X cards.
 
 Example:
-  python tools/generators/scaffold_shot_library.py --group angel-primes --slug angelica-prime \
+  python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime \
       --hero Angelica --underlayer data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json
 """
 import argparse
@@ -23,7 +23,7 @@ import json
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-VIEW = "data/art/shots/views"
+VIEW = "data/art/studio/views"
 POSE_VIEW_TEMPLATE = "data/art/_templates/heroes/pose-view-human.txt"
 HEAD_TEMPLATE = "data/art/_templates/heroes/head-human.txt"
 
@@ -47,8 +47,8 @@ HEAD_VIEWS = [
     ("head-tilt", "Head Tilt", f"{VIEW}/head/head-tilt.json"),
 ]
 HEAD_FRAMING = [
-    ("face-closeup", "Face Close-up", "data/art/shots/framing/face-closeup.json"),
-    ("chest-and-hair", "Chest and Hair", "data/art/shots/framing/chest-and-hair.json"),
+    ("face-closeup", "Face Close-up", "data/art/studio/framing/face-closeup.json"),
+    ("chest-and-hair", "Chest and Hair", "data/art/studio/framing/chest-and-hair.json"),
 ]
 HEAD_EXPRESSIONS = [
     ("soft-closed-smile", "Soft Closed Smile", "data/art/motion/expressions/soft-closed-smile.json"),

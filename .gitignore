@@ -46,3 +46,10 @@ reports/
 # Python
 __pycache__/
 *.pyc
+
+# Local ComfyUI sync state and backups (per machine)
+workflows/.sync/
+
+# Workflows that must never be committed (NSFW experiments and the general ComfyUI workspace)
+workflows/ComfyUI/
+workflows/**/X_*.json

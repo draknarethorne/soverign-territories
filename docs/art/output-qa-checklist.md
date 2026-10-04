@@ -54,6 +54,6 @@ landing. If something's off, the **Lever** column says what to adjust. Companion
 
 | Improvement | Watch for | Lever if off |
 | --- | --- | --- |
-| Baseline = photoreal | Cream shots look like a **real photo** (not fantasy) | Keep fantasy out of baseline |
+| Baseline = photoreal | Cream studio renders look like a **real photo** (not fantasy) | Keep fantasy out of baseline |
 | Fantasy only at the end | Glowing eyes / necrotic glow **only** in Fantasy/Final | Move those cues to the Fantasy or Final prompt |
 | Dynamism | Variety across runs | **Roll the seed**; raise denoise; lower CFG a notch |

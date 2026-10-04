@@ -1,0 +1,67 @@
+{
+  "installsRoot": "B:/Comfy-Desktop/ComfyUI-Installs",
+  "workflowsSubpath": "ComfyUI/user/default/workflows",
+  "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
+  "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",
+  "dev": ["Soverign Territories"],
+  "workspaces": {
+    "Soverign Territories": {
+      "status": "active",
+      "templates": true,
+      "role": "DEV: build and prove workflows, ideation and mass changes; holds the ST stage templates. Default deploy target."
+    },
+    "Drakness": {
+      "status": "active",
+      "legacy": true,
+      "pull": false,
+      "role": "UAT: her own acceptance workspace. Still holds the original hand-made experiments until the generated set replaces them."
+    },
+    "Draknara": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknava": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakniss": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakneta": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknira": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknisa": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakniya": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknora": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknoxa": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Angel Primes": {
+      "status": "planned",
+      "role": "UAT: one workspace for the Angel Primes test bed (Angelica and Angelo): generalized hair, cosmetics, views, outfits."
+    },
+    "Drakn Sisters": {
+      "status": "planned",
+      "role": "UAT: shared workspace for all ten sisters' scenes, so they can be worked in parallel. Studio work stays in each sister's own workspace."
+    },
+    "Drakn Bound": {
+      "status": "planned",
+      "role": "UAT: one workspace for all ten bound heroes, studio and scenes."
+    },
+    "Soverign Dawn Series": {
+      "status": "planned",
+      "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
+    }
+  },
+  "production": {
+    "uat": [
+      {"groups": ["angel-primes"], "workspace": "Angel Primes"},
+      {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
+      {"groups": ["drakn-sisters"], "class": "scene", "workspace": "Drakn Sisters"},
+      {"groups": ["drakn-sisters"], "workspace": "{hero}"}
+    ],
+    "prod": [
+      {"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Soverign Dawn Series"}
+    ]
+  },
+  "exclude": ["X_*.json"],
+  "stageTemplates": "ST?_*.json",
+  "inputs": {"Drakness": "Drakness_Qwen_X_Pose_00142_.png"},
+  "templates": {
+    "poses": "workflows/_templates/Qwen_X_Pose.master.json",
+    "default": "workflows/_templates/Qwen_Edit.master.json"
+  },
+  "stageFolders": {
+    "scene": "scenes"
+  },
+  "skipGroups": ["elder-dragons", "drakn-bound"]
+}
