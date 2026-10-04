@@ -64,7 +64,7 @@ piece (`motion`, `scene`), literal text (a plain string or `beat`), and can carr
 
 ```bash
 python tools/generators/gen_animation.py                                   # cards -> prompts/<group>/<Hero>/video/
-python tools/workflows/comfy_workflows.py make --engine minimax --create   # prompts -> workflows/.test/minimax (ST6 template)
+python tools/workflows/comfy_workflows.py make --engine minimax --create   # prompts -> workflows/<set>/<Hero>/ (ST6 template, tracked in git)
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine minimax
 ```
 

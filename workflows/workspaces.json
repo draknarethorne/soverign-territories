@@ -69,7 +69,7 @@
     "minimax": {
       "template": "workflows/_templates/ST6_MiniMax_Video.json",
       "turbo": true,
-      "dir": "workflows/.test/minimax",
+      "dir": "workflows",
       "classes": ["scene"]
     }
   },
