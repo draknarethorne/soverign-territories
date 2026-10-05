@@ -836,8 +836,8 @@ def cmd_pull(args):
                 done += 1
             print(f"{ws} templates: pulled {done}, left {skipped} existing" + (" (dry run)" if args.dry_run else ""))
             continue
-        if info.get("pull") is False and not args.force:
-            print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); use --force to override")
+        if info.get("pull") is False and not (args.force or args.include_legacy):
+            print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); use --include-legacy to capture them as curated")
             continue
         for name, p in install_files(cfg, ws, args.root).items():
             h = hero_of(name)
@@ -1053,6 +1053,7 @@ def main(argv=None):
     common(s, True, True)
     s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
     s.add_argument("--force", action="store_true", help="also replace repo copies")
+    s.add_argument("--include-legacy", action="store_true", help="also pull from a workspace whose pulling is turned off (its old hand-made workflows); generated copies are never replaced")
     s = sub.add_parser("make")
     common(s, False, True)
     s.add_argument("--create", action="store_true", help="also build workflows that do not exist yet")
