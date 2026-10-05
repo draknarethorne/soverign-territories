@@ -1,0 +1,14 @@
+{
+  "artId": "drakniya-head-sultry-lips-parted",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Sultry",
+  "components": {
+    "expression": "data/art/motion/expressions/sultry-lips-parted.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/head/closeups/Drakniya_Head_sultry_lips_parted.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head expression (front view). Scaffolded."
+}

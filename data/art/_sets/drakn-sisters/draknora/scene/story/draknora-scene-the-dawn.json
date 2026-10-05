@@ -1,0 +1,21 @@
+{
+  "artId": "draknora-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Fast, explosive ascent: she bursts upward out of the lava on a surging column of molten rock, arms flung wide and up, back arched, hair and ribbons streaming straight up behind her, caught at the peak of the rush; fierce, exhilarated expression with eyes locked on the camera; full figure from head to toe visible above the lava.",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/dawn-regalia.json",
+    "headwear": "a crown of {{METAL}} flame-shaped spires set with {{GEM}} stones",
+    "jewelry": "{{METAL}} flame-leaf collar necklace with a {{GEM}} stone, long ember drop earrings, wide {{METAL}} armlets",
+    "legs_feet": "bare feet, a faint {{MAGIC}} glow beneath them",
+    "effects": "Molten lava streams off her gown and hair and falls back in glowing curtains and droplets, sparks and embers rising around her, heat shimmer and orange light on her skin, rolling ash clouds behind.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/dawn/erupting-caldera-lava-lake.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/story/Draknora_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "THE DAWN: the sister rising from the Sundering in her element's homeland - first look at her territory. Her dragon is not yet bound, so no companion; native creatures instead. Rise speed and energy differ per sister."
+}

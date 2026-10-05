@@ -1,0 +1,25 @@
+{
+  "artId": "draknava-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "pose": "She rises on tiptoe with the staff raised in one hand and her other arm flung wide, her hair, ribbons and gown streaming in the gale, chin lifted, a joyful, radiant gaze straight to the camera; full figure visible.",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff-ascended.json",
+    "effects": "A great spiral of wind lifts ribbons, banners, leaves and feathers around her, glowing {{MAGIC}} ribbons of air trace the currents, the lyre strings glow and a ring of drifting chimes sings in the air.",
+    "companion": "her aligned Elder Dragon, Zephyros, swooping in close beside her with its wings spread across the sky, windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
+    "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds.json",
+    "headwear": "a slim silver circlet with swept-back feather wings",
+    "back": "long ribbons and a train of sheer silk that stream out in the wind like banners"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknava/scene/signature/Draknava_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Voice of the Wind': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

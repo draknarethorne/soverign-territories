@@ -1,0 +1,22 @@
+{
+  "artId": "draknoxa-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a sharp, calculating stare, a faint cunning smirk.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
+    "effects": "Faint tendrils of {{MAGIC}} toxic mist curl and drift low around her feet, glowing faintly in the dark.",
+    "companion": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/signature/alchemist-catacomb-lab.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/scene/signature/Draknoxa_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces in Draknoxa's own Toxic Orchid Magenta/Vibrant Acid Lime palette, plus the existing ossuary background (dark, toxic fit for Poison/Alchemist). Shortcut per explicit instruction."
+}

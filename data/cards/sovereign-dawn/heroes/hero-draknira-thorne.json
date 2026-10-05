@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/draknira-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Frost Sovereign", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/signature/draknira-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Frost Sovereign", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/signature/draknira-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

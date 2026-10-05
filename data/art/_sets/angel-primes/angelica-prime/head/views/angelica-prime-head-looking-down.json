@@ -1,0 +1,14 @@
+{
+  "artId": "angelica-prime-head-looking-down",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
+  "name": "Looking Down",
+  "components": {
+    "view": "data/art/studio/views/head/looking-down.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/Angelica/head/views/Angelica_Head_looking_down.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

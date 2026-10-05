@@ -1,0 +1,23 @@
+{
+  "artId": "drakniss-scene-greek",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Greek Oracle of the Sun",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a serene, warm smile, eyes soft with compassion and foresight.",
+    "wearing": "data/art/themes/greek/wardrobe/clothing/gowns/chiton-peplos-gown.json",
+    "headwear": "data/art/themes/greek/wardrobe/headwear/wreaths/gold-laurel-wreath.json",
+    "jewelry": "data/art/themes/greek/wardrobe/jewelry/sets/gold-laurel-jewelry-set.json",
+    "legs_feet": "data/art/themes/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
+    "holding": "data/art/themes/greek/wardrobe/weapons/staves/oracle-sun-staff.json",
+    "makeup": "data/art/themes/greek/cosmetics/makeup/gilded/gilded-goddess.json",
+    "effects": "Soft rays of {{MAGIC}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
+    "background": "data/art/themes/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/scene/themes/Drakniss_Scene_Greek.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Greek theme expansion (cleric: oracle of the sun)."
+}

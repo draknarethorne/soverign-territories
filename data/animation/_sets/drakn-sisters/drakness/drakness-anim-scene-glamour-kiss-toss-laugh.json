@@ -4,7 +4,7 @@
   "name": "KissTossLaugh",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-glamour.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/glamour/drakness-scene-glamour.json",
     "image": "Drakness_FireRed_Scene_Glamour_00003_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",

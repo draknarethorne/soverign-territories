@@ -1,0 +1,13 @@
+{
+  "artId": "drakness-x-pose-high-waist-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/high-waist-bikini.json"
+  },
+  "output": "prompts/drakn-sisters/Drakness/poses/bikini/Drakness_X_Pose_HighWaistBikini.txt",
+  "notes": "WARDROBE TEST. Same hero, only the pose piece differs (data/art/wardrobe/swimwear/high-waist-bikini.json)."
+}

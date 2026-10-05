@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/drakniya-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Heart of the Grove", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/drakniya-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/signature/drakniya-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Heart of the Grove", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/signature/drakniya-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

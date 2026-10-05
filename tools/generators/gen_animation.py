@@ -16,6 +16,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "generators"))
+import art_layout  # noqa: E402
 import gen_prompt  # noqa: E402
 
 CARDS = ROOT / "data" / "animation" / "_sets"
@@ -156,11 +157,13 @@ def output_path(card, toks):
     hero = toks["HERO"].split()[0]
     group = pathlib.PurePosixPath(card["heroArt"]).parts[3]
     art = card.get("source", {}).get("artCard")
-    source = ""
+    source, fam = "", []
     if art:
-        stem = pathlib.PurePosixPath(load(art)["output"]).stem
+        src_out = load(art)["output"]
+        stem = pathlib.PurePosixPath(src_out).stem
         source = stem[len(hero) + 1:] + "_" if stem.startswith(hero + "_") else stem + "_"
-    return f"prompts/{group}/{hero}/video/{hero}_Video_{source}{card['name']}.txt"
+        fam = art_layout.video_family(src_out)
+    return "/".join(["prompts", group, hero, "video", *fam, f"{hero}_Video_{source}{card['name']}.txt"])
 
 
 def camera_text(card, toks):

@@ -1,0 +1,21 @@
+{
+  "artId": "drakneta-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Signature",
+  "wearing": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout, secured at the shoulders, no headwear, her hair fully visible; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
+  "pose": "She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling {{MAGIC}} lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.",
+  "holding": "a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched {{PRIMARY}} metal, a ball of crackling {{MAGIC}} lightning suspended in the ring",
+  "effects": "Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit.",
+  "components": {
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "companion": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
+    "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/scene/signature/Drakneta_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Deliberate 'from scratch' authoring test: only heroArt + a handful of reusable pieces are referenced (silver-gem-set.json and glowing-strap-heels.json for jewelry/footwear, a brand-new backgrounds/castle/ancient-stone-hall.json) -- wearing, pose (motion+gaze+expression combined), holding, and effects are typed directly as literal top-level fields instead of referencing decomposed component files, proving the alternate single-file authoring path works end-to-end alongside the decomposed-pieces path. Grounded in prompts/_archive/Drakneta/Final/Drakneta_FireRed_Elegant_2.json (lightning staff cast, castle stone floor, translucent sheer outfit, matching heels, bracelets/necklace/belly ring). Switched to scene-with-companion-human.txt so her aligned Elder Dragon (Fulgora) appears, consistent with every other sister's signature scene."
+}

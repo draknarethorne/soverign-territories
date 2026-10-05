@@ -1,0 +1,20 @@
+{
+  "artId": "draknisa-armor-silk-battle-dress",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Silk Battle Dress",
+  "aesthetic": "a clean studio presentation of the silk battle dress",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/robes/silk-battle-dress.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknisa/armor/wardrobe/Draknisa_Armor_SilkBattleDress.txt",
+  "notes": "WARDROBE TEST: same hero, only the armor differs."
+}

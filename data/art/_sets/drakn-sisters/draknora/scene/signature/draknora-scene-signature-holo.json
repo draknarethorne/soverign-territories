@@ -1,0 +1,25 @@
+{
+  "artId": "draknora-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "pose": "She stands tall at the edge of the battlement with the sword raised overhead pointing at the sky and her other hand thrust out palm-forward, hair and cape streaming in the updraft, a fierce, triumphant gaze straight to the camera; full figure visible.",
+    "expression": "data/art/motion/expressions/fierce-focused.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword-ascended.json",
+    "effects": "A pillar of white-gold fire spirals up the blade into the sky, a ring of flame blooms around her feet, embers and sparks stream upward, heat haze warps the air and the whole citadel glows.",
+    "companion": "her aligned Elder Dragon, Pyraxis, diving low over the battlement behind her with its wings spread wide and a roar of fire, flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze",
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire.json",
+    "headwear": "a crown of burnished copper flame spires set with {{GEM}} stones",
+    "back": "a long cape of living flame that streams behind her like wings"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/signature/Draknora_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Flame Empress': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

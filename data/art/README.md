@@ -117,6 +117,32 @@ A pure move must leave every generated prompt byte-identical; regenerate and che
 **Optional template lines.** A template line starting with `?` (e.g. `?Headwear: {{HEADWEAR}}.`) is printed only when
 every token in it has a value, so slots like headwear or makeup cost nothing for cards that do not use them.
 
+## Card and output folders: families
+
+A card is filed under a **family** folder below its stage, and its prompt and rendered images follow the same path, so a folder
+holds only closely related work. The family comes from the card itself (`tools/generators/art_layout.py`, enforced by the
+validator), never from a hand-typed folder:
+
+```text
+data/art/_sets/<group>/<slug>/<stage>/<family>/<artId>.json
+prompts/<group>/<Hero>/<stage>/<family>/<Hero>_<Stage>_<Name>.txt
+ComfyUI output: <Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+```
+
+| Stage | Families | Notes |
+| --- | --- | --- |
+| scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
+| poses | golden A-pose at the root; `views`; underlayer tests by piece type: `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | The type is read from the underlayer piece's tags. |
+| head | golden head at the root; `views`; `closeups` (framing and expressions) | |
+| clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
+| armor | `wardrobe` for library armor; a hero's own and celestial armor stay in the stage folder | |
+| showcase, motion, hair | flat or their own families | Motion and hair already carry families. |
+| video | mirrors the picture it animates (`signature`, `glamour`, `story`, `poses`) | |
+
+A folder only exists to group related cards; one-card groups stay flat. Workflow file names and ComfyUI workspaces stay flat; only the
+output folder (the SaveImage prefix) changes. `tools/workflows/organize_outputs.py` sorts images rendered earlier into the same
+folders (preview first, then `--apply`).
+
 ## Where rendered images live (convention)
 
 The prompt file path is the identity of an image. A rendered PNG sits at the same path under `assets/art/` with the
@@ -412,7 +438,7 @@ from; the whole image is generated from the identity file's own `description`).
 Example — swapping a weapon without touching the armor at all:
 
 ```jsonc
-// data/art/_sets/drakn-sisters/drakness/armor/bone-scythe.json
+// data/art/_sets/drakn-sisters/drakness/armor/drakness-armor-bone-scythe.json
 "components": {
   "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
   "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",

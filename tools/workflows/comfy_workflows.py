@@ -623,7 +623,7 @@ def cmd_deploy(args):
             print(f"{ws} templates: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
             continue
         for name, (g, h, p) in selected(cfg, ws, args, repo).items():
-            replace = args.overwrite or cfg["workspaces"][ws].get("legacy", False)
+            replace = args.overwrite or (cfg["workspaces"][ws].get("legacy", False) and not getattr(args, "patch_only", False))
             if name not in inst and getattr(args, "existing", False):
                 continue
             if name in inst and getattr(args, "new_only", False):
@@ -1005,6 +1005,7 @@ def main(argv=None):
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
     s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
     s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
+    s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
     s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
     s = sub.add_parser("cleanup")
     common(s, False, True)

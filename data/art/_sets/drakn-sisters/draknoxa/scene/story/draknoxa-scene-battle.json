@@ -1,0 +1,22 @@
+{
+  "artId": "draknoxa-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Battle",
+  "components": {
+    "pose": "She stands with her alembic staff in one hand and flings a glowing flask with the other, her half-cape swirling, a sly, fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/battle-gear.json",
+    "headwear": "a hood with a {{METAL}} thorn circlet",
+    "jewelry": "a bandolier of glowing vials, {{METAL}} buckled bracers with {{GEM}} stones",
+    "legs_feet": "buckled thigh boots",
+    "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
+    "effects": "A flask bursts into a billowing cloud of luminous {{MAGIC}} venom mist rolling across the field, glowing droplets hanging in the air, burst vats hissing behind her.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/battle/venom-marsh-stilts.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/scene/story/Draknoxa_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BATTLE: the sister in class-aligned war gear commanding her element on a battlefield of her homeland. Reuses her signature weapon."
+}

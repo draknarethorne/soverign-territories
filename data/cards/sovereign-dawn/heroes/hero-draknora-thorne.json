@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/draknora-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Flame Empress", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/signature/draknora-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Flame Empress", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/signature/draknora-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

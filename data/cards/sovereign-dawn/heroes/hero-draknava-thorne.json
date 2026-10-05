@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/draknava-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknava/scene/draknava-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Voice of the Wind", "artCard": "data/art/_sets/drakn-sisters/draknava/scene/draknava-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknava/scene/signature/draknava-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Voice of the Wind", "artCard": "data/art/_sets/drakn-sisters/draknava/scene/signature/draknava-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

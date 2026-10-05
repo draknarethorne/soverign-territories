@@ -1,0 +1,13 @@
+{
+  "artId": "drakness-x-pose-backless-halter",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/poses/backless/Drakness_X_Pose_BacklessHalter.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/backless-halter-one-piece.json"
+  },
+  "notes": "UNDERLAYER TEST. Same original photo as drakness-x-pose; only the underlayer piece differs."
+}

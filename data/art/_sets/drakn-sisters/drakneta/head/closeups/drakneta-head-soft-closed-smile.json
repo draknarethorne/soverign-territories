@@ -1,0 +1,14 @@
+{
+  "artId": "drakneta-head-soft-closed-smile",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Soft Closed Smile",
+  "components": {
+    "expression": "data/art/motion/expressions/soft-closed-smile.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/head/closeups/Drakneta_Head_soft_closed_smile.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head expression (front view). Scaffolded."
+}

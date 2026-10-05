@@ -47,10 +47,10 @@ def edit(path, fn):
 
 CARD = "data/cards/sovereign-dawn/heroes/hero-drakness-thorne.json"
 IDENT = "data/art/heroes/drakn-sisters/drakness-thorne.json"
-SCENE = "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature.json"
+SCENE = "data/art/_sets/drakn-sisters/drakness/scene/signature/drakness-scene-signature.json"
 ANIM = "data/animation/_sets/drakn-sisters/drakness/drakness-anim-x-pose-kiss-toss-laugh.json"
-SIB_SCENE = "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature.json"
-HOLO_SCENE = "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature-holo.json"
+SIB_SCENE = "data/art/_sets/drakn-sisters/draknora/scene/signature/draknora-scene-signature.json"
+HOLO_SCENE = "data/art/_sets/drakn-sisters/drakness/scene/signature/drakness-scene-signature-holo.json"
 
 CASES = [
     ("baseline is clean", lambda r: None, None),
@@ -114,9 +114,14 @@ CASES = [
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update({"finish": "mythic"})), "finishes.json"),
     ("studio kit naming a piece that does not exist",
      lambda r: edit(r / "data/art/_kits/draknara.json", lambda d: d["clothing"].append("wardrobe/clothing/dresses/no-such-dress")), "kit names"),
+    ("scene output not in its family folder",
+     lambda r: edit(r / SCENE, lambda d: d.update({"output": d["output"].replace("/scene/signature/", "/scene/")})), "family folder"),
+    ("card file filed in the wrong family folder",
+     lambda r: (r / "data/art/_sets/drakn-sisters/drakness/scene/story").mkdir(exist_ok=True) or shutil.move(
+         str(r / HOLO_SCENE), str(r / "data/art/_sets/drakn-sisters/drakness/scene/story/drakness-scene-signature-holo.json")), "card file must sit in"),
     ("variant artCard belonging to a different hero",
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update(
-         {"artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-shiny.json"})), "belongs to"),
+         {"artCard": "data/art/_sets/drakn-sisters/draknora/scene/signature/draknora-scene-signature-shiny.json"})), "belongs to"),
 ]
 
 

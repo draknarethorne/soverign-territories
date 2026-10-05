@@ -1,0 +1,33 @@
+{
+  "artId": "drakneta-scene-signature-shiny",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Signature Shiny",
+  "wearing": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout, secured at the shoulders, no headwear, her hair fully visible; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
+  "pose": "She stands with weight shifted, one arm bent at the elbow, her hand cupped with a ball of crackling {{MAGIC}} lightning fusing in her palm as she casts; her other hand rests on an ornate staff planted at her side. Her gaze is direct and focused on the camera, her expression composed with a quiet, knowing smile.",
+  "holding": "a tall ornate staff, upright, touching the ground, topped with an open ring-shaped summoning sigil of etched {{PRIMARY}} metal, a ball of crackling {{MAGIC}} lightning suspended in the ring",
+  "effects": "Soft gradient lightning strikes flicker in the air around her, diffused studio light catching the fibre-optic threads woven through her outfit. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
+  "components": {
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "companion": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
+    "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/scene/signature/Drakneta_Scene_Signature_Shiny.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "SHINY variant of the Signature: same scene and pose in a prismatic, gilded colourway with a holographic glitter sheen. Convention: <slug>-scene-signature-shiny.",
+  "overrides": {
+    "palette": {
+      "primaryColor": "Platinum Electric Gold",
+      "metal": "bright platinum",
+      "accentColors": [
+        "Arc White",
+        "Prismatic Gold"
+      ],
+      "magicColor": "prismatic white-hot"
+    }
+  },
+  "finish": "shiny"
+}

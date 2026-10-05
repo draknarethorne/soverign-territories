@@ -17,6 +17,10 @@ import argparse
 import json
 import pathlib
 import re
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -55,6 +59,8 @@ def main():
     sex = "female" if female else "male"
     other = "male" if female else "female"
     made = skipped = 0
+    base = ART / "_sets" / args.group / args.slug
+    outputs = {json.loads(p.read_text(encoding="utf-8")).get("output") for p in base.rglob("*.json")} if base.exists() else set()
     for arg in args.paths:
         for f in pieces_under(arg):
             piece = json.loads(f.read_text(encoding="utf-8"))
@@ -70,7 +76,13 @@ def main():
             out_name = {"pose": f"{args.hero}_X_Pose_{camel(short)}", "clothing": f"{args.hero}_Clothing_{camel(short)}",
                         "armor": f"{args.hero}_Armor_{camel(short)}"}[stage]
             art_id = {"pose": f"{args.slug}-x-pose-{short}", "clothing": f"{args.slug}-clothing-{short}", "armor": f"{args.slug}-armor-{short}"}[stage]
-            target = ART / "_sets" / args.group / args.slug / ("pose" if stage == "pose" else stage) / f"{art_id}.json"
+            if stage == "pose":
+                card = {"artId": art_id, "kind": "base-set", "stage": "pose", "components": {"underlayer": pid}}
+            else:
+                card = {"artId": art_id, "kind": "base-set", "stage": stage, "components": {"wearing": pid}}
+            fam = art_layout.family(card, args.group, ROOT)
+            target = ART / "_sets" / args.group / args.slug / stage / "/".join(fam) / f"{art_id}.json"
+            folder = "/".join([folder, *fam])
             if target.exists():
                 skipped += 1
                 continue
@@ -86,6 +98,9 @@ def main():
                         "aesthetic": f"a clean studio presentation of the {piece['name'].lower()}",
                         "components": comps, "template": f"{TEMPLATES}/{stage}-human.txt", "denoise": "~0.5-0.7"}
             card["output"] = f"prompts/{args.group}/{args.hero}/{folder}/{out_name}.txt"
+            if card["output"] in outputs:
+                skipped += 1
+                continue
             card["notes"] = f"WARDROBE TEST. Same hero, only the {stage} piece differs ({pid})."
             made += 1
             if args.dry_run:

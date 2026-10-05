@@ -52,6 +52,9 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
   a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.
+- **Output folders follow card families (Oct 2026).** Cards, prompts and ComfyUI output folders are grouped by family below the stage
+  (`scene/signature`, `scene/glamour`, `poses/lingerie`, `clothing/gowns` ...); the rule lives in `tools/generators/art_layout.py` and is
+  validated. A variant such as shiny or holo sits beside its main card, and one-card groups stay flat. See `data/art/README.md`.
 - **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
   studio render and a full scene.
 - **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor

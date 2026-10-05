@@ -1,0 +1,21 @@
+{
+  "artId": "drakniss-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Slow, gentle ascent: she floats upward out of a column of golden light as the clouds part, arms lowered slightly away from her sides with palms open and turned up, head lifted and gaze to the camera, peaceful and radiant; full figure from head to toe visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/dawn-regalia.json",
+    "headwear": "a radiant crown of {{METAL}} sun-rays set with {{GEM}} stones",
+    "jewelry": "a {{METAL}} sunburst collar with {{GEM}} stones, long ray earrings, {{METAL}} armlets",
+    "legs_feet": "bare feet, a soft glow beneath them",
+    "effects": "Golden motes and drifting white feathers fall softly around her, warm rays streaming outward from behind her, a gentle {{MAGIC}} glow on the clouds below.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/dawn/cloud-sea-sunrise-summit.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/scene/story/Drakniss_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "THE DAWN: the sister rising from the Sundering in her element's homeland - first look at her territory. Her dragon is not yet bound, so no companion; native creatures instead. Rise speed and energy differ per sister."
+}

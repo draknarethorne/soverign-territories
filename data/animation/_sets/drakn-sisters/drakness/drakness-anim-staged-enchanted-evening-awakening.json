@@ -4,7 +4,7 @@
   "name": "Awakening",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-staged-enchanted-evening.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/glamour/drakness-scene-staged-enchanted-evening.json",
     "image": "Drakness_FireRed_Scene_Staged_EnchantedEvening_00001_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",

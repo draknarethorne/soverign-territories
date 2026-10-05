@@ -1,0 +1,19 @@
+{
+  "artId": "draknora-scene-elegant-casting",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Elegant Casting",
+  "components": {
+    "pose": "She stands in a dramatic lunge, weight over her front leg, one arm thrown out to the side with an open palm releasing a rolling wave of flame, the other hand drawn back at her shoulder shaping a bright ball of fire between her fingers, torso arched, chin lifted, a fierce, confident gaze to the camera. A hot, gusting wind whips her gown, hem and hair upward. No weapon or staff - casting with her bare hands only.",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/elegant-casting-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "effects": "Rolling {{MAGIC}} flames and a glowing ball of fire spin around her hands, embers streaming on the wind.",
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/casting/black-stone-arena-lava-cracks.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/glamour/Draknora_Scene_ElegantCasting.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Elegant casting: unique gown that fits her magic, hands-only complex casting stance with wind."
+}

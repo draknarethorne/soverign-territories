@@ -13,7 +13,7 @@ You never write a prompt. You write small JSON files that the generator turns in
 | --- | --- | --- | --- |
 | Identity | `data/art/heroes/<group>/<slug>-thorne.json` | Who she is: colours, eyes, skin, build | `draknisa-thorne.json` |
 | Piece | `data/art/wardrobe`, `cosmetics`, `themes`, `races`, `backgrounds`, `heroes/.../<slug>/` | One reusable chunk of description | a bikini, a gown, a throne room |
-| Card | `data/art/_sets/<group>/<slug>/<stage>/` | A recipe: which pieces to use, in which template | `draknisa-scene-robe.json` |
+| Card | `data/art/_sets/<group>/<slug>/<stage>/<family>/` | A recipe: which pieces to use, in which template | `draknisa-scene-robe.json` |
 | Template | `data/art/_templates/heroes/*.txt` | Static prompt scaffolding with `{{TOKENS}}` | `scene-with-outfit-human.txt` |
 
 ```text

@@ -22,6 +22,9 @@ import sys
 
 from jsonschema import Draft7Validator, validators
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools" / "generators"))
+import art_layout  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCHEMAS = ROOT / "data/schemas"
 ART_SCHEMAS = ROOT / "data/art/_schema"
@@ -235,6 +238,13 @@ def check_art_cards(report):
             if ("-staged-" in d["artId"]) != is_staged_tpl or ("_Staged_" in d.get("output", "")) != is_staged_tpl:
                 report.error(where, "staged scenes must use a scene-staged-* template AND have '-staged-' in the artId "
                                     "and '_Staged_' in the output name; complete scenes must have none of these")
+        fam = art_layout.family(d, group, ROOT)
+        if fam is not None:
+            card_fam = list(f.relative_to(ROOT / "data/art/_sets").parts[3:-1])
+            if card_fam != fam:
+                report.error(where, f"card file must sit in <stage>/{'/'.join(fam) or '(stage root)'}/ (family comes from the card, see tools/generators/art_layout.py)")
+            if d.get("output") and d["output"].split("/")[4:-1] != fam:
+                report.error(where, f"output {d['output']} must sit in the family folder '{'/'.join(fam) or '(stage root)'}' below its stage folder")
         out = d.get("output")
         if out:
             if out.split("/")[1] != group:

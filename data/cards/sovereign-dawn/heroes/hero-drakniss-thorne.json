@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/drakniss-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Radiant Saint", "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/drakniss-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/signature/drakniss-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Radiant Saint", "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/signature/drakniss-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

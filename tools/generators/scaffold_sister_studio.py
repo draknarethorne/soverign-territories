@@ -23,6 +23,9 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import art_layout  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
 TPL = "data/art/_templates/heroes"
@@ -45,12 +48,19 @@ def norm(p):
 
 
 class Writer:
-    def __init__(self, base):
-        self.base, self.made, self.skipped = base, 0, 0
+    def __init__(self, base, group):
+        self.base, self.group, self.made, self.skipped = base, group, 0, 0
+        # Hand-made cards use their own file names, so also skip anything whose output file already has a card.
+        self.outputs = {json.loads(p.read_text(encoding="utf-8")).get("output") for p in base.rglob("*.json")} if base.exists() else set()
 
     def write(self, sub, art_id, card):
+        fam = art_layout.family(card, self.group, ROOT)  # the card decides its folder; hair and motion keep theirs
+        if fam is not None:
+            hero, stem = card["output"].split("/")[2], pathlib.PurePosixPath(card["output"]).stem
+            card["output"] = art_layout.output_for(card, self.group, hero, stem, ROOT)
+            sub = "/".join([sub.split("/")[0], *fam])
         target = self.base / sub / f"{art_id}.json"
-        if target.exists():
+        if target.exists() or card.get("output") in self.outputs:
             self.skipped += 1
             return
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -69,7 +79,7 @@ def main():
     kit = json.loads(kit_path.read_text(encoding="utf-8")) if kit_path.exists() and not args.celestial_only else {}
     hero = kit.get("hero") or slug.capitalize()
     ident = f"data/art/heroes/{group}/{slug}-thorne.json"
-    wr = Writer(ART / "_sets" / group / slug)
+    wr = Writer(ART / "_sets" / group / slug, group)
     out = lambda folder, name: f"prompts/{group}/{hero}/{folder}/{name}.txt"
 
     def clothing_card(stage, path, note):

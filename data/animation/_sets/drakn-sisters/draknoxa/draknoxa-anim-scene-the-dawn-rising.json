@@ -4,7 +4,7 @@
   "name": "Rising",
   "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/draknoxa-scene-the-dawn.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/story/draknoxa-scene-the-dawn.json",
     "image": "Draknoxa_Qwen_Scene_TheDawn_00001_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",
