@@ -173,3 +173,21 @@ Add `--dry-run` as the last argument to preview. The tool behind them is `tools/
   them (`templates` and `engines` in `workspaces.json`), so tune one in dev, `pull --templates` it back, and every new workflow follows.
 - **`X_*` files are never mirrored** (`exclude` in `workspaces.json`, plus `.gitignore`).
 - `pull -w <Workspace>` brings workflows that only exist in a workspace into the repo; it is off for `legacy` workspaces.
+
+## Where files live
+
+Folder locations are set once in `workspaces.json` under `paths`; the tools read them from there.
+
+```text
+B:\Sovereign Territories\Models        original reference photos: the source, never an upload target
+B:\Sovereign Territories\Masters       hand-picked keepers copied from the output (what the backup script protects)
+B:\Comfy-Desktop\ComfyUI-Installs      the workspaces (code and workflows)
+B:\Comfy-Desktop\ComfyUI-Inputs\<Workspace>   that workspace's own input images: transient copies
+B:\Comfy-Desktop\ComfyUI-Output        one raw output folder; the prefix sorts it by <set>/<Hero>/<stage>/<family>
+```
+
+Everything under `Comfy-Desktop` is a transient copy of something that lives in the repo or on the working drive.
+`python tools\workflows\sync_inputs.py` copies, into each workspace's own folder, exactly the images that workspace's workflows load
+(preview first, then `--apply`). Set each install's input and output folders in ComfyUI (the `--input-directory` and
+`--output-directory` launch arguments), then retire the old shared folders. Until a folder exists, the tools fall back to the
+old shared one.

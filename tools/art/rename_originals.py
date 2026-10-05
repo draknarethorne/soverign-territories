@@ -20,9 +20,13 @@ import collections
 import json
 import pathlib
 import re
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_MODELS = pathlib.Path("B:/Soverign Territories/Models")
+sys.path.insert(0, str(ROOT / "tools/workflows"))
+import comfy_workflows as cw  # noqa: E402
+
+DEFAULT_MODELS = cw.work_root(cw.load_cfg()) / "Models"
 MAP = ROOT / "tools/art/originals_rename_map.json"
 FACEBOOK = re.compile(r"^facebook_(?P<ts>\d+)_(?P<id>\d+)(?P<ext>\.\w+)$")
 SCREENSHOT = re.compile(r"^Screenshot_(?P<date>\d{8})_(?P<time>\d{6})_(?P<app>.+?)(?P<ext>\.\w+)$", re.I)

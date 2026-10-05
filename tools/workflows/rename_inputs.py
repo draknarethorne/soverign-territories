@@ -86,45 +86,45 @@ def fix_workflow(wf, hero, group, mapping, photos, wrong_photo_fix, retarget=Non
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
-    ap.add_argument("--input", help="shared input folder (default: sharedInput in workspaces.json)")
+    ap.add_argument("--input", help="one input folder to process (default: the shared one and every workspace input folder)")
     ap.add_argument("--photo", action="append", default=[], metavar="HERO=FILE", help="make FILE the original photo for HERO (repeatable)")
     args = ap.parse_args()
     cfg = cw.load_cfg()
     mapping, photos = old_to_new(), dict(cfg.get("photos", {}))
-    inp = pathlib.Path(args.input or cfg["sharedInput"])
     retarget = {}
     for spec in args.photo:
         hero, _, new = spec.partition("=")
         if hero not in photos or not new:
             sys.exit(f"--photo needs HERO=FILE for one of: {', '.join(photos)}")
-        if not (inp / new).exists():
-            print(f"note: {new} is not in the input folder yet; copy it there before running the workflows")
+        if not any((d / new).exists() for d in cw.input_dirs(cfg)):
+            print(f"note: {new} is not in any input folder yet; copy it there before running the workflows")
         retarget[hero] = (photos[hero], new)
         photos[hero] = new
         print(f"photo for {hero}: {retarget[hero][0]} -> {new}")
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     groups = cw.hero_groups()
 
-    # 1. the copies in the shared input folder
-    ren, skipped, unmapped = [], [], []
-    for p in sorted(inp.iterdir()):
-        if not p.is_file() or not re.match(r"^(facebook_|screenshot_)", p.name, re.I):
-            continue
-        new = mapping.get(p.name)
-        if not new:
-            unmapped.append(p.name)
-        elif (inp / new).exists():
-            skipped.append((p.name, new))
-        else:
-            ren.append((p, new))
-    print(f"input folder {inp}: {len(ren)} to rename, {len(skipped)} already have the new name, {len(unmapped)} not in the map")
-    for p, new in ren[:4]:
-        print(f"    {p.name} -> {new}")
-    for n in unmapped:
-        print(f"    LEFT  {n} (never in the library)")
-    if args.apply:
-        for p, new in ren:
-            p.rename(inp / new)
+    # 1. the copies in every input folder (the shared one and each workspace's own)
+    for inp in ([pathlib.Path(args.input)] if args.input else cw.input_dirs(cfg)):
+        ren, skipped, unmapped = [], [], []
+        for p in sorted(inp.iterdir()):
+            if not p.is_file() or not re.match(r"^(facebook_|screenshot_)", p.name, re.I):
+                continue
+            new = mapping.get(p.name)
+            if not new:
+                unmapped.append(p.name)
+            elif (inp / new).exists():
+                skipped.append((p.name, new))
+            else:
+                ren.append((p, new))
+        print(f"input folder {inp}: {len(ren)} to rename, {len(skipped)} already have the new name, {len(unmapped)} not in the map")
+        for p, new in ren[:4]:
+            print(f"    {p.name} -> {new}")
+        for n in unmapped:
+            print(f"    LEFT  {n} (never in the library)")
+        if args.apply:
+            for p, new in ren:
+                p.rename(inp / new)
 
     # 2-4. workflows: repo and every install
     targets = []

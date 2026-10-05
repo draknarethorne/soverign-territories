@@ -1,6 +1,11 @@
 {
   "installsRoot": "B:/Comfy-Desktop/ComfyUI-Installs",
   "workflowsSubpath": "ComfyUI/user/default/workflows",
+  "paths": {
+    "workRoot": "B:/Sovereign Territories",
+    "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
+    "outputRoot": "B:/Comfy-Desktop/ComfyUI-Output"
+  },
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
   "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",
   "dev": ["Sovereign Territories"],

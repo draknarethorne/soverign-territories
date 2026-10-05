@@ -35,7 +35,7 @@ def main():
     ap.add_argument("--show", type=int, default=3, help="example moves to list per destination")
     args = ap.parse_args()
     cfg = cw.load_cfg()
-    out_root = pathlib.Path(args.output or cfg["sharedOutput"])
+    out_root = pathlib.Path(args.output) if args.output else cw.output_root(cfg)
     if not out_root.is_dir():
         sys.exit(f"output folder not found: {out_root}")
     groups = cw.hero_groups()

@@ -62,6 +62,34 @@ def load_cfg():
     return json.loads(CFG_PATH.read_text(encoding="utf-8"))
 
 
+def work_root(cfg):
+    """The working drive folder that holds Models (originals) and Masters; accepts the old misspelled folder until it is renamed."""
+    want = pathlib.Path(cfg.get("paths", {}).get("workRoot", "B:/Sovereign Territories"))
+    old = pathlib.Path(str(want).replace("Sovereign", "Soverign"))
+    return want if want.exists() or not old.exists() else old
+
+
+def output_root(cfg):
+    """One shared output folder for every workspace (falls back to the old shared location until the move)."""
+    new = pathlib.Path(cfg.get("paths", {}).get("outputRoot", ""))
+    return new if new.is_dir() else pathlib.Path(cfg["sharedOutput"])
+
+
+def input_dir(cfg, ws):
+    """A workspace's own input folder when it exists, else the old shared one."""
+    own = pathlib.Path(cfg.get("paths", {}).get("inputsRoot", "")) / ws
+    return own if own.is_dir() else pathlib.Path(cfg["sharedInput"])
+
+
+def input_dirs(cfg):
+    """Every input folder in use: the shared one and each per-workspace one."""
+    out = [pathlib.Path(cfg["sharedInput"])]
+    root = pathlib.Path(cfg.get("paths", {}).get("inputsRoot", ""))
+    if root.is_dir():
+        out += sorted(p for p in root.iterdir() if p.is_dir())
+    return [p for p in out if p.is_dir()]
+
+
 def install_dir(cfg, ws, root=None):
     return pathlib.Path(root or cfg["installsRoot"]) / ws / cfg["workflowsSubpath"]
 
