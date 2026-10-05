@@ -21,6 +21,7 @@ tool puts that prompt (and the size and length) into the `ST6_MiniMax_Video` tem
 | --- | --- | --- |
 | Card | `data/animation/_sets/<group>/<slug>/*.json` | One animation: source, look, actions |
 | Motion | `data/animation/motions/<family>/*.json` | A reusable action (blow a kiss, eyes glow) |
+| Sequence | `data/animation/sequences/*.json` | A proven chain of actions you can drop into any card (kiss, toss, laugh) |
 | Transition | `data/animation/transitions/*.json` | How one action hands off to the next |
 | Look | `data/animation/looks/*.json` | The film style line (photoreal, card art) |
 | Camera | `data/animation/cameras/*.json` | How the camera moves (follow pan, orbit, push in, rise, static) |
@@ -138,6 +139,7 @@ Each entry in `actions` can be any of these, in any mix:
 | Typed action | `"She gives the camera a playful wink."` | A plain string; lasts `defaultSeconds` (2) |
 | Literal beat | `{ "beat": "...", "seconds": 3 }` | Typed text with its own length |
 | Scene change | `{ "scene": "<piece path or literal text>" }` | Labelled `Scene:` and joined by a hard cut by default |
+| Whole sequence | `{ "sequence": "data/animation/sequences/kiss-toss-laugh.json" }` | Expands into the actions it holds; its own `transition` joins it to the previous action |
 | Together | `{ "motion": "...laugh.json", "with": [ { "motion": "...eyes-glow.json" } ] }` | Things that happen in the same moment: "...; at the same time, her eyes ignite" |
 
 Each becomes its own `[start-end] Motion:` or `Scene:` line, with times added up for you.

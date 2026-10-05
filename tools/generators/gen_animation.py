@@ -116,10 +116,25 @@ def parse(item, card, toks):
     return kind, beat, item.get("seconds", item.get("duration", secs)), audio
 
 
+def expand(actions, default):
+    """Replace each {"sequence": piece} with the actions it holds; a transition on the sequence goes to its first action."""
+    out = []
+    for item in actions:
+        if isinstance(item, dict) and "sequence" in item:
+            inner = expand(load(item["sequence"])["actions"], default)
+            if item.get("transition") and inner:
+                first = inner[0] if isinstance(inner[0], dict) else {"beat": inner[0], "seconds": default}
+                inner[0] = {**first, "transition": item["transition"]}
+            out += inner
+        else:
+            out.append(item)
+    return out
+
+
 def timeline(card, toks):
     """[start-end] Motion:/Scene: blocks, each joined to the one before by its transition (default: the card's, else 'flow')."""
     t, lines, audio = 0.0, [], []
-    for i, item in enumerate(card["actions"]):
+    for i, item in enumerate(expand(card["actions"], card.get("defaultSeconds", 2))):
         kind, beat, secs, a = parse(item, card, toks)
         audio += a
         label = kind + ":"

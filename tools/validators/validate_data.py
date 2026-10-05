@@ -257,6 +257,12 @@ def check_animation_cards(report):
     def action(where, item):
         if isinstance(item, str):
             return
+        if item.get("sequence"):
+            exists(where, "sequence", item["sequence"])
+            if (ROOT / item["sequence"]).exists():
+                for inner in load(item["sequence"]).get("actions", []):
+                    action(where, inner)
+            return
         for key in ("motion", "scene"):
             ref = item.get(key)
             if ref and ref.endswith(".json"):

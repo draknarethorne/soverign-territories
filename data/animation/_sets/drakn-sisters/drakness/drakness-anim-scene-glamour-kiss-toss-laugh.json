@@ -1,0 +1,23 @@
+{
+  "animId": "drakness-anim-scene-glamour-kiss-toss-laugh",
+  "kind": "animation",
+  "name": "KissTossLaugh",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-glamour.json",
+    "image": "Drakness_FireRed_Scene_Glamour_00003_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "actions": [
+    {
+      "sequence": "data/animation/sequences/kiss-toss-laugh.json"
+    }
+  ],
+  "world": "The crypt is alive around her: violet candle flames flicker and lean, mist drifts across the stone floor, faint violet light pulses inside the skulls and dust motes drift through the candlelight, while her gown and hair move with each gesture.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "The kiss, toss and laugh chain on a scene render, with the crypt moving behind her."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sequences/kiss-toss-laugh",
+  "kind": "sequence",
+  "name": "Kiss, toss, laugh",
+  "actions": [
+    {
+      "motion": "data/animation/motions/romantic/blow-a-kiss.json",
+      "seconds": 2
+    },
+    {
+      "motion": "data/animation/motions/candid/hair-toss.json"
+    },
+    {
+      "motion": "data/animation/motions/candid/break-pose-laugh.json",
+      "with": [
+        {
+          "motion": "data/animation/motions/magic/eyes-glow.json"
+        }
+      ],
+      "transition": "settle"
+    },
+    "{{She}} gives the camera one last playful wink."
+  ]
+}
