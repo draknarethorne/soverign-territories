@@ -86,6 +86,8 @@ python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firere
 
 ### Hand-curated workflows
 
+Curated workflows write to their own output folder, `<set>/<Hero>/_curated/<name>` (for example `drakn-sisters/Drakness/_curated/`), so hand-tuned renders never mix with the generated families. `fork` and `pull` set this prefix for you (and patch the workspace copy to match); only the SaveImage prefix changes.
+
 Generated workflows are rebuilt from prompts, so a hand edit to one would be overwritten. Anything you tune by hand lives in
 `workflows/_curated/<set>/<Hero>/` instead. `make` and `deploy` never touch that folder.
 
