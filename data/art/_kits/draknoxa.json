@@ -1,0 +1,147 @@
+{
+  "hero": "Draknoxa",
+  "group": "drakn-sisters",
+  "slug": "draknoxa",
+  "class": "Alchemist",
+  "element": "Poison",
+  "library": true,
+  "underlayers": [
+    "wardrobe/swimwear/bralette-set",
+    "wardrobe/swimwear/push-up-bikini",
+    "wardrobe/swimwear/lace-bralette-set",
+    "wardrobe/swimwear/balconette-set",
+    "wardrobe/swimwear/high-neck-halter-bikini",
+    "wardrobe/swimwear/cutout-monokini",
+    "wardrobe/swimwear/second-skin-bodysuit",
+    "wardrobe/swimwear/backless-halter-one-piece",
+    "wardrobe/swimwear/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/chain-harness-bikini",
+    "wardrobe/swimwear/halter-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/slip-dress",
+    "wardrobe/clothing/dresses/wrap-dress",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/dresses/off-shoulder-dress",
+    "wardrobe/clothing/dresses/bodycon-mini-dress",
+    "wardrobe/clothing/dresses/strapless-cocktail-dress",
+    "wardrobe/clothing/gowns/mermaid-gown",
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/gowns/high-slit-gown",
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "wardrobe/clothing/sets/leather-pants-and-corset-top",
+    "wardrobe/clothing/sets/genie-pants-and-top",
+    "wardrobe/clothing/sets/long-skirt-and-bustier",
+    "wardrobe/clothing/sets/leather-catsuit",
+    "wardrobe/clothing/dresses/corset-dress",
+    "heroes/drakn-sisters/draknoxa/clothing/toxic-silk-gown",
+    "heroes/drakn-sisters/draknoxa/clothing/apothecary-dress",
+    "heroes/drakn-sisters/draknoxa/clothing/signature-robe",
+    "heroes/drakn-sisters/draknoxa/clothing/elegant-casting-gown",
+    "heroes/drakn-sisters/draknoxa/clothing/dawn-regalia"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/assassin-leathers",
+    "wardrobe/armor/leather/leather-corset-armor",
+    "wardrobe/armor/leather/leather-bikini-armor",
+    "wardrobe/armor/robes/hooded-assassin-robes",
+    "wardrobe/armor/scale/scale-halter-and-skirt",
+    "wardrobe/armor/mail/chain-bikini",
+    "heroes/drakn-sisters/draknoxa/armor/venomhide-corset-armor",
+    "heroes/drakn-sisters/draknoxa/armor/alchemist-apron-harness",
+    "heroes/drakn-sisters/draknoxa/armor/serpent-scale-armor",
+    "heroes/drakn-sisters/draknoxa/clothing/battle-gear"
+  ],
+  "motions": [
+    "motion/standing/commanding-cast",
+    "motion/standing/three-quarter-glamour",
+    "motion/standing/hand-on-hip-power",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/dynamic/twirl-spin",
+    "motion/dynamic/arching-twist",
+    "motion/dynamic/hair-flip-toss",
+    "motion/dynamic/kneeling-glamour",
+    "motion/walking/catwalk-confident",
+    "motion/walking/strut-runway",
+    "motion/romantic/windswept-dreamy",
+    "motion/romantic/sultry-over-shoulder"
+  ],
+  "showcase": [
+    {
+      "name": "Spell Calling",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknoxa/clothing/battle-gear",
+        "holding": "heroes/drakn-sisters/draknoxa/weapons/alembic-staff",
+        "effects": "Glowing venom wisps and moths rise and circle around her, {{MAGIC}} light streaming from the weapon in her hand, luminous droplets and green mist drifting in the rays.",
+        "background": "backgrounds/studio/radiant-burst"
+      }
+    },
+    {
+      "name": "Elemental Casting",
+      "components": {
+        "pose": "motion/standing/three-quarter-glamour",
+        "wearing": "heroes/drakn-sisters/draknoxa/clothing/signature-robe",
+        "effects": "A swirl of luminous droplets and green mist lifts around her raised hand, small floating flasks orbiting in a slow ring, small sparks of {{MAGIC}} light within it.",
+        "background": "backgrounds/studio/ember-dust-flare"
+      }
+    },
+    {
+      "name": "Armor Stand",
+      "components": {
+        "pose": "motion/standing/hand-on-hip-power",
+        "wearing": "heroes/drakn-sisters/draknoxa/armor/venomhide-corset-armor",
+        "effects": "A wall of luminous venom mist hang in the air behind her in a protective arc, {{MAGIC}} light running through them.",
+        "background": "backgrounds/studio/charcoal-magic-glow"
+      }
+    },
+    {
+      "name": "Elemental Dance",
+      "components": {
+        "pose": "motion/dynamic/twirl-spin",
+        "wearing": "heroes/drakn-sisters/draknoxa/clothing/toxic-silk-gown",
+        "effects": "Ribbons of {{MAGIC}} light trail from her hands and her hem as she spins, Glowing venom wisps and moths swirling in the air around her.",
+        "background": "backgrounds/studio/primary-gradient"
+      }
+    },
+    {
+      "name": "Runway Flair",
+      "components": {
+        "pose": "motion/walking/catwalk-confident",
+        "wearing": "heroes/drakn-sisters/draknoxa/armor/alchemist-apron-harness",
+        "effects": "Luminous mist rolls along the floor either side of her, luminous droplets and green mist rising around her.",
+        "background": "backgrounds/studio/theatrical-haze-spotlight"
+      }
+    },
+    {
+      "name": "Mirror Spirit",
+      "components": {
+        "pose": "motion/dynamic/kneeling-glamour",
+        "wearing": "heroes/drakn-sisters/draknoxa/clothing/dawn-regalia",
+        "effects": "A pale spirit double of her rises from her reflection in the floor, luminous droplets and green mist drifting between them.",
+        "background": "backgrounds/studio/mirror-floor-glow"
+      }
+    },
+    {
+      "name": "Celestial Rising",
+      "components": {
+        "pose": "motion/standing/over-the-shoulder-glance",
+        "wearing": "heroes/drakn-sisters/draknoxa/armor/celestial-armor",
+        "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+        "background": "backgrounds/studio/starfield-indigo"
+      }
+    },
+    {
+      "name": "Celestial Ascended",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknoxa/armor/celestial-armor",
+        "holding": "heroes/drakn-sisters/draknoxa/weapons/alembic-staff-ascended",
+        "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+        "background": "backgrounds/studio/prismatic-glass"
+      }
+    }
+  ]
+}

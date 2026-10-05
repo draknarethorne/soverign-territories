@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknara/armor/celestial-armor",
   "kind": "wearing",
   "name": "Celestial armor",
-  "description": "celestial armor of antique bronze: two sculpted domed plates of ornate pierced filigree that fully cover each breast, joined at the centre by a jewelled ornament set with a turquoise gem, and a matching ornate hip piece with a hanging front panel and a curved plate at each hip, every surface engraved with carved spirals, totem faces and mountain ridgelines with tiny turquoise inlays; each piece hangs against the skin held by magic alone, weightless and floating freely; midriff, shoulders and arms bare",
+  "description": "celestial armor of antique bronze: two small ornate filigree plates, each in the form of a round carved totem-face disc with a spiral border, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small mountain-peak chevron covering the front of the hips; every plate is engraved with carved spirals and tiny turquoise inlays and set with a turquoise; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin",
   "compatibleStages": [
     "armor",
     "showcase",
@@ -14,5 +14,5 @@
     "bikini",
     "female"
   ],
-  "notes": "Shaman / Earth. Signature earned armor: filigree plates fully covering the bust and hips, held by magic, motif drawn from her class and element."
+  "notes": "Shaman / Earth. Signature earned armor: small filigree plates at bikini-cup coverage, a different shape per sister, held by magic."
 }

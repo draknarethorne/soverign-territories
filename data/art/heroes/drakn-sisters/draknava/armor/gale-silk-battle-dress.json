@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/armor/gale-silk-battle-dress",
+  "kind": "wearing",
+  "name": "Gale silk battle dress",
+  "description": "a light {{PRIMARY}} silk battle dress with an armored silver bodice, a high-low skirt that streams in the wind and feathered bracers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "bard",
+    "wind",
+    "female"
+  ]
+}

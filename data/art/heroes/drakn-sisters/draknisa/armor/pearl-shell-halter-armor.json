@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/armor/pearl-shell-halter-armor",
+  "kind": "wearing",
+  "name": "Pearl-shell halter armor",
+  "description": "a halter bodice of scallop-shell plates joined by {{METAL}} chain and seed pearls, and a hip girdle of small shells, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "enchanter",
+    "water",
+    "female"
+  ]
+}

@@ -1,0 +1,36 @@
+=== Draknisa Thorne · Showcase: Spell Calling (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Wearing an enchanter's tide-mail: a corselet of overlapping pearl-and-polished platinum scales like fish mail, a flowing split skirt of deep-teal sea-silk, shell-edged vambraces and a cape of sheer wave-patterned gauze.
+
+Jewelry: a simple polished platinum necklace and small matching earrings.
+Legs & feet: bare feet with a delicate polished platinum anklet set with aquamarine stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a slender polished platinum staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of platinum, a soft aqua glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft.
+
+Dolphins and sea spirits of water rise and circle around her, aqua light streaming from the weapon in her hand, beads of water and spray drifting in the rays.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
+
+Studio backdrop: a dark seamless studio backdrop lit by a burst of aqua light radiating from behind the figure in soft rays, with fine floating motes of light and a bright halo behind the head.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

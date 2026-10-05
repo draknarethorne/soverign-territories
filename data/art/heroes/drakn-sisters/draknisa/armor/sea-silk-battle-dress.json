@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/armor/sea-silk-battle-dress",
+  "kind": "wearing",
+  "name": "Sea-silk battle dress",
+  "description": "a rippling {{PRIMARY}} sea-silk dress with an armored {{METAL}} bodice, a skirt slit high to the hip and wave-patterned vambraces",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "enchanter",
+    "water",
+    "female"
+  ]
+}

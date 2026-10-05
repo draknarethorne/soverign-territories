@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/armor/halo-priestess-armor",
+  "kind": "wearing",
+  "name": "Halo priestess armor",
+  "description": "a white-gold corset-bodice with a halo-ring collar, sheer ivory skirt panels edged in {{ACCENT_SOFT}} and armored bracers, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "cleric",
+    "light",
+    "female"
+  ]
+}

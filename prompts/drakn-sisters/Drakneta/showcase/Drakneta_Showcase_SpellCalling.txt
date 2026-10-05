@@ -1,0 +1,36 @@
+=== Drakneta Thorne · Showcase: Spell Calling (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a summoner's storm-plate: a fitted cuirass of bright gold with copper-coil inlay and lightning-fork engraving, a short pleated skirt of arc-white silk, spiked winged pauldrons and a cape edged in gold wire.
+
+Jewelry: a simple bright gold necklace and small matching earrings.
+Legs & feet: bare feet with a delicate bright gold anklet set with citrine stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a slender bright gold conduit rod in one hand, wound with copper coil and tipped with a forked prong, a citrine crystal at its heart crackling with white-hot electric arcs, fine tendrils of static running along the shaft.
+
+Arcs of lightning and sparks rise and circle around her, white-hot electric light streaming from the weapon in her hand, static sparks drifting in the rays.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
+
+Studio backdrop: a dark seamless studio backdrop lit by a burst of white-hot electric light radiating from behind the figure in soft rays, with fine floating motes of light and a bright halo behind the head.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

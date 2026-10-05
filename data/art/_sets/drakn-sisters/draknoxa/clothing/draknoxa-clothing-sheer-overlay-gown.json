@@ -1,0 +1,18 @@
+{
+  "artId": "draknoxa-clothing-sheer-overlay-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Sheer Overlay Gown",
+  "aesthetic": "a clean studio presentation of the sheer overlay gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/sheer-overlay-gown.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknoxa/clothing/Draknoxa_Clothing_SheerOverlayGown.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

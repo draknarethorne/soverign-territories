@@ -1,0 +1,28 @@
+=== Draknora Thorne · Head / Close-up (group: X_Head) — Edit (img2img) ===
+Incoming image: an A-pose (or hair variant) of Draknora Thorne. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional beauty glamour shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Close-up framed from the upper chest up: the head, face and hair fill the frame, with the bust and the length of the hair falling beside it visible at the bottom of the frame.
+
+View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.
+
+Keep high fidelity to facial likeness, bone structure, hairstyle, body, and wardrobe from the incoming image.
+
+Expression: a joyful, candid laugh - a wide open smile showing teeth, eyes crinkling at the corners, cheeks high and dimples showing if present.
+
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends, tone-on-tone dimension.
+
+Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural warm peach blush, groomed warm auburn-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+
+Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; dark brown lush lashes, defined lash line.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

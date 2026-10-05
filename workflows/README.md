@@ -31,6 +31,8 @@ every studio stage.
 | See what is where | `bin\status.cmd --hero Drakness`, `bin\workspaces.cmd` |
 | Move finished studio work to a sister's own workspace | `bin\promote-uat.cmd Drakness studio --dry-run` |
 | Move chosen scenes to the shared scene workspace | `bin\promote-uat.cmd Drakness scene --dry-run` |
+| Copy a sister's studio work to her workspace, scenes to the shared one | `python tools\workflows\comfy_workflows.py deploy --to uat --hero Draknara --class studio` and `... --group drakn-sisters --class scene` |
+| See which dev files are now duplicates, then remove them | `python tools\workflows\comfy_workflows.py cleanup --group drakn-sisters` (preview), add `--apply` (moves to backup; keeps edited, curated and undelivered files) |
 | Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
 | Keep what I made or changed in ComfyUI | `bin\pull-dev.cmd Drakness` |
 | Put the ST templates in dev | `bin\deploy-templates.cmd` |

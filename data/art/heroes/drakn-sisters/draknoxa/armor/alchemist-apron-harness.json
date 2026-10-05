@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/armor/alchemist-apron-harness",
+  "kind": "wearing",
+  "name": "Alchemist apron harness",
+  "description": "a leather apron-harness of crossed straps with brass buckles and many small pouches and vials, a short skirt of layered {{ACCENT_SOFT}} cloth and fingerless gloves",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "poison",
+    "female"
+  ]
+}

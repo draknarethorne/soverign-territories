@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/clothing/ember-mini-dress",
+  "kind": "wearing",
+  "name": "Ember mini dress",
+  "description": "a fitted mini dress with an ombre hem from {{PRIMARY}} to gold cut in flame points, thin straps and a sweetheart neckline",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "magician",
+    "fire",
+    "female"
+  ]
+}

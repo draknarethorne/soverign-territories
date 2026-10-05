@@ -1,0 +1,34 @@
+=== Drakniss Thorne · Showcase: Elemental Casting (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial sunrobe of ivory and Radiant Rose Gold silk with radiant rose gold sun embroidery, wide bell sleeves, a halo collar of radiant rose gold rays, an open front over a fitted ivory bodice and long slit skirt, a radiant rose gold sash with a sunburst clasp, a trailing hem of pleated gold-dusted gauze.
+
+Jewelry: a simple radiant rose gold necklace and small matching earrings.
+Legs & feet: bare feet with a delicate radiant rose gold anklet set with morganite stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+A swirl of golden motes and drifting feathers of light lifts around her raised hand, small orbs of light orbiting in a slow ring, small sparks of warm golden-white light within it.
+
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+
+Studio backdrop: a warm dark seamless studio backdrop filled with drifting dust and glowing ember motes, with a soft golden lens flare behind one shoulder.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/arc-mini-dress",
+  "kind": "wearing",
+  "name": "Arc mini dress",
+  "description": "a fitted mini dress threaded with electrum, a metallic sheen, a sweetheart neckline and an asymmetric hem",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "summoner",
+    "lightning",
+    "female"
+  ]
+}

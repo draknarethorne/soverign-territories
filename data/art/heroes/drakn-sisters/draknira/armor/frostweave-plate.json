@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/armor/frostweave-plate",
+  "kind": "wearing",
+  "name": "Frostweave plate",
+  "description": "white-silver plate etched with snowflake runes, a tall fur-lined collar, crystal-edged pauldrons and a split skirt of {{PRIMARY}} silk",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "wizard",
+    "ice",
+    "female"
+  ]
+}

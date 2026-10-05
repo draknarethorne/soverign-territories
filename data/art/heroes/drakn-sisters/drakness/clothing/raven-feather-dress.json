@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/raven-feather-dress",
+  "kind": "wearing",
+  "name": "Raven feather dress",
+  "description": "a fitted dress layered with glossy raven feathers, short at the front and long at the back, a deep neckline and {{METAL}} chain straps",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "necromancer",
+    "darkness",
+    "female"
+  ]
+}

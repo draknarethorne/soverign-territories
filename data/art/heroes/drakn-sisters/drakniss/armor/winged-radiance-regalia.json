@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/armor/winged-radiance-regalia",
+  "kind": "wearing",
+  "name": "Winged radiance regalia",
+  "description": "ceremonial armor of {{METAL}} with feathered wing pauldrons, a jewelled breastplate, long tassets and a floating sun-disc ornament",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "cleric",
+    "light",
+    "female"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "artId": "drakneta-x-pose-bralette-set",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/poses/Drakneta_X_Pose_BraletteSet.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/bralette-set.json"
+  },
+  "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
+}

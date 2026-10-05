@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/armor/conduit-halter-armor",
+  "kind": "wearing",
+  "name": "Conduit halter armor",
+  "description": "a plunging halter of coiled copper and {{METAL}} that crackles with static, a pleated arc-white skirt and a wire-wrapped belt, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "summoner",
+    "lightning",
+    "female"
+  ]
+}

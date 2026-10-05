@@ -1,0 +1,147 @@
+{
+  "hero": "Drakneta",
+  "group": "drakn-sisters",
+  "slug": "drakneta",
+  "class": "Summoner",
+  "element": "Lightning",
+  "library": true,
+  "underlayers": [
+    "wardrobe/swimwear/bralette-set",
+    "wardrobe/swimwear/push-up-bikini",
+    "wardrobe/swimwear/lace-bralette-set",
+    "wardrobe/swimwear/balconette-set",
+    "wardrobe/swimwear/high-neck-halter-bikini",
+    "wardrobe/swimwear/cutout-monokini",
+    "wardrobe/swimwear/second-skin-bodysuit",
+    "wardrobe/swimwear/backless-halter-one-piece",
+    "wardrobe/swimwear/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/chain-harness-bikini",
+    "wardrobe/swimwear/halter-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/slip-dress",
+    "wardrobe/clothing/dresses/wrap-dress",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/dresses/off-shoulder-dress",
+    "wardrobe/clothing/dresses/bodycon-mini-dress",
+    "wardrobe/clothing/dresses/strapless-cocktail-dress",
+    "wardrobe/clothing/gowns/mermaid-gown",
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/gowns/high-slit-gown",
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "wardrobe/clothing/sets/leather-pants-and-corset-top",
+    "wardrobe/clothing/sets/genie-pants-and-top",
+    "wardrobe/clothing/sets/long-skirt-and-bustier",
+    "wardrobe/clothing/gowns/one-shoulder-gown",
+    "wardrobe/clothing/dresses/one-shoulder-dress",
+    "heroes/drakn-sisters/drakneta/clothing/thunder-silk-gown",
+    "heroes/drakn-sisters/drakneta/clothing/arc-mini-dress",
+    "heroes/drakn-sisters/drakneta/clothing/signature-robe",
+    "heroes/drakn-sisters/drakneta/clothing/elegant-casting-gown",
+    "heroes/drakn-sisters/drakneta/clothing/dawn-regalia"
+  ],
+  "armor": [
+    "wardrobe/armor/runic/runic-warplate",
+    "wardrobe/armor/plate/gothic-plate",
+    "wardrobe/armor/mail/mail-and-leather",
+    "wardrobe/armor/scale/lamellar-armor",
+    "wardrobe/armor/leather/studded-leather",
+    "wardrobe/armor/plate/female-plate",
+    "heroes/drakn-sisters/drakneta/armor/stormcoil-plate",
+    "heroes/drakn-sisters/drakneta/armor/conduit-halter-armor",
+    "heroes/drakn-sisters/drakneta/armor/tempest-summoner-vestments",
+    "heroes/drakn-sisters/drakneta/clothing/battle-gear"
+  ],
+  "motions": [
+    "motion/standing/commanding-cast",
+    "motion/standing/three-quarter-glamour",
+    "motion/standing/hand-on-hip-power",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/dynamic/twirl-spin",
+    "motion/dynamic/arching-twist",
+    "motion/dynamic/hair-flip-toss",
+    "motion/dynamic/kneeling-glamour",
+    "motion/walking/catwalk-confident",
+    "motion/walking/strut-runway",
+    "motion/romantic/windswept-dreamy",
+    "motion/romantic/sultry-over-shoulder"
+  ],
+  "showcase": [
+    {
+      "name": "Spell Calling",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/drakneta/clothing/battle-gear",
+        "holding": "heroes/drakn-sisters/drakneta/weapons/storm-conduit-rod",
+        "effects": "Arcs of lightning and sparks rise and circle around her, {{MAGIC}} light streaming from the weapon in her hand, static sparks drifting in the rays.",
+        "background": "backgrounds/studio/radiant-burst"
+      }
+    },
+    {
+      "name": "Elemental Casting",
+      "components": {
+        "pose": "motion/standing/three-quarter-glamour",
+        "wearing": "heroes/drakn-sisters/drakneta/clothing/signature-robe",
+        "effects": "A swirl of static sparks lifts around her raised hand, small orbs of lightning orbiting in a slow ring, small sparks of {{MAGIC}} light within it.",
+        "background": "backgrounds/studio/ember-dust-flare"
+      }
+    },
+    {
+      "name": "Armor Stand",
+      "components": {
+        "pose": "motion/standing/hand-on-hip-power",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/stormcoil-plate",
+        "effects": "A cage of lightning arcs hang in the air behind her in a protective arc, {{MAGIC}} light running through them.",
+        "background": "backgrounds/studio/charcoal-magic-glow"
+      }
+    },
+    {
+      "name": "Elemental Dance",
+      "components": {
+        "pose": "motion/dynamic/twirl-spin",
+        "wearing": "heroes/drakn-sisters/drakneta/clothing/thunder-silk-gown",
+        "effects": "Ribbons of {{MAGIC}} light trail from her hands and her hem as she spins, Arcs of lightning and sparks swirling in the air around her.",
+        "background": "backgrounds/studio/primary-gradient"
+      }
+    },
+    {
+      "name": "Runway Flair",
+      "components": {
+        "pose": "motion/walking/catwalk-confident",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/conduit-halter-armor",
+        "effects": "Arcs of lightning crackle along the floor either side of her, static sparks rising around her.",
+        "background": "backgrounds/studio/theatrical-haze-spotlight"
+      }
+    },
+    {
+      "name": "Mirror Spirit",
+      "components": {
+        "pose": "motion/dynamic/kneeling-glamour",
+        "wearing": "heroes/drakn-sisters/drakneta/clothing/dawn-regalia",
+        "effects": "A pale spirit double of her rises from her reflection in the floor, static sparks drifting between them.",
+        "background": "backgrounds/studio/mirror-floor-glow"
+      }
+    },
+    {
+      "name": "Celestial Rising",
+      "components": {
+        "pose": "motion/standing/over-the-shoulder-glance",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-armor",
+        "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+        "background": "backgrounds/studio/starfield-indigo"
+      }
+    },
+    {
+      "name": "Celestial Ascended",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-armor",
+        "holding": "heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended",
+        "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+        "background": "backgrounds/studio/prismatic-glass"
+      }
+    }
+  ]
+}

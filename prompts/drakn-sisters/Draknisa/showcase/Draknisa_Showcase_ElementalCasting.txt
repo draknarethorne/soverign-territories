@@ -1,0 +1,34 @@
+=== Draknisa Thorne · Showcase: Elemental Casting (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Wearing a floor-length ceremonial tidecaller robe of Deep Oceanic Blue and deep-teal silk with wave-patterned polished platinum embroidery, wide sleeves of sheer sea-foam gauze, a high collar of layered shell plates, an open front over a fitted Deep Oceanic Blue bodice and long slit skirt, a polished platinum belt of linked pearls, a long train that ripples like water.
+
+Jewelry: a simple polished platinum necklace and small matching earrings.
+Legs & feet: bare feet with a delicate polished platinum anklet set with aquamarine stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+A swirl of beads of water and spray lifts around her raised hand, floating spheres of water orbiting in a slow ring, small sparks of aqua light within it.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
+
+Studio backdrop: a warm dark seamless studio backdrop filled with drifting dust and glowing ember motes, with a soft golden lens flare behind one shoulder.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

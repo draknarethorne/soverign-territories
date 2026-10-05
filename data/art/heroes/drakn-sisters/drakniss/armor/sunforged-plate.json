@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/armor/sunforged-plate",
+  "kind": "wearing",
+  "name": "Sunforged plate",
+  "description": "polished white-gold plate with a sunburst across the chest, winged pauldrons, a short flared skirt of ivory silk and a {{GEM}} stone at the throat",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "cleric",
+    "light",
+    "female"
+  ]
+}

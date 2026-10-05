@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/armor/tidemail-corselet",
+  "kind": "wearing",
+  "name": "Tidemail corselet",
+  "description": "a corselet of overlapping fish-scale mail in pearl and {{METAL}}, shell pauldrons and a flowing split skirt of deep-teal sea-silk",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "enchanter",
+    "water",
+    "female"
+  ]
+}

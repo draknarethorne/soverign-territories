@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/armor/stormcoil-plate",
+  "kind": "wearing",
+  "name": "Stormcoil plate",
+  "description": "electrum plate with copper-coil inlay and lightning-fork engraving, spiked pauldrons, a short pleated skirt of arc-white silk and a {{GEM}} stone at the chest",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "summoner",
+    "lightning",
+    "female"
+  ]
+}

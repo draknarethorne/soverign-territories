@@ -1,0 +1,10 @@
+{
+  "artId": "draknora-motion-hand-on-hip-power",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "component": "data/art/motion/standing/hand-on-hip-power.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "denoise": "~0.4-0.6",
+  "output": "prompts/drakn-sisters/Draknora/motion/standing/Draknora_Motion_Standing_HandOnHipPower.txt"
+}

@@ -1,0 +1,147 @@
+{
+  "hero": "Draknira",
+  "group": "drakn-sisters",
+  "slug": "draknira",
+  "class": "Wizard",
+  "element": "Ice",
+  "library": true,
+  "underlayers": [
+    "wardrobe/swimwear/bralette-set",
+    "wardrobe/swimwear/push-up-bikini",
+    "wardrobe/swimwear/lace-bralette-set",
+    "wardrobe/swimwear/balconette-set",
+    "wardrobe/swimwear/high-neck-halter-bikini",
+    "wardrobe/swimwear/cutout-monokini",
+    "wardrobe/swimwear/second-skin-bodysuit",
+    "wardrobe/swimwear/backless-halter-one-piece",
+    "wardrobe/swimwear/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/chain-harness-bikini",
+    "wardrobe/swimwear/halter-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/slip-dress",
+    "wardrobe/clothing/dresses/wrap-dress",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/dresses/off-shoulder-dress",
+    "wardrobe/clothing/dresses/bodycon-mini-dress",
+    "wardrobe/clothing/dresses/strapless-cocktail-dress",
+    "wardrobe/clothing/gowns/mermaid-gown",
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/gowns/high-slit-gown",
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "wardrobe/clothing/sets/leather-pants-and-corset-top",
+    "wardrobe/clothing/sets/genie-pants-and-top",
+    "wardrobe/clothing/sets/long-skirt-and-bustier",
+    "wardrobe/clothing/gowns/cape-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "heroes/drakn-sisters/draknira/clothing/ice-silk-gown",
+    "heroes/drakn-sisters/draknira/clothing/winter-fur-mini-dress",
+    "heroes/drakn-sisters/draknira/clothing/signature-robe",
+    "heroes/drakn-sisters/draknira/clothing/elegant-casting-gown",
+    "heroes/drakn-sisters/draknira/clothing/dawn-regalia"
+  ],
+  "armor": [
+    "wardrobe/armor/crystal/frost-crystal-armor",
+    "wardrobe/armor/plate/full-plate",
+    "wardrobe/armor/plate/plate-bikini",
+    "wardrobe/armor/mail/chain-bikini",
+    "wardrobe/armor/robes/battle-mage-robes",
+    "wardrobe/armor/hide/fur-and-leather-bikini",
+    "heroes/drakn-sisters/draknira/armor/frostweave-plate",
+    "heroes/drakn-sisters/draknira/armor/snowflake-corset-armor",
+    "heroes/drakn-sisters/draknira/armor/aurora-mage-battle-gown",
+    "heroes/drakn-sisters/draknira/clothing/battle-gear"
+  ],
+  "motions": [
+    "motion/standing/commanding-cast",
+    "motion/standing/three-quarter-glamour",
+    "motion/standing/hand-on-hip-power",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/dynamic/twirl-spin",
+    "motion/dynamic/arching-twist",
+    "motion/dynamic/hair-flip-toss",
+    "motion/dynamic/kneeling-glamour",
+    "motion/walking/catwalk-confident",
+    "motion/walking/strut-runway",
+    "motion/romantic/windswept-dreamy",
+    "motion/romantic/sultry-over-shoulder"
+  ],
+  "showcase": [
+    {
+      "name": "Spell Calling",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknira/clothing/battle-gear",
+        "holding": "heroes/drakn-sisters/draknira/weapons/frost-crystal-staff",
+        "effects": "Snow sprites and ice crystals rise and circle around her, {{MAGIC}} light streaming from the weapon in her hand, snowflakes and diamond dust drifting in the rays.",
+        "background": "backgrounds/studio/radiant-burst"
+      }
+    },
+    {
+      "name": "Elemental Casting",
+      "components": {
+        "pose": "motion/standing/three-quarter-glamour",
+        "wearing": "heroes/drakn-sisters/draknira/clothing/signature-robe",
+        "effects": "A swirl of snowflakes and diamond dust lifts around her raised hand, small ice shards orbiting in a slow ring, small sparks of {{MAGIC}} light within it.",
+        "background": "backgrounds/studio/ember-dust-flare"
+      }
+    },
+    {
+      "name": "Armor Stand",
+      "components": {
+        "pose": "motion/standing/hand-on-hip-power",
+        "wearing": "heroes/drakn-sisters/draknira/armor/frostweave-plate",
+        "effects": "A wall of ice crystal hang in the air behind her in a protective arc, {{MAGIC}} light running through them.",
+        "background": "backgrounds/studio/charcoal-magic-glow"
+      }
+    },
+    {
+      "name": "Elemental Dance",
+      "components": {
+        "pose": "motion/dynamic/twirl-spin",
+        "wearing": "heroes/drakn-sisters/draknira/clothing/ice-silk-gown",
+        "effects": "Ribbons of {{MAGIC}} light trail from her hands and her hem as she spins, Snow sprites and ice crystals swirling in the air around her.",
+        "background": "backgrounds/studio/primary-gradient"
+      }
+    },
+    {
+      "name": "Runway Flair",
+      "components": {
+        "pose": "motion/walking/catwalk-confident",
+        "wearing": "heroes/drakn-sisters/draknira/armor/snowflake-corset-armor",
+        "effects": "Frost spreads along the floor either side of her, snowflakes and diamond dust rising around her.",
+        "background": "backgrounds/studio/theatrical-haze-spotlight"
+      }
+    },
+    {
+      "name": "Mirror Spirit",
+      "components": {
+        "pose": "motion/dynamic/kneeling-glamour",
+        "wearing": "heroes/drakn-sisters/draknira/clothing/dawn-regalia",
+        "effects": "A pale spirit double of her rises from her reflection in the floor, snowflakes and diamond dust drifting between them.",
+        "background": "backgrounds/studio/mirror-floor-glow"
+      }
+    },
+    {
+      "name": "Celestial Rising",
+      "components": {
+        "pose": "motion/standing/over-the-shoulder-glance",
+        "wearing": "heroes/drakn-sisters/draknira/armor/celestial-armor",
+        "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+        "background": "backgrounds/studio/starfield-indigo"
+      }
+    },
+    {
+      "name": "Celestial Ascended",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknira/armor/celestial-armor",
+        "holding": "heroes/drakn-sisters/draknira/weapons/frost-crystal-staff-ascended",
+        "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+        "background": "backgrounds/studio/prismatic-glass"
+      }
+    }
+  ]
+}

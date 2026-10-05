@@ -1,0 +1,10 @@
+{
+  "artId": "drakneta-motion-arching-twist",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "component": "data/art/motion/dynamic/arching-twist.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "denoise": "~0.4-0.6",
+  "output": "prompts/drakn-sisters/Drakneta/motion/dynamic/Drakneta_Motion_Dynamic_ArchingTwist.txt"
+}

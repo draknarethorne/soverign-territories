@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/armor/snowflake-corset-armor",
+  "kind": "wearing",
+  "name": "Snowflake corset armor",
+  "description": "a corset of overlapping frosted {{METAL}} plates shaped like snowflakes, crystal pauldrons and a short skirt of layered ice-blue silk",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "wizard",
+    "ice",
+    "female"
+  ]
+}

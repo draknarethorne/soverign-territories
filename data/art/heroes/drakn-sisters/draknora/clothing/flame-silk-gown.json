@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/clothing/flame-silk-gown",
+  "kind": "wearing",
+  "name": "Flame silk gown",
+  "description": "a {{PRIMARY}} silk gown with flame-shaped slits up the skirt, a plunging neckline and {{METAL}} thread edging that glints like embers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "magician",
+    "fire",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/armor/serpent-scale-armor",
+  "kind": "wearing",
+  "name": "Serpent-scale armor",
+  "description": "a bodice and hip girdle of overlapping serpent scales in {{PRIMARY}} and {{ACCENT_SOFT}}, a coiled brass serpent clasp and a hooded half-cape",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "poison",
+    "female"
+  ]
+}

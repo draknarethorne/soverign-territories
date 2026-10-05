@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/armor/aurora-mage-battle-gown",
+  "kind": "wearing",
+  "name": "Aurora mage battle gown",
+  "description": "a fitted {{PRIMARY}} gown shaded like an aurora from {{PRIMARY}} to {{ACCENT_SOFT}}, an armored {{METAL}} bodice, a high slit and fur-trimmed bracers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "wizard",
+    "ice",
+    "female"
+  ]
+}

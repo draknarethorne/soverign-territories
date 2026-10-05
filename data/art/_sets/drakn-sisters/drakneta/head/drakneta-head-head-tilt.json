@@ -1,0 +1,14 @@
+{
+  "artId": "drakneta-head-head-tilt",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Head Tilt",
+  "components": {
+    "view": "data/art/studio/views/head/head-tilt.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/head/Drakneta_Head_head_tilt.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

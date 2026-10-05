@@ -1,0 +1,10 @@
+{
+  "artId": "drakneta-motion-commanding-cast",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "component": "data/art/motion/standing/commanding-cast.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "denoise": "~0.4-0.6",
+  "output": "prompts/drakn-sisters/Drakneta/motion/standing/Drakneta_Motion_Standing_CommandingCast.txt"
+}

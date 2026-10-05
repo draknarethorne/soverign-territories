@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/armor/heartwood-bark-armor",
+  "kind": "wearing",
+  "name": "Heartwood bark armor",
+  "description": "a bodice of overlapping heartwood bark plates in {{PRIMARY}} and {{ACCENT_SOFT}}, vine-wrapped pauldrons with tiny flowers and a skirt of layered leaves, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "druid",
+    "grass",
+    "female"
+  ]
+}

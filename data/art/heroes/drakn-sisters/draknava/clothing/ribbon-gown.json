@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/ribbon-gown",
+  "kind": "wearing",
+  "name": "Ribbon gown",
+  "description": "a gown of layered silk ribbons in {{PRIMARY}} and {{ACCENT_SOFT}} that stream and swirl, a plunging neckline and thin shoulder cords",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "bard",
+    "wind",
+    "female"
+  ]
+}

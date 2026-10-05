@@ -1,0 +1,39 @@
+=== Draknava Thorne · Motion (group: Motion) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Change ONLY the pose/motion; keep face, body, hair, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Maintain the existing outfit and hairstyle expressly.
+
+Motion-generated breeze, swirling around her.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+Body: captured mid-twirl, torso rotating, skirt or drape flaring outward.
+
+Head: turned with the spin, following the motion.
+
+Gaze: bright, joyful, glancing toward the camera.
+
+Expression: joyful, carefree, laughing smile.
+
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring, natural studio eyes, not glowing.
+
+Makeup: soft and natural, with a subtly blended silver-toned eyeshadow, a light natural soft pink blush, groomed soft ash-grey brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+
+Pose: arms extended slightly for balance, caught mid-spin.
+
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

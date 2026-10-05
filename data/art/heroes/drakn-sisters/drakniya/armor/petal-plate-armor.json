@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/armor/petal-plate-armor",
+  "kind": "wearing",
+  "name": "Petal plate armor",
+  "description": "armor of overlapping petal-shaped plates in {{PRIMARY}} and {{METAL}}, a sculpted bodice, flared petal tassets and a {{GEM}} stone at the chest",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "druid",
+    "grass",
+    "female"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "artId": "drakniss-head-over-shoulder",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Over Shoulder",
+  "components": {
+    "view": "data/art/studio/views/head/over-shoulder.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/head/Drakniss_Head_over_shoulder.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

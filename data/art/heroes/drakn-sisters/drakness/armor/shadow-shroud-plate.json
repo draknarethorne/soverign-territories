@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/shadow-shroud-plate",
+  "kind": "wearing",
+  "name": "Shadow-shroud plate",
+  "description": "black plate etched with {{MAGIC}} sigils, raven-wing pauldrons and a long shadow-silk skirt that trails like smoke, split high at the hip",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "necromancer",
+    "darkness",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/clothing/wave-silk-gown",
+  "kind": "wearing",
+  "name": "Wave silk gown",
+  "description": "a flowing {{PRIMARY}} and teal silk gown that ripples like water, a plunging neckline, thin straps and a high slit",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "enchanter",
+    "water",
+    "female"
+  ]
+}

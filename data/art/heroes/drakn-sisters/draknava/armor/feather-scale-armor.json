@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/armor/feather-scale-armor",
+  "kind": "wearing",
+  "name": "Feather-scale armor",
+  "description": "armor of overlapping feather-shaped silver scales over a {{PRIMARY}} base, winged pauldrons and a skirt of layered silk scarves",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "bard",
+    "wind",
+    "female"
+  ]
+}

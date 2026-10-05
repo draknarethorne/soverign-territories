@@ -1,0 +1,34 @@
+=== Drakneta Thorne · Showcase: Celestial Rising (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Wearing celestial armor of bright electrum: two small ornate filigree plates, each in the form of an angular shape with forked lightning-bolt edges, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small ring-sigil circle covering the front of the hips; every plate is engraved with arc-coil lines and small branching bolts and set with an arc-white gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin.
+
+Jewelry: a simple bright gold necklace and small matching earrings.
+Legs & feet: bare feet with a delicate bright gold anklet set with citrine stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Fine stars drift and glitter around her and tiny points of white-hot electric light trace the filigree of her armor, a soft ring of starlight behind her head.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, subtle golden-peach-tinted satin lips, groomed golden-brown brows, dark brown lashes, fingernails and toenails natural or Light Gold; present, never heavy.
+
+Studio backdrop: a deep indigo seamless studio backdrop scattered with fine stars and a soft violet-and-gold nebula glow, a gentle ring of starlight behind the figure.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/toxic-silk-gown",
+  "kind": "wearing",
+  "name": "Toxic silk gown",
+  "description": "a {{PRIMARY}} and acid-lime silk gown with a high slit, a plunging neckline and a hem that fades like spilled venom",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "poison",
+    "female"
+  ]
+}

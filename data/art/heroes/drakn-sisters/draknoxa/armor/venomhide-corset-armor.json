@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/armor/venomhide-corset-armor",
+  "kind": "wearing",
+  "name": "Venomhide corset armor",
+  "description": "a corset of {{PRIMARY}} dragonhide with brass buckles, a bandolier of glowing vials, spiked pauldrons and a short ruffled skirt",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "poison",
+    "female"
+  ]
+}

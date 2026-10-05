@@ -1,0 +1,14 @@
+{
+  "artId": "drakness-head-three-quarter-right",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Three-Quarter Right",
+  "components": {
+    "view": "data/art/studio/views/head/three-quarter-right.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/head/Drakness_Head_three_quarter_right.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

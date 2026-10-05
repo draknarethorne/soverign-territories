@@ -1,0 +1,13 @@
+{
+  "artId": "drakniss-x-pose-chain-harness-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/poses/Drakniss_X_Pose_ChainHarnessBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/chain-harness-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
+}

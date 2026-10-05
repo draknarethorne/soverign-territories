@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/pyromancer-battle-robes",
+  "kind": "wearing",
+  "name": "Pyromancer battle robes",
+  "description": "fitted {{PRIMARY}} and copper robes cut high at the leg with flame embroidery in {{ACCENT_SOFT}}, armored bracers and a scorched half-cape",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "magician",
+    "fire",
+    "female"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "hero": "Draknisa",
+  "group": "drakn-sisters",
+  "slug": "draknisa",
+  "class": "Enchanter",
+  "element": "Water",
+  "library": true,
+  "underlayers": [
+    "wardrobe/swimwear/bralette-set",
+    "wardrobe/swimwear/push-up-bikini",
+    "wardrobe/swimwear/lace-bralette-set",
+    "wardrobe/swimwear/balconette-set",
+    "wardrobe/swimwear/high-neck-halter-bikini",
+    "wardrobe/swimwear/cutout-monokini",
+    "wardrobe/swimwear/second-skin-bodysuit",
+    "wardrobe/swimwear/backless-halter-one-piece",
+    "wardrobe/swimwear/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/chain-harness-bikini",
+    "wardrobe/swimwear/halter-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/slip-dress",
+    "wardrobe/clothing/dresses/wrap-dress",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/dresses/off-shoulder-dress",
+    "wardrobe/clothing/dresses/bodycon-mini-dress",
+    "wardrobe/clothing/dresses/strapless-cocktail-dress",
+    "wardrobe/clothing/gowns/mermaid-gown",
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/gowns/high-slit-gown",
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "wardrobe/clothing/sets/leather-pants-and-corset-top",
+    "wardrobe/clothing/sets/genie-pants-and-top",
+    "wardrobe/clothing/sets/long-skirt-and-bustier",
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/dresses/slip-dress",
+    "heroes/drakn-sisters/draknisa/clothing/wave-silk-gown",
+    "heroes/drakn-sisters/draknisa/clothing/coral-lace-mini-dress",
+    "heroes/drakn-sisters/draknisa/clothing/signature-robe",
+    "heroes/drakn-sisters/draknisa/clothing/elegant-casting-gown",
+    "heroes/drakn-sisters/draknisa/clothing/dawn-regalia"
+  ],
+  "armor": [
+    "wardrobe/armor/mail/chain-hauberk-long",
+    "wardrobe/armor/mail/mail-skirt-and-bandeau",
+    "wardrobe/armor/scale/scale-halter-and-skirt",
+    "wardrobe/armor/robes/silk-battle-dress",
+    "wardrobe/armor/robes/priestess-robes",
+    "wardrobe/armor/plate/female-plate",
+    "heroes/drakn-sisters/draknisa/armor/tidemail-corselet",
+    "heroes/drakn-sisters/draknisa/armor/pearl-shell-halter-armor",
+    "heroes/drakn-sisters/draknisa/armor/sea-silk-battle-dress",
+    "heroes/drakn-sisters/draknisa/clothing/battle-gear"
+  ],
+  "motions": [
+    "motion/standing/commanding-cast",
+    "motion/standing/three-quarter-glamour",
+    "motion/standing/hand-on-hip-power",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/dynamic/twirl-spin",
+    "motion/dynamic/arching-twist",
+    "motion/dynamic/hair-flip-toss",
+    "motion/dynamic/kneeling-glamour",
+    "motion/walking/catwalk-confident",
+    "motion/walking/strut-runway",
+    "motion/romantic/windswept-dreamy",
+    "motion/romantic/sultry-over-shoulder"
+  ],
+  "showcase": [
+    {
+      "name": "Spell Calling",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknisa/clothing/battle-gear",
+        "holding": "heroes/drakn-sisters/draknisa/weapons/tidepearl-staff",
+        "effects": "Dolphins and sea spirits of water rise and circle around her, {{MAGIC}} light streaming from the weapon in her hand, beads of water and spray drifting in the rays.",
+        "background": "backgrounds/studio/radiant-burst"
+      }
+    },
+    {
+      "name": "Elemental Casting",
+      "components": {
+        "pose": "motion/standing/three-quarter-glamour",
+        "wearing": "heroes/drakn-sisters/draknisa/clothing/signature-robe",
+        "effects": "A swirl of beads of water and spray lifts around her raised hand, floating spheres of water orbiting in a slow ring, small sparks of {{MAGIC}} light within it.",
+        "background": "backgrounds/studio/ember-dust-flare"
+      }
+    },
+    {
+      "name": "Armor Stand",
+      "components": {
+        "pose": "motion/standing/hand-on-hip-power",
+        "wearing": "heroes/drakn-sisters/draknisa/armor/tidemail-corselet",
+        "effects": "Arcs of standing water hang in the air behind her in a protective arc, {{MAGIC}} light running through them.",
+        "background": "backgrounds/studio/charcoal-magic-glow"
+      }
+    },
+    {
+      "name": "Elemental Dance",
+      "components": {
+        "pose": "motion/dynamic/twirl-spin",
+        "wearing": "heroes/drakn-sisters/draknisa/clothing/wave-silk-gown",
+        "effects": "Ribbons of {{MAGIC}} light trail from her hands and her hem as she spins, Dolphins and sea spirits of water swirling in the air around her.",
+        "background": "backgrounds/studio/primary-gradient"
+      }
+    },
+    {
+      "name": "Runway Flair",
+      "components": {
+        "pose": "motion/walking/catwalk-confident",
+        "wearing": "heroes/drakn-sisters/draknisa/armor/pearl-shell-halter-armor",
+        "effects": "Shallow ripples spread along the floor either side of her, beads of water and spray rising around her.",
+        "background": "backgrounds/studio/theatrical-haze-spotlight"
+      }
+    },
+    {
+      "name": "Mirror Spirit",
+      "components": {
+        "pose": "motion/dynamic/kneeling-glamour",
+        "wearing": "heroes/drakn-sisters/draknisa/clothing/dawn-regalia",
+        "effects": "A pale spirit double of her rises from her reflection in the floor, beads of water and spray drifting between them.",
+        "background": "backgrounds/studio/mirror-floor-glow"
+      }
+    },
+    {
+      "name": "Celestial Rising",
+      "components": {
+        "pose": "motion/standing/over-the-shoulder-glance",
+        "wearing": "heroes/drakn-sisters/draknisa/armor/celestial-armor",
+        "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+        "background": "backgrounds/studio/starfield-indigo"
+      }
+    },
+    {
+      "name": "Celestial Ascended",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknisa/armor/celestial-armor",
+        "holding": "heroes/drakn-sisters/draknisa/weapons/tidepearl-staff-ascended",
+        "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+        "background": "backgrounds/studio/prismatic-glass"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/forgefire-plate",
+  "kind": "wearing",
+  "name": "Forgefire plate",
+  "description": "copper-and-red plate with flame-cut edges and glowing {{MAGIC}} seams, a sculpted cuirass, pauldrons and a short flared plate skirt, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "magician",
+    "fire",
+    "female"
+  ]
+}

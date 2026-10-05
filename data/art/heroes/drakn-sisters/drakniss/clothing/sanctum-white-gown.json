@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/clothing/sanctum-white-gown",
+  "kind": "wearing",
+  "name": "Sanctum white gown",
+  "description": "a white-and-gold gown with a plunging neckline, sheer long sleeves, a {{METAL}} sash and a flowing skirt to the floor",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "cleric",
+    "light",
+    "female"
+  ]
+}

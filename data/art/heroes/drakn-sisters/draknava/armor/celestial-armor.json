@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknava/armor/celestial-armor",
   "kind": "wearing",
   "name": "Celestial armor",
-  "description": "celestial armor of polished silver: two sculpted domed plates of ornate pierced filigree that fully cover each breast, joined at the centre by a jewelled ornament set with a jade gem, and a matching ornate hip piece with a hanging front panel and a curved plate at each hip, every surface engraved with lyres, feathers and wind spirals with tiny drifting stars; each piece hangs against the skin held by magic alone, weightless and floating freely; midriff, shoulders and arms bare",
+  "description": "celestial armor of polished silver: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small lyre shape covering the front of the hips; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a jade gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin",
   "compatibleStages": [
     "armor",
     "showcase",
@@ -14,5 +14,5 @@
     "bikini",
     "female"
   ],
-  "notes": "Bard / Wind. Signature earned armor: filigree plates fully covering the bust and hips, held by magic, motif drawn from her class and element."
+  "notes": "Bard / Wind. Signature earned armor: small filigree plates at bikini-cup coverage, a different shape per sister, held by magic."
 }

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/armor/songweaver-corset-armor",
+  "kind": "wearing",
+  "name": "Songweaver corset armor",
+  "description": "a corset of jade leather with silver lyre-string lacing, feathered pauldrons, a short skirt of streaming ribbons and a slim lyre on a strap",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "bard",
+    "wind",
+    "female"
+  ]
+}

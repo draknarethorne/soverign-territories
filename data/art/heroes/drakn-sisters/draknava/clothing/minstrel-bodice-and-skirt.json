@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/minstrel-bodice-and-skirt",
+  "kind": "wearing",
+  "name": "Minstrel bodice and skirt",
+  "description": "a laced {{PRIMARY}} bodice with a deep neckline and a skirt of layered silk scarves in {{ACCENT_SOFT}} that flutters at the hem, a bell-hung belt",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "bard",
+    "wind",
+    "female"
+  ]
+}

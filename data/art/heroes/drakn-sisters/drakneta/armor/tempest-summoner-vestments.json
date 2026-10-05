@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/armor/tempest-summoner-vestments",
+  "kind": "wearing",
+  "name": "Tempest summoner vestments",
+  "description": "fitted storm-grey vestments threaded with gold lightning embroidery, armored bracers, a high collar and a cape edged in gold wire",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "summoner",
+    "lightning",
+    "female"
+  ]
+}

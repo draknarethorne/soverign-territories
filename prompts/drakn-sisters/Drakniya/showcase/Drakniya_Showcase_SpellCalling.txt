@@ -1,0 +1,36 @@
+=== Drakniya Thorne · Showcase: Spell Calling (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
+Wearing a druid's living armour: a bodice of overlapping bark-and-leaf plates in Emerald Green and sage, vine-wrapped pauldrons with small flowers, a skirt of layered leaves over leather greaves and a hooded mantle of moss.
+
+Jewelry: a simple antique gold necklace and small matching earrings.
+Legs & feet: bare feet with a delicate antique gold anklet set with peridot stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a gnarled living-wood staff in one hand, the bark twisting naturally up the shaft, leafy vines and small blossoms curling along it, the top opening into a cradle of branches holding a glowing bright emerald-green seed-orb, a few fresh green leaves sprouting from the wood.
+
+Fireflies and butterflies rise and circle around her, bright emerald-green light streaming from the weapon in her hand, petals and spores drifting in the rays.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
+
+Studio backdrop: a dark seamless studio backdrop lit by a burst of bright emerald-green light radiating from behind the figure in soft rays, with fine floating motes of light and a bright halo behind the head.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,18 @@
+{
+  "artId": "drakness-clothing-raven-feather-dress",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Raven feather dress",
+  "aesthetic": "a clean studio presentation of the raven feather dress",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/raven-feather-dress.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakness/clothing/Drakness_Clothing_RavenFeatherDress.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

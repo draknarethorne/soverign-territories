@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/meadow-wrap-dress",
+  "kind": "wearing",
+  "name": "Meadow wrap dress",
+  "description": "a flowing wrap dress with floral embroidery, a deep V neckline, a tie at the waist and a skirt that falls to mid-calf",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "druid",
+    "grass",
+    "female"
+  ]
+}

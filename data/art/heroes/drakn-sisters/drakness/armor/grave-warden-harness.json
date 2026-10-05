@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/grave-warden-harness",
+  "kind": "wearing",
+  "name": "Grave-warden harness",
+  "description": "a black leather harness of crossed straps with bone buckles, a collar of vertebrae, a short tattered {{PRIMARY}} skirt and bone-plated bracers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "necromancer",
+    "darkness",
+    "female"
+  ]
+}

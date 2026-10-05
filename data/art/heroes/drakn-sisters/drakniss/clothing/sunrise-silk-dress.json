@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/clothing/sunrise-silk-dress",
+  "kind": "wearing",
+  "name": "Sunrise silk dress",
+  "description": "a fitted silk dress shaded from {{PRIMARY}} to gold like sunrise, thin straps, a deep neckline and a hem to mid-thigh",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "cleric",
+    "light",
+    "female"
+  ]
+}

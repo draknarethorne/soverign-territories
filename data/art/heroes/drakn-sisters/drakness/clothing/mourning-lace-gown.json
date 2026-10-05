@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/mourning-lace-gown",
+  "kind": "wearing",
+  "name": "Mourning lace gown",
+  "description": "a {{PRIMARY}} lace gown with a high collar, sheer long sleeves, a plunging neckline and a trailing hem scattered with {{METAL}} bead sigils",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "necromancer",
+    "darkness",
+    "female"
+  ]
+}

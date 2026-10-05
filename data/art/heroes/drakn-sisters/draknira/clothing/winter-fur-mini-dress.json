@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/clothing/winter-fur-mini-dress",
+  "kind": "wearing",
+  "name": "Winter fur mini dress",
+  "description": "a fitted white mini dress with long sleeves, a deep V neckline and thick white fur at the collar, cuffs and hem",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "wizard",
+    "ice",
+    "female"
+  ]
+}

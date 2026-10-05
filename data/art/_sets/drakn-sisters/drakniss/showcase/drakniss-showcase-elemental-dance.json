@@ -1,0 +1,19 @@
+{
+  "artId": "drakniss-showcase-elemental-dance",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Elemental Dance",
+  "components": {
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
+    "pose": "data/art/motion/dynamic/twirl-spin.json",
+    "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/sanctum-white-gown.json",
+    "effects": "Ribbons of {{MAGIC}} light trail from her hands and her hem as she spins, White doves and motes of light swirling in the air around her.",
+    "background": "data/art/backgrounds/studio/primary-gradient.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/showcase/Drakniss_Showcase_ElementalDance.txt",
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

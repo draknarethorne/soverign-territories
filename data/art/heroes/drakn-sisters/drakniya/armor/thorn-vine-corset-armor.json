@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/armor/thorn-vine-corset-armor",
+  "kind": "wearing",
+  "name": "Thorn-vine corset armor",
+  "description": "a corset of woven living vines with small thorns and {{METAL}} leaf buckles, leaf pauldrons and a short skirt of overlapping leaves",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "druid",
+    "grass",
+    "female"
+  ]
+}

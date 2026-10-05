@@ -1,0 +1,10 @@
+{
+  "artId": "drakniya-motion-twirl-spin",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "component": "data/art/motion/dynamic/twirl-spin.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "denoise": "~0.4-0.6",
+  "output": "prompts/drakn-sisters/Drakniya/motion/dynamic/Drakniya_Motion_Dynamic_TwirlSpin.txt"
+}

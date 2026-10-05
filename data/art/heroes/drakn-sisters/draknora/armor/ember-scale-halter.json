@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/ember-scale-halter",
+  "kind": "wearing",
+  "name": "Ember-scale halter",
+  "description": "a plunging halter of overlapping copper scales that glow like coals and a battle skirt of {{PRIMARY}} silk split to the hip, a {{METAL}} belt",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "magician",
+    "fire",
+    "female"
+  ]
+}

@@ -1,0 +1,34 @@
+=== Draknoxa Thorne · Showcase: Celestial Rising (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a peekaboo underlayer of fine deep acid-lime strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
+Wearing celestial armor of tarnished brass: two small ornate filigree plates, each in the form of a teardrop flask shape rimmed by a coiling serpent, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small coiled-serpent oval covering the front of the hips; every plate is engraved with etched droplets and a tiny stopper ornament and set with an acid-lime gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin.
+
+Jewelry: a simple tarnished brass necklace and small matching earrings.
+Legs & feet: bare feet with a delicate tarnished brass anklet set with pink tourmaline stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Fine stars drift and glitter around her and tiny points of toxic lime light trace the filigree of her armor, a soft ring of starlight behind her head.
+
+Eyes: irises softly aglow with toxic lime light, brightest near the pupil and fading to the natural acid lime-emerald irises at the rim, iris detail still visible, a gentle toxic lime catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, groomed dark burgundy-black brows, black lashes, fingernails and toenails natural or Light Magenta; present, never heavy.
+
+Studio backdrop: a deep indigo seamless studio backdrop scattered with fine stars and a soft violet-and-gold nebula glow, a gentle ring of starlight behind the figure.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/clothing/coral-lace-mini-dress",
+  "kind": "wearing",
+  "name": "Coral lace mini dress",
+  "description": "a fitted mini dress of fine lace in {{PRIMARY}} with scalloped edges, a sweetheart neckline and a shell-shaped {{METAL}} clasp",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "enchanter",
+    "water",
+    "female"
+  ]
+}

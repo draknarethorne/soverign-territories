@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/woodland-leaf-gown",
+  "kind": "wearing",
+  "name": "Woodland leaf gown",
+  "description": "a layered gown of leaf-cut silk in {{PRIMARY}} and {{ACCENT_SOFT}} with a plunging neckline, flowers at the waist and a flowing skirt to the floor",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "druid",
+    "grass",
+    "female"
+  ]
+}

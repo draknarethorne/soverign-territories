@@ -47,14 +47,17 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
   to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
 - **Sister studio workspaces (Oct 2026).** Each sister's non-scene work (everything with studio class, including the new `showcase` stage)
-  deploys to her own ComfyUI workspace with `deploy --to uat --hero <Name> --class studio`; scenes stay in the dev project. First proven
-  with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
+  deploys to her own ComfyUI workspace with `deploy --to uat --hero <Name> --class studio`; all sister scenes go to the shared
+  `Drakn Sisters` workspace (`deploy --to uat --group drakn-sisters --class scene`). Dev keeps whatever is not delivered, edited or
+  hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
+  a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.
 - **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
   studio render and a full scene.
 - **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor
-  (`heroes/drakn-sisters/<slug>/armor/celestial-armor.json`): ornate filigree plates in her metal and class/element motif that fully
-  cover the bust and hips and are held by magic. Coverage stays at bikini level. The `celestial` finish (`SD-001-CELESTIAL`, rank 3 in
+  (`heroes/drakn-sisters/<slug>/armor/celestial-armor.json`): small ornate filigree plates in her metal and class/element motif, each a
+  different shape (crescents, flames, leaves, snowflakes, shells, sunbursts ...), covering the area of a small bikini cup and a small
+  front hip piece, held by magic alone with no straps or wire. The `celestial` finish (`SD-001-CELESTIAL`, rank 3 in
   `finishes.json`) is the earned top edition: unlocked by a sister's celestial quest chain rather than drawn from a pack, with some
   held back in packs for a small chance (rules are open decision O3). The codex shows a silhouette or masked teaser until it is owned.
 

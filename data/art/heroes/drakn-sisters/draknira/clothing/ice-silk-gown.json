@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/clothing/ice-silk-gown",
+  "kind": "wearing",
+  "name": "Ice silk gown",
+  "description": "a pale ice-blue silk gown beaded with tiny crystals, a plunging neckline, long sleeves and a skirt slit to the thigh",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "wizard",
+    "ice",
+    "female"
+  ]
+}

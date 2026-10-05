@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/thunder-silk-gown",
+  "kind": "wearing",
+  "name": "Thunder silk gown",
+  "description": "a storm-grey silk gown with gold lightning embroidery, a plunging neckline and a skirt slit to the hip that flares like a thunderhead",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "summoner",
+    "lightning",
+    "female"
+  ]
+}

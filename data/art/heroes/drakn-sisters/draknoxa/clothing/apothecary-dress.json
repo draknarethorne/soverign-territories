@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/apothecary-dress",
+  "kind": "wearing",
+  "name": "Apothecary dress",
+  "description": "a fitted corseted dress with brass buckles, a high collar, a plunging neckline and a skirt hung with small glowing vials",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "poison",
+    "female"
+  ]
+}

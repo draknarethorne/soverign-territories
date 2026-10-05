@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/ossuary-queen-armor",
+  "kind": "wearing",
+  "name": "Ossuary queen armor",
+  "description": "a cuirass of curved bone ribs set in blackened {{METAL}} with {{ACCENT_SOFT}} filigree, skull-faced pauldrons and a skirt of hanging bone chimes over {{PRIMARY}} silk, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "necromancer",
+    "darkness",
+    "female"
+  ]
+}

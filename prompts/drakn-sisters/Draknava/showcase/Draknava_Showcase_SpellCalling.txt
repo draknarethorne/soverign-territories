@@ -1,0 +1,36 @@
+=== Draknava Thorne · Showcase: Spell Calling (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+
+Wearing a bard's windrunner leathers: a fitted jade leather corset with silver feather-scale pauldrons, a skirt of layered silk scarves that stream in the wind, light greaves and a slim lyre strapped across her back.
+
+Jewelry: a simple polished nickel necklace and small matching earrings.
+Legs & feet: bare feet with a delicate polished nickel anklet set with jade stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing pale silver-jade strings, small silver wind-chimes and long ribbons of Windswept Jade silk streaming from it in the breeze, a faint pale silver-jade shimmer in the air around the strings.
+
+Swirling ribbons of wind and feathers rise and circle around her, pale silver-jade light streaming from the weapon in her hand, leaves and feathers drifting in the rays.
+
+Eyes: irises softly aglow with pale silver-jade light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle pale silver-jade catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, groomed soft ash-grey brows, soft grey-brown lashes, fingernails and toenails natural or Light Jade; present, never heavy.
+
+Studio backdrop: a dark seamless studio backdrop lit by a burst of pale silver-jade light radiating from behind the figure in soft rays, with fine floating motes of light and a bright halo behind the head.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

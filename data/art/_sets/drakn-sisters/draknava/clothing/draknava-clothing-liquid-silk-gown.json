@@ -1,0 +1,18 @@
+{
+  "artId": "draknava-clothing-liquid-silk-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Liquid Silk Gown",
+  "aesthetic": "a clean studio presentation of the liquid silk gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/liquid-silk-gown.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknava/clothing/Draknava_Clothing_LiquidSilkGown.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

@@ -16,6 +16,8 @@ Commands
   make    [filters] [--create]         prompt -> repo workflow: set positive, negative, filename prefix (and file name)
   deploy  [targets] [filters]          repo -> workspace (default: dev). Existing workflows only get the three
                                        prompt values updated, so input image, seed and toggles survive. --overwrite replaces.
+  cleanup [filters] [--apply]          preview (or --apply) removing plain duplicates from dev that are identical in their UAT workspace;
+                                       everything else stays (not in the repo, edited, not delivered). Moved to backup, never deleted.
   promote --to uat|prod [--from dev|uat] <filters>
                                        MOVE approved workflows up a tier: capture the source workspace copy into the repo
                                        master, copy it to the next tier, then take it out of the source workspace (backed up)
@@ -624,6 +626,9 @@ def cmd_deploy(args):
             replace = args.overwrite or cfg["workspaces"][ws].get("legacy", False)
             if name not in inst and getattr(args, "existing", False):
                 continue
+            if name in inst and getattr(args, "new_only", False):
+                tally["kept"] += 1
+                continue
             if name not in inst:
                 print(f"  new      {ws}/{name}")
                 if not args.dry_run:
@@ -668,6 +673,67 @@ def cmd_deploy(args):
                     tally["skipped"] += 1
         print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
+
+
+def cmd_cleanup(args):
+    """Remove plain duplicates from the dev workspace once the same workflow sits in its routed UAT workspace(s).
+
+    A dev file is removed only if it is a generated workflow and every UAT workspace that serves it holds an identical copy.
+    Anything else stays: files not in the repo (yours, curated or renamed), edited copies, and files not yet delivered.
+    Default is a preview; --apply moves the duplicates to workflows/.sync/backup/ (nothing is deleted)."""
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    groups = hero_groups()
+    src = args.workspace[0] if args.workspace else cfg["dev"][0]
+    if not install_exists(cfg, src, args.root):
+        sys.exit(f"{src}: workspace not found")
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    cache, tally, kept = {}, collections.Counter(), collections.defaultdict(list)
+
+    def files_of(ws):
+        if ws not in cache:
+            cache[ws] = install_files(cfg, ws, args.root) if install_exists(cfg, ws, args.root) else None
+        return cache[ws]
+
+    for name, p in sorted(install_files(cfg, src, args.root).items()):
+        h = hero_of(name)
+        if not h or is_template(cfg, name) or excluded(cfg, name):
+            continue
+        g = groups[h]
+        if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group) or not stage_ok(args, name) \
+                or (args.match and args.match.lower() not in name.lower()):
+            continue
+        why = None
+        dests = [w for w in targets_for(cfg, "uat", g, h, stage_of(name)) if w != src]
+        if name not in repo:
+            why = "not a generated workflow in the repo (yours, curated or renamed)"
+        elif not dests:
+            why = "no UAT workspace serves it"
+        else:
+            for w in dests:
+                held = files_of(w)
+                if held is None:
+                    why = f"{w} does not exist yet"
+                elif name not in held:
+                    why = f"not delivered to {w} yet"
+                elif not same_workflow(p, held[name]):
+                    why = f"differs from the copy in {w} (edited?)"
+                if why:
+                    break
+        if why:
+            kept[why].append(name)
+            continue
+        print(f"  {'remove ' if args.apply else 'would remove'}  {name}  (also in {', '.join(dests)})")
+        tally["duplicates"] += 1
+        if args.apply:
+            b = BACKUPS / stamp / (src + " (cleaned)") / name
+            b.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(p), str(b))
+    for why, names in kept.items():
+        print(f"  KEEP {len(names):4}  {why}")
+        for n in names[: args.show]:
+            print(f"           {n}")
+    print(f"{src}: {tally['duplicates']} duplicate(s) " + ("moved to backup" if args.apply else "would be removed (preview; use --apply)") + f", {sum(map(len, kept.values()))} kept")
 
 
 def cmd_promote(args):
@@ -939,6 +1005,12 @@ def main(argv=None):
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
     s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
     s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
+    s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
+    s = sub.add_parser("cleanup")
+    common(s, False, True)
+    s.add_argument("-w", "--workspace", action="append", help="workspace to clean (default: the dev workspace)")
+    s.add_argument("--apply", action="store_true", help="really move the duplicates to backup (default: preview only)")
+    s.add_argument("--show", type=int, default=5, help="names to list per kept reason")
     s = sub.add_parser("fork")
     common(s)
     s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
@@ -964,7 +1036,7 @@ def main(argv=None):
     common(s)
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork}[args.cmd](args)
 
 
 if __name__ == "__main__":
