@@ -5,7 +5,7 @@ Repo layout follows the prompts:  workflows/<set>/<Hero>/<Hero>_Qwen_<Stage>_<Na
 (<set> is the prompt group: drakn-sisters, drakn-bound, angel-primes, elder-dragons ...).
 
 ComfyUI workspaces are DEPLOY TARGETS configured in workflows/workspaces.json, in three tiers:
-  dev    where workflows are built and proven (Soverign Territories; the default target of every deploy)
+  dev    where workflows are built and proven (Sovereign Territories; the default target of every deploy)
   uat    acceptance: a hero's own workspace or a group workspace (Drakness, Angel Primes ...)
   prod   a card-series workspace for the final art ("Sovereign Dawn Series"); holds only the cards of that series
 Which workspace serves which hero or set is configured under "production"; nothing is hard-coded.
@@ -972,9 +972,11 @@ def cmd_make(args):
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
-        want = args.input or video or (None if is_apose else input_for(cfg, it["hero"], it["stage"]))
+        want = args.input or video or (cfg.get("photos", {}).get(it["hero"]) if is_apose else input_for(cfg, it["hero"], it["stage"]))
         if ln and want:
             ln["widgets_values"][0] = want
+            if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
+                ln["widgets_values_named"]["image"] = want
         if not args.dry_run:
             write_wf(target, wf)
         tally["created"] += 1

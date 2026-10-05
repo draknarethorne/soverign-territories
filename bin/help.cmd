@@ -19,7 +19,7 @@ echo  DEPLOY AND PROMOTE
 echo    refresh-dev.cmd HERO [STAGE]   prompts, then make, then deploy to DEV (the usual loop)
 echo    refresh-firered.cmd HERO [STAGE] the same loop for FireRed (local test workflows, not in git)
 echo    animate.cmd HERO               video prompts, MiniMax workflows, then deploy to DEV
-echo    deploy-dev.cmd HERO [STAGE]    repo to DEV (Soverign Territories)
+echo    deploy-dev.cmd HERO [STAGE]    repo to DEV (Sovereign Territories)
 echo    deploy-uat.cmd HERO [STAGE]    repo to the hero or group UAT workspace
 echo    deploy-prod.cmd HERO [STAGE]   repo to the series PROD workspace
 echo    promote-uat.cmd HERO [STAGE]   MOVE approved workflows from DEV to UAT

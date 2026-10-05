@@ -42,7 +42,7 @@ every studio stage.
 
 | Tier | Flag | Workspaces | Purpose |
 | --- | --- | --- | --- |
-| **dev** (default) | none | `Soverign Territories`; later themed ones such as `Soverign Territories Halloween` | build and prove workflows, ideation, mass changes |
+| **dev** (default) | none | `Sovereign Territories`; later themed ones such as `Sovereign Territories Halloween` | build and prove workflows, ideation, mass changes |
 | **uat** | `--to uat` | a hero's own workspace (`Drakness`), a group's (`Angel Primes`, `Drakn Bound`) or a shared scene workspace (`Drakn Sisters`) | acceptance: pick the A-pose, curate, generate 8-16 images |
 | **prod** | `--to prod` | `<Series> Series`, such as `Sovereign Dawn Series` | final art and polish for the actual cards of that series |
 

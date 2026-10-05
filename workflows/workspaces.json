@@ -3,9 +3,9 @@
   "workflowsSubpath": "ComfyUI/user/default/workflows",
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
   "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",
-  "dev": ["Soverign Territories"],
+  "dev": ["Sovereign Territories"],
   "workspaces": {
-    "Soverign Territories": {
+    "Sovereign Territories": {
       "status": "active",
       "templates": true,
       "role": "DEV: build and prove workflows, ideation and mass changes; holds the ST stage templates. Default deploy target."
@@ -51,6 +51,18 @@
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
   "inputs": {"Drakness": "Drakness_Qwen_X_Pose_00142_.png"},
+  "photos": {
+    "Drakness": "drakness_image_7500527121164427158.jpg",
+    "Draknara": "draknara_image_7500642581350460257.jpg",
+    "Draknava": "draknava_image_7500635899647965293.jpg",
+    "Drakneta": "drakneta_screenshot_20260918_101907_facebook.jpg",
+    "Draknira": "draknira_image_7500653433765869209.jpg",
+    "Draknisa": "draknisa_image_7508205480366024326.jpg",
+    "Drakniss": "drakniss_image_7500603748082432155.jpg",
+    "Drakniya": "drakniya_image_7506737147105404640.jpg",
+    "Draknora": "draknora_image_7500598496923586557.jpg",
+    "Draknoxa": "draknoxa_image_7508203131793908784.jpg"
+  },
   "templates": {
     "poses": "workflows/_templates/ST1_Qwen_A_Pose.json",
     "default": "workflows/_templates/ST2_Qwen_Edit.json",
