@@ -691,12 +691,21 @@ def cmd_deploy(args):
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
 
 
+def same_copy(dev_p, uat_p, master_p):
+    """Loose duplicate test: same prompt values as the repo master and the same input image; seeds and other run-to-run values are ignored."""
+    try:
+        a, b, m = read_wf(dev_p), read_wf(uat_p), read_wf(master_p)
+    except ValueError:
+        return False
+    return get_values(a) == get_values(b) == get_values(m) and input_image(a) == input_image(b)
+
+
 def cmd_cleanup(args):
     """Remove plain duplicates from the dev workspace once the same workflow sits in its routed UAT workspace(s).
 
     A dev file is removed only if it is a generated workflow and every UAT workspace that serves it holds an identical copy.
     Anything else stays: files not in the repo (yours, curated or renamed), edited copies, and files not yet delivered.
-    Default is a preview; --apply moves the duplicates to workflows/.sync/backup/ (nothing is deleted)."""
+    Strict by default (identical graphs); --loose ignores seeds and other values that change every run. Default is a preview; --apply moves the duplicates to workflows/.sync/backup/ (nothing is deleted)."""
     cfg = load_cfg()
     repo = repo_files(cfg)
     groups = hero_groups()
@@ -732,7 +741,7 @@ def cmd_cleanup(args):
                     why = f"{w} does not exist yet"
                 elif name not in held:
                     why = f"not delivered to {w} yet"
-                elif not same_workflow(p, held[name]):
+                elif not (same_copy(p, held[name], repo[name][2]) if args.loose else same_workflow(p, held[name])):
                     why = f"differs from the copy in {w} (edited?)"
                 if why:
                     break
@@ -1036,6 +1045,7 @@ def main(argv=None):
     common(s, False, True)
     s.add_argument("-w", "--workspace", action="append", help="workspace to clean (default: the dev workspace)")
     s.add_argument("--apply", action="store_true", help="really move the duplicates to backup (default: preview only)")
+    s.add_argument("--loose", action="store_true", help="treat a dev file as a duplicate when prompts and input image match (ignores seeds and other run-to-run changes)")
     s.add_argument("--show", type=int, default=5, help="names to list per kept reason")
     s = sub.add_parser("fork")
     common(s)
