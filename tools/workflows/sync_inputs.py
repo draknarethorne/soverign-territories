@@ -39,7 +39,9 @@ def referenced(wf):
 
 def source_index(cfg):
     """{file name: path}, first folder wins."""
-    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", pathlib.Path(cfg["sharedInput"]), *cw.output_roots(cfg)]
+    new_out = cw.output_root(cfg)
+    legacy = [pathlib.Path(cfg["sharedInput"]), pathlib.Path(cfg["sharedOutput"])]  # last: old renders must never shadow new ones
+    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", new_out, *legacy]
     index = {}
     for root in roots:
         if root.is_dir():
