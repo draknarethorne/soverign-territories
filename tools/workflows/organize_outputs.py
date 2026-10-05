@@ -6,7 +6,7 @@ New renders land in <output>/<group>/<Hero>/<stage>/<family>/ because each workf
 folder. This tool:
   1. sorts images whose name matches a prompt into their family folder,
   2. carries everything else (archive folders, hand-made files) along to the same place under <group>/<Hero>/.
-File names are never changed and nothing is deleted. Folders that are not a hero's (Base, ST, Experimental ...) are left alone.
+File names are kept (a file whose name is already taken in its destination gets a __2 suffix) and nothing is deleted. Folders that are not a hero's (Base, ST, Experimental ...) are left alone.
 
   python tools/workflows/organize_outputs.py                 # preview, all heroes
   python tools/workflows/organize_outputs.py --hero Drakness # preview one hero
@@ -57,7 +57,7 @@ def main():
         for f in sorted(p for p in folder.rglob("*") if p.is_file()):
             rel = f.relative_to(folder)
             m = NAME.match(f.name)
-            sortable = len(rel.parts) == 2 and m and m["hero"] == hero  # loose in <stage>/, not in a subfolder
+            sortable = len(rel.parts) in (1, 2) and m and m["hero"] == hero  # loose in the hero folder or a stage folder, not in a subfolder
             dest, how = new_home / rel.parent, "carried"
             if sortable:
                 target = where.get(f"{hero}_{RENAMED.get(m['rest'], m['rest'])}")
@@ -74,10 +74,13 @@ def main():
     if args.apply:
         for f, dest, _ in moves:
             dest.mkdir(parents=True, exist_ok=True)
-            if (dest / f.name).exists():
-                print(f"  SKIP {f.name}: already in {dest}")
-                continue
-            shutil.move(str(f), str(dest / f.name))
+            target = dest / f.name
+            n = 1
+            while target.exists():  # a different image already has this name there: keep both
+                n += 1
+                target = dest / f"{f.stem}__{n}{f.suffix}"
+                print(f"  RENAMED {f.name} -> {target.name} (the name was taken in {dest.relative_to(out_root).as_posix()}/)")
+            shutil.move(str(f), str(target))
         for hero, group, folder in sources:  # tidy emptied old folders (only empty ones)
             for d in sorted((p for p in folder.rglob("*") if p.is_dir()), reverse=True) + [folder]:
                 if d.is_dir() and not any(d.iterdir()):
