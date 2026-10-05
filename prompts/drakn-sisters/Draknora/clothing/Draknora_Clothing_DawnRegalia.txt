@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing an ornate floor-length dawn gown of Flame Red silk and gold-orange gauze, a fitted bodice embroidered with gold flames and phoenix feathers, a high swept collar of burnished copper flame-shaped plates, long layered sleeves ending in flame-cut points, and a skirt split into long burning ribbons that whip upward behind her; sweetheart neckline.
 
 Arms: bare arms.

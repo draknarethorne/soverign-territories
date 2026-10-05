@@ -16,7 +16,7 @@ Keep high fidelity to facial likeness, bone structure, hairstyle, body, and ward
 
 Expression: a soft, gentle closed-mouth smile, lips together and relaxed, cheeks just lifted, a hint of dimples if present, calm and inviting eyes.
 
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour, tone-on-tone dimension.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 

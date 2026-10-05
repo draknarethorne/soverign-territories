@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a soft smudged cool smoky ash-grey root shadow at the crown blending seamlessly into the lighter base colour through the lengths - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing an ornate floor-length dawn gown of Glacial Cyan and frost-white silk with a fitted bodice embroidered in brushed chrome snowflake geometry, a high collar of layered ice-crystal plates, long sheer sleeves of rime-edged gauze, and a skirt that falls into a long train of frost-feathered ribbons; sweetheart neckline.
 
 Arms: bare arms.

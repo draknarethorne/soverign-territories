@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a soft smudged cool smoky ash-grey root shadow at the crown blending seamlessly into the lighter base colour through the lengths - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing a pale ice-blue silk gown beaded with tiny crystals, a plunging neckline, long sleeves and a skirt slit to the thigh.
 
 Arms: bare arms.

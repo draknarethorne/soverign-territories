@@ -16,7 +16,7 @@ Keep high fidelity to facial likeness, bone structure, hairstyle, body, and ward
 
 Expression: {{EXPRESSION}}.
 
-Hair: {{HAIR}}, tone-on-tone dimension.
+{{HAIR_KEEP}}
 
 {{FACE_STYLE}}
 

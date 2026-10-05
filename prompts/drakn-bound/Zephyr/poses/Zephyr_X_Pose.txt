@@ -21,7 +21,7 @@ Skin: fair, cool-toned complexion, evenly toned.
 
 Wearing: only a Windswept Jade fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet.
 
-Hair: silvery-blonde hair, short and windswept, tone-on-tone dimension; styled short textured crop, cropped close at the sides and back, slightly longer and tousled on top (override the source hairstyle); a very slight lift from a light breeze below.
+Hair: silvery-blonde hair, short and windswept; short textured crop, cropped close at the sides and back, slightly longer and tousled on top; a very slight lift from a light breeze below (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics. Reset any heavy styling from the source photo. Fingernails natural or Light Jade.
 

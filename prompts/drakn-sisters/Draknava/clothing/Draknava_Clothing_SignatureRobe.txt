@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing a floor-length ceremonial bard's windsilk robe of Windswept Jade and gossamer-silver silk with polished nickel embroidery of feathers and written music, wide flowing sleeves, a high collar of layered feather-cut plates, an open front over a fitted Windswept Jade bodice and long slit skirt, a polished nickel sash hung with small silver bells, a long hem of floating scarves.
 
 Arms: bare arms.

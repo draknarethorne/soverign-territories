@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing celestial armor of polished silver: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small lyre shape covering the front of the hips; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a jade gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin.
 
 Arms: bare arms.

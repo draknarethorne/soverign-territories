@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing a fitted knee-length Soft Pearl White cocktail dress with a sweetheart neckline, thin shoulder straps and gold seam detailing, softly flared at the hem.
 
 Arms: simple silver bracelets.

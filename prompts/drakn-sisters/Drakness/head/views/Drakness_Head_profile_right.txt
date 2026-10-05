@@ -16,7 +16,7 @@ Keep high fidelity to facial likeness, bone structure, hairstyle, body, and ward
 
 Expression: a warm, radiant glamour smile - lips softly parted with a hint of teeth, cheeks lifted and defined, dimples showing if present, eyes bright and engaged with the camera, the lips, cheeks and smile lines clearly visible.
 
-Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension.
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
 
 Makeup: soft and natural, with a subtly blended amethyst-toned eyeshadow, a light natural rosy-plum blush, groomed dark espresso-black brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 

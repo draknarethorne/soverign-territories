@@ -21,9 +21,7 @@ Skin: {{SKIN}}.
 
 Wearing: {{UNDERLAYER}}.
 
-Hair: {{HAIR}}, tone-on-tone dimension; a very slight lift from a light breeze below.
-
-Hairstyle: {{HAIRSTYLE}} (fully replace the source photo's hairstyle).
+Hair: {{HAIR_ESTABLISH}} (fully replace the source photo's hairstyle).
 
 {{FACE_STYLE}} Reset any heavy makeup from the source photo. Fingernails and toenails natural or {{NAIL}}.
 

@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Wearing an ornate floor-length dawn gown of Electric Gold and arc-white silk with a fitted bodice embroidered with bright gold lightning forks and copper coils, a high winged collar of bright gold plates, long sleeves of sheer white gauze edged in gold wire, and a skirt of rippling ribbons that crackle and whip upward; sweetheart neckline.
 
 Arms: bare arms.

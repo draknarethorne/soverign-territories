@@ -21,7 +21,7 @@ Skin: warm, sun-kissed complexion, evenly toned.
 
 Wearing: only a Radiant Rose Gold fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet.
 
-Hair: golden-blonde hair, short and neatly combed, tone-on-tone dimension; styled short textured crop, cropped close at the sides and back, slightly longer and tousled on top (override the source hairstyle); a very slight lift from a light breeze below.
+Hair: golden-blonde hair, short and neatly combed; short textured crop, cropped close at the sides and back, slightly longer and tousled on top; a very slight lift from a light breeze below (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics. Reset any heavy styling from the source photo. Fingernails natural or Light Gold.
 

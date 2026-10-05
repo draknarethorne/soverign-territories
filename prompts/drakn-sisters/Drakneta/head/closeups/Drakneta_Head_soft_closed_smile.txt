@@ -16,7 +16,7 @@ Keep high fidelity to facial likeness, bone structure, hairstyle, body, and ward
 
 Expression: a soft, gentle closed-mouth smile, lips together and relaxed, cheeks just lifted, a hint of dimples if present, calm and inviting eyes.
 
-Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour, tone-on-tone dimension.
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
 
 Makeup: soft and natural, with a subtly blended champagne-gold-toned eyeshadow, a light natural golden peach blush, groomed golden-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
 

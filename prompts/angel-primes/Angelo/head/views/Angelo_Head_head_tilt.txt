@@ -16,7 +16,7 @@ Keep high fidelity to facial likeness, bone structure, hairstyle, body, and ward
 
 Expression: a warm, radiant glamour smile - lips softly parted with a hint of teeth, cheeks lifted and defined, dimples showing if present, eyes bright and engaged with the camera, the lips, cheeks and smile lines clearly visible.
 
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour, tone-on-tone dimension.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
 

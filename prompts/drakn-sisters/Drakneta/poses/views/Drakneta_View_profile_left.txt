@@ -10,6 +10,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour and hairstyle, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+
 Standing A-pose, the same stance as the incoming image: upright, feet set apart, arms relaxed slightly away from the sides, open hands.
 
 View: full side profile, the whole body turned 90 degrees to face frame-left, the head in clean profile looking ahead toward frame-left; same A-pose arms and stance.

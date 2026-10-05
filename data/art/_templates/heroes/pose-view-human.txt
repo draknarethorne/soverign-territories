@@ -10,6 +10,8 @@ Background: {{BACKGROUND}}.
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour and hairstyle, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+{{HAIR_KEEP}}
+
 Standing A-pose, the same stance as the incoming image: upright, feet set apart, arms relaxed slightly away from the sides, open hands.
 
 {{VIEW}}

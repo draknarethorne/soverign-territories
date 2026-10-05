@@ -12,6 +12,8 @@ Background: {{BACKGROUND}}.
 
 Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
 
+{{HAIR_KEEP}}
+
 Maintain the existing outfit and hairstyle expressly.
 
 {{BREEZE}}

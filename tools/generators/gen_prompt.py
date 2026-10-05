@@ -132,6 +132,16 @@ def resolve_hairstyle(pal):
     return pal["hairStyle"]
 
 
+def resolve_breeze(pal):
+    """The hair piece's own 'breeze' line (a very slight lift ...), so the template never hard-codes it."""
+    if "hairStyleComponent" in pal:
+        return load_json(ROOT / pal["hairStyleComponent"]).get("breeze", DEFAULT_BREEZE)
+    return DEFAULT_BREEZE
+
+
+DEFAULT_BREEZE = "A very slight lift from a light breeze below."
+
+
 def resolve_hairstyle_negatives(pal):
     """Optional 'a_pose_negatives' list on the hair component (e.g. ponytail, bun) so a
     style that must fully replace the source photo's hair can ban what leaks through."""
@@ -265,6 +275,10 @@ def tokens_for(hero):
         "HAIR_NEG": ", ".join(pal.get("hairColorNegatives", [])),
         "HAIRSTYLE": decap(resolve_hairstyle(pal)),
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
+        # One hair block for the A-pose (colour, highlights, style, breeze) and one line for every stage that keeps the incoming hair.
+        "HAIR_ESTABLISH": "{{HAIR}}; {{HAIRSTYLE}}; " + decap(resolve_breeze(pal)).rstrip("."),
+        "HAIR_KEEP": "Hair: {{HAIR}} - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume "
+                     "(never bald, shaved, thinning or covered).",
         "FACE_STYLE": face_style("bust" in phy, eyeshadow, pal.get("blushColor"), pal.get("browColor")),
         "FIGURE_NEG": FIGURE_NEG["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],

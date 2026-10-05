@@ -21,7 +21,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Wearing: only Soft Pearl White fitted mid-thigh athletic swim trunks with gold stripes down the sides; chest, abdomen, and lower legs bare; bare feet.
 
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour, tone-on-tone dimension; styled left natural, loose and relaxed (override the source hairstyle); a very slight lift from a light breeze below.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour; left natural, loose and relaxed; no breeze (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, no cosmetics. Reset any heavy styling from the source photo. Fingernails natural or Light White.
 
