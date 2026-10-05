@@ -245,4 +245,4 @@ Trainer Decks are **pre-built 20-card decks** given to new players during the tu
 
 **Document Status**: Companion to trainer-deck-schema.json  
 **Last Updated**: December 30, 2025  
-**Maintained By**: @Soverign-Beast-Mode agent
+**Maintained By**: @Sovereign-Beast-Mode agent

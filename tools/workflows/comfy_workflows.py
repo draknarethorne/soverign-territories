@@ -7,7 +7,7 @@ Repo layout follows the prompts:  workflows/<set>/<Hero>/<Hero>_Qwen_<Stage>_<Na
 ComfyUI workspaces are DEPLOY TARGETS configured in workflows/workspaces.json, in three tiers:
   dev    where workflows are built and proven (Soverign Territories; the default target of every deploy)
   uat    acceptance: a hero's own workspace or a group workspace (Drakness, Angel Primes ...)
-  prod   a card-series workspace for the final art ("Soverign Dawn Series"); holds only the cards of that series
+  prod   a card-series workspace for the final art ("Sovereign Dawn Series"); holds only the cards of that series
 Which workspace serves which hero or set is configured under "production"; nothing is hard-coded.
 
 Commands

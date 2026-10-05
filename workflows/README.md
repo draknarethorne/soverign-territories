@@ -44,7 +44,7 @@ every studio stage.
 | --- | --- | --- | --- |
 | **dev** (default) | none | `Soverign Territories`; later themed ones such as `Soverign Territories Halloween` | build and prove workflows, ideation, mass changes |
 | **uat** | `--to uat` | a hero's own workspace (`Drakness`), a group's (`Angel Primes`, `Drakn Bound`) or a shared scene workspace (`Drakn Sisters`) | acceptance: pick the A-pose, curate, generate 8-16 images |
-| **prod** | `--to prod` | `<Series> Series`, such as `Soverign Dawn Series` | final art and polish for the actual cards of that series |
+| **prod** | `--to prod` | `<Series> Series`, such as `Sovereign Dawn Series` | final art and polish for the actual cards of that series |
 
 UAT and prod targets come from the `production` rules in `workspaces.json`: they match on `groups` and/or `heroes`, and
 `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to

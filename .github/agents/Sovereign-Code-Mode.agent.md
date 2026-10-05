@@ -1,5 +1,5 @@
 ---
-name: Soverign-Code-Mode
+name: Sovereign-Code-Mode
 description: 'Unity/Nakama code implementation agent - writes C# scripts, runs tests, commits only after validation'
 argument-hint: 'Provide implementation requests based on game-bible.md for Sovereign Territories game systems.'
 model: GPT-5.1-Codex

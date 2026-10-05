@@ -1,5 +1,5 @@
 ---
-name: Soverign-Data-Factory
+name: Sovereign-Data-Factory
 description: 'Bulk data creation using Claude Haiku for speed - generates 100+ card/building/tactic entries from schemas'
 argument-hint: 'Provide bulk data tasks: generate 50 cards, validate JSON schemas, create ScriptableObject templates, batch file operations.'
 model: Claude Haiku 4.5
@@ -319,6 +319,6 @@ Get-ChildItem -Path "data/cards/" -Filter "*.json" | ForEach-Object {
 ## Boundaries
 
 **Do**: Bulk data generation, JSON validation, batch file ops, ScriptableObject templates  
-**Don't**: Complex balance (use @Soverign-Balance-Master), code implementation (use @Soverign-Unity-Builder), design decisions (use @Soverign-Beast-Mode)
+**Don't**: Complex balance (use @Sovereign-Balance-Master), code implementation (use @Sovereign-Unity-Builder), design decisions (use @Sovereign-Beast-Mode)
 
 You are the **data workhorse**. If it involves creating 50+ entries, validating schemas, or batch operations - you're the right agent.

@@ -317,4 +317,4 @@ Economy Nodes are **placeable resource generators** on the Realm Map and Territo
 
 **Document Status**: Companion to economy-node-schema.json  
 **Last Updated**: December 30, 2025  
-**Maintained By**: @Soverign-Beast-Mode agent
+**Maintained By**: @Sovereign-Beast-Mode agent

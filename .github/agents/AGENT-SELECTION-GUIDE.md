@@ -8,25 +8,25 @@ Quick reference for choosing the right specialized agent for Sovereign Territori
 
 ```
 Is it about game design/systems/documentation?
-├─ YES → @Soverign-Beast-Mode (Claude Sonnet 4.5)
+├─ YES → @Sovereign-Beast-Mode (Claude Sonnet 4.5)
 └─ NO
    ├─ Is it math/balance/economy calculations?
-   │  └─ YES → @Soverign-Balance-Master (o1-preview)
+   │  └─ YES → @Sovereign-Balance-Master (o1-preview)
    │
    ├─ Does it involve images/UI/visual assets?
-   │  └─ YES → @Soverign-Visual-Analyst (Gemini Pro)
+   │  └─ YES → @Sovereign-Visual-Analyst (Gemini Pro)
    │
    ├─ Is it Unity code/scenes/prefabs?
-   │  └─ YES → @Soverign-Unity-Builder (GPT-4o)
+   │  └─ YES → @Sovereign-Unity-Builder (GPT-4o)
    │
    ├─ Is it bulk data (50+ cards/buildings)?
-   │  └─ YES → @Soverign-Data-Factory (Claude Haiku)
+   │  └─ YES → @Sovereign-Data-Factory (Claude Haiku)
    │
    ├─ Is it Nakama/multiplayer/backend?
-   │  └─ YES → @Soverign-Network-Ninja (GPT-5.1-Codex)
+   │  └─ YES → @Sovereign-Network-Ninja (GPT-5.1-Codex)
    │
    └─ Is it algorithm/pathfinding/complex logic?
-      └─ YES → @Soverign-Code-Mode (GPT-5.1-Codex)
+      └─ YES → @Sovereign-Code-Mode (GPT-5.1-Codex)
 ```
 
 ---
@@ -35,21 +35,21 @@ Is it about game design/systems/documentation?
 
 | Agent | Model | Best For | Don't Use For |
 |-------|-------|----------|---------------|
-| **@Soverign-Beast-Mode** | Claude Sonnet 4.5 | Game design, documentation, system architecture, balance discussions | Code implementation, visual analysis |
-| **@Soverign-Balance-Master** | GPT-5.2 | Damage formulas, XP curves, gacha math, economy optimization | Simple calculations, Unity code |
-| **@Soverign-Visual-Analyst** | Gemini 3 Pro (Preview) | Card art critique, UI/UX analysis, battle map terrain design | Code implementation, design docs |
-| **@Soverign-Unity-Builder** | GPT-4o | MonoBehaviours, ScriptableObjects, UI, scenes, general Unity code | Complex algorithms, backend logic |
-| **@Soverign-Data-Factory** | Claude Haiku 4.5 | Bulk card generation (50+), JSON validation, batch file operations | Single card design, complex balance |
-| **@Soverign-Network-Ninja** | GPT-5.1-Codex | Nakama server logic, authentication, matchmaking, real-time battles | Unity client code (use Unity-Builder) |
-| **@Soverign-Code-Mode** | GPT-5.1-Codex | Complex algorithms, pathfinding, procedural generation, battle AI | Simple Unity scripts (use Unity-Builder) |
+| **@Sovereign-Beast-Mode** | Claude Sonnet 4.5 | Game design, documentation, system architecture, balance discussions | Code implementation, visual analysis |
+| **@Sovereign-Balance-Master** | GPT-5.2 | Damage formulas, XP curves, gacha math, economy optimization | Simple calculations, Unity code |
+| **@Sovereign-Visual-Analyst** | Gemini 3 Pro (Preview) | Card art critique, UI/UX analysis, battle map terrain design | Code implementation, design docs |
+| **@Sovereign-Unity-Builder** | GPT-4o | MonoBehaviours, ScriptableObjects, UI, scenes, general Unity code | Complex algorithms, backend logic |
+| **@Sovereign-Data-Factory** | Claude Haiku 4.5 | Bulk card generation (50+), JSON validation, batch file operations | Single card design, complex balance |
+| **@Sovereign-Network-Ninja** | GPT-5.1-Codex | Nakama server logic, authentication, matchmaking, real-time battles | Unity client code (use Unity-Builder) |
+| **@Sovereign-Code-Mode** | GPT-5.1-Codex | Complex algorithms, pathfinding, procedural generation, battle AI | Simple Unity scripts (use Unity-Builder) |
 
 ---
 
 ## 🎮 By Project Phase
 
 ### **Phase 1: Design (Current)**
-**Primary**: @Soverign-Beast-Mode  
-**Secondary**: @Soverign-Balance-Master (for formulas), @Soverign-Visual-Analyst (for mockups)
+**Primary**: @Sovereign-Beast-Mode  
+**Secondary**: @Sovereign-Balance-Master (for formulas), @Sovereign-Visual-Analyst (for mockups)
 
 **Typical Tasks**:
 - Update game-bible.md with new systems
@@ -60,8 +60,8 @@ Is it about game design/systems/documentation?
 ---
 
 ### **Phase 2: Data Creation**
-**Primary**: @Soverign-Data-Factory  
-**Secondary**: @Soverign-Beast-Mode (for design specs)
+**Primary**: @Sovereign-Data-Factory  
+**Secondary**: @Sovereign-Beast-Mode (for design specs)
 
 **Typical Tasks**:
 - Generate 100 card entries from schemas
@@ -72,8 +72,8 @@ Is it about game design/systems/documentation?
 ---
 
 ### **Phase 3: Unity Implementation**
-**Primary**: @Soverign-Unity-Builder  
-**Secondary**: @Soverign-Code-Mode (for complex logic), @Soverign-Visual-Analyst (for UI polish)
+**Primary**: @Sovereign-Unity-Builder  
+**Secondary**: @Sovereign-Code-Mode (for complex logic), @Sovereign-Visual-Analyst (for UI polish)
 
 **Typical Tasks**:
 - Create CardManager, BattleManager scripts
@@ -84,8 +84,8 @@ Is it about game design/systems/documentation?
 ---
 
 ### **Phase 4: Backend Integration**
-**Primary**: @Soverign-Network-Ninja  
-**Secondary**: @Soverign-Unity-Builder (for client-side network code)
+**Primary**: @Sovereign-Network-Ninja  
+**Secondary**: @Sovereign-Unity-Builder (for client-side network code)
 
 **Typical Tasks**:
 - Implement Nakama authentication
@@ -96,8 +96,8 @@ Is it about game design/systems/documentation?
 ---
 
 ### **Phase 5: Balance & Polish**
-**Primary**: @Soverign-Balance-Master  
-**Secondary**: @Soverign-Beast-Mode (for design iteration), @Soverign-Visual-Analyst (for UI polish)
+**Primary**: @Sovereign-Balance-Master  
+**Secondary**: @Sovereign-Beast-Mode (for design iteration), @Sovereign-Visual-Analyst (for UI polish)
 
 **Typical Tasks**:
 - Tune damage formulas
@@ -110,68 +110,68 @@ Is it about game design/systems/documentation?
 ## 🔍 By Task Type
 
 ### **Documentation**
-- Game design docs → **@Soverign-Beast-Mode**
-- Code documentation → **@Soverign-Unity-Builder** or **@Soverign-Code-Mode**
-- Visual style guide → **@Soverign-Visual-Analyst**
+- Game design docs → **@Sovereign-Beast-Mode**
+- Code documentation → **@Sovereign-Unity-Builder** or **@Sovereign-Code-Mode**
+- Visual style guide → **@Sovereign-Visual-Analyst**
 
 ### **Analysis**
-- System design → **@Soverign-Beast-Mode**
-- Math/balance → **@Soverign-Balance-Master**
-- Visual critique → **@Soverign-Visual-Analyst**
+- System design → **@Sovereign-Beast-Mode**
+- Math/balance → **@Sovereign-Balance-Master**
+- Visual critique → **@Sovereign-Visual-Analyst**
 
 ### **Creation**
-- Game systems → **@Soverign-Beast-Mode**
-- Unity code → **@Soverign-Unity-Builder**
-- Bulk data → **@Soverign-Data-Factory**
-- Nakama server → **@Soverign-Network-Ninja**
+- Game systems → **@Sovereign-Beast-Mode**
+- Unity code → **@Sovereign-Unity-Builder**
+- Bulk data → **@Sovereign-Data-Factory**
+- Nakama server → **@Sovereign-Network-Ninja**
 
 ### **Optimization**
-- Economy tuning → **@Soverign-Balance-Master**
-- Code performance → **@Soverign-Code-Mode**
-- UI/UX clarity → **@Soverign-Visual-Analyst**
+- Economy tuning → **@Sovereign-Balance-Master**
+- Code performance → **@Sovereign-Code-Mode**
+- UI/UX clarity → **@Sovereign-Visual-Analyst**
 
 ---
 
 ## 💡 Example Scenarios
 
 ### Scenario 1: "Design a new pack system with 3 tiers"
-**Agent**: @Soverign-Beast-Mode  
+**Agent**: @Sovereign-Beast-Mode  
 **Why**: System design, game-bible.md updates, cross-system impact analysis
 
 ---
 
 ### Scenario 2: "Calculate optimal gold production rates for 5 building tiers"
-**Agent**: @Soverign-Balance-Master (GPT-5.2)  
+**Agent**: @Sovereign-Balance-Master (GPT-5.2)  
 **Why**: Math-heavy, requires formula derivation and curve optimization
 
 ---
 
 ### Scenario 3: "Review main-menu.jpg and suggest UI improvements"
-**Agent**: @Soverign-Visual-Analyst  
+**Agent**: @Sovereign-Visual-Analyst  
 **Why**: Visual analysis, UI/UX critique, requires image understanding
 
 ---
 
 ### Scenario 4: "Create CardManager.cs to handle deck building"
-**Agent**: @Soverign-Unity-Builder  
+**Agent**: @Sovereign-Unity-Builder  
 **Why**: Unity MonoBehaviour, general C# coding
 
 ---
 
 ### Scenario 5: "Generate 100 Fire element units (Common to Legendary)"
-**Agent**: @Soverign-Data-Factory  
+**Agent**: @Sovereign-Data-Factory  
 **Why**: Bulk data generation, repetitive task, needs speed
 
 ---
 
 ### Scenario 6: "Implement Nakama matchmaking with ELO brackets"
-**Agent**: @Soverign-Network-Ninja  
+**Agent**: @Sovereign-Network-Ninja  
 **Why**: Nakama server logic, multiplayer systems
 
 ---
 
 ### Scenario 7: "Write A* pathfinding for 8x8 tactical grid"
-**Agent**: @Soverign-Code-Mode  
+**Agent**: @Sovereign-Code-Mode  
 **Why**: Complex algorithm, requires deep reasoning
 
 ---
@@ -180,15 +180,15 @@ Is it about game design/systems/documentation?
 
 ### ❌ Using Unity-Builder for complex algorithms
 **Problem**: GPT-4o is fast but less rigorous than GPT-5.1-Codex for algorithms  
-**Fix**: Use @Soverign-Code-Mode for pathfinding, AI, procedural generation
+**Fix**: Use @Sovereign-Code-Mode for pathfinding, AI, procedural generation
 
 ### ❌ Using Beast-Mode for bulk data creation
 **Problem**: Sonnet 4.5 is thorough but slower than Haiku for repetitive tasks  
-**Fix**: Use @Soverign-Data-Factory for 50+ entries
+**Fix**: Use @Sovereign-Data-Factory for 50+ entries
 
 ### ❌ Using Balance-Master for simple questions
 **Problem**: GPT-5.2's deep reasoning wastes time on "What's 2+2?"  
-**Fix**: Use @Soverign-Unity-Builder or Haiku 4.5 for quick tasks
+**Fix**: Use @Sovereign-Unity-Builder or Haiku 4.5 for quick tasks
 
 ### ❌ Using Visual-Analyst without images
 **Problem**: Gemini 3 Pro's superpower is multimodal vision  
@@ -200,13 +200,13 @@ Is it about game design/systems/documentation?
 
 All agents are in `.github/agents/`:
 
-- `Soverign-Beast-Mode.agent.md` (Claude Sonnet 4.5)
-- `Soverign-Balance-Master.agent.md` (GPT-5.2)
-- `Soverign-Visual-Analyst.agent.md` (Gemini 3 Pro Preview)
-- `Soverign-Unity-Builder.agent.md` (GPT-4o)
-- `Soverign-Data-Factory.agent.md` (Claude Haiku 4.5)
-- `Soverign-Network-Ninja.agent.md` (GPT-5.1-Codex)
-- `Soverign-Code-Mode.agent.md` (GPT-5.1-Codex)
+- `Sovereign-Beast-Mode.agent.md` (Claude Sonnet 4.5)
+- `Sovereign-Balance-Master.agent.md` (GPT-5.2)
+- `Sovereign-Visual-Analyst.agent.md` (Gemini 3 Pro Preview)
+- `Sovereign-Unity-Builder.agent.md` (GPT-4o)
+- `Sovereign-Data-Factory.agent.md` (Claude Haiku 4.5)
+- `Sovereign-Network-Ninja.agent.md` (GPT-5.1-Codex)
+- `Sovereign-Code-Mode.agent.md` (GPT-5.1-Codex)
 
 ---
 
@@ -214,11 +214,11 @@ All agents are in `.github/agents/`:
 
 **Example Workflow**: Designing a new battle mechanic
 
-1. **@Soverign-Beast-Mode**: Design the mechanic, update game-bible.md
-2. **@Soverign-Balance-Master**: Calculate damage formulas, stat curves
-3. **@Soverign-Unity-Builder**: Implement BattleManager.cs, CombatResolver.cs
-4. **@Soverign-Visual-Analyst**: Review battle UI mockup for clarity
-5. **@Soverign-Balance-Master**: Tune values based on playtesting
+1. **@Sovereign-Beast-Mode**: Design the mechanic, update game-bible.md
+2. **@Sovereign-Balance-Master**: Calculate damage formulas, stat curves
+3. **@Sovereign-Unity-Builder**: Implement BattleManager.cs, CombatResolver.cs
+4. **@Sovereign-Visual-Analyst**: Review battle UI mockup for clarity
+5. **@Sovereign-Balance-Master**: Tune values based on playtesting
 
 **Key Point**: Each agent specializes in one step. Don't ask Unity-Builder to do balance math or Beast-Mode to write Unity code.
 
@@ -226,7 +226,7 @@ All agents are in `.github/agents/`:
 
 ## 🎯 Current Active Agent
 
-**You are currently talking to**: @Soverign-Beast-Mode (Claude Sonnet 4.5)
+**You are currently talking to**: @Sovereign-Beast-Mode (Claude Sonnet 4.5)
 
 **Specialized for**:
 - Game design & system architecture
@@ -234,7 +234,7 @@ All agents are in `.github/agents/`:
 - Design iteration & balance discussions
 - Cross-system impact analysis
 
-**To switch**: Mention the agent in chat (e.g., "@Soverign-Balance-Master, calculate XP curve for levels 1-50")
+**To switch**: Mention the agent in chat (e.g., "@Sovereign-Balance-Master, calculate XP curve for levels 1-50")
 
 ---
 

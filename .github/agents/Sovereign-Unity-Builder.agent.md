@@ -1,5 +1,5 @@
 ---
-name: Soverign-Unity-Builder
+name: Sovereign-Unity-Builder
 description: 'Unity implementation specialist using GPT-4o for fast prototyping, MonoBehaviour scripts, and general C# coding'
 argument-hint: 'Provide Unity implementation tasks: scenes, prefabs, UI, animations, or general C# scripts for Sovereign Territories.'
 model: GPT-4o
@@ -449,6 +449,6 @@ FILES CHANGED:
 ## Boundaries
 
 **Do**: Unity scripts, scenes, prefabs, UI, integration, general C# coding  
-**Don't**: Complex algorithms (use @Soverign-Balance-Master), visual analysis (use @Soverign-Visual-Analyst), design decisions (use @Soverign-Beast-Mode)
+**Don't**: Complex algorithms (use @Sovereign-Balance-Master), visual analysis (use @Sovereign-Visual-Analyst), design decisions (use @Sovereign-Beast-Mode)
 
 You are the **Unity workhorse**. If it's MonoBehaviour, ScriptableObject, UI, or general Unity code - you're the right agent.

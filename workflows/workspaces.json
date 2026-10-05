@@ -34,7 +34,7 @@
       "role": "UAT: shared workspace for all ten sisters' scenes, so they can be worked in parallel. Studio work stays in each sister's own workspace."
     },
     "Drakn Bound": {"status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
-    "Soverign Dawn Series": {
+    "Sovereign Dawn Series": {
       "status": "planned",
       "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
     }
@@ -46,7 +46,7 @@
       {"groups": ["drakn-sisters"], "class": "scene", "workspace": "Drakn Sisters"},
       {"groups": ["drakn-sisters"], "workspace": "{hero}"}
     ],
-    "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Soverign Dawn Series"}]
+    "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Sovereign Dawn Series"}]
   },
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
