@@ -10,6 +10,10 @@ them still use the old facebook_/Screenshot_ names. This tool:
   4. keeps the named copy of the image value (widgets_values_named.image) equal to the real one.
 Files whose old name is not in the map (photos that were never in the library) are left alone and listed.
 
+To change which photo is "the" original for a sister, once you have settled on it:
+  python tools/workflows/rename_inputs.py --photo Draknara=draknara_image_7500642754476958031.jpg --apply
+That edits "photos" in workspaces.json and moves her workflows (repo and every install) from her old photo to the new one.
+
   python tools/workflows/rename_inputs.py            # preview
   python tools/workflows/rename_inputs.py --apply
 """
@@ -52,7 +56,7 @@ def set_image(node, value):
         named["image"] = value
 
 
-def fix_workflow(wf, hero, group, mapping, photos, wrong_photo_fix):
+def fix_workflow(wf, hero, group, mapping, photos, wrong_photo_fix, retarget=None):
     """Edit one workflow in place; return (renamed, rerouted, synced)."""
     renamed = rerouted = synced = 0
     for node in load_nodes(wf):
@@ -60,6 +64,9 @@ def fix_workflow(wf, hero, group, mapping, photos, wrong_photo_fix):
             continue
         cur = node["widgets_values"][0]
         new = mapping.get(cur, cur)
+        if retarget and hero in retarget and new == retarget[hero][0]:
+            new = retarget[hero][1]
+            rerouted += 1
         if new != cur:
             renamed += 1
         m = ORIGINAL.match(new)
@@ -80,10 +87,21 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--input", help="shared input folder (default: sharedInput in workspaces.json)")
+    ap.add_argument("--photo", action="append", default=[], metavar="HERO=FILE", help="make FILE the original photo for HERO (repeatable)")
     args = ap.parse_args()
     cfg = cw.load_cfg()
-    mapping, photos = old_to_new(), cfg.get("photos", {})
+    mapping, photos = old_to_new(), dict(cfg.get("photos", {}))
     inp = pathlib.Path(args.input or cfg["sharedInput"])
+    retarget = {}
+    for spec in args.photo:
+        hero, _, new = spec.partition("=")
+        if hero not in photos or not new:
+            sys.exit(f"--photo needs HERO=FILE for one of: {', '.join(photos)}")
+        if not (inp / new).exists():
+            print(f"note: {new} is not in the input folder yet; copy it there before running the workflows")
+        retarget[hero] = (photos[hero], new)
+        photos[hero] = new
+        print(f"photo for {hero}: {retarget[hero][0]} -> {new}")
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     groups = cw.hero_groups()
 
@@ -133,7 +151,7 @@ def main():
         except ValueError:
             continue
         before = json.dumps(wf, sort_keys=True)
-        r, f, s = fix_workflow(wf, hero, group, mapping, photos, wrong_fix)
+        r, f, s = fix_workflow(wf, hero, group, mapping, photos, wrong_fix, retarget)
         if json.dumps(wf, sort_keys=True) == before:
             continue
         tally[(where, "renamed")] += r > 0
@@ -150,6 +168,11 @@ def main():
             print(f"  {where:24} {n:5} workflow(s): {what}")
     if per_hero:
         print("  sent to their own photo:", ", ".join(f"{h} {n}" for h, n in sorted(per_hero.items())))
+    if args.apply and retarget:
+        text = cw.CFG_PATH.read_text(encoding="utf-8")
+        for hero, (old, new) in retarget.items():
+            text = text.replace(f'"{hero}": "{old}"', f'"{hero}": "{new}"')
+        cw.CFG_PATH.write_text(text, encoding="utf-8")
     print("done" if args.apply else "preview only; use --apply")
 
 
