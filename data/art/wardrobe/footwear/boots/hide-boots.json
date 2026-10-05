@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/hide-boots",
+  "kind": "legs_feet",
+  "name": "Hide Boots",
+  "description": "rugged {{PRIMARY}} hide boots wrapped in leather cords with fur at the cuff and a thick sole",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "barbarian",
+    "unisex"
+  ]
+}

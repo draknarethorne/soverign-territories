@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/pantsuit",
+  "kind": "wearing",
+  "name": "Tailored Pantsuit",
+  "description": "a {{PRIMARY}} tailored pantsuit: a fitted blazer with a plunging V neckline worn closed, notched lapels, {{METAL}} buttons and straight high-waist trousers",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "tailored",
+    "low-cut",
+    "female"
+  ]
+}

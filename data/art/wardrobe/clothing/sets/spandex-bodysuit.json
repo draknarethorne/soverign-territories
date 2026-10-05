@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/spandex-bodysuit",
+  "kind": "wearing",
+  "name": "Spandex Bodysuit",
+  "description": "a {{PRIMARY}} stretch spandex bodysuit with long sleeves, a scoop neck and full-length legs, a smooth second-skin fit with {{ACCENT_SOFT}} side panels",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "bodysuit",
+    "spandex",
+    "form-fitting",
+    "female"
+  ]
+}

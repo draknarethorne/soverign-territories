@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/priestess-robes",
+  "kind": "wearing",
+  "name": "Priestess Robes",
+  "description": "flowing white-and-{{PRIMARY}} priestess robes with a low neckline, a long {{METAL}} stole, a wide jewelled belt and bare shoulders under a sheer {{ACCENT_SOFT}} veil of fabric",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "robes",
+    "female"
+  ]
+}

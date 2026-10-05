@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/corset-bodice-gown",
+  "kind": "wearing",
+  "name": "Corset-Bodice Gown",
+  "description": "a {{PRIMARY}} gown with a structured corset bodice laced in {{METAL}} cord up the front, bare shoulders, and a long full skirt in layered silk to the floor",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "corset",
+    "female"
+  ]
+}

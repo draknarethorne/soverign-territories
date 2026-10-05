@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/plate-sabatons",
+  "kind": "legs_feet",
+  "name": "Plate Sabatons and Greaves",
+  "description": "articulated {{PRIMARY}}-toned plate greaves over the shin with matching sabatons on the feet, {{ACCENT_SOFT}} trim and {{METAL}} rivets",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "armor",
+    "plate",
+    "unisex"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/swimwear/cutout-monokini",
+  "kind": "wearing",
+  "name": "Cut-Out Monokini",
+  "description": "only a {{PRIMARY}} fitted monokini one-piece with a deep plunge and large side cut-outs at the waist that leave the midriff and sides bare, high-cut at the hips; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "one-piece",
+    "cutout",
+    "female"
+  ]
+}

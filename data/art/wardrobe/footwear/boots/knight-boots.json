@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/boots/knight-boots",
+  "kind": "legs_feet",
+  "name": "Knight Boots",
+  "description": "heavy {{PRIMARY}} leather boots with plate knee-caps and shin guards, {{METAL}} buckles and thick soles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "armor",
+    "male"
+  ]
+}

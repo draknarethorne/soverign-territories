@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/heels/stiletto-pumps",
+  "kind": "legs_feet",
+  "name": "Stiletto Pumps",
+  "description": "classic {{PRIMARY}} stiletto pumps with a pointed toe and a slim {{METAL}} heel, bare legs",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "female"
+  ]
+}

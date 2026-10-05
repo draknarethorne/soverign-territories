@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/open-vest-and-trousers",
+  "kind": "wearing",
+  "name": "Open Vest and Trousers",
+  "description": "an open {{PRIMARY}} vest worn over a bare chest, a {{METAL}} chain across the front, and loose dark trousers held by a wide sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "vest",
+    "open-chest",
+    "male"
+  ]
+}

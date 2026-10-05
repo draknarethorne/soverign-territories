@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/heels/lace-up-heels",
+  "kind": "legs_feet",
+  "name": "Lace-Up Heels",
+  "description": "{{PRIMARY}} high-heeled sandals with ribbons that lace up the shin to below the knee, tied in a bow, {{METAL}} heel tips",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "lace-up",
+    "female"
+  ]
+}

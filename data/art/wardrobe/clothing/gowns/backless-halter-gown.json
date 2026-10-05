@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/gowns/backless-halter-gown",
+  "kind": "wearing",
+  "name": "Backless Halter Gown",
+  "description": "a {{PRIMARY}} floor-length halter gown with a high neck tie and a fitted bodice, the entire back bare to the waist, falling in a smooth skirt to the floor",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "halter",
+    "backless",
+    "female"
+  ],
+  "notes": "Use with the backless A-pose bases for a clean bare-back look."
+}

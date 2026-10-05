@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/velvet-battle-gown",
+  "kind": "wearing",
+  "name": "Velvet Battle Gown",
+  "description": "a {{PRIMARY}} velvet bodice with {{METAL}} brocade and pauldrons of {{ACCENT_SOFT}} embossed leather, a split velvet skirt with armored hip guards, a high collar",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "velvet",
+    "female"
+  ]
+}

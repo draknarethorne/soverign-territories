@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/swimwear/high-neck-halter-bikini",
+  "kind": "wearing",
+  "name": "High-Neck Halter Bikini",
+  "description": "only a {{PRIMARY}} high-neck halter bikini top that rises to a collar at the throat with a keyhole opening at the chest, shoulders and arms bare, and a matching high-waist bottom; midriff partly bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "bikini",
+    "halter",
+    "female"
+  ]
+}

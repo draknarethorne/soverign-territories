@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/crowns/flower-crown",
+  "kind": "headwear",
+  "name": "Flower Crown",
+  "description": "a crown of fresh flowers and trailing {{ACCENT_SOFT}} ribbon woven with small {{GEM}} gems",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown",
+    "floral"
+  ]
+}

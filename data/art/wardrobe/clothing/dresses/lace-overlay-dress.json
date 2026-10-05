@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/lace-overlay-dress",
+  "kind": "wearing",
+  "name": "Lace Overlay Dress",
+  "description": "a {{PRIMARY}} fitted dress under an overlay of fine floral lace with scalloped edges, long sheer sleeves, a modest neckline and a skirt to the knee",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "lace",
+    "female"
+  ]
+}

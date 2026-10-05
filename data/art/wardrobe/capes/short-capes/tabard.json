@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/capes/short-capes/tabard",
+  "kind": "back",
+  "name": "Heraldic Tabard",
+  "description": "a {{PRIMARY}} tabard hanging at the chest and back, split at the sides and emblazoned with an {{METAL}} crest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "tabard"
+  ]
+}

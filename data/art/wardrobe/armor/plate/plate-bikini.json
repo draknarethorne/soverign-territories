@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/plate-bikini",
+  "kind": "wearing",
+  "name": "Plate Bikini Armor",
+  "description": "a bikini-cut set of {{PRIMARY}}-toned plate: sculpted cups joined by a {{METAL}} ring, a plate hip girdle with fauld flaps, polished {{ACCENT_SOFT}} straps",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "bikini",
+    "female"
+  ]
+}

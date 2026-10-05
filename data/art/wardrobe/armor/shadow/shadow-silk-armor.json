@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/shadow/shadow-silk-armor",
+  "kind": "wearing",
+  "name": "Shadow-Silk Armor",
+  "description": "fitted armor of black plate and shadow-silk in {{PRIMARY}}, a high collar, a layered split skirt that drifts like smoke and {{METAL}} sigils glowing with {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "shadow",
+    "unisex"
+  ]
+}

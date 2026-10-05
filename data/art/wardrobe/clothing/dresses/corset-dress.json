@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/corset-dress",
+  "kind": "wearing",
+  "name": "Corset Dress",
+  "description": "a {{PRIMARY}} corset-bodice dress with {{METAL}} lacing up the front, a sweetheart neckline and a short flared skirt in layered {{ACCENT_SOFT}} ruffles",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "corset",
+    "female"
+  ]
+}

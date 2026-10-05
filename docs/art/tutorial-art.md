@@ -151,6 +151,18 @@ An A-pose card is one line of difference from the base card. This is the whole o
 The same trick works for hair (`overrides.palette.hairStyleComponent`), makeup (`components.makeup`) and eye glow
 (`components.eye_effect`). One-off changes to a hero for a single render go in `overrides.palette` or `overrides.physique`.
 
+**Test a whole family at once.** `scaffold_wardrobe_tests.py` writes one card per wearing piece in a folder (A-pose underlayers,
+clothing or armor, chosen from each piece's `compatibleStages`) and skips pieces tagged for the other sex or already carded:
+
+```bash
+python tools/generators/scaffold_wardrobe_tests.py --group drakn-sisters --slug drakness --hero Drakness wardrobe/clothing/gowns
+python tools/generators/gen_prompt.py --group drakn-sisters --slug drakness
+python tools/workflows/comfy_workflows.py make --hero Drakness --stage clothing --create
+```
+
+The golden A-pose is the incoming image for scenes. The underlayer pieces are for generating alternatives to it: pick the base that
+blends best (for example the second-skin bodysuit for full-coverage looks, a backless base for bare-back gowns).
+
 ## Recipe 4: add a hero
 
 1. Add the gameplay card under `data/cards/sovereign-dawn/...` (the codex owns name, element, sex, race, class, rarity).

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/romper",
+  "kind": "wearing",
+  "name": "Romper",
+  "description": "a {{PRIMARY}} fitted romper with thin straps, a square neckline and short flared shorts with {{ACCENT_SOFT}} piping",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "romper",
+    "short",
+    "female"
+  ]
+}

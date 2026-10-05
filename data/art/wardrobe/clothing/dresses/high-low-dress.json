@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/high-low-dress",
+  "kind": "wearing",
+  "name": "High-Low Dress",
+  "description": "a {{PRIMARY}} chiffon high-low dress, short at the front to the knee and long at the back to the ankle, with a fitted bodice, thin straps and a floaty layered skirt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "high-low",
+    "flowing",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/princess-gown",
+  "kind": "wearing",
+  "name": "Princess Gown",
+  "description": "a {{PRIMARY}} princess gown with a fitted bodice, a sweetheart neckline, sheer cap sleeves, a full skirt of layered tulle to the floor and {{ACCENT_SOFT}} floral appliques",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "princess",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/halter-dress",
+  "kind": "wearing",
+  "name": "Halter Dress",
+  "description": "a {{PRIMARY}} halter-neck dress with a plunging front held by a neck tie, a fitted waist and a flowing skirt to mid-thigh, the shoulders and back bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "halter",
+    "backless",
+    "female"
+  ]
+}

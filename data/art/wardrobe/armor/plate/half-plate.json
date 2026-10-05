@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/plate/half-plate",
+  "kind": "wearing",
+  "name": "Half-Plate Armor",
+  "description": "{{PRIMARY}}-toned half-plate: a polished breastplate and backplate, pauldrons and a waist guard over a quilted {{ACCENT_SOFT}} arming doublet, the arms and legs in leather with plate vambraces",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "unisex"
+  ]
+}

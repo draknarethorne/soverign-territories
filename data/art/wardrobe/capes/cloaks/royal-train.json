@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/capes/cloaks/royal-train",
+  "kind": "back",
+  "name": "Royal Train",
+  "description": "a long {{PRIMARY}} velvet train lined in {{ACCENT_SOFT}} and trimmed with white fur, fastened with a jewelled {{METAL}} clasp",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "train",
+    "royal"
+  ]
+}

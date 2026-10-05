@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/a-line-dress",
+  "kind": "wearing",
+  "name": "A-Line Dress",
+  "description": "a {{PRIMARY}} A-line dress with a fitted bodice, wide boat neckline, short cap sleeves and a skirt that flares gently to the knee, {{ACCENT_SOFT}} piping at the waist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "a-line",
+    "female"
+  ]
+}

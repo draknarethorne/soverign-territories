@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/sheer-overlay-gown",
+  "kind": "wearing",
+  "name": "Sheer Overlay Gown",
+  "description": "a {{PRIMARY}} gown with a fitted lining and an overlay of sheer {{ACCENT_SOFT}} chiffon embroidered with {{METAL}} thread, long sheer sleeves, a modest lining at the chest and a floor-length flowing skirt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "sheer",
+    "flowing",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/cutout-dress",
+  "kind": "wearing",
+  "name": "Cut-Out Dress",
+  "description": "a {{PRIMARY}} fitted dress to mid-thigh with a high neck and long sleeves, large cut-outs at the waist and a keyhole at the chest that leave the midriff bare, {{METAL}} ring details at the cut-outs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "cutout",
+    "open-midriff",
+    "female"
+  ]
+}

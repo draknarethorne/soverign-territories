@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/leather-catsuit",
+  "kind": "wearing",
+  "name": "Leather Catsuit",
+  "description": "a skin-tight {{PRIMARY}} leather catsuit with a high collar and a {{METAL}} zip at the front, long sleeves and full-length legs, glossy and seamless",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "catsuit",
+    "leather",
+    "form-fitting",
+    "female"
+  ]
+}

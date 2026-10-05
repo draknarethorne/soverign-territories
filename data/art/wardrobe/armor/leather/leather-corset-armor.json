@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/leather/leather-corset-armor",
+  "kind": "wearing",
+  "name": "Leather Corset Armor",
+  "description": "a {{PRIMARY}} leather corset-bodice laced with {{ACCENT_SOFT}} cord, pauldrons and a short pleated leather skirt, the midriff bare, {{METAL}} studs and buckles",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "corset",
+    "open-midriff",
+    "female"
+  ]
+}

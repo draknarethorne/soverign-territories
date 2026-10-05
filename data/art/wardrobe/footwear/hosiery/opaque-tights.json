@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/footwear/hosiery/opaque-tights",
+  "kind": "legs_feet",
+  "name": "Opaque Tights",
+  "description": "smooth opaque {{PRIMARY}} tights with a seamless finish under {{ACCENT_SOFT}} flat shoes",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hosiery",
+    "tights",
+    "unisex"
+  ]
+}

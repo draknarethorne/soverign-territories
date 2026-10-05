@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/hats/veiled-hat",
+  "kind": "headwear",
+  "name": "Veiled Hat",
+  "description": "a small {{PRIMARY}} hat set at an angle with a sheer {{ACCENT_SOFT}} half-veil that stops above the lips",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hat",
+    "veil"
+  ]
+}

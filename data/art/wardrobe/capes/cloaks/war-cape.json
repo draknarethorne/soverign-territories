@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/capes/cloaks/war-cape",
+  "kind": "back",
+  "name": "War Cape",
+  "description": "a long {{PRIMARY}} cape fastened at the shoulders with {{METAL}} clasps and lined in {{ACCENT_SOFT}}, trailing behind",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "cape"
+  ]
+}

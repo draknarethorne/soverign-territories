@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/wrap-skirt-and-top",
+  "kind": "wearing",
+  "name": "Wrap Skirt and Halter Top",
+  "description": "a {{PRIMARY}} low-slung wrap skirt of flowing silk with a thigh-high slit and a matching halter crop top with a keyhole, the midriff bare, a fine {{METAL}} belly chain",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "wrap",
+    "open-midriff",
+    "female"
+  ]
+}

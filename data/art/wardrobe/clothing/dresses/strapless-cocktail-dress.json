@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/strapless-cocktail-dress",
+  "kind": "wearing",
+  "name": "Strapless Cocktail Dress",
+  "description": "a {{PRIMARY}} strapless sweetheart cocktail dress with a boned bodice, a {{METAL}} waist sash and a short pleated tulip skirt, shoulders and arms bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "strapless",
+    "cocktail",
+    "female"
+  ]
+}

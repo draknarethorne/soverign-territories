@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/leather/studded-leather",
+  "kind": "wearing",
+  "name": "Studded Leather Armor",
+  "description": "a {{PRIMARY}} studded leather jerkin over a linen shirt with {{METAL}} studs in rows, a leather skirt split for movement and layered pauldrons",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "unisex"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/crowns/laurel-wreath",
+  "kind": "headwear",
+  "name": "Laurel Wreath",
+  "description": "a wreath of {{METAL}} laurel leaves resting on the brow, tied with {{ACCENT_SOFT}} ribbon",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown",
+    "wreath"
+  ]
+}

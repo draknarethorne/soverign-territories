@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/fitted-tank-and-shorts",
+  "kind": "wearing",
+  "name": "Fitted Tank and Shorts",
+  "description": "only a {{PRIMARY}} fitted sleeveless tank top and matching short training shorts with {{METAL}} piping; arms, lower legs and feet bare",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "athletic",
+    "tank",
+    "male"
+  ]
+}

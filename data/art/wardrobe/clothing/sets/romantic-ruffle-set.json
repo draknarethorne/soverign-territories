@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/romantic-ruffle-set",
+  "kind": "wearing",
+  "name": "Ruffle Blouse and Skirt",
+  "description": "a {{PRIMARY}} ruffled off-shoulder blouse with billowing sleeves and a flowing tiered skirt to the ankle, a {{METAL}} waist cinch",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "blouse",
+    "romantic",
+    "female"
+  ]
+}

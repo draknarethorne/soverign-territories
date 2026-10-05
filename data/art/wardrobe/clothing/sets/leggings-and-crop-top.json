@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/leggings-and-crop-top",
+  "kind": "wearing",
+  "name": "Leggings and Crop Top",
+  "description": "a {{PRIMARY}} fitted sports crop top with high-waist full-length leggings and {{METAL}} piping, midriff bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "athletic",
+    "leggings",
+    "open-midriff",
+    "female"
+  ]
+}

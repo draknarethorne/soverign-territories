@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/long-coat",
+  "kind": "wearing",
+  "name": "Long Coat",
+  "description": "a long {{PRIMARY}} coat with a high collar, a double row of {{METAL}} buttons and wide cuffs, worn over a fitted dark vest and shirt with matching trousers",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coat",
+    "long",
+    "male"
+  ]
+}

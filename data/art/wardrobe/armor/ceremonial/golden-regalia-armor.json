@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/ceremonial/golden-regalia-armor",
+  "kind": "wearing",
+  "name": "Golden Regalia Armor",
+  "description": "parade armor of {{METAL}} with {{PRIMARY}} enamel panels, a high collar, a jewelled chest plate set with {{GEM}} stones and long ceremonial tassets",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "royal",
+    "unisex"
+  ]
+}

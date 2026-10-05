@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/barefoot/wrapped-feet",
+  "kind": "legs_feet",
+  "name": "Wrapped Feet",
+  "description": "bare soles with strips of {{PRIMARY}} cloth wrapped around the arch and ankle, tied with {{ACCENT_SOFT}} cord",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "barefoot",
+    "unisex"
+  ]
+}

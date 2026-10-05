@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/bodycon-mini-dress",
+  "kind": "wearing",
+  "name": "Bodycon Mini Dress",
+  "description": "a {{PRIMARY}} stretch bodycon mini dress that hugs the figure from neckline to upper thigh, scoop neck, short sleeves and a smooth seamless finish",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "mini",
+    "form-fitting",
+    "female"
+  ]
+}

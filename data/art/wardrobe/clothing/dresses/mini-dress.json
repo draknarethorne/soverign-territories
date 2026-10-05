@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/mini-dress",
+  "kind": "wearing",
+  "name": "Mini Dress",
+  "description": "a {{PRIMARY}} satin mini dress with a fitted bodice, thin straps and a short flared skirt ending high on the thigh, {{ACCENT_SOFT}} trim at the hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "mini",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/plunge-gown",
+  "kind": "wearing",
+  "name": "Plunge Gown",
+  "description": "a {{PRIMARY}} floor-length gown with a deep plunging neckline to the navel, fitted through the waist and hips and flowing to the floor, held by thin {{METAL}} shoulder chains",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "low-cut",
+    "plunge",
+    "female"
+  ]
+}

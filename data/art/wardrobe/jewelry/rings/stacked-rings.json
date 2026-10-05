@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/rings/stacked-rings",
+  "kind": "jewelry",
+  "name": "Stacked Rings",
+  "description": "several slim {{METAL}} rings stacked on the fingers, one set with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "rings"
+  ]
+}

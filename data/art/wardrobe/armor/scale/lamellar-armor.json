@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/scale/lamellar-armor",
+  "kind": "wearing",
+  "name": "Lamellar Armor",
+  "description": "laced lamellar armor of small {{PRIMARY}} lacquered plates bound with {{ACCENT_SOFT}} cord, flared shoulder guards, a lamellar skirt to the knee and a {{METAL}} clasp at the chest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "lamellar",
+    "unisex"
+  ]
+}

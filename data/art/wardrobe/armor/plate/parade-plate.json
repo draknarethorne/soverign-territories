@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/parade-plate",
+  "kind": "wearing",
+  "name": "Ceremonial Plate Armor",
+  "description": "gleaming parade plate etched with {{METAL}} filigree and {{ACCENT_SOFT}} enamel, a sunburst on the breastplate, winged pauldrons and a long {{PRIMARY}} tabard open at the sides",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "ceremonial",
+    "unisex"
+  ]
+}

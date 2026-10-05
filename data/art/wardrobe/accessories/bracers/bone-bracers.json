@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/accessories/bracers/bone-bracers",
+  "kind": "arms",
+  "name": "Bone Bracers",
+  "description": "bracers of polished bone plates bound in {{PRIMARY}} leather from wrist to elbow",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "bone"
+  ]
+}

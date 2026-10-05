@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/slippers",
+  "kind": "legs_feet",
+  "name": "Embroidered Slippers",
+  "description": "soft {{PRIMARY}} slippers embroidered with {{ACCENT_SOFT}} thread and a turned-up toe",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "unisex"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/jeweled-sandals",
+  "kind": "legs_feet",
+  "name": "Jeweled Sandals",
+  "description": "delicate {{METAL}} flat sandals with a toe ring, thin chain straps across the foot and {{GEM}} stones at the ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/swimwear/bustier-set",
+  "kind": "wearing",
+  "name": "Bustier Set",
+  "description": "only a {{PRIMARY}} strapless boned satin bustier with a sweetheart neckline that lifts the bust and brings it together, a {{METAL}} centre-front busk and matching high-cut briefs; shoulders and midriff bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "lingerie",
+    "bustier",
+    "strapless",
+    "female"
+  ]
+}

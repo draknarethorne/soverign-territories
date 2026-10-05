@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/mermaid-gown",
+  "kind": "wearing",
+  "name": "Mermaid Gown",
+  "description": "a {{PRIMARY}} mermaid gown that hugs the body from the bust to the knee and flares into a trumpet of ruffled silk at the floor, a sweetheart neckline and {{ACCENT_SOFT}} embroidery",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "mermaid",
+    "form-fitting",
+    "female"
+  ]
+}

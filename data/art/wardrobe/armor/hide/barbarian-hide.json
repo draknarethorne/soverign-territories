@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/hide/barbarian-hide",
+  "kind": "wearing",
+  "name": "Barbarian Hide Armor",
+  "description": "layered {{PRIMARY}} hide and fur: a fur mantle over one shoulder, a leather chest wrap with bone toggles, a hide kilt and rough leather wrist wraps, the arms bare",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "barbarian",
+    "unisex"
+  ]
+}

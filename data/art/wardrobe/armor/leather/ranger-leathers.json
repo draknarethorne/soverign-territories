@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/leather/ranger-leathers",
+  "kind": "wearing",
+  "name": "Ranger Leathers",
+  "description": "supple {{PRIMARY}} leather armor: a hooded jerkin with leaf-pattern {{ACCENT_SOFT}} stitching, bracers, a quiver strap across the chest and a layered tabard",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "ranger",
+    "unisex"
+  ]
+}

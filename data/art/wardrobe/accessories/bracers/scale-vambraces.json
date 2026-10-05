@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/accessories/bracers/scale-vambraces",
+  "kind": "arms",
+  "name": "Scale Vambraces",
+  "description": "vambraces of overlapping {{PRIMARY}} scales with {{METAL}} edging",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "scale"
+  ]
+}

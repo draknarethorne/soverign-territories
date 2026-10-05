@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/necklaces/body-chain",
+  "kind": "jewelry",
+  "name": "Body Chain",
+  "description": "a fine {{METAL}} body chain that drapes from the neck to the waist with {{GEM}} drops and a thin belly chain",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "body-chain"
+  ]
+}

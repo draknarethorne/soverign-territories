@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/layered-tulle-gown",
+  "kind": "wearing",
+  "name": "Layered Tulle Gown",
+  "description": "a {{PRIMARY}} gown of many floaty layers of tulle in shades of {{ACCENT_SOFT}}, a fitted bodice with thin straps and a skirt that swirls to the floor",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "tulle",
+    "flowing",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/bolero-and-skirt",
+  "kind": "wearing",
+  "name": "Bolero and Skirt",
+  "description": "a short {{PRIMARY}} bolero jacket with long sleeves over a {{ACCENT_SOFT}} bandeau top and a high-waist flared skirt to mid-thigh",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "bolero",
+    "female"
+  ]
+}

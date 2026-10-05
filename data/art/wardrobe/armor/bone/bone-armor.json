@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/bone/bone-armor",
+  "kind": "wearing",
+  "name": "Bone Armor",
+  "description": "armor assembled from polished bone: a cuirass of curved ribs, a spine-ridged backplate, skull-faced pauldrons and a skirt of hanging bone plates, bound with {{PRIMARY}} leather and {{ACCENT_SOFT}} sinew",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "unisex"
+  ]
+}

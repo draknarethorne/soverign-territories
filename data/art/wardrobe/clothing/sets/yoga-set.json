@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/yoga-set",
+  "kind": "wearing",
+  "name": "Yoga Set",
+  "description": "a {{PRIMARY}} longline sports bra with a keyhole back and matching high-waist leggings with mesh panels at the calves, midriff bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "athletic",
+    "yoga",
+    "open-midriff",
+    "female"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/barefoot/barefoot-anklets",
+  "kind": "legs_feet",
+  "name": "Barefoot with Anklets",
+  "description": "bare feet with a delicate {{METAL}} anklet set with {{GEM}} stones and a thin toe ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "barefoot",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/swimwear/halter-bikini",
+  "kind": "wearing",
+  "name": "Halter Bikini",
+  "description": "only a {{PRIMARY}} halter bikini in a lustrous satin-metallic finish with a subtle {{METAL}} sheen: a plunging triangle top that ties behind the neck and at the back, and a matching high-cut bottom with thin side ties; midriff bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "bikini",
+    "halter",
+    "female"
+  ]
+}

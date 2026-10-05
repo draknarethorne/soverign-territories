@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bone/necromancer-vestments",
+  "kind": "wearing",
+  "name": "Necromancer Vestments",
+  "description": "layered {{PRIMARY}} robes cut high at the legs, a collar of vertebrae, bone shoulder plates, a {{METAL}} belt with hanging skulls and a long tattered sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "robes",
+    "unisex"
+  ]
+}

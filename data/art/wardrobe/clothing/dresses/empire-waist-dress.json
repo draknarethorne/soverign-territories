@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/empire-waist-dress",
+  "kind": "wearing",
+  "name": "Empire-Waist Dress",
+  "description": "a {{PRIMARY}} empire-waist dress with a gathered bust under a low scoop neckline, short flutter sleeves and a soft flowing skirt to the ankle",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "empire",
+    "flowing",
+    "female"
+  ]
+}

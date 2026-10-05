@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/headwear/hoods/silk-hood",
+  "kind": "headwear",
+  "name": "Silk Hood",
+  "description": "a soft {{PRIMARY}} silk hood with a pointed tip and {{ACCENT_SOFT}} lining, drawn up over the head with the face fully visible",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hood"
+  ]
+}

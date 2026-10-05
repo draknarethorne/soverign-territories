@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/scale/scale-halter-and-skirt",
+  "kind": "wearing",
+  "name": "Scale Halter and Battle Skirt",
+  "description": "a plunging halter top of {{PRIMARY}} scales tied at the neck and a matching split battle skirt of layered scales, the midriff bare, a {{METAL}} belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "scale",
+    "open-midriff",
+    "female"
+  ]
+}

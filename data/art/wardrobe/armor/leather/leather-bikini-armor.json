@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/leather/leather-bikini-armor",
+  "kind": "wearing",
+  "name": "Leather Bikini Armor",
+  "description": "a bikini-cut set of {{PRIMARY}} leather: a studded plunge halter top, a belted leather hip piece with {{METAL}} buckles and a short {{ACCENT_SOFT}} fur-edged skirt flap",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "bikini",
+    "female"
+  ]
+}

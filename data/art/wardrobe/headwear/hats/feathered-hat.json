@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/hats/feathered-hat",
+  "kind": "headwear",
+  "name": "Feathered Hat",
+  "description": "a wide-brimmed {{PRIMARY}} hat with a curved {{ACCENT_SOFT}} plume and a {{METAL}} buckle band",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hat",
+    "swashbuckler"
+  ]
+}

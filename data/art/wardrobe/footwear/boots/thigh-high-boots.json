@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/thigh-high-boots",
+  "kind": "legs_feet",
+  "name": "Thigh-High Boots",
+  "description": "fitted {{PRIMARY}} leather thigh-high boots with a stiletto heel and a {{METAL}} zip up the back, bare thighs above the top edge",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "thigh-high",
+    "female"
+  ]
+}

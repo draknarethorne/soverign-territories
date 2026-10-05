@@ -107,6 +107,9 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
   [art/output-qa-checklist.md](art/output-qa-checklist.md); the generator cannot judge images.
 - **Thorne Art Studio:** a Windows tool for editing art JSON, previewing prompts and driving ComfyUI; assessed in
   [art/thorne-art-studio-proposal.md](art/thorne-art-studio-proposal.md). Build the command-line pieces first.
+- **Art packs and dynamic ComfyUI prompts (Oct 2026):** zip packs of art JSON and custom nodes that assemble a prompt from a template plus
+  chosen pieces at run time, both on one shared prompt library; proposal in
+  [art/art-packs-and-comfy-node-proposal.md](art/art-packs-and-comfy-node-proposal.md). Recommended before the Studio app.
 - Unity project scaffolding; mining signature pieces back into shared wardrobe/background components.
 
 ## Readiness gates

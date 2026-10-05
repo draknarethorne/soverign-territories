@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/boots/ankle-boots",
+  "kind": "legs_feet",
+  "name": "Ankle Boots",
+  "description": "{{PRIMARY}} leather ankle boots with a block heel, {{METAL}} buckles and a pointed toe",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "unisex"
+  ]
+}

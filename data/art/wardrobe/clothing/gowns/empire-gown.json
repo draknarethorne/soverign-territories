@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/empire-gown",
+  "kind": "wearing",
+  "name": "Empire Gown",
+  "description": "a {{PRIMARY}} empire-waist gown with a low square neckline, short puffed sleeves, a {{ACCENT_SOFT}} ribbon under the bust and a long flowing skirt of light silk",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "empire",
+    "flowing",
+    "female"
+  ]
+}

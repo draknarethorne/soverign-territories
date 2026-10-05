@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/belts/chain-belt",
+  "kind": "jewelry",
+  "name": "Chain Belt",
+  "description": "a low-slung {{METAL}} chain belt with hanging {{GEM}} drops, resting on the hips",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "belt"
+  ]
+}

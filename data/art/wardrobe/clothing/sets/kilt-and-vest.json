@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/kilt-and-vest",
+  "kind": "wearing",
+  "name": "Kilt and Vest",
+  "description": "a pleated {{PRIMARY}} kilt with a broad leather belt and a {{METAL}} brooch, a fitted open {{ACCENT_SOFT}} vest over a bare chest",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "kilt",
+    "vest",
+    "male"
+  ]
+}

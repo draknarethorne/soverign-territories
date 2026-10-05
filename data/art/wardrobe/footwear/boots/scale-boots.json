@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/scale-boots",
+  "kind": "legs_feet",
+  "name": "Scale Boots",
+  "description": "knee-high boots of overlapping {{PRIMARY}} scales on a leather base, {{METAL}}-capped toes and a low heel",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "armor",
+    "scale",
+    "unisex"
+  ]
+}

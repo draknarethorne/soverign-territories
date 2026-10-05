@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/doublet-and-hose",
+  "kind": "wearing",
+  "name": "Doublet and Hose",
+  "description": "a fitted {{PRIMARY}} velvet doublet with slashed {{ACCENT_SOFT}} sleeves, a high collar and {{METAL}} buttons, over close-fitting hose",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "doublet",
+    "royal",
+    "male"
+  ]
+}

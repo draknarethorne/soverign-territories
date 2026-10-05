@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/horned-helm",
+  "kind": "headwear",
+  "name": "Horned Helm",
+  "description": "a {{PRIMARY}} half-helm with a nose guard and a pair of curved {{METAL}} horns",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "horned"
+  ]
+}

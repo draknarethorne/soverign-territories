@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bronze/hoplite-bronze",
+  "kind": "wearing",
+  "name": "Hoplite Bronze Armor",
+  "description": "a molded bronze muscle cuirass over a {{PRIMARY}} linen tunic with leather pteruges at the waist and shoulders, bronze greaves and a crested {{ACCENT_SOFT}} plume",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "greek",
+    "unisex"
+  ]
+}

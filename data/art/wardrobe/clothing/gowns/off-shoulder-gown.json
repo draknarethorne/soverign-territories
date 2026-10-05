@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/off-shoulder-gown",
+  "kind": "wearing",
+  "name": "Off-Shoulder Gown",
+  "description": "a {{PRIMARY}} floor-length off-the-shoulder gown with a draped bardot neckline, long fitted sleeves and a flowing skirt, bare shoulders and collarbones",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "off-shoulder",
+    "female"
+  ]
+}

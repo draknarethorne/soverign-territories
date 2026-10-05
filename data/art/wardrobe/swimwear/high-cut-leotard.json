@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/high-cut-leotard",
+  "kind": "wearing",
+  "name": "High-Cut Leotard",
+  "description": "only a {{PRIMARY}} sleeveless high-cut leotard with a scooped neckline and {{METAL}} trim, cut high at the hips; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "dance",
+    "leotard",
+    "female"
+  ]
+}

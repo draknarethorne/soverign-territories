@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/barbute-helm",
+  "kind": "headwear",
+  "name": "Barbute Helm",
+  "description": "a {{PRIMARY}}-toned barbute helm with a T-shaped opening, {{METAL}} rivets and {{ACCENT_SOFT}} trim and a smooth crown",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "plate"
+  ]
+}

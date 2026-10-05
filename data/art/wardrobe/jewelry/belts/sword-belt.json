@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/belts/sword-belt",
+  "kind": "jewelry",
+  "name": "Sword Belt",
+  "description": "a wide {{PRIMARY}} leather belt with a {{METAL}} buckle, a sheath and small pouches",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "belt",
+    "armor"
+  ]
+}

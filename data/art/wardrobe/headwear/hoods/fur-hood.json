@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/hoods/fur-hood",
+  "kind": "headwear",
+  "name": "Fur Hood",
+  "description": "a {{PRIMARY}} cloak hood trimmed with thick white fur, pulled up with the face fully visible",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hood",
+    "fur"
+  ]
+}

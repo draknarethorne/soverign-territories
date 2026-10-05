@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/velvet-long-sleeve-gown",
+  "kind": "wearing",
+  "name": "Velvet Long-Sleeve Gown",
+  "description": "a {{PRIMARY}} velvet gown with a square neckline, long fitted sleeves with pointed cuffs, a high waist and a heavy skirt to the floor, {{METAL}} embroidery at the neckline and hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "velvet",
+    "royal",
+    "female"
+  ]
+}

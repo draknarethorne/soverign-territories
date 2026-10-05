@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/heels/ankle-strap-sandals",
+  "kind": "legs_feet",
+  "name": "Ankle-Strap Heeled Sandals",
+  "description": "open-toed {{PRIMARY}} heeled sandals with thin straps across the foot and a strap around the ankle fastened with a {{METAL}} clasp",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "sandals",
+    "female"
+  ]
+}

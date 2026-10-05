@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/sallet-helm",
+  "kind": "headwear",
+  "name": "Sallet Helm",
+  "description": "a rounded {{PRIMARY}} sallet helm with a swept-back tail and a raised visor, {{METAL}} edging",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "plate"
+  ]
+}

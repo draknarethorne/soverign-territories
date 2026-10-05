@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/accessories/bracers/plate-vambraces",
+  "kind": "arms",
+  "name": "Plate Vambraces",
+  "description": "polished {{PRIMARY}} plate vambraces from wrist to elbow with {{METAL}} rivets and {{ACCENT_SOFT}} straps",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "plate"
+  ]
+}

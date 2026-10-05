@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/winged-helm",
+  "kind": "headwear",
+  "name": "Winged Helm",
+  "description": "a polished {{PRIMARY}} helm with a cheek guard and a pair of swept feathered {{METAL}} wings at the sides",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "winged"
+  ]
+}

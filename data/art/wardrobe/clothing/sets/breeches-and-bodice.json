@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/breeches-and-bodice",
+  "kind": "wearing",
+  "name": "Breeches and Bodice",
+  "description": "a swashbuckler's outfit: fitted {{PRIMARY}} breeches tucked into the boots and a laced {{ACCENT_SOFT}} bodice over a loose white open-necked shirt with billowing sleeves, a broad {{METAL}}-buckled belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "swashbuckler",
+    "female"
+  ]
+}

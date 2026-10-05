@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/gambeson-and-trousers",
+  "kind": "wearing",
+  "name": "Gambeson and Trousers",
+  "description": "a quilted {{PRIMARY}} gambeson with rolled sleeves over a linen shirt, sturdy trousers and a leather belt with a pouch",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "padded",
+    "soldier",
+    "male"
+  ]
+}

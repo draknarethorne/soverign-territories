@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/sets/leather-pants-and-corset-top",
+  "kind": "wearing",
+  "name": "Leather Pants and Corset Top",
+  "description": "skin-tight {{PRIMARY}} leather pants with {{METAL}} lacing at the hips and a {{ACCENT_SOFT}} corset-style crop top laced with {{METAL}} cord over a bare midriff, short bolero shoulders",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "leather",
+    "corset",
+    "open-midriff",
+    "female"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/heels/glass-slippers",
+  "kind": "legs_feet",
+  "name": "Crystal Slippers",
+  "description": "delicate heeled slippers of clear crystal with a {{METAL}} trim line, glittering with {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "fantasy",
+    "female"
+  ]
+}

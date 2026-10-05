@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/strapless-bralette-set",
+  "kind": "wearing",
+  "name": "Strapless Bralette Set",
+  "description": "only a {{PRIMARY}} strapless seamless bralette with a soft sweetheart top edge and matching low-rise briefs; shoulders, midriff and arms bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "lingerie",
+    "strapless",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/silk-battle-dress",
+  "kind": "wearing",
+  "name": "Silk Battle Dress",
+  "description": "a flowing {{PRIMARY}} silk dress with an armored {{METAL}} bodice, a long skirt slit to the hip over fitted leggings and plate vambraces",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "silk",
+    "female"
+  ]
+}

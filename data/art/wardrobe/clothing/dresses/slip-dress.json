@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/slip-dress",
+  "kind": "wearing",
+  "name": "Silk Slip Dress",
+  "description": "a {{PRIMARY}} bias-cut silk slip dress with thin straps and a cowl neckline, falling close to the body to mid-calf with a soft sheen and {{ACCENT_SOFT}} lace at the hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "silk",
+    "female"
+  ]
+}

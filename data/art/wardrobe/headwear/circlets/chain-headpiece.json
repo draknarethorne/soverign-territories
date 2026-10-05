@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/circlets/chain-headpiece",
+  "kind": "headwear",
+  "name": "Chain Headpiece",
+  "description": "a fine {{METAL}} chain headpiece that drapes across the forehead with {{GEM}} drops at the temples",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "circlet",
+    "chain"
+  ]
+}

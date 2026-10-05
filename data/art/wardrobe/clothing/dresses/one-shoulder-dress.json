@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/one-shoulder-dress",
+  "kind": "wearing",
+  "name": "One-Shoulder Dress",
+  "description": "an asymmetric {{PRIMARY}} one-shoulder dress with a draped bodice, a single wide shoulder strap, a side gather at the hip and a skirt that falls to above the knee",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "asymmetric",
+    "female"
+  ]
+}

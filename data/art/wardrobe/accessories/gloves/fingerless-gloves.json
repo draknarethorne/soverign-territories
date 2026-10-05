@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/accessories/gloves/fingerless-gloves",
+  "kind": "arms",
+  "name": "Fingerless Gloves",
+  "description": "{{PRIMARY}} leather fingerless gloves with {{METAL}} studs and straps at the wrist",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "gloves",
+    "leather"
+  ]
+}

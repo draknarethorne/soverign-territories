@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/mail-coif",
+  "kind": "headwear",
+  "name": "Mail Coif",
+  "description": "a {{PRIMARY}}-toned chain-mail coif covering the head and neck with an open face, riveted {{METAL}} links at the brow",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "mail"
+  ]
+}

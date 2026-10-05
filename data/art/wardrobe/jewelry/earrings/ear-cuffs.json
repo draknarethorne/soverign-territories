@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/earrings/ear-cuffs",
+  "kind": "jewelry",
+  "name": "Ear Cuffs",
+  "description": "{{METAL}} ear cuffs running along the edge of each ear with tiny {{GEM}} stones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earrings"
+  ]
+}

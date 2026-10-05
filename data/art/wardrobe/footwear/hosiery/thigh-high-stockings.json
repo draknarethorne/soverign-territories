@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/footwear/hosiery/thigh-high-stockings",
+  "kind": "legs_feet",
+  "name": "Thigh-High Stockings",
+  "description": "sheer {{PRIMARY}} thigh-high stockings with a lace top band, over matching {{PRIMARY}} heels",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hosiery",
+    "stockings",
+    "female"
+  ]
+}

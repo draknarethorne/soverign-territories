@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/robes/velvet-doublet-armor",
+  "kind": "wearing",
+  "name": "Velvet Doublet Armor",
+  "description": "a {{PRIMARY}} velvet doublet with a hidden steel gorget and {{METAL}} brocade, slashed sleeves, plate tassets over fitted hose and a short half-cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "velvet",
+    "royal",
+    "male"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/swimwear/corset-set",
+  "kind": "wearing",
+  "name": "Corset Set",
+  "description": "only a {{PRIMARY}} satin underbust corset with {{METAL}} boning and lacing that cinches the waist, over a matching balconette bra and high-cut briefs; shoulders and arms bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "lingerie",
+    "corset",
+    "female"
+  ],
+  "notes": "Gives a defined waist to carry into gowns and armor; the back lacing is part of this base."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bone/bone-bikini",
+  "kind": "wearing",
+  "name": "Bone Bikini Armor",
+  "description": "a bikini-cut set of bone: rib-bone cups joined by a vertebrae strap, a hip girdle of small bone plates and a skirt of hanging bone shards, {{ACCENT_SOFT}} leather lacing",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bone",
+    "bikini",
+    "female"
+  ]
+}

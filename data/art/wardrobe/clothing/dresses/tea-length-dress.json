@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/tea-length-dress",
+  "kind": "wearing",
+  "name": "Tea-Length Dress",
+  "description": "a {{PRIMARY}} tea-length dress with a fitted bodice, short puffed sleeves, a nipped waist and a full circle skirt to mid-calf with {{ACCENT_SOFT}} floral embroidery",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "tea-length",
+    "female"
+  ]
+}

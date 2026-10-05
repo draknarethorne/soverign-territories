@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/compression-shorts",
+  "kind": "wearing",
+  "name": "Compression Shorts",
+  "description": "only {{PRIMARY}} fitted knee-length compression shorts with {{METAL}} side stripes; chest, arms and feet bare",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "athletic",
+    "shorts",
+    "male"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/cape-gown",
+  "kind": "wearing",
+  "name": "Cape Gown",
+  "description": "a {{PRIMARY}} fitted floor-length gown with a high neck and a matching sheer cape that falls from the shoulders to the floor, {{METAL}} brooch at the throat",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "cape",
+    "regal",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/crowns/bone-crown",
+  "kind": "headwear",
+  "name": "Bone Crown",
+  "description": "a crown of interlocking bone points threaded with {{METAL}} wire and set with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown",
+    "bone"
+  ]
+}

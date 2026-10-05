@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/hide/fur-and-leather-bikini",
+  "kind": "wearing",
+  "name": "Fur and Leather Bikini",
+  "description": "a bikini-cut set of {{PRIMARY}} leather trimmed in thick white fur: a laced top, a low-slung skirt of fur and leather and a fur-edged shoulder wrap, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "fur",
+    "bikini",
+    "female"
+  ]
+}

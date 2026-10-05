@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/leather-jerkin-and-trousers",
+  "kind": "wearing",
+  "name": "Leather Jerkin and Trousers",
+  "description": "a {{PRIMARY}} leather jerkin laced up the front over a linen shirt with rolled sleeves, fitted dark trousers and a broad belt with {{METAL}} buckles",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tunic",
+    "leather",
+    "male"
+  ]
+}

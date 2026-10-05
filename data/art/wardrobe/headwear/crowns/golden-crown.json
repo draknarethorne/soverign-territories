@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/crowns/golden-crown",
+  "kind": "headwear",
+  "name": "Golden Crown",
+  "description": "an ornate {{METAL}} crown with high arches, filigree and {{GEM}} stones, a velvet {{PRIMARY}} lining",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown",
+    "royal"
+  ]
+}

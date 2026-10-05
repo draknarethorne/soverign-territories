@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/leather/hardened-leather-cuirass",
+  "kind": "wearing",
+  "name": "Hardened Leather Cuirass",
+  "description": "a boiled-leather cuirass in {{PRIMARY}} carved with {{ACCENT_SOFT}} patterns, layered leather pauldrons and tassets, over a padded shirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "unisex"
+  ]
+}

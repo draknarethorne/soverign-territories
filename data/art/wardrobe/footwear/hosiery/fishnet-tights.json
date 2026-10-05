@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/footwear/hosiery/fishnet-tights",
+  "kind": "legs_feet",
+  "name": "Fishnet Tights",
+  "description": "{{PRIMARY}} fishnet tights under {{ACCENT_SOFT}} ankle boots",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hosiery",
+    "tights",
+    "female"
+  ]
+}

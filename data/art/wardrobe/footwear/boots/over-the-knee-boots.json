@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/boots/over-the-knee-boots",
+  "kind": "legs_feet",
+  "name": "Over-the-Knee Boots",
+  "description": "soft {{PRIMARY}} suede over-the-knee boots with a block heel, a {{ACCENT_SOFT}} stitched cuff at the top and a snug fit around the calf",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "female"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/leggings-and-crop-top",
+  "kind": "wearing",
+  "name": "Leggings and Crop Top",
+  "description": "only a {{PRIMARY}} fitted crop top and matching high-waist full-length leggings with {{METAL}} piping; midriff bare; matching flat trainers",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "athletic",
+    "leggings",
+    "female"
+  ]
+}

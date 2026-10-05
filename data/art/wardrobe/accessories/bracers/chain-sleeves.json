@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/accessories/bracers/chain-sleeves",
+  "kind": "arms",
+  "name": "Chain Sleeves",
+  "description": "long sleeves of fine {{PRIMARY}}-toned chain mail from shoulder to wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "mail"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/wrap-gown",
+  "kind": "wearing",
+  "name": "Wrap Gown",
+  "description": "a {{PRIMARY}} floor-length wrap gown with a deep V neckline, long sleeves, a tie at the waist and a skirt that wraps open to reveal the leg",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "wrap",
+    "low-cut",
+    "female"
+  ]
+}

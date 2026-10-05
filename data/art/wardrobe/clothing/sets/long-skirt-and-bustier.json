@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/long-skirt-and-bustier",
+  "kind": "wearing",
+  "name": "Long Skirt and Bustier",
+  "description": "a flowing {{PRIMARY}} maxi skirt with a high slit and a low-slung {{METAL}} chain belt, paired with a fitted strapless {{ACCENT_SOFT}} bustier top, the midriff bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "long",
+    "open-midriff",
+    "female"
+  ]
+}

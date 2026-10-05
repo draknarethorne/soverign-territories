@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/mail/mail-skirt-and-bandeau",
+  "kind": "wearing",
+  "name": "Mail Skirt and Bandeau",
+  "description": "a {{PRIMARY}} chain-mail bandeau with a {{METAL}} ring clasp, a floor-length chain-mail skirt split to the hip over leather shorts, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "mail",
+    "open-midriff",
+    "female"
+  ]
+}

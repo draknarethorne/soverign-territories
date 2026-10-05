@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/peasant-dress",
+  "kind": "wearing",
+  "name": "Peasant Dress",
+  "description": "a {{PRIMARY}} peasant dress with a gathered off-shoulder blouse top, a laced bodice and a full skirt to mid-calf, {{ACCENT_SOFT}} ribbon at the cuffs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "peasant",
+    "female"
+  ]
+}

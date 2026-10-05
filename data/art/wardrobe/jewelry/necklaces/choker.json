@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/necklaces/choker",
+  "kind": "jewelry",
+  "name": "Choker",
+  "description": "a close-fitting {{PRIMARY}} velvet choker with a {{METAL}} centre ornament set with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "choker"
+  ]
+}

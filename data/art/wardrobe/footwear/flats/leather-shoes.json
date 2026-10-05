@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/leather-shoes",
+  "kind": "legs_feet",
+  "name": "Leather Shoes",
+  "description": "polished {{PRIMARY}} leather shoes with a low heel and {{METAL}} buckles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "male"
+  ]
+}

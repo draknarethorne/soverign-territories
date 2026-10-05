@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/swimwear/silk-slip-set",
+  "kind": "wearing",
+  "name": "Silk Slip Set",
+  "description": "only a {{PRIMARY}} silk slip set: a short camisole with lace trim at the neckline and matching tap shorts with {{METAL}} piping; arms and legs bare; matching {{PRIMARY}} flat sandals",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "sleepwear",
+    "silk",
+    "female"
+  ]
+}

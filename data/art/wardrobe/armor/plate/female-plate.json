@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/plate/female-plate",
+  "kind": "wearing",
+  "name": "Female Plate Armor",
+  "description": "fitted {{PRIMARY}}-toned plate with a sculpted breastplate shaped to the figure, a cinched waist, flared tassets over a short {{ACCENT_SOFT}} battle skirt, pauldrons and a plunging {{METAL}}-edged neckline, the midriff covered by a segmented plate belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "female"
+  ]
+}

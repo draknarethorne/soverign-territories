@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/capes/cloaks/butterfly-wings",
+  "kind": "back",
+  "name": "Gossamer Wings",
+  "description": "a pair of translucent gossamer wings veined in {{METAL}}, held lightly at the shoulder blades and shimmering with {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "wings",
+    "fantasy"
+  ]
+}

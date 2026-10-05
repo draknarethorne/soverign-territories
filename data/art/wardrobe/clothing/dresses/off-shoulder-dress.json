@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/off-shoulder-dress",
+  "kind": "wearing",
+  "name": "Off-Shoulder Dress",
+  "description": "a {{PRIMARY}} off-the-shoulder dress with a ruffled neckline, fitted waist and a full skirt to the knee, bare shoulders and collarbones",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "off-shoulder",
+    "female"
+  ]
+}

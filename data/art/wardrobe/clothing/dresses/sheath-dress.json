@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/sheath-dress",
+  "kind": "wearing",
+  "name": "Sheath Dress",
+  "description": "a {{PRIMARY}} straight-cut sheath dress with a clean square neckline, narrow shoulder straps and a smooth column skirt to the knee, {{METAL}} buttons down the back seam",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "straight",
+    "elegant",
+    "female"
+  ]
+}

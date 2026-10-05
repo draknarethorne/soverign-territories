@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/half-plate-open-midriff",
+  "kind": "wearing",
+  "name": "Open-Midriff Plate",
+  "description": "a {{PRIMARY}}-toned plate cuirass cut to just under the bust with a {{METAL}} chain across the open midriff, pauldrons and a plate battle-skirt with an {{ACCENT_SOFT}} leather underskirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "open-midriff",
+    "female"
+  ]
+}

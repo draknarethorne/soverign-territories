@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/high-slit-gown",
+  "kind": "wearing",
+  "name": "High-Slit Gown",
+  "description": "a {{PRIMARY}} floor-length gown with a fitted bodice, narrow straps and a skirt slit from the hip to the floor, the leg visible with each step, {{METAL}} clasp at the hip",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "slit",
+    "female"
+  ]
+}

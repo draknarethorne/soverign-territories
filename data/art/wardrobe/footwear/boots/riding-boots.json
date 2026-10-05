@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/riding-boots",
+  "kind": "legs_feet",
+  "name": "Riding Boots",
+  "description": "tall polished {{PRIMARY}} riding boots with a smooth shaft to the knee, a low heel and {{METAL}} spurs",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "riding",
+    "unisex"
+  ]
+}

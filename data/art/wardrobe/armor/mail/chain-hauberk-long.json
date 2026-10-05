@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/mail/chain-hauberk-long",
+  "kind": "wearing",
+  "name": "Long Chain Hauberk",
+  "description": "a {{PRIMARY}}-toned chain-mail hauberk to the knee with long sleeves, split at the sides, under a belted {{ACCENT_SOFT}} surcoat",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "mail",
+    "unisex"
+  ]
+}

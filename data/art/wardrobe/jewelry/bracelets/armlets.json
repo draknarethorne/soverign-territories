@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/bracelets/armlets",
+  "kind": "jewelry",
+  "name": "Upper Armlets",
+  "description": "coiled {{METAL}} armlets set with {{GEM}} stones worn on the upper arms, matching cuffs at the wrists",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "armlet"
+  ]
+}

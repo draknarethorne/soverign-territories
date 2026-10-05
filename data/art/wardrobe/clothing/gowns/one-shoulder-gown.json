@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/one-shoulder-gown",
+  "kind": "wearing",
+  "name": "One-Shoulder Gown",
+  "description": "an asymmetric {{PRIMARY}} one-shoulder gown with a sculpted draped bodice, a single sleeve, a side gather at the waist and a long flowing skirt with a train",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "asymmetric",
+    "female"
+  ]
+}

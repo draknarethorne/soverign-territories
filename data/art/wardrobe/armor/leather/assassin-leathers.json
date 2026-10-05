@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/leather/assassin-leathers",
+  "kind": "wearing",
+  "name": "Assassin Leathers",
+  "description": "fitted dark {{PRIMARY}} leather armor with a high collar and a layered half-cape, many {{METAL}} buckles, a bandolier of throwing knives and a face-covering scarf tied low at the neck",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "rogue",
+    "unisex"
+  ]
+}

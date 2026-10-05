@@ -40,6 +40,7 @@ data debt, and the readiness gates.
 | Hero/dragon vision roster | `codex/heroes/ideation_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline. **Ideation-tier vision**, not MVP scope — a subset ships first. |
 | Current state, decisions, backlog | `STATUS.md` | Wins on "what is done / open / next". Rules still live in the rows above. |
 | Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
+| Art packs, dynamic ComfyUI prompts | `art/art-packs-and-comfy-node-proposal.md` | Proposal: zip packs of art JSON and custom nodes on one shared prompt library. |
 
 ## Phases
 

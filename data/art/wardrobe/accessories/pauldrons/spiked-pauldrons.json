@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/accessories/pauldrons/spiked-pauldrons",
+  "kind": "arms",
+  "name": "Spiked Pauldrons",
+  "description": "large layered {{PRIMARY}} pauldrons crowned with curved {{METAL}} spikes",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "pauldron"
+  ]
+}

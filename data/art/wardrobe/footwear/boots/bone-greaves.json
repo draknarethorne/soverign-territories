@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/bone-greaves",
+  "kind": "legs_feet",
+  "name": "Bone Greaves",
+  "description": "slender greaves of polished bone plates strapped along the shin over {{PRIMARY}} leather boots, spurs of bone at the heel",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "armor",
+    "bone",
+    "unisex"
+  ]
+}

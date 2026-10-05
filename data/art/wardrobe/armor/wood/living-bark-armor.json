@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/wood/living-bark-armor",
+  "kind": "wearing",
+  "name": "Living Bark Armor",
+  "description": "armor grown from bark and leaves: a bodice of overlapping bark plates in {{PRIMARY}} and {{ACCENT_SOFT}}, vine-wrapped pauldrons with small flowers and a leaf skirt over leather greaves",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "wood",
+    "druid",
+    "unisex"
+  ]
+}

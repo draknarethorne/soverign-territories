@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/capes/cloaks/tattered-cloak",
+  "kind": "back",
+  "name": "Tattered Cloak",
+  "description": "a long tattered {{PRIMARY}} cloak with ragged edges that stir in a slow wind",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "cloak"
+  ]
+}

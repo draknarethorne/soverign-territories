@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/ball-gown",
+  "kind": "wearing",
+  "name": "Ball Gown",
+  "description": "a {{PRIMARY}} ball gown with a fitted strapless bodice and an enormous full skirt of layered tulle and satin sweeping to the floor, {{METAL}} beadwork across the bodice and {{ACCENT_SOFT}} edging on the hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "ball",
+    "elegant",
+    "female"
+  ]
+}

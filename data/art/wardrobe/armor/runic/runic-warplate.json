@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/runic/runic-warplate",
+  "kind": "wearing",
+  "name": "Runic Warplate",
+  "description": "{{PRIMARY}}-toned plate carved with glowing {{MAGIC}} runes, heavy pauldrons, a studded belt and a fur-lined mantle, {{METAL}} rivets",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "runic",
+    "norse",
+    "unisex"
+  ]
+}

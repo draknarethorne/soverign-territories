@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/mail/chain-bikini",
+  "kind": "wearing",
+  "name": "Chainmail Bikini",
+  "description": "a bikini-cut set of fine {{PRIMARY}}-toned chainmail: a mail halter top with a plunging front and a mail loincloth over a leather belt with {{METAL}} studs",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "mail",
+    "bikini",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/capes/cloaks/fur-cloak",
+  "kind": "back",
+  "name": "Fur Cloak",
+  "description": "a heavy cloak of thick white fur over the shoulders, fastened with a {{METAL}} chain",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "cloak",
+    "fur"
+  ]
+}

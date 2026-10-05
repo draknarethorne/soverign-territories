@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/sets/palazzo-and-bralette",
+  "kind": "wearing",
+  "name": "Palazzo and Bralette",
+  "description": "wide-leg flowing {{PRIMARY}} palazzo pants with a high waist and a matching {{ACCENT_SOFT}} lace bralette, the midriff bare, a sheer open overshirt tied at the waist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "palazzo",
+    "open-midriff",
+    "flowing",
+    "female"
+  ]
+}

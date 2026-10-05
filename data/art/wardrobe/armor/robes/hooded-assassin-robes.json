@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/hooded-assassin-robes",
+  "kind": "wearing",
+  "name": "Hooded Cloth Robes",
+  "description": "layered {{PRIMARY}} cloth robes with wrapped sashes, a deep hood, long sleeves and a {{ACCENT_SOFT}} half-cape, a face scarf pulled down at the throat",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "robes",
+    "unisex"
+  ]
+}

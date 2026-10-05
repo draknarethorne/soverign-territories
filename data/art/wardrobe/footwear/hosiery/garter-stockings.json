@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/footwear/hosiery/garter-stockings",
+  "kind": "legs_feet",
+  "name": "Garter Stockings",
+  "description": "sheer {{PRIMARY}} stockings held by {{ACCENT_SOFT}} satin garter straps with {{METAL}} clasps, over matching heels",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "hosiery",
+    "stockings",
+    "female"
+  ]
+}

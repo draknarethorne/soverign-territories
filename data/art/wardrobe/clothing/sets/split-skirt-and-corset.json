@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/split-skirt-and-corset",
+  "kind": "wearing",
+  "name": "Split Skirt and Corset",
+  "description": "a {{PRIMARY}} long skirt open at both sides over fitted shorts and a laced {{ACCENT_SOFT}} corset bodice with bare shoulders, a {{METAL}} chain belt at the hip",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "split",
+    "corset",
+    "female"
+  ]
+}

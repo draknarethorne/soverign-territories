@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/boots/buskin-boots",
+  "kind": "legs_feet",
+  "name": "Buskin Boots",
+  "description": "soft {{PRIMARY}} leather buskin boots laced up the front to mid-calf with an open toe and {{ACCENT_SOFT}} tassels",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "male"
+  ]
+}

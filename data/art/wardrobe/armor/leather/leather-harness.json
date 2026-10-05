@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/leather/leather-harness",
+  "kind": "wearing",
+  "name": "Leather Harness Armor",
+  "description": "a bare-chested {{PRIMARY}} leather harness of crossed straps and {{METAL}} buckles with spiked pauldrons, a studded belt and a leather loincloth over fitted trousers",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "harness",
+    "male"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/pencil-skirt-and-blouse",
+  "kind": "wearing",
+  "name": "Pencil Skirt and Blouse",
+  "description": "a {{PRIMARY}} high-waist pencil skirt to the knee and a fitted silk blouse with a deep V, the sleeves rolled to the elbow, {{METAL}} buttons",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "straight",
+    "tailored",
+    "female"
+  ]
+}

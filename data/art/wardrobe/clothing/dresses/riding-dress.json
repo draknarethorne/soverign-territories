@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/riding-dress",
+  "kind": "wearing",
+  "name": "Riding Dress",
+  "description": "a {{PRIMARY}} fitted riding dress with a high collar, a row of {{METAL}} buttons, long sleeves and a split skirt that falls to the ankle, {{ACCENT_SOFT}} piping along the seams",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "riding",
+    "female"
+  ]
+}

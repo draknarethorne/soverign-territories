@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/gothic-plate",
+  "kind": "wearing",
+  "name": "Gothic Plate Armor",
+  "description": "fluted gothic plate in {{PRIMARY}}-toned steel with sharp ridges and pointed edges, a high gorget, spiked elbows and knees, {{METAL}} engraving and {{ACCENT_SOFT}} leather straps",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "gothic",
+    "unisex"
+  ]
+}

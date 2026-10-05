@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/loose-tunic-dress",
+  "kind": "wearing",
+  "name": "Loose Tunic Dress",
+  "description": "a loose {{PRIMARY}} linen tunic dress with a wide neckline, long bell sleeves, a drawstring at the hip and a relaxed hem to mid-thigh, {{ACCENT_SOFT}} embroidery at the neck",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "loose",
+    "tunic",
+    "female"
+  ]
+}

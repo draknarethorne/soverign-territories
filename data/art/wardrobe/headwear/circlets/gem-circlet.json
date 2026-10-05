@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/headwear/circlets/gem-circlet",
+  "kind": "headwear",
+  "name": "Gem Circlet",
+  "description": "a thin {{METAL}} circlet with a single {{GEM}} gem resting on the forehead",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "circlet"
+  ]
+}

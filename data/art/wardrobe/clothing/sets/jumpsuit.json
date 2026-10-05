@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/jumpsuit",
+  "kind": "wearing",
+  "name": "Plunge Jumpsuit",
+  "description": "a {{PRIMARY}} wide-leg jumpsuit with a deep plunging neckline, a wrap waist with a {{METAL}} belt and long flowing legs, bare shoulders and arms",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jumpsuit",
+    "low-cut",
+    "female"
+  ]
+}

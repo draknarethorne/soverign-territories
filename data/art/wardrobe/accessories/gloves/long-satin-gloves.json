@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/accessories/gloves/long-satin-gloves",
+  "kind": "arms",
+  "name": "Long Satin Gloves",
+  "description": "opera-length {{PRIMARY}} satin gloves reaching above the elbow, with a {{METAL}} button at the wrist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "gloves",
+    "elegant"
+  ]
+}

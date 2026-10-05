@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/ballet-flats",
+  "kind": "legs_feet",
+  "name": "Ballet Flats",
+  "description": "soft {{PRIMARY}} satin ballet flats with a round toe and thin {{ACCENT_SOFT}} ribbons that cross the ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "female"
+  ]
+}

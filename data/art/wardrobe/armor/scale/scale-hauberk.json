@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/scale/scale-hauberk",
+  "kind": "wearing",
+  "name": "Scale Hauberk",
+  "description": "overlapping {{PRIMARY}} scales on a leather base from neck to thigh with short sleeves, each scale edged in {{METAL}}, a {{ACCENT_SOFT}} sash at the waist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "scale",
+    "unisex"
+  ]
+}

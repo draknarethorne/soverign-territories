@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/mini-skirt-and-crop-top",
+  "kind": "wearing",
+  "name": "Mini Skirt and Crop Top",
+  "description": "a {{PRIMARY}} pleated mini skirt at mid-thigh and a fitted long-sleeved crop top with a {{METAL}} zip, the midriff bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "skirt",
+    "mini",
+    "open-midriff",
+    "female"
+  ]
+}

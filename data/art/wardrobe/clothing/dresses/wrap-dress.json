@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/wrap-dress",
+  "kind": "wearing",
+  "name": "Wrap Dress",
+  "description": "a {{PRIMARY}} jersey wrap dress with a deep V neckline, a tie at the natural waist and a skirt that wraps open to the knee, three-quarter sleeves",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "wrap",
+    "low-cut",
+    "female"
+  ]
+}

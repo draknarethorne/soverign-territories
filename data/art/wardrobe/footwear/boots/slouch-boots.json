@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/slouch-boots",
+  "kind": "legs_feet",
+  "name": "Slouch Boots",
+  "description": "soft {{PRIMARY}} leather slouch boots that gather at the shin, with a low stacked heel and a {{METAL}} strap at the ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "loose",
+    "female"
+  ]
+}

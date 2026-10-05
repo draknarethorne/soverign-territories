@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/battle-mage-robes",
+  "kind": "wearing",
+  "name": "Battle-Mage Robes",
+  "description": "fitted {{PRIMARY}} robes with {{METAL}} embroidered runes down the front, a wide {{ACCENT_SOFT}} belt with pouches, armored bracers and flowing split skirts",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "robes",
+    "unisex"
+  ]
+}

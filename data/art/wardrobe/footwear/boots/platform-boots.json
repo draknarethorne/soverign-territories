@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/platform-boots",
+  "kind": "legs_feet",
+  "name": "Platform Boots",
+  "description": "chunky {{PRIMARY}} knee-high platform boots with thick soles, front lacing and {{METAL}} buckles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "platform",
+    "female"
+  ]
+}

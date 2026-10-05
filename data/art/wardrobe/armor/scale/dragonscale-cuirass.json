@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/scale/dragonscale-cuirass",
+  "kind": "wearing",
+  "name": "Dragonscale Cuirass",
+  "description": "a cuirass of iridescent dragon scales in {{PRIMARY}} and {{ACCENT_SOFT}}, spined pauldrons, a flared scale skirt and a {{GEM}} stone set at the chest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "scale",
+    "dragon",
+    "unisex"
+  ]
+}

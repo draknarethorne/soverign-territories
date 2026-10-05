@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/accessories/pauldrons/winged-pauldrons",
+  "kind": "arms",
+  "name": "Winged Pauldrons",
+  "description": "sculpted {{PRIMARY}} pauldrons shaped like folded wings edged in {{METAL}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "pauldron"
+  ]
+}

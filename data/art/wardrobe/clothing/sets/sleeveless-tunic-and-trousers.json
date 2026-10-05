@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/sets/sleeveless-tunic-and-trousers",
+  "kind": "wearing",
+  "name": "Sleeveless Tunic and Trousers",
+  "description": "a sleeveless {{PRIMARY}} tunic with a {{ACCENT_SOFT}} border and a leather belt, fitted dark trousers and leather wrist wraps, the arms bare",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tunic",
+    "sleeveless",
+    "male"
+  ]
+}

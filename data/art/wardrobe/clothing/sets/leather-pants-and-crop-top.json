@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/sets/leather-pants-and-crop-top",
+  "kind": "wearing",
+  "name": "Leather Pants and Crop Top",
+  "description": "fitted {{PRIMARY}} leather trousers with a low rise and a matching long-sleeved leather crop jacket cut to above the navel, the midriff bare, {{METAL}} zips at the cuffs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "leather",
+    "open-midriff",
+    "female"
+  ]
+}

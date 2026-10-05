@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/strappy-flat-sandals",
+  "kind": "legs_feet",
+  "name": "Strappy Flat Sandals",
+  "description": "{{PRIMARY}} flat sandals with thin crossed straps over the foot and a tie at the ankle, a {{METAL}} toe ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "female"
+  ]
+}

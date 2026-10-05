@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/gowns/sweetheart-gown",
+  "kind": "wearing",
+  "name": "Sweetheart Gown",
+  "description": "a {{PRIMARY}} strapless gown with a boned sweetheart bodice, a {{METAL}} sash at the waist and a skirt that falls in soft folds to the floor",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "strapless",
+    "female"
+  ]
+}

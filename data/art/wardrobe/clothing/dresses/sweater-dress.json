@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/dresses/sweater-dress",
+  "kind": "wearing",
+  "name": "Sweater Dress",
+  "description": "a {{PRIMARY}} knitted sweater dress with a loose cowl neck, long sleeves, a belted waist and a hem to mid-thigh",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "knit",
+    "loose",
+    "female"
+  ]
+}

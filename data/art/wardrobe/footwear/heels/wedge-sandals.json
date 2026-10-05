@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/heels/wedge-sandals",
+  "kind": "legs_feet",
+  "name": "Wedge Sandals",
+  "description": "{{PRIMARY}} cork-and-leather wedge sandals with ankle ties and {{ACCENT_SOFT}} straps",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "wedge",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/headwear/helms/scale-helm",
+  "kind": "headwear",
+  "name": "Scale Helm",
+  "description": "a close helm of overlapping {{PRIMARY}} scales with a raised crest and an open face, {{METAL}} brow band",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "helm",
+    "scale"
+  ]
+}

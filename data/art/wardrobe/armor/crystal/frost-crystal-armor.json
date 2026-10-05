@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/crystal/frost-crystal-armor",
+  "kind": "wearing",
+  "name": "Frost Crystal Armor",
+  "description": "a cuirass of translucent ice crystal in {{PRIMARY}} and white, jagged crystal pauldrons, a layered crystal skirt and {{METAL}} filigree catching {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "ice",
+    "unisex"
+  ]
+}

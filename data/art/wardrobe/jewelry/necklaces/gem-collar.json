@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/necklaces/gem-collar",
+  "kind": "jewelry",
+  "name": "Gem Collar",
+  "description": "a broad {{METAL}} collar necklace set with a row of {{GEM}} stones, resting on the collarbones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "collar"
+  ]
+}

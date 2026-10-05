@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/necklaces/layered-chains",
+  "kind": "jewelry",
+  "name": "Layered Chains",
+  "description": "several {{METAL}} chains of different lengths layered at the chest with a small {{GEM}} pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace"
+  ]
+}

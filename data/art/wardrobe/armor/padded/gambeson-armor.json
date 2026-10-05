@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/padded/gambeson-armor",
+  "kind": "wearing",
+  "name": "Padded Gambeson Armor",
+  "description": "a thick quilted {{PRIMARY}} gambeson with {{METAL}} buttons over a short mail collar, leather vambraces and a belted skirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "padded",
+    "unisex"
+  ]
+}

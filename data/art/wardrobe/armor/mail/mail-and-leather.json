@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/mail/mail-and-leather",
+  "kind": "wearing",
+  "name": "Mail and Leather",
+  "description": "a short chain-mail shirt with {{ACCENT_SOFT}} leather shoulder guards, a studded leather belt and a split leather skirt, the arms bare",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "mail",
+    "leather",
+    "unisex"
+  ]
+}

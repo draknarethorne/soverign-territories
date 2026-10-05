@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/moccasins",
+  "kind": "legs_feet",
+  "name": "Moccasins",
+  "description": "soft {{PRIMARY}} suede moccasins with {{ACCENT_SOFT}} beadwork on the toe and fringe at the ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "unisex"
+  ]
+}

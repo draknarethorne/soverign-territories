@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/robes/cloth-wraps",
+  "kind": "wearing",
+  "name": "Cloth Wrap Armor",
+  "description": "strips of {{PRIMARY}} and {{ACCENT_SOFT}} cloth wound around the torso and hips, layered over a short tunic with a {{METAL}} clasp at the shoulder, a tied sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "cloth",
+    "unisex"
+  ]
+}

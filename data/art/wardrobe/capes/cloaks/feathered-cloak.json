@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/capes/cloaks/feathered-cloak",
+  "kind": "back",
+  "name": "Feathered Cloak",
+  "description": "a mantle of layered {{PRIMARY}} and {{ACCENT_SOFT}} feathers across the shoulders falling to the waist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "cloak",
+    "feathers"
+  ]
+}

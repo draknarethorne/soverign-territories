@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/gowns/liquid-silk-gown",
+  "kind": "wearing",
+  "name": "Liquid Silk Gown",
+  "description": "a {{PRIMARY}} bias-cut liquid silk gown that clings and flows like water, a cowl neck, thin straps and a long skirt that pools slightly at the floor",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "silk",
+    "form-fitting",
+    "flowing",
+    "female"
+  ]
+}

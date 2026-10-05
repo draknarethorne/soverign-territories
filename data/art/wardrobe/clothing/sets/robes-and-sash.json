@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/clothing/sets/robes-and-sash",
+  "kind": "wearing",
+  "name": "Robes and Sash",
+  "description": "long {{PRIMARY}} robes open at the chest over a fitted tunic, a wide {{ACCENT_SOFT}} sash at the waist and long sleeves with {{METAL}} trim",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "robe",
+    "male"
+  ]
+}

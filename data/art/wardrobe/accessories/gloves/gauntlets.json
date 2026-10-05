@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/accessories/gloves/gauntlets",
+  "kind": "arms",
+  "name": "Plate Gauntlets",
+  "description": "articulated {{PRIMARY}}-toned plate gauntlets with flared cuffs and {{METAL}} knuckle guards",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "gloves",
+    "plate"
+  ]
+}

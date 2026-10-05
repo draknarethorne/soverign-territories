@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/footwear/boots/lace-up-boots",
+  "kind": "legs_feet",
+  "name": "Lace-Up Boots",
+  "description": "{{PRIMARY}} leather boots laced with {{ACCENT_SOFT}} cord from the toe to the knee, a low heel and a turned-over cuff",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "boots",
+    "lace-up",
+    "unisex"
+  ]
+}

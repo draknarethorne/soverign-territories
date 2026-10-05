@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/full-plate",
+  "kind": "wearing",
+  "name": "Full Plate Armor",
+  "description": "full {{PRIMARY}}-toned plate armor from gorget to sabatons, a domed breastplate with a {{METAL}} crest, layered pauldrons, couters, vambraces, a fauld and tassets, {{ACCENT_SOFT}} trim and rivets",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "heavy",
+    "unisex"
+  ]
+}

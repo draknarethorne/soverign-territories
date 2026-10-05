@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/capes/mantles/scale-mantle",
+  "kind": "back",
+  "name": "Scale Mantle",
+  "description": "a short mantle of overlapping {{PRIMARY}} scales over the shoulders with a {{METAL}} chain clasp",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "back",
+    "mantle",
+    "scale"
+  ]
+}

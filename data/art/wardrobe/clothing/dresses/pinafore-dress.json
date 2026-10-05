@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/pinafore-dress",
+  "kind": "wearing",
+  "name": "Pinafore Dress",
+  "description": "a {{PRIMARY}} pinafore dress with wide straps and a square neckline worn over a white blouse with puffed sleeves, a pleated skirt to the knee and {{METAL}} buttons",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "pinafore",
+    "female"
+  ]
+}

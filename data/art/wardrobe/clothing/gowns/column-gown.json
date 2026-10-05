@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/clothing/gowns/column-gown",
+  "kind": "wearing",
+  "name": "Column Gown",
+  "description": "a {{PRIMARY}} straight-cut column gown in smooth satin, narrow shoulder straps, a high round neck and a clean unbroken line to the floor, {{METAL}} brooch at the waist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "gown",
+    "straight",
+    "column",
+    "female"
+  ]
+}

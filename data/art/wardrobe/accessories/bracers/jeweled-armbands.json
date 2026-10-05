@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/accessories/bracers/jeweled-armbands",
+  "kind": "arms",
+  "name": "Jeweled Armbands",
+  "description": "wide {{METAL}} armbands set with {{GEM}} stones on the upper arms and slim matching cuffs at the wrists",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arms",
+    "jewelry"
+  ]
+}

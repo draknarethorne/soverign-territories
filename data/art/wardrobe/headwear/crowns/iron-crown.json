@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/headwear/crowns/iron-crown",
+  "kind": "headwear",
+  "name": "Iron Crown",
+  "description": "a heavy dark iron crown with tall angular points and {{GEM}} inlays, {{METAL}} edging",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown"
+  ]
+}

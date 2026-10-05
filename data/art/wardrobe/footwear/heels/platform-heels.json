@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/heels/platform-heels",
+  "kind": "legs_feet",
+  "name": "Platform Heels",
+  "description": "{{PRIMARY}} platform heels with a thick sole, a high block heel and ankle straps with {{METAL}} buckles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "female"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/clothing/dresses/peplum-dress",
+  "kind": "wearing",
+  "name": "Peplum Dress",
+  "description": "a {{PRIMARY}} fitted sleeveless dress with a structured peplum flare at the waist, a high round neckline and a narrow knee-length skirt, {{ACCENT_SOFT}} trim",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "dress",
+    "peplum",
+    "female"
+  ]
+}

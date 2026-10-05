@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/jewelry/earrings/chandelier-earrings",
+  "kind": "jewelry",
+  "name": "Chandelier Earrings",
+  "description": "long {{METAL}} chandelier earrings set with {{GEM}} stones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earrings"
+  ]
+}

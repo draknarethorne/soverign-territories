@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/sets/genie-pants-and-top",
+  "kind": "wearing",
+  "name": "Genie Pants and Top",
+  "description": "billowing sheer {{PRIMARY}} harem pants gathered at the ankles with {{METAL}} cuffs and a low-slung {{METAL}} belt, and a matching jewelled crop top, the midriff bare, {{ACCENT_SOFT}} veil trim",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pants",
+    "harem",
+    "open-midriff",
+    "flowing",
+    "female"
+  ]
+}

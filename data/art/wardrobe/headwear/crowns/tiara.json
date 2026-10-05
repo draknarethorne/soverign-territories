@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/headwear/crowns/tiara",
+  "kind": "headwear",
+  "name": "Jeweled Tiara",
+  "description": "a slender {{METAL}} tiara with a central peak set with a {{GEM}} stone and smaller gems along the arc",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "crown",
+    "tiara",
+    "royal"
+  ]
+}

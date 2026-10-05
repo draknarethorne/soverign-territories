@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/gladiator-sandals",
+  "kind": "legs_feet",
+  "name": "Gladiator Sandals",
+  "description": "{{PRIMARY}} leather gladiator sandals with straps that wrap the foot and lace up the calf to below the knee, {{METAL}} buckles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "unisex"
+  ]
+}
