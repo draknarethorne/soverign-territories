@@ -24,7 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Grass given a crown and a will. Where she kneels, the ruined earth remembers how to live.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/drakniya-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/drakniya-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Heart of the Grove", "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/drakniya-scene-signature-holo.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Grass), paired to Sylvanya." }
 }

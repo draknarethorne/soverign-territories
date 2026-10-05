@@ -24,7 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Fire given a crown and a will. Her temper is the reason winters come late.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknora-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Flame Empress", "artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-holo.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Fire), paired to Pyraxis." }
 }

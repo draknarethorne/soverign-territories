@@ -24,7 +24,12 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Earth given a crown and a will. She keeps the oldest grudge and the deepest roots.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknara-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknara/scene/draknara-scene-signature-shiny.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Earth), paired to Terrador." }
 }

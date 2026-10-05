@@ -1,0 +1,37 @@
+{
+  "animId": "drakness-anim-scene-signature-holo-ascension",
+  "kind": "animation",
+  "name": "Ascension",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature-holo.json",
+    "image": "Drakness_Qwen_Scene_Signature_Holo_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/push-in-follow.json",
+  "audio": "a rising choral swell, a deep dragon roar, tolling bells and a crack of violet lightning; no speech",
+  "world": "The necropolis is alive: soul-fire drifts, spectral shades rise and sway, ravens wheel, violet lightning flickers across the sky and mist rolls between the tombs.",
+  "actions": [
+    {
+      "beat": "The dead in the necropolis go still, then every skeleton turns and kneels toward her as violet soul-light pours down the scythe.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} lifts a hand's breadth off the ground and raises the scythe overhead in both hands as {{her}} cape billows up and dissolves into ravens.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "A great arc of soul-fire sweeps out from the blade across the horizon while Umbrath rears up behind {{her}} and roars, and {{she}} turns a regal, commanding look to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "The Holo edition in motion: her ascended moment with the dragon and the world moving around her."
+}

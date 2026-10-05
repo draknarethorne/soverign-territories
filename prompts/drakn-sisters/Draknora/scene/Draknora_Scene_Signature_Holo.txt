@@ -1,0 +1,43 @@
+=== Draknora Thorne · Scene (Outfit + Companion): Signature Holo (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+
+Wearing skimpy D&D-flair armor, cloth top and bottom in a bikini-like cut with matching ornate pieces; legs bare, stomach and belly button bare with jewelry.
+
+Headwear: a crown of burnished copper flame spires set with ruby stones.
+
+Jewelry: gold bracelet, necklace, arm bands, anklets, earrings, and belly ring, all aligned to the armor's gold trim.
+Back: a long cape of living flame that streams behind her like wings.
+Legs & feet: bright Flame Red high heels with glowing fiery orange-gold straps.
+
+She stands tall at the edge of the battlement with the sword raised overhead pointing at the sky and her other hand thrust out palm-forward, hair and cape streaming in the updraft, a fierce, triumphant gaze straight to the camera; full figure visible.
+
+Holding an ascended greatsword with a blade of living white-gold fire, a flared burnished copper crossguard shaped like wings of flame, fiery orange-gold light pulsing along the fuller and a trail of embers streaming from the edge, held aloft in her right hand.
+
+A pillar of white-gold fire spirals up the blade into the sky, a ring of flame blooms around her feet, embers and sparks stream upward, heat haze warps the air and the whole citadel glows.
+
+Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, groomed warm auburn-brown brows, dark brown lashes, fingernails and toenails natural or Light Red; present, never heavy.
+
+Companion: her aligned Elder Dragon, Pyraxis, diving low over the battlement behind her with its wings spread wide and a roar of fire, flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze.
+
+Environment: the highest battlement of a high-fantasy citadel at sunset, tall towers and banners behind, a sky streaked with fire and drifting ember smoke, forges glowing in the city far below, scorched stone and iron braziers burning along the parapet.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

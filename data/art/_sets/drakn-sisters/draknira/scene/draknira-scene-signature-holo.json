@@ -1,0 +1,25 @@
+{
+  "artId": "draknira-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "pose": "She stands still and regal on the dais with the staff raised in one hand and the other palm turned down over the frost spreading across the floor, her mantle lifted by a cold wind, a calm, absolute gaze straight to the camera; full figure visible.",
+    "expression": "a cool, calculating stare, utterly composed.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff-ascended.json",
+    "effects": "Frost races outward across the floor and up the pillars, a storm of ice crystals and snow swirls around her in a slow spiral, a ring of floating ice shards orbits the staff, and the windows frost over in {{MAGIC}} light.",
+    "companion": "her aligned Elder Dragon, Glaciora, filling the great hall's windows behind her with its head lowered toward her, glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome",
+    "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/signature/frozen-great-hall.json",
+    "headwear": "a tall crown of {{METAL}} and clear ice-crystal spires",
+    "back": "a long mantle of white fur and sheer frozen silk that crystallises into ice at its hem"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Frost Sovereign': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

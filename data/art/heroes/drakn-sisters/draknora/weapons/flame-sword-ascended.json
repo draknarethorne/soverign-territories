@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknora/weapons/flame-sword-ascended",
+  "kind": "holding",
+  "name": "Ascended flame sword",
+  "description": "an ascended greatsword with a blade of living white-gold fire, a flared {{METAL}} crossguard shaped like wings of flame, {{MAGIC}} light pulsing along the fuller and a trail of embers streaming from the edge, held aloft in her right hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

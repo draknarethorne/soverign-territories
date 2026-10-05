@@ -24,7 +24,12 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Lightning given a crown and a will. She was the first to laugh when the crown broke.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/drakneta-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakneta/scene/drakneta-scene-signature-shiny.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Lightning), paired to Fulgora." }
 }

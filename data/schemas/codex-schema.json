@@ -181,7 +181,22 @@
         },
         "portraitAsset": {"type": "string", "description": "Rendered portrait/head image reference"},
         "fullArtAsset": {"type": "string", "description": "Rendered full card art (signature scene) reference"},
-        "shinyPortrait": {"type": "string", "description": "Rendered shiny/foil variant reference"},
+        "variants": {
+          "type": "array",
+          "description": "Art editions of this card (finishes defined in data/art/_schema/finishes.json). A variant never changes gameplay; its code is <collectionNumber>-<suffix>, e.g. SD-001-HOLO.",
+          "items": {
+            "type": "object",
+            "required": ["finish", "artCard"],
+            "additionalProperties": false,
+            "properties": {
+              "finish": {"type": "string", "pattern": "^[a-z]+$", "description": "Key in finishes.json"},
+              "title": {"type": "string", "description": "Edition title shown with the card, e.g. Reaper Queen (authored finishes such as holo)"},
+              "artCard": {"type": "string", "pattern": "^data/art/_sets/.+\\.json$", "description": "The scene card that produces this edition; it must carry the same finish"},
+              "fullArtAsset": {"type": "string", "description": "Rendered full card art reference"},
+              "videoAsset": {"type": "string", "description": "Rendered animated art reference"}
+            }
+          }
+        },
         "voicelineActor": {"type": "string"}
       }
     },

@@ -1,0 +1,37 @@
+{
+  "animId": "draknira-anim-scene-signature-holo-ascension",
+  "kind": "animation",
+  "name": "Ascension",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-signature-holo.json",
+    "image": "Draknira_Qwen_Scene_Signature_Holo_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/push-in-follow.json",
+  "audio": "deep ice groaning, a cold crystalline choir and a low dragon breath; no speech",
+  "world": "The hall is alive: frost creeps over the stone, snow and diamond dust drift, ice shards turn in slow orbit, the windows glitter and cold light shifts across the pillars.",
+  "actions": [
+    {
+      "beat": "Frost spreads across the hall floor and up the pillars, the windows frosting over as the great shadow of Glaciora fills them.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} raises the staff and the great crystal ignites, ice shards lifting to orbit it in a slowly turning ring as {{her}} mantle crystallises at the hem.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "A storm of snow and diamond dust spirals around {{her}} while Glaciora lowers its head to the window, and {{she}} turns a calm, absolute look to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "The Holo edition in motion: her ascended moment with the dragon and the world moving around her."
+}

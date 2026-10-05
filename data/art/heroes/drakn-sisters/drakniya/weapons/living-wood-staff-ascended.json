@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/weapons/living-wood-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended living-wood staff",
+  "description": "an ascended living-wood staff grown into a crowned tree, its branches blossoming with glowing {{MAGIC}} flowers, the cradle at the top holding a floating seed-orb that has bloomed into a tiny radiant tree of light, held planted in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

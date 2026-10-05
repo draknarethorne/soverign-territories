@@ -24,7 +24,12 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Poison given a crown and a will. The youngest shard, and the patient one.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknoxa-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/draknoxa-scene-signature-shiny.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Poison), paired to Venomis." }
 }

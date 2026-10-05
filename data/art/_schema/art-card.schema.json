@@ -13,6 +13,7 @@
     "output": {"type": "string", "pattern": "^prompts/[^/]+/.+\\.txt$"},
     "denoise": {"type": "string"},
     "notes": {"type": "string"},
+    "finish": {"type": "string", "pattern": "^[a-z]+$", "description": "Marks this card as an art edition of its hero's card (key in finishes.json); the card must list it under art.variants"},
     "component": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "One whole reusable piece (hair, motion)"},
     "components": {
       "type": "object",

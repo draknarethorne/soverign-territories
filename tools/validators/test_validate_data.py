@@ -29,6 +29,7 @@ def run_on_copy(mutate):
         vd.check_instances(report, counts)
         cards, identity_of = vd.check_card_art_links(report)
         vd.check_art_cards(report)
+        vd.check_variants(report, cards)
         vd.check_piece_refs(report)
         vd.check_animation_cards(report)
         return report.errors
@@ -48,6 +49,7 @@ IDENT = "data/art/heroes/drakn-sisters/drakness-thorne.json"
 SCENE = "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature.json"
 ANIM = "data/animation/_sets/drakn-sisters/drakness/drakness-anim-x-pose-kiss-toss-laugh.json"
 SIB_SCENE = "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature.json"
+HOLO_SCENE = "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature-holo.json"
 
 CASES = [
     ("baseline is clean", lambda r: None, None),
@@ -103,6 +105,15 @@ CASES = [
      lambda r: (r / SCENE).rename((r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
      lambda r: (r / "data/art/themes/stray").mkdir(), "no theme.json"),
+    ("variant art card that does not carry its finish",
+     lambda r: edit(r / HOLO_SCENE, lambda d: d.pop("finish")), "bidirectional"),
+    ("art card with a finish that its card does not list",
+     lambda r: edit(r / CARD, lambda d: d["art"].update({"variants": d["art"]["variants"][:1]})), "does not list it"),
+    ("variant with a finish missing from finishes.json",
+     lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update({"finish": "mythic"})), "finishes.json"),
+    ("variant artCard belonging to a different hero",
+     lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update(
+         {"artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-shiny.json"})), "belongs to"),
 ]
 
 

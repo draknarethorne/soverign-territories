@@ -24,7 +24,13 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Ice given a crown and a will. She speaks softly, and the room forgets to breathe.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknira-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Frost Sovereign", "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-signature-holo.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Ice), paired to Glaciora." }
 }

@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/reaper-scythe-ascended",
+  "kind": "holding",
+  "name": "Ascended reaper scythe",
+  "description": "an ascended reaper scythe taller than she is, the black shaft wrapped in chains of spectral light, a huge crescent blade of polished silver etched with gothic patterns and burning with {{MAGIC}} soul-fire along its edge, a crowned bone skull emblem at the top, held in both hands",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

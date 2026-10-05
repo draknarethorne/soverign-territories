@@ -688,8 +688,16 @@ data/cards/.../hero-drakness-thorne.json            data/art/heroes/drakn-sister
   name, element, sex, race, class,    ──────────>     art: { palette, physique }   (look only)
   rarity, stats, abilities, lore                      (name/element/sex/race/class are PULLED from the card)
   art: { artIdentity: "data/art/heroes/drakn-sisters/drakness-thorne.json",
-         portraitAsset / fullArtAsset / shinyPortrait }   <- references to rendered output (see C1 plan)
+         portraitAsset / fullArtAsset }   <- references to rendered output (see C1 plan)
 ```
+
+**Variants (finishes).** A card's `art.variants` lists its art editions; each entry names a `finish` (a key in
+`_schema/finishes.json`: `shiny`, `holo`) and the scene card that produces it, which must carry the same `finish` and the same
+`heroArt` (checked both ways by the validator, and an artId ending `-shiny`/`-holo` must set `finish`). The variant code is
+`<collectionNumber>-<suffix>` (`SD-001-HOLO`), derived from the card, so the suffix is changed in `finishes.json` only. Cards are named
+`<hero>-scene-signature-<finish>`. A **shiny** reuses the Signature with a prismatic `overrides.palette` and a sheen line; a **holo**
+is authored (new pose, upgraded weapon piece, crown/mantle, grander effects, a closer companion, an `Ascension` video) and may carry a
+`title` on the variant. Foil and holo shaders are applied in the client, not baked into the art.
 
 - **The card owns** identity and mechanics: name, element, sex, race, class, rarity, stats, abilities, lore, companion.
 - **The art identity owns** look: palette, physique, hairstyle. `gen_prompt.py` resolves `cardId` through

@@ -24,7 +24,12 @@
   ],
   "tacticSlots": 7,
   "lore": "One of the nine Sundered — Wind given a crown and a will. Her songs travel farther than any army.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/draknava-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknava/scene/draknava-scene-signature-shiny.json" }
+    ]
+  },
   "acquisition": { "packSources": [], "campaignDrops": [] },
   "meta": { "designNotes": "First-pass stats; balance TBD. Transcendent heroine (Wind), paired to Zephyros." }
 }

@@ -53,7 +53,13 @@
   ],
   "tacticSlots": 7,
   "lore": "First of the Sundered — the Darkness that remained when the shard-storm broke. Where she walks, the dead lean closer to listen.",
-  "art": { "artIdentity": "data/art/heroes/drakn-sisters/drakness-thorne.json" },
+  "art": {
+    "artIdentity": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+    "variants": [
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Reaper Queen", "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-signature-holo.json" }
+    ]
+  },
   "acquisition": {
     "packSources": [],
     "campaignDrops": []

@@ -41,6 +41,11 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 - **A hand-made workflow is never overwritten.** Anything tuned by hand is forked or pulled into `workflows/_curated/`; patterns that
   recur graduate into pieces, motions, transitions or templates.
 - Prompt injection into ComfyUI workflows is automated; delivering rendered images back to cards is still manual (C1).
+- **Variants are art editions of one card (Oct 2026).** `SD-001` stays the only definition; `art.variants` on the card lists editions
+  (`shiny`, `holo`; tiers in `data/art/_schema/finishes.json`), each pointing at an art card that carries the same `finish`. A variant
+  never changes gameplay; its code is `<collectionNumber>-<SUFFIX>` (`SD-001-HOLO`), derived, never stored. Shiny = recolour and sheen
+  for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
+  to the client, not the baked art. Holos exist so far for Drakness, Draknora, Drakniya and Draknira.
 
 ## Open decisions
 
@@ -93,10 +98,11 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
 ## Deferred
 
 - **Asset delivery (C1).** The chain now reaches a ready ComfyUI workflow; it stops at the rendered image. Needs: where rendered PNGs live and how they are named,
-  how the card's `portraitAsset`/`fullArtAsset`/`shinyPortrait` fields point at them, how Unity loads them (provisional
+  how the card's `portraitAsset`/`fullArtAsset` and each variant's `fullArtAsset`/`videoAsset` fields point at them, how Unity loads them (provisional
   card-art target 512x768, 2:3), and a validator check that referenced files exist. Running workflows through the ComfyUI API is
   still an option, see [art/comfyui-automation-proposal.md](art/comfyui-automation-proposal.md).
-- **Shiny/foil (C2).** Same scene card plus an `effects` layer, or its own variant; decide with C1.
+- **Foil shader (C2).** Variants are modelled (see Decisions); still open: the in-client holo/foil shader and its mask, finish drop rates
+  (with O3), and a reserved tier above Holo.
 - **Beyond-card art:** frames, icons, map tiles, battle UI, menus. Rendering quality is checked by hand with
   [art/output-qa-checklist.md](art/output-qa-checklist.md); the generator cannot judge images.
 - **Thorne Art Studio:** a Windows tool for editing art JSON, previewing prompts and driving ComfyUI; assessed in

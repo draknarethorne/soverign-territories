@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknira/weapons/frost-crystal-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended frost-crystal staff",
+  "description": "an ascended frost-crystal staff of pale silvery wood, crowned with a huge faceted ice crystal floating in a halo of silver rings, cold {{MAGIC}} light blazing inside it and ice shards orbiting it, held upright in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

@@ -249,6 +249,45 @@ def check_art_cards(report):
             outputs[out] = where
 
 
+def check_variants(report, cards):
+    """card.art.variants <-> art cards with a finish: both directions, unique codes, naming."""
+    finishes = load(ART_SCHEMAS / "finishes.json")["finishes"]
+    listed = {}
+    for cid, (f, d) in cards.items():
+        ident = d.get("art", {}).get("artIdentity")
+        seen = set()
+        for v in d.get("art", {}).get("variants", []):
+            fin, ac = v.get("finish"), v.get("artCard", "")
+            if fin not in finishes:
+                report.error(rel(f), f"variant finish {fin!r} is not in _schema/finishes.json")
+                continue
+            if fin in seen:
+                report.error(rel(f), f"card {cid} lists the {fin} variant twice")
+            seen.add(fin)
+            if not (ROOT / ac).exists():
+                report.error(rel(f), f"variant {fin} artCard {ac} does not exist")
+                continue
+            art = load(ROOT / ac)
+            listed[ac] = (cid, fin)
+            if art.get("finish") != fin:
+                report.error(rel(f), f"variant {fin} artCard {ac} must set \"finish\": \"{fin}\" (link must be bidirectional)")
+            if art.get("heroArt") != ident:
+                report.error(rel(f), f"variant {fin} artCard {ac} belongs to {art.get('heroArt')}, not this card's art identity")
+            if art.get("stage") != "scene":
+                report.error(rel(f), f"variant {fin} artCard {ac} must be a scene card")
+    for f in rglob("data/art/_sets/**/*.json"):
+        d = load(f)
+        fin = d.get("finish")
+        aid = d.get("artId", "")
+        suffix_fin = next((k for k in finishes if aid.endswith("-" + k)), None)
+        if fin and fin not in finishes:
+            report.error(rel(f), f"finish {fin!r} is not in _schema/finishes.json")
+        elif fin and listed.get(rel(f), (None, None))[1] != fin:
+            report.error(rel(f), f"art card has finish {fin!r} but its hero's card does not list it under art.variants")
+        if suffix_fin and fin != suffix_fin:
+            report.error(rel(f), f"artId ends in -{suffix_fin} so it must set \"finish\": \"{suffix_fin}\"")
+
+
 def check_animation_cards(report):
     """data/animation/_sets cards: every file they name exists, and every action and transition is usable."""
     def exists(where, what, path):
@@ -361,6 +400,7 @@ def main():
     check_instances(report, counts)
     cards, identity_of = check_card_art_links(report)
     check_art_cards(report)
+    check_variants(report, cards)
     check_piece_refs(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)
