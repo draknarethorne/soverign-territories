@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/clothing/desert-wanderer-wrap",
+  "kind": "wearing",
+  "name": "Desert wanderer wrap",
+  "description": "a wrapped {{PRIMARY}} cloth top crossed over the chest and tied at the back, and a long layered skirt of fringed {{ACCENT_SOFT}} cloth slit to the thigh, a woven sash at the hip, the midriff bare",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "shaman",
+    "earth",
+    "female"
+  ]
+}

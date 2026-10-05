@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/mirror-floor-glow",
+  "kind": "background",
+  "name": "Showcase: mirror floor and glow",
+  "description": "a black glossy mirror-floor studio with a soft {{PRIMARY}} glow rising behind the figure and a clear reflection of the figure on the floor",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "mirror",
+    "glow"
+  ]
+}

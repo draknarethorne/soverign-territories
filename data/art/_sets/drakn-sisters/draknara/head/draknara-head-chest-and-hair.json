@@ -1,0 +1,14 @@
+{
+  "artId": "draknara-head-chest-and-hair",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Chest and Hair",
+  "components": {
+    "framing": "data/art/studio/framing/chest-and-hair.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/head/Draknara_Head_chest_and_hair.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head framing (front view). Scaffolded."
+}

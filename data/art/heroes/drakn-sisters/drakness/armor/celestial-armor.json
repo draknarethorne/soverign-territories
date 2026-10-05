@@ -1,0 +1,18 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/celestial-armor",
+  "kind": "wearing",
+  "name": "Celestial armor",
+  "description": "celestial armor of polished black silver: two sculpted domed plates of ornate pierced filigree that fully cover each breast, joined at the centre by a jewelled ornament set with a pale moonstone gem, and a matching ornate hip piece with a hanging front panel and a curved plate at each hip, every surface engraved with a night sky of crescent moons, constellations and small moth wings; each piece hangs against the skin held by magic alone, weightless and floating freely; midriff, shoulders and arms bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "celestial",
+    "armor",
+    "bikini",
+    "female"
+  ],
+  "notes": "Necromancer / Darkness. Signature earned armor: filigree plates fully covering the bust and hips, held by magic, motif drawn from her class and element."
+}

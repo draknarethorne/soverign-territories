@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/armor/earthbound-stone-armor",
+  "kind": "wearing",
+  "name": "Earthbound stone armor",
+  "description": "armor of layered sandstone-coloured stone plates bound with hide cord and bronze wire: a sculpted cuirass of overlapping stone scales painted with {{ACCENT_SOFT}} ochre spirals, stone pauldrons carved like mountain ridgelines, a belted skirt of hanging stone tiles and a {{METAL}} sash, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "shaman",
+    "earth",
+    "female"
+  ]
+}

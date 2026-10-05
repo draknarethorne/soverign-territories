@@ -1,0 +1,151 @@
+{
+  "hero": "Draknara",
+  "group": "drakn-sisters",
+  "slug": "draknara",
+  "class": "Shaman",
+  "element": "Earth",
+  "library": true,
+  "underlayers": [
+    "wardrobe/swimwear/bralette-set",
+    "wardrobe/swimwear/push-up-bikini",
+    "wardrobe/swimwear/lace-bralette-set",
+    "wardrobe/swimwear/balconette-set",
+    "wardrobe/swimwear/bandeau-bikini",
+    "wardrobe/swimwear/high-neck-halter-bikini",
+    "wardrobe/swimwear/cutout-monokini",
+    "wardrobe/swimwear/second-skin-bodysuit",
+    "wardrobe/swimwear/backless-halter-one-piece",
+    "wardrobe/swimwear/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/chain-harness-bikini",
+    "wardrobe/swimwear/sarong-and-bikini",
+    "wardrobe/swimwear/bustier-set",
+    "wardrobe/swimwear/corset-set",
+    "wardrobe/swimwear/halter-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/peasant-dress",
+    "wardrobe/clothing/dresses/loose-tunic-dress",
+    "wardrobe/clothing/dresses/wrap-dress",
+    "wardrobe/clothing/dresses/slip-dress",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/dresses/empire-waist-dress",
+    "wardrobe/clothing/gowns/high-slit-gown",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/gowns/empire-gown",
+    "wardrobe/clothing/gowns/sheer-overlay-gown",
+    "wardrobe/clothing/gowns/wrap-gown",
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/sets/genie-pants-and-top",
+    "wardrobe/clothing/sets/palazzo-and-bralette",
+    "wardrobe/clothing/sets/wrap-skirt-and-top",
+    "wardrobe/clothing/sets/long-skirt-and-bustier",
+    "wardrobe/clothing/sets/split-skirt-and-corset",
+    "wardrobe/clothing/sets/leather-pants-and-corset-top",
+    "wardrobe/clothing/sets/leather-catsuit",
+    "heroes/drakn-sisters/draknara/clothing/ceremonial-spirit-dress",
+    "heroes/drakn-sisters/draknara/clothing/desert-wanderer-wrap",
+    "heroes/drakn-sisters/draknara/clothing/signature-robe",
+    "heroes/drakn-sisters/draknara/clothing/elegant-casting-gown",
+    "heroes/drakn-sisters/draknara/clothing/dawn-regalia"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/leather-bikini-armor",
+    "wardrobe/armor/leather/leather-corset-armor",
+    "wardrobe/armor/leather/studded-leather",
+    "wardrobe/armor/leather/ranger-leathers",
+    "wardrobe/armor/leather/hardened-leather-cuirass",
+    "wardrobe/armor/scale/scale-halter-and-skirt",
+    "wardrobe/armor/hide/fur-and-leather-bikini",
+    "wardrobe/armor/hide/barbarian-hide",
+    "wardrobe/armor/bone/bone-bikini",
+    "wardrobe/armor/mail/mail-skirt-and-bandeau",
+    "wardrobe/armor/wood/living-bark-armor",
+    "wardrobe/armor/bronze/hoplite-bronze",
+    "wardrobe/armor/runic/runic-warplate",
+    "wardrobe/armor/ceremonial/golden-regalia-armor",
+    "wardrobe/armor/plate/half-plate-open-midriff",
+    "heroes/drakn-sisters/draknara/armor/earthbound-stone-armor",
+    "heroes/drakn-sisters/draknara/armor/totem-feather-regalia",
+    "heroes/drakn-sisters/draknara/armor/canyon-war-wraps",
+    "heroes/drakn-sisters/draknara/clothing/battle-gear"
+  ],
+  "motions": "all",
+  "showcase": [
+    {
+      "name": "Totem Calling",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknara/clothing/battle-gear",
+        "holding": "heroes/drakn-sisters/draknara/weapons/totem-staff",
+        "effects": "Glowing spirits of beasts rise around her and circle the totem, {{MAGIC}} light streaming from the carved face, fine dust and motes of light drifting in the rays.",
+        "background": "backgrounds/studio/radiant-burst",
+        "jewelry": "{{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans"
+      }
+    },
+    {
+      "name": "Earthen Casting",
+      "components": {
+        "pose": "motion/standing/three-quarter-glamour",
+        "wearing": "heroes/drakn-sisters/draknara/clothing/signature-robe",
+        "effects": "A swirl of {{MAGIC}} dust and loose stones lifts around her raised hand, small stones orbiting in a slow ring, warm sparks of light in the dust.",
+        "background": "backgrounds/studio/ember-dust-flare"
+      }
+    },
+    {
+      "name": "Stone Ward",
+      "components": {
+        "pose": "motion/standing/hand-on-hip-power",
+        "wearing": "heroes/drakn-sisters/draknara/armor/earthbound-stone-armor",
+        "effects": "Slabs of stone hang in the air behind her in a protective arc, {{MAGIC}} light running through their cracks, grit and dust falling slowly.",
+        "background": "backgrounds/studio/charcoal-magic-glow"
+      }
+    },
+    {
+      "name": "Spirit Dance",
+      "components": {
+        "pose": "motion/dynamic/twirl-spin",
+        "wearing": "heroes/drakn-sisters/draknara/clothing/ceremonial-spirit-dress",
+        "effects": "Ribbons of {{MAGIC}} light trail from her hands and the fringe of her dress as she spins, small spirits of birds and beasts swirling in the air around her.",
+        "background": "backgrounds/studio/primary-gradient"
+      }
+    },
+    {
+      "name": "Ancestral Fire",
+      "components": {
+        "pose": "motion/walking/catwalk-confident",
+        "wearing": "heroes/drakn-sisters/draknara/armor/totem-feather-regalia",
+        "effects": "Low ancestral flames flicker along the floor either side of her, embers and smoke rising and her feathers lifting in the heat.",
+        "background": "backgrounds/studio/theatrical-haze-spotlight"
+      }
+    },
+    {
+      "name": "Mirror Spirit",
+      "components": {
+        "pose": "motion/dynamic/kneeling-glamour",
+        "wearing": "heroes/drakn-sisters/draknara/clothing/dawn-regalia",
+        "effects": "A pale spirit double of her rises from her reflection in the floor, motes of {{MAGIC}} light drifting upward between them.",
+        "background": "backgrounds/studio/mirror-floor-glow"
+      }
+    },
+    {
+      "name": "Celestial Rising",
+      "components": {
+        "pose": "motion/standing/over-the-shoulder-glance",
+        "wearing": "heroes/drakn-sisters/draknara/armor/celestial-armor",
+        "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+        "background": "backgrounds/studio/starfield-indigo"
+      }
+    },
+    {
+      "name": "Celestial Ascended",
+      "components": {
+        "pose": "motion/standing/commanding-cast",
+        "wearing": "heroes/drakn-sisters/draknara/armor/celestial-armor",
+        "holding": "heroes/drakn-sisters/draknara/weapons/totem-staff-ascended",
+        "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, the totem face glowing with {{MAGIC}} light.",
+        "background": "backgrounds/studio/prismatic-glass",
+        "headwear": "a feather crown on a bronze headband set with a {{GEM}} stone"
+      }
+    }
+  ]
+}

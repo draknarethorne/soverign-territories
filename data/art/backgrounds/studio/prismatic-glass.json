@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/prismatic-glass",
+  "kind": "background",
+  "name": "Showcase: prismatic glass",
+  "description": "a seamless pale studio backdrop split by soft rainbow light prisms and glittering crystalline reflections that scatter across the floor and backdrop",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "prism",
+    "crystal"
+  ]
+}

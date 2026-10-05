@@ -500,7 +500,7 @@ Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) 
 tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` token (the realm uses this).
 
 **Studio vs scene.** Every stage has one of two classes, defined in `data/art/_schema/stages.json` (the validator
-checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`) is a cream-backdrop render for clearly
+checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (cream, or for `showcase` a coloured backdrop with magic and flair) for clearly
 seeing the subject, an outfit or an armor piece, and may still include motion (a catwalk, a battle stance); **scene**
 (`scene`, staged scenes included) adds a realm, background and effects. Anything that is not a scene is studio. The
 class also drives workflow routing: sister studio work goes to each sister's own UAT workspace, sister scenes to the

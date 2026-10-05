@@ -53,7 +53,7 @@ def art_piece_files():
     out = []
     for p in rglob("data/art/**/*.json"):
         parts = p.relative_to(ROOT / "data/art").parts
-        if parts[0] in ("_schema", "_sets"):
+        if parts[0] in ("_schema", "_sets", "_kits"):
             continue
         if parts[0] == "heroes" and len(parts) == 3:
             continue  # identity, not a piece
@@ -288,6 +288,29 @@ def check_variants(report, cards):
             report.error(rel(f), f"artId ends in -{suffix_fin} so it must set \"finish\": \"{suffix_fin}\"")
 
 
+def check_kits(report):
+    """data/art/_kits: every piece or card a sister's studio kit names must exist."""
+    def paths(v):
+        if isinstance(v, str):
+            if v.startswith(("wardrobe/", "heroes/", "backgrounds/", "motion/", "data/art/")):
+                yield v
+        elif isinstance(v, list):
+            for x in v:
+                yield from paths(x)
+        elif isinstance(v, dict):
+            for x in v.values():
+                yield from paths(x)
+    for f in rglob("data/art/_kits/*.json"):
+        d, where = load(f), rel(f)
+        for key in ("hero", "slug", "group"):
+            if key not in d:
+                report.error(where, f"kit is missing '{key}'")
+        for ref in paths({k: v for k, v in d.items() if k != "motions" or v != "all"}):
+            full = ref if ref.startswith("data/art/") else "data/art/" + ref
+            if not (ROOT / (full if full.endswith(".json") else full + ".json")).exists():
+                report.error(where, f"kit names {ref}, which does not exist")
+
+
 def check_animation_cards(report):
     """data/animation/_sets cards: every file they name exists, and every action and transition is usable."""
     def exists(where, what, path):
@@ -401,6 +424,7 @@ def main():
     cards, identity_of = check_card_art_links(report)
     check_art_cards(report)
     check_variants(report, cards)
+    check_kits(report)
     check_piece_refs(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)

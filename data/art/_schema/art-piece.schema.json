@@ -13,7 +13,7 @@
     },
     "tags": {"type": "array", "items": {"type": "string"}, "description": "Free-form search/ideation tags (e.g. studio, profile, swimwear); never rendered into a prompt."},
     "name": {"type": "string", "minLength": 1},
-    "compatibleStages": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "scene", "final"]}},
+    "compatibleStages": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"]}},
     "notes": {"type": "string"},
     "sourceVariant": {"type": "string"},
     "status": {"type": "string"},

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/armor/canyon-war-wraps",
+  "kind": "wearing",
+  "name": "Canyon war wraps",
+  "description": "a warrior's wraps: broad bands of {{PRIMARY}} hide and {{METAL}} wound across the chest and hips, ochre war-paint spirals on the bare skin, a short split hide skirt and bronze-studded straps at the thighs, the midriff bare",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "shaman",
+    "earth",
+    "female"
+  ]
+}

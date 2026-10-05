@@ -16,7 +16,7 @@
       "pull": false,
       "role": "UAT: her own acceptance workspace. Still holds the original hand-made experiments until the generated set replaces them."
     },
-    "Draknara": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknara": {"status": "active", "role": "UAT: her own studio workspace. Holds all of her non-scene work (poses, motions, clothing, armor, head shots, showcase); her scenes stay in the dev project until proven."},
     "Draknava": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
     "Drakniss": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
     "Drakneta": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},

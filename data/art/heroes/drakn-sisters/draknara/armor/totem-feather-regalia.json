@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/armor/totem-feather-regalia",
+  "kind": "wearing",
+  "name": "Totem feather regalia",
+  "description": "shaman regalia: a hide cuirass sewn with overlapping {{METAL}} discs, feather epaulettes in {{PRIMARY}} and {{ACCENT_SOFT}}, strands of beads and bone charms across the chest, a fringed hide skirt and a wide beaded belt",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "shaman",
+    "earth",
+    "female"
+  ]
+}

@@ -46,6 +46,17 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   never changes gameplay; its code is `<collectionNumber>-<SUFFIX>` (`SD-001-HOLO`), derived, never stored. Shiny = recolour and sheen
   for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
   to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
+- **Sister studio workspaces (Oct 2026).** Each sister's non-scene work (everything with studio class, including the new `showcase` stage)
+  deploys to her own ComfyUI workspace with `deploy --to uat --hero <Name> --class studio`; scenes stay in the dev project. First proven
+  with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
+  bases, outfits, armor, motions and showcase shots that suit her class and element.
+- **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
+  studio render and a full scene.
+- **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor
+  (`heroes/drakn-sisters/<slug>/armor/celestial-armor.json`): ornate filigree plates in her metal and class/element motif that fully
+  cover the bust and hips and are held by magic. Coverage stays at bikini level. The `celestial` finish (`SD-001-CELESTIAL`, rank 3 in
+  `finishes.json`) is the earned top edition: unlocked by a sister's celestial quest chain rather than drawn from a pack, with some
+  held back in packs for a small chance (rules are open decision O3). The codex shows a silhouette or masked teaser until it is owned.
 
 ## Open decisions
 
@@ -53,7 +64,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | --- | --- | --- |
 | O1 | 3 or 5 elements in the first public release? | Estimate from a finished Grass set (G1). |
 | O2 | Does "exactly one hero per formation" survive? | Written before the art pipeline made a larger roster cheap. Revisit after a playtest. |
-| O3 | How are vision cards obtained? | All 30 have empty `acquisition` today. Needs pack/reward/campaign rules. |
+| O3 | How are vision cards obtained? | All 30 have empty `acquisition` today. Needs pack/reward/campaign rules, including the quest-earned Celestial edition, the pack-chance share and the codex teaser. |
 | O4 | Transcendent format legality | 64 points exceeds any starter budget; decide special formats (Phase 2+). |
 
 ## Next work (in order)
@@ -101,6 +112,8 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
   how the card's `portraitAsset`/`fullArtAsset` and each variant's `fullArtAsset`/`videoAsset` fields point at them, how Unity loads them (provisional
   card-art target 512x768, 2:3), and a validator check that referenced files exist. Running workflows through the ComfyUI API is
   still an option, see [art/comfyui-automation-proposal.md](art/comfyui-automation-proposal.md).
+- **Animated card art:** static, animated (looping PNG or WebP) and video trailers are separate outputs; animated art plans are to be
+  revisited. Videos are for reels, not the card.
 - **Foil shader (C2).** Variants are modelled (see Decisions); still open: the in-client holo/foil shader and its mask, finish drop rates
   (with O3), and a reserved tier above Holo.
 - **Beyond-card art:** frames, icons, map tiles, battle UI, menus. Rendering quality is checked by hand with

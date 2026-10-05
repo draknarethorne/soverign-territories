@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/ember-dust-flare",
+  "kind": "background",
+  "name": "Showcase: ember dust and lens flare",
+  "description": "a warm dark seamless studio backdrop filled with drifting dust and glowing ember motes, with a soft golden lens flare behind one shoulder",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "embers",
+    "flare"
+  ]
+}

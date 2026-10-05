@@ -30,6 +30,7 @@ def run_on_copy(mutate):
         cards, identity_of = vd.check_card_art_links(report)
         vd.check_art_cards(report)
         vd.check_variants(report, cards)
+        vd.check_kits(report)
         vd.check_piece_refs(report)
         vd.check_animation_cards(report)
         return report.errors
@@ -111,6 +112,8 @@ CASES = [
      lambda r: edit(r / CARD, lambda d: d["art"].update({"variants": d["art"]["variants"][:1]})), "does not list it"),
     ("variant with a finish missing from finishes.json",
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update({"finish": "mythic"})), "finishes.json"),
+    ("studio kit naming a piece that does not exist",
+     lambda r: edit(r / "data/art/_kits/draknara.json", lambda d: d["clothing"].append("wardrobe/clothing/dresses/no-such-dress")), "kit names"),
     ("variant artCard belonging to a different hero",
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update(
          {"artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-signature-shiny.json"})), "belongs to"),

@@ -163,6 +163,21 @@ python tools/workflows/comfy_workflows.py make --hero Drakness --stage clothing 
 The golden A-pose is the incoming image for scenes. The underlayer pieces are for generating alternatives to it: pick the base that
 blends best (for example the second-skin bodysuit for full-coverage looks, a backless base for bare-back gowns).
 
+## Recipe 3b: build a sister's studio kit
+
+A kit file lists what to test for one sister, suited to her class and element (A-pose underlayers, outfits, armor, motions and
+showcase shots). The scaffold writes the cards; the workflow tool then sends her studio work to her own workspace:
+
+```bash
+python tools/generators/scaffold_sister_studio.py --slug draknara
+python tools/generators/gen_prompt.py --group drakn-sisters --slug draknara
+python tools/workflows/comfy_workflows.py make --hero Draknara --class studio --create
+python tools/workflows/comfy_workflows.py deploy --to uat --hero Draknara --class studio
+```
+
+Copy `data/art/_kits/draknara.json` for the next sister and change the pieces. A **showcase** card is a studio shot on a coloured
+backdrop (`backgrounds/studio/*`) with an effects line; use it to see magic and flair before building the full scene.
+
 ## Recipe 4: add a hero
 
 1. Add the gameplay card under `data/cards/sovereign-dawn/...` (the codex owns name, element, sex, race, class, rarity).

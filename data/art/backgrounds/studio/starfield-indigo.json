@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/starfield-indigo",
+  "kind": "background",
+  "name": "Showcase: starfield indigo",
+  "description": "a deep indigo seamless studio backdrop scattered with fine stars and a soft violet-and-gold nebula glow, a gentle ring of starlight behind the figure",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "stars",
+    "celestial"
+  ]
+}

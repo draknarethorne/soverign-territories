@@ -1,7 +1,20 @@
 {
   "description": "Finish (variant) tiers of a card. A variant is the same card in a different art edition: gameplay never changes. A variant's code is <collectionNumber>-<suffix>, e.g. SD-001-HOLO. To rename a suffix, change it here only.",
   "finishes": {
-    "shiny": {"suffix": "SHINY", "rank": 1, "description": "Same scene and pose in a prismatic or gilded colourway with a glitter sheen. Cheap and generated for every card hero."},
-    "holo": {"suffix": "HOLO", "rank": 2, "description": "Re-authored edition: same scene family, new ascended pose, upgraded signature items, extra magic, its own title and an animated video. One authored card per hero."}
+    "shiny": {
+      "suffix": "SHINY",
+      "rank": 1,
+      "description": "Same scene and pose in a prismatic or gilded colourway with a glitter sheen. Cheap and generated for every card hero."
+    },
+    "holo": {
+      "suffix": "HOLO",
+      "rank": 2,
+      "description": "Re-authored edition: same scene family, new ascended pose, upgraded signature items, extra magic, its own title and an animated video. One authored card per hero."
+    },
+    "celestial": {
+      "suffix": "CELESTIAL",
+      "rank": 3,
+      "description": "Earned edition: a hero's signature celestial armor in a full scene, unlocked by completing her celestial quest chain rather than drawn from a pack (access rules are open decision O3). A one-per-hero collectible; art is a scene card."
+    }
   }
 }

@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/primary-gradient",
+  "kind": "background",
+  "name": "Showcase: primary colour gradient",
+  "description": "a seamless studio backdrop in a deep {{PRIMARY}} gradient that fades to near black at the edges, with a soft vignette and an even, glamorous key light on the figure",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "gradient",
+    "colour"
+  ]
+}

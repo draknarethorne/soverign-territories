@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/theatrical-haze-spotlight",
+  "kind": "background",
+  "name": "Showcase: haze and spotlight",
+  "description": "a dark studio stage with theatrical haze drifting through the air and a single wide spotlight forming a bright halo behind the figure, a soft reflective floor",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "haze",
+    "spotlight"
+  ]
+}

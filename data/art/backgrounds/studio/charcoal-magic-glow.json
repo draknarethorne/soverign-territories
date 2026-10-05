@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/charcoal-magic-glow",
+  "kind": "background",
+  "name": "Showcase: charcoal backdrop, magic glow",
+  "description": "a seamless deep charcoal studio backdrop with a soft pool of {{MAGIC}} light glowing behind the figure and a gentle low haze at her feet",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "charcoal",
+    "glow"
+  ]
+}

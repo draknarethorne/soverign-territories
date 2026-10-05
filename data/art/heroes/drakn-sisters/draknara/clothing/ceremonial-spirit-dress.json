@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/clothing/ceremonial-spirit-dress",
+  "kind": "wearing",
+  "name": "Ceremonial spirit dress",
+  "description": "a fringed ceremonial dress of soft {{PRIMARY}} hide and cloth with {{ACCENT_SOFT}} beadwork across the bodice, a deep V neckline, long fringe at the sleeves and hem and a hem that falls to mid-thigh",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "shaman",
+    "earth",
+    "female"
+  ]
+}

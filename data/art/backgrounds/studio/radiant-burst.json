@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/studio/radiant-burst",
+  "kind": "background",
+  "name": "Showcase: radiant burst",
+  "description": "a dark seamless studio backdrop lit by a burst of {{MAGIC}} light radiating from behind the figure in soft rays, with fine floating motes of light and a bright halo behind the head",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "showcase",
+    "burst",
+    "rays"
+  ]
+}

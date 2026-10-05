@@ -1,0 +1,34 @@
+=== Draknara Thorne · Showcase: Stone Ward (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
+Wearing armor of layered sandstone-coloured stone plates bound with hide cord and bronze wire: a sculpted cuirass of overlapping stone scales painted with turquoise ochre spirals, stone pauldrons carved like mountain ridgelines, a belted skirt of hanging stone tiles and a antique bronze sash, the midriff bare.
+
+Jewelry: a simple antique bronze necklace and small matching earrings.
+Legs & feet: bare feet with a delicate antique bronze anklet set with turquoise stones and a thin toe ring.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. bold, confident, a hint of a smirk. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+Slabs of stone hang in the air behind her in a protective arc, warm turquoise light running through their cracks, grit and dust falling slowly.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - warm bronze-taupe-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, groomed warm bronze-brown brows, dark brown lashes, fingernails and toenails natural or Light Terracotta; present, never heavy.
+
+Studio backdrop: a seamless deep charcoal studio backdrop with a soft pool of warm turquoise light glowing behind the figure and a gentle low haze at her feet.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.
