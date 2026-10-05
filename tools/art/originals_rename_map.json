@@ -1,0 +1,2422 @@
+{
+ "renames": [
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788210498766_7500298447818601013.jpg",
+   "new": "draknara_image_7500298447818601013.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788210543015_7500298633414036242.jpg",
+   "new": "draknara_image_7500298633414036242.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788210559467_7500298702416477355.jpg",
+   "new": "draknara_image_7500298702416477355.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788210572650_7500298757710195803.jpg",
+   "new": "draknara_image_7500298757710195803.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788210588656_7500298824845095228.jpg",
+   "new": "draknara_image_7500298824845095228.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788210615453_7500298937238262239.jpg",
+   "new": "draknara_image_7500298937238262239.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788210629878_7500298997742738004.jpg",
+   "new": "draknara_image_7500298997742738004.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788210656023_7500299107400452345.jpg",
+   "new": "draknara_image_7500299107400452345.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292296963_7500641534322472354.jpg",
+   "new": "draknara_image_7500641534322472354.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292329467_7500641670655486368.jpg",
+   "new": "draknara_image_7500641670655486368.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788292349299_7500641753837502819.jpg",
+   "new": "draknara_image_7500641753837502819.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292357293_7500641787365620254.jpg",
+   "new": "draknara_image_7500641787365620254.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292374698_7500641860368009759.jpg",
+   "new": "draknara_image_7500641860368009759.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292380969_7500641886671061103.jpg",
+   "new": "draknara_image_7500641886671061103.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292389311_7500641921660670380.jpg",
+   "new": "draknara_image_7500641921660670380.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292407046_7500641996042971122.jpg",
+   "new": "draknara_image_7500641996042971122.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292418635_7500642044652396844.jpg",
+   "new": "draknara_image_7500642044652396844.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292441739_7500642141558692401.jpg",
+   "new": "draknara_image_7500642141558692401.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292467096_7500642247911187085.jpg",
+   "new": "draknara_image_7500642247911187085.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292473200_7500642273512689056.jpg",
+   "new": "draknara_image_7500642273512689056.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788292478797_7500642296988890059.jpg",
+   "new": "draknara_image_7500642296988890059.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292488195_7500642336408569829.jpg",
+   "new": "draknara_image_7500642336408569829.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292495173_7500642365674318249.jpg",
+   "new": "draknara_image_7500642365674318249.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292509847_7500642427224216287.jpg",
+   "new": "draknara_image_7500642427224216287.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292532053_7500642520367895854.jpg",
+   "new": "draknara_image_7500642520367895854.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292546594_7500642581350460257.jpg",
+   "new": "draknara_image_7500642581350460257.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292554552_7500642614731661715.jpg",
+   "new": "draknara_image_7500642614731661715.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292568623_7500642673748612794.jpg",
+   "new": "draknara_image_7500642673748612794.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292578855_7500642716664050327.jpg",
+   "new": "draknara_image_7500642716664050327.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara",
+   "old": "facebook_1788292587870_7500642754476958031.jpg",
+   "new": "draknara_image_7500642754476958031.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292605766_7500642829536337473.jpg",
+   "new": "draknara_image_7500642829536337473.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292617562_7500642879014189201.jpg",
+   "new": "draknara_image_7500642879014189201.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292623153_7500642902462834775.jpg",
+   "new": "draknara_image_7500642902462834775.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "facebook_1788292646509_7500643000424865035.jpg",
+   "new": "draknara_image_7500643000424865035.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_145825_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_145825_facebook.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_145926_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_145926_facebook.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_145958_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_145958_facebook.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_150029_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_150029_facebook.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_150134_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_150134_facebook.jpg"
+  },
+  {
+   "hero": "Draknara",
+   "folder": "Draknara/gallery",
+   "old": "Screenshot_20260901_150253_Facebook.jpg",
+   "new": "draknara_screenshot_20260901_150253_facebook.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788284331784_7500608125941108948.jpg",
+   "new": "draknava_image_7500608125941108948.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788284384621_7500608347555238074.jpg",
+   "new": "draknava_image_7500608347555238074.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290604021_7500634433609211830.jpg",
+   "new": "draknava_image_7500634433609211830.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290617893_7500634491792120658.jpg",
+   "new": "draknava_image_7500634491792120658.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290626008_7500634525832496506.jpg",
+   "new": "draknava_image_7500634525832496506.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290646832_7500634613171134921.jpg",
+   "new": "draknava_image_7500634613171134921.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290658517_7500634662180590647.jpg",
+   "new": "draknava_image_7500634662180590647.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290686677_7500634780293048687.jpg",
+   "new": "draknava_image_7500634780293048687.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290697027_7500634823706674174.jpg",
+   "new": "draknava_image_7500634823706674174.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290725875_7500634944702619583.jpg",
+   "new": "draknava_image_7500634944702619583.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290736291_7500634988390967969.jpg",
+   "new": "draknava_image_7500634988390967969.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290745184_7500635025688275505.jpg",
+   "new": "draknava_image_7500635025688275505.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290758219_7500635080362467705.jpg",
+   "new": "draknava_image_7500635080362467705.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290777533_7500635161373870367.jpg",
+   "new": "draknava_image_7500635161373870367.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290796911_7500635242649172918.jpg",
+   "new": "draknava_image_7500635242649172918.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290804124_7500635272904497921.jpg",
+   "new": "draknava_image_7500635272904497921.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290810769_7500635300773748445.jpg",
+   "new": "draknava_image_7500635300773748445.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788290822454_7500635349784130689.jpg",
+   "new": "draknava_image_7500635349784130689.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290856082_7500635490832026463.jpg",
+   "new": "draknava_image_7500635490832026463.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290872613_7500635560164288825.jpg",
+   "new": "draknava_image_7500635560164288825.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290885689_7500635615010511223.jpg",
+   "new": "draknava_image_7500635615010511223.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290897225_7500635663396796957.jpg",
+   "new": "draknava_image_7500635663396796957.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290909026_7500635712891874985.jpg",
+   "new": "draknava_image_7500635712891874985.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788290915555_7500635740277012951.jpg",
+   "new": "draknava_image_7500635740277012951.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290922682_7500635770169182872.jpg",
+   "new": "draknava_image_7500635770169182872.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290929245_7500635797696849058.jpg",
+   "new": "draknava_image_7500635797696849058.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290939485_7500635840648449552.jpg",
+   "new": "draknava_image_7500635840648449552.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788290953552_7500635899647965293.jpg",
+   "new": "draknava_image_7500635899647965293.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788290967868_7500635959695154551.jpg",
+   "new": "draknava_image_7500635959695154551.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291019642_7500636176849607494.jpg",
+   "new": "draknava_image_7500636176849607494.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291027264_7500636208818718720.jpg",
+   "new": "draknava_image_7500636208818718720.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291049603_7500636302517297500.jpg",
+   "new": "draknava_image_7500636302517297500.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291066713_7500636374279946069.jpg",
+   "new": "draknava_image_7500636374279946069.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291079296_7500636427056371998.jpg",
+   "new": "draknava_image_7500636427056371998.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291150928_7500636727502632856.jpg",
+   "new": "draknava_image_7500636727502632856.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291180167_7500636850143186402.jpg",
+   "new": "draknava_image_7500636850143186402.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788291209681_7500636973931726255.jpg",
+   "new": "draknava_image_7500636973931726255.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291272318_7500637236650681264.jpg",
+   "new": "draknava_image_7500637236650681264.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava",
+   "old": "facebook_1788291288776_7500637305682080686.jpg",
+   "new": "draknava_image_7500637305682080686.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291298054_7500637344594266079.jpg",
+   "new": "draknava_image_7500637344594266079.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291328964_7500637474242773700.jpg",
+   "new": "draknava_image_7500637474242773700.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291398038_7500637763957430813.jpg",
+   "new": "draknava_image_7500637763957430813.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291407459_7500637803471541020.jpg",
+   "new": "draknava_image_7500637803471541020.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291420317_7500637857403479044.jpg",
+   "new": "draknava_image_7500637857403479044.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291428821_7500637893072356225.jpg",
+   "new": "draknava_image_7500637893072356225.jpg"
+  },
+  {
+   "hero": "Draknava",
+   "folder": "Draknava/gallery",
+   "old": "facebook_1788291521520_7500638281883859763.jpg",
+   "new": "draknava_image_7500638281883859763.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788108583773_7499870985354040274.jpg",
+   "new": "drakness_image_7499870985354040274.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788108630213_7499871180140674331.jpg",
+   "new": "drakness_image_7499871180140674331.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264515831_7500525011808057646.jpg",
+   "new": "drakness_image_7500525011808057646.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264556751_7500525183441778770.jpg",
+   "new": "drakness_image_7500525183441778770.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264582599_7500525291853737333.jpg",
+   "new": "drakness_image_7500525291853737333.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264598465_7500525358401484825.jpg",
+   "new": "drakness_image_7500525358401484825.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264613979_7500525423474371879.jpg",
+   "new": "drakness_image_7500525423474371879.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264632532_7500525501291331681.jpg",
+   "new": "drakness_image_7500525501291331681.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264645743_7500525556700752438.jpg",
+   "new": "drakness_image_7500525556700752438.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264655895_7500525599279164988.jpg",
+   "new": "drakness_image_7500525599279164988.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264665772_7500525640708173346.jpg",
+   "new": "drakness_image_7500525640708173346.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264679816_7500525699614052214.jpg",
+   "new": "drakness_image_7500525699614052214.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness",
+   "old": "facebook_1788264699110_7500525780536812251.jpg",
+   "new": "drakness_image_7500525780536812251.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264714298_7500525844239351470.jpg",
+   "new": "drakness_image_7500525844239351470.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264730563_7500525912460001916.jpg",
+   "new": "drakness_image_7500525912460001916.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264746164_7500525977894910778.jpg",
+   "new": "drakness_image_7500525977894910778.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264760549_7500526038230589114.jpg",
+   "new": "drakness_image_7500526038230589114.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264767767_7500526068505763189.jpg",
+   "new": "drakness_image_7500526068505763189.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264783260_7500526133487503857.jpg",
+   "new": "drakness_image_7500526133487503857.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264795094_7500526183122210596.jpg",
+   "new": "drakness_image_7500526183122210596.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264804279_7500526221650625001.jpg",
+   "new": "drakness_image_7500526221650625001.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264817571_7500526277400684823.jpg",
+   "new": "drakness_image_7500526277400684823.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264828620_7500526323742448840.jpg",
+   "new": "drakness_image_7500526323742448840.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264873885_7500526513597190703.jpg",
+   "new": "drakness_image_7500526513597190703.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264883358_7500526553330692828.jpg",
+   "new": "drakness_image_7500526553330692828.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264902431_7500526633326971248.jpg",
+   "new": "drakness_image_7500526633326971248.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264913069_7500526677948523538.jpg",
+   "new": "drakness_image_7500526677948523538.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264925844_7500526731529237453.jpg",
+   "new": "drakness_image_7500526731529237453.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264936270_7500526775257167443.jpg",
+   "new": "drakness_image_7500526775257167443.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264949098_7500526829064726470.jpg",
+   "new": "drakness_image_7500526829064726470.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264960714_7500526877782913583.jpg",
+   "new": "drakness_image_7500526877782913583.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264970654_7500526919477154843.jpg",
+   "new": "drakness_image_7500526919477154843.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264982488_7500526969112946034.jpg",
+   "new": "drakness_image_7500526969112946034.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788264996614_7500527028360041498.jpg",
+   "new": "drakness_image_7500527028360041498.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427157.jpg",
+   "new": "drakness_image_7500527121164427157.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness",
+   "old": "facebook_1788265018740_7500527121164427158.jpg",
+   "new": "drakness_image_7500527121164427158.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness",
+   "old": "facebook_1988265018740_7500527121164427158.jpg",
+   "new": "drakness_image_7500527121164427158__2.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness",
+   "old": "facebook_1998265018740_7500527121164427158.jpg",
+   "new": "drakness_image_7500527121164427158__3.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427159.jpg",
+   "new": "drakness_image_7500527121164427159.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427160.jpg",
+   "new": "drakness_image_7500527121164427160.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427161.jpg",
+   "new": "drakness_image_7500527121164427161.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427162.jpg",
+   "new": "drakness_image_7500527121164427162.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427163.jpg",
+   "new": "drakness_image_7500527121164427163.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427164.jpg",
+   "new": "drakness_image_7500527121164427164.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1988265018740_7500527121164427165.jpg",
+   "new": "drakness_image_7500527121164427165.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788265054418_7500527270807855665.jpg",
+   "new": "drakness_image_7500527270807855665.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788270463331_7500549957431414470.jpg",
+   "new": "drakness_image_7500549957431414470.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788270530724_7500550240098351708.jpg",
+   "new": "drakness_image_7500550240098351708.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1788270566908_7500550391866961012.jpg",
+   "new": "drakness_image_7500550391866961012.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness",
+   "old": "facebook_1790095534583_7508204861086814452.jpg",
+   "new": "drakness_image_7508204861086814452.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "facebook_1790095543159_7508204897055512447.jpg",
+   "new": "drakness_image_7508204897055512447.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115058_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115058_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115136_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115136_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115215_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115215_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115222_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115222_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115237_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115237_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115242_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115242_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115250_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115250_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115254_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115254_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115259_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115259_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115304_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115304_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115310_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115310_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260830_115320_Facebook.jpg",
+   "new": "drakness_screenshot_20260830_115320_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155347_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155347_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155402_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155402_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155409_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155409_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155441_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155441_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155450_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155450_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155453_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155453_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155500_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155500_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155506_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155506_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155514_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155514_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155520_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155520_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155542_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155542_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155547_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155547_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155611_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155611_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155621_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155621_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155627_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155627_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155633_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155633_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155646_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155646_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155652_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155652_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155658_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155658_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155704_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155704_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155722_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155722_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155730_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155730_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155736_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155736_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155742_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155742_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155753_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155753_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260831_155803_Facebook.jpg",
+   "new": "drakness_screenshot_20260831_155803_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260901_085538_Facebook.jpg",
+   "new": "drakness_screenshot_20260901_085538_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260901_090658_Facebook.jpg",
+   "new": "drakness_screenshot_20260901_090658_facebook.jpg"
+  },
+  {
+   "hero": "Drakness",
+   "folder": "Drakness/gallery",
+   "old": "Screenshot_20260901_090700_Facebook.jpg",
+   "new": "drakness_screenshot_20260901_090700_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618565536_7502010003903621556.jpg",
+   "new": "drakneta_image_7502010003903621556.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618596864_7502010135304035615.jpg",
+   "new": "drakneta_image_7502010135304035615.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618606139_7502010174206807497.jpg",
+   "new": "drakneta_image_7502010174206807497.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618611135_7502010195159303086.jpg",
+   "new": "drakneta_image_7502010195159303086.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618619278_7502010229316302440.jpg",
+   "new": "drakneta_image_7502010229316302440.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618625716_7502010256315432810.jpg",
+   "new": "drakneta_image_7502010256315432810.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta",
+   "old": "facebook_1788618637397_7502010305308899481.jpg",
+   "new": "drakneta_image_7502010305308899481.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618642787_7502010327919146190.jpg",
+   "new": "drakneta_image_7502010327919146190.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618652675_7502010369392491973.jpg",
+   "new": "drakneta_image_7502010369392491973.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618676209_7502010468101133315.jpg",
+   "new": "drakneta_image_7502010468101133315.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618688672_7502010520375495891.jpg",
+   "new": "drakneta_image_7502010520375495891.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618694175_7502010543453103366.jpg",
+   "new": "drakneta_image_7502010543453103366.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "facebook_1788618700213_7502010568778639961.jpg",
+   "new": "drakneta_image_7502010568778639961.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101443_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101443_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101448_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101448_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101456_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101456_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101502_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101502_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101508_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101508_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101513_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101513_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101526_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101526_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101537_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101537_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101548_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101548_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101559_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101559_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101607_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101607_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101621_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101621_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101640_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101640_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101700_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101700_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101707_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101707_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101718_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101718_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101747_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101747_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101752_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101752_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101758_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101758_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101800_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101800_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101826_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101826_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101829_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101829_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101843_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101843_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101907_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101907_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_101916_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_101916_facebook.jpg"
+  },
+  {
+   "hero": "Drakneta",
+   "folder": "Drakneta/gallery",
+   "old": "Screenshot_20260918_102046_Facebook.jpg",
+   "new": "drakneta_screenshot_20260918_102046_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira",
+   "old": "facebook_1788295134011_7500653433765869209.jpg",
+   "new": "draknira_image_7500653433765869209.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295160665_7500653545560370141.jpg",
+   "new": "draknira_image_7500653545560370141.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira",
+   "old": "facebook_1788295167946_7500653576098180634.jpg",
+   "new": "draknira_image_7500653576098180634.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295175217_7500653606593713408.jpg",
+   "new": "draknira_image_7500653606593713408.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295182653_7500653637785509353.jpg",
+   "new": "draknira_image_7500653637785509353.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295188806_7500653663591510013.jpg",
+   "new": "draknira_image_7500653663591510013.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295196709_7500653696738959944.jpg",
+   "new": "draknira_image_7500653696738959944.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295204896_7500653731079341369.jpg",
+   "new": "draknira_image_7500653731079341369.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira",
+   "old": "facebook_1788295210835_7500653755986109704.jpg",
+   "new": "draknira_image_7500653755986109704.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira",
+   "old": "facebook_1788295216159_7500653778316842726.jpg",
+   "new": "draknira_image_7500653778316842726.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira",
+   "old": "facebook_1788295223146_7500653807625132328.jpg",
+   "new": "draknira_image_7500653807625132328.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295242776_7500653889958365047.jpg",
+   "new": "draknira_image_7500653889958365047.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295248416_7500653913616078132.jpg",
+   "new": "draknira_image_7500653913616078132.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295263577_7500653977202985670.jpg",
+   "new": "draknira_image_7500653977202985670.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295269619_7500654002545836419.jpg",
+   "new": "draknira_image_7500654002545836419.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295275206_7500654025981752346.jpg",
+   "new": "draknira_image_7500654025981752346.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295284238_7500654063861020604.jpg",
+   "new": "draknira_image_7500654063861020604.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295290014_7500654088087279157.jpg",
+   "new": "draknira_image_7500654088087279157.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295297218_7500654118303806285.jpg",
+   "new": "draknira_image_7500654118303806285.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295306669_7500654157944840194.jpg",
+   "new": "draknira_image_7500654157944840194.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "facebook_1788295313734_7500654187579711167.jpg",
+   "new": "draknira_image_7500654187579711167.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154221_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154221_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154246_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154246_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154330_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154330_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154403_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154403_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154446_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154446_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154505_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154505_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154539_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154539_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154612_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154612_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154655_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154655_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154723_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154723_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154738_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154738_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154814_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154814_facebook.jpg"
+  },
+  {
+   "hero": "Draknira",
+   "folder": "Draknira/gallery",
+   "old": "Screenshot_20260901_154905_Facebook.jpg",
+   "new": "draknira_screenshot_20260901_154905_facebook.jpg"
+  },
+  {
+   "hero": "Draknisa",
+   "folder": "Draknisa/gallery",
+   "old": "facebook_1790095137533_7508203195738729765.jpg",
+   "new": "draknisa_image_7508203195738729765.jpg"
+  },
+  {
+   "hero": "Draknisa",
+   "folder": "Draknisa",
+   "old": "facebook_1790095672463_7508205439396836392.jpg",
+   "new": "draknisa_image_7508205439396836392.jpg"
+  },
+  {
+   "hero": "Draknisa",
+   "folder": "Draknisa",
+   "old": "facebook_1790095682231_7508205480366024326.jpg",
+   "new": "draknisa_image_7508205480366024326.jpg"
+  },
+  {
+   "hero": "Draknisa",
+   "folder": "Draknisa",
+   "old": "facebook_1790095702450_7508205565171893529.jpg",
+   "new": "draknisa_image_7508205565171893529.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210869183_7500300001460625402.jpg",
+   "new": "drakniss_image_7500300001460625402.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210899364_7500300128047838582.jpg",
+   "new": "drakniss_image_7500300128047838582.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210909679_7500300171311613326.jpg",
+   "new": "drakniss_image_7500300171311613326.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210919949_7500300214386550930.jpg",
+   "new": "drakniss_image_7500300214386550930.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210931190_7500300261534646629.jpg",
+   "new": "drakniss_image_7500300261534646629.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210940706_7500300301448049909.jpg",
+   "new": "drakniss_image_7500300301448049909.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210951746_7500300347753288960.jpg",
+   "new": "drakniss_image_7500300347753288960.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210961987_7500300390712030012.jpg",
+   "new": "drakniss_image_7500300390712030012.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210974075_7500300441410580449.jpg",
+   "new": "drakniss_image_7500300441410580449.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788210988740_7500300502917452237.jpg",
+   "new": "drakniss_image_7500300502917452237.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788211005645_7500300573822210489.jpg",
+   "new": "drakniss_image_7500300573822210489.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788211018640_7500300628326238376.jpg",
+   "new": "drakniss_image_7500300628326238376.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788211029874_7500300675446616169.jpg",
+   "new": "drakniss_image_7500300675446616169.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788211040313_7500300719229323941.jpg",
+   "new": "drakniss_image_7500300719229323941.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788211052424_7500300770027608502.jpg",
+   "new": "drakniss_image_7500300770027608502.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788282903522_7500602135374352254.jpg",
+   "new": "drakniss_image_7500602135374352254.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788282944493_7500602307221640589.jpg",
+   "new": "drakniss_image_7500602307221640589.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss",
+   "old": "facebook_1788282956666_7500602358276154864.jpg",
+   "new": "drakniss_image_7500602358276154864.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss",
+   "old": "facebook_1788282973410_7500602428509034103.jpg",
+   "new": "drakniss_image_7500602428509034103.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788282983573_7500602471133526869.jpg",
+   "new": "drakniss_image_7500602471133526869.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788282998579_7500602534073984949.jpg",
+   "new": "drakniss_image_7500602534073984949.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283016901_7500602610923040295.jpg",
+   "new": "drakniss_image_7500602610923040295.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283028779_7500602660742543568.jpg",
+   "new": "drakniss_image_7500602660742543568.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283040550_7500602710114904631.jpg",
+   "new": "drakniss_image_7500602710114904631.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283058660_7500602786071470290.jpg",
+   "new": "drakniss_image_7500602786071470290.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283070067_7500602833915412997.jpg",
+   "new": "drakniss_image_7500602833915412997.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283079851_7500602874954588999.jpg",
+   "new": "drakniss_image_7500602874954588999.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283105299_7500602981688801638.jpg",
+   "new": "drakniss_image_7500602981688801638.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283122898_7500603055507297113.jpg",
+   "new": "drakniss_image_7500603055507297113.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283134693_7500603104978923656.jpg",
+   "new": "drakniss_image_7500603104978923656.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283144318_7500603145346544346.jpg",
+   "new": "drakniss_image_7500603145346544346.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283155760_7500603193338760562.jpg",
+   "new": "drakniss_image_7500603193338760562.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss",
+   "old": "facebook_1788283178973_7500603290699273264.jpg",
+   "new": "drakniss_image_7500603290699273264.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283190620_7500603339550560875.jpg",
+   "new": "drakniss_image_7500603339550560875.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283212624_7500603431843623292.jpg",
+   "new": "drakniss_image_7500603431843623292.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283223446_7500603477235137019.jpg",
+   "new": "drakniss_image_7500603477235137019.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283245400_7500603569318062208.jpg",
+   "new": "drakniss_image_7500603569318062208.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283263365_7500603644668790111.jpg",
+   "new": "drakniss_image_7500603644668790111.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283275310_7500603694767155717.jpg",
+   "new": "drakniss_image_7500603694767155717.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss",
+   "old": "facebook_1788283288020_7500603748082432155.jpg",
+   "new": "drakniss_image_7500603748082432155.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss",
+   "old": "facebook_1788283325143_7500603903780895951.jpg",
+   "new": "drakniss_image_7500603903780895951.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283348040_7500603999818274715.jpg",
+   "new": "drakniss_image_7500603999818274715.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283364591_7500604069239572329.jpg",
+   "new": "drakniss_image_7500604069239572329.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283395802_7500604200149543427.jpg",
+   "new": "drakniss_image_7500604200149543427.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283406704_7500604245872359757.jpg",
+   "new": "drakniss_image_7500604245872359757.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283430704_7500604346537093015.jpg",
+   "new": "drakniss_image_7500604346537093015.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283471589_7500604518020494124.jpg",
+   "new": "drakniss_image_7500604518020494124.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283556272_7500604873208071523.jpg",
+   "new": "drakniss_image_7500604873208071523.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283620660_7500605143270030355.jpg",
+   "new": "drakniss_image_7500605143270030355.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283636045_7500605207805106703.jpg",
+   "new": "drakniss_image_7500605207805106703.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283668170_7500605342543731895.jpg",
+   "new": "drakniss_image_7500605342543731895.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283674014_7500605367055636573.jpg",
+   "new": "drakniss_image_7500605367055636573.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283680309_7500605393456965153.jpg",
+   "new": "drakniss_image_7500605393456965153.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283691064_7500605438566008671.jpg",
+   "new": "drakniss_image_7500605438566008671.jpg"
+  },
+  {
+   "hero": "Drakniss",
+   "folder": "Drakniss/gallery",
+   "old": "facebook_1788283701503_7500605482349371100.jpg",
+   "new": "drakniss_image_7500605482349371100.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745604301_7506737147105404640.jpg",
+   "new": "drakniya_image_7506737147105404640.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745668938_7506737418209918335.jpg",
+   "new": "drakniya_image_7506737418209918335.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745674852_7506737443018544599.jpg",
+   "new": "drakniya_image_7506737443018544599.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745679749_7506737463556204827.jpg",
+   "new": "drakniya_image_7506737463556204827.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745684843_7506737484923268767.jpg",
+   "new": "drakniya_image_7506737484923268767.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745689698_7506737505284150921.jpg",
+   "new": "drakniya_image_7506737505284150921.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745695446_7506737529395830291.jpg",
+   "new": "drakniya_image_7506737529395830291.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745699908_7506737548108197047.jpg",
+   "new": "drakniya_image_7506737548108197047.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745704545_7506737567558093153.jpg",
+   "new": "drakniya_image_7506737567558093153.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745709077_7506737586564717846.jpg",
+   "new": "drakniya_image_7506737586564717846.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745713487_7506737605064928946.jpg",
+   "new": "drakniya_image_7506737605064928946.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745719201_7506737629029583253.jpg",
+   "new": "drakniya_image_7506737629029583253.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745723777_7506737648224183057.jpg",
+   "new": "drakniya_image_7506737648224183057.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745728573_7506737668340477209.jpg",
+   "new": "drakniya_image_7506737668340477209.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "facebook_1789745733967_7506737690961925068.jpg",
+   "new": "drakniya_image_7506737690961925068.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya",
+   "old": "facebook_1789745740271_7506737717401633165.jpg",
+   "new": "drakniya_image_7506737717401633165.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103604_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103604_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103612_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103612_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103621_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103621_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103627_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103627_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103634_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103634_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103649_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103649_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103657_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103657_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103708_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103708_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103735_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103735_facebook.jpg"
+  },
+  {
+   "hero": "Drakniya",
+   "folder": "Drakniya/gallery",
+   "old": "Screenshot_20260918_103751_Facebook.jpg",
+   "new": "drakniya_screenshot_20260918_103751_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281730823_7500597216718914221.jpg",
+   "new": "draknora_image_7500597216718914221.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281772148_7500597390049861254.jpg",
+   "new": "draknora_image_7500597390049861254.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora",
+   "old": "facebook_1788281781217_7500597428089103392.jpg",
+   "new": "draknora_image_7500597428089103392.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281795985_7500597490029222141.jpg",
+   "new": "draknora_image_7500597490029222141.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281805555_7500597530169721490.jpg",
+   "new": "draknora_image_7500597530169721490.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281816431_7500597575785291409.jpg",
+   "new": "draknora_image_7500597575785291409.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281827671_7500597622931911297.jpg",
+   "new": "draknora_image_7500597622931911297.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora",
+   "old": "facebook_1788281861617_7500597765309011836.jpg",
+   "new": "draknora_image_7500597765309011836.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281874900_7500597821021035280.jpg",
+   "new": "draknora_image_7500597821021035280.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281888179_7500597876718367404.jpg",
+   "new": "draknora_image_7500597876718367404.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281915682_7500597992075087470.jpg",
+   "new": "draknora_image_7500597992075087470.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281927255_7500598040615709595.jpg",
+   "new": "draknora_image_7500598040615709595.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora",
+   "old": "facebook_1788281937398_7500598083158560049.jpg",
+   "new": "draknora_image_7500598083158560049.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281963256_7500598191615563465.jpg",
+   "new": "draknora_image_7500598191615563465.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788281989826_7500598303058926058.jpg",
+   "new": "draknora_image_7500598303058926058.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788282014225_7500598405393768314.jpg",
+   "new": "draknora_image_7500598405393768314.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora",
+   "old": "facebook_1788282036047_7500598496923586557.jpg",
+   "new": "draknora_image_7500598496923586557.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788282055260_7500598577512091270.jpg",
+   "new": "draknora_image_7500598577512091270.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "facebook_1788282093831_7500598739285690094.jpg",
+   "new": "draknora_image_7500598739285690094.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120222_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120222_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120226_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120226_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120320_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120320_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120420_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120420_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120451_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120451_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120531_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120531_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120546_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120546_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120619_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120619_facebook.jpg"
+  },
+  {
+   "hero": "Draknora",
+   "folder": "Draknora/gallery",
+   "old": "Screenshot_20260901_120733_Facebook.jpg",
+   "new": "draknora_screenshot_20260901_120733_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281136724_7500594724889346896.jpg",
+   "new": "draknoxa_image_7500594724889346896.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281166066_7500594847955542617.jpg",
+   "new": "draknoxa_image_7500594847955542617.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281176172_7500594890343808770.jpg",
+   "new": "draknoxa_image_7500594890343808770.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281185794_7500594930703104917.jpg",
+   "new": "draknoxa_image_7500594930703104917.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281201186_7500594995261748003.jpg",
+   "new": "draknoxa_image_7500594995261748003.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281214983_7500595053129653106.jpg",
+   "new": "draknoxa_image_7500595053129653106.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281238597_7500595152172875280.jpg",
+   "new": "draknoxa_image_7500595152172875280.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281250656_7500595202752618744.jpg",
+   "new": "draknoxa_image_7500595202752618744.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281264863_7500595262340783673.jpg",
+   "new": "draknoxa_image_7500595262340783673.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281282221_7500595335146864460.jpg",
+   "new": "draknoxa_image_7500595335146864460.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281295343_7500595390186193516.jpg",
+   "new": "draknoxa_image_7500595390186193516.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281309820_7500595450905760457.jpg",
+   "new": "draknoxa_image_7500595450905760457.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281327008_7500595522995591240.jpg",
+   "new": "draknoxa_image_7500595522995591240.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281336332_7500595562106831761.jpg",
+   "new": "draknoxa_image_7500595562106831761.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281368421_7500595696696161149.jpg",
+   "new": "draknoxa_image_7500595696696161149.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281376753_7500595731642793749.jpg",
+   "new": "draknoxa_image_7500595731642793749.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281389383_7500595784618167503.jpg",
+   "new": "draknoxa_image_7500595784618167503.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281399318_7500595826285625701.jpg",
+   "new": "draknoxa_image_7500595826285625701.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281495714_7500596230603273711.jpg",
+   "new": "draknoxa_image_7500596230603273711.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "facebook_1788281516259_7500596316774418512.jpg",
+   "new": "draknoxa_image_7500596316774418512.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa",
+   "old": "facebook_1790095115590_7508203103702313943.jpg",
+   "new": "draknoxa_image_7508203103702313943.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa",
+   "old": "facebook_1790095122288_7508203131793908784.jpg",
+   "new": "draknoxa_image_7508203131793908784.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa",
+   "old": "facebook_1790095137533_7508203195738729765.jpg",
+   "new": "draknoxa_image_7508203195738729765.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155354_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155354_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155409_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155409_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155446_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155446_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155541_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155541_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155552_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155552_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155612_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155612_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155624_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155624_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155652_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155652_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155658_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155658_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155709_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155709_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155716_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155716_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155742_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155742_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155813_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155813_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155840_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155840_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155902_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155902_facebook.jpg"
+  },
+  {
+   "hero": "Draknoxa",
+   "folder": "Draknoxa/gallery",
+   "old": "Screenshot_20260901_155926_Facebook.jpg",
+   "new": "draknoxa_screenshot_20260901_155926_facebook.jpg"
+  }
+ ]
+}
