@@ -175,6 +175,76 @@ Each fact has one home: if the card owns it (name, element, sex, class), do not 
 | `art.artIdentity ... does not link back` | Make the card and identity point at each other. |
 | `template needs tokens with no value` (generator) | A slot the template requires is missing from `components`. |
 
+## Group shots: bringing several characters into one image
+
+A model cannot keep ten faces if you give it ten references. The Qwen edit encoder takes at most three images, and ten
+full-length figures in one frame leave each face only a few dozen pixels wide. So build the shot in layers: render each
+character large, on her own, in the same light; place them onto a shared background; then let one gentle pass blend it.
+
+```text
+plate (empty ridge)  +  10 cut-outs (one per character)  -->  collage  -->  harmonise pass  -->  final
+```
+
+### Step 1: the plate
+
+Run `SovereignTerritories_Plate_Qwen_Text` in ComfyUI (a text-to-image workflow, no input image, 1280x1600). It makes an empty
+ridge in three terraces with dawn light from the right. Keep the best one. Its prompt, and the harmonise prompt below, are
+stored in the workflows themselves under `workflows/_curated/key-art/SovereignTerritories/`.
+
+### Step 2: one cut-out render per character
+
+Each sister has a `Lineup` scene card (`<hero>-scene-lineup.json`): her dawn gown on a flat grey backdrop, lit from the right
+by the same dawn light, full figure, effects kept within arm's reach so she cuts out cleanly. Refresh and run them:
+
+```bash
+bin\refresh-dev.cmd Draknora scene     # or run the whole set; the workflows are named <Hero>_Qwen_Scene_Lineup
+```
+
+Pick the best render for each. Check that the light comes from the **right** in all ten; a render lit from the left will not
+match, so rerun it.
+
+### Step 3: cut out and place
+
+Cut each figure out of the grey. Two ways:
+
+- **In an image editor (Krita, GIMP, Photopea):** the flat grey makes "select subject" or a colour-range selection easy. Feather the
+  edge by about 1 to 2 pixels and remove any grey fringe.
+- **In ComfyUI:** `Load Background Removal Model` then `Remove Background` give an image with a mask. You need to download a
+  background-removal model into `models/background_removal` first (the folder is empty today). Then `ImageCompositeMasked`
+  places each figure on the plate.
+
+Work on a canvas the size of the plate (1280x1600) and place **back to front**: the single top figure first, then the middle row,
+then the front row. This is the layout, in pixels, with the colours spread so no two neighbours look alike:
+
+| Row | Who, left to right | Feet at y | Height | Centres at x |
+| --- | --- | --- | --- | --- |
+| Top | Drakness | 1056 | 670 | 640 |
+| Middle | Draknisa, Draknara, Draknava, Drakniss | 1280 | 830 | 275, 518, 762, 1005 |
+| Front | Draknora, Draknira, Drakniya, Drakneta, Draknoxa | 1552 | 990 | 154, 397, 640, 883, 1126 |
+
+Back figures are smaller and sit higher on the terraces. Give the farther rows a little haze: slightly lower contrast and
+saturation, and a soft pale-blue mist layer at 10 to 20 percent between the rows. Add a soft dark shadow under every pair of
+feet. Save the flattened result as a PNG named `SovereignTerritories_Collage_00001_.png` in ComfyUI's `input` folder.
+
+### Step 4: harmonise
+
+Run `SovereignTerritories_Harmonize_Qwen_Edit`. It reads the collage and re-lights it at a low strength (denoise 0.4). Its prompt
+says the ten women must not change, and asks for matching light, shadows, mist and softened edges. Check:
+
+- exactly ten women, the same faces and gowns;
+- the edges no longer look pasted on.
+
+If a face drifts, lower the strength to 0.25 to 0.3. If it still looks pasted, raise it toward 0.5. The strength is the
+`denoise` value on the workflow.
+
+### Why this works, and what to expect
+
+Every face is rendered at full size from her own A-pose, so identity is as good as a single portrait. The harmonise pass is the
+only step that sees all ten at once, and at low strength it has little room to change anyone. If one face does drift, redo only
+that sister's cut-out and recomposite.
+
+This has not been run end to end yet; treat the numbers (positions, strength) as a starting point.
+
 ## Working with an AI assistant
 
 An assistant can write all of this, provided it works from the repo and not from memory. Give it this brief and the file

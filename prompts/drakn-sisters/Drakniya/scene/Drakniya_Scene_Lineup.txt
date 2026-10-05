@@ -1,0 +1,38 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Lineup (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of layered Emerald Green and sage silk cut into leaf shapes, a fitted bodice embroidered with antique gold ivy and seed-pearls, sleeves of sheer green gauze wrapped with living vines in small bloom, and a skirt of overlapping petals that opens like a blossom around her; sweetheart neckline.
+
+Headwear: a crown of woven twigs, blossoms and tiny antique gold leaves.
+
+Jewelry: a antique gold leaf collar with peridot dewdrops, vine bracelets with small flowers, antique gold acorn earrings.
+Legs & feet: bare feet with fine antique gold anklets.
+
+She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.
+
+Vines with small flowers curl around her wrists and hem, a glowing green seed floats above her palm, a few petals drift close to her.
+
+Eyes: the natural deep forest-emerald irises kept intact, with a faint bright emerald-green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
+
+Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop and nothing else in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
+
+Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, landscape, scenery, buildings, trees, sky, clouds, horizon, furniture, props, other people, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

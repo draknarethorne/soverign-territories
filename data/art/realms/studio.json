@@ -1,0 +1,27 @@
+{
+  "id": "realms/studio",
+  "kind": "realm",
+  "name": "Realm: plain studio (for cut-outs)",
+  "description": "Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame",
+  "negatives": [
+    "landscape",
+    "scenery",
+    "buildings",
+    "trees",
+    "sky",
+    "clouds",
+    "horizon",
+    "furniture",
+    "props",
+    "other people"
+  ],
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "studio",
+    "cutout"
+  ],
+  "notes": "For group shots: each character is rendered alone on a flat backdrop so she can be cut out and composited. Pair with a backgrounds/studio/ piece."
+}

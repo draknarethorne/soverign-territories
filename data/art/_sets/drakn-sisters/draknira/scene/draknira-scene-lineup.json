@@ -1,0 +1,22 @@
+{
+  "artId": "draknira-scene-lineup",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Lineup",
+  "components": {
+    "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.",
+    "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/dawn-regalia.json",
+    "headwear": "a tall crown of {{METAL}} and clear ice-crystal spires",
+    "jewelry": "a {{METAL}} snowflake collar set with {{GEM}} crystals, long icicle earrings, {{METAL}} cuffs",
+    "legs_feet": "bare feet with fine {{METAL}} anklets",
+    "effects": "Frost spreads across her hem and sleeves, a snowflake of ice crystals turns above her palm, fine diamond dust hangs close to her.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/studio/dawn-rim-grey.json",
+    "realm": "data/art/realms/studio.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/scene/Draknira_Scene_Lineup.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "GROUP SHOT cut-out: her dawn regalia on a flat grey backdrop with the shared dawn lighting, full figure, effects kept close, to be composited with the other nine. See docs/art/tutorial-art.md (group shots)."
+}
