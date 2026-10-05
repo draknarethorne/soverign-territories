@@ -4,7 +4,7 @@
   "paths": {
     "workRoot": "B:/Sovereign Territories",
     "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
-    "outputRoot": "B:/Comfy-Desktop/ComfyUI-Output",
+    "outputRoot": "B:/Comfy-Desktop/ComfyUI-Outputs",
     "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes"}
   },
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",

@@ -183,7 +183,7 @@ B:\Sovereign Territories\Models        original reference photos: the source, ne
 B:\Sovereign Territories\Masters       hand-picked keepers copied from the output (what the backup script protects)
 B:\Comfy-Desktop\ComfyUI-Installs      the workspaces (code and workflows)
 B:\Comfy-Desktop\ComfyUI-Inputs\<Workspace>   that workspace's own input images: transient copies
-B:\Comfy-Desktop\ComfyUI-Output\<Project>   raw output, one folder per project; the prefix sorts it by <set>/<Hero>/<stage>/<family>
+B:\Comfy-Desktop\ComfyUI-Outputs\<Project>   raw output, one folder per project; the prefix sorts it by <set>/<Hero>/<stage>/<family>
 ```
 
 Each workspace writes to the project folder named by its `output` setting in `workspaces.json` (set in ComfyUI as that install's

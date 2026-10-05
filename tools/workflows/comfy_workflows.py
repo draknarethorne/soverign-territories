@@ -70,7 +70,7 @@ def work_root(cfg):
 
 
 def output_root(cfg):
-    """The parent of every project output folder (ComfyUI-Output)."""
+    """The parent of every project output folder (ComfyUI-Outputs)."""
     return pathlib.Path(cfg.get("paths", {}).get("outputRoot") or cfg["sharedOutput"])
 
 
