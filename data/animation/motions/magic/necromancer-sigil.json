@@ -1,0 +1,12 @@
+{
+  "id": "motions/magic/necromancer-sigil",
+  "kind": "motion",
+  "name": "Necromancer's sigil",
+  "seconds": 3,
+  "beat": "Pale spectral hands of {{MAGIC}} smoke rise and caress the swirling light as it coils down {{her}} raised arm and curls around {{her}} like a living ribbon, a glowing sigil of bone and black roses blooming above {{her}} palm while {{she}} meets the camera with a slow, knowing smile.",
+  "audio": "a whispering chorus, a deep resonant swell",
+  "tags": [
+    "magic",
+    "necromancer"
+  ]
+}

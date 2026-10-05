@@ -19,7 +19,9 @@ sys.path.insert(0, str(ROOT / "tools" / "generators"))
 import gen_prompt  # noqa: E402
 
 CARDS = ROOT / "data" / "animation" / "_sets"
-DEFAULT_CAMERA = "Static camera with a very slow push-in; the framing stays on her full figure from head to toe."
+DEFAULT_CAMERA = "data/animation/cameras/follow-pan.json"
+DEFAULT_WORLD = ("Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, "
+                 "water, foliage, banners, birds and creatures - while cloth and hair respond to the air.")
 DEFAULT_CONSTRAINTS = ("Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; "
                        "no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.")
 PRONOUNS = {
@@ -146,6 +148,19 @@ def output_path(card, toks):
     return f"prompts/{group}/{hero}/video/{hero}_Video_{source}{card['name']}.txt"
 
 
+def camera_text(card, toks):
+    """A camera piece (data/animation/cameras/*.json) or literal text; every video moves the camera unless a card says static."""
+    spec = card.get("camera", DEFAULT_CAMERA)
+    return fill(load(spec)["description"] if spec.endswith(".json") else spec, toks)
+
+
+def world_text(card, toks, art_toks):
+    if "world" in card:
+        return fill(card["world"], toks)
+    extra = " Her companion in the background moves too: it banks, beats its wings and turns its head." if art_toks.get("COMPANION") else ""
+    return DEFAULT_WORLD + extra
+
+
 def generate(card_path):
     card = load(card_path)
     toks, art_toks = hero_tokens(card)
@@ -158,7 +173,7 @@ def generate(card_path):
         "SOURCE_IMAGE": card.get("source", {}).get("image", "(choose the image to animate)"),
         "WIDTH": str(width), "HEIGHT": str(height), "SECONDS": f"{total:g}",
         "LOOK": fill(look["description"], toks), "SUBJECT": subject(card, toks, art_toks), "TIMELINE": tl,
-        "CAMERA": fill(card.get("camera", DEFAULT_CAMERA), toks),
+        "CAMERA": camera_text(card, toks), "WORLD": world_text(card, toks, art_toks),
         "AUDIO": card.get("audio") or "; ".join(motion_audio) or "soft ambient score, no speech",
         "CONSTRAINTS": fill(card.get("constraints", DEFAULT_CONSTRAINTS), toks),
         "NEGATIVE": ", ".join(look.get("negatives", [])),

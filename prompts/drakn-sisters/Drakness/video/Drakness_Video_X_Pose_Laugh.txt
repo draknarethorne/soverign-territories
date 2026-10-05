@@ -15,7 +15,9 @@ Timeline:
 [3s-5s] Motion: Without pausing, she tosses her hair back with a quick turn of the head, the strands floating and settling, and meets the camera with a confident smile.
 [5s-7s] Motion: Without pausing, she lifts one hand to her lips, blows a kiss toward the camera with a playful glance, then lets the hand fall and finishes with a warm smile.
 
-Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.
+World: The studio stays plain, but the soft light shifts as she moves and her hair and clothing sway and settle with every motion.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
 
 Audio: light, warm laughter; a soft whoosh of air; a soft, airy kiss sound
 

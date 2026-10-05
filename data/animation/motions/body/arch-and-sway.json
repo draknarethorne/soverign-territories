@@ -1,0 +1,12 @@
+{
+  "id": "motions/body/arch-and-sway",
+  "kind": "motion",
+  "name": "Arch and sway",
+  "seconds": 2,
+  "beat": "{{She}} arches {{her}} back slightly and sways {{her}} hips in a slow, sultry rhythm, chin tilting down, shoulders rolling, hair and cloth following the movement.",
+  "audio": "a slow, low pulse",
+  "tags": [
+    "body",
+    "sway"
+  ]
+}

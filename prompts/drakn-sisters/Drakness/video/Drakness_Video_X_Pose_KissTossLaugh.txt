@@ -16,7 +16,9 @@ Timeline:
 [4s-7s] Motion: As the previous motion settles, she holds the pose for a heartbeat, then breaks into a real, delighted laugh, shoulders loosening, hair swaying, relaxing out of the pose as if the photo has just been taken, and glances back at the camera; at the same time, her eyes ignite with a steady amethyst glow, the light brightening from the irises outward while she holds the camera's gaze, a faint amethyst reflection spreading across her cheeks.
 [7s-9s] Motion: Without pausing, she gives the camera one last playful wink.
 
-Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.
+World: The studio stays plain, but the soft light shifts as she moves and her hair and clothing sway and settle with every motion.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
 
 Audio: a soft, airy kiss sound; a soft whoosh of air; light, warm laughter; a low, rising shimmer
 

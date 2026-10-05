@@ -8,7 +8,6 @@
     "image": "Drakness_Qwen_X_Pose_00142_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",
-  "camera": "Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.",
   "size": [
     640,
     960
@@ -26,5 +25,6 @@
       "motion": "data/animation/motions/romantic/blow-a-kiss.json",
       "seconds": 2
     }
-  ]
+  ],
+  "world": "The studio stays plain, but the soft light shifts as she moves and her hair and clothing sway and settle with every motion."
 }

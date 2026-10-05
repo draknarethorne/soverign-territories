@@ -1,0 +1,12 @@
+{
+  "id": "motions/ambient/companion-stirs",
+  "kind": "motion",
+  "name": "The companion stirs",
+  "seconds": 2,
+  "beat": "The companion in the background moves too: it banks, beats its wings and turns its head toward {{her}}, its eyes catching the magic light, while the flames, candles and smoke around it sway.",
+  "audio": "distant wingbeats and a low growl",
+  "tags": [
+    "ambient",
+    "companion"
+  ]
+}

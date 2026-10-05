@@ -1,0 +1,6 @@
+{
+  "id": "cameras/orbit-reveal",
+  "kind": "camera",
+  "name": "Orbit and reveal",
+  "description": "The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame."
+}

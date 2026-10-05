@@ -282,6 +282,8 @@ def check_animation_cards(report):
                 exists(where, key, d[key])
         if d.get("source", {}).get("artCard"):
             exists(where, "source.artCard", d["source"]["artCard"])
+        if str(d.get("camera", "")).endswith(".json"):
+            exists(where, "camera", d["camera"])
         if not d.get("actions"):
             report.error(where, "animation card needs at least one action")
         for item in d.get("actions", []):

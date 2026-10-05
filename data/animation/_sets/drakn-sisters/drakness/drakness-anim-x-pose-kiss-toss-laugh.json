@@ -28,11 +28,11 @@
     },
     "{{She}} gives the camera one last playful wink."
   ],
-  "camera": "Static camera on a plain studio backdrop; the framing stays on her full figure from head to toe.",
   "size": [
     640,
     960
   ],
   "template": "data/animation/_templates/video-minimax.txt",
-  "notes": "Chains reusable motions (kiss, toss, laugh while her eyes glow) and ends on a literal action typed straight into the card."
+  "notes": "Chains reusable motions (kiss, toss, laugh while her eyes glow) and ends on a literal action typed straight into the card.",
+  "world": "The studio stays plain, but the soft light shifts as she moves and her hair and clothing sway and settle with every motion."
 }

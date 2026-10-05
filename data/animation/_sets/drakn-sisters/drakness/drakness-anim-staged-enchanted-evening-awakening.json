@@ -8,28 +8,47 @@
     "image": "Drakness_FireRed_Scene_Staged_EnchantedEvening_00001_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",
-  "audio": "a low, rising shimmer, a soft swell of energy, then a gentle chime as the moths scatter; no speech",
+  "audio": "a low, rising shimmer, a whispering chorus and a deep resonant swell, distant wingbeats, then a soft hush as the smoke settles; no speech",
   "size": [
     640,
     960
   ],
   "template": "data/animation/_templates/video-minimax.txt",
-  "notes": "Takes the plain Enchanted Evening render and adds the magic the still left out. Source is an art card, so the intro is summarised from what we asked for.",
+  "notes": "Takes the plain Enchanted Evening render and adds the magic the still left out: a seductive necromancer's spell with the whole scene moving (candles, dragon, smoke) and a camera that follows.",
   "actions": [
     {
-      "motion": "data/animation/motions/magic/eyes-glow.json"
+      "motion": "data/animation/motions/magic/eyes-glow.json",
+      "with": [
+        {
+          "motion": "data/animation/motions/body/shift-cross-legs.json"
+        }
+      ]
     },
     {
       "motion": "data/animation/motions/magic/raise-hand-cast.json",
-      "transition": "flow"
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/magic/ambient-awaken.json"
+        }
+      ]
     },
     {
-      "beat": "The {{MAGIC}} smoke and radiant light swirl into a ring of glowing spectral moths circling {{her}} raised hand, then spread through the moonlit balcony as the candle flames flare to match.",
-      "seconds": 2,
-      "transition": "blend"
+      "motion": "data/animation/motions/magic/necromancer-sigil.json",
+      "seconds": 2.5,
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/companion-stirs.json"
+        },
+        {
+          "motion": "data/animation/motions/body/arch-and-sway.json"
+        }
+      ]
     },
     {
-      "motion": "data/animation/motions/magic/ambient-awaken.json",
+      "beat": "{{She}} closes {{her}} fingers around the sigil; the light sinks into {{her}} skin and the smoke settles around {{her}} like a cloak as the candles steady and the dragon glides away into the dark.",
       "seconds": 1,
       "transition": "settle"
     }

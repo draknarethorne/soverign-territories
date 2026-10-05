@@ -13,6 +13,8 @@ prompt:
 Timeline:
 {{TIMELINE}}
 
+World: {{WORLD}}
+
 {{CAMERA}}
 
 Audio: {{AUDIO}}

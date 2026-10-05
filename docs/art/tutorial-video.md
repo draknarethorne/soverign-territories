@@ -23,6 +23,7 @@ tool puts that prompt (and the size and length) into the `ST6_MiniMax_Video` tem
 | Motion | `data/animation/motions/<family>/*.json` | A reusable action (blow a kiss, eyes glow) |
 | Transition | `data/animation/transitions/*.json` | How one action hands off to the next |
 | Look | `data/animation/looks/*.json` | The film style line (photoreal, card art) |
+| Camera | `data/animation/cameras/*.json` | How the camera moves (follow pan, orbit, push in, rise, static) |
 | Template | `data/animation/_templates/video-minimax.txt` | The prompt layout the video model expects |
 
 ## The loop
@@ -51,7 +52,9 @@ Timeline:
 [2s-5s] Motion: Without pausing, she raises one hand, palm up ...
 [5s-7s] Motion: Blending seamlessly out of the previous action, the amethyst smoke and radiant light swirl into ...
 
-Static camera with a very slow push-in; the framing stays on her full figure from head to toe.
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally ...
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure in frame ...
 
 Audio: a low, rising shimmer ...
 
@@ -119,6 +122,11 @@ and adds the magic the still left out:
 - **`name`** is CamelCase and ends up in file names. The output is named after the scene it animates, automatically:
   `Drakness_Video_Scene_Staged_EnchantedEvening_Awakening`. (You can still set `output` by hand to override.)
 - **`animId`** equals the file name; the validator checks it.
+- **`camera`** is optional: a camera piece (`"data/animation/cameras/orbit-reveal.json"`) or your own sentence. The default is a slow
+  follow pan so the whole scene stays active; use `cameras/static.json` only when you want it locked off.
+- **`world`** is optional text for the "World:" line, which tells the model the whole scene moves, not just her. The default covers
+  flames, candles, smoke, water, foliage and creatures, and adds a moving companion when the art has one. For a plain studio
+  image set `world` yourself (the studio examples do).
 
 ### The actions list
 

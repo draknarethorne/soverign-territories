@@ -1,0 +1,12 @@
+{
+  "id": "motions/body/shift-cross-legs",
+  "kind": "motion",
+  "name": "Shift weight and cross the legs",
+  "seconds": 2,
+  "beat": "{{She}} shifts {{her}} weight onto one hip and slowly crosses one leg in front of the other, hips tilting, one hand trailing along whatever is beside {{her}}.",
+  "audio": "a soft rustle of fabric",
+  "tags": [
+    "body",
+    "legs"
+  ]
+}

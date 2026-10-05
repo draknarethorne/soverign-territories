@@ -1,0 +1,6 @@
+{
+  "id": "cameras/follow-pan",
+  "kind": "camera",
+  "name": "Follow pan",
+  "description": "The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts."
+}

@@ -353,11 +353,23 @@ ENGINES = {"qwen": "Qwen", "firered": "FireRed", "minimax": "MiniMax"}
 
 
 def engine_prompt(cfg, item, pos):
-    """The positive prompt an engine should get: FireRed adds a magic-effects instruction on the scenes listed in fxScenes."""
+    """The positive prompt an engine should get. FireRed can pull the Environment up beside the fidelity paragraph and tell the
+    model to replace the studio backdrop (envFirst), and adds a magic-effects instruction (fx) on the scenes listed in fxScenes."""
     fr = cfg.get("engines", {}).get("firered", {})
     m = re.search(r"_Scene_(.+)$", item["stem"])
-    if item.get("engine") == "firered" and fr.get("fx") and m and (fr.get("fxScenes") == "*" or m.group(1) in fr.get("fxScenes", [])):
-        return pos + "\n\n" + fr["fx"]
+    if item.get("engine") != "firered" or not m:
+        return pos
+    scene = m.group(1)
+    if scene in fr.get("envFirst", []):
+        env = re.search(r"^Environment: (.*)\n\n?", pos, re.M)
+        if env:
+            rest = pos[:env.start()] + pos[env.end():]
+            anchor = re.search(r"^Maintain strict fidelity.*\n\n", rest, re.M)
+            if anchor:
+                block = "Background: replace the plain studio backdrop of the incoming image completely with this environment: " + env.group(1) + "\n\n"
+                pos = rest[:anchor.end()] + block + rest[anchor.end():]
+    if fr.get("fx") and (fr.get("fxScenes") == "*" or scene in fr.get("fxScenes", [])):
+        pos = pos + "\n\n" + fr["fx"]
     return pos
 
 
@@ -610,6 +622,8 @@ def cmd_deploy(args):
             continue
         for name, (g, h, p) in selected(cfg, ws, args, repo).items():
             replace = args.overwrite or cfg["workspaces"][ws].get("legacy", False)
+            if name not in inst and getattr(args, "existing", False):
+                continue
             if name not in inst:
                 print(f"  new      {ws}/{name}")
                 if not args.dry_run:
@@ -924,6 +938,7 @@ def main(argv=None):
     s.add_argument("--templates", action="store_true", help="deploy the ST?_ stage templates instead of hero workflows")
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
     s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
+    s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
     s = sub.add_parser("fork")
     common(s)
     s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
