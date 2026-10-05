@@ -126,7 +126,7 @@ validator), never from a hand-typed folder:
 ```text
 data/art/_sets/<group>/<slug>/<stage>/<family>/<artId>.json
 prompts/<group>/<Hero>/<stage>/<family>/<Hero>_<Stage>_<Name>.txt
-ComfyUI output: <Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+ComfyUI output: <group>/<Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
 ```
 
 | Stage | Families | Notes |
@@ -138,6 +138,9 @@ ComfyUI output: <Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.pn
 | armor | `wardrobe` for library armor; a hero's own and celestial armor stay in the stage folder | |
 | showcase, motion, hair | flat or their own families | Motion and hair already carry families. |
 | video | mirrors the picture it animates (`signature`, `glamour`, `story`, `poses`) | |
+
+The output folder also starts with the set, so `Draknara/` and `Drakness/` sit under `drakn-sisters/` and a later set (bound heroes,
+dragons) never mixes with them.
 
 A folder only exists to group related cards; one-card groups stay flat. Workflow file names and ComfyUI workspaces stay flat; only the
 output folder (the SaveImage prefix) changes. `tools/workflows/organize_outputs.py` sorts images rendered earlier into the same

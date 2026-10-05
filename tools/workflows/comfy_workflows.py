@@ -33,7 +33,7 @@ filters:  --hero H  --group G  --stage S  --class studio|scene  --match TEXT   (
           deploy and promote need at least one filter, or --all.
 
 The four values that always agree for a prompt Hero_Stage_Name.txt:
-  positive prompt, negative prompt, SaveImage prefix <Hero>/<stage>/[family/]<Hero>_Qwen_<Stage>_<Name>, workflow file <Hero>_Qwen_<Stage>_<Name>.json
+  positive prompt, negative prompt, SaveImage prefix <set>/<Hero>/<stage>/[family/]<Hero>_Qwen_<Stage>_<Name>, workflow file <Hero>_Qwen_<Stage>_<Name>.json
 Nothing is ever deleted, and every overwritten workspace file is first copied to workflows/.sync/backup/.
 """
 import argparse
@@ -391,7 +391,7 @@ def prompt_index(cfg, engine="qwen"):
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
         folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "stem": stem, "name": name,
-                    "prefix": "/".join([hero, folder] + family + [name])})
+                    "prefix": "/".join([group, hero, folder] + family + [name])})
     return out
 
 

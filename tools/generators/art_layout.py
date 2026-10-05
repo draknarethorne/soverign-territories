@@ -4,7 +4,7 @@ Every card is filed under a FAMILY below its stage, and the prompt (hence the Co
 
   data/art/_sets/<group>/<slug>/<stage>/<family...>/<artId>.json
   prompts/<group>/<Hero>/<stage folder>/<family...>/<Hero>_<Stage>_<Name>.txt
-  ComfyUI output: <Hero>/<stage folder>/<family...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+  ComfyUI output: <group>/<Hero>/<stage folder>/<family...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
 
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
 Hair and motion cards already carry their own family folders and are left as they are.
