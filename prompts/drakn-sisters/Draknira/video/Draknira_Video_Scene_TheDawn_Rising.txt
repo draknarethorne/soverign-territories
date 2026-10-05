@@ -1,0 +1,29 @@
+=== Draknira Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknira_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Draknira Thorne, wearing an ornate floor-length dawn gown of Glacial Cyan and frost-white silk with a fitted bodice embroidered in, in a frozen polar sea at dawn: a vast ice shelf cracking apart in every direction, towering blue-white ice cliffs.
+
+Timeline:
+[0s-2.5s] Motion: The ice shelf groans and cracks outward in every direction as shards lift and fall, a whale breaching in the open water between the floes.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises slowly and deliberately through the broken ice on a pillar of frozen water, arms lowered, palms turned down as if holding the ice steady.
+[5.5s-8s] Motion: As the previous motion settles, frost spreads across the water around her and diamond dust falls as her eyes ignite with icy white-cyan light; she lifts her chin and meets the camera, calm and commanding.
+
+World: The polar sea is alive: ice shards fall, snow and diamond dust drift, a whale breaches, seals slide off the floes, snowy owls circle and arctic foxes bound across the ice.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: deep ice cracking, a low wind and a cold crystalline chime; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

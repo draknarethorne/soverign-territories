@@ -1,0 +1,40 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Battle (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Wearing an enchanter's tide-mail: a corselet of overlapping pearl-and-polished platinum scales like fish mail, a flowing split skirt of deep-teal sea-silk, shell-edged vambraces and a cape of sheer wave-patterned gauze.
+
+Headwear: a pearl-and-polished platinum coronet.
+
+Jewelry: a pearl gorget on a polished platinum chain, shell-edged bracers.
+Legs & feet: sea-silk wrapped sandals with polished platinum greaves.
+
+She stands with her tidepearl staff held high in one hand and her other arm sweeping out to command the water, cape and hair streaming, a calm, fierce gaze straight to the camera; full figure visible.
+
+Holding a slender polished platinum staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of platinum, a soft aqua glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft.
+
+A towering wave rears up behind her and curls over the harbour on her command, spray and glowing aqua water streaming around her, a whirlpool turning in the bay.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - teal-toned eyeshadow, a light natural soft coral blush, subtle coral-pink-tinted satin lips, groomed dark chocolate-brown brows, dark brown-black lashes, fingernails and toenails natural or Light Blue; present, never heavy.
+
+Environment: a storm-lashed harbour with wrecked ships, towering waves breaking over stone quays, a whirlpool in the bay and lightning on the horizon.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -1,0 +1,40 @@
+=== Draknoxa Thorne · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a peekaboo underlayer of fine deep acid-lime strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
+Wearing an ornate floor-length dawn gown of Toxic Orchid Magenta and acid-lime silk with a fitted bodice embroidered with tarnished brass thorns and venom-drop motifs, a high collar of scalloped brass plates, long sleeves of sheer green gauze, and a skirt of ruffled panels and trailing ribbons that drip with glowing venom-green; sweetheart neckline.
+
+Headwear: a tarnished brass crown of thorned vines and small glass vials set with pink tourmaline stones.
+
+Jewelry: a tarnished brass vial-and-thorn collar with pink tourmaline stones, long dropper earrings, tarnished brass cuffs.
+Legs & feet: bare feet, fine tarnished brass anklets.
+
+She stands with a slow, knowing smile before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.
+
+A thread of toxic lime light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, luminous green spores drifting around both of them.
+
+Eyes: the natural acid lime-emerald irises kept intact, with a faint toxic lime glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, groomed dark burgundy-black brows, black lashes, fingernails and toenails natural or Light Magenta; present, never heavy.
+
+Companion: her aligned Elder Dragon, Venomis, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her.
+
+Environment: a hollow in a giant fungus-covered tree over glowing green water, hanging luminous spore pods and curtains of moss.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

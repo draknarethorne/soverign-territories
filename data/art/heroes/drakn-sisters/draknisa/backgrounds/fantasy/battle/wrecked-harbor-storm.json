@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/battle/wrecked-harbor-storm",
+  "kind": "background",
+  "name": "Wrecked Harbor",
+  "description": "a storm-lashed harbour with wrecked ships, towering waves breaking over stone quays, a whirlpool in the bay and lightning on the horizon",
+  "mood": "stormy, dramatic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

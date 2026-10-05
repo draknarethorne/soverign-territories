@@ -1,0 +1,16 @@
+{
+  "id": "themes/danish/wardrobe/headwear/crowns/frost-crystal-crown",
+  "kind": "headwear",
+  "name": "Frost crystal crown",
+  "description": "a tall crown of {{METAL}} filigree set with clear ice-crystal spires and small {{GEM}} stones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "danish",
+    "winter",
+    "crown"
+  ]
+}

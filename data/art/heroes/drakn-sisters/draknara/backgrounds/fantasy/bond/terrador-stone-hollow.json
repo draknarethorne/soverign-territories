@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/bond/terrador-stone-hollow",
+  "kind": "background",
+  "name": "Terrador's Stone Hollow",
+  "description": "a vast cave in a sandstone cliff with a bed of warm sand and ancient bones, turquoise veins in the walls and dust hanging in shafts of light",
+  "mood": "ancient, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

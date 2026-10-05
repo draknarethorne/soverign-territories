@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a cleric's radiant battle plate: a polished white-gold cuirass with a sunburst across the chest, ivory silk skirt panels edged in {{ACCENT_SOFT}}, winged pauldrons and a long white-gold tabard",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

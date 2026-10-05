@@ -1,0 +1,37 @@
+{
+  "animId": "draknora-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknora/scene/draknora-scene-the-dawn.json",
+    "image": "Draknora_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/crane-rise.json",
+  "audio": "a thunderous eruption, roaring flame and a rising brass-like swell; no speech",
+  "world": "The caldera is alive: lava arcs and falls, embers and ash swirl, fire salamanders scurry across the rocks, ash birds wheel overhead and the sky flickers orange.",
+  "actions": [
+    {
+      "beat": "The lava lake bulges and cracks, the volcano rumbling as fountains of fire arc into the sky; fire salamanders scatter across the rocks.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} bursts upward out of the lava on a surging column of molten rock, arms flung wide, back arched, hair and ribbons streaming straight up behind {{her}}.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "The lava streams off {{her}} in glowing curtains and falls back into the lake as {{she}} lands lightly on the rising rock, {{her}} eyes igniting with {{MAGIC}} fire and a fierce, exhilarated look to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

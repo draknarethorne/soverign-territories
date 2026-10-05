@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/battle/gale-cliff-bridge",
+  "kind": "background",
+  "name": "Gale Cliff Bridge",
+  "description": "a cliff-edge rope-bridge fortress in a howling gale, banners torn horizontal, leaves and debris streaming past and airships adrift in the clouds",
+  "mood": "wild, windy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

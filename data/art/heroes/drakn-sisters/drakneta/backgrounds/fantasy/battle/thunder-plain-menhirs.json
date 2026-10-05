@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/battle/thunder-plain-menhirs",
+  "kind": "background",
+  "name": "Thunder Plain",
+  "description": "an open stormy plain beneath towering black thunderheads, fork lightning striking a ring of standing stones and scattered camp wreckage",
+  "mood": "charged, ominous",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/battle/risen-legion-battlefield",
+  "kind": "background",
+  "name": "Risen Legion Battlefield",
+  "description": "a night battlefield of toppled siege towers and broken banners, rows of skeletal soldiers rising from the churned mud under a violet storm sky, ghostly fire drifting between the dead",
+  "mood": "grim, epic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

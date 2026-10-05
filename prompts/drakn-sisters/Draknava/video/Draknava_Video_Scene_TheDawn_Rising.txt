@@ -1,0 +1,29 @@
+=== Draknava Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknava_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Draknava Thorne, wearing an ornate floor-length dawn gown of Windswept Jade and gossamer-silver silk with a fitted bodice embroidered, in a vast green gorge between floating islands at dawn: waterfalls pouring off the edges into drifting cloud.
+
+Timeline:
+[0s-2.5s] Motion: A great updraft whirls up through the gorge, tearing leaves and feathers into a spiral, eagles and swallows streaming through the air.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises through the centre of the updraft, turning gently in the spiral, arms out and lifted as if carried on the wind.
+[5.5s-8s] Motion: As the previous motion settles, silk ribbons and leaves swirl around her as her eyes glow with pale silver-jade light and she looks to the camera, joyful and free, the clouds swept back.
+
+World: The gorge is alive: a great updraft spirals, leaves, feathers and petals streaming upward, eagles and swallows wheel through the air and clouds sweep past the cliff walls.
+
+The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame.
+
+Audio: rushing wind and a soaring flute-like melody; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

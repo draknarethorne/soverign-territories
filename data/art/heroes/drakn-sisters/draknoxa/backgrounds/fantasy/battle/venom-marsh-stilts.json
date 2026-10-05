@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/battle/venom-marsh-stilts",
+  "kind": "background",
+  "name": "Venom Marsh",
+  "description": "a poisoned marsh village on stilts under green fog, burst vats leaking glowing venom and collapsed palisades",
+  "mood": "toxic, eerie",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

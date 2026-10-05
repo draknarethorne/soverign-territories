@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/backgrounds/fantasy/bond/aquaria-tide-cavern",
+  "kind": "background",
+  "name": "Aquaria's Tide Cavern",
+  "description": "a vast sea cave open to the tide, glowing coral shelves, shallow turquoise pools and shafts of light falling through the water",
+  "mood": "luminous, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

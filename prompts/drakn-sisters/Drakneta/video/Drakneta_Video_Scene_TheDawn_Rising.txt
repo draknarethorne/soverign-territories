@@ -1,0 +1,29 @@
+=== Drakneta Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakneta_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakneta Thorne, wearing an ornate floor-length dawn gown of Electric Gold and arc-white silk with a fitted bodice embroidered with, in a high windswept plateau under towering thunderheads at dawn: a smoking crater of fused glassy rock where lightning has struck.
+
+Timeline:
+[0s-2.5s] Motion: Black thunderheads boil above the plateau and forks of lightning flicker across the sky, great eagles riding the storm.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, a bolt strikes the crater and she is hurled upright on the flash of lightning, one arm flung high, hair and ribbons blasted upward.
+[5.5s-8s] Motion: As the previous motion settles, lightning arcs away from her across the plain as shattered rock falls back, static crackling over her skin and her eyes blazing with white-hot electric light as she turns a thrilled look to the camera.
+
+World: The plateau is alive: black thunderheads boil, forks of lightning flicker, rain and static drift sideways, great eagles ride the storm and sparks jump between the standing stones.
+
+The camera rises slowly from below her eye line while panning gently from left to right, following the action upward; smooth, no cuts, her full figure stays in frame.
+
+Audio: a crack of thunder, crackling electricity and a rising orchestral hit; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

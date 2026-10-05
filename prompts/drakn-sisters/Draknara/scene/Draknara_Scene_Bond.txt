@@ -1,0 +1,40 @@
+=== Draknara Thorne · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of Deep Burnt Sienna woven cloth and soft hide with turquoise beadwork in bands and spirals, a fitted bodice with fringed antique bronze edging, a shoulder mantle of feathers and painted hide, and a skirt of layered fringe and woven panels that swings wide around her; sweetheart neckline.
+
+Headwear: a feather crown with a antique bronze headband set with turquoise beads.
+
+Jewelry: layered turquoise bead necklaces with bone and antique bronze talismans, heavy antique bronze cuffs, feather earrings.
+Legs & feet: bare feet, fine antique bronze anklets.
+
+She stands with her feet planted in the warm sand before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.
+
+A thread of warm turquoise light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, dust and small stones lifting gently around both of them.
+
+Eyes: the natural rich malachite-hazel irises kept intact, with a faint warm turquoise glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - warm bronze-taupe-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, groomed warm bronze-brown brows, dark brown lashes, fingernails and toenails natural or Light Terracotta; present, never heavy.
+
+Companion: her aligned Elder Dragon, Terrador, an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her.
+
+Environment: a vast cave in a sandstone cliff with a bed of warm sand and ancient bones, turquoise veins in the walls and dust hanging in shafts of light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

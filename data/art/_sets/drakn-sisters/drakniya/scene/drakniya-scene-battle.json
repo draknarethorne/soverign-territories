@@ -1,0 +1,22 @@
+{
+  "artId": "drakniya-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Battle",
+  "components": {
+    "pose": "She plants her feet and drives her living-wood staff into the ground with both hands, chin lifted, a determined, fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakniya/clothing/battle-gear.json",
+    "headwear": "a crown of antlers woven with vines and small flowers",
+    "jewelry": "a {{METAL}} leaf gorget with {{GEM}} dewdrops, vine-wrapped bracers",
+    "legs_feet": "leather greaves wrapped in living moss",
+    "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/living-wood-staff.json",
+    "effects": "Huge roots and thorned vines burst up from the earth around her and tear through the barricades, petals and leaves whirling, {{MAGIC}} light running through the vines.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/battle/overgrown-bridge-barricade.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/scene/Drakniya_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BATTLE: the sister in class-aligned war gear commanding her element on a battlefield of her homeland. Reuses her signature weapon."
+}

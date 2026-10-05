@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "an alchemist's venom-leathers: a fitted corset of {{PRIMARY}} dragonhide with brass buckles and a bandolier of glowing vials, a short ruffled skirt over armoured thigh straps and a hooded half-cape with a high collar",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

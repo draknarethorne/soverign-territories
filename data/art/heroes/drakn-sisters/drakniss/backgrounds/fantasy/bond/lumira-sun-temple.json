@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/bond/lumira-sun-temple",
+  "kind": "background",
+  "name": "Lumira's Sun Temple",
+  "description": "an open golden colonnade on a cloud-bound peak around a great bowl of light, drifting petals of light and a sea of clouds below",
+  "mood": "radiant, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

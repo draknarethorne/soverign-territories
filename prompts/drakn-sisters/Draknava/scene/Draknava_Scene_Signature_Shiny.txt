@@ -1,0 +1,40 @@
+=== Draknava Thorne · Scene (Outfit + Companion): Signature Shiny (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Iridescent Windswept Jade over a matte underlayer, with delicate iridescent silver-jade glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Jewelry: polished silver with jade-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Iridescent Windswept Jade high heels with glowing iridescent silver-jade straps.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a playful, knowing smile, eyes bright with mischief. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a slender silver staff in one hand, topped with an open lyre-shaped crest strung with glowing iridescent silver-jade strings, small silver wind-chimes and long ribbons of Iridescent Windswept Jade silk streaming from it in the breeze, a faint iridescent silver-jade shimmer in the air around the strings.
+
+A playful swirl of wind catches loose leaves and her hair, iridescent silver-jade light glinting within the breeze. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.
+
+Eyes: irises softly aglow with iridescent silver-jade light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle iridescent silver-jade catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, groomed soft ash-grey brows, soft grey-brown lashes, fingernails and toenails natural or Light Jade; present, never heavy.
+
+Companion: her aligned Elder Dragon, Zephyros, flying through the clouds behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk.
+
+Environment: an open-air stone amphitheater on a high-fantasy cliff top above a sea of clouds, curved tiers and a round stage, long ribbons and banners streaming in a strong wind, windchimes and carved wind-sigils on the pillars, bright open sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

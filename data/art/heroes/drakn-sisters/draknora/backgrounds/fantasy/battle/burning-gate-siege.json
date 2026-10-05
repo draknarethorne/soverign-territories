@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/battle/burning-gate-siege",
+  "kind": "background",
+  "name": "Burning Gate Siege",
+  "description": "a besieged citadel gate at dusk, collapsed walls and rivers of lava running through the courtyard, siege engines aflame, a red smoke-filled sky and drifting embers",
+  "mood": "fiery, desperate",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

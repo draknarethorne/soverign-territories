@@ -1,0 +1,15 @@
+{
+  "id": "themes/danish",
+  "name": "Danish",
+  "type": "culture",
+  "description": "A fantasy-adapted Danish winter pack: Snow Queen fairy-tale gowns, frost crowns, Baltic amber and silver filigree, gabled harbour towns and white palaces of ice. Inspired by, not a literal costume reference.",
+  "kind": "theme",
+  "realm": "fantasy",
+  "tags": [
+    "danish",
+    "snow-queen",
+    "winter",
+    "amber",
+    "gabled"
+  ]
+}

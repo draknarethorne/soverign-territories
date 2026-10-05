@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknara/backgrounds/fantasy/battle/canyon-chasm-fray",
+  "kind": "background",
+  "name": "Canyon Chasm",
+  "description": "a red-rock canyon mouth cut by a split chasm, boulders hurled through the dust and a dry riverbed strewn with shields",
+  "mood": "raw, dusty",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

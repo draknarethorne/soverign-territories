@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknira/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a wizard's frost-plate battle gown: a fitted cuirass of white-silver plate etched with snowflake runes, a long split skirt of {{PRIMARY}} silk lined with white fur, crystal-edged pauldrons and a high fur-lined collar",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

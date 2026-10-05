@@ -1,0 +1,37 @@
+{
+  "animId": "drakneta-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakneta/scene/drakneta-scene-the-dawn.json",
+    "image": "Drakneta_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/crane-rise.json",
+  "audio": "a crack of thunder, crackling electricity and a rising orchestral hit; no speech",
+  "world": "The plateau is alive: black thunderheads boil, forks of lightning flicker, rain and static drift sideways, great eagles ride the storm and sparks jump between the standing stones.",
+  "actions": [
+    {
+      "beat": "Black thunderheads boil above the plateau and forks of lightning flicker across the sky, great eagles riding the storm.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "A bolt strikes the crater and {{she}} is hurled upright on the flash of lightning, one arm flung high, hair and ribbons blasted upward.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Lightning arcs away from {{her}} across the plain as shattered rock falls back, static crackling over {{her}} skin and {{her}} eyes blazing with {{MAGIC}} light as {{she}} turns a thrilled look to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

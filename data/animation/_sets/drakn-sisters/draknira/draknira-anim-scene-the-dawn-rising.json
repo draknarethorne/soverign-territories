@@ -1,0 +1,37 @@
+{
+  "animId": "draknira-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknira/scene/draknira-scene-the-dawn.json",
+    "image": "Draknira_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/follow-pan.json",
+  "audio": "deep ice cracking, a low wind and a cold crystalline chime; no speech",
+  "world": "The polar sea is alive: ice shards fall, snow and diamond dust drift, a whale breaches, seals slide off the floes, snowy owls circle and arctic foxes bound across the ice.",
+  "actions": [
+    {
+      "beat": "The ice shelf groans and cracks outward in every direction as shards lift and fall, a whale breaching in the open water between the floes.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} rises slowly and deliberately through the broken ice on a pillar of frozen water, arms lowered, palms turned down as if holding the ice steady.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Frost spreads across the water around {{her}} and diamond dust falls as {{her}} eyes ignite with {{MAGIC}} light; {{she}} lifts {{her}} chin and meets the camera, calm and commanding.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

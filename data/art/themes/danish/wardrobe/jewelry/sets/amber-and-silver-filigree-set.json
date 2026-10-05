@@ -1,0 +1,16 @@
+{
+  "id": "themes/danish/wardrobe/jewelry/sets/amber-and-silver-filigree-set",
+  "kind": "jewelry",
+  "name": "Amber and silver filigree set",
+  "description": "a broad {{METAL}} filigree collar necklace set with warm Baltic amber cabochons, matching drop earrings and a {{METAL}} brooch at the throat",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "danish",
+    "amber",
+    "jewelry"
+  ]
+}

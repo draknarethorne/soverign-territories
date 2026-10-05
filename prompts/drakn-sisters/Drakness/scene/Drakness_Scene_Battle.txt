@@ -1,0 +1,40 @@
+=== Drakness Thorne · Scene (Outfit + Effects): Battle (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+
+Wearing a necromancer's war-harness: a fitted cuirass of blackened steel and polished bone ribs etched with amethyst sigils, a layered skirt of torn dark silk split high at the sides, bone-spiked pauldrons and a long tattered cape of shadow-silk edged in polished silver.
+
+Headwear: a crown of black thorns and polished bone points.
+
+Jewelry: a bone-and-polished silver gorget set with a amethyst stone, spiked bracers.
+Legs & feet: black greaves with bone-plated sabatons.
+
+She strides forward mid-cast with her reaper scythe in one hand and the other arm thrust out palm-first to command the dead, her cape streaming behind her, chin lifted, a fierce, commanding gaze straight to the camera; full figure visible.
+
+Holding an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black shaft, polished silver blade with gothic patterns, in one hand.
+
+Rows of skeletal soldiers claw out of the churned mud behind her wrapped in amethyst soul-fire, threads of necrotic energy spiralling from her palm, ghostly flames drifting across the battlefield.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, groomed dark espresso-black brows, black lashes, fingernails and toenails natural or Light Violet; present, never heavy.
+
+Environment: a night battlefield of toppled siege towers and broken banners, rows of skeletal soldiers rising from the churned mud under a violet storm sky, ghostly fire drifting between the dead.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

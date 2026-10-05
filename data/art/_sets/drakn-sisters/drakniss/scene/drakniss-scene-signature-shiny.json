@@ -1,0 +1,33 @@
+{
+  "artId": "drakniss-scene-signature-shiny",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Signature Shiny",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a serene, warm smile, eyes soft with compassion.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",
+    "effects": "Soft rays of {{MAGIC}} radiant light filter down around her, faint motes of golden light drifting like dust in sunlight. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
+    "companion": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold",
+    "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/signature/sunburst-temple-altar.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/scene/Drakniss_Scene_Signature_Shiny.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "SHINY variant of the Signature: same scene and pose in a prismatic, gilded colourway with a holographic glitter sheen. Convention: <slug>-scene-signature-shiny.",
+  "overrides": {
+    "palette": {
+      "primaryColor": "Prismatic Rose Gold",
+      "metal": "radiant white gold",
+      "accentColors": [
+        "Radiant Gold",
+        "Pearl White"
+      ],
+      "magicColor": "prismatic golden-white"
+    }
+  }
+}

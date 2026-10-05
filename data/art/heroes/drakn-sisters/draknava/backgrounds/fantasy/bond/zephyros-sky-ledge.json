@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknava/backgrounds/fantasy/bond/zephyros-sky-ledge",
+  "kind": "background",
+  "name": "Zephyros's Sky Ledge",
+  "description": "a windswept rim of stone on a sky-island above endless clouds, with nests of silk-like cloud fibres and ribbons of wind",
+  "mood": "airy, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

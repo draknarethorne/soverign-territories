@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakness/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a necromancer's war-harness: a fitted cuirass of blackened steel and polished bone ribs etched with {{ACCENT_SOFT}} sigils, a layered skirt of torn dark silk split high at the sides, bone-spiked pauldrons and a long tattered cape of shadow-silk edged in {{METAL}}",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

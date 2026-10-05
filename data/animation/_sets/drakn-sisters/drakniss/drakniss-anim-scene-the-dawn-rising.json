@@ -1,0 +1,37 @@
+{
+  "animId": "drakniss-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/drakniss-scene-the-dawn.json",
+    "image": "Drakniss_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/push-in-follow.json",
+  "audio": "a warm rising choir and soft chimes; no speech",
+  "world": "The summit is alive: clouds drift and part below, golden motes and white feathers fall, white doves wheel around the pillars and a snow-white deer waits at the edge of the light.",
+  "actions": [
+    {
+      "beat": "The clouds below part and a column of golden light rises through them, white doves lifting from the summit pillars.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} floats gently upward out of the column of light, arms lowering slightly, palms open and turned up.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Golden motes and drifting white feathers fall softly around {{her}} as {{her}} eyes glow with {{MAGIC}} light and {{she}} looks to the camera, peaceful and radiant; the snow-white deer watches from the edge of the summit.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

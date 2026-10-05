@@ -1,0 +1,37 @@
+{
+  "animId": "draknava-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknava/scene/draknava-scene-the-dawn.json",
+    "image": "Draknava_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/orbit-reveal.json",
+  "audio": "rushing wind and a soaring flute-like melody; no speech",
+  "world": "The gorge is alive: a great updraft spirals, leaves, feathers and petals streaming upward, eagles and swallows wheel through the air and clouds sweep past the cliff walls.",
+  "actions": [
+    {
+      "beat": "A great updraft whirls up through the gorge, tearing leaves and feathers into a spiral, eagles and swallows streaming through the air.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} rises through the centre of the updraft, turning gently in the spiral, arms out and lifted as if carried on the wind.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Silk ribbons and leaves swirl around {{her}} as {{her}} eyes glow with {{MAGIC}} light and {{she}} looks to the camera, joyful and free, the clouds swept back.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

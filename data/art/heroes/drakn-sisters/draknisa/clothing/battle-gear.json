@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "an enchanter's tide-mail: a corselet of overlapping pearl-and-{{METAL}} scales like fish mail, a flowing split skirt of deep-teal sea-silk, shell-edged vambraces and a cape of sheer wave-patterned gauze",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

@@ -1,0 +1,40 @@
+=== Drakniss Thorne · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of ivory and Radiant Rose Gold silk with a fitted bodice embroidered with radiant rose gold sunbursts, a high halo-shaped collar of radiant rose gold rays, long sleeves of sheer gold-dusted gauze, and a skirt of pleated panels that fan out like rays of light behind her; sweetheart neckline.
+
+Headwear: a radiant crown of radiant rose gold sun-rays set with morganite stones.
+
+Jewelry: a radiant rose gold sunburst collar with morganite stones, long ray earrings, radiant rose gold armlets.
+Legs & feet: bare feet, fine radiant rose gold anklets.
+
+She stands with her face tilted up toward the light before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.
+
+A thread of warm golden-white light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, golden light pooling and sparks of light drifting around both of them.
+
+Eyes: the natural radiant topaz-gold irises kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+
+Companion: her aligned Elder Dragon, Lumira, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her.
+
+Environment: an open golden colonnade on a cloud-bound peak around a great bowl of light, drifting petals of light and a sea of clouds below.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

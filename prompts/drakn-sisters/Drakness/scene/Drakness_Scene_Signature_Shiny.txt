@@ -1,0 +1,42 @@
+=== Drakness Thorne · Scene (Outfit + Companion): Signature Shiny (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+
+Wearing a two-piece skeletal armor bikini - weathered natural bone cups, vertebrae halter strap, high-cut skeletal hip bones, vibrant amethyst centerpiece; bare stomach and midriff, revealing high-cut with bold décolletage, legs exposed.
+
+Jewelry: silver chain necklace with a small polished bone skull pendant; matching skull earrings and rings; matching small bellybutton ring.
+Arms: matching bone bracers; matching pauldrons with dragon-claw spikes.
+Back: a simple black leather cape with a bone-coloured gothic pattern hanging behind her.
+Legs & feet: slender skeletal bone-spine greaves, delicate skeletal plate, midnight-black silk stockings, medium-small skeletal bone-coloured runes, stiletto sabatons.
+
+She stands mid-cast, commanding and composed, her gaze toward the camera, weight shifted, chin lifted, her free hand raised and open as she channels.
+
+Holding an ornate reaper scythe with bone accents and a small bone skull emblem at the top, black shaft, polished silver blade with gothic patterns, in one hand.
+
+Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.
+
+Eyes: irises softly aglow with prismatic amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle prismatic amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - amethyst-toned eyeshadow, a light natural rosy-plum blush, subtle plum-violet-tinted satin lips, groomed dark espresso-black brows, black lashes, fingernails and toenails natural or Light Violet; present, never heavy.
+
+Companion: her aligned Elder Dragon, Umbrath, looming in the shadows of the necropolis behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light.
+
+Environment: a vast high-fantasy necropolis court under a violet-black sky, rows of cracked tombs and leaning gravestones, skeletal hands and half-risen skeletons clawing out of the earth in the mist, rib-cage arches of giant bone, drifting black smoke and a soft amethyst haze.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/bond/glaciora-ice-cathedral",
+  "kind": "background",
+  "name": "Glaciora's Ice Cathedral",
+  "description": "an ice cathedral cave with pillars of blue ice, a frozen waterfall and an aurora glowing through a crystal ceiling",
+  "mood": "still, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

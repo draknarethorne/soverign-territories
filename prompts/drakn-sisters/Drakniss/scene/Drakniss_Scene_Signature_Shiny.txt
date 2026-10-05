@@ -1,0 +1,40 @@
+=== Drakniss Thorne · Scene (Outfit + Companion): Signature Shiny (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Prismatic Rose Gold over a matte underlayer, with delicate prismatic golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Jewelry: radiant white gold with morganite-jewelled bracelets, necklace, and belly-button ring.
+Legs & feet: bright Prismatic Rose Gold high heels with glowing prismatic golden-white straps.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a serene, warm smile, eyes soft with compassion. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a tall rose-gold-and-ivory processional staff in one hand, topped with a radiant sunburst halo of golden rays around a small glowing ivory orb, a soft prismatic golden-white light haloing the top, a short ribbon of Prismatic Rose Gold silk tied below the halo.
+
+Soft rays of prismatic golden-white radiant light filter down around her, faint motes of golden light drifting like dust in sunlight. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.
+
+Eyes: irises softly aglow with prismatic golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle prismatic golden-white catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
+
+Companion: her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold.
+
+Environment: the sanctum of a high-fantasy sun temple, a great sunburst rose window blazing behind a white-and-gold altar, tall stained-glass windows, gleaming marble statues and gold-inlaid floors, soft rays of light and drifting incense.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

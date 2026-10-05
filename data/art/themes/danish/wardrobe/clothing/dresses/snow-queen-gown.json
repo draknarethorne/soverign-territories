@@ -1,0 +1,15 @@
+{
+  "id": "themes/danish/wardrobe/clothing/dresses/snow-queen-gown",
+  "kind": "wearing",
+  "name": "Snow Queen gown",
+  "description": "a floor-length winter gown of pale ice-blue and white wool-silk with a fitted bodice laced in {{METAL}} thread and embroidered with {{PRIMARY}} snowflake and thistle motifs, a high white-fur collar, long fitted sleeves and a full skirt of layered white silk edged with white fur, in the style of a Danish fairy-tale winter queen",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "danish",
+    "winter",
+    "gown"
+  ]
+}

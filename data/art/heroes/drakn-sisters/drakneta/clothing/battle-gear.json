@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a summoner's storm-plate: a fitted cuirass of {{METAL}} with copper-coil inlay and lightning-fork engraving, a short pleated skirt of arc-white silk, spiked winged pauldrons and a cape edged in gold wire",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

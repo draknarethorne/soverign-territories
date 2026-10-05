@@ -1,0 +1,29 @@
+=== Drakness Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakness_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakness Thorne, wearing an ornate floor-length dawn gown of layered Midnight Violet silk and sheer smoke-grey gauze, in the Sundering Scar at first light: a vast circular crater of fused black glass cracked open like a shattered mirror.
+
+Timeline:
+[0s-2.5s] Motion: The glowing seams of the black glass crater pulse and the amethyst sigil burns brighter; ravens and bats lift in a wheeling cloud as ash drifts upward.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises slowly and weightlessly out of the cracked glass, arms lowering, palms opening, shadows unfurling from her shoulders like folded wings.
+[5.5s-8s] Motion: As the previous motion settles, her eyes open and ignite with amethyst light; she turns her gaze to the camera, calm, newborn and commanding, as the ash and glass shards drift back down.
+
+World: The Sundering Scar is alive: ash and glass shards drift, glowing cracks pulse, spectral wisps rise, ravens and bats wheel overhead and the pale dawn light shifts across the crater.
+
+The camera rises slowly from below her eye line while panning gently from left to right, following the action upward; smooth, no cuts, her full figure stays in frame.
+
+Audio: a deep rumble and a low choral swell, glass chiming softly; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

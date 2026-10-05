@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/battle/overgrown-bridge-barricade",
+  "kind": "background",
+  "name": "Overgrown Bridge Barricade",
+  "description": "a ruined stone bridge in an ancient forest where colossal roots and thorned vines crash through splintered barricades, broken arrows standing in the earth and shafts of light cutting through smoke",
+  "mood": "fierce, verdant",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

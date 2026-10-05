@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknora/backgrounds/fantasy/bond/pyraxis-lava-aerie",
+  "kind": "background",
+  "name": "Pyraxis's Lava Aerie",
+  "description": "a ledge above a lava sea inside a vast crater, a nest of cooled gold and bronze and columns of rising heat",
+  "mood": "fiery, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

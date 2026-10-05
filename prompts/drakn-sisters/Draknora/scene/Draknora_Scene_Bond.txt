@@ -1,0 +1,40 @@
+=== Draknora Thorne · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of Flame Red silk and gold-orange gauze, a fitted bodice embroidered with gold flames and phoenix feathers, a high swept collar of burnished copper flame-shaped plates, long layered sleeves ending in flame-cut points, and a skirt split into long burning ribbons that whip upward behind her; sweetheart neckline.
+
+Headwear: a crown of burnished copper flame-shaped spires set with ruby stones.
+
+Jewelry: burnished copper flame-leaf collar necklace with a ruby stone, long ember drop earrings, wide burnished copper armlets.
+Legs & feet: bare feet, fine burnished copper anklets.
+
+She stands with a bold, delighted smile before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.
+
+A thread of fiery orange-gold light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, heat shimmering and embers drifting up around both of them.
+
+Eyes: the natural molten amber irises kept intact, with a faint fiery orange-gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - gold-toned eyeshadow, a light natural warm peach blush, subtle ember-coral-tinted satin lips, groomed warm auburn-brown brows, dark brown lashes, fingernails and toenails natural or Light Red; present, never heavy.
+
+Companion: her aligned Elder Dragon, Pyraxis, an Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her.
+
+Environment: a ledge above a lava sea inside a vast crater, a nest of cooled gold and bronze and columns of rising heat.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

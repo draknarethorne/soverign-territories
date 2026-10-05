@@ -1,0 +1,37 @@
+{
+  "animId": "draknisa-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknisa/scene/draknisa-scene-the-dawn.json",
+    "image": "Draknisa_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/crane-rise.json",
+  "audio": "a rush of water, a bright rising harp-like swell and gulls; no speech",
+  "world": "The reef sea is alive: water cascades and ripples, spray hangs in the sunrise light, dolphins leap, manta rays and turtles glide, fish flash in schools and seabirds wheel overhead.",
+  "actions": [
+    {
+      "beat": "The sea swells and the surface lifts into a towering column of water, dolphins leaping alongside and manta rays gliding beneath.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} shoots up on top of the column of water, arms swept wide and up, head thrown back, hair and gown streaming.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "The water is released and cascades back in glittering sheets while {{she}} stands exultant on the crest, {{her}} eyes bright with {{MAGIC}} light, looking to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

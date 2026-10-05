@@ -1,0 +1,29 @@
+=== Draknoxa Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknoxa_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Draknoxa Thorne, wearing an ornate floor-length dawn gown of Toxic Orchid Magenta and acid-lime silk with a fitted bodice embroidered, in a vast bioluminescent mire at dawn: black glowing water and mangrove roots, bubbling bogs of acid-green and magenta.
+
+Timeline:
+[0s-2.5s] Motion: The bog bubbles and releases luminous green fumes, giant fungus lamps pulsing, frogs and moths lifting out of the mist.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises with unhurried, almost lazy grace out of the bubbling mire, one hand lifted with fingers spread, the other trailing.
+[5.5s-8s] Motion: As the previous motion settles, glowing venom drips from her gown and falls slowly back into the bog as her eyes ignite with toxic lime light and she meets the camera with a slow, knowing smile.
+
+World: The bog is alive: luminous green fumes drift, bubbles burst, giant fungus lamps pulse, frogs and moths lift out of the mist and glowing spores float through the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: a low bubbling swamp, a slow sinister swell and croaking frogs; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

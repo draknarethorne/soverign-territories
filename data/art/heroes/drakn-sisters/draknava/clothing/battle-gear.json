@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknava/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a bard's windrunner leathers: a fitted jade leather corset with silver feather-scale pauldrons, a skirt of layered silk scarves that stream in the wind, light greaves and a slim lyre strapped across her back",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

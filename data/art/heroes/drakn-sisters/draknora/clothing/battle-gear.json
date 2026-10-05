@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknora/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a flame-forged magician's battle dress: a fitted breastplate of burnished copper and red-gold scales with flame-cut edges, a short layered skirt of {{PRIMARY}} silk over armoured thigh guards, bracers etched with fire runes and a scorched cape",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "animId": "drakness-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/drakness-scene-the-dawn.json",
+    "image": "Drakness_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/crane-rise.json",
+  "audio": "a deep rumble and a low choral swell, glass chiming softly; no speech",
+  "world": "The Sundering Scar is alive: ash and glass shards drift, glowing cracks pulse, spectral wisps rise, ravens and bats wheel overhead and the pale dawn light shifts across the crater.",
+  "actions": [
+    {
+      "beat": "The glowing seams of the black glass crater pulse and the {{MAGIC}} sigil burns brighter; ravens and bats lift in a wheeling cloud as ash drifts upward.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} rises slowly and weightlessly out of the cracked glass, arms lowering, palms opening, shadows unfurling from {{her}} shoulders like folded wings.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "{{Her}} eyes open and ignite with {{MAGIC}} light; {{she}} turns {{her}} gaze to the camera, calm, newborn and commanding, as the ash and glass shards drift back down.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

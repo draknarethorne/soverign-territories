@@ -1,0 +1,40 @@
+=== Draknava Thorne · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+
+Wearing an ornate floor-length dawn gown of Windswept Jade and gossamer-silver silk with a fitted bodice embroidered with polished nickel feathers and swirling wind-lines, a high collar of layered feather-cut plates, long sleeves of sheer silver gauze, and a skirt of layered scarves and streaming ribbons that spiral upward around her; sweetheart neckline.
+
+Headwear: a polished nickel circlet with a pair of swept-back feather wings at the temples.
+
+Jewelry: a polished nickel feather collar with jade stones, long feather earrings, polished nickel armlets.
+Legs & feet: bare feet, fine polished nickel anklets.
+
+She rises on tiptoe on the windy ledge before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.
+
+A thread of pale silver-jade light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, ribbons of wind curling around both of them.
+
+Eyes: the natural silver-grey irises kept intact, with a faint pale silver-jade glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, groomed soft ash-grey brows, soft grey-brown lashes, fingernails and toenails natural or Light Jade; present, never heavy.
+
+Companion: her aligned Elder Dragon, Zephyros, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her.
+
+Environment: a windswept rim of stone on a sky-island above endless clouds, with nests of silk-like cloud fibres and ribbons of wind.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

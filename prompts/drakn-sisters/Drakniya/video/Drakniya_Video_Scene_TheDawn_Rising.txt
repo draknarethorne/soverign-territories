@@ -1,0 +1,29 @@
+=== Drakniya Thorne · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakniya_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakniya Thorne, wearing an ornate floor-length dawn gown of layered Emerald Green and sage silk cut into leaf shapes, in a primeval forest valley waking at dawn: colossal moss-hung trees, roots uncoiling and flowers bursting open all around.
+
+Timeline:
+[0s-2.5s] Motion: Colossal roots uncoil and flowers burst open across the forest floor as the valley wakes, fireflies and butterflies lifting into the sunbeams.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises steadily out of a huge opening blossom, arms opening wide with palms up as if gathering the morning.
+[5.5s-8s] Motion: As the previous motion settles, petals and spores swirl up around her as her eyes glow with bright emerald-green light and she smiles joyfully to the camera; a stag and doe look on.
+
+World: The forest is alive: leaves, petals and spores drift, vines uncurl, fireflies and butterflies rise into the sunbeams, a stag and doe step into the clearing and owls and hummingbirds cross the light.
+
+The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame.
+
+Audio: birdsong swelling into a warm choral harmony, rustling leaves; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

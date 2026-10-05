@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakness/backgrounds/fantasy/bond/umbrath-glass-cavern",
+  "kind": "background",
+  "name": "Umbrath's Glass Cavern",
+  "description": "a vast cavern of black glass and bone where violet shadow pours from the ceiling, a heap of obsidian shards and ancient crowns and glowing amethyst veins in the walls",
+  "mood": "hushed, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

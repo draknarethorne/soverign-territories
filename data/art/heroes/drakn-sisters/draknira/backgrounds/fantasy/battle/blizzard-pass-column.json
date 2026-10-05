@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknira/backgrounds/fantasy/battle/blizzard-pass-column",
+  "kind": "background",
+  "name": "Blizzard Pass",
+  "description": "a frozen mountain pass in a howling blizzard, shattered ice-walls, a long column of armoured silhouettes struggling through the drifts and an aurora glowing behind the storm clouds",
+  "mood": "bitter, epic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

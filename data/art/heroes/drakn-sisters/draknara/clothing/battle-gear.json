@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknara/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a shaman's war regalia: a hide-and-bronze cuirass painted with ochre spirals and {{ACCENT_SOFT}} beadwork, a fringed leather skirt, bone and bead talismans on a wide belt and a feathered shoulder mantle",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

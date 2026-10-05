@@ -1,0 +1,33 @@
+{
+  "artId": "draknora-scene-signature-shiny",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Signature Shiny",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "data/art/motion/expressions/fierce-focused.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword.json",
+    "effects": "She extends her left hand towards the camera, a small glowing fire spell forming in her palm, gradient heat haze shimmering around her; faint flames lick and swirl around her glowing heeled sandals, casting warm light across the ground. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
+    "companion": "data/art/heroes/drakn-sisters/draknora/companion/pyraxis-flight.json",
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/Draknora_Scene_Signature_Shiny.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "SHINY variant of the Signature: same scene and pose in a prismatic, gilded colourway with a holographic glitter sheen. Convention: <slug>-scene-signature-shiny.",
+  "overrides": {
+    "palette": {
+      "primaryColor": "Molten Gold Flame",
+      "metal": "liquid gold",
+      "accentColors": [
+        "Blazing White-Gold",
+        "Vibrant Orange"
+      ],
+      "magicColor": "white-gold fire"
+    }
+  }
+}

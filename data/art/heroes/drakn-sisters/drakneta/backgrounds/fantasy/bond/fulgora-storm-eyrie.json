@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/backgrounds/fantasy/bond/fulgora-storm-eyrie",
+  "kind": "background",
+  "name": "Fulgora's Storm Eyrie",
+  "description": "a high stone ring on a mountain peak inside a permanent thunderhead, copper pylons crackling and forks of lightning in the clouds",
+  "mood": "electric, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

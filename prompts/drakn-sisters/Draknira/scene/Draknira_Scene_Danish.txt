@@ -1,0 +1,41 @@
+=== Draknira Thorne · Scene (Outfit + Effects): Danish (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a soft smudged cool smoky ash-grey root shadow at the crown blending seamlessly into the lighter base colour through the lengths - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
+
+Wearing a floor-length winter gown of pale ice-blue and white wool-silk with a fitted bodice laced in brushed chrome thread and embroidered with Glacial Cyan snowflake and thistle motifs, a high white-fur collar, long fitted sleeves and a full skirt of layered white silk edged with white fur, in the style of a Danish fairy-tale winter queen.
+
+Headwear: a tall crown of brushed chrome filigree set with clear ice-crystal spires and small diamond stones.
+
+Jewelry: a broad brushed chrome filigree collar necklace set with warm Baltic amber cabochons, matching drop earrings and a brushed chrome brooch at the throat.
+Back: a long white ermine-trimmed mantle of pale ice-blue velvet, fastened at the collarbone with a brushed chrome clasp and trailing behind her.
+Legs & feet: knee-high white leather boots lined and cuffed with white fur, hidden beneath the hem of the gown.
+
+She stands tall and serene with her sceptre held upright in one hand and the other hand resting lightly on the front of her gown, her mantle trailing behind her, chin lifted, a calm, regal gaze straight to the camera; full figure visible.
+
+Holding a slender brushed chrome sceptre topped with a large six-pointed snowflake of clear ice crystal glowing with icy white-cyan light, held upright in one hand.
+
+Soft snowflakes drift around her and a faint icy white-cyan frost shimmer glitters on her gown and mantle, a cold halo of diamond dust at her sceptre.
+
+Eyes: the natural glacial cyan irises kept intact, with a faint icy white-cyan glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Makeup: soft and natural - frost-white-toned eyeshadow, a light natural cool rose blush, subtle icy rose-tinted satin lips, groomed soft ash-brown brows, soft dark brown lashes, fingernails and toenails natural or Light Cyan; present, never heavy.
+
+Environment: a snowbound fairy-tale harbour town at dusk: tall colourful gabled houses with snow on the steep roofs along a frozen canal, wooden sailing ships locked in the ice, warm lantern light in the windows, and across the water a white palace of ice spires under a pale rose-and-blue winter sky with snow falling softly.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

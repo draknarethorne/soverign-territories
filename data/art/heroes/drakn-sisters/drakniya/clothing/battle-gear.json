@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/clothing/battle-gear",
+  "kind": "wearing",
+  "name": "Battle gear",
+  "description": "a druid's living armour: a bodice of overlapping bark-and-leaf plates in {{PRIMARY}} and {{ACCENT_SOFT}}, vine-wrapped pauldrons with small flowers, a skirt of layered leaves over leather greaves and a hooded mantle of moss",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "battle"
+  ]
+}

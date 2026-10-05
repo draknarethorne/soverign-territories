@@ -1,0 +1,22 @@
+{
+  "artId": "draknara-scene-bond",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Bond",
+  "components": {
+    "pose": "She stands with her feet planted in the warm sand before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.",
+    "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/dawn-regalia.json",
+    "headwear": "a feather crown with a {{METAL}} headband set with {{ACCENT_SOFT}} beads",
+    "jewelry": "layered {{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans, heavy {{METAL}} cuffs, feather earrings",
+    "legs_feet": "bare feet, fine {{METAL}} anklets",
+    "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, dust and small stones lifting gently around both of them.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "companion": "her aligned Elder Dragon, Terrador, an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/bond/terrador-stone-hollow.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Bond.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BOND: the first meeting with her Elder Dragon in its lair, her palm against its snout as the bond forms."
+}

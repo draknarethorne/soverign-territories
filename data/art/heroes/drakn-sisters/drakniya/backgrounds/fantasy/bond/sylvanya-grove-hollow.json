@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/backgrounds/fantasy/bond/sylvanya-grove-hollow",
+  "kind": "background",
+  "name": "Sylvanya's Grove",
+  "description": "a vast hollow among colossal trees with a bed of moss and flowering vines, shafts of sunlight and floating spores",
+  "mood": "gentle, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

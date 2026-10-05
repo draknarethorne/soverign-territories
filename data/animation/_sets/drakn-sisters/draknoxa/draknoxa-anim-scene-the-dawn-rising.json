@@ -1,0 +1,37 @@
+{
+  "animId": "draknoxa-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/draknoxa-scene-the-dawn.json",
+    "image": "Draknoxa_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/follow-pan.json",
+  "audio": "a low bubbling swamp, a slow sinister swell and croaking frogs; no speech",
+  "world": "The bog is alive: luminous green fumes drift, bubbles burst, giant fungus lamps pulse, frogs and moths lift out of the mist and glowing spores float through the air.",
+  "actions": [
+    {
+      "beat": "The bog bubbles and releases luminous green fumes, giant fungus lamps pulsing, frogs and moths lifting out of the mist.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} rises with unhurried, almost lazy grace out of the bubbling mire, one hand lifted with fingers spread, the other trailing.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Glowing venom drips from {{her}} gown and falls slowly back into the bog as {{her}} eyes ignite with {{MAGIC}} light and {{she}} meets the camera with a slow, knowing smile.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "THE DAWN, in motion: the sister rises from the Sundering in her homeland, the world moving around her."
+}

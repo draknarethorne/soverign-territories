@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/backgrounds/fantasy/bond/venomis-bayou-den",
+  "kind": "background",
+  "name": "Venomis's Bayou Den",
+  "description": "a hollow in a giant fungus-covered tree over glowing green water, hanging luminous spore pods and curtains of moss",
+  "mood": "eerie, awed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}

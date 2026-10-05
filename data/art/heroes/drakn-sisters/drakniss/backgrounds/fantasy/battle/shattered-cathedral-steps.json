@@ -1,0 +1,13 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/backgrounds/fantasy/battle/shattered-cathedral-steps",
+  "kind": "background",
+  "name": "Shattered Cathedral Steps",
+  "description": "the broken steps of a white marble cathedral at sunrise, shattered columns and fallen banners, shafts of golden light cutting through drifting smoke",
+  "mood": "hopeful, grave",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy"
+  ]
+}
