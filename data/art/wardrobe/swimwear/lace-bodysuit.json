@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/swimwear/lace-bodysuit",
+  "kind": "wearing",
+  "name": "Lace Bodysuit",
+  "description": "only a {{PRIMARY}} one-piece lace bodysuit in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging over a matching skin-toned lining: a deep low-cut plunging neckline on thin straps that lifts the bust and brings it together into a deep, tight cleavage, the sides cut very high over the hips in sharp high-cut leg lines; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "lingerie",
+    "lace",
+    "one-piece",
+    "female"
+  ],
+  "notes": "Cut test: the one-piece version of the lace set, with a low-cut top and high-cut hips."
+}

@@ -1,0 +1,37 @@
+{
+  "animId": "draknara-anim-scene-signature-holo-ascension",
+  "kind": "animation",
+  "name": "Ascension",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknara/scene/draknara-scene-signature-holo.json",
+    "image": "Draknara_Qwen_Scene_Signature_Holo_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/push-in-follow.json",
+  "audio": "deep drums, a low earthen rumble, bone chimes and a hawk's cry; no speech",
+  "world": "The grove is alive: ancestral fires flicker, spirit lights drift between the totems, wind chimes ring, feathers and dust swirl and warm light shifts through the trees.",
+  "actions": [
+    {
+      "beat": "The ancestral fires between the standing stones leap high and the carved faces of the totem poles begin to glow.",
+      "seconds": 2.5,
+      "transition": "flow"
+    },
+    {
+      "beat": "{{She}} plants the staff and raises {{her}} free arm high as glowing spirits of beasts rise from the stones and circle {{her}}, {{her}} hair and fringe lifting.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "Terrador rises among the totems behind {{her}} and lowers its great head as the spirits settle into a slow ring, and {{she}} turns a fierce, proud look to the camera.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "The Holo edition in motion: her ascended moment with the dragon and the world moving around her."
+}

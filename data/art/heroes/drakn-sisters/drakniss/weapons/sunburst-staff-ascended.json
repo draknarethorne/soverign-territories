@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/weapons/sunburst-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended sunburst staff",
+  "description": "an ascended rose-gold-and-ivory processional staff topped with a blazing sunburst halo of golden rays around a floating orb of {{MAGIC}} light, ribbons of {{PRIMARY}} silk streaming from it, held upright in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

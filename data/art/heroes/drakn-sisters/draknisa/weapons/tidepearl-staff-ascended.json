@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/weapons/tidepearl-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended tidepearl staff",
+  "description": "an ascended platinum staff shaped like a cresting wave, topped with a huge iridescent pearl floating above a ring of platinum shells, {{MAGIC}} light swirling inside it and a spiral of living water coiling up the shaft, held upright in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

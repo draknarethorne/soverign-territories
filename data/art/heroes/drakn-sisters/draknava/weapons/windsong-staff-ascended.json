@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknava/weapons/windsong-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended windsong staff",
+  "description": "an ascended slender silver staff topped with a great open lyre-shaped crest strung with strings of glowing {{MAGIC}} light that sing in the wind, silver wind-chimes and long ribbons of {{PRIMARY}} silk streaming from it, held in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

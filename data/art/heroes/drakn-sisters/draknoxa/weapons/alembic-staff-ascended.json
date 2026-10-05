@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/weapons/alembic-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended alembic staff",
+  "description": "an ascended tarnished-brass staff topped with a great caged glass flask of roiling {{PRIMARY}} liquid wreathed in {{MAGIC}} vapour, coiled copper tubing along the shaft and a bandolier of glowing corked vials hanging from it on chains, held in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

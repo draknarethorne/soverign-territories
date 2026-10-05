@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/draknara/weapons/totem-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended totem staff",
+  "description": "an ascended spirit-totem staff of carved ancient wood hung with {{PRIMARY}} and {{ACCENT_SOFT}} cloth, feathers, beads and bone charms, topped with a great carved totem face ringed in feathers whose eyes glow with {{MAGIC}} light, planted upright in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

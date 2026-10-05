@@ -1,0 +1,29 @@
+=== Drakniss Thorne · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
+Source image: Drakniss_Qwen_Scene_Signature_Holo_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Drakniss Thorne, wearing a layered ethereal gown of sheer fabric that flows around her, in the sanctum of a high-fantasy sun temple, a great sunburst rose window blazing behind a white-and-gold altar; her aligned Elder Dragon, Lumira, filling the high windows behind her with its head lowered toward her.
+
+Timeline:
+[0s-2.5s] Motion: The great rose window behind the altar ignites and beams of golden light stream across the sanctum, incense rising through the rays.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she lifts the staff and opens her free palm to the light as a sunburst halo blazes behind her and golden feathers of light lift from her mantle.
+[5.5s-8s] Motion: As the previous motion settles, lumira's great wings fill the windows and glow as it lowers its head toward her, and she turns a serene, radiant look to the camera.
+
+World: The sanctum is alive: rays of light shift through the windows, golden motes and incense drift, the rose window blazes and the gold-inlaid floor glimmers.
+
+The camera rises slowly from below her eye line while panning gently from left to right, following the action upward; smooth, no cuts, her full figure stays in frame.
+
+Audio: a swelling choir and organ, soft chimes and a warm dragon hum; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

@@ -1,0 +1,43 @@
+=== Draknara Thorne · Scene (Outfit + Companion): Signature Holo (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Burnt Sienna over a matte underlayer, with delicate warm turquoise glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Headwear: a crown of eagle feathers and carved bone on a bronze headband.
+
+Jewelry: antique bronze with turquoise-jewelled bracelets, necklace, and belly-button ring.
+Back: a long mantle of layered feathers and fringed hide that lifts like wings.
+Legs & feet: bright Deep Burnt Sienna high heels with glowing warm turquoise straps.
+
+She stands with the staff planted and her free arm raised high, palm open to the sky, her hair and fringe lifted by a rising spirit-wind, chin lifted, a fierce, proud gaze straight to the camera; full figure visible.
+
+Holding an ascended spirit-totem staff of carved ancient wood hung with Deep Burnt Sienna and turquoise cloth, feathers, beads and bone charms, topped with a great carved totem face ringed in feathers whose eyes glow with warm turquoise light, planted upright in one hand.
+
+Glowing spirits of beasts rise from the standing stones and circle her, the ancestral fires leap high, warm turquoise motes and leaf litter spiral upward and the totem poles glow along their carved faces.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - warm bronze-taupe-toned eyeshadow, a light natural warm terracotta blush, subtle terracotta-rose-tinted satin lips, groomed warm bronze-brown brows, dark brown lashes, fingernails and toenails natural or Light Terracotta; present, never heavy.
+
+Companion: her aligned Elder Dragon, Terrador, rising among the totem poles close behind her with its great head lowered toward her, deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze.
+
+Environment: a sacred high-fantasy spirit grove of standing stones and tall carved totem poles hung with feathers, beads and bone-and-stone wind chimes, low ancestral fires glowing between the stones, earthy mist and warm dust-gold light through the trees.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

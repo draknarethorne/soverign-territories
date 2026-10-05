@@ -1,0 +1,12 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended",
+  "kind": "holding",
+  "name": "Ascended storm sigil staff",
+  "description": "an ascended tall staff topped with a great ring-shaped summoning sigil of etched {{PRIMARY}} metal, a blazing sphere of {{MAGIC}} lightning suspended in the ring and arcs of lightning leaping between copper coils along the shaft, held upright in one hand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "holo"
+  ]
+}

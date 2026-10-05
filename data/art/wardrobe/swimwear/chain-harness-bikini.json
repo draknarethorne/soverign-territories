@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/swimwear/chain-harness-bikini",
+  "kind": "wearing",
+  "name": "Chain Harness Bikini",
+  "description": "only a {{PRIMARY}} satin plunge bikini whose top is held by fine {{METAL}} chains in place of straps: a slim chain halter around the neck and two delicate chains falling to the sides of the waist, the back from nape to waist a clear expanse of bare skin; a matching high-cut bottom with thin {{METAL}} chain side-links; midriff bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "bikini",
+    "chains",
+    "backless",
+    "female"
+  ],
+  "notes": "Bare-back reference using fine chains instead of fabric straps, so no strap lines carry into a scene."
+}

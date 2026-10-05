@@ -1,0 +1,43 @@
+=== Draknoxa Thorne · Scene (Outfit + Companion): Signature Holo (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+
+Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a peekaboo underlayer of fine deep acid-lime strands hidden beneath the top layer and glimpsed only where the hair parts and moves, subdued and low-contrast, the visible top layer keeping its natural base colour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Toxic Orchid Magenta over a matte underlayer, with delicate toxic lime glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+
+Headwear: a high-collared hood of dark silk pinned with a tarnished-brass thorn circlet.
+
+Jewelry: tarnished brass with pink tourmaline-jewelled bracelets, necklace, and belly-button ring.
+Back: a hooded half-cape of dark silk with a high collar.
+Legs & feet: bright Toxic Orchid Magenta high heels with glowing toxic lime straps.
+
+She stands with the staff in one hand and a glowing vial held up between two fingers of the other, her hair stirred by rising fumes, chin slightly lowered, a sly, knowing gaze straight to the camera; full figure visible.
+
+Holding an ascended tarnished-brass staff topped with a great caged glass flask of roiling Toxic Orchid Magenta liquid wreathed in toxic lime vapour, coiled copper tubing along the shaft and a bandolier of glowing corked vials hanging from it on chains, held in one hand.
+
+Billows of luminous toxic lime venom mist roll across the floor, the alembics bubble over and glowing droplets float in the air, bursts of lime and magenta light flash from the flasks along the shelves.
+
+Eyes: irises softly aglow with toxic lime light, brightest near the pupil and fading to the natural acid lime-emerald irises at the rim, iris detail still visible, a gentle toxic lime catchlight, no light spilling beyond the eyelids.
+
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, subtle deep orchid-berry-tinted satin lips, groomed dark burgundy-black brows, black lashes, fingernails and toenails natural or Light Magenta; present, never heavy.
+
+Companion: her aligned Elder Dragon, Venomis, coiling through the vaulted laboratory behind her with its head lowered over her shoulder, toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime.
+
+Environment: a vaulted high-fantasy alchemist's laboratory in old catacombs, shelves of corked vials and glass flasks, bubbling alembics and coiled copper pipes, lit by glowing lime and magenta liquids, wisps of toxic mist curling along the stone floor.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

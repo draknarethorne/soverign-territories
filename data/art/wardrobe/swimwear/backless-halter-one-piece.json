@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/swimwear/backless-halter-one-piece",
+  "kind": "wearing",
+  "name": "Backless Halter One-Piece",
+  "description": "only a {{PRIMARY}} satin-metallic halter one-piece with a deep plunging front held by a single narrow tie behind the neck, cut high at the hips; the entire back from the nape to the low waist is one clear expanse of bare skin and spine, the only fabric near it a thin tie at the neck; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "swimwear",
+    "one-piece",
+    "halter",
+    "backless",
+    "female"
+  ],
+  "notes": "Bare-back reference: the A-pose base to use when a gown, cape or armor needs a fully exposed back with no straps or band to carry into the scene."
+}

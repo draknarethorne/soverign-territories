@@ -1,0 +1,24 @@
+{
+  "artId": "drakneta-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "companion": "her aligned Elder Dragon, Fulgora, filling the shattered windows behind her with its head thrust into the hall, electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning",
+    "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json",
+    "wearing": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout, secured at the shoulders, no headwear, her hair fully visible; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
+    "pose": "She stands with the staff planted and her free hand cupped around a fierce ball of lightning at chest height, her hair lifted by static, chin lifted, an intense, knowing gaze straight to the camera; full figure visible.",
+    "holding": "data/art/heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended.json",
+    "effects": "Forks of lightning strike through the tall windows and run along the copper coils, the floor sigil blazes with {{MAGIC}} light, arcs dance between her hands and the staff and loose sparks hang in the air.",
+    "headwear": "a forked crown of {{PRIMARY}} metal crackling with small arcs of lightning",
+    "back": "a cape of storm-grey silk threaded with copper wire that crackles with static"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/scene/Drakneta_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Stormbringer': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

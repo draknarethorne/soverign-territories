@@ -45,7 +45,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   (`shiny`, `holo`; tiers in `data/art/_schema/finishes.json`), each pointing at an art card that carries the same `finish`. A variant
   never changes gameplay; its code is `<collectionNumber>-<SUFFIX>` (`SD-001-HOLO`), derived, never stored. Shiny = recolour and sheen
   for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
-  to the client, not the baked art. Holos exist so far for Drakness, Draknora, Drakniya and Draknira.
+  to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
 
 ## Open decisions
 
@@ -71,7 +71,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 - Render and review the first video clips; tune looks, motions and transitions from what the renders show.
 - Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used.
-- Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace) to choose the A-pose look that blends best.
+- Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace, plus lace bodysuit and the backless set: halter one-piece, strapless plunge, chain harness) to choose the A-pose look that blends best. The backless pieces give a clean bare-back reference so gowns and capes do not inherit straps.
 - Title and key-art scene from the text-to-image templates (`ST0_*_Text`), as a card in the pipeline; an item stage for weapons and armor.
 - Use the other `ST` templates (polish, finals) to generate their own prompts.
 - Documentation audit and launcher check, now with [art/tutorial-art.md](art/tutorial-art.md) and [art/tutorial-video.md](art/tutorial-video.md).
