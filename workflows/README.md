@@ -183,11 +183,20 @@ B:\Sovereign Territories\Models        original reference photos: the source, ne
 B:\Sovereign Territories\Masters       hand-picked keepers copied from the output (what the backup script protects)
 B:\Comfy-Desktop\ComfyUI-Installs      the workspaces (code and workflows)
 B:\Comfy-Desktop\ComfyUI-Inputs\<Workspace>   that workspace's own input images: transient copies
-B:\Comfy-Desktop\ComfyUI-Output        one raw output folder; the prefix sorts it by <set>/<Hero>/<stage>/<family>
+B:\Comfy-Desktop\ComfyUI-Output\<Project>   raw output, one folder per project; the prefix sorts it by <set>/<Hero>/<stage>/<family>
 ```
+
+Each workspace writes to the project folder named by its `output` setting in `workspaces.json` (set in ComfyUI as that install's
+output directory), and the prefix inside it does not change:
+
+| Output project folder | Written by | Sets inside |
+| --- | --- | --- |
+| `Sovereign Territories` | the ten sister workspaces, Drakn Sisters, Drakn Bound, the Sovereign Territories brand workspace | `drakn-sisters`, `drakn-bound`, `elder-dragons`, `sovereign-territories` |
+| `Angel Primes` | the Angel Primes workspace (a test bed; it never produces production art) | `angel-primes` |
+| `Sovereign Dawn Series` | the production workspace: final art, kept apart from experiments | the series' sets |
 
 Everything under `Comfy-Desktop` is a transient copy of something that lives in the repo or on the working drive.
 `python tools\workflows\sync_inputs.py` copies, into each workspace's own folder, exactly the images that workspace's workflows load
-(preview first, then `--apply`). Set each install's input and output folders in ComfyUI (the `--input-directory` and
+(preview first, then `--apply`). `python tools\workflows\organize_outputs.py` moves images rendered earlier (the old shared output) into `<project>/<set>/<Hero>/...`. Set each install's input and output folders in ComfyUI (the `--input-directory` and
 `--output-directory` launch arguments), then retire the old shared folders. Until a folder exists, the tools fall back to the
 old shared one.

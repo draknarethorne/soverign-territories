@@ -70,9 +70,19 @@ def work_root(cfg):
 
 
 def output_root(cfg):
-    """One shared output folder for every workspace (falls back to the old shared location until the move)."""
-    new = pathlib.Path(cfg.get("paths", {}).get("outputRoot", ""))
-    return new if new.is_dir() else pathlib.Path(cfg["sharedOutput"])
+    """The parent of every project output folder (ComfyUI-Output)."""
+    return pathlib.Path(cfg.get("paths", {}).get("outputRoot") or cfg["sharedOutput"])
+
+
+def output_home(cfg, group):
+    """Where a set's images belong: <outputRoot>/<project folder>/<set>/ (the project comes from paths.outputFolders)."""
+    project = cfg.get("paths", {}).get("outputFolders", {}).get(group)
+    return output_root(cfg) / project / group if project else output_root(cfg) / group
+
+
+def output_roots(cfg):
+    """Existing output folders to search: the new root and the old shared one."""
+    return [p for p in (output_root(cfg), pathlib.Path(cfg["sharedOutput"])) if p.is_dir()]
 
 
 def input_dir(cfg, ws):

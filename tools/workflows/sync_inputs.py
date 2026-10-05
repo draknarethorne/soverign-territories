@@ -39,7 +39,7 @@ def referenced(wf):
 
 def source_index(cfg):
     """{file name: path}, first folder wins."""
-    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", pathlib.Path(cfg["sharedInput"]), cw.output_root(cfg)]
+    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", pathlib.Path(cfg["sharedInput"]), *cw.output_roots(cfg)]
     index = {}
     for root in roots:
         if root.is_dir():

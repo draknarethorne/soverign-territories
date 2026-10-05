@@ -4,42 +4,43 @@
   "paths": {
     "workRoot": "B:/Sovereign Territories",
     "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
-    "outputRoot": "B:/Comfy-Desktop/ComfyUI-Output"
+    "outputRoot": "B:/Comfy-Desktop/ComfyUI-Output",
+    "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes"}
   },
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
   "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",
   "dev": ["Sovereign Territories"],
   "workspaces": {
-    "Sovereign Territories": {
+    "Sovereign Territories": {"output": "Sovereign Territories", 
       "status": "active",
       "templates": true,
       "role": "DEV: build and prove workflows, ideation and mass changes; holds the ST stage templates. Default deploy target."
     },
-    "Drakness": {
+    "Drakness": {"output": "Sovereign Territories", 
       "status": "active",
       "legacy": true,
       "pull": false,
       "role": "UAT: her own acceptance workspace. Still holds the original hand-made experiments until the generated set replaces them."
     },
-    "Draknara": {"status": "active", "role": "UAT: her own studio workspace. Holds all of her non-scene work (poses, motions, clothing, armor, head shots, showcase); her scenes stay in the dev project until proven."},
-    "Draknava": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakniss": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakneta": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknira": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknisa": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakniya": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknora": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknoxa": {"status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Angel Primes": {
+    "Draknara": {"output": "Sovereign Territories", "status": "active", "role": "UAT: her own studio workspace. Holds all of her non-scene work (poses, motions, clothing, armor, head shots, showcase); her scenes stay in the dev project until proven."},
+    "Draknava": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakniss": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakneta": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknira": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknisa": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Drakniya": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknora": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Draknoxa": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
+    "Angel Primes": {"output": "Angel Primes", 
       "status": "planned",
-      "role": "UAT: one workspace for the Angel Primes test bed (Angelica and Angelo): generalized hair, cosmetics, views, outfits."
+      "role": "UAT: one workspace for the Angel Primes test bed (Angelica and Angelo): generalized hair, cosmetics, views, outfits. A test bed: it never produces production artifacts."
     },
-    "Drakn Sisters": {
+    "Drakn Sisters": {"output": "Sovereign Territories", 
       "status": "active",
       "role": "UAT: shared workspace for all ten sisters' scenes, so they can be worked in parallel. Studio work stays in each sister's own workspace."
     },
-    "Drakn Bound": {"status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
-    "Sovereign Dawn Series": {
+    "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
+    "Sovereign Dawn Series": {"output": "Sovereign Dawn Series", 
       "status": "planned",
       "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
     }

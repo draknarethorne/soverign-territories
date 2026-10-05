@@ -56,6 +56,10 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   (`scene/signature`, `scene/glamour`, `poses/lingerie`, `clothing/gowns` ...) and the output folder starts with the set and hero
   (`drakn-sisters/Draknara/scenes/signature/...`), mirroring `prompts/`; the rule lives in `tools/generators/art_layout.py` and is
   validated. A variant such as shiny or holo sits beside its main card, and one-card groups stay flat. See `data/art/README.md`.
+- **Folders outside the repo (Oct 2026).** Originals live in `B:\Sovereign Territories\Models`, hand-picked keepers in `...\Masters`;
+  everything under `B:\Comfy-Desktop` is a transient copy. Each ComfyUI workspace has its own inputs (`ComfyUI-Inputs\<Workspace>`) and
+  writes to a project output folder (`Sovereign Territories`, `Angel Primes` as a test bed, `Sovereign Dawn Series` for production), set
+  in `workflows/workspaces.json`. The brand and marketing set (title, logos, icons, key art) will be the `sovereign-territories` set.
 - **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
   studio render and a full scene.
 - **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor
