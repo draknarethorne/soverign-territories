@@ -1,0 +1,28 @@
+=== Draknava Thorne · Showcase: Photo: Catwalk (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknava Thorne (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+A candid, photorealistic lifestyle photograph shot on location with natural light, lifelike skin texture, razor-sharp focus on her, natural depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Shot: full-length, head to toe, the whole body and the surroundings in frame.
+
+Wearing a Windswept Jade floor-length gown with a fitted bodice, narrow straps and a skirt slit from the hip to the floor, the leg visible with each step, polished nickel clasp at the hip.
+
+Jewelry: a simple polished nickel necklace and small matching earrings.
+
+Legs & feet: classic Windswept Jade stiletto pumps with a pointed toe and a slim polished nickel heel, bare legs.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography. Breeze flowing any direction. walking towards the camera, body position adjusting with the stride. facing forward, matching the walk. remains focused on camera. alluring, confident smile, lips slightly parted; lips full and expressive. hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.
+
+Eyes: natural silver-grey irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a long, glossy fashion-show runway under bright white spotlights, rows of seated guests and photographers softly out of focus on both sides, a dark backdrop behind with a soft glow.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, studio backdrop, cream backdrop, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.

@@ -1,0 +1,31 @@
+=== Drakneta Thorne · Showcase: Celestial Ascended (remove the clothing first) (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+First completely remove every garment, swimsuit, strap, string and shoe worn in the incoming image, so that no trace of the original clothing remains, shows through or peeks out at any edge. Then dress the subject only in what is described below.
+
+Wearing celestial armor of bright electrum: two small ornate filigree plates, each in the form of an angular shape with forked lightning-bolt edges, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small ring-sigil circle covering the front of the hips; every plate is engraved with arc-coil lines and small branching bolts and set with an arc-white gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin.
+
+Jewelry: a simple bright gold necklace and small matching earrings.
+Legs & feet: bare feet with a delicate bright gold anklet set with citrine stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding an ascended tall staff topped with a great ring-shaped summoning sigil of etched Electric Gold metal, a blazing sphere of white-hot electric lightning suspended in the ring and arcs of lightning leaping between copper coils along the shaft, held upright in one hand.
+
+Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with white-hot electric light.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Studio backdrop: a seamless pale studio backdrop split by soft rainbow light prisms and glittering crystalline reflections that scatter across the floor and backdrop.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

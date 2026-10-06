@@ -1,0 +1,27 @@
+=== Draknira Thorne · Showcase: Editorial: Twirl (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a Glacial Cyan chiffon high-low dress, short at the front to the knee and long at the back to the ankle, with a fitted bodice, thin straps and a floaty layered skirt.
+
+Jewelry: a simple brushed chrome necklace and small matching earrings.
+Legs & feet: open-toed Glacial Cyan heeled sandals with thin straps across the foot and a strap around the ankle fastened with a brushed chrome clasp.
+
+A candid high-fashion editorial shot, dynamic spinning motion, fabric and hair in flow. Motion-generated breeze, swirling around her. captured mid-twirl, torso rotating, skirt or drape flaring outward. turned with the spin, following the motion. bright, joyful, glancing toward the camera. joyful, carefree, laughing smile. arms extended slightly for balance, caught mid-spin.
+
+A fashion wind machine from the side: hair streams across the frame and the fabric of the outfit billows and ripples, caught mid-movement. No magical effects, only fashion lighting.
+
+Eyes: natural glacial cyan irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Studio backdrop: a clean seamless white studio backdrop with bright, even high-key lighting, minimal shadows, soft floor reflection; no backlight or rim light.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

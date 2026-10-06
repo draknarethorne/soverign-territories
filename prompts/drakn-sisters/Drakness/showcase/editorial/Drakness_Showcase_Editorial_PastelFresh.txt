@@ -1,0 +1,27 @@
+=== Drakness Thorne · Showcase: Editorial: Pastel Fresh (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a light, flowing mid-length Midnight Violet sundress with a fitted bodice, wide straps and a loose skirt trimmed in amethyst, moving softly with the air.
+
+Jewelry: a simple polished silver necklace and small matching earrings.
+Legs & feet: Midnight Violet flat sandals with thin crossed straps over the foot and a tie at the ankle, a polished silver toe ring.
+
+A candid high-fashion editorial shot, dreamy romantic moment, wind-caught hair. Strong breeze flowing towards her. standing softly, head tilted back slightly, basking in the breeze. tilted back gently, eyes soft or closed. soft, dreamy, eyes closed or half-lidded. serene, dreamy, soft closed-mouth smile. arms relaxed at her sides, hair caught fully in the wind.
+
+Clean, flattering fashion lighting with soft shadows and gentle highlights on skin and fabric. No magical effects.
+
+Eyes: natural deep violet irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Studio backdrop: a seamless pastel blush-pink backdrop with soft even light, a clean floor and a faint gradient at the top.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

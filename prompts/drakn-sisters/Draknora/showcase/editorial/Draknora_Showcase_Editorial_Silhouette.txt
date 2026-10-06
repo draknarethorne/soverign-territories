@@ -1,0 +1,27 @@
+=== Draknora Thorne · Showcase: Editorial: Backlit Silhouette (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a Flame Red straight-cut column gown in smooth satin, narrow shoulder straps, a high round neck and a clean unbroken line to the floor, burnished copper brooch at the waist.
+
+Jewelry: a simple burnished copper necklace and small matching earrings.
+Legs & feet: classic Flame Red stiletto pumps with a pointed toe and a slim burnished copper heel, bare legs.
+
+A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. composed, serene; lips softly together; expressive, sultry brows. one foot forward for an elegant line; arms relaxed with a graceful hand.
+
+Clean, flattering fashion lighting with soft shadows and gentle highlights on skin and fabric. No magical effects.
+
+Eyes: natural molten amber irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Studio backdrop: a hazy studio space with a bright diffused backlight behind the subject, a soft glow around her outline and drifting fine haze in the air.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

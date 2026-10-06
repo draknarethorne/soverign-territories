@@ -1,0 +1,27 @@
+=== Drakneta Thorne · Showcase: Editorial: Kneeling Glamour (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a Electric Gold corset-bodice dress with bright gold lacing up the front, a sweetheart neckline and a short flared skirt in layered white ruffles.
+
+Jewelry: a simple bright gold necklace and small matching earrings.
+Legs & feet: fitted Electric Gold leather thigh-high boots with a stiletto heel and a bright gold zip up the back, bare thighs above the top edge.
+
+A candid high-fashion editorial shot, low dynamic glamour pose. No breeze. lowered into a graceful kneeling pose, one knee down, the other leg bent with foot planted. level, facing the camera. direct, alluring eyes to camera. sultry, composed half-smile. one hand resting on the raised knee, the other braced lightly on the ground.
+
+A crisp fashion spotlight with a faint glittering shimmer on skin, jewelry and fabric, sharp specular highlights and long soft shadows. No magical effects, only fashion lighting.
+
+Eyes: natural dark storm-charcoal, almost black irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Studio backdrop: a seamless backdrop in a brushed bright gold tone with a soft vignette and a glossy reflective floor.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

@@ -1,0 +1,26 @@
+=== Drakneta Thorne · Showcase: Photo: Sitting on the Bed (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+A candid, photorealistic lifestyle photograph shot on location with natural light, lifelike skin texture, razor-sharp focus on her, natural depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Shot: three-quarter length, framed from mid-thigh up, the location visible around her.
+
+Wearing a Electric Gold bias-cut silk slip dress with thin straps and a cowl neckline, falling close to the body to mid-calf with a soft sheen and white lace at the hem.
+
+Legs & feet: bare feet, no footwear.
+
+A candid lifestyle photograph, relaxed and intimate, natural morning light. Light breeze. sitting on the edge of the bed, one leg tucked under, back gently curved, leaning slightly forward. head tilted a little, hair falling naturally. to camera, soft and unhurried. a relaxed, genuine smile. one hand resting on the duvet beside her, the other tucking hair behind her ear.
+
+Eyes: natural dark storm-charcoal, almost black irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a bright modern hotel bedroom in the morning, a large bed with crisp white linen and soft pillows, sheer curtains over tall windows, warm natural daylight and a few soft shadows.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, studio backdrop, cream backdrop, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.

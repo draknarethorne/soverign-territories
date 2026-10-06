@@ -1,0 +1,24 @@
+=== Draknira Thorne · Showcase: Photo: Bathroom Selfie (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+A candid, photorealistic lifestyle photograph shot on location with natural light, lifelike skin texture, razor-sharp focus on her, natural depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Shot: a candid mirror selfie, three-quarter length, shown as her reflection in a large mirror with the phone held in front of her chest, the room visible around the mirror.
+
+Wearing a Glacial Cyan longline sports bra with a keyhole back and matching high-waist leggings with mesh panels at the calves, midriff bare.
+
+A candid social-media mirror selfie, casual and natural. Light breeze. standing in front of the mirror, weight on one hip, torso angled slightly. head tilted a little, face visible in the mirror. at the phone screen in the mirror. a playful, confident smile. one hand holding a phone in front of her chest, below her face, the other resting on her hip.
+
+Eyes: natural glacial cyan irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a bright, clean modern bathroom with a large frameless mirror over a white vanity, soft even daylight from a frosted window, a few toiletries and a plant, white tile behind.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, studio backdrop, cream backdrop, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.
