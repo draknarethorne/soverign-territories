@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/full-length",
+  "kind": "framing",
+  "name": "Shot: full-length",
+  "description": "full-length, head to toe, the whole body and the surroundings in frame",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

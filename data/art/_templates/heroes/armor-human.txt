@@ -12,6 +12,8 @@ Background: {{BACKGROUND}}.
 
 ?{{KEY_BLOCK}}
 
+?{{STRIP}}
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.

@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/beach-sunset-shoreline",
+  "kind": "background",
+  "name": "Modern: beach shoreline, sunset",
+  "description": "a quiet sandy beach at sunset, gentle waves washing over wet sand that mirrors a glowing orange and pink sky, warm low light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

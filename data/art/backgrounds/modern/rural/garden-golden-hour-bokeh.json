@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/garden-golden-hour-bokeh",
+  "kind": "background",
+  "name": "Modern: garden, golden hour bokeh",
+  "description": "a lush garden in golden-hour light, flowers and leaves glowing as soft bokeh, warm backlight in her hair",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

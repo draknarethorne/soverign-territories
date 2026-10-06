@@ -1,0 +1,38 @@
+=== {{HERO}} · Showcase: {{NAME}} (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of {{HERO}} (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+A candid, photorealistic lifestyle photograph shot on location with natural light, lifelike skin texture, razor-sharp focus on her, natural depth of field.
+
+{{KEEP_LINE}}
+
+?{{KEY_BLOCK}}
+
+?{{STRIP}}
+
+Shot: {{FRAMING}}.
+
+Wearing {{WEARING}}.
+
+?Headwear: {{HEADWEAR}}.
+
+?Jewelry: {{JEWELRY}}.
+
+?Legs & feet: {{LEGS_FEET}}.
+
+{{POSE}}
+
+?Holding {{HOLDING}}.
+
+{{EYE_EFFECT}}
+
+?{{MAKEUP_LINE}}
+
+{{REALM}}. Location: {{BACKGROUND}}.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, bald, shaved head, thinning hair, {{SKIN_NEG}}, {{FIGURE_NEG}}, studio backdrop, cream backdrop, {{REALM_NEG}}, text, wording, watermark, logo.

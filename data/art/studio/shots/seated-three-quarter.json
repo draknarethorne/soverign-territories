@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/seated-three-quarter",
+  "kind": "framing",
+  "name": "Shot: seated three-quarter",
+  "description": "framed from the knees up while she sits, the table or furniture and the location visible around her",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

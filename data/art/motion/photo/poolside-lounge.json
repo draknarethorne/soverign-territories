@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/poolside-lounge",
+  "kind": "motion",
+  "name": "Poolside lounging",
+  "editorial": "A candid vacation photograph, bright and relaxed.",
+  "breeze": "Light breeze.",
+  "body": "reclined on the lounger propped on her elbows, one knee raised, back arched slightly.",
+  "head": "head turned toward the camera, sunglasses pushed up into her hair.",
+  "defaultGaze": "to camera, sun-warmed.",
+  "defaultExpression": "a bright, easy smile.",
+  "pose": "one hand resting on the lounger, the other trailing toward the water.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "daily"
+  ]
+}

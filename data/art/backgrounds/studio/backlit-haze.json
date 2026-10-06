@@ -1,0 +1,13 @@
+{
+  "id": "backgrounds/studio/backlit-haze",
+  "kind": "background",
+  "name": "Studio: backlit haze",
+  "description": "a hazy studio space with a bright diffused backlight behind the subject, a soft glow around her outline and drifting fine haze in the air",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "editorial"
+  ]
+}

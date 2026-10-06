@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/urban/cafe-sidewalk-terrace",
+  "kind": "background",
+  "name": "Modern: sidewalk cafe terrace",
+  "description": "a sidewalk cafe terrace on a pleasant street in daylight, a small round marble table with a coffee cup, wicker chairs, potted plants and passers-by softly out of focus",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "urban"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

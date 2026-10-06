@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/cafe-seated",
+  "kind": "motion",
+  "name": "Seated at a cafe table",
+  "editorial": "A candid street-style photograph, relaxed and natural.",
+  "breeze": "Light breeze.",
+  "body": "seated at the small table, legs crossed, leaning on one forearm.",
+  "head": "turned toward the camera, chin on the lightest touch of her hand.",
+  "defaultGaze": "to camera, amused.",
+  "defaultExpression": "a warm, easy smile.",
+  "pose": "one hand around a coffee cup on the table, the other tucking her hair back.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "daily"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "wardrobe/effects/editorial/spotlight-shimmer",
+  "kind": "effects",
+  "name": "Editorial: spotlight shimmer",
+  "description": "A crisp fashion spotlight with a faint glittering shimmer on skin, jewelry and fabric, sharp specular highlights and long soft shadows. No magical effects, only fashion lighting.",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "editorial",
+    "spotlight"
+  ]
+}

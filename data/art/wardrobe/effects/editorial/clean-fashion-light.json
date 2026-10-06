@@ -1,0 +1,13 @@
+{
+  "id": "wardrobe/effects/editorial/clean-fashion-light",
+  "kind": "effects",
+  "name": "Editorial: clean fashion light",
+  "description": "Clean, flattering fashion lighting with soft shadows and gentle highlights on skin and fabric. No magical effects.",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "editorial",
+    "clean"
+  ]
+}

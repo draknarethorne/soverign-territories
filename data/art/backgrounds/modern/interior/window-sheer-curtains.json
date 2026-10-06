@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/interior/window-sheer-curtains",
+  "kind": "background",
+  "name": "Modern: tall window with sheer curtains",
+  "description": "a bright apartment room beside a tall window with sheer white curtains moving in a light breeze, soft morning light streaming in across a wooden floor",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "interior"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

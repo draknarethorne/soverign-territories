@@ -1,0 +1,13 @@
+{
+  "id": "backgrounds/studio/black-velvet-spotlight",
+  "kind": "background",
+  "name": "Studio: black velvet with a single spotlight",
+  "description": "a deep black velvet backdrop with one soft spotlight from above-left, a gentle pool of light on the floor and the edges falling into darkness",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "editorial"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/mirror-selfie",
+  "kind": "motion",
+  "name": "Mirror selfie",
+  "editorial": "A candid social-media mirror selfie, casual and natural.",
+  "breeze": "Light breeze.",
+  "body": "standing in front of the mirror, weight on one hip, torso angled slightly.",
+  "head": "head tilted a little, face visible in the mirror.",
+  "defaultGaze": "at the phone screen in the mirror.",
+  "defaultExpression": "a playful, confident smile.",
+  "pose": "one hand holding a phone in front of her chest, below her face, the other resting on her hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "daily"
+  ]
+}

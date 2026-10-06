@@ -164,11 +164,12 @@ ComfyUI output: <group>/<Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_0
 | Stage | Families | Notes |
 | --- | --- | --- |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
-| poses | golden A-pose at the root; `views`; underlayer tests by piece type: `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | The type is read from the underlayer piece's tags. |
+| poses | golden A-pose at the root; `views`; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | The type is read from the underlayer piece's tags. |
 | head | golden head at the root; `views`; `closeups` (framing and expressions) | |
 | clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
 | armor | `wardrobe` for library armor; a hero's own and celestial armor stay in the stage folder | |
-| showcase, motion, hair | flat or their own families | Motion and hair already carry families. |
+| showcase | `celestial` (celestial armor, with `strip-tests`), `elemental` (casting, dance, calling, mirror spirit), `studio` (armor stand, runway), `editorial` (fashion shots on studio backdrops, no magic), `photo/<mood>` (glamour, romantic, daily: real-world locations) | Rules live in `showcase_family()` in `art_layout.py`; real-world shots use `showcase-photo-human.txt`, modern-realm locations and `studio/shots/*` framings. |
+| motion, hair | their own families | Motion and hair already carry families. |
 | video | mirrors the picture it animates (`signature`, `glamour`, `story`, `poses`) | |
 
 The output folder also starts with the set, so `Draknara/` and `Drakness/` sit under `drakn-sisters/` and a later set (bound heroes,
@@ -557,6 +558,7 @@ sex where it differs), so existing cards need no change.
 | `framing` | How tight a head shot is | `studio/framing/*` | `bust-up` |
 | `expression` | Facial read | `motion/expressions/*` | per stage and sex (above) |
 | `underlayer` | What the A-pose wears | `wardrobe/swimwear/*`, hero `wearing/` pieces | triangle bikini / swim brief |
+| `footwear` | Shoes inside the swimwear piece (`{{FOOTWEAR}}`) | `wardrobe/footwear/*` | each sister's signature heels; `data/art/_settings/studio.json` `aPoseFootwear: "barefoot"` switches every female A-pose and underlayer test to bare feet at once, and a card's own `components.footwear` always wins (`<slug>-x-pose-barefoot` is the test card) |
 | `eye_effect` | Scene eye glow | `wardrobe/effects/eyes/*` | `partial-glow` |
 
 Pieces may carry an optional `tags` list (e.g. `studio`, `profile`, `swimwear`) purely for finding and ideation;

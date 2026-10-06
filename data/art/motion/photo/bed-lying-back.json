@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/bed-lying-back",
+  "kind": "motion",
+  "name": "Lying back on the bed",
+  "editorial": "A candid lifestyle photograph from above, relaxed and dreamy, natural morning light.",
+  "breeze": "Light breeze.",
+  "body": "lying back on the bed, shoulders on the pillows, one knee bent, her hair spread across the linen.",
+  "head": "head resting on the pillow, turned toward the camera.",
+  "defaultGaze": "up toward the camera, lazy and warm.",
+  "defaultExpression": "a soft, dreamy smile.",
+  "pose": "one arm stretched above her head, the other resting on her stomach.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "romantic"
+  ]
+}

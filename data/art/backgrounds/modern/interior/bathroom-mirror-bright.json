@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/interior/bathroom-mirror-bright",
+  "kind": "background",
+  "name": "Modern: bright bathroom with a large mirror",
+  "description": "a bright, clean modern bathroom with a large frameless mirror over a white vanity, soft even daylight from a frosted window, a few toiletries and a plant, white tile behind",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "interior"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

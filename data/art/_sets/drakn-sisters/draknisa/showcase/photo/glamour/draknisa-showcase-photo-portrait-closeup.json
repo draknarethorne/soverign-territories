@@ -1,0 +1,20 @@
+{
+  "artId": "draknisa-showcase-photo-portrait-closeup",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Photo: Portrait Close-up",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/off-shoulder-dress.json",
+    "pose": "data/art/motion/photo/portrait-closeup.json",
+    "background": "data/art/backgrounds/modern/rural/garden-golden-hour-bokeh.json",
+    "framing": "data/art/studio/shots/close-up-portrait.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/drakn-sisters/Draknisa/showcase/photo/glamour/Draknisa_Showcase_Photo_PortraitCloseup.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

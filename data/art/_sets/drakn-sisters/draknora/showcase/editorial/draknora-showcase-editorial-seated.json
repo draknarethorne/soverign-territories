@@ -1,0 +1,20 @@
+{
+  "artId": "draknora-showcase-editorial-seated",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Editorial: Seated Elegance",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/strapless-cocktail-dress.json",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "background": "data/art/backgrounds/studio/window-light-studio.json",
+    "effects": "data/art/wardrobe/effects/editorial/clean-fashion-light.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknora/showcase/editorial/Draknora_Showcase_Editorial_Seated.txt",
+  "notes": "EDITORIAL SHOWCASE: a fashion shot on a studio backdrop with no magic, to test how the A-pose carries into a styled studio photo."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/lying-from-above",
+  "kind": "framing",
+  "name": "Shot: lying, from above",
+  "description": "full-length, photographed from slightly above and to the side while she lies on the bed, the whole bed and room in frame",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

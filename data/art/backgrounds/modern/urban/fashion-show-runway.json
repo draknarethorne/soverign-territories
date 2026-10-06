@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/urban/fashion-show-runway",
+  "kind": "background",
+  "name": "Modern: fashion show runway",
+  "description": "a long, glossy fashion-show runway under bright white spotlights, rows of seated guests and photographers softly out of focus on both sides, a dark backdrop behind with a soft glow",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "urban"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

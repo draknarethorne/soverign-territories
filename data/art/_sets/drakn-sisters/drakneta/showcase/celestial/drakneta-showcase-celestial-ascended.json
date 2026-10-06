@@ -1,0 +1,20 @@
+{
+  "artId": "drakneta-showcase-celestial-ascended",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Celestial Ascended",
+  "components": {
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "wearing": "data/art/heroes/drakn-sisters/drakneta/armor/celestial-armor.json",
+    "holding": "data/art/heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended.json",
+    "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+    "background": "data/art/backgrounds/studio/prismatic-glass.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakneta/showcase/celestial/Drakneta_Showcase_CelestialAscended.txt",
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

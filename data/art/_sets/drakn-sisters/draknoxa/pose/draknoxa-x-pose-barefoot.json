@@ -1,0 +1,13 @@
+{
+  "artId": "draknoxa-x-pose-barefoot",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/poses/Draknoxa_X_Pose_Barefoot.txt",
+  "denoise": "~1.0",
+  "notes": "BAREFOOT A-POSE TEST. Same original photo as the golden A-pose with bare feet instead of her signature heels; the global switch is data/art/_settings/studio.json.",
+  "components": {
+    "footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
+  }
+}

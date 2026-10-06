@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/close-up-portrait",
+  "kind": "framing",
+  "name": "Shot: close-up portrait",
+  "description": "close-up beauty portrait, head and shoulders filling the frame, shallow depth of field with the location as soft colour behind her",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

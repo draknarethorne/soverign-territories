@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/portrait-closeup",
+  "kind": "motion",
+  "name": "Beauty portrait",
+  "editorial": "A candid beauty portrait, soft natural light.",
+  "breeze": "Light breeze.",
+  "body": "shoulders relaxed and angled slightly away from the lens.",
+  "head": "head turned a few degrees toward the camera, chin level.",
+  "defaultGaze": "directly into the lens, warm and engaged.",
+  "defaultExpression": "a soft, natural smile with a hint of warmth in the eyes.",
+  "pose": "one hand lightly touching the collarbone or the hair near the face.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "close-up"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/mirror-selfie",
+  "kind": "framing",
+  "name": "Shot: mirror selfie",
+  "description": "a candid mirror selfie, three-quarter length, shown as her reflection in a large mirror with the phone held in front of her chest, the room visible around the mirror",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

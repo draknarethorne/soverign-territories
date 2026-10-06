@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/bed-sitting",
+  "kind": "motion",
+  "name": "Sitting on the bed",
+  "editorial": "A candid lifestyle photograph, relaxed and intimate, natural morning light.",
+  "breeze": "Light breeze.",
+  "body": "sitting on the edge of the bed, one leg tucked under, back gently curved, leaning slightly forward.",
+  "head": "head tilted a little, hair falling naturally.",
+  "defaultGaze": "to camera, soft and unhurried.",
+  "defaultExpression": "a relaxed, genuine smile.",
+  "pose": "one hand resting on the duvet beside her, the other tucking hair behind her ear.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "romantic"
+  ]
+}

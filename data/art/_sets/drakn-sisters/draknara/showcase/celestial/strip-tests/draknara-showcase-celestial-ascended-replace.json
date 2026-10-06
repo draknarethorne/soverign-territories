@@ -1,0 +1,22 @@
+{
+  "artId": "draknara-showcase-celestial-ascended-replace",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Celestial Ascended (replace the clothing)",
+  "components": {
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknara/armor/celestial-armor.json",
+    "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff-ascended.json",
+    "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, the totem face glowing with {{MAGIC}} light.",
+    "background": "data/art/backgrounds/studio/prismatic-glass.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/showcase-celestial-ascended-headwear.json",
+    "strip": "data/art/wardrobe/effects/strip/replace-original.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknara/showcase/celestial/strip-tests/Draknara_Showcase_CelestialAscendedReplace.txt",
+  "notes": "STRIP TEST: the same shot as celestial-ascended plus an instruction to remove the A-pose swimsuit first, to see whether it stops bleeding through."
+}

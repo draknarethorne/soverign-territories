@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/effects/strip/replace-original",
+  "kind": "effects",
+  "name": "Strip: replace the original clothing entirely",
+  "description": "Replace the incoming image's clothing completely with the outfit described below: nothing of the original swimsuit, its straps, strings or colour may remain, show through the new outfit or appear at its edges.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "strip",
+    "bleed-test"
+  ],
+  "notes": "Optional line (components.strip). A gentler wording of the same instruction as remove-original, to compare which one the model follows."
+}

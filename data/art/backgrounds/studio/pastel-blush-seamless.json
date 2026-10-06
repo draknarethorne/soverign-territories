@@ -1,0 +1,13 @@
+{
+  "id": "backgrounds/studio/pastel-blush-seamless",
+  "kind": "background",
+  "name": "Studio: pastel blush seamless",
+  "description": "a seamless pastel blush-pink backdrop with soft even light, a clean floor and a faint gradient at the top",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "editorial"
+  ]
+}

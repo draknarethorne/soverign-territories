@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/interior/hotel-bedroom-morning",
+  "kind": "background",
+  "name": "Modern: hotel bedroom, morning",
+  "description": "a bright modern hotel bedroom in the morning, a large bed with crisp white linen and soft pillows, sheer curtains over tall windows, warm natural daylight and a few soft shadows",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "interior"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

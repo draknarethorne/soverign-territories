@@ -1,0 +1,13 @@
+{
+  "id": "backgrounds/studio/window-light-studio",
+  "kind": "background",
+  "name": "Studio: soft window light",
+  "description": "a pale warm-grey studio wall with a tall softly diffused window light from one side, gentle gradient shadows and a bare wooden floor",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "editorial"
+  ]
+}

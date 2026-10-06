@@ -1,0 +1,4 @@
+{
+  "description": "Global studio defaults. aPoseFootwear: 'signature' = each sister's own heels in the A-pose (art.defaultFootwear); 'barefoot' = bare feet in every female A-pose and underlayer test, with one regenerate. A card's own components.footwear always wins.",
+  "aPoseFootwear": "signature"
+}

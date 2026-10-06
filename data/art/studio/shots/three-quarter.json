@@ -1,0 +1,13 @@
+{
+  "id": "studio/shots/three-quarter",
+  "kind": "framing",
+  "name": "Shot: three-quarter",
+  "description": "three-quarter length, framed from mid-thigh up, the location visible around her",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "shot",
+    "real-world"
+  ]
+}

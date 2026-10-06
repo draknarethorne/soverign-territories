@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/beach-midday-shoreline",
+  "kind": "background",
+  "name": "Modern: beach shoreline, midday",
+  "description": "a sunny sandy beach at midday, turquoise water rolling onto the shore in soft foam, a clear blue sky and a few distant palms, bright natural light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

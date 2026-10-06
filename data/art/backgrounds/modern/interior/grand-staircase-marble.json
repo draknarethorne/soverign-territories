@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/interior/grand-staircase-marble",
+  "kind": "background",
+  "name": "Modern: grand marble staircase",
+  "description": "the grand sweeping marble staircase of a luxury hotel lobby, a polished brass and dark-wood banister, a crystal chandelier overhead and warm ambient light, the lobby softly blurred behind",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "interior"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

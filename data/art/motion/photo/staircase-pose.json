@@ -1,0 +1,21 @@
+{
+  "id": "motion/photo/staircase-pose",
+  "kind": "motion",
+  "name": "Grand staircase pose",
+  "editorial": "A candid high-fashion editorial photograph, relaxed elegance.",
+  "breeze": "Light breeze.",
+  "body": "standing on a middle step of the staircase, weight on the back leg, torso turned a little toward the camera, spine long.",
+  "head": "chin slightly lowered, looking down into the lens.",
+  "defaultGaze": "to camera, poised.",
+  "defaultExpression": "composed, confident half-smile.",
+  "pose": "one hand resting lightly on the banister, the other holding the skirt or hanging easily, one foot on a higher step.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "photo",
+    "glamour"
+  ]
+}

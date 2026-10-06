@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/poolside-lounge",
+  "kind": "background",
+  "name": "Modern: resort poolside",
+  "description": "a sunlit resort pool deck with a turquoise pool, a white cushioned lounger, palm fronds and a striped towel, bright midday light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Not canon. Real-world location for realistic showcase shots; pair with components.realm = realms/modern.json."
+}

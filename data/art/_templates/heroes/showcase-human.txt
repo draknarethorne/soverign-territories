@@ -10,6 +10,8 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 
 ?{{KEY_BLOCK}}
 
+?{{STRIP}}
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.

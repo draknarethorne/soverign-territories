@@ -1,0 +1,13 @@
+{
+  "id": "backgrounds/studio/metallic-seamless",
+  "kind": "background",
+  "name": "Studio: metallic seamless",
+  "description": "a seamless backdrop in a brushed {{METAL}} tone with a soft vignette and a glossy reflective floor",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "studio",
+    "editorial"
+  ]
+}
