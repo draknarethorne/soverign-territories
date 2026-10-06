@@ -7,12 +7,13 @@
   "properties": {
     "artId": {"type": "string", "pattern": "^[a-z0-9-]+$"},
     "kind": {"const": "base-set"},
-    "stage": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene"]},
-    "heroArt": {"type": "string", "pattern": "^data/art/(heroes|dragons)/.+\\.json$", "description": "Art identity file (which in turn links to the gameplay card)"},
+    "stage": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "brand", "card"]},
+    "heroArt": {"type": "string", "pattern": "^data/art/(heroes|dragons|brand|cards)/.+\\.json$", "description": "Art identity file (which in turn links to the gameplay card)"},
     "template": {"type": "string", "pattern": "^data/art/_templates/.+\\.txt$"},
     "output": {"type": "string", "pattern": "^prompts/[^/]+/.+\\.txt$"},
     "denoise": {"type": "string"},
     "notes": {"type": "string"},
+    "keyDetails": {"type": "array", "items": {"enum": ["hair", "bust", "eyes", "skin", "legs"]}, "uniqueItems": true, "description": "Details called out up front in a Critical details block (and left out of the later lines); overrides the template default"},
     "finish": {"type": "string", "pattern": "^[a-z]+$", "description": "Marks this card as an art edition of its hero's card (key in finishes.json); the card must list it under art.variants"},
     "component": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "One whole reusable piece (hair, motion)"},
     "components": {

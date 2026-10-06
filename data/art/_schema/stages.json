@@ -12,7 +12,9 @@
     ],
     "scene": [
       "scene",
-      "video"
+      "video",
+      "brand",
+      "card"
     ]
   },
   "cardStageToFolder": {

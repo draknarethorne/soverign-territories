@@ -53,7 +53,25 @@ PROMPTS = ROOT / "prompts"
 CFG_PATH = WF / "workspaces.json"
 BACKUPS = WF / ".sync" / "backup"
 CURATED = WF / "_curated"
+TEST = WF / "_test"
+# Curated workflow files carry this prefix so they sort to the bottom of a workspace list; a name with a render counter
+# (Name_00001) is a workflow captured from a render and keeps its name. Test workflows (experiments, bisects) are kept in
+# workflows/_test under a test_ prefix and are only pushed to a workspace on request (deploy --tests).
+CURATED_PREFIX = "zz_Curated_"
+TEST_PREFIX = "test_"
+CAPTURED_NAME = re.compile(r"_\d{5}")
 TIERS = ("dev", "uat", "prod")
+
+
+def plain_name(name):
+    for prefix in (CURATED_PREFIX, TEST_PREFIX):
+        if name.startswith(prefix):
+            return name[len(prefix):]
+    return name
+
+
+def curated_name(name):
+    return name if name.startswith((CURATED_PREFIX, TEST_PREFIX)) or CAPTURED_NAME.search(name) else CURATED_PREFIX + name
 
 
 # ---------- configuration ----------
@@ -217,6 +235,22 @@ def engine_of(name):
     return "firered" if "_FireRed_" in name else "minimax" if "_MiniMax_" in name else "qwen"
 
 
+def is_staged(name):
+    """A staged scene takes a pre-staged outfit render; it is built and kept in the repo but only deployed on request."""
+    return "_Scene_Staged_" in plain_name(name)
+
+
+def workspace_subdir(ws, wf):
+    """Folder inside a workspace for a generated workflow, mirroring its output folder: <stage>/<family>/, with the hero
+    first in a workspace that serves several heroes. Curated and test workflows stay at the top, where their prefix sorts them last."""
+    s = save_node(wf)
+    parts = s["widgets_values"][0].split("/") if s else []
+    if len(parts) < 4 or parts[2].startswith(("_", ".")):
+        return pathlib.Path()
+    sub = pathlib.Path(*parts[2:-1])
+    return sub if ws in hero_groups() else pathlib.Path(parts[1]) / sub
+
+
 def repo_path(cfg, group, hero, name):
     return engine_roots(cfg)[engine_of(name)] / group / hero / name
 
@@ -244,7 +278,7 @@ def hero_files(hero):
 
 
 def install_files(cfg, ws, root=None):
-    """{name: path} for the workflows saved in a workspace (flat by file name)."""
+    """{name: path} for the workflows saved in a workspace (found by file name, whatever folder they sit in)."""
     out = {}
     d = install_dir(cfg, ws, root)
     if d.is_dir():
@@ -257,17 +291,17 @@ def install_files(cfg, ws, root=None):
 
 
 def hero_of(name):
-    prefix = name.split("_", 1)[0]
+    prefix = plain_name(name).split("_", 1)[0]
     return prefix if prefix in hero_groups() else None
 
 
 STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
-               "Head": "head", "View": "poses", "Video": "video"}
+               "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card"}
 
 
 def stage_of(name):
     """Prompt folder a workflow file belongs to: Hero_Qwen_X_Pose -> poses, Hero_Qwen_Scene_Glamour -> scene."""
-    m = re.match(r"^[^_]+_(?:Qwen|FireRed|MiniMax)_(.+?)(?:\.json)?$", name)
+    m = re.match(r"^[^_]+_(?:Qwen|FireRed|MiniMax)_(.+?)(?:\.json)?$", plain_name(name))
     if not m:
         return "other"
     parts = m.group(1).split("_")
@@ -316,8 +350,14 @@ def get_values(wf):
 
 
 def curated_prefix(group, hero, name):
-    """Hand-curated workflows write to <group>/<Hero>/_curated/<name>, apart from the generated art."""
+    """Hand-curated workflows write to <group>/<Hero>/_curated/<name>, apart from the generated art (the sort prefix is not part of the output name)."""
+    name = plain_name(name)
     return f"{group}/{hero}/_curated/{name[:-5] if name.endswith('.json') else name}"
+
+
+def test_prefix(group, hero, name):
+    name = plain_name(name)
+    return f"{group}/{hero}/_test/{name[:-5] if name.endswith('.json') else name}"
 
 
 def set_prefix(wf, prefix):
@@ -354,6 +394,21 @@ def patch_wf(wf, pos, neg, prefix):
         s["widgets_values"][0] = prefix
         if isinstance(s.get("widgets_values_named"), dict) and "filename_prefix" in s["widgets_values_named"]:
             s["widgets_values_named"]["filename_prefix"] = prefix
+    return changed
+
+
+def set_size(wf, prompt_text):
+    """Apply a 'Size: WxH' line from a generated prompt's header to the text-to-image latent; return True if it changed."""
+    m = re.search(r"^Size: (\d+)x(\d+)", prompt_text, re.M)
+    if not m:
+        return False
+    w, h = int(m.group(1)), int(m.group(2))
+    changed = False
+    for sg in wf.get("definitions", {}).get("subgraphs", []):
+        for n in sg.get("nodes", []):
+            if n.get("type") == "EmptySD3LatentImage" and n["widgets_values"][:2] != [w, h]:
+                n["widgets_values"][0], n["widgets_values"][1] = w, h
+                changed = True
     return changed
 
 
@@ -494,6 +549,14 @@ def pick_targets(cfg, args, default):
     return [n for n in names if n in ws]
 
 
+def name_matches(pattern, text):
+    """--match is a case-insensitive substring; with a ^ or $ in it, it is a regex (Hero_FireRed_X_Pose$ picks only the base A-pose)."""
+    text = text[:-5] if text.endswith(".json") else text
+    if "^" in pattern or "$" in pattern:
+        return re.search(pattern, text, re.I) is not None
+    return pattern.lower() in text.lower()
+
+
 def selected(cfg, ws, args, repo):
     """Repo files a workspace should hold, after the filters."""
     out = {}
@@ -506,7 +569,7 @@ def selected(cfg, ws, args, repo):
             continue
         if not stage_ok(args, name):
             continue
-        if args.match and args.match.lower() not in name.lower():
+        if args.match and not name_matches(args.match, name):
             continue
         out[name] = (group, hero, p)
     return out
@@ -547,15 +610,20 @@ def cmd_list(args):
                   + ", ".join(f"{s} {c}" for s, c in sorted(stages.items())))
 
 
-def curated_files():
-    """{name: (group, hero, path)} for hand-curated workflows in workflows/_curated/<set>/<Hero>/. make and deploy never touch them."""
+def curated_files(folder=None):
+    """{name: (group, hero, path)} for hand-curated workflows in workflows/_curated/<set>/<Hero>/ (or test workflows in _test). make and deploy never touch them."""
     out = {}
-    if CURATED.is_dir():
-        for g in sorted(CURATED.iterdir()):
+    folder = folder or CURATED
+    if folder.is_dir():
+        for g in sorted(folder.iterdir()):
             for h in sorted(g.iterdir()) if g.is_dir() else []:
                 for p in sorted(h.glob("*.json")) if h.is_dir() else []:
                     out[p.name] = (g.name, h.name, p)
     return out
+
+
+def test_files():
+    return curated_files(TEST)
 
 
 def same_workflow(a, b):
@@ -597,6 +665,7 @@ def cmd_status(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
     cur = curated_files()
+    tst = test_files()
     groups = hero_groups()
     for ws in pick_targets(cfg, args, "all"):
         if not install_exists(cfg, ws, args.root):
@@ -606,7 +675,7 @@ def cmd_status(args):
         inst = install_files(cfg, ws, args.root)
         rows = collections.defaultdict(list)
         for name, (g, h, p) in selected(cfg, ws, args, repo).items():
-            rows["missing" if name not in inst else classify(p, inst[name])].append(name)
+            rows["staged" if name not in inst and is_staged(name) else "missing" if name not in inst else classify(p, inst[name])].append(name)
         for name in inst:
             h = hero_of(name)
             if name in repo or not h or not holds(cfg, ws, groups[h], h, stage_of(name)):
@@ -616,14 +685,17 @@ def cmd_status(args):
             if name in cur:
                 rows["curated" if same_workflow(cur[name][2], inst[name]) else "curated-changed"].append(name)
                 continue
+            if name in tst:
+                rows["test" if same_workflow(tst[name][2], inst[name]) else "test-changed"].append(name)
+                continue
             rows["legacy" if info.get("legacy") else "install-only"].append(name)
         for name in selected(cfg, ws, args, cur):
             if name not in inst:
                 rows["curated-missing"].append(name)
-        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
+        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "test", "test-changed", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
         print(f"{ws} [{info['status']}]: {counts}")
         hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull: keeps it as a curated workflow", "curated-changed": "pull: captures your edits",
-                 "curated-missing": "deploy --curated", "legacy": "old hand-made, no generated prompt"}
+                 "curated-missing": "deploy --curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt"}
         for k, names in rows.items():
             if k in hints and names and (args.verbose or len(names) <= 5):
                 print(f"    {k} ({hints[k]}): " + ", ".join(names))
@@ -680,13 +752,17 @@ def cmd_deploy(args):
             replace = args.overwrite or (cfg["workspaces"][ws].get("legacy", False) and not getattr(args, "patch_only", False))
             if name not in inst and getattr(args, "existing", False):
                 continue
+            if name not in inst and is_staged(name) and not getattr(args, "staged", False):
+                tally["staged held back"] += 1
+                continue
             if name in inst and getattr(args, "new_only", False):
                 tally["kept"] += 1
                 continue
             if name not in inst:
                 print(f"  new      {ws}/{name}")
                 if not args.dry_run:
-                    write_wf(dest / name, read_wf(p))
+                    wf = read_wf(p)
+                    write_wf(dest / workspace_subdir(ws, wf) / name, wf)
                 tally["new"] += 1
                 continue
             state = classify(p, inst[name])
@@ -707,6 +783,18 @@ def cmd_deploy(args):
                     patch_wf(wf, *get_values(read_wf(p)))
                     write_wf(inst[name], wf)
             tally["updated"] += 1
+        if getattr(args, "tests", False):
+            for name, (g, h, p) in selected(cfg, ws, args, test_files()).items():
+                if name not in inst:
+                    print(f"  test     {ws}/{name} (new)")
+                    if not args.dry_run:
+                        write_wf(dest / name, read_wf(p))
+                    tally["test"] += 1
+                elif same_workflow(p, inst[name]):
+                    tally["aligned"] += 1
+                else:
+                    print(f"  SKIP     {ws}/{name} differs from the test copy (your edits?): pull it, or use --overwrite")
+                    tally["skipped"] += 1
         if getattr(args, "curated", False):
             for name, (g, h, p) in selected(cfg, ws, args, curated_files()).items():
                 if name not in inst:
@@ -764,7 +852,7 @@ def cmd_cleanup(args):
             continue
         g = groups[h]
         if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group) or not stage_ok(args, name) \
-                or (args.match and args.match.lower() not in name.lower()):
+                or (args.match and not name_matches(args.match, name)):
             continue
         why = None
         dests = [w for w in targets_for(cfg, "uat", g, h, stage_of(name)) if w != src]
@@ -806,7 +894,6 @@ def cmd_promote(args):
         sys.exit("Promote needs a filter (--hero, --group, --stage, --class, --match) or --all.")
     if args.src == args.to or TIERS.index(args.src) > TIERS.index(args.to):
         sys.exit(f"Promote goes up: dev -> uat -> prod (got {args.src} -> {args.to}).")
-    repo = repo_files(cfg)
     groups = hero_groups()
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     moved = collections.Counter()
@@ -830,7 +917,7 @@ def cmd_promote(args):
                 continue
             if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group):
                 continue
-            if not stage_ok(args, name) or (args.match and args.match.lower() not in name.lower()):
+            if not stage_ok(args, name) or (args.match and not name_matches(args.match, name)):
                 continue
             dests = [w for w in targets_for(cfg, args.to, g, h, stage_of(name)) if w in cfg["workspaces"] and install_exists(cfg, w, args.root)]
             if not dests:
@@ -861,6 +948,7 @@ def cmd_pull(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
     cur = curated_files()
+    tst = test_files()
     groups = hero_groups()
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     for ws in pick_targets(cfg, args, "dev"):
@@ -896,20 +984,21 @@ def cmd_pull(args):
                 continue
             if not stage_ok(args, name):
                 continue
-            if args.match and args.match.lower() not in name.lower():
+            if args.match and not name_matches(args.match, name):
                 continue
-            if name in cur:  # a hand-curated workflow: the workspace is where it is edited, so keep the repo copy in step
+            if name in cur or name in tst:  # a hand-curated or test workflow: the workspace is where it is edited, so keep the repo copy in step
+                store, make_prefix = (cur, curated_prefix) if name in cur else (tst, test_prefix)
                 wf = read_wf(p)
-                prefix_fix = set_prefix(wf, curated_prefix(groups[h], h, name))  # curated work writes to <group>/<Hero>/_curated/
+                prefix_fix = set_prefix(wf, make_prefix(groups[h], h, name))  # writes to <group>/<Hero>/_curated/ or _test/
                 if prefix_fix and not args.dry_run:
                     backup(stamp, ws, name, p)
                     write_wf(p, wf)  # the workspace copy gets the same prefix so the two stay identical
-                if read_wf(cur[name][2]) == wf:
+                if read_wf(store[name][2]) == wf:
                     skipped += 1
                     continue
-                print(f"  update curated  {ws}/{name}")
+                print(f"  update {'curated' if name in cur else 'test'}  {ws}/{name}")
                 if not args.dry_run:
-                    write_wf(cur[name][2], wf)
+                    write_wf(store[name][2], wf)
                 done += 1
                 continue
             if name in repo and not args.force:
@@ -917,18 +1006,24 @@ def cmd_pull(args):
                 continue
             if name in repo:
                 dst = repo_path(cfg, groups[h], h, name)
+            elif name.startswith(TEST_PREFIX):
+                dst = TEST / groups[h] / h / name  # an experiment: kept apart from the curated workflows
             else:
-                dst = CURATED / groups[h] / h / name  # not generated by us: keep it as a curated workflow
-            print(f"  pull   {ws}/{name} -> {dst.parent.relative_to(ROOT).as_posix()}/")
+                dst = CURATED / groups[h] / h / curated_name(name)  # not generated by us: keep it as a curated workflow
+            print(f"  pull   {ws}/{name} -> {dst.parent.relative_to(ROOT).as_posix()}/{dst.name if dst.name != name else ''}")
             wf = read_wf(p)
-            if dst.is_relative_to(CURATED):
-                prefix = curated_prefix(groups[h], h, name)
+            if dst.is_relative_to(CURATED) or dst.is_relative_to(TEST):
+                prefix = (test_prefix if dst.is_relative_to(TEST) else curated_prefix)(groups[h], h, name)
                 print(f"           output folder: {prefix.rsplit('/', 1)[0]}/")
                 if set_prefix(wf, prefix) and not args.dry_run:
                     backup(stamp, ws, name, p)
                     write_wf(p, wf)
             if not args.dry_run:
                 write_wf(dst, wf)
+                if dst.name != name:  # the workspace copy takes the curated name too, so the two stay one workflow
+                    backup(stamp, ws, name, p)
+                    write_wf(p.with_name(dst.name), wf)
+                    p.unlink()
             done += 1
         print(f"{ws}: pulled {done}, left {skipped} unchanged" + (" (dry run)" if args.dry_run else ""))
 
@@ -941,7 +1036,7 @@ def cmd_fork(args):
     if src not in repo:
         sys.exit(f"No generated workflow named {src} (try: status -v, or the name without .json).")
     g, h, p = repo[src]
-    new = f"{src[:-5]}_{args.tag}.json"
+    new = curated_name(f"{src[:-5]}_{args.tag}.json")
     if new in repo or new in cur:
         sys.exit(f"{new} already exists.")
     wf = read_wf(p)
@@ -957,6 +1052,13 @@ def cmd_fork(args):
     if not args.no_deploy and install_exists(cfg, ws, args.root):
         write_wf(install_dir(cfg, ws, args.root) / new, wf)
         print(f"  deployed to {ws}: open {new} in ComfyUI, edit it, save it, then run pull to keep your changes")
+
+
+def is_text_item(cfg, item):
+    """A prompt whose family is listed under textGroups for its group is text-to-image (no incoming picture): the brand set."""
+    parts = item["path"].relative_to(PROMPTS).parts
+    wanted = cfg.get("textGroups", {}).get(item["group"], [])
+    return item.get("engine") == "qwen" and (parts[2] in wanted or (len(parts) > 4 and parts[3] in wanted))
 
 
 def cmd_make(args):
@@ -977,7 +1079,7 @@ def cmd_make(args):
     if args.stage or args.cls:
         items = [i for i in items if stage_ok(args, i["stage"], True)]
     if args.match:
-        items = [i for i in items if args.match.lower() in i["stem"].lower()]
+        items = [i for i in items if name_matches(args.match, i["stem"])]
     tally = {"created": 0, "updated": 0, "unchanged": 0, "missing": 0}
     for it in items:
         target = engine_roots(cfg)[it["engine"]] / it["group"] / it["hero"] / f"{it['name']}.json"
@@ -985,7 +1087,8 @@ def cmd_make(args):
         pos = engine_prompt(cfg, it, pos)
         if target.exists():
             wf = read_wf(target)
-            if patch_wf(wf, pos, neg, it["prefix"]):
+            resized = is_text_item(cfg, it) and set_size(wf, it["path"].read_text(encoding="utf-8"))
+            if patch_wf(wf, pos, neg, it["prefix"]) or resized:
                 if not args.dry_run:
                     write_wf(target, wf)
                 tally["updated"] += 1
@@ -998,13 +1101,16 @@ def cmd_make(args):
             if args.verbose:
                 print(f"  missing  {it['group']}/{it['hero']}/{target.name}")
             continue
-        is_apose = it["engine"] == "qwen" and re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None
+        is_apose = re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None  # takes the hero's source photo
+        is_text = is_text_item(cfg, it)
         master = ROOT / (cfg["engines"][it["engine"]]["template"] if it["engine"] in ("firered", "minimax")
-                         else cfg["templates"]["poses" if is_apose else "default"])
+                         else cfg["templates"]["text" if is_text else "poses" if is_apose else "default"])
         if not master.exists():
             sys.exit(f"Master template not found: {master}")
         wf = read_wf(master)
         patch_wf(wf, pos, neg, it["prefix"])
+        if is_text:
+            set_size(wf, it["path"].read_text(encoding="utf-8"))
         if it["engine"] == "firered":
             set_turbo(wf, cfg["engines"]["firered"].get("turbo", True))
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
@@ -1022,6 +1128,32 @@ def cmd_make(args):
     print("make: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
     if tally["missing"] and not args.create:
         print("      (use --create to build the missing workflows from the master template)")
+
+
+def cmd_tidy(args):
+    """Move generated workflows that sit loose in a workspace into <stage>/<family>/ folders, so the ComfyUI list shows folders, not hundreds of files."""
+    cfg = load_cfg()
+    repo = repo_files(cfg)
+    for ws in pick_targets(cfg, args, "all"):
+        if not install_exists(cfg, ws, args.root):
+            continue
+        d = install_dir(cfg, ws, args.root)
+        moved = 0
+        for name, p in install_files(cfg, ws, args.root).items():
+            if name not in repo or (args.hero and repo[name][1].lower() != args.hero.lower()):
+                continue
+            want = d / workspace_subdir(ws, read_wf(repo[name][2])) / name
+            if p == want:
+                continue
+            if args.verbose:
+                print(f"  {ws}: {p.relative_to(d).as_posix()} -> {want.relative_to(d).as_posix()}")
+            if args.apply:
+                want.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(p), str(want))
+            moved += 1
+        print(f"{ws}: {moved} workflow(s) {'moved' if args.apply else 'would move'}")
+    if not args.apply:
+        print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
 
 def cmd_inputs(args):
@@ -1078,6 +1210,8 @@ def main(argv=None):
     s.add_argument("--templates", action="store_true", help="deploy the ST?_ stage templates instead of hero workflows")
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
     s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
+    s.add_argument("--tests", action="store_true", help="also copy test workflows (workflows/_test, test_ prefix) the workspace lacks")
+    s.add_argument("--staged", action="store_true", help="also add staged scenes (Scene_Staged_*) the workspace lacks; they are held back by default")
     s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
     s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
     s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
@@ -1112,8 +1246,12 @@ def main(argv=None):
     s = sub.add_parser("inputs")
     common(s)
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
+    s = sub.add_parser("tidy")
+    common(s, True, True)
+    s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
+    s.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork, "tidy": cmd_tidy}[args.cmd](args)
 
 
 if __name__ == "__main__":

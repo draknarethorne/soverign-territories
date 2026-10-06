@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Card-Art Identity",
+  "description": "Shared art direction for the non-hero gameplay cards (units, pets, buildings, tactics, equipment, workers): the style, one palette and effect per element, and the framing of each category. Individual art cards point at a gameplay card by cardId and take its name, element and lore from there.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "cardart"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^cards/[a-z0-9-]+$"},
+    "kind": {"const": "cardart"},
+    "notes": {"type": "string"},
+    "cardart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["style", "elements", "categories"],
+      "properties": {
+        "style": {"type": "string", "description": "Rendering style shared by all card art"},
+        "elements": {
+          "type": "object",
+          "description": "Element name -> palette and effect (Neutral included)",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["color", "fx"],
+            "properties": {"color": {"type": "string"}, "fx": {"type": "string"}}
+          }
+        },
+        "categories": {
+          "type": "object",
+          "description": "Category (units, pets, buildings, tactics, equipment, workers) -> framing and background",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["framing", "background"],
+            "properties": {"framing": {"type": "string"}, "background": {"type": "string"}}
+          }
+        }
+      }
+    }
+  }
+}

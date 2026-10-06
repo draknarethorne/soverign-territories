@@ -14,9 +14,10 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
-THEMES = {"celtic", "danish", "egyptian", "greek", "norse", "roman", "thanksgiving"}
-LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase"}
+THEMES = {p.parent.name for p in (ROOT / "data/art/themes").rglob("theme.json")}
+LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card"}
 STAGE_FOLDER = {"pose": "poses"}
+BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
 # holo edition sits beside its signature card, and one-card groups stay flat in the stage folder.
 SCENE_BUCKETS = {
@@ -30,7 +31,7 @@ def scene_family(art_id, group):
     rest = art_id.split("-scene-", 1)[1] if "-scene-" in art_id else art_id
     if group != "drakn-sisters":
         return ["modern"] if rest.startswith("modern-") else []
-    if rest in THEMES:
+    if rest.removeprefix("staged-") in THEMES:
         return ["themes"]
     if rest.startswith("signature-"):
         return ["signature"]
@@ -42,9 +43,20 @@ def scene_family(art_id, group):
     return []
 
 
+def brand_family(art_id):
+    """Brand art (title, key art, plate, logo, icons) groups by what it is: <slug>-brand-<family>-<name>."""
+    rest = art_id.split("-brand-", 1)[1] if "-brand-" in art_id else art_id
+    for prefix, fam in BRAND_FAMILIES.items():
+        if rest == prefix or rest.startswith(prefix + "-"):
+            return [fam]
+    return []
+
+
 def wearing_family(card):
     """Library clothing groups by its family (dresses, gowns, sets) and library armor shares one folder; signature items stay flat."""
     wear = card.get("components", {}).get("wearing", "")
+    if wear.startswith("data/art/themes/"):
+        return ["themes"]
     parts = wear.split("/")
     if not (wear.startswith("data/art/wardrobe/") and len(parts) >= 6):
         return []
@@ -78,6 +90,10 @@ def family(card, group, root=None):
         return None
     if stage == "scene":
         return scene_family(art_id, group)
+    if stage == "brand":
+        return brand_family(art_id)
+    if stage == "card":
+        return []  # mass card art sits flat in <category>/card/
     if stage == "pose":
         if "view" in comps:
             return ["views"]

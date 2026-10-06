@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Art Brand Identity",
+  "description": "Art-direction identity of the game brand (data/art/brand/<slug>.json): the title, key art, logo and icon set. It has no gameplay card; it names the heroes that appear in key art and the look of the world. Text-to-image only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "brand"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^brand/[a-z0-9-]+$"},
+    "kind": {"const": "brand"},
+    "notes": {"type": "string"},
+    "brand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "tagline", "ridge", "light", "sky", "lineup", "elements"],
+      "properties": {
+        "name": {"type": "string", "minLength": 2},
+        "tagline": {"type": "string"},
+        "ridge": {"type": "string", "description": "The stage the heroes stand on in key art"},
+        "light": {"type": "string", "description": "Light direction and colour shared by every brand image"},
+        "sky": {"type": "string", "description": "What fills the sky behind the heroes"},
+        "world": {"type": "string", "description": "The fractured world below"},
+        "lineup": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Heroes in key-art order (left to right, front row then back row)",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hero", "row", "look"],
+            "properties": {
+              "hero": {"type": "string", "pattern": "^[a-z]+$", "description": "Sister slug; must have an identity under data/art/heroes/drakn-sisters/"},
+              "row": {"enum": ["front", "back"]},
+              "look": {"type": "string", "description": "Gown colour and element effect, as the key art should show her"}
+            }
+          }
+        },
+        "elements": {
+          "type": "array",
+          "minItems": 1,
+          "description": "One entry per element icon",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["element", "hero", "motif"],
+            "properties": {
+              "element": {"type": "string"},
+              "hero": {"type": "string", "pattern": "^[a-z]+$"},
+              "motif": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@
 
   where-used <piece>          list every file that references the piece
   move <old> <new>            git mv the piece, then rewrite every reference (and the piece's own id)
+  regroup <map.json>          move many pieces in one pass (used to sub-organize a crowded folder)
 
 A <piece> is a path under data/art/ with or without the leading 'data/art/' and '.json', e.g.
   wardrobe/weapons/greatsword   or   data/art/wardrobe/weapons/swords/greatsword.json
@@ -87,6 +88,42 @@ def cmd_move(old, new, dry_run):
         target.write_text(text, encoding="utf-8")
 
 
+def cmd_regroup(map_file, dry_run):
+    """Move many pieces at once. The map file is JSON: {"pairs": [[old, new], ...], "extra": {"literal": "replacement"}}.
+    Every path reference and quoted id is rewritten in one pass over the repo; 'extra' covers ids that are not a piece path (a theme manifest)."""
+    import json
+    import re
+    spec = json.loads(pathlib.Path(map_file).read_text(encoding="utf-8"))
+    pairs = [(norm(a), norm(b)) for a, b in spec["pairs"]]
+    for old, new in pairs:
+        if not (ROOT / f"data/art/{old}.json").exists():
+            sys.exit(f"no such piece: data/art/{old}.json")
+        if (ROOT / f"data/art/{new}.json").exists():
+            sys.exit(f"destination exists: data/art/{new}.json")
+    rewrite = {}
+    for old, new in pairs:
+        rewrite[f"data/art/{old}.json"] = f"data/art/{new}.json"
+        rewrite[f'"{old}"'] = f'"{new}"'
+    rewrite.update(spec.get("extra", {}))
+    print(f"{len(pairs)} piece(s) to move, {len(rewrite)} reference forms{' (dry run)' if dry_run else ''}")
+    if dry_run:
+        return
+    for old, new in pairs:
+        src, dst = ROOT / f"data/art/{old}.json", ROOT / f"data/art/{new}.json"
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if subprocess.run(["git", "mv", str(src), str(dst)], cwd=ROOT, capture_output=True).returncode != 0:
+            shutil.move(str(src), str(dst))
+    pattern = re.compile("|".join(re.escape(k) for k in sorted(rewrite, key=len, reverse=True)))
+    changed = 0
+    for f in scan_files():
+        text = f.read_text(encoding="utf-8")
+        new_text = pattern.sub(lambda m: rewrite[m.group(0)], text)
+        if new_text != text:
+            f.write_text(new_text, encoding="utf-8", newline="")
+            changed += 1
+    print(f"rewrote references in {changed} file(s); regenerate prompts and check that they are unchanged")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -96,9 +133,14 @@ def main():
     m.add_argument("old")
     m.add_argument("new")
     m.add_argument("--dry-run", action="store_true")
+    r = sub.add_parser("regroup")
+    r.add_argument("map_file")
+    r.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     if args.cmd == "where-used":
         cmd_where_used(args.piece)
+    elif args.cmd == "regroup":
+        cmd_regroup(args.map_file, args.dry_run)
     else:
         cmd_move(args.old, args.new, args.dry_run)
 

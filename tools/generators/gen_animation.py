@@ -58,10 +58,12 @@ def seconds_label(n):
 
 def hero_tokens(card):
     hero = gen_prompt.load_identity(card["heroArt"])
-    toks = gen_prompt.tokens_for(hero)
-    sex = "female" if "bust" in hero["art"]["physique"] else "male"
     art = card.get("source", {}).get("artCard")
     art_toks = gen_prompt.generate(art, tokens_only=True) if art else {}
+    if hero.get("kind") == "brand":  # key art and title have no single hero; the cards write their own subject and beats
+        return {"HERO": hero["brand"]["name"], **PRONOUNS["female"]}, art_toks
+    toks = gen_prompt.tokens_for(hero)
+    sex = "female" if "bust" in hero["art"]["physique"] else "male"
     toks = {**toks, **PRONOUNS[sex]}
     return toks, art_toks
 
@@ -74,7 +76,9 @@ def subject(card, toks, art_toks):
     if src.get("describe"):
         return "Scene: The first frame shows " + fill(src["describe"], toks).rstrip(".") + "."
     parts = [f"The first frame shows {toks['HERO']}"]
-    worn = art_toks.get("WEARING") or art_toks.get("UNDERLAYER")
+    worn = art_toks.get("WEARING")
+    if not worn and art_toks.get("UNDERLAYER"):
+        worn = art_toks["UNDERLAYER"].split(", ")[0]  # the garment only; finish and sheen clauses clip into dangling fragments
     if worn:
         parts.append("wearing " + clip(worn, 110))
     where = art_toks.get("BACKGROUND")

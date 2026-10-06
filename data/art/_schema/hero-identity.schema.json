@@ -36,6 +36,8 @@
       "properties": {
         "negatives": {"type": "array", "items": {"type": "string"}, "description": "Permanent hero-specific negative-prompt terms"},
         "defaultUnderlayer": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "A-pose underlayer piece used when a pose card sets none (the hero's signature look); override per card with components.underlayer"},
+        "defaultFootwear": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "A-pose shoe piece (legs_feet) filling {{FOOTWEAR}} inside the swimwear pieces; override per card with components.footwear"},
+        "defaultSheen": {"type": "string", "pattern": "^data/art/.+\\.json$", "description": "Surface-finish piece (wardrobe/finishes/*.json) filling {{SHEEN}} inside metallic pieces; override per card with components.sheen"},
         "palette": {
           "type": "object",
           "additionalProperties": false,

@@ -133,7 +133,7 @@ def main():
 
     if kit.get("library"):
         subprocess.run([sys.executable, str(ROOT / "tools/generators/scaffold_studio_library.py"), "--group", group, "--slug", slug,
-                        "--hero", hero, "--identity", ident, "--underlayer", "data/art/wardrobe/swimwear/metallic-triangle-bikini.json"], check=True)
+                        "--hero", hero, "--identity", ident, "--underlayer", "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"], check=True)
     print(f"{slug}: made {wr.made} cards, {wr.skipped} already existed")
 
 

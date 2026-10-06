@@ -51,10 +51,10 @@ HEAD_FRAMING = [
     ("chest-and-hair", "Chest and Hair", "data/art/studio/framing/chest-and-hair.json"),
 ]
 HEAD_EXPRESSIONS = [
-    ("soft-closed-smile", "Soft Closed Smile", "data/art/motion/expressions/soft-closed-smile.json"),
-    ("sultry-lips-parted", "Sultry", "data/art/motion/expressions/sultry-lips-parted.json"),
-    ("serious-poised", "Serious", "data/art/motion/expressions/serious-poised.json"),
-    ("joyful-laugh", "Joyful Laugh", "data/art/motion/expressions/joyful-laugh.json"),
+    ("soft-closed-smile", "Soft Closed Smile", "data/art/motion/expressions/glamour/soft-closed-smile.json"),
+    ("sultry-lips-parted", "Sultry", "data/art/motion/expressions/glamour/sultry-lips-parted.json"),
+    ("serious-poised", "Serious", "data/art/motion/expressions/composed/serious-poised.json"),
+    ("joyful-laugh", "Joyful Laugh", "data/art/motion/expressions/playful/joyful-laugh.json"),
 ]
 
 

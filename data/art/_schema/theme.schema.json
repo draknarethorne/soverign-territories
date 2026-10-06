@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["id", "kind", "name", "type", "description"],
   "properties": {
-    "id": {"type": "string", "pattern": "^themes/[a-z0-9-]+$", "description": "'themes/' + the folder name"},
+    "id": {"type": "string", "pattern": "^themes/[a-z0-9-]+/[a-z0-9-]+$", "description": "'themes/' + group folder + '/' + the theme folder name"},
     "kind": {"const": "theme"},
     "name": {"type": "string", "minLength": 1},
     "type": {"enum": ["culture", "event"], "description": "culture = a lasting world style; event = a seasonal/holiday pack that can be switched on for a period"},

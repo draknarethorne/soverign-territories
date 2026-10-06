@@ -62,7 +62,9 @@ def art_piece_files():
             continue  # identity, not a piece
         if parts[0] == "dragons":
             continue
-        if parts[0] == "themes" and len(parts) == 3 and parts[2] == "theme.json":
+        if parts[0] in ("brand", "cards"):
+            continue  # brand and card-art identities, not pieces
+        if parts[0] == "themes" and parts[-1] == "theme.json":
             continue  # theme manifest, not a piece
         out.append(p)
     return out
@@ -76,8 +78,10 @@ REGISTRY = [
     ("gameplay cards", card_files, SCHEMAS / "codex-schema.json"),
     ("art hero identities", hero_identity_files, ART_SCHEMAS / "hero-identity.schema.json"),
     ("art dragon identities", lambda: rglob("data/art/dragons/**/*.json"), ART_SCHEMAS / "dragon-identity.schema.json"),
+    ("art brand identities", lambda: rglob("data/art/brand/*.json"), ART_SCHEMAS / "brand-identity.schema.json"),
+    ("art card-art identities", lambda: rglob("data/art/cards/*.json"), ART_SCHEMAS / "cardart-identity.schema.json"),
     ("art pieces", art_piece_files, ART_SCHEMAS / "art-piece.schema.json"),
-    ("art themes", lambda: rglob("data/art/themes/*/theme.json"), ART_SCHEMAS / "theme.schema.json"),
+    ("art themes", lambda: rglob("data/art/themes/**/theme.json"), ART_SCHEMAS / "theme.schema.json"),
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
 ]
 
@@ -377,18 +381,24 @@ def check_piece_refs(report):
         if realm_dir not in ("fantasy", "modern", "studio") or len(parts) <= parts.index("backgrounds") + 2:
             report.error(rel(f), "backgrounds must live under fantasy/, modern/ or studio/ (that folder is the realm)")
     # Core wardrobe and theme pieces: the id is the path, so a move can never leave a stale id behind.
-    for f in rglob("data/art/wardrobe/**/*.json") + rglob("data/art/themes/*/**/*.json") + rglob("data/art/cosmetics/**/*.json"):
+    for f in rglob("data/art/wardrobe/**/*.json") + rglob("data/art/themes/**/*.json") + rglob("data/art/cosmetics/**/*.json"):
         if f.name == "theme.json":
             continue
         expected = f.relative_to(ROOT / "data/art").with_suffix("").as_posix()
         actual = load(f).get("id")
         if actual != expected:
             report.error(rel(f), f"id {actual!r} must equal its path {expected!r}")
-    for f in rglob("data/art/themes/*"):
-        if f.is_dir() and not (f / "theme.json").exists():
-            report.error(rel(f), "theme folder has no theme.json")
-        elif f.is_dir() and load(f / "theme.json").get("id") != f"themes/{f.name}":
-            report.error(rel(f / "theme.json"), f"id must be 'themes/{f.name}'")
+    # Themes sit one level down in a group folder (themes/<group>/<theme>/theme.json) so the list stays browsable.
+    for group in rglob("data/art/themes/*"):
+        if not group.is_dir():
+            continue
+        if (group / "theme.json").exists():
+            report.error(rel(group / "theme.json"), "a theme must sit inside a group folder: themes/<group>/<theme>/")
+        for f in group.iterdir():
+            if f.is_dir() and not (f / "theme.json").exists():
+                report.error(rel(f), "theme folder has no theme.json")
+            elif f.is_dir() and load(f / "theme.json").get("id") != f"themes/{group.name}/{f.name}":
+                report.error(rel(f / "theme.json"), f"id must be 'themes/{group.name}/{f.name}'")
     for f in art_piece_files():
         d = load(f)
         for field in ("defaultGaze", "defaultExpression"):
@@ -401,6 +411,12 @@ def check_piece_refs(report):
         du = load(f).get("art", {}).get("defaultUnderlayer")
         if du and not (ROOT / du).exists():
             report.error(rel(f), f"defaultUnderlayer {du} does not exist")
+        df = load(f).get("art", {}).get("defaultFootwear")
+        if df and not (ROOT / df).exists():
+            report.error(rel(f), f"defaultFootwear {df} does not exist")
+        ds = load(f).get("art", {}).get("defaultSheen")
+        if ds and not (ROOT / ds).exists():
+            report.error(rel(f), f"defaultSheen {ds} does not exist")
         if "hairHighlights" in pal:
             if not (ROOT / pal["hairHighlights"]).exists():
                 report.error(rel(f), f"hairHighlights {pal['hairHighlights']} does not exist")
