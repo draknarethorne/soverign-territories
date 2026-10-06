@@ -48,11 +48,11 @@ A piece is a tiny JSON file. Decide where it lives with one question: how widely
 
 When unsure, start in the narrowest scope and promote it the second time it is reused.
 
-Real example, `data/art/wardrobe/swimwear/lace-bralette-set.json`:
+Real example, `data/art/wardrobe/swimwear/lingerie/lace-bralette-set.json`:
 
 ```json
 {
-  "id": "wardrobe/swimwear/lace-bralette-set",
+  "id": "wardrobe/swimwear/lingerie/lace-bralette-set",
   "kind": "wearing",
   "name": "Lace Lingerie Set",
   "description": "only a {{PRIMARY}} lace lingerie set in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging: a plunging balconette bra ... matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
@@ -144,7 +144,7 @@ An A-pose card is one line of difference from the base card. This is the whole o
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Drakness/poses/Drakness_X_Pose_Lace.txt",
   "denoise": "~1.0",
-  "components": { "underlayer": "data/art/wardrobe/swimwear/lace-bralette-set.json" }
+  "components": { "underlayer": "data/art/wardrobe/swimwear/lingerie/lace-bralette-set.json" }
 }
 ```
 

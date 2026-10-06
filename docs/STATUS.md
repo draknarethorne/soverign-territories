@@ -60,6 +60,11 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   everything under `B:\Comfy-Desktop` is a transient copy. Each ComfyUI workspace has its own inputs (`ComfyUI-Inputs\<Workspace>`) and
   writes to a project output folder (`Sovereign Territories`, `Angel Primes` as a test bed, `Sovereign Dawn Series` for production), set
   in `workflows/workspaces.json`. The brand and marketing set (title, logos, icons, key art) will be the `sovereign-territories` set.
+- **Brand, card art and video pieces (Oct 2026).** The brand set (key art, plates, title, logo, icons, two videos) lives in
+  `data/art/brand/` and `_sets/sovereign-territories/`. Non-hero gameplay cards (units, pets, buildings, tactics, equipment, workers; 174)
+  get mechanical card-art prompts from their own name, element and lore (`data/art/cards/sovereign-dawn.json`,
+  `tools/generators/scaffold_card_art.py`, stage `card`); they are first drafts, not hand-directed art. Reusable video effect pieces
+  (ambient, element, theme) in `data/animation/motions/` feed ten theme scene videos. Nothing from these has been rendered yet.
 - **Showcase stage:** a studio-class shot on a coloured or magical backdrop (`backgrounds/studio/*`) with an effects line, between a cream
   studio render and a full scene.
 - **Celestial armor and the Celestial finish (design, Oct 2026).** Every sister has her own signature celestial armor
@@ -68,6 +73,12 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   front hip piece, held by magic alone with no straps or wire. The `celestial` finish (`SD-001-CELESTIAL`, rank 3 in
   `finishes.json`) is the earned top edition: unlocked by a sister's celestial quest chain rather than drawn from a pack, with some
   held back in packs for a small chance (rules are open decision O3). The codex shows a silhouette or masked teaser until it is owned.
+- **Theme scenes have two paths over one library (Oct 2026).** Every outfit, armor, jewelry, footwear, headwear and weapon item is a
+  library piece, never inline text in a card (generic fillers such as "bare arms" excepted), so a scene can be built either way: a
+  *complete* scene (`<hero>-scene-<theme>`) names all the pieces so the model has freedom and a scene can be tested at once, or a
+  *pre-staged* path where a studio outfit card (`<hero>-armor|clothing-<theme>`) is rendered first and the `-scene-staged-<theme>`
+  card only adds scene, effects and pose. Each sister has six themes (the 12 new packs plus the older ones); effects, expression and pose
+  stay literal text on the card. Raven armor is now pieces (`heroes/drakn-sisters/drakness/armor/raven-*`).
 
 ## Open decisions
 
@@ -91,6 +102,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 ### Art and video track (runs alongside)
 
+- **Library gaps (Oct 2026):** the map of what exists and where the gaps land (backgrounds, props, races, creatures, unit/building/tactic art, theme gear for bounds and dragons) is in [../data/art/README.md](../data/art/README.md#library-map-what-exists-where-the-gaps-are). Do these as the sisters' scenes show what is missing, not as a separate big push.
 - Render and review the first video clips; tune looks, motions and transitions from what the renders show.
 - Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used.
 - Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace, plus lace bodysuit and the backless set: halter one-piece, strapless plunge, chain harness) to choose the A-pose look that blends best. The backless pieces give a clean bare-back reference so gowns and capes do not inherit straps.
