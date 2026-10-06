@@ -46,12 +46,24 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   never changes gameplay; its code is `<collectionNumber>-<SUFFIX>` (`SD-001-HOLO`), derived, never stored. Shiny = recolour and sheen
   for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
   to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
-- **Sister studio workspaces (Oct 2026).** Each sister's non-scene work (everything with studio class, including the new `showcase` stage)
-  deploys to her own ComfyUI workspace with `deploy --to uat --hero <Name> --class studio`; all sister scenes go to the shared
-  `Drakn Sisters` workspace (`deploy --to uat --group drakn-sisters --class scene`). Dev keeps whatever is not delivered, edited or
-  hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
+- **Sister workspaces and the batch workspace (Oct 2026, replaces the studio/scene split).** Every stage of a sister (poses, motion, armor,
+  clothing, showcase, scenes, video) deploys to both her own workspace (fine-tuning one sister) and `Drakn Sisters` (batches of one stage across all
+  ten, laid out `<stage>/<family>/<Hero>/`); `deploy --to uat --hero <Name>` keeps the two in step and duplicates are intended. Whether
+  a dedicated workspace per sister is needed at all is open until the `Drakn Sisters` tree has been used. Dev keeps whatever is not
+  delivered, edited or hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
   a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.
+- **Three kinds of hand-made workflow (Oct 2026).** `zz_Curated` = older hand-written workflows and new ones written from scratch; `zz_Shots` =
+  workflows tuned for a render (seed, Turbo or not), kept in the repo under `workflows/_shots/<set>/<Hero>/` with their subfolders;
+  `zz_Test` = temporary. Generated workflows are never edited by hand.
+- **A-pose bleed tests and real-world showcases (Oct 2026, in progress).** Celestial armor showcases let the A-pose swimsuit bleed through. Options
+  under test: a `strip` instruction (`wardrobe/effects/strip/remove-original`, `replace-original`; cards `<slug>-showcase-celestial-ascended-remove|replace`),
+  a neutral base-layer A-pose (`<slug>-x-pose-base-layer`) and the user's own nude A-pose workflow (a shot). Also 13 real-world photo showcases per sister
+  (`showcase/photo/glamour|romantic|daily`: catwalk, grand staircase, bed, beach, city street, bathroom selfie ...) to see how realistic she stays;
+  template `showcase-photo-human.txt`, locations in `backgrounds/modern/`. Whether Turbo is worth it for the A-pose is a render question, recorded as shots.
+- **Footwear in the A-pose (Oct 2026, under test).** Dropping the heels from the standard A-pose keeps shoes out of every later outfit. One switch,
+  `data/art/_settings/studio.json` `aPoseFootwear` (`signature` today, `barefoot` to flip every female A-pose and underlayer test after a regenerate),
+  plus a `<slug>-x-pose-barefoot` card per sister for the comparison. Showcases are filed in families (`celestial`, `elemental`, `studio`, `editorial`, `photo/<mood>`).
 - **Output folders follow card families (Oct 2026).** Cards, prompts and ComfyUI output folders are grouped by family below the stage
   (`scene/signature`, `scene/glamour`, `poses/lingerie`, `clothing/gowns` ...) and the output folder starts with the set and hero
   (`drakn-sisters/Draknara/scenes/signature/...`), mirroring `prompts/`; the rule lives in `tools/generators/art_layout.py` and is
