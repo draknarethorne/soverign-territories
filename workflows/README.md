@@ -31,7 +31,7 @@ every studio stage.
 | See what is where | `bin\status.cmd --hero Drakness`, `bin\workspaces.cmd` |
 | Move finished studio work to a sister's own workspace | `bin\promote-uat.cmd Drakness studio --dry-run` |
 | Move chosen scenes to the shared scene workspace | `bin\promote-uat.cmd Drakness scene --dry-run` |
-| Copy a sister's studio work to her workspace, scenes to the shared one | `python tools\workflows\comfy_workflows.py deploy --to uat --hero Draknara --class studio` and `... --group drakn-sisters --class scene` |
+| Copy a sister's work to her workspace and to the shared batch workspace | `python tools\workflows\comfy_workflows.py deploy --to uat --hero Draknara` (both get everything; add `--new-only` to protect work in progress) |
 | See which dev files are now duplicates, then remove them | `python tools\workflows\comfy_workflows.py cleanup --group drakn-sisters` (preview), add `--apply` (moves to backup; keeps edited, curated and undelivered files) |
 | Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
 | Keep what I made or changed in ComfyUI | `bin\pull-dev.cmd Drakness` |
@@ -45,14 +45,15 @@ every studio stage.
 | Tier | Flag | Workspaces | Purpose |
 | --- | --- | --- | --- |
 | **dev** (default) | none | `Sovereign Territories`; later themed ones such as `Sovereign Territories Halloween` | build and prove workflows, ideation, mass changes |
-| **uat** | `--to uat` | a hero's own workspace (`Drakness`), a group's (`Angel Primes`, `Drakn Bound`) or a shared scene workspace (`Drakn Sisters`) | acceptance: pick the A-pose, curate, generate 8-16 images |
+| **uat** | `--to uat` | a hero's own workspace (`Drakness`), a group's (`Angel Primes`, `Drakn Bound`) and the shared batch workspace (`Drakn Sisters`) | acceptance: pick the A-pose, curate, generate 8-16 images; the sister workspace is for fine-tuning one sister, `Drakn Sisters` for running one stage across all sisters |
 | **prod** | `--to prod` | `<Series> Series`, such as `Sovereign Dawn Series` | final art and polish for the actual cards of that series |
 
 UAT and prod targets come from the `production` rules in `workspaces.json`: they match on `groups` and/or `heroes`, and
 `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
 stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a
-scene is studio). The first matching UAT rule wins, so class rules go first: sister scenes route to `Drakn Sisters`, sister
-studio work to the sister's own workspace. `list` shows the studio and scene routes per hero. A workspace that does not
+scene is studio). Every matching UAT rule receives the work: a sister's own workspace and `Drakn Sisters` both hold all her
+stages (poses, motion, armor, clothing, showcase, scenes, video), so a deploy keeps the two in step and duplicates between
+them are intended. `list` shows the routes per hero. A workspace that does not
 exist yet is skipped. All workspaces share one output
 folder, and the `SaveImage` prefix (`<Hero>/<stage>/...`) sorts renders into hero folders whichever workspace ran them.
 
@@ -88,8 +89,16 @@ python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firere
 
 ### Folders inside a workspace
 
-A new workflow is saved in the workspace under its output folder: `<stage>/<family>/` in a hero's own workspace (`scenes/themes/`, `poses/bikini/`, `armor/themes/` ...) and `<Hero>/<stage>/<family>/` in a workspace that serves several heroes (the shared scene workspace). ComfyUI shows these as folders.
-`tidy` moves loose files into them; curated (`zz_Curated_`) and test (`test_`) files stay at the top. Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+A new workflow is saved in the workspace under its output folder: `<stage>/<family>/` in a hero's own workspace (`scenes/themes/`, `poses/bikini/`, `showcase/photo/daily/` ...), `<Hero>/<stage>/<family>/` in the dev workspace, and `<stage>/<family>/<Hero>/` in `Drakn Sisters` (set by `layouts` in `workspaces.json`), so one stage across all ten sisters sits side by side for batch runs. ComfyUI shows these as folders.
+`tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a sister's workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+
+### Shots (zz_Shots)
+
+A shot is a workflow you tuned for one render: a chosen seed, Turbo on or off, a changed input. Save it in the workspace under `zz_Shots/`, in any subfolders you like (`zz_Shots/armor/`, `zz_Shots/poses/` ...).
+`pull --shots` (`bin\pull-shots.cmd HERO`) keeps it in the repo under `workflows/_shots/<set>/<Hero>/` with the same subfolders and captures later edits; its file name and output prefix stay as you set them.
+`deploy --shots` (`bin\deploy-shots.cmd HERO`) copies kept shots to a workspace that lacks them and never overwrites a differing copy.
+`status` shows `shots`, `shots-new` (pull it), `shots-changed` and `shots-missing`.
+A shot is not a curated workflow: curated ones are the older hand-written workflows (and new ones written from scratch to test a concept), shots are the ones in use. Shots are captured even from a legacy workspace such as Drakness.
 
 ### Hand-curated workflows
 

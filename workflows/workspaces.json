@@ -37,7 +37,7 @@
     },
     "Drakn Sisters": {"output": "Sovereign Territories", 
       "status": "active",
-      "role": "UAT: shared workspace for all ten sisters' scenes, so they can be worked in parallel. Studio work stays in each sister's own workspace."
+      "role": "UAT: batch workspace for all ten sisters: every stage (poses, motion, armor, clothing, showcase, scenes, video), laid out stage first (stage/family/Hero) so one stage across all sisters sits together. Each sister's own workspace holds the same work for fine tuning."
     },
     "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
     "Sovereign Dawn Series": {"output": "Sovereign Dawn Series", 
@@ -49,7 +49,7 @@
     "uat": [
       {"groups": ["angel-primes"], "workspace": "Angel Primes"},
       {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
-      {"groups": ["drakn-sisters"], "class": "scene", "workspace": "Drakn Sisters"},
+      {"groups": ["drakn-sisters"], "workspace": "Drakn Sisters"},
       {"groups": ["drakn-sisters"], "workspace": "{hero}"}
     ],
     "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Sovereign Dawn Series"}]
@@ -93,6 +93,7 @@
     }
   },
   "stageFolders": {"scene": "scenes"},
+  "layouts": {"Drakn Sisters": "stage-first"},
   "textGroups": {"sovereign-territories": ["key-art", "plate", "title", "logo", "icon"], "sovereign-dawn": ["card"]},
   "skipGroups": ["elder-dragons", "drakn-bound"]
 }
