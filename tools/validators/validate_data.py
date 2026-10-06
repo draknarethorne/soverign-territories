@@ -56,7 +56,7 @@ def art_piece_files():
     out = []
     for p in rglob("data/art/**/*.json"):
         parts = p.relative_to(ROOT / "data/art").parts
-        if parts[0] in ("_schema", "_sets", "_kits"):
+        if parts[0] in ("_schema", "_sets", "_kits", "_settings"):
             continue
         if parts[0] == "heroes" and len(parts) == 3:
             continue  # identity, not a piece

@@ -27,6 +27,8 @@ echo    promote-prod.cmd HERO [STAGE]  MOVE approved workflows from UAT to PROD
 echo    pull-dev.cmd HERO [STAGE]      keep what you made or edited in DEV (new = curated; edits to curated are captured)
 echo    fork.cmd WORKFLOW TAG          copy a generated workflow to hand-edit it (curated), and put it in DEV
 echo    deploy-curated.cmd HERO        copy hand-curated workflows to a workspace that lacks them
+echo    pull-shots.cmd HERO            keep what you saved under zz_Shots (seeds, Turbo or not) in the repo, subfolders included
+echo    deploy-shots.cmd HERO          copy kept shots to a workspace that lacks them
 echo    deploy-templates.cmd           put the ST stage templates in DEV
 echo.
 echo  LOOK

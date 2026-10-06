@@ -27,6 +27,31 @@ SCENE_BUCKETS = {
 }
 
 
+# Real-world photo showcases group by mood; showcases on a studio backdrop group by kind (celestial armor, elemental magic, studio display, editorial).
+SHOWCASE_STUDIO = {"armor-stand", "runway-flair"}
+SHOWCASE_ELEMENTAL = {"elemental-casting", "elemental-dance", "spell-calling", "mirror-spirit", "ancestral-fire", "earthen-casting",
+                      "spirit-dance", "stone-ward", "totem-calling"}
+PHOTO_MOODS = {
+    "glamour": ["catwalk", "grand-staircase", "rooftop-sunset", "portrait-closeup"],
+    "romantic": ["bed-sitting", "bed-lying", "window-light", "beach-sunset"],
+    "daily": ["beach-walk", "city-street", "bathroom-selfie", "cafe-table", "poolside"],
+}
+
+
+def showcase_family(art_id):
+    rest = art_id.split("-showcase-", 1)[1] if "-showcase-" in art_id else art_id
+    if rest.startswith("photo-"):
+        name = rest[len("photo-"):]
+        return next((["photo", mood] for mood, names in PHOTO_MOODS.items() if name in names), ["photo"])
+    if rest.startswith("celestial-"):  # celestial armor shots; the strip tests ask whether the A-pose swimsuit bleeds through
+        return ["celestial", "strip-tests"] if rest.endswith(("-remove", "-replace")) else ["celestial"]
+    if rest.startswith("editorial-"):
+        return ["editorial"]
+    if rest in SHOWCASE_STUDIO:
+        return ["studio"]
+    return ["elemental"] if rest in SHOWCASE_ELEMENTAL else []
+
+
 def scene_family(art_id, group):
     rest = art_id.split("-scene-", 1)[1] if "-scene-" in art_id else art_id
     if group != "drakn-sisters":
@@ -65,6 +90,7 @@ def wearing_family(card):
 
 # A-pose underlayer tests group by what the piece is (its tags, first match wins).
 UNDERLAYER_FAMILIES = [
+    ("base", {"base"}),
     ("backless", {"backless"}),
     ("lingerie", {"lingerie", "sleepwear"}),
     ("athletic", {"athletic", "sporty", "dance"}),
@@ -98,6 +124,8 @@ def family(card, group, root=None):
         if "view" in comps:
             return ["views"]
         return underlayer_family(card, root or ROOT) if "underlayer" in comps and not art_id.endswith("-x-pose") else []
+    if stage == "showcase":
+        return showcase_family(art_id)
     if stage == "head":
         return [] if art_id.endswith("-x-head") else ["views"] if "view" in comps else ["closeups"]
     if stage in ("clothing", "armor"):

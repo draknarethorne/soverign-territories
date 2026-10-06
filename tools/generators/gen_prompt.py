@@ -200,6 +200,13 @@ SLOT_DEFAULTS = {
 }
 
 
+BAREFOOT_A_POSE = "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
+
+
+def studio_defaults():
+    return json.loads((ROOT / "data/art/_settings/studio.json").read_text(encoding="utf-8"))
+
+
 def default_slot(slot, stage, sex):
     entry = SLOT_DEFAULTS[slot]
     value = entry.get(stage, entry.get("*"))
@@ -565,6 +572,9 @@ def generate(card_path, tokens_only=False):
                 # A hero can carry her own default underlayer (her signature metallic look) and shoe.
                 if hero["art"].get(hero_defaults.get(slot, "")):
                     default = hero["art"][hero_defaults[slot]]
+                # One switch for every A-pose: _settings/studio.json aPoseFootwear = "barefoot" replaces each sister's heels.
+                if slot == "footwear" and card["stage"] == "pose" and sex == "female" and studio_defaults().get("aPoseFootwear") == "barefoot":
+                    default = BAREFOOT_A_POSE
                 if default:
                     card.setdefault("components", {}).setdefault(slot, default)
     # A dragon or brand identity has no 'art' section (not humanoid) -- its own, simpler token set.
@@ -582,6 +592,8 @@ def generate(card_path, tokens_only=False):
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
+    if "{{FOOTWEAR_NEG}}" in template:
+        toks.setdefault("FOOTWEAR_NEG", "")  # only a footwear piece with negatives (barefoot) fills it
     # A makeup piece (components.makeup) replaces the default studio face-styling line everywhere,
     # and also feeds scene templates through the optional {{MAKEUP_LINE}}.
     if toks.get("MAKEUP"):

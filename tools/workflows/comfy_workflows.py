@@ -59,6 +59,13 @@ TEST = WF / "_test"
 # workflows/_test under a test_ prefix and are only pushed to a workspace on request (deploy --tests).
 CURATED_PREFIX = "zz_Curated_"
 TEST_PREFIX = "test_"
+# Inside a workspace, curated and test workflows sit in these folders, which sort after every generated stage folder.
+CURATED_DIR = "zz_Curated"
+TEST_DIR = "zz_Test"
+# Shots: workflows you tuned for a specific render (seed, Turbo on or off). Saved in a workspace under zz_Shots/ (any subfolders) and kept
+# in the repo under workflows/_shots/<set>/<Hero>/ with the same subfolders; never regenerated, never renamed, prefix left as you set it.
+SHOTS = WF / "_shots"
+SHOTS_DIR = "zz_Shots"
 CAPTURED_NAME = re.compile(r"_\d{5}")
 TIERS = ("dev", "uat", "prod")
 
@@ -171,7 +178,8 @@ def route_stage(args):
 
 
 def targets_for(cfg, tier, group, hero, stage=None):
-    """Workspaces that serve this hero and stage for a tier. Dev: the default dev workspace. UAT: first matching rule. Prod: every matching rule.
+    """Workspaces that serve this hero and stage for a tier. Dev: the default dev workspace. UAT and prod: every matching rule, so a sister's own
+    workspace and the shared one can both hold her work.
 
     A rule may carry "class": "studio" or "scene"; it then applies only to stages of that class."""
     if tier == "dev":
@@ -185,8 +193,6 @@ def targets_for(cfg, tier, group, hero, stage=None):
         if "class" in r and (stage is None or class_of(stage) != r["class"]):
             continue
         out.append(r["workspace"].format(hero=hero))
-        if tier == "uat":
-            break
     return out
 
 
@@ -242,13 +248,22 @@ def is_staged(name):
 
 def workspace_subdir(ws, wf):
     """Folder inside a workspace for a generated workflow, mirroring its output folder: <stage>/<family>/, with the hero
-    first in a workspace that serves several heroes. Curated and test workflows stay at the top, where their prefix sorts them last."""
+    first in a workspace that serves several heroes. Curated and test workflows are placed by CURATED_DIR and TEST_DIR instead."""
     s = save_node(wf)
     parts = s["widgets_values"][0].split("/") if s else []
     if len(parts) < 4 or parts[2].startswith(("_", ".")):
         return pathlib.Path()
     sub = pathlib.Path(*parts[2:-1])
-    return sub if ws in hero_groups() else pathlib.Path(parts[1]) / sub
+    if ws in hero_groups():
+        return sub
+    if load_cfg().get("layouts", {}).get(ws) == "stage-first":
+        return sub / parts[1]  # a batch workspace: one stage and family holds every hero side by side
+    return pathlib.Path(parts[1]) / sub
+
+
+def special_dir(ws, base, hero):
+    """zz_Curated, zz_Test and zz_Shots: flat in a sister's own workspace, one folder per hero in a shared one."""
+    return pathlib.Path(base) if ws in hero_groups() or not hero else pathlib.Path(base) / hero
 
 
 def repo_path(cfg, group, hero, name):
@@ -284,7 +299,7 @@ def install_files(cfg, ws, root=None):
     if d.is_dir():
         for p in sorted(d.rglob("*.json")):
             rel = p.relative_to(d)
-            if any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name):
+            if rel.parts[0] == SHOTS_DIR or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name):
                 continue
             out.setdefault(p.name, p)
     return out
@@ -626,6 +641,38 @@ def test_files():
     return curated_files(TEST)
 
 
+def shot_files():
+    """{(Hero, 'sub/folders/name.json'): (group, path)} for the shots kept in workflows/_shots/<set>/<Hero>/."""
+    out = {}
+    if SHOTS.is_dir():
+        for g in sorted(SHOTS.iterdir()):
+            for h in sorted(g.iterdir()) if g.is_dir() else []:
+                for p in sorted(h.rglob("*.json")) if h.is_dir() else []:
+                    out[(h.name, p.relative_to(h).as_posix())] = (g.name, p)
+    return out
+
+
+def workspace_shots(cfg, ws, root=None):
+    """{(Hero, 'sub/folders/name.json'): path} for what a workspace holds under zz_Shots/ (a shared workspace may add a hero folder first)."""
+    out, d = {}, install_dir(cfg, ws, root) / SHOTS_DIR
+    if d.is_dir():
+        heroes = hero_groups()
+        for p in sorted(d.rglob("*.json")):
+            parts = p.relative_to(d).parts
+            if any(x.startswith(".") for x in parts):
+                continue
+            hero = hero_of(p.name) or (parts[0] if parts[0] in heroes else None)
+            if not hero:
+                continue
+            sub = parts[1:] if parts[0] == hero and len(parts) > 1 else parts
+            out[(hero, "/".join(sub))] = p
+    return out
+
+
+def shot_home(ws, hero, rel):
+    return special_dir(ws, SHOTS_DIR, hero) / rel
+
+
 def same_workflow(a, b):
     """Same graph, whatever the formatting: ComfyUI re-saves files with its own spacing."""
     return read_wf(a) == read_wf(b)
@@ -692,10 +739,20 @@ def cmd_status(args):
         for name in selected(cfg, ws, args, cur):
             if name not in inst:
                 rows["curated-missing"].append(name)
-        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "test", "test-changed", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
+        have = workspace_shots(cfg, ws, args.root)
+        store = shot_files()
+        for key, p in have.items():
+            if args.hero and key[0].lower() != args.hero.lower():
+                continue
+            rows["shots-new" if key not in store else "shots" if same_workflow(store[key][1], p) else "shots-changed"].append(key[1])
+        for key, (g, p) in store.items():
+            if key not in have and holds(cfg, ws, g, key[0], None) and not (args.hero and key[0].lower() != args.hero.lower()):
+                rows["shots-missing"].append(key[1])
+        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "test", "test-changed", "shots", "shots-new", "shots-changed", "shots-missing", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
         print(f"{ws} [{info['status']}]: {counts}")
         hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull: keeps it as a curated workflow", "curated-changed": "pull: captures your edits",
-                 "curated-missing": "deploy --curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt"}
+                 "curated-missing": "deploy --curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt",
+                 "shots-new": "pull --shots", "shots-changed": "pull --shots", "shots-missing": "deploy --shots"}
         for k, names in rows.items():
             if k in hints and names and (args.verbose or len(names) <= 5):
                 print(f"    {k} ({hints[k]}): " + ", ".join(names))
@@ -788,7 +845,7 @@ def cmd_deploy(args):
                 if name not in inst:
                     print(f"  test     {ws}/{name} (new)")
                     if not args.dry_run:
-                        write_wf(dest / name, read_wf(p))
+                        write_wf(dest / special_dir(ws, TEST_DIR, h) / name, read_wf(p))
                     tally["test"] += 1
                 elif same_workflow(p, inst[name]):
                     tally["aligned"] += 1
@@ -800,7 +857,7 @@ def cmd_deploy(args):
                 if name not in inst:
                     print(f"  curated  {ws}/{name} (new)")
                     if not args.dry_run:
-                        write_wf(dest / name, read_wf(p))
+                        write_wf(dest / special_dir(ws, CURATED_DIR, h) / name, read_wf(p))
                     tally["curated"] += 1
                 elif same_workflow(p, inst[name]):
                     tally["aligned"] += 1
@@ -812,6 +869,28 @@ def cmd_deploy(args):
                     tally["curated"] += 1
                 else:
                     print(f"  SKIP     {ws}/{name} differs from the curated copy (your edits?): pull it, or use --overwrite")
+                    tally["skipped"] += 1
+        if getattr(args, "shots", False):
+            for (h, rel), (g, p) in shot_files().items():
+                if not holds(cfg, ws, g, h, None) or (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group) \
+                        or (args.match and not name_matches(args.match, p.name)):
+                    continue
+                have = workspace_shots(cfg, ws, args.root).get((h, rel))
+                if not have:
+                    print(f"  shot     {ws}/{shot_home(ws, h, rel).as_posix()} (new)")
+                    if not args.dry_run:
+                        write_wf(dest / shot_home(ws, h, rel), read_wf(p))
+                    tally["shots"] += 1
+                elif same_workflow(p, have):
+                    tally["aligned"] += 1
+                elif args.overwrite:
+                    print(f"  shot     {ws}/{SHOTS_DIR}/{rel} (replace)")
+                    if not args.dry_run:
+                        backup(stamp, ws, p.name, have)
+                        write_wf(have, read_wf(p))
+                    tally["shots"] += 1
+                else:
+                    print(f"  SKIP     {ws}/{SHOTS_DIR}/{rel} differs from the repo copy (your edits?): pull it, or use --overwrite")
                     tally["skipped"] += 1
         print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
@@ -944,6 +1023,25 @@ def cmd_promote(args):
     print("Restart the affected ComfyUI workspaces to see changes.")
 
 
+def pull_shots(cfg, ws, args, stamp):
+    """Keep the workflows under zz_Shots/ in a workspace as repo shots (workflows/_shots/<set>/<Hero>/, same subfolders). Edits are captured again."""
+    groups = hero_groups()
+    done = skipped = 0
+    for (h, rel), p in workspace_shots(cfg, ws, args.root).items():
+        if (args.hero and h.lower() != args.hero.lower()) or (args.group and groups[h] != args.group) \
+                or (args.match and not name_matches(args.match, p.name)):
+            continue
+        dst = SHOTS / groups[h] / h / rel
+        if dst.exists() and same_workflow(dst, p):
+            skipped += 1
+            continue
+        print(f"  shot   {ws}/{SHOTS_DIR}/{rel} -> {dst.relative_to(ROOT).as_posix()}" + (" (update)" if dst.exists() else ""))
+        if not args.dry_run:
+            write_wf(dst, read_wf(p))
+        done += 1
+    print(f"{ws} shots: pulled {done}, left {skipped} unchanged" + (" (dry run)" if args.dry_run else ""))
+
+
 def cmd_pull(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
@@ -972,7 +1070,11 @@ def cmd_pull(args):
             print(f"{ws} templates: pulled {done}, left {skipped} existing" + (" (dry run)" if args.dry_run else ""))
             continue
         if info.get("pull") is False and not (args.force or args.include_legacy):
-            print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); use --include-legacy to capture them as curated")
+            pull_shots(cfg, ws, args, stamp)
+            print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); only its zz_Shots were captured; use --include-legacy for the rest")
+            continue
+        pull_shots(cfg, ws, args, stamp)
+        if args.shots:
             continue
         for name, p in install_files(cfg, ws, args.root).items():
             h = hero_of(name)
@@ -1050,7 +1152,7 @@ def cmd_fork(args):
     write_wf(dst, wf)
     ws = cfg["dev"][0]
     if not args.no_deploy and install_exists(cfg, ws, args.root):
-        write_wf(install_dir(cfg, ws, args.root) / new, wf)
+        write_wf(install_dir(cfg, ws, args.root) / special_dir(ws, CURATED_DIR, h) / new, wf)
         print(f"  deployed to {ws}: open {new} in ComfyUI, edit it, save it, then run pull to keep your changes")
 
 
@@ -1131,18 +1233,23 @@ def cmd_make(args):
 
 
 def cmd_tidy(args):
-    """Move generated workflows that sit loose in a workspace into <stage>/<family>/ folders, so the ComfyUI list shows folders, not hundreds of files."""
+    """Move generated workflows that sit loose in a workspace into <stage>/<family>/ folders, and curated and test ones into zz_Curated/ and zz_Test/, so the ComfyUI list shows folders, not hundreds of files."""
     cfg = load_cfg()
-    repo = repo_files(cfg)
+    repo, cur, tst = repo_files(cfg), curated_files(), test_files()
     for ws in pick_targets(cfg, args, "all"):
         if not install_exists(cfg, ws, args.root):
             continue
         d = install_dir(cfg, ws, args.root)
         moved = 0
         for name, p in install_files(cfg, ws, args.root).items():
-            if name not in repo or (args.hero and repo[name][1].lower() != args.hero.lower()):
+            if name in cur or name in tst:
+                if args.hero and (cur.get(name) or tst[name])[1].lower() != args.hero.lower():
+                    continue
+                want = d / special_dir(ws, CURATED_DIR if name in cur else TEST_DIR, hero_of(name)) / name
+            elif name not in repo or (args.hero and repo[name][1].lower() != args.hero.lower()):
                 continue
-            want = d / workspace_subdir(ws, read_wf(repo[name][2])) / name
+            else:
+                want = d / workspace_subdir(ws, read_wf(repo[name][2])) / name
             if p == want:
                 continue
             if args.verbose:
@@ -1152,6 +1259,10 @@ def cmd_tidy(args):
                 shutil.move(str(p), str(want))
             moved += 1
         print(f"{ws}: {moved} workflow(s) {'moved' if args.apply else 'would move'}")
+        if args.apply:  # moving leaves empty folders behind (an old hero-first layout), which ComfyUI would still list
+            for folder in sorted((q for q in d.rglob("*") if q.is_dir()), key=lambda q: len(q.parts), reverse=True):
+                if not any(folder.iterdir()) and not folder.relative_to(d).parts[0].startswith("zz_"):
+                    folder.rmdir()
     if not args.apply:
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
@@ -1211,6 +1322,7 @@ def main(argv=None):
     s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
     s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
     s.add_argument("--tests", action="store_true", help="also copy test workflows (workflows/_test, test_ prefix) the workspace lacks")
+    s.add_argument("--shots", action="store_true", help="also copy shots (workflows/_shots) the workspace lacks, into zz_Shots/ with their subfolders")
     s.add_argument("--staged", action="store_true", help="also add staged scenes (Scene_Staged_*) the workspace lacks; they are held back by default")
     s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
     s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
@@ -1237,6 +1349,7 @@ def main(argv=None):
     common(s, True, True)
     s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
     s.add_argument("--force", action="store_true", help="also replace repo copies")
+    s.add_argument("--shots", action="store_true", help="only capture the workflows under zz_Shots/ (new and edited ones); other pulls also include them")
     s.add_argument("--include-legacy", action="store_true", help="also pull from a workspace whose pulling is turned off (its old hand-made workflows); generated copies are never replaced")
     s = sub.add_parser("make")
     common(s, False, True)
