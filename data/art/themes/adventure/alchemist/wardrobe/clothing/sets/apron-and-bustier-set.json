@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/clothing/sets/apron-and-bustier-set",
+  "kind": "wearing",
+  "name": "Apron and Bustier Set",
+  "description": "a set of a leather bustier under a half-length {{PRIMARY}} work apron with pockets of tools and vials, short shorts and a wide brass-buckled belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "clothing"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "themes/eastern/ninja/cosmetics/makeup/stealth/smoky-shadow-liner",
+  "kind": "makeup",
+  "name": "Smoky Shadow Liner",
+  "description": "shinobi makeup - a sharp smoky black wing with {{ACCENT_SOFT}} inner-corner shimmer, defined lashes, a soft shadowed contour and a muted dark-rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "makeup"
+  ]
+}

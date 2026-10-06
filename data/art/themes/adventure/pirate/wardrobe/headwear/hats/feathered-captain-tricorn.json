@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn",
+  "kind": "headwear",
+  "name": "Feathered Captain's Tricorn",
+  "description": "a tilted black tricorn hat edged in {{METAL}} braid with a long curling {{PRIMARY}} feather and a {{GEM}} brooch",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "headwear"
+  ]
+}

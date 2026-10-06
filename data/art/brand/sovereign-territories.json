@@ -1,0 +1,37 @@
+{
+  "id": "brand/sovereign-territories",
+  "kind": "brand",
+  "notes": "The game's brand identity: title, key art, logo and icons. The key-art look text is copied from the hand-tuned Title_Qwen_Text workflow so the data-driven prompt matches what was already proven. Heroes must exist as sister identities.",
+  "brand": {
+    "name": "Sovereign Territories",
+    "tagline": "Build the Deck. Conquer the Campaign. Level Your Heroes.",
+    "ridge": "a shattered obsidian ridge at the first light of dawn",
+    "light": "warm golden dawn light from the right with a cool blue fill from the left",
+    "sky": "the sky is split by ten streaks of coloured light, distant ancient dragons in silhouette among the clouds",
+    "world": "a fractured world of ten glowing elemental territories far below",
+    "lineup": [
+      {"hero": "draknora", "row": "front", "look": "a flame-red gown wreathed in fire"},
+      {"hero": "draknira", "row": "front", "look": "a pale icy-cyan and white gown with frost crystals"},
+      {"hero": "drakniya", "row": "front", "look": "a deep forest-green gown with living vines and flowers"},
+      {"hero": "drakneta", "row": "front", "look": "a bright yellow-gold gown crackling with white lightning"},
+      {"hero": "draknoxa", "row": "front", "look": "a magenta-purple gown with acid-lime venom mist"},
+      {"hero": "drakness", "row": "back", "look": "a black and violet gown wrapped in shadow smoke"},
+      {"hero": "draknisa", "row": "back", "look": "a deep ocean-blue gown with swirling water"},
+      {"hero": "drakniss", "row": "back", "look": "a white and rose-gold gown glowing with golden light"},
+      {"hero": "draknara", "row": "back", "look": "a terracotta-brown gown with floating stones and turquoise beads"},
+      {"hero": "draknava", "row": "back", "look": "a pale silver gown with swirling wind ribbons"}
+    ],
+    "elements": [
+      {"element": "Darkness", "hero": "drakness", "motif": "a crescent moon swallowed by swirling shadow"},
+      {"element": "Fire", "hero": "draknora", "motif": "a single tall flame"},
+      {"element": "Grass", "hero": "drakniya", "motif": "an unfurling leaf with a small bloom"},
+      {"element": "Ice", "hero": "draknira", "motif": "a six-pointed snowflake crystal"},
+      {"element": "Water", "hero": "draknisa", "motif": "a rising wave curling over a pearl"},
+      {"element": "Light", "hero": "drakniss", "motif": "a radiant sunburst"},
+      {"element": "Earth", "hero": "draknara", "motif": "a faceted boulder with a sprouting mountain peak"},
+      {"element": "Lightning", "hero": "drakneta", "motif": "a forked lightning bolt"},
+      {"element": "Wind", "hero": "draknava", "motif": "three curling wind spirals"},
+      {"element": "Poison", "hero": "draknoxa", "motif": "a dripping vial with a curl of toxic vapour"}
+    ]
+  }
+}

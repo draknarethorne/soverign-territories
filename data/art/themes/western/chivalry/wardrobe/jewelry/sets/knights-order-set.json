@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/chivalry/wardrobe/jewelry/sets/knights-order-set",
+  "kind": "jewelry",
+  "name": "Order of the Knights Set",
+  "description": "a set of a chain of office with a {{METAL}} order medallion, a signet ring with a {{GEM}} seal, hanging favour ribbons and a clasp-brooch",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "jewelry"
+  ]
+}

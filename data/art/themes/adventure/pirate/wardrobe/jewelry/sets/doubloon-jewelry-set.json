@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set",
+  "kind": "jewelry",
+  "name": "Doubloon Jewelry Set",
+  "description": "a plunder jewelry set of gold doubloon pendants on chains, a {{GEM}} pirate-queen ring, hoop earrings and a rope-and-coin bracelet in {{METAL}}",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "jewelry"
+  ]
+}

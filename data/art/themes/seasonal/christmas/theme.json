@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/christmas",
+  "kind": "theme",
+  "name": "Midwinter Christmas",
+  "type": "event",
+  "description": "Festive midwinter holiday: velvet holly gowns, fur-trimmed coats, candy-cane and ribbon motifs, evergreen wreaths, snowy markets, glowing trees and gift-lit hearths.",
+  "realm": "fantasy",
+  "tags": [
+    "christmas",
+    "winter",
+    "holly",
+    "festive",
+    "snow"
+  ]
+}

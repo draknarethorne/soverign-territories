@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/backgrounds/fantasy/forests/bamboo-grove-night",
+  "kind": "background",
+  "name": "Bamboo Grove at Night",
+  "description": "a dense bamboo grove at night, tall green stalks catching moonlight, falling leaves, a narrow stone path and a hidden dojo gate in the mist",
+  "mood": "silent, mysterious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "forests"
+  ]
+}

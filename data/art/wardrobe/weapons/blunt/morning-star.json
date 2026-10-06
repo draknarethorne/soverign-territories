@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/blunt/morning-star",
+  "kind": "holding",
+  "name": "Morning Star",
+  "description": "a spiked {{METAL}} morning star on a short {{PRIMARY}}-wrapped haft, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "mace",
+    "blunt",
+    "melee"
+  ]
+}

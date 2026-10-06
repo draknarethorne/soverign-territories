@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/polearms/javelin",
+  "kind": "holding",
+  "name": "Javelin",
+  "description": "a slim {{METAL}}-tipped javelin on a {{PRIMARY}}-banded shaft, held back over the shoulder ready to throw",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "polearm",
+    "javelin",
+    "ranged"
+  ]
+}

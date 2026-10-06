@@ -1,0 +1,11 @@
+{
+  "artId": "sovereign-territories-brand-harmonize-ten-sisters",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/harmonize.txt",
+  "denoise": "1.0",
+  "size": "1024x1280",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/edit/SovereignTerritories_Brand_HarmonizeTenSisters.txt",
+  "notes": "Edit pass on the composite of the ten sisters over the plate; input is the collage image."
+}

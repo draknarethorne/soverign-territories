@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/clothing/dresses/shadow-silk-dress",
+  "kind": "wearing",
+  "name": "Shadow Silk Dress",
+  "description": "a sleek short dress of black silk with a high collar, a deep keyhole neckline, {{PRIMARY}} piping and a long tail cloth, split high at both thighs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "clothing"
+  ]
+}

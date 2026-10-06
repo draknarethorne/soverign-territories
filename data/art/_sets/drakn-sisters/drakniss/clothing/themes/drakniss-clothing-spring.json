@@ -1,0 +1,19 @@
+{
+  "artId": "drakniss-clothing-spring",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Spring Bloom Cleric",
+  "aesthetic": "a clean studio presentation of the spring bloom cleric outfit",
+  "components": {
+    "wearing": "data/art/themes/seasonal/spring/wardrobe/clothing/gowns/blossom-drape-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/seasonal/spring/wardrobe/jewelry/sets/petal-and-dew-set.json",
+    "legs_feet": "data/art/themes/seasonal/spring/wardrobe/footwear/sandals/ribbon-strap-flower-sandals.json",
+    "headwear": "data/art/themes/seasonal/spring/wardrobe/headwear/crowns/wild-flower-crown.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/clothing/themes/Drakniss_Clothing_Spring.txt",
+  "notes": "Pre-staged Spring Bloom Cleric outfit: render it from the A-pose, then feed the image to the Staged spring scene. Every item is a library piece."
+}

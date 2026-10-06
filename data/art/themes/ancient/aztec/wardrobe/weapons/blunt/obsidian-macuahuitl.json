@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/weapons/blunt/obsidian-macuahuitl",
+  "kind": "holding",
+  "name": "Obsidian Macuahuitl",
+  "description": "a flat wooden war club studded along both edges with razor-sharp obsidian blades, {{PRIMARY}} cord wrapping the grip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "weapons"
+  ]
+}

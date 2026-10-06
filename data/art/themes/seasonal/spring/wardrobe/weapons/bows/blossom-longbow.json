@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/weapons/bows/blossom-longbow",
+  "kind": "holding",
+  "name": "Blossom Longbow",
+  "description": "a longbow of pale wood with cherry blossoms growing along its limbs, a string of {{MAGIC}} light and petal-fletched arrows in a quiver at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "weapons"
+  ]
+}

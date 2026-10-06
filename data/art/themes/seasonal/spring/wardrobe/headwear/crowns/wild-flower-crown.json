@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/headwear/crowns/wild-flower-crown",
+  "kind": "headwear",
+  "name": "Wild Flower Crown",
+  "description": "a woven crown of fresh blossoms, {{PRIMARY}} and {{ACCENT_SOFT}} flowers and green leaves with a few trailing ribbons",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "headwear"
+  ]
+}

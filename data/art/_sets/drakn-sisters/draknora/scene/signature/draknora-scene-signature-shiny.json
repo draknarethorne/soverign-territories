@@ -6,7 +6,7 @@
   "name": "Signature Shiny",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "expression": "data/art/motion/expressions/fierce-focused.json",
+    "expression": "data/art/motion/expressions/intense/fierce-focused.json",
     "wearing": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing.json",
     "jewelry": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

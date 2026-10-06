@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a tall crown of {{METAL}} and clear ice-crystal spires",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknira-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

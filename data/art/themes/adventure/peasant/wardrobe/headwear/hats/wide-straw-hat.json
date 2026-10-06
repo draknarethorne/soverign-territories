@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/headwear/hats/wide-straw-hat",
+  "kind": "headwear",
+  "name": "Wide Straw Hat",
+  "description": "a wide-brimmed woven straw hat with a {{PRIMARY}} ribbon band and a sprig of wheat tucked in",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "headwear"
+  ]
+}

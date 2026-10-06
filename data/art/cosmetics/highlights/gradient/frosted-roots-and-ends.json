@@ -1,0 +1,9 @@
+{
+  "id": "cosmetics/highlights/gradient/frosted-roots-and-ends",
+  "kind": "highlights",
+  "name": "Frosted roots and ends",
+  "description": "a noticeable frosted {{HIGHLIGHT_COLOR}} shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "frost", "roots", "ends", "ice"],
+  "notes": "Draknira (Ice/Wizard). Replaces root-shadow, which was a soft smudge at the crown only."
+}

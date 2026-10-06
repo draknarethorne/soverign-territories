@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/bone-crossbow",
+  "kind": "holding",
+  "name": "Bone Crossbow",
+  "description": "a crossbow built of bone and {{METAL}} with a skull-carved stock, a spectral {{MAGIC}} bolt loaded in the groove",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "crossbow"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/wardrobe/weapons/swords/knightly-longsword-and-shield",
+  "kind": "holding",
+  "name": "Longsword and Heater Shield",
+  "description": "a {{METAL}} longsword with a cruciform hilt raised in one hand and a heater shield painted with a {{PRIMARY}} heraldic device on the other arm",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "weapons"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/backgrounds/fantasy/highlands/midsummer-meadow-maypole",
+  "kind": "background",
+  "name": "Midsummer Meadow and Maypole",
+  "description": "a rolling flower meadow at golden hour with a ribbon-hung maypole, garlands strung between trees, a crowd's picnic blankets and a low glowing sun over distant hills",
+  "mood": "joyful, golden",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "highlands"
+  ]
+}

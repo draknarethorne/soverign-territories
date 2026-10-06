@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/intense/battle-cry",
+  "kind": "expression",
+  "name": "Battle cry",
+  "expression": "a fierce battle-cry, mouth open, eyes blazing, brows drawn low.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

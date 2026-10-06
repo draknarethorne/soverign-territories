@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/whips/chain-whip",
+  "kind": "holding",
+  "name": "Chain Whip",
+  "description": "a long {{METAL}} chain whip with a {{PRIMARY}} leather handle, coiled in one hand with a few links trailing",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "whip",
+    "chain",
+    "melee"
+  ]
+}

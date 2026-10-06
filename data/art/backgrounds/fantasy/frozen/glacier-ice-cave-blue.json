@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/frozen/glacier-ice-cave-blue",
+  "kind": "background",
+  "name": "Glacier Ice Cave",
+  "description": "the inside of a glacier ice cave, translucent blue walls and hanging icicles, shafts of daylight refracting into rainbows and a frozen pool at the floor",
+  "mood": "serene, cold",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "frozen"
+  ]
+}

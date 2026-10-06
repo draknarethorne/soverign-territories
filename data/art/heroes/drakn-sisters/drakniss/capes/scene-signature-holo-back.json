@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a long mantle of sheer white-gold silk that glows at its edges like sunlight through cloud",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniss-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

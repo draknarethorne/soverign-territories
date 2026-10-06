@@ -1,0 +1,23 @@
+{
+  "artId": "draknisa-scene-danish",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Danish Enchanter",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "expression": "data/art/motion/expressions/intense/haughty-scorn.json",
+    "wearing": "data/art/themes/northern/danish/wardrobe/clothing/dresses/snow-queen-gown.json",
+    "jewelry": "data/art/themes/northern/danish/wardrobe/jewelry/sets/amber-and-silver-filigree-set.json",
+    "legs_feet": "data/art/themes/northern/danish/wardrobe/footwear/boots/white-fur-boots.json",
+    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json",
+    "headwear": "data/art/themes/northern/danish/wardrobe/headwear/crowns/frost-crystal-crown.json",
+    "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json",
+    "back": "data/art/themes/northern/danish/wardrobe/capes/mantles/ermine-snow-mantle.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/scene/themes/Draknisa_Scene_Danish.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Danish Enchanter: complete scene from the A-pose, every item a library piece (also pre-stageable through draknisa-clothing-danish)."
+}

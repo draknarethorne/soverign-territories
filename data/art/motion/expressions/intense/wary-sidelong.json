@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/intense/wary-sidelong",
+  "kind": "expression",
+  "name": "Wary sidelong",
+  "expression": "wary and watchful, a sidelong glance, lips pressed, one brow slightly raised.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

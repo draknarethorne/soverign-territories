@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/footwear/scene-robe-legs-feet",
+  "kind": "legs_feet",
+  "name": "Robe - legs_feet",
+  "description": "bare feet, a ring of moss and tiny flowers around them",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniya-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

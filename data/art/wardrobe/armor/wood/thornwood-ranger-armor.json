@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/wood/thornwood-ranger-armor",
+  "kind": "wearing",
+  "name": "Thornwood Ranger Armor",
+  "description": "ranger armor of lacquered thornwood plates and {{PRIMARY}} leather, a cropped hooded mantle of woven grass, {{METAL}} thorn-spike pauldrons and a belt of pouches",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "wood",
+    "ranger",
+    "nature"
+  ]
+}

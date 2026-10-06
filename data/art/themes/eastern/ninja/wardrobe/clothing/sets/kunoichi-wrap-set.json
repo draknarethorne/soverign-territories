@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/clothing/sets/kunoichi-wrap-set",
+  "kind": "wearing",
+  "name": "Kunoichi Wrap Set",
+  "description": "a fitted kunoichi outfit of a cropped {{PRIMARY}} wrap top with mesh sleeves, a short side-slit skirt over black shorts, an {{ACCENT_SOFT}} sash at the waist and wrapped forearms",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "clothing"
+  ]
+}

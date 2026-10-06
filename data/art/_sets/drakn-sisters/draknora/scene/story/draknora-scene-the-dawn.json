@@ -7,9 +7,9 @@
   "components": {
     "pose": "Fast, explosive ascent: she bursts upward out of the lava on a surging column of molten rock, arms flung wide and up, back arched, hair and ribbons streaming straight up behind her, caught at the peak of the rush; fierce, exhilarated expression with eyes locked on the camera; full figure from head to toe visible above the lava.",
     "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/dawn-regalia.json",
-    "headwear": "a crown of {{METAL}} flame-shaped spires set with {{GEM}} stones",
-    "jewelry": "{{METAL}} flame-leaf collar necklace with a {{GEM}} stone, long ember drop earrings, wide {{METAL}} armlets",
-    "legs_feet": "bare feet, a faint {{MAGIC}} glow beneath them",
+    "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknora/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Molten lava streams off her gown and hair and falls back in glowing curtains and droplets, sparks and embers rising around her, heat shimmer and orange light on her skin, rolling ash clouds behind.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/dawn/erupting-caldera-lava-lake.json"

@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/clothing/dresses/wrap-sarong-sundress",
+  "kind": "wearing",
+  "name": "Wrap Sarong Sundress",
+  "description": "a short wrap sundress in {{PRIMARY}} with a bold {{ACCENT_SOFT}} hibiscus print, a plunging neckline and a knotted side tie",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "clothing"
+  ]
+}

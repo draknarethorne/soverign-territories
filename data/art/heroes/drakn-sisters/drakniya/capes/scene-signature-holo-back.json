@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a long train of living vines, leaves and flowers trailing behind her like a cloak",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniya-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

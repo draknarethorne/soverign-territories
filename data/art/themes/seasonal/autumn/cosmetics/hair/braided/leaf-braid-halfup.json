@@ -1,0 +1,23 @@
+{
+  "id": "themes/seasonal/autumn/cosmetics/hair/braided/leaf-braid-halfup",
+  "kind": "hair",
+  "name": "Leaf-Braid Half Up",
+  "a_pose_style": "hair parted in the centre with the top sections braided back from the temples and tucked with small autumn leaves, the rest left loose and softly wavy in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with the top sections braided back and tucked with autumn leaves, the rest loose and softly wavy in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "autumn",
+    "hair"
+  ]
+}

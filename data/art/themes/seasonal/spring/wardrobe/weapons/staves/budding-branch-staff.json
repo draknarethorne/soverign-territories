@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/weapons/staves/budding-branch-staff",
+  "kind": "holding",
+  "name": "Budding Branch Staff",
+  "description": "a slender branch staff just bursting into blossom, {{PRIMARY}} flowers and fresh leaves along its length and a glowing {{MAGIC}} bud at the tip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "weapons"
+  ]
+}

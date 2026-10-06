@@ -6,7 +6,7 @@
   "name": "Three-Quarter Right",
   "components": {
     "view": "data/art/studio/views/body/three-quarter-right.json",
-    "underlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
   },
   "template": "data/art/_templates/heroes/pose-view-human.txt",
   "output": "prompts/drakn-sisters/Draknira/poses/views/Draknira_View_three_quarter_right.txt",

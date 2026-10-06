@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/backgrounds/fantasy/dungeons/alchemist-laboratory-bubbling",
+  "kind": "background",
+  "name": "Bubbling Alchemist Laboratory",
+  "description": "a cluttered high-fantasy alchemy laboratory of stone arches, shelves of colourful vials, bubbling glass alembics, copper pipes, hanging herbs and a glowing transmutation circle on the floor",
+  "mood": "arcane, busy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "dungeons"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/interiors/grand-ballroom-chandeliers",
+  "kind": "background",
+  "name": "Grand Ballroom of Chandeliers",
+  "description": "a grand high-fantasy ballroom with a mirrored polished floor, enormous crystal chandeliers, tall gilded windows and swirling dancers in the distance",
+  "mood": "glamorous, festive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "interiors"
+  ]
+}

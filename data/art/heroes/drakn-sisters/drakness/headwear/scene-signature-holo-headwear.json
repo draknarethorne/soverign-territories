@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/headwear/scene-signature-holo-headwear",
+  "kind": "headwear",
+  "name": "Signature Holo - headwear",
+  "description": "a crown of black bone thorns wreathed in violet soul-fire",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

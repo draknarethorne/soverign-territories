@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/backgrounds/fantasy/canyon/dusty-main-street-sundown",
+  "kind": "background",
+  "name": "Dusty Main Street at Sundown",
+  "description": "a high-fantasy frontier town's dusty main street at sundown, weathered timber storefronts with hanging signs, a saloon with swinging doors, tumbling sage, long amber shadows and red mesas beyond",
+  "mood": "tense, golden",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "canyon"
+  ]
+}

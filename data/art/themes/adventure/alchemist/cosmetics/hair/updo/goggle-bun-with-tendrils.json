@@ -1,0 +1,23 @@
+{
+  "id": "themes/adventure/alchemist/cosmetics/hair/updo/goggle-bun-with-tendrils",
+  "kind": "hair",
+  "name": "Goggle Bun with Tendrils",
+  "a_pose_style": "hair parted in the centre with the length gathered into a loose messy bun behind the goggles, long tendrils left falling in front of the shoulders and a pencil tucked in, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted and gathered into a loose messy bun behind goggles, with long tendrils falling in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "alchemist",
+    "hair"
+  ]
+}

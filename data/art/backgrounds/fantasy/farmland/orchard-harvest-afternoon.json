@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/farmland/orchard-harvest-afternoon",
+  "kind": "background",
+  "name": "Orchard Harvest Afternoon",
+  "description": "an orchard of heavy apple trees in the afternoon sun, baskets of fruit and wooden ladders, a stone farmhouse and long soft shadows",
+  "mood": "warm, abundant",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "farmland"
+  ]
+}

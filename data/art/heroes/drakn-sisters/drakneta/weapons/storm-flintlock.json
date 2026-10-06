@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/weapons/storm-flintlock",
+  "kind": "holding",
+  "name": "Storm Flintlock",
+  "description": "an ornate flintlock pistol with a {{METAL}} barrel, {{MAGIC}} lightning arcing along the muzzle, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "pistol"
+  ]
+}

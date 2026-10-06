@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/autumn/motion/leaf-toss",
+  "kind": "motion",
+  "name": "Leaf Toss",
+  "editorial": "A joyful autumn shot tossing leaves.",
+  "breeze": "A gust whirling the leaves.",
+  "body": "standing in a drift of leaves, one knee lifted, torso leaning forward.",
+  "head": "head thrown back, laughing.",
+  "defaultGaze": "bright eyes lifted then to camera.",
+  "defaultExpression": "a delighted, carefree laugh.",
+  "pose": "both hands flinging a shower of leaves up around her.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "autumn"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/banners/war-banner",
+  "kind": "holding",
+  "name": "War Banner",
+  "description": "a tall war banner on a long pole planted at her side, a {{PRIMARY}} flag with a {{METAL}} heraldic device snapping in the wind",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "banners"
+  ]
+}

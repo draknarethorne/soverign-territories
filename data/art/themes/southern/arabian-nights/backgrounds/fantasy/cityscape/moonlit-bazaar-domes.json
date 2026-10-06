@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/backgrounds/fantasy/cityscape/moonlit-bazaar-domes",
+  "kind": "background",
+  "name": "Moonlit Bazaar and Domes",
+  "description": "a high-fantasy desert bazaar at night, colourful silk awnings and hanging brass lanterns, spice stalls, white domes and minarets under a crescent moon and a sky of stars",
+  "mood": "exotic, lively",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "cityscape"
+  ]
+}

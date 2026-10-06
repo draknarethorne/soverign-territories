@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/ninja/motion/smoke-vanish",
+  "kind": "motion",
+  "name": "Smoke Vanish",
+  "editorial": "A cinematic shot half-vanishing in smoke.",
+  "breeze": "Smoke swirling around her.",
+  "body": "twisting mid-step, hip out, body half-obscured by smoke.",
+  "head": "looking back over the shoulder.",
+  "defaultGaze": "sly eyes to camera.",
+  "defaultExpression": "a sly, teasing smile.",
+  "pose": "one hand held in a sealing gesture in front of her, the other trailing smoke.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "ninja"
+  ]
+}

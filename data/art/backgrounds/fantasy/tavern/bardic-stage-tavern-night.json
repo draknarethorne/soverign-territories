@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/tavern/bardic-stage-tavern-night",
+  "kind": "background",
+  "name": "Bardic Stage in the Tavern",
+  "description": "the raised wooden stage of a lively tavern at night, a lute and drum, hanging lanterns and garlands, a crowd of silhouettes at packed tables and amber light",
+  "mood": "festive, lively",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "tavern"
+  ]
+}

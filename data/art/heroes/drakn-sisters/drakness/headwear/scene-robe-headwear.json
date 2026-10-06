@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a sheer {{PRIMARY}} veil falling from a slim {{METAL}} crown of thorns, lifted away from the face",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

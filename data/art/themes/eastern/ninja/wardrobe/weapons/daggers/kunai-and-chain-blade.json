@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/weapons/daggers/kunai-and-chain-blade",
+  "kind": "holding",
+  "name": "Kunai and Chain Blade",
+  "description": "a {{METAL}} kunai in each hand, a long chain with a weighted blade on the end looped over one forearm",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "weapons"
+  ]
+}

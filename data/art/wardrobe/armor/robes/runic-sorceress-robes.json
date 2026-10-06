@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/robes/runic-sorceress-robes",
+  "kind": "wearing",
+  "name": "Runic Sorceress Robes",
+  "description": "open-fronted {{PRIMARY}} silk robes embroidered with glowing {{MAGIC}} runes over a fitted bodice and short skirt, wide trailing sleeves and a {{METAL}} sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "robes",
+    "sorceress",
+    "runic"
+  ]
+}

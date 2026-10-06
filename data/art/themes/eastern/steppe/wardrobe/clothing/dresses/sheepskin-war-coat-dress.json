@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/clothing/dresses/sheepskin-war-coat-dress",
+  "kind": "wearing",
+  "name": "Sheepskin War Coat-Dress",
+  "description": "a short wrap coat-dress of {{PRIMARY}} felted wool with a thick sheepskin collar and cuffs, bold {{ACCENT_SOFT}} geometric trim, a wide braided belt and an open front over bare legs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "clothing"
+  ]
+}

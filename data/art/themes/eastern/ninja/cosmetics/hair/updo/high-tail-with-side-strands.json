@@ -1,0 +1,23 @@
+{
+  "id": "themes/eastern/ninja/cosmetics/hair/updo/high-tail-with-side-strands",
+  "kind": "hair",
+  "name": "High Tail with Side Strands",
+  "a_pose_style": "hair parted in the centre with the length pulled up into a high tail bound by a {{PRIMARY}} cord, two long strands left to fall in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted and pulled into a high cord-bound tail with two long strands falling in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "ninja",
+    "hair"
+  ]
+}

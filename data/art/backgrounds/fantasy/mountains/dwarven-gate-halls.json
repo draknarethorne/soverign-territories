@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/mountains/dwarven-gate-halls",
+  "kind": "background",
+  "name": "Dwarven Gate Halls",
+  "description": "the carved stone entrance of a mountain hall, giant statues flanking huge bronze doors, glowing forge-light spilling out and a snowy peak above",
+  "mood": "grand, ancient",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "mountains"
+  ]
+}

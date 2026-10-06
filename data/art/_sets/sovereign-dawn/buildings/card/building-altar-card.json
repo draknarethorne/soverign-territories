@@ -1,0 +1,13 @@
+{
+  "artId": "building-altar-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "buildings",
+  "cardId": "BUILDING_ALTAR",
+  "output": "prompts/sovereign-dawn/Buildings/card/Buildings_Card_Altar.txt",
+  "notes": "Mechanical card art for BUILDING_ALTAR (SD-113); prompt built from the card's name, element and lore."
+}

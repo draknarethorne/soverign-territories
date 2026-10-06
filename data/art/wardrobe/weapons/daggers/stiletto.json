@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/daggers/stiletto",
+  "kind": "holding",
+  "name": "Stiletto",
+  "description": "a needle-thin {{METAL}} stiletto with a {{PRIMARY}} grip, held low in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "dagger",
+    "stiletto",
+    "melee"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a crown of woven twigs, blossoms and {{METAL}} leaves, with two small curved horns of pale wood",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniya-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

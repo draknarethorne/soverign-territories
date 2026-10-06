@@ -1,0 +1,11 @@
+{
+  "artId": "sovereign-territories-brand-title-lockup",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/title-lockup.txt",
+  "denoise": "1.0",
+  "size": "1344x768",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/title/SovereignTerritories_Brand_TitleLockup.txt",
+  "notes": "Title lettering for the title screen, store page and reel."
+}

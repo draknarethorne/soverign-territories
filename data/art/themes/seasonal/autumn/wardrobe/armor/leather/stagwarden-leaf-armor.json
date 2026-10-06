@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/armor/leather/stagwarden-leaf-armor",
+  "kind": "wearing",
+  "name": "Stagwarden Leaf Armor",
+  "description": "woodland armor - a sculpted {{PRIMARY}} leather cuirass stamped with oak leaves, {{METAL}} antler-shaped pauldrons, overlapping leaf-scale tassets and a cloak of stitched autumn leaves",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "armor"
+  ]
+}

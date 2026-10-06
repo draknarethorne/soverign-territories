@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/halloween/motion/expressions/wicked-delight",
+  "kind": "expression",
+  "name": "Wicked delight",
+  "expression": "wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "halloween"
+  ]
+}

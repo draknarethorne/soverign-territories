@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/jewelry/scene-robe-jewelry",
+  "kind": "jewelry",
+  "name": "Robe - jewelry",
+  "description": "{{METAL}} reliquary pendant on a long chain, stacked rings on every finger, {{METAL}} cuffs engraved with runes",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/wardrobe/weapons/polearms/jousting-lance",
+  "kind": "holding",
+  "name": "Jousting Lance",
+  "description": "a long fluted jousting lance with a {{PRIMARY}} and {{ACCENT_SOFT}} spiral-painted shaft, a {{METAL}} coronal tip and a trailing pennon, couched under one arm",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "weapons"
+  ]
+}

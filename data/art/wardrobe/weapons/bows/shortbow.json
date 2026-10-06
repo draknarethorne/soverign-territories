@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/bows/shortbow",
+  "kind": "holding",
+  "name": "Shortbow",
+  "description": "a compact {{PRIMARY}} shortbow with {{METAL}} tips and a quiver of {{MAGIC}}-fletched arrows at the hip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "bow",
+    "shortbow",
+    "ranged"
+  ]
+}

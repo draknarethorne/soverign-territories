@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/crossbows/hand-crossbow",
+  "kind": "holding",
+  "name": "Hand Crossbow",
+  "description": "a one-handed {{METAL}} hand crossbow with a {{PRIMARY}} stock, a bolt set in the groove",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "crossbow",
+    "ranged"
+  ]
+}

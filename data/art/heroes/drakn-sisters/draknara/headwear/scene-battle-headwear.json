@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknara/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a feather crown on a bronze headband",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknara-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

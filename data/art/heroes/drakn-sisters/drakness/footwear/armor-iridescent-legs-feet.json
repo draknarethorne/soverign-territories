@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/footwear/armor-iridescent-legs-feet",
+  "kind": "legs_feet",
+  "name": "Iridescent - legs_feet",
+  "description": "slender high-heel ankle wear, multiple thin {{PRIMARY}} leather straps, ornate silver accents and buckles",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the drakness-armor-iridescent card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -7,8 +7,8 @@
   "components": {
     "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.",
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/dawn-regalia.json",
-    "headwear": "a radiant crown of {{METAL}} sun-rays set with {{GEM}} stones",
-    "jewelry": "a {{METAL}} sunburst collar with {{GEM}} stones, long ray earrings, {{METAL}} armlets",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-lineup-jewelry.json",
     "legs_feet": "bare feet with fine {{METAL}} anklets",
     "effects": "A soft halo of golden light glows behind her head, a mote of light glows above her palm, a few sparks of light drift close to her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",

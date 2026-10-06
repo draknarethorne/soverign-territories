@@ -6,7 +6,7 @@
   "name": "Profile Left",
   "components": {
     "view": "data/art/studio/views/body/profile-left.json",
-    "underlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
   },
   "template": "data/art/_templates/heroes/pose-view-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/poses/views/Drakneta_View_profile_left.txt",

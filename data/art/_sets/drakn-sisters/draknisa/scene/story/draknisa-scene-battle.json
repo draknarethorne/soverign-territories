@@ -7,9 +7,9 @@
   "components": {
     "pose": "She stands with her tidepearl staff held high in one hand and her other arm sweeping out to command the water, cape and hair streaming, a calm, fierce gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/battle-gear.json",
-    "headwear": "a pearl-and-{{METAL}} coronet",
-    "jewelry": "a pearl gorget on a {{METAL}} chain, shell-edged bracers",
-    "legs_feet": "sea-silk wrapped sandals with {{METAL}} greaves",
+    "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknisa/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknisa/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json",
     "effects": "A towering wave rears up behind her and curls over the harbour on her command, spray and glowing {{MAGIC}} water streaming around her, a whirlpool turning in the bay.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

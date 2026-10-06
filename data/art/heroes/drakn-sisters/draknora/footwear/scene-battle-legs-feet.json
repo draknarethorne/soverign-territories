@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/footwear/scene-battle-legs-feet",
+  "kind": "legs_feet",
+  "name": "Battle - legs_feet",
+  "description": "knee-high armoured boots of copper and red leather",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknora-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, a light breeze moving his hair.",
-    "wearing": "fitted Storm Gold-toned banded leather armor across the chest and shoulders, Arc White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; prayer-cloth wraps at the wrists and waist, faint lightning-bolt embroidery along the hem",
+    "wearing": "data/art/heroes/drakn-bound/dorian/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists.json",
     "effects": "A few small {{MAGIC}} sparks of static dance along his knuckles and the ends of his hair - understated, nothing busy.",

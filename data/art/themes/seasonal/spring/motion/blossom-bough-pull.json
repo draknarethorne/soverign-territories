@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/spring/motion/blossom-bough-pull",
+  "kind": "motion",
+  "name": "Blossom Bough Pull",
+  "editorial": "A candid orchard shot.",
+  "breeze": "Soft breeze shaking petals loose.",
+  "body": "standing on tiptoe, one knee bent behind her.",
+  "head": "looking back over one shoulder.",
+  "defaultGaze": "gentle, curious eyes to camera.",
+  "defaultExpression": "a gentle, delighted smile.",
+  "pose": "one hand drawing down a blossoming branch toward her face, the other holding her hair back from the breeze.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "spring"
+  ]
+}

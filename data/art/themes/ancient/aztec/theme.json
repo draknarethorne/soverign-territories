@@ -1,0 +1,15 @@
+{
+  "id": "themes/ancient/aztec",
+  "kind": "theme",
+  "name": "Aztec Sun Court",
+  "type": "culture",
+  "description": "Fantasy-adapted Mesoamerican sun court: feathered headdresses, jade and gold collars, woven huipil gowns, obsidian blades, stepped pyramids in jungle and sun-lit plazas.",
+  "realm": "fantasy",
+  "tags": [
+    "aztec",
+    "mesoamerican",
+    "feathers",
+    "jade",
+    "pyramid"
+  ]
+}

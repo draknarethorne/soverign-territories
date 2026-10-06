@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ships/captains-cabin-lamplit",
+  "kind": "background",
+  "name": "Captain's Cabin by Lamplight",
+  "description": "a ship captain's cabin of dark wood, a chart table with maps and brass instruments, a swaying lantern and a stern window showing a moonlit sea",
+  "mood": "intimate, nautical",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ships"
+  ]
+}

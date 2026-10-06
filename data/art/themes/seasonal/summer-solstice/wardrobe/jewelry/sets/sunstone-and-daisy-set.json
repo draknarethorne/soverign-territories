@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/jewelry/sets/sunstone-and-daisy-set",
+  "kind": "jewelry",
+  "name": "Sunstone and Daisy Set",
+  "description": "a set of a {{GEM}} sunstone pendant on a {{METAL}} chain, daisy-chain bracelets, tiny sun earrings and a woven wheat ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "jewelry"
+  ]
+}

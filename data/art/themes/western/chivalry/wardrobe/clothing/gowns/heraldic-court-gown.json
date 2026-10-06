@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/wardrobe/clothing/gowns/heraldic-court-gown",
+  "kind": "wearing",
+  "name": "Heraldic Court Gown",
+  "description": "a regal court gown in {{PRIMARY}} velvet with a heraldic {{ACCENT_SOFT}} crest embroidered across the bodice, long hanging sleeves, a deep square neckline and a train",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "clothing"
+  ]
+}

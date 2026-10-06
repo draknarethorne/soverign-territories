@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/clothing/sets/beaded-wrap-set",
+  "kind": "wearing",
+  "name": "Beaded Wrap Set",
+  "description": "a set of a beaded {{PRIMARY}} bandeau top with {{ACCENT_SOFT}} geometric patterns, a wrapped hip cloth tied at one side with a long sash and layered bead strands at the waist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "clothing"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/farmland/vineyard-terraces-dusk",
+  "kind": "background",
+  "name": "Vineyard Terraces at Dusk",
+  "description": "terraced vineyards on a hillside at dusk, rows of vines heavy with grapes, a stone villa and a rose-coloured sky",
+  "mood": "romantic, golden",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "farmland"
+  ]
+}

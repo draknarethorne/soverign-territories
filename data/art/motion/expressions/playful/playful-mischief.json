@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/playful/playful-mischief",
+  "kind": "expression",
+  "name": "Playful mischief",
+  "expression": "playful and mischievous, a sly smirk, one brow arched, eyes sparkling.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

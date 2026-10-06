@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
   "name": "Soft Closed Smile",
   "components": {
-    "expression": "data/art/motion/expressions/soft-closed-smile.json"
+    "expression": "data/art/motion/expressions/glamour/soft-closed-smile.json"
   },
   "template": "data/art/_templates/heroes/head-human.txt",
   "output": "prompts/drakn-sisters/Draknava/head/closeups/Draknava_Head_soft_closed_smile.txt",

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "a white-silver gorget set with a {{GEM}} crystal, frost-etched bracers",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknira-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

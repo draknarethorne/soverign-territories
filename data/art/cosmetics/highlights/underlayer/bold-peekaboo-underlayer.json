@@ -1,0 +1,9 @@
+{
+  "id": "cosmetics/highlights/underlayer/bold-peekaboo-underlayer",
+  "kind": "highlights",
+  "name": "Bold peekaboo underlayer",
+  "description": "a bold peekaboo underlayer of {{HIGHLIGHT_COLOR}} strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "peekaboo", "underlayer", "bold", "poison"],
+  "notes": "Draknoxa (Poison/Alchemist). Replaces peekaboo-underlayer, which asked for hidden, low-contrast strands."
+}

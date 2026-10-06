@@ -1,0 +1,19 @@
+{
+  "id": "themes/southern/tropical-isles/cosmetics/makeup/tropical/sun-gloss-and-shimmer",
+  "kind": "makeup",
+  "name": "Sun Gloss and Shimmer",
+  "description": "island makeup - sun-glossed bronze skin with golden shimmer on the cheekbones, a coral lid, a flower-pink lip and a few fine painted {{ACCENT_SOFT}} dots at the temple",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "makeup"
+  ]
+}

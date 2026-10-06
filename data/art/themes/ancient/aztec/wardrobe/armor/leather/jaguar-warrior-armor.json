@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/armor/leather/jaguar-warrior-armor",
+  "kind": "wearing",
+  "name": "Jaguar Warrior Armor",
+  "description": "fantasy jaguar-warrior armor - a spotted jaguar-hide cuirass over {{PRIMARY}} quilted cotton, {{METAL}} sun-disc shoulder guards, a feathered skirt, woven wrist guards and a jaguar-fang belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "armor"
+  ]
+}

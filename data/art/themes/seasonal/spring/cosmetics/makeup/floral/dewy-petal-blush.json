@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/spring/cosmetics/makeup/floral/dewy-petal-blush",
+  "kind": "makeup",
+  "name": "Dewy Petal Blush",
+  "description": "spring makeup - a dewy glow, a soft petal-pink wash across the cheekbones, a pale {{ACCENT_SOFT}} lid shimmer with a thin line of tiny freckles and a natural glossy rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "makeup"
+  ]
+}

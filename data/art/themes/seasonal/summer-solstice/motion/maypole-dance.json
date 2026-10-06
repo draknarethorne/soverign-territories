@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/summer-solstice/motion/maypole-dance",
+  "kind": "motion",
+  "name": "Maypole Dance",
+  "editorial": "A joyful festival action shot.",
+  "breeze": "Warm breeze lifting the ribbons.",
+  "body": "mid-spin around a maypole, skirt flaring.",
+  "head": "head tilted back, laughing to the camera.",
+  "defaultGaze": "bright eyes to camera.",
+  "defaultExpression": "a delighted, carefree laugh.",
+  "pose": "one hand gripping a ribbon from the maypole, the other arm flung wide.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice"
+  ]
+}

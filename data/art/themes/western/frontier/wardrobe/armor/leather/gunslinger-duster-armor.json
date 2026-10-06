@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/wardrobe/armor/leather/gunslinger-duster-armor",
+  "kind": "wearing",
+  "name": "Gunslinger Duster Armor",
+  "description": "frontier armor - a cropped {{PRIMARY}} leather duster over a studded corset-vest, {{METAL}} conchos and spurs, a double gunbelt with holsters and leather bracers",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "armor"
+  ]
+}

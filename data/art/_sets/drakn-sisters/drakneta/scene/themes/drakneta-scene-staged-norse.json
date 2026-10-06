@@ -1,0 +1,18 @@
+{
+  "artId": "drakneta-scene-staged-norse",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Norse Summoner",
+  "base_description": "{{HERO}} already staged in the norse summoner outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "effects": "Forks of {{MAGIC}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
+    "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
+    "expression": "a fierce, focused look and a hint of a battle-ready grin."
+  },
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/scene/themes/Drakneta_Scene_Staged_Norse.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "STAGED path: feed the drakneta-armor-norse studio render; only the scene, effects and pose are added."
+}

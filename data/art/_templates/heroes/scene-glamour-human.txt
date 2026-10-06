@@ -4,12 +4,11 @@ Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit, glamour p
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait photography, flattering soft cinematic light, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+{{KEEP_LINE}}
 
-{{HAIR_KEEP}}
-Skin: {{SKIN}}.
+?{{KEY_BLOCK}}
 
 Wearing {{WEARING}}.
 
@@ -32,8 +31,6 @@ Legs & feet: {{LEGS_FEET}}.
 Environment: {{BACKGROUND}}.
 
 {{REALM}}.
-
-Figure: {{FIGURE}}.
 
 ----------------------------------------------------------------
 negative prompt:

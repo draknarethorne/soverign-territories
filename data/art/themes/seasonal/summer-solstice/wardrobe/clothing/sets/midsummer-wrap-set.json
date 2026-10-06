@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/clothing/sets/midsummer-wrap-set",
+  "kind": "wearing",
+  "name": "Midsummer Wrap Set",
+  "description": "a set of a knotted {{PRIMARY}} wrap top with a flower-embroidered edge, a low sun-gold wrap skirt that ties at the hip and a woven flower belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "clothing"
+  ]
+}

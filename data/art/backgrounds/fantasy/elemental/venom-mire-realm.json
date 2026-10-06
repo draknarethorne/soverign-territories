@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/venom-mire-realm",
+  "kind": "background",
+  "name": "Realm of Venom",
+  "description": "an elemental poison realm: a bubbling toxic mire of lime-green pools and twisted purple fungi, curling vapour and glowing spore clouds",
+  "mood": "toxic, strange",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/wardrobe/clothing/dresses/fringe-saloon-dress",
+  "kind": "wearing",
+  "name": "Fringe Saloon Dress",
+  "description": "a short saloon dress in {{PRIMARY}} satin with a corset bodice, {{ACCENT_SOFT}} lace trim, long swinging fringe at the hem and a garter holster on one thigh",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "clothing"
+  ]
+}

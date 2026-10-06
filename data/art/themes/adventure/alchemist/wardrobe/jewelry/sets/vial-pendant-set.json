@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/jewelry/sets/vial-pendant-set",
+  "kind": "jewelry",
+  "name": "Vial Pendant Set",
+  "description": "a set of a corked vial pendant filled with glowing {{MAGIC}} liquid on a {{METAL}} chain, brass gear earrings, a measuring-spoon charm bracelet and a ring with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "jewelry"
+  ]
+}

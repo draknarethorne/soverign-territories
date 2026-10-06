@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/headwear/crowns/crescent-corona-crown",
+  "kind": "headwear",
+  "name": "Crescent Corona Crown",
+  "description": "a crown of curved {{METAL}} crescents around a black disc ringed with {{MAGIC}} light, fine rays radiating up like a corona",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "headwear"
+  ]
+}

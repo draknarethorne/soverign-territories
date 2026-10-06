@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/jewelry/scene-robe-jewelry",
+  "kind": "jewelry",
+  "name": "Robe - jewelry",
+  "description": "a {{METAL}} vial pendant on a chain, dropper earrings, {{METAL}} cuffs",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknoxa-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

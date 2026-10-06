@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/jewelry/sets/shuriken-charm-set",
+  "kind": "jewelry",
+  "name": "Shuriken Charm Set",
+  "description": "a minimal set of a thin {{METAL}} chain choker with a tiny shuriken charm, shuriken-stud earrings and a wrapped cord bracelet with a {{GEM}} bead",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "jewelry"
+  ]
+}

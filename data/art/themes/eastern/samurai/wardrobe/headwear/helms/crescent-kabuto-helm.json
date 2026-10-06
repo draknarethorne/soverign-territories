@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm",
+  "kind": "headwear",
+  "name": "Crescent Kabuto Helm",
+  "description": "a lacquered {{PRIMARY}} kabuto helm with a swept neck guard and a large {{METAL}} crescent crest, carried or worn tilted back above the forehead",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "headwear"
+  ]
+}

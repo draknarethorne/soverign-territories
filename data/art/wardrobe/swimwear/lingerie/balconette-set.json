@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/balconette-set",
+  "id": "wardrobe/swimwear/lingerie/balconette-set",
   "kind": "wearing",
   "name": "Balconette Lingerie Set",
-  "description": "only a {{PRIMARY}} lingerie-style set in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a balconette bra with underwired half-cups that lift the bust and bring it together into a deep, tight cleavage, thin shoulder straps and a narrow band under the bust; and matching low-rise briefs with thin side bands; midriff and abdomen bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} lingerie-style set in {{SHEEN}} with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a balconette bra with underwired half-cups that lift the bust and bring it together into a deep, tight cleavage, thin shoulder straps and a narrow band under the bust; and matching low-rise briefs with thin side bands; midriff and abdomen bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

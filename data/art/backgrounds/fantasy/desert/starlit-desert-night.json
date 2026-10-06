@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/desert/starlit-desert-night",
+  "kind": "background",
+  "name": "Starlit Desert Night",
+  "description": "a cold desert night of silver dunes under a sky thick with stars and a bright moon, a lone fire and a faint trail of footprints",
+  "mood": "quiet, endless",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "desert"
+  ]
+}

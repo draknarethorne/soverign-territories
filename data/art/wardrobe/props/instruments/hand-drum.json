@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/instruments/hand-drum",
+  "kind": "holding",
+  "name": "Hand Drum",
+  "description": "a round hand drum of stretched hide with {{PRIMARY}} painted patterns and {{METAL}} jingles, held against one hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "instruments"
+  ]
+}

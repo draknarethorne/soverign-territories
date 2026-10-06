@@ -1,0 +1,13 @@
+{
+  "artId": "worker-lumberjack-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "workers",
+  "cardId": "WORKER_LUMBERJACK",
+  "output": "prompts/sovereign-dawn/Workers/card/Workers_Card_Lumberjack.txt",
+  "notes": "Mechanical card art for WORKER_LUMBERJACK (SD-139); prompt built from the card's name, element and lore."
+}

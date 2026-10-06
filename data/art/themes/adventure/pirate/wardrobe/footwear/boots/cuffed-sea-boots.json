@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots",
+  "kind": "legs_feet",
+  "name": "Cuffed Sea Boots",
+  "description": "tall cuffed {{PRIMARY}} leather sea boots folded over at the knee with {{METAL}} buckles, worn thigh-high and salt-stained",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "footwear"
+  ]
+}

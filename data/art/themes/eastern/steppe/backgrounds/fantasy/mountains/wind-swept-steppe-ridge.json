@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/backgrounds/fantasy/mountains/wind-swept-steppe-ridge",
+  "kind": "background",
+  "name": "Wind-Swept Steppe Ridge",
+  "description": "a grassy ridge above rolling steppe, a lone standing stone with banners snapping in the wind, a distant column of riders and storm clouds on the horizon",
+  "mood": "stormy, free",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "mountains"
+  ]
+}

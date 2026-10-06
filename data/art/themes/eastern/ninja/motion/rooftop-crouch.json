@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/ninja/motion/rooftop-crouch",
+  "kind": "motion",
+  "name": "Rooftop Crouch",
+  "editorial": "A low cinematic shot on a rooftop edge.",
+  "breeze": "Light breeze.",
+  "body": "a low balanced crouch on a roof ridge, one knee up.",
+  "head": "head turned sharply to the camera.",
+  "defaultGaze": "sharp, unblinking eyes to camera.",
+  "defaultExpression": "a cool, cat-like smirk.",
+  "pose": "one hand braced on the tiles, the other holding a kunai point-down along the leg.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "ninja"
+  ]
+}

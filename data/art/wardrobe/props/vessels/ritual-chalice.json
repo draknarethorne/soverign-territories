@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/vessels/ritual-chalice",
+  "kind": "holding",
+  "name": "Ritual Chalice",
+  "description": "a tall ritual chalice of {{METAL}} held in both hands, a column of {{MAGIC}} mist rising from it",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "vessels"
+  ]
+}

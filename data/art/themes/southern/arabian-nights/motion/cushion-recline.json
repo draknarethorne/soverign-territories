@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/arabian-nights/motion/cushion-recline",
+  "kind": "motion",
+  "name": "Cushion Recline",
+  "editorial": "A languid palace portrait.",
+  "breeze": "Light breeze.",
+  "body": "reclining on silk cushions, one knee raised.",
+  "head": "tilted back against the cushions, chin lifted.",
+  "defaultGaze": "lazy, seductive eyes to camera.",
+  "defaultExpression": "a languid, knowing smile.",
+  "pose": "one arm draped along the cushions, the other hand holding a bunch of grapes.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights"
+  ]
+}

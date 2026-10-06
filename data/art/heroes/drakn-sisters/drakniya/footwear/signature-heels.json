@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Drakniya (Grass/Druid)",
+  "description": "matching {{PRIMARY}} open-toed wedge sandals in the same finish, with a sculpted wedge heel and straps that twine around the ankle like vines, small {{METAL}} leaf accents, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

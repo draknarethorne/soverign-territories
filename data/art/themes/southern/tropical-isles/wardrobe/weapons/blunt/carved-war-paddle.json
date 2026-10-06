@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/weapons/blunt/carved-war-paddle",
+  "kind": "holding",
+  "name": "Carved War Paddle",
+  "description": "a long carved war paddle with a sharpened edge and {{ACCENT_SOFT}} tribal patterns, held in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "weapons"
+  ]
+}

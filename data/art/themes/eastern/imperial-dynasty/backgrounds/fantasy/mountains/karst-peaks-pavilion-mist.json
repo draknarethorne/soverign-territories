@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/imperial-dynasty/backgrounds/fantasy/mountains/karst-peaks-pavilion-mist",
+  "kind": "background",
+  "name": "Karst Peaks and Pavilion in Mist",
+  "description": "towering green karst peaks wreathed in mist with a small red-pillared pavilion on a cliff, a winding stone stair, pine trees and a river far below at dawn",
+  "mood": "serene, majestic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "mountains"
+  ]
+}

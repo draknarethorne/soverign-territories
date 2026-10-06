@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/weapons/flame-whip",
+  "kind": "holding",
+  "name": "Flame Whip",
+  "description": "a long whip of braided {{PRIMARY}} leather wreathed in {{MAGIC}} flame, its tip trailing sparks, coiled in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "whip"
+  ]
+}

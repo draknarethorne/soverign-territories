@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/weapons/slings/shepherds-sling-and-crook",
+  "kind": "holding",
+  "name": "Shepherd's Sling and Crook",
+  "description": "a shepherd's crook staff in one hand and a leather sling with a smooth stone in the other",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "weapons"
+  ]
+}

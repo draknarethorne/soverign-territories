@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/raven-arms",
+  "kind": "arms",
+  "name": "Raven bracers (Drakness signature)",
+  "description": "matching bicep bands and bracers, otherwise bare forearms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "raven",
+    "armor"
+  ]
+}

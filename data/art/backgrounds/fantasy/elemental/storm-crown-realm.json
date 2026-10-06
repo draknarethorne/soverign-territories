@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/storm-crown-realm",
+  "kind": "background",
+  "name": "Realm of Storms",
+  "description": "an elemental lightning realm: floating black rock platforms among crackling storm clouds, forks of lightning striking spires and a sky of violet and gold",
+  "mood": "electric, wild",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

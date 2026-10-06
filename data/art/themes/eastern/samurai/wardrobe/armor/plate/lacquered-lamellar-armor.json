@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/armor/plate/lacquered-lamellar-armor",
+  "kind": "wearing",
+  "name": "Lacquered Lamellar Armor",
+  "description": "feudal fantasy armor - a lacquered {{PRIMARY}} lamellar cuirass laced in {{ACCENT_SOFT}} silk cord, {{METAL}} shoulder plates, a short pleated plated skirt (kusazuri) and vambraces",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "armor"
+  ]
+}

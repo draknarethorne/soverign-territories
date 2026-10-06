@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/backgrounds/fantasy/camp/harvest-lodge-bonfire",
+  "kind": "background",
+  "name": "Harvest Lodge Bonfire",
+  "description": "a rustic timber lodge at dusk with a crackling bonfire, hanging corn and gourds, long tables of harvest food, drifting leaves and sparks over a hillside orchard",
+  "mood": "cosy, festive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "camp"
+  ]
+}

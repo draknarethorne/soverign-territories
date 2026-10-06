@@ -7,9 +7,9 @@
   "components": {
     "pose": "Slow, gentle ascent: she floats upward out of a column of golden light as the clouds part, arms lowered slightly away from her sides with palms open and turned up, head lifted and gaze to the camera, peaceful and radiant; full figure from head to toe visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/dawn-regalia.json",
-    "headwear": "a radiant crown of {{METAL}} sun-rays set with {{GEM}} stones",
-    "jewelry": "a {{METAL}} sunburst collar with {{GEM}} stones, long ray earrings, {{METAL}} armlets",
-    "legs_feet": "bare feet, a soft glow beneath them",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniss/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Golden motes and drifting white feathers fall softly around her, warm rays streaming outward from behind her, a gentle {{MAGIC}} glow on the clouds below.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/dawn/cloud-sea-sunrise-summit.json"

@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/light-sources/torch",
+  "kind": "holding",
+  "name": "Burning Torch",
+  "description": "a burning pitch torch held high in one hand, the flame tinted {{MAGIC}} at the edges and sparks drifting off",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "light-sources"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/canyon/red-rock-arch-sunset",
+  "kind": "background",
+  "name": "Red Rock Arch at Sunset",
+  "description": "a huge natural red-rock arch against a blazing sunset sky, long shadows across a dry riverbed and scattered desert flowers",
+  "mood": "dramatic, warm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "canyon"
+  ]
+}

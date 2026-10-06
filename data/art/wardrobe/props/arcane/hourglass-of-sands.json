@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/arcane/hourglass-of-sands",
+  "kind": "holding",
+  "name": "Hourglass of Sands",
+  "description": "an ornate {{METAL}} hourglass held aloft, glowing {{MAGIC}} sand drifting upward instead of down",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "arcane"
+  ]
+}

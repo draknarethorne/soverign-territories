@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/jungle/rope-bridge-treetops",
+  "kind": "background",
+  "name": "Rope Bridge in the Treetops",
+  "description": "a rope bridge strung between giant jungle trees high above the forest floor, glowing flowers, drifting mist and a golden sky through the leaves",
+  "mood": "adventurous, airy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "jungle"
+  ]
+}

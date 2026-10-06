@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/heels/matching-open-toed-heels",
+  "kind": "legs_feet",
+  "name": "Matching open-toed heels (default A-pose shoe)",
+  "description": "matching {{PRIMARY}} open-toed heels",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "default",
+    "female"
+  ],
+  "notes": "Fallback for any hero without art.defaultFootwear (the Angel Primes test bed)."
+}

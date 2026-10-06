@@ -7,9 +7,9 @@
   "components": {
     "pose": "She stands with her alembic staff in one hand and flings a glowing flask with the other, her half-cape swirling, a sly, fierce gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/battle-gear.json",
-    "headwear": "a hood with a {{METAL}} thorn circlet",
-    "jewelry": "a bandolier of glowing vials, {{METAL}} buckled bracers with {{GEM}} stones",
-    "legs_feet": "buckled thigh boots",
+    "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknoxa/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknoxa/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
     "effects": "A flask bursts into a billowing cloud of luminous {{MAGIC}} venom mist rolling across the field, glowing droplets hanging in the air, burst vats hissing behind her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

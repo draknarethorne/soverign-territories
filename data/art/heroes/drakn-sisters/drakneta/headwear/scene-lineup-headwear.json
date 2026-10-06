@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a {{METAL}} crown of lightning-fork spires",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

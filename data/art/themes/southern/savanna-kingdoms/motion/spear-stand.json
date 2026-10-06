@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/savanna-kingdoms/motion/spear-stand",
+  "kind": "motion",
+  "name": "Spear Stand",
+  "editorial": "A proud heroic portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing tall, one foot slightly forward, shoulders squared.",
+  "head": "chin lifted, eyes to camera.",
+  "defaultGaze": "proud, steady eyes to camera.",
+  "defaultExpression": "a proud, regal smile.",
+  "pose": "a spear planted upright in one hand, the other arm holding a shield at her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms"
+  ]
+}

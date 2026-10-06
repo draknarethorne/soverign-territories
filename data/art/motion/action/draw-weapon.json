@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/draw-weapon",
+  "kind": "motion",
+  "name": "Drawing the Weapon",
+  "editorial": "An action shot of a weapon being drawn.",
+  "breeze": "Light breeze.",
+  "body": "a half-turn stance, weight on the back foot.",
+  "head": "turned toward the camera over one shoulder.",
+  "defaultGaze": "confident eyes to camera.",
+  "defaultExpression": "a confident half-smile.",
+  "pose": "one hand pulling a blade from its sheath at the hip, the other hand on the scabbard.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

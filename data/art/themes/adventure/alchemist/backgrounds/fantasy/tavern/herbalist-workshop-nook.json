@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/backgrounds/fantasy/tavern/herbalist-workshop-nook",
+  "kind": "background",
+  "name": "Herbalist Workshop Nook",
+  "description": "a cosy timber workshop hung with drying herbs, jars of roots and powders, a mortar and pestle, a crackling hearth and a window of rain at dusk",
+  "mood": "cosy, curious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "tavern"
+  ]
+}

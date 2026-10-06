@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/castle/throne-room-banners",
+  "kind": "background",
+  "name": "Throne Room of Banners",
+  "description": "a vast high-fantasy throne room of white stone, a raised dais with a carved throne, tall banners and narrow stained-glass windows throwing coloured light across the floor, braziers and a long red carpet",
+  "mood": "regal, solemn",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "castle"
+  ]
+}

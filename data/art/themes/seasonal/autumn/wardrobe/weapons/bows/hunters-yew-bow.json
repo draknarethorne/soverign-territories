@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/weapons/bows/hunters-yew-bow",
+  "kind": "holding",
+  "name": "Hunter's Yew Bow",
+  "description": "a hunter's yew bow with leaves and acorns carved along the limbs, a {{MAGIC}} glow in the nock and russet-fletched arrows in a quiver at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "weapons"
+  ]
+}

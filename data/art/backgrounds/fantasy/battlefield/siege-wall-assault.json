@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/battlefield/siege-wall-assault",
+  "kind": "background",
+  "name": "Siege Wall Assault",
+  "description": "a castle wall under siege, ladders and rams at the base, flaming arrows arcing overhead, catapult stones and billowing smoke",
+  "mood": "violent, chaotic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "battlefield"
+  ]
+}

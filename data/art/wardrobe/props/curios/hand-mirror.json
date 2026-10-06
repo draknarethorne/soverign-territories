@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/curios/hand-mirror",
+  "kind": "holding",
+  "name": "Hand Mirror",
+  "description": "an ornate {{METAL}} hand mirror held up in one hand, its glass reflecting a swirl of {{MAGIC}} light instead of her face",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "curios"
+  ]
+}

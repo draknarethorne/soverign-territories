@@ -7,14 +7,14 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "expression": "a sharp, knowing look and a faint cunning smile.",
-    "wearing": "data/art/themes/egyptian/wardrobe/clothing/gowns/kalasiris-sheath-gown.json",
-    "headwear": "data/art/themes/egyptian/wardrobe/headwear/diadems/golden-uraeus-diadem.json",
-    "jewelry": "data/art/themes/egyptian/wardrobe/jewelry/sets/usekh-collar-set.json",
-    "legs_feet": "data/art/themes/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
-    "holding": "data/art/themes/egyptian/wardrobe/props/vessels/canopic-jar-flask.json",
-    "makeup": "data/art/themes/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json",
+    "wearing": "data/art/themes/ancient/egyptian/wardrobe/clothing/gowns/kalasiris-sheath-gown.json",
+    "headwear": "data/art/themes/ancient/egyptian/wardrobe/headwear/diadems/golden-uraeus-diadem.json",
+    "jewelry": "data/art/themes/ancient/egyptian/wardrobe/jewelry/sets/usekh-collar-set.json",
+    "legs_feet": "data/art/themes/ancient/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
+    "holding": "data/art/themes/ancient/egyptian/wardrobe/props/vessels/canopic-jar-flask.json",
+    "makeup": "data/art/themes/ancient/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json",
     "effects": "Thin tendrils of {{MAGIC}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
-    "background": "data/art/themes/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
+    "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/scene/themes/Draknoxa_Scene_Egyptian.txt",

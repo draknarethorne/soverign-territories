@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/summer-solstice",
+  "kind": "theme",
+  "name": "Summer Solstice",
+  "type": "event",
+  "description": "Midsummer festival: sun-gold sundresses and flower crowns, bonfire dances, lakeside picnics, wheat fields, long golden evenings and fireflies.",
+  "realm": "fantasy",
+  "tags": [
+    "summer",
+    "solstice",
+    "midsummer",
+    "sun",
+    "festival"
+  ]
+}

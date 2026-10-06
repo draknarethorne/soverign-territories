@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/backgrounds/fantasy/castle/great-hall-banners",
+  "kind": "background",
+  "name": "Great Hall of Banners",
+  "description": "a vast stone castle great hall with a high timber roof, hanging heraldic banners, long feast tables, a roaring hearth and shafts of light from tall arched windows",
+  "mood": "solemn, grand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "castle"
+  ]
+}

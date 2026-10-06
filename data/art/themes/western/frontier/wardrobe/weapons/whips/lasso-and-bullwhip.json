@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/wardrobe/weapons/whips/lasso-and-bullwhip",
+  "kind": "holding",
+  "name": "Lasso and Bullwhip",
+  "description": "a coiled lasso in one hand and a long {{PRIMARY}} leather bullwhip at the hip, its tip glinting {{MAGIC}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "weapons"
+  ]
+}

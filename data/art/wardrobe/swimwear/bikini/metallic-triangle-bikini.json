@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/metallic-triangle-bikini",
+  "id": "wardrobe/swimwear/bikini/metallic-triangle-bikini",
   "kind": "wearing",
   "name": "Metallic Triangle Bikini (signature-colour underlayer)",
-  "description": "only a {{PRIMARY}} string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together so the bust is lifted and pressed into a deep, tight cleavage, held by thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} string bikini, top and bottom both in {{SHEEN}} with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together, with thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; {{FOOTWEAR}}",
   "compatibleStages": ["pose"],
   "tags": ["swimwear", "bikini", "metallic", "signature", "female"],
   "notes": "Each sister's art.defaultUnderlayer: the signature primary colour with a subtle metal sheen, so it pops on the A-pose and carries into outfits. Override with components.underlayer (e.g. the plain triangle-bikini) to dial it down."

@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/spring/motion/expressions/bloom-radiance",
+  "kind": "expression",
+  "name": "Bloom radiance",
+  "expression": "radiant and fresh, a soft glowing smile, eyes bright and slightly misty with joy.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "spring"
+  ]
+}

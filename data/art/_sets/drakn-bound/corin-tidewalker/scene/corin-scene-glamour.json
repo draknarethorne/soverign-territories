@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile, sea wind stirring his hair.",
-    "wearing": "close-fitting Deep Oceanic Blue-toned light leather armor, Seafoam Green accent straps across the chest and hips, built for silent movement; scale-like overlapping plates across the torso, a shell-shaped clasp at the collar",
+    "wearing": "data/art/heroes/drakn-bound/corin/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json",
     "effects": "A few droplets of water hang in the sea air around him, faint {{MAGIC}} light rippling softly through them - understated, nothing busy.",

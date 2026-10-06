@@ -1,0 +1,23 @@
+{
+  "id": "themes/seasonal/halloween/cosmetics/hair/waves/windblown-witch-waves",
+  "kind": "hair",
+  "name": "Windblown Witch Waves",
+  "a_pose_style": "hair parted in the centre with big loose witchy waves, a few thin plaits with tiny bat charms at the temples, the rest left wild and falling in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted in big loose witchy waves with a few thin plaits and bat charms at the temples, the rest wild and falling in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "halloween",
+    "hair"
+  ]
+}

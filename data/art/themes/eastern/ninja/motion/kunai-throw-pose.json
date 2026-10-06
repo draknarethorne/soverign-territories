@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/ninja/motion/kunai-throw-pose",
+  "kind": "motion",
+  "name": "Kunai Throw",
+  "editorial": "A frozen mid-action throwing shot.",
+  "breeze": "Light breeze.",
+  "body": "a long lunge, torso twisting through the throw.",
+  "head": "turned along the throw line, then to the camera.",
+  "defaultGaze": "intense eyes to camera.",
+  "defaultExpression": "sharp and focused.",
+  "pose": "one arm swept forward just released a kunai, the other held back for balance, a second kunai ready.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "ninja"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/backgrounds/fantasy/temple/sunlit-stepped-pyramid-plaza",
+  "kind": "background",
+  "name": "Sunlit Stepped Pyramid Plaza",
+  "description": "a high-fantasy sun court with a great stepped pyramid of carved stone, stone serpents and sun-disc reliefs, braziers and feathered banners, jungle canopy beyond and blazing midday light",
+  "mood": "grand, ceremonial",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "temple"
+  ]
+}

@@ -7,9 +7,9 @@
   "components": {
     "pose": "Fast, spiralling ascent: she rises upright through the centre of a great updraft with her body turning gently in the spiral, arms out and lifted as if on the wind, head lifted and gaze to the camera, joyful and free; full figure from head to toe visible.",
     "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/dawn-regalia.json",
-    "headwear": "a {{METAL}} circlet with a pair of swept-back feather wings at the temples",
-    "jewelry": "a {{METAL}} feather collar with {{GEM}} stones, long feather earrings, {{METAL}} armlets",
-    "legs_feet": "bare feet, floating clear of the stone",
+    "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknava/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknava/footwear/scene-the-dawn-legs-feet.json",
     "effects": "A great spiral of wind lifts leaves, feathers and silk ribbons in a swirling column around her, streaks of {{MAGIC}} light tracing the air currents, clouds swept back from her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/dawn/floating-islands-gorge-updraft.json"

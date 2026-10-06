@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/halloween",
+  "kind": "theme",
+  "name": "Halloween",
+  "type": "event",
+  "description": "Samhain-night fantasy: witches' gowns and hats, pumpkin-lantern fields, haunted manors, bats, candlelight, mist and spectral glows.",
+  "realm": "fantasy",
+  "tags": [
+    "halloween",
+    "witch",
+    "pumpkin",
+    "gothic",
+    "spooky"
+  ]
+}

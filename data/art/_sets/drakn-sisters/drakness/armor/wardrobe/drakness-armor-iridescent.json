@@ -9,9 +9,9 @@
     "wearing": "data/art/wardrobe/armor/bikini/iridescent-bikini.json",
     "arms": "data/art/wardrobe/jewelry/bracelets/matching-bracelets.json",
     "back": "data/art/wardrobe/capes/cloaks/sheer-glowing-cloak.json",
-    "jewelry": "a necklace with a small polished-silver skull pendant; matching earrings and rings; a small bellybutton ring",
-    "legs_feet": "slender high-heel ankle wear, multiple thin {{PRIMARY}} leather straps, ornate silver accents and buckles",
-    "holding": "nothing in hand, fingers relaxed at her side"
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/armor-iridescent-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/footwear/armor-iridescent-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/armor-iridescent-holding.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",
   "output": "prompts/drakn-sisters/Drakness/armor/wardrobe/Drakness_Armor_Iridescent.txt",

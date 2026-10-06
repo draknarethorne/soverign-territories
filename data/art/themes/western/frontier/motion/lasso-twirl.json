@@ -1,0 +1,20 @@
+{
+  "id": "themes/western/frontier/motion/lasso-twirl",
+  "kind": "motion",
+  "name": "Lasso Twirl",
+  "editorial": "A lively ranch action shot.",
+  "breeze": "Wind lifting the lasso and fringe.",
+  "body": "a wide stance with a slight lean, one boot forward.",
+  "head": "head up, grinning at the camera.",
+  "defaultGaze": "bright, playful eyes to camera.",
+  "defaultExpression": "a whooping, playful grin.",
+  "pose": "one arm raised overhead spinning a lasso in a loop, the other hand on the hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "frontier"
+  ]
+}

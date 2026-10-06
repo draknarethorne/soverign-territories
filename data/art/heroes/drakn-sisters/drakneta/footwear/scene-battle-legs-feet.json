@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/footwear/scene-battle-legs-feet",
+  "kind": "legs_feet",
+  "name": "Battle - legs_feet",
+  "description": "plated boots with copper coil inlay",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

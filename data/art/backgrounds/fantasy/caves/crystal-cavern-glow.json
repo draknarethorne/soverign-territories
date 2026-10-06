@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/caves/crystal-cavern-glow",
+  "kind": "background",
+  "name": "Crystal Cavern Glow",
+  "description": "a vast underground cavern of giant glowing crystals in violet and cyan, a still black pool mirroring them and thin mist at the floor",
+  "mood": "magical, awe-struck",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "caves"
+  ]
+}

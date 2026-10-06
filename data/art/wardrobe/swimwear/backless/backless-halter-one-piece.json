@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/backless-halter-one-piece",
+  "id": "wardrobe/swimwear/backless/backless-halter-one-piece",
   "kind": "wearing",
   "name": "Backless Halter One-Piece",
-  "description": "only a {{PRIMARY}} satin-metallic halter one-piece with a deep plunging front held by a single narrow tie behind the neck, cut high at the hips; the entire back from the nape to the low waist is one clear expanse of bare skin and spine, the only fabric near it a thin tie at the neck; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} satin-metallic halter one-piece with a deep plunging front held by a single narrow tie behind the neck, cut high at the hips; the entire back from the nape to the low waist is one clear expanse of bare skin and spine, the only fabric near it a thin tie at the neck; arms and legs bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

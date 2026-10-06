@@ -1,0 +1,21 @@
+{
+  "artId": "draknoxa-armor-alchemist",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Alchemist's Guild Alchemist",
+  "aesthetic": "a clean studio presentation of the alchemist's guild alchemist outfit",
+  "components": {
+    "wearing": "data/art/themes/adventure/alchemist/wardrobe/armor/leather/transmuters-harness-armor.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/adventure/alchemist/wardrobe/jewelry/sets/vial-pendant-set.json",
+    "legs_feet": "data/art/themes/adventure/alchemist/wardrobe/footwear/boots/acid-proof-lab-boots.json",
+    "headwear": "data/art/themes/adventure/alchemist/wardrobe/headwear/goggles/brass-lens-goggles.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknoxa/armor/themes/Draknoxa_Armor_Alchemist.txt",
+  "notes": "Pre-staged Alchemist's Guild Alchemist outfit: render it from the A-pose, then feed the image to the Staged alchemist scene. Every item is a library piece."
+}

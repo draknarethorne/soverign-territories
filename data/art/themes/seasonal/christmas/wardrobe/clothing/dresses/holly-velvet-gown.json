@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/clothing/dresses/holly-velvet-gown",
+  "kind": "wearing",
+  "name": "Holly Velvet Gown",
+  "description": "a festive off-the-shoulder velvet gown in {{PRIMARY}} with a white faux-fur collar and hem, {{ACCENT_SOFT}} holly-and-berry embroidery, a satin sash and a high thigh slit",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "clothing"
+  ]
+}

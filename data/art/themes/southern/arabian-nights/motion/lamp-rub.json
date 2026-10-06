@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/arabian-nights/motion/lamp-rub",
+  "kind": "motion",
+  "name": "Lamp Rub",
+  "editorial": "A magical portrait summoning a djinn.",
+  "breeze": "Light breeze.",
+  "body": "kneeling on a cushion, back arched slightly.",
+  "head": "head lowered, eyes up to the camera.",
+  "defaultGaze": "bright, sly eyes to camera.",
+  "defaultExpression": "a sly, delighted smile.",
+  "pose": "one hand rubbing a glowing lamp, smoke spiralling up from it.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights"
+  ]
+}

@@ -10,12 +10,12 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "companion": "her aligned Elder Dragon, Fulgora, filling the shattered windows behind her with its head thrust into the hall, electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json",
-    "wearing": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout, secured at the shoulders, no headwear, her hair fully visible; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
+    "wearing": "data/art/heroes/drakn-sisters/drakneta/clothing/scene-signature-holo-wearing.json",
     "pose": "She stands with the staff planted and her free hand cupped around a fierce ball of lightning at chest height, her hair lifted by static, chin lifted, an intense, knowing gaze straight to the camera; full figure visible.",
     "holding": "data/art/heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended.json",
     "effects": "Forks of lightning strike through the tall windows and run along the copper coils, the floor sigil blazes with {{MAGIC}} light, arcs dance between her hands and the staff and loose sparks hang in the air.",
-    "headwear": "a forked crown of {{PRIMARY}} metal crackling with small arcs of lightning",
-    "back": "a cape of storm-grey silk threaded with copper wire that crackles with static"
+    "headwear": "data/art/heroes/drakn-sisters/drakneta/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/drakneta/capes/scene-signature-holo-back.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/scene/signature/Drakneta_Scene_Signature_Holo.txt",

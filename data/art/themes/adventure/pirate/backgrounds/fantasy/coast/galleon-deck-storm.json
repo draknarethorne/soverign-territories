@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/backgrounds/fantasy/coast/galleon-deck-storm",
+  "kind": "background",
+  "name": "Galleon Deck in a Storm",
+  "description": "the deck of a high-fantasy galleon in a storm, taut rigging and flapping patched sails, crashing grey waves, flashes of lightning and rain-slick planks",
+  "mood": "stormy, daring",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "coast"
+  ]
+}

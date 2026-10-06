@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
   "name": "Totem Calling",
   "components": {
-    "jewelry": "{{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/showcase-totem-calling-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/commanding-cast.json",
     "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/battle-gear.json",

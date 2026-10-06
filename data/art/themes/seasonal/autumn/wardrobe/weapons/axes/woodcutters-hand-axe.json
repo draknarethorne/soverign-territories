@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/weapons/axes/woodcutters-hand-axe",
+  "kind": "holding",
+  "name": "Woodcutter's Hand Axe",
+  "description": "a sturdy hand axe with a {{METAL}} head etched with oak leaves and a {{PRIMARY}} leather-wrapped haft, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "weapons"
+  ]
+}

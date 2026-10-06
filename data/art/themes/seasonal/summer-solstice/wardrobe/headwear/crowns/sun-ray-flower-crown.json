@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/headwear/crowns/sun-ray-flower-crown",
+  "kind": "headwear",
+  "name": "Sun-Ray Flower Crown",
+  "description": "a crown of sunflowers, daisies and golden wheat with fine {{METAL}} sun rays fanning above it",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "headwear"
+  ]
+}

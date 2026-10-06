@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Draknoxa (Poison/Alchemist)",
+  "description": "matching {{PRIMARY}} open-toed platform sandals in the same finish, with a thick sole, straps crossing the instep and a small {{METAL}} vial-shaped buckle at the ankle, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

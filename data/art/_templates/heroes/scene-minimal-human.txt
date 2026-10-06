@@ -4,12 +4,11 @@ Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit and full s
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+{{KEEP_LINE}}
 
-{{HAIR_KEEP}}
-Skin: {{SKIN}}.
+?{{KEY_BLOCK}}
 
 Wearing {{WEARING}}.
 
@@ -22,8 +21,6 @@ Wearing {{WEARING}}.
 Environment: {{BACKGROUND}}.
 
 {{REALM}}.
-
-Figure: {{FIGURE}}.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a {{METAL}} crown of thorned vines and small glass vials set with {{GEM}} stones",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknoxa-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

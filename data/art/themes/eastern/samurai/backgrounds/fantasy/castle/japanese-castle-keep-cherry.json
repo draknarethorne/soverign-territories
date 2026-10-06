@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/backgrounds/fantasy/castle/japanese-castle-keep-cherry",
+  "kind": "background",
+  "name": "Castle Keep under Cherry Blossoms",
+  "description": "a high-fantasy tiered white-and-black castle keep with curved roofs, stone walls and moat, cherry blossoms drifting across the scene, lanterns and a wide stone bridge",
+  "mood": "elegant, serene",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "castle"
+  ]
+}

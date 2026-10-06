@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/vessels/jewelled-goblet",
+  "kind": "holding",
+  "name": "Jewelled Goblet",
+  "description": "a jewelled {{METAL}} goblet held up in one hand, set with {{GEM}} stones and filled with glowing {{MAGIC}} wine",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "vessels"
+  ]
+}

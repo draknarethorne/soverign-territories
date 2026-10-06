@@ -1,0 +1,19 @@
+{
+  "artId": "draknisa-clothing-aztec",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Aztec Sun Court Enchanter",
+  "aesthetic": "a clean studio presentation of the aztec sun court enchanter outfit",
+  "components": {
+    "wearing": "data/art/themes/ancient/aztec/wardrobe/clothing/sets/jade-and-gold-skirt-set.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/ancient/aztec/wardrobe/jewelry/sets/jade-collar-set.json",
+    "legs_feet": "data/art/themes/ancient/aztec/wardrobe/footwear/sandals/woven-lace-up-sandals.json",
+    "headwear": "data/art/themes/ancient/aztec/wardrobe/headwear/crowns/quetzal-feather-headdress.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknisa/clothing/themes/Draknisa_Clothing_Aztec.txt",
+  "notes": "Pre-staged Aztec Sun Court Enchanter outfit: render it from the A-pose, then feed the image to the Staged aztec scene. Every item is a library piece."
+}

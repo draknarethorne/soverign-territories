@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/samurai/motion/petal-cut",
+  "kind": "motion",
+  "name": "Petal Cut",
+  "editorial": "A cinematic shot slicing through falling petals.",
+  "breeze": "Wind spinning the petals.",
+  "body": "a deep forward stance mid-slash, hair and sleeves streaming.",
+  "head": "turned over the shoulder to the camera.",
+  "defaultGaze": "focused eyes to camera.",
+  "defaultExpression": "a fierce, focused calm.",
+  "pose": "the katana swept in a diagonal cut, petals parting around the blade.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "samurai"
+  ]
+}

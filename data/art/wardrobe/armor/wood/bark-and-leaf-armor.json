@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/wood/bark-and-leaf-armor",
+  "kind": "wearing",
+  "name": "Bark and Leaf Armor",
+  "description": "druidic armor of overlapping shaped bark plates in {{PRIMARY}} over a bodice of woven living leaves, vine-wrapped bracers and a skirt of layered leaves",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "wood",
+    "druid",
+    "nature"
+  ]
+}

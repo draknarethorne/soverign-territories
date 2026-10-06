@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/instruments/silver-flute",
+  "kind": "holding",
+  "name": "Silver Flute",
+  "description": "a slim {{METAL}} flute raised to the lips, a faint ribbon of {{MAGIC}} light curling from its end",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "instruments"
+  ]
+}

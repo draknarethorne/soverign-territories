@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/backgrounds/fantasy/castle/tournament-field-pavilions",
+  "kind": "background",
+  "name": "Tournament Field and Pavilions",
+  "description": "a high-fantasy tournament field with striped silk pavilions, rows of fluttering heraldic banners, a wooden tilt barrier, cheering stands and a golden afternoon sky over a castle on a hill",
+  "mood": "pageantry, golden",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "castle"
+  ]
+}

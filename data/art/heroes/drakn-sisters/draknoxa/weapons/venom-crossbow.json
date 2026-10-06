@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/weapons/venom-crossbow",
+  "kind": "holding",
+  "name": "Venom Crossbow",
+  "description": "a compact crossbow of tarnished {{METAL}} with a bolt dipped in glowing {{MAGIC}} venom loaded",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "crossbow"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/farmland/windmill-field-storm",
+  "kind": "background",
+  "name": "Windmill Field before the Storm",
+  "description": "a golden wheat field with a wooden windmill under a dark rolling storm front, light breaking on the crop and swallows skimming low",
+  "mood": "moody, pastoral",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "farmland"
+  ]
+}

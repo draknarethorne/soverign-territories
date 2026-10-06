@@ -6,7 +6,7 @@
   "name": "Default",
   "aesthetic": "deadly assassin aesthetic",
   "components": {
-    "wearing": "close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder",
+    "wearing": "data/art/heroes/drakn-bound/malakor/clothing/armor-default-wearing.json",
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",

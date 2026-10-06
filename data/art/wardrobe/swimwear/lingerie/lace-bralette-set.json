@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/lace-bralette-set",
+  "id": "wardrobe/swimwear/lingerie/lace-bralette-set",
   "kind": "wearing",
   "name": "Lace Lingerie Set",
-  "description": "only a {{PRIMARY}} lace lingerie set in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging: a plunging balconette bra with thin straps that lifts the bust and brings it together into a deep, tight cleavage, and matching low-rise lace briefs with thin scalloped side bands; midriff and abdomen bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} lace lingerie set in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging: a plunging balconette bra with thin straps that lifts the bust and brings it together into a deep, tight cleavage, and matching low-rise lace briefs with thin scalloped side bands; midriff and abdomen bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

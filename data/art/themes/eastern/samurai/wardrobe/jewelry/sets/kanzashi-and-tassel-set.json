@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set",
+  "kind": "jewelry",
+  "name": "Kanzashi and Tassel Set",
+  "description": "a set of {{METAL}} kanzashi hairpins with hanging {{GEM}} beads, a silk cord choker with a small bell, tassel earrings and a carved ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "jewelry"
+  ]
+}

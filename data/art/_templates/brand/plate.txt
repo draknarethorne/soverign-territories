@@ -1,0 +1,13 @@
+=== {{NAME}} · Landscape Plate — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. An empty three-terrace ridge under the dawn sky: the plate that the ten sisters are composited onto before the harmonize pass.
+Size: {{SIZE}}
+
+----------------------------------------------------------------
+prompt:
+
+Epic fantasy landscape plate, portrait composition, photoreal cinematic fantasy, with no people in it. A wide {{RIDGE}}, rising in three broad terraces like a stage: a wide lower terrace, a narrower middle terrace, and a single high platform at the top centre, all of them empty. {{SKY_SENTENCE}}, and {{WORLD}}. {{LIGHT_SENTENCE}}, volumetric god-rays, soft mist between the terraces, rich colour. A clear empty band of sky across the top for the title. No people, no figures, no statues, no text, no lettering, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+people, figures, women, statues, text, lettering, watermark, logo, low quality, blurry, modern objects

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/temple/underground-sanctum-crystals",
+  "kind": "background",
+  "name": "Underground Sanctum of Crystals",
+  "description": "a vaulted underground sanctum of carved columns and a central glowing crystal altar, runes pulsing on the walls and a cool blue light",
+  "mood": "arcane, hushed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "temple"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/armor/hide/lion-guard-hide-armor",
+  "kind": "wearing",
+  "name": "Lion Guard Hide Armor",
+  "description": "fantasy royal-guard armor - a tawny hide cuirass with {{PRIMARY}} beaded bands, {{METAL}} brass collar and armlets, a mane-trimmed shoulder mantle and a short layered cloth skirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "armor"
+  ]
+}

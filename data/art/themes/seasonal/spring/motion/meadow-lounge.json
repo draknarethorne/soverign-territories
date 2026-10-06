@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/spring/motion/meadow-lounge",
+  "kind": "motion",
+  "name": "Meadow Lounge",
+  "editorial": "A relaxed meadow portrait.",
+  "breeze": "Light breeze.",
+  "body": "reclining on one hip in tall grass, legs folded to one side.",
+  "head": "tilted, chin resting on a shoulder.",
+  "defaultGaze": "soft, dreamy eyes to camera.",
+  "defaultExpression": "a soft, content smile.",
+  "pose": "one hand propped on the grass, the other holding a small bouquet to her chest.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "spring"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/camp/caravan-halt-oasis",
+  "kind": "background",
+  "name": "Caravan Halt at the Oasis",
+  "description": "a desert caravan halted around an oasis pool, kneeling camels, patterned tents and cooking smoke, palms and long evening shadows on the dunes",
+  "mood": "weary, exotic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "camp"
+  ]
+}

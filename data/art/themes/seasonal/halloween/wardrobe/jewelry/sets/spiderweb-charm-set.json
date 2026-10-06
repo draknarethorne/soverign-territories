@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set",
+  "kind": "jewelry",
+  "name": "Spiderweb Charm Set",
+  "description": "a spiderweb-lace choker with a hanging {{GEM}} charm, a bat-wing pendant, spider rings and a charm bracelet of tiny bones and bells in {{METAL}}",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "jewelry"
+  ]
+}

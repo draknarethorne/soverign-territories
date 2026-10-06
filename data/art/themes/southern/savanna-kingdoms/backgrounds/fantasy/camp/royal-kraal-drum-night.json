@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/backgrounds/fantasy/camp/royal-kraal-drum-night",
+  "kind": "background",
+  "name": "Royal Kraal at Drum Night",
+  "description": "a ring of round thatched houses and carved wooden gates around a firelit courtyard, drummers' shadows, sparks rising into a starry sky and woven banners hanging overhead",
+  "mood": "festive, ceremonial",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "camp"
+  ]
+}

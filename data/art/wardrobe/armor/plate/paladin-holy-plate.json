@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/paladin-holy-plate",
+  "kind": "wearing",
+  "name": "Paladin Holy Plate",
+  "description": "gleaming {{METAL}} plate armor engraved with {{ACCENT_SOFT}} sunburst filigree, a white surcoat with a {{PRIMARY}} holy emblem over the breastplate, flared pauldrons and a short flowing tasset skirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "paladin",
+    "holy"
+  ]
+}

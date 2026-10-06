@@ -1,0 +1,19 @@
+{
+  "id": "themes/eastern/samurai/cosmetics/makeup/kabuki/crimson-lid-and-white-glow",
+  "kind": "makeup",
+  "name": "Crimson Lid and White Glow",
+  "description": "samurai makeup - a fine crimson flick on the outer lids, a pale luminous porcelain glow, subtle {{ACCENT_SOFT}} shading on the cheeks and a deep red lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "makeup"
+  ]
+}

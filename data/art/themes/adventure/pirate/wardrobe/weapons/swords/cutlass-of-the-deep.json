@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/weapons/swords/cutlass-of-the-deep",
+  "kind": "holding",
+  "name": "Cutlass of the Deep",
+  "description": "a wide-bladed cutlass with a {{METAL}} shell guard and a {{PRIMARY}}-wrapped grip, sea-spray glinting on the steel, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "weapons"
+  ]
+}

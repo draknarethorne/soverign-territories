@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/footwear/sandals/curled-toe-slippers",
+  "kind": "legs_feet",
+  "name": "Curled-Toe Slippers",
+  "description": "pointed curled-toe {{PRIMARY}} silk slippers embroidered with {{METAL}} thread and a delicate anklet",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "footwear"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/jewelry/scene-lineup-jewelry",
+  "kind": "jewelry",
+  "name": "Lineup - jewelry",
+  "description": "a {{METAL}} leaf collar with {{GEM}} dewdrops, vine bracelets with small flowers, {{METAL}} acorn earrings",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniya-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

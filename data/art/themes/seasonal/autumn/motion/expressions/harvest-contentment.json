@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/autumn/motion/expressions/harvest-contentment",
+  "kind": "expression",
+  "name": "Harvest contentment",
+  "expression": "warm and content, a gentle smile, eyes soft and glowing in the amber light.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "autumn"
+  ]
+}

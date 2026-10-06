@@ -7,9 +7,9 @@
   "components": {
     "pose": "Fast, snapping ascent: she is hurled upright out of the crater on a flash of lightning, one arm flung high, the other pulled in, hair and ribbons blasted upward, caught at the exact instant of the strike; sharp, startled-then-thrilled expression with eyes on the camera; full figure from head to toe visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakneta/clothing/dawn-regalia.json",
-    "headwear": "a {{METAL}} crown of lightning-fork spires",
-    "jewelry": "a {{METAL}} coil collar with {{GEM}} stones, long spark earrings, {{METAL}} armlets",
-    "legs_feet": "bare feet, sparks dancing around them",
+    "headwear": "data/art/heroes/drakn-sisters/drakneta/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakneta/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakneta/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Forking bolts of {{MAGIC}} lightning arc away from her across the sky and ground, shattered rock and glassy fragments falling back in slow arcs, static crackling over her skin and gown, flash-lit clouds.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/dawn/thunderhead-plateau-strike-crater.json"

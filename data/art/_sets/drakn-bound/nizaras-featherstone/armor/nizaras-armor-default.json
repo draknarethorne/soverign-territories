@@ -6,7 +6,7 @@
   "name": "Default",
   "aesthetic": "cunning rogue aesthetic",
   "components": {
-    "wearing": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
+    "wearing": "data/art/heroes/drakn-bound/nizaras/clothing/armor-default-wearing.json",
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",

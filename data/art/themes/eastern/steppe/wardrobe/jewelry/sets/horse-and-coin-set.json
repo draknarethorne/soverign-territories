@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/jewelry/sets/horse-and-coin-set",
+  "kind": "jewelry",
+  "name": "Horse and Coin Set",
+  "description": "a set of heavy {{METAL}} coin chains across the chest, a carved horse pendant, large hoop earrings and wide hammered armlets with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "jewelry"
+  ]
+}

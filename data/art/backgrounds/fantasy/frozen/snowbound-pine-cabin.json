@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/frozen/snowbound-pine-cabin",
+  "kind": "background",
+  "name": "Snowbound Pine Cabin",
+  "description": "a log cabin with a glowing window and smoking chimney in a snowbound pine forest at dusk, deep drifts, falling snow and a lantern on the porch",
+  "mood": "cosy, remote",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "frozen"
+  ]
+}

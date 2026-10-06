@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/steppe/motion/firelit-feast-sit",
+  "kind": "motion",
+  "name": "Firelit Feast Sit",
+  "editorial": "A relaxed campfire portrait.",
+  "breeze": "Light breeze.",
+  "body": "sitting cross-legged by a fire, leaning back on one hand.",
+  "head": "tilted, laughing to the camera.",
+  "defaultGaze": "bright, teasing eyes to camera.",
+  "defaultExpression": "a hearty, easy laugh.",
+  "pose": "one hand lifting a horn cup, the other resting on a knee.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "steppe"
+  ]
+}

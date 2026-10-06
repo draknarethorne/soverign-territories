@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/autumn/motion/basket-carry",
+  "kind": "motion",
+  "name": "Harvest Basket Carry",
+  "editorial": "A candid harvest portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing with weight on one leg, hip pushed out to carry the load.",
+  "head": "turned to the camera, smiling.",
+  "defaultGaze": "warm eyes to camera.",
+  "defaultExpression": "a warm, easy smile.",
+  "pose": "a woven basket of apples and gourds braced on one hip, the other hand holding a fallen leaf to her lips.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "autumn"
+  ]
+}

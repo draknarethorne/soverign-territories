@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/armor/leather/sunbearer-gilded-armor",
+  "kind": "wearing",
+  "name": "Sunbearer Gilded Armor",
+  "description": "festival armor - a gilded {{METAL}} sunburst breastplate over a {{PRIMARY}} silk bodice, radiant ray-shaped pauldrons, a short layered gold-and-cream skirt and a flowing sun-gold sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "armor"
+  ]
+}

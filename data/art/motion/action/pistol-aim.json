@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/pistol-aim",
+  "kind": "motion",
+  "name": "Pistol Aim",
+  "editorial": "A dynamic action shot, three-quarter view.",
+  "breeze": "Light breeze.",
+  "body": "squared stance, one foot back, weight forward.",
+  "head": "head level, one eye over the sights.",
+  "defaultGaze": "locked on the target.",
+  "defaultExpression": "cool, steady and focused.",
+  "pose": "one arm straight out aiming a pistol, the other hand braced under the wrist.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

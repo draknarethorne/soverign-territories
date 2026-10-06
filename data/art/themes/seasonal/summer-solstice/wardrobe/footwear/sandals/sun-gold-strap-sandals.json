@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/footwear/sandals/sun-gold-strap-sandals",
+  "kind": "legs_feet",
+  "name": "Sun-Gold Strap Sandals",
+  "description": "light {{METAL}} strappy sandals with ribbon ties up the ankle and a small sun charm",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "footwear"
+  ]
+}

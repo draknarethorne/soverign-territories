@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/weapons/tide-cutlass",
+  "kind": "holding",
+  "name": "Tide Cutlass",
+  "description": "a curved {{METAL}} cutlass with a shell-shaped guard and a {{PRIMARY}} grip, a thin stream of {{MAGIC}} water flowing along the blade",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "cutlass"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/raven-pauldrons",
+  "kind": "back",
+  "name": "Raven-feather pauldrons (Drakness signature)",
+  "description": "raven-feather pauldrons with silver accents resting on the shoulders",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "raven",
+    "armor"
+  ]
+}

@@ -6,8 +6,8 @@
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "denoise": "~1.0",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/corset-set.json"
+    "underlayer": "data/art/wardrobe/swimwear/lingerie/corset-set.json"
   },
   "output": "prompts/drakn-sisters/Drakness/poses/lingerie/Drakness_X_Pose_CorsetSet.txt",
-  "notes": "WARDROBE TEST. Same hero, only the pose piece differs (data/art/wardrobe/swimwear/corset-set.json)."
+  "notes": "WARDROBE TEST. Same hero, only the pose piece differs (data/art/wardrobe/swimwear/lingerie/corset-set.json)."
 }

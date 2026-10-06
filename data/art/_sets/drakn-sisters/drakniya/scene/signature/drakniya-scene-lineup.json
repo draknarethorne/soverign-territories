@@ -7,8 +7,8 @@
   "components": {
     "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.",
     "wearing": "data/art/heroes/drakn-sisters/drakniya/clothing/dawn-regalia.json",
-    "headwear": "a crown of woven twigs, blossoms and tiny {{METAL}} leaves",
-    "jewelry": "a {{METAL}} leaf collar with {{GEM}} dewdrops, vine bracelets with small flowers, {{METAL}} acorn earrings",
+    "headwear": "data/art/heroes/drakn-sisters/drakniya/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniya/jewelry/scene-lineup-jewelry.json",
     "legs_feet": "bare feet with fine {{METAL}} anklets",
     "effects": "Vines with small flowers curl around her wrists and hem, a glowing green seed floats above her palm, a few petals drift close to her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",

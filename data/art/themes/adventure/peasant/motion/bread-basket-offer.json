@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/peasant/motion/bread-basket-offer",
+  "kind": "motion",
+  "name": "Bread Basket Offer",
+  "editorial": "A friendly market portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing with weight on one leg, leaning forward slightly.",
+  "head": "head tilted, smiling to the camera.",
+  "defaultGaze": "kind, bright eyes to camera.",
+  "defaultExpression": "a kind, welcoming smile.",
+  "pose": "a basket of fresh loaves held out in both hands toward the camera.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "peasant"
+  ]
+}

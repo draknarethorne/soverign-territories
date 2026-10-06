@@ -6,7 +6,7 @@
   "name": "Default",
   "aesthetic": "swift warrior aesthetic",
   "components": {
-    "wearing": "fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar",
+    "wearing": "data/art/heroes/drakn-bound/zephyr/clothing/armor-default-wearing.json",
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",

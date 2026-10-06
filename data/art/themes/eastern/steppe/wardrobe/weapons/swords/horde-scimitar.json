@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/weapons/swords/horde-scimitar",
+  "kind": "holding",
+  "name": "Horde Scimitar",
+  "description": "a heavy curved scimitar with a {{METAL}} guard and horsehair tassel on a {{PRIMARY}} grip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "weapons"
+  ]
+}

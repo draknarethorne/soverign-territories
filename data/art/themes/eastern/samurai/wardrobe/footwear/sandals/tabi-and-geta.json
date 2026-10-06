@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta",
+  "kind": "legs_feet",
+  "name": "Tabi and Geta",
+  "description": "white split-toe tabi socks with tall lacquered {{PRIMARY}} geta sandals on two wooden blocks",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "footwear"
+  ]
+}

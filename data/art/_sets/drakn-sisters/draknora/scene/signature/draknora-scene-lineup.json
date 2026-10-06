@@ -7,8 +7,8 @@
   "components": {
     "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.",
     "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/dawn-regalia.json",
-    "headwear": "a crown of {{METAL}} flame-shaped spires set with {{GEM}} stones",
-    "jewelry": "{{METAL}} flame-leaf collar necklace with a {{GEM}} stone, long ember drop earrings, wide {{METAL}} armlets",
+    "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/jewelry/scene-lineup-jewelry.json",
     "legs_feet": "bare feet with fine {{METAL}} anklets",
     "effects": "Small tongues of flame lick around her hands and hem, a ball of fire rests in her open palm, a few embers rise close to her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",

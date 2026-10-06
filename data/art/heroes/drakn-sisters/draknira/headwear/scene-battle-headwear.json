@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a frost-crystal circlet",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknira-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/weapons/bows/sunray-bow",
+  "kind": "holding",
+  "name": "Sunray Bow",
+  "description": "a gilded {{METAL}} bow with radiating sun-ray tips, a string of {{MAGIC}} light and an arrow of golden light nocked",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "weapons"
+  ]
+}

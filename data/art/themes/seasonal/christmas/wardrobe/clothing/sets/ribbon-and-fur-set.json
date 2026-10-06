@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/clothing/sets/ribbon-and-fur-set",
+  "kind": "wearing",
+  "name": "Ribbon and Fur Set",
+  "description": "a holiday set of a short fur-trimmed {{PRIMARY}} velvet jacket-top tied with a satin ribbon bow, a matching mini skirt with a {{ACCENT_SOFT}} bell-trimmed hem and fur-cuffed gloves",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "clothing"
+  ]
+}

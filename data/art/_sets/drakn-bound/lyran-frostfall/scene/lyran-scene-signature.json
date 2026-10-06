@@ -7,7 +7,7 @@
   "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression calm and controlled, breath visible in the cold air.",
   "effects": "Fine snowflakes drift and swirl gently in the cold air around him, catching the torchlight.",
   "components": {
-    "wearing": "heavy Glacial Cyan-toned plate armor over the chest and shoulders, Frost White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; frost patterns etched into the pauldrons, a crest of interlocking icicles at the collar",
+    "wearing": "data/art/heroes/drakn-bound/lyran/clothing/armor-default-wearing.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",

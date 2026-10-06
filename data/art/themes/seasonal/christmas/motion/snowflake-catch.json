@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/christmas/motion/snowflake-catch",
+  "kind": "motion",
+  "name": "Snowflake Catch",
+  "editorial": "A candid winter shot catching snow.",
+  "breeze": "Gentle snow-laden breeze.",
+  "body": "standing in falling snow, head tilted back slightly, one hip out.",
+  "head": "turned up and then to the camera.",
+  "defaultGaze": "dreamy eyes drifting to camera.",
+  "defaultExpression": "a soft, joyful smile.",
+  "pose": "one hand held out palm-up catching snowflakes, the other holding a fur collar closed.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "christmas"
+  ]
+}

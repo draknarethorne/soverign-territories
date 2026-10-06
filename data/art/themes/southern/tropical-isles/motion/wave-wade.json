@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/tropical-isles/motion/wave-wade",
+  "kind": "motion",
+  "name": "Wading in the Surf",
+  "editorial": "A sunny shoreline portrait.",
+  "breeze": "Sea breeze and spray.",
+  "body": "wading ankle-deep with weight on one leg, hips swaying.",
+  "head": "head tilted, laughing to the camera.",
+  "defaultGaze": "sparkling eyes to camera.",
+  "defaultExpression": "a bright, easy laugh.",
+  "pose": "one hand trailing the water, the other holding her hair back from the breeze.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles"
+  ]
+}

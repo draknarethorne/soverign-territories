@@ -1,0 +1,20 @@
+{
+  "id": "themes/western/chivalry/motion/knight-salute",
+  "kind": "motion",
+  "name": "Knight's Salute",
+  "editorial": "A formal heroic portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing tall, feet together, shoulders back.",
+  "head": "head high, eyes to camera.",
+  "defaultGaze": "steady, noble eyes to camera.",
+  "defaultExpression": "a calm, honourable smile.",
+  "pose": "one fist held over the heart, the other hand resting on a sword hilt.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "chivalry"
+  ]
+}

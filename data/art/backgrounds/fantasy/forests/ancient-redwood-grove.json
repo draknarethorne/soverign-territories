@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/forests/ancient-redwood-grove",
+  "kind": "background",
+  "name": "Ancient Redwood Grove",
+  "description": "a high-fantasy grove of colossal ancient redwoods, shafts of golden light through the canopy, thick ferns and moss and a few floating motes of pollen",
+  "mood": "majestic, hushed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "forests"
+  ]
+}

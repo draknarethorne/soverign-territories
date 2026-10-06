@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/coast/sandy-cove-sunset",
+  "kind": "background",
+  "name": "Sandy Cove at Sunset",
+  "description": "a quiet sandy cove with tide pools and driftwood, a ruined stone watchtower on the headland and a huge orange sun sinking into a glittering sea",
+  "mood": "peaceful, golden",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "coast"
+  ]
+}

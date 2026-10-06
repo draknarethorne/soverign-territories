@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/caves/lava-tube-forge-cave",
+  "kind": "background",
+  "name": "Lava Tube Forge Cave",
+  "description": "a cave with a river of slow molten lava, a dwarven forge carved into the wall with anvils and glowing steel, orange light on dark rock",
+  "mood": "hot, industrious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "caves"
+  ]
+}

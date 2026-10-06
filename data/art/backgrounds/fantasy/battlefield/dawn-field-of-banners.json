@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/battlefield/dawn-field-of-banners",
+  "kind": "background",
+  "name": "Dawn Field of Banners",
+  "description": "a wide grass battlefield at dawn, two armies' banners facing each other across the mist, planted spears, riders and a pale gold sunrise",
+  "mood": "tense, epic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "battlefield"
+  ]
+}

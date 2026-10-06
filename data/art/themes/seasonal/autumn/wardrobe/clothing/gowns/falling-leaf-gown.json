@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/clothing/gowns/falling-leaf-gown",
+  "kind": "wearing",
+  "name": "Falling Leaf Gown",
+  "description": "a flowing gown of layered {{PRIMARY}} and {{ACCENT_SOFT}} leaf-shaped tulle fading from gold to russet, a deep wrapped bodice, a plunging neckline and a long slit skirt that trails fallen leaves",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "clothing"
+  ]
+}

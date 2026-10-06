@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a delicate {{METAL}} tiara of pearls and shell",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknisa-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

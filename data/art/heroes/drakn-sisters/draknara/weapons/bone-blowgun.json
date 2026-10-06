@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/weapons/bone-blowgun",
+  "kind": "holding",
+  "name": "Bone Blowgun",
+  "description": "a long carved bone blowgun held to the lips, a quiver of {{MAGIC}}-tipped darts at the belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "blowgun"
+  ]
+}

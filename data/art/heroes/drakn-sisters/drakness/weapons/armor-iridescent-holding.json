@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/armor-iridescent-holding",
+  "kind": "holding",
+  "name": "Iridescent - holding",
+  "description": "nothing in hand, fingers relaxed at her side",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the drakness-armor-iridescent card so the item is a library piece (pre-stageable) instead of inline text."
+}

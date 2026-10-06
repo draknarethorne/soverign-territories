@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/holy/pilgrim-staff-and-lantern",
+  "kind": "holding",
+  "name": "Pilgrim Staff and Lantern",
+  "description": "a simple pilgrim staff in one hand with a small glowing {{MAGIC}} lantern hanging from its hook",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "holy"
+  ]
+}

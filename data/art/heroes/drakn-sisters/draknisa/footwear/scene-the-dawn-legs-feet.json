@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/footwear/scene-the-dawn-legs-feet",
+  "kind": "legs_feet",
+  "name": "TheDawn - legs_feet",
+  "description": "bare feet standing on the crest of the water",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknisa-scene-the-dawn card so the item is a library piece (pre-stageable) instead of inline text."
+}

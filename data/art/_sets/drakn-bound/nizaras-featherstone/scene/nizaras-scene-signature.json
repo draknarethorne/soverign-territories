@@ -7,7 +7,7 @@
   "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, a faint, knowing smile, utterly at ease in the undergrowth.",
   "effects": "Loose leaves and faint pollen drift and swirl gently around him, stirred by the grove's living magic.",
   "components": {
-    "wearing": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
+    "wearing": "data/art/heroes/drakn-bound/nizaras/clothing/armor-default-wearing.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",

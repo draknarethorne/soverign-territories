@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/romantic/windswept-dreamy.json",
     "wearing": "data/art/heroes/drakn-sisters/drakniya/clothing/signature-robe.json",
-    "headwear": "a crown of woven twigs, blossoms and {{METAL}} leaves, with two small curved horns of pale wood",
-    "jewelry": "{{METAL}} leaf pendant, acorn earrings, braided vine bracelets",
-    "legs_feet": "bare feet, a ring of moss and tiny flowers around them",
+    "headwear": "data/art/heroes/drakn-sisters/drakniya/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniya/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniya/footwear/scene-robe-legs-feet.json",
     "effects": "Fireflies and drifting pollen glow softly around her, a few leaves spiralling in the light, the ivy on her mantle gently stirring.",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/sanctum/mossy-waterfall-grotto-shrine.json",
     "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/living-wood-staff.json"

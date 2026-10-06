@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/weapons/staves/broomstick-and-lantern-staff",
+  "kind": "holding",
+  "name": "Broomstick and Lantern Staff",
+  "description": "a gnarled broom-handled staff hung with a glowing jack-o'-lantern lantern whose light is {{MAGIC}}, a tuft of straw at the end, carried in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "weapons"
+  ]
+}

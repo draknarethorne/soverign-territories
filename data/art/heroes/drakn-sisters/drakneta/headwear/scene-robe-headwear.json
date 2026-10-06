@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a slim {{METAL}} circlet with a small forked crest",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

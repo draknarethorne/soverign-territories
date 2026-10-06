@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/wardrobe/clothing/sets/ranch-hand-set",
+  "kind": "wearing",
+  "name": "Ranch Hand Set",
+  "description": "a ranch set of a knotted checked shirt open over a cropped {{PRIMARY}} top, high-waisted leather shorts with a wide buckled belt and a bandana at the neck",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "clothing"
+  ]
+}

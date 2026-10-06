@@ -1,0 +1,13 @@
+{
+  "artId": "unit-tidal-archer-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "units",
+  "cardId": "UNIT_TIDAL_ARCHER",
+  "output": "prompts/sovereign-dawn/Units/card/Units_Card_TidalArcher.txt",
+  "notes": "Mechanical card art for UNIT_TIDAL_ARCHER (SD-067); prompt built from the card's name, element and lore."
+}

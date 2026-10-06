@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/shields/round-shield",
+  "kind": "holding",
+  "name": "Round Shield",
+  "description": "a round {{PRIMARY}} shield with a {{METAL}} boss and rim, carried on the forearm",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "shield",
+    "round"
+  ]
+}

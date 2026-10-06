@@ -1,0 +1,13 @@
+{
+  "id": "themes/eastern/steppe/motion/expressions/wild-freedom",
+  "kind": "expression",
+  "name": "Wild freedom",
+  "expression": "wild and free, a fierce open grin, windswept hair, eyes alight with the thrill of the ride.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "steppe"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/ground-slam-cast",
+  "kind": "motion",
+  "name": "Ground-Slam Cast",
+  "editorial": "A dramatic low-angle action shot.",
+  "breeze": "Light breeze.",
+  "body": "kneeling on one knee, torso bent forward.",
+  "head": "head lowered then lifted, eyes to camera.",
+  "defaultGaze": "intense eyes up to camera.",
+  "defaultExpression": "fierce and determined.",
+  "pose": "one fist or the weapon planted on the ground sending a shockwave outward, the other arm braced on the knee.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

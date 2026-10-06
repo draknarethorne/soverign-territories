@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a pearl-and-{{METAL}} coronet",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknisa-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

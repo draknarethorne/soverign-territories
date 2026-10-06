@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/tropical-isles/motion/flower-lei-offer",
+  "kind": "motion",
+  "name": "Lei Offered",
+  "editorial": "A welcoming portrait.",
+  "breeze": "Light breeze.",
+  "body": "a graceful half-step forward, torso inclined.",
+  "head": "head tilted, smiling to the camera.",
+  "defaultGaze": "warm, sparkling eyes to camera.",
+  "defaultExpression": "a warm, welcoming smile.",
+  "pose": "both hands holding out a fresh flower lei toward the camera.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles"
+  ]
+}

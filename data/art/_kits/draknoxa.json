@@ -6,17 +6,17 @@
   "element": "Poison",
   "library": true,
   "underlayers": [
-    "wardrobe/swimwear/bralette-set",
-    "wardrobe/swimwear/push-up-bikini",
-    "wardrobe/swimwear/lace-bralette-set",
-    "wardrobe/swimwear/balconette-set",
-    "wardrobe/swimwear/high-neck-halter-bikini",
-    "wardrobe/swimwear/cutout-monokini",
-    "wardrobe/swimwear/second-skin-bodysuit",
-    "wardrobe/swimwear/backless-halter-one-piece",
-    "wardrobe/swimwear/strapless-plunge-bodysuit",
-    "wardrobe/swimwear/chain-harness-bikini",
-    "wardrobe/swimwear/halter-bikini"
+    "wardrobe/swimwear/lingerie/bralette-set",
+    "wardrobe/swimwear/bikini/push-up-bikini",
+    "wardrobe/swimwear/lingerie/lace-bralette-set",
+    "wardrobe/swimwear/lingerie/balconette-set",
+    "wardrobe/swimwear/bikini/high-neck-halter-bikini",
+    "wardrobe/swimwear/one-piece/cutout-monokini",
+    "wardrobe/swimwear/one-piece/second-skin-bodysuit",
+    "wardrobe/swimwear/backless/backless-halter-one-piece",
+    "wardrobe/swimwear/backless/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/backless/chain-harness-bikini",
+    "wardrobe/swimwear/bikini/halter-bikini"
   ],
   "clothing": [
     "wardrobe/clothing/dresses/slip-dress",

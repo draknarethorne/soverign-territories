@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/curios/sealed-scroll",
+  "kind": "holding",
+  "name": "Sealed Scroll",
+  "description": "a rolled parchment scroll sealed with a {{METAL}} wax seal and a {{PRIMARY}} ribbon, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "curios"
+  ]
+}

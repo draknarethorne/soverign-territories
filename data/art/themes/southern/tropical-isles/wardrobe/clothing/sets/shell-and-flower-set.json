@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/clothing/sets/shell-and-flower-set",
+  "kind": "wearing",
+  "name": "Shell and Flower Set",
+  "description": "a tropical set of a seashell-and-flower {{PRIMARY}} bikini top, a wrapped {{ACCENT_SOFT}} printed sarong tied low on one hip and a floral waist chain",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "clothing"
+  ]
+}

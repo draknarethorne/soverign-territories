@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/verdant-bloom-realm",
+  "kind": "background",
+  "name": "Realm of Bloom",
+  "description": "an elemental grass realm: a floating meadow of giant flowers and arching vines, glowing pollen in the air and waterfalls of leaves over mossy stone",
+  "mood": "lush, alive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

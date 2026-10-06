@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/frozen/frozen-lake-aurora",
+  "kind": "background",
+  "name": "Frozen Lake under Aurora",
+  "description": "a vast frozen lake with cracked ice and wind-swept snow under a green and violet aurora, a ring of black pines on the far shore",
+  "mood": "wintry, awe-struck",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "frozen"
+  ]
+}

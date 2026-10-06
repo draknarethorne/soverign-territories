@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/weapons/bows/composite-horn-bow",
+  "kind": "holding",
+  "name": "Composite Horn Bow",
+  "description": "a short composite bow of horn, sinew and {{PRIMARY}} lacquered wood with {{METAL}} tips, a quiver of {{MAGIC}}-fletched arrows at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "weapons"
+  ]
+}

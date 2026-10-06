@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/weapons/blunt/gift-wrapped-war-hammer",
+  "kind": "holding",
+  "name": "Gift-Wrapped War Hammer",
+  "description": "a heavy hammer whose head is wrapped like a gift in {{PRIMARY}} paper with a {{ACCENT_SOFT}} ribbon bow, {{METAL}} glinting at the edges, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "weapons"
+  ]
+}

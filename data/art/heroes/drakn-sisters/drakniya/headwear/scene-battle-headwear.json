@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a crown of antlers woven with vines and small flowers",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniya-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

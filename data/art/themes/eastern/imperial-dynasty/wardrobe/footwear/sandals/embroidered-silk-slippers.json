@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/footwear/sandals/embroidered-silk-slippers",
+  "kind": "legs_feet",
+  "name": "Embroidered Silk Slippers",
+  "description": "pointed embroidered {{PRIMARY}} silk slippers with {{METAL}} thread phoenix patterns",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "footwear"
+  ]
+}

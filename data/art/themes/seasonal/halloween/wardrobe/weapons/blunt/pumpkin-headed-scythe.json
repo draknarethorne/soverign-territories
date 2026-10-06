@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/weapons/blunt/pumpkin-headed-scythe",
+  "kind": "holding",
+  "name": "Pumpkin-Headed Scythe",
+  "description": "a long-handled scythe with a {{METAL}} blade and a carved pumpkin at the base of the blade glowing {{MAGIC}} from within, held in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "weapons"
+  ]
+}

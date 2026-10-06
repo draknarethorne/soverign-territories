@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/headwear/hats/fur-trimmed-felt-cap",
+  "kind": "headwear",
+  "name": "Fur-Trimmed Felt Cap",
+  "description": "a pointed {{PRIMARY}} felt cap with a deep fur brim, a trailing braid of {{ACCENT_SOFT}} cord and a {{METAL}} plume holder",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "headwear"
+  ]
+}

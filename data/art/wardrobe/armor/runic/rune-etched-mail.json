@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/runic/rune-etched-mail",
+  "kind": "wearing",
+  "name": "Rune-Etched Mail",
+  "description": "a mail shirt woven with glowing {{MAGIC}} runes over a {{PRIMARY}} tunic, rune-carved {{METAL}} pauldrons and a belt of hanging stone charms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "runic",
+    "mail"
+  ]
+}

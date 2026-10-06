@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
   "name": "Joyful Laugh",
   "components": {
-    "expression": "data/art/motion/expressions/joyful-laugh.json"
+    "expression": "data/art/motion/expressions/playful/joyful-laugh.json"
   },
   "template": "data/art/_templates/heroes/head-human.txt",
   "output": "prompts/angel-primes/Angelica/head/closeups/Angelica_Head_joyful_laugh.txt",

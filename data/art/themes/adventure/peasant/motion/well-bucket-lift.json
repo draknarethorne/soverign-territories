@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/peasant/motion/well-bucket-lift",
+  "kind": "motion",
+  "name": "Well Bucket Lift",
+  "editorial": "A candid village shot at the well.",
+  "breeze": "Light breeze.",
+  "body": "standing with a slight backward lean, bracing against a rope.",
+  "head": "turned to the camera, smiling.",
+  "defaultGaze": "warm eyes to camera.",
+  "defaultExpression": "a warm, breathless smile.",
+  "pose": "both hands hauling a rope with a dripping wooden bucket at the well's edge.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "peasant"
+  ]
+}

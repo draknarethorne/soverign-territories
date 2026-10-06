@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/bandeau-bikini",
+  "id": "wardrobe/swimwear/bikini/bandeau-bikini",
   "kind": "wearing",
   "name": "Bandeau Bikini",
-  "description": "only a {{PRIMARY}} strapless bandeau bikini top with a small {{ACCENT_SOFT}} centre knot and matching high-cut bottom; shoulders, midriff and hips bare; matching {{PRIMARY}} open-toed heels",
+  "description": "only a {{PRIMARY}} strapless bandeau bikini top with a small {{ACCENT_SOFT}} centre knot and matching high-cut bottom; shoulders, midriff and hips bare; {{FOOTWEAR}}",
   "compatibleStages": ["pose"],
   "tags": ["swimwear", "bikini", "strapless", "female"]
 }

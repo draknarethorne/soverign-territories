@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/swamp/witch-hut-bog",
+  "kind": "background",
+  "name": "Witch's Hut in the Bog",
+  "description": "a crooked stilted hut in a misty bog, hanging charms and glowing jars on the porch, black water, reeds and will-o'-the-wisps drifting between the trees",
+  "mood": "eerie, folkloric",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "swamp"
+  ]
+}

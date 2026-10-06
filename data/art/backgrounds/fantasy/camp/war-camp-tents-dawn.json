@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/camp/war-camp-tents-dawn",
+  "kind": "background",
+  "name": "War Camp at Dawn",
+  "description": "a sprawling army camp of striped tents and banners at dawn, cook fires, stacked weapons and horses, mist over the field and bugles on the wind",
+  "mood": "martial, tense",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "camp"
+  ]
+}

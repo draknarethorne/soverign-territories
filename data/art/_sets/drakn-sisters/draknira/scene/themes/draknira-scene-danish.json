@@ -6,15 +6,15 @@
   "name": "Danish",
   "components": {
     "pose": "She stands tall and serene with her sceptre held upright in one hand and the other hand resting lightly on the front of her gown, her mantle trailing behind her, chin lifted, a calm, regal gaze straight to the camera; full figure visible.",
-    "wearing": "data/art/themes/danish/wardrobe/clothing/dresses/snow-queen-gown.json",
-    "headwear": "data/art/themes/danish/wardrobe/headwear/crowns/frost-crystal-crown.json",
-    "jewelry": "data/art/themes/danish/wardrobe/jewelry/sets/amber-and-silver-filigree-set.json",
-    "legs_feet": "data/art/themes/danish/wardrobe/footwear/boots/white-fur-boots.json",
-    "back": "data/art/themes/danish/wardrobe/capes/mantles/ermine-snow-mantle.json",
-    "holding": "data/art/themes/danish/wardrobe/weapons/staves/snow-queen-sceptre.json",
+    "wearing": "data/art/themes/northern/danish/wardrobe/clothing/dresses/snow-queen-gown.json",
+    "headwear": "data/art/themes/northern/danish/wardrobe/headwear/crowns/frost-crystal-crown.json",
+    "jewelry": "data/art/themes/northern/danish/wardrobe/jewelry/sets/amber-and-silver-filigree-set.json",
+    "legs_feet": "data/art/themes/northern/danish/wardrobe/footwear/boots/white-fur-boots.json",
+    "back": "data/art/themes/northern/danish/wardrobe/capes/mantles/ermine-snow-mantle.json",
+    "holding": "data/art/themes/northern/danish/wardrobe/weapons/staves/snow-queen-sceptre.json",
     "effects": "Soft snowflakes drift around her and a faint {{MAGIC}} frost shimmer glitters on her gown and mantle, a cold halo of diamond dust at her sceptre.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/themes/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json"
+    "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknira/scene/themes/Draknira_Scene_Danish.txt",

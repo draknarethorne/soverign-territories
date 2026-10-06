@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/axes/two-handed-war-axe",
+  "kind": "holding",
+  "name": "Two-Handed War Axe",
+  "description": "a great two-handed war axe with a long {{PRIMARY}}-wrapped haft and a broad {{METAL}} bearded head etched with {{MAGIC}} runes, gripped in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "axe",
+    "two-handed",
+    "melee"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/alchemist",
+  "kind": "theme",
+  "name": "Alchemist's Guild",
+  "type": "culture",
+  "description": "Arcane alchemy: leather aprons and goggles, corseted lab coats, bandoliers of vials, brass instruments, bubbling laboratories, herb-hung workshops and glowing transmutation circles.",
+  "realm": "fantasy",
+  "tags": [
+    "alchemy",
+    "laboratory",
+    "vials",
+    "brass",
+    "potion"
+  ]
+}

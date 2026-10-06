@@ -2,8 +2,8 @@
   "id": "cosmetics/highlights/streaks/bold-face-framing-streaks",
   "kind": "highlights",
   "name": "Bold face-framing streaks",
-  "description": "noticeable, vibrant deep {{HIGHLIGHT_COLOR}} bold face-framing streaks that catch the light, confined to the front sections around the face",
+  "description": "noticeable, vibrant deep {{HIGHLIGHT_COLOR}} bold face-framing streaks that catch the light, tone-on-tone dimension",
   "compatibleStages": ["pose", "head"],
   "tags": ["highlights", "streaks", "face-framing", "bold"],
-  "notes": "The style Drakness's own hairColor spells out in prose; kept here as a reusable piece. Use a deep tone so it stays contained on an A-pose."
+  "notes": "Wording proven on the Drakness A-pose (Turbo, Oct 2026): streaks start up at the eyes. The earlier 'confined to the front sections' clause and a rewrite with 'starting at the roots beside the eyes' both did worse. Use a deep tone so it stays contained on an A-pose."
 }

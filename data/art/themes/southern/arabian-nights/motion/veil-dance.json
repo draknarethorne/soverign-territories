@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/arabian-nights/motion/veil-dance",
+  "kind": "motion",
+  "name": "Veil Dance",
+  "editorial": "A graceful dance shot with trailing silk.",
+  "breeze": "Warm breeze lifting the silk.",
+  "body": "mid-dance, hips swaying, one foot lifted on its toes.",
+  "head": "head tilted, eyes over the veil to the camera.",
+  "defaultGaze": "dazzling eyes to camera.",
+  "defaultExpression": "an enchanting, playful smile.",
+  "pose": "both arms raised and flowing, trailing sheer silk veils in a spiral.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights"
+  ]
+}

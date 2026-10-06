@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/footwear/boots/scuffed-leather-boots",
+  "kind": "legs_feet",
+  "name": "Scuffed Leather Boots",
+  "description": "short scuffed {{PRIMARY}} leather boots with frayed laces, dust on the toes",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "footwear"
+  ]
+}

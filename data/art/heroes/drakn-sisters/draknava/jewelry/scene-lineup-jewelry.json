@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknava/jewelry/scene-lineup-jewelry",
+  "kind": "jewelry",
+  "name": "Lineup - jewelry",
+  "description": "a {{METAL}} feather collar with {{GEM}} stones, long feather earrings, {{METAL}} armlets",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknava-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

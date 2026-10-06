@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/backgrounds/fantasy/mountains/black-sun-ritual-peak",
+  "kind": "background",
+  "name": "Black Sun Ritual Peak",
+  "description": "a windswept mountain summit with a ring of standing stones under a black sun, corona rays streaking the sky, pale light shimmering across the rocks and robed silhouettes far below",
+  "mood": "ominous, sacred",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "mountains"
+  ]
+}

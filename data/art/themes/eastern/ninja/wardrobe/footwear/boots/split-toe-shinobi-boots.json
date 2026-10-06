@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/footwear/boots/split-toe-shinobi-boots",
+  "kind": "legs_feet",
+  "name": "Split-Toe Shinobi Boots",
+  "description": "knee-high soft black split-toe boots with {{PRIMARY}} straps and {{METAL}} buckles, silent soles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "footwear"
+  ]
+}

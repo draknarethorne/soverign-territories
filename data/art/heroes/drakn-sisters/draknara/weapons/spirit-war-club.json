@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknara/weapons/spirit-war-club",
+  "kind": "holding",
+  "name": "Spirit War Club",
+  "description": "a heavy carved wooden war club studded with {{METAL}} and bone teeth, {{MAGIC}} spirit-light pulsing in its grain, gripped in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "club"
+  ]
+}

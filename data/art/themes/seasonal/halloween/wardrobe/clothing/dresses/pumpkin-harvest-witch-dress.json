@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/clothing/dresses/pumpkin-harvest-witch-dress",
+  "kind": "wearing",
+  "name": "Pumpkin Harvest Witch Dress",
+  "description": "a short flared witch dress in {{PRIMARY}} with pumpkin-orange {{ACCENT_SOFT}} layered petticoats, a patchwork corset and a ragged scalloped hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "clothing"
+  ]
+}

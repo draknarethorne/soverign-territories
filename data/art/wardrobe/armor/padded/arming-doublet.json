@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/padded/arming-doublet",
+  "kind": "wearing",
+  "name": "Arming Doublet",
+  "description": "a quilted {{PRIMARY}} arming doublet laced at the front with {{METAL}} points, cropped at the ribs, over a linen shirt and a leather belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "padded",
+    "doublet"
+  ]
+}

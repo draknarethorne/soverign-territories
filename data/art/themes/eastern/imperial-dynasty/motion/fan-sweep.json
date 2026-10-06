@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/imperial-dynasty/motion/fan-sweep",
+  "kind": "motion",
+  "name": "Fan Sweep",
+  "editorial": "A graceful court dance shot.",
+  "breeze": "Silk sleeves drifting.",
+  "body": "a slow turn with one foot pointed, torso arched.",
+  "head": "head turned, eyes over the fan to the camera.",
+  "defaultGaze": "enchanting eyes to camera.",
+  "defaultExpression": "an elegant, mysterious smile.",
+  "pose": "a silk fan swept across the body in one hand, the other hand curved gracefully behind.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty"
+  ]
+}

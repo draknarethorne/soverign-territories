@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknara/footwear/scene-robe-legs-feet",
+  "kind": "legs_feet",
+  "name": "Robe - legs_feet",
+  "description": "soft {{PRIMARY}} moccasin boots with {{ACCENT_SOFT}} beading",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknara-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/cityscape/guild-street-lanternlit",
+  "kind": "background",
+  "name": "Lantern-Lit Guild Street",
+  "description": "a narrow cobbled guild street at night, hanging iron lanterns and carved guild signs, steam from a baker's vent, rain-slick stones reflecting warm light",
+  "mood": "intimate, moody",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "cityscape"
+  ]
+}

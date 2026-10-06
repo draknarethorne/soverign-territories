@@ -1,0 +1,18 @@
+{
+  "artId": "draknisa-scene-staged-danish",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Danish Enchanter",
+  "base_description": "{{HERO}} already staged in the danish enchanter outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json",
+    "expression": "data/art/motion/expressions/intense/haughty-scorn.json"
+  },
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/scene/themes/Draknisa_Scene_Staged_Danish.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "STAGED path: feed the draknisa-clothing-danish studio render; only the scene, effects and pose are added."
+}

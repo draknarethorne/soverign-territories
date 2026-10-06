@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/imperial-dynasty/backgrounds/fantasy/castle/lantern-lit-palace-terrace",
+  "kind": "background",
+  "name": "Lantern-Lit Palace Terrace",
+  "description": "a high-fantasy imperial palace terrace of red pillars and gold-tiled roofs, rows of glowing paper lanterns, a carved marble balustrade and a koi pond under a full moon",
+  "mood": "grand, ethereal",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "castle"
+  ]
+}

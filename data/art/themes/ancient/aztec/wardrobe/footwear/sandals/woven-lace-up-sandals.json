@@ -1,0 +1,15 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/footwear/sandals/woven-lace-up-sandals",
+  "kind": "legs_feet",
+  "name": "Woven Lace-Up Sandals",
+  "description": "flat woven {{PRIMARY}} sandals laced up to the knee with {{METAL}} beads and small feather tassels",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "footwear"
+  ]
+}

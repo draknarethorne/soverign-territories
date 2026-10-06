@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/vessels/wicker-basket",
+  "kind": "holding",
+  "name": "Wicker Basket",
+  "description": "a woven wicker basket on one arm brimming with seasonal flowers and fruit",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "vessels"
+  ]
+}

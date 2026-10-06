@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/intense/predatory-grin",
+  "kind": "expression",
+  "name": "Predatory grin",
+  "expression": "a predatory grin, teeth just showing, eyes bright and unblinking.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

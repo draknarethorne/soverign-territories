@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/pirate/cosmetics/makeup/pirate/salt-kohl-and-sunburn",
+  "kind": "makeup",
+  "name": "Salt Kohl and Sunburn",
+  "description": "pirate-queen makeup - smudged dark kohl around the eyes with a {{ACCENT_SOFT}} shimmer on the lids, sun-flushed cheekbones, a few freckles and sea-salt on the skin, a natural berry lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "makeup"
+  ]
+}

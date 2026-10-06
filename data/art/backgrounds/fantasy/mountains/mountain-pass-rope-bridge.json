@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/mountains/mountain-pass-rope-bridge",
+  "kind": "background",
+  "name": "Mountain Pass Rope Bridge",
+  "description": "a narrow mountain pass with an old rope-and-plank bridge over a deep gorge, a waterfall misting the cliff and pines clinging to the rock",
+  "mood": "adventurous, precarious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "mountains"
+  ]
+}

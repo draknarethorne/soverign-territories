@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknava/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a slim {{METAL}} circlet with feather wings",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknava-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

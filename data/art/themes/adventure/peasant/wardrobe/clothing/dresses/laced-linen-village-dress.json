@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/clothing/dresses/laced-linen-village-dress",
+  "kind": "wearing",
+  "name": "Laced Linen Village Dress",
+  "description": "a simple short linen dress in {{PRIMARY}} with a laced bodice, a loose off-the-shoulder blouse, a patched {{ACCENT_SOFT}} apron and a ragged hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "clothing"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "themes/southern/arabian-nights/motion/expressions/sultry-gilt-gaze",
+  "kind": "expression",
+  "name": "Sultry gilt gaze",
+  "expression": "a sultry, heavy-lidded gaze over a half-smile, eyes glinting like gold in the lamplight.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights"
+  ]
+}

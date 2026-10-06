@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/radiant-sun-realm",
+  "kind": "background",
+  "name": "Realm of Radiance",
+  "description": "an elemental light realm: a terrace of white and gold marble ringed by shafts of sunlight, glowing floating motes and a halo of warm light overhead",
+  "mood": "radiant, sacred",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

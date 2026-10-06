@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/eclipse/cosmetics/makeup/celestial/corona-eye-and-shadow",
+  "kind": "makeup",
+  "name": "Corona Eye and Shadow",
+  "description": "eclipse makeup - a deep black-plum lid fading into a thin {{ACCENT_SOFT}} corona flick, metallic gold dots along the brow, an elongated glow on the cheekbones and a deep wine lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "makeup"
+  ]
+}

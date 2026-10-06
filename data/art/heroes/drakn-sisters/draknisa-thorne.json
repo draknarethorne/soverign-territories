@@ -1,7 +1,9 @@
 {
   "cardId": "HERO_DRAKNISA_THORNE",
   "art": {
-    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json",
+    "defaultFootwear": "data/art/heroes/drakn-sisters/draknisa/footwear/signature-heels.json",
+    "defaultSheen": "data/art/wardrobe/finishes/high-gloss.json",
     "palette": {
       "primaryColor": "Deep Oceanic Blue",
       "accentColors": [

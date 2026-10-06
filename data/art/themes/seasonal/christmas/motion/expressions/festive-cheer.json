@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/christmas/motion/expressions/festive-cheer",
+  "kind": "expression",
+  "name": "Festive cheer",
+  "expression": "festive cheer, a warm open smile, cheeks flushed, eyes sparkling with the holiday lights.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "christmas"
+  ]
+}

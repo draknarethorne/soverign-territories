@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/tavern/alehouse-cellar-barrels",
+  "kind": "background",
+  "name": "Alehouse Cellar of Barrels",
+  "description": "a vaulted stone alehouse cellar of stacked barrels and hanging sausages, a single lantern and shafts of light from a trapdoor",
+  "mood": "cosy, secretive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "tavern"
+  ]
+}

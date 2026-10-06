@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/weapons/swords/jian-and-tassel",
+  "kind": "holding",
+  "name": "Jian and Silk Tassel",
+  "description": "a straight double-edged {{METAL}} jian with a {{PRIMARY}} silk tassel at the pommel, held point-up in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "weapons"
+  ]
+}

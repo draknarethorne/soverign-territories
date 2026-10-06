@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/backgrounds/fantasy/frozen/snowy-christmas-market",
+  "kind": "background",
+  "name": "Snowy Christmas Market",
+  "description": "a high-fantasy winter market square at dusk, timber stalls with garlands and string lights, a huge glowing tree, steaming mulled wine, lanterns and gently falling snow",
+  "mood": "festive, cosy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "frozen"
+  ]
+}

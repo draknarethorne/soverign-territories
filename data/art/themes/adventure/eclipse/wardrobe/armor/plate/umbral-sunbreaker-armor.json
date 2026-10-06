@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/armor/plate/umbral-sunbreaker-armor",
+  "kind": "wearing",
+  "name": "Umbral Sunbreaker Armor",
+  "description": "eclipse armor - a polished black obsidian cuirass with a {{METAL}} corona ring around the chest, crescent-moon pauldrons, a skirt of black plates edged in {{PRIMARY}} light and a flowing cape lined with {{ACCENT_SOFT}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "armor"
+  ]
+}

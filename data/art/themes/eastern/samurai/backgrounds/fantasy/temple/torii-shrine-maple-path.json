@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/backgrounds/fantasy/temple/torii-shrine-maple-path",
+  "kind": "background",
+  "name": "Torii Shrine Maple Path",
+  "description": "a long path of red torii gates up a misty mountainside shrine, stone lanterns, crimson maple leaves falling and a distant pagoda in the clouds",
+  "mood": "sacred, tranquil",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "temple"
+  ]
+}

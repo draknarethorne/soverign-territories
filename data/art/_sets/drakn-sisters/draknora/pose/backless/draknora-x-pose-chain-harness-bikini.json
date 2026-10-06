@@ -7,7 +7,7 @@
   "output": "prompts/drakn-sisters/Draknora/poses/backless/Draknora_X_Pose_ChainHarnessBikini.txt",
   "denoise": "~1.0",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/chain-harness-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/backless/chain-harness-bikini.json"
   },
   "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
 }

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/battlefield/aftermath-smoking-field",
+  "kind": "background",
+  "name": "Smoking Field after Battle",
+  "description": "a battlefield after the fight, broken shields and spears in the mud, smoking siege engines, torn banners and a red sunset through smoke",
+  "mood": "grim, solemn",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "battlefield"
+  ]
+}

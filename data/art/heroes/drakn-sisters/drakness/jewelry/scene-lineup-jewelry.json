@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/jewelry/scene-lineup-jewelry",
+  "kind": "jewelry",
+  "name": "Lineup - jewelry",
+  "description": "layered {{METAL}} bone-and-moon necklaces set with {{GEM}} stones, long drop earrings, bangles stacked on both wrists",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

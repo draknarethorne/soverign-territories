@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/headwear/crowns/phoenix-hairpin-crown",
+  "kind": "headwear",
+  "name": "Phoenix Hairpin Crown",
+  "description": "an ornate {{METAL}} phoenix crown with hanging {{GEM}} bead tassels and long hairpins fanned behind the head",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "headwear"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a cape of storm-grey silk threaded with copper wire that crackles with static",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

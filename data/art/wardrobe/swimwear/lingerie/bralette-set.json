@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/bralette-set",
+  "id": "wardrobe/swimwear/lingerie/bralette-set",
   "kind": "wearing",
   "name": "Plunge Bralette Set",
-  "description": "only a {{PRIMARY}} soft wireless bralette set in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a bralette with a deep plunging V neckline and thin straps that draws the bust together at the centre, and matching low-rise briefs with thin elastic sides; midriff and abdomen bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} soft wireless bralette set in {{SHEEN}} with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a bralette with a deep plunging V neckline and thin straps that draws the bust together at the centre, and matching low-rise briefs with thin elastic sides; midriff and abdomen bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/mountains/snow-peak-ridge-summit",
+  "kind": "background",
+  "name": "Snow Peak Ridge Summit",
+  "description": "a knife-edge summit ridge of snow and rock above a sea of clouds, a thin cornice, a blazing blue sky and a flag-like plume of spindrift off the peak",
+  "mood": "vast, exhilarating",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "mountains"
+  ]
+}

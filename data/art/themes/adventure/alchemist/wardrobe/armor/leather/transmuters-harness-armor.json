@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/armor/leather/transmuters-harness-armor",
+  "kind": "wearing",
+  "name": "Transmuter's Harness Armor",
+  "description": "alchemist armor - a fitted {{PRIMARY}} leather cuirass with {{METAL}} transmutation-circle plates, a bandolier of glowing vials, brass-and-leather bracers and a splatter-proof half-cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "armor"
+  ]
+}

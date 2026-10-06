@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/headwear/crowns/beaded-crown-and-headwrap",
+  "kind": "headwear",
+  "name": "Beaded Crown and Headwrap",
+  "description": "a tall wrapped {{PRIMARY}} headwrap with a crown of {{METAL}} brass rings and beads and a cluster of feathers at the front",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "headwear"
+  ]
+}

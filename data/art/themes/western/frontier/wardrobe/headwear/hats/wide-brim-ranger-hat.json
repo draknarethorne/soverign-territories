@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/frontier/wardrobe/headwear/hats/wide-brim-ranger-hat",
+  "kind": "headwear",
+  "name": "Wide-Brim Ranger Hat",
+  "description": "a wide-brimmed {{PRIMARY}} felt hat with a braided leather band, a {{METAL}} concho and a feather tucked in",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "headwear"
+  ]
+}

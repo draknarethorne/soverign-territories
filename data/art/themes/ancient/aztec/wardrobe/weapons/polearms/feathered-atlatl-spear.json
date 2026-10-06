@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/weapons/polearms/feathered-atlatl-spear",
+  "kind": "holding",
+  "name": "Feathered Atlatl and Spear",
+  "description": "a carved {{METAL}} atlatl with a feather-fletched throwing spear ready at its hook, held back over the shoulder",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "weapons"
+  ]
+}

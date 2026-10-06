@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/weapons/polearms/pitchfork-and-sickle",
+  "kind": "holding",
+  "name": "Pitchfork and Sickle",
+  "description": "a pitchfork held upright in one hand with a {{METAL}} sickle tucked in the belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "weapons"
+  ]
+}

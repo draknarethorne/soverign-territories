@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/volcano/obsidian-field-eruption",
+  "kind": "background",
+  "name": "Obsidian Field at Eruption",
+  "description": "a field of black glass obsidian shards under a distant erupting volcano, rivers of lava glowing in the dark and lightning in the ash cloud",
+  "mood": "catastrophic, grand",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "volcano"
+  ]
+}

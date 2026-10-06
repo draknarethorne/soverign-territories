@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/steppe",
+  "kind": "theme",
+  "name": "Steppe Horde",
+  "type": "culture",
+  "description": "Fantasy-adapted horse-nomad steppe warriors: fur-lined lamellar and sheepskin coats, felt boots, recurve bows, scimitars and lances, felt yurts, endless grasslands and war-banner camps.",
+  "realm": "fantasy",
+  "tags": [
+    "steppe",
+    "horde",
+    "nomad",
+    "horse",
+    "fur"
+  ]
+}

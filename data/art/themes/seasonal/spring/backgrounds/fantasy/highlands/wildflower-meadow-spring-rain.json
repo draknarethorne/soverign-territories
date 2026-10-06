@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/backgrounds/fantasy/highlands/wildflower-meadow-spring-rain",
+  "kind": "background",
+  "name": "Wildflower Meadow in Spring Rain",
+  "description": "a rolling high-fantasy meadow of wildflowers under a bright spring shower, a rainbow arcing over distant hills, a mossy ruin half-hidden in blossoms",
+  "mood": "fresh, hopeful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "highlands"
+  ]
+}

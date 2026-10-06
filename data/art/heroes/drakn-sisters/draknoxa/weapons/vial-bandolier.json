@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/weapons/vial-bandolier",
+  "kind": "holding",
+  "name": "Vial Bandolier",
+  "description": "a bandolier of corked vials glowing {{MAGIC}} across the chest, one vial held between the fingers ready to throw",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "vials"
+  ]
+}

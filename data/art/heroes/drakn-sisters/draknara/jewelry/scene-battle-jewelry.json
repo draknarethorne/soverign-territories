@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknara/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "{{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans, heavy bronze cuffs",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknara-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

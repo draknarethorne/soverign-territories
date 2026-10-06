@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/library/scriptorium-candle-desk",
+  "kind": "background",
+  "name": "Scriptorium Candle Desk",
+  "description": "a quiet stone scriptorium with sloped writing desks, quills and inkwells, parchment scrolls, tall candles and snow outside a small arched window",
+  "mood": "calm, studious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "library"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/clothing/gowns/phoenix-silk-hanfu-gown",
+  "kind": "wearing",
+  "name": "Phoenix Silk Hanfu Gown",
+  "description": "a layered silk hanfu-style gown in {{PRIMARY}} with {{ACCENT_SOFT}} phoenix embroidery, a wide sash, long flowing sleeves, a low neckline and a high slit",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "clothing"
+  ]
+}

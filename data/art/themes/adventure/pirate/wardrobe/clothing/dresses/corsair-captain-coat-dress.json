@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/clothing/dresses/corsair-captain-coat-dress",
+  "kind": "wearing",
+  "name": "Corsair Captain Coat-Dress",
+  "description": "a swashbuckling captain's coat-dress in deep {{PRIMARY}} brocade with wide {{ACCENT_SOFT}} cuffs, a plunging cream shirt front, a broad sash at the waist and a high hem over thigh boots",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "clothing"
+  ]
+}

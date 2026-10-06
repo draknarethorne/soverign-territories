@@ -1,0 +1,13 @@
+{
+  "artId": "building-treasury-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "buildings",
+  "cardId": "BUILDING_TREASURY",
+  "output": "prompts/sovereign-dawn/Buildings/card/Buildings_Card_Treasury.txt",
+  "notes": "Mechanical card art for BUILDING_TREASURY (SD-101); prompt built from the card's name, element and lore."
+}

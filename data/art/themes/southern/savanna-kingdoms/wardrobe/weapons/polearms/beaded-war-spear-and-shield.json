@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/weapons/polearms/beaded-war-spear-and-shield",
+  "kind": "holding",
+  "name": "War Spear and Hide Shield",
+  "description": "a long {{METAL}}-bladed war spear in one hand and a tall oval hide shield painted with {{PRIMARY}} and {{ACCENT_SOFT}} patterns on the other arm",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "weapons"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/holy/prayer-censer",
+  "kind": "holding",
+  "name": "Prayer Censer",
+  "description": "a swinging {{METAL}} censer on a chain trailing fragrant smoke that glows faintly {{MAGIC}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "holy"
+  ]
+}

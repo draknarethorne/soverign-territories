@@ -1,0 +1,19 @@
+{
+  "artId": "draknisa-clothing-greek",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Greek Enchanter",
+  "aesthetic": "a clean studio presentation of the greek enchanter outfit",
+  "components": {
+    "wearing": "data/art/themes/ancient/greek/wardrobe/clothing/gowns/chiton-peplos-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/ancient/greek/wardrobe/jewelry/sets/gold-laurel-jewelry-set.json",
+    "legs_feet": "data/art/themes/ancient/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
+    "headwear": "data/art/themes/ancient/greek/wardrobe/headwear/wreaths/gold-laurel-wreath.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknisa/clothing/themes/Draknisa_Clothing_Greek.txt",
+  "notes": "Pre-staged Greek Enchanter outfit: render it from the A-pose, then feed the image to the Staged greek scene. Every item is a library piece."
+}

@@ -6,9 +6,9 @@
   "name": "Tailored Shirt and Trousers",
   "components": {
     "wearing": "data/art/wardrobe/clothing/sets/tailored-dress-shirt-set.json",
-    "arms": "rolled sleeves showing bare forearms, a simple watch on one wrist",
-    "jewelry": "no jewelry",
-    "legs_feet": "dark leather dress shoes"
+    "arms": "data/art/heroes/angel-primes/angelo/armor/prime-clothing-tailored-set-arms.json",
+    "jewelry": "data/art/heroes/angel-primes/angelo/jewelry/prime-clothing-tailored-set-jewelry.json",
+    "legs_feet": "data/art/heroes/angel-primes/angelo/footwear/prime-clothing-tailored-set-legs-feet.json"
   },
   "template": "data/art/_templates/heroes/clothing-human.txt",
   "aesthetic": "clean, confident, smart-casual look",

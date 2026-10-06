@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/armor/scale/sultans-guard-armor",
+  "kind": "wearing",
+  "name": "Sultan's Guard Armor",
+  "description": "palace-guard armor - overlapping gilded {{METAL}} scales over a {{PRIMARY}} silk bodice, a pointed {{METAL}} gorget, curved pauldrons, a sheer split skirt and wrapped bracers",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "armor"
+  ]
+}

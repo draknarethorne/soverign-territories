@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/backgrounds/fantasy/highlands/golden-wheat-field-cottage",
+  "kind": "background",
+  "name": "Golden Wheat Field and Cottage",
+  "description": "a high-fantasy wheat field at golden hour, a thatched stone cottage with smoking chimney, a wooden fence and a distant windmill under a wide soft sky",
+  "mood": "pastoral, warm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "highlands"
+  ]
+}

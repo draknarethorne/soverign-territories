@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/eclipse/motion/corona-raise",
+  "kind": "motion",
+  "name": "Corona Raise",
+  "editorial": "A dramatic low-angle ritual shot beneath the eclipse.",
+  "breeze": "Light breeze.",
+  "body": "standing tall, chest lifted, feet apart.",
+  "head": "head tilted up toward the eclipse, then to the camera.",
+  "defaultGaze": "intense eyes to camera.",
+  "defaultExpression": "a solemn, powerful stare.",
+  "pose": "both arms raised to frame the black sun above her, fingers spread.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "eclipse"
+  ]
+}

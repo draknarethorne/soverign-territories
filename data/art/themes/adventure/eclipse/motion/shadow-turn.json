@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/eclipse/motion/shadow-turn",
+  "kind": "motion",
+  "name": "Shadow Turn",
+  "editorial": "A cinematic shot half in shadow.",
+  "breeze": "Light breeze.",
+  "body": "turning away mid-step, one hip cocked, back arched.",
+  "head": "looking back over one shoulder.",
+  "defaultGaze": "smoldering eyes to camera.",
+  "defaultExpression": "a knowing, enigmatic smile.",
+  "pose": "one hand trailing the edge of a cape, the other held low at her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "eclipse"
+  ]
+}

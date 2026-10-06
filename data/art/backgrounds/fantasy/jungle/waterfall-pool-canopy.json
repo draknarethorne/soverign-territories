@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/jungle/waterfall-pool-canopy",
+  "kind": "background",
+  "name": "Waterfall Pool in the Canopy",
+  "description": "a jungle waterfall plunging into a turquoise pool, huge ferns and hanging orchids, colourful birds and rainbow spray",
+  "mood": "vivid, refreshing",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "jungle"
+  ]
+}

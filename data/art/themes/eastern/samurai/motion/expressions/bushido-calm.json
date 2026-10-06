@@ -1,0 +1,13 @@
+{
+  "id": "themes/eastern/samurai/motion/expressions/bushido-calm",
+  "kind": "expression",
+  "name": "Bushido calm",
+  "expression": "calm and resolute, steady unwavering eyes, lips closed, a stillness before action.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "samurai"
+  ]
+}

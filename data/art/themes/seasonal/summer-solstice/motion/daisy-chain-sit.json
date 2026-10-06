@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/summer-solstice/motion/daisy-chain-sit",
+  "kind": "motion",
+  "name": "Daisy-Chain Sit",
+  "editorial": "A relaxed meadow portrait.",
+  "breeze": "Light breeze.",
+  "body": "sitting cross-legged in the grass, leaning slightly forward.",
+  "head": "head tilted, smiling to the camera.",
+  "defaultGaze": "soft, sun-bright eyes to camera.",
+  "defaultExpression": "a gentle, sunny smile.",
+  "pose": "both hands weaving a daisy chain, a flower crown beside her.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "themes/southern/tropical-isles/motion/expressions/island-sunshine",
+  "kind": "expression",
+  "name": "Island sunshine",
+  "expression": "radiant island sunshine, a wide easy smile, cheeks glowing and eyes full of light.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles"
+  ]
+}

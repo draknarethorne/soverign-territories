@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/backgrounds/fantasy/castle/great-hall-yule-hearth",
+  "kind": "background",
+  "name": "Great Hall Yule Hearth",
+  "description": "a grand stone hall decorated for midwinter, a roaring fireplace with stockings, tall evergreen garlands with ribbons, a decorated tree and stacked gifts, golden candlelight",
+  "mood": "warm, festive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "castle"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/firearms/blunderbuss",
+  "kind": "holding",
+  "name": "Blunderbuss",
+  "description": "a flared-muzzle blunderbuss with {{METAL}} bands and a {{PRIMARY}} wood stock, carried in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "blunderbuss",
+    "flintlock",
+    "ranged"
+  ]
+}

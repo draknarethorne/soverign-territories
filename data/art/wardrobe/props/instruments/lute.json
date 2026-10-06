@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/instruments/lute",
+  "kind": "holding",
+  "name": "Lute",
+  "description": "a polished {{PRIMARY}} wooden lute with {{METAL}} inlay and a curved neck, cradled in the crook of one arm with the fingers on the strings",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "instruments"
+  ]
+}

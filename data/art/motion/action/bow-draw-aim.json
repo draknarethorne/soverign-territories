@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/bow-draw-aim",
+  "kind": "motion",
+  "name": "Bow Draw and Aim",
+  "editorial": "A dynamic action shot, side-on to the camera.",
+  "breeze": "Light breeze.",
+  "body": "feet planted wide, torso turned side-on, drawn bow arm extended.",
+  "head": "turned along the arrow line, one eye lined up on the target.",
+  "defaultGaze": "locked on a target beyond the frame.",
+  "defaultExpression": "calm, narrow-eyed focus.",
+  "pose": "the string hand drawn back to the cheek with the arrow nocked, the other arm straight and steady.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

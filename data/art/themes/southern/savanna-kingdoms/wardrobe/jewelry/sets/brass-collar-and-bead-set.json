@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/jewelry/sets/brass-collar-and-bead-set",
+  "kind": "jewelry",
+  "name": "Brass Collar and Bead Set",
+  "description": "a set of stacked {{METAL}} neck rings and layered {{PRIMARY}} bead collars, wide brass armlets, anklets and a {{GEM}} bead pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "jewelry"
+  ]
+}

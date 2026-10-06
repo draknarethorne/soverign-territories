@@ -6,7 +6,7 @@
   "name": "Three-Quarter Left",
   "components": {
     "view": "data/art/studio/views/body/three-quarter-left.json",
-    "underlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
   },
   "template": "data/art/_templates/heroes/pose-view-human.txt",
   "output": "prompts/drakn-sisters/Draknava/poses/views/Draknava_View_three_quarter_left.txt",

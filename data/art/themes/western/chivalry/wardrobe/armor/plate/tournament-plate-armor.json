@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/wardrobe/armor/plate/tournament-plate-armor",
+  "kind": "wearing",
+  "name": "Tournament Plate Armor",
+  "description": "knightly armor - a polished {{METAL}} breastplate with {{PRIMARY}} heraldic enamel, filigreed pauldrons and couters, a plated skirt of fauld lames, greaves and a short tabard",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "armor"
+  ]
+}

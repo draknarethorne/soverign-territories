@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair.",
-    "wearing": "heavy Radiant Rose Gold-toned plate armor over the chest and shoulders, Ivory White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a radiant sunburst emblem emblazoned over the chest plate, gold filigree tracing the edges",
+    "wearing": "data/art/heroes/drakn-bound/hauk/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer.json",
     "effects": "Soft rays of {{MAGIC}} light fall around him, a few golden motes drifting like dust in sunlight - understated, nothing busy.",

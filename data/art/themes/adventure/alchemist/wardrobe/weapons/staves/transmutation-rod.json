@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/weapons/staves/transmutation-rod",
+  "kind": "holding",
+  "name": "Transmutation Rod",
+  "description": "a slim brass rod with a spinning {{METAL}} ring and a glowing {{MAGIC}} crystal at the tip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "weapons"
+  ]
+}

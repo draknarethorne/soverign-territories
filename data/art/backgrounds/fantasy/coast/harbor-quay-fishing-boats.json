@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/coast/harbor-quay-fishing-boats",
+  "kind": "background",
+  "name": "Harbor Quay with Fishing Boats",
+  "description": "a high-fantasy harbour quay at dawn, bobbing wooden fishing boats and stacked nets and crates, a stone lighthouse at the mouth of the bay and gulls over calm silver water",
+  "mood": "calm, working",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "coast"
+  ]
+}

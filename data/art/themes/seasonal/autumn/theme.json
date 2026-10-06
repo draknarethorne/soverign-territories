@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/autumn",
+  "kind": "theme",
+  "name": "Autumn Harvest Woods",
+  "type": "event",
+  "description": "Autumn woodland: russet leaf gowns, cloaks of fallen leaves, antler and acorn crowns, harvest baskets, golden forests, misty orchards and fireside lodges.",
+  "realm": "fantasy",
+  "tags": [
+    "autumn",
+    "leaves",
+    "harvest",
+    "woodland",
+    "amber"
+  ]
+}

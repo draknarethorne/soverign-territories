@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/sports-set",
+  "id": "wardrobe/swimwear/athletic/sports-set",
   "kind": "wearing",
   "name": "Sports Bra and Bike Shorts",
-  "description": "only a {{PRIMARY}} athletic set in a lustrous satin-metallic finish with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a fitted compression sports bra with a low scoop neckline and thin racerback straps that lifts and centres the bust into a tight cleavage, and matching low-rise bike shorts; midriff bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} athletic set in {{SHEEN}} with a subtle {{METAL}} sheen and a hairline {{METAL}} edge trim: a fitted compression sports bra with a low scoop neckline and thin racerback straps that lifts and centres the bust into a tight cleavage, and matching low-rise bike shorts; midriff bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

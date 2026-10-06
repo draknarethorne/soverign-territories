@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/curios/folded-map-and-compass",
+  "kind": "holding",
+  "name": "Map and Compass",
+  "description": "an unrolled parchment map in one hand and a brass compass in the other, the needle glowing {{MAGIC}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "curios"
+  ]
+}

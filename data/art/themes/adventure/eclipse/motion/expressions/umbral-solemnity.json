@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/eclipse/motion/expressions/umbral-solemnity",
+  "kind": "expression",
+  "name": "Umbral solemnity",
+  "expression": "solemn and enigmatic, half-lidded eyes catching the corona light, lips softly closed.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "eclipse"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/weapons/frost-rapier",
+  "kind": "holding",
+  "name": "Frost Rapier",
+  "description": "a rapier of living ice with a {{METAL}} guard and a frost-rimed hilt, cold {{MAGIC}} mist curling off the blade, held point-forward in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "rapier"
+  ]
+}

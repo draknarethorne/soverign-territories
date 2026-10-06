@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/crystal/prismatic-glass-armor",
+  "kind": "wearing",
+  "name": "Prismatic Glass Armor",
+  "description": "armor of clear prismatic glass plates edged in {{METAL}}, scattering rainbow light across the {{PRIMARY}} silk beneath, a layered glass skirt and shard bracers",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "glass"
+  ]
+}

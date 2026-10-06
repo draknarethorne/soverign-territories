@@ -1,0 +1,20 @@
+{
+  "artId": "drakness-scene-enchanted-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Enchanted Evening",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/gown-wearing.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/ornate-gem-pendant.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/clothing/gown-legs-feet.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
+    "companion": "her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight",
+    "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/evening/gothic-balcony-moonlit-cemetery.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/scene/glamour/Drakness_Scene_EnchantedEvening.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Complete (unstaged) Enchanted Evening: the same pose, ambient glow, companion and terrace as the staged card, with the gown named as a library piece so it runs straight from the A-pose."
+}

@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
   "name": "Joyful Laugh",
   "components": {
-    "expression": "data/art/motion/expressions/joyful-laugh.json"
+    "expression": "data/art/motion/expressions/playful/joyful-laugh.json"
   },
   "template": "data/art/_templates/heroes/head-human.txt",
   "output": "prompts/drakn-sisters/Draknara/head/closeups/Draknara_Head_joyful_laugh.txt",

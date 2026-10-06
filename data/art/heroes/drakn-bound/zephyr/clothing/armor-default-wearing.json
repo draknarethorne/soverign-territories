@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-bound/zephyr/clothing/armor-default-wearing",
+  "kind": "wearing",
+  "name": "Default - wearing",
+  "description": "fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the zephyr-armor-default card so the item is a library piece (pre-stageable) instead of inline text."
+}

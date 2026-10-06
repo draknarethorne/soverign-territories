@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/scale/serpent-scale-armor",
+  "kind": "wearing",
+  "name": "Serpent Scale Armor",
+  "description": "shimmering {{PRIMARY}} serpent-scale armor on a fitted bodice and short skirt, a coiled {{METAL}} serpent clasp at the chest and matching armlets",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "scale",
+    "serpent"
+  ]
+}

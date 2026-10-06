@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/armor/scale/dragon-guard-lamellar",
+  "kind": "wearing",
+  "name": "Dragon Guard Lamellar",
+  "description": "imperial guard armor - lacquered {{PRIMARY}} lamellar plates edged in {{METAL}} with a dragon-head breast medallion, flared shoulder guards, a pleated armoured skirt and silk sleeves",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "armor"
+  ]
+}

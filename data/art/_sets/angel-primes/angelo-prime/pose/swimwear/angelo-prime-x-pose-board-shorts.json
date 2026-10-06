@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelo-prime.json",
   "name": "Board Shorts",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/board-shorts.json"
+    "underlayer": "data/art/wardrobe/swimwear/trunks/board-shorts.json"
   },
   "template": "data/art/_templates/heroes/pose-male-human.txt",
   "output": "prompts/angel-primes/Angelo/poses/swimwear/Angelo_X_Pose_Board_Shorts.txt",

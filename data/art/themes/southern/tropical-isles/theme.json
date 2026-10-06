@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/tropical-isles",
+  "kind": "theme",
+  "name": "Tropical Isles",
+  "type": "culture",
+  "description": "Fantasy-adapted island lagoons: flower and shell sets, wrapped sarongs, woven crowns, outrigger canoes, coral reefs, volcano shores and torch-lit beach feasts.",
+  "realm": "fantasy",
+  "tags": [
+    "island",
+    "tropical",
+    "lagoon",
+    "shell",
+    "outrigger"
+  ]
+}

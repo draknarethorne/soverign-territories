@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/ninja",
+  "kind": "theme",
+  "name": "Shinobi Shadow Clan",
+  "type": "culture",
+  "description": "Fantasy-adapted shinobi: fitted dark wraps and mesh, kunoichi armor, masks and hoods, kunai, shuriken and chain blades, moonlit rooftops, bamboo groves and hidden mountain dojos.",
+  "realm": "fantasy",
+  "tags": [
+    "ninja",
+    "shinobi",
+    "kunoichi",
+    "stealth",
+    "shadow"
+  ]
+}

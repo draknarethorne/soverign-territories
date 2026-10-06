@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknava/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a slim {{METAL}} circlet with a small feather at each temple",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknava-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

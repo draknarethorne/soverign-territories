@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/alchemist/motion/workbench-lean",
+  "kind": "motion",
+  "name": "Workbench Lean",
+  "editorial": "A relaxed shot at a laboratory bench.",
+  "breeze": "Light breeze.",
+  "body": "leaning back against a bench, ankles crossed.",
+  "head": "tilted, looking up at the camera.",
+  "defaultGaze": "sly, appraising eyes to camera.",
+  "defaultExpression": "a clever, knowing smile.",
+  "pose": "arms folded loosely under the chest, one hand holding a vial.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "alchemist"
+  ]
+}

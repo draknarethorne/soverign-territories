@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/summer-solstice/motion/firefly-reach",
+  "kind": "motion",
+  "name": "Firefly Reach",
+  "editorial": "A dusk portrait with fireflies.",
+  "breeze": "Warm evening breeze.",
+  "body": "standing at the lake edge, one foot in the water.",
+  "head": "turned up toward the glowing lights then to the camera.",
+  "defaultGaze": "wondering eyes to camera.",
+  "defaultExpression": "a soft, wondering smile.",
+  "pose": "one hand cupped open with a firefly glowing in it, the other lifting the hem.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice"
+  ]
+}

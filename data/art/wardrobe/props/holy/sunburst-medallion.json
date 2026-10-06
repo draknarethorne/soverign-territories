@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/holy/sunburst-medallion",
+  "kind": "holding",
+  "name": "Sunburst Holy Symbol",
+  "description": "a large {{METAL}} sunburst holy symbol on a chain held up in one hand, radiating {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "holy"
+  ]
+}

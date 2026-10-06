@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/backgrounds/fantasy/coast/coral-lagoon-volcano",
+  "kind": "background",
+  "name": "Coral Lagoon beneath the Volcano",
+  "description": "a high-fantasy tropical lagoon of impossibly clear turquoise water over coral, palms along a white sand beach, outrigger canoes and a smoking green volcano under a bright sky",
+  "mood": "vivid, lush",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "coast"
+  ]
+}

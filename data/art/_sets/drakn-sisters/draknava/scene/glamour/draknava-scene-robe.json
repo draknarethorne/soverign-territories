@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/walking/slow-sensual-walk.json",
     "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/signature-robe.json",
-    "headwear": "a slim {{METAL}} circlet with a small feather at each temple",
-    "jewelry": "a {{METAL}} lyre pendant, feather earrings, {{METAL}} bangles with tiny bells",
-    "legs_feet": "soft {{PRIMARY}} slippers with silver stitching",
+    "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknava/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknava/footwear/scene-robe-legs-feet.json",
     "effects": "Silk scarves and the hem of the robe lift gently in a passing breeze, faint {{MAGIC}} ripples of sound-light drifting through the air, a few feathers floating down.",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/sanctum/windchime-hilltop-pavilion.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json"

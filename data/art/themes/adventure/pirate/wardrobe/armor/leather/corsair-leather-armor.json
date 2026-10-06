@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/armor/leather/corsair-leather-armor",
+  "kind": "wearing",
+  "name": "Corsair Leather Armor",
+  "description": "light corsair armor - a fitted {{PRIMARY}} leather corset-cuirass with {{METAL}} buckles and rivets, a cropped brass-buttoned coat, fingerless gloves and a crossing bandolier of pistols and charms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "armor"
+  ]
+}

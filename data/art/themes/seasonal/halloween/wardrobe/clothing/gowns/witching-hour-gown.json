@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/clothing/gowns/witching-hour-gown",
+  "kind": "wearing",
+  "name": "Witching Hour Gown",
+  "description": "a long off-the-shoulder witch's gown in {{PRIMARY}} velvet with a tattered {{ACCENT_SOFT}} hem, a laced corset bodice, bat-wing sleeves and a thigh-high slit",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "clothing"
+  ]
+}

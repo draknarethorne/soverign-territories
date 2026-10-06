@@ -7,9 +7,9 @@
   "components": {
     "pose": "She plants her feet and drives her living-wood staff into the ground with both hands, chin lifted, a determined, fierce gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakniya/clothing/battle-gear.json",
-    "headwear": "a crown of antlers woven with vines and small flowers",
-    "jewelry": "a {{METAL}} leaf gorget with {{GEM}} dewdrops, vine-wrapped bracers",
-    "legs_feet": "leather greaves wrapped in living moss",
+    "headwear": "data/art/heroes/drakn-sisters/drakniya/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniya/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniya/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/living-wood-staff.json",
     "effects": "Huge roots and thorned vines burst up from the earth around her and tear through the barricades, petals and leaves whirling, {{MAGIC}} light running through the vines.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

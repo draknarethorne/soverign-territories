@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/hide/berserker-furs",
+  "kind": "wearing",
+  "name": "Berserker Furs",
+  "description": "a fur-trimmed leather chest wrap and loincloth skirt in {{PRIMARY}}, a heavy fur mantle over one shoulder, bone beads and a {{METAL}}-studded belt, bare arms with leather wrist wraps",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "barbarian",
+    "furs"
+  ]
+}

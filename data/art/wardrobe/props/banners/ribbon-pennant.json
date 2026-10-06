@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/banners/ribbon-pennant",
+  "kind": "holding",
+  "name": "Ribbon Pennant",
+  "description": "a slim pennant on a short pole carrying a swallow-tailed {{PRIMARY}} streamer and trailing {{ACCENT_SOFT}} ribbons",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "banners"
+  ]
+}

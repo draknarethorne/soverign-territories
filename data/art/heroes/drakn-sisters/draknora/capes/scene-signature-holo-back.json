@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a long cape of living flame that streams behind her like wings",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknora-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

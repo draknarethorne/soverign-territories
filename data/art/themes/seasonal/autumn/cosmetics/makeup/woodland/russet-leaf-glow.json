@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/autumn/cosmetics/makeup/woodland/russet-leaf-glow",
+  "kind": "makeup",
+  "name": "Russet Leaf Glow",
+  "description": "autumn makeup - warm copper and {{ACCENT_SOFT}} shades on the lids, a soft russet blush, a sheer bronze highlight and a muted brick-rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "makeup"
+  ]
+}

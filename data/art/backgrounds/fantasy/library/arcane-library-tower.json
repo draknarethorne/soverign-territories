@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/library/arcane-library-tower",
+  "kind": "background",
+  "name": "Arcane Library Tower",
+  "description": "a towering round library of floor-to-ceiling bookshelves with spiral ladders, floating books and glowing orbs, a huge astrolabe and warm lamplight",
+  "mood": "scholarly, magical",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "library"
+  ]
+}

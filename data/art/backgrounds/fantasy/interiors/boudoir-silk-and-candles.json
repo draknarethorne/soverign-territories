@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/interiors/boudoir-silk-and-candles",
+  "kind": "background",
+  "name": "Boudoir of Silk and Candles",
+  "description": "a lavish boudoir of silk drapes and cushions, a gilded dressing table and mirror, dozens of candles and a canopied bed in soft golden light",
+  "mood": "intimate, sensual",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "interiors"
+  ]
+}

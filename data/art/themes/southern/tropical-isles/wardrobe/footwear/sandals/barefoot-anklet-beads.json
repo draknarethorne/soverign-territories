@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/footwear/sandals/barefoot-anklet-beads",
+  "kind": "legs_feet",
+  "name": "Barefoot with Anklet Beads",
+  "description": "bare feet with a beaded {{METAL}} anklet and a few {{PRIMARY}} shells",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "footwear"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/highlands/cliff-top-ruined-keep",
+  "kind": "background",
+  "name": "Cliff-Top Ruined Keep",
+  "description": "a ruined stone keep on a cliff top above a misty valley, crumbling arches and ivy, golden light breaking through grey clouds",
+  "mood": "romantic, ancient",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "highlands"
+  ]
+}

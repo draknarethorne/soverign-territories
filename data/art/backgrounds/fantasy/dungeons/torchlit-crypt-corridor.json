@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/dungeons/torchlit-crypt-corridor",
+  "kind": "background",
+  "name": "Torchlit Crypt Corridor",
+  "description": "a long stone crypt corridor lined with burial niches and carved skulls, flickering wall torches, cobwebs and a faint green mist along the floor",
+  "mood": "ominous, tense",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "dungeons"
+  ]
+}

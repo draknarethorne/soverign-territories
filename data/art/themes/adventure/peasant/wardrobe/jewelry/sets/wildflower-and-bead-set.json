@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/jewelry/sets/wildflower-and-bead-set",
+  "kind": "jewelry",
+  "name": "Wildflower and Bead Set",
+  "description": "a simple jewelry set of a leather cord necklace with a polished {{GEM}} stone, a braided straw bracelet, a small {{METAL}} ring and a wildflower tucked behind one ear",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "jewelry"
+  ]
+}

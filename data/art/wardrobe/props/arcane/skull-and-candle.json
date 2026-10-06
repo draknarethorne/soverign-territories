@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/arcane/skull-and-candle",
+  "kind": "holding",
+  "name": "Skull and Candle",
+  "description": "a small polished skull held in one hand with a tall black candle burning a {{MAGIC}} flame on its crown",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "arcane"
+  ]
+}

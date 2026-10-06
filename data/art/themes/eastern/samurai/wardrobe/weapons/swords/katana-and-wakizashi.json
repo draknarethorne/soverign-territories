@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/weapons/swords/katana-and-wakizashi",
+  "kind": "holding",
+  "name": "Katana and Wakizashi",
+  "description": "a long curved katana with a {{METAL}} tsuba and {{PRIMARY}} silk-wrapped hilt held in one hand, a shorter wakizashi sheathed at the sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "weapons"
+  ]
+}

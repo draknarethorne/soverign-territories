@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/arabian-nights",
+  "kind": "theme",
+  "name": "Arabian Nights Sultanate",
+  "type": "culture",
+  "description": "Fantasy desert sultanate: silk harem sets and veils, jewelled belts, curved scimitars, lamps and djinn magic, bazaars, domed palaces, oasis courts under starry skies.",
+  "realm": "fantasy",
+  "tags": [
+    "arabian",
+    "sultanate",
+    "djinn",
+    "bazaar",
+    "desert"
+  ]
+}

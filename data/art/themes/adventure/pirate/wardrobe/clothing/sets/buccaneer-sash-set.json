@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/clothing/sets/buccaneer-sash-set",
+  "kind": "wearing",
+  "name": "Buccaneer Sash Set",
+  "description": "a buccaneer outfit of a laced {{PRIMARY}} bustier top under an open striped shirt, a wide knotted {{ACCENT_SOFT}} sash, short breeches with rope belts and a flowing sash tail",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "clothing"
+  ]
+}

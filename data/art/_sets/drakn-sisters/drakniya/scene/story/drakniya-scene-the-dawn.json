@@ -7,9 +7,9 @@
   "components": {
     "pose": "Medium, graceful ascent: she rises upright out of a huge opening blossom at a steady unhurried pace, arms open wide and slightly forward with palms up as if gathering the morning, head lifted and gaze to the camera, a gentle joyful smile; full figure from head to toe visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakniya/clothing/dawn-regalia.json",
-    "headwear": "a crown of woven twigs, blossoms and tiny {{METAL}} leaves",
-    "jewelry": "a {{METAL}} leaf collar with {{GEM}} dewdrops, vine bracelets with small flowers, {{METAL}} acorn earrings",
-    "legs_feet": "bare feet, small flowers blooming where they pass",
+    "headwear": "data/art/heroes/drakn-sisters/drakniya/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniya/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniya/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Petals, seeds and spores swirl upward around her, vines and flowers uncurling as she rises, motes of green-gold light drifting through the sunbeams.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/dawn/primeval-forest-awakening.json"

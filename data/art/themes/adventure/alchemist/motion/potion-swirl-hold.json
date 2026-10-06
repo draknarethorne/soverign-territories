@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/alchemist/motion/potion-swirl-hold",
+  "kind": "motion",
+  "name": "Potion Swirl",
+  "editorial": "A candid lab portrait with a glowing flask.",
+  "breeze": "Light breeze.",
+  "body": "standing with weight on one leg, leaning toward the light.",
+  "head": "head tilted, studying the flask then glancing to camera.",
+  "defaultGaze": "curious, bright eyes to camera.",
+  "defaultExpression": "an intrigued, playful smile.",
+  "pose": "a flask of glowing liquid held up at eye level, the other hand swirling it gently.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "alchemist"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/swords/scimitar",
+  "kind": "holding",
+  "name": "Scimitar",
+  "description": "a curved {{METAL}} scimitar with a {{PRIMARY}}-wrapped grip and a gem in the pommel, held ready in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "sword",
+    "scimitar",
+    "melee"
+  ]
+}

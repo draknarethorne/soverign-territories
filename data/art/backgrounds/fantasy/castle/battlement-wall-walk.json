@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/castle/battlement-wall-walk",
+  "kind": "background",
+  "name": "Battlement Wall Walk",
+  "description": "a windswept castle battlement walk at golden hour, crenellated stone parapets and round towers, fluttering pennants, a sprawling kingdom of fields and rivers far below",
+  "mood": "heroic, open",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "castle"
+  ]
+}

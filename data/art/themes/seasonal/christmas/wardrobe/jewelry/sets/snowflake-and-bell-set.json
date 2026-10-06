@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/jewelry/sets/snowflake-and-bell-set",
+  "kind": "jewelry",
+  "name": "Snowflake and Bell Set",
+  "description": "a holiday jewelry set of a {{METAL}} snowflake pendant, tiny jingle-bell earrings, a candy-cane charm bracelet and a ribbon choker with a {{GEM}} drop",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "jewelry"
+  ]
+}

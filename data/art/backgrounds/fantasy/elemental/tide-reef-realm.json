@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/tide-reef-realm",
+  "kind": "background",
+  "name": "Realm of Tides",
+  "description": "an elemental water realm: a luminous undersea terrace of coral and pearl columns, shafts of light from the surface, drifting jellyfish and ribbons of living water",
+  "mood": "fluid, serene",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

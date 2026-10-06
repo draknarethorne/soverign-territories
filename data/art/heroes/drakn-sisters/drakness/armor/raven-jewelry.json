@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/raven-jewelry",
+  "kind": "jewelry",
+  "name": "Raven runic jewelry (Drakness signature)",
+  "description": "an ultra-thin Tarnished Silver and Amethyst runic choker; matching earrings and rings; a small bellybutton ring with a gem",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "raven",
+    "armor"
+  ]
+}

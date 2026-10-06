@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/highlands/rolling-moor-heather",
+  "kind": "background",
+  "name": "Rolling Moor of Heather",
+  "description": "rolling highland moors of purple heather under a broad cloud-streaked sky, a lone stone cairn and a winding sheep track, soft low sunlight",
+  "mood": "wild, open",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "highlands"
+  ]
+}

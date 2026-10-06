@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/chivalry/wardrobe/footwear/boots/plated-riding-boots",
+  "kind": "legs_feet",
+  "name": "Plated Riding Boots",
+  "description": "knee-high {{PRIMARY}} leather riding boots with {{METAL}} plate knee cops and spurs",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "footwear"
+  ]
+}

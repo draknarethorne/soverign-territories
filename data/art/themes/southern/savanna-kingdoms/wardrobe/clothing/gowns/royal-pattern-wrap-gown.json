@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/clothing/gowns/royal-pattern-wrap-gown",
+  "kind": "wearing",
+  "name": "Royal Pattern Wrap Gown",
+  "description": "a bold woven-pattern wrap gown in {{PRIMARY}} and {{ACCENT_SOFT}} geometric bands draped over one shoulder with a high slit and a wide beaded belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "clothing"
+  ]
+}

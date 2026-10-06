@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/weapons/sunbeam-bow",
+  "kind": "holding",
+  "name": "Sunbeam Bow",
+  "description": "a bow of {{METAL}} with a string of woven {{MAGIC}} light and a radiant arrow of light nocked",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "bow"
+  ]
+}

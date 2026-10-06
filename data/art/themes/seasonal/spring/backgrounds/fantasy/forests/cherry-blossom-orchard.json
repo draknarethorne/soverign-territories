@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard",
+  "kind": "background",
+  "name": "Cherry Blossom Orchard",
+  "description": "a high-fantasy cherry blossom orchard in full bloom at golden morning light, drifting pink petals, a winding stone path, a small arched bridge over a stream and distant misty hills",
+  "mood": "soft, romantic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "forests"
+  ]
+}

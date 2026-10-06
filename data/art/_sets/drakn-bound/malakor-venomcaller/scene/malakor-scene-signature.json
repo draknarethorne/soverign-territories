@@ -7,7 +7,7 @@
   "pose": "He stands with weight shifted onto one leg, shoulders relaxed, a sharp, watchful gaze toward the camera — a coiled stance ready to move, his expression cold and calculating, a thin, predatory smile.",
   "effects": "A faint toxic-green mist curls low around his feet.",
   "components": {
-    "wearing": "close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder",
+    "wearing": "data/art/heroes/drakn-bound/malakor/clothing/armor-default-wearing.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/malakor-venomcaller/weapons/venomfang-daggers.json",

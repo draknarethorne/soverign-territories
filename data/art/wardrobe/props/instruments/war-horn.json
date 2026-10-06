@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/instruments/war-horn",
+  "kind": "holding",
+  "name": "War Horn",
+  "description": "a long curved horn banded in {{METAL}} and wrapped in {{PRIMARY}} leather, lifted to the lips",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "instruments"
+  ]
+}

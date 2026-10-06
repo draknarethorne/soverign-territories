@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/christmas/motion/tree-light-reach",
+  "kind": "motion",
+  "name": "Tree-Light Reach",
+  "editorial": "A playful shot decorating a tree.",
+  "breeze": "Light breeze.",
+  "body": "reaching up with one foot lifted behind her.",
+  "head": "looking back over the shoulder to the camera.",
+  "defaultGaze": "playful eyes to camera.",
+  "defaultExpression": "a bright, playful smile.",
+  "pose": "one arm stretched up to hang a glowing ornament on a branch, the other hand holding a string of lights.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "christmas"
+  ]
+}

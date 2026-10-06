@@ -4,25 +4,21 @@ Incoming image: the front-facing A-pose of {{HERO}}. Turn the SAME subject to a 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body studio shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body studio shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: {{BACKGROUND}}.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour and hairstyle, skin tone, and any existing tattoos, body markings, or beauty marks.
+{{KEEP_LINE}}
 
-{{HAIR_KEEP}}
+?{{KEY_BLOCK}}
 
 Standing A-pose, the same stance as the incoming image: upright, feet set apart, arms relaxed slightly away from the sides, open hands.
 
 {{VIEW}}
 
-Wearing: {{UNDERLAYER}}. Keep the exact outfit from the incoming image.
+Keep the exact outfit from the incoming image.
 
-Figure: {{FIGURE}}.
-
-Eyes: {{EYE}}, natural studio eyes, not glowing.
-
-{{FACE_STYLE}}
+Eyes: natural studio eyes, not glowing.
 
 Expression: {{EXPRESSION}}.
 

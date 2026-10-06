@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/bows/recurve-horse-bow",
+  "kind": "holding",
+  "name": "Recurve Horse Bow",
+  "description": "a short recurve horse bow of horn and {{PRIMARY}} lacquered wood with {{METAL}} fittings, a thumb ring and a quiver of {{MAGIC}}-fletched arrows at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "bow",
+    "recurve",
+    "ranged"
+  ]
+}

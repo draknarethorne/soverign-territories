@@ -1,0 +1,11 @@
+{
+  "artId": "sovereign-territories-brand-logo-app-icon",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/emblem-logo.txt",
+  "denoise": "1.0",
+  "size": "1024x1024",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/logo/SovereignTerritories_Brand_LogoAppIcon.txt",
+  "notes": "The same emblem for the square app icon; crop or round it in the client."
+}

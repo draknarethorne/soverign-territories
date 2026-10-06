@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a tall circlet of {{METAL}} filigree set with a single {{GEM}} stone at the brow, fine {{METAL}} chains swept back through her hair",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

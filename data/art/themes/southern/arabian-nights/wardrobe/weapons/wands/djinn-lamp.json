@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/weapons/wands/djinn-lamp",
+  "kind": "holding",
+  "name": "Djinn Lamp",
+  "description": "an ornate {{METAL}} oil lamp held in one hand, glowing {{MAGIC}} smoke curling from its spout into swirling shapes",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "weapons"
+  ]
+}

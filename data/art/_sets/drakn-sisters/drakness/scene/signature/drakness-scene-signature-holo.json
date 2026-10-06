@@ -10,13 +10,13 @@
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
     "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
-    "back": "a great cape of shadow-silk that billows upward and dissolves into ravens at its edges",
+    "back": "data/art/heroes/drakn-sisters/drakness/capes/scene-signature-holo-back.json",
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe-ascended.json",
     "effects": "A spiral of {{MAGIC}} soul-energy coils up the scythe, a vast host of spectral shades rises from the necropolis behind her, ravens burst from her cape, violet lightning forks across the sky and a ring of glowing sigils halos behind her head.",
     "companion": "her aligned Elder Dragon, Umbrath, rearing up enormous behind her with its wings spread across the sky, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light, amethyst fire pouring from its jaws",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/signature/necropolis-rising-dead.json",
-    "headwear": "a crown of black bone thorns wreathed in violet soul-fire"
+    "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-signature-holo-headwear.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakness/scene/signature/Drakness_Scene_Signature_Holo.txt",

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist",
+  "kind": "background",
+  "name": "Golden Oak Glade in Mist",
+  "description": "a high-fantasy forest glade of golden and crimson oaks in morning mist, a carpet of fallen leaves, shafts of low amber light and a mossy standing stone",
+  "mood": "warm, hushed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "forests"
+  ]
+}

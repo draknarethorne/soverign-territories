@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Draknira (Ice/Wizard)",
+  "description": "matching {{PRIMARY}} open-toed heels in the same finish, with a faceted ice-crystal heel, a slim strap across the toes and a thin ankle strap closed by a small {{METAL}} snowflake clasp, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/dungeons/treasure-vault-gold",
+  "kind": "background",
+  "name": "Treasure Vault of Gold",
+  "description": "a deep stone vault heaped with gold coins, jewelled goblets and chests, iron-bound doors ajar and shafts of torchlight glittering across the hoard",
+  "mood": "greedy, glittering",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "dungeons"
+  ]
+}

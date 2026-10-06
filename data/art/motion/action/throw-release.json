@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/throw-release",
+  "kind": "motion",
+  "name": "Throw Release",
+  "editorial": "A frozen action shot at the moment of a throw.",
+  "breeze": "Light breeze.",
+  "body": "a long step forward, torso rotating through the throw.",
+  "head": "turned toward the target.",
+  "defaultGaze": "locked on the target.",
+  "defaultExpression": "sharp, focused determination.",
+  "pose": "the throwing arm extended forward just after release, the other arm pulled back.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

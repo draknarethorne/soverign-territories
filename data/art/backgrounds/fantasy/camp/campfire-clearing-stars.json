@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/camp/campfire-clearing-stars",
+  "kind": "background",
+  "name": "Campfire Clearing under Stars",
+  "description": "a woodland clearing with a crackling campfire, bedrolls and a canvas lean-to, sparks rising toward a sky full of stars and the Milky Way",
+  "mood": "warm, restful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "camp"
+  ]
+}

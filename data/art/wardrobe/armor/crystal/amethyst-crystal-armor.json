@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/crystal/amethyst-crystal-armor",
+  "kind": "wearing",
+  "name": "Amethyst Crystal Armor",
+  "description": "faceted amethyst crystal plates over a {{PRIMARY}} silk bodice, shard-shaped pauldrons that glow {{MAGIC}} from within, a skirt of hanging crystal slivers and {{METAL}} filigree",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "arcane"
+  ]
+}

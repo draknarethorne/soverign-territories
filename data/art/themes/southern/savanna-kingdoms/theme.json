@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/savanna-kingdoms",
+  "kind": "theme",
+  "name": "Savanna Kingdoms",
+  "type": "culture",
+  "description": "Fantasy-adapted savanna kingdoms: bold woven and beaded patterns, wrapped cloth, brass and bead collars, spears and shields, baobab plains, golden-grass royal courts and drum-lit nights.",
+  "realm": "fantasy",
+  "tags": [
+    "savanna",
+    "kingdom",
+    "beadwork",
+    "spear",
+    "baobab"
+  ]
+}

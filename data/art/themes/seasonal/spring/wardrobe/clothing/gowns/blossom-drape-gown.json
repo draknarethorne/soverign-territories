@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/clothing/gowns/blossom-drape-gown",
+  "kind": "wearing",
+  "name": "Blossom Drape Gown",
+  "description": "a light flowing gown in layered {{PRIMARY}} chiffon with {{ACCENT_SOFT}} petals appliqued down the bodice, a deep plunging neckline, a petal-edged high slit skirt and floating ribbon straps",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "clothing"
+  ]
+}

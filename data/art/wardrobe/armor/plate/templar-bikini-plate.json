@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/plate/templar-bikini-plate",
+  "kind": "wearing",
+  "name": "Templar Plate Set",
+  "description": "a polished {{METAL}} breastplate with {{PRIMARY}} enamel cross-and-flame motifs, a plated mini-tasset skirt over bare thighs, filigreed pauldrons and gauntlets, a short white cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "plate",
+    "templar",
+    "revealing"
+  ]
+}

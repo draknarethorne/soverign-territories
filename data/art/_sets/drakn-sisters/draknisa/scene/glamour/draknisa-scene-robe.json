@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/romantic/hand-to-collarbone.json",
     "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/signature-robe.json",
-    "headwear": "a delicate {{METAL}} tiara of pearls and shell",
-    "jewelry": "a pearl pendant on a {{METAL}} chain, pearl drop earrings, {{METAL}} shell bangles",
-    "legs_feet": "barefoot with fine {{METAL}} anklets",
+    "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknisa/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknisa/footwear/scene-robe-legs-feet.json",
     "effects": "Soft beads of water hang in the air near her and a thin ribbon of tide-water winds around her wrist, {{MAGIC}} light rippling across the walls like sun through water.",
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/sanctum/enchanted-tide-pool-atrium.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json"

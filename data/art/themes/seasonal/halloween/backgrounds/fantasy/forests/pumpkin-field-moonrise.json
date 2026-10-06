@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/backgrounds/fantasy/forests/pumpkin-field-moonrise",
+  "kind": "background",
+  "name": "Pumpkin Field at Moonrise",
+  "description": "a misty high-fantasy pumpkin field at dusk, hundreds of carved jack-o'-lanterns glowing orange, a twisted tree with hanging lanterns, bats against a huge orange moon and drifting low fog",
+  "mood": "spooky, festive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "forests"
+  ]
+}

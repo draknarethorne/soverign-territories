@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/clothing/sets/meadow-bralette-set",
+  "kind": "wearing",
+  "name": "Meadow Bralette Set",
+  "description": "a spring set of a floral-embroidered {{PRIMARY}} bralette with ribbon ties, a flared mini skirt of overlapping {{ACCENT_SOFT}} petals and a thin woven vine belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "clothing"
+  ]
+}

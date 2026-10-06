@@ -1,0 +1,23 @@
+{
+  "id": "themes/western/chivalry/cosmetics/hair/braided/plaited-coronet-and-veil",
+  "kind": "hair",
+  "name": "Plaited Coronet",
+  "a_pose_style": "hair parted in the centre with two plaits wrapped over the head like a coronet, the rest falling loose and softly curled in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with two plaits wrapped like a coronet and the rest loose and softly curled in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "chivalry",
+    "hair"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/bronze/centurion-bronze-armor",
+  "kind": "wearing",
+  "name": "Centurion Bronze Armor",
+  "description": "segmented bronze lorica with a {{PRIMARY}} tunic skirt, a crested bronze helm held under one arm, a studded military belt and a flowing cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "centurion"
+  ]
+}

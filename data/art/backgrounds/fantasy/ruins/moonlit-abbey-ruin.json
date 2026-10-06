@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ruins/moonlit-abbey-ruin",
+  "kind": "background",
+  "name": "Moonlit Abbey Ruin",
+  "description": "the roofless ruin of a gothic abbey in moonlight, tall empty windows, ivy and fallen stone, drifting mist and a lone raven on an arch",
+  "mood": "gothic, haunted",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ruins"
+  ]
+}

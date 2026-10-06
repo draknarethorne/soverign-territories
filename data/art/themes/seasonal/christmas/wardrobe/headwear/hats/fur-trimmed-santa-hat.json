@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/headwear/hats/fur-trimmed-santa-hat",
+  "kind": "headwear",
+  "name": "Fur-Trimmed Midwinter Hat",
+  "description": "a velvet {{PRIMARY}} Santa-style hat with a white fur brim and a fluffy white pom-pom, a sprig of holly and a {{METAL}} bell at the tip",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "headwear"
+  ]
+}

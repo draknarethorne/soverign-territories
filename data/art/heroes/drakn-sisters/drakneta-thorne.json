@@ -1,7 +1,9 @@
 {
   "cardId": "HERO_DRAKNETA_THORNE",
   "art": {
-    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json",
+    "defaultFootwear": "data/art/heroes/drakn-sisters/drakneta/footwear/signature-heels.json",
+    "defaultSheen": "data/art/wardrobe/finishes/high-gloss.json",
     "palette": {
       "primaryColor": "Electric Gold",
       "accentColors": [
@@ -20,7 +22,7 @@
       "eyeColor": "Dark storm-charcoal, almost black iris with a thin bright electric-gold limbal ring, radiating white-hot gold striations, and spark-white flecks",
       "eyeColorGlamour": "Dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring",
       "hairColor": "Light golden-brown dark-blonde hair, sleek and sultry",
-      "hairHighlights": "data/art/cosmetics/highlights/streaks/sparse-fine-streaks.json",
+      "hairHighlights": "data/art/cosmetics/highlights/streaks/forked-lightning-streaks.json",
       "hairHighlightColor": "electric white-silver",
       "hairColorNegatives": ["all-over blue hair", "all-over cyan hair", "fully dyed hair"],
       "skinTone": "Warm golden tan complexion, evenly tanned, no pale areas",

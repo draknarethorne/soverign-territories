@@ -1,0 +1,13 @@
+{
+  "artId": "unit-giant-eagle-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "pets",
+  "cardId": "UNIT_GIANT_EAGLE",
+  "output": "prompts/sovereign-dawn/Pets/card/Pets_Card_GiantEagle.txt",
+  "notes": "Mechanical card art for UNIT_GIANT_EAGLE (SD-039); prompt built from the card's name, element and lore."
+}

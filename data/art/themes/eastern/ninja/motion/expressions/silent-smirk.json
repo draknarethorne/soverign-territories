@@ -1,0 +1,13 @@
+{
+  "id": "themes/eastern/ninja/motion/expressions/silent-smirk",
+  "kind": "expression",
+  "name": "Silent smirk",
+  "expression": "a silent, knowing smirk, narrowed eyes, utterly relaxed in the shadows.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "ninja"
+  ]
+}

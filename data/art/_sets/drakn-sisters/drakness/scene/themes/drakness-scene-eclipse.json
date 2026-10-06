@@ -1,0 +1,25 @@
+{
+  "artId": "drakness-scene-eclipse",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Eclipse Necromancer",
+  "components": {
+    "pose": "data/art/motion/action/draw-weapon.json",
+    "expression": "data/art/themes/adventure/eclipse/motion/expressions/umbral-solemnity.json",
+    "wearing": "data/art/heroes/drakn-sisters/drakness/armor/raven-wearing.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/armor/raven-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/raven-boots.json",
+    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
+    "headwear": "data/art/themes/adventure/eclipse/wardrobe/headwear/crowns/crescent-corona-crown.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/ornate-dagger.json",
+    "back": "data/art/heroes/drakn-sisters/drakness/armor/raven-pauldrons.json",
+    "arms": "data/art/heroes/drakn-sisters/drakness/armor/raven-arms.json",
+    "makeup": "data/art/themes/adventure/eclipse/cosmetics/makeup/celestial/corona-eye-and-shadow.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/scene/themes/Drakness_Scene_Eclipse.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Eclipse Necromancer: complete scene from the A-pose, every item a library piece (also pre-stageable through drakness-armor-eclipse)."
+}

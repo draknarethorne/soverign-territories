@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/tavern/inn-bedchamber-candlelit",
+  "kind": "background",
+  "name": "Inn Bedchamber, Candlelit",
+  "description": "a rustic inn bedchamber with a carved four-poster bed, patchwork quilts, a small fireplace and candles on the sill, rain tapping at a leaded window",
+  "mood": "intimate, warm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "tavern"
+  ]
+}

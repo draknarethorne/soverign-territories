@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/frost-spire-realm",
+  "kind": "background",
+  "name": "Realm of Frost",
+  "description": "an elemental ice realm: towering spires of blue ice and frozen waterfalls under a pale sky, drifting snow glitter and glowing frost flowers",
+  "mood": "crisp, majestic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, a light breeze moving his hair.",
-    "wearing": "fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest",
+    "wearing": "data/art/heroes/drakn-bound/torvald/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",
     "effects": "A few fine motes of {{MAGIC}} dust drift around his feet in the warm light - understated, nothing busy.",

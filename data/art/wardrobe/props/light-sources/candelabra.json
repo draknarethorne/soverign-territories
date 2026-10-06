@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/light-sources/candelabra",
+  "kind": "holding",
+  "name": "Candelabra",
+  "description": "a three-branched {{METAL}} candelabra held in one hand, three steady {{MAGIC}} flames lighting the face from below",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "light-sources"
+  ]
+}

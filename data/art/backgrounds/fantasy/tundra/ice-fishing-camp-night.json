@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/tundra/ice-fishing-camp-night",
+  "kind": "background",
+  "name": "Ice-Fishing Camp at Night",
+  "description": "a frozen lake with a skin tent and a small fire on the ice, fishing holes and sled dogs, a green aurora overhead",
+  "mood": "remote, quiet",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "tundra"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/summer-solstice/motion/expressions/midsummer-glow",
+  "kind": "expression",
+  "name": "Midsummer glow",
+  "expression": "glowing and carefree, a wide golden smile, eyes crinkled with the warmth of the sun.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice"
+  ]
+}

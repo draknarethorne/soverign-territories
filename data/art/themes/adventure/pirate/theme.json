@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate",
+  "kind": "theme",
+  "name": "Pirate",
+  "type": "culture",
+  "description": "High-fantasy pirate: corsair coats and sashes, tricorn hats, cutlasses and flintlocks, sea boots, storm-lashed galleons, moonlit smugglers' coves.",
+  "realm": "fantasy",
+  "tags": [
+    "pirate",
+    "sea",
+    "corsair",
+    "flintlock"
+  ]
+}

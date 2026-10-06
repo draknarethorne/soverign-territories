@@ -7,7 +7,7 @@
   "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression wild and eager, a berserker's grin baring his teeth.",
   "effects": "A fine haze of dust drifts around his feet.",
   "components": {
-    "wearing": "fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest",
+    "wearing": "data/art/heroes/drakn-bound/torvald/clothing/armor-default-wearing.json",
     "jewelry": "none, unadorned",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",

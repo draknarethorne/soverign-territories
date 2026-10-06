@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/clothing/scene-signature-holo-wearing",
+  "kind": "wearing",
+  "name": "Signature Holo - wearing",
+  "description": "a layered, ethereal outfit of sheer, frosted {{PRIMARY}} fabric over a matte underlayer, with delicate {{MAGIC}} glowing fibre-optic threads woven throughout, secured at the shoulders, no headwear, her hair fully visible; a thin bikini-style top and a short, skimpy, intricate bottom with a few short fringes hanging down, the whole outfit translucent so the shape beneath is softly visible",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

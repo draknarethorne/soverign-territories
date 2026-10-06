@@ -1,0 +1,11 @@
+{
+  "artId": "sovereign-territories-brand-plate-dawn-ridge",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/plate.txt",
+  "denoise": "1.0",
+  "size": "1024x1280",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/plate/SovereignTerritories_Brand_PlateDawnRidge.txt",
+  "notes": "Empty three-terrace ridge: the background the ten sisters are composited onto."
+}

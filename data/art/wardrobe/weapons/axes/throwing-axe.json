@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/axes/throwing-axe",
+  "kind": "holding",
+  "name": "Throwing Axe",
+  "description": "a light {{METAL}} throwing axe with a short {{PRIMARY}}-wrapped haft held in one hand, a second one hanging at the belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "axe",
+    "throwing",
+    "ranged"
+  ]
+}

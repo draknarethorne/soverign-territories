@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/backgrounds/fantasy/forests/jungle-cenote-sanctuary",
+  "kind": "background",
+  "name": "Jungle Cenote Sanctuary",
+  "description": "a hidden jungle sanctuary around a turquoise cenote, moss-covered carved stone faces, hanging vines, shafts of light through the canopy and drifting mist over the water",
+  "mood": "mystic, lush",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "forests"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "a white-gold sunburst gorget with {{GEM}} stones, gleaming bracers",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniss-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

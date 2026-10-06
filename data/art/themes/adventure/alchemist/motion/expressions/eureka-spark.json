@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/alchemist/motion/expressions/eureka-spark",
+  "kind": "expression",
+  "name": "Eureka spark",
+  "expression": "a bright eureka spark, eyes wide and gleaming, a quick delighted grin.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "alchemist"
+  ]
+}

@@ -4,11 +4,11 @@ Incoming image: an A-pose of {{HERO}}. Change ONLY the hairstyle; keep face, bod
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: {{BACKGROUND}}.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure and proportions, all exactly as shown; keep the hair colour and highlights.
 
 Maintain existing outfit expressly.
 
@@ -16,12 +16,6 @@ Maintain existing outfit expressly.
 
 {{HAIR_CHANGE}}
 {{EXTRAS}}
-
-Eyes: {{EYE}}, natural studio eyes, not glowing.
-
-{{FACE_STYLE}}
-
-{{LEGS}}.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,18 @@
+{
+  "id": "races/orc/race",
+  "kind": "race",
+  "name": "Race: Orc",
+  "description": "an orc: tall and powerfully built with green or grey-green skin, small lower tusks, a strong jaw and brow, thick corded muscle and scarred knuckles",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "race",
+    "orc"
+  ],
+  "notes": "Visual features of the race for the bound heroes and units. Not yet wired into the prompt templates (planned slot: {{RACE}} in the Figure line of male and non-human heroes)."
+}

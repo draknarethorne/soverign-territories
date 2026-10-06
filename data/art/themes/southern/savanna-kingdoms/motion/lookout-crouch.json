@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/savanna-kingdoms/motion/lookout-crouch",
+  "kind": "motion",
+  "name": "Lookout Crouch",
+  "editorial": "A watchful savanna shot.",
+  "breeze": "Light breeze.",
+  "body": "a low crouch on a rock, one hand on the stone.",
+  "head": "turned to scan the horizon then to the camera.",
+  "defaultGaze": "keen, steady eyes to camera.",
+  "defaultExpression": "a calm, watchful smile.",
+  "pose": "one hand shading the eyes, the other resting on a spear across the knee.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms"
+  ]
+}

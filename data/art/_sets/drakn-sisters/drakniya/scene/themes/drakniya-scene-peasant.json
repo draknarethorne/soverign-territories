@@ -1,0 +1,23 @@
+{
+  "artId": "drakniya-scene-peasant",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Village Peasant Druid",
+  "components": {
+    "pose": "data/art/themes/adventure/peasant/motion/pitchfork-lean.json",
+    "expression": "data/art/themes/adventure/peasant/motion/expressions/honest-warmth.json",
+    "wearing": "data/art/themes/adventure/peasant/wardrobe/clothing/sets/market-day-blouse-set.json",
+    "jewelry": "data/art/themes/adventure/peasant/wardrobe/jewelry/sets/wildflower-and-bead-set.json",
+    "legs_feet": "data/art/themes/adventure/peasant/wardrobe/footwear/boots/scuffed-leather-boots.json",
+    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "background": "data/art/themes/adventure/peasant/backgrounds/fantasy/highlands/golden-wheat-field-cottage.json",
+    "headwear": "data/art/themes/adventure/peasant/wardrobe/headwear/hats/wide-straw-hat.json",
+    "holding": "data/art/themes/adventure/peasant/wardrobe/weapons/polearms/pitchfork-and-sickle.json",
+    "makeup": "data/art/themes/adventure/peasant/cosmetics/makeup/natural/sun-kissed-freckles.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/scene/themes/Drakniya_Scene_Peasant.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Village Peasant Druid: complete scene from the A-pose, every item a library piece (also pre-stageable through drakniya-clothing-peasant)."
+}

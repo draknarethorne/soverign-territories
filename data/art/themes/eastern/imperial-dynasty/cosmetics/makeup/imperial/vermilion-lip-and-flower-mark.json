@@ -1,0 +1,19 @@
+{
+  "id": "themes/eastern/imperial-dynasty/cosmetics/makeup/imperial/vermilion-lip-and-flower-mark",
+  "kind": "makeup",
+  "name": "Vermilion Lip and Flower Mark",
+  "description": "imperial makeup - a pale luminous base, a fine {{ACCENT_SOFT}} flower mark on the forehead, slim winged liner and a precise vermilion lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "makeup"
+  ]
+}

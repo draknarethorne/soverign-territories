@@ -7,9 +7,9 @@
   "components": {
     "pose": "Slow, deliberate ascent: she rises upright through the broken ice on a rising pillar of frozen water, arms lowered and slightly out, palms down as if holding the ice steady, chin lifted, gaze to the camera, calm and commanding; full figure from head to toe visible above the ice.",
     "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/dawn-regalia.json",
-    "headwear": "a tall crown of {{METAL}} and clear ice-crystal spires",
-    "jewelry": "a {{METAL}} snowflake collar set with {{GEM}} crystals, long icicle earrings, {{METAL}} cuffs",
-    "legs_feet": "bare feet, a thin glaze of frost beneath them",
+    "headwear": "data/art/heroes/drakn-sisters/draknira/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknira/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknira/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Shards of ice and glittering snow fall back around her in slow arcs, frost spreading outward across the surface of the water, a cold {{MAGIC}} glow in the air and a faint halo of diamond dust.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/dawn/shattering-ice-shelf-polar-sea.json"

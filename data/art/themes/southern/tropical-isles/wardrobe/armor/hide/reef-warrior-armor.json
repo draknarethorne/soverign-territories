@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/armor/hide/reef-warrior-armor",
+  "kind": "wearing",
+  "name": "Reef Warrior Armor",
+  "description": "island warrior armor - woven fibre and {{PRIMARY}} shell plates across the chest, a {{METAL}} shark-tooth belt, a layered grass-and-leaf skirt and wrapped wrists",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "armor"
+  ]
+}

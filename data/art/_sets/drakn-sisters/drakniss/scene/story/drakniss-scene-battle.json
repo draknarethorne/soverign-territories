@@ -7,9 +7,9 @@
   "components": {
     "pose": "She stands with her sunburst staff raised to the sky in one hand and the other palm open, chin lifted, a calm, radiant gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/battle-gear.json",
-    "headwear": "a winged white-gold circlet",
-    "jewelry": "a white-gold sunburst gorget with {{GEM}} stones, gleaming bracers",
-    "legs_feet": "white-gold greaves over ivory boots",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniss/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",
     "effects": "A column of golden light descends on her from the clouds, beams of {{MAGIC}} radiance sweeping the field and driving back the smoke, wounded soldiers behind her rising into the glow.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

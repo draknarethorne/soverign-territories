@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a great cape of shadow-silk that billows upward and dissolves into ravens at its edges",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

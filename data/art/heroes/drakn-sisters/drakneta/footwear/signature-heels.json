@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Drakneta (Lightning/Summoner)",
+  "description": "matching {{PRIMARY}} open-toed stiletto sandals in the same finish, with a zig-zag strap crossing the instep and a thin ankle strap, the slim heel shaped like a {{METAL}} lightning bolt, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

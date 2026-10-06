@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/backgrounds/fantasy/highlands/baobab-plain-sunset",
+  "kind": "background",
+  "name": "Baobab Plain at Sunset",
+  "description": "a vast golden-grass savanna at sunset with giant baobab trees, a distant herd and drifting dust, a huge orange sun low on the horizon and a rocky kopje",
+  "mood": "vast, warm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "highlands"
+  ]
+}

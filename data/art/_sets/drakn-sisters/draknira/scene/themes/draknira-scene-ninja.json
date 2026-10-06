@@ -1,0 +1,23 @@
+{
+  "artId": "draknira-scene-ninja",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Shinobi Shadow Clan Wizard",
+  "components": {
+    "pose": "data/art/themes/eastern/ninja/motion/kunai-throw-pose.json",
+    "expression": "data/art/themes/eastern/ninja/motion/expressions/silent-smirk.json",
+    "wearing": "data/art/themes/eastern/ninja/wardrobe/armor/leather/shadowclan-light-armor.json",
+    "jewelry": "data/art/themes/eastern/ninja/wardrobe/jewelry/sets/shuriken-charm-set.json",
+    "legs_feet": "data/art/themes/eastern/ninja/wardrobe/footwear/boots/split-toe-shinobi-boots.json",
+    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "background": "data/art/themes/eastern/ninja/backgrounds/fantasy/camp/moonlit-pagoda-rooftops.json",
+    "headwear": "data/art/themes/eastern/ninja/wardrobe/headwear/hoods/half-mask-and-hood.json",
+    "holding": "data/art/themes/eastern/ninja/wardrobe/weapons/throwing/shuriken-fan.json",
+    "makeup": "data/art/themes/eastern/ninja/cosmetics/makeup/stealth/smoky-shadow-liner.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/scene/themes/Draknira_Scene_Ninja.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Shinobi Shadow Clan Wizard: complete scene from the A-pose, every item a library piece (also pre-stageable through draknira-armor-ninja)."
+}

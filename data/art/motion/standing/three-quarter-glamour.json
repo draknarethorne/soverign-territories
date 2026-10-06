@@ -7,7 +7,7 @@
   "body": "angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve.",
   "head": "turned back toward the camera, chin slightly down.",
   "defaultGaze": "data/art/motion/gaze/eyes-to-camera.json",
-  "defaultExpression": "data/art/motion/expressions/alluring-confident.json",
+  "defaultExpression": "data/art/motion/expressions/glamour/alluring-confident.json",
   "pose": "one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.",
   "extras": [],
   "compatibleStages": [

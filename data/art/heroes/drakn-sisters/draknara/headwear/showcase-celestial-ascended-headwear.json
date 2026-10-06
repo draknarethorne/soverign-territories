@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/headwear/showcase-celestial-ascended-headwear",
+  "kind": "headwear",
+  "name": "Celestial Ascended - headwear",
+  "description": "a feather crown on a bronze headband set with a {{GEM}} stone",
+  "compatibleStages": [
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "showcase"
+  ],
+  "notes": "Extracted from the draknara-showcase-celestial-ascended card so the item is a library piece (pre-stageable) instead of inline text."
+}

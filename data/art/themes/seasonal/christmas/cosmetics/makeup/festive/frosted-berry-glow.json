@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/christmas/cosmetics/makeup/festive/frosted-berry-glow",
+  "kind": "makeup",
+  "name": "Frosted Berry Glow",
+  "description": "festive makeup - a deep berry lip, a soft {{ACCENT_SOFT}} shimmer on the lids with tiny silver glitter flecks, rosy windburnt cheeks and delicate frost-white highlights",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "makeup"
+  ]
+}

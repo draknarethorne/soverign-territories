@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/swords/short-sword",
+  "kind": "holding",
+  "name": "Short Sword",
+  "description": "a broad double-edged {{METAL}} short sword with a simple crossguard and a {{PRIMARY}} leather grip, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "sword",
+    "short",
+    "melee"
+  ]
+}

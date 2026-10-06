@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/frontier/wardrobe/footwear/boots/spurred-cowboy-boots",
+  "kind": "legs_feet",
+  "name": "Spurred Cowboy Boots",
+  "description": "tall tooled {{PRIMARY}} leather cowboy boots with {{METAL}} star spurs and a stacked heel",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "footwear"
+  ]
+}

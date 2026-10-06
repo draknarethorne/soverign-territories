@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/backgrounds/fantasy/highlands/endless-steppe-warcamp",
+  "kind": "background",
+  "name": "Endless Steppe Warcamp",
+  "description": "an endless high-fantasy grassland under a vast sky, a ring of felt yurts with war banners and horsehair standards, picketed horses and smoke from cook fires at sunset",
+  "mood": "vast, wild",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "highlands"
+  ]
+}

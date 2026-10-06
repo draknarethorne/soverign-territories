@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/autumn/motion/acorn-crouch",
+  "kind": "motion",
+  "name": "Crouch by the Fire",
+  "editorial": "A cosy fireside shot.",
+  "breeze": "Light breeze.",
+  "body": "crouched low by a fire, knees together, torso leaning toward the flames.",
+  "head": "face turned to the camera, lit by firelight.",
+  "defaultGaze": "soft, glowing eyes to camera.",
+  "defaultExpression": "a soft, content smile.",
+  "pose": "both hands held out toward the fire, a blanket slipping off one shoulder.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "autumn"
+  ]
+}

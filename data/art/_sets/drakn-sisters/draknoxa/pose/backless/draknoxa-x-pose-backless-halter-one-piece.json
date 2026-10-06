@@ -7,7 +7,7 @@
   "output": "prompts/drakn-sisters/Draknoxa/poses/backless/Draknoxa_X_Pose_BacklessHalterOnePiece.txt",
   "denoise": "~1.0",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/backless-halter-one-piece.json"
+    "underlayer": "data/art/wardrobe/swimwear/backless/backless-halter-one-piece.json"
   },
   "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
 }

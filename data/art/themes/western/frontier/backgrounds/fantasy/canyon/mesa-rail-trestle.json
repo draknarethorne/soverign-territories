@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/backgrounds/fantasy/canyon/mesa-rail-trestle",
+  "kind": "background",
+  "name": "Mesa Rail Trestle",
+  "description": "a towering red mesa canyon crossed by an old timber rail trestle with a steam engine puffing smoke, vultures circling a hard blue sky and glowing mineral veins in the rock",
+  "mood": "vast, adventurous",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "canyon"
+  ]
+}

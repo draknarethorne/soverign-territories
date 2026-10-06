@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/jewelry/sets/gold-coin-and-gem-set",
+  "kind": "jewelry",
+  "name": "Gold Coin and Gem Set",
+  "description": "an ornate set of layered {{METAL}} coin necklaces, a {{GEM}} nose-stud chain, wide filigree armlets, anklets and a jewelled belt",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "jewelry"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-bound/malakor/clothing/armor-default-wearing",
+  "kind": "wearing",
+  "name": "Default - wearing",
+  "description": "close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the malakor-armor-default card so the item is a library piece (pre-stageable) instead of inline text."
+}

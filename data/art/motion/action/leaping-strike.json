@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/leaping-strike",
+  "kind": "motion",
+  "name": "Leaping Strike",
+  "editorial": "A frozen mid-air action shot.",
+  "breeze": "Strong rush of air.",
+  "body": "airborne, knees tucked, body twisting as she leaps.",
+  "head": "turned toward the camera over one shoulder.",
+  "defaultGaze": "fierce eyes to camera.",
+  "defaultExpression": "a thrilled, fearless grin.",
+  "pose": "the weapon arm swept back for a strike, the other arm flung out for balance, hair and clothing streaming.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

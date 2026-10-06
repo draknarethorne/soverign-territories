@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/steppe/motion/banner-plant",
+  "kind": "motion",
+  "name": "Banner Plant",
+  "editorial": "A triumphant shot planting a war banner.",
+  "breeze": "Wind snapping the banner.",
+  "body": "a wide stance, one boot up on a rock.",
+  "head": "chin lifted, looking down at the camera.",
+  "defaultGaze": "proud, fierce eyes to camera.",
+  "defaultExpression": "a triumphant, fierce grin.",
+  "pose": "one hand planting a war banner pole in the ground, the other resting on the sword at her hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "steppe"
+  ]
+}

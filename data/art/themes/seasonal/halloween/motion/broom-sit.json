@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/halloween/motion/broom-sit",
+  "kind": "motion",
+  "name": "Broom Sit",
+  "editorial": "A playful shot sitting on a broomstick.",
+  "breeze": "Wind lifting the hair and hem.",
+  "body": "sitting side-on across a broomstick, legs crossed, torso leaning back.",
+  "head": "turned over the shoulder to the camera.",
+  "defaultGaze": "playful, teasing eyes to camera.",
+  "defaultExpression": "a gleeful, playful laugh.",
+  "pose": "one hand gripping the broom handle, the other holding the pointed hat on her head.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "halloween"
+  ]
+}

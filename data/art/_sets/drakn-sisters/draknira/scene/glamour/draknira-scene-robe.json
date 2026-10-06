@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
     "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/signature-robe.json",
-    "headwear": "a slim {{METAL}} circlet with a pointed ice crystal at the brow",
-    "jewelry": "a {{METAL}} star-chart pendant, icicle earrings, {{METAL}} cuffs",
-    "legs_feet": "soft frost-white boots lined in fur",
+    "headwear": "data/art/heroes/drakn-sisters/draknira/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknira/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknira/footwear/scene-robe-legs-feet.json",
     "effects": "A slow drift of fine snow and tiny floating ice crystals catches the light around her, faint {{MAGIC}} glints on the frost-edged robe.",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/sanctum/ice-cave-star-observatory.json",
     "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff.json"

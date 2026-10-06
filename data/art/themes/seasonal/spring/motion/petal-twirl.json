@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/spring/motion/petal-twirl",
+  "kind": "motion",
+  "name": "Petal Twirl",
+  "editorial": "A joyful spring editorial with swirling petals.",
+  "breeze": "Playful gusts swirling petals.",
+  "body": "mid-twirl, skirt flared, weight on the ball of one foot.",
+  "head": "head tilted back, laughing toward the camera.",
+  "defaultGaze": "bright, delighted eyes to camera.",
+  "defaultExpression": "a joyful, open laugh.",
+  "pose": "both arms lifted out to the sides, fingers spread, petals swirling around her.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "spring"
+  ]
+}

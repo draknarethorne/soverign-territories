@@ -1,0 +1,19 @@
+{
+  "id": "themes/southern/savanna-kingdoms/cosmetics/makeup/tribal/ochre-pattern-and-gloss",
+  "kind": "makeup",
+  "name": "Ochre Pattern and Gloss",
+  "description": "ceremonial makeup - fine {{ACCENT_SOFT}} ochre dot patterns across the cheekbones and brow, a luminous bronze glow and a warm deep-berry lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "makeup"
+  ]
+}

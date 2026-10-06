@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/peasant/motion/pitchfork-lean",
+  "kind": "motion",
+  "name": "Pitchfork Lean",
+  "editorial": "A candid farm portrait.",
+  "breeze": "Light breeze.",
+  "body": "leaning relaxed on a pitchfork, one foot crossed over the other.",
+  "head": "tilted, grinning at the camera.",
+  "defaultGaze": "cheeky eyes to camera.",
+  "defaultExpression": "a cheeky, sunny grin.",
+  "pose": "both hands on the pitchfork handle, a straw stalk between the teeth.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "peasant"
+  ]
+}

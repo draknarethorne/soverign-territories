@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/umbral-shade-realm",
+  "kind": "background",
+  "name": "Realm of Shadow",
+  "description": "an elemental darkness realm: black glass platforms drifting in a violet-black void, curling shadow smoke and a pale moon with a thin silver halo",
+  "mood": "mysterious, deep",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ruins/toppled-colossus-field",
+  "kind": "background",
+  "name": "Toppled Colossus Field",
+  "description": "a field of wild grass around a toppled giant stone statue, broken columns and a crumbled arch under a dramatic cloudy sky",
+  "mood": "melancholy, epic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ruins"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/jewelry/sets/black-sun-jewelry-set",
+  "kind": "jewelry",
+  "name": "Black Sun Jewelry Set",
+  "description": "a jewelry set of a black onyx disc pendant ringed in {{METAL}} rays on a chain, crescent earrings, a segmented armlet and ring with a {{GEM}} stone",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "jewelry"
+  ]
+}

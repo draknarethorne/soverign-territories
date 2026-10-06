@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknara/headwear/scene-signature-holo-headwear",
+  "kind": "headwear",
+  "name": "Signature Holo - headwear",
+  "description": "a crown of eagle feathers and carved bone on a bronze headband",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknara-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

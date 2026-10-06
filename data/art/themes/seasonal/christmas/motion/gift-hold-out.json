@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/christmas/motion/gift-hold-out",
+  "kind": "motion",
+  "name": "Gift Held Out",
+  "editorial": "A cheerful holiday portrait with a gift.",
+  "breeze": "Light breeze.",
+  "body": "standing with weight on one leg, shoulders turned, leaning slightly forward.",
+  "head": "tilted, smiling at the camera.",
+  "defaultGaze": "warm, sparkling eyes to camera.",
+  "defaultExpression": "a warm, delighted smile.",
+  "pose": "a ribbon-wrapped gift box held out in both hands toward the camera.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "christmas"
+  ]
+}

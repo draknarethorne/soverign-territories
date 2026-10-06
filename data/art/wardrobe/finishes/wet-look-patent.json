@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/finishes/wet-look-patent",
+  "kind": "sheen",
+  "name": "Finish: Wet-look patent",
+  "description": "a wet-look patent finish with a liquid shine and sharp, bright reflections",
+  "compatibleStages": [
+    "pose",
+    "clothing",
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "finish",
+    "sheen",
+    "metallic"
+  ],
+  "notes": "Fills {{SHEEN}}. Set a hero default with art.defaultSheen or override per card with components.sheen. Ladder: matte < satin < semi-gloss < high-gloss; wet-look-patent, pearlescent and brushed are alternatives."
+}

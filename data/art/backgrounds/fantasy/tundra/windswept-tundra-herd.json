@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/tundra/windswept-tundra-herd",
+  "kind": "background",
+  "name": "Windswept Tundra with a Herd",
+  "description": "a vast flat tundra of snow, lichen and low scrub, a distant herd of shaggy beasts and a pale low sun in a pink-grey sky",
+  "mood": "stark, open",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "tundra"
+  ]
+}

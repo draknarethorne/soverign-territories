@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a radiant crown of {{METAL}} sun-rays set with {{GEM}} stones",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniss-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

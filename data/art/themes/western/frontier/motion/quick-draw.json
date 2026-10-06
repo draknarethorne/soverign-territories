@@ -1,0 +1,20 @@
+{
+  "id": "themes/western/frontier/motion/quick-draw",
+  "kind": "motion",
+  "name": "Quick Draw",
+  "editorial": "A tense action shot at the moment of a quick draw.",
+  "breeze": "Light breeze.",
+  "body": "a wide stance, one hip cocked, shoulders squared.",
+  "head": "chin low under the hat brim, eyes to the camera.",
+  "defaultGaze": "narrowed, steady eyes to camera.",
+  "defaultExpression": "a cool, dangerous half-smile.",
+  "pose": "one hand snapping a revolver up from the hip, the other hand hovering over the second holster.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "frontier"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/weapons/staves/wheat-sheaf-staff",
+  "kind": "holding",
+  "name": "Wheat-Sheaf Staff",
+  "description": "a tall staff topped with a bound sheaf of golden wheat and a glowing {{MAGIC}} sun disc, ribbons trailing",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "weapons"
+  ]
+}

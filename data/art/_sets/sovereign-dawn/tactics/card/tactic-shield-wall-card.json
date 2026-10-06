@@ -1,0 +1,13 @@
+{
+  "artId": "tactic-shield-wall-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "tactics",
+  "cardId": "TACTIC_SHIELD_WALL",
+  "output": "prompts/sovereign-dawn/Tactics/card/Tactics_Card_ShieldWall.txt",
+  "notes": "Mechanical card art for TACTIC_SHIELD_WALL (SD-120); prompt built from the card's name, element and lore."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bronze/amazon-bronze-set",
+  "kind": "wearing",
+  "name": "Amazon Bronze Set",
+  "description": "polished bronze breastplate and tasset skirt in a warrior-queen style, {{PRIMARY}} leather straps, an {{ACCENT_SOFT}} sash, bronze bracers and a short red cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "warrior",
+    "revealing"
+  ]
+}

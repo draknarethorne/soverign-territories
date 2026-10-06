@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/footwear/sandals/wrapped-leather-sandals",
+  "kind": "legs_feet",
+  "name": "Wrapped Leather Sandals",
+  "description": "flat leather sandals with {{PRIMARY}} bead-wrapped straps tied up to the calf and a {{METAL}} anklet",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "footwear"
+  ]
+}

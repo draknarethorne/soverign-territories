@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/headwear/goggles/brass-lens-goggles",
+  "kind": "headwear",
+  "name": "Brass Lens Goggles",
+  "description": "a pair of brass goggles with multiple swing-down lenses resting on the head over a {{PRIMARY}} headband, {{GEM}} glass in the lenses",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "headwear"
+  ]
+}

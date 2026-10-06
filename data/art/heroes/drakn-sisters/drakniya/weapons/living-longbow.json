@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/weapons/living-longbow",
+  "kind": "holding",
+  "name": "Living Longbow",
+  "description": "a longbow grown from living {{PRIMARY}} wood with blossoms and leaves along its limbs and a string of {{MAGIC}} light",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "bow"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/clothing/sets/umbral-wrap-set",
+  "kind": "wearing",
+  "name": "Umbral Wrap Set",
+  "description": "a set of a black cropped halter with a {{METAL}} crescent clasp, a low-slung wrap skirt of layered shadow silk edged in a thin {{ACCENT_SOFT}} corona line and a ring of {{METAL}} chain at the waist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "clothing"
+  ]
+}

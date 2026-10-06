@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/mail/ringmail-ranger-set",
+  "kind": "wearing",
+  "name": "Ringmail Ranger Set",
+  "description": "a short ringmail cuirass over a {{PRIMARY}} tunic, leather bracers, a hooded cloak clasped with {{METAL}} and a belt hung with a quiver and knife",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "mail",
+    "ranger"
+  ]
+}

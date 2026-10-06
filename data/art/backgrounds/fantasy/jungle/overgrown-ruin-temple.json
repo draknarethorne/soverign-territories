@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/jungle/overgrown-ruin-temple",
+  "kind": "background",
+  "name": "Overgrown Ruin Temple",
+  "description": "a stepped stone ruin swallowed by jungle, giant roots and vines over carved faces, shafts of green light and drifting mist",
+  "mood": "mystic, lush",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "jungle"
+  ]
+}

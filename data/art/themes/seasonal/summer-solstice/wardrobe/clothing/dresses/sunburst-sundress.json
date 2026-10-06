@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/clothing/dresses/sunburst-sundress",
+  "kind": "wearing",
+  "name": "Sunburst Sundress",
+  "description": "a short flowing sundress in {{PRIMARY}} cotton with a sunburst {{ACCENT_SOFT}} embroidered bodice, thin straps, a plunging back and a flared hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "clothing"
+  ]
+}

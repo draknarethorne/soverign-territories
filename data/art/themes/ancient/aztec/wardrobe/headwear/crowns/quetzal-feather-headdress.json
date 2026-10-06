@@ -1,0 +1,15 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/headwear/crowns/quetzal-feather-headdress",
+  "kind": "headwear",
+  "name": "Quetzal Feather Headdress",
+  "description": "a tall radiating headdress of long green and {{PRIMARY}} quetzal feathers on a {{METAL}} band set with jade and {{GEM}} stones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "headwear"
+  ]
+}

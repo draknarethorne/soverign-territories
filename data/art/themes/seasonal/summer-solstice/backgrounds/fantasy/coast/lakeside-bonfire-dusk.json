@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/summer-solstice/backgrounds/fantasy/coast/lakeside-bonfire-dusk",
+  "kind": "background",
+  "name": "Lakeside Bonfire at Dusk",
+  "description": "a calm lake shore at dusk with a crackling bonfire, floating flower lanterns on the water, fireflies and a pink-gold sky reflected on the surface",
+  "mood": "warm, romantic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "coast"
+  ]
+}

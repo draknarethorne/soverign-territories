@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a crown of black thorns and polished bone points",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

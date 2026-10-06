@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/weapons/briar-sickle",
+  "kind": "holding",
+  "name": "Briar Sickle",
+  "description": "a curved {{METAL}} sickle with a living-wood handle wrapped in thorny {{PRIMARY}} vines and tiny leaves, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "sickle"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/chivalry/wardrobe/clothing/sets/squire-tabard-set",
+  "kind": "wearing",
+  "name": "Squire Tabard Set",
+  "description": "a set of a short heraldic tabard in {{PRIMARY}} and {{ACCENT_SOFT}} quarters belted over a cropped padded top, a leather skirt with a hanging sword belt and fingerless gloves",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "clothing"
+  ]
+}

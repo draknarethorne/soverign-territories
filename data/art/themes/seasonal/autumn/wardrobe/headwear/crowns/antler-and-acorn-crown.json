@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/headwear/crowns/antler-and-acorn-crown",
+  "kind": "headwear",
+  "name": "Antler and Acorn Crown",
+  "description": "a slim crown of curved antlers wrapped in russet leaves, acorns and a few {{GEM}} berries, bound with a {{PRIMARY}} ribbon",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "headwear"
+  ]
+}

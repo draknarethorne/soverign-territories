@@ -7,9 +7,9 @@
   "components": {
     "pose": "She strides forward mid-cast with her reaper scythe in one hand and the other arm thrust out palm-first to command the dead, her cape streaming behind her, chin lifted, a fierce, commanding gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/battle-gear.json",
-    "headwear": "a crown of black thorns and polished bone points",
-    "jewelry": "a bone-and-{{METAL}} gorget set with a {{GEM}} stone, spiked bracers",
-    "legs_feet": "black greaves with bone-plated sabatons",
+    "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json",
     "effects": "Rows of skeletal soldiers claw out of the churned mud behind her wrapped in {{MAGIC}} soul-fire, threads of necrotic energy spiralling from her palm, ghostly flames drifting across the battlefield.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

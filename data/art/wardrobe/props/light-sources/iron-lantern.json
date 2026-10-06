@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/light-sources/iron-lantern",
+  "kind": "holding",
+  "name": "Iron Lantern",
+  "description": "a hooded iron lantern held low in one hand, its glass glowing warm {{MAGIC}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "light-sources"
+  ]
+}

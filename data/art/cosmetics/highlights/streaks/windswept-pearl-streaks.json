@@ -1,0 +1,9 @@
+{
+  "id": "cosmetics/highlights/streaks/windswept-pearl-streaks",
+  "kind": "highlights",
+  "name": "Windswept pearl streaks",
+  "description": "flowing, noticeable {{HIGHLIGHT_COLOR}} pearlescent streaks swept in one direction along the lengths as if carried by a breeze, bright against the base colour and catching the light, tone-on-tone dimension",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "streaks", "windswept", "pearlescent", "wind"],
+  "notes": "Draknava (Wind/Bard). Replaces pearl-glaze, which asked for no distinct streaks."
+}

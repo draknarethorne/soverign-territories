@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat",
+  "kind": "headwear",
+  "name": "Tall Witch Hat",
+  "description": "a tall pointed witch hat in {{PRIMARY}} with a wide curved brim, a buckled {{METAL}} band, a few {{ACCENT_SOFT}} stars and a trailing ribbon",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "headwear"
+  ]
+}

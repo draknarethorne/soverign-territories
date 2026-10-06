@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/weapons/swords/gilded-scimitar-pair",
+  "kind": "holding",
+  "name": "Gilded Scimitar Pair",
+  "description": "a pair of curved {{METAL}} scimitars with {{GEM}}-set hilts, one raised and one held low, a faint {{MAGIC}} shimmer along the edges",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "weapons"
+  ]
+}

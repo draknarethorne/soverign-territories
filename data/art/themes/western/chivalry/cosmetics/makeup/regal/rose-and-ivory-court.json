@@ -1,0 +1,19 @@
+{
+  "id": "themes/western/chivalry/cosmetics/makeup/regal/rose-and-ivory-court",
+  "kind": "makeup",
+  "name": "Rose and Ivory Court",
+  "description": "court makeup - an ivory-fair luminous base, a soft rose blush, a delicate {{ACCENT_SOFT}} lid and a defined deep-rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "makeup"
+  ]
+}

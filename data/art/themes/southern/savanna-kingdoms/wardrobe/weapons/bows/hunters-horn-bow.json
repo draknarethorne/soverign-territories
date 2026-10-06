@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/weapons/bows/hunters-horn-bow",
+  "kind": "holding",
+  "name": "Hunter's Horn Bow",
+  "description": "a long curved horn bow with a {{PRIMARY}} bead-wrapped grip, a quiver of {{MAGIC}}-fletched arrows at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms",
+    "weapons"
+  ]
+}

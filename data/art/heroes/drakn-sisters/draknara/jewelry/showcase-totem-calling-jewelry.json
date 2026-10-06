@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/jewelry/showcase-totem-calling-jewelry",
+  "kind": "jewelry",
+  "name": "Totem Calling - jewelry",
+  "description": "{{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans",
+  "compatibleStages": [
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "showcase"
+  ],
+  "notes": "Extracted from the draknara-showcase-totem-calling card so the item is a library piece (pre-stageable) instead of inline text."
+}

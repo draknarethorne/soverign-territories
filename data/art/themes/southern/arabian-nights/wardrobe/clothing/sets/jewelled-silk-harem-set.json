@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/clothing/sets/jewelled-silk-harem-set",
+  "kind": "wearing",
+  "name": "Jewelled Silk Harem Set",
+  "description": "a silk set of a jewelled {{PRIMARY}} bralette with hanging {{METAL}} coins, low-slung sheer harem trousers gathered at the ankles in {{ACCENT_SOFT}} and a beaded hip scarf",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "clothing"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/frontier/wardrobe/jewelry/sets/turquoise-and-silver-set",
+  "kind": "jewelry",
+  "name": "Turquoise and Silver Set",
+  "description": "a frontier jewelry set of a squash-blossom necklace in {{METAL}} with {{GEM}} stones, concho earrings, a wide cuff and a bolo tie",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "jewelry"
+  ]
+}

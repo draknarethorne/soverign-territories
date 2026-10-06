@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/clothing/gowns/veiled-palace-gown",
+  "kind": "wearing",
+  "name": "Veiled Palace Gown",
+  "description": "a flowing {{PRIMARY}} silk gown with a deep neckline, wide gilded sleeves and a high slit, a sheer half-veil and a jewelled sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "clothing"
+  ]
+}

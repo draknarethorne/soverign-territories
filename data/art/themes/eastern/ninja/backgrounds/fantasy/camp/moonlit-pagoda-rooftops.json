@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/backgrounds/fantasy/camp/moonlit-pagoda-rooftops",
+  "kind": "background",
+  "name": "Moonlit Pagoda Rooftops",
+  "description": "a high-fantasy rooftop scene of tiered pagoda roofs under a full moon, paper lanterns far below, drifting mist and a silhouette of distant hills",
+  "mood": "stealthy, dramatic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "camp"
+  ]
+}

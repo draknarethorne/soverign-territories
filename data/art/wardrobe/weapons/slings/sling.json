@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/slings/sling",
+  "kind": "holding",
+  "name": "Sling",
+  "description": "a leather sling with a {{PRIMARY}} cord held spinning in one hand, a pouch of {{MAGIC}}-glowing stones at the belt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "sling",
+    "ranged"
+  ]
+}

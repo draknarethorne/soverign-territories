@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/weapons/pearl-pistol",
+  "kind": "holding",
+  "name": "Pearl Pistol",
+  "description": "a slim pistol of {{METAL}} and mother-of-pearl, a ribbon of {{MAGIC}} water swirling around the barrel",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "pistol"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "artId": "draknora-scene-pirate",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Pirate Magician",
+  "components": {
+    "pose": "data/art/motion/action/pistol-aim.json",
+    "expression": "data/art/themes/adventure/pirate/motion/expressions/cocky-swagger.json",
+    "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/dresses/corsair-captain-coat-dress.json",
+    "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
+    "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
+    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/galleon-deck-storm.json",
+    "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json",
+    "holding": "data/art/heroes/drakn-sisters/draknora/weapons/ember-pistol.json",
+    "makeup": "data/art/themes/adventure/pirate/cosmetics/makeup/pirate/salt-kohl-and-sunburn.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/scene/themes/Draknora_Scene_Pirate.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Pirate Magician: complete scene from the A-pose, every item a library piece (also pre-stageable through draknora-clothing-pirate)."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/chivalry",
+  "kind": "theme",
+  "name": "Chivalry and Tournament",
+  "type": "culture",
+  "description": "Knightly tournament fantasy: heraldic surcoats and gowns, polished plate with tabards, great helms and circlets, lances and longswords, banners, jousting fields and castle great halls.",
+  "realm": "fantasy",
+  "tags": [
+    "chivalry",
+    "knight",
+    "heraldry",
+    "tournament",
+    "castle"
+  ]
+}

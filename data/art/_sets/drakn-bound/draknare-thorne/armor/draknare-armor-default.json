@@ -6,7 +6,7 @@
   "name": "Default",
   "aesthetic": "grim shadow-knight aesthetic",
   "components": {
-    "wearing": "heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes",
+    "wearing": "data/art/heroes/drakn-bound/draknare/clothing/armor-default-wearing.json",
     "arms": "bare forearms, no additional arm pieces",
     "jewelry": "none, unadorned",
     "back": "no cape or back piece",

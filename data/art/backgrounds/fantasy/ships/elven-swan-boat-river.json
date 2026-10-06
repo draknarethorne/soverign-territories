@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ships/elven-swan-boat-river",
+  "kind": "background",
+  "name": "Swan Boat on a Misty River",
+  "description": "a graceful carved swan-prowed boat gliding down a misty river between willow trees, lanterns on the bow and soft dawn light",
+  "mood": "serene, enchanted",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ships"
+  ]
+}

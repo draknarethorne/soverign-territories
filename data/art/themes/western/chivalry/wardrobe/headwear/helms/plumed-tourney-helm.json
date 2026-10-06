@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/chivalry/wardrobe/headwear/helms/plumed-tourney-helm",
+  "kind": "headwear",
+  "name": "Plumed Tourney Helm",
+  "description": "a polished {{METAL}} helm with a raised visor and a tall {{PRIMARY}} plume, held or worn tilted back",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "chivalry",
+    "headwear"
+  ]
+}

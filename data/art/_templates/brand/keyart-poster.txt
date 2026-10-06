@@ -1,0 +1,13 @@
+=== {{NAME}} · Key Art Poster — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. The ten sisters, standing together on the ridge, for the poster and the title screen.
+Size: {{SIZE}}
+
+----------------------------------------------------------------
+prompt:
+
+Epic key-art poster for a fantasy strategy card game, portrait composition, photoreal cinematic fantasy. Exactly ten women, no more and no fewer, stand together on {{RIDGE}}: five in a front row and five in a second row on higher ground behind them, standing in the gaps between the front figures. Every woman is fully visible and clearly separated from her neighbours, with a different face, a different hair colour and a different gown colour, each wreathed in her own element. Front row, left to right: {{LINEUP_FRONT}} Back row, left to right: {{LINEUP_BACK}} Behind them {{SKY}}, and {{WORLD}}. Dramatic rim light, volumetric god-rays, rich colour, heroic scale, a clear empty band of sky across the top for the title. No text, no lettering, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+fewer than ten women, nine women, eight women, merged bodies, duplicate faces, text, lettering, watermark, logo, low quality, blurry, extra limbs, deformed hands, modern objects

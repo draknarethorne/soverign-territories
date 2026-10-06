@@ -7,10 +7,10 @@
   "aesthetic": "luxurious necromancer aesthetic; a little D&D armor flair is fine, the outfit stays revealing",
   "components": {
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/raven-wearing.json",
-    "arms": "matching bicep bands and bracers, otherwise bare forearms",
-    "back": "raven-feather pauldrons with silver accents resting on the shoulders",
-    "jewelry": "an ultra-thin Tarnished Silver and Amethyst runic choker; matching earrings and rings; a small bellybutton ring with a gem",
-    "legs_feet": "Iridescent Shadow Steel thigh-high plated high-heel boots, Necrotic-Violet and Tarnished Silver ornate designs",
+    "arms": "data/art/heroes/drakn-sisters/drakness/armor/raven-arms.json",
+    "back": "data/art/heroes/drakn-sisters/drakness/armor/raven-pauldrons.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/armor/raven-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/raven-boots.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/ornate-dagger.json"
   },
   "template": "data/art/_templates/heroes/armor-human.txt",

@@ -7,7 +7,7 @@
   "output": "prompts/drakn-sisters/Drakniss/poses/bikini/Drakniss_X_Pose_HighNeckHalterBikini.txt",
   "denoise": "~1.0",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/high-neck-halter-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/bikini/high-neck-halter-bikini.json"
   },
   "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
 }

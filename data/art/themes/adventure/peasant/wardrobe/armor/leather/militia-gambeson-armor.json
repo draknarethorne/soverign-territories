@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/armor/leather/militia-gambeson-armor",
+  "kind": "wearing",
+  "name": "Militia Gambeson Armor",
+  "description": "village militia gear - a quilted {{PRIMARY}} gambeson cropped at the ribs with a laced front, a leather bracer, a simple {{METAL}} pot helm slung at the belt and a rope sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "armor"
+  ]
+}

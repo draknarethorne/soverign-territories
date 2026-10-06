@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/volcano/caldera-rim-lava-lake",
+  "kind": "background",
+  "name": "Caldera Rim over a Lava Lake",
+  "description": "the black rim of a volcanic caldera above a glowing lava lake, plumes of steam and sparks, ash in the air and a dull red sky",
+  "mood": "fiery, fierce",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "volcano"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/weapons/staves/candy-cane-staff",
+  "kind": "holding",
+  "name": "Candy-Cane Staff",
+  "description": "a tall staff shaped like a candy cane in {{PRIMARY}} and white stripes, a ribbon bow and a glittering {{MAGIC}} star at the hook, carried in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "weapons"
+  ]
+}

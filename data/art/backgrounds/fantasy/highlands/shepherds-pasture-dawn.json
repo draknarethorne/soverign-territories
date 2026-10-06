@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/highlands/shepherds-pasture-dawn",
+  "kind": "background",
+  "name": "Shepherd's Pasture at Dawn",
+  "description": "a green mountain pasture at dawn with a dry-stone wall and a few grazing sheep, wildflowers in dew and a low sea of cloud in the valley",
+  "mood": "peaceful, fresh",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "highlands"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/weapons/blunt/eclipse-ritual-mace",
+  "kind": "holding",
+  "name": "Eclipse Ritual Mace",
+  "description": "a ritual mace with a round black head ringed by a {{METAL}} corona that glows {{MAGIC}} at its edge, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "weapons"
+  ]
+}

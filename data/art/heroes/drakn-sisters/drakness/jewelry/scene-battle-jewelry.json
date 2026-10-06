@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "a bone-and-{{METAL}} gorget set with a {{GEM}} stone, spiked bracers",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakness-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

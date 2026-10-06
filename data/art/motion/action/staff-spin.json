@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/staff-spin",
+  "kind": "motion",
+  "name": "Staff Spin",
+  "editorial": "A dynamic action shot with motion blur on the weapon.",
+  "breeze": "Light breeze.",
+  "body": "a wide balanced stance, hips turned.",
+  "head": "level, facing the camera.",
+  "defaultGaze": "bright, confident eyes to camera.",
+  "defaultExpression": "a playful, confident smile.",
+  "pose": "a staff or long weapon spinning in a blur across the body, both hands gripping it.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

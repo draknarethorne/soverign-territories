@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/wardrobe/clothing/sets/market-day-blouse-set",
+  "kind": "wearing",
+  "name": "Market Day Blouse Set",
+  "description": "a set of a loose open-necked linen blouse knotted at the waist, a laced {{PRIMARY}} corset belt, a flared skirt hitched up at one hip and a headscarf",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "clothing"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/weapons/polearms/shark-tooth-spear",
+  "kind": "holding",
+  "name": "Shark-Tooth Spear",
+  "description": "a carved {{PRIMARY}} wooden spear tipped with sharp shark teeth and {{METAL}} bands, a faint {{MAGIC}} sea glow along the shaft",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "weapons"
+  ]
+}

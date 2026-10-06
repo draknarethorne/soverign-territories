@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/jewelry/sets/jade-and-gold-court-set",
+  "kind": "jewelry",
+  "name": "Jade and Gold Court Set",
+  "description": "a court set of a jade disc pendant on a {{METAL}} chain, tassel earrings, jade bangles and a silk-cord waist pendant with a {{GEM}} bead",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty",
+    "jewelry"
+  ]
+}

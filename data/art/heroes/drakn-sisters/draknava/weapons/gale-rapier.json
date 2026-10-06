@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/weapons/gale-rapier",
+  "kind": "holding",
+  "name": "Gale Rapier",
+  "description": "a slender {{METAL}} rapier etched with wind spirals, a faint {{MAGIC}} breeze curling around the blade, held point-forward in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "rapier"
+  ]
+}

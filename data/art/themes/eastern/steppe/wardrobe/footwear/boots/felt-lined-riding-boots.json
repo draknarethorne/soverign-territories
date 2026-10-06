@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/footwear/boots/felt-lined-riding-boots",
+  "kind": "legs_feet",
+  "name": "Felt-Lined Riding Boots",
+  "description": "knee-high {{PRIMARY}} leather riding boots with felt lining, curled toes and {{METAL}} spur plates",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "footwear"
+  ]
+}

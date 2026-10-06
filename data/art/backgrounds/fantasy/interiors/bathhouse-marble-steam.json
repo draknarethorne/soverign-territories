@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/interiors/bathhouse-marble-steam",
+  "kind": "background",
+  "name": "Marble Bathhouse in Steam",
+  "description": "a vaulted marble bathhouse with a tiled pool, curling steam, carved pillars and shafts of light from high windows",
+  "mood": "calm, luxurious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "interiors"
+  ]
+}

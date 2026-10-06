@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/backgrounds/fantasy/castle/haunted-manor-courtyard",
+  "kind": "background",
+  "name": "Haunted Manor Courtyard",
+  "description": "the courtyard of a crumbling gothic manor at night, candle-lit windows, cobwebbed iron gates, ivy-covered statues, floating candles and ghostly lights in the mist",
+  "mood": "gothic, eerie",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "castle"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/armor/plate/snowguard-festive-armor",
+  "kind": "wearing",
+  "name": "Snowguard Festive Armor",
+  "description": "festive winter armor - a polished {{METAL}} cuirass with {{PRIMARY}} enamel holly-leaf inlay, a fur-lined tabard, plated pauldrons trimmed with white fur, bell-tipped belt tassels and a short red cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "armor"
+  ]
+}

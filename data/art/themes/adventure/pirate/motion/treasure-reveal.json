@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/pirate/motion/treasure-reveal",
+  "kind": "motion",
+  "name": "Treasure Reveal",
+  "editorial": "A candid shot of an opened treasure chest.",
+  "breeze": "Light breeze.",
+  "body": "kneeling beside an open chest, torso turned to the camera.",
+  "head": "head tilted, eyes up to the camera.",
+  "defaultGaze": "gleeful eyes to camera.",
+  "defaultExpression": "a delighted, greedy grin.",
+  "pose": "one hand scooping gold coins that spill through the fingers, the other resting on the chest lid.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "pirate"
+  ]
+}

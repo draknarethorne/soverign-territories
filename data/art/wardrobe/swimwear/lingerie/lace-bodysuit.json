@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/lace-bodysuit",
+  "id": "wardrobe/swimwear/lingerie/lace-bodysuit",
   "kind": "wearing",
   "name": "Lace Bodysuit",
-  "description": "only a {{PRIMARY}} one-piece lace bodysuit in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging over a matching skin-toned lining: a deep low-cut plunging neckline on thin straps that lifts the bust and brings it together into a deep, tight cleavage, the sides cut very high over the hips in sharp high-cut leg lines; arms and legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} one-piece lace bodysuit in fine floral lace with scalloped edges and a hairline {{METAL}} thread edging over a matching skin-toned lining: a deep low-cut plunging neckline on thin straps that lifts the bust and brings it together into a deep, tight cleavage, the sides cut very high over the hips in sharp high-cut leg lines; arms and legs bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

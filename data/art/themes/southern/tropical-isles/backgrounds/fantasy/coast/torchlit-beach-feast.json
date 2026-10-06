@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/tropical-isles/backgrounds/fantasy/coast/torchlit-beach-feast",
+  "kind": "background",
+  "name": "Torch-Lit Beach Feast",
+  "description": "a night beach feast with a ring of flaming torches, long leaf-laid tables of fruit, drummers by a bonfire, glowing tide and a huge moon over the lagoon",
+  "mood": "festive, warm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "coast"
+  ]
+}

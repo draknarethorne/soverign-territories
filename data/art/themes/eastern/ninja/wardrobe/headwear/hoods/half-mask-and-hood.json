@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/headwear/hoods/half-mask-and-hood",
+  "kind": "headwear",
+  "name": "Half Mask and Hood",
+  "description": "a soft {{PRIMARY}} hood pushed back on the head with a black cloth mask pulled down around the neck and a {{METAL}} forehead guard",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "headwear"
+  ]
+}

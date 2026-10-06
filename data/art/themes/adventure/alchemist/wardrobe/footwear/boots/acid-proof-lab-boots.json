@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/footwear/boots/acid-proof-lab-boots",
+  "kind": "legs_feet",
+  "name": "Acid-Proof Lab Boots",
+  "description": "knee-high {{PRIMARY}} leather lab boots with brass buckles and thick stain-resistant soles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "footwear"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "themes/southern/tropical-isles/cosmetics/hair/waves/long-sea-waves-and-flower",
+  "kind": "hair",
+  "name": "Long Sea Waves with a Flower",
+  "a_pose_style": "hair parted in the centre in long loose sea-salt waves with a flower tucked behind one ear and a few thin braids at the temples, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted in long loose sea-salt waves with a flower behind one ear and thin temple braids.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "tropical-isles",
+    "hair"
+  ]
+}

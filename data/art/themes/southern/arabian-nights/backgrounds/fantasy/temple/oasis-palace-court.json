@@ -1,0 +1,14 @@
+{
+  "id": "themes/southern/arabian-nights/backgrounds/fantasy/temple/oasis-palace-court",
+  "kind": "background",
+  "name": "Oasis Palace Court",
+  "description": "a marble palace courtyard around a still reflecting pool with palm trees, carved lattice screens, floating lanterns and silk cushions, warm lamplight against a deep blue night",
+  "mood": "luxurious, mystic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "temple"
+  ]
+}

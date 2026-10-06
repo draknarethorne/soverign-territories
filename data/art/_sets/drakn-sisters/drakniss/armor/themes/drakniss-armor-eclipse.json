@@ -1,0 +1,21 @@
+{
+  "artId": "drakniss-armor-eclipse",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Eclipse Cleric",
+  "aesthetic": "a clean studio presentation of the eclipse cleric outfit",
+  "components": {
+    "wearing": "data/art/themes/adventure/eclipse/wardrobe/armor/plate/umbral-sunbreaker-armor.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/adventure/eclipse/wardrobe/jewelry/sets/black-sun-jewelry-set.json",
+    "legs_feet": "data/art/themes/adventure/eclipse/wardrobe/footwear/boots/obsidian-stiletto-boots.json",
+    "headwear": "data/art/themes/adventure/eclipse/wardrobe/headwear/crowns/crescent-corona-crown.json",
+    "back": "the back of the armor fully visible",
+    "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/armor/themes/Drakniss_Armor_Eclipse.txt",
+  "notes": "Pre-staged Eclipse Cleric outfit: render it from the A-pose, then feed the image to the Staged eclipse scene. Every item is a library piece."
+}

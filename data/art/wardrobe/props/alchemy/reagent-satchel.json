@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/alchemy/reagent-satchel",
+  "kind": "holding",
+  "name": "Reagent Satchel",
+  "description": "a leather satchel across the hip bulging with labelled vials, dried herbs and roots, one corked vial glowing {{MAGIC}} in the hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "alchemy"
+  ]
+}

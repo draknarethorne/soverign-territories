@@ -15,8 +15,8 @@
     "effects": "A great spiral of wind lifts ribbons, banners, leaves and feathers around her, glowing {{MAGIC}} ribbons of air trace the currents, the lyre strings glow and a ring of drifting chimes sings in the air.",
     "companion": "her aligned Elder Dragon, Zephyros, swooping in close beside her with its wings spread across the sky, windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds.json",
-    "headwear": "a slim silver circlet with swept-back feather wings",
-    "back": "long ribbons and a train of sheer silk that stream out in the wind like banners"
+    "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/draknava/capes/scene-signature-holo-back.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknava/scene/signature/Draknava_Scene_Signature_Holo.txt",

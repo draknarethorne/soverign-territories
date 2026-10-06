@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/shadow/nightblade-leather",
+  "kind": "wearing",
+  "name": "Nightblade Leathers",
+  "description": "sleek black leather armor with {{PRIMARY}} piping, a deep plunge cuirass, strapped thighs and belted daggers, {{METAL}} buckles and a short hooded cape",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "shadow",
+    "rogue",
+    "leather"
+  ]
+}

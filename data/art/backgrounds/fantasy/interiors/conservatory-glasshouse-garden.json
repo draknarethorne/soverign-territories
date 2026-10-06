@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/interiors/conservatory-glasshouse-garden",
+  "kind": "background",
+  "name": "Conservatory Glasshouse Garden",
+  "description": "a Victorian-style glasshouse conservatory of exotic plants and orchids, curved iron beams, a stone fountain and soft green light",
+  "mood": "serene, lush",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "interiors"
+  ]
+}

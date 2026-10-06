@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/steppe/motion/horse-bow-draw",
+  "kind": "motion",
+  "name": "Horse-Bow Draw",
+  "editorial": "A dynamic shot drawing a bow on the open steppe.",
+  "breeze": "Strong steppe wind.",
+  "body": "a wide stance, torso twisted back as if shooting over the shoulder.",
+  "head": "turned over the shoulder to the camera.",
+  "defaultGaze": "sharp, fearless eyes to camera.",
+  "defaultExpression": "a wild, thrilled grin.",
+  "pose": "the bow drawn at full stretch behind her, the string hand at the cheek.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "steppe"
+  ]
+}

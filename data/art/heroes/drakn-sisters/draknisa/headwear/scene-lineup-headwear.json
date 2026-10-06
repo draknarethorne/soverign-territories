@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/headwear/scene-lineup-headwear",
+  "kind": "headwear",
+  "name": "Lineup - headwear",
+  "description": "a crown of {{METAL}} coral branches set with pearls",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknisa-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

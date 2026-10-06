@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/halloween/cosmetics/makeup/spooky/spiderweb-glam",
+  "kind": "makeup",
+  "name": "Spiderweb Glam",
+  "description": "Halloween glam - a dramatic dark lip, a sweeping {{ACCENT_SOFT}} cat-eye, a fine spiderweb pattern painted from one eye across the cheekbone, glittering star dots and flushed cheeks",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "makeup"
+  ]
+}

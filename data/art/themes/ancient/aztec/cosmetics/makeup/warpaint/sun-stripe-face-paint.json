@@ -1,0 +1,19 @@
+{
+  "id": "themes/ancient/aztec/cosmetics/makeup/warpaint/sun-stripe-face-paint",
+  "kind": "makeup",
+  "name": "Sun Stripe Face Paint",
+  "description": "ceremonial face paint - a bold {{ACCENT_SOFT}} stripe across the eyes and nose bridge, small {{PRIMARY}} dots along the cheekbones and a deep natural lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "makeup"
+  ]
+}

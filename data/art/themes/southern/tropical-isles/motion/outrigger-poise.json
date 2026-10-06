@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/tropical-isles/motion/outrigger-poise",
+  "kind": "motion",
+  "name": "Outrigger Poise",
+  "editorial": "A heroic canoe portrait.",
+  "breeze": "Strong sea wind.",
+  "body": "standing balanced on the prow of a canoe, one foot forward.",
+  "head": "chin up, looking out then to the camera.",
+  "defaultGaze": "bold, bright eyes to camera.",
+  "defaultExpression": "a bold, free smile.",
+  "pose": "one hand holding a paddle upright, the other arm stretched to the horizon.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles"
+  ]
+}

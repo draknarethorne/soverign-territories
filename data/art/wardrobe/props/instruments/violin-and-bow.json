@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/instruments/violin-and-bow",
+  "kind": "holding",
+  "name": "Violin and Bow",
+  "description": "an elegant {{PRIMARY}} violin tucked under the chin with a slim bow drawn across the strings, {{MAGIC}} sparks trailing the bow",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "instruments"
+  ]
+}

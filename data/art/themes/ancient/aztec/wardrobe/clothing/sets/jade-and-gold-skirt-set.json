@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/clothing/sets/jade-and-gold-skirt-set",
+  "kind": "wearing",
+  "name": "Jade and Gold Skirt Set",
+  "description": "a ceremonial set of a fitted {{PRIMARY}} woven top with a {{METAL}} sun medallion, a wrap skirt with a beaded fringe and long feather streamers at the hip",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "clothing"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "artId": "unit-molten-hound-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "units",
+  "cardId": "UNIT_MOLTEN_HOUND",
+  "output": "prompts/sovereign-dawn/Units/card/Units_Card_MoltenHound.txt",
+  "notes": "Mechanical card art for UNIT_MOLTEN_HOUND (SD-056); prompt built from the card's name, element and lore."
+}

@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/walking/relaxed-stroll.json",
     "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/signature-robe.json",
-    "headwear": "a feather crown with a {{METAL}} headband set with {{ACCENT_SOFT}} beads",
-    "jewelry": "{{ACCENT_SOFT}} bead necklaces with bone talismans, {{METAL}} cuffs, feather earrings",
-    "legs_feet": "soft {{PRIMARY}} moccasin boots with {{ACCENT_SOFT}} beading",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknara/footwear/scene-robe-legs-feet.json",
     "effects": "Smoke from the fire-pit curls upward past her in slow spirals with faint {{MAGIC}} sparks, and the fringe on the robe sways softly.",
     "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/sanctum/cliff-dwelling-kiva-chamber.json",
     "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json"

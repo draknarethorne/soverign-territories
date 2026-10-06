@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/jewelry/sets/pearl-and-shell-set",
+  "kind": "jewelry",
+  "name": "Pearl and Shell Set",
+  "description": "a set of layered shell and pearl necklaces, a {{GEM}} pearl pendant, shell anklets, wrapped cord armlets and a pearl ear cuff",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "jewelry"
+  ]
+}

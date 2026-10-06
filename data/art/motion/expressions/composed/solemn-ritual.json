@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/composed/solemn-ritual",
+  "kind": "expression",
+  "name": "Solemn ritual",
+  "expression": "solemn and focused, eyes half-closed in concentration, lips softly parted as if murmuring words.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

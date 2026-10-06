@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/weapons/daggers/crescent-ritual-blades",
+  "kind": "holding",
+  "name": "Crescent Ritual Blades",
+  "description": "a pair of curved crescent-moon blades of {{METAL}} with {{PRIMARY}} glowing edges, one in each hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "weapons"
+  ]
+}

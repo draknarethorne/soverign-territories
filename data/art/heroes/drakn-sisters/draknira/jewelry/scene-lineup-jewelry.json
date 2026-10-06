@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/jewelry/scene-lineup-jewelry",
+  "kind": "jewelry",
+  "name": "Lineup - jewelry",
+  "description": "a {{METAL}} snowflake collar set with {{GEM}} crystals, long icicle earrings, {{METAL}} cuffs",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknira-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/desert/buried-temple-sand",
+  "kind": "background",
+  "name": "Buried Temple in the Sand",
+  "description": "a half-buried sandstone temple facade emerging from a dune, carved pillars and a dark doorway, drifting sand and a deep blue sky",
+  "mood": "ancient, mysterious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "desert"
+  ]
+}

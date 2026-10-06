@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/clothing/gowns/corona-silk-gown",
+  "kind": "wearing",
+  "name": "Corona Silk Gown",
+  "description": "a sleek gown of {{PRIMARY}} silk fading to black at the hem, a radiant {{METAL}} sunburst embroidered across the bodice, a deep plunge neckline, a high slit and a long train",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "clothing"
+  ]
+}

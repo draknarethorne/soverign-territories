@@ -1,0 +1,23 @@
+{
+  "id": "themes/seasonal/summer-solstice/cosmetics/hair/braided/sunlit-half-braid-and-daisies",
+  "kind": "hair",
+  "name": "Sunlit Half Braid with Daisies",
+  "a_pose_style": "hair parted in the centre with the top sections braided back and tucked with daisies, the rest worn loose and sun-tousled in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with the top braided back and tucked with daisies, the rest loose and sun-tousled in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "summer-solstice",
+    "hair"
+  ]
+}

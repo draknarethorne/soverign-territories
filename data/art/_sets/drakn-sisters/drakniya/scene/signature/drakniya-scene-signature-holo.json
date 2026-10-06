@@ -15,8 +15,8 @@
     "effects": "Roots and flowering vines surge up around her, petals, leaves and glowing {{MAGIC}} spores swirl in a great spiral, the heart-tree's boughs bloom all at once and shafts of golden light pour down.",
     "companion": "her aligned Elder Dragon, Sylvanya, rising close behind her among the boughs with its wings spread like canopies, emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/signature/heart-tree-glade.json",
-    "headwear": "a crown of antlers woven with blossoming vines, small flowers and glowing seed-pods",
-    "back": "a long train of living vines, leaves and flowers trailing behind her like a cloak"
+    "headwear": "data/art/heroes/drakn-sisters/drakniya/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/drakniya/capes/scene-signature-holo-back.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakniya/scene/signature/Drakniya_Scene_Signature_Holo.txt",

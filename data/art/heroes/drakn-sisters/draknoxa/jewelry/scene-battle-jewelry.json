@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "a bandolier of glowing vials, {{METAL}} buckled bracers with {{GEM}} stones",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknoxa-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

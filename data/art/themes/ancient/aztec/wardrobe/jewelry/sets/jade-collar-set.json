@@ -1,0 +1,15 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/jewelry/sets/jade-collar-set",
+  "kind": "jewelry",
+  "name": "Jade Collar Set",
+  "description": "a broad layered collar of jade beads and {{METAL}} plaques, large disc earrings, jade armlets and a carved {{GEM}} pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "jewelry"
+  ]
+}

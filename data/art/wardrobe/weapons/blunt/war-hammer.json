@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/blunt/war-hammer",
+  "kind": "holding",
+  "name": "War Hammer",
+  "description": "a heavy one-handed war hammer with a {{METAL}} head and a {{PRIMARY}} leather-wrapped haft",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "hammer",
+    "blunt",
+    "melee"
+  ]
+}

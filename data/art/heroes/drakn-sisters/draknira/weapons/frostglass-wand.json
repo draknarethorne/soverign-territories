@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknira/weapons/frostglass-wand",
+  "kind": "holding",
+  "name": "Frostglass Wand",
+  "description": "a slender wand of clear frostglass tipped with a faceted {{MAGIC}} crystal, tiny shards of ice drifting around the tip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "wand"
+  ]
+}

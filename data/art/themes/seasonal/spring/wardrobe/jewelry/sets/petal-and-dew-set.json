@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/jewelry/sets/petal-and-dew-set",
+  "kind": "jewelry",
+  "name": "Petal and Dew Set",
+  "description": "a delicate jewelry set of a {{METAL}} chain with a {{GEM}} dewdrop pendant, tiny petal earrings, a vine-wrapped armlet and a flower ring",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "jewelry"
+  ]
+}

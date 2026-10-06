@@ -1,0 +1,20 @@
+{
+  "id": "themes/southern/savanna-kingdoms/motion/drum-dance",
+  "kind": "motion",
+  "name": "Drum Dance",
+  "editorial": "A joyful festival dance shot.",
+  "breeze": "Warm breeze lifting the beads.",
+  "body": "mid-step in a rhythmic dance, knees bent, torso tilted.",
+  "head": "head up, laughing to the camera.",
+  "defaultGaze": "bright, joyful eyes to camera.",
+  "defaultExpression": "a joyful, open laugh.",
+  "pose": "both arms raised and swinging, bead strands flying.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms"
+  ]
+}

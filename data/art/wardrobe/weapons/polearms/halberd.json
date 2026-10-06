@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/polearms/halberd",
+  "kind": "holding",
+  "name": "Halberd",
+  "description": "a tall halberd with an axe blade, spear tip and hook of {{METAL}} on a {{PRIMARY}}-wrapped shaft, held upright in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "polearm",
+    "two-handed",
+    "melee"
+  ]
+}

@@ -4,7 +4,7 @@ Incoming image: an A-pose (or hair variant) of {{HERO}}. Zoom in to a studio hea
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional beauty glamour shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: {{BACKGROUND}}.
 
@@ -12,15 +12,13 @@ Background: {{BACKGROUND}}.
 
 {{VIEW}}
 
-Keep high fidelity to facial likeness, bone structure, hairstyle, body, and wardrobe from the incoming image.
+{{KEEP_LINE}} Keep the wardrobe unchanged.
+
+?{{KEY_BLOCK}}
 
 Expression: {{EXPRESSION}}.
 
-{{HAIR_KEEP}}
-
-{{FACE_STYLE}}
-
-Eyes: {{EYE}}, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
+Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

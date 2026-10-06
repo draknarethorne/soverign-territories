@@ -1,0 +1,20 @@
+{
+  "id": "themes/ancient/aztec/motion/warrior-crouch-strike",
+  "kind": "motion",
+  "name": "Warrior Crouch",
+  "editorial": "A fierce action portrait.",
+  "breeze": "Light breeze.",
+  "body": "low warrior crouch, one knee near the ground, torso coiled.",
+  "head": "head up, glaring at the camera.",
+  "defaultGaze": "fierce eyes to camera.",
+  "defaultExpression": "a fierce, fearless glare.",
+  "pose": "a war club held back ready to swing, the other hand braced on the stone.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "aztec"
+  ]
+}

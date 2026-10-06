@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/jewelry/scene-robe-jewelry",
+  "kind": "jewelry",
+  "name": "Robe - jewelry",
+  "description": "a {{METAL}} sunburst pendant, drop earrings, {{METAL}} bangles",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakniss-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

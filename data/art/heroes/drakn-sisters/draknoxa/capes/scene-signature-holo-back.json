@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/capes/scene-signature-holo-back",
+  "kind": "back",
+  "name": "Signature Holo - back",
+  "description": "a hooded half-cape of dark silk with a high collar",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknoxa-scene-signature-holo card so the item is a library piece (pre-stageable) instead of inline text."
+}

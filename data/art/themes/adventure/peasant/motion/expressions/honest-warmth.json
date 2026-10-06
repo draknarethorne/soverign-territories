@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/peasant/motion/expressions/honest-warmth",
+  "kind": "expression",
+  "name": "Honest warmth",
+  "expression": "honest warmth, an easy open smile, a little rosy and sun-flushed.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "peasant"
+  ]
+}

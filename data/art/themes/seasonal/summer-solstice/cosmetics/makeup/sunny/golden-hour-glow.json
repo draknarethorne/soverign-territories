@@ -1,0 +1,19 @@
+{
+  "id": "themes/seasonal/summer-solstice/cosmetics/makeup/sunny/golden-hour-glow",
+  "kind": "makeup",
+  "name": "Golden Hour Glow",
+  "description": "summer makeup - a sun-kissed glow with fine freckles, a gold lid shimmer, a peach flush on the cheekbones and a juicy coral lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "summer-solstice",
+    "makeup"
+  ]
+}

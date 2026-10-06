@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/composed/reverent-serene",
+  "kind": "expression",
+  "name": "Reverent serene",
+  "expression": "serene and reverent, eyes soft and slightly lifted, lips gently closed.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

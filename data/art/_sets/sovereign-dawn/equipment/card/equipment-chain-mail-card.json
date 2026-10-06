@@ -1,0 +1,13 @@
+{
+  "artId": "equipment-chain-mail-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "equipment",
+  "cardId": "EQUIPMENT_CHAIN_MAIL",
+  "output": "prompts/sovereign-dawn/Equipment/card/Equipment_Card_ChainMail.txt",
+  "notes": "Mechanical card art for EQUIPMENT_CHAIN_MAIL (SD-127); prompt built from the card's name, element and lore."
+}

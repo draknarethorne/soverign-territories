@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/standing/hand-on-hip-power.json",
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/signature-robe.json",
-    "headwear": "a slim {{METAL}} circlet with a small sunburst at the brow",
-    "jewelry": "a {{METAL}} sunburst pendant, drop earrings, {{METAL}} bangles",
-    "legs_feet": "soft ivory slippers embroidered in {{METAL}}",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniss/footwear/scene-robe-legs-feet.json",
     "effects": "Soft golden light and drifting motes glow around her, and a few white feathers float down through the coloured light.",
     "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/sanctum/rose-window-cloister-chapel.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json"

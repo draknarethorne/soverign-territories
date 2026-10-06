@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/clothing/sets/nomad-halter-set",
+  "kind": "wearing",
+  "name": "Nomad Halter Set",
+  "description": "a set of a fur-trimmed {{PRIMARY}} halter top with bead fringe, a low wrap skirt of felt panels with {{METAL}} coin chains and a wide studded belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "clothing"
+  ]
+}

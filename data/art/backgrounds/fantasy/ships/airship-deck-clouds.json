@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ships/airship-deck-clouds",
+  "kind": "background",
+  "name": "Airship Deck above the Clouds",
+  "description": "the deck of a high-fantasy airship under a huge balloon, brass rails and rigging, a sea of clouds below and a golden sunset ahead",
+  "mood": "adventurous, soaring",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ships"
+  ]
+}

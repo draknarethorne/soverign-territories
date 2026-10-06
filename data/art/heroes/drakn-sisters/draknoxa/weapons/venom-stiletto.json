@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/weapons/venom-stiletto",
+  "kind": "holding",
+  "name": "Venom Stiletto",
+  "description": "a needle-thin stiletto whose {{METAL}} blade drips {{MAGIC}} toxin, a small vial set in the hilt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "stiletto"
+  ]
+}

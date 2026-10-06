@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/temple/forest-shrine-stone-lanterns",
+  "kind": "background",
+  "name": "Forest Shrine of Stone Lanterns",
+  "description": "a mossy forest shrine with a small stone altar and rows of ancient stone lanterns, prayer ribbons on branches and soft green light",
+  "mood": "tranquil, sacred",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "temple"
+  ]
+}

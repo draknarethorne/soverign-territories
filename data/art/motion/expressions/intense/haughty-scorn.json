@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/intense/haughty-scorn",
+  "kind": "expression",
+  "name": "Haughty scorn",
+  "expression": "haughty and disdainful, chin lifted, a cool half-lidded stare and a faint curl of the lip.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

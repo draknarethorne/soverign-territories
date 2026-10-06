@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/footwear/boots/laced-forest-boots",
+  "kind": "legs_feet",
+  "name": "Laced Forest Boots",
+  "description": "knee-high laced {{PRIMARY}} suede boots with fur-lined cuffs and tiny {{METAL}} leaf charms on the laces",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "footwear"
+  ]
+}

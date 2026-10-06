@@ -1,0 +1,11 @@
+{
+  "artId": "sovereign-territories-brand-key-art-poster",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/keyart-poster.txt",
+  "denoise": "1.0",
+  "size": "1024x1280",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/key-art/SovereignTerritories_Brand_KeyArtPoster.txt",
+  "notes": "The ten sisters on the dawn ridge; replaces the hand-written Title_Qwen_Text prompt and is built from the sisters' own data."
+}

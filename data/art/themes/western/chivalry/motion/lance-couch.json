@@ -1,0 +1,20 @@
+{
+  "id": "themes/western/chivalry/motion/lance-couch",
+  "kind": "motion",
+  "name": "Lance Couched",
+  "editorial": "A dynamic jousting action shot.",
+  "breeze": "Wind streaming the pennon.",
+  "body": "a low forward lean in a charging stance, knees bent.",
+  "head": "head down behind the lance line, eyes to camera.",
+  "defaultGaze": "fierce eyes to camera.",
+  "defaultExpression": "a fierce, focused grin.",
+  "pose": "a long lance couched under one arm and levelled forward, the other hand gripping a shield.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "chivalry"
+  ]
+}

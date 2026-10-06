@@ -1,0 +1,9 @@
+{
+  "id": "cosmetics/highlights/streaks/forked-lightning-streaks",
+  "kind": "highlights",
+  "name": "Forked lightning streaks",
+  "description": "a few bold, sharp {{HIGHLIGHT_COLOR}} streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension",
+  "compatibleStages": ["pose", "head"],
+  "tags": ["highlights", "streaks", "forked", "lightning", "bold"],
+  "notes": "Drakneta (Lightning/Summoner). Replaces sparse-fine-streaks, which asked for hair-fine, subtle streaks."
+}

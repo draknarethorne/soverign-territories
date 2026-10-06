@@ -1,7 +1,9 @@
 {
   "cardId": "HERO_DRAKNOXA_THORNE",
   "art": {
-    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json",
+    "defaultFootwear": "data/art/heroes/drakn-sisters/draknoxa/footwear/signature-heels.json",
+    "defaultSheen": "data/art/wardrobe/finishes/high-gloss.json",
     "palette": {
       "primaryColor": "Toxic Orchid Magenta",
       "accentColors": [
@@ -20,7 +22,7 @@
       "eyeColor": "Acid lime-emerald iris with blackened moss limbal ring, radiating toxic magenta striations, and chartreuse flecks",
       "eyeColorGlamour": "Acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring",
       "hairColor": "Deep dark burgundy-black hair with a rich red tint and cool espresso depth",
-      "hairHighlights": "data/art/cosmetics/highlights/underlayer/peekaboo-underlayer.json",
+      "hairHighlights": "data/art/cosmetics/highlights/underlayer/bold-peekaboo-underlayer.json",
       "hairHighlightColor": "acid-lime",
       "hairColorNegatives": ["all-over lime-green hair", "all-over green hair", "all-over magenta hair", "all-over pink hair", "fully dyed hair"],
       "skinTone": "Pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free",

@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair.",
-    "wearing": "heavy Glacial Cyan-toned plate armor over the chest and shoulders, Frost White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; frost patterns etched into the pauldrons, a crest of interlocking icicles at the collar",
+    "wearing": "data/art/heroes/drakn-bound/lyran/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",
     "effects": "A few fine ice crystals glitter in the air around him, faint {{MAGIC}} frost-light on his armor - understated, nothing busy.",

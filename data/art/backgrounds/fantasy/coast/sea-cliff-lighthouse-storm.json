@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/coast/sea-cliff-lighthouse-storm",
+  "kind": "background",
+  "name": "Sea Cliff Lighthouse in a Storm",
+  "description": "a tall white lighthouse on a black sea cliff in a storm, huge waves breaking on the rocks, a rotating beam cutting through rain and lightning",
+  "mood": "dramatic, wild",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "coast"
+  ]
+}

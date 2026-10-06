@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/clothing/gowns/layered-silk-kimono",
+  "kind": "wearing",
+  "name": "Layered Silk Kimono",
+  "description": "an off-the-shoulder layered silk kimono in {{PRIMARY}} with {{ACCENT_SOFT}} crane and wave embroidery, a wide obi tied at the back, a slit hem and a loose open neckline",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "clothing"
+  ]
+}

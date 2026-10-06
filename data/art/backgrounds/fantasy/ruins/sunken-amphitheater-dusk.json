@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/ruins/sunken-amphitheater-dusk",
+  "kind": "background",
+  "name": "Overgrown Amphitheater at Dusk",
+  "description": "an overgrown ancient stone amphitheater with tiers of mossy seats and a cracked central stage, wildflowers and a violet dusk sky",
+  "mood": "forgotten, theatrical",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "ruins"
+  ]
+}

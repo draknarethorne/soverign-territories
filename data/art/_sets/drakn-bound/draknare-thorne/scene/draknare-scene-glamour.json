@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair.",
-    "wearing": "heavy Obsidian Black-toned plate armor over the chest and shoulders, Tarnished Silver trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; a cracked skull sigil emblazoned over the chest plate, etched with faint shadow-runes",
+    "wearing": "data/art/heroes/drakn-bound/draknare/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",
     "effects": "A few faint wisps of {{MAGIC}} shadow curl low around his boots - understated, nothing busy.",

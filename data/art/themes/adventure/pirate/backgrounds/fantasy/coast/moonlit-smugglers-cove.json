@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove",
+  "kind": "background",
+  "name": "Moonlit Smugglers' Cove",
+  "description": "a hidden high-fantasy smugglers' cove at night, a weathered galleon at anchor, lantern-lit rope bridges, barrels and treasure chests on a pebbled beach, a huge moon over calm black water",
+  "mood": "secretive, adventurous",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "coast"
+  ]
+}

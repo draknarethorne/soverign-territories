@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/signature-robe.json",
-    "headwear": "a sheer {{PRIMARY}} veil falling from a slim {{METAL}} crown of thorns, lifted away from the face",
-    "jewelry": "{{METAL}} reliquary pendant on a long chain, stacked rings on every finger, {{METAL}} cuffs engraved with runes",
-    "legs_feet": "soft {{PRIMARY}} velvet slippers embroidered in {{METAL}}",
+    "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/footwear/scene-robe-legs-feet.json",
     "effects": "Pale {{MAGIC}} candle flames float at different heights around her and the hem of the robe stirs as if in a slow draught; faint violet runes glow in the air near her hands.",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/sanctum/necromancer-lore-vault.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json"

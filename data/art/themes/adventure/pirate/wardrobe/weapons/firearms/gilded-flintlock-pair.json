@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/weapons/firearms/gilded-flintlock-pair",
+  "kind": "holding",
+  "name": "Gilded Flintlock Pair",
+  "description": "a pair of gilded flintlock pistols with {{METAL}} barrels, one raised and one tucked in the sash, a wisp of powder smoke curling up",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "pirate",
+    "weapons"
+  ]
+}

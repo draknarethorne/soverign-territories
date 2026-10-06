@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/sword-lunge",
+  "kind": "motion",
+  "name": "Sword Lunge",
+  "editorial": "A dynamic fencing-style action shot.",
+  "breeze": "Light breeze.",
+  "body": "a deep forward lunge, back leg extended, torso leaning into the thrust.",
+  "head": "turned toward the opponent, chin tucked.",
+  "defaultGaze": "locked on the opponent.",
+  "defaultExpression": "fierce concentration with a faint smirk.",
+  "pose": "the sword arm fully extended in a thrust, the other arm raised behind for balance.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

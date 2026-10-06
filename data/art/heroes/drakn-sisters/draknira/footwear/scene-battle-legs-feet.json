@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/footwear/scene-battle-legs-feet",
+  "kind": "legs_feet",
+  "name": "Battle - legs_feet",
+  "description": "armoured boots lined with white fur",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknira-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

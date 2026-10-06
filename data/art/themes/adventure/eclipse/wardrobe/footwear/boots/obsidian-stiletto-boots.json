@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/footwear/boots/obsidian-stiletto-boots",
+  "kind": "legs_feet",
+  "name": "Obsidian Stiletto Boots",
+  "description": "thigh-high black obsidian-sheen stiletto boots with {{METAL}} crescent buckles and {{PRIMARY}} corona inlay on the heel",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "footwear"
+  ]
+}

@@ -6,7 +6,7 @@
   "name": "Glamour",
   "components": {
     "pose": "He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile.",
-    "wearing": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
+    "wearing": "data/art/heroes/drakn-bound/nizaras/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",
     "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around him - understated, nothing busy.",

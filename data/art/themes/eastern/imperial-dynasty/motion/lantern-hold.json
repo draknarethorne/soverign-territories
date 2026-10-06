@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/imperial-dynasty/motion/lantern-hold",
+  "kind": "motion",
+  "name": "Lantern Held",
+  "editorial": "A quiet festival portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing straight, one foot slightly forward.",
+  "head": "head tilted, looking to the camera.",
+  "defaultGaze": "soft, glowing eyes to camera.",
+  "defaultExpression": "a gentle, serene smile.",
+  "pose": "a glowing paper lantern held at chest height in both hands.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/firearms/flintlock-pistol",
+  "kind": "holding",
+  "name": "Flintlock Pistol",
+  "description": "an ornate flintlock pistol with a {{METAL}} barrel, a {{PRIMARY}} wood grip inlaid with {{METAL}} and a thin curl of smoke at the muzzle, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "pistol",
+    "flintlock",
+    "ranged"
+  ]
+}

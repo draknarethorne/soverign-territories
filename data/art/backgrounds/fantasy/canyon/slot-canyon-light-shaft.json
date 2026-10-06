@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/canyon/slot-canyon-light-shaft",
+  "kind": "background",
+  "name": "Slot Canyon Light Shaft",
+  "description": "a narrow sandstone slot canyon with smooth swirling walls, a single shaft of golden light dropping to the sandy floor and glowing orange stone",
+  "mood": "intimate, luminous",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "canyon"
+  ]
+}

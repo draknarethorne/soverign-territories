@@ -1,0 +1,29 @@
+{
+  "id": "cards/sovereign-dawn",
+  "kind": "cardart",
+  "notes": "Mass card art for Sovereign Dawn (units, pets, buildings, tactics, equipment, workers). Prompts are built mechanically from each gameplay card's name, element and lore, so a card's art follows its design; hero-quality art (sisters, bounds, dragons) stays hand-directed.",
+  "cardart": {
+    "style": "painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject",
+    "elements": {
+      "Fire": {"color": "flame red and burnished copper", "fx": "glowing embers and licking flames"},
+      "Water": {"color": "deep oceanic blue and platinum", "fx": "swirling water and sea spray"},
+      "Earth": {"color": "terracotta brown and antique bronze", "fx": "floating stones and drifting dust"},
+      "Grass": {"color": "emerald green and antique gold", "fx": "curling vines, leaves and blossoms"},
+      "Ice": {"color": "glacial cyan and brushed chrome", "fx": "frost crystals and cold mist"},
+      "Lightning": {"color": "electric gold and white", "fx": "crackling arcs of lightning"},
+      "Wind": {"color": "windswept jade and polished silver", "fx": "spiralling wind ribbons and drifting feathers"},
+      "Light": {"color": "radiant rose gold and ivory", "fx": "warm rays of golden light and glowing motes"},
+      "Darkness": {"color": "midnight violet and polished silver", "fx": "curling shadow smoke and faint spectral wisps"},
+      "Poison": {"color": "toxic orchid magenta and acid lime", "fx": "wisps of toxic vapour and bubbling droplets"},
+      "Neutral": {"color": "warm steel grey, oak brown and soft gold", "fx": "soft dust and gentle golden light"}
+    },
+    "categories": {
+      "units": {"framing": "a full-body character shown in a dynamic three-quarter action pose, weapon and gear clearly visible", "background": "a dramatic battlefield landscape in the element's colours, softly out of focus"},
+      "pets": {"framing": "a full-body creature shown in a powerful, alert pose, anatomy and markings clearly visible", "background": "a wild landscape suited to the creature, in the element's colours, softly out of focus"},
+      "buildings": {"framing": "a single structure shown from a slightly raised three-quarter exterior view, with a few tiny workers and props for scale", "background": "a fantasy settlement and its surroundings at golden hour, softly out of focus"},
+      "tactics": {"framing": "the moment the tactic takes effect, shown as a dramatic effect-driven action scene with small silhouetted soldiers for scale", "background": "a battlefield sky and terrain lit by the effect itself"},
+      "equipment": {"framing": "a single item shown large and centred like a museum still life, with fine material detail and a slight glow", "background": "a dark, softly lit surface with a faint element-coloured glow behind the item"},
+      "workers": {"framing": "a working person at their trade, shown full-body with their tools and a hint of what they produce", "background": "their workplace in a fantasy settlement at a warm time of day, softly out of focus"}
+    }
+  }
+}

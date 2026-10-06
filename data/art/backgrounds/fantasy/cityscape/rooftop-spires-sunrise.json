@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/cityscape/rooftop-spires-sunrise",
+  "kind": "background",
+  "name": "Rooftop Spires at Sunrise",
+  "description": "a high-fantasy city seen from a rooftop terrace at sunrise, clustered red-tiled roofs, slender spires and domes, drifting chimney smoke and flocks of birds in a pink-gold sky",
+  "mood": "hopeful, airy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "cityscape"
+  ]
+}

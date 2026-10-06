@@ -4,21 +4,19 @@ Incoming image: an A-pose of {{HERO}} (chosen hair). Change ONLY the pose/motion
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: {{BACKGROUND}}.
 
 {{EDITORIAL}}
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
+{{KEEP_LINE}}
 
-{{HAIR_KEEP}}
+?{{KEY_BLOCK}}
 
 Maintain the existing outfit and hairstyle expressly.
 
 {{BREEZE}}
-
-Figure: {{FIGURE}}.
 
 Body: {{BODY}}
 
@@ -28,9 +26,7 @@ Gaze: {{GAZE}}
 
 Expression: {{EXPRESSION}}
 
-Eyes: {{EYE}}, natural studio eyes, not glowing.
-
-{{FACE_STYLE}}
+Eyes: natural studio eyes, not glowing.
 
 Pose: {{POSE}}
 {{EXTRAS}}

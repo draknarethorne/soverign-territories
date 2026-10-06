@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/clothing/dresses/lab-coat-corset-dress",
+  "kind": "wearing",
+  "name": "Lab Coat Corset Dress",
+  "description": "a short corseted lab-coat dress in {{PRIMARY}} canvas with {{METAL}} buttons, rolled sleeves stained with {{MAGIC}} potion, a deep V neckline, a belt of pouches and a split skirt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "clothing"
+  ]
+}

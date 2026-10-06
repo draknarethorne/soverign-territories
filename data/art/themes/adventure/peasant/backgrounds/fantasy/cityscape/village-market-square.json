@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/peasant/backgrounds/fantasy/cityscape/village-market-square",
+  "kind": "background",
+  "name": "Village Market Square",
+  "description": "a high-fantasy village square on market day, timber-framed houses, canvas stalls piled with fruit, bread and cloth, a stone well with a cart beside it and chickens underfoot",
+  "mood": "lively, rustic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "cityscape"
+  ]
+}

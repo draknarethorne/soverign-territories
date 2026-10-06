@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakness/weapons/grave-warden-flail",
+  "kind": "holding",
+  "name": "Grave Warden Flail",
+  "description": "a spiked flail of bone-linked chain with a skull head, {{MAGIC}} soul-light burning in its eye sockets, swung from one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "flail"
+  ]
+}

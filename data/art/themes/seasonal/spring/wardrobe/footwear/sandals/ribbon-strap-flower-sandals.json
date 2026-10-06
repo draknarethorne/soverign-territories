@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/footwear/sandals/ribbon-strap-flower-sandals",
+  "kind": "legs_feet",
+  "name": "Ribbon-Strap Flower Sandals",
+  "description": "soft {{PRIMARY}} sandals with ribbon straps wrapped to the knee and a small flower at each ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "footwear"
+  ]
+}

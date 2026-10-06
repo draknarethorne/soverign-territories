@@ -7,9 +7,9 @@
   "components": {
     "pose": "data/art/motion/walking/strut-runway.json",
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/signature-robe.json",
-    "headwear": "a slim {{METAL}} circlet of thorned vines",
-    "jewelry": "a {{METAL}} vial pendant on a chain, dropper earrings, {{METAL}} cuffs",
-    "legs_feet": "soft {{PRIMARY}} slippers with {{METAL}} buckles",
+    "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknoxa/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknoxa/footwear/scene-robe-legs-feet.json",
     "effects": "Thin curls of glowing {{MAGIC}} vapour rise from the open vials at her belt and drift past her, faint green light on the hem of the robe.",
     "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/sanctum/bayou-stilt-apothecary-veranda.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json"

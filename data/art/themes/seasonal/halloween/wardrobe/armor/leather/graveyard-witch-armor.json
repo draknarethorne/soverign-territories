@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/armor/leather/graveyard-witch-armor",
+  "kind": "wearing",
+  "name": "Graveyard Witch Armor",
+  "description": "dark witch armor - a sculpted {{PRIMARY}} leather bustier with {{METAL}} skull studs, ragged cloth tassets, bat-wing shoulder guards and a belt of potion vials and charms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "armor"
+  ]
+}

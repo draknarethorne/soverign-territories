@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/robes/monk-wraps",
+  "kind": "wearing",
+  "name": "Monk Wraps",
+  "description": "wrapped {{PRIMARY}} cloth bindings across the chest and hips, a short sash with {{ACCENT_SOFT}} knotted ends, bare midriff and arms, and hand wraps with {{METAL}} knuckle studs",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "robes",
+    "monk",
+    "wraps"
+  ]
+}

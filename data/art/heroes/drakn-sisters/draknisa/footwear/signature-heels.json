@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Draknisa (Water/Enchanter)",
+  "description": "matching {{PRIMARY}} open-toed stiletto sandals in the same finish, with thin straps that wrap up the ankle like flowing ribbons, a small {{METAL}} shell and pearl clasp at the ankle, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

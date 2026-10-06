@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/headwear/scene-battle-headwear",
+  "kind": "headwear",
+  "name": "Battle - headwear",
+  "description": "a forked {{METAL}} crown",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

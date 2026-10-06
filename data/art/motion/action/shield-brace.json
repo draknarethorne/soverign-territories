@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/shield-brace",
+  "kind": "motion",
+  "name": "Shield Brace",
+  "editorial": "An action shot of a defensive brace.",
+  "breeze": "Light breeze.",
+  "body": "feet planted, shoulder dropped behind the shield.",
+  "head": "head low behind the shield rim, eyes to camera.",
+  "defaultGaze": "steady, defiant eyes.",
+  "defaultExpression": "stern and unflinching.",
+  "pose": "a shield held forward on one arm, the other hand levelling a weapon beside it.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

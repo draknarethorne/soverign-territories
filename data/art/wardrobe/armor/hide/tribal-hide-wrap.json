@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/hide/tribal-hide-wrap",
+  "kind": "wearing",
+  "name": "Tribal Hide Wrap",
+  "description": "a stitched hide top and wrap skirt dyed {{PRIMARY}} with painted {{ACCENT_SOFT}} patterns, bone and feather charms and wrapped ankles",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "tribal"
+  ]
+}

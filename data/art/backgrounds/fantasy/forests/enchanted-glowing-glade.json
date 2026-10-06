@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/forests/enchanted-glowing-glade",
+  "kind": "background",
+  "name": "Enchanted Glowing Glade",
+  "description": "a twilight forest glade lit by glowing mushrooms and floating fireflies, a still pool reflecting violet light, curling roots and soft mist",
+  "mood": "magical, dreamy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "forests"
+  ]
+}

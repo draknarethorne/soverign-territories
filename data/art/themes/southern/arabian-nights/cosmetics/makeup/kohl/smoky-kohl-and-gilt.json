@@ -1,0 +1,19 @@
+{
+  "id": "themes/southern/arabian-nights/cosmetics/makeup/kohl/smoky-kohl-and-gilt",
+  "kind": "makeup",
+  "name": "Smoky Kohl and Gilt",
+  "description": "desert makeup - heavy smoky kohl with a sweeping wing, gold-leaf lids, a {{ACCENT_SOFT}} inner-corner highlight and a deep rose-henna lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "makeup"
+  ]
+}

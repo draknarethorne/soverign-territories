@@ -1,0 +1,19 @@
+{
+  "id": "themes/eastern/steppe/cosmetics/makeup/warpaint/wind-whipped-war-stripe",
+  "kind": "makeup",
+  "name": "Wind-Whipped War Stripe",
+  "description": "steppe makeup - a bold {{ACCENT_SOFT}} war stripe across the cheekbones, a smudged dark kohl, wind-reddened cheeks and a natural chapped lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "steppe",
+    "makeup"
+  ]
+}

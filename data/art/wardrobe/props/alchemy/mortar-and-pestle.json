@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/alchemy/mortar-and-pestle",
+  "kind": "holding",
+  "name": "Mortar and Pestle",
+  "description": "a heavy stone mortar cradled on one forearm with a {{METAL}} pestle in the other hand, a glowing {{MAGIC}} powder inside",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "alchemy"
+  ]
+}

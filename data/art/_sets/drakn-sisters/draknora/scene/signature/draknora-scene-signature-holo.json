@@ -7,7 +7,7 @@
   "finish": "holo",
   "components": {
     "pose": "She stands tall at the edge of the battlement with the sword raised overhead pointing at the sky and her other hand thrust out palm-forward, hair and cape streaming in the updraft, a fierce, triumphant gaze straight to the camera; full figure visible.",
-    "expression": "data/art/motion/expressions/fierce-focused.json",
+    "expression": "data/art/motion/expressions/intense/fierce-focused.json",
     "wearing": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-wearing.json",
     "jewelry": "data/art/heroes/drakn-sisters/draknora/armor/dnd-bikini-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
@@ -15,8 +15,8 @@
     "effects": "A pillar of white-gold fire spirals up the blade into the sky, a ring of flame blooms around her feet, embers and sparks stream upward, heat haze warps the air and the whole citadel glows.",
     "companion": "her aligned Elder Dragon, Pyraxis, diving low over the battlement behind her with its wings spread wide and a roar of fire, flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze",
     "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire.json",
-    "headwear": "a crown of burnished copper flame spires set with {{GEM}} stones",
-    "back": "a long cape of living flame that streams behind her like wings"
+    "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/draknora/capes/scene-signature-holo-back.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Draknora/scene/signature/Draknora_Scene_Signature_Holo.txt",

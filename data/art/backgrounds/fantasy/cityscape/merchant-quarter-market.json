@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/cityscape/merchant-quarter-market",
+  "kind": "background",
+  "name": "Merchant Quarter Market",
+  "description": "a bustling high-fantasy market street of timber-framed shopfronts, canvas stalls of cloth, spices and fruit, hanging signs, cobblestones and warm afternoon light",
+  "mood": "lively, colourful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "cityscape"
+  ]
+}

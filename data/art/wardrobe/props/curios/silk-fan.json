@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/curios/silk-fan",
+  "kind": "holding",
+  "name": "Silk Fan",
+  "description": "an open silk fan in {{PRIMARY}} painted with {{ACCENT_SOFT}} motifs, held at the cheek with ribs of {{METAL}}",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "curios"
+  ]
+}

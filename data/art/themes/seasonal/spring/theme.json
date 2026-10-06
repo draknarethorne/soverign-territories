@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/spring",
+  "kind": "theme",
+  "name": "Spring Bloom",
+  "type": "event",
+  "description": "Spring blossom festival: flowing floral gowns, petal capes, flower crowns, bows and wands of living wood, cherry orchards, meadows in bloom, soft rain and morning light.",
+  "realm": "fantasy",
+  "tags": [
+    "spring",
+    "blossom",
+    "floral",
+    "meadow",
+    "rain"
+  ]
+}

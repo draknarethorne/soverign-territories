@@ -1,0 +1,13 @@
+=== {{NAME}} · Harmonize Composite — Edit (img2img) ===
+Incoming image: a composite of the ten sisters cut out and placed on the landscape plate. Blend it into one photograph without changing any woman.
+Size: {{SIZE}}
+
+----------------------------------------------------------------
+prompt:
+
+Keep every one of the ten women exactly as she is: faces, hair, bodies, gowns, colours and positions must not change, and there must still be exactly ten women. Blend the composite into one photograph: unify the lighting to {{LIGHT}}, add matching soft shadows beneath each woman and between the rows, add gentle atmospheric mist and depth, and let each woman's magical glow softly light her neighbours and the ground. Fix cut-out edges and remove any halos. Do not add, remove or merge people.
+
+----------------------------------------------------------------
+negative prompt:
+
+fewer than ten women, more than ten women, merged bodies, changed faces, new people, text, lettering, watermark, logo, halo, cut-out edges

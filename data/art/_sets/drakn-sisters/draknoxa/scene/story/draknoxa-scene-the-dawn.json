@@ -7,9 +7,9 @@
   "components": {
     "pose": "Slow, languid emergence: she rises upright from the bubbling bog with unhurried, almost lazy grace, one hand lifted with fingers spread and the other trailing at her side, head tilted, gaze to the camera with a slow, knowing smile; full figure from head to toe visible above the mire.",
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/dawn-regalia.json",
-    "headwear": "a {{METAL}} crown of thorned vines and small glass vials set with {{GEM}} stones",
-    "jewelry": "a {{METAL}} vial-and-thorn collar with {{GEM}} stones, long dropper earrings, {{METAL}} cuffs",
-    "legs_feet": "bare feet with {{METAL}} anklets",
+    "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknoxa/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknoxa/footwear/scene-the-dawn-legs-feet.json",
     "effects": "Glowing acid-green and {{MAGIC}} ooze and thick fumes stream off her gown and hair and fall back into the bog in long slow drops, bubbles bursting around her, luminous spores drifting up through the mist.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/dawn/bioluminescent-mire-bog.json"

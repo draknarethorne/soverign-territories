@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/samurai/motion/kneel-seiza-blade",
+  "kind": "motion",
+  "name": "Seiza with Blade",
+  "editorial": "A formal portrait in the seiza posture.",
+  "breeze": "Light breeze.",
+  "body": "kneeling upright on the heels, back straight.",
+  "head": "head level, eyes to camera.",
+  "defaultGaze": "steady, serene eyes to camera.",
+  "defaultExpression": "a serene, disciplined look.",
+  "pose": "a sheathed katana laid across the knees, both hands resting on it.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "samurai"
+  ]
+}

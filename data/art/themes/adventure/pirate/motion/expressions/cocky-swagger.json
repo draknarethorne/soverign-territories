@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/pirate/motion/expressions/cocky-swagger",
+  "kind": "expression",
+  "name": "Cocky swagger",
+  "expression": "cocky and swaggering, a lopsided grin, one brow raised, eyes glinting with mischief.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "pirate"
+  ]
+}

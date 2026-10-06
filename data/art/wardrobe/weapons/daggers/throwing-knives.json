@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/daggers/throwing-knives",
+  "kind": "holding",
+  "name": "Throwing Knives",
+  "description": "a bandolier of slim {{METAL}} throwing knives across the chest, one held between the fingers ready to throw",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "dagger",
+    "throwing",
+    "ranged"
+  ]
+}

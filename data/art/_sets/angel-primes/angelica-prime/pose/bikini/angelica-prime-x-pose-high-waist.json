@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
   "name": "High-Waist Bikini",
   "components": {
-    "underlayer": "data/art/wardrobe/swimwear/high-waist-bikini.json"
+    "underlayer": "data/art/wardrobe/swimwear/bikini/high-waist-bikini.json"
   },
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "output": "prompts/angel-primes/Angelica/poses/bikini/Angelica_X_Pose_High_Waist.txt",

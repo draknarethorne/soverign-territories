@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/library/forbidden-archive-chained",
+  "kind": "background",
+  "name": "Forbidden Archive of Chained Books",
+  "description": "a dim vault of chained, glowing tomes on iron shelves, drifting dust, runic wards on the floor and a single hooded lantern",
+  "mood": "secretive, dangerous",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "library"
+  ]
+}

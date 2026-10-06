@@ -7,9 +7,9 @@
   "components": {
     "pose": "She stands braced against the storm with her frost-crystal staff raised in one hand and the other palm held out, her cloak whipping, an icy, unshakable gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/battle-gear.json",
-    "headwear": "a frost-crystal circlet",
-    "jewelry": "a white-silver gorget set with a {{GEM}} crystal, frost-etched bracers",
-    "legs_feet": "armoured boots lined with white fur",
+    "headwear": "data/art/heroes/drakn-sisters/draknira/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknira/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknira/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff.json",
     "effects": "A wall of ice erupts in front of her, shards and swirling snow whipping around her, frost racing outward across the ground in {{MAGIC}} light.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

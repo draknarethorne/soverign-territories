@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/playful/triumphant-laugh",
+  "kind": "expression",
+  "name": "Triumphant laugh",
+  "expression": "a triumphant laugh, head thrown slightly back, eyes crinkled with delight.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

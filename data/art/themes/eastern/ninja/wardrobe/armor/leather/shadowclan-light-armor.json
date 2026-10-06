@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/armor/leather/shadowclan-light-armor",
+  "kind": "wearing",
+  "name": "Shadowclan Light Armor",
+  "description": "stealth armor - a fitted black leather cuirass with {{PRIMARY}} lacing, a hooded half-cape, {{METAL}} forearm plates, a harness of kunai pouches and wrapped thighs",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "armor"
+  ]
+}

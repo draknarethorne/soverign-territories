@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/weapons/storm-spear",
+  "kind": "holding",
+  "name": "Storm Spear",
+  "description": "a long {{METAL}} spear with a forked tip, {{MAGIC}} lightning crawling along the shaft, held upright in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "spear"
+  ]
+}

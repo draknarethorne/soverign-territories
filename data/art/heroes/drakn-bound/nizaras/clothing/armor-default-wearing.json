@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-bound/nizaras/clothing/armor-default-wearing",
+  "kind": "wearing",
+  "name": "Default - wearing",
+  "description": "close-fitting Forest Green-toned light leather armor, Moss Brown accent straps across the chest and hips, built for silent movement; a woven vine-pattern across the chest, leaf-shaped clasps at the shoulders",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the nizaras-armor-default card so the item is a library piece (pre-stageable) instead of inline text."
+}

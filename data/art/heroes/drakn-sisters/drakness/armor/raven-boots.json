@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/raven-boots",
+  "kind": "legs_feet",
+  "name": "Raven plated boots (Drakness signature)",
+  "description": "Iridescent Shadow Steel thigh-high plated high-heel boots, Necrotic-Violet and Tarnished Silver ornate designs",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "raven",
+    "armor"
+  ]
+}

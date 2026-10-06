@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/overhead-strike",
+  "kind": "motion",
+  "name": "Overhead Strike",
+  "editorial": "A powerful action shot, slight low camera angle.",
+  "breeze": "Light breeze.",
+  "body": "feet wide, weight loaded, body arched back at the top of a swing.",
+  "head": "chin up, facing the camera.",
+  "defaultGaze": "straight to camera, wild and fierce.",
+  "defaultExpression": "a fierce battle-cry.",
+  "pose": "both hands raised high over the head gripping the weapon, about to bring it down.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

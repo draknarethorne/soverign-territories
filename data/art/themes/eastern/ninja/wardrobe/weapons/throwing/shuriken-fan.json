@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/ninja/wardrobe/weapons/throwing/shuriken-fan",
+  "kind": "holding",
+  "name": "Shuriken Fan",
+  "description": "a fan of {{METAL}} throwing stars held between the fingers of one hand, one spinning in the air with a {{MAGIC}} trail",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "ninja",
+    "weapons"
+  ]
+}

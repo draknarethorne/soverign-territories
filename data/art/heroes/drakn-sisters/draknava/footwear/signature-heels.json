@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/footwear/signature-heels",
+  "kind": "legs_feet",
+  "name": "Signature heels - Draknava (Wind/Bard)",
+  "description": "matching {{PRIMARY}} open-toed stiletto sandals in the same finish, with a single thin strap across the toes and a long thin strap that winds twice around the ankle, a small {{METAL}} feather-shaped charm at the ankle, bare toes showing",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "footwear",
+    "heels",
+    "signature",
+    "female"
+  ],
+  "notes": "Her own A-pose heel (art.defaultFootwear), tied to her element and class. Fills {{FOOTWEAR}} inside the swimwear pieces."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/swords/rapier",
+  "kind": "holding",
+  "name": "Rapier",
+  "description": "a slender {{METAL}} rapier with a swept {{PRIMARY}}-wrapped hilt, held point-forward in one hand, a thin {{MAGIC}} gleam along the blade",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "sword",
+    "rapier",
+    "melee"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "themes/western/frontier/cosmetics/makeup/dusty/trail-dust-and-bronze",
+  "kind": "makeup",
+  "name": "Trail Dust and Bronze",
+  "description": "frontier makeup - sun-bronzed skin with a smudge of trail dust, warm copper shadow, sun-flushed cheekbones and a muted rust lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "makeup"
+  ]
+}

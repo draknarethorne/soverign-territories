@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/ceremonial/royal-guard-parade-armor",
+  "kind": "wearing",
+  "name": "Royal Guard Parade Armor",
+  "description": "parade armor in gleaming {{METAL}} with {{PRIMARY}} enamel panels, a tall plumed helm, gold braid epaulettes and a ceremonial sash across the chest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "guard"
+  ]
+}

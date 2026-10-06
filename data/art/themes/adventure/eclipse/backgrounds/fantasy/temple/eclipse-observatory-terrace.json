@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace",
+  "kind": "background",
+  "name": "Eclipse Observatory Terrace",
+  "description": "a high-fantasy observatory terrace of white stone under a total solar eclipse, a black sun ringed with shimmering corona light, huge brass astrolabes and starfields appearing in the darkened sky",
+  "mood": "awe-struck, cosmic",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "eclipse",
+    "temple"
+  ]
+}

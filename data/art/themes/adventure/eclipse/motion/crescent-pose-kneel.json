@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/eclipse/motion/crescent-pose-kneel",
+  "kind": "motion",
+  "name": "Crescent Kneel",
+  "editorial": "A ritual portrait on one knee.",
+  "breeze": "Light breeze.",
+  "body": "kneeling on one knee, torso upright, other leg extended to the side.",
+  "head": "chin lifted toward the camera.",
+  "defaultGaze": "calm, commanding eyes to camera.",
+  "defaultExpression": "a calm, imperious stare.",
+  "pose": "both hands resting on the hilt of a weapon planted point-down in front of her.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "eclipse"
+  ]
+}

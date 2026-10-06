@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/caves/underground-lake-boat",
+  "kind": "background",
+  "name": "Underground Lake with a Boat",
+  "description": "a huge underground lake lit by bioluminescent fungus, a small wooden boat at a stone jetty, stalactites and a glowing waterfall",
+  "mood": "hushed, eerie",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "caves"
+  ]
+}

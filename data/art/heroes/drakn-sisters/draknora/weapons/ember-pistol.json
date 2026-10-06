@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknora/weapons/ember-pistol",
+  "kind": "holding",
+  "name": "Ember Pistol",
+  "description": "a flintlock pistol of {{METAL}} with a flame-shaped hammer, smoke and {{MAGIC}} embers curling from the muzzle, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "pistol"
+  ]
+}

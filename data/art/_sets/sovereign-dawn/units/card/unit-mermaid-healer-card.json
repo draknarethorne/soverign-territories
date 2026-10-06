@@ -1,0 +1,13 @@
+{
+  "artId": "unit-mermaid-healer-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "units",
+  "cardId": "UNIT_MERMAID_HEALER",
+  "output": "prompts/sovereign-dawn/Units/card/Units_Card_MermaidHealer.txt",
+  "notes": "Mechanical card art for UNIT_MERMAID_HEALER (SD-071); prompt built from the card's name, element and lore."
+}

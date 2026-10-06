@@ -1,0 +1,15 @@
+{
+  "id": "themes/western/frontier",
+  "kind": "theme",
+  "name": "Frontier Gunslinger",
+  "type": "culture",
+  "description": "Fantasy frontier: duster coats and fringe, gunbelts and holsters, wide hats, spurs, saloons, dusty canyon towns and railway-and-mesa vistas with a little magic in the dust.",
+  "realm": "fantasy",
+  "tags": [
+    "western",
+    "frontier",
+    "gunslinger",
+    "saloon",
+    "desert"
+  ]
+}

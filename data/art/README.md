@@ -72,15 +72,15 @@ the same internal layout, `<kind>/<family>/<piece>.json`, so a piece can move be
 | --- | --- | --- |
 | core | `wardrobe/`, `cosmetics/`, `backgrounds/` | it works in any theme, or it is the standard D&D fantasy default |
 | race | `races/<race>/` | it exists because of anatomy (hair texture, skin, ears, horns) |
-| theme | `themes/<theme>/` | it belongs to a culture or event pack (Greek, Roman, Thanksgiving, ...) |
+| theme | `themes/<group>/<theme>/` | it belongs to a culture or event pack (Greek, Roman, Thanksgiving, ...) |
 | hero | `heroes/<group>/<slug>/` | it is one named hero's signature item |
 
-Rules of thumb: theme beats race (a Greek gown is `themes/greek/` even for a dark elf; the dark elf's skin and hair
+Rules of thumb: theme beats race (a Greek gown is `themes/ancient/greek/` even for a dark elf; the dark elf's skin and hair
 live in the race); hero beats everything (a signature weapon stays with its hero); when unsure, start in the narrowest
 scope and promote it to core the second time it is reused.
 
 **Theme first, not kind first.** A themed deck is one unit (outfit, jewelry, makeup, hair, background): putting
-`themes/greek/` on the outside means one folder to add, version, ship or retire (an event pack like Thanksgiving is
+`themes/ancient/greek/` on the outside means one folder to add, version, ship or retire (an event pack like Thanksgiving is
 switched on for a period and then removed), and a tool can list "everything in this theme". Kind-first
 (`wardrobe/armor/roman/`) would scatter one theme across a dozen folders.
 
@@ -95,12 +95,12 @@ switched on for a period and then removed), and a tool can list "everything in t
 | `wardrobe/swimwear` | `underlayer` | what the A-pose wears |
 | `wardrobe/effects` | `effects`, `eye_effect` | |
 | `cosmetics/makeup` | `makeup` | replaces the default studio face-styling line; optional line in scenes |
-| `races/*/cosmetics/hair`, `themes/*/cosmetics/hair` | `component` on a hair card | |
+| `races/*/cosmetics/hair`, `themes/*/*/cosmetics/hair` | `component` on a hair card | |
 | `backgrounds/<realm>/` | `background` | realm folder is mandatory (fantasy, modern, studio); dragon lairs live in `backgrounds/fantasy/lairs/` |
 | `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` | `background` | a hero's own signature, throne (glamour), casting and evening settings; one scene = one unique background |
 | `hoards/` | `hoard` | what a dragon has collected (`{{HOARD}}` in the lair template) |
 
-**A theme manifest** (`themes/<theme>/theme.json`, `type`: `culture` or `event`) names the pack. A theme's pieces use
+**A theme manifest** (`themes/<group>/<theme>/theme.json`, `type`: `culture` or `event`) names the pack. A theme's pieces use
 `{{PRIMARY}}` / `{{ACCENT_SOFT}}` so each hero renders them in her own colours; an event that needs its own season
 palette sets `overrides.palette` on the card (see `drakniya-scene-thanksgiving.json`).
 
@@ -116,6 +116,38 @@ A pure move must leave every generated prompt byte-identical; regenerate and che
 
 **Optional template lines.** A template line starting with `?` (e.g. `?Headwear: {{HEADWEAR}}.`) is printed only when
 every token in it has a value, so slots like headwear or makeup cost nothing for cards that do not use them.
+
+## Keeping folders browsable
+
+A folder that grows past about 20 files gets sub-folders by a natural facet, so a person scans a handful of names instead of an alphabetical wall. Group by something already on the piece (a tag, its type, its mood), name the groups for what a person would look for, and regroup with `python tools/art/art_refs.py regroup <map.json>` so every path reference and id follows. A pure regroup must leave every generated prompt byte-identical.
+
+| Folder | Grouped by | Groups |
+| --- | --- | --- |
+| `themes/` | region or kind of world | `ancient`, `northern`, `eastern`, `southern`, `western`, `seasonal`, `adventure` |
+| `wardrobe/swimwear/` | what the piece is (its tags, as the A-pose underlayer families) | `bikini`, `lingerie`, `athletic`, `one-piece`, `backless`, `trunks` |
+| `motion/expressions/` | mood | `studio`, `glamour`, `composed`, `intense`, `playful` |
+
+Next candidates as they grow: `wardrobe/clothing/sets`, `dresses` and `gowns` (20-31 files each), `wardrobe/footwear/boots`, `races/human/cosmetics/hair/down`. A new theme goes into an existing group (or a new one when none fits); a new race gets its own folder under `races/`.
+
+## Library map: what exists, where the gaps are
+
+The core library is the D&D mass every theme and hero draws on; themes sit on top of it. Counts are pieces on disk (Oct 2026).
+
+| Area | Now | Gap and where it lands |
+| --- | --- | --- |
+| `themes/` (packs) | 26 in 7 groups: ancient (greek, roman, egyptian, aztec), northern (norse, celtic, danish), eastern (samurai, ninja, steppe, imperial-dynasty), southern (arabian-nights, savanna-kingdoms, tropical-isles), western (frontier, chivalry) | each group is the place to add the next pack of its kind |
+| `themes/` (events and genres) | seasonal (halloween, christmas, spring, autumn, thanksgiving, summer-solstice), adventure (pirate, alchemist, peasant, eclipse) | northern: slavic winter, fey court; ancient: persian, indian; seasonal: valentine, lunar new year; adventure: gaslamp, circus, vampire gothic, jungle explorer; one theme per element realm later |
+| `backgrounds/fantasy/` | 27 families, 104 pieces (3-10 per family; `lairs` 10) | more variety inside a family as scenes need it; modern and studio realms are separate |
+| `wardrobe/armor/` | 69 pieces across the class and material families | per-class sets as bound heroes and units need them |
+| `wardrobe/weapons/` | 33 pieces in 13 families | two-handed swords and maces, spears, more wands and staves; held items live in `props/` |
+| `wardrobe/props/` | 28 pieces (instruments, holy symbols, orbs, reagent kits, lanterns, banners, books ...) | grow with scenes |
+| `races/` | 8 race pieces (`races/<race>/race.json`: human, high, wood and dark elf, orc, dwarf, celestial, barbarian) plus human hair (46) | not yet wired into the templates; planned `{{RACE}}` slot in the Figure line for bound heroes and non-human units; per-race hair when needed |
+| creatures | 10 elder dragons, hoards and lairs | pets are covered by card art (below); summoned beasts and elementals as `creatures/<kind>/` when a card needs hand-directed art |
+| card art (units, pets, buildings, tactics, equipment, workers) | all 174 gameplay cards, mechanical: `cards/sovereign-dawn.json` (style, element palette and effect, category framing) plus `scaffold_card_art.py`; prompts in `prompts/sovereign-dawn/<Category>/card/` | prompts use only each card's name, element and lore, so they are first drafts; give a card hand-directed art by adding a richer identity and template for that category |
+| brand and title | `brand/sovereign-territories.json`, 16 art cards (key art, plates, title, logo, icons) and 2 videos | render and review |
+| theme gear for bounds and dragons | theme pieces read as female sister outfits | a theme pack also needs male pieces for the bound heroes (tagged `male`) and a `dragons/` folder (barding, horn caps, banners, theme lairs) so one theme can serve 10 sisters, 10 bounds and 10 dragons; not started |
+
+Video effect pieces live in `data/animation/motions/`: `ambient/` (snow, rain, mist, embers, fireflies, petals, leaves, sparkles, candlelight, banners, aurora ...), `elements/` (one surge per element) and `themes/<theme>/` (tree lights, bats, runes, sea spray ...). A video card combines a theme piece, an element piece and an ambient piece, so a new scene video needs no new text.
 
 ## Card and output folders: families
 
@@ -227,7 +259,7 @@ data/art/
 │   ├── footwear/{boots,heels,sandals,barefoot}/
 │   ├── capes/{cloaks,short-capes,mantles}/
 │   ├── accessories/{bags,quivers,bracers,gloves}/
-│   ├── swimwear/*.json             A-pose UNDERLAYERS, swappable (triangle-bikini default,
+│   ├── swimwear/<type>/*.json      A-pose UNDERLAYERS by type (bikini, lingerie, athletic, one-piece, backless, trunks), swappable (triangle-bikini default,
 │   │                               swim-brief default male, multicolor, high-waist, bandeau,
 │   │                               sporty, one-piece, board-shorts, athletic-trunks)
 │   └── effects/{ambient,eyes}/
@@ -237,10 +269,12 @@ data/art/
 │                                   under races/human/cosmetics/hair/.
 │
 ├── themes/                         ✅ THEME PACKS, one self-contained folder per culture or event:
-│   │                               greek, roman, egyptian, norse, celtic (culture) and
-│   │                               thanksgiving (event). Each has a theme.json manifest and
+│   │                               greek, roman, egyptian, norse, celtic, danish, pirate, ninja, samurai,
+│   │                               aztec, steppe, peasant, alchemist, eclipse (culture) and thanksgiving,
+│   │                               halloween, christmas, spring, autumn (event). Each has a theme.json manifest and
 │   │                               the same layout as the core: wardrobe/<kind>/<family>/,
-│   │                               cosmetics/{hair,makeup}/<family>/, backgrounds/<realm>/<family>/.
+│   │                               cosmetics/{hair,makeup}/<family>/, backgrounds/<realm>/<family>/,
+│   │                               and, for the newer packs, motion/ and motion/expressions/.
 │   └── <theme>/theme.json          (schema: _schema/theme.schema.json)
 │
 ├── dragons/                        ✅ CATEGORY: all 10 Elder Dragons seeded (elder-dragons/*.json),
@@ -592,11 +626,12 @@ Glow is only ever added in `scene` stages.
 | --- | --- | --- | --- |
 | Studio eyes | `{{EYE}}` | pose, head, hair, motion, armor, clothing | Iris colour + striations + limbal ring, always "natural, not glowing"; `glowing eyes` is in those negatives. |
 | Studio makeup/grooming | `{{FACE_STYLE}}` | pose, head, hair, motion, armor, clothing | Built in `gen_prompt.py` (`face_style`) from the hero's `eyeshadowColor` and `blushColor`; "present, never heavy". Males get a grooming line. |
-| Signature cosmetic colours | `{{LIP}}`, `{{EYESHADOW}}`, `{{BLUSH}}`, `{{NAIL}}` | pose, `FACE_STYLE`, scenes, makeup pieces | `palette.lipColor` / `eyeshadowColor` / `blushColor` / `nailColor`: **required for every female card hero** (schema-enforced), optional for males and test beds. Scenes with no `components.makeup` piece get a default `{{MAKEUP_LINE}}` from them. Core makeup pieces use the tokens; culture/event makeup keeps its own look. |
+| Signature cosmetic colours | `{{LIP}}`, `{{EYESHADOW}}`, `{{BLUSH}}`, `{{NAIL}}` | pose, `FACE_STYLE`, scenes, makeup pieces | `palette.lipColor` / `eyeshadowColor` / `blushColor` / `nailColor`: **required for every female card hero** (schema-enforced), optional for males and test beds. Scenes print a makeup line only when a card picks a `components.makeup` piece. Core makeup pieces use the tokens; culture/event makeup keeps its own look. |
 | Expression | `{{EXPRESSION}}` | pose, head | Defaults in `SLOT_DEFAULTS` (see below): pose = per-sex studio glamour/confident; head = `studio-glamour-smile` (lips, cheeks, dimples). Override on a card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
 | Hairstyle | `{{HAIRSTYLE}}`, `{{HAIRSTYLE_NEG}}` | pose | From the hero's `hairStyleComponent`. `hair/down/center-part-natural.json` takes the hair down, centre-parted, keeping the source's natural texture; its `a_pose_negatives` (ponytail, bun, updo, ...) go into the negative prompt. |
-| Hair, whole block | `{{HAIR_ESTABLISH}}` | pose (female and male) | One `Hair:` line built from the identity (colour and highlights), the hair piece (style and its own `breeze` line) - nothing about hair is hard-coded in the template. |
-| Hair, kept from the incoming image | `{{HAIR_KEEP}}` | every stage that edits an existing render (head, views, motion, armor, clothing, scenes, showcase) | The same sentence everywhere, so the signature colour and highlights are restated at each step; `hairFrom: "incoming"` on a card still overrides it. |
+| Hair, whole block | `{{HAIR_ESTABLISH}}` | pose (female and male) | The hair's style and `breeze` line, plus colour and highlights unless `hair` is a key detail (then they live in the Critical details block). |
+| Critical details | `{{KEY_BLOCK}}` | pose (female default: hair, bust, eyes, skin, legs); any stage via `keyDetails` on the card | A short up-front block built from the identity (`keyDetails`: `hair`, `bust`, `eyes`, `skin`, `legs`). Whatever it carries is left out of the later Figure, Skin, Hair and Eyes lines, so nothing is said twice. Downstream cards list only what a given outfit tends to lose. |
+| Fidelity to the incoming A-pose | `{{KEEP_LINE}}` | every stage that takes in an A-pose (head, views, motion, armor, clothing, scenes, showcase) | One line naming what to keep exactly: face, eyes, skin, makeup, figure, bust, hair colour, highlights and length. Those stages do not restate hair, figure, skin or eyes; poses that take in an original photo keep the full text. |
 | Scene eye glow | `{{EYE_EFFECT}}` | scene templates | Chosen with `components.eye_effect`; default `partial-glow`. |
 | (Soft iris-only eyes) | `{{EYE_SOFT}}` | inside the eye-effect pieces | Not used by the studio stages. |
 
@@ -687,7 +722,7 @@ visible." appended after it.
 ```jsonc
 "components": {
   "pose": "data/art/motion/standing/side-profile-elegant.json",       // defaultExpression: "composed, serene; ..."
-  "expression": "data/art/motion/expressions/fierce-focused.json"     // expression: "fierce, intensely focused; ..."
+  "expression": "data/art/motion/expressions/intense/fierce-focused.json"     // expression: "fierce, intensely focused; ..."
 }
 ```
 

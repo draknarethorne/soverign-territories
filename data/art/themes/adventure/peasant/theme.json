@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/peasant",
+  "kind": "theme",
+  "name": "Village Peasant",
+  "type": "culture",
+  "description": "Humble village life in a fantasy realm: linen blouses and laced bodices, aprons, shawls, straw hats, baskets, pitchforks and simple blades, thatched cottages, markets and wheat fields.",
+  "realm": "fantasy",
+  "tags": [
+    "peasant",
+    "village",
+    "linen",
+    "rustic",
+    "farm"
+  ]
+}

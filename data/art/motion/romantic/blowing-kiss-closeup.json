@@ -7,7 +7,7 @@
   "body": "close-up shot from thighs to head, legs exposed.",
   "head": "position varies.",
   "defaultGaze": "data/art/motion/gaze/focused-on-camera.json",
-  "defaultExpression": "data/art/motion/expressions/glamorous-confident.json",
+  "defaultExpression": "data/art/motion/expressions/glamour/glamorous-confident.json",
   "pose": "one hand blowing a kiss, the other in an elegant, alluring gesture.",
   "extras": [
     "Bold décolletage.",

@@ -1,0 +1,20 @@
+{
+  "id": "themes/ancient/aztec/motion/offering-bowl",
+  "kind": "motion",
+  "name": "Offering Bowl",
+  "editorial": "A reverent ceremonial portrait.",
+  "breeze": "Light breeze.",
+  "body": "standing straight with a slight bow of the head, feet together.",
+  "head": "head lowered then lifted to the camera.",
+  "defaultGaze": "calm, reverent eyes to camera.",
+  "defaultExpression": "a serene, reverent look.",
+  "pose": "both hands holding a gold offering bowl out in front, smoke curling from it.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "aztec"
+  ]
+}

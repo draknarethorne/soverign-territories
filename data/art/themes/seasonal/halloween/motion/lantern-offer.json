@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/halloween/motion/lantern-offer",
+  "kind": "motion",
+  "name": "Lantern Offer",
+  "editorial": "A spooky portrait with a glowing lantern.",
+  "breeze": "Cold breeze stirring the fog.",
+  "body": "standing in the fog, shoulders turned, one hip out.",
+  "head": "tilted, looking to the camera.",
+  "defaultGaze": "bright, bewitching eyes to camera.",
+  "defaultExpression": "an inviting, mischievous smile.",
+  "pose": "a glowing jack-o'-lantern held out in one hand toward the camera, the other hand lifting the hem of the dress.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "halloween"
+  ]
+}

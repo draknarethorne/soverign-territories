@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/quarterstaff",
+  "kind": "holding",
+  "name": "Quarterstaff",
+  "description": "a plain iron-shod quarterstaff of {{PRIMARY}}-stained wood held across the body in both hands",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "staff",
+    "quarterstaff",
+    "two-handed"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "races/celestial/race",
+  "kind": "race",
+  "name": "Race: Celestial",
+  "description": "a celestial: a tall radiant figure with softly glowing skin, faint golden light under the surface, small luminous halo-like markings and folded feathered wings of light at the shoulders",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "race",
+    "celestial",
+    "wings"
+  ],
+  "notes": "Visual features of the race for the bound heroes and units. Not yet wired into the prompt templates (planned slot: {{RACE}} in the Figure line of male and non-human heroes)."
+}

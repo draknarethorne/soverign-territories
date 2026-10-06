@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/samurai/motion/iaido-draw",
+  "kind": "motion",
+  "name": "Iaido Draw",
+  "editorial": "A precise action shot at the moment of the draw.",
+  "breeze": "Light breeze.",
+  "body": "a low wide stance, weight sunk, torso turned side-on.",
+  "head": "head turned to the camera, chin level.",
+  "defaultGaze": "calm, piercing eyes to camera.",
+  "defaultExpression": "a calm, lethal composure.",
+  "pose": "one hand drawing the katana a few inches from its sheath, the other gripping the scabbard at the hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "samurai"
+  ]
+}

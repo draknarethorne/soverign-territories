@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/jewelry/sets/acorn-and-amber-set",
+  "kind": "jewelry",
+  "name": "Acorn and Amber Set",
+  "description": "a woodland jewelry set of an amber pendant in {{METAL}} leaf-shaped settings, acorn-cap earrings, a leaf-vine armlet and a ring of twisted twigs",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "jewelry"
+  ]
+}

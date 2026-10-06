@@ -1,0 +1,13 @@
+{
+  "id": "themes/western/frontier/motion/expressions/dusty-cool",
+  "kind": "expression",
+  "name": "Dusty cool",
+  "expression": "dusty and cool, a lopsided half-smile, eyes steady and unbothered beneath the hat brim.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "frontier"
+  ]
+}

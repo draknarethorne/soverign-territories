@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/draknava/weapons/windsong-shortbow",
+  "kind": "holding",
+  "name": "Windsong Shortbow",
+  "description": "a slim shortbow with limbs carved like curling wind, its string humming a faint {{MAGIC}} note, a quiver of feathered arrows at the hip",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "ranged",
+    "bow"
+  ]
+}

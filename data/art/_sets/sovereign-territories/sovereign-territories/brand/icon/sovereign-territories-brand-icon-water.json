@@ -1,0 +1,12 @@
+{
+  "artId": "sovereign-territories-brand-icon-water",
+  "kind": "base-set",
+  "stage": "brand",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "template": "data/art/_templates/brand/icon-element.txt",
+  "denoise": "1.0",
+  "size": "1024x1024",
+  "output": "prompts/sovereign-territories/SovereignTerritories/brand/icon/SovereignTerritories_Brand_IconWater.txt",
+  "notes": "Water element icon for cards, the map and the deck builder.",
+  "element": "Water"
+}

@@ -7,7 +7,7 @@
   "body": "3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back.",
   "head": "turned over the shoulder toward the camera, chin slightly down.",
   "defaultGaze": "data/art/motion/gaze/eyes-to-camera.json",
-  "defaultExpression": "data/art/motion/expressions/alluring-confident.json",
+  "defaultExpression": "data/art/motion/expressions/glamour/alluring-confident.json",
   "pose": "one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.",
   "extras": [],
   "compatibleStages": [

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/swamp/sunken-ruin-lilies",
+  "kind": "background",
+  "name": "Sunken Ruin among Lilies",
+  "description": "a half-sunken marble ruin in a lily-covered swamp pool, broken columns wrapped in vines, dragonflies and soft green light filtering through the canopy",
+  "mood": "forgotten, quiet",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "swamp"
+  ]
+}

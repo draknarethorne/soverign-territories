@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/dungeons/flooded-sewer-vault",
+  "kind": "background",
+  "name": "Flooded Sewer Vault",
+  "description": "a vaulted brick sewer chamber with shallow glowing water, iron gratings, dripping pipes and bioluminescent moss on the arches",
+  "mood": "grimy, eerie",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "dungeons"
+  ]
+}

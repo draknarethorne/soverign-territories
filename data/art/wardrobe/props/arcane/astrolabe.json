@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/arcane/astrolabe",
+  "kind": "holding",
+  "name": "Astrolabe",
+  "description": "a polished brass and {{METAL}} astrolabe with turning rings held at chest height, tiny {{MAGIC}} stars orbiting it",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "arcane"
+  ]
+}

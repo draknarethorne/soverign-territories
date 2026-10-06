@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/weapons/throwing/volatile-flask-trio",
+  "kind": "holding",
+  "name": "Volatile Flask Trio",
+  "description": "three corked glass flasks of swirling {{MAGIC}} potion held between the fingers of one hand, ready to throw",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "weapons"
+  ]
+}

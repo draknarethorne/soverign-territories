@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/desert/dune-sea-caravan-trail",
+  "kind": "background",
+  "name": "Dune Sea Caravan Trail",
+  "description": "an endless sea of golden dunes with sculpted wind ridges, a distant caravan trail and a blazing white sun in a pale sky",
+  "mood": "vast, hot",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "desert"
+  ]
+}

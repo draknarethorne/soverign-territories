@@ -1,0 +1,13 @@
+{
+  "id": "themes/western/chivalry/motion/expressions/noble-resolve",
+  "kind": "expression",
+  "name": "Noble resolve",
+  "expression": "noble and resolute, chin lifted, a faint warm smile and steady, honourable eyes.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "chivalry"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "themes/ancient/aztec/motion/sun-salute",
+  "kind": "motion",
+  "name": "Sun Salute",
+  "editorial": "A ceremonial shot facing the sun.",
+  "breeze": "Light breeze.",
+  "body": "standing tall on a stone step, chest open, weight on one leg.",
+  "head": "face lifted to the light then to the camera.",
+  "defaultGaze": "bold, radiant eyes to camera.",
+  "defaultExpression": "a proud, radiant smile.",
+  "pose": "one arm raised high toward the sun, the other holding a staff or weapon against her side.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "aztec"
+  ]
+}

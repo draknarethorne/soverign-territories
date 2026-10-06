@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/alchemist/motion/flask-throw",
+  "kind": "motion",
+  "name": "Flask Throw",
+  "editorial": "A dynamic action shot hurling a potion.",
+  "breeze": "Light breeze.",
+  "body": "a long lunge, torso twisting through the throw.",
+  "head": "turned along the throw line.",
+  "defaultGaze": "wild, thrilled eyes to camera.",
+  "defaultExpression": "a thrilled, reckless grin.",
+  "pose": "one arm swinging forward releasing a glowing flask in a burst of colour, the other arm back for balance.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "alchemist"
+  ]
+}

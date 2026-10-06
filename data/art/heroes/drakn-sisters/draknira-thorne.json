@@ -1,7 +1,9 @@
 {
   "cardId": "HERO_DRAKNIRA_THORNE",
   "art": {
-    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json",
+    "defaultFootwear": "data/art/heroes/drakn-sisters/draknira/footwear/signature-heels.json",
+    "defaultSheen": "data/art/wardrobe/finishes/high-gloss.json",
     "palette": {
       "primaryColor": "Glacial Cyan",
       "accentColors": [
@@ -20,7 +22,7 @@
       "eyeColor": "Glacial cyan iris with deep navy limbal ring, radiating frost-silver striations, and crystalline white flecks",
       "eyeColorGlamour": "Glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring",
       "hairColor": "Icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen",
-      "hairHighlights": "data/art/cosmetics/highlights/roots/root-shadow.json",
+      "hairHighlights": "data/art/cosmetics/highlights/gradient/frosted-roots-and-ends.json",
       "hairHighlightColor": "cool smoky ash-grey",
       "hairColorNegatives": ["all-over grey hair", "all-over cyan hair", "all-over blue hair", "fully dyed hair"],
       "skinTone": "Cool fair porcelain complexion, evenly toned, smooth and blemish-free",

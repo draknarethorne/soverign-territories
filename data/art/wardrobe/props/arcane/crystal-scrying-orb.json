@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/arcane/crystal-scrying-orb",
+  "kind": "holding",
+  "name": "Crystal Scrying Orb",
+  "description": "a clear crystal scrying orb floating just above an open palm, swirling {{MAGIC}} images inside it",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "arcane"
+  ]
+}

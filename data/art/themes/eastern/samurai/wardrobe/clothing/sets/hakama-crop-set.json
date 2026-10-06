@@ -1,0 +1,14 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/clothing/sets/hakama-crop-set",
+  "kind": "wearing",
+  "name": "Hakama Crop Set",
+  "description": "a set of a short {{PRIMARY}} kimono-style crop top with wide sleeves, a high-waisted {{ACCENT_SOFT}} half-length hakama skirt with pleats and a tied sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "samurai",
+    "clothing"
+  ]
+}

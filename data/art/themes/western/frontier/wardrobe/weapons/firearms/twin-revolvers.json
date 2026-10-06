@@ -1,0 +1,14 @@
+{
+  "id": "themes/western/frontier/wardrobe/weapons/firearms/twin-revolvers",
+  "kind": "holding",
+  "name": "Twin Revolvers",
+  "description": "a pair of engraved {{METAL}} revolvers, one drawn and aimed, the other in its holster, a faint {{MAGIC}} glow in the cylinder",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "frontier",
+    "weapons"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/crouch-ready",
+  "kind": "motion",
+  "name": "Crouch Ready",
+  "editorial": "A low action shot, slight upward camera angle.",
+  "breeze": "Light breeze.",
+  "body": "a low crouch on the balls of the feet, one hand near the ground.",
+  "head": "head up, eyes forward.",
+  "defaultGaze": "sharp, predatory eyes to camera.",
+  "defaultExpression": "a sly, predatory half-smile.",
+  "pose": "one hand braced on the ground, the other holding the weapon back, coiled to spring.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

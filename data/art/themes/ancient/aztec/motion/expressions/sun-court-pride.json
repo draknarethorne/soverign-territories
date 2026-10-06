@@ -1,0 +1,13 @@
+{
+  "id": "themes/ancient/aztec/motion/expressions/sun-court-pride",
+  "kind": "expression",
+  "name": "Sun court pride",
+  "expression": "proud and regal, chin high, eyes bright, a faint confident curve of the lips.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "aztec"
+  ]
+}

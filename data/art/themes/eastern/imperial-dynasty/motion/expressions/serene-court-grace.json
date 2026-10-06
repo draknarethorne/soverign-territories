@@ -1,0 +1,13 @@
+{
+  "id": "themes/eastern/imperial-dynasty/motion/expressions/serene-court-grace",
+  "kind": "expression",
+  "name": "Serene court grace",
+  "expression": "serene and graceful, a soft closed-lip smile, a poised tilt of the chin and calm luminous eyes.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty"
+  ]
+}

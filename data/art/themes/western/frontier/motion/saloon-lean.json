@@ -1,0 +1,20 @@
+{
+  "id": "themes/western/frontier/motion/saloon-lean",
+  "kind": "motion",
+  "name": "Saloon Lean",
+  "editorial": "A relaxed saloon-door portrait.",
+  "breeze": "Dusty wind.",
+  "body": "leaning on a swinging door frame, one boot crossed over the other.",
+  "head": "tilted, tipping the hat back with a thumb.",
+  "defaultGaze": "sly eyes to camera.",
+  "defaultExpression": "a lazy, teasing smile.",
+  "pose": "one arm resting on the door, the other hand hooked in the gunbelt.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "frontier"
+  ]
+}

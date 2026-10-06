@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/swamp/mangrove-bayou-twilight",
+  "kind": "background",
+  "name": "Mangrove Bayou at Twilight",
+  "description": "a still bayou of twisted mangrove roots and hanging moss at twilight, a leaning wooden dock with a lantern, fireflies and low drifting mist",
+  "mood": "humid, mysterious",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "swamp"
+  ]
+}

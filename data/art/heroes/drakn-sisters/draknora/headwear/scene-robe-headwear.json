@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/headwear/scene-robe-headwear",
+  "kind": "headwear",
+  "name": "Robe - headwear",
+  "description": "a slim {{METAL}} circlet with a single {{GEM}} stone at the brow",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknora-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

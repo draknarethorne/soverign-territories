@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/armor/leather/bloomguard-leaf-armor",
+  "kind": "wearing",
+  "name": "Bloomguard Leaf Armor",
+  "description": "light blossom armor - overlapping {{PRIMARY}} leaf-shaped plates over a soft green bodice, {{METAL}} filigree bracers and greaves, a skirt of hanging petals and a belt of woven flowers",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "spring",
+    "armor"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/headwear/crowns/jewelled-veil-diadem",
+  "kind": "headwear",
+  "name": "Jewelled Veil Diadem",
+  "description": "a delicate {{METAL}} diadem with a central {{GEM}} drop and a sheer {{PRIMARY}} veil falling over the back of the head",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "arabian-nights",
+    "headwear"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/temple/marble-cathedral-sunbeams",
+  "kind": "background",
+  "name": "Marble Cathedral of Sunbeams",
+  "description": "a soaring marble cathedral nave with tall arched windows pouring golden sunbeams through drifting incense, rows of carved pews and a glowing altar",
+  "mood": "sacred, radiant",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "temple"
+  ]
+}

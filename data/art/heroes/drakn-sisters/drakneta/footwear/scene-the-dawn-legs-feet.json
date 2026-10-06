@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/footwear/scene-the-dawn-legs-feet",
+  "kind": "legs_feet",
+  "name": "TheDawn - legs_feet",
+  "description": "bare feet, sparks dancing around them",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-the-dawn card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "themes/adventure/eclipse/cosmetics/hair/sleek/eclipse-sleek-crown",
+  "kind": "hair",
+  "name": "Eclipse Sleek Crown",
+  "a_pose_style": "hair parted in the centre and swept sleekly back from the temples into a narrow crown plait threaded with a thin {{METAL}} chain, the rest falling straight and glossy in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted, swept back from the temples into a narrow crown plait threaded with a thin chain, the rest straight and glossy in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "eclipse",
+    "hair"
+  ]
+}

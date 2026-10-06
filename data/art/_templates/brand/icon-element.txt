@@ -1,0 +1,13 @@
+=== {{NAME}} · Element Icon: {{ELEMENT}} — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. One of the ten element icons used on cards, the map and the deck builder.
+Size: {{SIZE}}
+
+----------------------------------------------------------------
+prompt:
+
+A square game UI icon centred on a plain dark background: {{MOTIF}} as a glowing {{ELEMENT_COLOR}} crystal emblem set inside a round ornate {{ELEMENT_METAL}} frame, subtle rim light, crisp clean edges, a bold readable silhouette at small sizes. No text, no lettering.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, people, busy background, low quality, blurry

@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/finishes/high-gloss",
+  "kind": "sheen",
+  "name": "Finish: High-gloss",
+  "description": "a high-gloss, mirror-polished liquid-metal finish with crisp bright specular highlights, glossy reflections and deep saturated colour",
+  "compatibleStages": [
+    "pose",
+    "clothing",
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "finish",
+    "sheen",
+    "metallic"
+  ],
+  "notes": "Fills {{SHEEN}}. Set a hero default with art.defaultSheen or override per card with components.sheen. Ladder: matte < satin < semi-gloss < high-gloss; wet-look-patent, pearlescent and brushed are alternatives."
+}

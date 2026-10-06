@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/clothing/sets/foragers-wrap-set",
+  "kind": "wearing",
+  "name": "Forager's Wrap Set",
+  "description": "a woodland set of a cropped cross-laced {{PRIMARY}} suede top, a wrap skirt of overlapping russet panels with a woven rope belt and a small foraging pouch",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "autumn",
+    "clothing"
+  ]
+}

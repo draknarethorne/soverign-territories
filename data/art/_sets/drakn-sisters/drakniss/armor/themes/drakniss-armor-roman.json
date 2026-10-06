@@ -1,0 +1,21 @@
+{
+  "artId": "drakniss-armor-roman",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Roman Cleric",
+  "aesthetic": "a clean studio presentation of the roman cleric outfit",
+  "components": {
+    "wearing": "data/art/themes/ancient/roman/wardrobe/armor/lorica/gladiatrix-lorica-set.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/ancient/roman/wardrobe/jewelry/sets/gold-fibula-set.json",
+    "legs_feet": "data/art/themes/ancient/roman/wardrobe/footwear/sandals/caligae-sandals.json",
+    "headwear": "data/art/themes/ancient/roman/wardrobe/headwear/helms/crested-galea-helm.json",
+    "back": "the back of the armor fully visible",
+    "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/radiant-mace.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/armor/themes/Drakniss_Armor_Roman.txt",
+  "notes": "Pre-staged Roman Cleric outfit: render it from the A-pose, then feed the image to the Staged roman scene. Every item is a library piece."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/pirate/motion/ship-rail-lean",
+  "kind": "motion",
+  "name": "Ship Rail Lean",
+  "editorial": "A windswept ship-deck editorial shot.",
+  "breeze": "Strong sea wind.",
+  "body": "leaning back against the ship's rail, one boot up on a barrel.",
+  "head": "tilted, looking out to sea then back to the camera.",
+  "defaultGaze": "sly sidelong eyes to camera.",
+  "defaultExpression": "a salty, knowing smile.",
+  "pose": "one arm hooked over the rail, the other hand resting on a flintlock at the hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "pirate"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/ceremonial/high-priestess-regalia",
+  "kind": "wearing",
+  "name": "High Priestess Regalia",
+  "description": "ceremonial regalia of a long {{PRIMARY}} silk tabard with a {{METAL}} breast collar, jewelled bracers, a split skirt and a tall embroidered mantle",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "priest"
+  ]
+}

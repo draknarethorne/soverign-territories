@@ -7,8 +7,8 @@
   "components": {
     "pose": "She stands with a bold, delighted smile before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.",
     "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/dawn-regalia.json",
-    "headwear": "a crown of {{METAL}} flame-shaped spires set with {{GEM}} stones",
-    "jewelry": "{{METAL}} flame-leaf collar necklace with a {{GEM}} stone, long ember drop earrings, wide {{METAL}} armlets",
+    "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/jewelry/scene-lineup-jewelry.json",
     "legs_feet": "bare feet, fine {{METAL}} anklets",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, heat shimmering and embers drifting up around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/bedrock-stone-realm",
+  "kind": "background",
+  "name": "Realm of Stone",
+  "description": "an elemental earth realm: huge floating boulders and crystal clusters over a canyon of ochre rock, glowing seams of ore and drifting dust in amber light",
+  "mood": "solid, ancient",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/clothing/dresses/feathered-huipil-gown",
+  "kind": "wearing",
+  "name": "Feathered Huipil Gown",
+  "description": "a woven huipil-style gown in {{PRIMARY}} with bold {{ACCENT_SOFT}} geometric embroidery, a deep V neckline, a short front and a long back skirt of layered feathers and a broad woven belt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "aztec",
+    "clothing"
+  ]
+}

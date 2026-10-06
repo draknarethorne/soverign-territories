@@ -1,0 +1,17 @@
+{
+  "id": "motion/action/guard-stance",
+  "kind": "motion",
+  "name": "Guard Stance",
+  "editorial": "An action shot of a ready defensive stance.",
+  "breeze": "Light breeze.",
+  "body": "knees bent, weight low and centred, one foot forward.",
+  "head": "level, watching the camera.",
+  "defaultGaze": "steady, watchful eyes to camera.",
+  "defaultExpression": "wary and composed.",
+  "pose": "the weapon held across the body in a guard, the free hand forward and open.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ]
+}

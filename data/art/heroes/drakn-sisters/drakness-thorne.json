@@ -1,7 +1,9 @@
 {
   "cardId": "HERO_DRAKNESS_THORNE",
   "art": {
-    "defaultUnderlayer": "data/art/wardrobe/swimwear/metallic-triangle-bikini.json",
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json",
+    "defaultFootwear": "data/art/heroes/drakn-sisters/drakness/footwear/signature-heels.json",
+    "defaultSheen": "data/art/wardrobe/finishes/high-gloss.json",
     "palette": {
       "primaryColor": "Midnight Violet",
       "accentColors": [
@@ -19,7 +21,9 @@
       "gemColor": "amethyst",
       "eyeColor": "Deep violet iris with obsidian limbal ring, radiating amethyst striations, and luminous lilac flecks",
       "eyeColorGlamour": "Deep violet irises with radiating amethyst striations and an obsidian limbal ring",
-      "hairColor": "Rich black hair with warm espresso depth and noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light",
+      "hairColor": "Rich black hair with warm espresso depth",
+      "hairHighlights": "data/art/cosmetics/highlights/streaks/bold-face-framing-streaks.json",
+      "hairHighlightColor": "plum-amethyst",
       "hairColorNegatives": [
         "uniform flat one-tone hair",
         "fully dyed hair"

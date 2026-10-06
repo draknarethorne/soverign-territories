@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/leather/gladiator-harness-set",
+  "kind": "wearing",
+  "name": "Gladiator Harness Set",
+  "description": "crossed {{PRIMARY}} leather harness straps with {{METAL}} rings over the chest, a studded pteruges skirt, a single pauldron and wrapped forearms",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "leather",
+    "gladiator",
+    "revealing"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "themes/adventure/pirate/motion/cutlass-flourish",
+  "kind": "motion",
+  "name": "Cutlass Flourish",
+  "editorial": "A swashbuckling action shot on a ship's deck.",
+  "breeze": "Light breeze.",
+  "body": "feet wide on the pitching deck, weight on the front foot, one hip cocked.",
+  "head": "chin lifted, smirking at the camera.",
+  "defaultGaze": "bold, teasing eyes to camera.",
+  "defaultExpression": "a cocky pirate-queen grin.",
+  "pose": "a cutlass raised in a flourish over one shoulder, the other hand on the hip.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "pirate"
+  ]
+}

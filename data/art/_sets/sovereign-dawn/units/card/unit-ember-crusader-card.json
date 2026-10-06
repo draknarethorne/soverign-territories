@@ -1,0 +1,13 @@
+{
+  "artId": "unit-ember-crusader-card",
+  "kind": "base-set",
+  "stage": "card",
+  "heroArt": "data/art/cards/sovereign-dawn.json",
+  "template": "data/art/_templates/cards/card-art.txt",
+  "denoise": "1.0",
+  "size": "960x1440",
+  "category": "units",
+  "cardId": "UNIT_EMBER_CRUSADER",
+  "output": "prompts/sovereign-dawn/Units/card/Units_Card_EmberCrusader.txt",
+  "notes": "Mechanical card art for UNIT_EMBER_CRUSADER (SD-147); prompt built from the card's name, element and lore."
+}

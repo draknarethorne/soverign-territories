@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknava/footwear/scene-the-dawn-legs-feet",
+  "kind": "legs_feet",
+  "name": "TheDawn - legs_feet",
+  "description": "bare feet, floating clear of the stone",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknava-scene-the-dawn card so the item is a library piece (pre-stageable) instead of inline text."
+}

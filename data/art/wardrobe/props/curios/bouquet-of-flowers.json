@@ -1,0 +1,14 @@
+{
+  "id": "wardrobe/props/curios/bouquet-of-flowers",
+  "kind": "holding",
+  "name": "Bouquet of Flowers",
+  "description": "a loose bouquet of wildflowers tied with a {{PRIMARY}} ribbon, held against the chest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "prop",
+    "curios"
+  ]
+}

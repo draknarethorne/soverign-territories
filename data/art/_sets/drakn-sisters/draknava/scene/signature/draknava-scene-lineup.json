@@ -7,8 +7,8 @@
   "components": {
     "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly.",
     "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/dawn-regalia.json",
-    "headwear": "a {{METAL}} circlet with a pair of swept-back feather wings at the temples",
-    "jewelry": "a {{METAL}} feather collar with {{GEM}} stones, long feather earrings, {{METAL}} armlets",
+    "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknava/jewelry/scene-lineup-jewelry.json",
     "legs_feet": "bare feet with fine {{METAL}} anklets",
     "effects": "Silk ribbons and a few feathers swirl close around her in a gentle wind, a small whirl of air turns above her palm.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",

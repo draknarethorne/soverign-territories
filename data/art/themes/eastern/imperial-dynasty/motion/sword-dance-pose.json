@@ -1,0 +1,20 @@
+{
+  "id": "themes/eastern/imperial-dynasty/motion/sword-dance-pose",
+  "kind": "motion",
+  "name": "Sword Dance Pose",
+  "editorial": "A flowing martial-dance action shot.",
+  "breeze": "Wind lifting the sleeves and tassel.",
+  "body": "a long balanced stance on one leg, torso leaning into the line.",
+  "head": "head up, eyes to camera.",
+  "defaultGaze": "focused, bright eyes to camera.",
+  "defaultExpression": "a calm, poised half-smile.",
+  "pose": "a jian extended in one hand along a long diagonal, the other hand held in a sword-fingers gesture.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "imperial-dynasty"
+  ]
+}

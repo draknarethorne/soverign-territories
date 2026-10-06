@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/jewelry/scene-battle-jewelry",
+  "kind": "jewelry",
+  "name": "Battle - jewelry",
+  "description": "a flame-cut {{METAL}} gorget set with a {{GEM}} stone, scorched bracers",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknora-scene-battle card so the item is a library piece (pre-stageable) instead of inline text."
+}

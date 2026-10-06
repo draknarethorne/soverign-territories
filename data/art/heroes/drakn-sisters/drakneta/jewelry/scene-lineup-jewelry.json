@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/jewelry/scene-lineup-jewelry",
+  "kind": "jewelry",
+  "name": "Lineup - jewelry",
+  "description": "a {{METAL}} coil collar with {{GEM}} stones, long spark earrings, {{METAL}} armlets",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the drakneta-scene-lineup card so the item is a library piece (pre-stageable) instead of inline text."
+}

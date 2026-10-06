@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/crossbows/heavy-crossbow",
+  "kind": "holding",
+  "name": "Heavy Crossbow",
+  "description": "a heavy two-handed crossbow with a {{PRIMARY}} stock and {{METAL}} limbs and stirrup, a glowing {{MAGIC}} bolt loaded",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "crossbow",
+    "heavy",
+    "ranged"
+  ]
+}

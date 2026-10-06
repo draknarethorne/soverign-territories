@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots",
+  "kind": "legs_feet",
+  "name": "Buckled Witch Boots",
+  "description": "knee-high pointed {{PRIMARY}} witch boots with {{METAL}} buckles, a curled toe and tattered ribbon laces",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "halloween",
+    "footwear"
+  ]
+}

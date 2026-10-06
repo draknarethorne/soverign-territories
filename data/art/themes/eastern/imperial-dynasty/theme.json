@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/imperial-dynasty",
+  "kind": "theme",
+  "name": "Imperial Dynasty",
+  "type": "culture",
+  "description": "Fantasy imperial court: silk hanfu-style gowns with dragon and phoenix embroidery, lacquered armor, jade and gold ornaments, jian swords and fans, lantern-lit palaces and misty karst mountains.",
+  "realm": "fantasy",
+  "tags": [
+    "imperial",
+    "dynasty",
+    "silk",
+    "jade",
+    "lantern"
+  ]
+}

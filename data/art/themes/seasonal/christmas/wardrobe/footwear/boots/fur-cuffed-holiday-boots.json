@@ -1,0 +1,15 @@
+{
+  "id": "themes/seasonal/christmas/wardrobe/footwear/boots/fur-cuffed-holiday-boots",
+  "kind": "legs_feet",
+  "name": "Fur-Cuffed Holiday Boots",
+  "description": "knee-high {{PRIMARY}} velvet boots with white fur cuffs, {{METAL}} buckles and a small bell on each zip pull",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "christmas",
+    "footwear"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "themes/eastern/samurai",
+  "kind": "theme",
+  "name": "Samurai",
+  "type": "culture",
+  "description": "Fantasy-adapted feudal samurai: layered kimono and hakama, lacquered lamellar armor, kabuto helms, katanas and yumi bows, castle keeps, torii shrines and falling maple or cherry leaves.",
+  "realm": "fantasy",
+  "tags": [
+    "samurai",
+    "kimono",
+    "katana",
+    "lacquer",
+    "castle"
+  ]
+}

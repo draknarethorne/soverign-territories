@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/peasant/cosmetics/makeup/natural/sun-kissed-freckles",
+  "kind": "makeup",
+  "name": "Sun-Kissed Freckles",
+  "description": "village makeup - bare skin with sun-kissed freckles across the nose, wind-flushed cheeks, a smudge of flour or dust and a natural pink lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "peasant",
+    "makeup"
+  ]
+}

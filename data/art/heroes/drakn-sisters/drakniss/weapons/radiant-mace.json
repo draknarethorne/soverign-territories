@@ -1,0 +1,16 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/weapons/radiant-mace",
+  "kind": "holding",
+  "name": "Radiant Mace",
+  "description": "a flanged {{METAL}} mace with a sunburst head glowing with {{MAGIC}} light, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "signature",
+    "melee",
+    "mace"
+  ]
+}

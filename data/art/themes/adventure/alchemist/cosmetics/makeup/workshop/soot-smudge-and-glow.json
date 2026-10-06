@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/alchemist/cosmetics/makeup/workshop/soot-smudge-and-glow",
+  "kind": "makeup",
+  "name": "Soot Smudge and Glow",
+  "description": "alchemist makeup - a smudge of soot across one cheekbone, flushed cheeks, a faint {{MAGIC}} shimmer on the lids and a natural plum lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "alchemist",
+    "makeup"
+  ]
+}

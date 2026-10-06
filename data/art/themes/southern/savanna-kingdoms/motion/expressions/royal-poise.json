@@ -1,0 +1,13 @@
+{
+  "id": "themes/southern/savanna-kingdoms/motion/expressions/royal-poise",
+  "kind": "expression",
+  "name": "Royal poise",
+  "expression": "regal and poised, chin level, a calm confident smile and warm, steady eyes.",
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "savanna-kingdoms"
+  ]
+}

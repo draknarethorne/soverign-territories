@@ -1,0 +1,15 @@
+{
+  "id": "themes/adventure/eclipse",
+  "kind": "theme",
+  "name": "Eclipse",
+  "type": "culture",
+  "description": "Total-eclipse mysticism: corona-gold and umbral-black gowns, crescent crowns, obsidian and silver armor, ritual blades and staves, observatories and temples under a black sun.",
+  "realm": "fantasy",
+  "tags": [
+    "eclipse",
+    "corona",
+    "umbral",
+    "celestial",
+    "ritual"
+  ]
+}

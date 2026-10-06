@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-bound/lyran/clothing/armor-default-wearing",
+  "kind": "wearing",
+  "name": "Default - wearing",
+  "description": "heavy Glacial Cyan-toned plate armor over the chest and shoulders, Frost White trim and rivets, thick pauldrons, a reinforced waist-guard; forearms and shins in matching plated vambraces and greaves; frost patterns etched into the pauldrons, a crest of interlocking icicles at the collar",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "armor"
+  ],
+  "notes": "Extracted from the lyran-armor-default card so the item is a library piece (pre-stageable) instead of inline text."
+}

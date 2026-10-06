@@ -1,0 +1,20 @@
+{
+  "id": "themes/seasonal/halloween/motion/cauldron-stir",
+  "kind": "motion",
+  "name": "Cauldron Stir",
+  "editorial": "A moody candid shot beside a bubbling cauldron.",
+  "breeze": "Light breeze.",
+  "body": "leaning over a cauldron, weight on one leg, torso turned to the camera.",
+  "head": "chin tilted down, eyes up to the camera.",
+  "defaultGaze": "sly, mischievous eyes to camera.",
+  "defaultExpression": "a wicked, delighted smirk.",
+  "pose": "one hand stirring a bubbling cauldron with a long spoon, the other trailing a finger through rising green mist.",
+  "extras": [],
+  "compatibleStages": [
+    "motion",
+    "scene"
+  ],
+  "tags": [
+    "halloween"
+  ]
+}

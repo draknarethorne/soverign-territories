@@ -1,0 +1,23 @@
+{
+  "id": "themes/seasonal/spring/cosmetics/hair/braided/flower-woven-braids",
+  "kind": "hair",
+  "name": "Flower-Woven Braids",
+  "a_pose_style": "hair parted in the centre with two loose braids from the temples pinned back and woven with small blossoms, the rest worn loose and softly curled in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with loose temple braids woven with blossoms, the rest soft and curled in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "spring",
+    "hair"
+  ]
+}

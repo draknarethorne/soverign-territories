@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/elemental/gale-eyrie-realm",
+  "kind": "background",
+  "name": "Realm of Gales",
+  "description": "an elemental wind realm: cloud-borne stone terraces with spiralling wind currents, floating ribbons and feathers and a vast sky of rolling cumulus",
+  "mood": "airy, free",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/castle/gatehouse-portcullis-dusk",
+  "kind": "background",
+  "name": "Gatehouse at Dusk",
+  "description": "a massive castle gatehouse with a raised iron portcullis, torch-lit arrow slits, a drawbridge over a dark moat and a purple dusk sky behind the towers",
+  "mood": "imposing, watchful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "castle"
+  ]
+}

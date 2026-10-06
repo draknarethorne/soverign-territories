@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/footwear/scene-robe-legs-feet",
+  "kind": "legs_feet",
+  "name": "Robe - legs_feet",
+  "description": "soft {{PRIMARY}} slippers with {{METAL}} buckles",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknoxa-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/jewelry/scene-robe-jewelry",
+  "kind": "jewelry",
+  "name": "Robe - jewelry",
+  "description": "{{METAL}} sun-disc pendant, flame-cut earrings, {{METAL}} bangles",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "scene"
+  ],
+  "notes": "Extracted from the draknora-scene-robe card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -15,8 +15,8 @@
     "effects": "A great sunburst of {{MAGIC}} light blazes behind her, beams fall through the stained-glass windows, golden motes and drifting feathers of light fill the air and the marble floor glows beneath her feet.",
     "companion": "her aligned Elder Dragon, Lumira, filling the high windows behind her with its head lowered toward her, radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold",
     "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/signature/sunburst-temple-altar.json",
-    "headwear": "a radiant rose-gold crown with a sunburst halo of fine golden rays",
-    "back": "a long mantle of sheer white-gold silk that glows at its edges like sunlight through cloud"
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/drakniss/capes/scene-signature-holo-back.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
   "output": "prompts/drakn-sisters/Drakniss/scene/signature/Drakniss_Scene_Signature_Holo.txt",

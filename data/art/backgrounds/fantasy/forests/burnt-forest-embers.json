@@ -1,0 +1,14 @@
+{
+  "id": "backgrounds/fantasy/forests/burnt-forest-embers",
+  "kind": "background",
+  "name": "Burnt Forest of Embers",
+  "description": "a blackened forest after a wildfire, charred standing trunks, glowing embers drifting in a smoky orange sky and green shoots pushing through the ash",
+  "mood": "desolate, hopeful",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "forests"
+  ]
+}

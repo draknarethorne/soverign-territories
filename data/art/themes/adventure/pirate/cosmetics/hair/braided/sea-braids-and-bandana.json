@@ -1,0 +1,23 @@
+{
+  "id": "themes/adventure/pirate/cosmetics/hair/braided/sea-braids-and-bandana",
+  "kind": "hair",
+  "name": "Sea Braids and Bandana",
+  "a_pose_style": "hair parted in the centre with a few thin beaded braids at the temples tied back with a {{PRIMARY}} bandana, the rest worn loose and wind-tousled in front of the shoulders, the face and eyes clear",
+  "a_pose_negatives": [
+    "ponytail",
+    "bangs",
+    "hair across the face",
+    "hair covering eyes"
+  ],
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is centre-parted with thin beaded temple braids tied back under a bandana and the rest left loose and wind-tousled in front of the shoulders.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "pirate",
+    "hair"
+  ]
+}

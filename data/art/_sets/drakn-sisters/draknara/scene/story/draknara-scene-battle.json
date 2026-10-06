@@ -7,9 +7,9 @@
   "components": {
     "pose": "She slams her totem staff down with one hand and sweeps the other arm up, the ground heaving beneath her, hair and fringe flying, a fierce gaze straight to the camera; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/battle-gear.json",
-    "headwear": "a feather crown on a bronze headband",
-    "jewelry": "{{ACCENT_SOFT}} bead necklaces with bone and {{METAL}} talismans, heavy bronze cuffs",
-    "legs_feet": "bronze-shod hide boots",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknara/footwear/scene-battle-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",
     "effects": "The earth splits and slabs of stone heave up into a wall in front of her, dust and boulders hurled through the air, {{MAGIC}} light running through the cracks.",
     "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",

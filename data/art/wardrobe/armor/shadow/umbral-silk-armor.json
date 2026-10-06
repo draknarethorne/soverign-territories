@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/armor/shadow/umbral-silk-armor",
+  "kind": "wearing",
+  "name": "Umbral Silk Armor",
+  "description": "armor of black shadow silk and {{PRIMARY}} sheen with floating dark mist at the edges, {{METAL}} filigree plates at the chest and hips and a hooded half-cloak",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "shadow",
+    "umbral"
+  ]
+}

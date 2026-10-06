@@ -1,0 +1,23 @@
+{
+  "artId": "draknava-scene-greek",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Greek Bard",
+  "components": {
+    "pose": "data/art/motion/standing/side-profile-elegant.json",
+    "expression": "data/art/motion/expressions/composed/reverent-serene.json",
+    "wearing": "data/art/themes/ancient/greek/wardrobe/clothing/gowns/chiton-peplos-gown.json",
+    "jewelry": "data/art/themes/ancient/greek/wardrobe/jewelry/sets/gold-laurel-jewelry-set.json",
+    "legs_feet": "data/art/themes/ancient/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
+    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json",
+    "headwear": "data/art/themes/ancient/greek/wardrobe/headwear/wreaths/gold-laurel-wreath.json",
+    "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
+    "makeup": "data/art/themes/ancient/greek/cosmetics/makeup/gilded/gilded-goddess.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknava/scene/themes/Draknava_Scene_Greek.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Greek Bard: complete scene from the A-pose, every item a library piece (also pre-stageable through draknava-clothing-greek)."
+}

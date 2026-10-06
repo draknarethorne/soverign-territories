@@ -1,8 +1,8 @@
 {
-  "id": "wardrobe/swimwear/strapless-plunge-bodysuit",
+  "id": "wardrobe/swimwear/backless/strapless-plunge-bodysuit",
   "kind": "wearing",
   "name": "Strapless Plunge Bodysuit",
-  "description": "only a {{PRIMARY}} strapless plunging one-piece bodysuit in a lustrous satin finish with a sculpted, boned front that holds the bust lifted and together with no straps, cut very high at the hips; shoulders and arms bare, the back open from the top of the spine to the low waist as one clear expanse of bare skin; legs bare; matching {{PRIMARY}} open-toed high heels with {{METAL}} accents",
+  "description": "only a {{PRIMARY}} strapless plunging one-piece bodysuit in a lustrous satin finish with a sculpted, boned front that holds the bust lifted and together with no straps, cut very high at the hips; shoulders and arms bare, the back open from the top of the spine to the low waist as one clear expanse of bare skin; legs bare; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

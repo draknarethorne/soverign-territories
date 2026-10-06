@@ -1,0 +1,15 @@
+{
+  "id": "themes/southern/tropical-isles/wardrobe/headwear/crowns/flower-and-shell-crown",
+  "kind": "headwear",
+  "name": "Flower and Shell Crown",
+  "description": "a woven crown of tropical flowers, {{PRIMARY}} hibiscus and pale shells with a few trailing ribbons",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "tropical-isles",
+    "headwear"
+  ]
+}
