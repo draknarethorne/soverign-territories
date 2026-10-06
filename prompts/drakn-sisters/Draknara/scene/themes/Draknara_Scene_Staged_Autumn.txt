@@ -1,0 +1,27 @@
+=== Draknara Thorne · STAGED Scene (needs a pre-rendered stage image): Autumn Harvest Woods Shaman (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Draknara Thorne already staged in the autumn harvest woods shaman outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A joyful autumn shot tossing leaves. A gust whirling the leaves. standing in a drift of leaves, one knee lifted, torso leaning forward. head thrown back, laughing. bright eyes lifted then to camera. warm and content, a gentle smile, eyes soft and glowing in the amber light. both hands flinging a shower of leaves up around her.
+
+Ribbons of warm turquoise spirit-light and drifting motes of earth rise around her.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Environment: a high-fantasy forest glade of golden and crimson oaks in morning mist, a carpet of fallen leaves, shafts of low amber light and a mossy standing stone.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Deep Burnt Sienna dominant, with turquoise accents; all glow is warm turquoise.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

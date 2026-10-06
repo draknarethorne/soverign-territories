@@ -1,0 +1,13 @@
+=== Sovereign Territories · Element Icon: Poison — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. One of the ten element icons used on cards, the map and the deck builder.
+Size: 1024x1024
+
+----------------------------------------------------------------
+prompt:
+
+A square game UI icon centred on a plain dark background: a dripping vial with a curl of toxic vapour as a glowing Toxic Orchid Magenta crystal emblem set inside a round ornate tarnished brass frame, subtle rim light, crisp clean edges, a bold readable silhouette at small sizes. No text, no lettering.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, people, busy background, low quality, blurry

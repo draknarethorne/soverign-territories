@@ -1,0 +1,35 @@
+=== Drakness Thorne · Scene (Outfit + Effects): Aztec Sun Court Necromancer (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a ceremonial set of a fitted Midnight Violet woven top with a polished silver sun medallion, a wrap skirt with a beaded fringe and long feather streamers at the hip.
+
+Headwear: a tall radiating headdress of long green and Midnight Violet quetzal feathers on a polished silver band set with jade and amethyst stones.
+
+Jewelry: a broad layered collar of jade beads and polished silver plaques, large disc earrings, jade armlets and a carved amethyst pendant.
+Legs & feet: flat woven Midnight Violet sandals laced up to the knee with polished silver beads and small feather tassels.
+
+A frozen action shot at the moment of a throw. Light breeze. a long step forward, torso rotating through the throw. turned toward the target. locked on the target. proud and regal, chin high, eyes bright, a faint confident curve of the lips. the throwing arm extended forward just after release, the other arm pulled back.
+
+Holding a carved polished silver atlatl with a feather-fletched throwing spear ready at its hook, held back over the shoulder.
+
+Cold amethyst shadow-mist curls around her feet and faint spectral wisps drift upward.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: ceremonial face paint - a bold amethyst stripe across the eyes and nose bridge, small Midnight Violet dots along the cheekbones and a deep natural lip.
+
+Environment: a hidden jungle sanctuary around a turquoise cenote, moss-covered carved stone faces, hanging vines, shafts of light through the canopy and drifting mist over the water.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -4,12 +4,9 @@ Incoming image: an A-pose of Torvald Stonebreaker (chosen hair). Apply the outfi
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait photography, flattering soft cinematic light, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: dark brown hair, short and rugged - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: deep sun-weathered tan complexion, evenly toned.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest.
 
@@ -26,8 +23,6 @@ Eyes: the natural deep umber irises kept intact, with a faint warm amber glow ju
 Environment: a deep red-rock canyon in a high-fantasy realm, carved stone statues and ancient ruined stairways in the cliff walls, warm dust-gold light, scattered boulders.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: massive, heavily muscled, powerfully built build; broad, heavily muscled chest and core, imposing; solid, thick waist; thick, powerful legs.
 
 ----------------------------------------------------------------
 negative prompt:

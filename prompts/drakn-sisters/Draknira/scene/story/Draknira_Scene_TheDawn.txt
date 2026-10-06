@@ -4,12 +4,9 @@ Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, ca
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a soft smudged cool smoky ash-grey root shadow at the crown blending seamlessly into the lighter base colour through the lengths - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Wearing an ornate floor-length dawn gown of Glacial Cyan and frost-white silk with a fitted bodice embroidered in brushed chrome snowflake geometry, a high collar of layered ice-crystal plates, long sheer sleeves of rime-edged gauze, and a skirt that falls into a long train of frost-feathered ribbons; sweetheart neckline.
 
@@ -24,13 +21,9 @@ Shards of ice and glittering snow fall back around her in slow arcs, frost sprea
 
 Eyes: the natural glacial cyan irises kept intact, with a faint icy white-cyan glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
 
-Makeup: soft and natural - frost-white-toned eyeshadow, a light natural cool rose blush, subtle icy rose-tinted satin lips, groomed soft ash-brown brows, soft dark brown lashes, fingernails and toenails natural or Light Cyan; present, never heavy.
-
 Environment: a frozen polar sea at dawn: a vast ice shelf cracking apart in every direction, towering blue-white ice cliffs, a pale pink-gold sunrise on the horizon, breaching whales and narwhals in the open water between the floes, seals, snowy owls circling and arctic foxes bounding across the ice.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

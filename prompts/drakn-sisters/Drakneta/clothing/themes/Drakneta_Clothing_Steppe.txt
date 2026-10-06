@@ -1,0 +1,30 @@
+=== Drakneta Thorne · Clothing: Steppe Horde Summoner (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a short wrap coat-dress of Electric Gold felted wool with a thick sheepskin collar and cuffs, bold white geometric trim, a wide braided belt and an open front over bare legs.
+
+Headwear: a pointed Electric Gold felt cap with a deep fur brim, a trailing braid of white cord and a bright gold plume holder.
+
+Arms: bare arms.
+
+Jewelry: a set of heavy bright gold coin chains across the chest, a carved horse pendant, large hoop earrings and wide hammered armlets with a citrine stone.
+
+Legs & feet: knee-high Electric Gold leather riding boots with felt lining, curled toes and bright gold spur plates.
+
+Overall, a clean studio presentation of the steppe horde summoner outfit.
+
+Eyes: natural studio eyes, not glowing.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

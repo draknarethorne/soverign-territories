@@ -4,12 +4,9 @@ Incoming image: an A-pose of Angelo Prime (chosen hair). Apply the outfit and fu
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing a simple, elegant Soft Pearl White fitted outfit with gold trim; open-toed sandals in a matching tone.
 
@@ -20,8 +17,6 @@ a faint gold glow lingers softly, ambient and understated, nothing overtly magic
 Environment: an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: athletic, broad-shouldered, well-proportioned build; defined, naturally muscular chest and core, toned and healthy, not exaggerated; trim, athletic waist; long, strong, well-proportioned legs.
 
 ----------------------------------------------------------------
 negative prompt:

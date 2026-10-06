@@ -1,0 +1,29 @@
+=== Draknisa Thorne · Video: TideAndSpray (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknisa_Qwen_Scene_Pirate_00001_.png
+Size: 640x960
+Length: 7.5
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Draknisa Thorne, wearing a swashbuckling captain's coat-dress in deep Deep Oceanic Blue brocade with wide teal cuffs, in a hidden high-fantasy smugglers' cove at night, a weathered galleon at anchor, lantern-lit rope bridges.
+
+Timeline:
+[0s-2.5s] Motion: The deck pitches in the swell, rigging creaks, sails snap and spray flies up over the rail in sheets of sunlit foam; at the same time, a flock of birds wheels across the sky in a sweeping arc, wings flashing in the light.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, ribbons of water rise and swirl around her in slow spirals, droplets hanging in the air and catching the light; at the same time, waves roll in and break in lacy foam, water surging and sliding back over the stones and sand.
+[5s-7.5s] Motion: As the previous motion settles, great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: creaking timber, crashing waves and gulls; wingbeats and distant calls; flowing water and soft chimes; waves breaking and gulls; a quiet rising tone
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

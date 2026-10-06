@@ -1,0 +1,33 @@
+=== Draknara Thorne · Scene (Outfit + Effects): Autumn Harvest Woods Shaman (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a flowing gown of layered Deep Burnt Sienna and turquoise leaf-shaped tulle fading from gold to russet, a deep wrapped bodice, a plunging neckline and a long slit skirt that trails fallen leaves.
+
+Headwear: a slim crown of curved antlers wrapped in russet leaves, acorns and a few turquoise berries, bound with a Deep Burnt Sienna ribbon.
+
+Jewelry: a woodland jewelry set of an amber pendant in antique bronze leaf-shaped settings, acorn-cap earrings, a leaf-vine armlet and a ring of twisted twigs.
+Legs & feet: knee-high laced Deep Burnt Sienna suede boots with fur-lined cuffs and tiny antique bronze leaf charms on the laces.
+
+A joyful autumn shot tossing leaves. A gust whirling the leaves. standing in a drift of leaves, one knee lifted, torso leaning forward. head thrown back, laughing. bright eyes lifted then to camera. warm and content, a gentle smile, eyes soft and glowing in the amber light. both hands flinging a shower of leaves up around her.
+
+Ribbons of warm turquoise spirit-light and drifting motes of earth rise around her.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: autumn makeup - warm copper and turquoise shades on the lids, a soft russet blush, a sheer bronze highlight and a muted brick-rose lip.
+
+Environment: a high-fantasy forest glade of golden and crimson oaks in morning mist, a carpet of fallen leaves, shafts of low amber light and a mossy standing stone.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

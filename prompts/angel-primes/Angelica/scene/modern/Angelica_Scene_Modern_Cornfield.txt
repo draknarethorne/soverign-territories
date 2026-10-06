@@ -4,12 +4,9 @@ Incoming image: an A-pose of Angelica Prime (chosen hair). Apply the outfit and 
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Wearing a light, flowing mid-length Soft Pearl White sundress with a fitted bodice, wide straps and a loose skirt trimmed in gold, moving softly with the air.
 
@@ -20,8 +17,6 @@ Warm natural golden-hour light only, no magical or glowing effects.
 Environment: the edge of a tall green cornfield on a country farm road at golden hour, low warm sunlight, a distant farmhouse and a pale evening sky.
 
 Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph.
-
-Figure: lithe, slender, well-proportioned build; full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced); slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -4,12 +4,9 @@ Incoming image: an A-pose of Malakor Venomcaller (chosen hair). Apply the outfit
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait photography, flattering soft cinematic light, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: black hair, short and slicked back - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: deep olive-toned complexion, evenly toned.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder.
 
@@ -26,8 +23,6 @@ Eyes: the natural acid-green irises kept intact, with a faint sickly lime-green 
 Environment: a murky high-fantasy fen at dusk, twisted dead trees and still black water, glowing toxic-green mushrooms and drifting marsh lights, low creeping mist, a crumbling stone causeway.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: powerful, broad-shouldered, heavily muscled build; broad, heavily muscled chest and core; solid, thick waist; thick, powerful legs.
 
 ----------------------------------------------------------------
 negative prompt:

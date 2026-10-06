@@ -1,0 +1,35 @@
+=== Draknira Thorne · Scene (Outfit + Effects): Samurai Wizard (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing feudal fantasy armor - a lacquered Glacial Cyan lamellar cuirass laced in white silk cord, brushed chrome shoulder plates, a short pleated plated skirt (kusazuri) and vambraces.
+
+Headwear: a lacquered Glacial Cyan kabuto helm with a swept neck guard and a large brushed chrome crescent crest, carried or worn tilted back above the forehead.
+
+Jewelry: a set of brushed chrome kanzashi hairpins with hanging diamond beads, a silk cord choker with a small bell, tassel earrings and a carved ring.
+Legs & feet: white split-toe tabi socks with tall lacquered Glacial Cyan geta sandals on two wooden blocks.
+
+An action shot of a weapon being drawn. Light breeze. a half-turn stance, weight on the back foot. turned toward the camera over one shoulder. confident eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. one hand pulling a blade from its sheath at the hip, the other hand on the scabbard.
+
+Holding a long curved katana with a brushed chrome tsuba and Glacial Cyan silk-wrapped hilt held in one hand, a shorter wakizashi sheathed at the sash.
+
+Drifting icy white-cyan frost crystals and a cold mist swirl around her.
+
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+
+Makeup: samurai makeup - a fine crimson flick on the outer lids, a pale luminous porcelain glow, subtle white shading on the cheeks and a deep red lip.
+
+Environment: a long path of red torii gates up a misty mountainside shrine, stone lanterns, crimson maple leaves falling and a distant pagoda in the clouds.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

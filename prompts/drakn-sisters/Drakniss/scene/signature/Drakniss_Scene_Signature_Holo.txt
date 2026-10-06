@@ -4,12 +4,9 @@ Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, ca
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Radiant Rose Gold over a matte underlayer, with delicate warm golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
@@ -27,15 +24,11 @@ A great sunburst of warm golden-white light blazes behind her, beams fall throug
 
 Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - gold-toned eyeshadow, a light natural champagne-rose blush, subtle rose-gold-tinted satin lips, groomed soft honey-brown brows, soft brown lashes, fingernails and toenails natural or Light Rose Gold; present, never heavy.
-
 Companion: her aligned Elder Dragon, Lumira, filling the high windows behind her with its head lowered toward her, radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold.
 
 Environment: the sanctum of a high-fantasy sun temple, a great sunburst rose window blazing behind a white-and-gold altar, tall stained-glass windows, gleaming marble statues and gold-inlaid floors, soft rays of light and drifting incense.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

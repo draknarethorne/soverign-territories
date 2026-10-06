@@ -1,0 +1,33 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Halloween Druid (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a long off-the-shoulder witch's gown in Emerald Green velvet with a tattered sage hem, a laced corset bodice, bat-wing sleeves and a thigh-high slit.
+
+Headwear: a tall pointed witch hat in Emerald Green with a wide curved brim, a buckled antique gold band, a few sage stars and a trailing ribbon.
+
+Jewelry: a spiderweb-lace choker with a hanging peridot charm, a bat-wing pendant, spider rings and a charm bracelet of tiny bones and bells in antique gold.
+Legs & feet: knee-high pointed Emerald Green witch boots with antique gold buckles, a curled toe and tattered ribbon laces.
+
+A moody candid shot beside a bubbling cauldron. Light breeze. leaning over a cauldron, weight on one leg, torso turned to the camera. chin tilted down, eyes up to the camera. sly, mischievous eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. one hand stirring a bubbling cauldron with a long spoon, the other trailing a finger through rising green mist.
+
+Curling bright emerald-green vines, petals and floating leaves unfurl around her.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: Halloween glam - a dramatic dark lip, a sweeping sage cat-eye, a fine spiderweb pattern painted from one eye across the cheekbone, glittering star dots and flushed cheeks.
+
+Environment: a misty high-fantasy pumpkin field at dusk, hundreds of carved jack-o'-lanterns glowing orange, a twisted tree with hanging lanterns, bats against a huge orange moon and drifting low fog.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

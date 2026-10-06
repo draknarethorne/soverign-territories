@@ -1,0 +1,30 @@
+=== Draknira Thorne · Clothing: Danish Wizard (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a floor-length winter gown of pale ice-blue and white wool-silk with a fitted bodice laced in brushed chrome thread and embroidered with Glacial Cyan snowflake and thistle motifs, a high white-fur collar, long fitted sleeves and a full skirt of layered white silk edged with white fur, in the style of a Danish fairy-tale winter queen.
+
+Headwear: a tall crown of brushed chrome filigree set with clear ice-crystal spires and small diamond stones.
+
+Arms: bare arms.
+
+Jewelry: a broad brushed chrome filigree collar necklace set with warm Baltic amber cabochons, matching drop earrings and a brushed chrome brooch at the throat.
+
+Legs & feet: knee-high white leather boots lined and cuffed with white fur, hidden beneath the hem of the gown.
+
+Overall, a clean studio presentation of the danish wizard outfit.
+
+Eyes: natural studio eyes, not glowing.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

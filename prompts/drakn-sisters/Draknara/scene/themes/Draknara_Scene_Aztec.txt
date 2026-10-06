@@ -1,0 +1,35 @@
+=== Draknara Thorne · Scene (Outfit + Effects): Aztec Sun Court Shaman (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing fantasy jaguar-warrior armor - a spotted jaguar-hide cuirass over Deep Burnt Sienna quilted cotton, antique bronze sun-disc shoulder guards, a feathered skirt, woven wrist guards and a jaguar-fang belt.
+
+Headwear: a tall radiating headdress of long green and Deep Burnt Sienna quetzal feathers on a antique bronze band set with jade and turquoise stones.
+
+Jewelry: a broad layered collar of jade beads and antique bronze plaques, large disc earrings, jade armlets and a carved turquoise pendant.
+Legs & feet: flat woven Deep Burnt Sienna sandals laced up to the knee with antique bronze beads and small feather tassels.
+
+A fierce action portrait. Light breeze. low warrior crouch, one knee near the ground, torso coiled. head up, glaring at the camera. fierce eyes to camera. proud and regal, chin high, eyes bright, a faint confident curve of the lips. a war club held back ready to swing, the other hand braced on the stone.
+
+Holding a flat wooden war club studded along both edges with razor-sharp obsidian blades, Deep Burnt Sienna cord wrapping the grip, held in one hand.
+
+Ribbons of warm turquoise spirit-light and drifting motes of earth rise around her.
+
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+
+Makeup: ceremonial face paint - a bold turquoise stripe across the eyes and nose bridge, small Deep Burnt Sienna dots along the cheekbones and a deep natural lip.
+
+Environment: a high-fantasy sun court with a great stepped pyramid of carved stone, stone serpents and sun-disc reliefs, braziers and feathered banners, jungle canopy beyond and blazing midday light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

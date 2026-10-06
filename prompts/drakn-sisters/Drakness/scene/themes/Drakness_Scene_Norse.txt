@@ -1,0 +1,35 @@
+=== Drakness Thorne · Scene (Outfit + Effects): Norse Necromancer (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing Norse shieldmaiden armor - a riveted mail shirt over a Midnight Violet padded tunic, a leather corset belt with amethyst knotwork studs, fur-trimmed leather pauldrons and wrapped leather arm guards.
+
+Headwear: a braided silver circlet with small rune plaques across the brow, a thin plait of hair falling at each temple, the face and eyes clear.
+
+Jewelry: Norse silver jewelry - a heavy twisted torc at the neck, a pair of oval tortoise brooches at the chest, a silver arm ring and a pendant of amethyst rune stones on a leather cord.
+Legs & feet: calf-high Midnight Violet leather boots lined and cuffed with thick fur and bound with amethyst leather cross-lacing.
+
+A powerful action shot, slight low camera angle. Light breeze. feet wide, weight loaded, body arched back at the top of a swing. chin up, facing the camera. straight to camera, wild and fierce. fierce, intensely focused; jaw set, a slight knowing curl; eyes locked on the threat. both hands raised high over the head gripping the weapon, about to bring it down.
+
+Holding a spiked flail of bone-linked chain with a skull head, amethyst soul-light burning in its eye sockets, swung from one hand.
+
+Cold amethyst shadow-mist curls around her feet and faint spectral wisps drift upward.
+
+Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
+
+Makeup: Norse war paint - a bold dark kohl band across the eyes with a small amethyst rune painted on one cheekbone, wind-flushed cheeks and a natural lip.
+
+Environment: a high-fantasy Norse fjord village at night, a great timber longhall with carved dragon-head gables and glowing windows, snow-dusted pines and dark water, green and violet aurora rippling across a starry sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

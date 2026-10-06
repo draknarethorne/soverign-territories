@@ -1,0 +1,30 @@
+=== Draknara Thorne · Clothing: Autumn Harvest Woods Shaman (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a flowing gown of layered Deep Burnt Sienna and turquoise leaf-shaped tulle fading from gold to russet, a deep wrapped bodice, a plunging neckline and a long slit skirt that trails fallen leaves.
+
+Headwear: a slim crown of curved antlers wrapped in russet leaves, acorns and a few turquoise berries, bound with a Deep Burnt Sienna ribbon.
+
+Arms: bare arms.
+
+Jewelry: a woodland jewelry set of an amber pendant in antique bronze leaf-shaped settings, acorn-cap earrings, a leaf-vine armlet and a ring of twisted twigs.
+
+Legs & feet: knee-high laced Deep Burnt Sienna suede boots with fur-lined cuffs and tiny antique bronze leaf charms on the laces.
+
+Overall, a clean studio presentation of the autumn harvest woods shaman outfit.
+
+Eyes: natural studio eyes, not glowing.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

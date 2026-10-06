@@ -1,0 +1,27 @@
+=== Draknira Thorne · STAGED Scene (needs a pre-rendered stage image): Danish Wizard (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Draknira Thorne already staged in the danish wizard outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+She stands tall and serene with her sceptre held upright in one hand and the other hand resting lightly on the front of her gown, her mantle trailing behind her, chin lifted, a calm, regal gaze straight to the camera; full figure visible.
+
+Soft snowflakes drift around her and a faint icy white-cyan frost shimmer glitters on her gown and mantle, a cold halo of diamond dust at her sceptre.
+
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+
+Environment: a snowbound fairy-tale harbour town at dusk: tall colourful gabled houses with snow on the steep roofs along a frozen canal, wooden sailing ships locked in the ice, warm lantern light in the windows, and across the water a white palace of ice spires under a pale rose-and-blue winter sky with snow falling softly.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Glacial Cyan dominant, with white accents; all glow is icy white-cyan.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

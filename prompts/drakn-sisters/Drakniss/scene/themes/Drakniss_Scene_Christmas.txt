@@ -1,0 +1,33 @@
+=== Drakniss Thorne · Scene (Outfit + Effects): Midwinter Christmas Cleric (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a holiday set of a short fur-trimmed Radiant Rose Gold velvet jacket-top tied with a satin ribbon bow, a matching mini skirt with a gold bell-trimmed hem and fur-cuffed gloves.
+
+Headwear: a velvet Radiant Rose Gold Santa-style hat with a white fur brim and a fluffy white pom-pom, a sprig of holly and a radiant rose gold bell at the tip.
+
+Jewelry: a holiday jewelry set of a radiant rose gold snowflake pendant, tiny jingle-bell earrings, a candy-cane charm bracelet and a ribbon choker with a morganite drop.
+Legs & feet: knee-high Radiant Rose Gold velvet boots with white fur cuffs, radiant rose gold buckles and a small bell on each zip pull.
+
+A cheerful holiday portrait with a gift. Light breeze. standing with weight on one leg, shoulders turned, leaning slightly forward. tilted, smiling at the camera. warm, sparkling eyes to camera. festive cheer, a warm open smile, cheeks flushed, eyes sparkling with the holiday lights. a ribbon-wrapped gift box held out in both hands toward the camera.
+
+Warm rays of warm golden-white light and drifting golden motes glow around her.
+
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
+
+Makeup: festive makeup - a deep berry lip, a soft gold shimmer on the lids with tiny silver glitter flecks, rosy windburnt cheeks and delicate frost-white highlights.
+
+Environment: a grand stone hall decorated for midwinter, a roaring fireplace with stockings, tall evergreen garlands with ribbons, a decorated tree and stacked gifts, golden candlelight.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

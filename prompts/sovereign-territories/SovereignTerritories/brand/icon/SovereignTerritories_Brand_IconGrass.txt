@@ -1,0 +1,13 @@
+=== Sovereign Territories · Element Icon: Grass — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. One of the ten element icons used on cards, the map and the deck builder.
+Size: 1024x1024
+
+----------------------------------------------------------------
+prompt:
+
+A square game UI icon centred on a plain dark background: an unfurling leaf with a small bloom as a glowing Emerald Green crystal emblem set inside a round ornate antique gold frame, subtle rim light, crisp clean edges, a bold readable silhouette at small sizes. No text, no lettering.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, people, busy background, low quality, blurry

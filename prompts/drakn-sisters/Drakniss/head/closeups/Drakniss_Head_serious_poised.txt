@@ -4,7 +4,7 @@ Incoming image: an A-pose (or hair variant) of Drakniss Thorne. Zoom in to a stu
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional beauty glamour shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
@@ -12,15 +12,11 @@ Close-up framed from the upper chest up: the head, face and hair fill the frame,
 
 View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.
 
-Keep high fidelity to facial likeness, bone structure, hairstyle, body, and wardrobe from the incoming image.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
 
 Expression: a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct, no smile.
 
-Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-
-Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural champagne-rose blush, groomed soft honey-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
-
-Eyes: radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; soft brown lush lashes, defined lash line.
+Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; soft brown lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

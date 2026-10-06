@@ -1,0 +1,33 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Halloween Summoner (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a short flared witch dress in Electric Gold with pumpkin-orange white layered petticoats, a patchwork corset and a ragged scalloped hem.
+
+Headwear: a tall pointed witch hat in Electric Gold with a wide curved brim, a buckled bright gold band, a few white stars and a trailing ribbon.
+
+Jewelry: a spiderweb-lace choker with a hanging citrine charm, a bat-wing pendant, spider rings and a charm bracelet of tiny bones and bells in bright gold.
+Legs & feet: knee-high pointed Electric Gold witch boots with bright gold buckles, a curled toe and tattered ribbon laces.
+
+A playful shot sitting on a broomstick. Wind lifting the hair and hem. sitting side-on across a broomstick, legs crossed, torso leaning back. turned over the shoulder to the camera. playful, teasing eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. one hand gripping the broom handle, the other holding the pointed hat on her head.
+
+Forks of white-hot electric lightning crackle through the air and arc along her weapon.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: Halloween glam - a dramatic dark lip, a sweeping white cat-eye, a fine spiderweb pattern painted from one eye across the cheekbone, glittering star dots and flushed cheeks.
+
+Environment: a misty high-fantasy pumpkin field at dusk, hundreds of carved jack-o'-lanterns glowing orange, a twisted tree with hanging lanterns, bats against a huge orange moon and drifting low fog.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

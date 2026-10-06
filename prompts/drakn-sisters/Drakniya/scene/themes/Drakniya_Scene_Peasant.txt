@@ -1,0 +1,35 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Village Peasant Druid (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a set of a loose open-necked linen blouse knotted at the waist, a laced Emerald Green corset belt, a flared skirt hitched up at one hip and a headscarf.
+
+Headwear: a wide-brimmed woven straw hat with a Emerald Green ribbon band and a sprig of wheat tucked in.
+
+Jewelry: a simple jewelry set of a leather cord necklace with a polished peridot stone, a braided straw bracelet, a small antique gold ring and a wildflower tucked behind one ear.
+Legs & feet: short scuffed Emerald Green leather boots with frayed laces, dust on the toes.
+
+A candid farm portrait. Light breeze. leaning relaxed on a pitchfork, one foot crossed over the other. tilted, grinning at the camera. cheeky eyes to camera. honest warmth, an easy open smile, a little rosy and sun-flushed. both hands on the pitchfork handle, a straw stalk between the teeth.
+
+Holding a pitchfork held upright in one hand with a antique gold sickle tucked in the belt.
+
+Curling bright emerald-green vines, petals and floating leaves unfurl around her.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: village makeup - bare skin with sun-kissed freckles across the nose, wind-flushed cheeks, a smudge of flour or dust and a natural pink lip.
+
+Environment: a high-fantasy wheat field at golden hour, a thatched stone cottage with smoking chimney, a wooden fence and a distant windmill under a wide soft sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

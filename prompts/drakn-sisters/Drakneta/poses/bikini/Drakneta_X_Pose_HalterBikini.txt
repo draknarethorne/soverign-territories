@@ -1,5 +1,5 @@
 === Drakneta Thorne · A-Pose Base (group: X_Pose) — Build (img2img) ===
-Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. Set figure, skin, eyes, and hair here; downstream stages preserve them.
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. The Critical details are set here; downstream stages assume them and do not repeat them.
 Denoise ~1.0.
 
 ----------------------------------------------------------------
@@ -7,25 +7,30 @@ prompt:
 
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
-Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+Critical details - these must be clearly visible:
+Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+Legs: very long, slender legs.
+
+Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
-Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions. The one exception is the bust: it follows the Figure line below, enlarged, lifted and pressed together at the centre even where the reference bust is smaller or spread apart.
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
 
-Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs.
 
-Skin: warm golden tan complexion, evenly tanned, no pale areas.
+Wearing: only a Electric Gold halter bikini in a high-gloss, mirror-polished liquid-metal finish with crisp bright specular highlights, glossy reflections and deep saturated colour with a subtle bright gold sheen: a plunging triangle top that ties behind the neck and at the back, and a matching high-cut bottom with thin side ties; midriff bare; matching Electric Gold open-toed stiletto sandals in the same finish, with a zig-zag strap crossing the instep and a thin ankle strap, the slim heel shaped like a bright gold lightning bolt, bare toes showing.
 
-Wearing: only a Electric Gold halter bikini in a lustrous satin-metallic finish with a subtle bright gold sheen: a plunging triangle top that ties behind the neck and at the back, and a matching high-cut bottom with thin side ties; midriff bare; matching Electric Gold open-toed high heels with bright gold accents.
+Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
 
-Hair: light golden-brown dark-blonde hair, sleek and sultry, only a handful of thin, sharp electric white-silver streaks scattered sparsely through the lengths, each one hair-fine and subtle, the rest of the hair keeping its natural base colour; hair fully let down and loose, parted in the exact centre and framing the face, falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, its full length, ends and highlights visible, keeping the subject's own natural texture (straight, wavy or curly); forehead, eyes and cheeks open and unobscured, chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
+Makeup: soft and natural - champagne-gold-toned eyeshadow, a light natural golden peach blush, groomed golden-brown brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
 
-Makeup: soft and natural, with a subtly blended champagne-gold-toned eyeshadow, a light natural golden peach blush, groomed golden-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
-
-Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; dark brown lush lashes.
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; dark brown lush lashes.
 
 Lips: natural, subtle golden-peach-tinted satin - keep lips natural, no heavy lipstick.
 

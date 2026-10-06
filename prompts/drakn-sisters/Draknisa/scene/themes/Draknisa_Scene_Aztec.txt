@@ -1,0 +1,33 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Aztec Sun Court Enchanter (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a ceremonial set of a fitted Deep Oceanic Blue woven top with a polished platinum sun medallion, a wrap skirt with a beaded fringe and long feather streamers at the hip.
+
+Headwear: a tall radiating headdress of long green and Deep Oceanic Blue quetzal feathers on a polished platinum band set with jade and aquamarine stones.
+
+Jewelry: a broad layered collar of jade beads and polished platinum plaques, large disc earrings, jade armlets and a carved aquamarine pendant.
+Legs & feet: flat woven Deep Oceanic Blue sandals laced up to the knee with polished platinum beads and small feather tassels.
+
+A reverent ceremonial portrait. Light breeze. standing straight with a slight bow of the head, feet together. head lowered then lifted to the camera. calm, reverent eyes to camera. proud and regal, chin high, eyes bright, a faint confident curve of the lips. both hands holding a gold offering bowl out in front, smoke curling from it.
+
+Floating ribbons of aqua water and glittering droplets orbit her.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: ceremonial face paint - a bold teal stripe across the eyes and nose bridge, small Deep Oceanic Blue dots along the cheekbones and a deep natural lip.
+
+Environment: a hidden jungle sanctuary around a turquoise cenote, moss-covered carved stone faces, hanging vines, shafts of light through the canopy and drifting mist over the water.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

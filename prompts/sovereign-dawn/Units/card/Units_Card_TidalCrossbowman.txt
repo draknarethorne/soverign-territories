@@ -1,0 +1,13 @@
+=== Tidal Crossbowman · Card Art (units) — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. Art for the gameplay card UNIT_TIDAL_CROSSBOWMAN.
+Size: 960x1440
+
+----------------------------------------------------------------
+prompt:
+
+painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject. Tidal Crossbowman: Expert crossbow wielders who strike with the force of ocean currents. A full-body character shown in a dynamic three-quarter action pose, weapon and gear clearly visible. Colour palette of deep oceanic blue and platinum, with swirling water and sea spray around the subject. Background: a dramatic battlefield landscape in the element's colours, softly out of focus.  No text, no lettering, no frame, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, logo, card frame, border, low quality, blurry, extra limbs, deformed hands, modern objects

@@ -1,0 +1,35 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Greek Summoner (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a flowing Greek peplos gown of fine Electric Gold linen pinned at both shoulders with white brooches, softly pleated, cinched under the bust with a gold cord, a deep side slit to the thigh.
+
+Headwear: a delicate gold laurel wreath resting on the crown of the head, the leaves fine and detailed, the hair flowing beneath it.
+
+Jewelry: gold jewelry of laurel-leaf motifs - a collar necklace, matching earrings and a coiled gold armlet on the upper arm, with small citrine stones.
+Legs & feet: gold lace-up Greek sandals wrapping the ankle and calves in thin straps, the toes bare.
+
+A frozen action shot at the moment of a throw. Light breeze. a long step forward, torso rotating through the throw. turned toward the target. locked on the target. serene and reverent, eyes soft and slightly lifted, lips gently closed. the throwing arm extended forward just after release, the other arm pulled back.
+
+Holding a long bright gold spear with a forked tip, white-hot electric lightning crawling along the shaft, held upright in both hands.
+
+Forks of white-hot electric lightning crackle through the air and arc along her weapon.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: a gilded goddess finish - gold-washed lids with a soft white edge, luminous highlight on the cheekbones, defined brows, a warm peach blush and a rosy-nude lip.
+
+Environment: a white marble Greek-style temple of fluted columns on a high-fantasy sea cliff at golden hour, the deep blue sea glittering below, olive trees and a stone stair, warm light on the marble.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -1,0 +1,29 @@
+=== Draknoxa Thorne · Video: BatsAndVenom (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknoxa_Qwen_Scene_Halloween_00001_.png
+Size: 640x960
+Length: 7
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Draknoxa Thorne, wearing a short flared witch dress in Toxic Orchid Magenta with pumpkin-orange lime layered petticoats, in the courtyard of a crumbling gothic manor at night, candle-lit windows, cobwebbed iron gates, ivy-covered statues.
+
+Timeline:
+[0s-2.5s] Motion: A cloud of bats pours across the moon and wheels over the scene, wings fluttering as ghostly wisps drift through the trees; at the same time, low mist rolls slowly across the ground and drifts between the shapes in the setting, softening the light as it passes.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, wisps of toxic mist coil around her and drip and bubble along the ground, shimmering in sickly colours; at the same time, carved lanterns flare to life with orange fire in their grins, glowing eyes blinking open in the dark and wisps of ghostly light rising from them.
+[5s-7s] Motion: As the previous motion settles, thin ribbons of smoke curl upward from every fire, censer and chimney, drifting and twisting in the air.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: fluttering wings and a distant owl; a quiet wind; a soft hiss and bubbling; a spooky whisper and flickering flame; a low crackle
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

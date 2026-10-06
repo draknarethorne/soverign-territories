@@ -1,0 +1,13 @@
+=== Sovereign Territories · Element Icon: Wind — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. One of the ten element icons used on cards, the map and the deck builder.
+Size: 1024x1024
+
+----------------------------------------------------------------
+prompt:
+
+A square game UI icon centred on a plain dark background: three curling wind spirals as a glowing Windswept Jade crystal emblem set inside a round ornate polished nickel frame, subtle rim light, crisp clean edges, a bold readable silhouette at small sizes. No text, no lettering.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, people, busy background, low quality, blurry

@@ -1,0 +1,35 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Celtic Druid (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a long Celtic gown of Emerald Green wool with wide trailing sleeves, sage Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder.
+
+Headwear: a slim silver Celtic circlet worked with interlaced knotwork across the brow, a small peridot gem at the centre, the hair flowing freely beneath.
+
+Jewelry: Celtic silver jewelry - a triskele pendant on a braided chain, a penannular brooch pinning the mantle, knotwork arm cuffs and drop earrings set with peridot stones.
+Legs & feet: soft ankle-high Emerald Green leather moor boots laced up the front with sage cord.
+
+A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. composed, serene; lips softly together; expressive, sultry brows. one foot forward for an elegant line; arms relaxed with a graceful hand.
+
+Holding a gnarled living-wood staff in one hand, the bark twisting naturally up the shaft, leafy vines and small blossoms curling along it, the top opening into a cradle of branches holding a glowing bright emerald-green seed-orb, a few fresh green leaves sprouting from the wood.
+
+Curling bright emerald-green vines, petals and floating leaves unfurl around her.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: Celtic makeup - a soft smoky green-grey eye, a delicate sage woad spiral painted at one temple and a small triskele dot on the cheekbone, a natural flushed lip.
+
+Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

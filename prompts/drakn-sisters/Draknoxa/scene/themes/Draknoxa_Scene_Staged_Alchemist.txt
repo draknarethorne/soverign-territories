@@ -1,0 +1,27 @@
+=== Draknoxa Thorne · STAGED Scene (needs a pre-rendered stage image): Alchemist's Guild Alchemist (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Draknoxa Thorne already staged in the alchemist's guild alchemist outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A candid lab portrait with a glowing flask. Light breeze. standing with weight on one leg, leaning toward the light. head tilted, studying the flask then glancing to camera. curious, bright eyes to camera. a bright eureka spark, eyes wide and gleaming, a quick delighted grin. a flask of glowing liquid held up at eye level, the other hand swirling it gently.
+
+Wisps of toxic lime toxic vapour and bubbling droplets curl around her.
+
+Eyes: irises softly aglow with toxic lime light, brightest near the pupil and fading to the natural acid lime-emerald irises at the rim, iris detail still visible, a gentle toxic lime catchlight, no light spilling beyond the eyelids.
+
+Environment: a cluttered high-fantasy alchemy laboratory of stone arches, shelves of colourful vials, bubbling glass alembics, copper pipes, hanging herbs and a glowing transmutation circle on the floor.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Toxic Orchid Magenta dominant, with lime accents; all glow is toxic lime.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

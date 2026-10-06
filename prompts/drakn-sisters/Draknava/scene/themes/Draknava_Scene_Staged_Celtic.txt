@@ -1,0 +1,27 @@
+=== Draknava Thorne · STAGED Scene (needs a pre-rendered stage image): Celtic Bard (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Draknava Thorne already staged in the celtic bard outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a playful, knowing smile, eyes bright with mischief. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+A playful swirl of wind carries drifting mist and loose heather blossoms around her, pale silver-jade light glinting within the breeze.
+
+Eyes: irises softly aglow with pale silver-jade light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle pale silver-jade catchlight, no light spilling beyond the eyelids.
+
+Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Windswept Jade dominant, with silver accents; all glow is pale silver-jade.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

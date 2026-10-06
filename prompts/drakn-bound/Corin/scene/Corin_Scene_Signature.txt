@@ -4,12 +4,9 @@ Incoming image: an A-pose of Corin Tidewalker (chosen hair). Apply the outfit an
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: sun-streaked brown hair, short and wind-tousled - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: sun-weathered tan complexion, evenly toned.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing close-fitting Deep Oceanic Blue-toned light leather armor, Seafoam Green accent straps across the chest and hips, built for silent movement; scale-like overlapping plates across the torso, a shell-shaped clasp at the collar.
 
@@ -27,8 +24,6 @@ Companion: his bonded Shark, a massive sleek predator circling in the shallows a
 Environment: the skyline of a medieval high-fantasy walled citadel at dusk behind them, slate-roofed stone towers and timber-framed houses climbing to a distant keep and cathedral spires, banners stirring on the battlements, lantern and torch light glowing in the windows and streets below, warm last light on the rooftops.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, strong legs.
 
 ----------------------------------------------------------------
 negative prompt:

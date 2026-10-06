@@ -1,0 +1,35 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Steppe Horde Summoner (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a short wrap coat-dress of Electric Gold felted wool with a thick sheepskin collar and cuffs, bold white geometric trim, a wide braided belt and an open front over bare legs.
+
+Headwear: a pointed Electric Gold felt cap with a deep fur brim, a trailing braid of white cord and a bright gold plume holder.
+
+Jewelry: a set of heavy bright gold coin chains across the chest, a carved horse pendant, large hoop earrings and wide hammered armlets with a citrine stone.
+Legs & feet: knee-high Electric Gold leather riding boots with felt lining, curled toes and bright gold spur plates.
+
+A dynamic action shot, side-on to the camera. Light breeze. feet planted wide, torso turned side-on, drawn bow arm extended. turned along the arrow line, one eye lined up on the target. locked on a target beyond the frame. wild and free, a fierce open grin, windswept hair, eyes alight with the thrill of the ride. the string hand drawn back to the cheek with the arrow nocked, the other arm straight and steady.
+
+Holding a short composite bow of horn, sinew and Electric Gold lacquered wood with bright gold tips, a quiver of white-hot electric-fletched arrows at the hip.
+
+Forks of white-hot electric lightning crackle through the air and arc along her weapon.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: steppe makeup - a bold white war stripe across the cheekbones, a smudged dark kohl, wind-reddened cheeks and a natural chapped lip.
+
+Environment: a grassy ridge above rolling steppe, a lone standing stone with banners snapping in the wind, a distant column of riders and storm clouds on the horizon.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

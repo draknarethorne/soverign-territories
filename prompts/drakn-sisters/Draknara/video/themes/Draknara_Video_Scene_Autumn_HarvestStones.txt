@@ -1,0 +1,29 @@
+=== Draknara Thorne · Video: HarvestStones (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknara_Qwen_Scene_Autumn_00001_.png
+Size: 640x960
+Length: 7.5
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Draknara Thorne, wearing a flowing gown of layered Deep Burnt Sienna and turquoise leaf-shaped tulle fading from gold to russet, in a high-fantasy forest glade of golden and crimson oaks in morning mist, a carpet of fallen leaves.
+
+Timeline:
+[0s-2.5s] Motion: Warm harvest light turns the fields gold as wheat sways in long waves and a drift of leaves tumbles through the air; at the same time, dry leaves skitter across the ground and rise in a slow spiral of orange, gold and red around the scene before drifting off on the wind.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, stones and loose earth lift from the ground and orbit slowly around her as dust drifts off them; at the same time, fine dust motes float through slanting shafts of light, glowing and tumbling slowly in the still air.
+[5s-7.5s] Motion: As the previous motion settles, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: rustling grain and a warm wind; rustling leaves and a low wind; a deep rumble and grinding stone; a soft room tone; a rushing wind
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

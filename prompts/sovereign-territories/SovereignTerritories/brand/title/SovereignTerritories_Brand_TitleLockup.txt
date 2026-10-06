@@ -1,0 +1,13 @@
+=== Sovereign Territories · Title Lockup — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. The title lettering for the title screen, the store page and the reel.
+Size: 1344x768
+
+----------------------------------------------------------------
+prompt:
+
+A game title logo lockup on a deep dark misty background: the words "SOVEREIGN TERRITORIES" in large carved obsidian capital letters with molten gold edges and a subtle dawn-light glow, a small ornate crown-and-dragon-wing flourish centred above the words, and the tagline "Build the Deck. Conquer the Campaign. Level Your Heroes." in small elegant gold lettering beneath, everything centred, cinematic fantasy poster typography, razor-sharp lettering, every letter perfectly spelled.
+
+----------------------------------------------------------------
+negative prompt:
+
+misspelled words, extra letters, missing letters, blurry text, watermark, people, low quality, modern objects

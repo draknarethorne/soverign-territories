@@ -4,12 +4,9 @@ Incoming image: an A-pose of Draknava Thorne (chosen hair). Apply the outfit, ca
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Wearing a floor-length ceremonial bard's windsilk robe of Windswept Jade and gossamer-silver silk with polished nickel embroidery of feathers and written music, wide flowing sleeves, a high collar of layered feather-cut plates, an open front over a fitted Windswept Jade bodice and long slit skirt, a polished nickel sash hung with small silver bells, a long hem of floating scarves.
 
@@ -26,13 +23,9 @@ Silk scarves and the hem of the robe lift gently in a passing breeze, faint pale
 
 Eyes: irises softly aglow with pale silver-jade light, brightest near the pupil and fading to the natural silver-grey irises at the rim, iris detail still visible, a gentle pale silver-jade catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, subtle dusty mauve-tinted satin lips, groomed soft ash-grey brows, soft grey-brown lashes, fingernails and toenails natural or Light Jade; present, never heavy.
-
 Environment: an open-air hilltop music pavilion: a white colonnaded gazebo hung with wind chimes, silk banners and small harps, over rolling green highlands and a wide morning sky, a breeze moving through the colonnade, swallows nesting in the eaves.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

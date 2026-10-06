@@ -1,0 +1,35 @@
+=== Draknora Thorne · Scene (Outfit + Effects): Samurai Magician (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing an off-the-shoulder layered silk kimono in Flame Red with gold crane and wave embroidery, a wide obi tied at the back, a slit hem and a loose open neckline.
+
+Headwear: a lacquered Flame Red kabuto helm with a swept neck guard and a large burnished copper crescent crest, carried or worn tilted back above the forehead.
+
+Jewelry: a set of burnished copper kanzashi hairpins with hanging ruby beads, a silk cord choker with a small bell, tassel earrings and a carved ring.
+Legs & feet: white split-toe tabi socks with tall lacquered Flame Red geta sandals on two wooden blocks.
+
+A cinematic shot slicing through falling petals. Wind spinning the petals. a deep forward stance mid-slash, hair and sleeves streaming. turned over the shoulder to the camera. focused eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. the katana swept in a diagonal cut, petals parting around the blade.
+
+Holding a long curved katana with a burnished copper tsuba and Flame Red silk-wrapped hilt held in one hand, a shorter wakizashi sheathed at the sash.
+
+Flickers of fiery orange-gold flame and glowing embers drift around her.
+
+Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
+
+Makeup: samurai makeup - a fine crimson flick on the outer lids, a pale luminous porcelain glow, subtle gold shading on the cheeks and a deep red lip.
+
+Environment: a high-fantasy tiered white-and-black castle keep with curved roofs, stone walls and moat, cherry blossoms drifting across the scene, lanterns and a wide stone bridge.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

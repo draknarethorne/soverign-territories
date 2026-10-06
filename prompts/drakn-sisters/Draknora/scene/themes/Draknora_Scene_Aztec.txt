@@ -1,0 +1,35 @@
+=== Draknora Thorne · Scene (Outfit + Effects): Aztec Sun Court Magician (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing fantasy jaguar-warrior armor - a spotted jaguar-hide cuirass over Flame Red quilted cotton, burnished copper sun-disc shoulder guards, a feathered skirt, woven wrist guards and a jaguar-fang belt.
+
+Headwear: a tall radiating headdress of long green and Flame Red quetzal feathers on a burnished copper band set with jade and ruby stones.
+
+Jewelry: a broad layered collar of jade beads and burnished copper plaques, large disc earrings, jade armlets and a carved ruby pendant.
+Legs & feet: flat woven Flame Red sandals laced up to the knee with burnished copper beads and small feather tassels.
+
+A fierce action portrait. Light breeze. low warrior crouch, one knee near the ground, torso coiled. head up, glaring at the camera. fierce eyes to camera. proud and regal, chin high, eyes bright, a faint confident curve of the lips. a war club held back ready to swing, the other hand braced on the stone.
+
+Holding a flat wooden war club studded along both edges with razor-sharp obsidian blades, Flame Red cord wrapping the grip, held in one hand.
+
+Flickers of fiery orange-gold flame and glowing embers drift around her.
+
+Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
+
+Makeup: ceremonial face paint - a bold gold stripe across the eyes and nose bridge, small Flame Red dots along the cheekbones and a deep natural lip.
+
+Environment: a high-fantasy sun court with a great stepped pyramid of carved stone, stone serpents and sun-disc reliefs, braziers and feathered banners, jungle canopy beyond and blazing midday light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

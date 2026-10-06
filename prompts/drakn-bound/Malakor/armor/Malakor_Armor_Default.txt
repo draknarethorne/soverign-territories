@@ -4,13 +4,11 @@ Incoming image: an A-pose of Malakor Venomcaller (chosen hair) in the bikini und
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: black hair, short and slicked back - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing close-fitting Toxic Orchid Magenta-toned light leather armor, Tarnished Brass accent straps across the chest and hips, built for silent movement; faint venom-etched tattoos visible at the collarbone, a serpent-coil clasp at the shoulder.
 
@@ -26,11 +24,7 @@ Holding a pair of brass-edged daggers, one in each hand, Toxic Orchid Magenta-wr
 
 Overall, deadly assassin aesthetic.
 
-Figure: powerful, broad-shouldered, heavily muscled build; broad, heavily muscled chest and core; solid, thick waist; thick, powerful legs.
-
-Eyes: acid-green irises with faint toxic-violet striations and a blackened limbal ring, natural studio eyes, not glowing.
-
-Grooming: natural, clean and well-groomed, groomed brows, no cosmetics.
+Eyes: natural studio eyes, not glowing.
 
 ----------------------------------------------------------------
 negative prompt:

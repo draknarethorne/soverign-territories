@@ -4,12 +4,9 @@ Incoming image: an A-pose of Dorian Stormstrike (chosen hair). Apply the outfit,
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait photography, flattering soft cinematic light, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: jet-black hair, short and neatly cropped - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: warm golden-tan complexion, evenly toned.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing fitted Storm Gold-toned banded leather armor across the chest and shoulders, Arc White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; prayer-cloth wraps at the wrists and waist, faint lightning-bolt embroidery along the hem.
 
@@ -26,8 +23,6 @@ Eyes: the natural electric cobalt irises kept intact, with a faint white-hot ele
 Environment: ancient ruined stone temple pillars on a high-fantasy mountain peak, towering dark storm clouds behind, forks of lightning striking distant crags, wind-torn banners on broken columns.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: lean, athletic, well-muscled build; defined, toned chest and core; trim, athletic waist; long, agile legs.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,13 @@
+=== Sovereign Territories · Key Art Poster — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. The ten sisters, standing together on the ridge, for the poster and the title screen.
+Size: 1024x1280
+
+----------------------------------------------------------------
+prompt:
+
+Epic key-art poster for a fantasy strategy card game, portrait composition, photoreal cinematic fantasy. Exactly ten women, no more and no fewer, stand together on a shattered obsidian ridge at the first light of dawn: five in a front row and five in a second row on higher ground behind them, standing in the gaps between the front figures. Every woman is fully visible and clearly separated from her neighbours, with a different face, a different hair colour and a different gown colour, each wreathed in her own element. Front row, left to right: 1) a woman in a flame-red gown wreathed in fire; 2) a woman in a pale icy-cyan and white gown with frost crystals; 3) a woman in a deep forest-green gown with living vines and flowers; 4) a woman in a bright yellow-gold gown crackling with white lightning; 5) a woman in a magenta-purple gown with acid-lime venom mist. Back row, left to right: 6) a woman in a black and violet gown wrapped in shadow smoke; 7) a woman in a deep ocean-blue gown with swirling water; 8) a woman in a white and rose-gold gown glowing with golden light; 9) a woman in a terracotta-brown gown with floating stones and turquoise beads; 10) a woman in a pale silver gown with swirling wind ribbons. Behind them the sky is split by ten streaks of coloured light, distant ancient dragons in silhouette among the clouds, and a fractured world of ten glowing elemental territories far below. Dramatic rim light, volumetric god-rays, rich colour, heroic scale, a clear empty band of sky across the top for the title. No text, no lettering, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+fewer than ten women, nine women, eight women, merged bodies, duplicate faces, text, lettering, watermark, logo, low quality, blurry, extra limbs, deformed hands, modern objects

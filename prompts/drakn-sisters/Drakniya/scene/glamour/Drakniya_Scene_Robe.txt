@@ -4,12 +4,9 @@ Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, ca
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Wearing a floor-length ceremonial druid-robe of layered Emerald Green and sage silk cut into overlapping leaf shapes, wide bell sleeves, a mantle of living ivy and small flowers over the shoulders, an open front over a fitted Emerald Green bodice and long slit skirt, a woven antique gold belt hung with seed-pods and small bells, a trailing hem of fern fronds.
 
@@ -26,13 +23,9 @@ Fireflies and drifting pollen glow softly around her, a few leaves spiralling in
 
 Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
 
-Makeup: soft and natural - sage-toned eyeshadow, a light natural warm apricot blush, subtle warm rosewood-tinted satin lips, groomed warm chestnut-brown brows, dark brown lashes, fingernails and toenails natural or Light Green; present, never heavy.
-
 Environment: a mossy waterfall grotto sanctuary: a curtain of water falling into a clear emerald pool, ferns and hanging moss on the stone, small carved wooden shrines and lanterns of seed-pod glass hung among the roots, a stag drinking at the pool's edge, sunlight in green shafts through the canopy above.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
 
 ----------------------------------------------------------------
 negative prompt:

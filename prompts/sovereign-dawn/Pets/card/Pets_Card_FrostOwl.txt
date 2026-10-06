@@ -1,0 +1,13 @@
+=== Frost Owl · Card Art (pets) — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. Art for the gameplay card UNIT_FROST_OWL.
+Size: 960x1440
+
+----------------------------------------------------------------
+prompt:
+
+painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject. Frost Owl: A silent hunter of the frozen court that chose to stay when the rest of the court did not. A full-body creature shown in a powerful, alert pose, anatomy and markings clearly visible. Colour palette of glacial cyan and brushed chrome, with frost crystals and cold mist around the subject. Background: a wild landscape suited to the creature, in the element's colours, softly out of focus. A little more ornate and imposing than usual. No text, no lettering, no frame, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, logo, card frame, border, low quality, blurry, extra limbs, deformed hands, modern objects

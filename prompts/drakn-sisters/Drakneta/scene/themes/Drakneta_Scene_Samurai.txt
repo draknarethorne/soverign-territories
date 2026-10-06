@@ -1,0 +1,35 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Samurai Summoner (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing feudal fantasy armor - a lacquered Electric Gold lamellar cuirass laced in white silk cord, bright gold shoulder plates, a short pleated plated skirt (kusazuri) and vambraces.
+
+Headwear: a lacquered Electric Gold kabuto helm with a swept neck guard and a large bright gold crescent crest, carried or worn tilted back above the forehead.
+
+Jewelry: a set of bright gold kanzashi hairpins with hanging citrine beads, a silk cord choker with a small bell, tassel earrings and a carved ring.
+Legs & feet: white split-toe tabi socks with tall lacquered Electric Gold geta sandals on two wooden blocks.
+
+A precise action shot at the moment of the draw. Light breeze. a low wide stance, weight sunk, torso turned side-on. head turned to the camera, chin level. calm, piercing eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. one hand drawing the katana a few inches from its sheath, the other gripping the scabbard at the hip.
+
+Holding a long curved katana with a bright gold tsuba and Electric Gold silk-wrapped hilt held in one hand, a shorter wakizashi sheathed at the sash.
+
+Forks of white-hot electric lightning crackle through the air and arc along her weapon.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Makeup: samurai makeup - a fine crimson flick on the outer lids, a pale luminous porcelain glow, subtle white shading on the cheeks and a deep red lip.
+
+Environment: a high-fantasy tiered white-and-black castle keep with curved roofs, stone walls and moat, cherry blossoms drifting across the scene, lanterns and a wide stone bridge.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

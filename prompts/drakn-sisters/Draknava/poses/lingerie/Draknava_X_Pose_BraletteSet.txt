@@ -1,5 +1,5 @@
 === Draknava Thorne · A-Pose Base (group: X_Pose) — Build (img2img) ===
-Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. Set figure, skin, eyes, and hair here; downstream stages preserve them.
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. The Critical details are set here; downstream stages assume them and do not repeat them.
 Denoise ~1.0.
 
 ----------------------------------------------------------------
@@ -7,25 +7,30 @@ prompt:
 
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
-Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
+Critical details - these must be clearly visible:
+Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, flowing, noticeable seafoam pearlescent streaks swept in one direction along the lengths as if carried by a breeze, bright against the base colour and catching the light, tone-on-tone dimension.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring.
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+Legs: very long, slender legs.
+
+Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
-Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions. The one exception is the bust: it follows the Figure line below, enlarged, lifted and pressed together at the centre even where the reference bust is smaller or spread apart.
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
 
-Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
+Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs.
 
-Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
+Wearing: only a Windswept Jade soft wireless bralette set in a high-gloss, mirror-polished liquid-metal finish with crisp bright specular highlights, glossy reflections and deep saturated colour with a subtle polished nickel sheen and a hairline polished nickel edge trim: a bralette with a deep plunging V neckline and thin straps that draws the bust together at the centre, and matching low-rise briefs with thin elastic sides; midriff and abdomen bare; matching Windswept Jade open-toed stiletto sandals in the same finish, with a single thin strap across the toes and a long thin strap that winds twice around the ankle, a small polished nickel feather-shaped charm at the ankle, bare toes showing.
 
-Wearing: only a Windswept Jade soft wireless bralette set in a lustrous satin-metallic finish with a subtle polished nickel sheen and a hairline polished nickel edge trim: a bralette with a deep plunging V neckline and thin straps that draws the bust together at the centre, and matching low-rise briefs with thin elastic sides; midriff and abdomen bare; matching Windswept Jade open-toed high heels with polished nickel accents.
+Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
 
-Hair: soft silvery ash hair, soft and sultry with a breezy, airy sheen, a sheer pearlescent glaze of pale pale seafoam glossed over the whole length as a faint tonal sheen, with no distinct streaks, the base colour clearly dominant; hair fully let down and loose, parted in the exact centre and framing the face, falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, its full length, ends and highlights visible, keeping the subject's own natural texture (straight, wavy or curly); forehead, eyes and cheeks open and unobscured, chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
+Makeup: soft and natural - silver-toned eyeshadow, a light natural soft pink blush, groomed soft ash-grey brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Jade.
 
-Makeup: soft and natural, with a subtly blended silver-toned eyeshadow, a light natural soft pink blush, groomed soft ash-grey brows and softly defined eyes - present for the character's theme but never heavy or overly accented. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Jade.
-
-Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; soft grey-brown lush lashes.
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; soft grey-brown lush lashes.
 
 Lips: natural, subtle dusty mauve-tinted satin - keep lips natural, no heavy lipstick.
 

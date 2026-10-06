@@ -1,0 +1,34 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Danish Enchanter (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a floor-length winter gown of pale ice-blue and white wool-silk with a fitted bodice laced in polished platinum thread and embroidered with Deep Oceanic Blue snowflake and thistle motifs, a high white-fur collar, long fitted sleeves and a full skirt of layered white silk edged with white fur, in the style of a Danish fairy-tale winter queen.
+
+Headwear: a tall crown of polished platinum filigree set with clear ice-crystal spires and small aquamarine stones.
+
+Jewelry: a broad polished platinum filigree collar necklace set with warm Baltic amber cabochons, matching drop earrings and a polished platinum brooch at the throat.
+Back: a long white ermine-trimmed mantle of pale ice-blue velvet, fastened at the collarbone with a polished platinum clasp and trailing behind her.
+Legs & feet: knee-high white leather boots lined and cuffed with white fur, hidden beneath the hem of the gown.
+
+A candid high-fashion editorial shot, refined seated glamour. No breeze. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. haughty and disdainful, chin lifted, a cool half-lidded stare and a faint curl of the lip. one hand resting on the knee, the other draped gracefully at her side.
+
+Holding a slender polished platinum staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of platinum, a soft aqua glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft.
+
+Floating ribbons of aqua water and glittering droplets orbit her.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Environment: a snowbound fairy-tale harbour town at dusk: tall colourful gabled houses with snow on the steep roofs along a frozen canal, wooden sailing ships locked in the ice, warm lantern light in the windows, and across the water a white palace of ice spires under a pale rose-and-blue winter sky with snow falling softly.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

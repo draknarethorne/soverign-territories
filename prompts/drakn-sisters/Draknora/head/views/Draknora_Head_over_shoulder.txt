@@ -4,7 +4,7 @@ Incoming image: an A-pose (or hair variant) of Draknora Thorne. Zoom in to a stu
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional beauty glamour shot. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff.
+Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
@@ -12,15 +12,11 @@ Close-up framed from the upper chest up: the head, face and hair fill the frame,
 
 View: the shoulders turned away from the camera and the head turned back over one shoulder, the face in three-quarter profile glancing toward the camera, the nape of the neck and the fall of the hair visible.
 
-Keep high fidelity to facial likeness, bone structure, hairstyle, body, and wardrobe from the incoming image.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
 
 Expression: a warm, radiant glamour smile - lips softly parted with a hint of teeth, cheeks lifted and defined, dimples showing if present, eyes bright and engaged with the camera, the lips, cheeks and smile lines clearly visible.
 
-Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-
-Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural warm peach blush, groomed warm auburn-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
-
-Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; dark brown lush lashes, defined lash line.
+Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; dark brown lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -1,0 +1,35 @@
+=== Draknora Thorne · Scene (Outfit + Effects): Pirate Magician (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a swashbuckling captain's coat-dress in deep Flame Red brocade with wide gold cuffs, a plunging cream shirt front, a broad sash at the waist and a high hem over thigh boots.
+
+Headwear: a tilted black tricorn hat edged in burnished copper braid with a long curling Flame Red feather and a ruby brooch.
+
+Jewelry: a plunder jewelry set of gold doubloon pendants on chains, a ruby pirate-queen ring, hoop earrings and a rope-and-coin bracelet in burnished copper.
+Legs & feet: tall cuffed Flame Red leather sea boots folded over at the knee with burnished copper buckles, worn thigh-high and salt-stained.
+
+A dynamic action shot, three-quarter view. Light breeze. squared stance, one foot back, weight forward. head level, one eye over the sights. locked on the target. cocky and swaggering, a lopsided grin, one brow raised, eyes glinting with mischief. one arm straight out aiming a pistol, the other hand braced under the wrist.
+
+Holding a flintlock pistol of burnished copper with a flame-shaped hammer, smoke and fiery orange-gold embers curling from the muzzle, held in one hand.
+
+Flickers of fiery orange-gold flame and glowing embers drift around her.
+
+Eyes: irises softly aglow with fiery orange-gold light, brightest near the pupil and fading to the natural molten amber irises at the rim, iris detail still visible, a gentle fiery orange-gold catchlight, no light spilling beyond the eyelids.
+
+Makeup: pirate-queen makeup - smudged dark kohl around the eyes with a gold shimmer on the lids, sun-flushed cheekbones, a few freckles and sea-salt on the skin, a natural berry lip.
+
+Environment: the deck of a high-fantasy galleon in a storm, taut rigging and flapping patched sails, crashing grey waves, flashes of lightning and rain-slick planks.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

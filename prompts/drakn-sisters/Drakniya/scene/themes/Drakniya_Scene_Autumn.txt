@@ -1,0 +1,35 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Autumn Harvest Woods Druid (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing woodland armor - a sculpted Emerald Green leather cuirass stamped with oak leaves, antique gold antler-shaped pauldrons, overlapping leaf-scale tassets and a cloak of stitched autumn leaves.
+
+Headwear: a slim crown of curved antlers wrapped in russet leaves, acorns and a few peridot berries, bound with a Emerald Green ribbon.
+
+Jewelry: a woodland jewelry set of an amber pendant in antique gold leaf-shaped settings, acorn-cap earrings, a leaf-vine armlet and a ring of twisted twigs.
+Legs & feet: knee-high laced Emerald Green suede boots with fur-lined cuffs and tiny antique gold leaf charms on the laces.
+
+A low action shot, slight upward camera angle. Light breeze. a low crouch on the balls of the feet, one hand near the ground. head up, eyes forward. sharp, predatory eyes to camera. warm and content, a gentle smile, eyes soft and glowing in the amber light. one hand braced on the ground, the other holding the weapon back, coiled to spring.
+
+Holding a curved antique gold sickle with a living-wood handle wrapped in thorny Emerald Green vines and tiny leaves, held in one hand.
+
+Curling bright emerald-green vines, petals and floating leaves unfurl around her.
+
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: autumn makeup - warm copper and sage shades on the lids, a soft russet blush, a sheer bronze highlight and a muted brick-rose lip.
+
+Environment: a high-fantasy forest glade of golden and crimson oaks in morning mist, a carpet of fallen leaves, shafts of low amber light and a mossy standing stone.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

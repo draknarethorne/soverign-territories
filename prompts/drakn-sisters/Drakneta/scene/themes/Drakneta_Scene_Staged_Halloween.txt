@@ -1,0 +1,27 @@
+=== Drakneta Thorne · STAGED Scene (needs a pre-rendered stage image): Halloween Summoner (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Drakneta Thorne already staged in the halloween summoner outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A playful shot sitting on a broomstick. Wind lifting the hair and hem. sitting side-on across a broomstick, legs crossed, torso leaning back. turned over the shoulder to the camera. playful, teasing eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. one hand gripping the broom handle, the other holding the pointed hat on her head.
+
+Forks of white-hot electric lightning crackle through the air and arc along her weapon.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Environment: a misty high-fantasy pumpkin field at dusk, hundreds of carved jack-o'-lanterns glowing orange, a twisted tree with hanging lanterns, bats against a huge orange moon and drifting low fog.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Electric Gold dominant, with white accents; all glow is white-hot electric.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

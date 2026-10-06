@@ -4,25 +4,19 @@ Incoming image: the front-facing A-pose of Draknora Thorne. Turn the SAME subjec
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic scene. Professional full-body studio shot, head to toe. 85mm portrait photography, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic full-body studio shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour and hairstyle, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Standing A-pose, the same stance as the incoming image: upright, feet set apart, arms relaxed slightly away from the sides, open hands.
 
 View: rear view, the whole body turned fully away so the back faces the camera, the head facing straight away, the hair falling down the back; same A-pose arms and stance.
 
-Wearing: only a Flame Red string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle burnished copper sheen and a hairline burnished copper edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together so the bust is lifted and pressed into a deep, tight cleavage, held by thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; matching Flame Red open-toed high heels with burnished copper accents. Keep the exact outfit from the incoming image.
+Keep the exact outfit from the incoming image.
 
-Figure: lithe, slender, long-limbed build; full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs; very long, slender legs.
-
-Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring, natural studio eyes, not glowing.
-
-Makeup: soft and natural, with a subtly blended gold-toned eyeshadow, a light natural warm peach blush, groomed warm auburn-brown brows and softly defined eyes - present for the character's theme but never heavy or overly accented.
+Eyes: natural studio eyes, not glowing.
 
 Expression: an alluring, confident, relaxed expression - a soft closed-mouth smile with dimples, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 

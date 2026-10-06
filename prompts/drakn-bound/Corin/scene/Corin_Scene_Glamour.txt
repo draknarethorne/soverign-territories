@@ -4,12 +4,9 @@ Incoming image: an A-pose of Corin Tidewalker (chosen hair). Apply the outfit, g
 ----------------------------------------------------------------
 prompt:
 
-Photo-realistic glamour portrait. Professional full-body shot, head to toe. 85mm portrait photography, flattering soft cinematic light, razor-sharp optical focus, soft depth of field falloff, raw photographic capture.
+Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait photography, flattering soft cinematic light, razor-sharp focus, soft depth of field.
 
-Maintain strict fidelity to the reference image's facial likeness, facial bone structure, overall physical body shape, proportions, eye colour, iris pattern, hair colour, skin tone, and any existing tattoos, body markings, or beauty marks.
-
-Hair: sun-streaked brown hair, short and wind-tousled - kept exactly as in the incoming image, full, natural and clearly visible with its normal volume (never bald, shaved, thinning or covered).
-Skin: sun-weathered tan complexion, evenly toned.
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Wearing close-fitting Deep Oceanic Blue-toned light leather armor, Seafoam Green accent straps across the chest and hips, built for silent movement; scale-like overlapping plates across the torso, a shell-shaped clasp at the collar.
 
@@ -26,8 +23,6 @@ Eyes: the natural deep teal irises kept intact, with a faint aqua glow just kind
 Environment: a high-fantasy sea-cliff harbor at moonrise, a stone lighthouse tower, wooden sailing ships with lantern-lit masts, waves breaking against black rocks, silver moonlight on the water.
 
 Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
-
-Figure: athletic, lean, well-muscled build; defined, toned chest and core; trim, athletic waist; long, strong legs.
 
 ----------------------------------------------------------------
 negative prompt:

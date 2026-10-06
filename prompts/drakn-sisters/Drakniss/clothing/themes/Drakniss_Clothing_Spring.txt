@@ -1,0 +1,30 @@
+=== Drakniss Thorne · Clothing: Spring Bloom Cleric (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a light flowing gown in layered Radiant Rose Gold chiffon with gold petals appliqued down the bodice, a deep plunging neckline, a petal-edged high slit skirt and floating ribbon straps.
+
+Headwear: a woven crown of fresh blossoms, Radiant Rose Gold and gold flowers and green leaves with a few trailing ribbons.
+
+Arms: bare arms.
+
+Jewelry: a delicate jewelry set of a radiant rose gold chain with a morganite dewdrop pendant, tiny petal earrings, a vine-wrapped armlet and a flower ring.
+
+Legs & feet: soft Radiant Rose Gold sandals with ribbon straps wrapped to the knee and a small flower at each ankle.
+
+Overall, a clean studio presentation of the spring bloom cleric outfit.
+
+Eyes: natural studio eyes, not glowing.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

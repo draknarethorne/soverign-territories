@@ -1,0 +1,35 @@
+=== Drakniss Thorne · Scene (Outfit + Effects): Eclipse Cleric (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing eclipse armor - a polished black obsidian cuirass with a radiant rose gold corona ring around the chest, crescent-moon pauldrons, a skirt of black plates edged in Radiant Rose Gold light and a flowing cape lined with gold.
+
+Headwear: a crown of curved radiant rose gold crescents around a black disc ringed with warm golden-white light, fine rays radiating up like a corona.
+
+Jewelry: a jewelry set of a black onyx disc pendant ringed in radiant rose gold rays on a chain, crescent earrings, a segmented armlet and ring with a morganite stone.
+Legs & feet: thigh-high black obsidian-sheen stiletto boots with radiant rose gold crescent buckles and Radiant Rose Gold corona inlay on the heel.
+
+A dramatic low-angle ritual shot beneath the eclipse. Light breeze. standing tall, chest lifted, feet apart. head tilted up toward the eclipse, then to the camera. intense eyes to camera. solemn and enigmatic, half-lidded eyes catching the corona light, lips softly closed. both arms raised to frame the black sun above her, fingers spread.
+
+Holding a tall rose-gold-and-ivory processional staff in one hand, topped with a radiant sunburst halo of golden rays around a small glowing ivory orb, a soft warm golden-white light haloing the top, a short ribbon of Radiant Rose Gold silk tied below the halo.
+
+Warm rays of warm golden-white light and drifting golden motes glow around her.
+
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural radiant topaz-gold irises at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
+
+Makeup: eclipse makeup - a deep black-plum lid fading into a thin gold corona flick, metallic gold dots along the brow, an elongated glow on the cheekbones and a deep wine lip.
+
+Environment: a high-fantasy observatory terrace of white stone under a total solar eclipse, a black sun ringed with shimmering corona light, huge brass astrolabes and starfields appearing in the darkened sky.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

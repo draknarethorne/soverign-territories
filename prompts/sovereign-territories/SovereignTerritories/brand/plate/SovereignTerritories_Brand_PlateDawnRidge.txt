@@ -1,0 +1,13 @@
+=== Sovereign Territories · Landscape Plate — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. An empty three-terrace ridge under the dawn sky: the plate that the ten sisters are composited onto before the harmonize pass.
+Size: 1024x1280
+
+----------------------------------------------------------------
+prompt:
+
+Epic fantasy landscape plate, portrait composition, photoreal cinematic fantasy, with no people in it. A wide a shattered obsidian ridge at the first light of dawn, rising in three broad terraces like a stage: a wide lower terrace, a narrower middle terrace, and a single high platform at the top centre, all of them empty. The sky is split by ten streaks of coloured light, distant ancient dragons in silhouette among the clouds, and a fractured world of ten glowing elemental territories far below. Warm golden dawn light from the right with a cool blue fill from the left, volumetric god-rays, soft mist between the terraces, rich colour. A clear empty band of sky across the top for the title. No people, no figures, no statues, no text, no lettering, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+people, figures, women, statues, text, lettering, watermark, logo, low quality, blurry, modern objects

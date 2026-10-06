@@ -1,0 +1,13 @@
+=== Rock Slide · Card Art (tactics) — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. Art for the gameplay card TACTIC_ROCK_SLIDE.
+Size: 960x1440
+
+----------------------------------------------------------------
+prompt:
+
+painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject. Rock Slide: Boulders cascade down the mountainside, crushing all who stand in their path. The moment the tactic takes effect, shown as a dramatic effect-driven action scene with small silhouetted soldiers for scale. Colour palette of terracotta brown and antique bronze, with floating stones and drifting dust around the subject. Background: a battlefield sky and terrain lit by the effect itself.  No text, no lettering, no frame, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, logo, card frame, border, low quality, blurry, extra limbs, deformed hands, modern objects

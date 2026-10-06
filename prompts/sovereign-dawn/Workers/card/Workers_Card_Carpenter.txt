@@ -1,0 +1,13 @@
+=== Carpenter · Card Art (workers) — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. Art for the gameplay card WORKER_CARPENTER.
+Size: 960x1440
+
+----------------------------------------------------------------
+prompt:
+
+painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject. Carpenter: Skilled artisans who transform raw timber into refined structures. While they gather less wood, their expertise speeds up building construction throughout your territory. A working person at their trade, shown full-body with their tools and a hint of what they produce. Colour palette of warm steel grey, oak brown and soft gold, with soft dust and gentle golden light around the subject. Background: their workplace in a fantasy settlement at a warm time of day, softly out of focus.  No text, no lettering, no frame, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, logo, card frame, border, low quality, blurry, extra limbs, deformed hands, modern objects

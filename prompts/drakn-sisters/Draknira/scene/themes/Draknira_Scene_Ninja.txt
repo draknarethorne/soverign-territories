@@ -1,0 +1,35 @@
+=== Draknira Thorne · Scene (Outfit + Effects): Shinobi Shadow Clan Wizard (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing stealth armor - a fitted black leather cuirass with Glacial Cyan lacing, a hooded half-cape, brushed chrome forearm plates, a harness of kunai pouches and wrapped thighs.
+
+Headwear: a soft Glacial Cyan hood pushed back on the head with a black cloth mask pulled down around the neck and a brushed chrome forehead guard.
+
+Jewelry: a minimal set of a thin brushed chrome chain choker with a tiny shuriken charm, shuriken-stud earrings and a wrapped cord bracelet with a diamond bead.
+Legs & feet: knee-high soft black split-toe boots with Glacial Cyan straps and brushed chrome buckles, silent soles.
+
+A frozen mid-action throwing shot. Light breeze. a long lunge, torso twisting through the throw. turned along the throw line, then to the camera. intense eyes to camera. a silent, knowing smirk, narrowed eyes, utterly relaxed in the shadows. one arm swept forward just released a kunai, the other held back for balance, a second kunai ready.
+
+Holding a fan of brushed chrome throwing stars held between the fingers of one hand, one spinning in the air with a icy white-cyan trail.
+
+Drifting icy white-cyan frost crystals and a cold mist swirl around her.
+
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+
+Makeup: shinobi makeup - a sharp smoky black wing with white inner-corner shimmer, defined lashes, a soft shadowed contour and a muted dark-rose lip.
+
+Environment: a high-fantasy rooftop scene of tiered pagoda roofs under a full moon, paper lanterns far below, drifting mist and a silhouette of distant hills.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

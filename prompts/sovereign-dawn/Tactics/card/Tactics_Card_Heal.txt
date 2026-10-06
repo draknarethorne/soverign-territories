@@ -1,0 +1,13 @@
+=== Heal · Card Art (tactics) — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. Art for the gameplay card TACTIC_HEAL.
+Size: 960x1440
+
+----------------------------------------------------------------
+prompt:
+
+painterly high-fantasy trading-card illustration, rich saturated colour, dramatic lighting, crisp readable silhouette, detailed but uncluttered, centred composition with clear space around the subject. Heal: A skilled healer is worth a hundred swords on the battlefield. The moment the tactic takes effect, shown as a dramatic effect-driven action scene with small silhouetted soldiers for scale. Colour palette of warm steel grey, oak brown and soft gold, with soft dust and gentle golden light around the subject. Background: a battlefield sky and terrain lit by the effect itself.  No text, no lettering, no frame, no logo.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, logo, card frame, border, low quality, blurry, extra limbs, deformed hands, modern objects

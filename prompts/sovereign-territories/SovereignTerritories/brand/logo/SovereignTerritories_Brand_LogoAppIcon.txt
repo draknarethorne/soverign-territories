@@ -1,0 +1,13 @@
+=== Sovereign Territories · Emblem Logo — Text-to-Image ===
+Generate entirely from this description - no incoming reference image. The round emblem and the app icon.
+Size: 1024x1024
+
+----------------------------------------------------------------
+prompt:
+
+A round game emblem logo centred on a plain dark background: a shattered obsidian crown at the centre with a single dragon wing curving behind it, ringed by ten small glowing gems each in a different elemental colour (red, cyan, green, gold, magenta, violet, blue, rose-gold, terracotta and silver), the whole emblem edged in dawn-gold metal filigree with warm golden dawn light from the right with a cool blue fill from the left, crisp clean edges, a bold readable silhouette at small sizes. No text, no lettering.
+
+----------------------------------------------------------------
+negative prompt:
+
+text, lettering, words, watermark, people, busy background, low quality, blurry

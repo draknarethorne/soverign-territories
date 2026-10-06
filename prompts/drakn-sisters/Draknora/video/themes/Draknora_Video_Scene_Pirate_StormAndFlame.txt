@@ -1,0 +1,29 @@
+=== Draknora Thorne · Video: StormAndFlame (group: Video) — MiniMax H3 image-to-video ===
+Source image: Draknora_Qwen_Scene_Pirate_00001_.png
+Size: 640x960
+Length: 7.5
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Draknora Thorne, wearing a swashbuckling captain's coat-dress in deep Flame Red brocade with wide gold cuffs, in the deck of a high-fantasy galleon in a storm, taut rigging and flapping patched sails, crashing grey waves.
+
+Timeline:
+[0s-2.5s] Motion: The deck pitches in the swell, rigging creaks, sails snap and spray flies up over the rail in sheets of sunlit foam; at the same time, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, flames flare around her and along the ground, tongues of fire curling upward and throwing hot orange light across everything; at the same time, glowing embers lift from every flame and drift upward in lazy spirals, flaring and fading as they rise.
+[5s-7.5s] Motion: As the previous motion settles, waves roll in and break in lacy foam, water surging and sliding back over the stones and sand.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: creaking timber, crashing waves and gulls; a rushing wind; a roaring flame; gentle crackling fire; waves breaking and gulls
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

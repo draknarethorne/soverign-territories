@@ -1,0 +1,30 @@
+=== Draknoxa Thorne · Clothing: Pirate Alchemist (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Draknoxa Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a buccaneer outfit of a laced Toxic Orchid Magenta bustier top under an open striped shirt, a wide knotted lime sash, short breeches with rope belts and a flowing sash tail.
+
+Headwear: a tilted black tricorn hat edged in tarnished brass braid with a long curling Toxic Orchid Magenta feather and a pink tourmaline brooch.
+
+Arms: bare arms.
+
+Jewelry: a plunder jewelry set of gold doubloon pendants on chains, a pink tourmaline pirate-queen ring, hoop earrings and a rope-and-coin bracelet in tarnished brass.
+
+Legs & feet: tall cuffed Toxic Orchid Magenta leather sea boots folded over at the knee with tarnished brass buckles, worn thigh-high and salt-stained.
+
+Overall, a clean studio presentation of the pirate alchemist outfit.
+
+Eyes: natural studio eyes, not glowing.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

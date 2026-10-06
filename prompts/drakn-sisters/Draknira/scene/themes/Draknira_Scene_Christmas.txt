@@ -1,0 +1,35 @@
+=== Draknira Thorne · Scene (Outfit + Effects): Midwinter Christmas Wizard (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknira Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a festive off-the-shoulder velvet gown in Glacial Cyan with a white faux-fur collar and hem, white holly-and-berry embroidery, a satin sash and a high thigh slit.
+
+Headwear: a velvet Glacial Cyan Santa-style hat with a white fur brim and a fluffy white pom-pom, a sprig of holly and a brushed chrome bell at the tip.
+
+Jewelry: a holiday jewelry set of a brushed chrome snowflake pendant, tiny jingle-bell earrings, a candy-cane charm bracelet and a ribbon choker with a diamond drop.
+Legs & feet: knee-high Glacial Cyan velvet boots with white fur cuffs, brushed chrome buckles and a small bell on each zip pull.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. festive cheer, a warm open smile, cheeks flushed, eyes sparkling with the holiday lights. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a tall staff shaped like a candy cane in Glacial Cyan and white stripes, a ribbon bow and a glittering icy white-cyan star at the hook, carried in one hand.
+
+Drifting icy white-cyan frost crystals and a cold mist swirl around her.
+
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+
+Makeup: festive makeup - a deep berry lip, a soft white shimmer on the lids with tiny silver glitter flecks, rosy windburnt cheeks and delicate frost-white highlights.
+
+Environment: a high-fantasy winter market square at dusk, timber stalls with garlands and string lights, a huge glowing tree, steaming mulled wine, lanterns and gently falling snow.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, ruddy skin, sunburnt skin, overly tanned skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

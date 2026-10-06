@@ -1,0 +1,35 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Egyptian Enchanter (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Wearing a fitted Egyptian kalasiris sheath gown of fine pleated Deep Oceanic Blue linen with sheer panels, a plunging neckline held by broad shoulder straps, a gold-beaded teal sash at the hip.
+
+Headwear: a slim gold Egyptian diadem across the brow with a rearing cobra uraeus at the front, a trailing teal bead strand at each temple, the face and eyes fully clear.
+
+Jewelry: an Egyptian usekh broad collar of gold and teal beaded rows resting on the chest, matching wide gold cuffs, a pair of serpent armlets and gold hoop earrings.
+Legs & feet: simple gold-trimmed Egyptian papyrus sandals with a thin strap between the toes and a gold anklet, the toes bare.
+
+A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. composed, commanding, lips softly together. one foot forward for an elegant line; arms relaxed with a graceful hand.
+
+Holding a slender polished platinum staff in one hand, its shaft shaped like a rising wave, topped with a large iridescent pearl cradled in a sculpted curl of platinum, a soft aqua glow shimmering within the pearl, a thin ribbon of water spiralling lazily around the shaft.
+
+Floating ribbons of aqua water and glittering droplets orbit her.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: dramatic Egyptian makeup - thick winged black kohl liner extending toward the temples, gold-washed lids with a teal accent, defined brows and a warm terracotta lip.
+
+Environment: a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
