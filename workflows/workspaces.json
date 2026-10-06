@@ -56,7 +56,7 @@
   },
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
-  "inputs": {"Drakness": "Drakness_Qwen_X_Pose_00142_.png", "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"},
+  "inputs": {"Drakness": "Drakness_Qwen_X_Pose_00002.png", "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"},
   "photos": {
     "Drakness": "drakness_image_7500527121164427158.jpg",
     "Draknara": "draknara_image_7500642754476958031.jpg",
