@@ -35,6 +35,8 @@ every studio stage.
 | See which dev files are now duplicates, then remove them | `python tools\workflows\comfy_workflows.py cleanup --group drakn-sisters` (preview), add `--apply` (moves to backup; keeps edited, curated and undelivered files) |
 | Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
 | Keep what I made or changed in ComfyUI | `bin\pull-dev.cmd Drakness` |
+| Sort loose workflows in the workspaces into folders | `python tools\workflows\comfy_workflows.py tidy` (preview), add `--apply` |
+| Add the staged scenes (held back by default) | `python tools\workflows\comfy_workflows.py deploy --to uat --group drakn-sisters --class scene --staged` |
 | Put the ST templates in dev | `bin\deploy-templates.cmd` |
 | Run every commit hook | `bin\check.cmd` |
 
@@ -84,21 +86,28 @@ python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine fi
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
 ```
 
+### Folders inside a workspace
+
+A new workflow is saved in the workspace under its output folder: `<stage>/<family>/` in a hero's own workspace (`scenes/themes/`, `poses/bikini/`, `armor/themes/` ...) and `<Hero>/<stage>/<family>/` in a workspace that serves several heroes (the shared scene workspace). ComfyUI shows these as folders.
+`tidy` moves loose files into them; curated (`zz_Curated_`) and test (`test_`) files stay at the top. Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+
 ### Hand-curated workflows
 
 Curated workflows write to their own output folder, `<set>/<Hero>/_curated/<name>` (for example `drakn-sisters/Drakness/_curated/`), so hand-tuned renders never mix with the generated families. `fork` and `pull` set this prefix for you (and patch the workspace copy to match); only the SaveImage prefix changes.
+Curated files are named `zz_Curated_<Hero>_...` so they sort to the bottom of a workspace list and are never mistaken for generated ones; a workflow you captured from a render keeps its counter name (`..._00001`) and is left as it is.
+Test workflows (experiments, A/B and bisect variants) are named `test_<Hero>_...` and live in `workflows/_test/<set>/<Hero>/`, writing renders to `<set>/<Hero>/_test/`. They are not kept in workspaces: put them there when needed with `deploy --tests --hero H --match test_`, and `pull` saves new or edited ones back to `_test` before you remove them from the workspace. Prefix summary: no prefix is generated, `zz_Curated_` is hand-tuned and kept, `test_` is temporary.
 
 Generated workflows are rebuilt from prompts, so a hand edit to one would be overwritten. Anything you tune by hand lives in
 `workflows/_curated/<set>/<Hero>/` instead. `make` and `deploy` never touch that folder.
 
 | You want to | Run | What happens |
 | --- | --- | --- |
-| Start from a generated workflow and tune it | `fork NAME --as Tag` (`bin\fork.cmd`) | Copies it to `_curated` as `NAME_Tag` (its save prefix follows the new name, and it records what it came from), and puts it in DEV |
-| Keep what you did in ComfyUI | `pull --hero H` (`bin\pull-dev.cmd`) | A workflow that exists only in the workspace is kept as curated; edits to a curated one are captured |
+| Start from a generated workflow and tune it | `fork NAME --as Tag` (`bin\fork.cmd`) | Copies it to `_curated` as `zz_Curated_NAME_Tag` (its output folder uses `NAME_Tag`, and it records what it came from), and puts it in DEV |
+| Keep what you did in ComfyUI | `pull --hero H` (`bin\pull-dev.cmd`) | A workflow that exists only in the workspace is kept as curated (and renamed `zz_Curated_...` in both places); edits to a curated one are captured |
 | Put curated workflows in another workspace | `deploy --curated --hero H` (`bin\deploy-curated.cmd`) | Copies the ones the workspace lacks; a copy there that differs is skipped, never overwritten, unless you add `--overwrite` |
 | See what is where | `status --hero H` | Shows `curated`, `curated-changed` (pull it) and `curated-missing` (deploy it) next to the generated counts, and `install-only` for anything not yet kept |
 
-Name a curated workflow with the hero first (`Drakness_...`) so the tool can route it; the generated names are
+Name a curated workflow with the hero first (`Drakness_...`) so the tool can route it (the `zz_Curated_` prefix is added for you); the generated names are
 `<Hero>_<Engine>_<Stage>_<Name>`, so adding a tag at the end never collides. If a curated idea turns out to be worth
 automating, move what it does into a motion, transition, template or card piece, regenerate, and retire the curated copy.
 
