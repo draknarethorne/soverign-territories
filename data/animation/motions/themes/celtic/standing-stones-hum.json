@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/celtic/standing-stones-hum",
+  "kind": "motion",
+  "name": "Standing stones hum",
+  "seconds": 2.5,
+  "beat": "Mist curls round the standing stones as spirals carved in them begin to glow green and a faint humming light pulses through the circle.",
+  "audio": "a low humming drone and distant pipes",
+  "tags": [
+    "theme",
+    "celtic",
+    "stones"
+  ]
+}

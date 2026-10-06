@@ -1,0 +1,42 @@
+{
+  "animId": "draknara-anim-scene-autumn-harveststones",
+  "kind": "animation",
+  "name": "HarvestStones",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknara/scene/themes/draknara-scene-autumn.json",
+    "image": "Draknara_Qwen_Scene_Autumn_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/autumn/harvest-gold.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/leaves-swirl.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/stones-lift.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/dust-motes-glow.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/clouds-race.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Autumn scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

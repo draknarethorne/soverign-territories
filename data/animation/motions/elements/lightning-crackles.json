@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/lightning-crackles",
+  "kind": "motion",
+  "name": "Lightning crackles",
+  "seconds": 2,
+  "beat": "Arcs of lightning crackle around {{her}} and leap between nearby objects, flashing the scene gold-white.",
+  "audio": "crackling electricity",
+  "tags": [
+    "element",
+    "lightning"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/water-swirls",
+  "kind": "motion",
+  "name": "Water swirls",
+  "seconds": 2.5,
+  "beat": "Ribbons of water rise and swirl around {{her}} in slow spirals, droplets hanging in the air and catching the light.",
+  "audio": "flowing water and soft chimes",
+  "tags": [
+    "element",
+    "water"
+  ]
+}

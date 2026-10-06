@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/spring/blossoms-bloom",
+  "kind": "motion",
+  "name": "Blossoms bloom",
+  "seconds": 2.5,
+  "beat": "Buds swell and burst into bloom across every branch and bush in turn while petals loosen and drift on the breeze.",
+  "audio": "birdsong and a soft breeze",
+  "tags": [
+    "theme",
+    "spring",
+    "blossoms"
+  ]
+}

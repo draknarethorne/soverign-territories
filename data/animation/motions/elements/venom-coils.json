@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/venom-coils",
+  "kind": "motion",
+  "name": "Venom mist coils",
+  "seconds": 2.5,
+  "beat": "Wisps of toxic mist coil around {{her}} and drip and bubble along the ground, shimmering in sickly colours.",
+  "audio": "a soft hiss and bubbling",
+  "tags": [
+    "element",
+    "poison"
+  ]
+}

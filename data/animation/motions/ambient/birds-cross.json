@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/birds-cross",
+  "kind": "motion",
+  "name": "Birds cross the sky",
+  "seconds": 2.5,
+  "beat": "A flock of birds wheels across the sky in a sweeping arc, wings flashing in the light.",
+  "audio": "wingbeats and distant calls",
+  "tags": [
+    "ambient",
+    "birds",
+    "sky"
+  ]
+}

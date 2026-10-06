@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/roman/torches-flare",
+  "kind": "motion",
+  "name": "Torches flare",
+  "seconds": 2.5,
+  "beat": "Torches along the colonnade flare in a gust of wind, red banners snapping and sparks racing across the stone.",
+  "audio": "snapping banners and distant drums",
+  "tags": [
+    "theme",
+    "roman",
+    "torches"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "animId": "draknora-anim-scene-pirate-stormandflame",
+  "kind": "animation",
+  "name": "StormAndFlame",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknora/scene/themes/draknora-scene-pirate.json",
+    "image": "Draknora_Qwen_Scene_Pirate_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/pirate/sea-spray.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/clouds-race.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/fire-surges.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/embers-rise.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/waves-roll.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Pirate scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

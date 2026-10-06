@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/halloween/lanterns-flare",
+  "kind": "motion",
+  "name": "Jack-o'-lanterns flare",
+  "seconds": 2.5,
+  "beat": "Carved lanterns flare to life with orange fire in their grins, glowing eyes blinking open in the dark and wisps of ghostly light rising from them.",
+  "audio": "a spooky whisper and flickering flame",
+  "tags": [
+    "theme",
+    "halloween",
+    "lanterns"
+  ]
+}

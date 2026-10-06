@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/autumn/harvest-gold",
+  "kind": "motion",
+  "name": "Harvest light",
+  "seconds": 2.5,
+  "beat": "Warm harvest light turns the fields gold as wheat sways in long waves and a drift of leaves tumbles through the air.",
+  "audio": "rustling grain and a warm wind",
+  "tags": [
+    "theme",
+    "autumn",
+    "harvest"
+  ]
+}

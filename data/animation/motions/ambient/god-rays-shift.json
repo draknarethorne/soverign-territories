@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/god-rays-shift",
+  "kind": "motion",
+  "name": "God-rays shift",
+  "seconds": 2.5,
+  "beat": "Great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.",
+  "audio": "a quiet rising tone",
+  "tags": [
+    "ambient",
+    "light",
+    "sky"
+  ]
+}

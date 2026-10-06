@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/egyptian/sand-drifts",
+  "kind": "motion",
+  "name": "Sand drifts",
+  "seconds": 2.5,
+  "beat": "Fine golden sand streams across the ground and swirls around the pillars as hieroglyphs flicker with gold light.",
+  "audio": "a low desert wind and a distant sistrum",
+  "tags": [
+    "theme",
+    "egyptian",
+    "sand"
+  ]
+}

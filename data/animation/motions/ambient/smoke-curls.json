@@ -1,0 +1,12 @@
+{
+  "id": "motions/ambient/smoke-curls",
+  "kind": "motion",
+  "name": "Smoke curls",
+  "seconds": 2,
+  "beat": "Thin ribbons of smoke curl upward from every fire, censer and chimney, drifting and twisting in the air.",
+  "audio": "a low crackle",
+  "tags": [
+    "ambient",
+    "smoke"
+  ]
+}

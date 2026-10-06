@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/tropical-isles/palms-sway",
+  "kind": "motion",
+  "name": "Palms sway",
+  "seconds": 2.5,
+  "beat": "Palms sway in a warm breeze, surf rolls up the beach and bright birds flash between the trees.",
+  "audio": "waves, birds and a warm wind",
+  "tags": [
+    "theme",
+    "tropical-isles",
+    "palms"
+  ]
+}

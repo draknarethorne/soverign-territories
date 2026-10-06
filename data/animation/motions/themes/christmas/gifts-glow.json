@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/christmas/gifts-glow",
+  "kind": "motion",
+  "name": "Gifts glow",
+  "seconds": 2,
+  "beat": "Wrapped gifts and ribbons shimmer, bows lifting gently as magic light glows from within the boxes.",
+  "audio": "twinkling bells",
+  "tags": [
+    "theme",
+    "christmas",
+    "gifts"
+  ]
+}

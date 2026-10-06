@@ -1,0 +1,42 @@
+{
+  "animId": "draknava-anim-scene-spring-blossomwind",
+  "kind": "animation",
+  "name": "BlossomWind",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknava/scene/themes/draknava-scene-spring.json",
+    "image": "Draknava_Qwen_Scene_Spring_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/spring/blossoms-bloom.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/petals-drift.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/winds-stream.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/birds-cross.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/clouds-race.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Spring scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

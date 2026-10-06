@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/norse/rune-glow",
+  "kind": "motion",
+  "name": "Runes glow",
+  "seconds": 2.5,
+  "beat": "Carved runes on stone, wood and metal glow in turn with pale blue light while snow and sparks drift through the firelight.",
+  "audio": "a low war horn and crackling fire",
+  "tags": [
+    "theme",
+    "norse",
+    "runes"
+  ]
+}

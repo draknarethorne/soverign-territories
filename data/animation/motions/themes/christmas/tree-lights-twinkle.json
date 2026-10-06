@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/christmas/tree-lights-twinkle",
+  "kind": "motion",
+  "name": "Tree lights twinkle",
+  "seconds": 2.5,
+  "beat": "Garlands, wreaths and the lights on every tree twinkle on in a wave, warm gold and ruby light glowing on the snow and the faces nearby.",
+  "audio": "soft sleigh bells and a faint carol",
+  "tags": [
+    "theme",
+    "christmas",
+    "lights"
+  ]
+}

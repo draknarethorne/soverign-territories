@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/shadow-rolls",
+  "kind": "motion",
+  "name": "Shadow rolls",
+  "seconds": 2.5,
+  "beat": "Curling shadow smoke rolls out around {{her}} and across the ground, faint spectral wisps drifting through it.",
+  "audio": "a low whispering drone",
+  "tags": [
+    "element",
+    "darkness"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/chivalry/banners-and-pennants",
+  "kind": "motion",
+  "name": "Pennants snap",
+  "seconds": 2.5,
+  "beat": "Heraldic banners and pennants snap in the wind above the lists, a sunlit haze of dust drifting past polished armor.",
+  "audio": "trumpets and snapping cloth",
+  "tags": [
+    "theme",
+    "chivalry",
+    "banners"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/dust-motes-glow",
+  "kind": "motion",
+  "name": "Dust motes glow",
+  "seconds": 2,
+  "beat": "Fine dust motes float through slanting shafts of light, glowing and tumbling slowly in the still air.",
+  "audio": "a soft room tone",
+  "tags": [
+    "ambient",
+    "dust",
+    "light"
+  ]
+}

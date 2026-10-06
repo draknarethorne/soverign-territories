@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/aurora-ripples",
+  "kind": "motion",
+  "name": "Aurora ripples",
+  "seconds": 3,
+  "beat": "Curtains of green and violet aurora ripple and fold across the sky, their light shimmering over snow and water below.",
+  "audio": "a low shimmering tone",
+  "tags": [
+    "ambient",
+    "aurora",
+    "sky"
+  ]
+}

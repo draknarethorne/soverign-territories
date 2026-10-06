@@ -1,0 +1,42 @@
+{
+  "animId": "draknisa-anim-scene-pirate-tideandspray",
+  "kind": "animation",
+  "name": "TideAndSpray",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/draknisa/scene/themes/draknisa-scene-pirate.json",
+    "image": "Draknisa_Qwen_Scene_Pirate_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/pirate/sea-spray.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/birds-cross.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/water-swirls.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/waves-roll.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/god-rays-shift.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Pirate scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

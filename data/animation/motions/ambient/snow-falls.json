@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/snow-falls",
+  "kind": "motion",
+  "name": "Snow falls",
+  "seconds": 2.5,
+  "beat": "Soft snow drifts down through the whole frame in slow swirls, settling on shoulders, hair and every surface, while a thin breath of cold mist curls near the ground.",
+  "audio": "a hushed winter silence and faint wind",
+  "tags": [
+    "ambient",
+    "snow",
+    "winter"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/sparkles-shimmer",
+  "kind": "motion",
+  "name": "Sparkles shimmer",
+  "seconds": 2,
+  "beat": "Tiny points of light sparkle and drift across the frame, glittering on skin, metal and cloth as a shimmer sweeps through.",
+  "audio": "faint rising chimes",
+  "tags": [
+    "ambient",
+    "sparkle",
+    "glitter"
+  ]
+}

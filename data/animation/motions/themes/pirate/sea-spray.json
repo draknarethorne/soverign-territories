@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/pirate/sea-spray",
+  "kind": "motion",
+  "name": "Sea spray",
+  "seconds": 2.5,
+  "beat": "The deck pitches in the swell, rigging creaks, sails snap and spray flies up over the rail in sheets of sunlit foam.",
+  "audio": "creaking timber, crashing waves and gulls",
+  "tags": [
+    "theme",
+    "pirate",
+    "sea"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/waves-roll",
+  "kind": "motion",
+  "name": "Waves roll",
+  "seconds": 2.5,
+  "beat": "Waves roll in and break in lacy foam, water surging and sliding back over the stones and sand.",
+  "audio": "waves breaking and gulls",
+  "tags": [
+    "ambient",
+    "water",
+    "waves"
+  ]
+}

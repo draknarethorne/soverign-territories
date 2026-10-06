@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/frontier/tumbleweed-wind",
+  "kind": "motion",
+  "name": "Tumbleweed wind",
+  "seconds": 2.5,
+  "beat": "A dry wind sweeps dust across the street, a tumbleweed rolling past as sun glints off distant spurs and shutters bang.",
+  "audio": "a lonely wind and a distant harmonica",
+  "tags": [
+    "theme",
+    "frontier",
+    "dust"
+  ]
+}

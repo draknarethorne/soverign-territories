@@ -1,0 +1,12 @@
+{
+  "id": "motions/ambient/mist-rolls",
+  "kind": "motion",
+  "name": "Mist rolls in",
+  "seconds": 2.5,
+  "beat": "Low mist rolls slowly across the ground and drifts between the shapes in the setting, softening the light as it passes.",
+  "audio": "a quiet wind",
+  "tags": [
+    "ambient",
+    "mist"
+  ]
+}

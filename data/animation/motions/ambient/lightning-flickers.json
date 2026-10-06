@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/lightning-flickers",
+  "kind": "motion",
+  "name": "Lightning flickers",
+  "seconds": 2,
+  "beat": "Distant lightning flickers inside the clouds, flashing the whole scene white for an instant before the thunder rolls in.",
+  "audio": "rolling thunder",
+  "tags": [
+    "ambient",
+    "storm",
+    "lightning"
+  ]
+}

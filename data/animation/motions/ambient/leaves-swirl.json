@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/leaves-swirl",
+  "kind": "motion",
+  "name": "Leaves swirl",
+  "seconds": 2.5,
+  "beat": "Dry leaves skitter across the ground and rise in a slow spiral of orange, gold and red around the scene before drifting off on the wind.",
+  "audio": "rustling leaves and a low wind",
+  "tags": [
+    "ambient",
+    "leaves",
+    "autumn"
+  ]
+}

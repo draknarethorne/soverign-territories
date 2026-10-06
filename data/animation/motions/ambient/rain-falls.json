@@ -1,0 +1,12 @@
+{
+  "id": "motions/ambient/rain-falls",
+  "kind": "motion",
+  "name": "Rain falls",
+  "seconds": 2.5,
+  "beat": "Rain begins to fall in fine silver lines, rippling puddles and beading on every surface while the light dims and glistens.",
+  "audio": "soft rain and distant thunder",
+  "tags": [
+    "ambient",
+    "rain"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/petals-drift",
+  "kind": "motion",
+  "name": "Petals drift",
+  "seconds": 2.5,
+  "beat": "Soft petals blow across the frame on a warm breeze, turning and catching the light as they pass.",
+  "audio": "a gentle breeze and distant birdsong",
+  "tags": [
+    "ambient",
+    "petals",
+    "spring"
+  ]
+}

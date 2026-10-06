@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/frost-blooms",
+  "kind": "motion",
+  "name": "Frost blooms",
+  "seconds": 2.5,
+  "beat": "Frost spreads outward across every surface in feathering patterns, ice crystals blooming in the air around {{her}} and glittering as they catch the light.",
+  "audio": "crackling ice and a cold hush",
+  "tags": [
+    "element",
+    "ice"
+  ]
+}

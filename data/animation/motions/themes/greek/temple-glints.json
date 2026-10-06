@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/greek/temple-glints",
+  "kind": "motion",
+  "name": "Temple glints",
+  "seconds": 2.5,
+  "beat": "Sunlight slides over white marble columns, olive branches sway, and doves lift from the colonnade into a bright blue sky.",
+  "audio": "wingbeats and a gentle lyre",
+  "tags": [
+    "theme",
+    "greek",
+    "temple"
+  ]
+}

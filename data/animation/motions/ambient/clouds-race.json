@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/clouds-race",
+  "kind": "motion",
+  "name": "Clouds race",
+  "seconds": 2.5,
+  "beat": "Clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.",
+  "audio": "a rushing wind",
+  "tags": [
+    "ambient",
+    "clouds",
+    "sky"
+  ]
+}

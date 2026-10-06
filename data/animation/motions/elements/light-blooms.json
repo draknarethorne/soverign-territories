@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/light-blooms",
+  "kind": "motion",
+  "name": "Light blooms",
+  "seconds": 2.5,
+  "beat": "Warm golden light blooms outward from {{her}}, glowing motes rising through the air and a soft halo gathering behind {{her}}.",
+  "audio": "a soft rising choir",
+  "tags": [
+    "element",
+    "light"
+  ]
+}

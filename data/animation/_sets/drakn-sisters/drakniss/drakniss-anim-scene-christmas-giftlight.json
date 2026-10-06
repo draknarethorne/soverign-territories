@@ -1,0 +1,42 @@
+{
+  "animId": "drakniss-anim-scene-christmas-giftlight",
+  "kind": "animation",
+  "name": "GiftLight",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/themes/drakniss-scene-christmas.json",
+    "image": "Drakniss_Qwen_Scene_Christmas_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/christmas/gifts-glow.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/snow-falls.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/light-blooms.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/dust-motes-glow.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/candle-flicker.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Christmas scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

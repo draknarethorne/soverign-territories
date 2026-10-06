@@ -1,0 +1,42 @@
+{
+  "animId": "drakniya-anim-scene-thanksgiving-feastandvines",
+  "kind": "animation",
+  "name": "FeastAndVines",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "source": {
+    "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/themes/drakniya-scene-thanksgiving.json",
+    "image": "Drakniya_Qwen_Scene_Thanksgiving_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/thanksgiving/feast-steam.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/leaves-swirl.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/vines-unfurl.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/candle-flicker.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/dust-motes-glow.json",
+      "transition": "settle"
+    }
+  ],
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Thanksgiving scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects. Tune the pieces, not the card."
+}

@@ -1,0 +1,25 @@
+{
+  "animId": "sovereign-territories-anim-title-ignites",
+  "kind": "animation",
+  "name": "TitleIgnites",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "source": {
+    "artCard": "data/art/_sets/sovereign-territories/sovereign-territories/brand/title/sovereign-territories-brand-title-lockup.json",
+    "image": "SovereignTerritories_Qwen_Brand_TitleLockup_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "Static camera; the framing stays fixed on the title lettering.",
+  "audio": "a single deep drum hit, a rising shimmer and a low dragon's breath; no speech",
+  "subject": "The first frame shows the game title \"SOVEREIGN TERRITORIES\" in large carved obsidian letters with a tagline in gold beneath, on a dark misty background.",
+  "world": "Dark mist drifts slowly behind the lettering, embers float upward and a faint dawn glow gathers at the horizon of the frame.",
+  "constraints": "Keep the title lettering, spelling and layout exactly as in the first frame; no new text, no cuts, smooth natural motion, no people.",
+  "actions": [
+    {"beat": "Embers gather and drift toward the lettering as the mist parts.", "seconds": 2, "transition": "flow"},
+    {"beat": "The carved obsidian letters ignite from within with molten gold, a wave of dawn light sweeping across them from left to right.", "seconds": 3, "transition": "blend"},
+    {"beat": "The glow settles into a steady shimmer and the tagline brightens beneath the title.", "seconds": 2, "transition": "settle"}
+  ],
+  "size": [832, 480],
+  "output": "prompts/sovereign-territories/SovereignTerritories/video/title/SovereignTerritories_Video_TitleLockup_TitleIgnites.txt",
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Title-screen sting and reel opener. Feed the rendered title lockup as the source image."
+}

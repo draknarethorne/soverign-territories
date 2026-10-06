@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/halloween/bats-swarm",
+  "kind": "motion",
+  "name": "Bats swarm",
+  "seconds": 2.5,
+  "beat": "A cloud of bats pours across the moon and wheels over the scene, wings fluttering as ghostly wisps drift through the trees.",
+  "audio": "fluttering wings and a distant owl",
+  "tags": [
+    "theme",
+    "halloween",
+    "bats"
+  ]
+}

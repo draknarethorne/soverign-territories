@@ -1,0 +1,13 @@
+{
+  "id": "motions/elements/vines-unfurl",
+  "kind": "motion",
+  "name": "Vines unfurl",
+  "seconds": 2.5,
+  "beat": "Vines creep up from the ground and unfurl around {{her}}, leaves opening and small blossoms blooming along them.",
+  "audio": "creaking wood and rustling leaves",
+  "tags": [
+    "element",
+    "grass",
+    "nature"
+  ]
+}

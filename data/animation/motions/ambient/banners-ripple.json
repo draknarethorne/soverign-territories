@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/banners-ripple",
+  "kind": "motion",
+  "name": "Banners ripple",
+  "seconds": 2,
+  "beat": "Banners, pennants and hanging cloth ripple and snap in a rising wind, their fringes streaming.",
+  "audio": "flapping cloth and wind",
+  "tags": [
+    "ambient",
+    "banners",
+    "wind"
+  ]
+}

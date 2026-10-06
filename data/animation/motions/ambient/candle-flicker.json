@@ -1,0 +1,12 @@
+{
+  "id": "motions/ambient/candle-flicker",
+  "kind": "motion",
+  "name": "Candlelight flickers",
+  "seconds": 2,
+  "beat": "Every candle and lantern in the setting flickers and swells, throwing warm shifting light and soft shadows across the scene.",
+  "audio": "faint candle crackle",
+  "tags": [
+    "ambient",
+    "candles"
+  ]
+}

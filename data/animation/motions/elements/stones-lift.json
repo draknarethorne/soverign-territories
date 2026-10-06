@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/stones-lift",
+  "kind": "motion",
+  "name": "Stones lift",
+  "seconds": 2.5,
+  "beat": "Stones and loose earth lift from the ground and orbit slowly around {{her}} as dust drifts off them.",
+  "audio": "a deep rumble and grinding stone",
+  "tags": [
+    "element",
+    "earth"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "animId": "sovereign-territories-anim-key-art-dawn-awakens",
+  "kind": "animation",
+  "name": "DawnAwakens",
+  "heroArt": "data/art/brand/sovereign-territories.json",
+  "source": {
+    "artCard": "data/art/_sets/sovereign-territories/sovereign-territories/brand/key-art/sovereign-territories-brand-key-art-poster.json",
+    "image": "SovereignTerritories_Qwen_Brand_KeyArtPoster_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "The camera slowly cranes up and back to reveal the whole ridge, the ten sisters, the dragons in the sky and the empty band across the top.",
+  "audio": "a low rising orchestral swell, deep war drums, a distant dragon's roar and shimmering magic chimes; no speech",
+  "subject": "The first frame shows the ten sisters of Sovereign Territories standing together on a shattered obsidian ridge at dawn, each wreathed in her own element, with ancient dragons in the clouds above.",
+  "world": "The whole landscape wakes: mist drifts across the ridge, god-rays shift through the clouds, embers and petals and frost and sparks swirl on the wind, and the ten glowing elemental territories far below pulse with light.",
+  "constraints": "Keep all ten women, their faces, gowns and positions exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.",
+  "actions": [
+    {"beat": "Golden dawn light spreads across the ridge from the right as the ten elemental territories far below pulse awake one after another.", "seconds": 2.5, "transition": "flow"},
+    {"beat": "Each sister's element ignites around her in turn from left to right: flames flare, frost crystals bloom, vines unfurl, lightning crackles, venom mist coils, shadow smoke rolls, water swirls, golden light blooms, stones lift and wind ribbons stream.", "seconds": 3, "transition": "blend"},
+    {"beat": "The ancient dragons among the clouds bank and roar as the camera rises, leaving the clear band of sky across the top of the frame empty for the title.", "seconds": 2.5, "transition": "settle"}
+  ],
+  "size": [640, 800],
+  "output": "prompts/sovereign-territories/SovereignTerritories/video/key-art/SovereignTerritories_Video_KeyArtPoster_DawnAwakens.txt",
+  "template": "data/animation/_templates/video-minimax.txt",
+  "notes": "Reel and title-screen background: the key art coming alive. Feed the rendered poster as the source image."
+}

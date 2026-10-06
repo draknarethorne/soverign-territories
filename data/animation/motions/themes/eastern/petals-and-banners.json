@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/eastern/petals-and-banners",
+  "kind": "motion",
+  "name": "Banners and blossoms",
+  "seconds": 2.5,
+  "beat": "Silk banners ripple and cherry blossoms swirl through the air as lantern light glows along the rooftops.",
+  "audio": "a soft wind and gentle strings",
+  "tags": [
+    "theme",
+    "eastern",
+    "banners"
+  ]
+}

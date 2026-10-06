@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/stars-wheel",
+  "kind": "motion",
+  "name": "Stars wheel overhead",
+  "seconds": 3,
+  "beat": "The stars wheel slowly overhead, bright points streaking into faint arcs as a shooting star crosses the sky.",
+  "audio": "a soft rising chime",
+  "tags": [
+    "ambient",
+    "stars",
+    "night"
+  ]
+}

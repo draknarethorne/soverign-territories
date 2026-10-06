@@ -1,0 +1,13 @@
+{
+  "id": "motions/ambient/lanterns-rise",
+  "kind": "motion",
+  "name": "Lanterns rise",
+  "seconds": 3,
+  "beat": "Glowing paper lanterns lift into the night sky one after another, drifting upward in a slow river of warm light.",
+  "audio": "soft wind chimes and a distant festival",
+  "tags": [
+    "ambient",
+    "lanterns",
+    "night"
+  ]
+}

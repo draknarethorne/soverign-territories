@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/arabian-nights/lamps-glow",
+  "kind": "motion",
+  "name": "Lamps glow",
+  "seconds": 2.5,
+  "beat": "Hanging lamps flicker to life one by one and a drift of rose petals and silk streams past on a warm desert breeze.",
+  "audio": "a plucked oud and a warm wind",
+  "tags": [
+    "theme",
+    "arabian-nights",
+    "lamps"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/thanksgiving/feast-steam",
+  "kind": "motion",
+  "name": "Feast steams",
+  "seconds": 2.5,
+  "beat": "Steam rises in slow curls from the feast, candles flicker along the table and leaves drift through the warm light.",
+  "audio": "soft clinking glasses and a warm hum",
+  "tags": [
+    "theme",
+    "thanksgiving",
+    "feast"
+  ]
+}

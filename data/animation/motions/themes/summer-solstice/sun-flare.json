@@ -1,0 +1,13 @@
+{
+  "id": "motions/themes/summer-solstice/sun-flare",
+  "kind": "motion",
+  "name": "Solstice sun flares",
+  "seconds": 2.5,
+  "beat": "The midsummer sun flares through the scene, lens glints sliding across skin and cloth, flower garlands swaying and sparks of light rising like fireflies.",
+  "audio": "warm strings and a bright breeze",
+  "tags": [
+    "theme",
+    "summer-solstice",
+    "sun"
+  ]
+}

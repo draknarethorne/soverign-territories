@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/winds-stream",
+  "kind": "motion",
+  "name": "Winds stream",
+  "seconds": 2.5,
+  "beat": "Ribbons of wind spiral around {{her}}, lifting leaves, cloth and hair as the air itself seems to sing.",
+  "audio": "a rushing wind and soft whistling",
+  "tags": [
+    "element",
+    "wind"
+  ]
+}

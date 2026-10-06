@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/fire-surges",
+  "kind": "motion",
+  "name": "Fire surges",
+  "seconds": 2.5,
+  "beat": "Flames flare around {{her}} and along the ground, tongues of fire curling upward and throwing hot orange light across everything.",
+  "audio": "a roaring flame",
+  "tags": [
+    "element",
+    "fire"
+  ]
+}
