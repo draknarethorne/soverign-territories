@@ -1267,9 +1267,51 @@ def cmd_tidy(args):
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
 
+def replace_pose_inputs(cfg, args):
+    """Point every generated workflow that loads one of a hero's A-pose renders at the hero's configured default A-pose (cfg inputs),
+    in the repo and in every workspace that holds her work. Workflows that load the original photo, and curated, test and shot
+    workflows, are left alone."""
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    for hero in sorted(hero_groups()):
+        if args.hero and hero.lower() != args.hero.lower():
+            continue
+        want = cfg.get("inputs", {}).get(hero)
+        if not isinstance(want, str):
+            continue
+        pat = re.compile(rf"^{re.escape(hero)}_Qwen_X_Pose_\d+_?\.png$")
+
+        def retarget(p, backup_ws=None):
+            wf = read_wf(p)
+            ln = node_of(wf, "LoadImage")
+            if not ln or ln["widgets_values"][0] == want or not pat.match(ln["widgets_values"][0]):
+                return False
+            if not args.dry_run:
+                if backup_ws:
+                    backup(stamp, backup_ws, p.name, p)
+                ln["widgets_values"][0] = want
+                if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
+                    ln["widgets_values_named"]["image"] = want
+                write_wf(p, wf)
+            return True
+
+        repo = [(n, p) for n, (g, h, p) in repo_files(cfg).items() if h == hero]
+        print(f"{hero}: repo {sum(retarget(p) for _, p in repo)} workflow(s) now load {want}")
+        for ws in cfg["workspaces"]:
+            if not install_exists(cfg, ws, args.root):
+                continue
+            names = {n for n, _ in repo}
+            files = [p for n, p in install_files(cfg, ws, args.root).items() if n in names]
+            changed = sum(retarget(p, ws) for p in files)
+            if changed:
+                print(f"  {ws}: {changed} workflow(s) updated" + (" (dry run)" if args.dry_run else ""))
+
+
 def cmd_inputs(args):
     cfg = load_cfg()
     placeholder = re.compile(r"^(.+)_Qwen_X_Pose_00001_\.png$")
+    if args.replace_poses:
+        replace_pose_inputs(cfg, args)
+        return
     for h in sorted(hero_groups()):
         if not hero_files(h):
             continue
@@ -1359,6 +1401,8 @@ def main(argv=None):
     s = sub.add_parser("inputs")
     common(s)
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
+    s.add_argument("--replace-poses", action="store_true", help="point every generated workflow that loads one of a hero's A-pose renders at her configured default A-pose (repo and workspaces)")
+    s.add_argument("--hero", help="with --replace-poses: only this hero")
     s = sub.add_parser("tidy")
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
