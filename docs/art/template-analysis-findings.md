@@ -129,3 +129,106 @@ consistency win — no cross-model drift within the exploration chain.*
 2. Final-render pick: **FireRed** (low-drift) vs **Flux.2 klein-4B** (different look) — test on one near-final image.
 3. Do you want the **ST set built now** (I can fork/edit the JSON templates: set models, denoise, add
    scaling), or wait until you've run the §5 bake-off?
+
+---
+
+## 8. Disk clean-up (Oct 2026)
+
+Every path is relative to `B:\Comfy-Desktop\ComfyUI-Shared\models` (388 GB in use). The lists come from scanning the ST templates in
+`workflows/_templates` and every workflow in every ComfyUI workspace for the model files they load. Nothing here has been deleted. Do the stages
+in order; each one is safe once the one before it is done.
+
+### Stage 1: models no template or workflow uses (61.4 GB)
+
+No ST template, generated workflow, stock template or experiment loads any of these, so there is nothing to break.
+
+| Path | GB |
+| --- | --- |
+| `checkpoints/ltx-2.3-22b-dev-fp8.safetensors` | 21.09 |
+| `diffusion_models/z_image_turbo_bf16.safetensors` | 12.31 |
+| `text_encoders/gemma_3_12B_it_fp4_mixed.safetensors` | 9.45 |
+| `checkpoints/juggernautXL_ragnarok.safetensors` | 7.11 |
+| `checkpoints/dreamshaperXL_lightningDPMSDE.safetensors` | 6.94 |
+| `loras/ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors` | 2.74 |
+| `latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors` | 1.00 |
+| `loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors` | 0.63 |
+| `loras/JuggerCineXL2.safetensors` | 0.17 |
+| `diffusion_models/flux-2-klein-base-9b-fp8.safetensors` (empty file, 0 bytes) | 0.00 |
+
+Why: LTX is video and our video is MiniMax; Juggernaut, Dreamshaper and Z-Image have no ST template; the gemma files are the LTX text encoder and its LoRA.
+If one of these returns to the plan, it needs a template first.
+
+### Stage 2: stock templates and experiments to remove, and the models tied to them (127.7 GB)
+
+The stock templates and the early `X_*` experiments live in the base `ComfyUI` workspace
+(`B:\Comfy-Desktop\ComfyUI-Installs\ComfyUI\ComfyUI\user\default\workflows`); the `Sovereign Territories` dev workspace holds only the ST templates.
+Remove these workflow files from it:
+
+- Stock templates: `image_chrono_edit_14B`, `image_flux_kontext_dev_basic`, `image_flux2`, `image_flux2_klein_9b_kv_image_edit`, `image_hidream_e1_1`,
+  `image_hidream_o1`, `image_longcat_image_edit`, `image_mage_flow_edit_turbo_int8`, `image_omnigen2_image_edit`, `image_qwen_edit_2511_lora_inflation`,
+  `image_qwen_image_edit`, `image_qwen_image_edit_2509`, `image_qwen_image_edit_2511_systms_action`, `image_sd3.5_large_blur`, `image_simple3StepImage_v10`,
+  `image_wan2.1_fun_control`, `video_minimax_h3_r2v`.
+- Early experiments: `X_Flux1_A_Pose`, `X_JoyAI_A_Pose`.
+- Keep as references: `image_firered_image_edit1_1`, `image_qwen_image_edit_2511`, `image_qwen_image_edit_2511_int8`, `image_qwen_image_2_1_image_edit`,
+  `image_flux2_fp8`, `image_flux2_klein_image_edit_4b_base`, `image_flux2_klein_image_edit_4b_distilled`, and your `X_FireRed_*`, `X_Qwen_*`, `X_Vid_*` workflows.
+
+Once those are gone, these models are used by nothing else:
+
+| Path | GB | Only used by |
+| --- | --- | --- |
+| `diffusion_models/flux1-fill-dev.safetensors` | 23.80 | `X_Flux1_A_Pose` |
+| `diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors` | 20.97 | `video_minimax_h3_r2v` |
+| `diffusion_models/joyai_image_edit_int8_convrot.safetensors` | 16.43 | `X_JoyAI_A_Pose` |
+| `checkpoints/hidream_o1_image_bf16.safetensors` | 16.37 | `image_hidream_o1` |
+| `text_encoders/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors` | 10.06 | `X_JoyAI_A_Pose` |
+| `text_encoders/t5xxl_fp16.safetensors` | 9.79 | `X_Flux1_A_Pose` |
+| `text_encoders/gemma4_e4b_it_fp8_scaled.safetensors` | 9.06 | `image_hidream_o1` |
+| `text_encoders/qwen_3_8b_fp8mixed.safetensors` | 8.66 | `image_flux2_klein_9b_kv_image_edit` |
+| `text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors` | 6.70 | `image_chrono_edit_14B`, `image_wan2.1_fun_control` |
+| `loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors` | 1.96 | `video_minimax_h3_r2v` |
+| `diffusion_models/wan2.1_fun_control_1.3B_bf16.safetensors` | 1.83 | `image_wan2.1_fun_control` |
+| `clip_vision/clip_vision_h.safetensors` | 1.26 | `image_chrono_edit_14B`, `image_wan2.1_fun_control` |
+| `vae/ae.safetensors` | 0.34 | `X_Flux1_A_Pose` and four stock templates |
+| `vae/wan_2.1_vae.safetensors` | 0.25 | `X_JoyAI_A_Pose`, `image_chrono_edit_14B`, `image_wan2.1_fun_control` |
+| `text_encoders/clip_l.safetensors` | 0.25 | `X_Flux1_A_Pose`, `image_flux_kontext_dev_basic` |
+
+HiDream, ChronoEdit and SD3.5 are the "skip on this rig" templates from section 2. MageFlow: no MageFlow model was ever downloaded, so only the templates go
+(`image_mage_flow_edit_turbo_int8` here, and `ST2_MageFlow_Edit` in `workflows/_templates` if you drop that stage).
+
+### Stage 3: Flux.2 dev (a decision, 38.3 GB plus the base model)
+
+`ST3_Flux_Final` uses Flux.2 dev, which section 2 rates borderline on 8 GB, while `ST4_Flux_Polish` uses the klein 4B model that fits. If you drop the dev final
+(and `image_flux2`, `X_Flux_A_Pose`, `X_Flux_Polish`), these become free:
+
+| Path | GB |
+| --- | --- |
+| `diffusion_models/flux2_dev_fp8mixed.safetensors` | 35.46 |
+| `text_encoders/mistral_3_small_flux2_bf16.safetensors` | 35.58 |
+| `loras/Flux_2-Turbo-LoRA_comfyui.safetensors` | 2.76 |
+
+If you keep the dev final instead, still delete the bf16 Mistral: `ST3_Flux_Final` wants `mistral_3_small_flux2_fp8`, `Flux2TurboComfyv2` and `flux2-vae`, none of which are on disk.
+
+### Keep (about 125 GB)
+
+`diffusion_models/FireRed-Image-Edit-1.1-transformer`, `diffusion_models/qwen_image_edit_2511_fp8mixed`, `diffusion_models/minimax_h3_fl2va_pruned_int8_convrot`,
+`text_encoders/qwen_2.5_vl_7b_fp8_scaled`, `text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq`, `text_encoders/qwen_3_4b`, the Qwen, FireRed and MiniMax Lightning/turbo LoRAs
+(`loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`, `loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0`, `loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16`),
+`vae/qwen_image_vae`, `vae/minimax_h3_video_vae_fp16`, `vae/minimax_h3_audio_vae_fp32`, and `vae/full_encoder_small_decoder` (klein 4B base template).
+
+### Still to download for the ST templates
+
+- `ST4_Flux_Polish`: `diffusion_models/flux-2-klein-4b-fp8`, `vae/flux2-vae` (the encoder `qwen_3_4b` is already on disk).
+- `ST3_Flux_Final` (only if kept): `text_encoders/mistral_3_small_flux2_fp8`, `loras/Flux2TurboComfyv2`, `vae/flux2-vae`.
+- `ST4_Qwen_Polish`: `diffusion_models/qwen_image_edit_2511_int8_convrot`.
+- `ST1_Qwen_B_Pose`: `diffusion_models/qwen_image_2.1_int8_convrot`, `text_encoders/qwen3vl_8b_int8_convrot`, `vae/qwen_image_2.1_vae_bf16`.
+- `ST2_MageFlow_Edit` (only if kept): the MageFlow model, its VAE and `text_encoders/qwen3vl_4b_bf16`.
+
+To prune a stage from PowerShell, run from the models folder, for example for stage 1:
+
+```powershell
+cd B:\Comfy-Desktop\ComfyUI-Shared\models
+Remove-Item checkpoints\ltx-2.3-22b-dev-fp8.safetensors, diffusion_models\z_image_turbo_bf16.safetensors -WhatIf
+```
+
+`-WhatIf` only prints what would be removed; take it off to delete.
+
