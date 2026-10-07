@@ -8,6 +8,8 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
+Fit the outfit to the body in the incoming image: the garment follows her actual contour, so the natural shape of her bust, waist, hips and legs shows clearly through the fit of the fabric, as a real fitted garment on her body would.
+
 Wearing black plate etched with amethyst sigils, raven-wing pauldrons and a long shadow-silk skirt that trails like smoke, split high at the hip.
 
 Jewelry: a simple polished silver necklace and small matching earrings.

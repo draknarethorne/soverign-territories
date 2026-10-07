@@ -1,0 +1,16 @@
+=== Draknoxa Thorne · Bare: Bare edit: painted areas in her colour (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
+Incoming image: the finished A-pose of Draknoxa Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only matte Toxic Orchid Magenta body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Toxic Orchid Magenta body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free), with no paint or colour anywhere except those three areas; the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini, black bikini, swimsuit, bra, panties, thong, straps, strings, ties, waistband, lingerie, lace, fabric, chains, jewelry, shoes, white spots, polka dots, stickers, playing card, square patch, large patches, full coverage, bump on the pelvic area, raised bump, dark clothing, body paint over the whole body, painted body, tinted skin, coloured skin, headshot, close-up, cropped body, cropped feet, extra people, extra limbs, extra digits, deformed hands, changed face, changed hair, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, ruddy skin, sunburnt skin, overly tanned skin, text, watermark, logo.

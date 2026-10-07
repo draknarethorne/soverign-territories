@@ -1,0 +1,28 @@
+=== Drakneta Thorne · Showcase: Celestial Skin Armor (rising) (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit to the body in the incoming image: the garment follows her actual contour, so the natural shape of her bust, waist, hips and legs shows clearly through the fit of the fabric, as a real fitted garment on her body would.
+
+Wearing only celestial skin armor, thin bright electrum metallic designs in her Electric Gold colour scheme with fine bright gold edge lines, formed directly onto the skin as if the metal had been bound to the body by a magical spell, slightly raised and form-fitting so the contour of the body shows through; every design is open filigree with bare skin visible between its lines, and none is a cup or a plate; Breasts: on each breast one delicate design in the form of an angular shape with forked lightning-bolt edges, made of fine curving lines and swirls with arc-coil lines and small branching bolts, about 3 cm (one and a quarter inches) across, centred on the breast, with one tiny arc-white gem accent at its centre; Pelvic area: one small, form-fitting design in the form of a small ring-sigil circle, following the contour of the pelvic area, with its fine lines curving beneath the body and continuing as a narrow design over the lower back, so the rear is mostly bare skin and modestly covered; Everywhere else: the skin outside these three designs is unchanged natural skin, matte, with no metal, no metallic sheen, no paint and no tint, keeping her natural skin tone (warm golden tan complexion, evenly tanned, no pale areas), including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs, hands and bare feet; only the two breast designs and the one pelvic design carry any metal; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture.
+
+Legs & feet: bare feet, no footwear.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Fine stars drift and glitter around her and tiny points of white-hot electric light trace the filigree of her armor, a soft ring of starlight behind her head.
+
+Eyes: irises softly aglow with white-hot electric light, brightest near the pupil and fading to the natural dark storm-charcoal, almost black irises at the rim, iris detail still visible, a gentle white-hot electric catchlight, no light spilling beyond the eyelids.
+
+Studio backdrop: a deep indigo seamless studio backdrop scattered with fine stars and a soft violet-and-gold nebula glow, a gentle ring of starlight behind the figure.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, anklets, armor plates, bikini, body covered in metal, body paint over the whole body, bra, bracelets, bump on the pelvic area, chains, coloured skin, cups, full coverage, full-body suit, gold skin, hanging plates, large plates, metal on the shoulders, metallic skin, painted arms, painted legs, painted skin, painted stomach, plates, playing card, raised bump, shoes, silver skin, square patch, straps, strings, tinted skin, environment, landscape, room, furniture, text, wording, watermark, logo.

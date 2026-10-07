@@ -1,0 +1,16 @@
+=== Drakniss Thorne · Bare: Bare edit: celestial skin suit (full body) (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
+Incoming image: the finished A-pose of Drakniss Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only a full-body celestial suit, an open filigree of thin radiant rose gold metallic design in her Radiant Rose Gold colour scheme with fine radiant rose gold edge lines, formed directly onto the skin as if the metal had been bound to the whole body by a magical spell, slightly raised and form-fitting so the contour of the body shows through, with bare skin visible between the lines everywhere; Chest: on each breast a denser design in the form of a round sunburst disc ringed with fine pointed rays, made of fine curving lines and swirls with halo lines and tiny rays of light, with one tiny rose-quartz gem accent at its centre; Pelvic area: a denser, form-fitting design in the form of a small winged shield shape, following the contour of the pelvic area; Body: from those designs the fine open lines flow in elegant swirls over the shoulders, the arms to the wrists, the torso, the hips and the legs to the ankles, getting lighter and more open away from the chest and pelvic area, so the whole body reads as a magical suit of metal tracery on the skin; Not covered: the face, neck, hair, hands and feet stay natural unpainted skin; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+cups, bra, bikini, armor plates, plates, solid metal body, chrome skin, straps, strings, chains, shoes, bump on the pelvic area, raised bump, painted face, painted hands, painted feet, extra people, extra limbs, extra digits, deformed hands, changed face, changed hair, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.

@@ -8,6 +8,8 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
+Fit the outfit to the body in the incoming image: the garment follows her actual contour, so the natural shape of her bust, waist, hips and legs shows clearly through the fit of the fabric, as a real fitted garment on her body would.
+
 Wearing feudal fantasy armor - a lacquered Electric Gold lamellar cuirass laced in white silk cord, bright gold shoulder plates, a short pleated plated skirt (kusazuri) and vambraces.
 
 Headwear: a lacquered Electric Gold kabuto helm with a swept neck guard and a large bright gold crescent crest, carried or worn tilted back above the forehead.
