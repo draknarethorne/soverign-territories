@@ -23,6 +23,65 @@ piece + piece + identity --(card + template)--> prompt .txt --> workflow .json -
 
 Files under `prompts/` are generated: never edit them. Fix the piece, card or identity and regenerate.
 
+## The image chain: from bare skin to scene
+
+What the incoming image wears shows through into every later image. A low-cut dress over a bikini A-pose is not low cut, and
+celestial armor over a swimsuit keeps the straps. So the chain is built from the bottom up, and each stage picks its incoming image
+on purpose. Prompts only describe what to *add* or *change*; the incoming image supplies the rest.
+
+The original photos are varied shots (different framing, clothing, pose) and are not good enough to feed straight into the later stages.
+The very first step is therefore always the **standard X Pose** workflow: it takes an original photo and builds the one clean, full-length A-pose
+in her metallic bikini (barefoot), and it is also where the bust and the pose are brought into proper shape. Everything else starts from that
+image. You can intercept the X Pose workflow and use your own forceful wording to get the A-pose you want (keep that workflow as a shot).
+
+| Stage | Folder | Incoming image | Produces |
+| --- | --- | --- | --- |
+| 1. Standard X Pose | `poses/` | an original photo (any shot you like) | the golden A-pose: full length, metallic bikini, barefoot, bust and proportions set; the base for everything |
+| 2. Bare | `bare/` | the golden A-pose from stage 1 | the body with the bikini removed, in one of several looks (below) |
+| 3. Other poses | `motion/`, `poses/` and any workflow that takes an incoming A-pose | the bare image from stage 2, with the body contour line on | poses that keep her real form and do not carry the bikini |
+| 4. Outfit, armor, showcase | `clothing/`, `armor/`, `showcase/` | the bare image, or a pose from stage 3 | her in the outfit, armor or a styled shot |
+| 5. Scene | `scenes/` | a complete image from stage 4, or an A-pose | the final scene |
+
+The bikini A-pose from stage 1 stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you want that
+layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are built from the original photo like stage 1 and
+are for choosing which bikini or lingerie reads best.
+
+**Choose the incoming image for the effect you want:**
+
+| Incoming image | Result |
+| --- | --- |
+| Bare (`Bare_SkinStudy`, `Bare_ChestStudy`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
+| Bikini, lingerie or bodysuit A-pose | that layer shows under the outfit on purpose |
+| Celestial (`Bare_CelestialCore`, `Bare_CelestialSuit`, `Bare_CelestialPlate`, `Bare_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
+| Pasties, contoured or paint (`Bare_Pasties`, `Bare_Contoured`, `Bare_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
+
+**The bare looks** (all edit-only prompts in `data/art/_templates/heroes/bare-human.txt`, one short removal instruction plus a result paragraph
+with each area on its own semicolon-separated clause, and "change nothing else"):
+`Bare_Pasties`, `Bare_Contoured` (sheer, nylon-like), `Bare_Paint` and `Bare_PaintColour` (small painted areas), `Bare_SkinStudy` and
+`Bare_ChestStudy` (figure-study wording, model-chosen rendering), and the celestial ones. The celestial core paints only the three small
+designs; the suit forks it into an open-filigree design over the whole body; the plate versions are the original small plates, and
+`Bare_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
+
+**Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
+
+| Switch | Effect |
+| --- | --- |
+| `aPoseFootwear` | `barefoot` (default): no shoes in any A-pose; each outfit adds its own. `signature`: her heels again. `x-pose-heels` cards keep the heeled pose |
+| `bodyContour` | on by default (`fitted-contour`, `armor-contour` for armor): outfits follow the body in the incoming image, so her form shows through the fit. A card sets `components.body_contour` to `sheer-contour` (real body through thin fabric) or `"off"` |
+| `components.strip` on a card | an optional line that removes what the incoming image wears first (`remove-original`, `replace-original`, `remove-coverings`) |
+
+**Scenes, two ways.** A *complete* scene (`<hero>-scene-<name>`) describes the outfit and everything else, and takes an A-pose as input, so
+you choose how much of the A-pose shows through. A *staged* scene (`-staged-` in the name) takes an already-dressed image from stage 4 and
+only adds the scene, effects and pose, so the outfit comes from the image, not the prompt. Between the two, a *semi-staged* scene is a
+complete scene fed an A-pose that already wears a chosen layer (bikini, lingerie, celestial): the scene describes the pieces to add and the
+A-pose supplies the layer under them. Fully pre-staged scenes (a finished bone-armor image forced into the scene) come later, if at all.
+
+**Render and keep.** Qwen is the default engine; FireRed (local, not in git) is the photoreal comparison and takes the positive prompt only, so the
+negatives in a card do not apply to it. Run the A-pose and bare stages in non-Turbo mode overnight when you want the most realistic base, since
+everything after them inherits it. Save a workflow you tuned for one render (seed, Turbo or not) in the workspace under `zz_Shots/` and run
+`pull --shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
+are the tuned renders.
+
 ## The loop you will run every time
 
 ```bash

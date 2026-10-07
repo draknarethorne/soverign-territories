@@ -57,13 +57,13 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   workflows tuned for a render (seed, Turbo or not), kept in the repo under `workflows/_shots/<set>/<Hero>/` with their subfolders;
   `zz_Test` = temporary. Generated workflows are never edited by hand.
 - **A-pose bleed tests and real-world showcases (Oct 2026, in progress).** Celestial armor showcases let the A-pose swimsuit bleed through. Options
-  under test: a `strip` instruction (`wardrobe/effects/strip/remove-original`, `replace-original`; cards `<slug>-showcase-celestial-ascended-remove|replace`),
+  under test: a `strip` instruction (`wardrobe/effects/strip/remove-original`, `replace-original`; the celestial strip-test cards were retired, the pieces and the optional `?{{STRIP}}` template line stay for other edits),
   a neutral base-layer A-pose (`<slug>-x-pose-base-layer`) and the user's own nude A-pose workflow (a shot). Also 13 real-world photo showcases per sister
   (`showcase/photo/glamour|romantic|daily`: catwalk, grand staircase, bed, beach, city street, bathroom selfie ...) to see how realistic she stays;
   template `showcase-photo-human.txt`, locations in `backgrounds/modern/`. Whether Turbo is worth it for the A-pose is a render question, recorded as shots.
-- **Footwear in the A-pose (Oct 2026, under test).** Dropping the heels from the standard A-pose keeps shoes out of every later outfit. One switch,
-  `data/art/_settings/studio.json` `aPoseFootwear` (`signature` today, `barefoot` to flip every female A-pose and underlayer test after a regenerate),
-  plus a `<slug>-x-pose-barefoot` card per sister for the comparison. Showcases are filed in families (`celestial`, `elemental`, `studio`, `editorial`, `photo/<mood>`).
+- **Footwear in the A-pose (Oct 2026, decided).** The A-pose is barefoot by default, which keeps shoes out of every later outfit. One switch,
+  `data/art/_settings/studio.json` `aPoseFootwear` (`barefoot` today, `signature` to bring back each sister's heels after a regenerate),
+  plus `<slug>-x-pose-heels` cards for glamour work. Showcases are filed in families (`celestial`, `elemental`, `studio`, `editorial`, `photo/<mood>`).
 - **Output folders follow card families (Oct 2026).** Cards, prompts and ComfyUI output folders are grouped by family below the stage
   (`scene/signature`, `scene/glamour`, `poses/lingerie`, `clothing/gowns` ...) and the output folder starts with the set and hero
   (`drakn-sisters/Draknara/scenes/signature/...`), mirroring `prompts/`; the rule lives in `tools/generators/art_layout.py` and is
@@ -85,6 +85,19 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   front hip piece, held by magic alone with no straps or wire. The `celestial` finish (`SD-001-CELESTIAL`, rank 3 in
   `finishes.json`) is the earned top edition: unlocked by a sister's celestial quest chain rather than drawn from a pack, with some
   held back in packs for a small chance (rules are open decision O3). The codex shows a silhouette or masked teaser until it is owned.
+- **Body contour on by default (Oct 2026).** `bodyContour` in `data/art/_settings/studio.json` adds a fit-to-the-incoming-body line (`fitted-contour`; `armor-contour` for the armor stage)
+  to every outfit, armor, showcase and scene prompt for the female sisters; a card sets `components.body_contour` to another piece (`sheer-contour`) or `"off"` to change or skip it.
+- **Key learning: the incoming image decides what bleeds through (Oct 2026).** Outfits fed a bikini A-pose kept the bikini (low-cut dresses were not low cut; celestial armor kept the
+  straps). The chain is therefore: original photo, then the standard X Pose (a clean metallic-bikini, barefoot A-pose that also sets the bust and pose), then an edit-only `bare` stage
+  (removal plus a small covering or none), then the other poses fed the bare image with the body contour on, then
+  outfit, armor, showcase and scene, each fed the incoming image that gives the wanted result; documented in `docs/art/tutorial-art.md`. Complete scenes describe the outfit,
+  staged scenes take a dressed image, and a semi-staged scene is a complete scene fed an A-pose that already wears a layer. FireRed versions of the bare study and celestial
+  steps exist for overnight non-Turbo comparison; the best bare A-poses become the input for everything else.
+- **Two celestial looks and a two-step core (Oct 2026, ideation).** The original larger plates are kept as `celestial-plate-armor`; the new
+  `celestial-skin-armor` is thin metallic design formed on the skin by magic (open filigree, form-fitting, skin showing through, her class and element
+  motif). The `bare` stage (`Bare_*`) is an edit-only pass on a finished A-pose; `Bare_CelestialPlate` and `Bare_CelestialCore` (skin) produce a
+  "celestial A-pose" that can be fed into scenes, showcases or other outfits to carry her celestial form into the picture. Later: Shiny and Holo
+  editions add glow, a little more coverage and accessories, probably as a second pass on that image.
 - **Theme scenes have two paths over one library (Oct 2026).** Every outfit, armor, jewelry, footwear, headwear and weapon item is a
   library piece, never inline text in a card (generic fillers such as "bare arms" excepted), so a scene can be built either way: a
   *complete* scene (`<hero>-scene-<theme>`) names all the pieces so the model has freedom and a scene can be tested at once, or a
