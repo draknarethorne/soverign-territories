@@ -8,7 +8,7 @@
     "jewelry": "a simple {{METAL}} necklace and small matching earrings",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "wearing": "data/art/heroes/drakn-sisters/draknisa/armor/celestial-armor.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/armor/celestial-plate-armor.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff-ascended.json",
     "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
     "background": "data/art/backgrounds/studio/prismatic-glass.json"

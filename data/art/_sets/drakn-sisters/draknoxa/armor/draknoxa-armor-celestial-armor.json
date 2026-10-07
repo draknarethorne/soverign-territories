@@ -6,7 +6,7 @@
   "name": "Celestial armor",
   "aesthetic": "a clean studio presentation of the celestial armor",
   "components": {
-    "wearing": "data/art/heroes/drakn-sisters/draknoxa/armor/celestial-armor.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/armor/celestial-plate-armor.json",
     "arms": "bare arms",
     "jewelry": "a simple {{METAL}} necklace and small matching earrings",
     "back": "the back of the armor fully visible",

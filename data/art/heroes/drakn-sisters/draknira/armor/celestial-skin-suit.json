@@ -1,0 +1,35 @@
+{
+  "id": "heroes/drakn-sisters/draknira/armor/celestial-skin-suit",
+  "kind": "wearing",
+  "name": "Celestial skin suit (draknira)",
+  "description": "only a full-body celestial suit, an open filigree of thin brushed white-chrome metallic design in her {{PRIMARY}} colour scheme with fine {{METAL}} edge lines, formed directly onto the skin as if the metal had been bound to the whole body by a magical spell, slightly raised and form-fitting so the contour of the body shows through, with bare skin visible between the lines everywhere; Chest: on each breast a denser design in the form of a six-sided snowflake lattice with frosted points, made of fine curving lines and swirls with crystal-lattice filigree and tiny star facets, with one tiny glacial-blue gem accent at its centre; Pelvic area: a denser, form-fitting design in the form of a small elongated diamond lattice, following the contour of the pelvic area; Body: from those designs the fine open lines flow in elegant swirls over the shoulders, the arms to the wrists, the torso, the hips and the legs to the ankles, getting lighter and more open away from the chest and pelvic area, so the whole body reads as a magical suit of metal tracery on the skin; Not covered: the face, neck, hair, hands and feet stay natural unpainted skin; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture",
+  "negatives": [
+    "cups",
+    "bra",
+    "bikini",
+    "armor plates",
+    "plates",
+    "solid metal body",
+    "chrome skin",
+    "straps",
+    "strings",
+    "chains",
+    "shoes",
+    "bump on the pelvic area",
+    "raised bump",
+    "painted face",
+    "painted hands",
+    "painted feet"
+  ],
+  "compatibleStages": [
+    "armor",
+    "showcase"
+  ],
+  "tags": [
+    "armor",
+    "celestial",
+    "skin-suit",
+    "female"
+  ],
+  "notes": "Forked from the celestial skin armor: the same designs, flowing over the whole body as an open-filigree suit."
+}

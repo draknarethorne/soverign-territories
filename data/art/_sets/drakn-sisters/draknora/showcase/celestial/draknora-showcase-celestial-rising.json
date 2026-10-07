@@ -8,7 +8,7 @@
     "jewelry": "a simple {{METAL}} necklace and small matching earrings",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
-    "wearing": "data/art/heroes/drakn-sisters/draknora/armor/celestial-armor.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/armor/celestial-plate-armor.json",
     "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
     "background": "data/art/backgrounds/studio/starfield-indigo.json"
   },

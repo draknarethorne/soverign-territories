@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/effects/contour/fitted-contour",
+  "kind": "effects",
+  "name": "Contour: fitted to the incoming body",
+  "description": "Fit the outfit to the body in the incoming image: the garment follows her actual contour, so the natural shape of her bust, waist, hips and legs shows clearly through the fit of the fabric, as a real fitted garment on her body would.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "contour",
+    "fitted"
+  ],
+  "notes": "Optional line (components.body_contour). The outfit shows her real shape instead of hanging loose."
+}

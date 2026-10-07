@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/effects/strip/remove-coverings",
+  "kind": "effects",
+  "name": "Strip: remove pasties, patches and body paint",
+  "description": "Before dressing her, remove the small coverings, patches, pasties and any body paint from the incoming image completely, so that none of them shows through, remains visible or leaves a mark under or around the new outfit. Then apply only what is described below.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "strip",
+    "bleed-test"
+  ],
+  "notes": "Optional line (components.strip) for outfits fed from a Bare_Pasties, Bare_Contoured or Bare_Paint image."
+}

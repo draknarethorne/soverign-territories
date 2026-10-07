@@ -1,0 +1,13 @@
+{
+  "artId": "draknara-x-pose-heels",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/poses/Draknara_X_Pose_Heels.txt",
+  "denoise": "~1.0",
+  "notes": "HEELED A-POSE. The default A-pose is barefoot (data/art/_settings/studio.json); this keeps her signature heels for glamour work.",
+  "components": {
+    "footwear": "data/art/heroes/drakn-sisters/draknara/footwear/signature-heels.json"
+  }
+}

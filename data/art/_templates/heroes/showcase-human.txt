@@ -12,11 +12,13 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 
 ?{{STRIP}}
 
+?{{BODY_CONTOUR}}
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.
 
-Jewelry: {{JEWELRY}}.
+?Jewelry: {{JEWELRY}}.
 ?Arms: {{ARMS}}.
 ?Back: {{BACK}}.
 Legs & feet: {{LEGS_FEET}}.
@@ -36,4 +38,4 @@ Studio backdrop: {{BACKGROUND}}.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, bald, shaved head, thinning hair, {{SKIN_NEG}}, {{FIGURE_NEG}}, environment, landscape, room, furniture, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, {{EYE_NEG}}, {{HERO_NEG}}, bald, shaved head, thinning hair, {{SKIN_NEG}}, {{FIGURE_NEG}}, {{WEARING_NEG}}, environment, landscape, room, furniture, text, wording, watermark, logo.

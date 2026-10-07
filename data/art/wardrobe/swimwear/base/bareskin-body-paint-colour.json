@@ -1,0 +1,45 @@
+{
+  "id": "wardrobe/swimwear/base/bareskin-body-paint-colour",
+  "kind": "wearing",
+  "name": "Bareskin: painted areas in her colour",
+  "description": "no clothing at all. Remove all clothing, swimwear, straps, strings, jewelry and shoes from the reference image completely, so that the whole body from head to bare feet is shown in the frame; bare shoulders, bare arms, bare back, bare stomach, bare hips, bare thighs, bare legs and bare feet. Body paint only: a matte {{PRIMARY}} body paint with soft, clean edges is painted on exactly three areas, two round areas about two inches across on the centre of each breast and one small area about the size of a playing card on the front pelvic area, and nowhere else. It is paint on skin, so the natural shape of the body shows through with no relief or texture, and the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture. Nothing else is painted or worn; {{FOOTWEAR}}",
+  "compatibleStages": [
+    "pose"
+  ],
+  "tags": [
+    "bareskin",
+    "base",
+    "bleed-test",
+    "body-paint",
+    "colour",
+    "female",
+    "swimwear"
+  ],
+  "notes": "Painted-on bikini areas in her primary colour: a strap-free base that still shows where the plates go. The colour can tint a later outfit, so compare it with the skin-tone paint.",
+  "negatives": [
+    "bikini",
+    "black bikini",
+    "swimsuit",
+    "bra",
+    "panties",
+    "thong",
+    "straps",
+    "strings",
+    "ties",
+    "waistband",
+    "lingerie",
+    "lace",
+    "fabric",
+    "chains",
+    "jewelry",
+    "shoes",
+    "white spots",
+    "polka dots",
+    "stickers",
+    "dark clothing",
+    "headshot",
+    "close-up",
+    "cropped body",
+    "cropped feet"
+  ]
+}

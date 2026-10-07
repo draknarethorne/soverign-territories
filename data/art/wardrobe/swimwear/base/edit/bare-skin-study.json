@@ -1,0 +1,52 @@
+{
+  "id": "wardrobe/swimwear/base/edit/bare-skin-study",
+  "kind": "wearing",
+  "name": "Bare edit: figure study, bare skin",
+  "description": "nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; the only covering is one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin with no clothing, no paint and no tint, keeping her natural skin tone ({{SKIN}}), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible",
+  "compatibleStages": [
+    "showcase"
+  ],
+  "tags": [
+    "bare",
+    "edit",
+    "bleed-test",
+    "female",
+    "figure-study"
+  ],
+  "notes": "Less explicit, model-chosen rendering: a figure-study cue instead of anatomical terms.",
+  "negatives": [
+    "bikini",
+    "black bikini",
+    "swimsuit",
+    "bra",
+    "panties",
+    "thong",
+    "straps",
+    "strings",
+    "ties",
+    "waistband",
+    "lingerie",
+    "lace",
+    "fabric",
+    "chains",
+    "jewelry",
+    "shoes",
+    "pasties",
+    "stickers",
+    "body paint",
+    "painted body",
+    "white spots",
+    "polka dots",
+    "dark clothing",
+    "bump on the pelvic area",
+    "raised bump",
+    "square patch",
+    "headshot",
+    "close-up",
+    "cropped body",
+    "cropped feet",
+    "censored",
+    "blurred",
+    "mosaic"
+  ]
+}

@@ -14,6 +14,8 @@ Background: {{BACKGROUND}}.
 
 ?{{STRIP}}
 
+?{{BODY_CONTOUR}}
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.

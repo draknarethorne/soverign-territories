@@ -10,6 +10,8 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 
 ?{{KEY_BLOCK}}
 
+?{{BODY_CONTOUR}}
+
 Wearing {{WEARING}}.
 
 ?Headwear: {{HEADWEAR}}.

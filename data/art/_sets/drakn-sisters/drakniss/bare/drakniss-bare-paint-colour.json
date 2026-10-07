@@ -1,0 +1,14 @@
+{
+  "artId": "drakniss-bare-paint-colour",
+  "kind": "base-set",
+  "stage": "bare",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Bare edit: painted areas in her colour",
+  "components": {
+    "wearing": "data/art/wardrobe/swimwear/base/edit/bare-paint-colour.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/bare/Drakniss_Bare_PaintColour.txt",
+  "notes": "TWO-STEP BARE: an edit-only pass on the finished A-pose that removes the clothing and nothing else; feed the result to armor and showcases."
+}

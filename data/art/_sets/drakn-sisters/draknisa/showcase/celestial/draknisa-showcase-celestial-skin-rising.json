@@ -1,0 +1,18 @@
+{
+  "artId": "draknisa-showcase-celestial-skin-rising",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Celestial Skin Armor (rising)",
+  "components": {
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/armor/celestial-skin-armor.json",
+    "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+    "background": "data/art/backgrounds/studio/starfield-indigo.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknisa/showcase/celestial/Draknisa_Showcase_CelestialSkinRising.txt",
+  "notes": "CELESTIAL SKIN ARMOR SHOWCASE: the thin metallic-design version; feed the Bare_Celestial image (or the A-pose) as the incoming image."
+}

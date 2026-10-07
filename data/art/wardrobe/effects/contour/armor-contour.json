@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/effects/contour/armor-contour",
+  "kind": "effects",
+  "name": "Contour: armor shaped to the body",
+  "description": "Shape the armor to the body in the incoming image: it follows her actual contour closely, so the natural shape of her bust, waist and hips reads clearly through the form of the armor, as if it were made to measure.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "contour",
+    "armor"
+  ],
+  "notes": "Optional line (components.body_contour) for armor that should read as form-fitting."
+}

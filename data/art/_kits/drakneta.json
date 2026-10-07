@@ -128,7 +128,7 @@
       "name": "Celestial Rising",
       "components": {
         "pose": "motion/standing/over-the-shoulder-glance",
-        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-armor",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-plate-armor",
         "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
         "background": "backgrounds/studio/starfield-indigo"
       }
@@ -137,7 +137,7 @@
       "name": "Celestial Ascended",
       "components": {
         "pose": "motion/standing/commanding-cast",
-        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-armor",
+        "wearing": "heroes/drakn-sisters/drakneta/armor/celestial-plate-armor",
         "holding": "heroes/drakn-sisters/drakneta/weapons/storm-sigil-staff-ascended",
         "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
         "background": "backgrounds/studio/prismatic-glass"

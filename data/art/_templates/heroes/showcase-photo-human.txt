@@ -12,6 +12,8 @@ A candid, photorealistic lifestyle photograph shot on location with natural ligh
 
 ?{{STRIP}}
 
+?{{BODY_CONTOUR}}
+
 Shot: {{FRAMING}}.
 
 Wearing {{WEARING}}.

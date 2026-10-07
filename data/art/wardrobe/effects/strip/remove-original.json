@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/strip/remove-original",
   "kind": "effects",
   "name": "Strip: remove the original clothing first",
-  "description": "First completely remove every garment, swimsuit, strap, string and shoe worn in the incoming image, so that no trace of the original clothing remains, shows through or peeks out at any edge. Then dress the subject only in what is described below.",
+  "description": "Before anything else, remove ALL clothing from the subject in the incoming image: the swimsuit top and bottom, every strap and string at the neck, back, sides and hips, all jewelry and all shoes, leaving bare skin everywhere they were, so that nothing of the original clothing remains. Then apply only what is described below.",
   "compatibleStages": [
     "armor",
     "clothing",

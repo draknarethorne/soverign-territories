@@ -1,0 +1,14 @@
+{
+  "artId": "draknoxa-bare-celestial-suit",
+  "kind": "base-set",
+  "stage": "bare",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Bare edit: celestial skin suit (full body)",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/armor/celestial-skin-suit.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknoxa/bare/Draknoxa_Bare_CelestialSuit.txt",
+  "notes": "Fork of the celestial core: the designs flow over the whole body as a suit."
+}
