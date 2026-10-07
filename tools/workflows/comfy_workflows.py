@@ -44,6 +44,7 @@ import json
 import pathlib
 import re
 import shutil
+import struct
 import sys
 import uuid
 
@@ -1363,9 +1364,9 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
         for img in sorted(names):
             if (d / img).exists():
                 continue
-            src = next((q / img for q in input_dirs(cfg) if (q / img).exists()), None)
+            src = find_image(cfg, img)
             if not src:
-                print(f"  MISSING  {img} is not in {d} or any other input folder")
+                print(f"  MISSING  {img} is not in {d}, any other input folder or the output folders")
             elif args.dry_run:
                 print(f"  would copy {img} -> {d}")
             else:
@@ -1374,9 +1375,96 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
     print("inputs reset: " + (", ".join(f"{v} in {k}" for k, v in changed.items()) or "nothing to change") + (" (dry run)" if args.dry_run else ""))
 
 
+def image_size(path):
+    """(width, height) of a PNG or JPEG read from its header, or None."""
+    try:
+        with open(path, "rb") as f:
+            head = f.read(26)
+            if head[:8] == b"\x89PNG\r\n\x1a\n":
+                return struct.unpack(">II", head[16:24])
+            if head[:2] != b"\xff\xd8":
+                return None
+            f.seek(2)
+            while True:
+                b = f.read(1)
+                while b and b != b"\xff":
+                    b = f.read(1)
+                m = f.read(1)
+                while m == b"\xff":
+                    m = f.read(1)
+                if not m:
+                    return None
+                if m[0] in (0xD8, 0x01) or 0xD0 <= m[0] <= 0xD7:
+                    continue
+                n = struct.unpack(">H", f.read(2))[0]
+                if m[0] in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                    h, w = struct.unpack(">HH", f.read(5)[1:5])
+                    return w, h
+                f.seek(n - 2, 1)
+    except (OSError, struct.error):
+        return None
+
+
+def find_image(cfg, name):
+    """First existing copy of an image: any input folder, the photo folders, then anywhere under the output roots."""
+    for d in input_dirs(cfg):
+        if (d / name).exists():
+            return d / name
+    for root in output_roots(cfg):
+        hit = next(root.rglob(name), None)
+        if hit:
+            return hit
+    return None
+
+
+def inputs_status(cfg):
+    """Per hero: the configured photo, barefoot A-pose and bare-skin images, where each was found and whether it is the standard size."""
+    std = tuple(cfg.get("standardSize") or ())
+    print(f"standard size: {'x'.join(map(str, std)) if std else '(not set)'}")
+    for h in sorted(cfg.get("photos", {})):
+        conf = cfg.get("inputs", {}).get(h)
+        conf = conf if isinstance(conf, dict) else {}
+        print(h)
+        for role, name in (("photo", cfg["photos"].get(h)), ("apose", conf.get("apose")), ("bare", conf.get("bare"))):
+            if not name:
+                print(f"    {role:6} -")
+                continue
+            p = find_image(cfg, name)
+            size = image_size(p) if p else None
+            flag = "MISSING" if not p else ("?" if not size else ("ok" if not std or size == std else "WRONG SIZE"))
+            print(f"    {role:6} {name:48} {'x'.join(map(str, size)) if size else '-':10} {flag}" + (f"  ({p.parent.name})" if p else ""))
+
+
+def set_inputs(cfg, args):
+    """Write --photo / --apose / --bare for one hero into workspaces.json (then run inputs --reset)."""
+    hero = next((h for h in cfg.get("photos", {}) if h.lower() == args.set.lower()), None)
+    if not hero:
+        sys.exit(f"Unknown hero '{args.set}'. Known: {list(cfg.get('photos', {}))}")
+    if args.photo:
+        cfg["photos"][hero] = args.photo
+    conf = cfg["inputs"].get(hero)
+    conf = conf if isinstance(conf, dict) else {}
+    for role in ("apose", "bare"):
+        if getattr(args, role):
+            conf[role] = getattr(args, role)
+    cfg["inputs"][hero] = conf
+    print(f"{hero}: photo={cfg['photos'].get(hero)} apose={conf.get('apose')} bare={conf.get('bare')}")
+    if args.dry_run:
+        print("(dry run, nothing written)")
+    else:
+        CFG_PATH.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print("workspaces.json updated; now run: inputs --reset --hero " + hero)
+
+
 def cmd_inputs(args):
     cfg = load_cfg()
     placeholder = re.compile(r"^(.+)_Qwen_X_Pose_00001_\.png$")
+    if args.status:
+        inputs_status(cfg)
+        return
+    if args.set:
+        set_inputs(cfg, args)
+        return
     if args.reset:
         reset_inputs(cfg, args)
         return
@@ -1473,6 +1561,11 @@ def main(argv=None):
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
     s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
     s.add_argument("--hero", help="with --reset: only this hero")
+    s.add_argument("--status", action="store_true", help="per hero: the photo, A-pose and bare-skin images, where they are found and whether they match standardSize")
+    s.add_argument("--set", metavar="HERO", help="write --photo/--apose/--bare for this hero into workspaces.json (then run --reset)")
+    s.add_argument("--photo", help="with --set: original photo file name")
+    s.add_argument("--apose", help="with --set: barefoot A-pose file name")
+    s.add_argument("--bare", help="with --set: bare-skin A-pose file name")
     s = sub.add_parser("tidy")
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")

@@ -113,6 +113,18 @@ During a session you can point a workflow at any other image; a reset (or `--res
 `zz_Shots/`. When the golden images are chosen, rename them (for example `Drakness_Golden_BarefootPose.png`), keep them in the repo's input list and change the two
 names in `inputs`; a reset then repoints every workflow.
 
+**Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
+before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen
+templates pass it through unchanged; FireRed resizes to 1 MP (947x1107) and the VAE trims it back. The reset sequence for a hero:
+
+```bash
+python tools/workflows/comfy_workflows.py inputs --status                       # every hero's photo / A-pose / bare image: where found, size, ok or WRONG SIZE or MISSING
+python tools/workflows/comfy_workflows.py inputs --set Draknara --photo Draknara_Photo_944x1104.png --apose Draknara_Qwen_X_Pose_Golden.png --bare Draknara_Qwen_Bare_Golden.png
+python tools/workflows/comfy_workflows.py inputs --reset --hero Draknara --dry-run   # then without --dry-run; --reset also finds images under the output folders and copies them into each workspace's inputs
+```
+
+`--set` only needs the roles you give it (`--photo`, `--apose`, `--bare`); with `--dry-run` it prints and writes nothing. Workflows in `zz_Shots/` are never reset.
+
 ### Shots (zz_Shots)
 
 A shot is a workflow you tuned for one render: a chosen seed, Turbo on or off, a changed input. Save it in the workspace under `zz_Shots/`, in any subfolders you like (`zz_Shots/armor/`, `zz_Shots/poses/` ...).

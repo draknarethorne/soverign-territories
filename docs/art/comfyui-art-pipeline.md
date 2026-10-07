@@ -172,10 +172,24 @@ nearest supported Qwen resolution bucket (~1 megapixel, standard aspect ratios).
 3. **Output = that bucket size.** Feed it into the next stage and it's already a bucket size, so it
    passes through unchanged → **size stays stable across the whole chain.**
 
+**The snap crops.** `FluxKontextImageScale` picks the bucket whose aspect ratio is closest to the input, resizes with
+Lanczos to cover it, then **centre-crops** the overflow. A photo whose aspect is not exactly a bucket loses its
+edges (a head or feet can be cut) and two photos of different aspect come out at different sizes. The list contains
+**944x1104** (about 1.04 MP, multiples of 16), so an input that is already 944x1104 passes through untouched.
+
+**Standard size (Oct 2026, provisional until the reset finishes): 944x1104.** Scale each original to fit and **pad** it
+(never crop) to 944x1104 before the first X Pose, so every sister's chain starts and stays at one size. Other engines:
+
+| Template | Scaling node | At a 944x1104 input |
+| --- | --- | --- |
+| Qwen edit (ST1 A Pose, ST2, ST4 Qwen Polish) | `FluxKontextImageScale` | unchanged (it is a bucket) |
+| FireRed (ST3) | `ResizeImageMaskNode`, scale total pixels 1 MP, Lanczos | 944x1104 becomes 947x1107, then the VAE trims 1 px per edge back to 944x1104: right size, one needless resample. Other input sizes drift (1024x1280 ends at 912x1144). Prefer scaling by dimension 944x1104 with pad or crop off |
+| Flux.2 (ST3 Flux, ST4 Flux Polish) | `ImageScaleToTotalPixels` 1 MP | same small resample; both sides are multiples of 16, so the size survives |
+
 What this means in practice:
 
-- The **one thing that sets the canvas is the aspect ratio of the very first photo** you feed the
-  A-pose. Want tall card art? Start from a **portrait** reference; every downstream stage inherits it.
+- The **one thing that sets the canvas is the size and aspect of the very first image** you feed the
+  A-pose. Pad the originals to 944x1104 and every downstream stage inherits it.
 - You **don't** need to add `ImageScaleToTotalPixels` to the Qwen workflow — it would be redundant with
   `FluxKontextImageScale` (and could fight the buckets). That node appears in the **Flux / MageFlow /
   FireRed** ST files precisely *because* those model families don't ship the Kontext scaler and need an
@@ -213,10 +227,9 @@ edits (A-pose → hair → motion → armor → stance)   ~1 MP, iterate here
 **When:** once, at the very end, on the one approved card. Never during iteration — upscaling early just
 runs every stage slower and gets redone next stage.
 
-**Source sizes don't need to match.** The ~1 MP normalizer conforms every photo (1122×1402, 941×1254,
-1170×1580…) to the same working bucket at stage one, so a mixed source set is fine. The only thing that
-varies is **aspect** — snap it by **cropping each source to your chosen card aspect (5:7) before loading**.
-That one manual crop is the only prep worth doing.
+**Source sizes do matter (corrected Oct 2026).** The ~1 MP normalizer maps each photo to the bucket nearest its
+aspect and centre-crops the rest, so mixed originals (1122×1402, 941×1254, 1170×1580…) end at different sizes and
+lose edges. Scale each to fit and pad to 944×1104 before loading; do not crop.
 
 **How, on an RTX 3050 8 GB — use ESRGAN, not a latent hi-res pass:**
 
@@ -258,10 +271,9 @@ Plan every heroine against this so cards work full-screen, in the landscape spli
   so pick one and stay on it: **2:3** (~800×1184) or **3:4** (~880×1184). **3:4 is the pragmatic default**
   — a clean native bucket close to card proportions. You **can't** get an exact 5:7 out of the Qwen edit;
   if you want a precise card aspect, enforce it at the **final crop/upscale**, not the source.
-- **Crop raw sources to that aspect, not an exact size.** The ~1 MP normalizer rebuilds the pixels, so
-  only the aspect matters — crop every source to 2:3 or 3:4 and keep it **larger than the working bucket**
-  (≥ ~1200×1600) so it's downscaled, never upscaled. Mismatched source sizes are fine; mismatched source
-  *aspects* are what make heroines come out different shapes.
+- **Standard working size is now 944×1104 (provisional).** It replaces the 2:3 / 3:4 advice above for the
+  A-pose chain. Pad (do not crop) every source to it: the Kontext scaler centre-crops anything that is not
+  an exact bucket, and mismatched source *aspects* are what make heroines come out different shapes.
 - **Master resolution:** finish/upscale to a high-DPI master (**≥ 1600×2368**, more is fine), then let the
   app downscale per context. Keep the ~1 MP **working plate** separate from the **final master** — never
   ship the working plate for the detailed full-screen view.

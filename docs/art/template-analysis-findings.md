@@ -82,7 +82,10 @@ Extracted from the 23 templates in `workflows/Templates/`. Values inside subgrap
 
 - **Has a scaling node** (predictable output size): Qwen orig (1.5 MP), Qwen **2.1** (`ResolutionSelector`,
   best pattern), Flux.2 / Flux.2 fp8 (`ImageScaleToTotalPixels`, 1 MP), Flux Kontext (`FluxKontextImageScale`).
-- **No scaling** (inherits input size): Qwen 2509 / 2511 / 2511-int8 / action / inflation, FireRed, LongCat.
+- **No scaling** (inherits input size): Qwen 2509 / 2511 / 2511-int8 / action / inflation, LongCat, as shipped by ComfyUI.
+  Our own ST templates differ: ST1/ST2/ST4 Qwen carry `FluxKontextImageScale` (nearest bucket by aspect, then centre-crop;
+  944x1104 is a bucket so it passes unchanged) and ST3 FireRed carries `ResizeImageMaskNode` (scale total pixels, 1 MP = 1,048,576 px,
+  Lanczos; a 944x1104 input becomes 947x1107 and the VAE trims it back to 944x1104). The standard size is 944x1104 (Oct 2026, provisional).
 - **Action item:** card art wants a **fixed portrait target**. Copy Qwen 2.1's `ResolutionSelector` (or
   `ImageScaleToTotalPixels`) into any base that lacks scaling so every stage outputs a consistent size.
 
