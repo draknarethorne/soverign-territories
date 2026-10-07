@@ -23,4 +23,4 @@ Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, {{EYE_NEG}}, {{HERO_NEG}}, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, {{EYE_NEG}}, {{EXPRESSION_NEG}}, {{HERO_NEG}}, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

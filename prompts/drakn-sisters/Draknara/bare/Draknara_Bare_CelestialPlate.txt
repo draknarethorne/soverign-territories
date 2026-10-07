@@ -1,5 +1,5 @@
 === Draknara Thorne · Bare: Bare edit: celestial plate armor (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Draknara Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Draknara Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing celestial armor of antique bronze: two small ornate filigree plates, each in the form of a round carved totem-face disc with a spiral border, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small mountain-peak chevron covering the front of the hips; every plate is engraved with carved spirals and tiny turquoise inlays and set with a turquoise; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved (not wide); very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

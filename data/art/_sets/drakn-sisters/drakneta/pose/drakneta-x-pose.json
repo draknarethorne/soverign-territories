@@ -6,5 +6,6 @@
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/poses/Drakneta_X_Pose.txt",
   "denoise": "~1.0",
+  "figureProfile": "standard",
   "notes": "Drakneta Thorne pose — generated alongside Drakness as the initial baseline for all 10 female heroes."
 }

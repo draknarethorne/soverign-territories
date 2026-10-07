@@ -1,5 +1,5 @@
 === Drakneta Thorne · Bare: Bare edit: figure study, bare skin (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Drakneta Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Drakneta Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; the only covering is one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin with no clothing, no paint and no tint, keeping her natural skin tone (warm golden tan complexion, evenly tanned, no pale areas), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved (not wide), narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

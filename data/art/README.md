@@ -627,13 +627,14 @@ Glow is only ever added in `scene` stages.
 | Concern | Token | Used in | Notes |
 | --- | --- | --- | --- |
 | Studio eyes | `{{EYE}}` | pose, head, hair, motion, armor, clothing | Iris colour + striations + limbal ring, always "natural, not glowing"; `glowing eyes` is in those negatives. |
-| Studio makeup/grooming | `{{FACE_STYLE}}` | pose, head, hair, motion, armor, clothing | Built in `gen_prompt.py` (`face_style`) from the hero's `eyeshadowColor` and `blushColor`; "present, never heavy". Males get a grooming line. |
+| Studio makeup/grooming | `{{FACE_STYLE}}` | pose, head, hair, motion, armor, clothing | Built in `gen_prompt.py` (`face_style`) from the hero's `eyeshadowColor` and `blushColor`, wording in `_settings/phrases.json` (`faceStyle`); "present, never heavy". Males get a grooming line. |
 | Signature cosmetic colours | `{{LIP}}`, `{{EYESHADOW}}`, `{{BLUSH}}`, `{{NAIL}}` | pose, `FACE_STYLE`, scenes, makeup pieces | `palette.lipColor` / `eyeshadowColor` / `blushColor` / `nailColor`: **required for every female card hero** (schema-enforced), optional for males and test beds. Scenes print a makeup line only when a card picks a `components.makeup` piece. Core makeup pieces use the tokens; culture/event makeup keeps its own look. |
-| Expression | `{{EXPRESSION}}` | pose, head | Defaults in `SLOT_DEFAULTS` (see below): pose = per-sex studio glamour/confident; head = `studio-glamour-smile` (lips, cheeks, dimples). Override on a card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
+| Expression | `{{EXPRESSION}}`, `{{EXPRESSION_NEG}}` | pose, head, views | Defaults in `SLOT_DEFAULTS`: pose and head = `studio-soft-smile`, male pose = `studio-confident-soft-smile` (see below). The piece's `negatives` fill `{{EXPRESSION_NEG}}`. Override on a card with `components.expression` (a piece or literal). The pose also resets the source photo's head tilt and body angle. |
+| Figure | `{{FIGURE}}` | pose, Bare | The physique fields in order, nothing added by the generator (see below). `raceAlignment` is a design note and is never rendered. |
 | Hairstyle | `{{HAIRSTYLE}}`, `{{HAIRSTYLE_NEG}}` | pose | From the hero's `hairStyleComponent`. `hair/down/center-part-natural.json` takes the hair down, centre-parted, keeping the source's natural texture; its `a_pose_negatives` (ponytail, bun, updo, ...) go into the negative prompt. |
 | Hair, whole block | `{{HAIR_ESTABLISH}}` | pose (female and male) | The hair's style and `breeze` line, plus colour and highlights unless `hair` is a key detail (then they live in the Critical details block). |
 | Critical details | `{{KEY_BLOCK}}` | pose (female default: hair, bust, eyes, skin, legs); any stage via `keyDetails` on the card | A short up-front block built from the identity (`keyDetails`: `hair`, `bust`, `eyes`, `skin`, `legs`). Whatever it carries is left out of the later Figure, Skin, Hair and Eyes lines, so nothing is said twice. Downstream cards list only what a given outfit tends to lose. |
-| Fidelity to the incoming A-pose | `{{KEEP_LINE}}` | every stage that takes in an A-pose (head, views, motion, armor, clothing, scenes, showcase) | One line naming what to keep exactly: face, eyes, skin, makeup, figure, bust, hair colour, highlights and length. Those stages do not restate hair, figure, skin or eyes; poses that take in an original photo keep the full text. |
+| Fidelity to the incoming A-pose | `{{KEEP_LINE}}` | every stage that takes in an A-pose (head, views, motion, armor, clothing, scenes, showcase) | One line (`keepLine` in `_settings/phrases.json`) naming what to keep exactly: face, eyes, skin, makeup, figure, bust, hair colour, highlights and length. Those stages do not restate hair, figure, skin or eyes; poses that take in an original photo keep the full text. |
 | Scene eye glow | `{{EYE_EFFECT}}` | scene templates | Chosen with `components.eye_effect`; default `partial-glow`. |
 | (Soft iris-only eyes) | `{{EYE_SOFT}}` | inside the eye-effect pieces | Not used by the studio stages. |
 
@@ -642,6 +643,26 @@ iris rim), `partial-glow` (**default**, mid-cast, iris detail kept), `full-glow`
 dominates the face). Override per scene card: `"eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json"`.
 `scene-combat-human.txt` has no eye line (martial heroes). These alternatives exist for ideation: try them, then settle
 which suits which art.
+
+**Figure: standard plate, then the individual build.** The Figure line is the physique fields in order, then any `distinguishingMarks`:
+female `build`, `torso`, `bust`, `arms`, `hips`, `legs`; male `build`, `chest`, `arms`, `waist`, `legs`. A card with `figureProfile: standard`
+(the X Pose, X Pose Barefoot and Heels, which are fed the original photo) swaps everything but the bust for `standardFigure` in
+`_settings/phrases.json`, so the first A-pose stays the clean lithe, slender bikini plate and does not fight the original. Every later card
+(the Bare stage, underlayer tests, body views) uses the hero's own physique; the Bare stage says it in a `Body:` line and keeps the bust as in
+the incoming image, so the individual build is applied on a clean body, not on clothes and a background. Males have no standard figure (no Bare
+stage yet), so their X Pose uses the individual build. A physique field describes the body only: no skin colour (that is `palette.skinTone`), no
+pose or stance (the A-pose sets that), no glow.
+
+**Wording lives in data, not in the generator.** Every sentence `gen_prompt.py` adds to a hero prompt on its own (the keep line, the bust
+key line, the figure negatives, the makeup and grooming lines, the default hair breeze, the standard figure, card-art grandeur, the dragon
+field labels) is in `data/art/_settings/phrases.json`. Change it there and regenerate; a refactor of the generator must leave every
+prompt byte-identical.
+
+**The studio smile.** `studio-soft-smile` (copy of `studio-glamour` with the same chin, brows and gaze) draws a small, visible smile: lips
+gently parted with at most a hint of the upper teeth, mouth corners lifted for soft creases and faint dimples, cheeks only slightly raised,
+eyes wide open. A "closed-mouth smile" is read as neutral and "sultry" as a pout with heavy lids, which is why neither is used; its
+`negatives` (wide smile, toothy, laughing, cheeks pushed high, squinting smile, closed neutral mouth, resting face) keep it small.
+`studio-glamour-smile` (more teeth, lifted cheeks) and the older pieces stay available per card.
 
 ## Which colour drives what
 

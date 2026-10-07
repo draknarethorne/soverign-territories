@@ -13,7 +13,12 @@
       "pattern": "^UNIT_[A-Z_]+$",
       "description": "Link to the gameplay card. The card's art.artIdentity must point back at this file."
     },
-    "description": {"type": "string", "minLength": 20, "description": "Visual description that drives the text-to-image prompt"},
+    "description": {"type": "string", "minLength": 20, "description": "Visual description that drives the text-to-image prompt: colours and materials, one sentence"},
+    "silhouette": {"type": "string", "description": "Body shape and posture"},
+    "scaleTexture": {"type": "string", "description": "Scale or hide surface"},
+    "wingMembrane": {"type": "string", "description": "Wing membrane and its edging"},
+    "hornsAndCrest": {"type": "string", "description": "Horns, crest and head silhouette"},
+    "elementalVenting": {"type": "string", "description": "Where the element shows (mist, sparks, spores ...)"},
     "notes": {"type": "string"}
   }
 }

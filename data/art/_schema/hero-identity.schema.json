@@ -77,13 +77,15 @@
             {"required": ["chest", "waist"], "not": {"anyOf": [{"required": ["bust"]}, {"required": ["hips"]}]}}
           ],
           "properties": {
-            "build": {"type": "string"},
+            "build": {"type": "string", "description": "Overall build, the individual one; the X Pose from the original photo uses _settings/phrases.json standardFigure instead (card figureProfile: standard)"},
+            "torso": {"type": "string", "description": "Midriff and waist (female); optional"},
             "bust": {"type": "string"},
+            "arms": {"type": "string", "description": "Shoulders, arms and hands; optional"},
             "hips": {"type": "string"},
             "chest": {"type": "string"},
             "waist": {"type": "string"},
             "legs": {"type": "string"},
-            "raceAlignment": {"type": "string"},
+            "raceAlignment": {"type": "string", "description": "Design note about how the body reflects her race; never rendered into a prompt"},
             "distinguishingMarks": {"type": "array", "items": {"type": "string"}}
           }
         }

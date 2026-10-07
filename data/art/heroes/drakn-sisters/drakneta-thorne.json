@@ -45,12 +45,14 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json"
     },
     "physique": {
-      "build": "Lithe, slender, long-limbed build",
+      "build": "Tall, statuesque celestial build; ultra-long-limbed, commanding and radiant",
+      "torso": "Taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips",
       "bust": "Full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Very long, slender legs",
+      "arms": "Long, slender arms with fine, elegant hands",
+      "hips": "Shapely feminine hips, gently curved (not wide), narrow and regal, with a high-waisted line",
+      "legs": "Exceptionally long, statuesque legs with sharp, clean shin contours",
       "distinguishingMarks": [],
-      "raceAlignment": "Human presentation aligned to celestial characteristics (luminous, ethereal) — glamour build stays family-standard for now"
+      "raceAlignment": "Human presentation aligned to celestial herald characteristics (statuesque, kinetic, high-voltage presence)"
     }
   },
   "notes": "Core ART hero definition for Drakneta Thorne (Lightning, Celestial). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."

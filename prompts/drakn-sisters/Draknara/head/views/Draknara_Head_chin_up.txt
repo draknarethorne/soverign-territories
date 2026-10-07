@@ -14,11 +14,11 @@ View: head tilted slightly back with the chin raised, the jawline and neck elong
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
 
-Expression: a warm, radiant glamour smile - lips softly parted with a hint of teeth, cheeks lifted and defined, dimples showing if present, eyes bright and engaged with the camera, the lips, cheeks and smile lines clearly visible.
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
 Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; dark brown lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

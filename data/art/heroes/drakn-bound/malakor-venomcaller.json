@@ -26,12 +26,15 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Powerful, broad-shouldered, heavily muscled build",
-      "chest": "Broad, heavily muscled chest and core",
-      "waist": "Solid, thick waist",
-      "legs": "Thick, powerful legs",
-      "distinguishingMarks": [],
-      "raceAlignment": "Orc presentation — strong jaw, pronounced brow; tusks kept subtle in glamour shots"
+      "build": "Dense yet agile orcish assassin build; heavy bone structure stripped down to corded muscle",
+      "chest": "Broad chest with a heavy ribcage",
+      "arms": "Thick, muscular shoulders; long, heavy arms with knotty forearm cords",
+      "waist": "Tight, conditioned midsection; heavy, low-slung hips",
+      "legs": "Powerful, bowed legs with thick calves",
+      "distinguishingMarks": [
+        "subtle ritual scarification lines along the jaw and forearms"
+      ],
+      "raceAlignment": "Orcish presentation aligned to predatory stalker characteristics (dense jaw and neck architecture, leathery hide, silent lethal momentum)"
     }
   },
   "notes": "Core ART hero definition for Malakor Venomcaller (Poison, Assassin, Assassin/Burst DPS). First-pass palette/physique, no archived source material — Poison colour family parallels Draknoxa's own Toxic Orchid Magenta as a male variant."

@@ -8,6 +8,8 @@ Photo-realistic, cinematic fantasy creature photography. A full-body shot of an 
 
 {{DRAGON}}, {{DESCRIPTION}}.
 
+?{{MORPHOLOGY}}
+
 {{POSE}}
 
 Lair: {{BACKGROUND}}.

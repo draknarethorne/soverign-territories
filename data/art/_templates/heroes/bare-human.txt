@@ -1,5 +1,5 @@
 === {{HERO}} · Bare: {{NAME}} (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of {{HERO}}. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of {{HERO}}. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing {{WEARING}}
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: {{FIGURE}}.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -3,5 +3,10 @@
   "kind": "dragon",
   "cardId": "UNIT_VENOMIS",
   "description": "an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
+  "silhouette": "Low-slung, hunched viper-dragon with a wide, flared neck hood",
+  "scaleTexture": "Segmented plates in toxic orchid magenta and tarnished brass",
+  "wingMembrane": "Tattered, perforated membrane veined in vibrant acid lime",
+  "hornsAndCrest": "Flared neck hood crowned with curved, venom-grooved spines",
+  "elementalVenting": "Drips of acid-lime venom and a sickly mist from the jaws",
   "notes": "Skeletal identity, first pass -- aligned to Draknoxa Thorne (Poison) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknoxa's own palette (Toxic Orchid Magenta / Vibrant Acid Lime / Tarnished Brass)."
 }

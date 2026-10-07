@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Athletic, lean, well-muscled build",
-      "chest": "Defined, toned chest and core",
-      "waist": "Trim, athletic waist",
-      "legs": "Long, strong legs",
+      "build": "Lean, powerful swimmer build; broad back and a wiry endurance frame",
+      "chest": "Wide latissimus taper over a strong chest",
+      "arms": "Mobile, rounded deltoids; strong, rope-weathered forearms with prominent grip strength",
+      "waist": "Lean, flat midriff with visible functional core definition and serratus; grounded athletic hips",
+      "legs": "Dense, balanced legs built for steady footing",
       "distinguishingMarks": [],
-      "raceAlignment": "Human — standard human presentation"
+      "raceAlignment": "Human presentation aligned to pelagic vanguard characteristics (swimmer back, functional endurance, sea-weathered resilience)"
     }
   },
   "notes": "Core ART hero definition for Corin Tidewalker (Water, Beast Lord, Specialist/Hybrid). First-pass palette/physique, no archived source material — Water colour family parallels Draknisa's own palette as a male variant. Signature weapon: trident (wardrobe/weapons/trident.json)."

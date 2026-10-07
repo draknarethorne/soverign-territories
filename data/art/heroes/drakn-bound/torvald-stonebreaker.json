@@ -26,12 +26,15 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Massive, heavily muscled, powerfully built build",
-      "chest": "Broad, heavily muscled chest and core, imposing",
-      "waist": "Solid, thick waist",
-      "legs": "Thick, powerful legs",
-      "distinguishingMarks": [],
-      "raceAlignment": "Barbarian presentation — strong, grounded features"
+      "build": "Massive, raw-boned barbarian powerhouse; thick, heavy frame with colossal functional mass",
+      "chest": "Wide, dense ribcage and a heavy chest",
+      "arms": "Massive neck and heavy trapezius merging into dense shoulders; thick, heavy forearms",
+      "waist": "Thick powerlifter abdominal wall with massive oblique slabs; broad, heavy-boned hips",
+      "legs": "Huge, tree-trunk thighs and dense calves",
+      "distinguishingMarks": [
+        "faint battle scars across the chest and left shoulder"
+      ],
+      "raceAlignment": "Barbarian presentation aligned to primal mountain juggernaut characteristics (thick skeletal density, raw power, heavy mass)"
     }
   },
   "notes": "Core ART hero definition for Torvald Stonebreaker (Earth, Berserker, Melee/Striker). First-pass palette/physique, no archived source material — Earth colour family parallels Draknara's own Terracotta Ochre as a male variant."

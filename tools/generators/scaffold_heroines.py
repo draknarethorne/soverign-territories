@@ -147,6 +147,8 @@ for slug, h in HEROINES.items():
             "denoise": "~1.0" if stage == "pose" else "~0.4-0.6",
             "notes": f"{card['name']} {stage} — generated alongside Drakness as the initial baseline for all 10 female heroes.",
         }
+        if stage == "pose":
+            base_set_card["figureProfile"] = "standard"  # the X Pose from the original photo gets the standard figure
         if stage == "pose" and h.get("negativeRemove"):
             base_set_card["overrides"] = {"negativeRemove": h["negativeRemove"]}
         card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{stage}/{slug}-x-{stage}.json"

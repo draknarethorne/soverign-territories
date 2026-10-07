@@ -43,12 +43,14 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json"
     },
     "physique": {
-      "build": "Lithe, slender, long-limbed build",
+      "build": "Lithe, wiry athletic build; low-fat runner physique with wood-elven agility",
+      "torso": "Tight, lithe midriff with faint oblique fluting and subtle vertical definition; slender waist tapering cleanly into the hips",
       "bust": "Full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Very long, slender legs",
+      "arms": "Slender, lightly defined arms; subtle deltoid contours and lithe forearms",
+      "hips": "Shapely feminine hips, gently curved (not wide), with an athletic pelvis",
+      "legs": "Very long, lean athletic legs; subtly toned quadriceps and elongated calves",
       "distinguishingMarks": [],
-      "raceAlignment": "Human presentation aligned to wood-elf characteristics (slender, nature-toned) — no pointed ears in glamour shots"
+      "raceAlignment": "Human presentation aligned to wood elf characteristics (agile, trackless, low-fat runner vitality)"
     }
   },
   "notes": "Core ART hero definition for Drakniya Thorne (Grass, Wood Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."

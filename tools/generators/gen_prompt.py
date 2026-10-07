@@ -81,6 +81,17 @@ def decap(s):
     return (s[0].lower() + s[1:]) if s else s
 
 
+_PHRASES = None
+
+
+def phrases():
+    """data/art/_settings/phrases.json: every sentence the generator adds to a hero prompt on its own, so none is hidden in code."""
+    global _PHRASES
+    if _PHRASES is None:
+        _PHRASES = load_json(ROOT / "data/art/_settings/phrases.json")
+    return _PHRASES
+
+
 def cleanup(text):
     """Collapse artifacts left by empty tokens (e.g. an empty HERO_NEG between two
     literal commas): ', , ' -> ', ', and an empty token right before the trailing
@@ -137,11 +148,8 @@ def resolve_hairstyle(pal):
 def resolve_breeze(pal):
     """The hair piece's own 'breeze' line (a very slight lift ...), so the template never hard-codes it."""
     if "hairStyleComponent" in pal:
-        return load_json(ROOT / pal["hairStyleComponent"]).get("breeze", DEFAULT_BREEZE)
-    return DEFAULT_BREEZE
-
-
-DEFAULT_BREEZE = "A very slight lift from a light breeze below."
+        return load_json(ROOT / pal["hairStyleComponent"]).get("breeze", phrases()["defaultBreeze"])
+    return phrases()["defaultBreeze"]
 
 
 def resolve_hairstyle_negatives(pal):
@@ -177,10 +185,10 @@ SLOT_DEFAULTS = {
         "pose": "data/art/studio/views/body/front.json",
     },
     "expression": {
-        "head": "data/art/motion/expressions/studio/studio-glamour-smile.json",
+        "head": "data/art/motion/expressions/studio/studio-soft-smile.json",
         "pose": {
-            "female": "data/art/motion/expressions/studio/studio-glamour.json",
-            "male": "data/art/motion/expressions/studio/studio-confident.json",
+            "female": "data/art/motion/expressions/studio/studio-soft-smile.json",
+            "male": "data/art/motion/expressions/studio/studio-confident-soft-smile.json",
         },
     },
     "underlayer": {
@@ -216,43 +224,41 @@ def default_slot(slot, stage, sex):
 
 # One shared studio face-styling line for every cream-backdrop stage, so makeup stays
 # present-but-subtle and identical from the full-body shot to the close-up.
-def blush_phrase(blush):
-    return f"a light natural {blush} blush" if blush else "a light natural blush"
-
-
 def face_style(female, eyeshadow, blush, brow=None):
-    brows = f"groomed {brow} brows" if brow else "groomed brows"
-    if not female:
-        return f"Grooming: natural, clean and well-groomed, {brows}, no cosmetics."
-    return (f"Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush_phrase(blush)}, "
-            f"{brows}, softly defined eyes; never heavy.")
+    p = phrases()["faceStyle"]
+    brows = p["brows"].format(brow=brow) if brow else p["browsDefault"]
+    blush_text = p["blush"].format(blush=blush) if blush else p["blushDefault"]
+    return p["female" if female else "male"].format(eyeshadow=eyeshadow, blush=blush_text, brows=brows)
 
 
-# Fidelity line for every stage that takes in an A-pose: what to keep from the incoming image. Stages that need more
-# re-assert it per card with keyDetails (the Critical details block).
-KEEP_LINE = {
-    "female": "Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions "
-              "and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.",
-    "male": "Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, "
-            "and the hair colour, length and full volume, all exactly as shown.",
-}
-
-
-# Bust bans only make sense for the female physique; a male hero gets none.
-FIGURE_NEG = {
-    "female": "flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, "
-              "breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups",
-    "male": "",
-}
+# Fidelity line (phrases.json keepLine) for every stage that takes in an A-pose; stages that need more re-assert it per card
+# with keyDetails (the Critical details block).
 
 # Details a stage can call out up front in one Critical details block; the later lines then do not repeat them.
 # A card picks its own with "keyDetails"; a template without a card choice uses its default here (none = no block).
 KEY_LABELS = {"hair": "Hair", "bust": "Bust", "eyes": "Eyes", "skin": "Skin", "legs": "Legs"}
-BUST_KEY = ("full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, "
-            "even where the reference bust is smaller or spread apart")
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
+    "bare-human.txt": ["bust"],  # the bust stays as in the incoming image; only the rest of the build is applied
 }
+
+# Physique fields that make the Figure line, in order (the female schema has bust and hips, the male chest and waist).
+FIGURE_FIELDS_FEMALE = ("build", "torso", "bust", "arms", "hips", "legs")
+FIGURE_FIELDS_MALE = ("build", "chest", "arms", "waist", "legs")
+
+
+def apply_figure_profile(hero, profile):
+    """figureProfile: standard swaps the hero's individual build for the standard figure (phrases.json standardFigure),
+    keeping her bust; any other value keeps her own physique. Card overrides.physique still wins afterwards."""
+    if profile != "standard":
+        return
+    phy = hero["art"]["physique"]
+    sex = "female" if "bust" in phy else "male"
+    std = phrases()["standardFigure"].get(sex)
+    if not std:
+        sys.exit(f"ERROR: figureProfile standard has no standardFigure for {sex} in _settings/phrases.json")
+    own = set(FIGURE_FIELDS_FEMALE) | set(FIGURE_FIELDS_MALE)
+    hero["art"]["physique"] = {**{k: v for k, v in phy.items() if k not in own or k == "bust"}, **std}
 
 
 def tokens_for(hero, keys=()):
@@ -261,24 +267,10 @@ def tokens_for(hero, keys=()):
     primary = pal["primaryColor"]
     accent = pal["accentColors"][0]
     eyeshadow = pal.get("eyeshadowColor", accent.split()[-1].lower())
-    if "bust" in phy:
-        # Items promoted to the Critical details block are not repeated in the Figure line.
-        figure = "; ".join(part for part in [
-            decap(phy["build"]),
-            None if "bust" in keys else decap(phy["bust"]),
-            "slim waist",
-            decap(phy["hips"]),
-            "slim, tapering thighs",
-            None if "legs" in keys else decap(phy["legs"]),
-        ] if part)
-    else:
-        # Male physique schema: build/chest/waist/legs (no bust/hips).
-        figure = "; ".join([
-            decap(phy["build"]),
-            decap(phy["chest"]),
-            decap(phy["waist"]),
-            decap(phy["legs"]),
-        ])
+    # The Figure line is the physique fields in this order, nothing added by the generator. Items promoted to the
+    # Critical details block (bust, legs) are not repeated in it.
+    order = FIGURE_FIELDS_FEMALE if "bust" in phy else FIGURE_FIELDS_MALE
+    figure = "; ".join([decap(phy[k]) for k in order if phy.get(k) and k not in keys] + list(phy.get("distinguishingMarks", [])))
     skin = decap(pal["skinTone"])
     eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
     skin_neg = ", ".join(pal.get("skinColorNegatives", []))
@@ -287,7 +279,7 @@ def tokens_for(hero, keys=()):
     hero_neg = ", ".join(hero["art"].get("negatives", []))
     key_text = {
         "hair": resolve_hair(pal),
-        "bust": BUST_KEY if "bust" in phy else None,
+        "bust": phrases()["bustKey"] if "bust" in phy else None,
         "eyes": pal["eyeColorGlamour"],
         "skin": pal["skinTone"],
         "legs": phy["legs"],
@@ -320,9 +312,9 @@ def tokens_for(hero, keys=()):
         "HAIRSTYLE_NEG": resolve_hairstyle_negatives(pal),
         # One hair block for the A-pose (colour, highlights, style, breeze); later stages keep it through KEEP_LINE.
         "HAIR_ESTABLISH": hair_style if "hair" in keys else "{{HAIR}}; " + hair_style,
-        "KEEP_LINE": KEEP_LINE["female" if "bust" in phy else "male"],
+        "KEEP_LINE": phrases()["keepLine"]["female" if "bust" in phy else "male"],
         "FACE_STYLE": face_style("bust" in phy, eyeshadow, pal.get("blushColor"), pal.get("browColor")),
-        "FIGURE_NEG": FIGURE_NEG["female" if "bust" in phy else "male"],
+        "FIGURE_NEG": phrases()["figureNegatives"]["female" if "bust" in phy else "male"],
         "LEGS": phy["legs"],
         "EYE_NEG": eye_neg,
         "SKIN_NEG": skin_neg,
@@ -356,11 +348,6 @@ def tokens_for_brand(ident, card):
     return toks
 
 
-GRANDEUR = {"Common": "", "Uncommon": "", "Rare": "A little more ornate and imposing than usual.",
-            "Epic": "Ornate, imposing and clearly a cut above the ordinary.", "Legendary": "Grand, imposing and legendary in scale.",
-            "Mythic": "Awe-inspiring and mythic in scale, radiating power.", "Transcendent": "Transcendent, otherworldly and overwhelming in presence."}
-
-
 def tokens_for_cardart(ident, card):
     """Tokens for the card-art template: the gameplay card's name, element and lore, the shared style, and the category framing."""
     ca = ident["cardart"]
@@ -375,7 +362,7 @@ def tokens_for_cardart(ident, card):
         "NAME": gp.get("creatureType") or gp["name"], "LORE": gp.get("lore", "").strip(), "STYLE": ca["style"],
         "FRAMING": cat["framing"][0].upper() + cat["framing"][1:], "BACKGROUND": cat["background"],
         "ELEMENT_LINE": f"Colour palette of {el['color']}, with {el['fx']} around the subject.",
-        "GRANDEUR": GRANDEUR.get(gp.get("rarity", {}).get("tier", "Common"), ""),
+        "GRANDEUR": phrases()["grandeur"].get(gp.get("rarity", {}).get("tier", "Common"), ""),
     }
 
 
@@ -386,9 +373,17 @@ def tokens_for_dragon(dragon):
     description, for the dragon archetype's text-to-image templates (no incoming
     reference image to edit -- a dragon is generated entirely from its description,
     unlike a hero's img2img pipeline)."""
+    morphology = phrases()["dragonMorphology"]
+    fields = {k: label for k, label in morphology.items() if k not in ("notes", "headFields") and dragon.get(k)}
+
+    def line(keys):
+        return " ".join(label.format(decap(dragon[k]).rstrip(".")) for k, label in fields.items() if k in keys)
+
     return {
         "DRAGON": dragon["name"],
         "DESCRIPTION": dragon["description"],
+        "MORPHOLOGY": line(fields),
+        "MORPHOLOGY_HEAD": line(morphology["headFields"]),
         "ELEMENT": dragon.get("element", ""),
     }
 
@@ -554,6 +549,8 @@ def resolve_components_tokens(card):
 def generate(card_path, tokens_only=False):
     card = load_json(ROOT / card_path)
     hero = load_identity(card["heroArt"])
+    if "art" in hero:
+        apply_figure_profile(hero, card.get("figureProfile", "individual"))
     # Base-set card may override any palette/physique attribute from the hero definition.
     overrides = card.get("overrides", {})
     for section in ("palette", "physique"):
@@ -600,7 +597,7 @@ def generate(card_path, tokens_only=False):
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
-    for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG"):
+    for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG", "EXPRESSION_NEG"):
         if "{{" + neg_token + "}}" in template:
             toks.setdefault(neg_token, "")  # only a piece that carries negatives (barefoot, bareskin) fills it
     # A makeup piece (components.makeup) replaces the default studio face-styling line everywhere,
@@ -611,10 +608,10 @@ def generate(card_path, tokens_only=False):
     # Literal, per-card one-off strings that aren't reusable pieces on their own
     # (e.g. this specific composed outfit's display "name" or "aesthetic" line).
     _CARD_META_KEYS = {"artId", "kind", "stage", "heroArt", "component", "components",
-                        "template", "output", "denoise", "overrides", "notes", "hairFrom", "keyDetails"}
+                        "template", "output", "denoise", "overrides", "notes", "hairFrom", "keyDetails", "figureProfile"}
     # hairFrom: "incoming" makes a complete scene take hair from the incoming image instead of the hero's description.
     if card.get("hairFrom") == "incoming" and "HAIR" in toks:
-        toks["HAIR"] = "the exact hairstyle, colour, highlights and length shown in the incoming image"
+        toks["HAIR"] = phrases()["hairFromIncoming"]
     for key, val in card.items():
         if key not in _CARD_META_KEYS and isinstance(val, str):
             toks[key.upper()] = val

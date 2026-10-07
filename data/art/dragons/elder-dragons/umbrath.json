@@ -3,5 +3,10 @@
   "kind": "dragon",
   "cardId": "UNIT_UMBRATH",
   "description": "an Elder Dragon of obsidian-black and midnight-violet scales, wreathed in creeping shadow, wings like tattered sheets of darkness edged in amethyst light",
+  "silhouette": "Predatory, long-necked wyrm with high skeletal shoulder ridges and a razor-tapered tail",
+  "scaleTexture": "Overlapping matte obsidian plates with a faint midnight-violet sheen",
+  "wingMembrane": "Semi-translucent, tattered shadow-glass on slender razor-edged struts, edged in amethyst light",
+  "hornsAndCrest": "Swept-back crown of serrated obsidian horns with violet light in the fissures",
+  "elementalVenting": "Cold black shadow-mist curling from the throat and spine",
   "notes": "Skeletal identity, first pass -- aligned to Drakness Thorne (Darkness) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Drakness's own palette (Midnight Violet / Vibrant Amethyst / Polished Silver)."
 }

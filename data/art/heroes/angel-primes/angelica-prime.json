@@ -18,9 +18,10 @@
     },
     "physique": {
       "build": "Lithe, slender, well-proportioned build",
+      "torso": "Slim waist",
       "bust": "Full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced)",
       "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Long, slender legs",
+      "legs": "Long, slender legs with slim, tapering thighs",
       "distinguishingMarks": [],
       "raceAlignment": "Human — standard human presentation"
     }

@@ -1,5 +1,5 @@
 === Drakneta Thorne · Bare: Bare edit: painted areas in her colour (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Drakneta Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Drakneta Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing only matte Electric Gold body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Electric Gold body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (warm golden tan complexion, evenly tanned, no pale areas), with no paint or colour anywhere except those three areas; the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved (not wide), narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -41,12 +41,14 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json"
     },
     "physique": {
-      "build": "Lithe, slender, long-limbed build",
+      "build": "Lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone",
+      "torso": "Flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips",
       "bust": "Full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout",
+      "arms": "Slender, lightly defined arms; faint deltoid contours and toned forearms without bulk",
       "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Very long, slender legs",
+      "legs": "Very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition",
       "distinguishingMarks": [],
-      "raceAlignment": "Human presentation aligned to barbarian characteristics (strong, grounded) — glamour build stays family-standard for now"
+      "raceAlignment": "Human presentation aligned to barbarian characteristics (strong, grounded, sun-touched resilience)"
     }
   },
   "notes": "Core ART hero definition for Draknara Thorne (Earth, Barbarian). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."

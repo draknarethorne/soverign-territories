@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Athletic, lean, well-muscled build",
-      "chest": "Defined, toned chest and core",
-      "waist": "Trim, athletic waist",
-      "legs": "Long, lean legs",
+      "build": "Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach",
+      "chest": "Smooth pectoral contours without bulk",
+      "arms": "Broad, flexible shoulders; long, slender arms",
+      "waist": "Clean, flat athletic stomach with a natural narrow waist taper; slender hips",
+      "legs": "Long, elegant duelist legs",
       "distinguishingMarks": [],
-      "raceAlignment": "High Elf presentation — tall, elegant features; subtle pointed ears"
+      "raceAlignment": "High elf presentation aligned to wind duelist characteristics (aerodynamic reach, parrying leverage, unforced grace)"
     }
   },
   "notes": "Core ART hero definition for Zephyr Galeheart (Wind, Warrior, Melee/Striker). First-pass palette/physique, no archived source material — Wind colour family parallels Draknava's own palette as a male variant."

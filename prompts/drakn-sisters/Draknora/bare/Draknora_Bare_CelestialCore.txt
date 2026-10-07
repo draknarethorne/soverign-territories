@@ -1,5 +1,5 @@
 === Draknora Thorne · Bare: Bare edit: celestial skin armor (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Draknora Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Draknora Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing only celestial skin armor, thin burnished copper-gold metallic designs in her Flame Red colour scheme with fine burnished copper edge lines, formed directly onto the skin as if the metal had been bound to the body by a magical spell, slightly raised and form-fitting so the contour of the body shows through; every design is open filigree with bare skin visible between its lines, and none is a cup or a plate; Breasts: on each breast one delicate design in the form of an upswept flame tongue with a curling tip, made of fine curving lines and swirls with tiny rising sparks and ember-cut edges, about 3 cm (one and a quarter inches) across, centred on the breast, with one tiny ruby-red gem accent at its centre; Pelvic area: one small, form-fitting design in the form of a small flame shape pointing down, following the contour of the pelvic area, with its fine lines curving beneath the body and continuing as a narrow design over the lower back, so the rear is mostly bare skin and modestly covered; Everywhere else: the skin outside these three designs is unchanged natural skin, matte, with no metal, no metallic sheen, no paint and no tint, keeping her natural skin tone (warm sun-bronzed olive tan complexion, evenly tanned, no pale areas), including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs, hands and bare feet; only the two breast designs and the one pelvic design carry any metal; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, statuesque build with a balanced, dignified bearing; smooth flat stomach with soft natural curves into the hips; narrow waist, no abdominal cuts; slender, smooth arms with soft natural curves; unblemished hands; shapely feminine hips, gently curved (not wide), with a natural hourglass silhouette; very long, gracefully proportioned legs with smooth contours.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

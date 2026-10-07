@@ -6,6 +6,7 @@
   "template": "data/art/_templates/heroes/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Drakness/poses/Drakness_X_Pose_PonytailTest.txt",
   "denoise": "~1.0",
+  "figureProfile": "standard",
   "overrides": {
     "palette": {
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/updo/pony-tail.json"

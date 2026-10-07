@@ -42,12 +42,14 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json"
     },
     "physique": {
-      "build": "Lithe, slender, long-limbed build",
+      "build": "Compact, wiry dark-elven build; predatory poise with clinical, measured precision",
+      "torso": "Flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips",
       "bust": "Full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Very long, slender legs",
+      "arms": "Slender, wiry arms with defined tendon lines at the wrists; steady, precise hands",
+      "hips": "Shapely feminine hips, gently curved (not wide), narrow and agile",
+      "legs": "Very long, wiry legs with slender calves",
       "distinguishingMarks": [],
-      "raceAlignment": "Human presentation aligned to dark-elf characteristics (slender, elongated) — no pointed ears in glamour shots"
+      "raceAlignment": "Human presentation aligned to dark elf apothecary characteristics (clinical precision, venomous focus)"
     }
   },
   "notes": "Core ART hero definition for Draknoxa Thorne (Poison, Dark Elf). Mirrors data/art/heroes/drakness-thorne.json's structure. Base-set cards reference this."

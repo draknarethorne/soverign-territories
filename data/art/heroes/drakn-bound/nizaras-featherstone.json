@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Lean, agile, wiry-muscled build",
-      "chest": "Lean, toned chest and core",
-      "waist": "Narrow, agile waist",
-      "legs": "Long, lean legs built for quick movement",
+      "build": "Lithe, sinewy wood-elven scout build; ultra-lean, flexible and long-limbed",
+      "chest": "Lean chest over a light, agile ribcage",
+      "arms": "Slender, defined shoulders; corded, fibrous forearms with pronounced tendons",
+      "waist": "Compact, flat midriff with distinct oblique fluting; narrow waist and narrow, flexible hips",
+      "legs": "Long, lean runner legs with high, springy calves",
       "distinguishingMarks": [],
-      "raceAlignment": "Wood Elf presentation — slender, elongated features; subtle pointed ears"
+      "raceAlignment": "Wood elf presentation aligned to canopy tracker characteristics (whiplash agility, low body fat, corded sinew)"
     }
   },
   "notes": "Core ART hero definition for Nizaras Featherstone (Grass, Rogue, Specialist/Hybrid). First-pass palette/physique, no archived source material — Grass colour family parallels Drakniya's own palette as a male variant."

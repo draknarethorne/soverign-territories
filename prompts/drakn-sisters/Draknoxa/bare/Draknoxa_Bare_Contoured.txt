@@ -1,5 +1,5 @@
 === Draknoxa Thorne · Bare: Bare edit: contoured pasties and modesty patch (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Draknoxa Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Draknoxa Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing only these three small coverings, each described separately; Breasts: one small, thin, sheer, lightly translucent nylon-like covering, about one inch (2.5 cm) across, on the centre of each breast, a shade lighter than her skin, moulded to the natural contour of the breast so the soft natural form and a subtle natural relief show through it; Pelvic area: one small, thin, sheer, form-fitting nylon-like covering, a shade lighter than her skin, in a soft tapered shape that follows the contour of the pelvic area, smooth with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free); the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved (not wide), narrow and agile; very long, wiry legs with slender calves.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

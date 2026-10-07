@@ -12,7 +12,7 @@ Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base
 Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
 Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.
 Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
-Legs: very long, slender legs.
+Legs: very long, gracefully proportioned legs with smooth contours.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
@@ -22,7 +22,7 @@ Maintain strict fidelity to the reference image's facial features, facial bone s
 
 Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved (not wide); slim, tapering thighs.
+Figure: lithe, statuesque build with a balanced, dignified bearing; smooth flat stomach with soft natural curves into the hips; narrow waist, no abdominal cuts; slender, smooth arms with soft natural curves; unblemished hands; shapely feminine hips, gently curved (not wide), with a natural hourglass silhouette.
 
 Wearing: only a Flame Red strapless plunging one-piece bodysuit in a lustrous satin finish with a sculpted, boned front that holds the bust lifted and together with no straps, cut very high at the hips; shoulders and arms bare, the back open from the top of the spine to the low waist as one clear expanse of bare skin; legs bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes.
 
@@ -34,9 +34,9 @@ Eyes: both eyes matched, level and symmetrical, wide open and looking straight a
 
 Lips: natural, subtle ember-coral-tinted satin - keep lips natural, no heavy lipstick.
 
-Expression: an alluring, confident, relaxed expression - a soft closed-mouth smile with dimples, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, all-over blonde hair, fully dyed hair, thick thighs, wide hips, boyish figure, stick-like, pale skin, fair skin, washed-out skin, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, all-over blonde hair, fully dyed hair, thick thighs, wide hips, boyish figure, stick-like, pale skin, fair skin, washed-out skin, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

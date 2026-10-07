@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/studio/studio-confident-soft-smile",
+  "kind": "expression",
+  "name": "Studio Confident Soft Smile (A-pose default, male)",
+  "expression": "a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open (no squint), jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely)",
+  "negatives": ["wide smile", "broad grin", "toothy smile", "showing all teeth", "laughing", "cheeks pushed high", "squinting smile", "closed neutral mouth", "flat expression", "resting face", "scowl"],
+  "compatibleStages": ["pose", "motion", "scene"],
+  "tags": ["smile", "studio", "default"],
+  "notes": "Copy of studio-confident with an open, soft smile in place of the closed-mouth one. Default for the male A-pose via SLOT_DEFAULTS in gen_prompt.py."
+}

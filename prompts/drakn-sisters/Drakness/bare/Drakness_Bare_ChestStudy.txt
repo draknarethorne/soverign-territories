@@ -1,5 +1,5 @@
 === Drakness Thorne · Bare: Bare edit: figure study, bare chest (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Drakness Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Drakness Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing a bare upper body and a single small covering; Upper body: completely bare, the shoulders, arms, back, bare chest and stomach, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, with the natural shape, fullness and cleavage of the bust clearly visible and no clothing, paint, pasties or tint of any kind; Pelvic area: one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin, keeping her natural skin tone (warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas), including the hips, thighs, legs and bare feet
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: slender, long-limbed build with an aristocratic dark-elven bearing and sinewy tension; ultra-narrow, tightly cinched waistline; smooth flat midriff with no abdominal lines; slender arms with delicate wrists and elongated fingers; slight wiry tension in the forearms; shapely feminine hips, gently curved (not wide), with a high, tapering hip line; very long, slender legs with elegant tapering down to slim ankles.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

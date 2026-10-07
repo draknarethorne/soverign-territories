@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Lean, athletic, well-muscled build",
-      "chest": "Defined, toned chest and core",
-      "waist": "Trim, athletic waist",
-      "legs": "Long, agile legs",
+      "build": "Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined silhouette",
+      "chest": "Carved chest with deep serratus contours",
+      "arms": "Striated deltoids and triceps; calloused, conditioned hands",
+      "waist": "Tight midriff with chiselled abdominal definition; narrow waist and narrow hips",
+      "legs": "Tightly coiled athletic legs",
       "distinguishingMarks": [],
-      "raceAlignment": "Celestial presentation — luminous, ethereal features; glamour build stays family-standard for now"
+      "raceAlignment": "Celestial presentation aligned to barehanded kinetic conduit characteristics (zero body fat, wire-taut muscle, electric stillness)"
     }
   },
   "notes": "Core ART hero definition for Dorian Stormstrike (Lightning, Monk, Melee/Striker). First-pass palette/physique, no archived source material — Lightning colour family parallels Drakneta's own Electric Gold as a distinct male variant (a darker Storm Gold primary instead of the identical Electric Gold, so the siblings-by-element read as related but not twinned)."

@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Tall, broad-shouldered, powerfully built build",
-      "chest": "Broad, armored chest and core, strong and imposing",
-      "waist": "Solid, braced waist",
-      "legs": "Long, powerful legs",
+      "build": "Massive, powerful tank physique; dense heavy-armor frame with broad structural mass",
+      "chest": "Deep barrel chest",
+      "arms": "Heavily developed trapezius and deltoids; thick forearms and broad hands",
+      "waist": "Thick, powerful abdominal wall; solid, wide waistline and a sturdy pelvis",
+      "legs": "Heavy, pillar-like thighs and dense calves",
       "distinguishingMarks": [],
-      "raceAlignment": "Human — standard human presentation"
+      "raceAlignment": "Human presentation aligned to holy bastion characteristics (unshakeable mass, dense muscle wall, radiant vanguard authority)"
     }
   },
   "notes": "Core ART hero definition for Hauk Hammerfell (Light, Paladin, Defense/Tank). First-pass palette/physique, no archived source material — Light colour family parallels Drakniss's own palette as a male variant."

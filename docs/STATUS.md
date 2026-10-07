@@ -97,6 +97,11 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   FireRed's 1 MP resize lands on the same size. Generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original
   photo; `denoise` in `workspaces.json`, tool `comfy_workflows.py denoise`), so the stages after a golden image keep some creativity. Tuning rules:
   [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
+- **Individual physique, standard X Pose (Oct 2026).** The 10 sisters and 10 bound heroes each carry their own build (`physique`: `torso` and `arms` are new optional fields; the male
+  schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_.md`); its colours, metals, prompt-assembly sections and
+  invented ids were not adopted. The X Pose from the original photo keeps the standard lithe, slender figure (`figureProfile: standard`, text in `data/art/_settings/phrases.json`); the
+  individual build is applied from the Bare stage on (`Body:` line), so it never fights the original photo, clothes or background. The 10 Elder Dragons gain structured morphology
+  (`silhouette`, `scaleTexture`, `wingMembrane`, `hornsAndCrest`, `elementalVenting`) in our own palettes. Studio smile: new `studio-soft-smile` (A-pose and head default).
 - **Two celestial looks and a two-step core (Oct 2026, ideation).** The original larger plates are kept as `celestial-plate-armor`; the new
   `celestial-skin-armor` is thin metallic design formed on the skin by magic (open filigree, form-fitting, skin showing through, her class and element
   motif). The `bare` stage (`Bare_*`) is an edit-only pass on a finished A-pose; `Bare_CelestialPlate` and `Bare_CelestialCore` (skin) produce a
@@ -149,6 +154,19 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   `sovereign-dawn-card-list-mvp.json` says `cardCount: 131` but lists 135 ids.
 - None of the 30 vision cards is in a deck, box, or MVP list (only the marquee list and collection checklist).
 - `card-schema.json` was retired Oct 2026; `data/schemas/codex-schema.json` is the card schema.
+
+### Generator and automation debt (hidden wording and defaults)
+
+Fixed Oct 2026: the hero prompt wording that lived in `gen_prompt.py` (keep line, bust key, figure negatives, makeup and grooming lines, default breeze,
+hairFrom text, "slim waist" and "slim, tapering thighs", card-art grandeur) is now in `data/art/_settings/phrases.json`. Still open:
+
+- `SLOT_DEFAULTS` in `gen_prompt.py` (default expression, underlayer, footwear, sheen, background, framing by stage and sex) is code, not data; move it to a settings file.
+- `TEMPLATE_KEY_DEFAULTS` (which details each template calls out up front) and the `FIGURE_FIELDS_*` order are code constants.
+- `tokens_for_brand` hard-codes "a woman in ..." for the lineup; `tokens_for_cardart` and the card-art `SIZE` in `scaffold_card_art.py` hold wording and size in code.
+- `comfy_workflows.py` `engine_prompt()` rewrites FireRed prompts (environment-first, magic `fx` line) outside the prompt files; its text is in `workspaces.json` but the rewrite is invisible in `prompts/`.
+- Defaults derived in code rather than stated: nail colour ("Light <last word of primary>"), eyeshadow, magic and gem colours from the first accent when a hero omits them.
+- The three templates still hold some fixed prose by design (studio lines, negatives); a template change is a deliberate edit, not hidden.
+- The older studio and glamour expression pieces, and `motion/*` default expressions, still carry closed-mouth or sultry wording; only the A-pose and head defaults were changed.
 
 ### Schemas still to write
 

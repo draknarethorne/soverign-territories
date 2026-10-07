@@ -25,4 +25,4 @@ Expression: {{EXPRESSION}}.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, changed outfit, changed hairstyle, recolored eyes, glowing eyes, {{EYE_NEG}}, {{HERO_NEG}}, {{FIGURE_NEG}}, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, changed outfit, changed hairstyle, recolored eyes, glowing eyes, {{EYE_NEG}}, {{EXPRESSION_NEG}}, {{HERO_NEG}}, {{FIGURE_NEG}}, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

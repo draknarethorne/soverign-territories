@@ -1,5 +1,5 @@
 === Draknava Thorne · Bare: Bare edit: celestial plate armor (group: Bare, edit-only step on the finished A-pose) — Edit (img2img) ===
-Incoming image: the finished A-pose of Draknava Thorne. This pass only removes clothing; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the finished A-pose of Draknava Thorne. This pass removes clothing and applies her individual build; nothing else changes. Feed the result to the armor and showcase stages. Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
@@ -8,7 +8,9 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 
 Result: she is wearing celestial armor of polished silver: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small lyre shape covering the front of the hips; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a jade gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
-Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, body shape and proportions, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, gymnastic wood-elven build; coiled-spring agility and athletic balance; narrow gymnastic torso; tight waistline with faint oblique lines and a firm core tapering cleanly into the hips; slender, toned arms; firm athletic triceps and slender, dexterous wrists; shapely feminine hips, gently curved (not wide), compact and agile; very long, springy athletic legs; defined calves and toned thighs.
+
+Change nothing else: keep the face, expression, eyes, hair, skin tone, makeup, the bust size, the pose, the full-length framing from head to feet, the cream studio background and the lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

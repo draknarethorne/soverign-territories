@@ -26,12 +26,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Tall, broad-shouldered, powerfully built build",
-      "chest": "Broad, armored chest and core, strong and imposing",
-      "waist": "Solid, braced waist",
-      "legs": "Long, powerful legs",
+      "build": "Tall, statuesque high-elven knight; aristocratic, symmetrical athletic frame",
+      "chest": "Firm, sculpted athletic chest with smooth contours",
+      "arms": "Square, elevated shoulders; long, powerful arms with clean, elegant muscle and fine wrists",
+      "waist": "Unblemished flat core with a clean vertical line; narrow, elegant hips",
+      "legs": "Exceptionally long, straight legs",
       "distinguishingMarks": [],
-      "raceAlignment": "High Elf presentation — tall, elegant features; subtle pointed ears"
+      "raceAlignment": "High elf presentation aligned to royal knight bastion characteristics (geometric balance, unyielding poise, crystalline nobility)"
     }
   },
   "notes": "Core ART hero definition for Lyran Frostfall (Ice, Knight, Defense/Tank). First-pass palette/physique, no archived source material — Ice colour family parallels Draknira's own Glacial Cyan as a male variant."

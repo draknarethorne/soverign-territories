@@ -46,12 +46,14 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json"
     },
     "physique": {
-      "build": "Lithe, slender, long-limbed build",
+      "build": "Slender, long-limbed build with an aristocratic dark-elven bearing and sinewy tension",
+      "torso": "Ultra-narrow, tightly cinched waistline; smooth flat midriff with no abdominal lines",
       "bust": "Full, very voluptuous, noticeably enlarged bust - lifted high and pressed firmly together at the centre by a push-up contour, the inner curves meeting at the centre line in a deep, tight, narrow cleavage with no gap between them; soft, naturally rounded, full shape throughout",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
-      "legs": "Very long, slender legs",
-      "raceAlignment": "Human, aligned to dark-elf characteristics (slender, elongated) — no pointed ears in glamour shots",
-      "distinguishingMarks": []
+      "arms": "Slender arms with delicate wrists and elongated fingers; slight wiry tension in the forearms",
+      "hips": "Shapely feminine hips, gently curved (not wide), with a high, tapering hip line",
+      "legs": "Very long, slender legs with elegant tapering down to slim ankles",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human presentation aligned to dark elf characteristics (sinewy elegance, aristocratic detachment)"
     }
   },
   "notes": "Art-direction identity for SD-001 Drakness Thorne. Name, sex, element, race and class live on the gameplay card (cardId); this file owns only her look (palette, physique) and is the source of truth for art generation. Assembly cards, templates and gen_prompt.py reference THIS file."

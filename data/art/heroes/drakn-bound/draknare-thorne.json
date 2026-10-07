@@ -27,12 +27,13 @@
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
     },
     "physique": {
-      "build": "Tall, broad-shouldered, powerfully built build",
-      "chest": "Broad, armored chest and core, strong and imposing",
-      "waist": "Solid, braced waist",
-      "legs": "Long, powerful legs",
+      "build": "Imposing athletic tank build; broad-shouldered, tall and commanding",
+      "chest": "Deep, powerful chest tapering into a disciplined waist",
+      "arms": "Broad, squared shoulders with defined deltoids; muscular forearms with prominent vascular definition",
+      "waist": "Firm, flat athletic midsection with subtle core definition; narrow athletic hips",
+      "legs": "Strong, heavily muscled legs",
       "distinguishingMarks": [],
-      "raceAlignment": "Human — standard human presentation"
+      "raceAlignment": "Human presentation aligned to heavy dread-knight characteristics (imposing, tactical, unyielding authority)"
     }
   },
   "notes": "Core ART hero definition for Draknare Thorne (Darkness, Shadow Knight, Defense/Tank). Only male hero to carry the Thorne name (per docs/codex/heroes/ideation_codex.md). First-pass palette/physique, no archived source material — mirrors Drakness's own Darkness/amethyst-silver palette family but as a distinct, darker male variant."

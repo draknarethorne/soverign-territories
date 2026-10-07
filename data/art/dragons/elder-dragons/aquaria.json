@@ -3,5 +3,10 @@
   "kind": "dragon",
   "cardId": "UNIT_AQUARIA",
   "description": "an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum",
+  "silhouette": "Supple, serpentine dragon with finned limbs and a broad tail fluke",
+  "scaleTexture": "Smooth, seamless fish-scale armour in oceanic blue and deep teal, catching rippling caustic light",
+  "wingMembrane": "Flexible tide-glass that ripples like manta-ray fins, edged in polished platinum",
+  "hornsAndCrest": "Sweeping crown of curved, nautilus-like horns and translucent fin-frills",
+  "elementalVenting": "Streams of seawater, floating droplets and sea-spray trailing the body",
   "notes": "Skeletal identity, first pass -- aligned to Draknisa Thorne (Water) per docs/codex/heroes/ideation_codex.md's Element Alignment table. No archived source material; colours grounded in Draknisa's own palette (Deep Oceanic Blue / Deep Teal / Polished Platinum)."
 }
