@@ -1,0 +1,20 @@
+{
+  "artId": "draknava-showcase-editorial-over-shoulder",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Editorial: Over the Shoulder",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/backless-halter-gown.json",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "background": "data/art/backgrounds/studio/black-velvet-spotlight.json",
+    "effects": "data/art/wardrobe/effects/editorial/spotlight-shimmer.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknava/4_Wardrobe/showcase/editorial/Draknava_Showcase_Editorial_OverShoulder.txt",
+  "notes": "EDITORIAL SHOWCASE: a fashion shot on a studio backdrop with no magic, to test how the A-pose carries into a styled studio photo."
+}

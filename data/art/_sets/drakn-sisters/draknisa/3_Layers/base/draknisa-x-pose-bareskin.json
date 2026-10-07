@@ -1,0 +1,14 @@
+{
+  "artId": "draknisa-x-pose-bareskin",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/3_Layers/base/Draknisa_X_Pose_Bareskin.txt",
+  "denoise": "~1.0",
+  "notes": "BARESKIN A-POSE TEST. Minimal skin-tone covers exactly where the celestial plates sit, bare skin elsewhere and bare feet; feed it into the celestial showcases.",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/base/bareskin-adhesive-covers.json",
+    "footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
+  }
+}

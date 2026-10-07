@@ -1,0 +1,19 @@
+{
+  "artId": "draknira-clothing-sheer-contour",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Sheer overlay gown with body contour",
+  "aesthetic": "a clean studio presentation of the sheer overlay gown, her real body shape visible through the sheer fabric",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/sheer-overlay-gown.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "body_contour": "data/art/wardrobe/effects/contour/sheer-contour.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknira/4_Wardrobe/clothing/gowns/Draknira_Clothing_SheerContour.txt",
+  "notes": "BODY CONTOUR TEST: a sheer gown whose fabric shows her real shape from the incoming image."
+}

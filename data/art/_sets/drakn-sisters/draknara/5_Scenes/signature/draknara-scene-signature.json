@@ -1,0 +1,22 @@
+{
+  "artId": "draknara-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a grounded, intense stare, the weight of the earth in her gaze.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",
+    "effects": "Fine motes of {{MAGIC}} dust and drifting leaf litter swirl gently around her feet, stirred by unseen earth magic.",
+    "companion": "her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze",
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/signature/spirit-totem-grove.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/5_Scenes/signature/Draknara_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses proven cross-cutting wardrobe pieces (gown, jewelry set, heels, ambient glow) in Draknara's own Deep Burnt Sienna/Vivid Turquoise palette, with her own spirit-totem signature staff, plus the existing ancient-grove background (fits Earth/Shaman thematically)."
+}

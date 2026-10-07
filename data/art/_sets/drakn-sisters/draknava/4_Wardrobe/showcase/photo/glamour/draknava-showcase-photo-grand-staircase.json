@@ -1,0 +1,21 @@
+{
+  "artId": "draknava-showcase-photo-grand-staircase",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Photo: Grand Staircase",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
+    "pose": "data/art/motion/photo/staircase-pose.json",
+    "background": "data/art/backgrounds/modern/interior/grand-staircase-marble.json",
+    "framing": "data/art/studio/shots/full-length.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/drakn-sisters/Draknava/4_Wardrobe/showcase/photo/glamour/Draknava_Showcase_Photo_GrandStaircase.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

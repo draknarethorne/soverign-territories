@@ -1,0 +1,21 @@
+{
+  "artId": "lyran-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/lyran-frostfall.json",
+  "name": "Signature",
+  "pose": "He stands with weight grounded and even, shoulders squared to the camera, chin level, a focused and steady gaze — a disciplined, battle-ready stance, his expression calm and controlled, breath visible in the cold air.",
+  "effects": "Fine snowflakes drift and swirl gently in the cold air around him, catching the torchlight.",
+  "components": {
+    "wearing": "data/art/heroes/drakn-bound/lyran/clothing/armor-default-wearing.json",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",
+    "companion": "his bonded Frost Owl, a great owl with ice-pale feathers and glowing blue eyes, perched nearby watching the scene",
+    "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Lyran/5_Scenes/Lyran_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the tank-group default wardrobe set + the existing castle background."
+}

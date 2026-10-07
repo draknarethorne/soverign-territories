@@ -1,0 +1,18 @@
+{
+  "artId": "drakness-clothing-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Evening Gown",
+  "aesthetic": "elegant, composed, necromancer-adjacent evening look",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/gown-wearing.json",
+    "arms": "data/art/wardrobe/jewelry/bracelets/simple-silver.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/ornate-gem-pendant.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/clothing/gown-legs-feet.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/4_Wardrobe/clothing/Drakness_Clothing_Gown.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Grounded in prompts/_archive/Drakness/clothing/Drakness_Qwen_Clothing_Gown.txt. Arms + jewelry pulled from the shared wardrobe/ library (not Drakness-exclusive); wearing + legs_feet are her signature pieces."
+}

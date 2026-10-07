@@ -4,7 +4,7 @@
   "name": "RunesAndStorm",
   "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakneta/scene/themes/drakneta-scene-norse.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakneta/5_Scenes/themes/drakneta-scene-norse.json",
     "image": "Drakneta_Qwen_Scene_Norse_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

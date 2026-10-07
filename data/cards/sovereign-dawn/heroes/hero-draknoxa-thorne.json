@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/signature/draknoxa-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Venom Alchemist", "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/signature/draknoxa-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/draknoxa/5_Scenes/signature/draknoxa-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Venom Alchemist", "artCard": "data/art/_sets/drakn-sisters/draknoxa/5_Scenes/signature/draknoxa-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

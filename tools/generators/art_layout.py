@@ -1,10 +1,13 @@
 """Where an art card lives and where its image ends up: one rule, shared by the generators and the validator.
 
-Every card is filed under a FAMILY below its stage, and the prompt (hence the ComfyUI output folder) mirrors it:
+Every card is filed under the pipeline PHASE its prompt belongs to (phase_path), then a FAMILY; the card file, the prompt and the
+ComfyUI output folder all use the same folders:
 
-  data/art/_sets/<group>/<slug>/<stage>/<family...>/<artId>.json
-  prompts/<group>/<Hero>/<stage folder>/<family...>/<Hero>_<Stage>_<Name>.txt
-  ComfyUI output: <group>/<Hero>/<stage folder>/<family...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+  data/art/_sets/<group>/<slug>/<phase folders...>/<artId>.json
+  prompts/<group>/<Hero>/<phase folders...>/<Hero>_<Stage>_<Name>.txt
+  ComfyUI output: <group>/<Hero>/<phase folders...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+
+(1_Alpha, 2_Studies, 3_Layers, 4_Wardrobe, 5_Scenes, 6_Finish, 7_Video, Bench; brand and card art keep <stage>/<family>.)
 
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
 Hair and motion cards already carry their own family folders and are left as they are.
@@ -145,8 +148,8 @@ def stage_folder(stage):
     return STAGE_FOLDER.get(stage, stage)
 
 
-# The pipeline, in order: a workflow and its ComfyUI output sit under <Hero>/<phase>/..., so the folders read like the process (the prompts and
-# the card folders stay by stage). Motion is a bench, not a phase: a point-in-time test run on any phase's image.
+# The pipeline, in order: a card file, its prompt, a workflow and its ComfyUI output all sit under <Hero>/<phase>/..., so the folders read like the
+# process. Motion is a bench, not a phase: a point-in-time test run on any phase's image.
 LAYER_TYPES = {"base", "backless", "lingerie", "athletic", "one-piece", "bikini", "swimwear"}
 
 
@@ -176,12 +179,64 @@ def phase_path(stage, family):
     return None
 
 
+def dirs_for(stage_folder_name, fam):
+    """Folders below the hero for a prompt stage folder and its family: the pipeline phase path, or <stage>/<family> outside the hero chain."""
+    phased = phase_path(stage_folder_name, fam)
+    return phased if phased is not None else [stage_folder_name, *fam]
+
+
+def parse_dirs(dirs):
+    """Inverse of dirs_for: (prompt stage folder, family) from the folders below the hero."""
+    d = list(dirs)
+    if not d:
+        return "", []
+    p, rest = d[0], d[1:]
+    if p == "1_Alpha":
+        if not rest:
+            return "poses", []
+        sub, tail = rest[0], rest[1:]
+        if sub == "1_Prime":
+            return "alpha", []
+        if sub == "2_Bare":
+            return "alpha", ["bare"]
+        if sub == "2b_Experiments":
+            return "alpha", ["bare", *tail]
+        if sub == "3_Footwear":
+            return "alpha", ["footwear"]
+    elif p == "2_Studies" and rest:
+        if rest[0] == "body":
+            return "poses", ["views"]
+        if rest[0] in ("head", "hair"):
+            return rest[0], rest[1:]
+    elif p == "3_Layers":
+        return "poses", rest
+    elif p == "4_Wardrobe" and rest:
+        return rest[0], rest[1:]
+    elif p == "5_Scenes":
+        return "scene", rest
+    elif p == "6_Finish" and rest:
+        return rest[0], rest[1:]
+    elif p == "7_Video":
+        return "video", rest
+    elif p == "Bench" and rest[:1] == ["motion"]:
+        return "motion", rest[1:]
+    return p, rest
+
+
 def output_for(card, group, hero, stem, root=None):
-    return "/".join(["prompts", group, hero, stage_folder(card["stage"]), *(family(card, group, root) or []), stem + ".txt"])
+    return "/".join(["prompts", group, hero, *dirs_for(stage_folder(card["stage"]), family(card, group, root) or []), stem + ".txt"])
+
+
+def card_dirs(card, group, root=None):
+    """Folders below <slug>/ for a card file: the same as its prompt's folders below <Hero>/. Hair and motion cards keep the family their output names."""
+    fam = family(card, group, root)
+    if fam is None:
+        return list(pathlib.PurePosixPath(card["output"]).parts[3:-1])
+    return dirs_for(stage_folder(card["stage"]), fam)
 
 
 def video_family(source_output):
     """Video prompts mirror the family of the picture they animate (the golden pose becomes 'poses')."""
-    parts = pathlib.PurePosixPath(source_output).parts  # prompts/<group>/<Hero>/<folder>/<family...>/<file>
-    fam = list(parts[4:-1])
-    return fam or [parts[3]]
+    parts = pathlib.PurePosixPath(source_output).parts  # prompts/<group>/<Hero>/<phase folders...>/<file>
+    stage, fam = parse_dirs(parts[3:-1])
+    return fam or [stage]

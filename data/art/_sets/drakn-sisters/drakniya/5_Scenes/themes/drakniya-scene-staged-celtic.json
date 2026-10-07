@@ -1,0 +1,18 @@
+{
+  "artId": "drakniya-scene-staged-celtic",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Celtic Druid",
+  "base_description": "{{HERO}} already staged in the celtic druid outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/side-profile-elegant.json",
+    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
+    "expression": "data/art/motion/expressions/composed/composed-serene.json"
+  },
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_Staged_Celtic.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "STAGED path: feed the drakniya-clothing-celtic studio render; only the scene, effects and pose are added."
+}

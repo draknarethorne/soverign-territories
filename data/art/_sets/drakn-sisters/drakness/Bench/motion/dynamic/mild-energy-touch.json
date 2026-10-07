@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-motion-mild-energy-touch",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/motion/dynamic/mild-energy-touch.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/Bench/motion/dynamic/Drakness_Motion_Dynamic_MildEnergyTouch.txt",
+  "denoise": "~0.4-0.6"
+}

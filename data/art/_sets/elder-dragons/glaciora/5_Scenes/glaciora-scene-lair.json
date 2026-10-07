@@ -1,0 +1,17 @@
+{
+  "artId": "glaciora-scene-lair",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/dragons/elder-dragons/glaciora.json",
+  "name": "Lair",
+  "components": {
+    "pose": "The dragon lies curled on a shelf of blue ice, tail wrapped around its treasure, head raised and turned toward the camera with a cool, imperious gaze, frost-breath drifting from its nostrils.",
+    "background": "data/art/backgrounds/fantasy/lairs/ice-glacier-cavern.json",
+    "hoard": "data/art/hoards/ice-hoard.json",
+    "effects": "A few fine ice crystals glitter in the air above the hoard - understated, nothing busy."
+  },
+  "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
+  "output": "prompts/elder-dragons/Glaciora/5_Scenes/Glaciora_Scene_Lair.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "Daily-post lair shot: the dragon at rest on the kind of hoard its element would collect."
+}

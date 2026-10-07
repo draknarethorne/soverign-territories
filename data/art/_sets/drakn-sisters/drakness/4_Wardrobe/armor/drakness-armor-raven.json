@@ -1,0 +1,20 @@
+{
+  "artId": "drakness-armor-raven",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Raven",
+  "aesthetic": "luxurious necromancer aesthetic; a little D&D armor flair is fine, the outfit stays revealing",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/drakness/armor/raven-wearing.json",
+    "arms": "data/art/heroes/drakn-sisters/drakness/armor/raven-arms.json",
+    "back": "data/art/heroes/drakn-sisters/drakness/armor/raven-pauldrons.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/armor/raven-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/raven-boots.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/ornate-dagger.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/4_Wardrobe/armor/Drakness_Armor_Raven.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Grounded in prompts/_archive/Drakness/armor/Drakness_Qwen_Armor_Raven.txt. Hero-signature armor (raven-wearing.json). Reuses the existing heroes/drakn-sisters/drakness/weapons/ornate-dagger.json for the belt dagger instead of re-describing it."
+}

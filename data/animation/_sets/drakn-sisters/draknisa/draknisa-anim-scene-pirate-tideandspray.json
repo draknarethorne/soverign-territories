@@ -4,7 +4,7 @@
   "name": "TideAndSpray",
   "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknisa/scene/themes/draknisa-scene-pirate.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknisa/5_Scenes/themes/draknisa-scene-pirate.json",
     "image": "Draknisa_Qwen_Scene_Pirate_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

@@ -1,0 +1,23 @@
+{
+  "artId": "draknoxa-scene-egyptian",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Egyptian Embalmer-Alchemist",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "a sharp, knowing look and a faint cunning smile.",
+    "wearing": "data/art/themes/ancient/egyptian/wardrobe/clothing/gowns/kalasiris-sheath-gown.json",
+    "headwear": "data/art/themes/ancient/egyptian/wardrobe/headwear/diadems/golden-uraeus-diadem.json",
+    "jewelry": "data/art/themes/ancient/egyptian/wardrobe/jewelry/sets/usekh-collar-set.json",
+    "legs_feet": "data/art/themes/ancient/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
+    "holding": "data/art/themes/ancient/egyptian/wardrobe/props/vessels/canopic-jar-flask.json",
+    "makeup": "data/art/themes/ancient/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json",
+    "effects": "Thin tendrils of {{MAGIC}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
+    "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/5_Scenes/themes/Draknoxa_Scene_Egyptian.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Egyptian theme expansion (alchemist: temple embalmer with a canopic poison vessel)."
+}

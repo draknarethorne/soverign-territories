@@ -1,0 +1,18 @@
+{
+  "artId": "draknara-clothing-split-skirt-and-corset",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Split Skirt and Corset",
+  "aesthetic": "a clean studio presentation of the split skirt and corset",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/split-skirt-and-corset.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknara/4_Wardrobe/clothing/sets/Draknara_Clothing_SplitSkirtAndCorset.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

@@ -1,0 +1,18 @@
+{
+  "artId": "draknira-clothing-winter-fur-mini-dress",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Winter fur mini dress",
+  "aesthetic": "a clean studio presentation of the winter fur mini dress",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/winter-fur-mini-dress.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknira/4_Wardrobe/clothing/Draknira_Clothing_WinterFurMiniDress.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

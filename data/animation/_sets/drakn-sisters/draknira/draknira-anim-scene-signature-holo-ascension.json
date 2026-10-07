@@ -4,7 +4,7 @@
   "name": "Ascension",
   "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknira/scene/signature/draknira-scene-signature-holo.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknira/5_Scenes/signature/draknira-scene-signature-holo.json",
     "image": "Draknira_Qwen_Scene_Signature_Holo_00001_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",

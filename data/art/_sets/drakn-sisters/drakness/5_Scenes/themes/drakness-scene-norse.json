@@ -1,0 +1,23 @@
+{
+  "artId": "drakness-scene-norse",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Norse Necromancer",
+  "components": {
+    "pose": "data/art/motion/action/overhead-strike.json",
+    "expression": "data/art/motion/expressions/intense/fierce-focused.json",
+    "wearing": "data/art/themes/northern/norse/wardrobe/armor/mail/shieldmaiden-mail-set.json",
+    "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
+    "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
+    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
+    "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/grave-warden-flail.json",
+    "makeup": "data/art/themes/northern/norse/cosmetics/makeup/warpaint/rune-war-paint.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/5_Scenes/themes/Drakness_Scene_Norse.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Norse Necromancer: complete scene from the A-pose, every item a library piece (also pre-stageable through drakness-armor-norse)."
+}

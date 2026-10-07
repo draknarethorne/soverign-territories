@@ -1,0 +1,19 @@
+{
+  "artId": "draknira-showcase-celestial-skin-ascended",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Celestial Skin Armor (ascended)",
+  "components": {
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "wearing": "data/art/heroes/drakn-sisters/draknira/armor/celestial-skin-armor.json",
+    "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff-ascended.json",
+    "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+    "background": "data/art/backgrounds/studio/prismatic-glass.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknira/4_Wardrobe/showcase/celestial/Draknira_Showcase_CelestialSkinAscended.txt",
+  "notes": "CELESTIAL SKIN ARMOR SHOWCASE: the thin metallic-design version; feed the Bare_Celestial image (or the A-pose) as the incoming image."
+}

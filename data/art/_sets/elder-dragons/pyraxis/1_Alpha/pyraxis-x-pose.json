@@ -1,0 +1,10 @@
+{
+  "artId": "pyraxis-x-pose",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/dragons/elder-dragons/pyraxis.json",
+  "template": "data/art/_templates/dragons/pose-dragon.txt",
+  "output": "prompts/elder-dragons/Pyraxis/1_Alpha/Pyraxis_X_Pose.txt",
+  "denoise": "n/a — full text-to-image, no incoming reference",
+  "notes": "First dragon A-pose — text-to-image only, constructed entirely from the dragon's own description (no existing dragon reference image to edit from)."
+}

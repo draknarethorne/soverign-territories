@@ -1,0 +1,18 @@
+{
+  "artId": "draknisa-scene-staged-spring",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Spring Bloom Enchanter",
+  "base_description": "{{HERO}} already staged in the spring bloom enchanter outfit render",
+  "components": {
+    "pose": "data/art/themes/seasonal/spring/motion/petal-twirl.json",
+    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/highlands/wildflower-meadow-spring-rain.json",
+    "expression": "data/art/themes/seasonal/spring/motion/expressions/bloom-radiance.json"
+  },
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/themes/Draknisa_Scene_Staged_Spring.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "STAGED path: feed the draknisa-clothing-spring studio render; only the scene, effects and pose are added."
+}

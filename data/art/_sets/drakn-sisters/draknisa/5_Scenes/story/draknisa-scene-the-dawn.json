@@ -1,0 +1,21 @@
+{
+  "artId": "draknisa-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Fast, powerful ascent: she shoots up out of the sea standing upright on a towering column of water, arms swept wide and up, head thrown back then lifting, hair and gown streaming, caught at the moment the water is fully released; exultant expression with eyes on the camera; full figure from head to toe visible above the waterline.",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/dawn-regalia.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknisa/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknisa/footwear/scene-the-dawn-legs-feet.json",
+    "effects": "Great sheets and arcs of sea water cascade back down around her, spray and droplets frozen mid-air catching the sunrise, rainbow light in the mist, ripples spreading outward across the surface, a glow of {{MAGIC}} in the water.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/dawn/sunrise-coral-reef-surface.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/story/Draknisa_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "THE DAWN: the sister rising from the Sundering in her element's homeland - first look at her territory. Her dragon is not yet bound, so no companion; native creatures instead. Rise speed and energy differ per sister."
+}

@@ -1,0 +1,10 @@
+{
+  "artId": "drakness-hair-high-ponytail-loose-tendrils",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "component": "data/art/races/human/cosmetics/hair/pulled-back/high-ponytail-loose-tendrils.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/2_Studies/hair/pulled-back/Drakness_Hair_PulledBack_HighPonytailLooseTendrils.txt",
+  "denoise": "~0.4-0.6"
+}

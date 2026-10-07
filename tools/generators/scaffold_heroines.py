@@ -9,6 +9,10 @@ prompts with gen_prompt.py. Safe to delete after running (kept only if reused la
 """
 import json
 import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -143,7 +147,7 @@ for slug, h in HEROINES.items():
             "stage": stage,
             "heroArt": f"data/art/heroes/drakn-sisters/{slug}-thorne.json",
             "template": f"data/art/_templates/heroes/{tmpl}",
-            "output": f"prompts/drakn-sisters/{h['cap']}/{outdir}/{h['cap']}_{outname}.txt",
+            "output": f"prompts/drakn-sisters/{h['cap']}/{'/'.join(art_layout.dirs_for(outdir, []))}/{h['cap']}_{outname}.txt",
             "denoise": "~1.0" if stage == "pose" else "~0.4-0.6",
             "notes": f"{card['name']} {stage} — generated alongside Drakness as the initial baseline for all 10 female heroes.",
         }
@@ -151,7 +155,7 @@ for slug, h in HEROINES.items():
             base_set_card["figureProfile"] = "standard"  # the X Pose from the original photo gets the standard figure
         if stage == "pose" and h.get("negativeRemove"):
             base_set_card["overrides"] = {"negativeRemove": h["negativeRemove"]}
-        card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{stage}/{slug}-x-{stage}.json"
+        card_path = ROOT / f"data/art/_sets/drakn-sisters/{slug}/{'/'.join(art_layout.dirs_for(outdir, []))}/{slug}-x-{stage}.json"
         card_path.parent.mkdir(parents=True, exist_ok=True)
         card_path.write_text(json.dumps(base_set_card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 

@@ -1,0 +1,14 @@
+{
+  "artId": "angelica-prime-head-profile-right",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/angelica-prime.json",
+  "name": "Profile Right",
+  "components": {
+    "view": "data/art/studio/views/head/profile-right.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/Angelica/2_Studies/head/views/Angelica_Head_profile_right.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

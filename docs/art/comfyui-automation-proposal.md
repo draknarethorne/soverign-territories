@@ -108,7 +108,7 @@ are generated deterministically, this is cheap, and it turns the long re-pull li
 ### E. Find-or-create workflows by naming convention (the workflow materializer)
 
 Today a prompt and its workflow are matched by hand. The names already follow a rule: the prompt
-`prompts/drakn-sisters/Draknara/scene/Draknara_Scene_Signature.txt` pairs with
+`prompts/drakn-sisters/Draknara/5_Scenes/signature/Draknara_Scene_Signature.txt` pairs with
 `workflows/Draknara/Draknara_Qwen_Scene_Signature.json` (insert `Qwen` after the hero), and its `SaveImage` prefix is
 `Draknara/scenes/Draknara_Qwen_Scene_Signature`. A tool can apply that rule and either find the workflow or make it:
 

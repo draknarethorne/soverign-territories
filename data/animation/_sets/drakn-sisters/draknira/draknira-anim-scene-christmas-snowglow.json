@@ -4,7 +4,7 @@
   "name": "SnowGlow",
   "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknira/scene/themes/draknira-scene-christmas.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknira/5_Scenes/themes/draknira-scene-christmas.json",
     "image": "Draknira_Qwen_Scene_Christmas_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

@@ -1,0 +1,32 @@
+{
+  "artId": "drakniya-scene-thanksgiving",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Thanksgiving Harvest",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "a calm, warm smile, eyes gentle and grateful.",
+    "wearing": "data/art/themes/seasonal/thanksgiving/wardrobe/clothing/dresses/autumn-harvest-dress.json",
+    "headwear": "data/art/themes/seasonal/thanksgiving/wardrobe/headwear/wreaths/autumn-leaf-crown.json",
+    "jewelry": "data/art/themes/seasonal/thanksgiving/wardrobe/jewelry/sets/acorn-and-leaf-set.json",
+    "legs_feet": "data/art/themes/seasonal/thanksgiving/wardrobe/footwear/boots/brown-leather-ankle-boots.json",
+    "holding": "data/art/themes/seasonal/thanksgiving/wardrobe/props/harvest/cornucopia.json",
+    "makeup": "data/art/themes/seasonal/thanksgiving/cosmetics/makeup/warm/warm-autumn-glow.json",
+    "effects": "data/art/themes/seasonal/thanksgiving/wardrobe/effects/ambient/falling-autumn-leaves.json",
+    "background": "data/art/themes/seasonal/thanksgiving/backgrounds/fantasy/feast/harvest-feast-hall.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "overrides": {
+    "palette": {
+      "primaryColor": "Burnt Pumpkin Orange",
+      "accentColors": [
+        "Harvest Gold",
+        "Cranberry Red"
+      ]
+    }
+  },
+  "output": "prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_Thanksgiving.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Thanksgiving event expansion (druid at the harvest feast). Every piece comes from themes/thanksgiving/, so the whole event can be retired as one folder. overrides.palette gives the event its own seasonal colours instead of the hero's element colours."
+}

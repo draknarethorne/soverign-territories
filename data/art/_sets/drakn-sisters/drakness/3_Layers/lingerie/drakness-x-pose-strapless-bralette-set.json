@@ -1,0 +1,13 @@
+{
+  "artId": "drakness-x-pose-strapless-bralette-set",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/lingerie/strapless-bralette-set.json"
+  },
+  "output": "prompts/drakn-sisters/Drakness/3_Layers/lingerie/Drakness_X_Pose_StraplessBraletteSet.txt",
+  "notes": "WARDROBE TEST. Same hero, only the pose piece differs (data/art/wardrobe/swimwear/lingerie/strapless-bralette-set.json)."
+}

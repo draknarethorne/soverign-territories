@@ -1,0 +1,17 @@
+{
+  "artId": "angelo-prime-scene-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/angelo-prime.json",
+  "name": "Evening",
+  "components": {
+    "wearing": "data/art/heroes/angel-primes/angelo-prime/wearing/simple-evening-wear.json",
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
+    "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"
+  },
+  "template": "data/art/_templates/heroes/scene-minimal-human.txt",
+  "output": "prompts/angel-primes/Angelo/5_Scenes/Angelo_Scene_Evening.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Deliberately minimal: one bundled wearing piece (footwear included, not decomposed), reused motion/effects/background -- cutting corners on decomposition since this is a calibration test-bed hero, not a real card. Uses scene-minimal-human.txt (no jewelry/weapon/companion slots)."
+}

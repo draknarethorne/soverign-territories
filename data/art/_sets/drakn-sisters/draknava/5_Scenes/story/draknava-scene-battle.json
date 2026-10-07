@@ -1,0 +1,22 @@
+{
+  "artId": "draknava-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Battle",
+  "components": {
+    "pose": "She leaps mid-air with her windsong staff swept behind her and her free hand flung forward, scarves streaming, a joyful, fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknava/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknava/footwear/scene-battle-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
+    "effects": "A roaring gale spirals out from her hand tearing banners and debris sideways, silk scarves streaming, ribbons of {{MAGIC}} wind marking the currents.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/battle/gale-cliff-bridge.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknava/5_Scenes/story/Draknava_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BATTLE: the sister in class-aligned war gear commanding her element on a battlefield of her homeland. Reuses her signature weapon."
+}

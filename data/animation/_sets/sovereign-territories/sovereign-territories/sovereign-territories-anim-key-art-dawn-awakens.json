@@ -19,7 +19,7 @@
     {"beat": "The ancient dragons among the clouds bank and roar as the camera rises, leaving the clear band of sky across the top of the frame empty for the title.", "seconds": 2.5, "transition": "settle"}
   ],
   "size": [640, 800],
-  "output": "prompts/sovereign-territories/SovereignTerritories/video/key-art/SovereignTerritories_Video_KeyArtPoster_DawnAwakens.txt",
+  "output": "prompts/sovereign-territories/SovereignTerritories/7_Video/key-art/SovereignTerritories_Video_KeyArtPoster_DawnAwakens.txt",
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "Reel and title-screen background: the key art coming alive. Feed the rendered poster as the source image."
 }

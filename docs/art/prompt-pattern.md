@@ -6,7 +6,7 @@ compiles a hero/dragon definition (`data/art/heroes/<group>/<slug>-thorne.json` 
 `data/art/dragons/elder-dragons/<slug>.json`) + reusable component(s) (`data/art/{races,wardrobe,
 motion}/**/*.json`, via a card's `component`/`components` field) + a stage template
 (`data/art/_templates/<archetype>/*.txt`) into the final prompt `.txt` under
-`prompts/<group>/<Hero>/<stage>/<family>/`. Edit the **template / component / card**, never a
+`prompts/<group>/<Hero>/<phase>/<family>/`. Edit the **template / component / card**, never a
 generated `.txt` by hand — regenerate instead: `python tools/generators/gen_prompt.py <card.json>`.
 See [`data/art/README.md`](../../data/art/README.md) for the full directory/architecture reference.
 
@@ -84,7 +84,7 @@ Overall, [aesthetic] aesthetic.
 Group names match the `Drakness_Qwen_<group>` / `Drakness_X_<group>` ComfyUI workflows.
 **Componentized stages** (Pose, Head, Hair, Motion, Clothing, Armor, Scene) generate from
 `data/art/_templates/<archetype>/*.txt` via `gen_prompt.py`, output to
-`prompts/<group>/<Hero>/<stage>/<family>/`. **Not yet their own generator stage** (Fantasy,
+`prompts/<group>/<Hero>/<phase>/<family>/`. **Not yet their own generator stage** (Fantasy,
 standalone Weapons/Background/Pets plates) still only exist as hand-crafted reference text,
 archived under `prompts/_archive/` — treat as reference wording, not a live template.
 
@@ -107,7 +107,7 @@ archived under `prompts/_archive/` — treat as reference wording, not a live te
 
 Hair and Motion styles are **hero-agnostic, reusable components** —
 `data/art/races/human/cosmetics/hair/<family>/<slug>.json` and `data/art/motion/<family>/<slug>.json`.
-An assembly card (`data/art/_sets/<group>/<slug>/<stage>/<family>/<slug>.json`) just points a hero
+An assembly card (`data/art/_sets/<group>/<slug>/<phase>/<family>/<slug>.json`) just points a hero
 + a component at a template; any hero can reference any style with a one-line swap.
 
 **Twin-pair convention.** Many styles should exist as a **plain** version and a **decorated** version

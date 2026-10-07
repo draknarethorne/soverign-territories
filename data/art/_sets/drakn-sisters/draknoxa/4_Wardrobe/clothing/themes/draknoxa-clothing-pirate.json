@@ -1,0 +1,19 @@
+{
+  "artId": "draknoxa-clothing-pirate",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Pirate Alchemist",
+  "aesthetic": "a clean studio presentation of the pirate alchemist outfit",
+  "components": {
+    "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/sets/buccaneer-sash-set.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
+    "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
+    "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknoxa/4_Wardrobe/clothing/themes/Draknoxa_Clothing_Pirate.txt",
+  "notes": "Pre-staged Pirate Alchemist outfit: render it from the A-pose, then feed the image to the Staged pirate scene. Every item is a library piece."
+}

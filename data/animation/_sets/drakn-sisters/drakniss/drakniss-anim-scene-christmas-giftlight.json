@@ -4,7 +4,7 @@
   "name": "GiftLight",
   "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakniss/scene/themes/drakniss-scene-christmas.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakniss/5_Scenes/themes/drakniss-scene-christmas.json",
     "image": "Drakniss_Qwen_Scene_Christmas_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

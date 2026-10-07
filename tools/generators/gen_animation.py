@@ -155,7 +155,7 @@ def timeline(card, toks):
 
 
 def output_path(card, toks):
-    """prompts/<group>/<Hero>/video/<Hero>_Video_<source stem>_<Name>.txt, so the video is named after the scene it animates."""
+    """prompts/<group>/<Hero>/7_Video/<family>/<Hero>_Video_<source stem>_<Name>.txt, so the video is named after the scene it animates."""
     if card.get("output"):
         return card["output"]
     hero = toks["HERO"].split()[0]
@@ -167,7 +167,7 @@ def output_path(card, toks):
         stem = pathlib.PurePosixPath(src_out).stem
         source = stem[len(hero) + 1:] + "_" if stem.startswith(hero + "_") else stem + "_"
         fam = art_layout.video_family(src_out)
-    return "/".join(["prompts", group, hero, "video", *fam, f"{hero}_Video_{source}{card['name']}.txt"])
+    return "/".join(["prompts", group, hero, *art_layout.dirs_for("video", fam), f"{hero}_Video_{source}{card['name']}.txt"])
 
 
 def camera_text(card, toks):

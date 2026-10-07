@@ -1,0 +1,11 @@
+{
+  "artId": "draknava-final-look",
+  "kind": "base-set",
+  "stage": "final",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Final look",
+  "template": "data/art/_templates/heroes/final-human.txt",
+  "output": "prompts/drakn-sisters/Draknava/6_Finish/final/Draknava_Final_Look.txt",
+  "denoise": "~0.6-0.8",
+  "notes": "SKELETON: the terminal look on her polished image (input role polish, FireRed); tune the wording once there are polished images."
+}

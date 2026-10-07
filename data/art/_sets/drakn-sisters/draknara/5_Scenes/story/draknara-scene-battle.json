@@ -1,0 +1,22 @@
+{
+  "artId": "draknara-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Battle",
+  "components": {
+    "pose": "She slams her totem staff down with one hand and sweeps the other arm up, the ground heaving beneath her, hair and fringe flying, a fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknara/footwear/scene-battle-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",
+    "effects": "The earth splits and slabs of stone heave up into a wall in front of her, dust and boulders hurled through the air, {{MAGIC}} light running through the cracks.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/battle/canyon-chasm-fray.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/5_Scenes/story/Draknara_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BATTLE: the sister in class-aligned war gear commanding her element on a battlefield of her homeland. Reuses her signature weapon."
+}

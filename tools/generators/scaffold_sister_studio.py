@@ -58,7 +58,7 @@ class Writer:
         if fam is not None:
             hero, stem = card["output"].split("/")[2], pathlib.PurePosixPath(card["output"]).stem
             card["output"] = art_layout.output_for(card, self.group, hero, stem, ROOT)
-            sub = "/".join([sub.split("/")[0], *fam])
+        sub = "/".join(art_layout.card_dirs(card, self.group, ROOT))
         target = self.base / sub / f"{art_id}.json"
         if target.exists() or card.get("output") in self.outputs:
             self.skipped += 1
@@ -119,7 +119,7 @@ def main():
         art_id = f"{slug}-motion-{short}"
         wr.write(f"motion/{fam}", art_id, {"artId": art_id, "kind": "base-set", "stage": "motion", "heroArt": ident,
                  "component": path, "template": f"{TPL}/motion-human.txt", "denoise": "~0.4-0.6",
-                 "output": out(f"motion/{fam}", f"{hero}_Motion_{camel(fam)}_{camel(short)}")})
+                 "output": out("/".join(art_layout.dirs_for("motion", [fam])), f"{hero}_Motion_{camel(fam)}_{camel(short)}")})
 
     for s in kit.get("showcase", []):
         comps = {**DEFAULT_SHOWCASE, **{k: (norm(v) if str(v).startswith(("wardrobe/", "heroes/", "backgrounds/", "motion/", "data/art/")) else v)

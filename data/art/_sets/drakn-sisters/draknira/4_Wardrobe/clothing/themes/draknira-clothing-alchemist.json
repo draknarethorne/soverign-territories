@@ -1,0 +1,19 @@
+{
+  "artId": "draknira-clothing-alchemist",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Alchemist's Guild Wizard",
+  "aesthetic": "a clean studio presentation of the alchemist's guild wizard outfit",
+  "components": {
+    "wearing": "data/art/themes/adventure/alchemist/wardrobe/clothing/dresses/lab-coat-corset-dress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/adventure/alchemist/wardrobe/jewelry/sets/vial-pendant-set.json",
+    "legs_feet": "data/art/themes/adventure/alchemist/wardrobe/footwear/boots/acid-proof-lab-boots.json",
+    "headwear": "data/art/themes/adventure/alchemist/wardrobe/headwear/goggles/brass-lens-goggles.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknira/4_Wardrobe/clothing/themes/Draknira_Clothing_Alchemist.txt",
+  "notes": "Pre-staged Alchemist's Guild Wizard outfit: render it from the A-pose, then feed the image to the Staged alchemist scene. Every item is a library piece."
+}

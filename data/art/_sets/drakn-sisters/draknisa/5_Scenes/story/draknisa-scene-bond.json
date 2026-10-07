@@ -1,0 +1,22 @@
+{
+  "artId": "draknisa-scene-bond",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Bond",
+  "components": {
+    "pose": "She stands ankle-deep in a glowing pool before the great dragon, one hand raised and gently resting her palm against its snout, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the dragon's head is lowered to her and its eyes are on her; both are fully in frame.",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/dawn-regalia.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-lineup-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknisa/jewelry/scene-lineup-jewelry.json",
+    "legs_feet": "bare feet, fine {{METAL}} anklets",
+    "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, beads of water lifting and hanging around both of them.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "companion": "her aligned Elder Dragon, Aquaria, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/bond/aquaria-tide-cavern.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/story/Draknisa_Scene_Bond.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BOND: the first meeting with her Elder Dragon in its lair, her palm against its snout as the bond forms."
+}

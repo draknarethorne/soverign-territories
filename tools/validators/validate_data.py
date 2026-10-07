@@ -242,21 +242,24 @@ def check_art_cards(report):
             if ("-staged-" in d["artId"]) != is_staged_tpl or ("_Staged_" in d.get("output", "")) != is_staged_tpl:
                 report.error(where, "staged scenes must use a scene-staged-* template AND have '-staged-' in the artId "
                                     "and '_Staged_' in the output name; complete scenes must have none of these")
-        fam = art_layout.family(d, group, ROOT)
-        if fam is not None:
-            card_fam = list(f.relative_to(ROOT / "data/art/_sets").parts[3:-1])
-            if card_fam != fam:
-                report.error(where, f"card file must sit in <stage>/{'/'.join(fam) or '(stage root)'}/ (family comes from the card, see tools/generators/art_layout.py)")
-            if d.get("output") and d["output"].split("/")[4:-1] != fam:
-                report.error(where, f"output {d['output']} must sit in the family folder '{'/'.join(fam) or '(stage root)'}' below its stage folder")
         out = d.get("output")
+        # The card file, its prompt and the ComfyUI output share one set of folders: the pipeline phase and the family, both decided by the card
+        # (tools/generators/art_layout.py). Hair and motion cards name their own family in their output.
+        if out:
+            want = art_layout.card_dirs(d, group, ROOT)
+            card_dirs = list(f.relative_to(ROOT / "data/art/_sets").parts[2:-1])
+            where_to = "/".join(want) or "(slug root)"
+            if card_dirs != want:
+                report.error(where, f"card file must sit in {where_to}/ (the phase and family come from the card, see tools/generators/art_layout.py)")
+            if out.split("/")[3:-1] != want:
+                report.error(where, f"output {out} must sit in the folder '{where_to}' below its hero folder")
         if out:
             if out.split("/")[1] != group:
                 report.error(where, f"output {out} is not under prompts/{group}/")
             folder = stages["cardStageToFolder"].get(d["stage"], d["stage"])
             if folder not in known_folders:
                 report.error(where, f"stage folder '{folder}' is in no class (studio or scene) in _schema/stages.json")
-            elif len(out.split("/")) < 4 or out.split("/")[3] != folder:
+            elif len(out.split("/")) < 5 or art_layout.parse_dirs(out.split("/")[3:-1])[0] != folder:
                 report.error(where, f"output {out} must sit in the '{folder}' folder for stage '{d['stage']}'")
             if out in outputs:
                 report.error(where, f"output {out} is also produced by {outputs[out]} (one would overwrite the other)")

@@ -1,0 +1,23 @@
+{
+  "artId": "draknoxa-scene-halloween",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Halloween Alchemist",
+  "components": {
+    "pose": "data/art/motion/action/crouch-ready.json",
+    "expression": "data/art/themes/seasonal/halloween/motion/expressions/wicked-delight.json",
+    "wearing": "data/art/themes/seasonal/halloween/wardrobe/clothing/dresses/pumpkin-harvest-witch-dress.json",
+    "jewelry": "data/art/themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set.json",
+    "legs_feet": "data/art/themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots.json",
+    "effects": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+    "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/castle/haunted-manor-courtyard.json",
+    "headwear": "data/art/themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat.json",
+    "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/venom-stiletto.json",
+    "makeup": "data/art/themes/seasonal/halloween/cosmetics/makeup/spooky/spiderweb-glam.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/5_Scenes/themes/Draknoxa_Scene_Halloween.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Halloween Alchemist: complete scene from the A-pose, every item a library piece (also pre-stageable through draknoxa-clothing-halloween)."
+}

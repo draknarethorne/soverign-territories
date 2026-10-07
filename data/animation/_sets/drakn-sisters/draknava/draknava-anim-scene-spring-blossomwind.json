@@ -4,7 +4,7 @@
   "name": "BlossomWind",
   "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknava/scene/themes/draknava-scene-spring.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknava/5_Scenes/themes/draknava-scene-spring.json",
     "image": "Draknava_Qwen_Scene_Spring_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

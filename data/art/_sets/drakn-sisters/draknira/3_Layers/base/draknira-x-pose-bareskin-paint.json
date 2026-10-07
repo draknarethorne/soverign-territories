@@ -1,0 +1,14 @@
+{
+  "artId": "draknira-x-pose-bareskin-paint",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/3_Layers/base/Draknira_X_Pose_BareskinPaint.txt",
+  "denoise": "~1.0",
+  "notes": "BARESKIN A-POSE ALTERNATIVE. Minimal, strap-free foundation for the celestial armor showcases; compare with the plain Bareskin.",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/base/bareskin-body-paint-skin.json",
+    "footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
+  }
+}

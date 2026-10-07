@@ -1,0 +1,11 @@
+{
+  "artId": "draknoxa-polish-detail",
+  "kind": "base-set",
+  "stage": "polish",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Detail pass",
+  "template": "data/art/_templates/heroes/polish-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/6_Finish/polish/Draknoxa_Polish_Detail.txt",
+  "denoise": "~0.2-0.4",
+  "notes": "SKELETON: a detail-only pass on her chosen finished image (input role scene); tune the wording once there are scenes to polish."
+}

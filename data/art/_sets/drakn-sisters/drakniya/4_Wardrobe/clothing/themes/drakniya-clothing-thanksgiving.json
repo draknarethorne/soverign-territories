@@ -1,0 +1,19 @@
+{
+  "artId": "drakniya-clothing-thanksgiving",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Thanksgiving Druid",
+  "aesthetic": "a clean studio presentation of the thanksgiving druid outfit",
+  "components": {
+    "wearing": "data/art/themes/seasonal/thanksgiving/wardrobe/clothing/dresses/autumn-harvest-dress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/seasonal/thanksgiving/wardrobe/jewelry/sets/acorn-and-leaf-set.json",
+    "legs_feet": "data/art/themes/seasonal/thanksgiving/wardrobe/footwear/boots/brown-leather-ankle-boots.json",
+    "headwear": "data/art/themes/seasonal/thanksgiving/wardrobe/headwear/wreaths/autumn-leaf-crown.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniya/4_Wardrobe/clothing/themes/Drakniya_Clothing_Thanksgiving.txt",
+  "notes": "Pre-staged Thanksgiving Druid outfit: render it from the A-pose, then feed the image to the Staged thanksgiving scene. Every item is a library piece."
+}

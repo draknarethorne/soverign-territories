@@ -1,0 +1,19 @@
+{
+  "artId": "drakneta-showcase-armor-stand",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Armor Stand",
+  "components": {
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "wearing": "data/art/heroes/drakn-sisters/drakneta/armor/stormcoil-plate.json",
+    "effects": "A cage of lightning arcs hang in the air behind her in a protective arc, {{MAGIC}} light running through them.",
+    "background": "data/art/backgrounds/studio/charcoal-magic-glow.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakneta/4_Wardrobe/showcase/studio/Drakneta_Showcase_ArmorStand.txt",
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

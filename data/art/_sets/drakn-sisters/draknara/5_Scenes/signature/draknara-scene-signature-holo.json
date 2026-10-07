@@ -1,0 +1,25 @@
+{
+  "artId": "draknara-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "pose": "She stands with the staff planted and her free arm raised high, palm open to the sky, her hair and fringe lifted by a rising spirit-wind, chin lifted, a fierce, proud gaze straight to the camera; full figure visible.",
+    "expression": "a grounded, intense stare, the weight of the earth in her gaze.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff-ascended.json",
+    "effects": "Glowing spirits of beasts rise from the standing stones and circle her, the ancestral fires leap high, {{MAGIC}} motes and leaf litter spiral upward and the totem poles glow along their carved faces.",
+    "companion": "her aligned Elder Dragon, Terrador, rising among the totem poles close behind her with its great head lowered toward her, deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze",
+    "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/signature/spirit-totem-grove.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-signature-holo-headwear.json",
+    "back": "data/art/heroes/drakn-sisters/draknara/capes/scene-signature-holo-back.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/5_Scenes/signature/Draknara_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Spirit Mother': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

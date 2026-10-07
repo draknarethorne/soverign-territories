@@ -1,0 +1,22 @@
+{
+  "artId": "draknora-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Battle",
+  "components": {
+    "pose": "She charges forward in a wide lunge with her flame sword swept back in one hand and the other palm thrust forward, hair and cape streaming, a fierce, exhilarated gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknora/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknora/footwear/scene-battle-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword.json",
+    "effects": "A wave of living flame rolls out from her palm and the blade is wreathed in fire, embers and sparks streaming past her, heat haze warping the air behind her.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/battle/burning-gate-siege.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/5_Scenes/story/Draknora_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "BATTLE: the sister in class-aligned war gear commanding her element on a battlefield of her homeland. Reuses her signature weapon."
+}

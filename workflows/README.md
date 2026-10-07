@@ -106,7 +106,7 @@ A new workflow is saved in the workspace under its output folder, hero first and
 | `7_Video` | animation of a finished image |
 | `Bench` | `motion`: a point-in-time test run on any phase's image, not a phase |
 
-The prompts and card folders stay by stage; `art_layout.phase_path` maps a stage and family to its phase, and the SaveImage prefix (so the ComfyUI output folder) follows it.
+The card folders, the prompts and the ComfyUI output all use these phase folders (`art_layout.phase_path` maps a stage and family to its phase, `parse_dirs` goes back); the SaveImage prefix is the prompt's folder.
 ComfyUI shows these as folders.
 `tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a single-hero workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
 

@@ -1,0 +1,20 @@
+{
+  "artId": "corin-armor-default",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-bound/corin-tidewalker.json",
+  "name": "Default",
+  "aesthetic": "rugged beast-master aesthetic",
+  "components": {
+    "wearing": "data/art/heroes/drakn-bound/corin/clothing/armor-default-wearing.json",
+    "arms": "bare forearms, no additional arm pieces",
+    "jewelry": "none, unadorned",
+    "back": "no cape or back piece",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/drakn-bound/Corin/4_Wardrobe/armor/Corin_Armor_Default.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Default Specialist/Hybrid (Beast Lord) armor set — first-pass minimal scaffold, reusing wardrobe/armor/leather-rogue.json + the thematic wardrobe/weapons/trident.json (Water-aligned)."
+}

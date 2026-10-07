@@ -1,0 +1,13 @@
+{
+  "artId": "draknisa-x-pose-cutout-monokini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/3_Layers/one-piece/Draknisa_X_Pose_CutoutMonokini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/one-piece/cutout-monokini.json"
+  },
+  "notes": "UNDERLAYER TEST. Same original photo as the base A-pose; only the underlayer piece differs."
+}

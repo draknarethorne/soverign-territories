@@ -1,0 +1,34 @@
+{
+  "artId": "drakniya-scene-signature-shiny",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Signature Shiny",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a calm, knowing smile, eyes gentle and patient.",
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
+    "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/living-wood-staff.json",
+    "effects": "Loose leaves and faint {{MAGIC}} motes of pollen drift and swirl gently around her, stirred by living magic. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
+    "companion": "her aligned Elder Dragon, Sylvanya, visible in the distance beyond the trees, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold",
+    "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/signature/heart-tree-glade.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/5_Scenes/signature/Drakniya_Scene_Signature_Shiny.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "SHINY variant of the Signature: same scene and pose in a prismatic, gilded colourway with a holographic glitter sheen. Convention: <slug>-scene-signature-shiny.",
+  "overrides": {
+    "palette": {
+      "primaryColor": "Iridescent Emerald",
+      "metal": "gilded antique gold",
+      "accentColors": [
+        "Prismatic Sage",
+        "Moss Gold"
+      ],
+      "magicColor": "prismatic green-gold"
+    }
+  },
+  "finish": "shiny"
+}

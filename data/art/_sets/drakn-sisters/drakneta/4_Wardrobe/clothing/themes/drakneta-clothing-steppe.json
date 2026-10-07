@@ -1,0 +1,19 @@
+{
+  "artId": "drakneta-clothing-steppe",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Steppe Horde Summoner",
+  "aesthetic": "a clean studio presentation of the steppe horde summoner outfit",
+  "components": {
+    "wearing": "data/art/themes/eastern/steppe/wardrobe/clothing/dresses/sheepskin-war-coat-dress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/eastern/steppe/wardrobe/jewelry/sets/horse-and-coin-set.json",
+    "legs_feet": "data/art/themes/eastern/steppe/wardrobe/footwear/boots/felt-lined-riding-boots.json",
+    "headwear": "data/art/themes/eastern/steppe/wardrobe/headwear/hats/fur-trimmed-felt-cap.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakneta/4_Wardrobe/clothing/themes/Drakneta_Clothing_Steppe.txt",
+  "notes": "Pre-staged Steppe Horde Summoner outfit: render it from the A-pose, then feed the image to the Staged steppe scene. Every item is a library piece."
+}

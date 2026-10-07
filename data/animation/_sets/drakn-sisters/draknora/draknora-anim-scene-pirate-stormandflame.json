@@ -4,7 +4,7 @@
   "name": "StormAndFlame",
   "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknora/scene/themes/draknora-scene-pirate.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknora/5_Scenes/themes/draknora-scene-pirate.json",
     "image": "Draknora_Qwen_Scene_Pirate_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

@@ -1,0 +1,18 @@
+{
+  "artId": "draknava-clothing-dawn-regalia",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
+  "name": "Dawn Regalia (Draknava signature)",
+  "aesthetic": "a clean studio presentation of the dawn regalia (draknava signature)",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/dawn-regalia.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Draknava/4_Wardrobe/clothing/Draknava_Clothing_DawnRegalia.txt",
+  "notes": "WARDROBE TEST: same hero, only the outfit differs."
+}

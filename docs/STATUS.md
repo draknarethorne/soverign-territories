@@ -51,7 +51,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The other permanent workspaces are Angel Primes, Drakn Bound, Elder Dragons and
   Sovereign Territories (dev and brand). A single-sister workspace is spun up only while needed and discarded; only `Drakness` is kept (and kept in sync) until her
   hand-made armor, clothing and scenes are covered by the generated set. The chosen image of each later phase is named `_00000` too (`<Hero>_Qwen_Scene_00000.png`
-  feeds Polish, `_Polish_00000.png` feeds Final), so a skipped phase shows as a missing image. Prompts and card folders stay by stage. Dev keeps whatever is not
+  feeds Polish, `_Polish_00000.png` feeds Final), so a skipped phase shows as a missing image. The card folders (`data/art/_sets/`), the prompts and the output all use these same phase folders (one layout everywhere). Dev keeps whatever is not
   delivered, edited or hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
   a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.
@@ -101,7 +101,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
 - **The Alpha stage (Oct 2026).** The first workflows of a hero are not poses: they create her likeness, so they have their own stage and folder, `alpha/`
   (sorts first). Alpha 1 Prime (original photo to the bikini A-pose, standard figure), Alpha 2 Bare (Prime to bare skin: individual build, hair, eyes, skin and
-  bust re-asserted; the figure and chest looks sit flat in `alpha/bare/`, next to the hand-made `Alpha_2_Bare_Skin` shots; the coverings and celestial experiments are Alpha 2b in `alpha/bare/coverings/` and `alpha/bare/celestial/`) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
+  bust re-asserted; the figure and chest looks sit flat in `1_Alpha/2_Bare/`, next to the hand-made `Alpha_2_Bare_Skin` shots; the coverings and celestial experiments are Alpha 2b in `alpha/bare/coverings/` and `alpha/bare/celestial/`) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
   `Alpha_2_Bare_Figure` is the intended Bare step; the hand-made `Alpha_2_Bare_Skin` shots are temporary while it is tuned and are not kept long term.
   Bare, Barefoot and Heels are the three golden images, named `<Hero>_Qwen_Alpha_1_Prime|Alpha_2_Bare|Alpha_3_Barefoot|Alpha_3_Heels_00000.png` (the `_00000`
   sorts above the numbered renders); `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose` (the Barefoot image), `heels`

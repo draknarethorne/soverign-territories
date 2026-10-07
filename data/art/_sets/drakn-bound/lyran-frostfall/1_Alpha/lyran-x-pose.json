@@ -1,0 +1,10 @@
+{
+  "artId": "lyran-x-pose",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/drakn-bound/lyran-frostfall.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/drakn-bound/Lyran/1_Alpha/Lyran_X_Pose.txt",
+  "denoise": "~1.0",
+  "notes": "Lyran Frostfall A-pose base — first-pass minimal scaffold, part of the initial 30-hero-roster pass."
+}

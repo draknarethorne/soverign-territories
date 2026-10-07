@@ -1,0 +1,20 @@
+{
+  "artId": "drakneta-showcase-photo-cafe-table",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Photo: Cafe Table",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/wrap-skirt-and-top.json",
+    "pose": "data/art/motion/photo/cafe-seated.json",
+    "background": "data/art/backgrounds/modern/urban/cafe-sidewalk-terrace.json",
+    "framing": "data/art/studio/shots/seated-three-quarter.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "legs_feet": "data/art/wardrobe/footwear/flats/ballet-flats.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/drakn-sisters/Drakneta/4_Wardrobe/showcase/photo/daily/Drakneta_Showcase_Photo_CafeTable.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

@@ -22,6 +22,11 @@ import argparse
 import json
 import pathlib
 
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import art_layout  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VIEW = "data/art/studio/views"
 POSE_VIEW_TEMPLATE = "data/art/_templates/heroes/pose-view-human.txt"
@@ -77,6 +82,7 @@ def main():
     if not (ROOT / identity).exists():
         raise SystemExit(f"identity not found: {identity}")
     base = ROOT / "data/art/_sets" / args.group / args.slug
+    PV, HV, HC = ("/".join(art_layout.dirs_for(s, [f])) for s, f in (("poses", "views"), ("head", "views"), ("head", "closeups")))
 
     def card(art_id, stage, name, template, output, denoise, components, note):
         return {
@@ -89,27 +95,27 @@ def main():
         comps = {"view": piece}
         if args.underlayer:
             comps["underlayer"] = args.underlayer
-        write(base / "pose" / "views" / f"{args.slug}-view-{slug}.json", card(
+        write(base / PV / f"{args.slug}-view-{slug}.json", card(
             f"{args.slug}-view-{slug}", "pose", name, POSE_VIEW_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/poses/views/{args.hero}_View_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.hero}/{PV}/{args.hero}_View_{slug.replace('-', '_')}.txt",
             "~0.5-0.7", comps, "Reference-library body view, edited from the front A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_VIEWS:
-        write(base / "head" / "views" / f"{args.slug}-head-{slug}.json", card(
+        write(base / HV / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/head/views/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.hero}/{HV}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"view": piece}, "Reference-library head view, zoomed from the A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_FRAMING:
-        write(base / "head" / "closeups" / f"{args.slug}-head-{slug}.json", card(
+        write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/head/closeups/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"framing": piece}, "Reference-library head framing (front view). Scaffolded."))
 
     for slug, name, piece in HEAD_EXPRESSIONS:
-        write(base / "head" / "closeups" / f"{args.slug}-head-{slug}.json", card(
+        write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/head/closeups/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"expression": piece}, "Reference-library head expression (front view). Scaffolded."))
 
 

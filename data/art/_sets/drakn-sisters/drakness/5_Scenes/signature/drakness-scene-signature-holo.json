@@ -1,0 +1,25 @@
+{
+  "artId": "drakness-scene-signature-holo",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Signature Holo",
+  "finish": "holo",
+  "components": {
+    "pose": "She hovers a hand's breadth above the ground, the scythe raised overhead in both hands as a great arc of soul-light sweeps from the blade, her cape billowing upward, chin lifted, a regal, commanding gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
+    "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
+    "back": "data/art/heroes/drakn-sisters/drakness/capes/scene-signature-holo-back.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
+    "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe-ascended.json",
+    "effects": "A spiral of {{MAGIC}} soul-energy coils up the scythe, a vast host of spectral shades rises from the necropolis behind her, ravens burst from her cape, violet lightning forks across the sky and a ring of glowing sigils halos behind her head.",
+    "companion": "her aligned Elder Dragon, Umbrath, rearing up enormous behind her with its wings spread across the sky, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light, amethyst fire pouring from its jaws",
+    "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/signature/necropolis-rising-dead.json",
+    "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-signature-holo-headwear.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/5_Scenes/signature/Drakness_Scene_Signature_Holo.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "HOLO edition 'Reaper Queen': the Signature scene re-authored with an ascended pose, upgraded signature weapon, crown, mantle, grander magic and a closer dragon. Holo shader/foil is applied in the client, not baked in."
+}

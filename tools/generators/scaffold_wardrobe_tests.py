@@ -81,8 +81,8 @@ def main():
             else:
                 card = {"artId": art_id, "kind": "base-set", "stage": stage, "components": {"wearing": pid}}
             fam = art_layout.family(card, args.group, ROOT)
-            target = ART / "_sets" / args.group / args.slug / stage / "/".join(fam) / f"{art_id}.json"
-            folder = "/".join([folder, *fam])
+            folder = "/".join(art_layout.dirs_for(folder, fam))
+            target = ART / "_sets" / args.group / args.slug / folder / f"{art_id}.json"
             if target.exists():
                 skipped += 1
                 continue

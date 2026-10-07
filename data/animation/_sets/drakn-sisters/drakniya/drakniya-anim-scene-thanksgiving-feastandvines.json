@@ -4,7 +4,7 @@
   "name": "FeastAndVines",
   "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakniya/scene/themes/drakniya-scene-thanksgiving.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakniya/5_Scenes/themes/drakniya-scene-thanksgiving.json",
     "image": "Drakniya_Qwen_Scene_Thanksgiving_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

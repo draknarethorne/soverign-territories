@@ -4,7 +4,7 @@
   "name": "LanternsWake",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/themes/drakness-scene-halloween.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakness/5_Scenes/themes/drakness-scene-halloween.json",
     "image": "Drakness_Qwen_Scene_Halloween_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

@@ -1,0 +1,16 @@
+{
+  "artId": "drakness-alpha-prime-variant",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/1_Alpha/1_Prime/Drakness_Alpha_1_Prime_Variant.txt",
+  "denoise": "~1.0",
+  "figureProfile": "standard",
+  "overrides": {
+    "palette": {
+      "skinTone": "Warm sun-kissed olive tan"
+    }
+  },
+  "notes": "DEMO: same art hero definition as drakness-x-pose, with ONE overridden attribute (skinTone). Shows how a base-set card inherits the core hero and overrides a single trait. Diff against Drakness_X_Pose.txt should show only the Skin line differs."
+}

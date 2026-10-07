@@ -13,7 +13,7 @@ You never write a prompt. You write small JSON files that the generator turns in
 | --- | --- | --- | --- |
 | Identity | `data/art/heroes/<group>/<slug>-thorne.json` | Who she is: colours, eyes, skin, build | `draknisa-thorne.json` |
 | Piece | `data/art/wardrobe`, `cosmetics`, `themes`, `races`, `backgrounds`, `heroes/.../<slug>/` | One reusable chunk of description | a bikini, a gown, a throne room |
-| Card | `data/art/_sets/<group>/<slug>/<stage>/<family>/` | A recipe: which pieces to use, in which template | `draknisa-scene-robe.json` |
+| Card | `data/art/_sets/<group>/<slug>/<phase>/<family>/` | A recipe: which pieces to use, in which template | `draknisa-scene-robe.json` |
 | Template | `data/art/_templates/heroes/*.txt` | Static prompt scaffolding with `{{TOKENS}}` | `scene-with-outfit-human.txt` |
 
 ```text
@@ -64,9 +64,9 @@ bikini or lingerie reads best.
 
 **The bare looks** (all edit-only prompts in `data/art/_templates/heroes/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
-`Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `alpha/bare/` beside your own `Alpha_2_Bare_Skin` shot;
-the experiments are Alpha 2b and nested below it: `alpha/bare/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
-small painted areas) and `alpha/bare/celestial/`. The celestial core paints only the three small designs; the suit forks it into an open-filigree
+`Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot;
+the experiments are Alpha 2b and nested beside it: `1_Alpha/2b_Experiments/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
+small painted areas) and `1_Alpha/2b_Experiments/celestial/`. The celestial core paints only the three small designs; the suit forks it into an open-filigree
 design over the whole body; the plate versions are the original small plates, and `Alpha_2b_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
 
 **Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
@@ -166,7 +166,7 @@ A card chooses a template and fills its slots. Real example, `draknisa-scene-rob
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
-  "output": "prompts/drakn-sisters/Draknisa/scene/Draknisa_Scene_Robe.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/glamour/Draknisa_Scene_Robe.txt",
   "denoise": "~0.5-0.7"
 }
 ```
@@ -179,7 +179,7 @@ extend the default instead of replacing it (`"expression": "+a faint, knowing sm
 **Naming is enforced** (it keeps filenames and render folders predictable):
 
 - file name = `artId` = `<hero>-scene-<name>.json`, where `<hero>` is the first word of the folder (`draknisa`);
-- `output` = `prompts/<group>/<Hero>/scene/<Hero>_Scene_<Name>.txt`, and `<Name>` is CamelCase (`TheDawn`, `Robe`);
+- `output` = `prompts/<group>/<Hero>/5_Scenes/<family>/<Hero>_Scene_<Name>.txt`, and `<Name>` is CamelCase (`TheDawn`, `Robe`);
 - a **staged** scene (it edits an already finished render) adds `staged` after `scene` in the id and `_Staged_` in the output,
   and must use `scene-staged-human.txt`; every other scene is **complete** and starts from the A-pose.
 

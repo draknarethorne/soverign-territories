@@ -1,0 +1,21 @@
+{
+  "artId": "zephyr-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-bound/zephyr-galeheart.json",
+  "name": "Signature",
+  "pose": "He stands with weight shifted onto one leg, shoulders loose and ready, a confident, determined gaze toward the camera — a battle-ready stance, his expression bright and eager, hair whipping in the wind.",
+  "effects": "A light wind catches his hair and cloak-edge.",
+  "components": {
+    "wearing": "data/art/heroes/drakn-bound/zephyr/clothing/armor-default-wearing.json",
+    "jewelry": "none, unadorned",
+    "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
+    "holding": "data/art/heroes/drakn-bound/zephyr-galeheart/weapons/gale-saber.json",
+    "companion": "his bonded Giant Eagle, a soaring raptor with wind-swept feathers, circling high above him",
+    "background": "data/art/backgrounds/fantasy/cityscape/citadel-skyline-dusk.json"
+  },
+  "template": "data/art/_templates/heroes/scene-combat-human.txt",
+  "output": "prompts/drakn-bound/Zephyr/5_Scenes/Zephyr_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "First-pass minimal signature scene — reuses the striker-group default wardrobe set + the existing cityscape-dusk background (windy skyline fit)."
+}

@@ -19,7 +19,7 @@
     {"beat": "The glow settles into a steady shimmer and the tagline brightens beneath the title.", "seconds": 2, "transition": "settle"}
   ],
   "size": [832, 480],
-  "output": "prompts/sovereign-territories/SovereignTerritories/video/title/SovereignTerritories_Video_TitleLockup_TitleIgnites.txt",
+  "output": "prompts/sovereign-territories/SovereignTerritories/7_Video/title/SovereignTerritories_Video_TitleLockup_TitleIgnites.txt",
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "Title-screen sting and reel opener. Feed the rendered title lockup as the source image."
 }

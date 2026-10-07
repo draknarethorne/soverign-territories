@@ -151,23 +151,25 @@ Video effect pieces live in `data/animation/motions/`: `ambient/` (snow, rain, m
 
 ## Card and output folders: families
 
-A card is filed under a **family** folder below its stage, and its prompt and rendered images follow the same path, so a folder
-holds only closely related work. The family comes from the card itself (`tools/generators/art_layout.py`, enforced by the
-validator), never from a hand-typed folder:
+A card is filed under the **pipeline phase** its work belongs to and a **family** below it, and its prompt and rendered images use the
+same folders, so the card source, the prompts and ComfyUI read the same way and a folder holds only closely related work. The phase and
+family come from the card itself (`tools/generators/art_layout.py`, enforced by the validator), never from a hand-typed folder:
 
 ```text
-data/art/_sets/<group>/<slug>/<stage>/<family>/<artId>.json
-prompts/<group>/<Hero>/<stage>/<family>/<Hero>_<Stage>_<Name>.txt
-ComfyUI output: <group>/<Hero>/<phase>/...<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
+data/art/_sets/<group>/<slug>/<phase>/<family>/<artId>.json
+prompts/<group>/<Hero>/<phase>/<family>/<Hero>_<Stage>_<Name>.txt
+ComfyUI output: <group>/<Hero>/<phase>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
-The cards and prompts stay by stage; the workflows and the ComfyUI output follow the **pipeline phase** (`art_layout.phase_path`), hero first:
-`1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`, `hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`,
-`armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The table below is by stage.
+The phases (`art_layout.phase_path`, inverse `parse_dirs`), hero first: `1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`,
+`hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`, `armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and
+`Bench/motion` (a test run on any phase's image, not a phase). Brand and mass card art (`brand/<family>`, `<Category>/card`) have no phases and keep their
+stage folder. A card's `stage` field still names its kind of work (`pose`, `scene`, `alpha`); the table below is by stage, with the families each one uses.
+
 | Stage | Families | Notes |
 | --- | --- | --- |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
-| alpha (sisters) | `Alpha_1_Prime` at the root (from the original photo; its variants and tests sit beside it); `bare` (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`; your own `Alpha_2_Bare_Skin` shot writes here too) with the experiments nested as Alpha 2b in `bare/coverings` and `bare/celestial` (`Alpha_2b_<Name>`); `footwear` (`Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero: the only stage that makes her likeness. Prime from the photo, Bare from the Prime, Barefoot and Heels from the Bare image; Bare, Barefoot and Heels are the golden images. |
+| alpha (sisters) | the card family is `[]` (`1_Alpha/1_Prime`: `Alpha_1_Prime`, from the original photo, with its variants and tests), `bare` (`2_Bare`: `Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`) with the experiments nested as `bare/coverings` and `bare/celestial` (`2b_Experiments`, `Alpha_2b_<Name>`), and `footwear` (`3_Footwear`: `Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero, the only stage that makes her likeness. Bare, Barefoot and Heels are the golden images. |
 | poses | views; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | Fed the Bare image, never the photo. The type is read from the underlayer piece's tags. Dragons, bound heroes and the Angel Primes keep their X Pose at the root until they get an Alpha chain. |
 | head | golden head at the root; `views`; `closeups` (framing and expressions) | |
 | clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
@@ -179,15 +181,15 @@ The cards and prompts stay by stage; the workflows and the ComfyUI output follow
 The output folder also starts with the set, so `Draknara/` and `Drakness/` sit under `drakn-sisters/` and a later set (bound heroes,
 dragons) never mixes with them.
 
-A folder only exists to group related cards; one-card groups stay flat. Workflow file names and ComfyUI workspaces stay flat; only the
-output folder (the SaveImage prefix) changes. `tools/workflows/organize_outputs.py` sorts images rendered earlier into the same
+A folder only exists to group related cards; one-card groups stay flat. Workflow file names stay flat; the SaveImage prefix (the output folder) is the prompt's
+folder, so the cards, the prompts and the render folders can never drift apart. `tools/workflows/organize_outputs.py` sorts images rendered earlier into the same
 folders (preview first, then `--apply`).
 
 ## Where rendered images live (convention)
 
 The prompt file path is the identity of an image. A rendered PNG sits at the same path under `assets/art/` with the
-extension changed: `prompts/drakn-sisters/Drakniya/scene/Drakniya_Scene_Thanksgiving.txt` becomes
-`assets/art/drakn-sisters/Drakniya/scene/Drakniya_Scene_Thanksgiving.png`. Because the card's `output` field already
+extension changed: `prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_Thanksgiving.txt` becomes
+`assets/art/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_Thanksgiving.png`. Because the card's `output` field already
 defines the prompt path, the image path is derived, not stored twice; a tool (or the validator, later) can check that
 it exists, and Unity import can mirror the folder. Large binaries should use Git LFS or external storage. Still to
 decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fields point at these.
@@ -217,11 +219,11 @@ data/art/
 │   │                               series (if any) consumes a group's output is tracked on the
 │   │                               data/cards/ side, not here.
 │   ├── drakn-sisters/              ✅ 101 cards (10 heroes × pose/head, 44 hair + 25 motion + 2
-│   │   └── <slug>/<stage>/<family>/*.json    armor + 1 clothing for Drakness; all 10 now have a
+│   │   └── <slug>/<phase>/<family>/*.json    armor + 1 clothing for Drakness; all 10 now have a
 │   │                               signature scene — 3 bespoke [Drakness/Draknora/Drakneta],
 │   │                               7 first-pass minimal reusing proven wardrobe defaults)
 │   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
-│   │   └── <slug>/<stage>/<family>/*.json
+│   │   └── <slug>/<phase>/<family>/*.json
 │   ├── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — each now
 │   │   └── <slug>/<stage>/*.json   has its OWN signature weapon (heroes/drakn-bound/<slug>/weapons/),
 │   │                               not just the shared archetype-group default
@@ -355,7 +357,7 @@ instead, set `"hairFrom": "incoming"` on the card so hair comes from the image, 
 
 **Scene naming, uniform for every scene card** (validator-enforced): file name = artId = `<hero>-scene-<name>.json`
 (`<hero>` is the first word of the hero's folder, e.g. `corin-scene-signature` for `corin-tidewalker`), and the output is
-`prompts/<group>/<Hero>/scene/<Hero>_Scene_<Name>.txt`. Staged scenes insert `staged` after `scene`
+`prompts/<group>/<Hero>/5_Scenes/<family>/<Hero>_Scene_<Name>.txt`. Staged scenes insert `staged` after `scene`
 (`drakness-scene-staged-enchanted-evening` -> `Drakness_Scene_Staged_EnchantedEvening.txt`).
 
 **Motion component tokens join into ONE token per slot, not one-per-field** — a rich motion
@@ -432,12 +434,12 @@ disambiguate from, so no `_sets/` wrapper needed there):
 prompts/
 ├── _archive/                        Historical reference only (old hand-crafted system).
 ├── drakn-sisters/
-│   └── <Hero>/<stage>/<family>/*.txt
+│   └── <Hero>/<phase>/<family>/*.txt
 └── angel-primes/
-    └── <Hero>/<stage>/<family>/*.txt
+    └── <Hero>/<phase>/<family>/*.txt
 ```
 
-`data/art/_sets/<group>/...` → `prompts/<group>/<Hero>/<stage>/<family>/*.txt`.
+`data/art/_sets/<group>/<slug>/<phase>/<family>/...` → `prompts/<group>/<Hero>/<phase>/<family>/*.txt` (the same folders).
 Definitions never get mirrored into `prompts/` — they aren't "generated," they're read.
 
 ---
@@ -480,7 +482,7 @@ from; the whole image is generated from the identity file's own `description`).
 Example — swapping a weapon without touching the armor at all:
 
 ```jsonc
-// data/art/_sets/drakn-sisters/drakness/armor/drakness-armor-bone-scythe.json
+// data/art/_sets/drakn-sisters/drakness/4_Wardrobe/armor/drakness-armor-bone-scythe.json
 "components": {
   "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
   "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
@@ -729,7 +731,7 @@ don't invent a synonym** (e.g. use `expression`, not `mood` or `face`, for facia
 
 **A `components.<slot>` value can be a literal inline string instead of a file path** — useful for
 a quick final scene-level tweak, or for authoring an entire scene from scratch without any
-reusable pieces at all (see the worked example below and `_sets/drakn-sisters/drakneta/scene/
+reusable pieces at all (see the worked example below and `_sets/drakn-sisters/drakneta/5_Scenes/
 drakneta-castle-spellcast.json`).
 
 **A literal value can EXTEND the default instead of fully replacing it** — prefix it with `+`, e.g.
@@ -744,7 +746,7 @@ scene/drakness-elegant-casting.json` — `commanding-cast.json`'s own default ex
 commanding, lips softly together.") stays, with "a faint, knowing smile, teeth just barely
 visible." appended after it.
 
-**Worked example — overriding an expression** (`_sets/drakn-sisters/draknora/scene/draknora-dragon-flight.json`):
+**Worked example — overriding an expression** (`_sets/drakn-sisters/draknora/5_Scenes/draknora-dragon-flight.json`):
 
 ```jsonc
 "components": {

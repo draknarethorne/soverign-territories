@@ -4,7 +4,7 @@
   "name": "BatsAndVenom",
   "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknoxa/scene/themes/draknoxa-scene-halloween.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknoxa/5_Scenes/themes/draknoxa-scene-halloween.json",
     "image": "Draknoxa_Qwen_Scene_Halloween_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

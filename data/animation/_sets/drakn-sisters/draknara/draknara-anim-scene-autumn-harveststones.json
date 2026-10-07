@@ -4,7 +4,7 @@
   "name": "HarvestStones",
   "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/draknara/scene/themes/draknara-scene-autumn.json",
+    "artCard": "data/art/_sets/drakn-sisters/draknara/5_Scenes/themes/draknara-scene-autumn.json",
     "image": "Draknara_Qwen_Scene_Autumn_00001_.png"
   },
   "look": "data/animation/looks/card-art.json",

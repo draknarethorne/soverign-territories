@@ -508,17 +508,15 @@ def prompt_index(cfg, engine="qwen"):
         rel = p.relative_to(PROMPTS)
         if "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
             continue
-        group, hero, stagedir = rel.parts[0], rel.parts[1], rel.parts[2]
+        group, hero = rel.parts[0], rel.parts[1]
+        stagedir, family = art_layout.parse_dirs(rel.parts[2:-1])  # prompts sit in the pipeline phase folders, which are also the output folders
         if (stagedir == "video") != (engine == "minimax"):  # video prompts feed only the MiniMax engine
             continue
-        family = list(rel.parts[3:-1])
         stem = p.stem
         if not stem.startswith(hero + "_"):
             continue
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
-        folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
-        phased = art_layout.phase_path(stagedir, family)
-        dirs = phased if phased is not None else [folder] + family
+        dirs = list(rel.parts[2:-1])
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
                     "prefix": "/".join([group, hero] + dirs + [name])})
     return out

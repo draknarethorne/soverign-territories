@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a prompt .txt from an art-source card + hero card + stage template.
 
-Reads a card (data/art/_sets/<group>/<slug>/<stage>/[<family>/]<name>.json), pulls traits
+Reads a card (data/art/_sets/<group>/<slug>/<phase folders>/<name>.json), pulls traits
 from the referenced hero def, fills the {{TOKEN}} slots in the template, and writes the
 output .txt under prompts/<group>/<Hero>/... Model-agnostic — the output feeds any ComfyUI
 workflow.
@@ -26,6 +26,9 @@ import json
 import pathlib
 import re
 import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -693,11 +696,21 @@ def cleanup_orphans(expected_outputs, apply=False):
 
 
 def iter_card_paths(group="*", slug="*", stage="*", family=None):
-    """Glob data/art/_sets/<group>/<slug>/<stage>/[<family>/]*.json. "**" absorbs the
-    optional family level, since some stages (pose, head) have no family subfolder."""
+    """Every card under data/art/_sets/<group>/<slug>/ (the folders below the slug are the pipeline phase and family), narrowed by the
+    card's own stage (as written in the card or as its prompt folder, e.g. pose or poses) and by a family folder of its output."""
     base = ROOT / "data/art/_sets"
-    pattern = f"{group}/{slug}/{stage}/{family}/**/*.json" if family else f"{group}/{slug}/{stage}/**/*.json"
-    return sorted(base.glob(pattern))
+    paths = sorted(base.glob(f"{group}/{slug}/**/*.json"))
+    if stage == "*" and not family:
+        return paths
+    keep = []
+    for p in paths:
+        card = json.loads(p.read_text(encoding="utf-8"))
+        if stage != "*" and stage not in (card.get("stage"), art_layout.stage_folder(card.get("stage", ""))):
+            continue
+        if family and family not in art_layout.parse_dirs(pathlib.PurePosixPath(card.get("output", "")).parts[3:-1])[1]:
+            continue
+        keep.append(p)
+    return keep
 
 
 def main():

@@ -30,7 +30,7 @@ tool puts that prompt (and the size and length) into the `ST6_MiniMax_Video` tem
 ## The loop
 
 ```bash
-python tools/generators/gen_animation.py                                            # cards -> prompts/<group>/<Hero>/video/
+python tools/generators/gen_animation.py                                            # cards -> prompts/<group>/<Hero>/7_Video/<family>/
 python tools/workflows/comfy_workflows.py make --engine minimax --create --hero Drakness   # prompts -> workflows (tracked in git)
 python tools/workflows/comfy_workflows.py deploy --engine minimax --hero Drakness          # workflows -> ComfyUI dev
 ```
@@ -100,7 +100,7 @@ and adds the magic the still left out:
   "name": "Awakening",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakness/scene/glamour/drakness-scene-staged-enchanted-evening.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakness/5_Scenes/glamour/drakness-scene-staged-enchanted-evening.json",
     "image": "Drakness_FireRed_Scene_Staged_EnchantedEvening_00001_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",

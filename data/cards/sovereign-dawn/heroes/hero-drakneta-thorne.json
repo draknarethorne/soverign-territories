@@ -27,8 +27,8 @@
   "art": {
     "artIdentity": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
     "variants": [
-      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakneta/scene/signature/drakneta-scene-signature-shiny.json" },
-      { "finish": "holo", "title": "Stormbringer", "artCard": "data/art/_sets/drakn-sisters/drakneta/scene/signature/drakneta-scene-signature-holo.json" }
+      { "finish": "shiny", "artCard": "data/art/_sets/drakn-sisters/drakneta/5_Scenes/signature/drakneta-scene-signature-shiny.json" },
+      { "finish": "holo", "title": "Stormbringer", "artCard": "data/art/_sets/drakn-sisters/drakneta/5_Scenes/signature/drakneta-scene-signature-holo.json" }
     ]
   },
   "acquisition": { "packSources": [], "campaignDrops": [] },

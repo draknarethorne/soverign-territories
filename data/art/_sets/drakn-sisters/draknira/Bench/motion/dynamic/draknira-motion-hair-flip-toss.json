@@ -1,0 +1,10 @@
+{
+  "artId": "draknira-motion-hair-flip-toss",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "component": "data/art/motion/dynamic/hair-flip-toss.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "denoise": "~0.4-0.6",
+  "output": "prompts/drakn-sisters/Draknira/Bench/motion/dynamic/Draknira_Motion_Dynamic_HairFlipToss.txt"
+}

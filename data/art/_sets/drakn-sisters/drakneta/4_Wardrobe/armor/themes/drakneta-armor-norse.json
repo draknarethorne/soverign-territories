@@ -1,0 +1,21 @@
+{
+  "artId": "drakneta-armor-norse",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Norse Summoner",
+  "aesthetic": "a clean studio presentation of the norse summoner outfit",
+  "components": {
+    "wearing": "data/art/themes/northern/norse/wardrobe/armor/mail/shieldmaiden-mail-set.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
+    "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
+    "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json",
+    "back": "the back of the armor fully visible",
+    "holding": "data/art/themes/northern/norse/wardrobe/weapons/hammers/storm-war-hammer.json"
+  },
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakneta/4_Wardrobe/armor/themes/Drakneta_Armor_Norse.txt",
+  "notes": "Pre-staged Norse Summoner outfit: render it from the A-pose, then feed the image to the Staged norse scene. Every item is a library piece."
+}
