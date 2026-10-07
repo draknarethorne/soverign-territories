@@ -85,12 +85,33 @@ untick the switch on one workflow for a slow run) and the engine adds a real-the
 ```bash
 python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine firered --create
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
+# FireRed versions of the bare study and celestial steps (a regex needs a trailing $):
+python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage bare --match "Bare_(SkinStudy|ChestStudy|Celestial[A-Za-z]*)$" --create
 ```
+
+FireRed carries the positive prompt only, so the negative terms in a card do not apply to it; word the removal in the positive prompt. How the stages feed
+each other (bare, A-pose with an underlayer, outfit, scene) is in [docs/art/tutorial-art.md](../docs/art/tutorial-art.md#the-image-chain-from-bare-skin-to-scene).
 
 ### Folders inside a workspace
 
 A new workflow is saved in the workspace under its output folder: `<stage>/<family>/` in a hero's own workspace (`scenes/themes/`, `poses/bikini/`, `showcase/photo/daily/` ...), `<Hero>/<stage>/<family>/` in the dev workspace, and `<stage>/<family>/<Hero>/` in `Drakn Sisters` (set by `layouts` in `workspaces.json`), so one stage across all ten sisters sits side by side for batch runs. ComfyUI shows these as folders.
 `tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a sister's workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+
+### Default incoming images
+
+Every generated workflow opens with a default incoming image, chosen by its stage in `workspaces.json` (`inputRoles`, and the hero's images under `inputs`):
+the workflows directly in `poses/` load the original photo (`photos`); `bare/`, `head/` and `motion/` load the hero's barefoot A-pose (`apose`);
+everything else (`poses/<family>/`, armor, clothing, hair, scenes, showcase) loads her bare-skin A-pose (`bare`). A hero without role inputs keeps the older
+behaviour (the A-pose most of her workflows already read). Images are plain names, so each workspace needs the file in its own input folder.
+
+```bash
+python tools/workflows/comfy_workflows.py inputs --reset --hero Drakness --dry-run   # preview: repo and every workspace; copies missing images into each workspace's inputs
+python tools/workflows/comfy_workflows.py deploy --to uat --hero Drakness --patch-only --reset-inputs   # deploy prompts and also reset the inputs
+```
+
+During a session you can point a workflow at any other image; a reset (or `--reset-inputs`) puts it back. To keep a custom input, save the workflow under
+`zz_Shots/`. When the golden images are chosen, rename them (for example `Drakness_Golden_BarefootPose.png`), keep them in the repo's input list and change the two
+names in `inputs`; a reset then repoints every workflow.
 
 ### Shots (zz_Shots)
 
