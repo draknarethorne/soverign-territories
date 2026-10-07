@@ -121,8 +121,13 @@ def family(card, group, root=None):
     if stage == "card":
         return []  # mass card art sits flat in its stage folder
     if stage == "alpha":
-        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 2 Bare studies, 3 Barefoot and Heels.
-        return ["footwear"] if art_id.endswith(("-alpha-barefoot", "-alpha-heels")) else ["bare"] if "-alpha-bare-" in art_id else []
+        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 2 Bare (the figure and chest looks flat in bare/; the experiments
+        # 2b nested in bare/celestial and bare/coverings), 3 Barefoot and Heels.
+        if art_id.endswith(("-alpha-barefoot", "-alpha-heels")):
+            return ["footwear"]
+        if "-alpha-2b-celestial" in art_id:
+            return ["bare", "celestial"]
+        return ["bare", "coverings"] if "-alpha-2b-" in art_id else ["bare"] if "-alpha-bare-" in art_id else []
     if stage == "pose":
         if "view" in comps:
             return ["views"]

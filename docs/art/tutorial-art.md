@@ -52,17 +52,17 @@ bikini or lingerie reads best.
 
 | Incoming image | Result |
 | --- | --- |
-| Bare (`Bare_SkinStudy`, `Bare_ChestStudy`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
+| Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
 | Bikini, lingerie or bodysuit A-pose | that layer shows under the outfit on purpose |
-| Celestial (`Bare_CelestialCore`, `Bare_CelestialSuit`, `Bare_CelestialPlate`, `Bare_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
-| Pasties, contoured or paint (`Bare_Pasties`, `Bare_Contoured`, `Bare_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
+| Celestial (`Alpha_2b_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
+| Pasties, contoured or paint (`Alpha_2b_Pasties`, `_Contoured`, `_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
 
 **The bare looks** (all edit-only prompts in `data/art/_templates/heroes/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
-`Bare_Pasties`, `Bare_Contoured` (sheer, nylon-like), `Bare_Paint` and `Bare_PaintColour` (small painted areas), `Bare_SkinStudy` and
-`Bare_ChestStudy` (figure-study wording, model-chosen rendering), and the celestial ones. The celestial core paints only the three small
-designs; the suit forks it into an open-filigree design over the whole body; the plate versions are the original small plates, and
-`Bare_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
+`Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `alpha/bare/` beside your own `Alpha_2_Bare_Skin` shot;
+the experiments are Alpha 2b and nested below it: `alpha/bare/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
+small painted areas) and `alpha/bare/celestial/`. The celestial core paints only the three small designs; the suit forks it into an open-filigree
+design over the whole body; the plate versions are the original small plates, and `Alpha_2b_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
 
 **Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
 

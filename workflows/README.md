@@ -86,7 +86,7 @@ untick the switch on one workflow for a slow run) and the engine adds a real-the
 python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine firered --create
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
 # FireRed versions of the bare study and celestial steps (a regex needs a trailing $):
-python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage alpha --match "Alpha_2_Bare_(SkinStudy|ChestStudy|Celestial[A-Za-z]*)$" --create
+python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage alpha --match "Alpha_2_Bare_(Figure|Chest)$|Alpha_2b_Celestial[A-Za-z]*$" --create
 ```
 
 FireRed carries the positive prompt only, so the negative terms in a card do not apply to it; word the removal in the positive prompt. How the stages feed
