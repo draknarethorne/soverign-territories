@@ -164,7 +164,8 @@ ComfyUI output: <group>/<Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_0
 | Stage | Families | Notes |
 | --- | --- | --- |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |
-| poses | golden A-pose at the root; `views`; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | The type is read from the underlayer piece's tags. |
+| alpha (sisters) | `Alpha_1_Prime` at the root (from the original photo; its variants and tests sit beside it); `bare` (`Alpha_2_Bare_<Name>`, the bare studies); `footwear` (`Alpha_3_Barefoot`, `Alpha_3_Heels`) | The creation chain of a hero: the only stage that makes her likeness. Prime from the photo, Bare from the Prime, Barefoot and Heels from the Bare image; Bare, Barefoot and Heels are the golden images. |
+| poses | views; underlayer tests by piece type: `base` (neutral skin-tone layer), `backless`, `lingerie`, `athletic`, `one-piece`, `bikini`, `swimwear` | Fed the Bare image, never the photo. The type is read from the underlayer piece's tags. Dragons, bound heroes and the Angel Primes keep their X Pose at the root until they get an Alpha chain. |
 | head | golden head at the root; `views`; `closeups` (framing and expressions) | |
 | clothing | `dresses`, `gowns`, `sets` for library pieces; a sister's own pieces stay in the stage folder | |
 | armor | `wardrobe` for library armor; a hero's own and celestial armor stay in the stage folder | |
@@ -646,11 +647,11 @@ which suits which art.
 
 **Figure: standard plate, then the individual build.** The Figure line is the physique fields in order, then any `distinguishingMarks`:
 female `build`, `torso`, `bust`, `arms`, `hips`, `legs`; male `build`, `chest`, `arms`, `waist`, `legs`. A card with `figureProfile: standard`
-(the X Pose, X Pose Barefoot and Heels, which are fed the original photo) swaps everything but the bust for `standardFigure` in
+(Alpha 1 Prime, the only card fed the original photo) swaps everything but the bust for `standardFigure` in
 `_settings/phrases.json`, so the first A-pose stays the clean lithe, slender bikini plate and does not fight the original. Every later card
-(the Bare stage, underlayer tests, body views) uses the hero's own physique; the Bare stage says it in a `Body:` line and keeps the bust as in
-the incoming image, so the individual build is applied on a clean body, not on clothes and a background. Males have no standard figure (no Bare
-stage yet), so their X Pose uses the individual build. A physique field describes the body only: no skin colour (that is `palette.skinTone`), no
+(Alpha 2 Bare, Barefoot and Heels, underlayer tests, body views) uses the hero's own physique; Alpha 2 Bare says it in a `Body:` line and
+re-asserts hair, eyes, skin and bust in a Critical details block, so the individual build and the likeness are set on a clean body, not on clothes
+and a background. Males have no standard figure (no Alpha chain yet), so their X Pose uses the individual build. A physique field describes the body only: no skin colour (that is `palette.skinTone`), no
 pose or stance (the A-pose sets that), no glow.
 
 **Wording lives in data, not in the generator.** Every sentence `gen_prompt.py` adds to a hero prompt on its own (the keep line, the bust

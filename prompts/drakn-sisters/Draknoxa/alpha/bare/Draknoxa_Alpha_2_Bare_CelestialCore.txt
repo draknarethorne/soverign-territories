@@ -1,0 +1,24 @@
+=== Draknoxa Thorne · Alpha 2 Bare: Bare edit: celestial skin armor (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Draknoxa Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only celestial skin armor, thin tarnished brass metallic designs in her Toxic Orchid Magenta colour scheme with fine tarnished brass edge lines, formed directly onto the skin as if the metal had been bound to the body by a magical spell, slightly raised and form-fitting so the contour of the body shows through; every design is open filigree with bare skin visible between its lines, and none is a cup or a plate; Breasts: on each breast one delicate design in the form of a teardrop flask shape rimmed by a coiling serpent, made of fine curving lines and swirls with etched droplets and a tiny stopper ornament, about 3 cm (one and a quarter inches) across, centred on the breast, with one tiny acid-lime gem accent at its centre; Pelvic area: one small, form-fitting design in the form of a small coiled-serpent oval, following the contour of the pelvic area, with its fine lines curving beneath the body and continuing as a narrow design over the lower back, so the rear is mostly bare skin and modestly covered; Everywhere else: the skin outside these three designs is unchanged natural skin, matte, with no metal, no metallic sheen, no paint and no tint, keeping her natural skin tone (pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free), including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs, hands and bare feet; only the two breast designs and the one pelvic design carry any metal; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Critical details - these must be clearly visible:
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a bold peekaboo underlayer of acid-lime strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved (not wide), narrow and agile; very long, wiry legs with slender calves.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+anklets, armor plates, bikini, body covered in metal, body paint over the whole body, bra, bracelets, bump on the pelvic area, chains, coloured skin, cups, full coverage, full-body suit, gold skin, hanging plates, large plates, metal on the shoulders, metallic skin, painted arms, painted legs, painted skin, painted stomach, plates, playing card, raised bump, shoes, silver skin, square patch, straps, strings, tinted skin, extra people, extra limbs, extra digits, deformed hands, changed face, all-over lime-green hair, all-over green hair, all-over magenta hair, all-over pink hair, fully dyed hair, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, ruddy skin, sunburnt skin, overly tanned skin, text, watermark, logo.

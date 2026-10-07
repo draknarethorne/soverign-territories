@@ -210,6 +210,11 @@ SLOT_DEFAULTS = {
 
 BAREFOOT_A_POSE = "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
 
+# The alpha stage (the hero's creation chain) uses the same slot defaults as the pose stage.
+for _entry in SLOT_DEFAULTS.values():
+    if "pose" in _entry:
+        _entry["alpha"] = _entry["pose"]
+
 
 def studio_defaults():
     return json.loads((ROOT / "data/art/_settings/studio.json").read_text(encoding="utf-8"))
@@ -239,7 +244,7 @@ def face_style(female, eyeshadow, blush, brow=None):
 KEY_LABELS = {"hair": "Hair", "bust": "Bust", "eyes": "Eyes", "skin": "Skin", "legs": "Legs"}
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
-    "bare-human.txt": ["bust"],  # the bust stays as in the incoming image; only the rest of the build is applied
+    "bare-human.txt": ["hair", "bust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
 }
 
 # Physique fields that make the Figure line, in order (the female schema has bust and hips, the male chest and waist).
@@ -578,7 +583,7 @@ def generate(card_path, tokens_only=False):
                 if hero["art"].get(hero_defaults.get(slot, "")):
                     default = hero["art"][hero_defaults[slot]]
                 # One switch for every A-pose: _settings/studio.json aPoseFootwear = "barefoot" replaces each sister's heels.
-                if slot == "footwear" and card["stage"] == "pose" and sex == "female" and studio_defaults().get("aPoseFootwear") == "barefoot":
+                if slot == "footwear" and card["stage"] in ("pose", "alpha") and sex == "female" and studio_defaults().get("aPoseFootwear") == "barefoot":
                     default = BAREFOOT_A_POSE
                 if default:
                     card.setdefault("components", {}).setdefault(slot, default)

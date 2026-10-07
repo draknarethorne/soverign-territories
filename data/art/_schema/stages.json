@@ -2,14 +2,14 @@
   "description": "Every card stage is either 'studio' (a posed figure, outfit, hair or item on a studio backdrop: cream, or a coloured showcase backdrop with magic and flair) or 'scene' (a realm, background and effects). Names are prompt folder names. Read by the validator and by the workflow routing in workflows/workspaces.json. 'video' (animation of a finished image) counts as a scene.",
   "classes": {
     "studio": [
+      "alpha",
       "poses",
       "head",
       "hair",
       "motion",
       "armor",
       "clothing",
-      "showcase",
-      "bare"
+      "showcase"
     ],
     "scene": [
       "scene",

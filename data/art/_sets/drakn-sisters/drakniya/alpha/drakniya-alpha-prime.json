@@ -1,0 +1,11 @@
+{
+  "artId": "drakniya-alpha-prime",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/alpha/Drakniya_Alpha_1_Prime.txt",
+  "denoise": "~1.0",
+  "figureProfile": "standard",
+  "notes": "Drakniya Thorne pose — generated alongside Drakness as the initial baseline for all 10 female heroes."
+}

@@ -4,7 +4,7 @@
   "name": "KissTossLaugh",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": {
-    "artCard": "data/art/_sets/drakn-sisters/drakness/pose/drakness-x-pose.json",
+    "artCard": "data/art/_sets/drakn-sisters/drakness/alpha/drakness-alpha-prime.json",
     "image": "Drakness_Qwen_X_Pose_00142_.png"
   },
   "look": "data/animation/looks/cinematic-photoreal.json",

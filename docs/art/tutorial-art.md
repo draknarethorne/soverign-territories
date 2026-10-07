@@ -30,21 +30,23 @@ celestial armor over a swimsuit keeps the straps. So the chain is built from the
 on purpose. Prompts only describe what to *add* or *change*; the incoming image supplies the rest.
 
 The original photos are varied shots (different framing, clothing, pose) and are not good enough to feed straight into the later stages.
-The very first step is therefore always the **standard X Pose** workflow: it takes an original photo and builds the one clean, full-length A-pose
-in her metallic bikini (barefoot), and it is also where the bust and the pose are brought into proper shape. Everything else starts from that
-image. You can intercept the X Pose workflow and use your own forceful wording to get the A-pose you want (keep that workflow as a shot).
-
+The first steps are therefore the **Alpha** chain, the only workflows that create a hero's likeness (the other stages edit it). **Alpha 1 Prime**
+takes an original photo and builds the one clean, full-length A-pose in her metallic bikini (barefoot) with the standard figure, and brings the bust
+and the pose into proper shape. **Alpha 2 Bare** edits the Prime: it removes the bikini, applies her individual build and re-asserts hair, eyes, skin
+and bust. **Alpha 3 Barefoot and Heels** edit the Bare image back into the bikini on her own figure. Bare, Barefoot and Heels are the three golden
+images that every later stage starts from. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
 | Stage | Folder | Incoming image | Produces |
 | --- | --- | --- | --- |
-| 1. Standard X Pose | `poses/` | an original photo (any shot you like) | the golden A-pose: full length, metallic bikini, barefoot, bust and proportions set; the base for everything |
-| 2. Bare | `bare/` | the golden A-pose from stage 1 | the body with the bikini removed, in one of several looks (below) |
-| 3. Other poses | `motion/`, `poses/` and any workflow that takes an incoming A-pose | the bare image from stage 2, with the body contour line on | poses that keep her real form and do not carry the bikini |
-| 4. Outfit, armor, showcase | `clothing/`, `armor/`, `showcase/` | the bare image, or a pose from stage 3 | her in the outfit, armor or a styled shot |
-| 5. Scene | `scenes/` | a complete image from stage 4, or an A-pose | the final scene |
+| 1. Alpha 1 Prime | `alpha/` | an original photo (any shot you like) | the Prime A-pose: full length, metallic bikini, barefoot, standard figure, bust and pose set |
+| 2. Alpha 2 Bare | `alpha/bare/` | the Prime from stage 1 | the body with the bikini removed, her individual build and likeness set, in one of several looks (below) |
+| 3. Alpha 3 Barefoot, Heels | `alpha/footwear/` | the Bare image from stage 2 | the bikini A-pose on her own figure, barefoot or in heels |
+| 4. Other poses | `motion/`, `poses/` and any workflow that takes an incoming A-pose | the Bare image, with the body contour line on | poses that keep her real form and do not carry the bikini |
+| 5. Outfit, armor, showcase | `clothing/`, `armor/`, `showcase/` | the bare image, or a pose from stage 3 | her in the outfit, armor or a styled shot |
+| 6. Scene | `scenes/` | a complete image from stage 5, or an A-pose | the final scene |
 
-The bikini A-pose from stage 1 stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you want that
-layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are built from the original photo like stage 1 and
-are for choosing which bikini or lingerie reads best.
+The bikini A-pose (Prime, Barefoot or Heels) stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you
+want that layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are fed the Bare image and are for choosing which
+bikini or lingerie reads best.
 
 **Choose the incoming image for the effect you want:**
 

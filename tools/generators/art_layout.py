@@ -15,7 +15,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 THEMES = {p.parent.name for p in (ROOT / "data/art/themes").rglob("theme.json")}
-LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "bare"}
+LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha"}
 STAGE_FOLDER = {"pose": "poses"}
 BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
@@ -118,8 +118,11 @@ def family(card, group, root=None):
         return scene_family(art_id, group)
     if stage == "brand":
         return brand_family(art_id)
-    if stage in ("card", "bare"):
-        return []  # mass card art and the bare step sit flat in their stage folder
+    if stage == "card":
+        return []  # mass card art sits flat in its stage folder
+    if stage == "alpha":
+        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 2 Bare studies, 3 Barefoot and Heels.
+        return ["footwear"] if art_id.endswith(("-alpha-barefoot", "-alpha-heels")) else ["bare"] if "-alpha-bare-" in art_id else []
     if stage == "pose":
         if "view" in comps:
             return ["views"]

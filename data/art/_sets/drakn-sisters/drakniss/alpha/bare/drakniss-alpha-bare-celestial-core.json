@@ -1,0 +1,14 @@
+{
+  "artId": "drakniss-alpha-bare-celestial-core",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Bare edit: celestial skin armor",
+  "components": {
+    "wearing": "data/art/heroes/drakn-sisters/drakniss/armor/celestial-skin-armor.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/alpha/bare/Drakniss_Alpha_2_Bare_CelestialCore.txt",
+  "notes": "TWO-STEP CELESTIAL CORE: an edit-only pass that replaces the clothing with the thin celestial skin armor; feed the result into armor, showcase or scene stages for effects and accessories."
+}

@@ -97,6 +97,12 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   FireRed's 1 MP resize lands on the same size. Generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original
   photo; `denoise` in `workspaces.json`, tool `comfy_workflows.py denoise`), so the stages after a golden image keep some creativity. Tuning rules:
   [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
+- **The Alpha stage (Oct 2026).** The first workflows of a hero are not poses: they create her likeness, so they have their own stage and folder, `alpha/`
+  (sorts first). Alpha 1 Prime (original photo to the bikini A-pose, standard figure), Alpha 2 Bare (Prime to bare skin: individual build, hair, eyes, skin and
+  bust re-asserted; the old `bare/` studies live in `alpha/bare/`) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
+  Bare, Barefoot and Heels are the three golden images; `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose`
+  (`workspaces.json` `inputRoles`, `inputs --set --prime`). Sisters only so far; dragons, bound heroes and Angel Primes keep their X Pose in `poses/`. The Barefoot and
+  Heels cards still use the photo-oriented `pose-female-human.txt`; an edit-focused template for them is open, as is the same for the other stages.
 - **Individual physique, standard X Pose (Oct 2026).** The 10 sisters and 10 bound heroes each carry their own build (`physique`: `torso` and `arms` are new optional fields; the male
   schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_.md`); its colours, metals, prompt-assembly sections and
   invented ids were not adopted. The X Pose from the original photo keeps the standard lithe, slender figure (`figureProfile: standard`, text in `data/art/_settings/phrases.json`); the

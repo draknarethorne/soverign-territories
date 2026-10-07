@@ -1,0 +1,24 @@
+=== Drakness Thorne · Alpha 2 Bare: Bare edit: contoured pasties and modesty patch (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Drakness Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only these three small coverings, each described separately; Breasts: one small, thin, sheer, lightly translucent nylon-like covering, about one inch (2.5 cm) across, on the centre of each breast, a shade lighter than her skin, moulded to the natural contour of the breast so the soft natural form and a subtle natural relief show through it; Pelvic area: one small, thin, sheer, form-fitting nylon-like covering, a shade lighter than her skin, in a soft tapered shape that follows the contour of the pelvic area, smooth with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas); the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Critical details - these must be clearly visible:
+Hair: rich black hair with warm espresso depth, noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: slender, long-limbed build with an aristocratic dark-elven bearing and sinewy tension; ultra-narrow, tightly cinched waistline; smooth flat midriff with no abdominal lines; slender arms with delicate wrists and elongated fingers; slight wiry tension in the forearms; shapely feminine hips, gently curved (not wide), with a high, tapering hip line; very long, slender legs with elegant tapering down to slim ankles.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini, black bikini, swimsuit, bra, panties, thong, straps, strings, ties, waistband, lingerie, lace, fabric, chains, jewelry, shoes, white spots, polka dots, stickers, playing card, square patch, large patches, full coverage, bump on the pelvic area, raised bump, dark clothing, body paint over the whole body, painted body, tinted skin, coloured skin, headshot, close-up, cropped body, cropped feet, extra people, extra limbs, extra digits, deformed hands, changed face, uniform flat one-tone hair, fully dyed hair, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.

@@ -1,0 +1,24 @@
+=== Draknisa Thorne · Alpha 2 Bare: Bare edit: celestial plate armor, form-fitting (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Draknisa Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing celestial armor of polished platinum: two small ornate filigree plates, each in the form of a fanned scallop shell with ribbed edges, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form instead of standing out, covering the centre of each breast fully, and one matching small ornate plate in the form of a small pearl-set shell pointing down curved to follow the contour of the pelvic area, tapering and sitting flush against the skin so that no edge stands out, covering the whole front of the pelvic area completely; every plate is engraved with rolling wave lines and a seed pearl at each hinge and set with a pearl; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+
+Critical details - these must be clearly visible:
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring.
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, supple dancer physique with flowing, serpentine human grace; soft, completely flat midriff tapering smoothly into an exceptionally narrow waist; no muscle cuts; smooth, slender arms with graceful wrists; shapely feminine hips, gently curved (not wide), with supple, pronounced curves; very long, smooth, slender legs with dancer-like fluid lines.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini bottom, bikini top, flat discs, plates standing out, plates sticking out, straps, strings, chains, large plates, full coverage, extra people, extra limbs, extra digits, deformed hands, changed face, all-over teal hair, all-over blue hair, fully dyed hair, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.

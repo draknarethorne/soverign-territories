@@ -1,0 +1,24 @@
+=== Drakniss Thorne · Alpha 2 Bare: Bare edit: celestial plate armor (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Drakniss Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing celestial armor of radiant rose gold: two small ornate filigree plates, each in the form of a round sunburst disc ringed with fine pointed rays, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small winged shield shape covering the front of the hips; every plate is engraved with halo lines and tiny rays of light and set with a rose-quartz gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+
+Critical details - these must be clearly visible:
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish.
+Bust: full, voluptuous, noticeably enlarged, lifted and pressed together at the centre in a deep, tight cleavage, even where the reference bust is smaller or spread apart.
+Eyes: radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring.
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; firm, disciplined warrior-cleric bearing; flat, firm midriff with subtle core tone and a faint vertical linea alba; tight waist tapering into the hips; slender, defined arms; light deltoid contours and firm forearms; shapely feminine hips, gently curved (not wide), square and grounded; very long, toned athletic legs with firm quadriceps contours.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+, extra people, extra limbs, extra digits, deformed hands, changed face, all-over yellow hair, all-over pink hair, fully dyed hair, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.

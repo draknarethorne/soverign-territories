@@ -86,7 +86,7 @@ untick the switch on one workflow for a slow run) and the engine adds a real-the
 python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine firered --create
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
 # FireRed versions of the bare study and celestial steps (a regex needs a trailing $):
-python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage bare --match "Bare_(SkinStudy|ChestStudy|Celestial[A-Za-z]*)$" --create
+python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage alpha --match "Alpha_2_Bare_(SkinStudy|ChestStudy|Celestial[A-Za-z]*)$" --create
 ```
 
 FireRed carries the positive prompt only, so the negative terms in a card do not apply to it; word the removal in the positive prompt. How the stages feed
@@ -100,8 +100,8 @@ A new workflow is saved in the workspace under its output folder: `<stage>/<fami
 ### Default incoming images
 
 Every generated workflow opens with a default incoming image, chosen by its stage in `workspaces.json` (`inputRoles`, and the hero's images under `inputs`):
-the workflows directly in `poses/` load the original photo (`photos`); `bare/`, `head/` and `motion/` load the hero's barefoot A-pose (`apose`);
-everything else (`poses/<family>/`, armor, clothing, hair, scenes, showcase) loads her bare-skin A-pose (`bare`). A hero without role inputs keeps the older
+`alpha/` (Alpha 1 Prime) loads the original photo (`photos`); `alpha/bare/` (Alpha 2) loads the Prime image (`prime`); `head/` and `motion/` load the hero's
+barefoot golden A-pose (`apose`); everything else (`alpha/footwear/`, `poses/<family>/`, armor, clothing, hair, scenes, showcase) loads her bare-skin image (`bare`). A hero without role inputs keeps the older
 behaviour (the A-pose most of her workflows already read). Images are plain names, so each workspace needs the file in its own input folder.
 
 ```bash
@@ -119,7 +119,7 @@ templates pass it through unchanged; FireRed resizes to 1 MP (947x1107) and the 
 
 ```bash
 python tools/workflows/comfy_workflows.py inputs --status                       # every hero's photo / A-pose / bare image: where found, size, ok or WRONG SIZE or MISSING
-python tools/workflows/comfy_workflows.py inputs --set Draknara --photo Draknara_Photo_944x1104.png --apose Draknara_Qwen_X_Pose_Golden.png --bare Draknara_Qwen_Bare_Golden.png
+python tools/workflows/comfy_workflows.py inputs --set Draknara --photo Draknara_Photo_944x1104.png --prime Draknara_Alpha_Prime.png --bare Draknara_Qwen_Bare_Golden.png
 python tools/workflows/comfy_workflows.py inputs --reset --hero Draknara --dry-run   # then without --dry-run; --reset also finds images under the output folders and copies them into each workspace's inputs
 ```
 

@@ -312,7 +312,7 @@ def hero_of(name):
 
 
 STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
-               "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card", "Bare": "bare"}
+               "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card", "Alpha": "alpha"}
 
 
 def stage_of(name):
@@ -527,7 +527,7 @@ def infer_input(hero):
     pat = re.compile(rf"^{re.escape(hero)}_Qwen_X_Pose_\d+_\.png$")
     seen = collections.Counter()
     for p in hero_files(hero):
-        if stage_of(p.name) == "poses":
+        if stage_of(p.name) in ("poses", "alpha"):
             continue
         try:
             img = input_image(read_wf(p))
@@ -550,6 +550,8 @@ def input_role(cfg, hero, stage, family):
     conf, roles = cfg.get("inputs", {}).get(hero), cfg.get("inputRoles", {})
     if not isinstance(conf, dict) or not roles:
         return None
+    if family and f"{stage}/{family[0]}" in roles:
+        return roles[f"{stage}/{family[0]}"]  # e.g. alpha/bare
     key = stage + "/"
     return roles.get(key) if not family and key in roles else roles.get(stage, roles.get("default"))
 
@@ -577,7 +579,7 @@ def denoise_for(cfg, prompt_text, role):
     lo = float(m.group(1))
     hi = float(m.group(2) or lo)
     if lo >= 1.0:
-        return float(rule.get("golden", 0.7)) if role in ("apose", "bare") else 1.0
+        return float(rule.get("golden", 0.7)) if role in ("prime", "apose", "bare") else 1.0
     return {"low": lo, "mid": round((lo + hi) / 2, 2)}.get(rule.get("pick", "high"), hi)
 
 
@@ -1292,7 +1294,7 @@ def cmd_make(args):
             if args.verbose:
                 print(f"  missing  {it['group']}/{it['hero']}/{target.name}")
             continue
-        is_apose = re.match(rf"^{re.escape(it['hero'])}_X_Pose", it["stem"]) is not None  # takes the hero's source photo
+        is_apose = it["stage"] == "alpha" and not it["family"]  # Alpha 1 Prime: the only workflow that takes the hero's source photo
         is_text = is_text_item(cfg, it)
         master = ROOT / (cfg["engines"][it["engine"]]["template"] if it["engine"] in ("firered", "minimax")
                          else cfg["templates"]["text" if is_text else "poses" if is_apose else "default"])
@@ -1471,7 +1473,7 @@ def inputs_status(cfg):
         conf = cfg.get("inputs", {}).get(h)
         conf = conf if isinstance(conf, dict) else {}
         print(h)
-        for role, name in (("photo", cfg["photos"].get(h)), ("apose", conf.get("apose")), ("bare", conf.get("bare"))):
+        for role, name in (("photo", cfg["photos"].get(h)), ("prime", conf.get("prime")), ("bare", conf.get("bare")), ("apose", conf.get("apose"))):
             if not name:
                 print(f"    {role:6} -")
                 continue
@@ -1482,7 +1484,7 @@ def inputs_status(cfg):
 
 
 def set_inputs(cfg, args):
-    """Write --photo / --apose / --bare for one hero into workspaces.json (then run inputs --reset)."""
+    """Write --photo / --prime / --bare / --apose for one hero into workspaces.json (then run inputs --reset)."""
     hero = next((h for h in cfg.get("photos", {}) if h.lower() == args.set.lower()), None)
     if not hero:
         sys.exit(f"Unknown hero '{args.set}'. Known: {list(cfg.get('photos', {}))}")
@@ -1490,11 +1492,11 @@ def set_inputs(cfg, args):
         cfg["photos"][hero] = args.photo
     conf = cfg["inputs"].get(hero)
     conf = conf if isinstance(conf, dict) else {}
-    for role in ("apose", "bare"):
+    for role in ("prime", "bare", "apose"):
         if getattr(args, role):
             conf[role] = getattr(args, role)
     cfg["inputs"][hero] = conf
-    print(f"{hero}: photo={cfg['photos'].get(hero)} apose={conf.get('apose')} bare={conf.get('bare')}")
+    print(f"{hero}: photo={cfg['photos'].get(hero)} prime={conf.get('prime')} bare={conf.get('bare')} apose={conf.get('apose')}")
     if args.dry_run:
         print("(dry run, nothing written)")
     else:
@@ -1581,7 +1583,7 @@ def cmd_inputs(args):
             continue
         want = input_for(cfg, h, "scene")
         for p in hero_files(h):
-            if stage_of(p.name) == "poses":
+            if stage_of(p.name) in ("poses", "alpha"):
                 continue
             wf = read_wf(p)
             ln = node_of(wf, "LoadImage")
@@ -1665,10 +1667,11 @@ def main(argv=None):
     s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
     s.add_argument("--hero", help="with --reset: only this hero")
     s.add_argument("--status", action="store_true", help="per hero: the photo, A-pose and bare-skin images, where they are found and whether they match standardSize")
-    s.add_argument("--set", metavar="HERO", help="write --photo/--apose/--bare for this hero into workspaces.json (then run --reset)")
+    s.add_argument("--set", metavar="HERO", help="write --photo/--prime/--bare/--apose for this hero into workspaces.json (then run --reset)")
     s.add_argument("--photo", help="with --set: original photo file name")
-    s.add_argument("--apose", help="with --set: barefoot A-pose file name")
-    s.add_argument("--bare", help="with --set: bare-skin A-pose file name")
+    s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
+    s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
+    s.add_argument("--bare", help="with --set: Alpha 2 Bare image (bare skin, individual figure)")
     s = sub.add_parser("denoise")
     common(s)
     s.add_argument("--reset", action="store_true", help="set every generated workflow's denoise (repo and workspaces) from its card's hint; without it, only show the plan")

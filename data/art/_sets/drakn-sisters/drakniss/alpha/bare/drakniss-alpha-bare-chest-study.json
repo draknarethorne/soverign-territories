@@ -1,0 +1,14 @@
+{
+  "artId": "drakniss-alpha-bare-chest-study",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Bare edit: figure study, bare chest",
+  "components": {
+    "wearing": "data/art/wardrobe/swimwear/base/edit/bare-chest-study.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakniss/alpha/bare/Drakniss_Alpha_2_Bare_ChestStudy.txt",
+  "notes": "TWO-STEP BARE, model-chosen rendering: a figure-study cue instead of anatomical terms; compare with the hand-curated Bare_Skin shot."
+}
