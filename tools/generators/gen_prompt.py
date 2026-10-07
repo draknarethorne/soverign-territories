@@ -244,10 +244,11 @@ def face_style(female, eyeshadow, blush, brow=None):
 
 # Details a stage can call out up front in one Critical details block; the later lines then do not repeat them.
 # A card picks its own with "keyDetails"; a template without a card choice uses its default here (none = no block).
-KEY_LABELS = {"hair": "Hair", "bust": "Bust", "eyes": "Eyes", "skin": "Skin", "legs": "Legs"}
+# "bust" is the shared enlarging line (phrases.json bustKey); "ownBust" is the hero's own physique bust line.
+KEY_LABELS = {"hair": "Hair", "bust": "Bust", "ownBust": "Bust", "eyes": "Eyes", "skin": "Skin", "legs": "Legs"}
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
-    "bare-human.txt": ["hair", "bust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
+    "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
 }
 
 # Physique fields that make the Figure line, in order (the female schema has bust and hips, the male chest and waist).
@@ -278,7 +279,8 @@ def tokens_for(hero, keys=()):
     # The Figure line is the physique fields in this order, nothing added by the generator. Items promoted to the
     # Critical details block (bust, legs) are not repeated in it.
     order = FIGURE_FIELDS_FEMALE if "bust" in phy else FIGURE_FIELDS_MALE
-    figure = "; ".join([decap(phy[k]) for k in order if phy.get(k) and k not in keys] + list(phy.get("distinguishingMarks", [])))
+    shown = set(keys) | ({"bust"} if "ownBust" in keys else set())
+    figure = "; ".join([decap(phy[k]) for k in order if phy.get(k) and k not in shown] + list(phy.get("distinguishingMarks", [])))
     skin = decap(pal["skinTone"])
     eye_neg = ", ".join(pal.get("eyeColorNegatives", []))
     skin_neg = ", ".join(pal.get("skinColorNegatives", []))
@@ -288,6 +290,7 @@ def tokens_for(hero, keys=()):
     key_text = {
         "hair": resolve_hair(pal),
         "bust": phrases()["bustKey"] if "bust" in phy else None,
+        "ownBust": phy.get("bust"),
         "eyes": pal["eyeColorGlamour"],
         "skin": pal["skinTone"],
         "legs": phy["legs"],
