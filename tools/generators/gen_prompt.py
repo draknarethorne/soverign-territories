@@ -560,6 +560,14 @@ def generate(card_path, tokens_only=False):
         if section in overrides:
             hero["art"][section].update(overrides[section])
     template = (ROOT / card["template"]).read_text(encoding="utf-8")
+    contour = card.get("components", {}).get("body_contour")
+    default_contour = studio_defaults().get("bodyContour", "off")
+    if isinstance(default_contour, dict):  # per-stage defaults with a "default" fallback
+        default_contour = default_contour.get(card["stage"], default_contour.get("default", "off"))
+    if contour == "off":  # a card can opt out of the global default
+        card["components"].pop("body_contour")
+    elif contour is None and "{{BODY_CONTOUR}}" in template and default_contour != "off" and "bust" in hero.get("art", {}).get("physique", {}):  # the pieces are written for the female sisters
+        card.setdefault("components", {})["body_contour"] = f"data/art/wardrobe/effects/contour/{default_contour}.json"
     sex = None
     if "art" in hero:
         sex = "female" if "bust" in hero["art"]["physique"] else "male"
@@ -592,8 +600,9 @@ def generate(card_path, tokens_only=False):
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
-    if "{{FOOTWEAR_NEG}}" in template:
-        toks.setdefault("FOOTWEAR_NEG", "")  # only a footwear piece with negatives (barefoot) fills it
+    for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG"):
+        if "{{" + neg_token + "}}" in template:
+            toks.setdefault(neg_token, "")  # only a piece that carries negatives (barefoot, bareskin) fills it
     # A makeup piece (components.makeup) replaces the default studio face-styling line everywhere,
     # and also feeds scene templates through the optional {{MAKEUP_LINE}}.
     if toks.get("MAKEUP"):

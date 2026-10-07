@@ -311,7 +311,7 @@ def hero_of(name):
 
 
 STAGE_WORDS = {"Scene": "scene", "Hair": "hair", "Motion": "motion", "Armor": "armor", "Clothing": "clothing",
-               "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card"}
+               "Head": "head", "View": "poses", "Video": "video", "Brand": "brand", "Card": "card", "Bare": "bare"}
 
 
 def stage_of(name):
@@ -514,7 +514,7 @@ def prompt_index(cfg, engine="qwen"):
             continue
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
         folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
-        out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "stem": stem, "name": name,
+        out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
                     "prefix": "/".join([group, hero, folder] + family + [name])})
     return out
 
@@ -542,6 +542,28 @@ def input_for(cfg, hero, stage):
     if isinstance(conf, dict):
         conf = conf.get(stage) or conf.get("default")
     return conf or infer_input(hero) or f"{hero}_Qwen_X_Pose_00001_.png"
+
+
+def default_input(cfg, hero, stage, family):
+    """The image a workflow loads by default, by role (cfg inputRoles): the original photo for the root of poses/, the barefoot A-pose for
+    bare/head/motion, and the bare-skin A-pose for everything else. None when the hero has no role inputs configured (legacy behaviour)."""
+    conf, roles = cfg.get("inputs", {}).get(hero), cfg.get("inputRoles", {})
+    if not isinstance(conf, dict) or not roles:
+        return None
+    key = stage + "/"
+    role = roles.get(key) if not family and key in roles else roles.get(stage, roles.get("default"))
+    if role == "photo":
+        return cfg.get("photos", {}).get(hero)
+    return conf.get(role) or conf.get("apose")
+
+
+def input_index(cfg):
+    """{workflow name: (hero, stage, family)} for every Qwen and FireRed workflow the prompts define."""
+    out = {}
+    for engine in ("qwen", "firered"):
+        for it in prompt_index(cfg, engine):
+            out[it["name"]] = (it["hero"], it["stage"], it["family"])
+    return out
 
 
 # ---------- selection ----------
@@ -594,7 +616,7 @@ def classify(repo_p, inst_p):
     try:
         rv = get_values(read_wf(repo_p))
         iv = get_values(read_wf(inst_p))
-    except ValueError:
+    except (ValueError, AttributeError):  # an emptied file reads as JSON null
         return "unreadable"
     if rv is None or iv is None:
         return "unreadable"
@@ -778,7 +800,8 @@ def cmd_deploy(args):
     if not args.templates and not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
         sys.exit("Deploy needs a filter (--hero, --group, --stage, --class, --match) or --all, so a whole playground is never pushed by accident.")
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    for ws in pick_targets(cfg, args, "dev"):
+    targets = pick_targets(cfg, args, "dev")
+    for ws in targets:
         if not install_exists(cfg, ws, args.root):
             print(f"{ws}: workspace not created yet under {args.root or cfg['installsRoot']}, skipped")
             continue
@@ -893,6 +916,8 @@ def cmd_deploy(args):
                     print(f"  SKIP     {ws}/{SHOTS_DIR}/{rel} differs from the repo copy (your edits?): pull it, or use --overwrite")
                     tally["skipped"] += 1
         print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
+    if getattr(args, "reset_inputs", False):
+        reset_inputs(cfg, args, workspaces=targets, include_repo=False)
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
 
 
@@ -1023,11 +1048,13 @@ def cmd_promote(args):
     print("Restart the affected ComfyUI workspaces to see changes.")
 
 
-def pull_shots(cfg, ws, args, stamp):
+def pull_shots(cfg, ws, args, stamp, seen=None):
     """Keep the workflows under zz_Shots/ in a workspace as repo shots (workflows/_shots/<set>/<Hero>/, same subfolders). Edits are captured again."""
     groups = hero_groups()
     done = skipped = 0
     for (h, rel), p in workspace_shots(cfg, ws, args.root).items():
+        if seen is not None:
+            seen.add((h, rel))
         if (args.hero and h.lower() != args.hero.lower()) or (args.group and groups[h] != args.group) \
                 or (args.match and not name_matches(args.match, p.name)):
             continue
@@ -1042,6 +1069,18 @@ def pull_shots(cfg, ws, args, stamp):
     print(f"{ws} shots: pulled {done}, left {skipped} unchanged" + (" (dry run)" if args.dry_run else ""))
 
 
+def prune_shots(cfg, args, stamp, seen, scanned):
+    """Move repo shots that none of the pulled workspaces holds any more to the backup folder (git history keeps them too)."""
+    for (h, rel), (g, p) in shot_files().items():
+        if h not in scanned or (h, rel) in seen or (args.hero and h.lower() != args.hero.lower()) or (args.match and not name_matches(args.match, p.name)):
+            continue
+        print(f"  prune  {p.relative_to(ROOT).as_posix()} (no longer in the pulled workspaces)" + (" (dry run)" if args.dry_run else ""))
+        if not args.dry_run:
+            b = BACKUPS / stamp / "shots (pruned)" / h / rel
+            b.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(p), str(b))
+
+
 def cmd_pull(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
@@ -1049,6 +1088,9 @@ def cmd_pull(args):
     tst = test_files()
     groups = hero_groups()
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    seen, scanned = set(), set()
+    if args.prune and not (args.shots and args.hero and (args.workspace or args.to)):
+        sys.exit("--prune needs --shots, --hero and an explicit target (-w or --to), so a shot another workspace holds is never removed by mistake.")
     for ws in pick_targets(cfg, args, "dev"):
         if not install_exists(cfg, ws, args.root):
             print(f"{ws}: workspace not found, skipped")
@@ -1070,10 +1112,12 @@ def cmd_pull(args):
             print(f"{ws} templates: pulled {done}, left {skipped} existing" + (" (dry run)" if args.dry_run else ""))
             continue
         if info.get("pull") is False and not (args.force or args.include_legacy):
-            pull_shots(cfg, ws, args, stamp)
+            pull_shots(cfg, ws, args, stamp, seen)
+            scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
             print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); only its zz_Shots were captured; use --include-legacy for the rest")
             continue
-        pull_shots(cfg, ws, args, stamp)
+        pull_shots(cfg, ws, args, stamp, seen)
+        scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
         if args.shots:
             continue
         for name, p in install_files(cfg, ws, args.root).items():
@@ -1128,6 +1172,8 @@ def cmd_pull(args):
                     p.unlink()
             done += 1
         print(f"{ws}: pulled {done}, left {skipped} unchanged" + (" (dry run)" if args.dry_run else ""))
+    if args.prune:
+        prune_shots(cfg, args, stamp, seen, scanned)
 
 
 def cmd_fork(args):
@@ -1218,7 +1264,8 @@ def cmd_make(args):
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
-        want = args.input or video or (cfg.get("photos", {}).get(it["hero"]) if is_apose else input_for(cfg, it["hero"], it["stage"]))
+        want = args.input or video or default_input(cfg, it["hero"], it["stage"], it["family"]) \
+            or (cfg.get("photos", {}).get(it["hero"]) if is_apose else input_for(cfg, it["hero"], it["stage"]))
         if ln and want:
             ln["widgets_values"][0] = want
             if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
@@ -1267,50 +1314,71 @@ def cmd_tidy(args):
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
 
-def replace_pose_inputs(cfg, args):
-    """Point every generated workflow that loads one of a hero's A-pose renders at the hero's configured default A-pose (cfg inputs),
-    in the repo and in every workspace that holds her work. Workflows that load the original photo, and curated, test and shot
-    workflows, are left alone."""
+def reset_inputs(cfg, args, workspaces=None, include_repo=True):
+    """Point every generated workflow at its default incoming image (see default_input), in the repo and in the workspaces, and copy any image a
+    workspace is missing into its input folder. Curated, test and shot workflows are left alone; a changed file is backed up first."""
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    for hero in sorted(hero_groups()):
-        if args.hero and hero.lower() != args.hero.lower():
-            continue
-        want = cfg.get("inputs", {}).get(hero)
-        if not isinstance(want, str):
-            continue
-        pat = re.compile(rf"^{re.escape(hero)}_Qwen_X_Pose_\d+_?\.png$")
+    idx, repo = input_index(cfg), repo_files(cfg)
+    needs = collections.defaultdict(set)
+    changed = collections.Counter()
 
-        def retarget(p, backup_ws=None):
-            wf = read_wf(p)
-            ln = node_of(wf, "LoadImage")
-            if not ln or ln["widgets_values"][0] == want or not pat.match(ln["widgets_values"][0]):
-                return False
-            if not args.dry_run:
-                if backup_ws:
-                    backup(stamp, backup_ws, p.name, p)
-                ln["widgets_values"][0] = want
-                if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
-                    ln["widgets_values_named"]["image"] = want
-                write_wf(p, wf)
-            return True
+    def retarget(p, name, ws):
+        info = idx.get(name[:-5] if name.endswith(".json") else name)
+        if not info:
+            return
+        hero, stage, family = info
+        if (args.hero and hero.lower() != args.hero.lower()) or (getattr(args, "stage", None) and stage != args.stage) \
+                or (getattr(args, "match", None) and not name_matches(args.match, name)):
+            return
+        want = default_input(cfg, hero, stage, family)
+        wf = read_wf(p)
+        ln = node_of(wf, "LoadImage") if isinstance(wf, dict) else None
+        if not want or not ln:
+            return
+        if ws:
+            needs[ws].add(want)
+        if ln["widgets_values"][0] == want:
+            return
+        changed[ws or "repo"] += 1
+        if args.dry_run:
+            return
+        if ws:
+            backup(stamp, ws, p.name, p)
+        ln["widgets_values"][0] = want
+        if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
+            ln["widgets_values_named"]["image"] = want
+        write_wf(p, wf)
 
-        repo = [(n, p) for n, (g, h, p) in repo_files(cfg).items() if h == hero]
-        print(f"{hero}: repo {sum(retarget(p) for _, p in repo)} workflow(s) now load {want}")
-        for ws in cfg["workspaces"]:
-            if not install_exists(cfg, ws, args.root):
+    if include_repo:
+        for name, (g, h, p) in repo.items():
+            retarget(p, name, None)
+    for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
+        if not install_exists(cfg, ws, args.root):
+            continue
+        for name, p in install_files(cfg, ws, args.root).items():
+            if name in repo:
+                retarget(p, name, ws)
+    for ws, names in needs.items():
+        d = input_dir(cfg, ws, args.root) if args.root else input_dir(cfg, ws)
+        for img in sorted(names):
+            if (d / img).exists():
                 continue
-            names = {n for n, _ in repo}
-            files = [p for n, p in install_files(cfg, ws, args.root).items() if n in names]
-            changed = sum(retarget(p, ws) for p in files)
-            if changed:
-                print(f"  {ws}: {changed} workflow(s) updated" + (" (dry run)" if args.dry_run else ""))
+            src = next((q / img for q in input_dirs(cfg) if (q / img).exists()), None)
+            if not src:
+                print(f"  MISSING  {img} is not in {d} or any other input folder")
+            elif args.dry_run:
+                print(f"  would copy {img} -> {d}")
+            else:
+                shutil.copy2(src, d / img)
+                print(f"  copied   {img} -> {d}")
+    print("inputs reset: " + (", ".join(f"{v} in {k}" for k, v in changed.items()) or "nothing to change") + (" (dry run)" if args.dry_run else ""))
 
 
 def cmd_inputs(args):
     cfg = load_cfg()
     placeholder = re.compile(r"^(.+)_Qwen_X_Pose_00001_\.png$")
-    if args.replace_poses:
-        replace_pose_inputs(cfg, args)
+    if args.reset:
+        reset_inputs(cfg, args)
         return
     for h in sorted(hero_groups()):
         if not hero_files(h):
@@ -1369,6 +1437,7 @@ def main(argv=None):
     s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
     s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
     s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
+    s.add_argument("--reset-inputs", action="store_true", help="after deploying, also point the deployed workspaces' generated workflows back at their default incoming images")
     s = sub.add_parser("cleanup")
     common(s, False, True)
     s.add_argument("-w", "--workspace", action="append", help="workspace to clean (default: the dev workspace)")
@@ -1392,6 +1461,7 @@ def main(argv=None):
     s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
     s.add_argument("--force", action="store_true", help="also replace repo copies")
     s.add_argument("--shots", action="store_true", help="only capture the workflows under zz_Shots/ (new and edited ones); other pulls also include them")
+    s.add_argument("--prune", action="store_true", help="with --shots: also move repo shots that the pulled workspaces no longer hold to backup")
     s.add_argument("--include-legacy", action="store_true", help="also pull from a workspace whose pulling is turned off (its old hand-made workflows); generated copies are never replaced")
     s = sub.add_parser("make")
     common(s, False, True)
@@ -1401,8 +1471,8 @@ def main(argv=None):
     s = sub.add_parser("inputs")
     common(s)
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
-    s.add_argument("--replace-poses", action="store_true", help="point every generated workflow that loads one of a hero's A-pose renders at her configured default A-pose (repo and workspaces)")
-    s.add_argument("--hero", help="with --replace-poses: only this hero")
+    s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
+    s.add_argument("--hero", help="with --reset: only this hero")
     s = sub.add_parser("tidy")
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
