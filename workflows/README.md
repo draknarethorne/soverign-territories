@@ -125,6 +125,12 @@ python tools/workflows/comfy_workflows.py inputs --reset --hero Draknara --dry-r
 
 `--set` only needs the roles you give it (`--photo`, `--apose`, `--bare`); with `--dry-run` it prints and writes nothing. Workflows in `zz_Shots/` are never reset.
 
+### Denoise defaults
+
+New generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original photo), not at 1.0. `make --create` sets it,
+`comfy_workflows.py denoise` previews the plan and `denoise --reset` applies it to the repo and every workspace (backups first; `zz_Shots` is never touched).
+The table and the tuning rules are in [docs/art/comfyui-art-pipeline.md](../docs/art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
+
 ### Shots (zz_Shots)
 
 A shot is a workflow you tuned for one render: a chosen seed, Turbo on or off, a changed input. Save it in the workspace under `zz_Shots/`, in any subfolders you like (`zz_Shots/armor/`, `zz_Shots/poses/` ...).

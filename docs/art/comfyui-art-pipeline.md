@@ -127,21 +127,36 @@ quality** before committing a model to a stage.
 
 ### Denoise is the key lever
 
-All current workflows run **denoise = 1.0** (full redraw), which is why the look drifts between
-stages. Tune it by intent:
+Denoise is set by automation (Oct 2026), so a workflow no longer opens at 1.0 by accident. Each art card carries a range hint (its
+`denoise` field, printed in the prompt header as `Denoise ~0.5-0.7.`); the workflow tool starts every generated workflow at the **high end**
+of that range (`denoise.pick` in `workflows/workspaces.json`: `high`, `mid` or `low`), because the stages that follow a golden image should
+bring some creativity and not be a blind copy. Tune it per render from there.
 
-- **"Change one thing" stages** (hair → armor → stance): **~0.4–0.7** — change the target, hold the rest.
-- **Polish pass**: **~0.2–0.4** — enhance texture without redrawing identity.
-- **Base A-pose**: **1.0** — a full generation is wanted here.
+| Stage (incoming image) | Card range | Starts at |
+| --- | --- | --- |
+| X Pose from the original photo | ~1.0 | **1.0** (a full generation) |
+| Bare, outfit/armor/clothing, scenes, underlayer tests and body views (bare or A-pose in) | ~0.5-0.7 | **0.7** |
+| Hair, head, motion (A-pose in) | ~0.4-0.6 | **0.6** |
+| Real-world photo showcases | ~0.6-0.8 | **0.8** |
+| Any ~1.0 card fed a golden image (`denoise.golden`) | ~1.0 | **0.7**: a full redraw would throw the golden image away |
+| Polish (Qwen Polish) | ~0.2-0.4 | set by hand; no generated workflows use it yet |
 
-**Where to start within a range: start low, climb.** Lower denoise preserves identity, so begin at
-the bottom and raise by ~0.05 only if the change isn't fully taking. Defaults: hair **0.45**, armor/outfit
-**0.55**, final/FireRed polish **0.6**. The first value that fully applies the change is the right one —
-every extra step past that just erodes face, eyes, and body.
+Rules of thumb for tuning: **"change one thing" stages ~0.4-0.7**, **polish ~0.2-0.4**, **base A-pose 1.0**. If a change does not fully take, raise it by
+about 0.05; if the face, eyes or body drift, lower it. The first value that fully applies the change is the right one.
 
-> **Tip:** `denoise` isn't exposed outside the subgraph by default. Open the subgraph, select the
-> KSampler, and **promote** the `denoise` (and ideally `steps` + `seed`) widget to the parent so it's
-> editable on the outer node per-run. Do it once per ST workflow and save.
+```bash
+python tools/workflows/comfy_workflows.py denoise                      # preview: the table above, per stage and family, plus the template check
+python tools/workflows/comfy_workflows.py denoise --reset --dry-run    # how many workflows would change (repo and every workspace)
+python tools/workflows/comfy_workflows.py denoise --reset [--hero H --stage S --match M]   # apply; changed workspace files are backed up first
+```
+
+`make --create` sets the value on every new workflow; `make` without `--create` and a prompt-only `deploy` leave a workflow's denoise alone, so values you tune
+by hand survive. A `--reset` overwrites them, so save a tuned workflow in `zz_Shots/` (never reset) first. To change a default, edit the card's `denoise` hint or
+`denoise` in `workspaces.json`, then run `denoise --reset`.
+
+The Qwen and FireRed templates (`ST0`, `ST1`, `ST2`, `ST3_FireRed_Final`, `ST4_Qwen_Polish`) already expose `denoise` on the outer subgraph node, so it can be
+edited without opening the subgraph; `denoise` prints `NOT exposed` for any configured template that stops doing so. The Flux and MiniMax templates do not expose it
+(they sample through `SamplerCustomAdvanced` and `BasicScheduler`) and are not built by `make`.
 
 ### Steps: Turbo (4) vs non-Turbo (40)
 

@@ -93,6 +93,10 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   outfit, armor, showcase and scene, each fed the incoming image that gives the wanted result; documented in `docs/art/tutorial-art.md`. Complete scenes describe the outfit,
   staged scenes take a dressed image, and a semi-staged scene is a complete scene fed an A-pose that already wears a layer. FireRed versions of the bare study and celestial
   steps exist for overnight non-Turbo comparison; the best bare A-poses become the input for everything else.
+- **Standard size and denoise defaults (Oct 2026, provisional).** Originals are padded to 944x1104 (`standardSize`), a Kontext bucket, so the Qwen chain keeps one size;
+  FireRed's 1 MP resize lands on the same size. Generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original
+  photo; `denoise` in `workspaces.json`, tool `comfy_workflows.py denoise`), so the stages after a golden image keep some creativity. Tuning rules:
+  [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
 - **Two celestial looks and a two-step core (Oct 2026, ideation).** The original larger plates are kept as `celestial-plate-armor`; the new
   `celestial-skin-armor` is thin metallic design formed on the skin by magic (open filigree, form-fitting, skin showing through, her class and element
   motif). The `bare` stage (`Bare_*`) is an edit-only pass on a finished A-pose; `Bare_CelestialPlate` and `Bare_CelestialCore` (skin) produce a

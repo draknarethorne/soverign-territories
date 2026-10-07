@@ -545,17 +545,59 @@ def input_for(cfg, hero, stage):
     return conf or infer_input(hero) or f"{hero}_Qwen_X_Pose_00001_.png"
 
 
-def default_input(cfg, hero, stage, family):
-    """The image a workflow loads by default, by role (cfg inputRoles): the original photo for the root of poses/, the barefoot A-pose for
-    bare/head/motion, and the bare-skin A-pose for everything else. None when the hero has no role inputs configured (legacy behaviour)."""
+def input_role(cfg, hero, stage, family):
+    """The role of a workflow's default incoming image (photo, apose or bare, from cfg inputRoles); None when the hero has no role inputs."""
     conf, roles = cfg.get("inputs", {}).get(hero), cfg.get("inputRoles", {})
     if not isinstance(conf, dict) or not roles:
         return None
     key = stage + "/"
-    role = roles.get(key) if not family and key in roles else roles.get(stage, roles.get("default"))
+    return roles.get(key) if not family and key in roles else roles.get(stage, roles.get("default"))
+
+
+def default_input(cfg, hero, stage, family):
+    """The image a workflow loads by default, by role (cfg inputRoles): the original photo for the root of poses/, the barefoot A-pose for
+    bare/head/motion, and the bare-skin A-pose for everything else. None when the hero has no role inputs configured (legacy behaviour)."""
+    role = input_role(cfg, hero, stage, family)
+    if role is None:
+        return None
     if role == "photo":
         return cfg.get("photos", {}).get(hero)
+    conf = cfg["inputs"][hero]
     return conf.get(role) or conf.get("apose")
+
+
+def denoise_for(cfg, prompt_text, role):
+    """The denoise a new workflow starts at: the card's hint (the 'Denoise ~0.5-0.7.' line in the prompt header) at the end cfg denoise.pick
+    names (high by default). A full-generation hint (~1.0) stays 1.0 on the original photo but drops to denoise.golden when the incoming
+    image is a golden A-pose or bare image, since a full redraw there throws the golden image away. None when there is no rule or hint."""
+    rule = cfg.get("denoise")
+    m = re.search(r"Denoise ~?(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", prompt_text.split("\nprompt:", 1)[0]) if rule else None
+    if not m:
+        return None
+    lo = float(m.group(1))
+    hi = float(m.group(2) or lo)
+    if lo >= 1.0:
+        return float(rule.get("golden", 0.7)) if role in ("apose", "bare") else 1.0
+    return {"low": lo, "mid": round((lo + hi) / 2, 2)}.get(rule.get("pick", "high"), hi)
+
+
+def get_denoise(wf):
+    n = prompt_node(wf)
+    named = n.get("widgets_values_named") if n else None
+    return named.get("denoise") if isinstance(named, dict) else None
+
+
+def set_denoise(wf, value):
+    """Set the denoise widget the template exposes on the outer subgraph node; return True if it changed."""
+    n = prompt_node(wf)
+    named = n.get("widgets_values_named") if n else None
+    if not isinstance(named, dict) or "denoise" not in named:
+        return False
+    idx = list(named).index("denoise")
+    if named["denoise"] == value and n["widgets_values"][idx] == value:
+        return False
+    named["denoise"] = n["widgets_values"][idx] = value
+    return True
 
 
 def input_index(cfg):
@@ -1262,6 +1304,10 @@ def cmd_make(args):
             set_size(wf, it["path"].read_text(encoding="utf-8"))
         if it["engine"] == "firered":
             set_turbo(wf, cfg["engines"]["firered"].get("turbo", True))
+        if not is_text:
+            dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), input_role(cfg, it["hero"], it["stage"], it["family"]))
+            if dn is not None:
+                set_denoise(wf, dn)
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
@@ -1456,6 +1502,63 @@ def set_inputs(cfg, args):
         print("workspaces.json updated; now run: inputs --reset --hero " + hero)
 
 
+def denoise_plan(cfg):
+    """{workflow name: (hero, stage, family, role, denoise)} for every Qwen and FireRed workflow whose card gives a hint."""
+    plan = {}
+    for engine in ("qwen", "firered"):
+        for it in prompt_index(cfg, engine):
+            it["engine"] = engine
+            if is_text_item(cfg, it):
+                continue
+            role = input_role(cfg, it["hero"], it["stage"], it["family"])
+            dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), role)
+            if dn is not None:
+                plan[it["name"]] = (it["hero"], it["stage"], it["family"], role, dn)
+    return plan
+
+
+def cmd_denoise(args):
+    """Show, or with --reset apply, the denoise every generated workflow should start at (see denoise_for). Shots, curated and test workflows are left alone."""
+    cfg = load_cfg()
+    for label, rel in [("poses", cfg["templates"]["poses"]), ("default", cfg["templates"]["default"]), ("firered", cfg["engines"]["firered"]["template"])]:
+        wf = read_wf(ROOT / rel)
+        print(f"template {label:8} {rel}: denoise " + ("exposed on the outer node, set to " + str(get_denoise(wf)) if get_denoise(wf) is not None else "NOT exposed outside the subgraph"))
+    plan = denoise_plan(cfg)
+    rule = cfg.get("denoise", {})
+    print(f"rule: pick the {rule.get('pick', 'high')} end of each card's range; a 1.0 card fed a golden image uses {rule.get('golden', 0.7)}")
+    wanted = {k: v for k, v in plan.items() if (not args.hero or v[0].lower() == args.hero.lower()) and (not args.stage or v[1] == args.stage)
+              and (not args.match or name_matches(args.match, k))}
+    table = collections.Counter((v[1], v[2][0] if v[2] else "", v[3] or "-", v[4]) for v in wanted.values())
+    print(f"\n{'stage':10} {'family':12} {'input':6} denoise   workflows")
+    for (stage, fam, role, dn), n in sorted(table.items()):
+        print(f"{stage:10} {fam:12} {role:6} {dn:<9} {n}")
+    if not args.reset:
+        print("\nPreview only: add --reset to set these in the repo and every workspace (a changed workspace file is backed up first).")
+        return
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    changed = collections.Counter()
+    repo = repo_files(cfg)
+    spots = [(None, p, name) for name, (g, h, p) in repo.items()]
+    for ws in cfg["workspaces"]:
+        if install_exists(cfg, ws, args.root):
+            spots += [(ws, p, name) for name, p in install_files(cfg, ws, args.root).items() if name in repo]
+    for ws, p, name in spots:
+        stem = name[:-5] if name.endswith(".json") else name
+        if stem not in wanted:
+            continue
+        wf = read_wf(p)
+        if not isinstance(wf, dict) or get_denoise(wf) == wanted[stem][4] or get_denoise(wf) is None:
+            continue
+        changed[ws or "repo"] += 1
+        if args.dry_run:
+            continue
+        if ws:
+            backup(stamp, ws, p.name, p)
+        set_denoise(wf, wanted[stem][4])
+        write_wf(p, wf)
+    print("denoise reset: " + (", ".join(f"{v} in {k}" for k, v in changed.items()) or "nothing to change") + (" (dry run)" if args.dry_run else ""))
+
+
 def cmd_inputs(args):
     cfg = load_cfg()
     placeholder = re.compile(r"^(.+)_Qwen_X_Pose_00001_\.png$")
@@ -1566,12 +1669,18 @@ def main(argv=None):
     s.add_argument("--photo", help="with --set: original photo file name")
     s.add_argument("--apose", help="with --set: barefoot A-pose file name")
     s.add_argument("--bare", help="with --set: bare-skin A-pose file name")
+    s = sub.add_parser("denoise")
+    common(s)
+    s.add_argument("--reset", action="store_true", help="set every generated workflow's denoise (repo and workspaces) from its card's hint; without it, only show the plan")
+    s.add_argument("--hero")
+    s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
+    s.add_argument("--match", help="substring of the file name")
     s = sub.add_parser("tidy")
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
     s.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "fork": cmd_fork, "tidy": cmd_tidy}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy}[args.cmd](args)
 
 
 if __name__ == "__main__":

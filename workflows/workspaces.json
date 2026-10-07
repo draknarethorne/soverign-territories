@@ -58,6 +58,7 @@
   "stageTemplates": "ST?_*.json",
   "inputRoles": {"poses/": "photo", "bare": "apose", "head": "apose", "motion": "apose", "default": "bare"},
   "standardSize": [944, 1104],
+  "denoise": {"pick": "high", "golden": 0.7},
   "inputs": {"Drakness": {"apose": "Drakness_Qwen_X_Pose_Barefoot_00004_.png", "bare": "Drakness_Qwen_Bare_Skin_00003_.png"},
     "Draknara": {"apose": "Draknara_Qwen_X_Pose_00029_.png"},
     "Draknava": {"apose": "Draknava_Qwen_X_Pose_00028_.png"},
