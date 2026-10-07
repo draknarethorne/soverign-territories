@@ -35,7 +35,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 - Player-facing title is **Sovereign**, not "Player".
 - **Art and video are data-driven (Oct 2026).** Pieces, cards and animation cards generate prompts; prompts generate workflows. Prompts
   are never hand-edited. Work is **studio** (cream backdrop: poses, heads, hair, armor) or **scene** (realm, background, effects; video
-  counts as scene); studio goes to a sister's own workspace, scenes to the shared `Drakn Sisters` workspace.
+  counts as scene); everything goes to the one workspace per group (see the pipeline phases below).
 - **Dev/UAT/Prod workspaces** in ComfyUI: dev builds and proves, UAT is acceptance, PROD is the series workspace. Workflows are
   promoted (moved) up the tiers.
 - **A hand-made workflow is never overwritten.** Anything tuned by hand is forked or pulled into `workflows/_curated/`; patterns that
@@ -46,10 +46,12 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   never changes gameplay; its code is `<collectionNumber>-<SUFFIX>` (`SD-001-HOLO`), derived, never stored. Shiny = recolour and sheen
   for every card hero; Holo = a re-authored edition with a title, ascended pose, upgraded items and a video. The foil/holo shader belongs
   to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
-- **Sister workspaces and the batch workspace (Oct 2026, replaces the studio/scene split).** Every stage of a sister (poses, motion, armor,
-  clothing, showcase, scenes, video) deploys to both her own workspace (fine-tuning one sister) and `Drakn Sisters` (batches of one stage across all
-  ten, laid out `<stage>/<family>/<Hero>/`); `deploy --to uat --hero <Name>` keeps the two in step and duplicates are intended. Whether
-  a dedicated workspace per sister is needed at all is open until the `Drakn Sisters` tree has been used. Dev keeps whatever is not
+- **One workspace per group, hero first, by pipeline phase (Oct 2026, replaces the per-sister workspaces).** `Drakn Sisters` holds every sister laid out
+  `<Hero>/<phase>/...`: `1_Alpha`, `2_Studies`, `3_Layers`, `4_Wardrobe`, `5_Scenes`, `6_Finish` (`polish`, `final` skeletons per sister; upscale is not built yet),
+  `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The other permanent workspaces are Angel Primes, Drakn Bound, Elder Dragons and
+  Sovereign Territories (dev and brand). A single-sister workspace is spun up only while needed and discarded; only `Drakness` is kept (and kept in sync) until her
+  hand-made armor, clothing and scenes are covered by the generated set. The chosen image of each later phase is named `_00000` too (`<Hero>_Qwen_Scene_00000.png`
+  feeds Polish, `_Polish_00000.png` feeds Final), so a skipped phase shows as a missing image. Prompts and card folders stay by stage. Dev keeps whatever is not
   delivered, edited or hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
   a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.

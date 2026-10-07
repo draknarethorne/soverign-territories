@@ -158,9 +158,12 @@ validator), never from a hand-typed folder:
 ```text
 data/art/_sets/<group>/<slug>/<stage>/<family>/<artId>.json
 prompts/<group>/<Hero>/<stage>/<family>/<Hero>_<Stage>_<Name>.txt
-ComfyUI output: <group>/<Hero>/<stage>/<family>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+ComfyUI output: <group>/<Hero>/<phase>/...<Hero>_<Engine>_<Stage>_<Name>_00001_.png   (workflows in a workspace sit in the same folders)
 ```
 
+The cards and prompts stay by stage; the workflows and the ComfyUI output follow the **pipeline phase** (`art_layout.phase_path`), hero first:
+`1_Alpha` (`1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear`), `2_Studies` (`head`, `hair`, `body`), `3_Layers` (the underlayer types), `4_Wardrobe` (`clothing`,
+`armor`, `showcase`), `5_Scenes`, `6_Finish` (`polish`, `final`), `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The table below is by stage.
 | Stage | Families | Notes |
 | --- | --- | --- |
 | scene (sisters) | `signature` (signature, shiny, holo, lineup), `glamour` (glamour, test, elegant casting, evening, robe), `story` (dawn, battle, bond), `themes` | A shiny or holo card sits beside its signature card. Other groups keep scenes flat. |

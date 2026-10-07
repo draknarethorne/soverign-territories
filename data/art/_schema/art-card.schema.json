@@ -7,7 +7,7 @@
   "properties": {
     "artId": {"type": "string", "pattern": "^[a-z0-9-]+$"},
     "kind": {"const": "base-set"},
-    "stage": {"type": "string", "enum": ["alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "brand", "card"]},
+    "stage": {"type": "string", "enum": ["alpha", "pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "polish", "final", "brand", "card"]},
     "heroArt": {"type": "string", "pattern": "^data/art/(heroes|dragons|brand|cards)/.+\\.json$", "description": "Art identity file (which in turn links to the gameplay card)"},
     "template": {"type": "string", "pattern": "^data/art/_templates/.+\\.txt$"},
     "output": {"type": "string", "pattern": "^prompts/[^/]+/.+\\.txt$"},

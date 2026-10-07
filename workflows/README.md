@@ -45,15 +45,14 @@ every studio stage.
 | Tier | Flag | Workspaces | Purpose |
 | --- | --- | --- | --- |
 | **dev** (default) | none | `Sovereign Territories`; later themed ones such as `Sovereign Territories Halloween` | build and prove workflows, ideation, mass changes |
-| **uat** | `--to uat` | a hero's own workspace (`Drakness`), a group's (`Angel Primes`, `Drakn Bound`) and the shared batch workspace (`Drakn Sisters`) | acceptance: pick the A-pose, curate, generate 8-16 images; the sister workspace is for fine-tuning one sister, `Drakn Sisters` for running one stage across all sisters |
+| **uat** | `--to uat` | one workspace per group: `Drakn Sisters`, `Drakn Bound`, `Elder Dragons`, `Angel Primes` (plus `Drakness`, kept in sync until her hand-made workflows are covered) | acceptance: pick the goldens, curate, generate 8-16 images; a single-sister workspace is only spun up while needed and discarded after |
 | **prod** | `--to prod` | `<Series> Series`, such as `Sovereign Dawn Series` | final art and polish for the actual cards of that series |
 
 UAT and prod targets come from the `production` rules in `workspaces.json`: they match on `groups` and/or `heroes`, and
 `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
 stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a
-scene is studio). Every matching UAT rule receives the work: a sister's own workspace and `Drakn Sisters` both hold all her
-stages (poses, motion, armor, clothing, showcase, scenes, video), so a deploy keeps the two in step and duplicates between
-them are intended. `list` shows the routes per hero. A workspace that does not
+scene is studio). Every matching UAT rule receives the work: `Drakn Sisters` holds every sister's whole pipeline, and the `Drakness` rule
+(a `heroes` filter) also sends her work to her own workspace, so a deploy keeps the two in step. `list` shows the routes per hero. A workspace that does not
 exist yet is skipped. All workspaces share one output
 folder, and the `SaveImage` prefix (`<Hero>/<stage>/...`) sorts renders into hero folders whichever workspace ran them.
 
@@ -94,8 +93,22 @@ each other (bare, A-pose with an underlayer, outfit, scene) is in [docs/art/tuto
 
 ### Folders inside a workspace
 
-A new workflow is saved in the workspace under its output folder: `<stage>/<family>/` in a hero's own workspace (`scenes/themes/`, `poses/bikini/`, `showcase/photo/daily/` ...), `<Hero>/<stage>/<family>/` in the dev workspace, and `<stage>/<family>/<Hero>/` in `Drakn Sisters` (set by `layouts` in `workspaces.json`), so one stage across all ten sisters sits side by side for batch runs. ComfyUI shows these as folders.
-`tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a sister's workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+A new workflow is saved in the workspace under its output folder, hero first and then the pipeline phase: `<Hero>/<phase>/...` in every shared workspace (`Draknara/1_Alpha/2_Bare/`, `Draknara/4_Wardrobe/armor/wardrobe/`, `Draknara/5_Scenes/themes/`), and `<phase>/...` in a single-hero workspace such as `Drakness`. The phases follow the pipeline in order:
+
+| Phase folder | Holds |
+| --- | --- |
+| `1_Alpha` | `1_Prime`, `2_Bare` (Figure, Chest), `2b_Experiments/celestial` and `/coverings`, `3_Footwear` (Barefoot, Heels): creates her likeness and the three golden images |
+| `2_Studies` | `head` (close-ups, views), `hair`, `body` (turnaround views): studies on the goldens |
+| `3_Layers` | the underlayer tests: `base`, `bikini`, `lingerie`, `swimwear`, `athletic`, `one-piece`, `backless` |
+| `4_Wardrobe` | `clothing`, `armor`, `showcase` |
+| `5_Scenes` | `signature`, `glamour`, `story`, `themes` |
+| `6_Finish` | `polish` (Qwen detail pass, input role `scene`), `final` (FireRed look, input role `polish`); upscale is not built yet |
+| `7_Video` | animation of a finished image |
+| `Bench` | `motion`: a point-in-time test run on any phase's image, not a phase |
+
+The prompts and card folders stay by stage; `art_layout.phase_path` maps a stage and family to its phase, and the SaveImage prefix (so the ComfyUI output folder) follows it.
+ComfyUI shows these as folders.
+`tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a single-hero workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
 
 ### Default incoming images
 
@@ -242,7 +255,7 @@ B:\Sovereign Territories\Models        original reference photos: the source, ne
 B:\Sovereign Territories\Masters       hand-picked keepers copied from the output (what the backup script protects)
 B:\Comfy-Desktop\ComfyUI-Installs      the workspaces (code and workflows)
 B:\Comfy-Desktop\ComfyUI-Inputs\<Workspace>   that workspace's own input images: transient copies
-B:\Comfy-Desktop\ComfyUI-Outputs\<Project>   raw output, one folder per project; the prefix sorts it by <set>/<Hero>/<stage>/<family>
+B:\Comfy-Desktop\ComfyUI-Outputs\<Project>   raw output, one folder per project; the prefix sorts it by <set>/<Hero>/<phase>/...
 ```
 
 Each workspace writes to the project folder named by its `output` setting in `workspaces.json` (set in ComfyUI as that install's
@@ -250,7 +263,7 @@ output directory), and the prefix inside it does not change:
 
 | Output project folder | Written by | Sets inside |
 | --- | --- | --- |
-| `Sovereign Territories` | the ten sister workspaces, Drakn Sisters, Drakn Bound, the Sovereign Territories brand workspace | `drakn-sisters`, `drakn-bound`, `elder-dragons`, `sovereign-territories` |
+| `Sovereign Territories` | Drakn Sisters, Drakness, Drakn Bound, Elder Dragons, the Sovereign Territories brand and dev workspace | `drakn-sisters`, `drakn-bound`, `elder-dragons`, `sovereign-territories` |
 | `Angel Primes` | the Angel Primes workspace (a test bed; it never produces production art) | `angel-primes` |
 | `Sovereign Dawn Series` | the production workspace: final art, kept apart from experiments | the series' sets |
 

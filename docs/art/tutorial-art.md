@@ -35,14 +35,19 @@ takes an original photo and builds the one clean, full-length A-pose in her meta
 and the pose into proper shape. **Alpha 2 Bare** edits the Prime: it removes the bikini, applies her individual build and re-asserts hair, eyes, skin
 and bust. **Alpha 3 Barefoot and Heels** edit the Bare image back into the bikini on her own figure. Bare, Barefoot and Heels are the three golden
 images that every later stage starts from. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
-| Stage | Folder | Incoming image | Produces |
+| Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |
-| 1. Alpha 1 Prime | `alpha/` | an original photo (any shot you like) | the Prime A-pose: full length, metallic bikini, barefoot, standard figure, bust and pose set |
-| 2. Alpha 2 Bare | `alpha/bare/` | the Prime from stage 1 | the body with the bikini removed, her individual build and likeness set: `Alpha_2_Bare_Figure` is the main step (your hand-made `Alpha_2_Bare_Skin` shot is temporary), the other looks are below |
-| 3. Alpha 3 Barefoot, Heels | `alpha/footwear/` | the Bare image from stage 2 | the bikini A-pose on her own figure, barefoot or in heels |
-| 4. Other poses | `motion/`, `poses/` and any workflow that takes an incoming A-pose | the Bare image, with the body contour line on | poses that keep her real form and do not carry the bikini |
-| 5. Outfit, armor, showcase | `clothing/`, `armor/`, `showcase/` | the bare image, or a pose from stage 3 | her in the outfit, armor or a styled shot |
-| 6. Scene | `scenes/` | a complete image from stage 5, or an A-pose | the final scene |
+| 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo, then the Prime, then the Bare image | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
+| 2. Studies | `2_Studies/head`, `hair`, `body` | the golden images | head close-ups, hair styles and turnaround views: the reference library for every later step |
+| 3. Layers | `3_Layers/<type>` (bikini, lingerie, swimwear, athletic, one-piece, backless) | the Bare image, with the body contour line on | which underlayer reads best, so it can show under an outfit on purpose |
+| 4. Wardrobe | `4_Wardrobe/clothing`, `armor`, `showcase` | the Bare image, or a layer or pose you chose | her in the outfit or armor, and the showcase shots that check it |
+| 5. Scenes | `5_Scenes/<family>` | a complete image from phase 4, or an A-pose | the scene |
+| 6. Finish | `6_Finish/polish`, `final` (upscale is not built yet) | the chosen scene, then the polished image | a detail pass at low denoise, then the final look |
+| 7. Video | `7_Video/<family>` | a finished image | the animation |
+
+`Bench/motion` is not a phase: motions and poses are point-in-time tests of a piece, run on whichever phase's image you load, to validate a reusable motion or pose before a scene uses it.
+Every phase after Alpha reads the chosen image of the one before (`_00000` names: `Hero_Qwen_Scene_00000.png` feeds Polish, `Hero_Qwen_Polish_00000.png` feeds Final),
+so skipping a phase shows up as a missing image.
 
 The bikini A-pose (Prime, Barefoot or Heels) stays useful as an input on its own: feed it (or any A-pose in a bikini, lingerie or a bodysuit) when you
 want that layer to show under the outfit on purpose. The underlayer A-pose cards (`poses/<family>/`) are fed the Bare image and are for choosing which

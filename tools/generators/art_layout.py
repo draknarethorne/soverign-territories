@@ -15,7 +15,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 THEMES = {p.parent.name for p in (ROOT / "data/art/themes").rglob("theme.json")}
-LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha"}
+LAYOUT_STAGES = {"scene", "pose", "head", "clothing", "armor", "showcase", "brand", "card", "alpha", "polish", "final"}
 STAGE_FOLDER = {"pose": "poses"}
 BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
@@ -143,6 +143,37 @@ def family(card, group, root=None):
 
 def stage_folder(stage):
     return STAGE_FOLDER.get(stage, stage)
+
+
+# The pipeline, in order: a workflow and its ComfyUI output sit under <Hero>/<phase>/..., so the folders read like the process (the prompts and
+# the card folders stay by stage). Motion is a bench, not a phase: a point-in-time test run on any phase's image.
+LAYER_TYPES = {"base", "backless", "lingerie", "athletic", "one-piece", "bikini", "swimwear"}
+
+
+def phase_path(stage, family):
+    """Folders below the hero for a workflow and its output, from the prompt's stage folder and family folders; None for stages outside the hero chain."""
+    fam = list(family)
+    if stage == "alpha":
+        if fam[:1] == ["bare"]:
+            return ["1_Alpha", "2b_Experiments", fam[1]] if len(fam) > 1 else ["1_Alpha", "2_Bare"]
+        return ["1_Alpha", "3_Footwear"] if fam[:1] == ["footwear"] else ["1_Alpha", "1_Prime"]
+    if stage == "poses":
+        if not fam:
+            return ["1_Alpha"]
+        return ["2_Studies", "body"] if fam == ["views"] else ["3_Layers", *fam]
+    if stage in ("head", "hair"):
+        return ["2_Studies", stage, *fam]
+    if stage in ("clothing", "armor", "showcase"):
+        return ["4_Wardrobe", stage, *fam]
+    if stage == "scene":
+        return ["5_Scenes", *fam]
+    if stage in ("polish", "final"):
+        return ["6_Finish", stage]
+    if stage == "video":
+        return ["7_Video", *fam]
+    if stage == "motion":
+        return ["Bench", "motion", *fam]
+    return None
 
 
 def output_for(card, group, hero, stem, root=None):

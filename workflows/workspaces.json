@@ -20,26 +20,18 @@
       "status": "active",
       "legacy": true,
       "pull": false,
-      "role": "UAT: her own acceptance workspace. Still holds the original hand-made experiments until the generated set replaces them."
+      "role": "UAT: her own workspace, kept in sync with Drakn Sisters. Still holds the original hand-made experiments until her armor, clothing and scenes are covered by the generated set. The other sisters have no workspace of their own; add one only while you need it."
     },
-    "Draknara": {"output": "Sovereign Territories", "status": "active", "role": "UAT: her own studio workspace. Holds all of her non-scene work (poses, motions, clothing, armor, head shots, showcase); her scenes stay in the dev project until proven."},
-    "Draknava": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakniss": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakneta": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknira": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknisa": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Drakniya": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknora": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
-    "Draknoxa": {"output": "Sovereign Territories", "status": "skeleton", "role": "UAT: her own acceptance workspace, just started."},
     "Angel Primes": {"output": "Angel Primes", 
       "status": "planned",
       "role": "UAT: one workspace for the Angel Primes test bed (Angelica and Angelo): generalized hair, cosmetics, views, outfits. A test bed: it never produces production artifacts."
     },
     "Drakn Sisters": {"output": "Sovereign Territories", 
       "status": "active",
-      "role": "UAT: batch workspace for all ten sisters: every stage (poses, motion, armor, clothing, showcase, scenes, video), laid out stage first (stage/family/Hero) so one stage across all sisters sits together. Each sister's own workspace holds the same work for fine tuning."
+      "role": "UAT: the workspace for all ten sisters, laid out hero first and by pipeline phase (Hero/1_Alpha ... 7_Video, Bench), so each sister's folder reads like the process."
     },
-    "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes."},
+    "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes, laid out like Drakn Sisters."},
+    "Elder Dragons": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for the ten Elder Dragons (text-to-image plates, heads and lairs)."},
     "Sovereign Dawn Series": {"output": "Sovereign Dawn Series", 
       "status": "planned",
       "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
@@ -49,26 +41,27 @@
     "uat": [
       {"groups": ["angel-primes"], "workspace": "Angel Primes"},
       {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
+      {"groups": ["elder-dragons"], "workspace": "Elder Dragons"},
       {"groups": ["drakn-sisters"], "workspace": "Drakn Sisters"},
-      {"groups": ["drakn-sisters"], "workspace": "{hero}"}
+      {"groups": ["drakn-sisters"], "heroes": ["Drakness"], "workspace": "Drakness"}
     ],
     "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Sovereign Dawn Series"}]
   },
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
-  "inputRoles": {"alpha/": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "default": "bare"},
+  "inputRoles": {"alpha/": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
   "standardSize": [944, 1104],
   "denoise": {"pick": "high", "golden": 0.7},
-  "inputs": {"Drakness": {"prime": "Drakness_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakness_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakness_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakness_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknara": {"prime": "Draknara_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknara_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknara_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknara_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknava": {"prime": "Draknava_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknava_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknava_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknava_Qwen_Alpha_3_Heels_00000.png"},
-    "Drakneta": {"prime": "Drakneta_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakneta_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakneta_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakneta_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknira": {"prime": "Draknira_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknira_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknira_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknira_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknisa": {"prime": "Draknisa_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknisa_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknisa_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknisa_Qwen_Alpha_3_Heels_00000.png"},
-    "Drakniss": {"prime": "Drakniss_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakniss_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakniss_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakniss_Qwen_Alpha_3_Heels_00000.png"},
-    "Drakniya": {"prime": "Drakniya_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakniya_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakniya_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakniya_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknora": {"prime": "Draknora_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknora_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknora_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknora_Qwen_Alpha_3_Heels_00000.png"},
-    "Draknoxa": {"prime": "Draknoxa_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknoxa_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknoxa_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknoxa_Qwen_Alpha_3_Heels_00000.png"}, "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"},
+  "inputs": {"Drakness": {"prime": "Drakness_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakness_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakness_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakness_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakness_Qwen_Scene_00000.png", "polish": "Drakness_Qwen_Polish_00000.png"},
+    "Draknara": {"prime": "Draknara_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknara_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknara_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknara_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknara_Qwen_Scene_00000.png", "polish": "Draknara_Qwen_Polish_00000.png"},
+    "Draknava": {"prime": "Draknava_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknava_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknava_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknava_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknava_Qwen_Scene_00000.png", "polish": "Draknava_Qwen_Polish_00000.png"},
+    "Drakneta": {"prime": "Drakneta_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakneta_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakneta_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakneta_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakneta_Qwen_Scene_00000.png", "polish": "Drakneta_Qwen_Polish_00000.png"},
+    "Draknira": {"prime": "Draknira_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknira_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknira_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknira_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknira_Qwen_Scene_00000.png", "polish": "Draknira_Qwen_Polish_00000.png"},
+    "Draknisa": {"prime": "Draknisa_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknisa_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknisa_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknisa_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknisa_Qwen_Scene_00000.png", "polish": "Draknisa_Qwen_Polish_00000.png"},
+    "Drakniss": {"prime": "Drakniss_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakniss_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakniss_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakniss_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakniss_Qwen_Scene_00000.png", "polish": "Drakniss_Qwen_Polish_00000.png"},
+    "Drakniya": {"prime": "Drakniya_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakniya_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakniya_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakniya_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakniya_Qwen_Scene_00000.png", "polish": "Drakniya_Qwen_Polish_00000.png"},
+    "Draknora": {"prime": "Draknora_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknora_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknora_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknora_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknora_Qwen_Scene_00000.png", "polish": "Draknora_Qwen_Polish_00000.png"},
+    "Draknoxa": {"prime": "Draknoxa_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknoxa_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknoxa_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknoxa_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknoxa_Qwen_Scene_00000.png", "polish": "Draknoxa_Qwen_Polish_00000.png"}, "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"},
   "photos": {
     "Drakness": "drakness_image_7500527121164427158_944x1104.png",
     "Draknara": "draknara_image_7500298757710195803_944x1104.png",
@@ -85,8 +78,10 @@
     "poses": "workflows/_templates/ST1_Qwen_A_Pose.json",
     "default": "workflows/_templates/ST2_Qwen_Edit.json",
     "text": "workflows/_templates/ST0_Qwen_Text.json",
-    "video": "workflows/_templates/ST6_MiniMax_Video.json"
+    "video": "workflows/_templates/ST6_MiniMax_Video.json",
+    "byStage": {"polish": "workflows/_templates/ST4_Qwen_Polish.json"}
   },
+  "stageEngines": {"polish": ["qwen"], "final": ["firered"]},
   "engines": {
     "firered": {
       "template": "workflows/_templates/ST3_FireRed_Final.json",
@@ -105,7 +100,6 @@
     }
   },
   "stageFolders": {"scene": "scenes"},
-  "layouts": {"Drakn Sisters": "stage-first"},
   "textGroups": {"sovereign-territories": ["key-art", "plate", "title", "logo", "icon"], "sovereign-dawn": ["card"]},
   "skipGroups": ["elder-dragons", "drakn-bound"]
 }

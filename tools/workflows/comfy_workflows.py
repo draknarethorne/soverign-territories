@@ -49,6 +49,8 @@ import sys
 import uuid
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "generators"))
+import art_layout  # noqa: E402  (phase_path: the pipeline folders of a workflow and its output)
 WF = ROOT / "workflows"
 PROMPTS = ROOT / "prompts"
 CFG_PATH = WF / "workspaces.json"
@@ -355,7 +357,7 @@ def node_of(wf, kind):
 
 def save_node(wf):
     """The node that names the output files: SaveImage for pictures, SaveVideo for animations."""
-    return node_of(wf, "SaveImage") or node_of(wf, "SaveVideo")
+    return node_of(wf, "SaveImage") or node_of(wf, "SaveImageAdvanced") or node_of(wf, "SaveVideo")
 
 
 def get_values(wf):
@@ -515,8 +517,10 @@ def prompt_index(cfg, engine="qwen"):
             continue
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
         folder = cfg.get("stageFolders", {}).get(stagedir, stagedir)
+        phased = art_layout.phase_path(stagedir, family)
+        dirs = phased if phased is not None else [folder] + family
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
-                    "prefix": "/".join([group, hero, folder] + family + [name])})
+                    "prefix": "/".join([group, hero] + dirs + [name])})
     return out
 
 
@@ -579,7 +583,7 @@ def denoise_for(cfg, prompt_text, role):
     lo = float(m.group(1))
     hi = float(m.group(2) or lo)
     if lo >= 1.0:
-        return float(rule.get("golden", 0.7)) if role in ("prime", "apose", "bare") else 1.0
+        return float(rule.get("golden", 0.7)) if role in ("prime", "apose", "bare", "scene", "polish") else 1.0
     return {"low": lo, "mid": round((lo + hi) / 2, 2)}.get(rule.get("pick", "high"), hi)
 
 
@@ -1294,6 +1298,7 @@ def cmd_make(args):
             i["engine"] = engine
         if engine == "firered" and not (args.stage or args.cls):
             its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])]
+        its = [i for i in its if engine in cfg.get("stageEngines", {}).get(i["stage"], [engine])]  # e.g. final is FireRed only
         items += its
     if args.group:
         items = [i for i in items if i["group"] == args.group]
@@ -1327,7 +1332,7 @@ def cmd_make(args):
         is_apose = it["stage"] == "alpha" and not it["family"]  # Alpha 1 Prime: the only workflow that takes the hero's source photo
         is_text = is_text_item(cfg, it)
         master = ROOT / (cfg["engines"][it["engine"]]["template"] if it["engine"] in ("firered", "minimax")
-                         else cfg["templates"]["text" if is_text else "poses" if is_apose else "default"])
+                         else cfg["templates"].get("byStage", {}).get(it["stage"]) or cfg["templates"]["text" if is_text else "poses" if is_apose else "default"])
         if not master.exists():
             sys.exit(f"Master template not found: {master}")
         wf = read_wf(master)
@@ -1503,7 +1508,7 @@ def inputs_status(cfg):
         conf = cfg.get("inputs", {}).get(h)
         conf = conf if isinstance(conf, dict) else {}
         print(h)
-        for role, name in (("photo", cfg["photos"].get(h)), ("prime", conf.get("prime")), ("bare", conf.get("bare")), ("apose", conf.get("apose")), ("heels", conf.get("heels"))):
+        for role, name in (("photo", cfg["photos"].get(h)), ("prime", conf.get("prime")), ("bare", conf.get("bare")), ("apose", conf.get("apose")), ("heels", conf.get("heels")), ("scene", conf.get("scene")), ("polish", conf.get("polish"))):
             if not name:
                 print(f"    {role:6} -")
                 continue
@@ -1522,7 +1527,7 @@ def set_inputs(cfg, args):
         cfg["photos"][hero] = args.photo
     conf = cfg["inputs"].get(hero)
     conf = conf if isinstance(conf, dict) else {}
-    for role in ("prime", "bare", "apose", "heels"):
+    for role in ("prime", "bare", "apose", "heels", "scene", "polish"):
         if getattr(args, role):
             conf[role] = getattr(args, role)
     cfg["inputs"][hero] = conf
@@ -1705,6 +1710,8 @@ def main(argv=None):
     s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
     s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
     s.add_argument("--heels", help="with --set: Heels golden A-pose file name")
+    s.add_argument("--scene", help="with --set: the chosen scene image (Polish reads it)")
+    s.add_argument("--polish", help="with --set: the chosen polished image (Final reads it)")
     s.add_argument("--bare", help="with --set: Alpha 2 Bare image (bare skin, individual figure)")
     s = sub.add_parser("denoise")
     common(s)
