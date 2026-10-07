@@ -110,8 +110,10 @@ python tools/workflows/comfy_workflows.py deploy --to uat --hero Drakness --patc
 ```
 
 During a session you can point a workflow at any other image; a reset (or `--reset-inputs`) puts it back. To keep a custom input, save the workflow under
-`zz_Shots/`. When the golden images are chosen, rename them (for example `Drakness_Golden_BarefootPose.png`), keep them in the repo's input list and change the two
-names in `inputs`; a reset then repoints every workflow.
+`zz_Shots/`. The golden images are named by step with a `_00000` counter, so they sort above the numbered renders: `<Hero>_Qwen_Alpha_1_Prime_00000.png`,
+`<Hero>_Qwen_Alpha_2_Bare_00000.png`, `<Hero>_Qwen_Alpha_3_Barefoot_00000.png` and `<Hero>_Qwen_Alpha_3_Heels_00000.png`. These are already the names in `inputs`, so
+dropping a chosen render into a workspace's input folder under that name is all it takes; `inputs --reset` repoints every workflow (a missing file is reported, not copied).
+Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tuned.
 
 **Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
 before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen

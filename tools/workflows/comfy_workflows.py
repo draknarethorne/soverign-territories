@@ -975,6 +975,34 @@ def same_copy(dev_p, uat_p, master_p):
     return get_values(a) == get_values(b) == get_values(m) and input_image(a) == input_image(b)
 
 
+def cleanup_orphans(cfg, args):
+    """Move workflows named like generated ones that no prompt in the repo defines any more (a renamed or removed card) to backup.
+    Needs --match (end it with $ for a regex) so only what you name is touched; zz_ folders, curated and test files are never moved."""
+    if not args.match:
+        sys.exit("--orphans needs --match, e.g. --match \"_X_Pose(_Barefoot|_Heels)?$\"")
+    repo, cur, tst = repo_files(cfg), curated_files(), test_files()
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    moved = 0
+    for ws in args.workspace or list(cfg["workspaces"]):
+        if not install_exists(cfg, ws, args.root):
+            continue
+        d = install_dir(cfg, ws, args.root)
+        for name, p in sorted(install_files(cfg, ws, args.root).items()):
+            h = hero_of(name)
+            if not h or name in repo or name in cur or name in tst or is_template(cfg, name) or excluded(cfg, name):
+                continue
+            rel = p.relative_to(d)
+            if rel.parts[0].startswith("zz_") or (args.hero and h.lower() != args.hero.lower()) or not name_matches(args.match, name):
+                continue
+            print(f"  {'move ' if args.apply else 'would move'}  {ws}: {rel.as_posix()}")
+            moved += 1
+            if args.apply:
+                b = BACKUPS / stamp / (ws + " (orphans)") / rel
+                b.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(p), str(b))
+    print(f"orphans: {moved} workflow(s) " + ("moved to workflows/.sync/backup" if args.apply else "would be moved (preview; use --apply)"))
+
+
 def cmd_cleanup(args):
     """Remove plain duplicates from the dev workspace once the same workflow sits in its routed UAT workspace(s).
 
@@ -982,6 +1010,8 @@ def cmd_cleanup(args):
     Anything else stays: files not in the repo (yours, curated or renamed), edited copies, and files not yet delivered.
     Strict by default (identical graphs); --loose ignores seeds and other values that change every run. Default is a preview; --apply moves the duplicates to workflows/.sync/backup/ (nothing is deleted)."""
     cfg = load_cfg()
+    if args.orphans:
+        return cleanup_orphans(cfg, args)
     repo = repo_files(cfg)
     groups = hero_groups()
     src = args.workspace[0] if args.workspace else cfg["dev"][0]
@@ -1473,7 +1503,7 @@ def inputs_status(cfg):
         conf = cfg.get("inputs", {}).get(h)
         conf = conf if isinstance(conf, dict) else {}
         print(h)
-        for role, name in (("photo", cfg["photos"].get(h)), ("prime", conf.get("prime")), ("bare", conf.get("bare")), ("apose", conf.get("apose"))):
+        for role, name in (("photo", cfg["photos"].get(h)), ("prime", conf.get("prime")), ("bare", conf.get("bare")), ("apose", conf.get("apose")), ("heels", conf.get("heels"))):
             if not name:
                 print(f"    {role:6} -")
                 continue
@@ -1492,11 +1522,11 @@ def set_inputs(cfg, args):
         cfg["photos"][hero] = args.photo
     conf = cfg["inputs"].get(hero)
     conf = conf if isinstance(conf, dict) else {}
-    for role in ("prime", "bare", "apose"):
+    for role in ("prime", "bare", "apose", "heels"):
         if getattr(args, role):
             conf[role] = getattr(args, role)
     cfg["inputs"][hero] = conf
-    print(f"{hero}: photo={cfg['photos'].get(hero)} prime={conf.get('prime')} bare={conf.get('bare')} apose={conf.get('apose')}")
+    print(f"{hero}: photo={cfg['photos'].get(hero)} prime={conf.get('prime')} bare={conf.get('bare')} apose={conf.get('apose')} heels={conf.get('heels')}")
     if args.dry_run:
         print("(dry run, nothing written)")
     else:
@@ -1637,6 +1667,7 @@ def main(argv=None):
     s.add_argument("--apply", action="store_true", help="really move the duplicates to backup (default: preview only)")
     s.add_argument("--loose", action="store_true", help="treat a dev file as a duplicate when prompts and input image match (ignores seeds and other run-to-run changes)")
     s.add_argument("--show", type=int, default=5, help="names to list per kept reason")
+    s.add_argument("--orphans", action="store_true", help="instead: move workflows no prompt defines any more (renamed or removed cards) to backup; needs --match, honours -w and --hero")
     s = sub.add_parser("fork")
     common(s)
     s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
@@ -1666,11 +1697,14 @@ def main(argv=None):
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
     s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
     s.add_argument("--hero", help="with --reset: only this hero")
+    s.add_argument("--stage", help="with --reset: only this prompt folder (alpha, poses, armor ...)")
+    s.add_argument("--match", help="with --reset: only workflows whose name contains this")
     s.add_argument("--status", action="store_true", help="per hero: the photo, A-pose and bare-skin images, where they are found and whether they match standardSize")
     s.add_argument("--set", metavar="HERO", help="write --photo/--prime/--bare/--apose for this hero into workspaces.json (then run --reset)")
     s.add_argument("--photo", help="with --set: original photo file name")
     s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
     s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
+    s.add_argument("--heels", help="with --set: Heels golden A-pose file name")
     s.add_argument("--bare", help="with --set: Alpha 2 Bare image (bare skin, individual figure)")
     s = sub.add_parser("denoise")
     common(s)

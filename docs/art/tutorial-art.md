@@ -38,7 +38,7 @@ images that every later stage starts from. You can intercept an Alpha workflow a
 | Stage | Folder | Incoming image | Produces |
 | --- | --- | --- | --- |
 | 1. Alpha 1 Prime | `alpha/` | an original photo (any shot you like) | the Prime A-pose: full length, metallic bikini, barefoot, standard figure, bust and pose set |
-| 2. Alpha 2 Bare | `alpha/bare/` | the Prime from stage 1 | the body with the bikini removed, her individual build and likeness set, in one of several looks (below) |
+| 2. Alpha 2 Bare | `alpha/bare/` | the Prime from stage 1 | the body with the bikini removed, her individual build and likeness set: `Alpha_2_Bare_Figure` is the main step (your hand-made `Alpha_2_Bare_Skin` shot is temporary), the other looks are below |
 | 3. Alpha 3 Barefoot, Heels | `alpha/footwear/` | the Bare image from stage 2 | the bikini A-pose on her own figure, barefoot or in heels |
 | 4. Other poses | `motion/`, `poses/` and any workflow that takes an incoming A-pose | the Bare image, with the body contour line on | poses that keep her real form and do not carry the bikini |
 | 5. Outfit, armor, showcase | `clothing/`, `armor/`, `showcase/` | the bare image, or a pose from stage 3 | her in the outfit, armor or a styled shot |

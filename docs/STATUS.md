@@ -100,8 +100,10 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 - **The Alpha stage (Oct 2026).** The first workflows of a hero are not poses: they create her likeness, so they have their own stage and folder, `alpha/`
   (sorts first). Alpha 1 Prime (original photo to the bikini A-pose, standard figure), Alpha 2 Bare (Prime to bare skin: individual build, hair, eyes, skin and
   bust re-asserted; the figure and chest looks sit flat in `alpha/bare/`, next to the hand-made `Alpha_2_Bare_Skin` shots; the coverings and celestial experiments are Alpha 2b in `alpha/bare/coverings/` and `alpha/bare/celestial/`) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
-  Bare, Barefoot and Heels are the three golden images; `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose`
-  (`workspaces.json` `inputRoles`, `inputs --set --prime`). Sisters only so far; dragons, bound heroes and Angel Primes keep their X Pose in `poses/`. The Barefoot and
+  `Alpha_2_Bare_Figure` is the intended Bare step; the hand-made `Alpha_2_Bare_Skin` shots are temporary while it is tuned and are not kept long term.
+  Bare, Barefoot and Heels are the three golden images, named `<Hero>_Qwen_Alpha_1_Prime|Alpha_2_Bare|Alpha_3_Barefoot|Alpha_3_Heels_00000.png` (the `_00000`
+  sorts above the numbered renders); `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose` (the Barefoot image), `heels`
+  (`workspaces.json` `inputRoles` and `inputs`, `inputs --set --prime`). Sisters only so far; dragons, bound heroes and Angel Primes keep their X Pose in `poses/`. The Barefoot and
   Heels cards still use the photo-oriented `pose-female-human.txt`; an edit-focused template for them is open, as is the same for the other stages.
 - **Individual physique, standard X Pose (Oct 2026).** The 10 sisters and 10 bound heroes each carry their own build (`physique`: `torso` and `arms` are new optional fields; the male
   schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_.md`); its colours, metals, prompt-assembly sections and
