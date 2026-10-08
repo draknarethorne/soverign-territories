@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the spring bloom cleric outfit render",
   "components": {
     "pose": "data/art/motion/action/bow-draw-aim.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard.json",
     "expression": "data/art/themes/seasonal/spring/motion/expressions/bloom-radiance.json"
   },

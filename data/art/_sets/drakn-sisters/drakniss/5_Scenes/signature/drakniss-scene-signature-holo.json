@@ -7,7 +7,7 @@
   "finish": "holo",
   "components": {
     "pose": "She stands with the staff raised in one hand and her other palm open to the light, rays pouring from behind her like a halo, chin lifted, a serene, radiant gaze straight to the camera; full figure visible.",
-    "expression": "a serene, warm smile, eyes soft with compassion.",
+    "expression": "data/art/heroes/drakn-sisters/drakniss/expressions/serene-warm-smile-eyes-soft-with.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

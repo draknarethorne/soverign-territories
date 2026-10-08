@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/sets/buccaneer-sash-set.json",
     "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
     "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
-    "effects": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknoxa/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
     "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json",
     "makeup": "data/art/themes/adventure/pirate/cosmetics/makeup/pirate/salt-kohl-and-sunburn.json"

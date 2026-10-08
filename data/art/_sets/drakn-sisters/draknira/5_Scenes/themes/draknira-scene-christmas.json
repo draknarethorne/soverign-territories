@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/christmas/wardrobe/clothing/dresses/holly-velvet-gown.json",
     "jewelry": "data/art/themes/seasonal/christmas/wardrobe/jewelry/sets/snowflake-and-bell-set.json",
     "legs_feet": "data/art/themes/seasonal/christmas/wardrobe/footwear/boots/fur-cuffed-holiday-boots.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/christmas/backgrounds/fantasy/frozen/snowy-christmas-market.json",
     "headwear": "data/art/themes/seasonal/christmas/wardrobe/headwear/hats/fur-trimmed-santa-hat.json",
     "holding": "data/art/themes/seasonal/christmas/wardrobe/weapons/staves/candy-cane-staff.json",

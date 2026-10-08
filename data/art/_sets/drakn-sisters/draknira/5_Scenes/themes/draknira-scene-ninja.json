@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/ninja/wardrobe/armor/leather/shadowclan-light-armor.json",
     "jewelry": "data/art/themes/eastern/ninja/wardrobe/jewelry/sets/shuriken-charm-set.json",
     "legs_feet": "data/art/themes/eastern/ninja/wardrobe/footwear/boots/split-toe-shinobi-boots.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/ninja/backgrounds/fantasy/camp/moonlit-pagoda-rooftops.json",
     "headwear": "data/art/themes/eastern/ninja/wardrobe/headwear/hoods/half-mask-and-hood.json",
     "holding": "data/art/themes/eastern/ninja/wardrobe/weapons/throwing/shuriken-fan.json",

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/metrael/clothing/metrael-signature-attire",
+  "kind": "wearing",
+  "name": "Metrael's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/leather-jerkin-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a six-pointed snowflake of frost in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Metrael: the library piece wardrobe/clothing/sets/leather-jerkin-and-trousers.json plus ice and alignment details."
+}

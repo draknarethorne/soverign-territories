@@ -1,0 +1,10 @@
+{
+  "artId": "metrael-hair-high-bun-trailing-tendrils",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "component": "data/art/races/human/cosmetics/hair/updo/high-bun-trailing-tendrils.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/2_Studies/hair/updo/Metrael_Hair_Updo_HighBunTrailingTendrils.txt",
+  "denoise": "~0.4-0.6"
+}

@@ -1,0 +1,11 @@
+{
+  "artId": "sammara-hair-tropical-isles",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "component": "data/art/themes/southern/tropical-isles/cosmetics/hair/waves/long-sea-waves-and-flower.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/2_Studies/hair/themes/Sammara_Hair_TropicalIsles.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Tropical Isles theme hairstyle."
+}

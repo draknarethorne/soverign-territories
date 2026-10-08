@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/stands-angled-about-45-degrees-to",
+  "kind": "pose",
+  "name": "Stands angled about 45 degrees to",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "He stands angled about 45 degrees to the camera in a heroic three-quarter pose, weight on the back leg, one shoulder forward, glancing toward the camera with a bold, confident look and a slight smirk, a light breeze moving his hair."
+}

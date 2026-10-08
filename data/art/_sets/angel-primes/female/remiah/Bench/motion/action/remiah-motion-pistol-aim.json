@@ -1,0 +1,10 @@
+{
+  "artId": "remiah-motion-pistol-aim",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/Bench/motion/action/Remiah_Motion_Action_PistolAim.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/pistol-aim.json"
+}

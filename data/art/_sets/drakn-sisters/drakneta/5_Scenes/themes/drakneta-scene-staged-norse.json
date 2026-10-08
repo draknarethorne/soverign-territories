@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the norse summoner outfit render",
   "components": {
     "pose": "data/art/motion/standing/hand-on-hip-power.json",
-    "effects": "Forks of {{MAGIC}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/forks-of-lightning-flicker-across-the-night.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
-    "expression": "a fierce, focused look and a hint of a battle-ready grin."
+    "expression": "data/art/heroes/drakn-sisters/drakneta/expressions/fierce-focused-look-and-a-hint.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Drakneta/5_Scenes/themes/Drakneta_Scene_Staged_Norse.txt",

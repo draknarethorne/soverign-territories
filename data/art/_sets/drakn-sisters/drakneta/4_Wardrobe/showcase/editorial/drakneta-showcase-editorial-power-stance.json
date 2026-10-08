@@ -6,7 +6,7 @@
   "name": "Editorial: Power Stance",
   "components": {
     "wearing": "data/art/wardrobe/clothing/gowns/liquid-silk-gown.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
     "pose": "data/art/motion/standing/hand-on-hip-power.json",
     "background": "data/art/backgrounds/studio/primary-gradient.json",

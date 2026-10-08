@@ -8,7 +8,7 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Sylvanya, a distant silhouette above the treeline beyond the terrace, emerald-green wings like leaves in the dusk",
+    "companion": "data/art/heroes/drakn-sisters/drakniya/companion/her-aligned-elder-dragon-sylvanya-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/evening/vine-garden-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",

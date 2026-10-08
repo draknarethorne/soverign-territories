@@ -1,0 +1,11 @@
+{
+  "artId": "camaris-hair-roman",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "component": "data/art/themes/ancient/roman/cosmetics/hair/updo/roman-tutulus-updo.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/2_Studies/hair/themes/Camaris_Hair_Roman.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Roman theme hairstyle."
+}

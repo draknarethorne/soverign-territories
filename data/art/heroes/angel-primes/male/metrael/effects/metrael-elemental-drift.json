@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/metrael/effects/metrael-elemental-drift",
+  "kind": "effects",
+  "name": "Metrael's elemental drift",
+  "description": "A drift of swirling frost, snowflakes and ice crystals circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Metrael: written for this angel."
+}

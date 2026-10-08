@@ -1,0 +1,10 @@
+{
+  "artId": "seraphine-motion-kneeling-glamour",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/Bench/motion/dynamic/Seraphine_Motion_Dynamic_KneelingGlamour.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/dynamic/kneeling-glamour.json"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakness/expressions/calm-imperious-stare-utterly-sure-of",
+  "kind": "expression",
+  "name": "Calm imperious stare utterly sure of",
+  "expression": "a calm, imperious stare, utterly sure of her command over the dead.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

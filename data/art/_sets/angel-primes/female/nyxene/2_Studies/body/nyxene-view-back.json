@@ -1,0 +1,15 @@
+{
+  "artId": "nyxene-view-back",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "name": "Back",
+  "components": {
+    "view": "data/art/studio/views/body/back.json",
+    "underlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
+  },
+  "template": "data/art/_templates/heroes/pose-view-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/2_Studies/body/Nyxene_View_back.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Reference-library body view, edited from the front A-pose. Scaffolded."
+}

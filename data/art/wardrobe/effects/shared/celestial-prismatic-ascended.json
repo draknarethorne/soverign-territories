@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/celestial-prismatic-ascended",
+  "kind": "effects",
+  "name": "Celestial prismatic ascended",
+  "description": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "Extracted from 38 cards that carried this sentence inline; edit it here and every one follows."
+}

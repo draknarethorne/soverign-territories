@@ -5,11 +5,11 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "name": "Celestial Rising",
   "components": {
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/celestial-plate-armor.json",
-    "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+    "effects": "data/art/wardrobe/effects/shared/celestial-starlight-rising.json",
     "background": "data/art/backgrounds/studio/starfield-indigo.json"
   },
   "template": "data/art/_templates/heroes/showcase-human.txt",

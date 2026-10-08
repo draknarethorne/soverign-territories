@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/sammara/clothing/sammara-signature-gown",
+  "kind": "wearing",
+  "name": "Sammara's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/sweetheart-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a coiled serpent beside a nightshade bloom in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sammara: the library piece wardrobe/clothing/gowns/sweetheart-gown.json plus poison and alignment details."
+}

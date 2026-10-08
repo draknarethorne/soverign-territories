@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/radiant-sun-realm",
+  "kind": "background",
+  "name": "Radiant Sun (grounded)",
+  "description": "a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone",
+  "mood": "radiant, calm",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/radiant-sun-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

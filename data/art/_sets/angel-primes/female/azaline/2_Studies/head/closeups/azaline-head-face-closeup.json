@@ -3,11 +3,12 @@
   "kind": "base-set",
   "stage": "head",
   "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
-  "template": "data/art/_templates/heroes/head-human.txt",
-  "output": "prompts/angel-primes/female/Azaline/2_Studies/head/closeups/Azaline_Head_Face_Closeup.txt",
-  "denoise": "~0.4-0.6",
-  "name": "Face close-up",
+  "name": "Face Close-up",
   "components": {
     "framing": "data/art/studio/framing/face-closeup.json"
-  }
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/2_Studies/head/closeups/Azaline_Head_face_closeup.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head framing (front view). Scaffolded."
 }

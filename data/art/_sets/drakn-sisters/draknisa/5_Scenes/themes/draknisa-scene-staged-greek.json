@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the greek enchanter outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Soft droplets of water hang suspended in the sea air around her, faint {{MAGIC}} light rippling through them.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/soft-droplets-of-water-hang-suspended-in.json",
     "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json",
-    "expression": "a sly, knowing smile, eyes half-lidded with the calm of the tide."
+    "expression": "data/art/heroes/drakn-sisters/draknisa/expressions/sly-knowing-smile-eyes-half-lidded-2.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/5_Scenes/themes/Draknisa_Scene_Staged_Greek.txt",

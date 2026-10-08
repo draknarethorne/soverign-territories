@@ -1,0 +1,13 @@
+{
+  "artId": "zadriel-x-pose-running-shorts",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/3_Layers/athletic/Zadriel_X_Pose_RunningShorts.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/running-shorts.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

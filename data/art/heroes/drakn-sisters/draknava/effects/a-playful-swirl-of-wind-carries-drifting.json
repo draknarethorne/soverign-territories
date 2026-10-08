@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknava/effects/a-playful-swirl-of-wind-carries-drifting",
+  "kind": "effects",
+  "name": "A playful swirl of wind carries drifting",
+  "description": "A playful swirl of wind carries drifting mist and loose heather blossoms around her, {{MAGIC}} light glinting within the breeze.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

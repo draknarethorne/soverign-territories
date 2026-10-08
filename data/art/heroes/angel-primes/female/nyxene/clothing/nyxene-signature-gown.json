@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/nyxene/clothing/nyxene-signature-gown",
+  "kind": "wearing",
+  "name": "Nyxene's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/wrap-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a crescent moon pierced by a single star in {{ACCENT_SOFT}}; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Nyxene: the library piece wardrobe/clothing/gowns/wrap-gown.json plus darkness and alignment details."
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/greek/wardrobe/clothing/gowns/chiton-peplos-gown.json",
     "jewelry": "data/art/themes/ancient/greek/wardrobe/jewelry/sets/gold-laurel-jewelry-set.json",
     "legs_feet": "data/art/themes/ancient/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
-    "effects": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json",
     "headwear": "data/art/themes/ancient/greek/wardrobe/headwear/wreaths/gold-laurel-wreath.json",
     "holding": "data/art/heroes/drakn-sisters/drakneta/weapons/storm-spear.json",

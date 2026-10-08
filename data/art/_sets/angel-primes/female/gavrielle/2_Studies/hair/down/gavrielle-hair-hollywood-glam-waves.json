@@ -1,0 +1,10 @@
+{
+  "artId": "gavrielle-hair-hollywood-glam-waves",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "component": "data/art/races/human/cosmetics/hair/down/hollywood-glam-waves.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/2_Studies/hair/down/Gavrielle_Hair_Down_HollywoodGlamWaves.txt",
+  "denoise": "~0.4-0.6"
+}

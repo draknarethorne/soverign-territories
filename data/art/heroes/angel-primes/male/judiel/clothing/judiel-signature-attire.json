@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/judiel/clothing/judiel-signature-attire",
+  "kind": "wearing",
+  "name": "Judiel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/gambeson-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a forked lightning bolt inside a ring of cloud in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Judiel: the library piece wardrobe/clothing/sets/gambeson-and-trousers.json plus lightning and alignment details."
+}

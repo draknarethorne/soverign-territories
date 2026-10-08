@@ -1,0 +1,10 @@
+{
+  "artId": "judiel-hair-wet-look-slicked-back",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "component": "data/art/races/human/cosmetics/hair/down/wet-look-slicked-back.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/2_Studies/hair/down/Judiel_Hair_Down_WetLookSlickedBack.txt",
+  "denoise": "~0.4-0.6"
+}

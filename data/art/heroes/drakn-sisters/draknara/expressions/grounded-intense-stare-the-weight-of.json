@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknara/expressions/grounded-intense-stare-the-weight-of",
+  "kind": "expression",
+  "name": "Grounded intense stare the weight of",
+  "expression": "a grounded, intense stare, the weight of the earth in her gaze.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows."
+}

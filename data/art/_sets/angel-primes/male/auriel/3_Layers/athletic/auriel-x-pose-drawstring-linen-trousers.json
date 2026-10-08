@@ -1,0 +1,13 @@
+{
+  "artId": "auriel-x-pose-drawstring-linen-trousers",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/3_Layers/athletic/Auriel_X_Pose_DrawstringLinenTrousers.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/drawstring-linen-trousers.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

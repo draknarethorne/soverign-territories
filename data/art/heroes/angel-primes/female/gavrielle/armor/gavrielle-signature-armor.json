@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/armor/gavrielle-signature-armor",
+  "kind": "wearing",
+  "name": "Gavrielle's signature armor",
+  "extends": "data/art/wardrobe/armor/leather/studded-leather.json",
+  "description": "+, every plate and trim engraved with a spiral of swept feathers in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Gavrielle: the library piece wardrobe/armor/leather/studded-leather.json plus wind and alignment details."
+}

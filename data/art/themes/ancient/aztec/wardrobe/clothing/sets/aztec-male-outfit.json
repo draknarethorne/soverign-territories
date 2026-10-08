@@ -1,0 +1,8 @@
+{
+  "id": "themes/ancient/aztec/wardrobe/clothing/sets/aztec-male-outfit",
+  "kind": "wearing",
+  "name": "Aztec Male Outfit",
+  "description": "a woven {{PRIMARY}} cotton breechclout with jade and gold {{ACCENT_SOFT}} border patterns, a feathered shoulder cape, and woven sandals with turquoise stones",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["aztec", "clothing", "male"]
+}

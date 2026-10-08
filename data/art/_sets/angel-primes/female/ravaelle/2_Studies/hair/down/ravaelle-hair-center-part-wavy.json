@@ -1,0 +1,10 @@
+{
+  "artId": "ravaelle-hair-center-part-wavy",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "component": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/2_Studies/hair/down/Ravaelle_Hair_Down_CenterPartWavy.txt",
+  "denoise": "~0.4-0.6"
+}

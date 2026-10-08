@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/urael/effects/urael-elemental-drift",
+  "kind": "effects",
+  "name": "Urael's elemental drift",
+  "description": "A drift of dancing flame, embers and sparks circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Urael: written for this angel."
+}

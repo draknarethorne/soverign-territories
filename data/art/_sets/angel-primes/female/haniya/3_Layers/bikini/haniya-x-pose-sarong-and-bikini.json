@@ -1,0 +1,13 @@
+{
+  "artId": "haniya-x-pose-sarong-and-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/3_Layers/bikini/Haniya_X_Pose_SarongAndBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/bikini/sarong-and-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

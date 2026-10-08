@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/athletic/running-shorts",
+  "kind": "wearing",
+  "name": "Running Shorts",
+  "description": "only {{PRIMARY}} nylon running shorts with a drawstring waist and inner mesh brief, mid-thigh cut with {{ACCENT_SOFT}} side panels; chest, abdomen, and calves bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "athletic", "running", "male"]
+}

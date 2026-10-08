@@ -1,0 +1,11 @@
+{
+  "id": "heroes/drakn-sisters/draknara/effects/celestial-prismatic-ascended",
+  "kind": "effects",
+  "name": "Celestial prismatic ascended",
+  "description": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, the totem face glowing with {{MAGIC}} light.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

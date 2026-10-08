@@ -1,0 +1,10 @@
+{
+  "id": "heroes/angel-primes/female/sammara/effects/elemental-aura",
+  "kind": "effects",
+  "name": "A drift of curling green venom mist",
+  "description": "A drift of curling green venom mist and falling drops circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 12 cards that carried this sentence inline; edit it here and every one follows."
+}

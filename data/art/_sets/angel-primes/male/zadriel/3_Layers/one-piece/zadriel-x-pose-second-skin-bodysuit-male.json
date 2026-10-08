@@ -1,0 +1,13 @@
+{
+  "artId": "zadriel-x-pose-second-skin-bodysuit-male",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/3_Layers/one-piece/Zadriel_X_Pose_SecondSkinBodysuitMale.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/one-piece/second-skin-bodysuit-male.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

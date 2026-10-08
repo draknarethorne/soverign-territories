@@ -1,0 +1,10 @@
+{
+  "artId": "haniya-motion-staff-spin",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/Bench/motion/action/Haniya_Motion_Action_StaffSpin.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/staff-spin.json"
+}

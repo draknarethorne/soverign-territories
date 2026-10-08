@@ -1,0 +1,10 @@
+{
+  "artId": "camaris-hair-drifting-back",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "component": "data/art/races/human/cosmetics/hair/down/drifting-back.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/2_Studies/hair/down/Camaris_Hair_Down_DriftingBack.txt",
+  "denoise": "~0.4-0.6"
+}

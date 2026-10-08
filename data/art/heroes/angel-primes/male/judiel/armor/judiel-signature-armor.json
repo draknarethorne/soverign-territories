@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/judiel/armor/judiel-signature-armor",
+  "kind": "wearing",
+  "name": "Judiel's signature armor",
+  "extends": "data/art/wardrobe/armor/plate/half-plate.json",
+  "description": "+, every plate and trim engraved with a forked lightning bolt inside a ring of cloud in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Judiel: the library piece wardrobe/armor/plate/half-plate.json plus lightning and alignment details."
+}

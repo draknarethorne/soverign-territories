@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/vexiel/weapons/vexiel-signature-weapon",
+  "kind": "holding",
+  "name": "Vexiel's signature weapon",
+  "extends": "data/art/wardrobe/weapons/daggers/throwing-knives.json",
+  "description": "+, its metal worked with a coiled serpent beside a nightshade bloom in {{ACCENT_SOFT}}, curling green venom mist and falling drops gathering along it when it is raised; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Vexiel: the library piece wardrobe/weapons/daggers/throwing-knives.json plus poison and alignment details."
+}

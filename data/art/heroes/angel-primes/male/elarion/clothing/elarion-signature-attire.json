@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/elarion/clothing/elarion-signature-attire",
+  "kind": "wearing",
+  "name": "Elarion's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/skintight-training-suit.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a spiral of swept feathers in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Elarion: the library piece wardrobe/clothing/sets/skintight-training-suit.json plus wind and alignment details."
+}

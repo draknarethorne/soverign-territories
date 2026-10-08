@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/lineup-square-stance",
+  "kind": "pose",
+  "name": "Lineup square stance",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "She stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from her side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; her full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of her body so she can be cut out cleanly."
+}

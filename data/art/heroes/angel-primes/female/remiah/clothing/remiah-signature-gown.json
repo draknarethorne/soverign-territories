@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/remiah/clothing/remiah-signature-gown",
+  "kind": "wearing",
+  "name": "Remiah's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/mermaid-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a forked lightning bolt inside a ring of cloud in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Remiah: the library piece wardrobe/clothing/gowns/mermaid-gown.json plus lightning and alignment details."
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/alchemist/wardrobe/clothing/dresses/lab-coat-corset-dress.json",
     "jewelry": "data/art/themes/adventure/alchemist/wardrobe/jewelry/sets/vial-pendant-set.json",
     "legs_feet": "data/art/themes/adventure/alchemist/wardrobe/footwear/boots/acid-proof-lab-boots.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/alchemist/backgrounds/fantasy/dungeons/alchemist-laboratory-bubbling.json",
     "headwear": "data/art/themes/adventure/alchemist/wardrobe/headwear/goggles/brass-lens-goggles.json",
     "makeup": "data/art/themes/adventure/alchemist/cosmetics/makeup/workshop/soot-smudge-and-glow.json"

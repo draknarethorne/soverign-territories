@@ -1,0 +1,18 @@
+{
+  "artId": "elarion-scene-staged-steppe",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/5_Scenes/themes/Elarion_Scene_Staged_Steppe.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Steppe Horde",
+  "base_description": "{{HERO}} already staged in the steppe horde outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "effects": "data/art/heroes/angel-primes/male/elarion/effects/elarion-elemental-drift.json",
+    "background": "data/art/themes/eastern/steppe/backgrounds/fantasy/mountains/wind-swept-steppe-ridge.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief."
+  },
+  "notes": "STAGED path: feed the elarion-clothing-steppe studio render; only the scene, effects and pose are added."
+}

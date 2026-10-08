@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/baracel/armor/baracel-signature-armor",
+  "kind": "wearing",
+  "name": "Baracel's signature armor",
+  "extends": "data/art/wardrobe/armor/padded/arming-doublet.json",
+  "description": "+, every plate and trim engraved with a faceted crystal set in carved stone in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: the library piece wardrobe/armor/padded/arming-doublet.json plus earth and alignment details."
+}

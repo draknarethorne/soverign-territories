@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknara/companion/her-aligned-elder-dragon-terrador-a-vast",
+  "kind": "companion",
+  "name": "Her aligned elder dragon terrador a vast",
+  "description": "her aligned Elder Dragon, Terrador, a vast distant silhouette on the far ridge beyond the terrace, antique-bronze scales catching the last light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

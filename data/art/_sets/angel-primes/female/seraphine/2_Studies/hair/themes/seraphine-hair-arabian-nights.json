@@ -1,0 +1,11 @@
+{
+  "artId": "seraphine-hair-arabian-nights",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "component": "data/art/themes/southern/arabian-nights/cosmetics/hair/braided/long-braid-with-gold-chains.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/2_Studies/hair/themes/Seraphine_Hair_ArabianNights.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Arabian Nights Sultanate theme hairstyle."
+}

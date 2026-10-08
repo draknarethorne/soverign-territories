@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/ravaelle/effects/ravaelle-elemental-drift",
+  "kind": "effects",
+  "name": "Ravaelle's elemental drift",
+  "description": "A drift of flowing water and drifting spray circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Ravaelle: written for this angel."
+}

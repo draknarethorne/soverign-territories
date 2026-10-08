@@ -1,0 +1,13 @@
+{
+  "artId": "haniya-x-pose-silk-slip-set",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/3_Layers/lingerie/Haniya_X_Pose_SilkSlipSet.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/lingerie/silk-slip-set.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

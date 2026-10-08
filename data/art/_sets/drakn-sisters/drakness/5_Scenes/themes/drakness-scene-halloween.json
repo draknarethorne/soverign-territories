@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/halloween/wardrobe/clothing/gowns/witching-hour-gown.json",
     "jewelry": "data/art/themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set.json",
     "legs_feet": "data/art/themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/forests/pumpkin-field-moonrise.json",
     "headwear": "data/art/themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json",

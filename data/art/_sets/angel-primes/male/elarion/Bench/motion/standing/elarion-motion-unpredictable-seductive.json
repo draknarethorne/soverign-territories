@@ -1,0 +1,10 @@
+{
+  "artId": "elarion-motion-unpredictable-seductive",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/Bench/motion/standing/Elarion_Motion_Standing_UnpredictableSeductive.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/standing/unpredictable-seductive.json"
+}

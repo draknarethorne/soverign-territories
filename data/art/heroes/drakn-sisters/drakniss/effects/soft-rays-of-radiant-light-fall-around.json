@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/effects/soft-rays-of-radiant-light-fall-around",
+  "kind": "effects",
+  "name": "Soft rays of radiant light fall around",
+  "description": "Soft rays of {{MAGIC}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

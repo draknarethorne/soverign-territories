@@ -1,0 +1,18 @@
+{
+  "artId": "ravaelle-scene-staged-eclipse",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/5_Scenes/themes/Ravaelle_Scene_Staged_Eclipse.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Eclipse",
+  "base_description": "{{HERO}} already staged in the eclipse outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "effects": "data/art/heroes/angel-primes/female/ravaelle/effects/ravaelle-elemental-drift.json",
+    "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing."
+  },
+  "notes": "STAGED path: feed the ravaelle-clothing-eclipse studio render; only the scene, effects and pose are added."
+}

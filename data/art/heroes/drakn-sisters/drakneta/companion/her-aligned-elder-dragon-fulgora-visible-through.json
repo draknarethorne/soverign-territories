@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/companion/her-aligned-elder-dragon-fulgora-visible-through",
+  "kind": "companion",
+  "name": "Her aligned elder dragon fulgora visible through",
+  "description": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

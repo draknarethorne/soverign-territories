@@ -1,0 +1,10 @@
+{
+  "artId": "metrael-hair-bangs-tapered",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "component": "data/art/races/human/cosmetics/hair/framed/bangs-tapered.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/2_Studies/hair/framed/Metrael_Hair_Framed_BangsTapered.txt",
+  "denoise": "~0.4-0.6"
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/peasant/wardrobe/clothing/dresses/laced-linen-village-dress.json",
     "jewelry": "data/art/themes/adventure/peasant/wardrobe/jewelry/sets/wildflower-and-bead-set.json",
     "legs_feet": "data/art/themes/adventure/peasant/wardrobe/footwear/boots/scuffed-leather-boots.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/peasant/backgrounds/fantasy/cityscape/village-market-square.json",
     "headwear": "data/art/themes/adventure/peasant/wardrobe/headwear/hats/wide-straw-hat.json",
     "makeup": "data/art/themes/adventure/peasant/cosmetics/makeup/natural/sun-kissed-freckles.json"

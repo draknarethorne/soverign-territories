@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/effects/thin-tendrils-of-toxic-vapour-drift-between",
+  "kind": "effects",
+  "name": "Thin tendrils of toxic vapour drift between",
+  "description": "Thin tendrils of {{MAGIC}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

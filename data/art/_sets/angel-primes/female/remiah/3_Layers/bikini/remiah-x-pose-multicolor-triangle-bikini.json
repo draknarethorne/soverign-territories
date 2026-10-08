@@ -1,0 +1,13 @@
+{
+  "artId": "remiah-x-pose-multicolor-triangle-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/3_Layers/bikini/Remiah_X_Pose_MulticolorTriangleBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/bikini/multicolor-triangle-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

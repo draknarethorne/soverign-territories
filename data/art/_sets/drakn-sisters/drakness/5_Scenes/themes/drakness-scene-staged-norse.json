@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the norse necromancer outfit render",
   "components": {
     "pose": "data/art/motion/action/overhead-strike.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
     "expression": "data/art/motion/expressions/intense/fierce-focused.json"
   },

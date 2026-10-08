@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/thin-arcs-of-lightning-crackle-between-the",
+  "kind": "effects",
+  "name": "Thin arcs of lightning crackle between the",
+  "description": "Thin arcs of {{MAGIC}} lightning crackle between the fingers and along the edges of the wings, the air charged and bright.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

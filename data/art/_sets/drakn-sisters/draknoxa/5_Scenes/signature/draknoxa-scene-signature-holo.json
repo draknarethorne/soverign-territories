@@ -7,7 +7,7 @@
   "finish": "holo",
   "components": {
     "pose": "She stands with the staff in one hand and a glowing vial held up between two fingers of the other, her hair stirred by rising fumes, chin slightly lowered, a sly, knowing gaze straight to the camera; full figure visible.",
-    "expression": "a sharp, calculating stare, a faint cunning smirk.",
+    "expression": "data/art/heroes/drakn-sisters/draknoxa/expressions/sharp-calculating-stare-a-faint-cunning.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

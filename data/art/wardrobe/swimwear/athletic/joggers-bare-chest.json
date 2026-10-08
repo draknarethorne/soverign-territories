@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/athletic/joggers-bare-chest",
+  "kind": "wearing",
+  "name": "Joggers (Bare Chest)",
+  "description": "only {{PRIMARY}} cotton joggers with {{ACCENT_SOFT}} side stripes, a drawstring waist and tapered ankles; chest bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "athletic", "joggers", "male"]
+}

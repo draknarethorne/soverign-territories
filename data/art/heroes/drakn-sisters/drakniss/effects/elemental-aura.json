@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Warm rays of light and drifting golden",
+  "description": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

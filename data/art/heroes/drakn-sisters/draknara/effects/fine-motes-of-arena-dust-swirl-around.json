@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknara/effects/fine-motes-of-arena-dust-swirl-around",
+  "kind": "effects",
+  "name": "Fine motes of arena dust swirl around",
+  "description": "Fine motes of {{MAGIC}} arena dust swirl around her feet, stirred by unseen earth magic.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

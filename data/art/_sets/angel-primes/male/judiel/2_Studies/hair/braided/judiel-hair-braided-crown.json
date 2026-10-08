@@ -1,0 +1,10 @@
+{
+  "artId": "judiel-hair-braided-crown",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "component": "data/art/races/human/cosmetics/hair/braided/braided-crown.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/2_Studies/hair/braided/Judiel_Hair_Braided_BraidedCrown.txt",
+  "denoise": "~0.4-0.6"
+}

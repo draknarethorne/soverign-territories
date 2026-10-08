@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/haniya/weapons/haniya-signature-weapon",
+  "kind": "holding",
+  "name": "Haniya's signature weapon",
+  "extends": "data/art/wardrobe/weapons/bows/longbow.json",
+  "description": "+, its metal worked with twining leaves and a budding vine in {{ACCENT_SOFT}}, living vines, leaves and petals gathering along it when it is raised; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: the library piece wardrobe/weapons/bows/longbow.json plus grass and alignment details."
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/spring/wardrobe/clothing/sets/meadow-bralette-set.json",
     "jewelry": "data/art/themes/seasonal/spring/wardrobe/jewelry/sets/petal-and-dew-set.json",
     "legs_feet": "data/art/themes/seasonal/spring/wardrobe/footwear/sandals/ribbon-strap-flower-sandals.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/highlands/wildflower-meadow-spring-rain.json",
     "headwear": "data/art/themes/seasonal/spring/wardrobe/headwear/crowns/wild-flower-crown.json",
     "makeup": "data/art/themes/seasonal/spring/cosmetics/makeup/floral/dewy-petal-blush.json"

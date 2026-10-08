@@ -1,0 +1,35 @@
+{
+  "id": "wardrobe/armor/celestial/frame/celestial-skin-suit",
+  "kind": "wearing",
+  "name": "Celestial skin suit (frame)",
+  "description": "only a full-body celestial suit, an open filigree of thin [[METAL_NAME]] metallic design in her {{PRIMARY}} colour scheme with fine {{METAL}} edge lines, formed directly onto the skin as if the metal had been bound to the whole body by a magical spell, slightly raised and form-fitting so the contour of the body shows through, with bare skin visible between the lines everywhere; Chest: on each breast a denser design in the form of [[BREAST]], made of fine curving lines and swirls with [[ENGRAVING]], with one tiny [[GEM_NOUN]] accent at its centre; Pelvic area: a denser, form-fitting design in the form of [[HIP]], following the contour of the pelvic area; Body: from those designs the fine open lines flow in elegant swirls over the shoulders, the arms to the wrists, the torso, the hips and the legs to the ankles, getting lighter and more open away from the chest and pelvic area, so the whole body reads as a magical suit of metal tracery on the skin; Not covered: the face, neck, hair, hands and feet stay natural unpainted skin; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture",
+  "negatives": [
+    "cups",
+    "bra",
+    "bikini",
+    "armor plates",
+    "plates",
+    "solid metal body",
+    "chrome skin",
+    "straps",
+    "strings",
+    "chains",
+    "shoes",
+    "bump on the pelvic area",
+    "raised bump",
+    "painted face",
+    "painted hands",
+    "painted feet"
+  ],
+  "compatibleStages": [
+    "armor",
+    "showcase"
+  ],
+  "tags": [
+    "armor",
+    "celestial",
+    "skin-suit",
+    "female"
+  ],
+  "notes": "A frame, not a piece to use directly: the double-bracket gaps (metal, breast and hip shapes, engraving, gem) are filled by each hero's celestial-design file, so every sister's celestial armor shares one wording and differs only in those values."
+}

@@ -1,0 +1,11 @@
+{
+  "artId": "sandalyn-hair-thanksgiving",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "component": "data/art/themes/seasonal/thanksgiving/cosmetics/hair/braided/harvest-braid-with-leaves.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/2_Studies/hair/themes/Sandalyn_Hair_Thanksgiving.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Thanksgiving theme hairstyle."
+}

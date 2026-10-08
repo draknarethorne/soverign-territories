@@ -1,0 +1,18 @@
+{
+  "artId": "baracel-scene-staged-tropical-isles",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/baracel.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Baracel/5_Scenes/themes/Baracel_Scene_Staged_TropicalIsles.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Tropical Isles",
+  "base_description": "{{HERO}} already staged in the tropical isles outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "effects": "data/art/heroes/angel-primes/male/baracel/effects/baracel-elemental-drift.json",
+    "background": "data/art/themes/southern/tropical-isles/backgrounds/fantasy/coast/coral-lagoon-volcano.json",
+    "expression": "a warm, radiant smile, eyes full of light."
+  },
+  "notes": "STAGED path: feed the baracel-clothing-tropical-isles studio render; only the scene, effects and pose are added."
+}

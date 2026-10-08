@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/jewelry/zadriel-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Zadriel's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a scallop shell over curling waves and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus water and alignment details."
+}

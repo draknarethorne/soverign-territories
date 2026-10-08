@@ -1,0 +1,10 @@
+{
+  "artId": "ravaelle-hair-biceps-length-framed",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "component": "data/art/races/human/cosmetics/hair/framed/biceps-length-framed.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/2_Studies/hair/framed/Ravaelle_Hair_Framed_BicepsLengthFramed.txt",
+  "denoise": "~0.4-0.6"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/composed-quietly-commanding-look-eyes-steady",
+  "kind": "expression",
+  "name": "Composed quietly commanding look eyes steady",
+  "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 20 cards that carried this sentence inline; edit it here and every one follows."
+}

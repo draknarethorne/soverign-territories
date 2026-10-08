@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/steppe/wardrobe/armor/mail/horde-lamellar-armor.json",
     "jewelry": "data/art/themes/eastern/steppe/wardrobe/jewelry/sets/horse-and-coin-set.json",
     "legs_feet": "data/art/themes/eastern/steppe/wardrobe/footwear/boots/felt-lined-riding-boots.json",
-    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/steppe/backgrounds/fantasy/highlands/endless-steppe-warcamp.json",
     "headwear": "data/art/themes/eastern/steppe/wardrobe/headwear/hats/fur-trimmed-felt-cap.json",
     "holding": "data/art/themes/eastern/steppe/wardrobe/weapons/swords/horde-scimitar.json",

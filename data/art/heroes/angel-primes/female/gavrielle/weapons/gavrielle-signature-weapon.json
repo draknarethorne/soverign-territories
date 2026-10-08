@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/weapons/gavrielle-signature-weapon",
+  "kind": "holding",
+  "name": "Gavrielle's signature weapon",
+  "extends": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+  "description": "+, its metal worked with a spiral of swept feathers in {{ACCENT_SOFT}}, racing wind, feathers and leaves gathering along it when it is raised; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Gavrielle: the library piece wardrobe/weapons/staves/quarterstaff.json plus wind and alignment details."
+}

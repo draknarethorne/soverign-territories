@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/drakness/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (drakness)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "polished black silver",
+    "BREAST": "a thick crescent moon curving inward and tapering to fine points",
+    "HIP": "a small moth-wing shape pointing down",
+    "ENGRAVING": "pale moonstone inlay and a tracery of moth-wing veins",
+    "GEM": "a pale moonstone",
+    "GEM_NOUN": "pale moonstone"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

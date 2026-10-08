@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/urael/jewelry/urael-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Urael's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a rising flame with scattered embers and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Urael: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus fire and alignment details."
+}

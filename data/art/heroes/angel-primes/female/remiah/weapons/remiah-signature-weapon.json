@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/remiah/weapons/remiah-signature-weapon",
+  "kind": "holding",
+  "name": "Remiah's signature weapon",
+  "extends": "data/art/wardrobe/weapons/axes/two-handed-war-axe.json",
+  "description": "+, its metal worked with a forked lightning bolt inside a ring of cloud in {{ACCENT_SOFT}}, crackling arcs of lightning and sparks gathering along it when it is raised; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Remiah: the library piece wardrobe/weapons/axes/two-handed-war-axe.json plus lightning and alignment details."
+}

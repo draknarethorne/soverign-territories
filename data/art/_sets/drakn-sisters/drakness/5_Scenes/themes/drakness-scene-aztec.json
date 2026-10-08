@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/aztec/wardrobe/clothing/sets/jade-and-gold-skirt-set.json",
     "jewelry": "data/art/themes/ancient/aztec/wardrobe/jewelry/sets/jade-collar-set.json",
     "legs_feet": "data/art/themes/ancient/aztec/wardrobe/footwear/sandals/woven-lace-up-sandals.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/aztec/backgrounds/fantasy/forests/jungle-cenote-sanctuary.json",
     "headwear": "data/art/themes/ancient/aztec/wardrobe/headwear/crowns/quetzal-feather-headdress.json",
     "holding": "data/art/themes/ancient/aztec/wardrobe/weapons/polearms/feathered-atlatl-spear.json",

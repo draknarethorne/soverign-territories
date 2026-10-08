@@ -1,0 +1,10 @@
+{
+  "artId": "luzariel-hair-loose-glamour-curls",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "component": "data/art/races/human/cosmetics/hair/down/loose-glamour-curls.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/2_Studies/hair/down/Luzariel_Hair_Down_LooseGlamourCurls.txt",
+  "denoise": "~0.4-0.6"
+}

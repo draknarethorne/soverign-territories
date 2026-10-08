@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/eclipse/wardrobe/armor/plate/umbral-sunbreaker-armor.json",
     "jewelry": "data/art/themes/adventure/eclipse/wardrobe/jewelry/sets/black-sun-jewelry-set.json",
     "legs_feet": "data/art/themes/adventure/eclipse/wardrobe/footwear/boots/obsidian-stiletto-boots.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
     "headwear": "data/art/themes/adventure/eclipse/wardrobe/headwear/crowns/crescent-corona-crown.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",

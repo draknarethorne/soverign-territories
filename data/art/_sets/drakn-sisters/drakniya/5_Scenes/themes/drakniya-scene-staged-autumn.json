@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the autumn harvest woods druid outfit render",
   "components": {
     "pose": "data/art/motion/action/crouch-ready.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist.json",
     "expression": "data/art/themes/seasonal/autumn/motion/expressions/harvest-contentment.json"
   },

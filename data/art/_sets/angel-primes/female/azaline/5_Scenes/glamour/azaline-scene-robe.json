@@ -1,0 +1,22 @@
+{
+  "artId": "azaline-scene-robe",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/glamour/Azaline_Scene_Robe.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Robe",
+  "components": {
+    "pose": "data/art/motion/walking/slow-sensual-walk.json",
+    "wearing": "data/art/wardrobe/clothing/robes/silk-robe.json",
+    "headwear": "data/art/wardrobe/headwear/crowns/iron-crown.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/gem-collar.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glass-slippers.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
+    "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting swirling frost, snowflakes and ice crystals around her.",
+    "background": "data/art/backgrounds/fantasy/swamp/glowing-fen.json"
+  },
+  "notes": "ROBE: a flowing robe, a staff and a quiet sanctum."
+}

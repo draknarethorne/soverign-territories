@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/serene-knowing-smile-eyes-calm-and",
+  "kind": "expression",
+  "name": "Serene knowing smile eyes calm and",
+  "expression": "a serene, knowing smile, eyes calm and bright.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 20 cards that carried this sentence inline; edit it here and every one follows."
+}

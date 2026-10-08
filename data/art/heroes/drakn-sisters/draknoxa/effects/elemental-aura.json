@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Wisps of toxic vapour and bubbling droplets",
+  "description": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

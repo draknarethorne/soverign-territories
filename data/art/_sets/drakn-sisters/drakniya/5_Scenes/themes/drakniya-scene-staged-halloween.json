@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the halloween druid outfit render",
   "components": {
     "pose": "data/art/themes/seasonal/halloween/motion/cauldron-stir.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/forests/pumpkin-field-moonrise.json",
     "expression": "data/art/themes/seasonal/halloween/motion/expressions/wicked-delight.json"
   },

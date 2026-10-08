@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakness/companion/her-aligned-elder-dragon-umbrath-looming-in",
+  "kind": "companion",
+  "name": "Her aligned elder dragon umbrath looming in",
+  "description": "her aligned Elder Dragon, Umbrath, looming in the shadows of the necropolis behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

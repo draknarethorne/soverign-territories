@@ -6,14 +6,14 @@
   "name": "Norse Storm Shieldmaiden",
   "components": {
     "pose": "data/art/motion/standing/hand-on-hip-power.json",
-    "expression": "a fierce, focused look and a hint of a battle-ready grin.",
+    "expression": "data/art/heroes/drakn-sisters/drakneta/expressions/fierce-focused-look-and-a-hint.json",
     "wearing": "data/art/themes/northern/norse/wardrobe/armor/mail/shieldmaiden-mail-set.json",
     "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json",
     "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
     "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
     "holding": "data/art/themes/northern/norse/wardrobe/weapons/hammers/storm-war-hammer.json",
     "makeup": "data/art/themes/northern/norse/cosmetics/makeup/warpaint/rune-war-paint.json",
-    "effects": "Forks of {{MAGIC}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/forks-of-lightning-flicker-across-the-night.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

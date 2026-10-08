@@ -1,0 +1,19 @@
+{
+  "artId": "nyxene-showcase-photo-bathroom-selfie",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "name": "Photo: Bathroom Selfie",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/peplum-dress.json",
+    "pose": "data/art/motion/photo/mirror-selfie.json",
+    "background": "data/art/backgrounds/modern/interior/bathroom-mirror-bright.json",
+    "framing": "data/art/studio/shots/mirror-selfie.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/angel-primes/female/Nyxene/4_Wardrobe/showcase/photo/daily/Nyxene_Showcase_Photo_BathroomSelfie.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

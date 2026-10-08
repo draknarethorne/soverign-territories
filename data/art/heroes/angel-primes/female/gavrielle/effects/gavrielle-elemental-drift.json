@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/effects/gavrielle-elemental-drift",
+  "kind": "effects",
+  "name": "Gavrielle's elemental drift",
+  "description": "A drift of racing wind, feathers and leaves circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Gavrielle: written for this angel."
+}

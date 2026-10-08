@@ -1,0 +1,8 @@
+{
+  "id": "themes/western/chivalry/wardrobe/clothing/sets/chivalry-male-outfit",
+  "kind": "wearing",
+  "name": "Chivalry Male Outfit",
+  "description": "a {{PRIMARY}} wool tunic with heraldic {{ACCENT_SOFT}} surcoat, a polished steel {{METAL}} breastplate over the chest, wool breeches with leather reinforcement at knees",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["chivalry", "clothing", "male"]
+}

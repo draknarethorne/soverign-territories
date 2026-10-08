@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/weapons/luzariel-signature-weapon",
+  "kind": "holding",
+  "name": "Luzariel's signature weapon",
+  "extends": "data/art/wardrobe/weapons/crossbows/heavy-crossbow.json",
+  "description": "+, its metal worked with a crescent moon pierced by a single star in {{ACCENT_SOFT}}, drifting shadow, smoke and pale starlight gathering along it when it is raised; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Luzariel: the library piece wardrobe/weapons/crossbows/heavy-crossbow.json plus darkness and alignment details."
+}

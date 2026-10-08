@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/auriel/clothing/auriel-signature-attire",
+  "kind": "wearing",
+  "name": "Auriel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/gambeson-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a radiant sunburst in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Auriel: the library piece wardrobe/clothing/sets/gambeson-and-trousers.json plus light and alignment details."
+}

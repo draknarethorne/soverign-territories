@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/azaline/clothing/azaline-signature-gown",
+  "kind": "wearing",
+  "name": "Azaline's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/one-shoulder-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a six-pointed snowflake of frost in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Azaline: the library piece wardrobe/clothing/gowns/one-shoulder-gown.json plus ice and alignment details."
+}

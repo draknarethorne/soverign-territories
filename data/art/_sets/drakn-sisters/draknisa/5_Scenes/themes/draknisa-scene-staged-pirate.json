@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the pirate enchanter outfit render",
   "components": {
     "pose": "data/art/themes/adventure/pirate/motion/cutlass-flourish.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
     "expression": "data/art/themes/adventure/pirate/motion/expressions/cocky-swagger.json"
   },

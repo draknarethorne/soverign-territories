@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the samurai wizard outfit render",
   "components": {
     "pose": "data/art/motion/action/draw-weapon.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/temple/torii-shrine-maple-path.json",
     "expression": "data/art/themes/eastern/samurai/motion/expressions/bushido-calm.json"
   },

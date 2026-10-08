@@ -1,0 +1,10 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/rising-flames",
+  "kind": "background",
+  "name": "Rising Flames (grounded)",
+  "description": "a scorched ancient stone courtyard at dusk, a large real fire burning beyond the wall, warm firelight and drifting smoke across the weathered stone",
+  "mood": "warm, dramatic",
+  "compatibleStages": ["scene"],
+  "tags": ["fantasy", "elemental", "grounded"],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/rising-flames: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

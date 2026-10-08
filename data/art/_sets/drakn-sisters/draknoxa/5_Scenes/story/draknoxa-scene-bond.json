@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/dawn-regalia.json",
     "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-lineup-headwear.json",
     "jewelry": "data/art/heroes/drakn-sisters/draknoxa/jewelry/scene-lineup-jewelry.json",
-    "legs_feet": "bare feet, fine {{METAL}} anklets",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, luminous green spores drifting around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "companion": "her aligned Elder Dragon, Venomis, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",

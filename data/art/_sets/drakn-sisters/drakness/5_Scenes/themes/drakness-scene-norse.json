@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/northern/norse/wardrobe/armor/mail/shieldmaiden-mail-set.json",
     "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
     "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
     "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/grave-warden-flail.json",

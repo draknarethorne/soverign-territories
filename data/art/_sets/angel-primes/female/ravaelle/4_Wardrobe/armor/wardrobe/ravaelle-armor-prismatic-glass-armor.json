@@ -11,7 +11,7 @@
   "components": {
     "wearing": "data/art/wardrobe/armor/crystal/prismatic-glass-armor.json",
     "arms": "bare arms",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "back": "the back of the armor fully visible",
     "holding": "empty hands relaxed at the sides",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"

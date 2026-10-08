@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/sets/buccaneer-sash-set.json",
     "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
     "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
     "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/gale-rapier.json",

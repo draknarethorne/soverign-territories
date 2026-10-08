@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the halloween necromancer outfit render",
   "components": {
     "pose": "data/art/motion/action/guard-stance.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/forests/pumpkin-field-moonrise.json",
     "expression": "data/art/themes/seasonal/halloween/motion/expressions/wicked-delight.json"
   },

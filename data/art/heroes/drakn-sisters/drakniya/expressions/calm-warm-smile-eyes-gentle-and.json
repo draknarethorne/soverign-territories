@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/expressions/calm-warm-smile-eyes-gentle-and",
+  "kind": "expression",
+  "name": "Calm warm smile eyes gentle and",
+  "expression": "a calm, warm smile, eyes gentle and grateful.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

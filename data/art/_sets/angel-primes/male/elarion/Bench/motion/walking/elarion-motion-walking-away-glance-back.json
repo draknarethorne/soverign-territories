@@ -1,0 +1,10 @@
+{
+  "artId": "elarion-motion-walking-away-glance-back",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/Bench/motion/walking/Elarion_Motion_Walking_WalkingAwayGlanceBack.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/walking/walking-away-glance-back.json"
+}

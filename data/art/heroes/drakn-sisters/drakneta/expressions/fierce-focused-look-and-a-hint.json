@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/expressions/fierce-focused-look-and-a-hint",
+  "kind": "expression",
+  "name": "Fierce focused look and a hint",
+  "expression": "a fierce, focused look and a hint of a battle-ready grin.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

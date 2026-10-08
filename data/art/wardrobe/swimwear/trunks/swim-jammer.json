@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/trunks/swim-jammer",
+  "kind": "wearing",
+  "name": "Swim Jammer",
+  "description": "only {{PRIMARY}} swim jammers extending to mid-thigh with {{ACCENT_SOFT}} contrast piping, a high cut and snug waistband; chest, abdomen, and calves bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "jammer", "male"]
+}

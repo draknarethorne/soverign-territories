@@ -1,0 +1,20 @@
+{
+  "artId": "remiah-scene-elegant-casting",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/5_Scenes/glamour/Remiah_Scene_ElegantCasting.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Elegant Casting",
+  "components": {
+    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of crackling arcs of lightning and sparks around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only.",
+    "wearing": "data/art/heroes/angel-primes/female/remiah/clothing/remiah-signature-gown.json",
+    "jewelry": "data/art/heroes/angel-primes/female/remiah/jewelry/remiah-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
+    "back": "data/art/heroes/angel-primes/female/remiah/wings/remiah-wings.json",
+    "effects": "A shimmering column of crackling arcs of lightning and sparks, visible as streaming ribbons and {{MAGIC}} light, spirals around her.",
+    "background": "data/art/backgrounds/fantasy/highlands/windswept-cliffs.json"
+  },
+  "notes": "ELEGANT CASTING: a hands-only complex casting stance in her element."
+}

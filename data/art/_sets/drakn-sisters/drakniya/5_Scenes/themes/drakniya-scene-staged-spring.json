@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the spring bloom druid outfit render",
   "components": {
     "pose": "data/art/motion/action/bow-draw-aim.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard.json",
     "expression": "data/art/themes/seasonal/spring/motion/expressions/bloom-radiance.json"
   },

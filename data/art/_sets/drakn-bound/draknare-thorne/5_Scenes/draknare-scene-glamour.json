@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-bound/draknare-thorne.json",
   "name": "Glamour",
   "components": {
-    "pose": "He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair.",
+    "pose": "data/art/motion/scene/stands-tall-in-a-wide-grounded.json",
     "wearing": "data/art/heroes/drakn-bound/draknare/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",

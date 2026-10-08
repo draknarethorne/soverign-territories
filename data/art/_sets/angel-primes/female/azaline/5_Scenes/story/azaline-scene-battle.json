@@ -1,0 +1,23 @@
+{
+  "artId": "azaline-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/story/Azaline_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Battle",
+  "components": {
+    "pose": "She leaps mid-air with her weapon swept behind her and her free hand flung forward, wings spread wide, a calm, fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/female/azaline/armor/azaline-signature-armor.json",
+    "headwear": "data/art/heroes/angel-primes/female/azaline/headwear/azaline-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/female/azaline/jewelry/azaline-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/over-the-knee-boots.json",
+    "holding": "data/art/heroes/angel-primes/female/azaline/weapons/azaline-signature-weapon.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "effects": "A surge of swirling frost, snowflakes and ice crystals bursts out from her free hand, tearing banners and debris sideways, {{MAGIC}} light marking the currents.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/backgrounds/fantasy/ruins/toppled-colossus-field.json"
+  },
+  "notes": "BATTLE: war gear and a weapon in a battlefield setting, commanding her element."
+}

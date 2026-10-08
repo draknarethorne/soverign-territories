@@ -1,0 +1,22 @@
+{
+  "artId": "elarion-scene-summer-solstice",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/5_Scenes/themes/Elarion_Scene_SummerSolstice.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Summer Solstice",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+    "wearing": "data/art/themes/seasonal/summer-solstice/wardrobe/clothing/sets/summer-solstice-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/elarion/wings/elarion-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/elarion/effects/elarion-elemental-drift.json",
+    "background": "data/art/themes/seasonal/summer-solstice/backgrounds/fantasy/highlands/midsummer-meadow-maypole.json",
+    "legs_feet": "data/art/themes/seasonal/summer-solstice/wardrobe/footwear/sandals/sun-gold-strap-sandals.json",
+    "jewelry": "data/art/heroes/angel-primes/male/elarion/jewelry/elarion-signature-jewelry.json",
+    "holding": "data/art/themes/seasonal/summer-solstice/wardrobe/weapons/staves/wheat-sheaf-staff.json"
+  },
+  "notes": "Summer Solstice theme scene: every item is a library piece."
+}

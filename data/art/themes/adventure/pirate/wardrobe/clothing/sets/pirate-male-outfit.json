@@ -1,0 +1,8 @@
+{
+  "id": "themes/adventure/pirate/wardrobe/clothing/sets/pirate-male-outfit",
+  "kind": "wearing",
+  "name": "Pirate Male Outfit",
+  "description": "a worn {{PRIMARY}} linen shirt open at the collar, a {{ACCENT_SOFT}} leather waistcoat with {{METAL}} buckles, dark breeches, and a woven sash tied at the hip",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["pirate", "clothing", "male"]
+}

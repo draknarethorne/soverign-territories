@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the spring bloom bard outfit render",
   "components": {
     "pose": "data/art/motion/action/bow-draw-aim.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard.json",
     "expression": "data/art/themes/seasonal/spring/motion/expressions/bloom-radiance.json"
   },

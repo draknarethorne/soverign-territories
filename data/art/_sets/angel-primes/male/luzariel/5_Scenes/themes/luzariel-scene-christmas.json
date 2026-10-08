@@ -1,0 +1,22 @@
+{
+  "artId": "luzariel-scene-christmas",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/5_Scenes/themes/Luzariel_Scene_Christmas.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Midwinter Christmas",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "wearing": "data/art/themes/seasonal/christmas/wardrobe/clothing/sets/christmas-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/luzariel/wings/luzariel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/luzariel/effects/luzariel-elemental-drift.json",
+    "background": "data/art/themes/seasonal/christmas/backgrounds/fantasy/frozen/snowy-christmas-market.json",
+    "legs_feet": "data/art/themes/seasonal/christmas/wardrobe/footwear/boots/fur-cuffed-holiday-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/luzariel/jewelry/luzariel-signature-jewelry.json",
+    "holding": "data/art/themes/seasonal/christmas/wardrobe/weapons/staves/candy-cane-staff.json"
+  },
+  "notes": "Midwinter Christmas theme scene: every item is a library piece."
+}

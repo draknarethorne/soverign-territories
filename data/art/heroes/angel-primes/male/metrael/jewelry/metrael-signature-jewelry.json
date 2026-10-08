@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/metrael/jewelry/metrael-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Metrael's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a six-pointed snowflake of frost and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Metrael: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus ice and alignment details."
+}

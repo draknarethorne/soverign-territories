@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the roman magician outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Embers and sparks of {{MAGIC}} fire drift upward between the columns, warm firelight flickering across the marble.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/embers-and-sparks-of-fire-drift-upward.json",
     "background": "data/art/themes/ancient/roman/backgrounds/fantasy/ruins/forum-colonnade-dusk.json",
-    "expression": "a composed, fierce stare, the sacred flame reflected in her eyes."
+    "expression": "data/art/heroes/drakn-sisters/draknora/expressions/composed-fierce-stare-the-sacred-flame.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknora/5_Scenes/themes/Draknora_Scene_Staged_Roman.txt",

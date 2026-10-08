@@ -1,0 +1,10 @@
+{
+  "artId": "remiah-hair-voluminous-blowout",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "component": "data/art/races/human/cosmetics/hair/down/voluminous-blowout.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/2_Studies/hair/down/Remiah_Hair_Down_VoluminousBlowout.txt",
+  "denoise": "~0.4-0.6"
+}

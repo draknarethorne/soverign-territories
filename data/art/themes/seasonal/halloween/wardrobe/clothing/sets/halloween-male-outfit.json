@@ -1,0 +1,8 @@
+{
+  "id": "themes/seasonal/halloween/wardrobe/clothing/sets/halloween-male-outfit",
+  "kind": "wearing",
+  "name": "Halloween Male Outfit",
+  "description": "a black {{PRIMARY}} tunic with {{ACCENT_SOFT}} pumpkin-lantern motifs, a dark cloak with {{ACCENT_SOFT}} striped trim, black breeches, and subtle candlelight {{METAL}} buttons",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["halloween", "clothing", "male"]
+}

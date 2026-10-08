@@ -1,0 +1,42 @@
+{
+  "animId": "camaris-anim-scene-the-dawn-rising",
+  "kind": "animation",
+  "name": "Rising",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "source": {
+    "artCard": "data/art/_sets/angel-primes/female/camaris/5_Scenes/story/camaris-scene-the-dawn.json",
+    "image": "Camaris_Qwen_Scene_TheDawn_00001_.png"
+  },
+  "look": "data/animation/looks/cinematic-photoreal.json",
+  "camera": "data/animation/cameras/orbit-reveal.json",
+  "audio": "a soaring choral and string melody; no speech",
+  "world": "The realm is alive: dancing flame, embers and sparks stream and swirl through the air, feathers drift down and clouds sweep past.",
+  "actions": [
+    {
+      "motion": "data/animation/motions/elements/fire-surges.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/clouds-race.json"
+        }
+      ]
+    },
+    {
+      "beat": "{{She}} rises upright through the centre of the great column, {{her}} wings opening wide and {{her}} arms lifted, turning gently in the light.",
+      "seconds": 3,
+      "transition": "blend"
+    },
+    {
+      "beat": "{{She}} turns a joyful, radiant look to the camera as the light settles and feathers drift down around {{her}}.",
+      "seconds": 2.5,
+      "transition": "settle"
+    }
+  ],
+  "notes": "THE DAWN, in motion: the angel rises through her element's realm.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt"
+}

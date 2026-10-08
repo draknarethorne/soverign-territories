@@ -1,0 +1,24 @@
+{
+  "artId": "remiah-scene-celtic",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/5_Scenes/themes/Remiah_Scene_Celtic.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Celtic",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/northern/celtic/wardrobe/clothing/gowns/knotwork-celtic-gown.json",
+    "back": "data/art/heroes/angel-primes/female/remiah/wings/remiah-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/remiah/effects/remiah-elemental-drift.json",
+    "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
+    "headwear": "data/art/themes/northern/celtic/wardrobe/headwear/circlets/knotwork-silver-circlet.json",
+    "jewelry": "data/art/themes/northern/celtic/wardrobe/jewelry/sets/triskele-silver-set.json",
+    "legs_feet": "data/art/themes/northern/celtic/wardrobe/footwear/boots/laced-moor-boots.json",
+    "holding": "data/art/themes/northern/celtic/wardrobe/props/instruments/celtic-harp.json",
+    "makeup": "data/art/themes/northern/celtic/cosmetics/makeup/woad/woad-spiral-accents.json"
+  },
+  "notes": "Celtic theme scene: every item is a library piece."
+}

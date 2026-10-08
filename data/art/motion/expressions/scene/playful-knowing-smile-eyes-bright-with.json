@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/playful-knowing-smile-eyes-bright-with",
+  "kind": "expression",
+  "name": "Playful knowing smile eyes bright with",
+  "expression": "a playful, knowing smile, eyes bright with mischief.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 25 cards that carried this sentence inline; edit it here and every one follows."
+}

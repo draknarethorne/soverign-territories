@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the pirate bard outfit render",
   "components": {
     "pose": "data/art/motion/action/sword-lunge.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
     "expression": "data/art/themes/adventure/pirate/motion/expressions/cocky-swagger.json"
   },

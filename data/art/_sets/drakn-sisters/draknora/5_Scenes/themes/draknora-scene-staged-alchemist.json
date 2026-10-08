@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the alchemist's guild magician outfit render",
   "components": {
     "pose": "data/art/themes/adventure/alchemist/motion/flask-throw.json",
-    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/alchemist/backgrounds/fantasy/dungeons/alchemist-laboratory-bubbling.json",
     "expression": "data/art/themes/adventure/alchemist/motion/expressions/eureka-spark.json"
   },

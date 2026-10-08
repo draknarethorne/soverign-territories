@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknora/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Flickers of flame and glowing embers drift",
+  "description": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

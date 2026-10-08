@@ -1,0 +1,10 @@
+{
+  "id": "heroes/angel-primes/female/azaline/effects/elemental-aura",
+  "kind": "effects",
+  "name": "A drift of swirling frost snowflakes and",
+  "description": "A drift of swirling frost, snowflakes and ice crystals circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 12 cards that carried this sentence inline; edit it here and every one follows."
+}

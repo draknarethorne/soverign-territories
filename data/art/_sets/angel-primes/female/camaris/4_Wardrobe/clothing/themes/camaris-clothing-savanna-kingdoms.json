@@ -1,0 +1,19 @@
+{
+  "artId": "camaris-clothing-savanna-kingdoms",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/4_Wardrobe/clothing/themes/Camaris_Clothing_SavannaKingdoms.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Savanna Kingdoms",
+  "aesthetic": "a clean studio presentation of the savanna kingdoms outfit",
+  "components": {
+    "wearing": "data/art/themes/southern/savanna-kingdoms/wardrobe/clothing/sets/beaded-wrap-set.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/southern/savanna-kingdoms/wardrobe/jewelry/sets/brass-collar-and-bead-set.json",
+    "legs_feet": "data/art/themes/southern/savanna-kingdoms/wardrobe/footwear/sandals/wrapped-leather-sandals.json",
+    "headwear": "data/art/themes/southern/savanna-kingdoms/wardrobe/headwear/crowns/beaded-crown-and-headwrap.json"
+  },
+  "notes": "Pre-staged Savanna Kingdoms outfit: render it from the A-pose, then feed the image to the staged scene. Every item is a library piece."
+}

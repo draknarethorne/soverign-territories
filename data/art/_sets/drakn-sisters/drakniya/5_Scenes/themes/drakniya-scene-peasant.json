@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/peasant/wardrobe/clothing/sets/market-day-blouse-set.json",
     "jewelry": "data/art/themes/adventure/peasant/wardrobe/jewelry/sets/wildflower-and-bead-set.json",
     "legs_feet": "data/art/themes/adventure/peasant/wardrobe/footwear/boots/scuffed-leather-boots.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/peasant/backgrounds/fantasy/highlands/golden-wheat-field-cottage.json",
     "headwear": "data/art/themes/adventure/peasant/wardrobe/headwear/hats/wide-straw-hat.json",
     "holding": "data/art/themes/adventure/peasant/wardrobe/weapons/polearms/pitchfork-and-sickle.json",

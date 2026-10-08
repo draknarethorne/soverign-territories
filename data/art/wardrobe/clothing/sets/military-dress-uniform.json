@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/military-dress-uniform",
+  "kind": "wearing",
+  "name": "Military Dress Uniform",
+  "description": "a {{PRIMARY}} wool military-dress jacket with {{METAL}} buttons in rows, a stiff collar, and a {{ACCENT_SOFT}} stripe down each trouser leg; chest and shoulders squared and formal",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["military", "formal", "male"]
+}

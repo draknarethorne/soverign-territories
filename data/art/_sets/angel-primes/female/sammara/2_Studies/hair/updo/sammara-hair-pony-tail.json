@@ -1,0 +1,10 @@
+{
+  "artId": "sammara-hair-pony-tail",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "component": "data/art/races/human/cosmetics/hair/updo/pony-tail.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/2_Studies/hair/updo/Sammara_Hair_Updo_PonyTail.txt",
+  "denoise": "~0.4-0.6"
+}

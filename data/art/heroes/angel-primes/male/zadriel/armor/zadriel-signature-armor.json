@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/armor/zadriel-signature-armor",
+  "kind": "wearing",
+  "name": "Zadriel's signature armor",
+  "extends": "data/art/wardrobe/armor/crystal/amethyst-crystal-armor.json",
+  "description": "+, every plate and trim engraved with a scallop shell over curling waves in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: the library piece wardrobe/armor/crystal/amethyst-crystal-armor.json plus water and alignment details."
+}

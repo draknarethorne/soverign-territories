@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/baracel/effects/baracel-elemental-drift",
+  "kind": "effects",
+  "name": "Baracel's elemental drift",
+  "description": "A drift of stone shards, dust and glowing crystals circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: written for this angel."
+}

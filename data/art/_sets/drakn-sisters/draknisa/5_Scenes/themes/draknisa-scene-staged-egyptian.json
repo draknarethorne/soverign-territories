@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the egyptian enchanter outfit render",
   "components": {
     "pose": "data/art/motion/standing/side-profile-elegant.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
     "expression": "data/art/motion/expressions/composed/composed-commanding.json"
   },

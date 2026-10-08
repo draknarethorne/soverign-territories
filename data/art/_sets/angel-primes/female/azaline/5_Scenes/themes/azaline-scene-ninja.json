@@ -1,0 +1,24 @@
+{
+  "artId": "azaline-scene-ninja",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/themes/Azaline_Scene_Ninja.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Shinobi Shadow Clan",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "expression": "a fierce, focused gaze, chin raised.",
+    "wearing": "data/art/themes/eastern/ninja/wardrobe/clothing/dresses/shadow-silk-dress.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/azaline/effects/azaline-elemental-drift.json",
+    "background": "data/art/themes/eastern/ninja/backgrounds/fantasy/camp/moonlit-pagoda-rooftops.json",
+    "headwear": "data/art/themes/eastern/ninja/wardrobe/headwear/hoods/half-mask-and-hood.json",
+    "jewelry": "data/art/themes/eastern/ninja/wardrobe/jewelry/sets/shuriken-charm-set.json",
+    "legs_feet": "data/art/themes/eastern/ninja/wardrobe/footwear/boots/split-toe-shinobi-boots.json",
+    "makeup": "data/art/themes/eastern/ninja/cosmetics/makeup/stealth/smoky-shadow-liner.json",
+    "holding": "data/art/themes/eastern/ninja/wardrobe/weapons/daggers/kunai-and-chain-blade.json"
+  },
+  "notes": "Shinobi Shadow Clan theme scene: every item is a library piece."
+}

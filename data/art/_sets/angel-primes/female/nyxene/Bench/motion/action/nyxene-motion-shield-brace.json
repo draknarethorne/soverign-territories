@@ -1,0 +1,10 @@
+{
+  "artId": "nyxene-motion-shield-brace",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/Bench/motion/action/Nyxene_Motion_Action_ShieldBrace.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/shield-brace.json"
+}

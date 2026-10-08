@@ -1,0 +1,18 @@
+{
+  "artId": "judiel-scene-staged-danish",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/5_Scenes/themes/Judiel_Scene_Staged_Danish.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Danish",
+  "base_description": "{{HERO}} already staged in the danish outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "effects": "data/art/heroes/angel-primes/male/judiel/effects/judiel-elemental-drift.json",
+    "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera."
+  },
+  "notes": "STAGED path: feed the judiel-clothing-danish studio render; only the scene, effects and pose are added."
+}

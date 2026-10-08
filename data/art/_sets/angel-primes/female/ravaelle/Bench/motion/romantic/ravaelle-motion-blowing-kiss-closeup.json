@@ -1,0 +1,10 @@
+{
+  "artId": "ravaelle-motion-blowing-kiss-closeup",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/Bench/motion/romantic/Ravaelle_Motion_Romantic_BlowingKissCloseup.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/romantic/blowing-kiss-closeup.json"
+}

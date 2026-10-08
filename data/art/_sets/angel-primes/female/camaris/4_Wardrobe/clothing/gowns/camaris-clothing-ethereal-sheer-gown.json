@@ -1,0 +1,18 @@
+{
+  "artId": "camaris-clothing-ethereal-sheer-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/4_Wardrobe/clothing/gowns/Camaris_Clothing_EtherealSheerGown.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Ethereal Sheer Gown",
+  "aesthetic": "a clean studio presentation of ethereal sheer gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

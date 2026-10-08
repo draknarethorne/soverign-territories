@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Zephyros, a distant silhouette riding the clouds beyond the terrace, windswept-jade wings catching the last light",
+    "companion": "data/art/heroes/drakn-sisters/draknava/companion/her-aligned-elder-dragon-zephyros-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/evening/sky-terrace-twilight.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

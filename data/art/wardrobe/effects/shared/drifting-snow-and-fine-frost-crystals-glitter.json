@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/drifting-snow-and-fine-frost-crystals-glitter",
+  "kind": "effects",
+  "name": "Drifting snow and fine frost crystals glitter",
+  "description": "Drifting snow and fine frost crystals glitter in the air, a pale {{MAGIC}} chill glowing at the feet.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

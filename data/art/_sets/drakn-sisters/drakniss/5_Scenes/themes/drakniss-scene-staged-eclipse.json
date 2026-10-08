@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the eclipse cleric outfit render",
   "components": {
     "pose": "data/art/themes/adventure/eclipse/motion/corona-raise.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
     "expression": "data/art/themes/adventure/eclipse/motion/expressions/umbral-solemnity.json"
   },

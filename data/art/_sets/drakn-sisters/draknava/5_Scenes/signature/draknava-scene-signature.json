@@ -6,13 +6,13 @@
   "name": "Signature",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "expression": "data/art/motion/expressions/scene/playful-knowing-smile-eyes-bright-with.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff.json",
     "effects": "A playful swirl of wind catches loose leaves and her hair, {{MAGIC}} light glinting within the breeze.",
-    "companion": "her aligned Elder Dragon, Zephyros, flying through the clouds behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
+    "companion": "data/art/heroes/drakn-sisters/draknava/companion/her-aligned-elder-dragon-zephyros-flying-through.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

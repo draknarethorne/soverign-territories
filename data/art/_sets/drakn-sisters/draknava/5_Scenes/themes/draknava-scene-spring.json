@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/spring/wardrobe/clothing/gowns/blossom-drape-gown.json",
     "jewelry": "data/art/themes/seasonal/spring/wardrobe/jewelry/sets/petal-and-dew-set.json",
     "legs_feet": "data/art/themes/seasonal/spring/wardrobe/footwear/sandals/ribbon-strap-flower-sandals.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard.json",
     "headwear": "data/art/themes/seasonal/spring/wardrobe/headwear/crowns/wild-flower-crown.json",
     "holding": "data/art/themes/seasonal/spring/wardrobe/weapons/bows/blossom-longbow.json",

@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the midwinter christmas wizard outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/christmas/backgrounds/fantasy/frozen/snowy-christmas-market.json",
     "expression": "data/art/themes/seasonal/christmas/motion/expressions/festive-cheer.json"
   },

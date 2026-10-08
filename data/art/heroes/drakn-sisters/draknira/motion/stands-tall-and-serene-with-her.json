@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/motion/stands-tall-and-serene-with-her",
+  "kind": "pose",
+  "name": "Stands tall and serene with her",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "She stands tall and serene with her sceptre held upright in one hand and the other hand resting lightly on the front of her gown, her mantle trailing behind her, chin lifted, a calm, regal gaze straight to the camera; full figure visible."
+}

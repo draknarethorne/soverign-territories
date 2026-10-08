@@ -1,0 +1,8 @@
+{
+  "id": "themes/seasonal/autumn/wardrobe/clothing/sets/autumn-male-outfit",
+  "kind": "wearing",
+  "name": "Autumn Male Outfit",
+  "description": "a russet wool tunic with {{ACCENT_SOFT}} leaf-embroidered hem, a cloak woven with autumn leaves and acorns, brown breeches, and a {{METAL}} acorn brooch",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["autumn", "clothing", "male"]
+}

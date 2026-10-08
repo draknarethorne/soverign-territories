@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/weapons/zadriel-signature-weapon",
+  "kind": "holding",
+  "name": "Zadriel's signature weapon",
+  "extends": "data/art/wardrobe/weapons/polearms/javelin.json",
+  "description": "+, its metal worked with a scallop shell over curling waves in {{ACCENT_SOFT}}, flowing water and drifting spray gathering along it when it is raised; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: the library piece wardrobe/weapons/polearms/javelin.json plus water and alignment details."
+}

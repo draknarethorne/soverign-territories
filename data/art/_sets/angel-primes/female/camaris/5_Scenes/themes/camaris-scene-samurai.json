@@ -1,0 +1,24 @@
+{
+  "artId": "camaris-scene-samurai",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/5_Scenes/themes/Camaris_Scene_Samurai.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Samurai",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "expression": "a fierce, focused gaze, chin raised.",
+    "wearing": "data/art/themes/eastern/samurai/wardrobe/clothing/sets/hakama-crop-set.json",
+    "back": "data/art/heroes/angel-primes/female/camaris/wings/camaris-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/camaris/effects/camaris-elemental-drift.json",
+    "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/temple/torii-shrine-maple-path.json",
+    "headwear": "data/art/themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm.json",
+    "jewelry": "data/art/themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set.json",
+    "legs_feet": "data/art/themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta.json",
+    "makeup": "data/art/themes/eastern/samurai/cosmetics/makeup/kabuki/crimson-lid-and-white-glow.json",
+    "holding": "data/art/themes/eastern/samurai/wardrobe/weapons/swords/katana-and-wakizashi.json"
+  },
+  "notes": "Samurai theme scene: every item is a library piece."
+}

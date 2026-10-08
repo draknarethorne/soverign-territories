@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/elarion/armor/elarion-signature-armor",
+  "kind": "wearing",
+  "name": "Elarion's signature armor",
+  "extends": "data/art/wardrobe/armor/leather/studded-leather.json",
+  "description": "+, every plate and trim engraved with a spiral of swept feathers in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Elarion: the library piece wardrobe/armor/leather/studded-leather.json plus wind and alignment details."
+}

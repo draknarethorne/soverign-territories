@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/themes/seasonal/thanksgiving/wardrobe/effects/ambient/falling-autumn-leaves.json",
     "background": "data/art/themes/seasonal/thanksgiving/backgrounds/fantasy/feast/harvest-feast-hall.json",
-    "expression": "a calm, warm smile, eyes gentle and grateful."
+    "expression": "data/art/heroes/drakn-sisters/drakniya/expressions/calm-warm-smile-eyes-gentle-and.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_Staged_Thanksgiving.txt",

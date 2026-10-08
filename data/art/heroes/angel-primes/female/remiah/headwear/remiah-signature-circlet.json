@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/remiah/headwear/remiah-signature-circlet",
+  "kind": "headwear",
+  "name": "Remiah's signature circlet",
+  "extends": "data/art/wardrobe/headwear/circlets/gem-circlet.json",
+  "description": "+, a forked lightning bolt inside a ring of cloud rising at the centre of the brow, set with a {{GEM}} gem; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Remiah: the library piece wardrobe/headwear/circlets/gem-circlet.json plus lightning and alignment details."
+}

@@ -1,0 +1,20 @@
+{
+  "artId": "metrael-showcase-armor-stand",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/4_Wardrobe/showcase/studio/Metrael_Showcase_ArmorStand.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Armor Stand",
+  "components": {
+    "jewelry": "data/art/heroes/angel-primes/male/metrael/jewelry/metrael-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "wearing": "data/art/heroes/angel-primes/male/metrael/armor/metrael-signature-armor.json",
+    "back": "data/art/heroes/angel-primes/male/metrael/wings/metrael-wings.json",
+    "effects": "A curtain of swirling frost, snowflakes and ice crystals hangs in the air behind him in a protective arc, {{MAGIC}} light running through it.",
+    "background": "data/art/backgrounds/studio/charcoal-magic-glow.json"
+  },
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

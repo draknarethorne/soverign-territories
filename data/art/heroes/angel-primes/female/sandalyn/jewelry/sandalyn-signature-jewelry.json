@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/sandalyn/jewelry/sandalyn-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Sandalyn's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a faceted crystal set in carved stone, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sandalyn: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus earth and alignment details."
+}

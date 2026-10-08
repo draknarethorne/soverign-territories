@@ -1,0 +1,22 @@
+{
+  "artId": "auriel-scene-arabian-nights",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/5_Scenes/themes/Auriel_Scene_ArabianNights.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Arabian Nights Sultanate",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "wearing": "data/art/themes/southern/arabian-nights/wardrobe/clothing/sets/arabian-nights-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/auriel/effects/auriel-elemental-drift.json",
+    "background": "data/art/themes/southern/arabian-nights/backgrounds/fantasy/cityscape/moonlit-bazaar-domes.json",
+    "legs_feet": "data/art/themes/southern/arabian-nights/wardrobe/footwear/sandals/curled-toe-slippers.json",
+    "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
+    "holding": "data/art/themes/southern/arabian-nights/wardrobe/weapons/swords/gilded-scimitar-pair.json"
+  },
+  "notes": "Arabian Nights Sultanate theme scene: every item is a library piece."
+}

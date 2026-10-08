@@ -1,0 +1,24 @@
+{
+  "artId": "gavrielle-scene-roman",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/5_Scenes/themes/Gavrielle_Scene_Roman.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Roman",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/ancient/roman/wardrobe/clothing/gowns/stola-and-palla.json",
+    "back": "data/art/heroes/angel-primes/female/gavrielle/wings/gavrielle-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/gavrielle/effects/gavrielle-elemental-drift.json",
+    "background": "data/art/themes/ancient/roman/backgrounds/fantasy/ruins/forum-colonnade-dusk.json",
+    "headwear": "data/art/themes/ancient/roman/wardrobe/headwear/helms/crested-galea-helm.json",
+    "jewelry": "data/art/themes/ancient/roman/wardrobe/jewelry/sets/gold-fibula-set.json",
+    "legs_feet": "data/art/themes/ancient/roman/wardrobe/footwear/sandals/caligae-sandals.json",
+    "holding": "data/art/themes/ancient/roman/wardrobe/props/braziers/vestal-flame-brazier.json",
+    "makeup": "data/art/themes/ancient/roman/cosmetics/makeup/rouged/roman-kohl-and-rouge.json"
+  },
+  "notes": "Roman theme scene: every item is a library piece."
+}

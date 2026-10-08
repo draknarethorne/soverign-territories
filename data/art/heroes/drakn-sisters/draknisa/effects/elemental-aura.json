@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Floating ribbons of water and glittering droplet",
+  "description": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

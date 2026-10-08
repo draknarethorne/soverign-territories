@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the steppe horde magician outfit render",
   "components": {
     "pose": "data/art/motion/action/overhead-strike.json",
-    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/steppe/backgrounds/fantasy/highlands/endless-steppe-warcamp.json",
     "expression": "data/art/themes/eastern/steppe/motion/expressions/wild-freedom.json"
   },

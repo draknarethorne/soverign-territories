@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/verdant-bloom-realm",
+  "kind": "background",
+  "name": "Verdant Bloom (grounded)",
+  "description": "a wildflower meadow beside a mossy stone ruin, tall grass and flowers swaying, pollen and seeds drifting in warm afternoon sun, a small stream over mossy rock",
+  "mood": "lush, alive",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/verdant-bloom-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

@@ -1,0 +1,20 @@
+{
+  "artId": "baracel-armor-chain-hauberk-long",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/male/baracel.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/male/Baracel/4_Wardrobe/armor/wardrobe/Baracel_Armor_ChainHauberkLong.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Long Chain Hauberk",
+  "aesthetic": "a clean studio presentation of long chain hauberk",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/mail/chain-hauberk-long.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

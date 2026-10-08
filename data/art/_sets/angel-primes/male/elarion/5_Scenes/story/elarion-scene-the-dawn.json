@@ -1,0 +1,21 @@
+{
+  "artId": "elarion-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/5_Scenes/story/Elarion_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Fast, graceful ascent: she rises upright through the centre of a great column of racing wind, feathers and leaves with her wings half open and her body turning gently, arms out and lifted, head lifted and gaze to the camera, joyful and free; full figure from head to toe visible.",
+    "wearing": "data/art/wardrobe/clothing/sets/open-linen-shirt-and-trousers.json",
+    "jewelry": "data/art/heroes/angel-primes/male/elarion/jewelry/elarion-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/male/elarion/wings/elarion-wings.json",
+    "effects": "A great spiral of racing wind, feathers and leaves rises in a swirling column around her, streaks of {{MAGIC}} light tracing the air, clouds swept back.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/gale-eyrie-realm.json"
+  },
+  "notes": "THE DAWN: the angel rising through her element's realm."
+}

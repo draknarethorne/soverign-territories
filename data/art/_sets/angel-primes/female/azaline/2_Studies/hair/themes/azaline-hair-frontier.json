@@ -1,0 +1,11 @@
+{
+  "artId": "azaline-hair-frontier",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "component": "data/art/themes/western/frontier/cosmetics/hair/braided/side-braid-under-hat.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/2_Studies/hair/themes/Azaline_Hair_Frontier.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Frontier Gunslinger theme hairstyle."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/remiah/effects/remiah-elemental-drift",
+  "kind": "effects",
+  "name": "Remiah's elemental drift",
+  "description": "A drift of crackling arcs of lightning and sparks circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Remiah: written for this angel."
+}

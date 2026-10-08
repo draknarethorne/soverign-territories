@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/dresses/corsair-captain-coat-dress.json",
     "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
     "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
     "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tide-cutlass.json",

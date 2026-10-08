@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/alchemist/wardrobe/armor/leather/transmuters-harness-armor.json",
     "jewelry": "data/art/themes/adventure/alchemist/wardrobe/jewelry/sets/vial-pendant-set.json",
     "legs_feet": "data/art/themes/adventure/alchemist/wardrobe/footwear/boots/acid-proof-lab-boots.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/alchemist/backgrounds/fantasy/dungeons/alchemist-laboratory-bubbling.json",
     "headwear": "data/art/themes/adventure/alchemist/wardrobe/headwear/goggles/brass-lens-goggles.json",
     "holding": "data/art/themes/adventure/alchemist/wardrobe/weapons/throwing/volatile-flask-trio.json",

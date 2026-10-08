@@ -1,0 +1,11 @@
+{
+  "artId": "remiah-hair-chivalry",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "component": "data/art/themes/western/chivalry/cosmetics/hair/braided/plaited-coronet-and-veil.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/2_Studies/hair/themes/Remiah_Hair_Chivalry.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Chivalry and Tournament theme hairstyle."
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/halloween/wardrobe/clothing/dresses/pumpkin-harvest-witch-dress.json",
     "jewelry": "data/art/themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set.json",
     "legs_feet": "data/art/themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots.json",
-    "effects": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknoxa/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/castle/haunted-manor-courtyard.json",
     "headwear": "data/art/themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/venom-stiletto.json",

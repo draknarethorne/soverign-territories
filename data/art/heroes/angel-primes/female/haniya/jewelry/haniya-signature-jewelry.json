@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/haniya/jewelry/haniya-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Haniya's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing twining leaves and a budding vine, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus grass and alignment details."
+}

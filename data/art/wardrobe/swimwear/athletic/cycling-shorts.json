@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/athletic/cycling-shorts",
+  "kind": "wearing",
+  "name": "Cycling Shorts",
+  "description": "only {{PRIMARY}} padded cycling shorts with {{ACCENT_SOFT}} chamois and high-waisted bands; chest bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "athletic", "cycling", "male"]
+}

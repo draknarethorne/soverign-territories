@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/remiah/jewelry/remiah-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Remiah's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a forked lightning bolt inside a ring of cloud, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Remiah: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus lightning and alignment details."
+}

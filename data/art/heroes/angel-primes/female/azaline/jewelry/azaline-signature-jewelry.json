@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/azaline/jewelry/azaline-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Azaline's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a six-pointed snowflake of frost, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Azaline: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus ice and alignment details."
+}

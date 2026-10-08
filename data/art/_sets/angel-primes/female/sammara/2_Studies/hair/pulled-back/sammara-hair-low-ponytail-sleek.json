@@ -1,0 +1,10 @@
+{
+  "artId": "sammara-hair-low-ponytail-sleek",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "component": "data/art/races/human/cosmetics/hair/pulled-back/low-ponytail-sleek.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/2_Studies/hair/pulled-back/Sammara_Hair_PulledBack_LowPonytailSleek.txt",
+  "denoise": "~0.4-0.6"
+}

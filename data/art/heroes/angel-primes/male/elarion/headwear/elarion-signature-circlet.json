@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/elarion/headwear/elarion-signature-circlet",
+  "kind": "headwear",
+  "name": "Elarion's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/laurel-wreath.json",
+  "description": "+, a spiral of swept feathers rising at the centre of the brow, set with a {{GEM}} gem; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Elarion: the library piece wardrobe/headwear/crowns/laurel-wreath.json plus wind and alignment details."
+}

@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/loose-feathers-and-streaks-of-pale-cloud",
+  "kind": "effects",
+  "name": "Loose feathers and streaks of pale cloud",
+  "description": "Loose feathers and streaks of pale cloud spiral around the figure, hair and wings lifted by a rising gale.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

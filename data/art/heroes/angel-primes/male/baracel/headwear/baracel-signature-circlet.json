@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/baracel/headwear/baracel-signature-circlet",
+  "kind": "headwear",
+  "name": "Baracel's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/tiara.json",
+  "description": "+, a faceted crystal set in carved stone rising at the centre of the brow, set with a {{GEM}} gem; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: the library piece wardrobe/headwear/crowns/tiara.json plus earth and alignment details."
+}

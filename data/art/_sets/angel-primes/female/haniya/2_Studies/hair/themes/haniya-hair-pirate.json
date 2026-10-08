@@ -1,0 +1,11 @@
+{
+  "artId": "haniya-hair-pirate",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "component": "data/art/themes/adventure/pirate/cosmetics/hair/braided/sea-braids-and-bandana.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/2_Studies/hair/themes/Haniya_Hair_Pirate.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Pirate theme hairstyle."
+}

@@ -1,0 +1,22 @@
+{
+  "artId": "judiel-scene-eclipse",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/5_Scenes/themes/Judiel_Scene_Eclipse.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Eclipse",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/adventure/eclipse/wardrobe/clothing/sets/eclipse-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/judiel/wings/judiel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/judiel/effects/judiel-elemental-drift.json",
+    "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
+    "legs_feet": "data/art/themes/adventure/eclipse/wardrobe/footwear/boots/obsidian-stiletto-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/judiel/jewelry/judiel-signature-jewelry.json",
+    "holding": "data/art/themes/adventure/eclipse/wardrobe/weapons/daggers/crescent-ritual-blades.json"
+  },
+  "notes": "Eclipse theme scene: every item is a library piece."
+}

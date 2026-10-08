@@ -1,0 +1,24 @@
+{
+  "artId": "azaline-scene-frontier",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/themes/Azaline_Scene_Frontier.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Frontier Gunslinger",
+  "components": {
+    "pose": "data/art/motion/standing/unpredictable-seductive.json",
+    "expression": "a serene, knowing smile, eyes calm and bright.",
+    "wearing": "data/art/themes/western/frontier/wardrobe/clothing/dresses/fringe-saloon-dress.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/azaline/effects/azaline-elemental-drift.json",
+    "background": "data/art/themes/western/frontier/backgrounds/fantasy/canyon/dusty-main-street-sundown.json",
+    "headwear": "data/art/themes/western/frontier/wardrobe/headwear/hats/wide-brim-ranger-hat.json",
+    "jewelry": "data/art/themes/western/frontier/wardrobe/jewelry/sets/turquoise-and-silver-set.json",
+    "legs_feet": "data/art/themes/western/frontier/wardrobe/footwear/boots/spurred-cowboy-boots.json",
+    "makeup": "data/art/themes/western/frontier/cosmetics/makeup/dusty/trail-dust-and-bronze.json",
+    "holding": "data/art/themes/western/frontier/wardrobe/weapons/firearms/twin-revolvers.json"
+  },
+  "notes": "Frontier Gunslinger theme scene: every item is a library piece."
+}

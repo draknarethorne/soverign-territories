@@ -6,7 +6,7 @@
   "name": "Editorial: Pastel Fresh",
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/flowing-sundress.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/strappy-flat-sandals.json",
     "pose": "data/art/motion/romantic/windswept-dreamy.json",
     "background": "data/art/backgrounds/studio/pastel-blush-seamless.json",

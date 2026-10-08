@@ -1,0 +1,14 @@
+{
+  "artId": "angelica-head-three-quarter-left",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "name": "Three-Quarter Left",
+  "components": {
+    "view": "data/art/studio/views/head/three-quarter-left.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/2_Studies/head/views/Angelica_Head_three_quarter_left.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

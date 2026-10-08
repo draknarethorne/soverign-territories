@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/roman/wardrobe/armor/lorica/gladiatrix-lorica-set.json",
     "jewelry": "data/art/themes/ancient/roman/wardrobe/jewelry/sets/gold-fibula-set.json",
     "legs_feet": "data/art/themes/ancient/roman/wardrobe/footwear/sandals/caligae-sandals.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/roman/backgrounds/fantasy/ruins/forum-colonnade-dusk.json",
     "headwear": "data/art/themes/ancient/roman/wardrobe/headwear/helms/crested-galea-helm.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/radiant-mace.json",

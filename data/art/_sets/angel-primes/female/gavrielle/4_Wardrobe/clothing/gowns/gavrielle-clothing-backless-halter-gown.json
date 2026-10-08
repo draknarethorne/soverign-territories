@@ -1,0 +1,18 @@
+{
+  "artId": "gavrielle-clothing-backless-halter-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/4_Wardrobe/clothing/gowns/Gavrielle_Clothing_BacklessHalterGown.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Backless Halter Gown",
+  "aesthetic": "a clean studio presentation of backless halter gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/backless-halter-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

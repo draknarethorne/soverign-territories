@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknava/companion/her-aligned-elder-dragon-zephyros-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon zephyros a distant",
+  "description": "her aligned Elder Dragon, Zephyros, a distant silhouette riding the clouds beyond the terrace, windswept-jade wings catching the last light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

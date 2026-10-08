@@ -1,0 +1,8 @@
+{
+  "id": "themes/eastern/imperial-dynasty/wardrobe/clothing/sets/imperial-dynasty-male-outfit",
+  "kind": "wearing",
+  "name": "Imperial Dynasty Male Outfit",
+  "description": "a {{PRIMARY}} silk hanfu robe with {{ACCENT_SOFT}} dragon embroidery along the front, a wide embroidered belt, black silk trousers, and tied cloth shoes",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["imperial-dynasty", "clothing", "male"]
+}

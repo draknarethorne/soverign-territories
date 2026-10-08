@@ -1,0 +1,10 @@
+{
+  "artId": "nyxene-hair-sides-of-breasts-framed",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "component": "data/art/races/human/cosmetics/hair/framed/sides-of-breasts-framed.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/2_Studies/hair/framed/Nyxene_Hair_Framed_SidesOfBreastsFramed.txt",
+  "denoise": "~0.4-0.6"
+}

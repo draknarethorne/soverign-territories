@@ -1,0 +1,14 @@
+{
+  "artId": "luzariel-head-joyful-laugh",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "name": "Joyful Laugh",
+  "components": {
+    "expression": "data/art/motion/expressions/playful/joyful-laugh.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/2_Studies/head/closeups/Luzariel_Head_joyful_laugh.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head expression (front view). Scaffolded."
+}

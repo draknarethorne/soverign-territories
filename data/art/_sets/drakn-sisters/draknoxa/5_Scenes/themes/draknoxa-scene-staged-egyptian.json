@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the egyptian alchemist outfit render",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "Thin tendrils of {{MAGIC}} toxic vapour drift between the columns and around her feet, glowing faintly in the torchlight.",
+    "effects": "data/art/heroes/drakn-sisters/draknoxa/effects/thin-tendrils-of-toxic-vapour-drift-between.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
-    "expression": "a sharp, knowing look and a faint cunning smile."
+    "expression": "data/art/heroes/drakn-sisters/draknoxa/expressions/sharp-knowing-look-and-a-faint.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknoxa/5_Scenes/themes/Draknoxa_Scene_Staged_Egyptian.txt",

@@ -79,6 +79,59 @@ Rules of thumb: theme beats race (a Greek gown is `themes/ancient/greek/` even f
 live in the race); hero beats everything (a signature weapon stays with its hero); when unsure, start in the narrowest
 scope and promote it to core the second time it is reused.
 
+### Realism: realms
+
+How realistic the world looks is chosen by the **realm** (`data/art/realms/`), the `Setting:` line of a scene. `fantasy` is the illustrated high-fantasy default ("a Dungeons & Dragons-style realm"); `fantasy-cinematic`
+describes the same fantasy backgrounds as a film still shot on location, with real materials, natural light, subtle magic and bans on cartoon and cel shading; `modern` and `studio` are the other two. A card names its realm with
+`components.realm`, a hero with `art.defaultRealm`, a whole group in `_settings/studio.json` `realmByGroup` (Angel Primes uses the cinematic one); a realm piece's `backgroundRealm` says which `backgrounds/` folder its scenes use.
+Vocabulary decides the look: "ethereal", "magical", "towering", "floating", "glowing" lean illustrated, "weathered stone", "overcast", "dust", "natural light" lean photographic.
+`python tools/art/style_audit.py` ranks the backgrounds, effects and realms by that wording and `--prompts` counts it in the generated prompts. A background that has a realistic twin (the elemental realms have
+`grounded/` versions) lets one place be rendered both ways. Keep high-fantasy wording where a card-like look is wanted on purpose; otherwise write what a camera would see and let a glow be a light source.
+
+### Pieces that build on pieces (`extends`)
+
+The scopes above form a hierarchy: a hero's signature item should not re-describe a library item, it should **extend** it. A piece names its base with
+`"extends": "data/art/...json"` and then carries only what is different:
+
+```json
+{
+  "id": "heroes/angel-primes/female/azaline/jewelry/azaline-signature-jewelry",
+  "kind": "jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a six-pointed snowflake, each set with a small {{GEM}} gem",
+  "compatibleStages": ["armor", "clothing", "showcase", "scene"]
+}
+```
+
+- A field a piece writes replaces the base's field. In a text field `{{BASE}}` is replaced by the base's text (put it wherever it reads best), and a value
+  starting with `+` is the base text followed by the rest (no space is added when the rest starts with `,` `;` `.` or `:`, so `+, with ...` continues the base's sentence).
+- `negatives` are the base's plus the piece's own; every other field (`compatibleStages`, tags...) is inherited unless set.
+- A base may extend another base (a chain). A missing base, a different `kind` or a cycle is a validator error, and `{{BASE}}` without `extends` is rejected.
+- Change the base and every piece built on it follows; `art_refs.py where-used` and `move` see `extends` paths like any other reference.
+- Repeated inline sentences, poses and expressions are pulled into pieces by `tools/art/extract_literals.py` (preview first; a refactor must leave the prompts byte-identical).
+  A pose or expression piece is small: kind `pose` needs only `pose`, kind `expression` only `expression` (shared ones live in `motion/scene/` and `motion/expressions/scene/`, a hero's own beside her).
+
+**Frames: one wording, many heroes.** When several heroes have the same piece with only a few values different (the ten sisters' celestial armor), write the shared wording once as a *frame* with named gaps
+and let each hero fill the gaps. The frame is a normal piece whose text holds `[[SLOT]]` markers; a piece extends it and supplies `vars`:
+
+```json
+{
+  "id": "heroes/drakn-sisters/draknava/armor/celestial-plate-armor",
+  "kind": "wearing",
+  "name": "Celestial armor",
+  "extends": "data/art/wardrobe/armor/celestial/frame/celestial-plate-armor.json",
+  "varsFrom": "data/art/heroes/drakn-sisters/draknava/armor/celestial-design.json"
+}
+```
+
+`varsFrom` points at a `kind: "design"` file that holds only `vars` (`METAL_NAME`, `BREAST`, `HIP`, `ENGRAVING`, `GEM` ...), so the four celestial pieces of a hero share one set of values and a hero's look is
+edited in one place; a piece's own `vars` win over the design's. Every slot must be filled and every `vars` key must fill a slot (the validator checks both). Fixes to the frame reach all ten heroes.
+
+**Signature items for the angels.** Every angel owns a signature weapon, armor, gown (or attire), circlet and jewelry plus an elemental drift under
+`heroes/angel-primes/<division>/<slug>/<kind>/`, each extending a library piece and adding the angel's element motif and an alignment tone (pristine for the
+lawful ranks, tattered for the fallen). `scaffold_angel_library.py` writes them and the angel's showcases and scenes use them, the same way each Drakn sister
+has her own pieces. To write one by hand, add the file next to the angel and point a card slot at it.
+
 **Theme first, not kind first.** A themed deck is one unit (outfit, jewelry, makeup, hair, background): putting
 `themes/ancient/greek/` on the outside means one folder to add, version, ship or retire (an event pack like Thanksgiving is
 switched on for a period and then removed), and a tool can list "everything in this theme". Kind-first
@@ -208,10 +261,13 @@ female and one male per element in each of ten pairs, and each has a bonded pet 
 **One tree, with divisions.** Angel Primes is the test bed for a whole deck, so its work is filed below a division folder, the same in every layer
 (`data/art/_settings/groups.json` lists them: `female` and `male` for heroes, then `pets`, `units`, `buildings`, `equipment`, `tactics`, `workers`, the Sovereign Dawn card categories):
 `heroes/angel-primes/female/seraphine.json`, `_sets/angel-primes/female/seraphine/<phase>/...`, `prompts/angel-primes/female/Seraphine/<phase>/...`, and in ComfyUI
-`female/Seraphine/<phase>/...` in the Angel Primes workspace. A pair shares a family name; only Angelica and Angelo are named Prime. The scaffolders take the division
+`female/Seraphine/<phase>/...` in the Angel Primes workspace. A pair shares a family name; only Angelica and Angelo have the family name Prime (their art files use the first name like every other angel: `angelica`, `angelo`). The scaffolders take the division
 from the identity path (`--division` on the older ones), and the validator rejects a card outside a division of its group.
 
-**How this lines up with Sovereign Dawn.** `data/cards/sovereign-dawn/` has eight categories (heroes 35, units 108, buildings 20, equipment 14, tactics 12, pets 10, workers 10, dragons 10), so the divisions use the same names, with heroes split by their card's `sex`. The mass card art for those cards (`_sets/sovereign-dawn/<category>/card/`, `prompts/sovereign-dawn/<Category>/card/`) is flat first-draft art, one folder per category, and stays as it is; a test-bed building or unit is filed as `buildings/<Name>/<phase>/...`, one folder per item, because it is worked through the phases like a hero. Dragons stay in `elder-dragons`.
+**How this lines up with Sovereign Dawn.** `data/cards/sovereign-dawn/` has eight categories (heroes 35, units 108, buildings 20, equipment 14, tactics 12, pets 10,
+workers 10, dragons 10), so the divisions use the same names, with heroes split by their card's `sex`. The mass card art for those cards
+(`_sets/sovereign-dawn/<category>/card/`, `prompts/sovereign-dawn/<Category>/card/`) is flat first-draft art, one folder per category, and stays as it is; a test-bed
+building or unit is filed as `buildings/<Name>/<phase>/...`, one folder per item, because it is worked through the phases like a hero. Dragons stay in `elder-dragons`.
 
 What each angel has, and where it lives:
 
@@ -222,11 +278,28 @@ What each angel has, and where it lives:
 | The pet itself (look, temperament, scene placement; `bondedTo` and `profile.pet` link both ways) | `pets/angel-primes/<pet>.json` |
 | The kit: underlayers, clothing, armor, motions, heels and the signature scene, chosen to fit the angel | `_kits/angel-primes/<slug>.json` |
 
-The trimmed set is written by `python tools/generators/scaffold_angel_set.py --all` (or `--slug seraphine`; re-runnable, existing cards are kept): per angel the Alpha chain (Prime, Bare Figure; the
-female angels add Bare Chest, Barefoot and Heels, the males have no Barefoot or Heels step), the head and a face close-up, three underlayer tests, two outfits and two armors from the kit, four motions
-and one signature scene with wings, an element effect, the pet and an element realm (16 cards for a male angel, 20 for a female). Males use `bare-male-human.txt` and `bare-skin-study-male`. Then
-`gen_prompt.py --group angel-primes` and `comfy_workflows.py make --create --group angel-primes`. Every angel has a different mix of outfits and motions from the library so one run covers a wide
-variety; add a piece to a kit and re-run the scaffolder to try something new on one angel. Angelica and Angelo (`angelica-prime`, `angelo-prime`) are the older pair and are left as they were.
+Each angel's set is written by `python tools/generators/scaffold_angel_set.py --all` (or `--slug seraphine`; re-runnable, existing cards are kept) and follows a standard Drakn sister (Draknava), whose cards it clones, with Drakness's
+library breadth spread across the twenty. `scaffold_angel_set.py` writes the core (the Alpha chain: Prime, Bare Figure; the female angels add Bare Chest, Barefoot and Heels, the males have no Barefoot or Heels step; the head; the
+kit's underlayers, outfits, armor, motions and the signature scene with wings, an element effect, the pet and an element realm), and `scaffold_angel_library.py` adds the rest, **rotated by alignment rank** so ten angels sweep each
+library family instead of repeating one set:
+
+| Phase | Every angel | Female angels also |
+| --- | --- | --- |
+| 1_Alpha | Prime, Bare Figure | Bare Chest, Barefoot, Heels, 4 covering and 4 celestial experiments (the celestial pieces are shared: `wardrobe/armor/celestial/angelic-*`) |
+| 2_Studies | 6 body views, 8 head views, 6 close-ups and expressions (`scaffold_studio_library.py`), 8 of the 46 hairstyles | hair cards for the theme packs |
+| 3_Layers | a rotating mix of underlayers (males: only the male swimwear) | the 5 skin-base variants and bikini, lingerie, one-piece, backless and athletic tests |
+| 4_Wardrobe | the kit's clothing and armor | about 17 more outfits and 12 more armors from the library, a studio card per theme, and the showcases (celestial 4, editorial 7, elemental 4, studio 2, photo 13) |
+| 5_Scenes | the signature scene | glamour, enchanted evening (staged too), elegant casting, robe, battle, bond (in her element's lair), the dawn, and six theme packs each as a complete and a staged scene |
+| 6_Finish, Bench, 7_Video | the polish and final skeletons, 10-12 bench motions, signature video | the dawn and a theme video |
+
+That is about 177 cards for a female angel and about 50 for a male (Phase A: every phase that needs no male wardrobe). Only pieces not tagged male reach a female angel, and only pieces tagged male or unisex reach a male one, so
+the male wardrobe, showcases, theme outfits and scenes wait for a male wardrobe pack (the library has only 24 male-tagged pieces and no male theme outfits). A kit may override any rotated pick (`layers`, `clothing_more`,
+`armor_more`, `themes`, `hair`, `motions_more`). `scaffold_angel_set.py --coverage` reports how much of the library the angels exercise (today every swimwear piece, dress, gown, set, hairstyle, studio and modern background and
+all 26 theme packs; weapons 19 of 33, fantasy backgrounds 57 of 104). Scenes use the sisters' folders (`5_Scenes/signature`, `glamour`, `story`, `themes`) and the angels have no card, so no shiny or holo editions. Then
+`gen_prompt.py --group angel-primes`, `comfy_workflows.py make --create --group angel-primes` and `deploy --group angel-primes`. Angelica and Angelo (`angelica`, `angelo`) are the older pair: their wardrobe, layers and scenes stay hand-picked (no kit), but
+`scaffold_angel_set.py --all` (or `--slug angelica`) gives them the same Phase 1 and Phase 2 as every other angel: the Alpha chain (1_Prime, 2_Bare, and for Angelica 2b_Experiments and 3_Footwear with Barefoot and Heels), the head, view and body studies and the hair
+studies. Their pastel look is `art.defaultUnderlayer` in the identity, so the Prime A-pose wears it, and the pastel bikini ends in the shared `{{FOOTWEAR}}` slot like every other swimwear piece (barefoot in the A-pose, heels only in the Heels step;
+it used to carry its heels inside the text). The old single `X_Pose` card was retired; the pastel look stays as a layer test (`3_Layers/bikini/angelica-x-pose-angelic-pastel-bikini`).
 
 **Bust and contour.** Every female hero (sister or angel) is built with a full, firm, lifted bust and a crisp cleavage in the Alpha images, so clothing and armor have something to follow:
 the shared `bustKey` in `_settings/phrases.json` for the Prime, the hero's own `bust` line for the Bare step (`ownBust` in `keyDetails`). Outfit, armor, showcase and scene prompts also carry
@@ -622,8 +695,7 @@ tags are never rendered. A piece's `negatives` list becomes a `{{<SLOT>_NEG}}` t
 checks it): **studio** (`poses`, `head`, `hair`, `motion`, `armor`, `clothing`, `showcase`) is a studio-backdrop render (cream, or for `showcase` a coloured backdrop with magic and flair) for clearly
 seeing the subject, an outfit or an armor piece, and may still include motion (a catwalk, a battle stance); **scene**
 (`scene`, staged scenes included) adds a realm, background and effects. Anything that is not a scene is studio. The
-class also drives workflow routing: sister studio work goes to each sister's own UAT workspace, sister scenes to the
-shared `Drakn Sisters` workspace (see `workflows/README.md`). Canon scenes are always the `fantasy` realm; the validator rejects a scene
+class also drives workflow routing: sister studio and scene work both go to the `Drakn Sisters` workspace (and Drakness to her own as well; see `workflows/README.md`). Canon scenes are always the `fantasy` realm; the validator rejects a scene
 whose background folder doesn't match its realm, so a modern location can only appear if a card explicitly sets
 `components.realm` to `realms/modern.json` (the Angel Primes' `scene/modern/` cards, for fun).
 
@@ -632,14 +704,14 @@ paths for no behaviour change. Split when buildings/units/armor-only renders add
 
 ## The studio reference library (built from the A-pose)
 
-Every hero's X Pose is the baseline; a library of studio references is derived from it so a specific close-up or
+Every hero's A-pose (Alpha 1 Prime, then the Bare and Barefoot images) is the baseline; a library of studio references is derived from it so a specific close-up or
 angle can later be fed in as an image reference instead of re-describing the face with JSON. Generate a hero's whole
 library with one command, then `gen_prompt.py` to produce prompts:
 
 ```bash
-python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime --hero Angelica \
-    --underlayer data/art/heroes/angel-primes/female/angelica-prime/wearing/angelic-pastel-bikini.json
-python tools/generators/gen_prompt.py --group angel-primes --slug angelica-prime
+python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica --hero Angelica \
+    --underlayer data/art/heroes/angel-primes/female/angelica/wearing/angelic-pastel-bikini.json
+python tools/generators/gen_prompt.py --group angel-primes --slug angelica
 ```
 
 Per hero: 6 body views (3/4 L/R, profile L/R, back, back-glance), 8 head views (3/4 L/R, profile L/R, looking down,

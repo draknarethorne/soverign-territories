@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/effects/forks-of-lightning-flicker-across-the-night",
+  "kind": "effects",
+  "name": "Forks of lightning flicker across the night",
+  "description": "Forks of {{MAGIC}} lightning flicker across the night sky and arc between the roof beams of the longhall behind her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

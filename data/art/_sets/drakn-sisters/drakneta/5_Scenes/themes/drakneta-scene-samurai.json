@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/samurai/wardrobe/armor/plate/lacquered-lamellar-armor.json",
     "jewelry": "data/art/themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set.json",
     "legs_feet": "data/art/themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta.json",
-    "effects": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/castle/japanese-castle-keep-cherry.json",
     "headwear": "data/art/themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm.json",
     "holding": "data/art/themes/eastern/samurai/wardrobe/weapons/swords/katana-and-wakizashi.json",

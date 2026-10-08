@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/droplets-of-water-hang-in-the-air",
+  "kind": "effects",
+  "name": "Droplets of water hang in the air",
+  "description": "Droplets of {{MAGIC}} water hang in the air around the figure, a gentle mist curling about the feet and light rippling across the wings.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

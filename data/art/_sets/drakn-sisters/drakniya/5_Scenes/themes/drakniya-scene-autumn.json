@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/autumn/wardrobe/armor/leather/stagwarden-leaf-armor.json",
     "jewelry": "data/art/themes/seasonal/autumn/wardrobe/jewelry/sets/acorn-and-amber-set.json",
     "legs_feet": "data/art/themes/seasonal/autumn/wardrobe/footwear/boots/laced-forest-boots.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist.json",
     "headwear": "data/art/themes/seasonal/autumn/wardrobe/headwear/crowns/antler-and-acorn-crown.json",
     "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/briar-sickle.json",

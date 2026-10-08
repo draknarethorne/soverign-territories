@@ -11,7 +11,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/sets/robes-and-sash.json",
     "arms": "bare arms",
-    "jewelry": "a simple {{METAL}} chain with a small pendant",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
   },
   "notes": "WARDROBE TEST: same hero, only the piece differs."

@@ -1,0 +1,23 @@
+{
+  "artId": "azaline-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/signature/Azaline_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "data/art/motion/expressions/composed/serious-poised.json",
+    "wearing": "data/art/wardrobe/armor/crystal/frost-crystal-armor.json",
+    "headwear": "data/art/heroes/angel-primes/female/azaline/headwear/azaline-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/female/azaline/jewelry/azaline-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "effects": "Drifting snow and fine frost crystals glitter in the air, a pale {{MAGIC}} chill glowing at the feet.",
+    "companion": "data/art/heroes/angel-primes/female/azaline/companion/hoarfrost-beside.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/frost-spire-realm.json"
+  },
+  "notes": "Complete scene from the A-pose: outfit, wings, element effect, bonded pet and an element realm."
+}

@@ -7,7 +7,7 @@
   "finish": "holo",
   "components": {
     "pose": "She stands with the staff planted and her free hand open toward the sky, her gown and hair lifted by a rising wind of petals, chin lifted, a serene, radiant gaze straight to the camera; full figure visible.",
-    "expression": "a calm, knowing smile, eyes gentle and patient.",
+    "expression": "data/art/heroes/drakn-sisters/drakniya/expressions/calm-knowing-smile-eyes-gentle-and.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknara/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknara)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "antique bronze",
+    "BREAST": "a round carved totem-face disc with a spiral border",
+    "HIP": "a small mountain-peak chevron",
+    "ENGRAVING": "carved spirals and tiny turquoise inlays",
+    "GEM": "a turquoise",
+    "GEM_NOUN": "turquoise"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

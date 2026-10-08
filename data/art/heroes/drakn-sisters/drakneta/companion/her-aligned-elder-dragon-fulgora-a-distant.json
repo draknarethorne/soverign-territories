@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/companion/her-aligned-elder-dragon-fulgora-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon fulgora a distant",
+  "description": "her aligned Elder Dragon, Fulgora, a distant silhouette against flickering storm clouds beyond the terrace, electric-gold scales and faint lightning along its wings",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

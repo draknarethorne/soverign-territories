@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/expressions/serene-warm-smile-eyes-soft-with-2",
+  "kind": "expression",
+  "name": "Serene warm smile eyes soft with",
+  "expression": "a serene, warm smile, eyes soft with compassion and foresight.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

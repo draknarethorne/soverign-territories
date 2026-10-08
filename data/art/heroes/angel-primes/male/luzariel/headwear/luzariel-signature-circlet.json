@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/headwear/luzariel-signature-circlet",
+  "kind": "headwear",
+  "name": "Luzariel's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/regal-crown.json",
+  "description": "+, a crescent moon pierced by a single star rising at the centre of the brow, set with a {{GEM}} gem; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Luzariel: the library piece wardrobe/headwear/crowns/regal-crown.json plus darkness and alignment details."
+}

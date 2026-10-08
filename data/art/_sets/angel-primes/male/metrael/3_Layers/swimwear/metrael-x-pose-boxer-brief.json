@@ -1,0 +1,13 @@
+{
+  "artId": "metrael-x-pose-boxer-brief",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/3_Layers/swimwear/Metrael_X_Pose_BoxerBrief.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/trunks/boxer-brief.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

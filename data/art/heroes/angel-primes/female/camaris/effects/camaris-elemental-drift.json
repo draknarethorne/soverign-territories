@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/camaris/effects/camaris-elemental-drift",
+  "kind": "effects",
+  "name": "Camaris's elemental drift",
+  "description": "A drift of dancing flame, embers and sparks circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Camaris: written for this angel."
+}

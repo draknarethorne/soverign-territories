@@ -1,0 +1,8 @@
+{
+  "id": "themes/northern/norse/wardrobe/clothing/sets/norse-male-outfit",
+  "kind": "wearing",
+  "name": "Norse Male Outfit",
+  "description": "a {{PRIMARY}} wool tunic with {{ACCENT_SOFT}} trim and a wide leather belt with {{METAL}} buckle, wool breeches, a fur-trimmed cloak pinned with a torque brooch",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["norse", "clothing", "male"]
+}

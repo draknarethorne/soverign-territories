@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/azaline/effects/azaline-elemental-drift",
+  "kind": "effects",
+  "name": "Azaline's elemental drift",
+  "description": "A drift of swirling frost, snowflakes and ice crystals circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Azaline: written for this angel."
+}

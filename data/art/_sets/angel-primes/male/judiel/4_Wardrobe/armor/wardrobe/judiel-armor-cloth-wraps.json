@@ -1,0 +1,20 @@
+{
+  "artId": "judiel-armor-cloth-wraps",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/4_Wardrobe/armor/wardrobe/Judiel_Armor_ClothWraps.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Cloth Wrap Armor",
+  "aesthetic": "a clean studio presentation of cloth wrap armor",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/robes/cloth-wraps.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

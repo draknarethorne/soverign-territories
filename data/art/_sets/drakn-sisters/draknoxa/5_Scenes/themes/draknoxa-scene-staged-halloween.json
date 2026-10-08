@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the halloween alchemist outfit render",
   "components": {
     "pose": "data/art/motion/action/crouch-ready.json",
-    "effects": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknoxa/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/castle/haunted-manor-courtyard.json",
     "expression": "data/art/themes/seasonal/halloween/motion/expressions/wicked-delight.json"
   },

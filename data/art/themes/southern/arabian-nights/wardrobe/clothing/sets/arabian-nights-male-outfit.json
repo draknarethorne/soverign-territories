@@ -1,0 +1,8 @@
+{
+  "id": "themes/southern/arabian-nights/wardrobe/clothing/sets/arabian-nights-male-outfit",
+  "kind": "wearing",
+  "name": "Arabian Nights Male Outfit",
+  "description": "a {{PRIMARY}} silk tunic with {{ACCENT_SOFT}} jewelled belt and open sleeves, draped trousers with gold {{METAL}} embroidery at the ankles, and a curved scimitar accent brooch",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["arabian-nights", "clothing", "male"]
+}

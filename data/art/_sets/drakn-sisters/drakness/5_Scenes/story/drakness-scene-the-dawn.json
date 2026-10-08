@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/dawn-regalia.json",
     "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-lineup-headwear.json",
     "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/scene-lineup-jewelry.json",
-    "legs_feet": "bare feet with fine {{METAL}} anklets",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-with-fine-anklets.json",
     "effects": "Threads of {{MAGIC}} shadow rise from the glowing seams of the glass and spiral around her, shards of black glass and drifting ash hanging in the air as they fall back to the crater, a faint violet halo behind her.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/dawn/sundering-scar-glass-crater.json"

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/christmas/wardrobe/clothing/sets/ribbon-and-fur-set.json",
     "jewelry": "data/art/themes/seasonal/christmas/wardrobe/jewelry/sets/snowflake-and-bell-set.json",
     "legs_feet": "data/art/themes/seasonal/christmas/wardrobe/footwear/boots/fur-cuffed-holiday-boots.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/christmas/backgrounds/fantasy/castle/great-hall-yule-hearth.json",
     "headwear": "data/art/themes/seasonal/christmas/wardrobe/headwear/hats/fur-trimmed-santa-hat.json",
     "makeup": "data/art/themes/seasonal/christmas/cosmetics/makeup/festive/frosted-berry-glow.json"

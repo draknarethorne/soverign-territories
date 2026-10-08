@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknoxa)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "tarnished brass",
+    "BREAST": "a teardrop flask shape rimmed by a coiling serpent",
+    "HIP": "a small coiled-serpent oval",
+    "ENGRAVING": "etched droplets and a tiny stopper ornament",
+    "GEM": "an acid-lime gem",
+    "GEM_NOUN": "acid-lime gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

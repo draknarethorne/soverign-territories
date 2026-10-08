@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/sandalyn/effects/sandalyn-elemental-drift",
+  "kind": "effects",
+  "name": "Sandalyn's elemental drift",
+  "description": "A drift of stone shards, dust and glowing crystals circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sandalyn: written for this angel."
+}

@@ -1,0 +1,10 @@
+{
+  "artId": "urael-hair-fishtail-braid",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "component": "data/art/races/human/cosmetics/hair/braided/fishtail-braid.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Urael/2_Studies/hair/braided/Urael_Hair_Braided_FishtailBraid.txt",
+  "denoise": "~0.4-0.6"
+}

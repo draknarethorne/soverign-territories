@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/necklaces/ornate-gem-pendant.json",
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/clothing/gown-legs-feet.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight",
+    "companion": "data/art/heroes/drakn-sisters/drakness/companion/her-aligned-elder-dragon-umbrath-barely-visible.json",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/evening/gothic-balcony-moonlit-cemetery.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

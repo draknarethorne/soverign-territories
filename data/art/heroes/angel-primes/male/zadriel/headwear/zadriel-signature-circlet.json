@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/headwear/zadriel-signature-circlet",
+  "kind": "headwear",
+  "name": "Zadriel's signature circlet",
+  "extends": "data/art/wardrobe/headwear/circlets/silver-circlet.json",
+  "description": "+, a scallop shell over curling waves rising at the centre of the brow, set with a {{GEM}} gem; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: the library piece wardrobe/headwear/circlets/silver-circlet.json plus water and alignment details."
+}

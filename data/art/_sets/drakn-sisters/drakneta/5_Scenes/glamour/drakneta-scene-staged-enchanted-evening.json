@@ -8,7 +8,7 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Fulgora, a distant silhouette against flickering storm clouds beyond the terrace, electric-gold scales and faint lightning along its wings",
+    "companion": "data/art/heroes/drakn-sisters/drakneta/companion/her-aligned-elder-dragon-fulgora-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/evening/storm-watch-tower-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",

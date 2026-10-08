@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/spring/wardrobe/clothing/sets/meadow-bralette-set.json",
     "jewelry": "data/art/themes/seasonal/spring/wardrobe/jewelry/sets/petal-and-dew-set.json",
     "legs_feet": "data/art/themes/seasonal/spring/wardrobe/footwear/sandals/ribbon-strap-flower-sandals.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/forests/cherry-blossom-orchard.json",
     "headwear": "data/art/themes/seasonal/spring/wardrobe/headwear/crowns/wild-flower-crown.json",
     "holding": "data/art/heroes/drakn-sisters/drakniya/weapons/living-longbow.json",

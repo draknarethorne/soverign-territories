@@ -1,0 +1,13 @@
+{
+  "artId": "ravaelle-x-pose-backless-halter-one-piece",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/3_Layers/backless/Ravaelle_X_Pose_BacklessHalterOnePiece.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/backless/backless-halter-one-piece.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

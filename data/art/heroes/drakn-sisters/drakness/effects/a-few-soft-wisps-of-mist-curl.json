@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakness/effects/a-few-soft-wisps-of-mist-curl",
+  "kind": "effects",
+  "name": "A few soft wisps of mist curl",
+  "description": "A few soft wisps of {{MAGIC}} mist curl low around her feet, a faint {{MAGIC}} shimmer in the night air - understated, nothing busy.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

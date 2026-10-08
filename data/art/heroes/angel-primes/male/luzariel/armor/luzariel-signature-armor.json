@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/armor/luzariel-signature-armor",
+  "kind": "wearing",
+  "name": "Luzariel's signature armor",
+  "extends": "data/art/wardrobe/armor/scale/lamellar-armor.json",
+  "description": "+, every plate and trim engraved with a crescent moon pierced by a single star in {{ACCENT_SOFT}}; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Luzariel: the library piece wardrobe/armor/scale/lamellar-armor.json plus darkness and alignment details."
+}

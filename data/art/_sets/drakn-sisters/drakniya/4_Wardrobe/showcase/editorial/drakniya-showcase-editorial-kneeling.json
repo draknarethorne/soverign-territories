@@ -6,7 +6,7 @@
   "name": "Editorial: Kneeling Glamour",
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/corset-dress.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/thigh-high-boots.json",
     "pose": "data/art/motion/dynamic/kneeling-glamour.json",
     "background": "data/art/backgrounds/studio/metallic-seamless.json",

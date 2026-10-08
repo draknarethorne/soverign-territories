@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknora/effects/embers-and-sparks-of-fire-drift-upward",
+  "kind": "effects",
+  "name": "Embers and sparks of fire drift upward",
+  "description": "Embers and sparks of {{MAGIC}} fire drift upward between the columns, warm firelight flickering across the marble.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

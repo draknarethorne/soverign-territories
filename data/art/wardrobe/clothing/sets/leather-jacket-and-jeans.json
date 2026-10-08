@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/leather-jacket-and-jeans",
+  "kind": "wearing",
+  "name": "Leather Jacket and Jeans",
+  "description": "a black lambskin leather jacket with {{METAL}} zippers and hardware, worn over a {{PRIMARY}} cotton t-shirt and dark indigo jeans with natural fading",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["leather", "rebel", "male"]
+}

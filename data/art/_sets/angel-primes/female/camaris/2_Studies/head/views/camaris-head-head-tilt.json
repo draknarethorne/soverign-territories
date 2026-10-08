@@ -1,0 +1,14 @@
+{
+  "artId": "camaris-head-head-tilt",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/female/camaris.json",
+  "name": "Head Tilt",
+  "components": {
+    "view": "data/art/studio/views/head/head-tilt.json"
+  },
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/female/Camaris/2_Studies/head/views/Camaris_Head_head_tilt.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Reference-library head view, zoomed from the A-pose. Scaffolded."
+}

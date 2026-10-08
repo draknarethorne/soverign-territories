@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/tunic-cloak-and-breeches",
+  "kind": "wearing",
+  "name": "Tunic, Cloak and Breeches",
+  "description": "a {{PRIMARY}} linen tunic with {{ACCENT_SOFT}} trim at the neckline and sleeves, a wool cloak pinned with a {{METAL}} brooch, and brown wool breeches",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["tunic", "fantasy", "male"]
+}

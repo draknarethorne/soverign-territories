@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/footwear/studio/barefoot-fine-anklets",
+  "kind": "legs_feet",
+  "name": "Barefoot fine anklets",
+  "description": "bare feet, fine {{METAL}} anklets",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 30 cards that carried this sentence inline; edit it here and every one follows."
+}

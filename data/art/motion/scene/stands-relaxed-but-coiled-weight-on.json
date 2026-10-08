@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/stands-relaxed-but-coiled-weight-on",
+  "kind": "pose",
+  "name": "Stands relaxed but coiled weight on",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile."
+}

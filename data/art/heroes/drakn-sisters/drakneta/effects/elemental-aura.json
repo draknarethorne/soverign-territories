@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Forks of lightning crackle through the air",
+  "description": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

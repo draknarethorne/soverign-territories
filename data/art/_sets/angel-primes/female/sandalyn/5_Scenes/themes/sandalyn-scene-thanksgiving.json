@@ -1,0 +1,24 @@
+{
+  "artId": "sandalyn-scene-thanksgiving",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/5_Scenes/themes/Sandalyn_Scene_Thanksgiving.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Thanksgiving",
+  "components": {
+    "pose": "data/art/motion/standing/side-profile-elegant.json",
+    "expression": "a fierce, focused gaze, chin raised.",
+    "wearing": "data/art/themes/seasonal/thanksgiving/wardrobe/clothing/dresses/autumn-harvest-dress.json",
+    "back": "data/art/heroes/angel-primes/female/sandalyn/wings/sandalyn-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/sandalyn/effects/sandalyn-elemental-drift.json",
+    "background": "data/art/themes/seasonal/thanksgiving/backgrounds/fantasy/feast/harvest-feast-hall.json",
+    "headwear": "data/art/themes/seasonal/thanksgiving/wardrobe/headwear/wreaths/autumn-leaf-crown.json",
+    "jewelry": "data/art/themes/seasonal/thanksgiving/wardrobe/jewelry/sets/acorn-and-leaf-set.json",
+    "legs_feet": "data/art/themes/seasonal/thanksgiving/wardrobe/footwear/boots/brown-leather-ankle-boots.json",
+    "holding": "data/art/themes/seasonal/thanksgiving/wardrobe/props/harvest/cornucopia.json",
+    "makeup": "data/art/themes/seasonal/thanksgiving/cosmetics/makeup/warm/warm-autumn-glow.json"
+  },
+  "notes": "Thanksgiving theme scene: every item is a library piece."
+}

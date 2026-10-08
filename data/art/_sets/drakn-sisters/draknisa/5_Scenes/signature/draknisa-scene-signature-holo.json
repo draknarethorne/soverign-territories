@@ -7,7 +7,7 @@
   "finish": "holo",
   "components": {
     "pose": "She stands with the staff raised in one hand and her other arm sweeping out to the side as the water answers, her gown and hair lifted as if underwater, chin lifted, a calm, sovereign gaze straight to the camera; full figure visible.",
-    "expression": "a sly, knowing smile, eyes half-lidded with control.",
+    "expression": "data/art/heroes/drakn-sisters/draknisa/expressions/sly-knowing-smile-eyes-half-lidded.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

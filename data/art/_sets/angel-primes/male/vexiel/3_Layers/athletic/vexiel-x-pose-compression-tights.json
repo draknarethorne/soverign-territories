@@ -1,0 +1,13 @@
+{
+  "artId": "vexiel-x-pose-compression-tights",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/vexiel.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Vexiel/3_Layers/athletic/Vexiel_X_Pose_CompressionTights.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/compression-tights.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

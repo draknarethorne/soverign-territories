@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/waistcoat-and-rolled-sleeves",
+  "kind": "wearing",
+  "name": "Waistcoat and Rolled Sleeves",
+  "description": "a fitted {{PRIMARY}} wool waistcoat with {{METAL}} buttons over a white cotton dress shirt with the sleeves rolled to the elbow, and dark wool trousers",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["waistcoat", "smart-casual", "male"]
+}

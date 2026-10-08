@@ -1,0 +1,10 @@
+{
+  "artId": "gavrielle-hair-side-swept-over-shoulder",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "component": "data/art/races/human/cosmetics/hair/pulled-back/side-swept-over-shoulder.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/2_Studies/hair/pulled-back/Gavrielle_Hair_PulledBack_SideSweptOverShoulder.txt",
+  "denoise": "~0.4-0.6"
+}

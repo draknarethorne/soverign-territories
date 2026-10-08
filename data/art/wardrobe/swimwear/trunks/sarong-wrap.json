@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/trunks/sarong-wrap",
+  "kind": "wearing",
+  "name": "Sarong Wrap",
+  "description": "only a lightweight woven sarong in {{PRIMARY}} with {{ACCENT_SOFT}} geometric pattern, wrapped and knotted at the hip; chest, abdomen, and one leg bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "sarong", "male"]
+}

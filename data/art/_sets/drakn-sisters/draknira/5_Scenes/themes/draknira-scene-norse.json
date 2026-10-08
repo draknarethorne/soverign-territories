@@ -6,14 +6,14 @@
   "name": "Norse Frost Seeress",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "expression": "a cool, calculating stare, utterly composed in the cold.",
+    "expression": "data/art/heroes/drakn-sisters/draknira/expressions/cool-calculating-stare-utterly-composed-in.json",
     "wearing": "data/art/themes/northern/norse/wardrobe/clothing/dresses/fur-trimmed-kirtle.json",
     "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json",
     "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
     "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
     "holding": "data/art/themes/northern/norse/wardrobe/weapons/staves/rune-carved-staff.json",
     "makeup": "data/art/themes/northern/norse/cosmetics/makeup/warpaint/rune-war-paint.json",
-    "effects": "Fine ice crystals and drifting snow glitter in the air around her, faint {{MAGIC}} frost-light tracing her silhouette.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/fine-ice-crystals-and-drifting-snow-glitter.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

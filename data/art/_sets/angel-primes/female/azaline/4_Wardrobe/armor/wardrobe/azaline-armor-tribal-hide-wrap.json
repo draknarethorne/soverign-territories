@@ -1,0 +1,20 @@
+{
+  "artId": "azaline-armor-tribal-hide-wrap",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/4_Wardrobe/armor/wardrobe/Azaline_Armor_TribalHideWrap.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Tribal Hide Wrap",
+  "aesthetic": "a clean studio presentation of tribal hide wrap",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/hide/tribal-hide-wrap.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

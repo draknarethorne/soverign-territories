@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/baracel/weapons/baracel-signature-weapon",
+  "kind": "holding",
+  "name": "Baracel's signature weapon",
+  "extends": "data/art/wardrobe/weapons/blunt/morning-star.json",
+  "description": "+, its metal worked with a faceted crystal set in carved stone in {{ACCENT_SOFT}}, stone shards, dust and glowing crystals gathering along it when it is raised; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: the library piece wardrobe/weapons/blunt/morning-star.json plus earth and alignment details."
+}

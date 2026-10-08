@@ -1,0 +1,8 @@
+{
+  "id": "themes/eastern/steppe/wardrobe/clothing/sets/steppe-male-outfit",
+  "kind": "wearing",
+  "name": "Steppe Male Outfit",
+  "description": "a {{PRIMARY}} wool lamellar vest with {{ACCENT_SOFT}} leather reinforcement, a fur-lined sheepskin coat, dark felt trousers, and felt boots with {{METAL}} buckles",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["steppe", "clothing", "male"]
+}

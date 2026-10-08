@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/bond-hand-on-companion",
+  "kind": "pose",
+  "name": "Bond hand on companion",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "She stands close to her bonded companion, one hand raised and gently resting against it, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the companion turns toward her and both are fully in frame."
+}

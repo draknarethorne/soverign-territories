@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/haniya/armor/haniya-signature-armor",
+  "kind": "wearing",
+  "name": "Haniya's signature armor",
+  "extends": "data/art/wardrobe/armor/leather/hardened-leather-cuirass.json",
+  "description": "+, every plate and trim engraved with twining leaves and a budding vine in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: the library piece wardrobe/armor/leather/hardened-leather-cuirass.json plus grass and alignment details."
+}

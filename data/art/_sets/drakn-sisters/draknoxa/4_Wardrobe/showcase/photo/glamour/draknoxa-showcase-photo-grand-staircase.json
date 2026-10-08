@@ -12,7 +12,7 @@
     "realm": "data/art/realms/modern.json",
     "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings"
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
   },
   "template": "data/art/_templates/heroes/showcase-photo-human.txt",
   "denoise": "~0.6-0.8",

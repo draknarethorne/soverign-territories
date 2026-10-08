@@ -1,0 +1,8 @@
+{
+  "id": "themes/adventure/eclipse/wardrobe/clothing/sets/eclipse-male-outfit",
+  "kind": "wearing",
+  "name": "Eclipse Male Outfit",
+  "description": "a fitted black silk tunic with corona-gold {{ACCENT_SOFT}} trim and obsidian {{METAL}} clasps, paired with dark wool trousers and a crescent-pinned black cloak",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["eclipse", "clothing", "male"]
+}

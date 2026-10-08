@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/nyxene/armor/nyxene-signature-armor",
+  "kind": "wearing",
+  "name": "Nyxene's signature armor",
+  "extends": "data/art/wardrobe/armor/robes/silk-battle-dress.json",
+  "description": "+, every plate and trim engraved with a crescent moon pierced by a single star in {{ACCENT_SOFT}}; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Nyxene: the library piece wardrobe/armor/robes/silk-battle-dress.json plus darkness and alignment details."
+}

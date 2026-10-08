@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/three-piece-suit",
+  "kind": "wearing",
+  "name": "Three-Piece Suit",
+  "description": "a {{PRIMARY}} wool three-piece suit with a matched jacket, waistcoat, and trousers, a crisp white dress shirt with the collar open, and a {{METAL}} pocket watch chain on the waistcoat",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["suit", "formal", "male"]
+}

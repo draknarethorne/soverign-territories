@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/nyxene/jewelry/nyxene-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Nyxene's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a crescent moon pierced by a single star, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Nyxene: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus darkness and alignment details."
+}

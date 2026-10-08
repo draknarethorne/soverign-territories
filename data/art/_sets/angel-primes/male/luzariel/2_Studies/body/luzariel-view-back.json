@@ -1,0 +1,15 @@
+{
+  "artId": "luzariel-view-back",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "name": "Back",
+  "components": {
+    "view": "data/art/studio/views/body/back.json",
+    "underlayer": "data/art/wardrobe/swimwear/trunks/swim-brief.json"
+  },
+  "template": "data/art/_templates/heroes/pose-view-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/2_Studies/body/Luzariel_View_back.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Reference-library body view, edited from the front A-pose. Scaffolded."
+}

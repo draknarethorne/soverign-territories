@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/baracel/jewelry/baracel-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Baracel's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a faceted crystal set in carved stone and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus earth and alignment details."
+}

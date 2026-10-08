@@ -1,0 +1,15 @@
+{
+  "artId": "auriel-view-three-quarter-right",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "name": "Three-Quarter Right",
+  "components": {
+    "view": "data/art/studio/views/body/three-quarter-right.json",
+    "underlayer": "data/art/wardrobe/swimwear/trunks/swim-brief.json"
+  },
+  "template": "data/art/_templates/heroes/pose-view-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/2_Studies/body/Auriel_View_three_quarter_right.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Reference-library body view, edited from the front A-pose. Scaffolded."
+}

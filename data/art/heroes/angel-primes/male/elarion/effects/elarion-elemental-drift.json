@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/elarion/effects/elarion-elemental-drift",
+  "kind": "effects",
+  "name": "Elarion's elemental drift",
+  "description": "A drift of racing wind, feathers and leaves circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Elarion: written for this angel."
+}

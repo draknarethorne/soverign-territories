@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/venom-mire-realm",
+  "kind": "background",
+  "name": "Venom Mire (grounded)",
+  "description": "a still mangrove swamp at dusk, dark water skinned with green algae, twisted roots and pale fungi on rotting wood, low mist and a faint sickly glow on the water",
+  "mood": "damp, strange",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/venom-mire-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

@@ -1,0 +1,22 @@
+{
+  "artId": "zadriel-scene-frontier",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/5_Scenes/themes/Zadriel_Scene_Frontier.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Frontier Gunslinger",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/western/frontier/wardrobe/clothing/sets/frontier-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/zadriel/wings/zadriel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/zadriel/effects/zadriel-elemental-drift.json",
+    "background": "data/art/themes/western/frontier/backgrounds/fantasy/canyon/mesa-rail-trestle.json",
+    "legs_feet": "data/art/themes/western/frontier/wardrobe/footwear/boots/spurred-cowboy-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/zadriel/jewelry/zadriel-signature-jewelry.json",
+    "holding": "data/art/themes/western/frontier/wardrobe/weapons/whips/lasso-and-bullwhip.json"
+  },
+  "notes": "Frontier Gunslinger theme scene: every item is a library piece."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/vexiel/clothing/vexiel-signature-attire",
+  "kind": "wearing",
+  "name": "Vexiel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/skintight-training-suit.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a coiled serpent beside a nightshade bloom in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Vexiel: the library piece wardrobe/clothing/sets/skintight-training-suit.json plus poison and alignment details."
+}

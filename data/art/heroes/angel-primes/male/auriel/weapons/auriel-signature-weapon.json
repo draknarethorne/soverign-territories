@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/auriel/weapons/auriel-signature-weapon",
+  "kind": "holding",
+  "name": "Auriel's signature weapon",
+  "extends": "data/art/wardrobe/weapons/swords/broadsword-and-shield.json",
+  "description": "+, its metal worked with a radiant sunburst in {{ACCENT_SOFT}}, golden light and drifting motes gathering along it when it is raised; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Auriel: the library piece wardrobe/weapons/swords/broadsword-and-shield.json plus light and alignment details."
+}

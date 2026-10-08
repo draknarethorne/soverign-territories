@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Aquaria, a distant silhouette skimming the moonlit sea beyond the terrace, deep-teal scales glinting",
+    "companion": "data/art/heroes/drakn-sisters/draknisa/companion/her-aligned-elder-dragon-aquaria-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/evening/seaside-marble-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

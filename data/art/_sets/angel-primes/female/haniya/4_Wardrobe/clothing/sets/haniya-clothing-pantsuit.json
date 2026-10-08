@@ -1,0 +1,18 @@
+{
+  "artId": "haniya-clothing-pantsuit",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/4_Wardrobe/clothing/sets/Haniya_Clothing_Pantsuit.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Tailored Pantsuit",
+  "aesthetic": "a clean studio presentation of tailored pantsuit",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/pantsuit.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

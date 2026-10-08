@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/pirate/wardrobe/armor/leather/corsair-leather-armor.json",
     "jewelry": "data/art/themes/adventure/pirate/wardrobe/jewelry/sets/doubloon-jewelry-set.json",
     "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
-    "effects": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/galleon-deck-storm.json",
     "headwear": "data/art/themes/adventure/pirate/wardrobe/headwear/hats/feathered-captain-tricorn.json",
     "holding": "data/art/heroes/drakn-sisters/drakneta/weapons/storm-flintlock.json",

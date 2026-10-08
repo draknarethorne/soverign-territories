@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakness/motion/stands-mid-cast-commanding-and-composed",
+  "kind": "pose",
+  "name": "Stands mid cast commanding and composed",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "She stands mid-cast, commanding and composed, her gaze toward the camera, weight shifted, chin lifted, her free hand raised and open as she channels."
+}

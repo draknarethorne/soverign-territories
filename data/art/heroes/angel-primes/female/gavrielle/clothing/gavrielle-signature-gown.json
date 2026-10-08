@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/clothing/gavrielle-signature-gown",
+  "kind": "wearing",
+  "name": "Gavrielle's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/high-slit-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a spiral of swept feathers in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Gavrielle: the library piece wardrobe/clothing/gowns/high-slit-gown.json plus wind and alignment details."
+}

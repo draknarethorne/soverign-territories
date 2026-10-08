@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/black-tie-tuxedo",
+  "kind": "wearing",
+  "name": "Black Tie Tuxedo",
+  "description": "a formal black wool tuxedo with a single-breasted jacket, satin lapels, and {{METAL}} buttons, a crisp white dress shirt with the collar open, and black wool trousers with a satin side stripe",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["tuxedo", "formal", "male"]
+}

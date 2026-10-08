@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the egyptian cleric outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
     "expression": "data/art/motion/expressions/composed/composed-commanding.json"
   },

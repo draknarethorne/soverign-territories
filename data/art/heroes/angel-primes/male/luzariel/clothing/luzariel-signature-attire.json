@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/clothing/luzariel-signature-attire",
+  "kind": "wearing",
+  "name": "Luzariel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/tailored-dress-shirt-set.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a crescent moon pierced by a single star in {{ACCENT_SOFT}}; tattered, shadow-edged and trimmed with black feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Luzariel: the library piece wardrobe/clothing/sets/tailored-dress-shirt-set.json plus darkness and alignment details."
+}

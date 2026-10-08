@@ -1,0 +1,24 @@
+{
+  "artId": "sammara-scene-steppe",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/5_Scenes/themes/Sammara_Scene_Steppe.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Steppe Horde",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+    "wearing": "data/art/themes/eastern/steppe/wardrobe/clothing/dresses/sheepskin-war-coat-dress.json",
+    "back": "data/art/heroes/angel-primes/female/sammara/wings/sammara-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/sammara/effects/sammara-elemental-drift.json",
+    "background": "data/art/themes/eastern/steppe/backgrounds/fantasy/highlands/endless-steppe-warcamp.json",
+    "headwear": "data/art/themes/eastern/steppe/wardrobe/headwear/hats/fur-trimmed-felt-cap.json",
+    "jewelry": "data/art/themes/eastern/steppe/wardrobe/jewelry/sets/horse-and-coin-set.json",
+    "legs_feet": "data/art/themes/eastern/steppe/wardrobe/footwear/boots/felt-lined-riding-boots.json",
+    "makeup": "data/art/themes/eastern/steppe/cosmetics/makeup/warpaint/wind-whipped-war-stripe.json",
+    "holding": "data/art/themes/eastern/steppe/wardrobe/weapons/bows/composite-horn-bow.json"
+  },
+  "notes": "Steppe Horde theme scene: every item is a library piece."
+}

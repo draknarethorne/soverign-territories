@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknava/companion/her-aligned-elder-dragon-zephyros-flying-through",
+  "kind": "companion",
+  "name": "Her aligned elder dragon zephyros flying through",
+  "description": "her aligned Elder Dragon, Zephyros, flying through the clouds behind her, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

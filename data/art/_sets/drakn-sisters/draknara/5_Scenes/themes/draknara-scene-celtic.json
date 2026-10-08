@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/northern/celtic/wardrobe/clothing/gowns/knotwork-celtic-gown.json",
     "jewelry": "data/art/themes/northern/celtic/wardrobe/jewelry/sets/triskele-silver-set.json",
     "legs_feet": "data/art/themes/northern/celtic/wardrobe/footwear/boots/laced-moor-boots.json",
-    "effects": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknara/effects/elemental-aura.json",
     "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
     "headwear": "data/art/themes/northern/celtic/wardrobe/headwear/circlets/knotwork-silver-circlet.json",
     "holding": "data/art/heroes/drakn-sisters/draknara/weapons/totem-staff.json",

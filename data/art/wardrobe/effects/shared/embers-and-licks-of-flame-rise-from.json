@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/embers-and-licks-of-flame-rise-from",
+  "kind": "effects",
+  "name": "Embers and licks of flame rise from",
+  "description": "Embers and licks of flame rise from the ground and drift off the wings, a warm {{MAGIC}} glow on everything nearby.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

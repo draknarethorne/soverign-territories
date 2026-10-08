@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/seraphine/effects/seraphine-elemental-drift",
+  "kind": "effects",
+  "name": "Seraphine's elemental drift",
+  "description": "A drift of golden light and drifting motes circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Seraphine: written for this angel."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/sammara/headwear/sammara-signature-circlet",
+  "kind": "headwear",
+  "name": "Sammara's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/iron-crown.json",
+  "description": "+, a coiled serpent beside a nightshade bloom rising at the centre of the brow, set with a {{GEM}} gem; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sammara: the library piece wardrobe/headwear/crowns/iron-crown.json plus poison and alignment details."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/urael/clothing/urael-signature-attire",
+  "kind": "wearing",
+  "name": "Urael's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/open-vest-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a rising flame with scattered embers in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Urael: the library piece wardrobe/clothing/sets/open-vest-and-trousers.json plus fire and alignment details."
+}

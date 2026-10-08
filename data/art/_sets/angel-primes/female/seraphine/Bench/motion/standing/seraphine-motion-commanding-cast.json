@@ -1,0 +1,10 @@
+{
+  "artId": "seraphine-motion-commanding-cast",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/Bench/motion/standing/Seraphine_Motion_Standing_CommandingCast.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/standing/commanding-cast.json"
+}

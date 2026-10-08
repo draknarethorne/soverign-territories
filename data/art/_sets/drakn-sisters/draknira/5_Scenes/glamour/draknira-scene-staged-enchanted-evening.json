@@ -8,7 +8,7 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Glaciora, a distant silhouette crossing the frosty dusk sky beyond the terrace, glacial-cyan scales glittering",
+    "companion": "data/art/heroes/drakn-sisters/draknira/companion/her-aligned-elder-dragon-glaciora-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/evening/ice-palace-aurora-balcony.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",

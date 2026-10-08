@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknisa)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "polished platinum",
+    "BREAST": "a fanned scallop shell with ribbed edges",
+    "HIP": "a small pearl-set shell pointing down",
+    "ENGRAVING": "rolling wave lines and a seed pearl at each hinge",
+    "GEM": "a pearl",
+    "GEM_NOUN": "pearl"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

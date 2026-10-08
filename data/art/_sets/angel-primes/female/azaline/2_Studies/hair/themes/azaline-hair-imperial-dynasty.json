@@ -1,0 +1,11 @@
+{
+  "artId": "azaline-hair-imperial-dynasty",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "component": "data/art/themes/eastern/imperial-dynasty/cosmetics/hair/updo/coiled-bun-with-long-fall.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/2_Studies/hair/themes/Azaline_Hair_ImperialDynasty.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Imperial Dynasty theme hairstyle."
+}

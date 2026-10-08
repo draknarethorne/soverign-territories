@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/baracel/clothing/baracel-signature-attire",
+  "kind": "wearing",
+  "name": "Baracel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/tailored-dress-shirt-set.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a faceted crystal set in carved stone in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Baracel: the library piece wardrobe/clothing/sets/tailored-dress-shirt-set.json plus earth and alignment details."
+}

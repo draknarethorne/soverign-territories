@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/loose-stones-and-golden-dust-drift-upward",
+  "kind": "effects",
+  "name": "Loose stones and golden dust drift upward",
+  "description": "Loose stones and golden dust drift upward around the feet, warm {{MAGIC}} light running through cracks in the ground.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

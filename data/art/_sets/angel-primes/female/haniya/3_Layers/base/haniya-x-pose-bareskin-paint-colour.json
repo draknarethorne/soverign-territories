@@ -1,0 +1,14 @@
+{
+  "artId": "haniya-x-pose-bareskin-paint-colour",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/3_Layers/base/Haniya_X_Pose_BareskinPaintColour.txt",
+  "denoise": "~1.0",
+  "notes": "BARESKIN A-POSE ALTERNATIVE. Minimal, strap-free foundation for the celestial armor showcases; compare with the plain Bareskin.",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/base/bareskin-body-paint-colour.json",
+    "footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"
+  }
+}

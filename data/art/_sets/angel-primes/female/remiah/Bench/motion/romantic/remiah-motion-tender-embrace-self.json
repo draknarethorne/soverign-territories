@@ -1,0 +1,10 @@
+{
+  "artId": "remiah-motion-tender-embrace-self",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/Bench/motion/romantic/Remiah_Motion_Romantic_TenderEmbraceSelf.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/romantic/tender-embrace-self.json"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/effects/zadriel-elemental-drift",
+  "kind": "effects",
+  "name": "Zadriel's elemental drift",
+  "description": "A drift of flowing water and drifting spray circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: written for this angel."
+}

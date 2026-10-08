@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/warm-radiant-smile-eyes-full-of",
+  "kind": "expression",
+  "name": "Warm radiant smile eyes full of",
+  "expression": "a warm, radiant smile, eyes full of light.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 20 cards that carried this sentence inline; edit it here and every one follows."
+}

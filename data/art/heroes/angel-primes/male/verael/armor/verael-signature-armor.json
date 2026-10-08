@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/verael/armor/verael-signature-armor",
+  "kind": "wearing",
+  "name": "Verael's signature armor",
+  "extends": "data/art/wardrobe/armor/leather/hardened-leather-cuirass.json",
+  "description": "+, every plate and trim engraved with twining leaves and a budding vine in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Verael: the library piece wardrobe/armor/leather/hardened-leather-cuirass.json plus grass and alignment details."
+}

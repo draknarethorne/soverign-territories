@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/aztec/wardrobe/clothing/sets/jade-and-gold-skirt-set.json",
     "jewelry": "data/art/themes/ancient/aztec/wardrobe/jewelry/sets/jade-collar-set.json",
     "legs_feet": "data/art/themes/ancient/aztec/wardrobe/footwear/sandals/woven-lace-up-sandals.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/aztec/backgrounds/fantasy/forests/jungle-cenote-sanctuary.json",
     "headwear": "data/art/themes/ancient/aztec/wardrobe/headwear/crowns/quetzal-feather-headdress.json",
     "makeup": "data/art/themes/ancient/aztec/cosmetics/makeup/warpaint/sun-stripe-face-paint.json"

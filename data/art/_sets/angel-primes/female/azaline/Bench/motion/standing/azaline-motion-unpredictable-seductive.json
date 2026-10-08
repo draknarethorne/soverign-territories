@@ -1,0 +1,10 @@
+{
+  "artId": "azaline-motion-unpredictable-seductive",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/Bench/motion/standing/Azaline_Motion_Standing_UnpredictableSeductive.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/standing/unpredictable-seductive.json"
+}

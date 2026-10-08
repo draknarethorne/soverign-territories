@@ -1,0 +1,14 @@
+{
+  "artId": "sammara-alpha-2b-contoured",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "name": "Bare edit: contoured pasties and modesty patch",
+  "components": {
+    "wearing": "data/art/wardrobe/swimwear/base/edit/bare-contoured.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/angel-primes/female/Sammara/1_Alpha/2b_Experiments/coverings/Sammara_Alpha_2b_Contoured.txt",
+  "notes": "TWO-STEP BARE: an edit-only pass on the finished A-pose that removes the clothing and nothing else; feed the result to armor and showcases."
+}

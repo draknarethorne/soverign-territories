@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/expressions/sharp-calculating-stare-a-faint-cunning",
+  "kind": "expression",
+  "name": "Sharp calculating stare a faint cunning",
+  "expression": "a sharp, calculating stare, a faint cunning smirk.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows."
+}

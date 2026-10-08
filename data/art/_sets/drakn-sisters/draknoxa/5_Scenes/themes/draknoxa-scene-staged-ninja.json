@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the shinobi shadow clan alchemist outfit render",
   "components": {
     "pose": "data/art/themes/eastern/ninja/motion/rooftop-crouch.json",
-    "effects": "Wisps of {{MAGIC}} toxic vapour and bubbling droplets curl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknoxa/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/ninja/backgrounds/fantasy/camp/moonlit-pagoda-rooftops.json",
     "expression": "data/art/themes/eastern/ninja/motion/expressions/silent-smirk.json"
   },

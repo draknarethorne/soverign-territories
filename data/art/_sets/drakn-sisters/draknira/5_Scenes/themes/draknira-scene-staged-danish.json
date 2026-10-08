@@ -6,8 +6,8 @@
   "name": "Danish Wizard",
   "base_description": "{{HERO}} already staged in the danish wizard outfit render",
   "components": {
-    "pose": "She stands tall and serene with her sceptre held upright in one hand and the other hand resting lightly on the front of her gown, her mantle trailing behind her, chin lifted, a calm, regal gaze straight to the camera; full figure visible.",
-    "effects": "Soft snowflakes drift around her and a faint {{MAGIC}} frost shimmer glitters on her gown and mantle, a cold halo of diamond dust at her sceptre.",
+    "pose": "data/art/heroes/drakn-sisters/draknira/motion/stands-tall-and-serene-with-her.json",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/soft-snowflakes-drift-around-her-and-a.json",
     "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",

@@ -1,0 +1,18 @@
+{
+  "artId": "nyxene-clothing-lace-overlay-dress",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/4_Wardrobe/clothing/dresses/Nyxene_Clothing_LaceOverlayDress.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Lace Overlay Dress",
+  "aesthetic": "a clean studio presentation of lace overlay dress",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/lace-overlay-dress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

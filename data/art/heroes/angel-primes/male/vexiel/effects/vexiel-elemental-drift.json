@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/vexiel/effects/vexiel-elemental-drift",
+  "kind": "effects",
+  "name": "Vexiel's elemental drift",
+  "description": "A drift of curling green venom mist and falling drops circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Vexiel: written for this angel."
+}

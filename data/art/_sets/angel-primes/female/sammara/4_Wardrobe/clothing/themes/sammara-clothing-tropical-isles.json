@@ -1,0 +1,19 @@
+{
+  "artId": "sammara-clothing-tropical-isles",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/4_Wardrobe/clothing/themes/Sammara_Clothing_TropicalIsles.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Tropical Isles",
+  "aesthetic": "a clean studio presentation of the tropical isles outfit",
+  "components": {
+    "wearing": "data/art/themes/southern/tropical-isles/wardrobe/clothing/dresses/wrap-sarong-sundress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/southern/tropical-isles/wardrobe/jewelry/sets/pearl-and-shell-set.json",
+    "legs_feet": "data/art/themes/southern/tropical-isles/wardrobe/footwear/sandals/barefoot-anklet-beads.json",
+    "headwear": "data/art/themes/southern/tropical-isles/wardrobe/headwear/crowns/flower-and-shell-crown.json"
+  },
+  "notes": "Pre-staged Tropical Isles outfit: render it from the A-pose, then feed the image to the staged scene. Every item is a library piece."
+}

@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/dawn-regalia.json",
     "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-lineup-headwear.json",
     "jewelry": "data/art/heroes/drakn-sisters/draknava/jewelry/scene-lineup-jewelry.json",
-    "legs_feet": "bare feet, fine {{METAL}} anklets",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, ribbons of wind curling around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "companion": "her aligned Elder Dragon, Zephyros, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",

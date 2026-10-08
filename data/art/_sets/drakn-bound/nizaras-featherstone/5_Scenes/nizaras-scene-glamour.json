@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-bound/nizaras-featherstone.json",
   "name": "Glamour",
   "components": {
-    "pose": "He stands relaxed but coiled, weight on one leg, head tilted slightly, an intense, knowing gaze toward the camera and a sly half-smile.",
+    "pose": "data/art/motion/scene/stands-relaxed-but-coiled-weight-on.json",
     "wearing": "data/art/heroes/drakn-bound/nizaras/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",

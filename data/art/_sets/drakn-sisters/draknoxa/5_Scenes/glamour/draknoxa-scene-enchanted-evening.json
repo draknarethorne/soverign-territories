@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Venomis, a distant silhouette drifting through faint toxic mist beyond the terrace, toxic-orchid-magenta scales glowing softly",
+    "companion": "data/art/heroes/drakn-sisters/draknoxa/companion/her-aligned-elder-dragon-venomis-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/evening/night-bloom-conservatory-terrace.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

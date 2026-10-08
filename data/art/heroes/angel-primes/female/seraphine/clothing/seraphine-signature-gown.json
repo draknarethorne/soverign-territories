@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/seraphine/clothing/seraphine-signature-gown",
+  "kind": "wearing",
+  "name": "Seraphine's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/ball-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a radiant sunburst in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Seraphine: the library piece wardrobe/clothing/gowns/ball-gown.json plus light and alignment details."
+}

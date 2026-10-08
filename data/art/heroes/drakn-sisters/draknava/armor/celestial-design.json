@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknava/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknava)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "polished silver",
+    "BREAST": "a curved feather sweeping outward at the tip",
+    "HIP": "a small lyre shape",
+    "ENGRAVING": "fine barbs of filigree and tiny drifting stars",
+    "GEM": "a jade gem",
+    "GEM_NOUN": "jade gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

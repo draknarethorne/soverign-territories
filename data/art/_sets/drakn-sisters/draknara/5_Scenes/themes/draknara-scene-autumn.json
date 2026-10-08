@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/autumn/wardrobe/clothing/gowns/falling-leaf-gown.json",
     "jewelry": "data/art/themes/seasonal/autumn/wardrobe/jewelry/sets/acorn-and-amber-set.json",
     "legs_feet": "data/art/themes/seasonal/autumn/wardrobe/footwear/boots/laced-forest-boots.json",
-    "effects": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknara/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist.json",
     "headwear": "data/art/themes/seasonal/autumn/wardrobe/headwear/crowns/antler-and-acorn-crown.json",
     "makeup": "data/art/themes/seasonal/autumn/cosmetics/makeup/woodland/russet-leaf-glow.json"

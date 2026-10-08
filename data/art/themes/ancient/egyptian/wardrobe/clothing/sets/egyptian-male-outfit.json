@@ -1,0 +1,8 @@
+{
+  "id": "themes/ancient/egyptian/wardrobe/clothing/sets/egyptian-male-outfit",
+  "kind": "wearing",
+  "name": "Egyptian Male Outfit",
+  "description": "a fine white linen kalasiris skirt with pleats, a wide {{ACCENT_SOFT}} collar with gold cartouche inlay, a tied linen sash, and woven sandals",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["egyptian", "clothing", "male"]
+}

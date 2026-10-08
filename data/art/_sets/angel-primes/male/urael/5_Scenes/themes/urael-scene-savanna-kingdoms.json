@@ -1,0 +1,22 @@
+{
+  "artId": "urael-scene-savanna-kingdoms",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Urael/5_Scenes/themes/Urael_Scene_SavannaKingdoms.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Savanna Kingdoms",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/southern/savanna-kingdoms/wardrobe/clothing/sets/savanna-kingdoms-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/urael/wings/urael-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/urael/effects/urael-elemental-drift.json",
+    "background": "data/art/themes/southern/savanna-kingdoms/backgrounds/fantasy/highlands/baobab-plain-sunset.json",
+    "legs_feet": "data/art/themes/southern/savanna-kingdoms/wardrobe/footwear/sandals/wrapped-leather-sandals.json",
+    "jewelry": "data/art/heroes/angel-primes/male/urael/jewelry/urael-signature-jewelry.json",
+    "holding": "data/art/themes/southern/savanna-kingdoms/wardrobe/weapons/polearms/beaded-war-spear-and-shield.json"
+  },
+  "notes": "Savanna Kingdoms theme scene: every item is a library piece."
+}

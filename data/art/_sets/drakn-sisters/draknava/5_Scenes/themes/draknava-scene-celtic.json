@@ -6,14 +6,14 @@
   "name": "Celtic Wind Bard",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "expression": "data/art/motion/expressions/scene/playful-knowing-smile-eyes-bright-with.json",
     "wearing": "data/art/themes/northern/celtic/wardrobe/clothing/gowns/knotwork-celtic-gown.json",
     "headwear": "data/art/themes/northern/celtic/wardrobe/headwear/circlets/knotwork-silver-circlet.json",
     "jewelry": "data/art/themes/northern/celtic/wardrobe/jewelry/sets/triskele-silver-set.json",
     "legs_feet": "data/art/themes/northern/celtic/wardrobe/footwear/boots/laced-moor-boots.json",
     "holding": "data/art/themes/northern/celtic/wardrobe/props/instruments/celtic-harp.json",
     "makeup": "data/art/themes/northern/celtic/cosmetics/makeup/woad/woad-spiral-accents.json",
-    "effects": "A playful swirl of wind carries drifting mist and loose heather blossoms around her, {{MAGIC}} light glinting within the breeze.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/a-playful-swirl-of-wind-carries-drifting.json",
     "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (drakniss)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "radiant rose gold",
+    "BREAST": "a round sunburst disc ringed with fine pointed rays",
+    "HIP": "a small winged shield shape",
+    "ENGRAVING": "halo lines and tiny rays of light",
+    "GEM": "a rose-quartz gem",
+    "GEM_NOUN": "rose-quartz gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

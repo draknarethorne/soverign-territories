@@ -1,0 +1,8 @@
+{
+  "id": "themes/adventure/alchemist/wardrobe/clothing/sets/alchemist-male-outfit",
+  "kind": "wearing",
+  "name": "Alchemist Male Outfit",
+  "description": "a leather apron over a {{PRIMARY}} linen shirt with brass vials on a bandolier, brown wool trousers, and waxed canvas cuffs with {{ACCENT_SOFT}} trim",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["alchemist", "clothing", "male"]
+}

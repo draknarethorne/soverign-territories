@@ -2,49 +2,6 @@
   "id": "heroes/drakn-sisters/drakness/armor/celestial-skin-armor",
   "kind": "wearing",
   "name": "Celestial skin armor (drakness)",
-  "description": "only celestial skin armor, thin polished black silver metallic designs in her {{PRIMARY}} colour scheme with fine {{METAL}} edge lines, formed directly onto the skin as if the metal had been bound to the body by a magical spell, slightly raised and form-fitting so the contour of the body shows through; every design is open filigree with bare skin visible between its lines, and none is a cup or a plate; Breasts: on each breast one delicate design in the form of a thick crescent moon curving inward and tapering to fine points, made of fine curving lines and swirls with pale moonstone inlay and a tracery of moth-wing veins, about 3 cm (one and a quarter inches) across, centred on the breast, with one tiny pale moonstone accent at its centre; Pelvic area: one small, form-fitting design in the form of a small moth-wing shape pointing down, following the contour of the pelvic area, with its fine lines curving beneath the body and continuing as a narrow design over the lower back, so the rear is mostly bare skin and modestly covered; Everywhere else: the skin outside these three designs is unchanged natural skin, matte, with no metal, no metallic sheen, no paint and no tint, keeping her natural skin tone ({{SKIN}}), including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs, hands and bare feet; only the two breast designs and the one pelvic design carry any metal; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture",
-  "negatives": [
-    "anklets",
-    "armor plates",
-    "bikini",
-    "body covered in metal",
-    "body paint over the whole body",
-    "bra",
-    "bracelets",
-    "bump on the pelvic area",
-    "chains",
-    "coloured skin",
-    "cups",
-    "full coverage",
-    "full-body suit",
-    "gold skin",
-    "hanging plates",
-    "large plates",
-    "metal on the shoulders",
-    "metallic skin",
-    "painted arms",
-    "painted legs",
-    "painted skin",
-    "painted stomach",
-    "plates",
-    "playing card",
-    "raised bump",
-    "shoes",
-    "silver skin",
-    "square patch",
-    "straps",
-    "strings",
-    "tinted skin"
-  ],
-  "compatibleStages": [
-    "armor",
-    "showcase"
-  ],
-  "tags": [
-    "armor",
-    "celestial",
-    "skin-armor",
-    "female"
-  ],
-  "notes": "Thin metallic designs formed on the skin (not plates): the base celestial look. The larger plate version is celestial-plate-armor."
+  "extends": "data/art/wardrobe/armor/celestial/frame/celestial-skin-armor.json",
+  "varsFrom": "data/art/heroes/drakn-sisters/drakness/armor/celestial-design.json"
 }

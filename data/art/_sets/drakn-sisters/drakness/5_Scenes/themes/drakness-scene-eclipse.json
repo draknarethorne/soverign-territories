@@ -10,7 +10,7 @@
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/raven-wearing.json",
     "jewelry": "data/art/heroes/drakn-sisters/drakness/armor/raven-jewelry.json",
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/raven-boots.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
     "headwear": "data/art/themes/adventure/eclipse/wardrobe/headwear/crowns/crescent-corona-crown.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/ornate-dagger.json",

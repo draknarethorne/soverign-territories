@@ -1,0 +1,20 @@
+{
+  "artId": "azaline-showcase-photo-bed-lying",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "name": "Photo: Lying Back on the Bed",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/travelers-tunic.json",
+    "pose": "data/art/motion/photo/bed-lying-back.json",
+    "background": "data/art/backgrounds/modern/interior/hotel-bedroom-morning.json",
+    "framing": "data/art/studio/shots/lying-from-above.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/angel-primes/female/Azaline/4_Wardrobe/showcase/photo/romantic/Azaline_Showcase_Photo_BedLying.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

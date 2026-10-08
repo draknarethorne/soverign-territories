@@ -1,0 +1,20 @@
+{
+  "artId": "elarion-scene-elegant-casting",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/5_Scenes/glamour/Elarion_Scene_ElegantCasting.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Elegant Casting",
+  "components": {
+    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of racing wind, feathers and leaves around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only.",
+    "wearing": "data/art/heroes/angel-primes/male/elarion/clothing/elarion-signature-attire.json",
+    "jewelry": "data/art/heroes/angel-primes/male/elarion/jewelry/elarion-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/sandals/gladiator-sandals.json",
+    "back": "data/art/heroes/angel-primes/male/elarion/wings/elarion-wings.json",
+    "effects": "A shimmering column of racing wind, feathers and leaves, visible as streaming ribbons and {{MAGIC}} light, spirals around her.",
+    "background": "data/art/backgrounds/fantasy/volcano/caldera-rim-lava-lake.json"
+  },
+  "notes": "ELEGANT CASTING: a hands-only complex casting stance in her element."
+}

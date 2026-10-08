@@ -1,0 +1,13 @@
+{
+  "artId": "sandalyn-x-pose-base-layer",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/3_Layers/base/Sandalyn_X_Pose_BaseLayer.txt",
+  "denoise": "~1.0",
+  "notes": "BASE-LAYER TEST. Same original photo as the golden A-pose; a neutral base layer replaces the swimsuit so nothing coloured can bleed into armor shots.",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/base/skin-tone-base-layer.json"
+  }
+}

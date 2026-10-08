@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/umbral-shade-realm",
+  "kind": "background",
+  "name": "Umbral Shade (grounded)",
+  "description": "an abandoned stone terrace at night under a clear moon, long cool shadows, still black water and low mist, moonlight the only light",
+  "mood": "mysterious, quiet",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/umbral-shade-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

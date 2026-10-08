@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/steppe/wardrobe/clothing/dresses/sheepskin-war-coat-dress.json",
     "jewelry": "data/art/themes/eastern/steppe/wardrobe/jewelry/sets/horse-and-coin-set.json",
     "legs_feet": "data/art/themes/eastern/steppe/wardrobe/footwear/boots/felt-lined-riding-boots.json",
-    "effects": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/steppe/backgrounds/fantasy/mountains/wind-swept-steppe-ridge.json",
     "headwear": "data/art/themes/eastern/steppe/wardrobe/headwear/hats/fur-trimmed-felt-cap.json",
     "holding": "data/art/themes/eastern/steppe/wardrobe/weapons/bows/composite-horn-bow.json",

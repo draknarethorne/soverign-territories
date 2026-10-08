@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Drifting frost crystals and a cold mist",
+  "description": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 8 cards that carried this sentence inline; edit it here and every one follows."
+}

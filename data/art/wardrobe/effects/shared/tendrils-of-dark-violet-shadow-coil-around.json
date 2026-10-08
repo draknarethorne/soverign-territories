@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/tendrils-of-dark-violet-shadow-coil-around",
+  "kind": "effects",
+  "name": "Tendrils of dark violet shadow coil around",
+  "description": "Tendrils of dark violet shadow coil around the figure, scorched feather fragments and ember-sparks drifting upward.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

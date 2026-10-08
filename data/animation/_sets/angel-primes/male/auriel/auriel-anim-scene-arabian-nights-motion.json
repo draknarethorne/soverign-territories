@@ -1,0 +1,42 @@
+{
+  "animId": "auriel-anim-scene-arabian-nights-motion",
+  "kind": "animation",
+  "name": "ArabianNightsMotion",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "source": {
+    "artCard": "data/art/_sets/angel-primes/male/auriel/5_Scenes/themes/auriel-scene-arabian-nights.json",
+    "image": "Auriel_Qwen_Scene_ArabianNights_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/arabian-nights/lamps-glow.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/dust-motes-glow.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/light-blooms.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/sparkles-shimmer.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/clouds-race.json",
+      "transition": "settle"
+    }
+  ],
+  "notes": "The theme scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt"
+}

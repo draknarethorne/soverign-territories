@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/azaline/armor/azaline-signature-armor",
+  "kind": "wearing",
+  "name": "Azaline's signature armor",
+  "extends": "data/art/wardrobe/armor/plate/full-plate.json",
+  "description": "+, every plate and trim engraved with a six-pointed snowflake of frost in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Azaline: the library piece wardrobe/armor/plate/full-plate.json plus ice and alignment details."
+}

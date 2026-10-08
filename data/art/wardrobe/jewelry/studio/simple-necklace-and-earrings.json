@@ -1,0 +1,13 @@
+{
+  "id": "wardrobe/jewelry/studio/simple-necklace-and-earrings",
+  "kind": "jewelry",
+  "name": "Simple necklace and earrings",
+  "description": "a simple {{METAL}} necklace and small matching earrings",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene",
+    "showcase"
+  ],
+  "notes": "Extracted from 1125 cards that carried this sentence inline; edit it here and every one follows."
+}

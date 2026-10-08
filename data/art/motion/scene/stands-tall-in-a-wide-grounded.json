@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/stands-tall-in-a-wide-grounded",
+  "kind": "pose",
+  "name": "Stands tall in a wide grounded",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "He stands tall in a wide, grounded power stance, shoulders squared and chest open, chin slightly raised, a steady commanding gaze to the camera and the faint trace of a confident smile, a light breeze stirring his hair."
+}

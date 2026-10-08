@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/samurai/wardrobe/armor/plate/lacquered-lamellar-armor.json",
     "jewelry": "data/art/themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set.json",
     "legs_feet": "data/art/themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta.json",
-    "effects": "Drifting {{MAGIC}} frost crystals and a cold mist swirl around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/temple/torii-shrine-maple-path.json",
     "headwear": "data/art/themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm.json",
     "holding": "data/art/themes/eastern/samurai/wardrobe/weapons/swords/katana-and-wakizashi.json",

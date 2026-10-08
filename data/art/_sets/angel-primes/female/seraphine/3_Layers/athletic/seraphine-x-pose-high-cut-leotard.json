@@ -1,0 +1,13 @@
+{
+  "artId": "seraphine-x-pose-high-cut-leotard",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/3_Layers/athletic/Seraphine_X_Pose_HighCutLeotard.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/high-cut-leotard.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

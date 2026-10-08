@@ -8,7 +8,7 @@
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Zephyros, a distant silhouette riding the clouds beyond the terrace, windswept-jade wings catching the last light",
+    "companion": "data/art/heroes/drakn-sisters/draknava/companion/her-aligned-elder-dragon-zephyros-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/evening/sky-terrace-twilight.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",

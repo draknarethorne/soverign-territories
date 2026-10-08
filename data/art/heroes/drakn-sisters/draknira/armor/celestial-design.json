@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknira/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknira)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "brushed white-chrome",
+    "BREAST": "a six-sided snowflake lattice with frosted points",
+    "HIP": "a small elongated diamond lattice",
+    "ENGRAVING": "crystal-lattice filigree and tiny star facets",
+    "GEM": "a glacial-blue gem",
+    "GEM_NOUN": "glacial-blue gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

@@ -1,0 +1,10 @@
+{
+  "artId": "judiel-hair-wrapped-ponytail",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/judiel.json",
+  "component": "data/art/races/human/cosmetics/hair/pulled-back/wrapped-ponytail.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Judiel/2_Studies/hair/pulled-back/Judiel_Hair_PulledBack_WrappedPonytail.txt",
+  "denoise": "~0.4-0.6"
+}

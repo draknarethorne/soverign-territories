@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (drakniya)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "antique gold",
+    "BREAST": "a pointed leaf with a central vein and serrated edges",
+    "HIP": "a small open blossom",
+    "ENGRAVING": "fine vein filigree and tiny budding blossoms",
+    "GEM": "an emerald",
+    "GEM_NOUN": "emerald"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

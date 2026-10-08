@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/effects/luzariel-elemental-drift",
+  "kind": "effects",
+  "name": "Luzariel's elemental drift",
+  "description": "A drift of drifting shadow, smoke and pale starlight circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Luzariel: written for this angel."
+}

@@ -1,0 +1,22 @@
+{
+  "artId": "auriel-scene-chivalry",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/5_Scenes/themes/Auriel_Scene_Chivalry.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Chivalry and Tournament",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/western/chivalry/wardrobe/clothing/sets/chivalry-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/auriel/effects/auriel-elemental-drift.json",
+    "background": "data/art/themes/western/chivalry/backgrounds/fantasy/castle/great-hall-banners.json",
+    "legs_feet": "data/art/themes/western/chivalry/wardrobe/footwear/boots/plated-riding-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
+    "holding": "data/art/themes/western/chivalry/wardrobe/weapons/polearms/jousting-lance.json"
+  },
+  "notes": "Chivalry and Tournament theme scene: every item is a library piece."
+}

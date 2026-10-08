@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/seraphine/armor/seraphine-signature-armor",
+  "kind": "wearing",
+  "name": "Seraphine's signature armor",
+  "extends": "data/art/wardrobe/armor/bronze/centurion-bronze-armor.json",
+  "description": "+, every plate and trim engraved with a radiant sunburst in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Seraphine: the library piece wardrobe/armor/bronze/centurion-bronze-armor.json plus light and alignment details."
+}

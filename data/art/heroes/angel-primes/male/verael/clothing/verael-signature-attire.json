@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/verael/clothing/verael-signature-attire",
+  "kind": "wearing",
+  "name": "Verael's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/open-vest-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with twining leaves and a budding vine in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Verael: the library piece wardrobe/clothing/sets/open-vest-and-trousers.json plus grass and alignment details."
+}

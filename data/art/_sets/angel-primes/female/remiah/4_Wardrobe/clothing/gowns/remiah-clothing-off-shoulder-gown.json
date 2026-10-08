@@ -1,0 +1,18 @@
+{
+  "artId": "remiah-clothing-off-shoulder-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/4_Wardrobe/clothing/gowns/Remiah_Clothing_OffShoulderGown.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Off-Shoulder Gown",
+  "aesthetic": "a clean studio presentation of off-shoulder gown",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/off-shoulder-gown.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

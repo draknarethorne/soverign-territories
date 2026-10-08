@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/athletic/compression-tights",
+  "kind": "wearing",
+  "name": "Compression Tights",
+  "description": "only {{PRIMARY}} full-length compression tights with {{ACCENT_SOFT}} piping down the seams and a slim waistband; chest bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "athletic", "compression", "male"]
+}

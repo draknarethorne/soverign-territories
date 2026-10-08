@@ -1,0 +1,21 @@
+{
+  "artId": "sammara-showcase-photo-rooftop-sunset",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "name": "Photo: Rooftop Sunset",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "background": "data/art/backgrounds/modern/urban/rooftop-sunset.json",
+    "framing": "data/art/studio/shots/three-quarter.json",
+    "realm": "data/art/realms/modern.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "denoise": "~0.6-0.8",
+  "output": "prompts/angel-primes/female/Sammara/4_Wardrobe/showcase/photo/glamour/Sammara_Showcase_Photo_RooftopSunset.txt",
+  "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."
+}

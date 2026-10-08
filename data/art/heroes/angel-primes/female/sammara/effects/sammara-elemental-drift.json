@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/sammara/effects/sammara-elemental-drift",
+  "kind": "effects",
+  "name": "Sammara's elemental drift",
+  "description": "A drift of curling green venom mist and falling drops circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sammara: written for this angel."
+}

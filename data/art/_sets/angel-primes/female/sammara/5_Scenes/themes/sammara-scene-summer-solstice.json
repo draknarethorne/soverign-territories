@@ -1,0 +1,24 @@
+{
+  "artId": "sammara-scene-summer-solstice",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/5_Scenes/themes/Sammara_Scene_SummerSolstice.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Summer Solstice",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/seasonal/summer-solstice/wardrobe/clothing/dresses/sunburst-sundress.json",
+    "back": "data/art/heroes/angel-primes/female/sammara/wings/sammara-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/sammara/effects/sammara-elemental-drift.json",
+    "background": "data/art/themes/seasonal/summer-solstice/backgrounds/fantasy/coast/lakeside-bonfire-dusk.json",
+    "headwear": "data/art/themes/seasonal/summer-solstice/wardrobe/headwear/crowns/sun-ray-flower-crown.json",
+    "jewelry": "data/art/themes/seasonal/summer-solstice/wardrobe/jewelry/sets/sunstone-and-daisy-set.json",
+    "legs_feet": "data/art/themes/seasonal/summer-solstice/wardrobe/footwear/sandals/sun-gold-strap-sandals.json",
+    "makeup": "data/art/themes/seasonal/summer-solstice/cosmetics/makeup/sunny/golden-hour-glow.json",
+    "holding": "data/art/themes/seasonal/summer-solstice/wardrobe/weapons/bows/sunray-bow.json"
+  },
+  "notes": "Summer Solstice theme scene: every item is a library piece."
+}

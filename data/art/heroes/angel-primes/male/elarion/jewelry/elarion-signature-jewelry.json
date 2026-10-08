@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/elarion/jewelry/elarion-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Elarion's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a spiral of swept feathers and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Elarion: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus wind and alignment details."
+}

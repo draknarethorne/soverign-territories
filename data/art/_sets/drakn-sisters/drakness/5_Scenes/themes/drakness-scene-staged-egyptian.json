@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the egyptian necromancer outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Cold {{MAGIC}} necromantic mist curls low around her feet and between the columns, faint spectral glyphs drifting upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/cold-necromantic-mist-curls-low-around-her.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
-    "expression": "a calm, imperious stare, utterly sure of her command over the dead."
+    "expression": "data/art/heroes/drakn-sisters/drakness/expressions/calm-imperious-stare-utterly-sure-of.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Drakness/5_Scenes/themes/Drakness_Scene_Staged_Egyptian.txt",

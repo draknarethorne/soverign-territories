@@ -6,14 +6,14 @@
   "name": "Greek Oracle of the Sun",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "expression": "a serene, warm smile, eyes soft with compassion and foresight.",
+    "expression": "data/art/heroes/drakn-sisters/drakniss/expressions/serene-warm-smile-eyes-soft-with-2.json",
     "wearing": "data/art/themes/ancient/greek/wardrobe/clothing/gowns/chiton-peplos-gown.json",
     "headwear": "data/art/themes/ancient/greek/wardrobe/headwear/wreaths/gold-laurel-wreath.json",
     "jewelry": "data/art/themes/ancient/greek/wardrobe/jewelry/sets/gold-laurel-jewelry-set.json",
     "legs_feet": "data/art/themes/ancient/greek/wardrobe/footwear/sandals/gladiator-lace-sandals.json",
     "holding": "data/art/themes/ancient/greek/wardrobe/weapons/staves/oracle-sun-staff.json",
     "makeup": "data/art/themes/ancient/greek/cosmetics/makeup/gilded/gilded-goddess.json",
-    "effects": "Soft rays of {{MAGIC}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/soft-rays-of-radiant-light-fall-around.json",
     "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",

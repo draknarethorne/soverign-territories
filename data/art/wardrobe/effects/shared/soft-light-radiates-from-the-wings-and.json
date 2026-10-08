@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/soft-light-radiates-from-the-wings-and",
+  "kind": "effects",
+  "name": "Soft light radiates from the wings and",
+  "description": "Soft {{MAGIC}} light radiates from the wings and a faint halo above the head, motes of golden light drifting slowly upward.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

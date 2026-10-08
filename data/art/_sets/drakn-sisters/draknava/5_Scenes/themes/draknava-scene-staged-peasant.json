@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the village peasant bard outfit render",
   "components": {
     "pose": "data/art/themes/adventure/peasant/motion/well-bucket-lift.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/peasant/backgrounds/fantasy/cityscape/village-market-square.json",
     "expression": "data/art/themes/adventure/peasant/motion/expressions/honest-warmth.json"
   },

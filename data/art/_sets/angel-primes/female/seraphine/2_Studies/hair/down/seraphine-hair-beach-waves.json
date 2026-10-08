@@ -1,0 +1,10 @@
+{
+  "artId": "seraphine-hair-beach-waves",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "component": "data/art/races/human/cosmetics/hair/down/beach-waves.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/2_Studies/hair/down/Seraphine_Hair_Down_BeachWaves.txt",
+  "denoise": "~0.4-0.6"
+}

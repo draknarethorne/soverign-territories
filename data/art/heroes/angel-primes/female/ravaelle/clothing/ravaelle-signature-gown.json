@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/ravaelle/clothing/ravaelle-signature-gown",
+  "kind": "wearing",
+  "name": "Ravaelle's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/column-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a scallop shell over curling waves in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Ravaelle: the library piece wardrobe/clothing/gowns/column-gown.json plus water and alignment details."
+}

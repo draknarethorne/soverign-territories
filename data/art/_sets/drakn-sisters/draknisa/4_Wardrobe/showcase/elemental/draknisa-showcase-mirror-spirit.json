@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
   "name": "Mirror Spirit",
   "components": {
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/dynamic/kneeling-glamour.json",
     "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/dawn-regalia.json",

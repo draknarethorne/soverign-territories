@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/bedrock-stone-realm",
+  "kind": "background",
+  "name": "Bedrock Stone (grounded)",
+  "description": "a sandstone canyon at golden hour, tall ochre rock walls with layered strata, a dry riverbed of boulders and fine dust drifting in low amber sunlight, a few quartz veins glinting in the stone",
+  "mood": "solid, ancient",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/bedrock-stone-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

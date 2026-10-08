@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/azaline/headwear/azaline-signature-circlet",
+  "kind": "headwear",
+  "name": "Azaline's signature circlet",
+  "extends": "data/art/wardrobe/headwear/circlets/silver-circlet.json",
+  "description": "+, a six-pointed snowflake of frost rising at the centre of the brow, set with a {{GEM}} gem; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Azaline: the library piece wardrobe/headwear/circlets/silver-circlet.json plus ice and alignment details."
+}

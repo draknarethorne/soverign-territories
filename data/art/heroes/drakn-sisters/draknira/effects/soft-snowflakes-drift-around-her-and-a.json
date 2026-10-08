@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/effects/soft-snowflakes-drift-around-her-and-a",
+  "kind": "effects",
+  "name": "Soft snowflakes drift around her and a",
+  "description": "Soft snowflakes drift around her and a faint {{MAGIC}} frost shimmer glitters on her gown and mantle, a cold halo of diamond dust at her sceptre.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

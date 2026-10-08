@@ -1,0 +1,8 @@
+{
+  "id": "themes/eastern/samurai/wardrobe/clothing/sets/samurai-male-outfit",
+  "kind": "wearing",
+  "name": "Samurai Male Outfit",
+  "description": "a {{PRIMARY}} silk kimono with {{ACCENT_SOFT}} collar trim, a black lacquered haori jacket, a tied obi sash, and pleated {{ACCENT_SOFT}} hakama trousers",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["samurai", "clothing", "male"]
+}

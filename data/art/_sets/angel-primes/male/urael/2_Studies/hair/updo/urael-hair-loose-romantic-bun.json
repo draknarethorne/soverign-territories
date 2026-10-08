@@ -1,0 +1,10 @@
+{
+  "artId": "urael-hair-loose-romantic-bun",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "component": "data/art/races/human/cosmetics/hair/updo/loose-romantic-bun.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Urael/2_Studies/hair/updo/Urael_Hair_Updo_LooseRomanticBun.txt",
+  "denoise": "~0.4-0.6"
+}

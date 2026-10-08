@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/urael/weapons/urael-signature-weapon",
+  "kind": "holding",
+  "name": "Urael's signature weapon",
+  "extends": "data/art/wardrobe/weapons/swords/greatsword.json",
+  "description": "+, its metal worked with a rising flame with scattered embers in {{ACCENT_SOFT}}, dancing flame, embers and sparks gathering along it when it is raised; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Urael: the library piece wardrobe/weapons/swords/greatsword.json plus fire and alignment details."
+}

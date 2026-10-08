@@ -11,7 +11,7 @@
   "components": {
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "companion": "her aligned Elder Dragon, Fulgora, visible through the castle hall's high windows, electric-gold and arc-white scales, wings like sheets of storm-cloud laced with lightning",
+    "companion": "data/art/heroes/drakn-sisters/drakneta/companion/her-aligned-elder-dragon-fulgora-visible-through.json",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

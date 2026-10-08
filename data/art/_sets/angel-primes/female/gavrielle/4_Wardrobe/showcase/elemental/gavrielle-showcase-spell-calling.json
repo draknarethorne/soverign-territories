@@ -1,0 +1,21 @@
+{
+  "artId": "gavrielle-showcase-spell-calling",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/4_Wardrobe/showcase/elemental/Gavrielle_Showcase_SpellCalling.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Spell Calling",
+  "components": {
+    "jewelry": "data/art/heroes/angel-primes/female/gavrielle/jewelry/gavrielle-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "wearing": "data/art/heroes/angel-primes/female/gavrielle/armor/gavrielle-signature-armor.json",
+    "back": "data/art/heroes/angel-primes/female/gavrielle/wings/gavrielle-wings.json",
+    "effects": "Swirling racing wind, feathers and leaves rise and circle around her, {{MAGIC}} light streaming from the weapon in her hand.",
+    "background": "data/art/backgrounds/studio/backlit-haze.json",
+    "holding": "data/art/heroes/angel-primes/female/gavrielle/weapons/gavrielle-signature-weapon.json"
+  },
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

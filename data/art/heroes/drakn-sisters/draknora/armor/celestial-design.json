@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/draknora/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (draknora)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "burnished copper-gold",
+    "BREAST": "an upswept flame tongue with a curling tip",
+    "HIP": "a small flame shape pointing down",
+    "ENGRAVING": "tiny rising sparks and ember-cut edges",
+    "GEM": "a ruby-red gem",
+    "GEM_NOUN": "ruby-red gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

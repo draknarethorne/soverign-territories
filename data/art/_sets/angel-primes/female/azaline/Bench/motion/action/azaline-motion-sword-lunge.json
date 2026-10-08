@@ -1,0 +1,10 @@
+{
+  "artId": "azaline-motion-sword-lunge",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/Bench/motion/action/Azaline_Motion_Action_SwordLunge.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/sword-lunge.json"
+}

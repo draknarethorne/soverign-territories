@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/expressions/sharp-knowing-look-and-a-faint",
+  "kind": "expression",
+  "name": "Sharp knowing look and a faint",
+  "expression": "a sharp, knowing look and a faint cunning smile.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

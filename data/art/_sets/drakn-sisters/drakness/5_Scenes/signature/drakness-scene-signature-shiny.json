@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "name": "Signature Shiny",
   "components": {
-    "pose": "She stands mid-cast, commanding and composed, her gaze toward the camera, weight shifted, chin lifted, her free hand raised and open as she channels.",
+    "pose": "data/art/heroes/drakn-sisters/drakness/motion/stands-mid-cast-commanding-and-composed.json",
     "wearing": "data/art/heroes/drakn-sisters/drakness/armor/bone-wearing.json",
     "arms": "data/art/heroes/drakn-sisters/drakness/armor/bone-arms.json",
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
@@ -13,7 +13,7 @@
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe.json",
     "effects": "Necromantic magic gathers around her raised hand - swirling amethyst-and-violet soul energy, thin ribbons of dark smoke, and faint spectral shades rising from the ground around her. A cold violet glow runs along the edge of her weapon's blade. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
-    "companion": "her aligned Elder Dragon, Umbrath, looming in the shadows of the necropolis behind her, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light",
+    "companion": "data/art/heroes/drakn-sisters/drakness/companion/her-aligned-elder-dragon-umbrath-looming-in.json",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/signature/necropolis-rising-dead.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

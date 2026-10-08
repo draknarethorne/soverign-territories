@@ -1,0 +1,8 @@
+{
+  "id": "themes/southern/savanna-kingdoms/wardrobe/clothing/sets/savanna-kingdoms-male-outfit",
+  "kind": "wearing",
+  "name": "Savanna Kingdoms Male Outfit",
+  "description": "a wrapped {{PRIMARY}} cloth with bold beaded {{ACCENT_SOFT}} geometric patterns across the chest, brass and bead collar, dark cloth leggings with woven trim",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["savanna-kingdoms", "clothing", "male"]
+}

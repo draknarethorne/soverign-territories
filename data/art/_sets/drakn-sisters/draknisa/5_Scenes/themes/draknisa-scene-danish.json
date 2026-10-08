@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/northern/danish/wardrobe/clothing/dresses/snow-queen-gown.json",
     "jewelry": "data/art/themes/northern/danish/wardrobe/jewelry/sets/amber-and-silver-filigree-set.json",
     "legs_feet": "data/art/themes/northern/danish/wardrobe/footwear/boots/white-fur-boots.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json",
     "headwear": "data/art/themes/northern/danish/wardrobe/headwear/crowns/frost-crystal-crown.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json",

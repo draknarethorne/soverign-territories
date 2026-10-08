@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/soft-wondering-smile-eyes-lifted-and",
+  "kind": "expression",
+  "name": "Soft wondering smile eyes lifted and",
+  "expression": "a soft, wondering smile, eyes lifted and glowing.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 20 cards that carried this sentence inline; edit it here and every one follows."
+}

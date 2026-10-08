@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/dawn-regalia.json",
     "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-lineup-headwear.json",
     "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-lineup-jewelry.json",
-    "legs_feet": "bare feet, fine {{METAL}} anklets",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, golden light pooling and sparks of light drifting around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "companion": "her aligned Elder Dragon, Lumira, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",

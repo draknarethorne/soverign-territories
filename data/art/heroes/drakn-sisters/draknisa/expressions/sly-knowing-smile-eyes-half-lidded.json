@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/expressions/sly-knowing-smile-eyes-half-lidded",
+  "kind": "expression",
+  "name": "Sly knowing smile eyes half lidded",
+  "expression": "a sly, knowing smile, eyes half-lidded with control.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows."
+}

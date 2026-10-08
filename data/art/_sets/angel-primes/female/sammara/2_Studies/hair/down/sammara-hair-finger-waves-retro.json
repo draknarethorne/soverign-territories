@@ -1,0 +1,10 @@
+{
+  "artId": "sammara-hair-finger-waves-retro",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "component": "data/art/races/human/cosmetics/hair/down/finger-waves-retro.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/2_Studies/hair/down/Sammara_Hair_Down_FingerWavesRetro.txt",
+  "denoise": "~0.4-0.6"
+}

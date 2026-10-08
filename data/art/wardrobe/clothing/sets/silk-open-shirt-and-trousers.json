@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/silk-open-shirt-and-trousers",
+  "kind": "wearing",
+  "name": "Silk Open Shirt and Trousers",
+  "description": "a {{PRIMARY}} raw silk shirt unbuttoned at the chest with rolled sleeves, paired with {{ACCENT_SOFT}} tailored wool trousers and a woven silk belt",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["silk", "elegant", "male"]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknora/companion/her-aligned-elder-dragon-pyraxis-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon pyraxis a distant",
+  "description": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

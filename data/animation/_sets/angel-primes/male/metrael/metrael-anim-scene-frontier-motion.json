@@ -1,0 +1,42 @@
+{
+  "animId": "metrael-anim-scene-frontier-motion",
+  "kind": "animation",
+  "name": "FrontierMotion",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "source": {
+    "artCard": "data/art/_sets/angel-primes/male/metrael/5_Scenes/themes/metrael-scene-frontier.json",
+    "image": "Metrael_Qwen_Scene_Frontier_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/frontier/tumbleweed-wind.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/dust-motes-glow.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/frost-blooms.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/sparkles-shimmer.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/clouds-race.json",
+      "transition": "settle"
+    }
+  ],
+  "notes": "The theme scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt"
+}

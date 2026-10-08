@@ -1,0 +1,11 @@
+{
+  "artId": "nyxene-hair-christmas",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "component": "data/art/themes/seasonal/christmas/cosmetics/hair/braided/ribbon-crown-braid.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/2_Studies/hair/themes/Nyxene_Hair_Christmas.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Midwinter Christmas theme hairstyle."
+}

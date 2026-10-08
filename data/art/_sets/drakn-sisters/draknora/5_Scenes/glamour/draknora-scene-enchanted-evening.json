@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Pyraxis, a distant silhouette crossing the dusk sky beyond the terrace, flame-red scales catching the last light",
+    "companion": "data/art/heroes/drakn-sisters/draknora/companion/her-aligned-elder-dragon-pyraxis-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/evening/citadel-rooftop-braziers.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

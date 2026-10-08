@@ -1,0 +1,22 @@
+{
+  "artId": "luzariel-scene-celtic",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/5_Scenes/themes/Luzariel_Scene_Celtic.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Celtic",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/northern/celtic/wardrobe/clothing/sets/celtic-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/luzariel/wings/luzariel-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/luzariel/effects/luzariel-elemental-drift.json",
+    "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
+    "legs_feet": "data/art/themes/northern/celtic/wardrobe/footwear/boots/laced-moor-boots.json",
+    "holding": "data/art/themes/northern/celtic/wardrobe/props/instruments/celtic-harp.json",
+    "jewelry": "data/art/heroes/angel-primes/male/luzariel/jewelry/luzariel-signature-jewelry.json"
+  },
+  "notes": "Celtic theme scene: every item is a library piece."
+}

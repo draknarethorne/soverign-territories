@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/jewelry/gavrielle-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Gavrielle's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a spiral of swept feathers, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Gavrielle: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus wind and alignment details."
+}

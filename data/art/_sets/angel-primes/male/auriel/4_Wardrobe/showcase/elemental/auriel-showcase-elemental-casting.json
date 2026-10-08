@@ -1,0 +1,20 @@
+{
+  "artId": "auriel-showcase-elemental-casting",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/4_Wardrobe/showcase/elemental/Auriel_Showcase_ElementalCasting.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Elemental Casting",
+  "components": {
+    "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "pose": "data/art/motion/action/guard-stance.json",
+    "wearing": "data/art/heroes/angel-primes/male/auriel/clothing/auriel-signature-attire.json",
+    "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
+    "effects": "A swirl of golden light and drifting motes lifts around his raised hand, small whirlwinds orbiting in a slow ring, small sparks of {{MAGIC}} light within it.",
+    "background": "data/art/backgrounds/studio/black-velvet-spotlight.json"
+  },
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

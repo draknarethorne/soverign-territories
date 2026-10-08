@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/metrael/armor/metrael-signature-armor",
+  "kind": "wearing",
+  "name": "Metrael's signature armor",
+  "extends": "data/art/wardrobe/armor/plate/half-plate.json",
+  "description": "+, every plate and trim engraved with a six-pointed snowflake of frost in {{ACCENT_SOFT}}; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Metrael: the library piece wardrobe/armor/plate/half-plate.json plus ice and alignment details."
+}

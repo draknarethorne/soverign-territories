@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/trunks/hide-loincloth",
+  "kind": "wearing",
+  "name": "Hide Loincloth",
+  "description": "only a rough-stitched leather loincloth in brown hide, wrapped and cord-tied at the waist; chest, sides, and legs largely bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "loincloth", "male", "primitive"]
+}

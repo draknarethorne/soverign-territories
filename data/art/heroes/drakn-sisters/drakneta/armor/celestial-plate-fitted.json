@@ -2,29 +2,6 @@
   "id": "heroes/drakn-sisters/drakneta/armor/celestial-plate-fitted",
   "kind": "wearing",
   "name": "Celestial plate armor, form-fitting (drakneta)",
-  "description": "celestial armor of bright electrum: two small ornate filigree plates, each in the form of an angular shape with forked lightning-bolt edges, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form instead of standing out, covering the centre of each breast fully, and one matching small ornate plate in the form of a small ring-sigil circle curved to follow the contour of the pelvic area, tapering and sitting flush against the skin so that no edge stands out, covering the whole front of the pelvic area completely; every plate is engraved with arc-coil lines and small branching bolts and set with an arc-white gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin",
-  "negatives": [
-    "bikini bottom",
-    "bikini top",
-    "flat discs",
-    "plates standing out",
-    "plates sticking out",
-    "straps",
-    "strings",
-    "chains",
-    "large plates",
-    "full coverage"
-  ],
-  "compatibleStages": [
-    "armor",
-    "showcase"
-  ],
-  "tags": [
-    "armor",
-    "celestial",
-    "plate",
-    "fitted",
-    "female"
-  ],
-  "notes": "The original small plates, shaped to follow the contour of the body; the original celestial-plate-armor is unchanged."
+  "extends": "data/art/wardrobe/armor/celestial/frame/celestial-plate-fitted.json",
+  "varsFrom": "data/art/heroes/drakn-sisters/drakneta/armor/celestial-design.json"
 }

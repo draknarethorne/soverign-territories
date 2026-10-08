@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the celtic shaman outfit render",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknara/effects/elemental-aura.json",
     "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
     "expression": "data/art/motion/expressions/composed/composed-serene.json"
   },

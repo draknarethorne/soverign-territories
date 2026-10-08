@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/tide-reef-realm",
+  "kind": "background",
+  "name": "Tide Reef (grounded)",
+  "description": "a rocky tide-pool shore at low tide, wet dark stone and shallow clear water over coral and shells, sunlight slanting through the shallows, soft sea haze",
+  "mood": "fluid, serene",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/tide-reef-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

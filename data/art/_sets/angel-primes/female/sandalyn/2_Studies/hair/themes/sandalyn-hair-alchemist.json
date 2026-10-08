@@ -1,0 +1,11 @@
+{
+  "artId": "sandalyn-hair-alchemist",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "component": "data/art/themes/adventure/alchemist/cosmetics/hair/updo/goggle-bun-with-tendrils.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/2_Studies/hair/themes/Sandalyn_Hair_Alchemist.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Alchemist's Guild theme hairstyle."
+}

@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakness/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Cold shadow mist curls around her feet",
+  "description": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

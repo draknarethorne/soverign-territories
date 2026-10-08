@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the celtic bard outfit render",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "A playful swirl of wind carries drifting mist and loose heather blossoms around her, {{MAGIC}} light glinting within the breeze.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/a-playful-swirl-of-wind-carries-drifting.json",
     "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
-    "expression": "a playful, knowing smile, eyes bright with mischief."
+    "expression": "data/art/motion/expressions/scene/playful-knowing-smile-eyes-bright-with.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknava/5_Scenes/themes/Draknava_Scene_Staged_Celtic.txt",

@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the spring bloom enchanter outfit render",
   "components": {
     "pose": "data/art/themes/seasonal/spring/motion/petal-twirl.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/spring/backgrounds/fantasy/highlands/wildflower-meadow-spring-rain.json",
     "expression": "data/art/themes/seasonal/spring/motion/expressions/bloom-radiance.json"
   },

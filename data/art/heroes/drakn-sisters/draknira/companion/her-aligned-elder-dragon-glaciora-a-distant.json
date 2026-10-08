@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/companion/her-aligned-elder-dragon-glaciora-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon glaciora a distant",
+  "description": "her aligned Elder Dragon, Glaciora, a distant silhouette crossing the frosty dusk sky beyond the terrace, glacial-cyan scales glittering",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

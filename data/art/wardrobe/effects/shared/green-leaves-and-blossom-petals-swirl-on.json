@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/green-leaves-and-blossom-petals-swirl-on",
+  "kind": "effects",
+  "name": "Green leaves and blossom petals swirl on",
+  "description": "Green leaves and blossom petals swirl on the breeze around the figure, soft {{MAGIC}} light glowing among them.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

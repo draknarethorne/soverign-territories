@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the greek cleric outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Soft rays of {{MAGIC}} radiant light fall around her through the columns, faint golden motes drifting like dust in sunlight.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/soft-rays-of-radiant-light-fall-around.json",
     "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json",
-    "expression": "a serene, warm smile, eyes soft with compassion and foresight."
+    "expression": "data/art/heroes/drakn-sisters/drakniss/expressions/serene-warm-smile-eyes-soft-with-2.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Drakniss/5_Scenes/themes/Drakniss_Scene_Staged_Greek.txt",

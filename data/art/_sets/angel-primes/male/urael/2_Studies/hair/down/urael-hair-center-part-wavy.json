@@ -1,0 +1,10 @@
+{
+  "artId": "urael-hair-center-part-wavy",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "component": "data/art/races/human/cosmetics/hair/down/center-part-wavy.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Urael/2_Studies/hair/down/Urael_Hair_Down_CenterPartWavy.txt",
+  "denoise": "~0.4-0.6"
+}

@@ -1,0 +1,11 @@
+{
+  "artId": "seraphine-hair-autumn",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "component": "data/art/themes/seasonal/autumn/cosmetics/hair/braided/leaf-braid-halfup.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/2_Studies/hair/themes/Seraphine_Hair_Autumn.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Autumn Harvest Woods theme hairstyle."
+}

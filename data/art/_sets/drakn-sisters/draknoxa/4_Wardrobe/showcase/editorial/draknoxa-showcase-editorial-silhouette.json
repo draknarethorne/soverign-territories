@@ -6,7 +6,7 @@
   "name": "Editorial: Backlit Silhouette",
   "components": {
     "wearing": "data/art/wardrobe/clothing/gowns/column-gown.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
     "pose": "data/art/motion/standing/side-profile-elegant.json",
     "background": "data/art/backgrounds/studio/backlit-haze.json",

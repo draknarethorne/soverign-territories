@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/metrael/weapons/metrael-signature-weapon",
+  "kind": "holding",
+  "name": "Metrael's signature weapon",
+  "extends": "data/art/wardrobe/weapons/wands/arcane-wand.json",
+  "description": "+, its metal worked with a six-pointed snowflake of frost in {{ACCENT_SOFT}}, swirling frost, snowflakes and ice crystals gathering along it when it is raised; plain, severe and unornamented",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Metrael: the library piece wardrobe/weapons/wands/arcane-wand.json plus ice and alignment details."
+}

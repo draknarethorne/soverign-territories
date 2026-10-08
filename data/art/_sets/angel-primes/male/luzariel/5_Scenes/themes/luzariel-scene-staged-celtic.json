@@ -1,0 +1,18 @@
+{
+  "artId": "luzariel-scene-staged-celtic",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/5_Scenes/themes/Luzariel_Scene_Staged_Celtic.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Celtic",
+  "base_description": "{{HERO}} already staged in the celtic outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "effects": "data/art/heroes/angel-primes/male/luzariel/effects/luzariel-elemental-drift.json",
+    "background": "data/art/themes/northern/celtic/backgrounds/fantasy/highlands/standing-stones-misty-moor.json",
+    "expression": "a warm, radiant smile, eyes full of light."
+  },
+  "notes": "STAGED path: feed the luzariel-clothing-celtic studio render; only the scene, effects and pose are added."
+}

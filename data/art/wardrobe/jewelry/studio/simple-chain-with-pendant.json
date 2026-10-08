@@ -1,0 +1,12 @@
+{
+  "id": "wardrobe/jewelry/studio/simple-chain-with-pendant",
+  "kind": "jewelry",
+  "name": "Simple chain with pendant",
+  "description": "a simple {{METAL}} chain with a small pendant",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "notes": "Extracted from 60 cards that carried this sentence inline; edit it here and every one follows."
+}

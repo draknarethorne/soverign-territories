@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/adventure/peasant/wardrobe/clothing/sets/market-day-blouse-set.json",
     "jewelry": "data/art/themes/adventure/peasant/wardrobe/jewelry/sets/wildflower-and-bead-set.json",
     "legs_feet": "data/art/themes/adventure/peasant/wardrobe/footwear/boots/scuffed-leather-boots.json",
-    "effects": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknara/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/peasant/backgrounds/fantasy/highlands/golden-wheat-field-cottage.json",
     "headwear": "data/art/themes/adventure/peasant/wardrobe/headwear/hats/wide-straw-hat.json",
     "makeup": "data/art/themes/adventure/peasant/cosmetics/makeup/natural/sun-kissed-freckles.json"

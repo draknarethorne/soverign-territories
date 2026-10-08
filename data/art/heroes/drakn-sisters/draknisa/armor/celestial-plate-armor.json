@@ -2,17 +2,7 @@
   "id": "heroes/drakn-sisters/draknisa/armor/celestial-plate-armor",
   "kind": "wearing",
   "name": "Celestial armor",
-  "description": "celestial armor of polished platinum: two small ornate filigree plates, each in the form of a fanned scallop shell with ribbed edges, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small pearl-set shell pointing down covering the front of the hips; every plate is engraved with rolling wave lines and a seed pearl at each hinge and set with a pearl; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin",
-  "compatibleStages": [
-    "armor",
-    "showcase",
-    "scene"
-  ],
-  "tags": [
-    "celestial",
-    "armor",
-    "bikini",
-    "female"
-  ],
+  "extends": "data/art/wardrobe/armor/celestial/frame/celestial-plate-armor.json",
+  "varsFrom": "data/art/heroes/drakn-sisters/draknisa/armor/celestial-design.json",
   "notes": "Enchanter / Water. Signature earned armor: small filigree plates at bikini-cup coverage, a different shape per sister, held by magic."
 }

@@ -1,0 +1,10 @@
+{
+  "id": "motion/scene/battle-leap",
+  "kind": "pose",
+  "name": "Battle leap",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows.",
+  "pose": "She leaps mid-air with her weapon swept behind her and her free hand flung forward, wings spread wide, a calm, fierce gaze straight to the camera; full figure visible."
+}

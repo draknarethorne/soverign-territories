@@ -6,7 +6,7 @@
   "name": "Thanksgiving Harvest",
   "components": {
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "expression": "a calm, warm smile, eyes gentle and grateful.",
+    "expression": "data/art/heroes/drakn-sisters/drakniya/expressions/calm-warm-smile-eyes-gentle-and.json",
     "wearing": "data/art/themes/seasonal/thanksgiving/wardrobe/clothing/dresses/autumn-harvest-dress.json",
     "headwear": "data/art/themes/seasonal/thanksgiving/wardrobe/headwear/wreaths/autumn-leaf-crown.json",
     "jewelry": "data/art/themes/seasonal/thanksgiving/wardrobe/jewelry/sets/acorn-and-leaf-set.json",

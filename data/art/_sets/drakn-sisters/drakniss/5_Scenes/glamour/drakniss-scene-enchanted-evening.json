@@ -10,7 +10,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
-    "companion": "her aligned Elder Dragon, Lumira, a distant glowing silhouette crossing the twilight sky beyond the terrace, radiant rose-gold scales catching the last light",
+    "companion": "data/art/heroes/drakn-sisters/drakniss/companion/her-aligned-elder-dragon-lumira-a-distant.json",
     "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/evening/marble-terrace-golden-sunset.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

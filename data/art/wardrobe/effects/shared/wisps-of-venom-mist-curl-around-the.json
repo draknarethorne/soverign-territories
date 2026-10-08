@@ -1,0 +1,10 @@
+{
+  "id": "wardrobe/effects/shared/wisps-of-venom-mist-curl-around-the",
+  "kind": "effects",
+  "name": "Wisps of venom mist curl around the",
+  "description": "Wisps of {{MAGIC}} venom-mist curl around the figure, droplets of glowing toxin and drifting spores catching the light.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

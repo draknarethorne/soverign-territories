@@ -1,0 +1,8 @@
+{
+  "id": "themes/seasonal/spring/wardrobe/clothing/sets/spring-male-outfit",
+  "kind": "wearing",
+  "name": "Spring Male Outfit",
+  "description": "a {{PRIMARY}} linen tunic with delicate {{ACCENT_SOFT}} flower-petal embroidery, a light wool cloak with woven blossoms, pale breeches, and a knotted flower cord belt",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["spring", "clothing", "male"]
+}

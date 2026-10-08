@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/roll-neck-and-slacks",
+  "kind": "wearing",
+  "name": "Roll Neck and Slacks",
+  "description": "a fitted {{PRIMARY}} wool roll-neck jumper with high cuffs, paired with charcoal {{ACCENT_SOFT}} wool slacks with a sharp crease and a dark leather belt",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["turtleneck", "smart-casual", "male"]
+}

@@ -1,0 +1,18 @@
+{
+  "artId": "haniya-clothing-pencil-skirt-and-blouse",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/4_Wardrobe/clothing/sets/Haniya_Clothing_PencilSkirtAndBlouse.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Pencil Skirt and Blouse",
+  "aesthetic": "a clean studio presentation of pencil skirt and blouse",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/pencil-skirt-and-blouse.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

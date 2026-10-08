@@ -1,0 +1,42 @@
+{
+  "animId": "haniya-anim-scene-halloween-motion",
+  "kind": "animation",
+  "name": "HalloweenMotion",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "source": {
+    "artCard": "data/art/_sets/angel-primes/female/haniya/5_Scenes/themes/haniya-scene-halloween.json",
+    "image": "Haniya_Qwen_Scene_Halloween_00001_.png"
+  },
+  "look": "data/animation/looks/card-art.json",
+  "actions": [
+    {
+      "motion": "data/animation/motions/themes/halloween/bats-swarm.json",
+      "seconds": 2.5,
+      "transition": "flow",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/dust-motes-glow.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/elements/vines-unfurl.json",
+      "transition": "blend",
+      "with": [
+        {
+          "motion": "data/animation/motions/ambient/sparkles-shimmer.json"
+        }
+      ]
+    },
+    {
+      "motion": "data/animation/motions/ambient/clouds-race.json",
+      "transition": "settle"
+    }
+  ],
+  "notes": "The theme scene in motion, built only from reusable pieces: a theme effect, her element and ambient world effects.",
+  "size": [
+    640,
+    960
+  ],
+  "template": "data/animation/_templates/video-minimax.txt"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/armor/celestial/frame/celestial-plate-armor",
+  "kind": "wearing",
+  "name": "Celestial plate armor (frame)",
+  "description": "celestial armor of [[METAL_NAME]]: two small ornate filigree plates, each in the form of [[BREAST]], covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of [[HIP]] covering the front of the hips; every plate is engraved with [[ENGRAVING]] and set with [[GEM]]; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "celestial",
+    "armor",
+    "bikini",
+    "female"
+  ],
+  "notes": "A frame, not a piece to use directly: the double-bracket gaps (metal, breast and hip shapes, engraving, gem) are filled by each hero's celestial-design file, so every sister's celestial armor shares one wording and differs only in those values."
+}

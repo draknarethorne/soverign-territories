@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/seasonal/halloween/wardrobe/clothing/gowns/witching-hour-gown.json",
     "jewelry": "data/art/themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set.json",
     "legs_feet": "data/art/themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots.json",
-    "effects": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/forests/pumpkin-field-moonrise.json",
     "headwear": "data/art/themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat.json",
     "makeup": "data/art/themes/seasonal/halloween/cosmetics/makeup/spooky/spiderweb-glam.json"

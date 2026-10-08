@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/auriel/headwear/auriel-signature-circlet",
+  "kind": "headwear",
+  "name": "Auriel's signature circlet",
+  "extends": "data/art/wardrobe/headwear/circlets/chain-headpiece.json",
+  "description": "+, a radiant sunburst rising at the centre of the brow, set with a {{GEM}} gem; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Auriel: the library piece wardrobe/headwear/circlets/chain-headpiece.json plus light and alignment details."
+}

@@ -1,0 +1,20 @@
+{
+  "artId": "gavrielle-showcase-editorial-twirl",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "name": "Editorial: Twirl",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/bodycon-mini-dress.json",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
+    "pose": "data/art/motion/dynamic/twirl-spin.json",
+    "background": "data/art/backgrounds/studio/white-high-key.json",
+    "effects": "data/art/wardrobe/effects/editorial/wind-machine.json",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+  },
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/angel-primes/female/Gavrielle/4_Wardrobe/showcase/editorial/Gavrielle_Showcase_Editorial_Twirl.txt",
+  "notes": "EDITORIAL SHOWCASE: a fashion shot on a studio backdrop with no magic, to test how the A-pose carries into a styled studio photo."
+}

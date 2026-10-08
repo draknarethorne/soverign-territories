@@ -1,0 +1,18 @@
+{
+  "artId": "urael-scene-staged-enchanted-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Urael/5_Scenes/glamour/Urael_Scene_Staged_EnchantedEvening.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Enchanted Evening",
+  "base_description": "{{HERO}} already staged with her chosen hair, makeup and outfit (an outfit render, or just the metallic bikini A-pose to start)",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
+    "companion": "data/art/heroes/angel-primes/male/urael/companion/ember-beside.json",
+    "background": "data/art/backgrounds/fantasy/desert/starlit-desert-night.json"
+  },
+  "notes": "STAGED scene: the incoming image already carries hair, makeup and outfit; this pass adds only the evening scene, glow and her pet."
+}

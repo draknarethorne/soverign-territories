@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the autumn harvest woods shaman outfit render",
   "components": {
     "pose": "data/art/themes/seasonal/autumn/motion/leaf-toss.json",
-    "effects": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknara/effects/elemental-aura.json",
     "background": "data/art/themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist.json",
     "expression": "data/art/themes/seasonal/autumn/motion/expressions/harvest-contentment.json"
   },

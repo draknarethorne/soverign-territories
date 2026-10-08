@@ -1,0 +1,10 @@
+{
+  "id": "motion/expressions/scene/fierce-focused-gaze-chin-raised",
+  "kind": "expression",
+  "name": "Fierce focused gaze chin raised",
+  "expression": "a fierce, focused gaze, chin raised.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 20 cards that carried this sentence inline; edit it here and every one follows."
+}

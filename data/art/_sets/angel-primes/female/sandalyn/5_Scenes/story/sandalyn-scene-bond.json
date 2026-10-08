@@ -1,0 +1,22 @@
+{
+  "artId": "sandalyn-scene-bond",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/5_Scenes/story/Sandalyn_Scene_Bond.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Bond",
+  "components": {
+    "pose": "She stands close to her bonded companion, one hand raised and gently resting against it, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the companion turns toward her and both are fully in frame.",
+    "wearing": "data/art/wardrobe/clothing/gowns/princess-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/earrings/chandelier-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
+    "back": "data/art/heroes/angel-primes/female/sandalyn/wings/sandalyn-wings.json",
+    "effects": "A thread of {{MAGIC}} light runs from her hand to her companion where they touch, the bond glowing, motes of stone shards, dust and glowing crystals rising between them.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "companion": "data/art/heroes/angel-primes/female/sandalyn/companion/cairn-beside.json",
+    "background": "data/art/backgrounds/fantasy/lairs/earth-crystal-geode-cavern.json"
+  },
+  "notes": "BOND: the angel and her bonded pet in the lair of her element."
+}

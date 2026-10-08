@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/companion/her-aligned-elder-dragon-aquaria-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon aquaria a distant",
+  "description": "her aligned Elder Dragon, Aquaria, a distant silhouette skimming the moonlit sea beyond the terrace, deep-teal scales glinting",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

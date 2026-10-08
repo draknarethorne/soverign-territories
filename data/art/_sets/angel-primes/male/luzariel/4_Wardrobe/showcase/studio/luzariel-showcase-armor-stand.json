@@ -1,0 +1,20 @@
+{
+  "artId": "luzariel-showcase-armor-stand",
+  "kind": "base-set",
+  "stage": "showcase",
+  "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
+  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "output": "prompts/angel-primes/male/Luzariel/4_Wardrobe/showcase/studio/Luzariel_Showcase_ArmorStand.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Armor Stand",
+  "components": {
+    "jewelry": "data/art/heroes/angel-primes/male/luzariel/jewelry/luzariel-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "wearing": "data/art/heroes/angel-primes/male/luzariel/armor/luzariel-signature-armor.json",
+    "back": "data/art/heroes/angel-primes/male/luzariel/wings/luzariel-wings.json",
+    "effects": "A curtain of drifting shadow, smoke and pale starlight hangs in the air behind him in a protective arc, {{MAGIC}} light running through it.",
+    "background": "data/art/backgrounds/studio/charcoal-magic-glow.json"
+  },
+  "notes": "SHOWCASE: a studio shot on a coloured backdrop with magic and flair, before it becomes a scene."
+}

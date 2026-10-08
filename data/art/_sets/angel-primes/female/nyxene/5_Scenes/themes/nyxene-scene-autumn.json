@@ -1,0 +1,24 @@
+{
+  "artId": "nyxene-scene-autumn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/5_Scenes/themes/Nyxene_Scene_Autumn.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Autumn Harvest Woods",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/seasonal/autumn/wardrobe/clothing/sets/foragers-wrap-set.json",
+    "back": "data/art/heroes/angel-primes/female/nyxene/wings/nyxene-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/nyxene/effects/nyxene-elemental-drift.json",
+    "background": "data/art/themes/seasonal/autumn/backgrounds/fantasy/forests/golden-oak-glade-mist.json",
+    "headwear": "data/art/themes/seasonal/autumn/wardrobe/headwear/crowns/antler-and-acorn-crown.json",
+    "jewelry": "data/art/themes/seasonal/autumn/wardrobe/jewelry/sets/acorn-and-amber-set.json",
+    "legs_feet": "data/art/themes/seasonal/autumn/wardrobe/footwear/boots/laced-forest-boots.json",
+    "makeup": "data/art/themes/seasonal/autumn/cosmetics/makeup/woodland/russet-leaf-glow.json",
+    "holding": "data/art/themes/seasonal/autumn/wardrobe/weapons/bows/hunters-yew-bow.json"
+  },
+  "notes": "Autumn Harvest Woods theme scene: every item is a library piece."
+}

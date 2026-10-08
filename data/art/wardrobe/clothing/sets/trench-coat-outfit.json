@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/trench-coat-outfit",
+  "kind": "wearing",
+  "name": "Trench Coat Outfit",
+  "description": "a long tan waxed-canvas trench coat with a wide collar, buckled shoulder tabs, and a tied waist belt, worn over a {{PRIMARY}} dress shirt and dark trousers",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["trench", "detective", "male"]
+}

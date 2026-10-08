@@ -1,0 +1,10 @@
+{
+  "artId": "seraphine-motion-mild-energy-touch",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/Bench/motion/dynamic/Seraphine_Motion_Dynamic_MildEnergyTouch.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/dynamic/mild-energy-touch.json"
+}

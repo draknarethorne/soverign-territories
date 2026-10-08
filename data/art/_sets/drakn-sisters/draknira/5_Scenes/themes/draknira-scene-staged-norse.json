@@ -7,9 +7,9 @@
   "base_description": "{{HERO}} already staged in the norse wizard outfit render",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "effects": "Fine ice crystals and drifting snow glitter in the air around her, faint {{MAGIC}} frost-light tracing her silhouette.",
+    "effects": "data/art/heroes/drakn-sisters/draknira/effects/fine-ice-crystals-and-drifting-snow-glitter.json",
     "background": "data/art/themes/northern/norse/backgrounds/fantasy/mountains/fjord-longhall-aurora.json",
-    "expression": "a cool, calculating stare, utterly composed in the cold."
+    "expression": "data/art/heroes/drakn-sisters/draknira/expressions/cool-calculating-stare-utterly-composed-in.json"
   },
   "template": "data/art/_templates/heroes/scene-staged-human.txt",
   "output": "prompts/drakn-sisters/Draknira/5_Scenes/themes/Draknira_Scene_Staged_Norse.txt",

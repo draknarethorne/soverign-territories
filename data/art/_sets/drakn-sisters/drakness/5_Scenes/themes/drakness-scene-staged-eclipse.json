@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the eclipse necromancer outfit render",
   "components": {
     "pose": "data/art/motion/action/draw-weapon.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/adventure/eclipse/backgrounds/fantasy/temple/eclipse-observatory-terrace.json",
     "expression": "data/art/themes/adventure/eclipse/motion/expressions/umbral-solemnity.json"
   },

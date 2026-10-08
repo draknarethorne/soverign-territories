@@ -1,0 +1,18 @@
+{
+  "artId": "vexiel-scene-staged-summer-solstice",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/vexiel.json",
+  "template": "data/art/_templates/heroes/scene-staged-human.txt",
+  "output": "prompts/angel-primes/male/Vexiel/5_Scenes/themes/Vexiel_Scene_Staged_SummerSolstice.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Summer Solstice",
+  "base_description": "{{HERO}} already staged in the summer solstice outfit render",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "effects": "data/art/heroes/angel-primes/male/vexiel/effects/vexiel-elemental-drift.json",
+    "background": "data/art/themes/seasonal/summer-solstice/backgrounds/fantasy/coast/lakeside-bonfire-dusk.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing."
+  },
+  "notes": "STAGED path: feed the vexiel-clothing-summer-solstice studio render; only the scene, effects and pose are added."
+}

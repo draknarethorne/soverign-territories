@@ -1,0 +1,8 @@
+{
+  "id": "themes/seasonal/summer-solstice/wardrobe/clothing/sets/summer-solstice-male-outfit",
+  "kind": "wearing",
+  "name": "Summer Solstice Male Outfit",
+  "description": "sun-gold {{PRIMARY}} linen tunic with {{ACCENT_SOFT}} flower-woven hem, pale linen breeches, a flower-crown garland across the chest, and light leather sandals",
+  "compatibleStages": ["clothing", "scene"],
+  "tags": ["summer-solstice", "clothing", "male"]
+}

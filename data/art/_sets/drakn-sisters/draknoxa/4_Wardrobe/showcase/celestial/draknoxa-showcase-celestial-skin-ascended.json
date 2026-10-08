@@ -9,7 +9,7 @@
     "pose": "data/art/motion/standing/commanding-cast.json",
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/armor/celestial-skin-armor.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff-ascended.json",
-    "effects": "Rainbow light splits across her armor and the air, a halo of starlight and drifting motes around her, her ascended weapon blazing with {{MAGIC}} light.",
+    "effects": "data/art/wardrobe/effects/shared/celestial-prismatic-ascended.json",
     "background": "data/art/backgrounds/studio/prismatic-glass.json"
   },
   "template": "data/art/_templates/heroes/showcase-human.txt",

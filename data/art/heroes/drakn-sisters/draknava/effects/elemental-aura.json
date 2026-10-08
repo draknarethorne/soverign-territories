@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknava/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Spirals of wind lift petals leaves and",
+  "description": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/camaris/clothing/camaris-signature-gown",
+  "kind": "wearing",
+  "name": "Camaris's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/princess-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a rising flame with scattered embers in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Camaris: the library piece wardrobe/clothing/gowns/princess-gown.json plus fire and alignment details."
+}

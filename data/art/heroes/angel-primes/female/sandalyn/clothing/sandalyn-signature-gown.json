@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/sandalyn/clothing/sandalyn-signature-gown",
+  "kind": "wearing",
+  "name": "Sandalyn's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/liquid-silk-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a faceted crystal set in carved stone in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sandalyn: the library piece wardrobe/clothing/gowns/liquid-silk-gown.json plus earth and alignment details."
+}

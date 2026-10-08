@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/sandalyn/armor/sandalyn-signature-armor",
+  "kind": "wearing",
+  "name": "Sandalyn's signature armor",
+  "extends": "data/art/wardrobe/armor/mail/ringmail-ranger-set.json",
+  "description": "+, every plate and trim engraved with a faceted crystal set in carved stone in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sandalyn: the library piece wardrobe/armor/mail/ringmail-ranger-set.json plus earth and alignment details."
+}

@@ -1,0 +1,11 @@
+{
+  "artId": "nyxene-hair-aztec",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/nyxene.json",
+  "component": "data/art/themes/ancient/aztec/cosmetics/hair/braided/feather-woven-long-braids.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Nyxene/2_Studies/hair/themes/Nyxene_Hair_Aztec.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Aztec Sun Court theme hairstyle."
+}

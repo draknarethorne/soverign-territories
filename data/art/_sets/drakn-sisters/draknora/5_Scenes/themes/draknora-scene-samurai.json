@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/samurai/wardrobe/clothing/gowns/layered-silk-kimono.json",
     "jewelry": "data/art/themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set.json",
     "legs_feet": "data/art/themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta.json",
-    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/castle/japanese-castle-keep-cherry.json",
     "headwear": "data/art/themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm.json",
     "holding": "data/art/themes/eastern/samurai/wardrobe/weapons/swords/katana-and-wakizashi.json",

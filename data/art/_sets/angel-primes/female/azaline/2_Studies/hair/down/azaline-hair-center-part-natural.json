@@ -1,0 +1,10 @@
+{
+  "artId": "azaline-hair-center-part-natural",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "component": "data/art/races/human/cosmetics/hair/down/center-part-natural.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/2_Studies/hair/down/Azaline_Hair_Down_CenterPartNatural.txt",
+  "denoise": "~0.4-0.6"
+}

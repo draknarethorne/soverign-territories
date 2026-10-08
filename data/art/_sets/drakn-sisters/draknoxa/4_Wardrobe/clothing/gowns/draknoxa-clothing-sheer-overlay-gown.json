@@ -8,7 +8,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/gowns/sheer-overlay-gown.json",
     "arms": "bare arms",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
   },
   "template": "data/art/_templates/heroes/clothing-human.txt",

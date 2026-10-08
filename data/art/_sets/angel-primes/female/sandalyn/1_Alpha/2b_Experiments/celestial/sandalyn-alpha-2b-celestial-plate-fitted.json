@@ -1,0 +1,14 @@
+{
+  "artId": "sandalyn-alpha-2b-celestial-plate-fitted",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "name": "Bare edit: celestial plate armor, form-fitting",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/celestial/angelic-plate-fitted.json"
+  },
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/angel-primes/female/Sandalyn/1_Alpha/2b_Experiments/celestial/Sandalyn_Alpha_2b_CelestialPlateFitted.txt",
+  "notes": "Fork of the celestial core: the original small plates, form-fitting to the body."
+}

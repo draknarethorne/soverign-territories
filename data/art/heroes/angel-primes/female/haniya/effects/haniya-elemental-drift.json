@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/haniya/effects/haniya-elemental-drift",
+  "kind": "effects",
+  "name": "Haniya's elemental drift",
+  "description": "A drift of living vines, leaves and petals circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: written for this angel."
+}

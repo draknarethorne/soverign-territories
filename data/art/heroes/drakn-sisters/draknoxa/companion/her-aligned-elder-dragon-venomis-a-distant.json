@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/companion/her-aligned-elder-dragon-venomis-a-distant",
+  "kind": "companion",
+  "name": "Her aligned elder dragon venomis a distant",
+  "description": "her aligned Elder Dragon, Venomis, a distant silhouette drifting through faint toxic mist beyond the terrace, toxic-orchid-magenta scales glowing softly",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

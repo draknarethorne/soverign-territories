@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknara/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Ribbons of spirit light and drifting motes",
+  "description": "Ribbons of {{MAGIC}} spirit-light and drifting motes of earth rise around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}

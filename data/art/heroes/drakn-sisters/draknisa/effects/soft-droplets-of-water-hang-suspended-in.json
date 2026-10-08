@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/effects/soft-droplets-of-water-hang-suspended-in",
+  "kind": "effects",
+  "name": "Soft droplets of water hang suspended in",
+  "description": "Soft droplets of water hang suspended in the sea air around her, faint {{MAGIC}} light rippling through them.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

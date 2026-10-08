@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/egyptian/wardrobe/clothing/gowns/kalasiris-sheath-gown.json",
     "jewelry": "data/art/themes/ancient/egyptian/wardrobe/jewelry/sets/usekh-collar-set.json",
     "legs_feet": "data/art/themes/ancient/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
-    "effects": "Warm rays of {{MAGIC}} light and drifting golden motes glow around her.",
+    "effects": "data/art/heroes/drakn-sisters/drakniss/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
     "headwear": "data/art/themes/ancient/egyptian/wardrobe/headwear/diadems/golden-uraeus-diadem.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff.json",

@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the greek summoner outfit render",
   "components": {
     "pose": "data/art/motion/action/throw-release.json",
-    "effects": "Forks of {{MAGIC}} lightning crackle through the air and arc along her weapon.",
+    "effects": "data/art/heroes/drakn-sisters/drakneta/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/greek/backgrounds/fantasy/temple/marble-temple-sea-cliff.json",
     "expression": "data/art/motion/expressions/composed/reverent-serene.json"
   },

@@ -1,0 +1,11 @@
+{
+  "artId": "sammara-hair-steppe",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "component": "data/art/themes/eastern/steppe/cosmetics/hair/braided/horde-side-braids.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/2_Studies/hair/themes/Sammara_Hair_Steppe.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Steppe Horde theme hairstyle."
+}

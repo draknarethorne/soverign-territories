@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/trunks/boxer-brief",
+  "kind": "wearing",
+  "name": "Boxer Brief Swim",
+  "description": "only {{PRIMARY}} boxer-brief swim trunks with a wide waistband and {{ACCENT_SOFT}} side panels, mid-thigh cut; chest, abdomen, and calves bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "boxer", "male"]
+}

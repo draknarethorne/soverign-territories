@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/vexiel/armor/vexiel-signature-armor",
+  "kind": "wearing",
+  "name": "Vexiel's signature armor",
+  "extends": "data/art/wardrobe/armor/robes/runic-sorceress-robes.json",
+  "description": "+, every plate and trim engraved with a coiled serpent beside a nightshade bloom in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Vexiel: the library piece wardrobe/armor/robes/runic-sorceress-robes.json plus poison and alignment details."
+}

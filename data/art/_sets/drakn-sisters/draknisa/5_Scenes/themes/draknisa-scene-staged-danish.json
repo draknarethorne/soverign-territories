@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the danish enchanter outfit render",
   "components": {
     "pose": "data/art/motion/standing/seated-elegant.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json",
     "expression": "data/art/motion/expressions/intense/haughty-scorn.json"
   },

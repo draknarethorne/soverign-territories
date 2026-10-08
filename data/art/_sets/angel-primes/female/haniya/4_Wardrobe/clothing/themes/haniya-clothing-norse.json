@@ -1,0 +1,19 @@
+{
+  "artId": "haniya-clothing-norse",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/4_Wardrobe/clothing/themes/Haniya_Clothing_Norse.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Norse",
+  "aesthetic": "a clean studio presentation of the norse outfit",
+  "components": {
+    "wearing": "data/art/themes/northern/norse/wardrobe/clothing/dresses/fur-trimmed-kirtle.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/northern/norse/wardrobe/jewelry/sets/torc-and-brooch-set.json",
+    "legs_feet": "data/art/themes/northern/norse/wardrobe/footwear/boots/fur-lined-boots.json",
+    "headwear": "data/art/themes/northern/norse/wardrobe/headwear/circlets/braided-silver-circlet.json"
+  },
+  "notes": "Pre-staged Norse outfit: render it from the A-pose, then feed the image to the staged scene. Every item is a library piece."
+}

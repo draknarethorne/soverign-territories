@@ -8,7 +8,7 @@
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
     "wearing": "data/art/heroes/drakn-sisters/draknara/armor/celestial-skin-armor.json",
-    "effects": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+    "effects": "data/art/wardrobe/effects/shared/celestial-starlight-rising.json",
     "background": "data/art/backgrounds/studio/starfield-indigo.json"
   },
   "template": "data/art/_templates/heroes/showcase-human.txt",

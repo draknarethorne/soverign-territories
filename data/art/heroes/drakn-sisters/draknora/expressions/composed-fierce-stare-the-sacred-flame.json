@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknora/expressions/composed-fierce-stare-the-sacred-flame",
+  "kind": "expression",
+  "name": "Composed fierce stare the sacred flame",
+  "expression": "a composed, fierce stare, the sacred flame reflected in her eyes.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/open-linen-shirt-and-trousers",
+  "kind": "wearing",
+  "name": "Open Linen Shirt and Trousers",
+  "description": "a loose white linen shirt unbuttoned and open at the chest, with short rolled sleeves, paired with {{PRIMARY}} linen drawstring trousers and a {{ACCENT_SOFT}} rope belt",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["linen", "casual", "male"]
+}

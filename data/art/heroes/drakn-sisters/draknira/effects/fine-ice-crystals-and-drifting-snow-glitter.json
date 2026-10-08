@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/effects/fine-ice-crystals-and-drifting-snow-glitter",
+  "kind": "effects",
+  "name": "Fine ice crystals and drifting snow glitter",
+  "description": "Fine ice crystals and drifting snow glitter in the air around her, faint {{MAGIC}} frost-light tracing her silhouette.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/verael/effects/verael-elemental-drift",
+  "kind": "effects",
+  "name": "Verael's elemental drift",
+  "description": "A drift of living vines, leaves and petals circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Verael: written for this angel."
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/eastern/samurai/wardrobe/clothing/gowns/layered-silk-kimono.json",
     "jewelry": "data/art/themes/eastern/samurai/wardrobe/jewelry/sets/kanzashi-and-tassel-set.json",
     "legs_feet": "data/art/themes/eastern/samurai/wardrobe/footwear/sandals/tabi-and-geta.json",
-    "effects": "Spirals of {{MAGIC}} wind lift petals, leaves and loose strands of hair around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknava/effects/elemental-aura.json",
     "background": "data/art/themes/eastern/samurai/backgrounds/fantasy/castle/japanese-castle-keep-cherry.json",
     "headwear": "data/art/themes/eastern/samurai/wardrobe/headwear/helms/crescent-kabuto-helm.json",
     "holding": "data/art/themes/eastern/samurai/wardrobe/weapons/bows/yumi-longbow.json",

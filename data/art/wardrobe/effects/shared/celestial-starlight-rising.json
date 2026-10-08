@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/celestial-starlight-rising",
+  "kind": "effects",
+  "name": "Celestial starlight rising",
+  "description": "Fine stars drift and glitter around her and tiny points of {{MAGIC}} light trace the filigree of her armor, a soft ring of starlight behind her head.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "Extracted from 40 cards that carried this sentence inline; edit it here and every one follows."
+}

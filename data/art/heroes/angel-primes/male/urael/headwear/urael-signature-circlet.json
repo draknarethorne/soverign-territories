@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/urael/headwear/urael-signature-circlet",
+  "kind": "headwear",
+  "name": "Urael's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/flower-crown.json",
+  "description": "+, a rising flame with scattered embers rising at the centre of the brow, set with a {{GEM}} gem; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Urael: the library piece wardrobe/headwear/crowns/flower-crown.json plus fire and alignment details."
+}

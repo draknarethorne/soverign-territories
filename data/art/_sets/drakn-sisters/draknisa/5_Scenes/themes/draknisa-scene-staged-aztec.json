@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the aztec sun court enchanter outfit render",
   "components": {
     "pose": "data/art/themes/ancient/aztec/motion/offering-bowl.json",
-    "effects": "Floating ribbons of {{MAGIC}} water and glittering droplets orbit her.",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/aztec/backgrounds/fantasy/forests/jungle-cenote-sanctuary.json",
     "expression": "data/art/themes/ancient/aztec/motion/expressions/sun-court-pride.json"
   },

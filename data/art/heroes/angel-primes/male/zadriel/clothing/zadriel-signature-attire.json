@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/clothing/zadriel-signature-attire",
+  "kind": "wearing",
+  "name": "Zadriel's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/leather-jerkin-and-trousers.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a scallop shell over curling waves in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Zadriel: the library piece wardrobe/clothing/sets/leather-jerkin-and-trousers.json plus water and alignment details."
+}

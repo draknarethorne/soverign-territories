@@ -1,0 +1,20 @@
+{
+  "artId": "seraphine-armor-aztec",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/4_Wardrobe/armor/themes/Seraphine_Armor_Aztec.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Jaguar Warrior Armor",
+  "aesthetic": "a clean studio presentation of jaguar warrior armor",
+  "components": {
+    "wearing": "data/art/themes/ancient/aztec/wardrobe/armor/leather/jaguar-warrior-armor.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

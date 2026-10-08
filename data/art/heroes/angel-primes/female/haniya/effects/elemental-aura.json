@@ -1,0 +1,10 @@
+{
+  "id": "heroes/angel-primes/female/haniya/effects/elemental-aura",
+  "kind": "effects",
+  "name": "A drift of living vines leaves and",
+  "description": "A drift of living vines, leaves and petals circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 12 cards that carried this sentence inline; edit it here and every one follows."
+}

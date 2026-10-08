@@ -1,0 +1,10 @@
+{
+  "artId": "vexiel-hair-low-ponytail-loose-tendrils",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/vexiel.json",
+  "component": "data/art/races/human/cosmetics/hair/pulled-back/low-ponytail-loose-tendrils.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Vexiel/2_Studies/hair/pulled-back/Vexiel_Hair_PulledBack_LowPonytailLooseTendrils.txt",
+  "denoise": "~0.4-0.6"
+}

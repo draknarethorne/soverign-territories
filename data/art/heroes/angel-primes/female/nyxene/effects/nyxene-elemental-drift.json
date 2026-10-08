@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/nyxene/effects/nyxene-elemental-drift",
+  "kind": "effects",
+  "name": "Nyxene's elemental drift",
+  "description": "A drift of drifting shadow, smoke and pale starlight circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Nyxene: written for this angel."
+}

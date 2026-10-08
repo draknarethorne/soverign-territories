@@ -11,7 +11,7 @@
   "components": {
     "wearing": "data/art/wardrobe/armor/plate/gothic-plate.json",
     "arms": "bare arms",
-    "jewelry": "a simple {{METAL}} chain with a small pendant",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
     "back": "the back of the armor fully visible",
     "holding": "empty hands relaxed at the sides",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"

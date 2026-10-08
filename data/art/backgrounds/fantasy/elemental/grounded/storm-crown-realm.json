@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/storm-crown-realm",
+  "kind": "background",
+  "name": "Storm Crown (grounded)",
+  "description": "a bare black basalt headland under a heavy storm front, wet rock, a slate and violet sky with a distant lightning strike and a thin gold line at the horizon",
+  "mood": "electric, wild",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/storm-crown-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

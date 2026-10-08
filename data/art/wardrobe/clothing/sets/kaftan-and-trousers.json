@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/kaftan-and-trousers",
+  "kind": "wearing",
+  "name": "Kaftan and Trousers",
+  "description": "a flowing {{PRIMARY}} silk kaftan with wide sleeves and {{ACCENT_SOFT}} embroidered edge panels, worn over white linen trousers and a dark woven belt",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["kaftan", "eastern", "male"]
+}

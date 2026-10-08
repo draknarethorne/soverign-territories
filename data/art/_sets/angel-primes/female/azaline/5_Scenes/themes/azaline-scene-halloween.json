@@ -1,0 +1,24 @@
+{
+  "artId": "azaline-scene-halloween",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/azaline.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Azaline/5_Scenes/themes/Azaline_Scene_Halloween.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Halloween",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+    "wearing": "data/art/themes/seasonal/halloween/wardrobe/clothing/dresses/pumpkin-harvest-witch-dress.json",
+    "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/azaline/effects/azaline-elemental-drift.json",
+    "background": "data/art/themes/seasonal/halloween/backgrounds/fantasy/castle/haunted-manor-courtyard.json",
+    "headwear": "data/art/themes/seasonal/halloween/wardrobe/headwear/hats/tall-witch-hat.json",
+    "jewelry": "data/art/themes/seasonal/halloween/wardrobe/jewelry/sets/spiderweb-charm-set.json",
+    "legs_feet": "data/art/themes/seasonal/halloween/wardrobe/footwear/boots/buckled-witch-boots.json",
+    "makeup": "data/art/themes/seasonal/halloween/cosmetics/makeup/spooky/spiderweb-glam.json",
+    "holding": "data/art/themes/seasonal/halloween/wardrobe/weapons/blunt/pumpkin-headed-scythe.json"
+  },
+  "notes": "Halloween theme scene: every item is a library piece."
+}

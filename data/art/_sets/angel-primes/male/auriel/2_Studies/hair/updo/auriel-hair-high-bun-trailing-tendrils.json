@@ -1,0 +1,10 @@
+{
+  "artId": "auriel-hair-high-bun-trailing-tendrils",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "component": "data/art/races/human/cosmetics/hair/updo/high-bun-trailing-tendrils.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/2_Studies/hair/updo/Auriel_Hair_Updo_HighBunTrailingTendrils.txt",
+  "denoise": "~0.4-0.6"
+}

@@ -10,7 +10,7 @@
     "wearing": "data/art/themes/ancient/aztec/wardrobe/armor/leather/jaguar-warrior-armor.json",
     "jewelry": "data/art/themes/ancient/aztec/wardrobe/jewelry/sets/jade-collar-set.json",
     "legs_feet": "data/art/themes/ancient/aztec/wardrobe/footwear/sandals/woven-lace-up-sandals.json",
-    "effects": "Flickers of {{MAGIC}} flame and glowing embers drift around her.",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/aztec/backgrounds/fantasy/temple/sunlit-stepped-pyramid-plaza.json",
     "headwear": "data/art/themes/ancient/aztec/wardrobe/headwear/crowns/quetzal-feather-headdress.json",
     "holding": "data/art/themes/ancient/aztec/wardrobe/weapons/blunt/obsidian-macuahuitl.json",

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/haniya/clothing/haniya-signature-gown",
+  "kind": "wearing",
+  "name": "Haniya's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/empire-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with twining leaves and a budding vine in {{ACCENT_SOFT}}; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: the library piece wardrobe/clothing/gowns/empire-gown.json plus grass and alignment details."
+}

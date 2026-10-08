@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/gale-eyrie-realm",
+  "kind": "background",
+  "name": "Gale Eyrie (grounded)",
+  "description": "a high mountain ridge with weathered stone terraces above a sea of cloud, strong wind pulling at the grass and the snow, towering cumulus lit by the late sun",
+  "mood": "airy, free",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/gale-eyrie-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

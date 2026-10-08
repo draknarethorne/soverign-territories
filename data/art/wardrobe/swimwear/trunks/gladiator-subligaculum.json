@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/trunks/gladiator-subligaculum",
+  "kind": "wearing",
+  "name": "Gladiator Subligaculum",
+  "description": "only a broad linen subligaculum in {{PRIMARY}} with {{ACCENT_SOFT}} trim, wrapped and belted at the hips in the Roman fashion; chest and legs bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "gladiator", "male", "roman"]
+}

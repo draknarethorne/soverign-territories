@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/draknira/expressions/cool-calculating-stare-utterly-composed",
+  "kind": "expression",
+  "name": "Cool calculating stare utterly composed",
+  "expression": "a cool, calculating stare, utterly composed.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 3 cards that carried this sentence inline; edit it here and every one follows."
+}

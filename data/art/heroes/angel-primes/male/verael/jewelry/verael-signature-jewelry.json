@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/verael/jewelry/verael-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Verael's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as twining leaves and a budding vine and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Verael: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus grass and alignment details."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/clothing/sets/henley-and-chinos",
+  "kind": "wearing",
+  "name": "Henley and Chinos",
+  "description": "a {{PRIMARY}} cotton Henley shirt with {{ACCENT_SOFT}} trim on the placket and cuffs, paired with khaki chino trousers and a leather belt",
+  "compatibleStages": ["clothing", "showcase", "scene"],
+  "tags": ["henley", "casual", "male"]
+}

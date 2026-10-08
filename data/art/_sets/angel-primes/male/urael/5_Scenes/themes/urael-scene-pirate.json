@@ -1,0 +1,22 @@
+{
+  "artId": "urael-scene-pirate",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/urael.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Urael/5_Scenes/themes/Urael_Scene_Pirate.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Pirate",
+  "components": {
+    "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+    "wearing": "data/art/themes/adventure/pirate/wardrobe/clothing/sets/pirate-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/urael/wings/urael-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/urael/effects/urael-elemental-drift.json",
+    "background": "data/art/themes/adventure/pirate/backgrounds/fantasy/coast/moonlit-smugglers-cove.json",
+    "legs_feet": "data/art/themes/adventure/pirate/wardrobe/footwear/boots/cuffed-sea-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/urael/jewelry/urael-signature-jewelry.json",
+    "holding": "data/art/themes/adventure/pirate/wardrobe/weapons/swords/cutlass-of-the-deep.json"
+  },
+  "notes": "Pirate theme scene: every item is a library piece."
+}

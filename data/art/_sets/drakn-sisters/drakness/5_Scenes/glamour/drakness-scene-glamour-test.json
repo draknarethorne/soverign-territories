@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "effects": "A few soft wisps of {{MAGIC}} mist curl low around her feet, a faint {{MAGIC}} shimmer in the night air - understated, nothing busy.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/a-few-soft-wisps-of-mist-curl.json",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/throne/bone-throne-crypt.json"
   },

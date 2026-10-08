@@ -7,7 +7,7 @@
   "base_description": "{{HERO}} already staged in the aztec sun court necromancer outfit render",
   "components": {
     "pose": "data/art/motion/action/throw-release.json",
-    "effects": "Cold {{MAGIC}} shadow-mist curls around her feet and faint spectral wisps drift upward.",
+    "effects": "data/art/heroes/drakn-sisters/drakness/effects/elemental-aura.json",
     "background": "data/art/themes/ancient/aztec/backgrounds/fantasy/forests/jungle-cenote-sanctuary.json",
     "expression": "data/art/themes/ancient/aztec/motion/expressions/sun-court-pride.json"
   },

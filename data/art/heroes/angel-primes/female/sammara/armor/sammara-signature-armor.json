@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/sammara/armor/sammara-signature-armor",
+  "kind": "wearing",
+  "name": "Sammara's signature armor",
+  "extends": "data/art/wardrobe/armor/robes/cloth-wraps.json",
+  "description": "+, every plate and trim engraved with a coiled serpent beside a nightshade bloom in {{ACCENT_SOFT}}; worn, scorched at the edges and trimmed with dark feathers",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Sammara: the library piece wardrobe/armor/robes/cloth-wraps.json plus poison and alignment details."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "wardrobe/swimwear/athletic/drawstring-linen-trousers",
+  "kind": "wearing",
+  "name": "Drawstring Linen Trousers",
+  "description": "only lightweight white linen drawstring trousers with {{ACCENT_SOFT}} trim at the waistband, a relaxed fit; chest bare; bare feet",
+  "compatibleStages": ["pose"],
+  "tags": ["swimwear", "athletic", "linen", "male"]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/frost-spire-realm",
+  "kind": "background",
+  "name": "Frost Spire (grounded)",
+  "description": "a glacial valley at dawn, blue-white ice cliffs and a frozen waterfall under a pale clear sky, fresh snow on dark rock, fine ice crystals catching the low sun",
+  "mood": "crisp, cold",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/frost-spire-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

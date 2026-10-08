@@ -6,13 +6,13 @@
   "name": "Signature Shiny",
   "components": {
     "pose": "data/art/motion/standing/commanding-cast.json",
-    "expression": "a sharp, calculating stare, a faint cunning smirk.",
+    "expression": "data/art/heroes/drakn-sisters/draknoxa/expressions/sharp-calculating-stare-a-faint-cunning.json",
     "wearing": "data/art/wardrobe/clothing/gowns/ethereal-sheer-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff.json",
     "effects": "Faint tendrils of {{MAGIC}} toxic mist curl and drift low around her feet, glowing faintly in the dark. A fine prismatic glitter and a gilded, holographic shimmer play across the metal, the fabric and the magic, every glow edged with a rainbow sheen.",
-    "companion": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
+    "companion": "data/art/heroes/drakn-sisters/draknoxa/companion/her-aligned-elder-dragon-venomis-visible-driftin.json",
     "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/signature/alchemist-catacomb-lab.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

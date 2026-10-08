@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/haniya/headwear/haniya-signature-circlet",
+  "kind": "headwear",
+  "name": "Haniya's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/golden-crown.json",
+  "description": "+, twining leaves and a budding vine rising at the centre of the brow, set with a {{GEM}} gem; pristine, luminous and unmarked",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Haniya: the library piece wardrobe/headwear/crowns/golden-crown.json plus grass and alignment details."
+}

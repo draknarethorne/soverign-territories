@@ -1,0 +1,10 @@
+{
+  "artId": "sammara-motion-draw-weapon",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/Bench/motion/action/Sammara_Motion_Action_DrawWeapon.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/draw-weapon.json"
+}

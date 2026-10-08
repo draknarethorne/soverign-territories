@@ -1,0 +1,19 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/armor/celestial-design",
+  "kind": "design",
+  "name": "Celestial armor design (drakneta)",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "vars": {
+    "METAL_NAME": "bright electrum",
+    "BREAST": "an angular shape with forked lightning-bolt edges",
+    "HIP": "a small ring-sigil circle",
+    "ENGRAVING": "arc-coil lines and small branching bolts",
+    "GEM": "an arc-white gem",
+    "GEM_NOUN": "arc-white gem"
+  },
+  "notes": "The values that make this hero's celestial armor hers; the four celestial pieces (plate, fitted plate, skin armor, skin suit) fill the shared frames in wardrobe/armor/celestial/frame with them."
+}

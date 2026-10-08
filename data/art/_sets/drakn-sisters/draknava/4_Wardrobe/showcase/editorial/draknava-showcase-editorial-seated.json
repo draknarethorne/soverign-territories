@@ -6,7 +6,7 @@
   "name": "Editorial: Seated Elegance",
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/strapless-cocktail-dress.json",
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
     "pose": "data/art/motion/standing/seated-elegant.json",
     "background": "data/art/backgrounds/studio/window-light-studio.json",

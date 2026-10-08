@@ -1,0 +1,21 @@
+{
+  "artId": "zadriel-scene-the-dawn",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/5_Scenes/story/Zadriel_Scene_TheDawn.txt",
+  "denoise": "~0.5-0.7",
+  "name": "TheDawn",
+  "components": {
+    "pose": "Fast, graceful ascent: she rises upright through the centre of a great column of flowing water and drifting spray with her wings half open and her body turning gently, arms out and lifted, head lifted and gaze to the camera, joyful and free; full figure from head to toe visible.",
+    "wearing": "data/art/wardrobe/clothing/sets/kaftan-and-trousers.json",
+    "jewelry": "data/art/heroes/angel-primes/male/zadriel/jewelry/zadriel-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/male/zadriel/wings/zadriel-wings.json",
+    "effects": "A great spiral of flowing water and drifting spray rises in a swirling column around her, streaks of {{MAGIC}} light tracing the air, clouds swept back.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/tide-reef-realm.json"
+  },
+  "notes": "THE DAWN: the angel rising through her element's realm."
+}

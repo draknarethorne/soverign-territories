@@ -1,0 +1,10 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/effects/elemental-aura",
+  "kind": "effects",
+  "name": "Curling vines petals and floating leaves unfurl",
+  "description": "Curling {{MAGIC}} vines, petals and floating leaves unfurl around her.",
+  "compatibleStages": [
+    "scene"
+  ],
+  "notes": "Extracted from 10 cards that carried this sentence inline; edit it here and every one follows."
+}
