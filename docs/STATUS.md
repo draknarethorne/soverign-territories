@@ -233,8 +233,12 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
   `TEMPLATE_KEY_DEFAULTS` (hair edits leave out the hair line, staged scenes keep eyes and skin only), and the `hair` and `scene-staged` templates got the slot.
   All 4,996 prompts were regenerated: 4,147 changed, and every changed line is the `Denoise` header or the added Critical details block (checked against git: 0 other lines).
 - **Safety:** `denoise --reset` now keeps a denoise you set by hand in a workspace (a workspace file that differs from its repo copy is listed as `KEPT`; `--force` overwrites, with a backup) and takes `-w` to limit the workspaces. 5 new tests (43 in all).
-- **Applied so far:** all repo workflows (5,274 denoise values, 3,883 prompt texts) and the Angel Primes workspace (prompt text and 3,091 denoise values). **Not yet applied:** Drakn Sisters, Drakness and Sovereign Dawn Series, which hold final art and may be in use. Per workspace, preview then apply:
-  `comfy_workflows.py setup -w "Drakn Sisters"` then `--apply`, then `comfy_workflows.py denoise --reset -w "Drakn Sisters" --dry-run` and without `--dry-run` (your hand-set values, such as the 0.8 Bare shot, stay and are listed).
+- **Applied so far:** all repo workflows (5,274 denoise values, 3,883 prompt texts), the Angel Primes workspace (prompt text and 3,091 denoise values) and, on Oct 8, Drakn Sisters (1,911 aligned; 1,843 denoise values reset). **Not yet applied:** Drakness and Sovereign Dawn Series, which hold final art and may be in use. Per workspace, preview then apply:
+  `comfy_workflows.py setup -w "<workspace>"` then `--apply`, then `comfy_workflows.py denoise --reset -w "<workspace>" --dry-run` and without `--dry-run`.
+  `setup` only patches prompt text, so the workspace keeps its old denoise and `denoise --reset` lists nearly everything as KEPT (a hand-set guess).
+  Compare against the repo's pre-Oct-8 values (`git show 2d23454d0:<path>`) to find the few that really were hand-set, then run `denoise --reset --force` (each changed file is backed up first) and put those back.
+  In Drakn Sisters the only one was `Drakness_Qwen_Alpha_2_Bare_Figure` at 0.8, which was kept.
+- **Filename case on Windows (Oct 8):** git tracked 20 older-angel prompts and workflows as `Head_Face_Closeup` while the generator writes `Head_face_closeup`; the case-insensitive disk hid it until a branch switch rewrote the files, which made Angel Primes show 20 missing. They are renamed to the generator's case; if `status` shows many "missing" and "install-only" pairs differing only by case, look for this.
 - **To check on renders:** that the 0.9 and 0.95 edits keep the face (if not, lower that stage's range in its template, regenerate, `update`, `denoise --reset`), and that the Critical details lines read well in the finished prompts.
 
 ### Step 3: signature items for Angelica and Angelo
