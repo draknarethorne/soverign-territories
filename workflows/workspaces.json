@@ -5,54 +5,60 @@
     "workRoot": "B:/Sovereign Territories",
     "inputsRoot": "B:/Comfy-Desktop/ComfyUI-Inputs",
     "outputRoot": "B:/Comfy-Desktop/ComfyUI-Outputs",
-    "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes"}
+    "outputFolders": {"drakn-sisters": "Sovereign Territories", "drakn-bound": "Sovereign Territories", "elder-dragons": "Sovereign Territories", "sovereign-territories": "Sovereign Territories", "angel-primes": "Angel Primes", "sovereign-dawn": "Sovereign Dawn Series"}
   },
   "sharedInput": "B:/Comfy-Desktop/ComfyUI-Shared/input",
   "sharedOutput": "B:/Comfy-Desktop/ComfyUI-Shared/output",
-  "dev": ["Sovereign Territories"],
   "workspaces": {
-    "Sovereign Territories": {"output": "Sovereign Territories", 
+    "Sovereign Territories": {
+      "output": "Sovereign Territories",
       "status": "active",
       "templates": true,
-      "role": "DEV: build and prove workflows, ideation and mass changes; holds the ST stage templates. Default deploy target."
+      "accepts": ["*"],
+      "role": "HOME of the art and brand set (the sovereign-territories set: title, logo, icons, key art, plates) and the ST stage templates. Also takes any other set on request, for a while: promotional videos for reels and feeds, a scene kept next to the art, media for posts. Deploy it there with -w, remove it with cleanup -w when you are done; the set keeps its own home."
     },
-    "Drakness": {"output": "Sovereign Territories", 
+    "Drakness": {
+      "output": "Sovereign Territories",
       "status": "active",
       "legacy": true,
       "pull": false,
-      "role": "UAT: her own workspace, kept in sync with Drakn Sisters. Still holds the original hand-made experiments until her armor, clothing and scenes are covered by the generated set. The other sisters have no workspace of their own; add one only while you need it."
+      "role": "HOME (second copy): Drakness's own workspace beside Drakn Sisters, for working through issues with zz_Shots, zz_Curated and test items without polluting the shared workspace. Kept in sync on purpose; still holds her original hand-made experiments. The other sisters have no workspace of their own; add one only while you need it."
     },
-    "Angel Primes": {"output": "Angel Primes", 
-      "status": "planned",
-      "role": "UAT: the clean test bed, twenty angels (ten female, ten male) on a good-to-evil spectrum, each with a bonded pet. Try new things here first (themes, backgrounds, creatures, clothing, weapons, motions) and pull only what works into the Drakn workspaces. It never produces production artifacts. Angelica and Angelo are the older pair."
-    },
-    "Drakn Sisters": {"output": "Sovereign Territories", 
+    "Angel Primes": {
+      "output": "Angel Primes",
       "status": "active",
-      "role": "UAT: the workspace for all ten sisters, laid out hero first and by pipeline phase (Hero/1_Alpha ... 7_Video, Bench), so each sister's folder reads like the process."
+      "role": "HOME: the clean test bed, twenty angels (ten female, ten male) on a good-to-evil spectrum, each with a bonded pet. Try new things here first (themes, backgrounds, creatures, clothing, weapons, motions) and pull only what works into the Drakn workspaces. It never produces final artwork. Angelica and Angelo are the older pair."
     },
-    "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for all ten bound heroes, studio and scenes, laid out like Drakn Sisters."},
-    "Elder Dragons": {"output": "Sovereign Territories", "status": "planned", "role": "UAT: one workspace for the ten Elder Dragons (text-to-image plates, heads and lairs)."},
-    "Sovereign Dawn Series": {"output": "Sovereign Dawn Series", 
-      "status": "planned",
-      "role": "PROD: the final art and polish for the actual cards of the Sovereign Dawn series, all tiers."
+    "Drakn Sisters": {
+      "output": "Sovereign Territories",
+      "status": "active",
+      "role": "HOME: the whole image pipeline for all ten sisters, laid out hero first and by pipeline phase (Hero/1_Alpha ... 7_Video, Bench), so each sister's folder reads like the process. Final art is made here; zz_Shots, zz_Curated and zz_Test are mastered here."
+    },
+    "Drakn Bound": {"output": "Sovereign Territories", "status": "planned", "role": "HOME (planned): one workspace for all ten bound heroes, studio and scenes, laid out like Drakn Sisters. Skipped by every command until its status is active."},
+    "Elder Dragons": {"output": "Sovereign Territories", "status": "planned", "role": "HOME (planned): one workspace for the ten Elder Dragons (text-to-image plates, heads and lairs). Skipped by every command until its status is active."},
+    "Sovereign Dawn Series": {
+      "output": "Sovereign Dawn Series",
+      "status": "active",
+      "accepts": ["drakn-sisters", "drakn-bound", "elder-dragons"],
+      "role": "HOME of the Sovereign Dawn card set (units, pets, buildings, equipment, tactics, workers). Drakn Sisters, Drakn Bound and Elder Dragons can also be put here on request (deploy -w), as a temporary copy that cleanup -w removes."
     }
   },
-  "production": {
-    "uat": [
-      {"groups": ["angel-primes"], "workspace": "Angel Primes"},
-      {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
-      {"groups": ["elder-dragons"], "workspace": "Elder Dragons"},
-      {"groups": ["drakn-sisters"], "workspace": "Drakn Sisters"},
-      {"groups": ["drakn-sisters"], "heroes": ["Drakness"], "workspace": "Drakness"}
-    ],
-    "prod": [{"groups": ["drakn-sisters", "drakn-bound", "elder-dragons"], "workspace": "Sovereign Dawn Series"}]
-  },
+  "homes": [
+    {"groups": ["sovereign-territories"], "workspace": "Sovereign Territories"},
+    {"groups": ["sovereign-dawn"], "workspace": "Sovereign Dawn Series"},
+    {"groups": ["angel-primes"], "workspace": "Angel Primes"},
+    {"groups": ["drakn-bound"], "workspace": "Drakn Bound"},
+    {"groups": ["elder-dragons"], "workspace": "Elder Dragons"},
+    {"groups": ["drakn-sisters"], "workspace": "Drakn Sisters"},
+    {"groups": ["drakn-sisters"], "heroes": ["Drakness"], "workspace": "Drakness"}
+  ],
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
   "inputRoles": {"alpha/": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
   "standardSize": [944, 1104],
   "denoise": {"pick": "high", "golden": 0.7},
-  "inputs": {"Drakness": {"prime": "Drakness_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakness_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakness_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakness_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakness_Qwen_Scene_00000.png", "polish": "Drakness_Qwen_Polish_00000.png"},
+  "inputs": {
+    "Drakness": {"prime": "Drakness_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakness_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakness_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakness_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakness_Qwen_Scene_00000.png", "polish": "Drakness_Qwen_Polish_00000.png"},
     "Draknara": {"prime": "Draknara_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknara_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknara_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknara_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknara_Qwen_Scene_00000.png", "polish": "Draknara_Qwen_Polish_00000.png"},
     "Draknava": {"prime": "Draknava_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknava_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknava_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknava_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknava_Qwen_Scene_00000.png", "polish": "Draknava_Qwen_Polish_00000.png"},
     "Drakneta": {"prime": "Drakneta_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakneta_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakneta_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakneta_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakneta_Qwen_Scene_00000.png", "polish": "Drakneta_Qwen_Polish_00000.png"},
@@ -62,6 +68,8 @@
     "Drakniya": {"prime": "Drakniya_Qwen_Alpha_1_Prime_00000.png", "bare": "Drakniya_Qwen_Alpha_2_Bare_00000.png", "apose": "Drakniya_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Drakniya_Qwen_Alpha_3_Heels_00000.png", "scene": "Drakniya_Qwen_Scene_00000.png", "polish": "Drakniya_Qwen_Polish_00000.png"},
     "Draknora": {"prime": "Draknora_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknora_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknora_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknora_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknora_Qwen_Scene_00000.png", "polish": "Draknora_Qwen_Polish_00000.png"},
     "Draknoxa": {"prime": "Draknoxa_Qwen_Alpha_1_Prime_00000.png", "bare": "Draknoxa_Qwen_Alpha_2_Bare_00000.png", "apose": "Draknoxa_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Draknoxa_Qwen_Alpha_3_Heels_00000.png", "scene": "Draknoxa_Qwen_Scene_00000.png", "polish": "Draknoxa_Qwen_Polish_00000.png"},
+    "Angelica": {"prime": "Angelica_Qwen_Alpha_1_Prime_00000.png", "bare": "Angelica_Qwen_Alpha_2_Bare_00000.png", "apose": "Angelica_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Angelica_Qwen_Alpha_3_Heels_00000.png", "scene": "Angelica_Qwen_Scene_00000.png", "polish": "Angelica_Qwen_Polish_00000.png"},
+    "Angelo": {"prime": "Angelo_Qwen_Alpha_1_Prime_00000.png", "bare": "Angelo_Qwen_Alpha_2_Bare_00000.png", "apose": "Angelo_Qwen_Alpha_2_Bare_00000.png", "scene": "Angelo_Qwen_Scene_00000.png", "polish": "Angelo_Qwen_Polish_00000.png"},
     "Auriel": {"prime": "Auriel_Qwen_Alpha_1_Prime_00000.png", "bare": "Auriel_Qwen_Alpha_2_Bare_00000.png", "apose": "Auriel_Qwen_Alpha_2_Bare_00000.png", "scene": "Auriel_Qwen_Scene_00000.png", "polish": "Auriel_Qwen_Polish_00000.png"},
     "Azaline": {"prime": "Azaline_Qwen_Alpha_1_Prime_00000.png", "bare": "Azaline_Qwen_Alpha_2_Bare_00000.png", "apose": "Azaline_Qwen_Alpha_3_Barefoot_00000.png", "heels": "Azaline_Qwen_Alpha_3_Heels_00000.png", "scene": "Azaline_Qwen_Scene_00000.png", "polish": "Azaline_Qwen_Polish_00000.png"},
     "Baracel": {"prime": "Baracel_Qwen_Alpha_1_Prime_00000.png", "bare": "Baracel_Qwen_Alpha_2_Bare_00000.png", "apose": "Baracel_Qwen_Alpha_2_Bare_00000.png", "scene": "Baracel_Qwen_Scene_00000.png", "polish": "Baracel_Qwen_Polish_00000.png"},
@@ -82,7 +90,8 @@
     "Verael": {"prime": "Verael_Qwen_Alpha_1_Prime_00000.png", "bare": "Verael_Qwen_Alpha_2_Bare_00000.png", "apose": "Verael_Qwen_Alpha_2_Bare_00000.png", "scene": "Verael_Qwen_Scene_00000.png", "polish": "Verael_Qwen_Polish_00000.png"},
     "Vexiel": {"prime": "Vexiel_Qwen_Alpha_1_Prime_00000.png", "bare": "Vexiel_Qwen_Alpha_2_Bare_00000.png", "apose": "Vexiel_Qwen_Alpha_2_Bare_00000.png", "scene": "Vexiel_Qwen_Scene_00000.png", "polish": "Vexiel_Qwen_Polish_00000.png"},
     "Zadriel": {"prime": "Zadriel_Qwen_Alpha_1_Prime_00000.png", "bare": "Zadriel_Qwen_Alpha_2_Bare_00000.png", "apose": "Zadriel_Qwen_Alpha_2_Bare_00000.png", "scene": "Zadriel_Qwen_Scene_00000.png", "polish": "Zadriel_Qwen_Polish_00000.png"},
-    "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"},
+    "SovereignTerritories": "SovereignTerritories_Collage_00001_.png"
+  },
   "photos": {
     "Drakness": "drakness_image_7500527121164427158_944x1104.png",
     "Draknara": "draknara_image_7500298757710195803_944x1104.png",
@@ -94,22 +103,24 @@
     "Drakniya": "drakniya_image_7506737147105404640_944x1104.png",
     "Draknora": "draknora_image_7500597765309011836_944x1104.png",
     "Draknoxa": "draknoxa_image_7508203131793908784_944x1104.png",
+    "Angelica": "various_image_7513773530805044436_944x1104.png",
+    "Angelo": "angelo_photo_944x1104.png",
     "Auriel": "auriel_photo_944x1104.png",
-    "Azaline": "azaline_photo_944x1104.png",
+    "Azaline": "various_image_7508203306632658676_944x1104.png",
     "Baracel": "baracel_photo_944x1104.png",
-    "Camaris": "camaris_photo_944x1104.png",
+    "Camaris": "various_image_7513774554037884840_944x1104.png",
     "Elarion": "elarion_photo_944x1104.png",
-    "Gavrielle": "gavrielle_photo_944x1104.png",
-    "Haniya": "haniya_photo_944x1104.png",
+    "Gavrielle": "various_image_7513773485850669932_944x1104.png",
+    "Haniya": "various_image_7513774720907155492_944x1104.png",
     "Judiel": "judiel_photo_944x1104.png",
     "Luzariel": "luzariel_photo_944x1104.png",
     "Metrael": "metrael_photo_944x1104.png",
-    "Nyxene": "nyxene_photo_944x1104.png",
-    "Ravaelle": "ravaelle_photo_944x1104.png",
-    "Remiah": "remiah_photo_944x1104.png",
-    "Sammara": "sammara_photo_944x1104.png",
-    "Sandalyn": "sandalyn_photo_944x1104.png",
-    "Seraphine": "seraphine_photo_944x1104.png",
+    "Nyxene": "various_image_7513774270452492019_944x1104.png",
+    "Ravaelle": "various_image_7513772617730547310_944x1104.png",
+    "Remiah": "various_screenshot_20260922_114223_944x1104.png",
+    "Sammara": "various_image_7513773226500852939_944x1104.png",
+    "Sandalyn": "various_image_7513773205191292849_944x1104.png",
+    "Seraphine": "various_image_7513774596953980778_944x1104.png",
     "Urael": "urael_photo_944x1104.png",
     "Verael": "verael_photo_944x1104.png",
     "Vexiel": "vexiel_photo_944x1104.png",
@@ -133,12 +144,7 @@
       "envFirst": ["Signature"],
       "fx": "Magic and spell effects: first render every physical effect realistically, with real-world behaviour and texture - real fire, real smoke, real sparks, dust, spray and mist - then layer the magic on top of it: the same smoke, flames and particles also glow from within with luminous light in the colour of her magic, with bright cores, arcs of energy, glowing runes, strong bloom and a subtle lens flare. A spell forming in her hand is a real, tangible presence (swirling, dense, physical) that is also radiantly lit and vivid, like the visual effects of a big-budget fantasy film. The magic light must visibly illuminate and colour her skin, gown, hair and the surroundings. Keep the person, clothing, skin and environment photographic and lifelike."
     },
-    "minimax": {
-      "template": "workflows/_templates/ST6_MiniMax_Video.json",
-      "turbo": true,
-      "dir": "workflows",
-      "classes": ["scene"]
-    }
+    "minimax": {"template": "workflows/_templates/ST6_MiniMax_Video.json", "turbo": true, "dir": "workflows", "classes": ["scene"]}
   },
   "stageFolders": {"scene": "scenes"},
   "textGroups": {"sovereign-territories": ["key-art", "plate", "title", "logo", "icon"], "sovereign-dawn": ["card"]},
