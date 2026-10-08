@@ -127,32 +127,39 @@ quality** before committing a model to a stage.
 
 ### Denoise is the key lever
 
-Denoise is set by automation (Oct 2026), so a workflow no longer opens at 1.0 by accident. Each art card carries a range hint (its
-`denoise` field, printed in the prompt header as `Denoise ~0.5-0.7.`); the workflow tool starts every generated workflow at the **high end**
-of that range (`denoise.pick` in `workflows/workspaces.json`: `high`, `mid` or `low`), because the stages that follow a golden image should
-bring some creativity and not be a blind copy. Tune it per render from there.
+Denoise is set by automation, so a workflow no longer opens at 1.0 by accident. The range lives in each **stage template** (`data/art/_templates/heroes/*.txt`, printed in
+the prompt header as `Denoise ~0.8-0.9.`; the card's own `denoise` field is only a note); the workflow tool starts every generated workflow at the **high end** of that range
+(`denoise.pick` in `workflows/workspaces.json`: `high`, `mid` or `low`), because the stages that follow a golden image should bring real change and not be a blind copy.
+Tune it per render from there.
 
-| Stage (incoming image) | Card range | Starts at |
+**Why the edits run at 0.8 to 0.95 (Oct 2026).** At 0.7 an edit holds the person and also the pose, so a Bare, outfit or motion edit barely moves; in hand-made tests the armor edits ran
+at 0.9 and the Bare edits at 0.8. A higher denoise also lets the likeness drift, so the edit stages state it in the prompt: the **Critical details** block (hair, eyes, skin and the hero's own bust line,
+from the same hero data as the Prime) is switched on for every edit stage (`TEMPLATE_KEY_DEFAULTS` in `gen_prompt.py`), not only for the Prime and Bare steps.
+
+| Stage (incoming image) | Template range | Starts at |
 | --- | --- | --- |
-| X Pose from the original photo | ~1.0 | **1.0** (a full generation) |
-| Bare, outfit/armor/clothing, scenes, underlayer tests and body views (bare or A-pose in) | ~0.5-0.7 | **0.7** |
-| Hair, head, motion (A-pose in) | ~0.4-0.6 | **0.6** |
-| Real-world photo showcases | ~0.6-0.8 | **0.8** |
-| Any ~1.0 card fed a golden image (`denoise.golden`) | ~1.0 | **0.7**: a full redraw would throw the golden image away |
-| Polish (Qwen Polish) | ~0.2-0.4 | set by hand; no generated workflows use it yet |
+| Prime (A-pose from the original photo) | ~1.0 | **1.0** (a full generation) |
+| Bare, outfit, armor and clothing, scenes, showcases, body views (bare or A-pose in) | ~0.8-0.9 | **0.9** |
+| Motion (A-pose in): only the pose changes, and it must really change | ~0.85-0.95 | **0.95** |
+| Head views and close-ups, hair (A-pose in) | ~0.7-0.8 | **0.8** |
+| Staged scenes (the outfit is already in the incoming image) | ~0.7-0.8 | **0.8** |
+| Any ~1.0 template fed a golden image (`denoise.golden`): Barefoot, Heels, layer tests | ~1.0 | **0.9**: a full redraw would throw the golden image away |
+| Final look | ~0.6-0.8 | **0.8** |
+| Polish (detail only) | ~0.2-0.4 | **0.4**, unchanged: nothing in the picture should change |
 
-Rules of thumb for tuning: **"change one thing" stages ~0.4-0.7**, **polish ~0.2-0.4**, **base A-pose 1.0**. If a change does not fully take, raise it by
-about 0.05; if the face, eyes or body drift, lower it. The first value that fully applies the change is the right one.
+Rules of thumb for tuning: **"change one thing" stages 0.7-0.9**, **polish 0.2-0.4**, **base A-pose 1.0**. If a change does not fully take, raise it by about 0.05; if the face,
+eyes or body drift, lower it, or sharpen the likeness lines of the hero (her `palette` and `physique`). The first value that fully applies the change is the right one.
 
 ```bash
 python tools/workflows/comfy_workflows.py denoise                      # preview: the table above, per stage and family, plus the template check
-python tools/workflows/comfy_workflows.py denoise --reset --dry-run    # how many workflows would change (repo and every workspace)
+python tools/workflows/comfy_workflows.py denoise --reset --dry-run    # how many workflows would change (repo and every workspace), and which are kept
 python tools/workflows/comfy_workflows.py denoise --reset [--hero H --stage S --match M]   # apply; changed workspace files are backed up first
 ```
 
 `make --create` sets the value on every new workflow; `make` without `--create` and a prompt-only `deploy` leave a workflow's denoise alone, so values you tune
-by hand survive. A `--reset` overwrites them, so save a tuned workflow in `zz_Shots/` (never reset) first. To change a default, edit the card's `denoise` hint or
-`denoise` in `workspaces.json`, then run `denoise --reset`.
+by hand survive. A `--reset` also keeps them: a workspace workflow whose denoise differs from its repo copy was changed by you, so it is listed as `KEPT` and not overwritten
+(`--force` overwrites it, with a backup), and `zz_Shots` and curated workflows are never touched. To change a default, edit the `Denoise ~lo-hi` line of the stage template or
+`denoise` in `workspaces.json` (`golden`, `pick`), regenerate the prompts, `update` the workflows and run `denoise --reset`.
 
 The Qwen and FireRed templates (`ST0`, `ST1`, `ST2`, `ST3_FireRed_Final`, `ST4_Qwen_Polish`) already expose `denoise` on the outer subgraph node, so it can be
 edited without opening the subgraph; `denoise` prints `NOT exposed` for any configured template that stops doing so. The Flux and MiniMax templates do not expose it

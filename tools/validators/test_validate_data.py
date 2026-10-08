@@ -185,6 +185,12 @@ CASES = [
     ("output folder not matching the card's stage",
      lambda r: edit(r / "data/art/_sets/drakn-sisters/draknora/1_Alpha/1_Prime/draknora-alpha-prime.json",
                     lambda d: d.update({"output": d["output"].replace("/1_Alpha/1_Prime/", "/3_Layers/")})), "must sit in the 'alpha' folder"),
+    ("sister companion piece that no longer extends her Elder Dragon's frame",
+     lambda r: edit(r / "data/art/heroes/drakn-sisters/draknora/companion/draknora-bond-dragon.json",
+                    lambda d: d.pop("extends")), "must extend her Elder Dragon"),
+    ("sister scene that types the dragon instead of naming the piece",
+     lambda r: edit(r / "data/art/_sets/drakn-sisters/draknora/5_Scenes/story/draknora-scene-bond.json",
+                    lambda d: d["components"].update({"companion": "her aligned Elder Dragon, Pyraxis, beside her"})), "not type the dragon"),
     ("scene file name no longer matching its artId",
      lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
@@ -228,7 +234,8 @@ CASES = [
 QUICK = {"baseline is clean", "animation action pointing at a motion piece that does not exist", "art direction creeping back onto a gameplay card",
          "typo'd piece path would silently render as prompt text", "unknown field on a reusable piece", "piece extending a base that does not exist",
          "pieces extending each other in a cycle", "piece extending a frame without filling its slots", "output folder not matching the card's stage", "studio kit naming a piece that does not exist",
-         "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder"}
+         "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder",
+         "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece"}
 
 
 def main():

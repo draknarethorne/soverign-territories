@@ -46,6 +46,7 @@ ELEMENT_MAT = {
     "Fire": "dancing flame, embers and sparks",
     "Poison": "curling green venom mist and falling drops",
     "Darkness": "drifting shadow, smoke and pale starlight",
+    "Neutral": "soft white light, drifting pale feathers and motes",
 }
 EXPRESSIONS = [
     "a serene, knowing smile, eyes calm and bright.",
@@ -64,7 +65,7 @@ BG = {
 }
 _cache = {}
 ELEMENT_MOTION = {"Light": "light-blooms", "Water": "water-swirls", "Grass": "vines-unfurl", "Wind": "winds-stream", "Earth": "stones-lift", "Lightning": "lightning-crackles",
-                  "Ice": "frost-blooms", "Fire": "fire-surges", "Poison": "venom-coils", "Darkness": "shadow-rolls"}
+                  "Ice": "frost-blooms", "Fire": "fire-surges", "Poison": "venom-coils", "Darkness": "shadow-rolls", "Neutral": "feathers-drift"}
 
 # Shared studio pieces (extracted from the literals the cards used to carry; see tools/art/extract_literals.py).
 NECKLACE = "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
@@ -84,10 +85,11 @@ MOTIF = {
     "Ice": "a six-pointed snowflake of frost",
     "Fire": "a rising flame with scattered embers",
     "Poison": "a coiled serpent beside a nightshade bloom",
+    "Neutral": "a single white feather within a plain ring",
     "Darkness": "a crescent moon pierced by a single star",
 }
 WEAPON_FAMILY = {"Light": "swords", "Water": "polearms", "Grass": "bows", "Wind": "staves", "Earth": "blunt", "Lightning": "axes", "Ice": "wands", "Fire": "swords",
-                 "Poison": "daggers", "Darkness": "crossbows"}
+                 "Poison": "daggers", "Darkness": "crossbows", "Neutral": "polearms"}
 TONES = [(3, "pristine, luminous and unmarked"), (5, "clean, with a quiet shine"), (7, "plain, severe and unornamented"),
          (9, "worn, scorched at the edges and trimmed with dark feathers"), (10, "tattered, shadow-edged and trimmed with black feathers")]
 
@@ -195,7 +197,7 @@ class Angel:
     def __init__(self, slug, kit, ident, sex, division, wr, out):
         self.slug, self.kit, self.ident, self.sex, self.division, self.wr, self.out = slug, kit, ident, sex, division, wr, out
         self.hero, self.element, self.female = kit["hero"], kit["element"], sex == "female"
-        self.i = kit["alignmentRank"] - 1
+        self.i = kit.get("rotation", kit["alignmentRank"] - 1)  # which slice of each library pool this angel takes; a pair shares a rank, an extra pair sets its own rotation
         self.mat = ELEMENT_MAT[self.element]
         self.scene = {k: (norm(v) if k in ("back", "companion", "background", "wearing", "pose", "expression") else v) for k, v in kit["scene"].items()}
         self.made = 0
@@ -226,8 +228,9 @@ class Angel:
                 path.write_text(json.dumps(body, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
             return rel
 
+        ov = {k: norm(v) for k, v in self.kit.get("signature", {}).items()}  # a kit may name the base pieces of her or his signature items instead of the rotation picking them
         fam = WEAPON_FAMILY[self.element]
-        dark = ("vertebra", "skull", "bone", "demon", "infernal", "blood", "horn", "fang", "talon", "necrotic")
+        dark = ("vertebra", "skull", "bone", "demon", "infernal", "blood", "horn", "fang", "talon", "necrotic", "shadow", "umbral", "raven", "vampir")
 
         def pure(paths):
             """Angels of the lawful half do not wear bone and blood: drop library pieces whose text says so (the fallen keep them)."""
@@ -238,17 +241,17 @@ class Angel:
 
         weapons = pure(lib(f"wardrobe/weapons/{fam}", self.sex, neutral=True))
         out["weapon"] = piece("weapons", "signature-weapon", "holding", ["armor", "showcase", "scene"], f"{self.hero}'s signature weapon",
-                              f"+, its metal worked with {motif} in {{{{ACCENT_SOFT}}}}, {self.mat} gathering along it when it is raised; {tone}", pick(weapons, self.i))
+                              f"+, its metal worked with {motif} in {{{{ACCENT_SOFT}}}}, {self.mat} gathering along it when it is raised; {tone}", ov.get("weapon") or pick(weapons, self.i))
         armors = pure(lib("wardrobe/armor", self.sex, skip=("/celestial/",), skip_tags=("bikini",), neutral=True))
         out["armor"] = piece("armor", "signature-armor", "wearing", ["armor", "showcase", "scene"], f"{self.hero}'s signature armor",
-                             f"+, every plate and trim engraved with {motif} in {{{{ACCENT_SOFT}}}}; {tone}", pick(armors, self.i * 5 + 2))
+                             f"+, every plate and trim engraved with {motif} in {{{{ACCENT_SOFT}}}}; {tone}", ov.get("armor") or pick(armors, self.i * 5 + 2))
         gowns = pure(lib("wardrobe/clothing/gowns", "female") if self.female else lib("wardrobe/clothing/sets", "male"))
         out["gown"] = piece("clothing", "signature-gown" if self.female else "signature-attire", "wearing", ["clothing", "showcase", "scene"],
                             f"{self.hero}'s signature {'gown' if self.female else 'attire'}",
-                            f"+, the neckline, cuffs and hem embroidered with {motif} in {{{{ACCENT_SOFT}}}}; {tone}", pick(gowns, self.i * 2 + 1))
+                            f"+, the neckline, cuffs and hem embroidered with {motif} in {{{{ACCENT_SOFT}}}}; {tone}", ov.get("gown") or pick(gowns, self.i * 2 + 1))
         crowns = pure(lib("wardrobe/headwear/circlets", self.sex, neutral=True) + lib("wardrobe/headwear/crowns", self.sex, neutral=True))
         out["headwear"] = piece("headwear", "signature-circlet", "headwear", ["armor", "clothing", "showcase", "scene"], f"{self.hero}'s signature circlet",
-                                f"+, {motif} rising at the centre of the brow, set with a {{{{GEM}}}} gem; {tone}", pick(crowns, self.i * 2))
+                                f"+, {motif} rising at the centre of the brow, set with a {{{{GEM}}}} gem; {tone}", ov.get("circlet") or pick(crowns, self.i * 2))
         out["jewelry"] = piece("jewelry", "signature-jewelry", "jewelry", ["armor", "clothing", "showcase", "scene"], f"{self.hero}'s signature jewelry",
                                (f"+, the pendant and the earrings echoing {motif}, each set with a small {{{{GEM}}}} gem" if self.female
                                 else f"+, the pendant formed as {motif} and set with a small {{{{GEM}}}} gem"), NECKLACE if self.female else CHAIN)
@@ -341,10 +344,12 @@ class Angel:
             self.write("alpha", f"{self.slug}-alpha-2b-celestial-{name}", self.clone(f"1_Alpha/2b_Experiments/celestial/draknava-alpha-2b-celestial-{name}.json"))
 
     def studies(self):
-        under = getattr(self, "underlayer", None) or (BIKINI if self.female else BRIEF)
+        own = json.loads((ROOT / self.ident).read_text(encoding="utf-8")).get("art", {}).get("defaultUnderlayer")
+        under = getattr(self, "underlayer", None) or own or (BIKINI if self.female else BRIEF)
+        small = getattr(self, "small", False)
         subprocess.run([sys.executable, str(ROOT / "tools/generators/scaffold_studio_library.py"), "--group", GROUP, "--slug", self.slug, "--hero", self.hero,
-                        "--identity", self.ident, "--division", self.division, "--underlayer", under], check=True, stdout=subprocess.DEVNULL)
-        hair = self.kit.get("hair") or rot(interleave(lib(HAIR_LIB.removeprefix("data/art/"), self.sex, neutral=True)), self.i, 8)
+                        "--identity", self.ident, "--division", self.division, "--underlayer", under, *(["--small"] if small else [])], check=True, stdout=subprocess.DEVNULL)
+        hair = self.kit.get("hair") or rot(interleave(lib(HAIR_LIB.removeprefix("data/art/"), self.sex, neutral=True)), self.i, 2 if small else 8)
         for path in hair:
             path = norm(path)
             fam, stem = pathlib.Path(path).parent.name, pathlib.Path(path).stem
@@ -671,6 +676,15 @@ class Angel:
         self = object.__new__(cls)
         self.slug, self.kit, self.ident, self.sex, self.division, self.wr, self.out = slug, {}, ident, sex, division, wr, out
         self.hero, self.female, self.i, self.made, self.underlayer = hero, sex == "female", 10, 0, underlayer
+        return self
+
+    @classmethod
+    def alpha(cls, slug, hero, ident, sex, wr, out):
+        """An alpha test hero: the same studies as the others but the short version (see scaffold_studio_library --small), with two hairstyles."""
+        self = cls.older(slug, hero, ident, sex, "alpha", wr, out, None)
+        self.underlayer, self.small = ("data/art/wardrobe/swimwear/bikini/triangle-bikini.json" if sex == "female" else BRIEF), True
+        hair = {"female": ["down/beach-waves", "updo/high-bun"], "male": ["short/textured-crop", "pulled-back/low-ponytail-sleek"]}[sex]
+        self.kit = {"hair": [f"{HAIR_LIB}/{h}.json" for h in hair]}
         return self
 
     def extend_older(self):

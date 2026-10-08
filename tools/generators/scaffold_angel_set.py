@@ -84,7 +84,8 @@ def alpha_chain(wr, card, slug, hero, female, heels):
                  {"footwear": norm(heels)}, note="Alpha 3 Heeled A-pose, fed the Bare image."))
 
 
-# The older pair has no kit (their wardrobe, scenes and layers are hand-picked), but their creation chain and studies follow the same standard as every other angel.
+# The older pair, as long as it has no kit (its wardrobe, scenes and layers are hand-picked), still gets the same creation chain and studies as every other angel.
+# Once data/art/_kits/angel-primes/<slug>.json exists the normal kit builder takes over and only adds what is missing.
 OLDER = {"angelica": "data/art/heroes/angel-primes/female/angelica.json", "angelo": "data/art/heroes/angel-primes/male/angelo.json"}
 OLDER_HEELS = "data/art/wardrobe/footwear/heels/matching-open-toed-heels.json"  # what her original A-pose wore, now a Heels step instead of baked into the bikini
 
@@ -120,6 +121,64 @@ def build_older(slug):
     ang = library.Angel.older(slug, hero, ident, sex, division, wr, out, underlayer)
     ang.extend_older()
     print(f"{slug}: made {wr.made} cards, {wr.skipped} already existed")
+
+
+# The alpha test heroes (division alpha): a small version of the phases for trying any photo before giving it to an angel. No signature items, no kit, only library pieces.
+ALPHA = {"female": ("Female", "data/art/heroes/angel-primes/alpha/female.json"), "male": ("Male", "data/art/heroes/angel-primes/alpha/male.json")}
+ALPHA_PLAN = {
+    "female": {"layers": ["triangle-bikini", "one-piece/one-piece-swimsuit"], "clothing": "gowns/long-evening-gown", "pose": "standing/three-quarter-glamour",
+               "motions": ["standing/hand-on-hip-power", "walking/catwalk-confident", "dynamic/twirl-spin"]},
+    "male": {"layers": ["trunks/athletic-trunks", "trunks/board-shorts"], "clothing": "sets/tailored-dress-shirt-set", "pose": "walking/strut-runway",
+             "motions": ["standing/hand-on-hip-power", "walking/relaxed-stroll", "action/guard-stance"]},
+}
+WINGS = "data/art/wardrobe/capes/wings/white-angel-wings.json"
+GLOW = "data/art/wardrobe/effects/ambient/soft-ambient-glow.json"
+
+
+def build_alpha(slug):
+    hero, ident = ALPHA[slug]
+    female = slug == "female"
+    plan = ALPHA_PLAN[slug]
+    wr = Writer(ART / "_sets" / GROUP / "alpha" / slug, GROUP)
+    out = lambda folder, name: f"prompts/{GROUP}/alpha/{hero}/{folder}/{name}.txt"
+    card = card_factory(ident, out)
+    swim = lambda name: f"data/art/wardrobe/swimwear/{name if '/' in name else ('bikini/' if female else 'trunks/') + name}.json"
+    # Phase 1 (the full chain, minus the 2b experiments) and Phase 2 (short)
+    alpha_chain(wr, card, slug, hero, female, OLDER_HEELS)
+    wr.write("head", f"{slug}-x-head", card(f"{slug}-x-head", "head", "head", f"{hero}_X_Head", "head-human.txt", denoise="~0.4-0.6", note=f"{hero} head, the golden head."))
+    library.Angel.alpha(slug, hero, ident, slug, wr, out).studies()
+    # Phase 3: two layer tests
+    for name in plan["layers"]:
+        path = swim(name)
+        short = pathlib.Path(path).stem
+        art_id = f"{slug}-x-pose-{short}"
+        wr.write("pose", art_id, card(art_id, "pose", "poses", f"{hero}_X_Pose_{camel(short)}", f"pose-{slug}-human.txt", {"underlayer": path}, denoise="~1.0",
+                 note="UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."))
+    # Phase 4: one outfit and one armor on the studio backdrop
+    studio = dict(STUDIO)
+    studio["jewelry"] = library.NECKLACE if female else library.CHAIN
+    outfits = {"clothing": f"data/art/wardrobe/clothing/{plan['clothing']}.json", "armor": "data/art/wardrobe/armor/plate/half-plate.json"}
+    for stage, path in outfits.items():
+        piece, short = load(path), pathlib.Path(path).stem
+        comps = {"wearing": path, **{k: v for k, v in studio.items() if stage == "armor" or k not in ("back", "holding")}}
+        wr.write(stage, f"{slug}-{stage}-{short}", card(f"{slug}-{stage}-{short}", stage, stage, f"{hero}_{stage.capitalize()}_{camel(short)}", f"{stage}-human.txt", comps, name=piece["name"],
+                 aesthetic=f"a clean studio presentation of the {piece['name'].lower()}", note="WARDROBE TEST: same hero, only the piece differs."))
+    # Phase 5: two scenes, with the generic wings
+    common = {"back": WINGS, "jewelry": library.NECKLACE if female else library.CHAIN, "legs_feet": library.ANKLETS if female else BAREFOOT, "effects": GLOW}
+    wr.write("scene", f"{slug}-scene-glamour", card(f"{slug}-scene-glamour", "scene", "scene", f"{hero}_Scene_Glamour", "scene-glamour-human.txt",
+             {"pose": f"data/art/motion/{plan['pose']}.json", "wearing": outfits["clothing"], **common, "background": "data/art/backgrounds/fantasy/evening/moonlit-terrace.json"},
+             name="Glamour", note="GLAMOUR: a relaxed portrait in an evening setting, with wings: does the photo still look like the person?"))
+    wr.write("scene", f"{slug}-scene-signature", card(f"{slug}-scene-signature", "scene", "scene", f"{hero}_Scene_Signature", "scene-with-outfit-human.txt",
+             {"pose": "data/art/motion/standing/hand-on-hip-power.json", "wearing": outfits["armor"], **common,
+              "background": "data/art/backgrounds/fantasy/elemental/grounded/radiant-sun-realm.json"},
+             name="Signature", note="SIGNATURE: armor and wings in a sunlit setting (the cinematic realm Angel Primes uses)."))
+    # Phase 6: three motions on the A-pose
+    for path in (f"data/art/motion/{m}.json" for m in plan["motions"]):
+        fam, short = pathlib.Path(path).parent.name, pathlib.Path(path).stem
+        art_id = f"{slug}-motion-{short}"
+        wr.write(f"motion/{fam}", art_id, card(art_id, "motion", "/".join(art_layout.dirs_for("motion", [fam])), f"{hero}_Motion_{camel(fam)}_{camel(short)}",
+                 "motion-human.txt", denoise="~0.4-0.6", component=path))
+    print(f"alpha/{slug}: made {wr.made} cards, {wr.skipped} already existed")
 
 
 def build(slug):
@@ -190,18 +249,22 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--slug")
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--alpha", action="store_true", help="only the two alpha test heroes (alpha/female, alpha/male)")
     ap.add_argument("--coverage", action="store_true", help="report which library pieces the angel cards use; writes nothing")
     args = ap.parse_args()
     if args.coverage:
         library.coverage()
         return
-    slugs = sorted(p.stem for p in (ART / "_kits" / GROUP).glob("*.json")) if args.all else [args.slug]
+    kits = {p.stem for p in (ART / "_kits" / GROUP).glob("*.json")}
+    slugs = sorted(kits) if args.all else [args.slug]
     if args.all:
-        slugs += sorted(OLDER)
+        slugs = sorted(kits | set(OLDER) | set(ALPHA))
+    if args.alpha:
+        slugs = sorted(ALPHA)
     if not slugs or slugs == [None]:
         sys.exit("give --slug or --all")
     for slug in slugs:
-        build_older(slug) if slug in OLDER else build(slug)
+        build_older(slug) if slug in OLDER and slug not in kits else build_alpha(slug) if slug in ALPHA else build(slug)
 
 
 if __name__ == "__main__":

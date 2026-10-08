@@ -176,6 +176,9 @@ A card chooses a template and fills its slots. Real example, `draknisa-scene-rob
 }
 ```
 
+The card's `denoise` field is only a note; the real range is the `Denoise ~lo-hi.` line of its stage template, so one edit there changes every card of that stage
+(see [comfyui-art-pipeline.md](comfyui-art-pipeline.md#denoise-is-the-key-lever)).
+
 **A slot value is either a path to a piece or plain text.** If it ends in `.json` and the file exists it is a piece;
 otherwise it is used as literal text. That means you can build a whole card from nothing but text, reuse proven pieces
 where they exist, or mix both (as above: `wearing` is a piece, `headwear` is typed in). Prefix a literal with `+` to

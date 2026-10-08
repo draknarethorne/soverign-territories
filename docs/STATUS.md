@@ -102,8 +102,8 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   staged scenes take a dressed image, and a semi-staged scene is a complete scene fed an A-pose that already wears a layer. FireRed versions of the bare study and celestial
   steps exist for overnight non-Turbo comparison; the best bare A-poses become the input for everything else.
 - **Standard size and denoise defaults (Oct 2026, provisional).** Originals are padded to 944x1104 (`standardSize`), a Kontext bucket, so the Qwen chain keeps one size;
-  FireRed's 1 MP resize lands on the same size. Generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original
-  photo; `denoise` in `workspaces.json`, tool `comfy_workflows.py denoise`), so the stages after a golden image keep some creativity. Tuning rules:
+  FireRed's 1 MP resize lands on the same size. Generated workflows start at the high end of the range in their stage template (1.0 only for the Prime from the original
+  photo; `denoise` in `workspaces.json`, tool `comfy_workflows.py denoise`); the edit stages now run at 0.8 to 0.95, see the Oct 8 decision below. Tuning rules:
   [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
 - **The Alpha stage (Oct 2026).** The first workflows of a hero are not poses: they create her likeness, so they have their own stage and folder, `alpha/`
   (sorts first). Alpha 1 Prime (original photo to the bikini A-pose, standard figure), Alpha 2 Bare (Prime to bare skin: individual build, hair, eyes, skin and
@@ -194,21 +194,25 @@ Order: Drakn Bound first (its heroes mirror the sisters, so the generators alrea
 
 ## Agreed next steps (Oct 8, 2026)
 
-Four steps, done in this order. Each one ends with a pause: a summary of what was done, then the go-ahead for the next. Step 3 is itself split into phases (3a to 3d) with a pause after each.
+Five steps (0 to 4), done in this order. Each one ends with a pause: a summary of what was done, then the go-ahead for the next. Step 3 is itself split into phases (3a to 3d) with a pause after each.
 
 | Step | What | Plan |
 | --- | --- | --- |
-| 0 | Commit and push everything | Four commits on `ideation/hero-roster-10-elements`: (1) tooling, schemas, launchers and docs, (2) art and animation data, (3) generated prompts, (4) workflows and `workspaces.json`; then push to GitHub. Backups (`workflows/.sync/`) stay ignored. |
-| 1 | Alpha test sets: `angel-primes/alpha/female` and `alpha/male` | Two reusable test-bed heroes in a new `alpha` division, so any photo can be tried as an angel without touching a real angel's folders or output. A small version of the phases (see below). |
-| 2 | Higher denoise for edits that change a lot | Raise the denoise of the Bare, footwear, pose, motion and scene edits (0.7 holds the pose too tight); let the prompt's positive likeness text carry the likeness. Find what you actually used in the Drakness `zz_Shots` first. |
-| 3 | Signature items for Angelica and Angelo | The same definition and art as the other twenty angels: element and alignment, wings, pet, signature weapon, armor, gown or attire, circlet, jewelry, elemental drift, and the cards that use them. |
+| 0 | **Done (Oct 8).** Commit and push everything | Four commits on `ideation/hero-roster-10-elements`: (1) tooling, schemas, launchers and docs, (2) art and animation data, (3) generated prompts, (4) workflows and `workspaces.json`; then push to GitHub. Backups (`workflows/.sync/`) stay ignored. |
+| 1 | **Done (Oct 8).** Alpha test sets: `angel-primes/alpha/female` and `alpha/male` | Two reusable test-bed heroes in a new `alpha` division, so any photo can be tried as an angel without touching a real angel's folders or output. A small version of the phases (see below). |
+| 2 | **Done (Oct 8), rolled out to the repo and Angel Primes; Drakn workspaces pending.** Higher denoise for edits that change a lot | Raise the denoise of the Bare, footwear, pose, motion and scene edits (0.7 holds the pose too tight); let the prompt's positive likeness text carry the likeness. Find what you actually used in the Drakness `zz_Shots` first. |
+| 3 | **In progress: 3a done (Oct 8).** Signature items for Angelica and Angelo | The same definition and art as the other twenty angels: element and alignment, wings, pet, signature weapon, armor, gown or attire, circlet, jewelry, elemental drift, and the cards that use them. |
+| 4 | Sisters' companions from the Elder Dragon definitions | The sisters' dragon companions are text copied into companion pieces and cards; the Elder Dragon identity files are not used. Make one canonical companion piece per dragon from its identity and let each sister's piece extend it with only the scene placement. See below. |
 
 ### Step 1: alpha test sets
 
 - **Where:** division `alpha` of group `angel-primes`, one test-bed hero per sex (`data/art/heroes/angel-primes/alpha/<slug>.json`, `_sets/angel-primes/alpha/<slug>/`, `prompts/angel-primes/alpha/<Hero>/`, workspace and output folder `alpha/<Hero>/...`). Their identity is as generic as Angelica's and Angelo's (the reference photo's own face, hair and eyes, no fixed look), so any photo works.
 - **What is in the small set:** Phase 1 complete (Prime, Bare, Bare chest, Barefoot and Heels for the woman; Prime and Bare for the man), Phase 2 core (head, face close-up, a few head and body views, two hairstyles), two layer tests, one clothing and one armor card, a few motions and two scenes. Enough to see whether a photo makes a better angel; not the 180-card suite.
 - **Using it:** put the photo in the `Angel Primes` input folder, pick it in the Prime workflow's Load Image node, run Phase 1 and 2, and compare. If it wins, give that photo to an angel (`inputs --set` or the same pick in her Prime workflow, then `inputs --pull`). `inputs --pull` also picks up the test photo, so it never overwrites an angel's.
-- **To decide at the start:** the hero names (proposed `Female` and `Male`, giving `alpha/Female/...`) and whether the set reuses the angels' generators (proposed: yes, a trimmed list in `scaffold_angel_set.py`).
+- **Built (Oct 8):** hero names `Female` and `Male` (folders `alpha/Female/...`, `alpha/Male/...`), made by `scaffold_angel_set.py --alpha` (`bin\scaffold-angels.cmd --alpha`) from library pieces only, with a short studio library (`scaffold_studio_library.py --small`) and a shared `wardrobe/capes/wings/white-angel-wings`.
+  The woman has 23 cards and workflows (+2 FireRed scenes), the man 20 (+2): Phase 1 (Prime, Bare, and for her Bare chest, Barefoot, Heels; no 2b experiments), Phase 2 (head, face close-up, 2 head views, 3 body views, 2 hairstyles), 2 layer tests, 1 outfit, 1 armor,
+  Glamour and Signature scenes (cinematic realm), 3 motions. Their inputs and photos are in `workspaces.json` (`alpha_female_photo_944x1104.png` and `alpha_male_photo_944x1104.png` are placeholders: pick a photo in the Prime workflow, then `inputs --pull`).
+  `gen_prompt.py --slug` now matches the hero folder only, so `--slug female` no longer means the whole `female` division. Not touched: every angel's folders, prompts, workflows, photos and output.
 
 ### Step 2: denoise
 
@@ -220,13 +224,50 @@ Four steps, done in this order. Each one ends with a pause: a summary of what wa
   - (c) Strengthen the likeness wording in the positive "Critical details" and fidelity paragraphs of the edit templates, because a higher denoise leans on the prompt.
   - (d) Apply with `denoise --reset` (preview first), which changes only the denoise widget in the repo and the workspaces, so seeds and inputs stay.
 - **Risk to watch:** higher denoise loosens the likeness; compare a few renders per stage before regenerating everything, and keep hand-made `zz_` workflows untouched.
+- **What you had used (read from the workspaces):** your hand-made Drakness armor edits (`zz_Curated_Drakness_Qwen_Armor_Bikini`, `..._Armor_Bone`) run at 0.9, and the Drakn Sisters `Alpha_2_Bare` shots at 0.8
+  (one in the workspace); the older curated ones are at the template default. The generated defaults were 0.7 for edits and scenes, 0.6 for motion, head and hair.
+- **Built and applied (Oct 8):** the range is in each stage template, not on the cards (the card `denoise` field is only a note), so the change is 16 template lines plus `denoise.golden` 0.7 to 0.9. New defaults (high end of the range):
+  Bare, outfit, armor, clothing, scenes, showcases, body views and the golden-fed Barefoot, Heels and layer tests **0.9**; motion **0.95**; head and hair **0.8**; staged scenes **0.8**; Prime 1.0, final 0.8 and polish 0.4 unchanged.
+  Full table in [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
+- **Likeness in the positive prompt:** the Critical details block (hair, eyes, skin and the hero's own bust line, the same lines as the Prime) is now switched on for every edit stage in
+  `TEMPLATE_KEY_DEFAULTS` (hair edits leave out the hair line, staged scenes keep eyes and skin only), and the `hair` and `scene-staged` templates got the slot.
+  All 4,996 prompts were regenerated: 4,147 changed, and every changed line is the `Denoise` header or the added Critical details block (checked against git: 0 other lines).
+- **Safety:** `denoise --reset` now keeps a denoise you set by hand in a workspace (a workspace file that differs from its repo copy is listed as `KEPT`; `--force` overwrites, with a backup) and takes `-w` to limit the workspaces. 5 new tests (43 in all).
+- **Applied so far:** all repo workflows (5,274 denoise values, 3,883 prompt texts) and the Angel Primes workspace (prompt text and 3,091 denoise values). **Not yet applied:** Drakn Sisters, Drakness and Sovereign Dawn Series, which hold final art and may be in use. Per workspace, preview then apply:
+  `comfy_workflows.py setup -w "Drakn Sisters"` then `--apply`, then `comfy_workflows.py denoise --reset -w "Drakn Sisters" --dry-run` and without `--dry-run` (your hand-set values, such as the 0.8 Bare shot, stay and are listed).
+- **To check on renders:** that the 0.9 and 0.95 edits keep the face (if not, lower that stage's range in its template, regenerate, `update`, `denoise --reset`), and that the Critical details lines read well in the finished prompts.
 
 ### Step 3: signature items for Angelica and Angelo
 
-- **3a. Definition.** Decide their element and alignment (they are the older pair with no element; the repo's elements include Neutral), add the matching entries to the generator tables (material, motif, weapon family), and write a kit for each so they join `scaffold_angel_set.py --all` like the others. Also their wings and bonded pet pieces.
-- **3b. Signature pieces.** The same six signature pieces as every angel (weapon, armor, gown or attire, circlet, jewelry, elemental drift), each extending a library piece plus their element and alignment tone, and the signature armor and gown wardrobe cards.
-- **3c. Cards.** The rest of the angel suite around those pieces (showcases, signature, battle, spell-calling and glamour scenes, theme scenes, video), keeping their hand-picked layers, clothing and modern scenes.
-- **3d. Regenerate and verify.** Validate, regenerate prompts and workflows, deploy to Angel Primes, run the Phase 1 and 2 audit, update the docs.
+- **3a. Definition. Done (Oct 8).** No cards are generated yet; this is only the definition, for you to review.
+  - **Element and alignment:** Neutral (the eleventh element; added to the hero and pet schemas) and Balanced (neutral good), rank 5, as an eleventh pair beside the ten. Their palette is already pearl white and champagne gold, so the tone is "clean, with a quiet shine".
+    A new `rotation` key (10) in their kits makes them take their own slice of every library pool instead of repeating Sandalyn and Baracel's rank-5 picks.
+  - **Element tables:** material (soft white light, drifting pale feathers), motif (a single white feather within a plain ring), weapon family (polearms), the animation motion `feathers-drift`, and a new realm: `backgrounds/fantasy/elemental/meridian-vale-realm` (a high white-stone plateau) with its grounded twin.
+  - **Identity:** each has a `profile` like the other angels (archetype: the first herald and the first sentinel; inspired by the messenger and the guardian angels; wings; pair; pet).
+  - **Wings and pets:** pearl-white wings edged in champagne gold (his with dove-grey primaries); pets Plume (a pearl-white dove) and Ward (a lean pale hound), neither a dragon, with `companion` pieces for the scene slot and the two-way links to their angels.
+  - **Kits** (`_kits/angel-primes/angelica.json`, `angelo.json`): three underlayers, three outfits, two armors, four motions, heels and a signature scene, picked to differ from the layers and clothing they already have; the paladin plate for her, the parade plate for him.
+  - **Generators:** once a kit exists the normal kit builder takes over for them (it only adds what is missing, so their hand-picked cards stay); the "keep it pure" filter for lawful angels also skips shadow, umbral and raven pieces.
+  - **To confirm before 3b:** Neutral at rank 5 for the pair, the two pets, and the wings.
+- **3b. Signature pieces. Done (Oct 8).** The same six signature pieces as every angel (weapon, armor, gown or attire, circlet, jewelry, elemental drift), each extending a library piece plus their element and alignment tone, and the signature armor and gown wardrobe cards.
+- **3c. Cards. Done (Oct 8).** The rest of the angel suite around those pieces (showcases, signature, battle, spell-calling and glamour scenes, theme scenes, video), keeping their hand-picked layers, clothing and modern scenes.
+- **3d. Regenerate and verify. Done (Oct 8).** Angelica has 164 cards and Angelo 89, with the same signature pieces as every angel (picked by the kit's `signature` override: her paladin holy plate, spear, column gown and silver circlet; his full plate, halberd, long coat and laurel wreath).
+  Validator OK, prompts generated (0 failures, no she/her in Angelo's prompts), workflows made for Qwen, FireRed and MiniMax, deployed to Angel Primes (3,386 aligned, 0 stale, 0 missing), Phase 1 and 2 audit 0 problems.
+
+### Step 4: the sisters' companions from the Elder Dragon definitions. Done (Oct 8)
+
+- **Result:** each dragon has two frames, `data/art/dragons/elder-dragons/<slug>/companion/<slug>-companion.json` (the identity's description, with `[[PLACEMENT]]` and `[[DETAIL]]` gaps) and `<slug>-companion-distant.json` (the opening and name only, for scenes that word the dragon themselves).
+  The 20 sister companion pieces and the 20 sentences that scene cards carried inline (now 20 new pieces, 40 in all) extend a frame and fill the gaps with `vars`; the cards name the piece. `tools/art/dragon_companions.py` writes it all (re-runnable; `--apply`), and every conversion is asserted to join back to the old text.
+  All 5,271 prompts came out byte-identical, so nothing changed in the images' wording yet; the gain is that an edit to a dragon's identity now reaches the frames, and the full-frame scenes through them.
+- **Validator:** a sister's companion piece must extend a piece under `data/art/dragons/`, and a sister scene must name its companion as a piece, not type the dragon (2 mutation cases, both in `--quick`). Pieces under `dragons/<group>/<slug>/` are now validated as pieces.
+- **Still hand-worded:** 23 scene texts describe the dragon their own way (distant silhouettes, close-ups), and 10 of them cite only one of its colours or miss one (for example Venomis, tarnished brass). They use the distant frame; review them when you want the dragons to match their identities exactly (`dragon_companions.py` lists them).
+- **Original plan, kept for the record:**
+
+- **Today:** each sister has two companion pieces (`heroes/drakn-sisters/<slug>/companion/`, for example "her aligned Elder Dragon, Terrador, a vast distant silhouette on the far ridge...") and some scene cards, such as the Draknara Bond scene, carry the dragon as an inline sentence.
+  The Elder Dragon identity files (`data/art/dragons/elder-dragons/<slug>.json`: description, silhouette, scale texture, wing membrane, horns and crest, elemental venting) are not used by them, so the same dragon is described several ways and an edit to the dragon changes nothing in the scenes.
+- **Proposed reconciliation:** (1) audit every sister companion piece and inline companion sentence against the dragon's identity; (2) one canonical companion piece per dragon, written from the identity (`data/art/dragons/elder-dragons/<slug>/companion/`, kind `companion`, the dragon as it looks in a scene);
+  (3) each sister's companion pieces `extend` it and add only the scene placement with `+` (a distant silhouette on the ridge, towering beside her with its head lowered, ...), and the cards reference pieces instead of carrying sentences; (4) a validator check that a sister's companion piece extends her dragon's; (5) regenerate and review the prompt differences, which will be intentional wording changes where the dragon's own description now shows through.
+- **Why this way:** the dragon stays defined once, in its identity, and what a sister adds is only what changes from scene to scene. The alternative, a generator that builds the companion text from the identity at prompt time, hides the wording and cannot be adapted per scene.
+- **To decide at the start:** whether the canonical piece is written by hand from the identity or generated by a small tool (proposed: a tool, re-runnable, so a change to a dragon reaches the pieces), and how much of the identity belongs in a scene (proposed: silhouette, scales, wings, horns and venting, not the lore).
 
 ## Next work (in order)
 

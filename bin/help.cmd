@@ -34,7 +34,7 @@ echo.
 echo  ART DATA
 echo    prompts.cmd [filters]           regenerate prompts from data\art (all, or gen_prompt.py filters such as --group G --slug S)
 echo    videoprompts.cmd [card.json]    regenerate video prompts from data\animation cards
-echo    scaffold-angels.cmd [SLUG]      write the standard card set for the angels; --coverage reports library use
+echo    scaffold-angels.cmd [SLUG^|--alpha]  write the standard card set for the angels (--alpha: the two alpha test heroes); --coverage reports library use
 echo    scaffold-sister.cmd SLUG        write a sister's studio kit cards
 echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piece and every reference to it
 echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)

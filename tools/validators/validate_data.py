@@ -73,8 +73,8 @@ def art_piece_files():
             continue
         if parts[0] == "heroes" and (len(parts) == 3 or (len(parts) == 4 and parts[2] in art_layout.divisions(parts[1]))):
             continue  # identity, not a piece
-        if parts[0] == "dragons":
-            continue
+        if parts[0] == "dragons" and len(parts) <= 3:
+            continue  # a dragon identity (dragons/<group>/<slug>.json); the pieces below it (companion frames) are checked as pieces
         if parts[0] == "pets":
             continue  # pet identities, not pieces
         if parts[0] in ("brand", "cards"):
@@ -96,7 +96,7 @@ def hero_identity_files():
 REGISTRY = [
     ("gameplay cards", card_files, SCHEMAS / "codex-schema.json"),
     ("art hero identities", hero_identity_files, ART_SCHEMAS / "hero-identity.schema.json"),
-    ("art dragon identities", lambda: rglob("data/art/dragons/**/*.json"), ART_SCHEMAS / "dragon-identity.schema.json"),
+    ("art dragon identities", lambda: rglob("data/art/dragons/*/*.json"), ART_SCHEMAS / "dragon-identity.schema.json"),
     ("art pet identities", lambda: rglob("data/art/pets/**/*.json"), ART_SCHEMAS / "pet-identity.schema.json"),
     ("art brand identities", lambda: rglob("data/art/brand/*.json"), ART_SCHEMAS / "brand-identity.schema.json"),
     ("art card-art identities", lambda: rglob("data/art/cards/*.json"), ART_SCHEMAS / "cardart-identity.schema.json"),
@@ -174,7 +174,7 @@ def check_card_art_links(report):
 
     # identity -> card
     identity_of = {}
-    identity_files = hero_identity_files() + rglob("data/art/dragons/**/*.json")
+    identity_files = hero_identity_files() + rglob("data/art/dragons/*/*.json")
     for f in identity_files:
         d = load(f)
         cid = d.get("cardId")
@@ -511,6 +511,15 @@ def check_piece_refs(report):
         if ref and not (ROOT / ref).exists():
             report.error(rel(f), f"hairStyleComponent {ref} does not exist")
 
+    # A sister's dragon companion comes from her Elder Dragon's definition: the piece extends the dragon's companion frame (data/art/dragons/...) and only says where the dragon is,
+    # and a scene card names that piece instead of typing the dragon again (tools/art/dragon_companions.py does the conversion).
+    for f in rglob("data/art/heroes/drakn-sisters/*/companion/*.json"):
+        if not str(load(f).get("extends", "")).startswith("data/art/dragons/"):
+            report.error(rel(f), "a sister's companion piece must extend her Elder Dragon's companion frame (data/art/dragons/elder-dragons/<slug>/companion/...); see tools/art/dragon_companions.py")
+    for f in rglob("data/art/_sets/drakn-sisters/**/*.json"):
+        slot = load(f).get("components", {}).get("companion")
+        if isinstance(slot, str) and not slot.endswith(".json"):
+            report.error(rel(f), "a sister scene must name her dragon companion as a piece, not type the dragon in the card (see tools/art/dragon_companions.py)")
 
 def coverage(report, counts, cards, identity_of):
     print("COVERAGE")

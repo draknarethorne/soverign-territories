@@ -324,6 +324,14 @@ TEMPLATE_KEY_DEFAULTS = {
     "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
     "bare-male-human.txt": ["hair", "eyes", "skin"],
 }
+# The edit stages run at a high denoise (_templates/heroes/*.txt, 0.7 to 0.95), where the incoming image no longer pins the likeness, so they state it too: the same
+# hair, eyes, skin and own-bust lines as the Prime and Bare steps. Hair edits do not restate the hair; a staged scene only restates the face.
+for _t in ("armor-human.txt", "clothing-human.txt", "scene-combat-human.txt", "scene-glamour-human.txt", "scene-minimal-human.txt", "scene-with-companion-human.txt",
+           "scene-with-outfit-human.txt", "showcase-human.txt", "showcase-photo-human.txt", "pose-view-human.txt", "motion-human.txt"):
+    TEMPLATE_KEY_DEFAULTS[_t] = ["hair", "ownBust", "eyes", "skin"]
+TEMPLATE_KEY_DEFAULTS["head-human.txt"] = ["hair", "eyes", "skin"]
+TEMPLATE_KEY_DEFAULTS["hair-human.txt"] = ["eyes", "skin"]
+TEMPLATE_KEY_DEFAULTS["scene-staged-human.txt"] = ["eyes", "skin"]
 
 # Physique fields that make the Figure line, in order (the female schema has bust and hips, the male chest and waist).
 FIGURE_FIELDS_FEMALE = ("build", "torso", "bust", "arms", "hips", "legs")
@@ -800,8 +808,11 @@ def iter_card_paths(group="*", slug="*", stage="*", family=None):
     card's own stage (as written in the card or as its prompt folder, e.g. pose or poses) and by a family folder of its output."""
     base = ROOT / "data/art/_sets"
     paths = sorted(base.glob(f"{group}/**/*.json"))
-    if slug != "*":  # the slug folder follows the group, or the group's division folder
-        paths = [p for p in paths if slug in p.relative_to(base).parts[1:3]]
+    if slug != "*":  # the slug folder follows the group, or the group's division folder; a division named like the slug (female, male) is not a hero
+        def hero_folder(p):
+            parts = p.relative_to(base).parts
+            return parts[2] if len(parts) > 2 and parts[1] in art_layout.divisions(parts[0]) else parts[1]
+        paths = [p for p in paths if hero_folder(p) == slug]
     if stage == "*" and not family:
         return paths
     keep = []

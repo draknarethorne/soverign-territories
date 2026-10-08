@@ -134,5 +134,15 @@ class MasculineTests(unittest.TestCase):
         self.assertEqual(gp.masculine("the choice is hers; she steadies herself"), "the choice is his; he steadies himself")
 
 
+class SlugFilterTests(unittest.TestCase):
+    def test_a_slug_named_like_a_division_matches_only_that_hero(self):
+        """alpha/female is a hero; angel-primes/female is a division of ten women. --slug female must not pick the whole division."""
+        paths = gp.iter_card_paths(group="angel-primes", slug="female")
+        self.assertTrue(paths)
+        self.assertTrue(all("/alpha/female/" in p.as_posix() for p in paths), "only the alpha test hero")
+        self.assertTrue(all("/female/azaline/" not in p.as_posix() for p in paths))
+        self.assertTrue(any("/female/azaline/" in p.as_posix() for p in gp.iter_card_paths(group="angel-primes", slug="azaline")), "a normal angel is still found by her slug")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

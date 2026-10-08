@@ -550,5 +550,94 @@ class InputPullTests(unittest.TestCase):
         self.assertEqual(json.loads(cw.dump_cfg(cfg)), cfg)
 
 
+def denoise_wf(value):
+    """A workflow with the outer subgraph node that exposes a denoise widget, as the generated ones do."""
+    return {"nodes": [{"type": "sg", "widgets_values": ["pos", "neg", value], "widgets_values_named": {"positive": "pos", "negative": "neg", "denoise": value}}],
+            "definitions": {"subgraphs": [{"id": "sg"}]}}
+
+
+class DenoiseTests(unittest.TestCase):
+    """denoise --reset sets the denoise every generated workflow should start at, but never overwrites one you set by hand in a workspace."""
+
+    STEM = "Alice_Qwen_Armor_Plate"
+
+    def world(self):
+        w = World().__enter__()
+        w.cfg["templates"] = {"poses": "workflows/_templates/ST1_Qwen_A_Pose.json", "default": "workflows/_templates/ST2_Qwen_Edit.json"}
+        w.cfg["engines"] = {"firered": {"template": "workflows/_templates/ST3_FireRed_Final.json"}}
+        w.cfg["denoise"] = {"pick": "high", "golden": 0.9}
+        patch = mock.patch.object(cw, "denoise_plan", lambda cfg: {self.STEM: ("Alice", "armor", ["wardrobe"], "bare", 0.9)})
+        patch.start()
+        w.patches.append(patch)
+        w.master(self.STEM + ".json", denoise_wf(0.7))
+        return w
+
+    def value(self, path):
+        return cw.get_denoise(cw.read_wf(path))
+
+    def test_reset_sets_the_repo_and_the_workspace_copies(self):
+        w = self.world()
+        try:
+            path = w.put("A-Home", "armor/" + self.STEM + ".json", denoise_wf(0.7))
+            out, _ = w.run("denoise", "--reset", "--hero", "Alice")
+            self.assertEqual(self.value(w.masters[self.STEM + ".json"][2]), 0.9)
+            self.assertEqual(self.value(path), 0.9)
+            self.assertIn("1 in repo", out)
+        finally:
+            w.__exit__()
+
+    def test_a_value_set_by_hand_in_a_workspace_is_kept(self):
+        w = self.world()
+        try:
+            path = w.put("A-Home", "armor/" + self.STEM + ".json", denoise_wf(1.0))
+            out, _ = w.run("denoise", "--reset", "--hero", "Alice")
+            self.assertIn("KEPT", out)
+            self.assertEqual(self.value(path), 1.0, "your 1.0 survives")
+            self.assertEqual(self.value(w.masters[self.STEM + ".json"][2]), 0.9, "the repo copy still follows the tool")
+            out, _ = w.run("denoise", "--reset", "--hero", "Alice", "--force")
+            self.assertEqual(self.value(path), 0.9, "--force overwrites it")
+        finally:
+            w.__exit__()
+
+    def test_a_dry_run_changes_nothing(self):
+        w = self.world()
+        try:
+            path = w.put("A-Home", "armor/" + self.STEM + ".json", denoise_wf(0.7))
+            w.run("denoise", "--reset", "--hero", "Alice", "--dry-run")
+            self.assertEqual(self.value(path), 0.7)
+            self.assertEqual(self.value(w.masters[self.STEM + ".json"][2]), 0.7)
+        finally:
+            w.__exit__()
+
+
+class TemplateRangeTests(unittest.TestCase):
+    """The stage templates carry the denoise ranges (the high end is used) and the edit stages state the likeness (Critical details)."""
+
+    def setUp(self):
+        self.tpl = pathlib.Path(cw.__file__).resolve().parents[2] / "data/art/_templates/heroes"
+        sys.path.insert(0, str(pathlib.Path(cw.__file__).resolve().parents[1] / "generators"))
+        import gen_prompt
+        self.gp = gen_prompt
+
+    def high(self, name):
+        import re
+        m = re.search(r"Denoise ~(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", (self.tpl / name).read_text(encoding="utf-8").split("\nprompt:", 1)[0])
+        return float(m.group(2) or m.group(1))
+
+    def test_edits_that_change_a_lot_run_high(self):
+        for name in ("bare-human.txt", "bare-male-human.txt", "armor-human.txt", "clothing-human.txt", "scene-glamour-human.txt", "scene-with-outfit-human.txt", "pose-view-human.txt", "showcase-human.txt"):
+            self.assertGreaterEqual(self.high(name), 0.9, name)
+        self.assertGreaterEqual(self.high("motion-human.txt"), 0.95)
+        for name in ("head-human.txt", "hair-human.txt", "scene-staged-human.txt"):
+            self.assertGreaterEqual(self.high(name), 0.8, name)
+        self.assertLessEqual(self.high("polish-human.txt"), 0.4, "the polish pass stays light")
+
+    def test_every_edit_template_with_a_key_block_slot_switches_it_on(self):
+        for p in sorted(self.tpl.glob("*.txt")):
+            text = p.read_text(encoding="utf-8")
+            if "{{KEY_BLOCK}}" in text and self.high(p.name) >= 0.7 and p.name not in ("pose-female-human.txt", "pose-male-human.txt"):
+                self.assertTrue(self.gp.TEMPLATE_KEY_DEFAULTS.get(p.name), f"{p.name} runs at a high denoise but states no Critical details")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

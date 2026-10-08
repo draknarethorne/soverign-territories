@@ -63,6 +63,10 @@ HEAD_EXPRESSIONS = [
 ]
 
 
+# --small: the short version used by the alpha test heroes (one head, the face close-up, two head views, three body views).
+SMALL = {"body": {"three-quarter-left", "profile-left", "back"}, "head": {"three-quarter-left", "profile-left"}, "framing": {"face-closeup"}, "expression": set()}
+
+
 def write(path, card):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -77,7 +81,9 @@ def main():
     ap.add_argument("--identity", help="hero identity json (default: data/art/heroes/<group>/[<division>/]<slug>.json)")
     ap.add_argument("--division", default="", help="division folder of a group that has them (female, male ...), see _settings/groups.json")
     ap.add_argument("--underlayer", help="underlayer piece to keep identical to the hero's A-pose (pose views only)")
+    ap.add_argument("--small", action="store_true", help="only a short version of the library (3 body views, 2 head views, the face close-up), for the alpha test heroes")
     args = ap.parse_args()
+    keep = lambda kind, slug: not args.small or slug in SMALL[kind]
 
     identity = args.identity or "/".join(filter(None, ["data/art/heroes", args.group, args.division, args.slug + ".json"]))
     if not (ROOT / identity).exists():
@@ -93,6 +99,8 @@ def main():
         }
 
     for slug, name, piece in POSE_VIEWS:
+        if not keep("body", slug):
+            continue
         comps = {"view": piece}
         if args.underlayer:
             comps["underlayer"] = args.underlayer
@@ -102,18 +110,24 @@ def main():
             "~0.5-0.7", comps, "Reference-library body view, edited from the front A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_VIEWS:
+        if not keep("head", slug):
+            continue
         write(base / HV / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
             f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HV}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"view": piece}, "Reference-library head view, zoomed from the A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_FRAMING:
+        if not keep("framing", slug):
+            continue
         write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
             f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"framing": piece}, "Reference-library head framing (front view). Scaffolded."))
 
     for slug, name, piece in HEAD_EXPRESSIONS:
+        if not keep("expression", slug):
+            continue
         write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
             f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",

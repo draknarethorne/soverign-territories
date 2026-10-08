@@ -1807,7 +1807,7 @@ def cmd_denoise(args):
         print(f"template {label:8} {rel}: denoise " + ("exposed on the outer node, set to " + str(get_denoise(wf)) if get_denoise(wf) is not None else "NOT exposed outside the subgraph"))
     plan = denoise_plan(cfg)
     rule = cfg.get("denoise", {})
-    print(f"rule: pick the {rule.get('pick', 'high')} end of each card's range; a 1.0 card fed a golden image uses {rule.get('golden', 0.7)}")
+    print(f"rule: pick the {rule.get('pick', 'high')} end of the range in each stage template (_templates/heroes/*.txt, 'Denoise ~lo-hi'); a 1.0 template fed a golden image uses {rule.get('golden', 0.7)}")
     wanted = {k: v for k, v in plan.items() if (not args.hero or v[0].lower() == args.hero.lower()) and (not args.stage or v[1] == args.stage)
               and (not args.match or name_matches(args.match, k))}
     table = collections.Counter((v[1], v[2][0] if v[2] else "", v[3] or "-", v[4]) for v in wanted.values())
@@ -1818,10 +1818,15 @@ def cmd_denoise(args):
         print("\nPreview only: add --reset to set these in the repo and every workspace (a changed workspace file is backed up first).")
         return
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    changed = collections.Counter()
+    changed, kept = collections.Counter(), collections.defaultdict(list)
     repo = repo_files(cfg)
+    # What the repo copies hold now is what the tool last set; a workspace copy that differs from it was changed by you in place, and is kept (unless --force).
+    before = {}
+    for name, (g, h, p) in repo.items():
+        wf = read_wf(p)
+        before[name[:-5] if name.endswith(".json") else name] = get_denoise(wf) if isinstance(wf, dict) else None
     spots = [(None, p, name) for name, (g, h, p) in repo.items()]
-    for ws in cfg["workspaces"]:
+    for ws in args.workspace or cfg["workspaces"]:
         if workspace_ready(cfg, ws, args.root)[0]:
             spots += [(ws, p, name) for name, p in install_files(cfg, ws, args.root).items() if name in repo and not is_hand_made(cfg, ws, p, args.root)]
     for ws, p, name in spots:
@@ -1831,6 +1836,9 @@ def cmd_denoise(args):
         wf = read_wf(p)
         if not isinstance(wf, dict) or get_denoise(wf) == wanted[stem][4] or get_denoise(wf) is None:
             continue
+        if ws and not getattr(args, "force", False) and before.get(stem) is not None and abs(get_denoise(wf) - before[stem]) > 1e-6:
+            kept[ws].append(f"{p.name} ({round(get_denoise(wf), 3)}, the tool would set {wanted[stem][4]})")
+            continue
         changed[ws or "repo"] += 1
         if args.dry_run:
             continue
@@ -1838,6 +1846,8 @@ def cmd_denoise(args):
             backup(stamp, ws, p.name, p)
         set_denoise(wf, wanted[stem][4])
         write_wf(p, wf)
+    for ws, names in kept.items():
+        print(f"  KEPT     {len(names)} workflow(s) in {ws} carry a denoise you set by hand (use --force to overwrite): " + "; ".join(names[:6]) + (" ..." if len(names) > 6 else ""))
     print("denoise reset: " + (", ".join(f"{v} in {k}" for k, v in changed.items()) or "nothing to change") + (" (dry run)" if args.dry_run else ""))
 
 
@@ -1956,8 +1966,9 @@ def main(argv=None):
     s.add_argument("--polish", help="with --set: the chosen polished image (Final reads it)")
     s.add_argument("--bare", help="with --set: Alpha 2 Bare image (bare skin, individual figure)")
     s = sub.add_parser("denoise")
-    common(s)
-    s.add_argument("--reset", action="store_true", help="set every generated workflow's denoise (repo and workspaces) from its card's hint; without it, only show the plan")
+    common(s, True)
+    s.add_argument("--reset", action="store_true", help="set every generated workflow's denoise (repo and workspaces) from its stage template's range; without it, only show the plan. A workspace workflow whose denoise you changed by hand is kept")
+    s.add_argument("--force", action="store_true", help="with --reset: also overwrite denoise values you set by hand in a workspace (a changed file is backed up first)")
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
