@@ -1,0 +1,11 @@
+{
+  "artId": "angelo-polish-detail",
+  "kind": "base-set",
+  "stage": "polish",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/polish-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/6_Finish/polish/Angelo_Polish_Detail.txt",
+  "denoise": "~0.2-0.4",
+  "name": "Detail pass",
+  "notes": "SKELETON: a detail-only pass on her chosen finished image (input role scene); tune the wording once there are scenes to polish."
+}

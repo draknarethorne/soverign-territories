@@ -2,7 +2,9 @@
   "id": "heroes/drakn-sisters/draknora/companion/pyraxis-flight",
   "kind": "companion",
   "name": "Pyraxis in Flight (Draknora signature)",
-  "description": "her aligned Elder Dragon, Pyraxis, flying over the citadel's towers behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light",
-  "compatibleStages": ["scene"],
-  "notes": "Hero-signature companion placement, unique to Draknora's bond with Pyraxis (data/art/dragons/elder-dragons/pyraxis.json) in this specific scene — grounded in prompts/_archive/Draknora/final/Draknora_Qwen_Dragon_1.json and Draknora_Qwen_Fire_Dragon.json, which described the dragon generically (unnamed). Separated from the background piece deliberately: the dragon's identity/placement is a companion concern, the city itself is an environment concern — two different reusable things, not bundled together."
+  "extends": "data/art/dragons/elder-dragons/pyraxis/companion/pyraxis-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "flying over the citadel's towers behind her, approaching from the right toward her left shoulder, flame-red scales and burnished-gold wings catching the light"
+  },
+  "notes": "Extends the Pyraxis companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

@@ -1,0 +1,10 @@
+{
+  "artId": "female-motion-catwalk-confident",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/Bench/motion/walking/Female_Motion_Walking_CatwalkConfident.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/walking/catwalk-confident.json"
+}

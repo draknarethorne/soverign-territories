@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/companion/drakniya-bond-dragon",
+  "kind": "companion",
+  "name": "Sylvanya in Drakniya's bond scene",
+  "extends": "data/art/dragons/elder-dragons/sylvanya/companion/sylvanya-companion.json",
+  "vars": {
+    "PLACEMENT": "",
+    "DETAIL": ", towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Sylvanya companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

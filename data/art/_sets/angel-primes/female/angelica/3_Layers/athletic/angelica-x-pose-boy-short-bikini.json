@@ -1,0 +1,13 @@
+{
+  "artId": "angelica-x-pose-boy-short-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/3_Layers/athletic/Angelica_X_Pose_BoyShortBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/athletic/boy-short-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

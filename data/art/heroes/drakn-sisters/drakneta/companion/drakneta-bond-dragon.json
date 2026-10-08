@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/companion/drakneta-bond-dragon",
+  "kind": "companion",
+  "name": "Fulgora in Drakneta's bond scene",
+  "extends": "data/art/dragons/elder-dragons/fulgora/companion/fulgora-companion.json",
+  "vars": {
+    "PLACEMENT": "",
+    "DETAIL": ", towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Fulgora companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

@@ -9,7 +9,7 @@
     "testBed": {"const": true},
     "name": {"type": "string", "minLength": 2},
     "kind": {"type": "string", "description": "The creature (lion, fairy, snow leopard ...); never a dragon in Angel Primes"},
-    "element": {"enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison"]},
+    "element": {"enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"]},
     "bondedTo": {"type": "string", "pattern": "^data/art/heroes/.+\\.json$"},
     "size": {"type": "string", "description": "How big it is next to its angel, for placing it in a scene"},
     "look": {"type": "string", "minLength": 20, "description": "What it looks like: coat, markings, eyes, the one detail that ties it to its element"},

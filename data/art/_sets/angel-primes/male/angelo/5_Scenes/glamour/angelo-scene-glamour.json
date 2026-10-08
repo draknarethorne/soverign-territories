@@ -1,0 +1,21 @@
+{
+  "artId": "angelo-scene-glamour",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/scene-glamour-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/5_Scenes/glamour/Angelo_Scene_Glamour.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Glamour",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "wearing": "data/art/wardrobe/clothing/sets/long-coat.json",
+    "jewelry": "data/art/heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/flats/leather-shoes.json",
+    "back": "data/art/heroes/angel-primes/male/angelo/wings/angelo-wings.json",
+    "effects": "A gentle drift of soft white light, drifting pale feathers and motes lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/meridian-vale-realm.json"
+  },
+  "notes": "GLAMOUR: a relaxed, beautiful portrait in her element's realm."
+}

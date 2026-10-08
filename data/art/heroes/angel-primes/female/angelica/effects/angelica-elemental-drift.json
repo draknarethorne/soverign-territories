@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/female/angelica/effects/angelica-elemental-drift",
+  "kind": "effects",
+  "name": "Angelica's elemental drift",
+  "description": "A drift of soft white light, drifting pale feathers and motes circles her, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: written for this angel."
+}

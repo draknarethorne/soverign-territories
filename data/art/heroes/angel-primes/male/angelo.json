@@ -1,6 +1,16 @@
 {
   "testBed": true,
   "name": "Angelo Prime",
+  "profile": {
+    "element": "Neutral",
+    "alignment": "Balanced (neutral good)",
+    "alignmentRank": 5,
+    "archetype": "The first sentinel, keeping the road open between every element and every side",
+    "inspiredBy": "the guardian angels of the first gate",
+    "wings": "a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold",
+    "pair": "angelica",
+    "pet": "data/art/pets/angel-primes/ward.json"
+  },
   "art": {
     "defaultUnderlayer": "data/art/heroes/angel-primes/male/angelo/wearing/angelic-pastel-trunks.json",
     "palette": {

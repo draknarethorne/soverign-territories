@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, ice crystals glittering in the air around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "companion": "her aligned Elder Dragon, Glaciora, an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "companion": "data/art/heroes/drakn-sisters/draknira/companion/draknira-bond-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/bond/glaciora-ice-cathedral.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

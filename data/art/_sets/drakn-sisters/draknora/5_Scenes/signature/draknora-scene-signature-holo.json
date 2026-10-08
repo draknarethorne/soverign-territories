@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknora/weapons/flame-sword-ascended.json",
     "effects": "A pillar of white-gold fire spirals up the blade into the sky, a ring of flame blooms around her feet, embers and sparks stream upward, heat haze warps the air and the whole citadel glows.",
-    "companion": "her aligned Elder Dragon, Pyraxis, diving low over the battlement behind her with its wings spread wide and a roar of fire, flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze",
+    "companion": "data/art/heroes/drakn-sisters/draknora/companion/draknora-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/signature/citadel-battlement-dragonfire.json",
     "headwear": "data/art/heroes/drakn-sisters/draknora/headwear/scene-signature-holo-headwear.json",
     "back": "data/art/heroes/drakn-sisters/draknora/capes/scene-signature-holo-back.json"

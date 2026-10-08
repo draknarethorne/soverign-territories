@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakneta/companion/drakneta-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Fulgora in Drakneta's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/fulgora/companion/fulgora-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "filling the shattered windows behind her with its head thrust into the hall, electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Fulgora companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

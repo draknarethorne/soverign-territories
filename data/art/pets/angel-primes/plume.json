@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Plume",
+  "kind": "dove",
+  "element": "Neutral",
+  "bondedTo": "data/art/heroes/angel-primes/female/angelica.json",
+  "size": "small, no bigger than her forearm",
+  "look": "a pearl-white dove with soft dove-grey wingtips, a faint warm champagne ring around each dark eye and a long fanned tail, a gentle pearl glow in its breast feathers",
+  "temperament": "Calm and watchful; it speaks in low, rolling coos and carries her messages without being asked",
+  "scenePlacement": "perched on her raised hand, wings half open, a loose white feather drifting down",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

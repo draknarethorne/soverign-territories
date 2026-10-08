@@ -1,0 +1,23 @@
+{
+  "artId": "angelo-scene-battle",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/5_Scenes/story/Angelo_Scene_Battle.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Battle",
+  "components": {
+    "pose": "She leaps mid-air with her weapon swept behind her and her free hand flung forward, wings spread wide, a calm, fierce gaze straight to the camera; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/male/angelo/armor/angelo-signature-armor.json",
+    "headwear": "data/art/heroes/angel-primes/male/angelo/headwear/angelo-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/scale-boots.json",
+    "holding": "data/art/heroes/angel-primes/male/angelo/weapons/angelo-signature-weapon.json",
+    "back": "data/art/heroes/angel-primes/male/angelo/wings/angelo-wings.json",
+    "effects": "A surge of soft white light, drifting pale feathers and motes bursts out from her free hand, tearing banners and debris sideways, {{MAGIC}} light marking the currents.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/backgrounds/fantasy/ruins/sunken-amphitheater-dusk.json"
+  },
+  "notes": "BATTLE: war gear and a weapon in a battlefield setting, commanding her element."
+}

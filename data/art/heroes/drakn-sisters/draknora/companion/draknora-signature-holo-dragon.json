@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknora/companion/draknora-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Pyraxis in Draknora's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/pyraxis/companion/pyraxis-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "diving low over the battlement behind her with its wings spread wide and a roar of fire, flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Pyraxis companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

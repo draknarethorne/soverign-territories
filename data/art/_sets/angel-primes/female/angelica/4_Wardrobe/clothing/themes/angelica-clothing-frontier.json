@@ -1,0 +1,19 @@
+{
+  "artId": "angelica-clothing-frontier",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/4_Wardrobe/clothing/themes/Angelica_Clothing_Frontier.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Frontier Gunslinger",
+  "aesthetic": "a clean studio presentation of the frontier gunslinger outfit",
+  "components": {
+    "wearing": "data/art/themes/western/frontier/wardrobe/clothing/dresses/fringe-saloon-dress.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/themes/western/frontier/wardrobe/jewelry/sets/turquoise-and-silver-set.json",
+    "legs_feet": "data/art/themes/western/frontier/wardrobe/footwear/boots/spurred-cowboy-boots.json",
+    "headwear": "data/art/themes/western/frontier/wardrobe/headwear/hats/wide-brim-ranger-hat.json"
+  },
+  "notes": "Pre-staged Frontier Gunslinger outfit: render it from the A-pose, then feed the image to the staged scene. Every item is a library piece."
+}

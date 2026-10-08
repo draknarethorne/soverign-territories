@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/angelica/clothing/angelica-signature-gown",
+  "kind": "wearing",
+  "name": "Angelica's signature gown",
+  "extends": "data/art/wardrobe/clothing/gowns/column-gown.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a single white feather within a plain ring in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: the library piece wardrobe/clothing/gowns/column-gown.json plus neutral and alignment details."
+}

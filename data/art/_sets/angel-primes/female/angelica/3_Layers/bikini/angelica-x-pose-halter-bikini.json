@@ -1,0 +1,13 @@
+{
+  "artId": "angelica-x-pose-halter-bikini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/3_Layers/bikini/Angelica_X_Pose_HalterBikini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/bikini/halter-bikini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

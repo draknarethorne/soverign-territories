@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknisa/companion/draknisa-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Aquaria in Draknisa's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/aquaria/companion/aquaria-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "rising out of the sea beyond the terrace with its head curved over her and its wings spread, deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Aquaria companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

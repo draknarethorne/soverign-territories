@@ -1,0 +1,13 @@
+{
+  "artId": "male-x-pose-athletic-trunks",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/alpha/male.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/alpha/Male/3_Layers/swimwear/Male_X_Pose_AthleticTrunks.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/trunks/athletic-trunks.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

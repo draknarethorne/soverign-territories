@@ -1,0 +1,21 @@
+{
+  "artId": "angelica-scene-enchanted-evening",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/5_Scenes/glamour/Angelica_Scene_EnchantedEvening.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Enchanted Evening",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "wearing": "data/art/wardrobe/clothing/gowns/mermaid-gown.json",
+    "jewelry": "data/art/wardrobe/jewelry/earrings/ear-cuffs.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/glass-slippers.json",
+    "effects": "data/art/wardrobe/effects/ambient/soft-ambient-glow.json",
+    "companion": "data/art/heroes/angel-primes/female/angelica/companion/plume-beside.json",
+    "back": "data/art/heroes/angel-primes/female/angelica/wings/angelica-wings.json",
+    "background": "data/art/backgrounds/fantasy/ships/captains-cabin-lamplit.json"
+  },
+  "notes": "ENCHANTED EVENING: an evening gown, her bonded pet beside her, an evening setting."
+}

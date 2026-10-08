@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/angelo/companion/ward-beside",
+  "kind": "companion",
+  "name": "Ward beside Angelo",
+  "description": "a lean pale hound with a short pearl-white coat, dove-grey ears and mask and amber eyes, standing at his side facing the viewer with its ears up and its tail low",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "hound"
+  ]
+}

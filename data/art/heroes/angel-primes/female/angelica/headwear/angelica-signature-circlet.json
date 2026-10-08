@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/angelica/headwear/angelica-signature-circlet",
+  "kind": "headwear",
+  "name": "Angelica's signature circlet",
+  "extends": "data/art/wardrobe/headwear/circlets/silver-circlet.json",
+  "description": "+, a single white feather within a plain ring rising at the centre of the brow, set with a {{GEM}} gem; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: the library piece wardrobe/headwear/circlets/silver-circlet.json plus neutral and alignment details."
+}

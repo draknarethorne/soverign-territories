@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/angelo/headwear/angelo-signature-circlet",
+  "kind": "headwear",
+  "name": "Angelo's signature circlet",
+  "extends": "data/art/wardrobe/headwear/crowns/laurel-wreath.json",
+  "description": "+, a single white feather within a plain ring rising at the centre of the brow, set with a {{GEM}} gem; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelo: the library piece wardrobe/headwear/crowns/laurel-wreath.json plus neutral and alignment details."
+}

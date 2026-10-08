@@ -2,9 +2,10 @@
   "id": "heroes/drakn-sisters/drakniss/companion/her-aligned-elder-dragon-lumira-visible-beyond",
   "kind": "companion",
   "name": "Her aligned elder dragon lumira visible beyond",
-  "description": "her aligned Elder Dragon, Lumira, visible beyond the hall's high windows, an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/lumira/companion/lumira-companion.json",
+  "vars": {
+    "PLACEMENT": "visible beyond the hall's high windows, ",
+    "DETAIL": ""
+  },
+  "notes": "Extends the Lumira companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

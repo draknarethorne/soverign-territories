@@ -97,7 +97,7 @@
       "required": ["element", "alignment", "alignmentRank", "archetype"],
       "description": "Design notes for a test-bed hero (Angel Primes): where she or he sits on the good-to-evil spectrum, the element, the archetype and the bonded pet. Never rendered into a prompt; the set scaffolder and the roster table read it.",
       "properties": {
-        "element": {"enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison"]},
+        "element": {"enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"]},
         "alignment": {"type": "string"},
         "alignmentRank": {"type": "integer", "minimum": 1, "maximum": 10, "description": "1 = purest good, 10 = fully fallen"},
         "archetype": {"type": "string"},

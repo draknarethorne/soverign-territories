@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/female/angelica/jewelry/angelica-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Angelica's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+  "description": "+, the pendant and the earrings echoing a single white feather within a plain ring, each set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: the library piece wardrobe/jewelry/studio/simple-necklace-and-earrings.json plus neutral and alignment details."
+}

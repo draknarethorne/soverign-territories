@@ -1,0 +1,12 @@
+{
+  "id": "heroes/angel-primes/male/angelo/effects/angelo-elemental-drift",
+  "kind": "effects",
+  "name": "Angelo's elemental drift",
+  "description": "A drift of soft white light, drifting pale feathers and motes circles him, {{MAGIC}} light glinting within it.",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelo: written for this angel."
+}

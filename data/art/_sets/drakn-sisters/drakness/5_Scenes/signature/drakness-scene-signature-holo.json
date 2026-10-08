@@ -14,7 +14,7 @@
     "legs_feet": "data/art/heroes/drakn-sisters/drakness/armor/bone-legs-feet.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/reaper-scythe-ascended.json",
     "effects": "A spiral of {{MAGIC}} soul-energy coils up the scythe, a vast host of spectral shades rises from the necropolis behind her, ravens burst from her cape, violet lightning forks across the sky and a ring of glowing sigils halos behind her head.",
-    "companion": "her aligned Elder Dragon, Umbrath, rearing up enormous behind her with its wings spread across the sky, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light, amethyst fire pouring from its jaws",
+    "companion": "data/art/heroes/drakn-sisters/drakness/companion/drakness-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/drakness/backgrounds/fantasy/signature/necropolis-rising-dead.json",
     "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-signature-holo-headwear.json"
   },

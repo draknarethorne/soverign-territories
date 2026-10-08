@@ -1,0 +1,15 @@
+{
+  "id": "dragons/elder-dragons/zephyros/companion/zephyros-companion-distant",
+  "kind": "companion",
+  "name": "Zephyros as her companion (scene wording)",
+  "description": "her aligned Elder Dragon, Zephyros, [[PLACEMENT]]",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "A frame for a scene that words the dragon itself (a distant silhouette, a close-up that rewords its traits): it gives the opening and the name, the sister's piece fills in the rest. Written by tools/art/dragon_companions.py."
+}

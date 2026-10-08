@@ -1,0 +1,24 @@
+{
+  "artId": "angelica-scene-imperial-dynasty",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/5_Scenes/themes/Angelica_Scene_ImperialDynasty.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Imperial Dynasty",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/eastern/imperial-dynasty/wardrobe/clothing/gowns/phoenix-silk-hanfu-gown.json",
+    "back": "data/art/heroes/angel-primes/female/angelica/wings/angelica-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/angelica/effects/angelica-elemental-drift.json",
+    "background": "data/art/themes/eastern/imperial-dynasty/backgrounds/fantasy/castle/lantern-lit-palace-terrace.json",
+    "headwear": "data/art/themes/eastern/imperial-dynasty/wardrobe/headwear/crowns/phoenix-hairpin-crown.json",
+    "jewelry": "data/art/themes/eastern/imperial-dynasty/wardrobe/jewelry/sets/jade-and-gold-court-set.json",
+    "legs_feet": "data/art/themes/eastern/imperial-dynasty/wardrobe/footwear/sandals/embroidered-silk-slippers.json",
+    "makeup": "data/art/themes/eastern/imperial-dynasty/cosmetics/makeup/imperial/vermilion-lip-and-flower-mark.json",
+    "holding": "data/art/themes/eastern/imperial-dynasty/wardrobe/weapons/swords/jian-and-tassel.json"
+  },
+  "notes": "Imperial Dynasty theme scene: every item is a library piece."
+}

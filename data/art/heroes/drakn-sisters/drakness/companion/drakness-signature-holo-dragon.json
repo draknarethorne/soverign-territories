@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakness/companion/drakness-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Umbrath in Drakness's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/umbrath/companion/umbrath-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "rearing up enormous behind her with its wings spread across the sky, obsidian-black and midnight-violet scales, wings like tattered sheets of darkness edged in amethyst light, amethyst fire pouring from its jaws"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Umbrath companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

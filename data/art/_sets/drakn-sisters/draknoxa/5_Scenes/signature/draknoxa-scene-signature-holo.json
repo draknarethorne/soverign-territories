@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknoxa/weapons/alembic-staff-ascended.json",
     "effects": "Billows of luminous {{MAGIC}} venom mist roll across the floor, the alembics bubble over and glowing droplets float in the air, bursts of lime and magenta light flash from the flasks along the shelves.",
-    "companion": "her aligned Elder Dragon, Venomis, coiling through the vaulted laboratory behind her with its head lowered over her shoulder, toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
+    "companion": "data/art/heroes/drakn-sisters/draknoxa/companion/draknoxa-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknoxa/backgrounds/fantasy/signature/alchemist-catacomb-lab.json",
     "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-signature-holo-headwear.json",
     "back": "data/art/heroes/drakn-sisters/draknoxa/capes/scene-signature-holo-back.json"

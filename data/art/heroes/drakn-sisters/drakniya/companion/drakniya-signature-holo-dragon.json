@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniya/companion/drakniya-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Sylvanya in Drakniya's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/sylvanya/companion/sylvanya-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "rising close behind her among the boughs with its wings spread like canopies, emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Sylvanya companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

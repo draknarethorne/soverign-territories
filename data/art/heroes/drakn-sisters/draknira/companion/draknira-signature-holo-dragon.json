@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknira/companion/draknira-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Glaciora in Draknira's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/glaciora/companion/glaciora-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "filling the great hall's windows behind her with its head lowered toward her, glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Glaciora companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

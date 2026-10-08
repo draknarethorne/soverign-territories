@@ -2,9 +2,9 @@
   "id": "heroes/drakn-sisters/drakniya/companion/her-aligned-elder-dragon-sylvanya-a-distant",
   "kind": "companion",
   "name": "Her aligned elder dragon sylvanya a distant",
-  "description": "her aligned Elder Dragon, Sylvanya, a distant silhouette above the treeline beyond the terrace, emerald-green wings like leaves in the dusk",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/sylvanya/companion/sylvanya-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "a distant silhouette above the treeline beyond the terrace, emerald-green wings like leaves in the dusk"
+  },
+  "notes": "Extends the Sylvanya companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

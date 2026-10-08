@@ -2,9 +2,10 @@
   "id": "heroes/drakn-sisters/drakniya/companion/her-aligned-elder-dragon-sylvanya-visible-in",
   "kind": "companion",
   "name": "Her aligned elder dragon sylvanya visible in",
-  "description": "her aligned Elder Dragon, Sylvanya, visible in the distance beyond the trees, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/sylvanya/companion/sylvanya-companion.json",
+  "vars": {
+    "PLACEMENT": "visible in the distance beyond the trees, ",
+    "DETAIL": ""
+  },
+  "notes": "Extends the Sylvanya companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

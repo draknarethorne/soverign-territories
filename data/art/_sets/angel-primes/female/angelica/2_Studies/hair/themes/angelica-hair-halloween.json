@@ -1,0 +1,11 @@
+{
+  "artId": "angelica-hair-halloween",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "component": "data/art/themes/seasonal/halloween/cosmetics/hair/waves/windblown-witch-waves.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/2_Studies/hair/themes/Angelica_Hair_Halloween.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Halloween theme hairstyle."
+}

@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff-ascended.json",
     "effects": "Great arcs of tidal water rise and hang in the air around her, a ring of floating water spheres orbits the staff, glowing {{MAGIC}} ripples spread across the terrace and moonlit spray glitters everywhere.",
-    "companion": "her aligned Elder Dragon, Aquaria, rising out of the sea beyond the terrace with its head curved over her and its wings spread, deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum",
+    "companion": "data/art/heroes/drakn-sisters/draknisa/companion/draknisa-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/signature/tidal-sea-temple-terrace.json",
     "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-signature-holo-headwear.json",
     "back": "data/art/heroes/drakn-sisters/draknisa/capes/scene-signature-holo-back.json"

@@ -1,0 +1,22 @@
+{
+  "artId": "angelo-scene-frontier",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/5_Scenes/themes/Angelo_Scene_Frontier.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Frontier Gunslinger",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a serene, knowing smile, eyes calm and bright.",
+    "wearing": "data/art/themes/western/frontier/wardrobe/clothing/sets/frontier-male-outfit.json",
+    "back": "data/art/heroes/angel-primes/male/angelo/wings/angelo-wings.json",
+    "effects": "data/art/heroes/angel-primes/male/angelo/effects/angelo-elemental-drift.json",
+    "background": "data/art/themes/western/frontier/backgrounds/fantasy/canyon/dusty-main-street-sundown.json",
+    "legs_feet": "data/art/themes/western/frontier/wardrobe/footwear/boots/spurred-cowboy-boots.json",
+    "jewelry": "data/art/heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry.json",
+    "holding": "data/art/themes/western/frontier/wardrobe/weapons/firearms/twin-revolvers.json"
+  },
+  "notes": "Frontier Gunslinger theme scene: every item is a library piece."
+}

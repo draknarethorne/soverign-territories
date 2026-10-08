@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/angelica/weapons/angelica-signature-weapon",
+  "kind": "holding",
+  "name": "Angelica's signature weapon",
+  "extends": "data/art/wardrobe/weapons/polearms/spear.json",
+  "description": "+, its metal worked with a single white feather within a plain ring in {{ACCENT_SOFT}}, soft white light, drifting pale feathers and motes gathering along it when it is raised; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: the library piece wardrobe/weapons/polearms/spear.json plus neutral and alignment details."
+}

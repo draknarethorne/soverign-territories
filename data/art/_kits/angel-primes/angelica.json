@@ -1,0 +1,45 @@
+{
+  "hero": "Angelica",
+  "group": "angel-primes",
+  "slug": "angelica",
+  "element": "Neutral",
+  "alignmentRank": 5,
+  "rotation": 10,
+  "identity": "data/art/heroes/angel-primes/female/angelica.json",
+  "underlayers": [
+    "wardrobe/swimwear/bikini/halter-bikini",
+    "wardrobe/swimwear/one-piece/cutout-monokini",
+    "wardrobe/swimwear/bikini/sarong-and-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/gowns/empire-gown",
+    "wardrobe/clothing/dresses/flowing-sundress",
+    "wardrobe/clothing/sets/romantic-ruffle-set"
+  ],
+  "armor": [
+    "wardrobe/armor/plate/paladin-holy-plate",
+    "wardrobe/armor/robes/priestess-robes"
+  ],
+  "motions": [
+    "motion/standing/side-profile-elegant",
+    "motion/walking/relaxed-stroll",
+    "motion/standing/three-quarter-glamour",
+    "motion/dynamic/twirl-spin"
+  ],
+  "heels": "wardrobe/footwear/heels/matching-open-toed-heels",
+  "signature": {
+    "armor": "wardrobe/armor/plate/paladin-holy-plate",
+    "weapon": "wardrobe/weapons/polearms/spear",
+    "gown": "wardrobe/clothing/gowns/column-gown",
+    "circlet": "wardrobe/headwear/circlets/silver-circlet"
+  },
+  "scene": {
+    "wearing": "wardrobe/armor/plate/paladin-holy-plate",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/glamour/soft-closed-smile",
+    "background": "backgrounds/fantasy/elemental/meridian-vale-realm",
+    "back": "heroes/angel-primes/female/angelica/wings/angelica-wings",
+    "companion": "heroes/angel-primes/female/angelica/companion/plume-beside",
+    "effects": "Soft pearl-white light and loose white feathers drift in the air around the figure, a gentle {{MAGIC}} glow lifting from the ground."
+  }
+}

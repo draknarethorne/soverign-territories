@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/fantasy/elemental/grounded/meridian-vale-realm",
+  "kind": "background",
+  "name": "Meridian Vale Realm (grounded)",
+  "description": "a high limestone plateau at first light, short pale grass and a few weathered standing stones, thin cloud on the horizon, soft even daylight and a light wind in the grass",
+  "mood": "calm, open",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "grounded"
+  ],
+  "notes": "A realistic counterpart of backgrounds/fantasy/elemental/meridian-vale-realm: the same place described as a real location with natural light and weather, for the cinematic realm."
+}

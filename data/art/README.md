@@ -258,6 +258,9 @@ female and one male per element in each of ten pairs, and each has a bonded pet 
 | 9 | Poison | Nightshade | Corrupt (chaotic evil) | Sammara (Viridia, viper) | Vexiel (Sting, scorpion) |
 | 10 | Darkness | Duskfall | Fallen (evil) | Nyxene (Shade, panther) | Luzariel (Corvin, raven) |
 
+An eleventh pair stands beside the ten: **Angelica and Angelo** (family Prime, element Neutral, Balanced (neutral good), rank 5; pets Plume, a dove, and Ward, a hound; realm `meridian-vale-realm`). A kit may set `rotation`
+(an integer) to take its own slice of each library pool; without it the pool slice is `alignmentRank - 1`, so a pair sharing a rank would repeat another pair's picks.
+
 **One tree, with divisions.** Angel Primes is the test bed for a whole deck, so its work is filed below a division folder, the same in every layer
 (`data/art/_settings/groups.json` lists them: `female` and `male` for heroes, then `pets`, `units`, `buildings`, `equipment`, `tactics`, `workers`, the Sovereign Dawn card categories):
 `heroes/angel-primes/female/seraphine.json`, `_sets/angel-primes/female/seraphine/<phase>/...`, `prompts/angel-primes/female/Seraphine/<phase>/...`, and in ComfyUI
@@ -296,7 +299,9 @@ That is about 177 cards for a female angel and about 50 for a male (Phase A: eve
 the male wardrobe, showcases, theme outfits and scenes wait for a male wardrobe pack (the library has only 24 male-tagged pieces and no male theme outfits). A kit may override any rotated pick (`layers`, `clothing_more`,
 `armor_more`, `themes`, `hair`, `motions_more`). `scaffold_angel_set.py --coverage` reports how much of the library the angels exercise (today every swimwear piece, dress, gown, set, hairstyle, studio and modern background and
 all 26 theme packs; weapons 19 of 33, fantasy backgrounds 57 of 104). Scenes use the sisters' folders (`5_Scenes/signature`, `glamour`, `story`, `themes`) and the angels have no card, so no shiny or holo editions. Then
-`gen_prompt.py --group angel-primes`, `comfy_workflows.py make --create --group angel-primes` and `deploy --group angel-primes`. Angelica and Angelo (`angelica`, `angelo`) are the older pair: their wardrobe, layers and scenes stay hand-picked (no kit), but
+`gen_prompt.py --group angel-primes`, `comfy_workflows.py make --create --group angel-primes` and `deploy --group angel-primes`. The `alpha` division (`alpha/female`, `alpha/male`; hero names `Female` and `Male`) holds two generic test heroes for trying other photos before assigning one to an angel: the same identity wording as Angelica and Angelo (the photo's own face, hair and eyes),
+no kit and no signature items, only library pieces and a shared `wardrobe/capes/wings/white-angel-wings`, and a short version of the phases (`scaffold_angel_set.py --alpha`, or `bin\scaffold-angels.cmd --alpha`).
+Angelica and Angelo (`angelica`, `angelo`) are the older pair: their wardrobe, layers and scenes stay hand-picked (no kit), but
 `scaffold_angel_set.py --all` (or `--slug angelica`) gives them the same Phase 1 and Phase 2 as every other angel: the Alpha chain (1_Prime, 2_Bare, and for Angelica 2b_Experiments and 3_Footwear with Barefoot and Heels), the head, view and body studies and the hair
 studies. Their pastel look is `art.defaultUnderlayer` in the identity, so the Prime A-pose wears it, and the pastel bikini ends in the shared `{{FOOTWEAR}}` slot like every other swimwear piece (barefoot in the A-pose, heels only in the Heels step;
 it used to carry its heels inside the text). The old single `X_Pose` card was retired; the pastel look stays as a layer test (`3_Layers/bikini/angelica-x-pose-angelic-pastel-bikini`).
@@ -458,6 +463,12 @@ jewelry/weapon/companion slots, for lower-priority content like the Angel Primes
 footwear is baked into the one bundled `wearing` piece instead of decomposed). A **companion** is
 its own piece, deliberately separate from `background` — the dragon's identity/placement is one
 reusable concern, the environment it flies through is another.
+
+**A sister's dragon companion comes from her Elder Dragon's identity.** Each dragon in `dragons/elder-dragons/` has two frames in its `companion/`
+folder: `<slug>-companion.json` (the identity's description with `[[PLACEMENT]]`/`[[DETAIL]]` gaps) and `<slug>-companion-distant.json` (just the opening and name,
+for scenes that word the dragon themselves). The sister's piece (`heroes/drakn-sisters/<sister>/companion/*.json`) `extends` a frame and sets `vars` for where the dragon is,
+and her scene cards name that piece. Change a dragon's look in its identity, then run `python tools/art/dragon_companions.py --apply` and regenerate; the validator
+rejects a sister companion piece that does not extend a dragon frame, and a scene card that types the dragon instead of naming a piece.
 
 ### Complete vs staged scenes
 

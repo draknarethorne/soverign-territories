@@ -1,0 +1,22 @@
+{
+  "artId": "angelica-scene-robe",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/5_Scenes/glamour/Angelica_Scene_Robe.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Robe",
+  "components": {
+    "pose": "data/art/motion/walking/slow-sensual-walk.json",
+    "wearing": "data/art/wardrobe/clothing/robes/silk-robe.json",
+    "headwear": "data/art/wardrobe/headwear/hats/feathered-hat.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/platform-heels.json",
+    "back": "data/art/heroes/angel-primes/female/angelica/wings/angelica-wings.json",
+    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting soft white light, drifting pale feathers and motes around her.",
+    "background": "data/art/backgrounds/fantasy/swamp/mangrove-bayou-twilight.json"
+  },
+  "notes": "ROBE: a flowing robe, a staff and a quiet sanctum."
+}

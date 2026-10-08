@@ -1,5 +1,5 @@
 === {{HERO}} · Hairstyle (group: Hair) — Edit (img2img) ===
-Incoming image: an A-pose of {{HERO}}. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise ~0.4-0.6.
+Incoming image: an A-pose of {{HERO}}. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
@@ -9,6 +9,8 @@ Photo-realistic full-body shot, 85mm portrait photography, razor-sharp focus, so
 Background: {{BACKGROUND}}.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure and proportions, all exactly as shown; keep the hair colour and highlights.
+
+?{{KEY_BLOCK}}
 
 Maintain existing outfit expressly.
 

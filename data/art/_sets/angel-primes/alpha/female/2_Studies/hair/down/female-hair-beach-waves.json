@@ -1,0 +1,10 @@
+{
+  "artId": "female-hair-beach-waves",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "component": "data/art/races/human/cosmetics/hair/down/beach-waves.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/2_Studies/hair/down/Female_Hair_Down_BeachWaves.txt",
+  "denoise": "~0.4-0.6"
+}

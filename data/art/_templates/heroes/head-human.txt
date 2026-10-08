@@ -1,5 +1,5 @@
 === {{HERO}} · Head / Close-up (group: X_Head) — Edit (img2img) ===
-Incoming image: an A-pose (or hair variant) of {{HERO}}. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+Incoming image: an A-pose (or hair variant) of {{HERO}}. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/angelo/clothing/angelo-signature-attire",
+  "kind": "wearing",
+  "name": "Angelo's signature attire",
+  "extends": "data/art/wardrobe/clothing/sets/long-coat.json",
+  "description": "+, the neckline, cuffs and hem embroidered with a single white feather within a plain ring in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelo: the library piece wardrobe/clothing/sets/long-coat.json plus neutral and alignment details."
+}

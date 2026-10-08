@@ -1,5 +1,5 @@
 === {{HERO}} · Showcase: {{NAME}} (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
-Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+Incoming image: an A-pose of {{HERO}} (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:

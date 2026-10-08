@@ -1,0 +1,20 @@
+{
+  "artId": "male-armor-half-plate",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/alpha/male.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/alpha/Male/4_Wardrobe/armor/wardrobe/Male_Armor_HalfPlate.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Half-Plate Armor",
+  "aesthetic": "a clean studio presentation of the half-plate armor",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/plate/half-plate.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

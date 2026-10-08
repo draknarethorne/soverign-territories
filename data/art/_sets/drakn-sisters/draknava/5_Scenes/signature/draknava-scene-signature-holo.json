@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknava/weapons/windsong-staff-ascended.json",
     "effects": "A great spiral of wind lifts ribbons, banners, leaves and feathers around her, glowing {{MAGIC}} ribbons of air trace the currents, the lyre strings glow and a ring of drifting chimes sings in the air.",
-    "companion": "her aligned Elder Dragon, Zephyros, swooping in close beside her with its wings spread across the sky, windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk",
+    "companion": "data/art/heroes/drakn-sisters/draknava/companion/draknava-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/signature/cliff-amphitheater-winds.json",
     "headwear": "data/art/heroes/drakn-sisters/draknava/headwear/scene-signature-holo-headwear.json",
     "back": "data/art/heroes/drakn-sisters/draknava/capes/scene-signature-holo-back.json"

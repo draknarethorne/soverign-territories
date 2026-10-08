@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, leaves and petals lifting from the moss around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "companion": "her aligned Elder Dragon, Sylvanya, an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "companion": "data/art/heroes/drakn-sisters/drakniya/companion/drakniya-bond-dragon.json",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/bond/sylvanya-grove-hollow.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

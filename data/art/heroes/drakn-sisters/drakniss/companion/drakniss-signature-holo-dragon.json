@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/drakniss/companion/drakniss-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Lumira in Drakniss's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/lumira/companion/lumira-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "filling the high windows behind her with its head lowered toward her, radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Lumira companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

@@ -1,5 +1,5 @@
 === {{HERO}} · Showcase: {{NAME}} (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
-Incoming image: an A-pose of {{HERO}} (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+Incoming image: an A-pose of {{HERO}} (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:

@@ -1,0 +1,15 @@
+{
+  "id": "backgrounds/fantasy/elemental/meridian-vale-realm",
+  "kind": "background",
+  "name": "Meridian Vale Realm",
+  "description": "an elemental neutral realm: a high white-stone plateau where every weather meets, a soft light of no particular colour, drifting feathers and pale cloud rolling past standing stones",
+  "mood": "calm, balanced",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "fantasy",
+    "elemental",
+    "neutral"
+  ]
+}

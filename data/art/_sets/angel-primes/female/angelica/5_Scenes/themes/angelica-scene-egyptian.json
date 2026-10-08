@@ -1,0 +1,24 @@
+{
+  "artId": "angelica-scene-egyptian",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/5_Scenes/themes/Angelica_Scene_Egyptian.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Egyptian",
+  "components": {
+    "pose": "data/art/motion/standing/side-profile-elegant.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/ancient/egyptian/wardrobe/clothing/gowns/kalasiris-sheath-gown.json",
+    "back": "data/art/heroes/angel-primes/female/angelica/wings/angelica-wings.json",
+    "effects": "data/art/heroes/angel-primes/female/angelica/effects/angelica-elemental-drift.json",
+    "background": "data/art/themes/ancient/egyptian/backgrounds/fantasy/temple/hypostyle-hall-torchlit.json",
+    "headwear": "data/art/themes/ancient/egyptian/wardrobe/headwear/diadems/golden-uraeus-diadem.json",
+    "jewelry": "data/art/themes/ancient/egyptian/wardrobe/jewelry/sets/usekh-collar-set.json",
+    "legs_feet": "data/art/themes/ancient/egyptian/wardrobe/footwear/sandals/papyrus-sandals.json",
+    "holding": "data/art/themes/ancient/egyptian/wardrobe/props/vessels/canopic-jar-flask.json",
+    "makeup": "data/art/themes/ancient/egyptian/cosmetics/makeup/kohl/winged-kohl-gold.json"
+  },
+  "notes": "Egyptian theme scene: every item is a library piece."
+}

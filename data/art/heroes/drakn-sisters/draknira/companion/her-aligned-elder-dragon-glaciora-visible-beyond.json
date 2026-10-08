@@ -2,9 +2,10 @@
   "id": "heroes/drakn-sisters/draknira/companion/her-aligned-elder-dragon-glaciora-visible-beyond",
   "kind": "companion",
   "name": "Her aligned elder dragon glaciora visible beyond",
-  "description": "her aligned Elder Dragon, Glaciora, visible beyond the hall's high windows, an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/glaciora/companion/glaciora-companion.json",
+  "vars": {
+    "PLACEMENT": "visible beyond the hall's high windows, ",
+    "DETAIL": ""
+  },
+  "notes": "Extends the Glaciora companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

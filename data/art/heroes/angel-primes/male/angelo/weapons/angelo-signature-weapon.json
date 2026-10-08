@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/angelo/weapons/angelo-signature-weapon",
+  "kind": "holding",
+  "name": "Angelo's signature weapon",
+  "extends": "data/art/wardrobe/weapons/polearms/halberd.json",
+  "description": "+, its metal worked with a single white feather within a plain ring in {{ACCENT_SOFT}}, soft white light, drifting pale feathers and motes gathering along it when it is raised; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelo: the library piece wardrobe/weapons/polearms/halberd.json plus neutral and alignment details."
+}

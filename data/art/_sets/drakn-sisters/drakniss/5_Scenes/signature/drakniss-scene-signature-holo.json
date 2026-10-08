@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/drakniss/weapons/sunburst-staff-ascended.json",
     "effects": "A great sunburst of {{MAGIC}} light blazes behind her, beams fall through the stained-glass windows, golden motes and drifting feathers of light fill the air and the marble floor glows beneath her feet.",
-    "companion": "her aligned Elder Dragon, Lumira, filling the high windows behind her with its head lowered toward her, radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold",
+    "companion": "data/art/heroes/drakn-sisters/drakniss/companion/drakniss-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/signature/sunburst-temple-altar.json",
     "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-signature-holo-headwear.json",
     "back": "data/art/heroes/drakn-sisters/drakniss/capes/scene-signature-holo-back.json"

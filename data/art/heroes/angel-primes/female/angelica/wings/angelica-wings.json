@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/angelica/wings/angelica-wings",
+  "kind": "back",
+  "name": "Angelica - wings",
+  "description": "a pair of large pearl-white feathered wings, softly layered, each feather edged in warm champagne gold at the tip",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "neutral"
+  ]
+}

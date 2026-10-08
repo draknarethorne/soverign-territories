@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/male/angelo/wings/angelo-wings",
+  "kind": "back",
+  "name": "Angelo - wings",
+  "description": "a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "neutral"
+  ]
+}

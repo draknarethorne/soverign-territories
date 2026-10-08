@@ -13,7 +13,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
     "holding": "data/art/heroes/drakn-sisters/draknira/weapons/frost-crystal-staff-ascended.json",
     "effects": "Frost races outward across the floor and up the pillars, a storm of ice crystals and snow swirls around her in a slow spiral, a ring of floating ice shards orbits the staff, and the windows frost over in {{MAGIC}} light.",
-    "companion": "her aligned Elder Dragon, Glaciora, filling the great hall's windows behind her with its head lowered toward her, glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome",
+    "companion": "data/art/heroes/drakn-sisters/draknira/companion/draknira-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/signature/frozen-great-hall.json",
     "headwear": "data/art/heroes/drakn-sisters/draknira/headwear/scene-lineup-headwear.json",
     "back": "data/art/heroes/drakn-sisters/draknira/capes/scene-signature-holo-back.json"

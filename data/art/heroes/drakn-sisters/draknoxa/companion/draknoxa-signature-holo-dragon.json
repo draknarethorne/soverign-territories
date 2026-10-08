@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknoxa/companion/draknoxa-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Venomis in Draknoxa's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/venomis/companion/venomis-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "coiling through the vaulted laboratory behind her with its head lowered over her shoulder, toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Venomis companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

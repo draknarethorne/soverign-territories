@@ -2,9 +2,10 @@
   "id": "heroes/drakn-sisters/draknoxa/companion/her-aligned-elder-dragon-venomis-visible-driftin",
   "kind": "companion",
   "name": "Her aligned elder dragon venomis visible driftin",
-  "description": "her aligned Elder Dragon, Venomis, visible drifting through the shadows nearby, an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/venomis/companion/venomis-companion.json",
+  "vars": {
+    "PLACEMENT": "visible drifting through the shadows nearby, ",
+    "DETAIL": ""
+  },
+  "notes": "Extends the Venomis companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

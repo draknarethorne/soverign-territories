@@ -2,9 +2,9 @@
   "id": "heroes/drakn-sisters/drakness/companion/her-aligned-elder-dragon-umbrath-barely-visible",
   "kind": "companion",
   "name": "Her aligned elder dragon umbrath barely visible",
-  "description": "her aligned Elder Dragon, Umbrath, barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/umbrath/companion/umbrath-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "barely visible in the distant night sky beyond the terrace, a silhouette of dark wings against the moonlight"
+  },
+  "notes": "Extends the Umbrath companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknava/companion/draknava-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Zephyros in Draknava's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/zephyros/companion/zephyros-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "swooping in close beside her with its wings spread across the sky, windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Zephyros companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

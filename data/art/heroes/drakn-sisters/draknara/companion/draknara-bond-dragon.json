@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/draknara/companion/draknara-bond-dragon",
+  "kind": "companion",
+  "name": "Terrador in Draknara's bond scene",
+  "extends": "data/art/dragons/elder-dragons/terrador/companion/terrador-companion.json",
+  "vars": {
+    "PLACEMENT": "",
+    "DETAIL": ", towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Terrador companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/capes/wings/white-angel-wings",
+  "kind": "back",
+  "name": "White angel wings",
+  "description": "a pair of large, softly layered white feathered wings spread behind the shoulders, every feather clearly defined with a soft pearl sheen at the tips",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "unisex"
+  ],
+  "notes": "The generic wings of the alpha test heroes; each angel has her or his own wings piece under heroes/angel-primes/."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/drakn-sisters/drakness/companion/drakness-bond-dragon",
+  "kind": "companion",
+  "name": "Umbrath in Drakness's bond scene",
+  "extends": "data/art/dragons/elder-dragons/umbrath/companion/umbrath-companion.json",
+  "vars": {
+    "PLACEMENT": "",
+    "DETAIL": ", towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Umbrath companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

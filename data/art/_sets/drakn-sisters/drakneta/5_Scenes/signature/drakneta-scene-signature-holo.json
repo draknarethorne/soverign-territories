@@ -8,7 +8,7 @@
   "components": {
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "companion": "her aligned Elder Dragon, Fulgora, filling the shattered windows behind her with its head thrust into the hall, electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning",
+    "companion": "data/art/heroes/drakn-sisters/drakneta/companion/drakneta-signature-holo-dragon.json",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/signature/storm-watch-sigil-hall.json",
     "wearing": "data/art/heroes/drakn-sisters/drakneta/clothing/scene-signature-holo-wearing.json",
     "pose": "She stands with the staff planted and her free hand cupped around a fierce ball of lightning at chest height, her hair lifted by static, chin lifted, an intense, knowing gaze straight to the camera; full figure visible.",

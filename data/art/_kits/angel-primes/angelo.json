@@ -1,0 +1,45 @@
+{
+  "hero": "Angelo",
+  "group": "angel-primes",
+  "slug": "angelo",
+  "element": "Neutral",
+  "alignmentRank": 5,
+  "rotation": 10,
+  "identity": "data/art/heroes/angel-primes/male/angelo.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/swim-jammer",
+    "wardrobe/swimwear/trunks/boxer-brief",
+    "wardrobe/swimwear/athletic/running-shorts"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/henley-and-chinos",
+    "wardrobe/clothing/sets/three-piece-suit",
+    "wardrobe/clothing/sets/open-linen-shirt-and-trousers"
+  ],
+  "armor": [
+    "wardrobe/armor/plate/half-plate",
+    "wardrobe/armor/plate/parade-plate"
+  ],
+  "motions": [
+    "motion/standing/hand-on-hip-power",
+    "motion/walking/strut-runway",
+    "motion/action/guard-stance",
+    "motion/walking/relaxed-stroll"
+  ],
+  "heels": "wardrobe/footwear/heels/matching-open-toed-heels",
+  "signature": {
+    "armor": "wardrobe/armor/plate/full-plate",
+    "weapon": "wardrobe/weapons/polearms/halberd",
+    "gown": "wardrobe/clothing/sets/long-coat",
+    "circlet": "wardrobe/headwear/crowns/laurel-wreath"
+  },
+  "scene": {
+    "wearing": "wardrobe/armor/plate/parade-plate",
+    "pose": "motion/standing/hand-on-hip-power",
+    "expression": "motion/expressions/composed/serious-poised",
+    "background": "backgrounds/fantasy/elemental/meridian-vale-realm",
+    "back": "heroes/angel-primes/male/angelo/wings/angelo-wings",
+    "companion": "heroes/angel-primes/male/angelo/companion/ward-beside",
+    "effects": "Soft pearl-white light and loose white feathers drift in the air around the figure, a gentle {{MAGIC}} glow lifting from the ground."
+  }
+}

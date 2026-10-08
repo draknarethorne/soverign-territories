@@ -1,0 +1,10 @@
+{
+  "artId": "female-hair-high-bun",
+  "kind": "base-set",
+  "stage": "hair",
+  "heroArt": "data/art/heroes/angel-primes/alpha/female.json",
+  "component": "data/art/races/human/cosmetics/hair/updo/high-bun.json",
+  "template": "data/art/_templates/heroes/hair-human.txt",
+  "output": "prompts/angel-primes/alpha/Female/2_Studies/hair/updo/Female_Hair_Updo_HighBun.txt",
+  "denoise": "~0.4-0.6"
+}

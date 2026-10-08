@@ -1,0 +1,12 @@
+{
+  "id": "motions/elements/feathers-drift",
+  "kind": "motion",
+  "name": "Feathers drift",
+  "seconds": 2.5,
+  "beat": "Soft pearl-white light spreads outward from {{her}}, loose white feathers drifting through the air and a faint halo gathering behind {{her}}.",
+  "audio": "a soft, held choir",
+  "tags": [
+    "element",
+    "neutral"
+  ]
+}

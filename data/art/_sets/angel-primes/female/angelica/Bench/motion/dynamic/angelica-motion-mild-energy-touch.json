@@ -1,0 +1,10 @@
+{
+  "artId": "angelica-motion-mild-energy-touch",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/Bench/motion/dynamic/Angelica_Motion_Dynamic_MildEnergyTouch.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/dynamic/mild-energy-touch.json"
+}

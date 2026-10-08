@@ -1,5 +1,5 @@
 === {{HERO}} · Pose View: {{NAME}} (group: X_Pose) — Edit (img2img) ===
-Incoming image: the front-facing A-pose of {{HERO}}. Turn the SAME subject to a new view for the reference library; keep everything else. Denoise ~0.5-0.7.
+Incoming image: the front-facing A-pose of {{HERO}}. Turn the SAME subject to a new view for the reference library; keep everything else. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:

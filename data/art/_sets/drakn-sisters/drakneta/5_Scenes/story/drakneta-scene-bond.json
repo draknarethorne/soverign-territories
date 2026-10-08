@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, small arcs of lightning dancing between them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "companion": "her aligned Elder Dragon, Fulgora, an Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "companion": "data/art/heroes/drakn-sisters/drakneta/companion/drakneta-bond-dragon.json",
     "background": "data/art/heroes/drakn-sisters/drakneta/backgrounds/fantasy/bond/fulgora-storm-eyrie.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

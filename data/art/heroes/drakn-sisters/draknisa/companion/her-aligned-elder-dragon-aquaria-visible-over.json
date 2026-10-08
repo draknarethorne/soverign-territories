@@ -2,9 +2,10 @@
   "id": "heroes/drakn-sisters/draknisa/companion/her-aligned-elder-dragon-aquaria-visible-over",
   "kind": "companion",
   "name": "Her aligned elder dragon aquaria visible over",
-  "description": "her aligned Elder Dragon, Aquaria, visible over the moonlit water beyond the terrace, an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum",
-  "compatibleStages": [
-    "scene"
-  ],
-  "notes": "Extracted from 2 cards that carried this sentence inline; edit it here and every one follows."
+  "extends": "data/art/dragons/elder-dragons/aquaria/companion/aquaria-companion.json",
+  "vars": {
+    "PLACEMENT": "visible over the moonlit water beyond the terrace, ",
+    "DETAIL": ""
+  },
+  "notes": "Extends the Aquaria companion frame; only the placement is this scene's. (Was a typed sentence that copied the dragon's description.)"
 }

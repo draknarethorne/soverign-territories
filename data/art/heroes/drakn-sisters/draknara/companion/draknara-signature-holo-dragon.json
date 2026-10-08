@@ -1,0 +1,14 @@
+{
+  "id": "heroes/drakn-sisters/draknara/companion/draknara-signature-holo-dragon",
+  "kind": "companion",
+  "name": "Terrador in Draknara's signature holo scene",
+  "extends": "data/art/dragons/elder-dragons/terrador/companion/terrador-companion-distant.json",
+  "vars": {
+    "PLACEMENT": "rising among the totem poles close behind her with its great head lowered toward her, deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze"
+  },
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "Extends the Terrador companion frame; only the placement is this scene's. (Was a sentence typed into the card.)"
+}

@@ -12,7 +12,7 @@
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "effects": "A thread of {{MAGIC}} light runs from her palm to the dragon's brow where they touch, the bond forming, motes of light rising between them, ribbons of wind curling around both of them.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "companion": "her aligned Elder Dragon, Zephyros, an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk, towering close beside her and lowering its great head toward her raised hand, its eyes fixed on her",
+    "companion": "data/art/heroes/drakn-sisters/draknava/companion/draknava-bond-dragon.json",
     "background": "data/art/heroes/drakn-sisters/draknava/backgrounds/fantasy/bond/zephyros-sky-ledge.json"
   },
   "template": "data/art/_templates/heroes/scene-with-companion-human.txt",

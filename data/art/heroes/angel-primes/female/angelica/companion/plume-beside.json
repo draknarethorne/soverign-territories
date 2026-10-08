@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/angelica/companion/plume-beside",
+  "kind": "companion",
+  "name": "Plume beside Angelica",
+  "description": "a pearl-white dove with dove-grey wingtips and a warm champagne ring around each dark eye, perched on her raised hand with its wings half open, a loose white feather drifting down",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "dove"
+  ]
+}

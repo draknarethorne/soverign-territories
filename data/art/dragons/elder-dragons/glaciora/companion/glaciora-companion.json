@@ -1,0 +1,15 @@
+{
+  "id": "dragons/elder-dragons/glaciora/companion/glaciora-companion",
+  "kind": "companion",
+  "name": "Glaciora as her companion",
+  "description": "her aligned Elder Dragon, Glaciora, [[PLACEMENT]]an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome[[DETAIL]]",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "A frame: the [[PLACEMENT]] gap is where this dragon is in a scene (it ends with ', ' when it is not empty) and [[DETAIL]] is anything after the description; a sister's companion piece extends it and fills the gaps with vars. Written by tools/art/dragon_companions.py from the dragon identity. This frame shows the dragon as the identity describes it; the description is read from the identity file, so edit it there."
+}

@@ -1,0 +1,18 @@
+{
+  "artId": "angelica-clothing-palazzo-and-bralette",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/4_Wardrobe/clothing/sets/Angelica_Clothing_PalazzoAndBralette.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Palazzo and Bralette",
+  "aesthetic": "a clean studio presentation of palazzo and bralette",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/sets/palazzo-and-bralette.json",
+    "arms": "bare arms",
+    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

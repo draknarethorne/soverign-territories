@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/angelica/armor/angelica-signature-armor",
+  "kind": "wearing",
+  "name": "Angelica's signature armor",
+  "extends": "data/art/wardrobe/armor/plate/paladin-holy-plate.json",
+  "description": "+, every plate and trim engraved with a single white feather within a plain ring in {{ACCENT_SOFT}}; clean, with a quiet shine",
+  "compatibleStages": [
+    "armor",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelica: the library piece wardrobe/armor/plate/paladin-holy-plate.json plus neutral and alignment details."
+}

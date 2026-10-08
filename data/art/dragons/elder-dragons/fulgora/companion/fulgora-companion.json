@@ -1,0 +1,15 @@
+{
+  "id": "dragons/elder-dragons/fulgora/companion/fulgora-companion",
+  "kind": "companion",
+  "name": "Fulgora as her companion",
+  "description": "her aligned Elder Dragon, Fulgora, [[PLACEMENT]]an Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning[[DETAIL]]",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "dragon",
+    "companion"
+  ],
+  "notes": "A frame: the [[PLACEMENT]] gap is where this dragon is in a scene (it ends with ', ' when it is not empty) and [[DETAIL]] is anything after the description; a sister's companion piece extends it and fills the gaps with vars. Written by tools/art/dragon_companions.py from the dragon identity. This frame shows the dragon as the identity describes it; the description is read from the identity file, so edit it there."
+}

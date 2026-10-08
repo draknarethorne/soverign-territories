@@ -1,0 +1,14 @@
+{
+  "id": "heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry",
+  "kind": "jewelry",
+  "name": "Angelo's signature jewelry",
+  "extends": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
+  "description": "+, the pendant formed as a single white feather within a plain ring and set with a small {{GEM}} gem",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "notes": "Signature item of Angelo: the library piece wardrobe/jewelry/studio/simple-chain-with-pendant.json plus neutral and alignment details."
+}

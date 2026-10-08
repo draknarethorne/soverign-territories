@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Ward",
+  "kind": "hound",
+  "element": "Neutral",
+  "bondedTo": "data/art/heroes/angel-primes/male/angelo.json",
+  "size": "knee-high at the shoulder",
+  "look": "a lean pale hound with a short pearl-white coat, dove-grey ears and mask, amber eyes and a thin champagne-gold collar, a faint pearl glow along its spine",
+  "temperament": "Patient and steady; it walks half a pace ahead of him and never barks without cause",
+  "scenePlacement": "standing at his side facing the viewer, ears up, tail low",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}
