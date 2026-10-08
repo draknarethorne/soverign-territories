@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/elarion/wings/elarion-wings",
+  "kind": "back",
+  "name": "Elarion - wings",
+  "description": "a pair of long, slender storm-grey wings swept back, built for speed",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "wind"
+  ]
+}

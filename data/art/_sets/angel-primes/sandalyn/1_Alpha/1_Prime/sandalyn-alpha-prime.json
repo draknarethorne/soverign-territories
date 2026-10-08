@@ -1,0 +1,11 @@
+{
+  "artId": "sandalyn-alpha-prime",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/sandalyn.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/Sandalyn/1_Alpha/1_Prime/Sandalyn_Alpha_1_Prime.txt",
+  "denoise": "~1.0",
+  "figureProfile": "standard",
+  "notes": "Sandalyn Prime A-pose, built from the original photo."
+}

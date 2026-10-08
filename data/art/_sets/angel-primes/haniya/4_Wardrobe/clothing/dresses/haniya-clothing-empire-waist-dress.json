@@ -1,0 +1,18 @@
+{
+  "artId": "haniya-clothing-empire-waist-dress",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/angel-primes/haniya.json",
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "output": "prompts/angel-primes/Haniya/4_Wardrobe/clothing/dresses/Haniya_Clothing_EmpireWaistDress.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Empire-Waist Dress",
+  "aesthetic": "a clean studio presentation of the empire-waist dress",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/empire-waist-dress.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

@@ -1,0 +1,10 @@
+{
+  "artId": "haniya-motion-relaxed-stroll",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/haniya.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Haniya/Bench/motion/walking/Haniya_Motion_Walking_RelaxedStroll.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/walking/relaxed-stroll.json"
+}

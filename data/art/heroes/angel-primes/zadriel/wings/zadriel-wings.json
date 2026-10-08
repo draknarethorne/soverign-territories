@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/zadriel/wings/zadriel-wings",
+  "kind": "back",
+  "name": "Zadriel - wings",
+  "description": "a pair of broad pearl-grey wings with blue-silver edges, calm and wide",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "water"
+  ]
+}

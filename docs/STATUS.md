@@ -123,6 +123,14 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   *pre-staged* path where a studio outfit card (`<hero>-armor|clothing-<theme>`) is rendered first and the `-scene-staged-<theme>`
   card only adds scene, effects and pose. Each sister has six themes (the 12 new packs plus the older ones); effects, expression and pose
   stay literal text on the card. Raven armor is now pieces (`heroes/drakn-sisters/drakness/armor/raven-*`).
+- **Every bust is full, firm and lifted, on purpose (Oct 2026).** Clothing and armor that is applied to a flatter or lower body loses the bust line, so the Alpha images
+  establish a lifted, crisp cleavage for every sister (shared `bustKey` for the Prime, each sister's own `bust` line for the Bare step through the `ownBust` key; the
+  lines differ in shape and detail, not in lift), and the standard `fitted-contour` / `armor-contour` pieces (also `-male` variants, applied to male heroes) tell every
+  outfit to follow and support the bust, waist and hips unless a card opts out. Explicit anatomical wording stays in the hand-made `zz_Shots`, never in generated files.
+- **Angel Primes is the clean test bed (Oct 2026).** Twenty angels (ten female, ten male, humans only, no card, `testBed`) on a good-to-evil spectrum, one female and one male
+  per element in each of ten pairs, each with a bonded non-dragon pet (`data/art/pets/angel-primes/`). New things (themes, backgrounds, creatures, clothing, weapons,
+  motions) are tried here and only the ones that work are pulled into the Drakn workspaces; Drakness is no longer the test-everything hero. Roster, kits and the trimmed
+  set (about 16-20 cards each) are in [../data/art/README.md](../data/art/README.md#angel-primes-the-clean-test-bed). Angelica and Angelo stay as the older pair.
 
 ## Open decisions
 

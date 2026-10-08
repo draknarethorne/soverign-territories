@@ -1,0 +1,38 @@
+{
+  "hero": "Nyxene",
+  "group": "angel-primes",
+  "slug": "nyxene",
+  "element": "Darkness",
+  "alignmentRank": 10,
+  "identity": "data/art/heroes/angel-primes/nyxene.json",
+  "underlayers": [
+    "wardrobe/swimwear/lingerie/bustier-set",
+    "wardrobe/swimwear/backless/backless-halter-one-piece",
+    "wardrobe/swimwear/lingerie/lace-bodysuit"
+  ],
+  "clothing": [
+    "wardrobe/clothing/gowns/velvet-long-sleeve-gown",
+    "wardrobe/clothing/gowns/corset-bodice-gown",
+    "wardrobe/clothing/gowns/plunge-gown"
+  ],
+  "armor": [
+    "wardrobe/armor/robes/velvet-battle-gown",
+    "wardrobe/armor/plate/gothic-plate"
+  ],
+  "motions": [
+    "motion/standing/commanding-cast",
+    "motion/standing/seated-elegant",
+    "motion/romantic/sultry-over-shoulder",
+    "motion/walking/strut-runway"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/robes/velvet-battle-gown",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/solemn-ritual",
+    "background": "backgrounds/fantasy/elemental/umbral-shade-realm",
+    "back": "heroes/angel-primes/nyxene/wings/nyxene-wings",
+    "companion": "heroes/angel-primes/nyxene/companion/shade-beside",
+    "effects": "Tendrils of dark violet shadow coil around the figure, scorched feather fragments and ember-sparks drifting upward."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/auriel/companion/solaris-beside",
+  "kind": "companion",
+  "name": "Solaris beside Auriel",
+  "description": "a large adult lion with a golden coat and a full white-gold mane, calm amber eyes and a faint glow of light in the mane, standing at his side with its head at his hip height, mane catching the light",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "lion"
+  ]
+}

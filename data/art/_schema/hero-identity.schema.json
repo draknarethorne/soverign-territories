@@ -91,6 +91,22 @@
         }
       }
     },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["element", "alignment", "alignmentRank", "archetype"],
+      "description": "Design notes for a test-bed hero (Angel Primes): where she or he sits on the good-to-evil spectrum, the element, the archetype and the bonded pet. Never rendered into a prompt; the set scaffolder and the roster table read it.",
+      "properties": {
+        "element": {"enum": ["Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison"]},
+        "alignment": {"type": "string"},
+        "alignmentRank": {"type": "integer", "minimum": 1, "maximum": 10, "description": "1 = purest good, 10 = fully fallen"},
+        "archetype": {"type": "string"},
+        "inspiredBy": {"type": "string", "description": "The tradition the character echoes; no historical angel is used by name"},
+        "wings": {"type": "string"},
+        "pair": {"type": "string", "description": "Slug of the angel of the other sex with the same element and alignment"},
+        "pet": {"type": "string", "pattern": "^data/art/pets/.+\\.json$", "description": "The bonded pet's identity; its bondedTo must point back here"}
+      }
+    },
     "notes": {"type": "string"}
   }
 }

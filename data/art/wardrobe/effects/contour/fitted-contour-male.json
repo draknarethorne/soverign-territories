@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/effects/contour/fitted-contour-male",
+  "kind": "effects",
+  "name": "Contour: fitted to the incoming body (male)",
+  "description": "Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "contour",
+    "fitted",
+    "male"
+  ],
+  "notes": "Optional line (components.body_contour); the generator picks the -male variant of the default piece for male heroes."
+}

@@ -1,0 +1,13 @@
+{
+  "artId": "auriel-head-face-closeup",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/auriel.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/Auriel/2_Studies/head/closeups/Auriel_Head_Face_Closeup.txt",
+  "denoise": "~0.4-0.6",
+  "name": "Face close-up",
+  "components": {
+    "framing": "data/art/studio/framing/face-closeup.json"
+  }
+}

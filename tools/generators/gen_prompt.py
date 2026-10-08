@@ -249,6 +249,7 @@ KEY_LABELS = {"hair": "Hair", "bust": "Bust", "ownBust": "Bust", "eyes": "Eyes",
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
     "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
+    "bare-male-human.txt": ["hair", "eyes", "skin"],
 }
 
 # Physique fields that make the Figure line, in order (the female schema has bust and hips, the male chest and waist).
@@ -574,8 +575,11 @@ def generate(card_path, tokens_only=False):
         default_contour = default_contour.get(card["stage"], default_contour.get("default", "off"))
     if contour == "off":  # a card can opt out of the global default
         card["components"].pop("body_contour")
-    elif contour is None and "{{BODY_CONTOUR}}" in template and default_contour != "off" and "bust" in hero.get("art", {}).get("physique", {}):  # the pieces are written for the female sisters
-        card.setdefault("components", {})["body_contour"] = f"data/art/wardrobe/effects/contour/{default_contour}.json"
+    elif contour is None and "{{BODY_CONTOUR}}" in template and default_contour != "off" and "physique" in hero.get("art", {}):
+        male = "bust" not in hero["art"]["physique"]  # male heroes use the <piece>-male variant
+        piece = f"data/art/wardrobe/effects/contour/{default_contour}{'-male' if male else ''}.json"
+        if (ROOT / piece).exists():
+            card.setdefault("components", {})["body_contour"] = piece
     sex = None
     if "art" in hero:
         sex = "female" if "bust" in hero["art"]["physique"] else "male"

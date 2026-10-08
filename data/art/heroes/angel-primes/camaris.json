@@ -1,0 +1,45 @@
+{
+  "testBed": true,
+  "name": "Camaris",
+  "profile": {
+    "element": "Fire",
+    "alignment": "Zealous (chaotic neutral)",
+    "alignmentRank": 8,
+    "archetype": "Wrathful zealot",
+    "inspiredBy": "the angels of wrath and righteous war",
+    "wings": "a pair of broad crimson feathered wings fading to gold, the tips glowing like embers",
+    "pair": "urael",
+    "pet": "data/art/pets/angel-primes/cinder.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Flame Red",
+      "accentColors": [
+        "Burnished Copper",
+        "Ember Orange"
+      ],
+      "metal": "burnished copper",
+      "magicColor": "ember orange",
+      "gemColor": "ruby",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wild-tossed.json"
+    },
+    "physique": {
+      "build": "Curvy, athletic, powerful hourglass build; a fighter's frame",
+      "torso": "Strong, defined waist",
+      "bust": "Very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Strong, toned arms",
+      "hips": "Full, powerful hips",
+      "legs": "Strong, shapely, muscular legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    },
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

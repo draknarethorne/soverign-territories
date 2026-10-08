@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Shade",
+  "kind": "panther",
+  "element": "Darkness",
+  "bondedTo": "data/art/heroes/angel-primes/nyxene.json",
+  "size": "large",
+  "look": "a sleek black panther whose coat holds a faint violet sheen, with glowing violet eyes and silent, heavy paws",
+  "temperament": "Silent, possessive and patient; it appears from shadow at her side without a sound",
+  "scenePlacement": "padding at her side, head level with her hip, violet eyes on the viewer",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

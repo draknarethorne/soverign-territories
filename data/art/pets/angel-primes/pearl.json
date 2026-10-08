@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Pearl",
+  "kind": "swan",
+  "element": "Water",
+  "bondedTo": "data/art/heroes/angel-primes/ravaelle.json",
+  "size": "large",
+  "look": "a large pearl-white swan with faint aqua tinting along the edges of its feathers, a long graceful neck and calm dark eyes",
+  "temperament": "Serene and protective; it glides beside her and hisses at anything that threatens her patients",
+  "scenePlacement": "gliding beside her on shallow water, its wings half raised",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

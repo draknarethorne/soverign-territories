@@ -1,0 +1,38 @@
+{
+  "hero": "Remiah",
+  "group": "angel-primes",
+  "slug": "remiah",
+  "element": "Lightning",
+  "alignmentRank": 6,
+  "identity": "data/art/heroes/angel-primes/remiah.json",
+  "underlayers": [
+    "wardrobe/swimwear/athletic/sports-set",
+    "wardrobe/swimwear/athletic/high-cut-leotard",
+    "wardrobe/swimwear/bikini/push-up-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/leather-pants-and-crop-top",
+    "wardrobe/clothing/sets/jumpsuit",
+    "wardrobe/clothing/dresses/mini-dress"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/leather-bikini-armor",
+    "wardrobe/armor/plate/half-plate-open-midriff"
+  ],
+  "motions": [
+    "motion/action/leaping-strike",
+    "motion/dynamic/twirl-spin",
+    "motion/standing/commanding-cast",
+    "motion/action/sword-lunge"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/leather/leather-corset-armor",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/intense/fierce-focused",
+    "background": "backgrounds/fantasy/elemental/storm-crown-realm",
+    "back": "heroes/angel-primes/remiah/wings/remiah-wings",
+    "companion": "heroes/angel-primes/remiah/companion/spark-beside",
+    "effects": "Thin arcs of {{MAGIC}} lightning crackle between the fingers and along the edges of the wings, the air charged and bright."
+  }
+}

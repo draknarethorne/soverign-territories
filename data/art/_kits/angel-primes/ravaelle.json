@@ -1,0 +1,38 @@
+{
+  "hero": "Ravaelle",
+  "group": "angel-primes",
+  "slug": "ravaelle",
+  "element": "Water",
+  "alignmentRank": 2,
+  "identity": "data/art/heroes/angel-primes/ravaelle.json",
+  "underlayers": [
+    "wardrobe/swimwear/lingerie/silk-slip-set",
+    "wardrobe/swimwear/bikini/halter-bikini",
+    "wardrobe/swimwear/one-piece/cutout-monokini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/gowns/liquid-silk-gown",
+    "wardrobe/clothing/gowns/mermaid-gown",
+    "wardrobe/clothing/dresses/flowing-sundress"
+  ],
+  "armor": [
+    "wardrobe/armor/robes/priestess-robes",
+    "wardrobe/armor/crystal/prismatic-glass-armor"
+  ],
+  "motions": [
+    "motion/dynamic/fluid-floor-reach",
+    "motion/romantic/windswept-dreamy",
+    "motion/walking/relaxed-stroll",
+    "motion/standing/side-profile-elegant"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/clothing/gowns/liquid-silk-gown",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/composed-serene",
+    "background": "backgrounds/fantasy/elemental/tide-reef-realm",
+    "back": "heroes/angel-primes/ravaelle/wings/ravaelle-wings",
+    "companion": "heroes/angel-primes/ravaelle/companion/pearl-beside",
+    "effects": "Droplets of {{MAGIC}} water hang in the air around the figure, a gentle mist curling about the feet and light rippling across the wings."
+  }
+}

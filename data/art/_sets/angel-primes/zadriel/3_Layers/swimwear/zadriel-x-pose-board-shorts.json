@@ -1,0 +1,13 @@
+{
+  "artId": "zadriel-x-pose-board-shorts",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/zadriel.json",
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/Zadriel/3_Layers/swimwear/Zadriel_X_Pose_BoardShorts.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/trunks/board-shorts.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

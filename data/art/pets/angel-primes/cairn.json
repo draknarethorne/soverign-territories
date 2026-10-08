@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Cairn",
+  "kind": "mountain ram",
+  "element": "Earth",
+  "bondedTo": "data/art/heroes/angel-primes/sandalyn.json",
+  "size": "large",
+  "look": "a sturdy russet-and-cream mountain ram with heavy curled horns ringed in stone-grey bands and a thick, weather-worn coat",
+  "temperament": "Stubborn, loyal and immovable; it plants itself between her and any danger",
+  "scenePlacement": "standing on a boulder beside her, horns lowered and steady",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

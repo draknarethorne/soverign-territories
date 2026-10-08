@@ -1,0 +1,37 @@
+{
+  "hero": "Urael",
+  "group": "angel-primes",
+  "slug": "urael",
+  "element": "Fire",
+  "alignmentRank": 8,
+  "identity": "data/art/heroes/angel-primes/urael.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/athletic-trunks",
+    "wardrobe/swimwear/trunks/swim-brief"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/leather-jerkin-and-trousers",
+    "wardrobe/clothing/sets/sleeveless-tunic-and-trousers",
+    "wardrobe/clothing/sets/skintight-training-suit"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/gladiator-harness-set",
+    "wardrobe/armor/plate/gothic-plate"
+  ],
+  "motions": [
+    "motion/action/overhead-strike",
+    "motion/action/leaping-strike",
+    "motion/action/draw-weapon",
+    "motion/walking/high-energy-stride"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/leather/gladiator-harness-set",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/intense/battle-cry",
+    "background": "backgrounds/fantasy/elemental/rising-flames",
+    "back": "heroes/angel-primes/urael/wings/urael-wings",
+    "companion": "heroes/angel-primes/urael/companion/ember-beside",
+    "effects": "Embers and licks of flame rise from the ground and drift off the wings, a warm {{MAGIC}} glow on everything nearby."
+  }
+}

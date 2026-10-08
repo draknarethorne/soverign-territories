@@ -1,0 +1,38 @@
+{
+  "hero": "Auriel",
+  "group": "angel-primes",
+  "slug": "auriel",
+  "element": "Light",
+  "alignmentRank": 1,
+  "identity": "data/art/heroes/angel-primes/auriel.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/swim-brief",
+    "wardrobe/swimwear/athletic/fitted-tank-and-shorts",
+    "wardrobe/swimwear/trunks/athletic-trunks"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/tailored-dress-shirt-set",
+    "wardrobe/clothing/sets/long-coat",
+    "wardrobe/clothing/sets/robes-and-sash"
+  ],
+  "armor": [
+    "wardrobe/armor/ceremonial/golden-regalia-armor",
+    "wardrobe/armor/plate/plate-tank"
+  ],
+  "motions": [
+    "motion/standing/three-quarter-glamour",
+    "motion/action/guard-stance",
+    "motion/walking/relaxed-stroll",
+    "motion/action/ground-slam-cast"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/ceremonial/golden-regalia-armor",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/composed-commanding",
+    "background": "backgrounds/fantasy/elemental/radiant-sun-realm",
+    "back": "heroes/angel-primes/auriel/wings/auriel-wings",
+    "companion": "heroes/angel-primes/auriel/companion/solaris-beside",
+    "effects": "Soft {{MAGIC}} light radiates from the wings and a faint halo above the head, motes of golden light drifting slowly upward."
+  }
+}

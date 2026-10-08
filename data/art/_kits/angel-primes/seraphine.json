@@ -1,0 +1,38 @@
+{
+  "hero": "Seraphine",
+  "group": "angel-primes",
+  "slug": "seraphine",
+  "element": "Light",
+  "alignmentRank": 1,
+  "identity": "data/art/heroes/angel-primes/seraphine.json",
+  "underlayers": [
+    "wardrobe/swimwear/bikini/push-up-bikini",
+    "wardrobe/swimwear/lingerie/balconette-set",
+    "wardrobe/swimwear/one-piece/one-piece-swimsuit"
+  ],
+  "clothing": [
+    "wardrobe/clothing/gowns/plunge-gown",
+    "wardrobe/clothing/dresses/halter-dress",
+    "wardrobe/clothing/gowns/ethereal-sheer-gown"
+  ],
+  "armor": [
+    "wardrobe/armor/plate/paladin-holy-plate",
+    "wardrobe/armor/ceremonial/golden-regalia-armor"
+  ],
+  "motions": [
+    "motion/standing/three-quarter-glamour",
+    "motion/standing/seated-elegant",
+    "motion/walking/catwalk-confident",
+    "motion/romantic/hand-to-collarbone"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/clothing/gowns/ethereal-sheer-gown",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/reverent-serene",
+    "background": "backgrounds/fantasy/elemental/radiant-sun-realm",
+    "back": "heroes/angel-primes/seraphine/wings/seraphine-wings",
+    "companion": "heroes/angel-primes/seraphine/companion/lumen-beside",
+    "effects": "Soft {{MAGIC}} light radiates from the wings and a faint halo above the head, motes of golden light drifting slowly upward."
+  }
+}

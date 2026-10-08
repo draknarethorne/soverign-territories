@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Quill",
+  "kind": "snowy owl",
+  "element": "Ice",
+  "bondedTo": "data/art/heroes/angel-primes/metrael.json",
+  "size": "large",
+  "look": "a large snowy owl with silver-grey barring, pale gold eyes and a soft ruff of white feathers dusted with frost",
+  "temperament": "Silent, exacting and watchful; it notes everything and forgets nothing",
+  "scenePlacement": "perched on his shoulder, head turned toward the viewer",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

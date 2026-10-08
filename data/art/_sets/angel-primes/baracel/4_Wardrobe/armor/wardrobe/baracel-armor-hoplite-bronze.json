@@ -1,0 +1,20 @@
+{
+  "artId": "baracel-armor-hoplite-bronze",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/baracel.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/Baracel/4_Wardrobe/armor/wardrobe/Baracel_Armor_HopliteBronze.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Hoplite Bronze Armor",
+  "aesthetic": "a clean studio presentation of the hoplite bronze armor",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/bronze/hoplite-bronze.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} chain with a small pendant",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

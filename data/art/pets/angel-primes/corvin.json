@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Corvin",
+  "kind": "raven",
+  "element": "Darkness",
+  "bondedTo": "data/art/heroes/angel-primes/luzariel.json",
+  "size": "large",
+  "look": "a large black raven with ember-gold eyes and the tips of its feathers singed to red, a faint wisp of smoke at its wings",
+  "temperament": "Cunning, mocking and fiercely attached; it repeats his secrets to anyone who will listen",
+  "scenePlacement": "perched on his shoulder, wings half open, ember-gold eyes on the viewer",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

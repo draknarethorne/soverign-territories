@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/effects/contour/armor-contour-male",
+  "kind": "effects",
+  "name": "Contour: armor shaped to the body (male)",
+  "description": "Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "showcase",
+    "scene"
+  ],
+  "tags": [
+    "contour",
+    "armor",
+    "male"
+  ],
+  "notes": "Optional line (components.body_contour); the generator picks the -male variant of the default piece for male heroes."
+}

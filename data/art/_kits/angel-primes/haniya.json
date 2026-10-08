@@ -1,0 +1,38 @@
+{
+  "hero": "Haniya",
+  "group": "angel-primes",
+  "slug": "haniya",
+  "element": "Grass",
+  "alignmentRank": 3,
+  "identity": "data/art/heroes/angel-primes/haniya.json",
+  "underlayers": [
+    "wardrobe/swimwear/bikini/bandeau-bikini",
+    "wardrobe/swimwear/lingerie/bralette-set",
+    "wardrobe/swimwear/athletic/sporty-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/flowing-sundress",
+    "wardrobe/clothing/dresses/peasant-dress",
+    "wardrobe/clothing/dresses/empire-waist-dress"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/ranger-leathers",
+    "wardrobe/armor/hide/fur-and-leather-bikini"
+  ],
+  "motions": [
+    "motion/walking/relaxed-stroll",
+    "motion/dynamic/twirl-spin",
+    "motion/romantic/playful-wink",
+    "motion/photo/cafe-seated"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/clothing/dresses/empire-waist-dress",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/glamour/soft-closed-smile",
+    "background": "backgrounds/fantasy/elemental/verdant-bloom-realm",
+    "back": "heroes/angel-primes/haniya/wings/haniya-wings",
+    "companion": "heroes/angel-primes/haniya/companion/bloom-beside",
+    "effects": "Green leaves and blossom petals swirl on the breeze around the figure, soft {{MAGIC}} light glowing among them."
+  }
+}

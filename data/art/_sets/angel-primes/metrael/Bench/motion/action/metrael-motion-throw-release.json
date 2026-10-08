@@ -1,0 +1,10 @@
+{
+  "artId": "metrael-motion-throw-release",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/metrael.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Metrael/Bench/motion/action/Metrael_Motion_Action_ThrowRelease.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/throw-release.json"
+}

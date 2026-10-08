@@ -1,0 +1,37 @@
+{
+  "hero": "Luzariel",
+  "group": "angel-primes",
+  "slug": "luzariel",
+  "element": "Darkness",
+  "alignmentRank": 10,
+  "identity": "data/art/heroes/angel-primes/luzariel.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/swim-brief",
+    "wardrobe/swimwear/one-piece/second-skin-bodysuit-male"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/long-coat",
+    "wardrobe/clothing/sets/doublet-and-hose",
+    "wardrobe/clothing/sets/tailored-dress-shirt-set"
+  ],
+  "armor": [
+    "wardrobe/armor/plate/gothic-plate",
+    "wardrobe/armor/robes/velvet-doublet-armor"
+  ],
+  "motions": [
+    "motion/standing/three-quarter-glamour",
+    "motion/action/draw-weapon",
+    "motion/walking/catwalk-confident",
+    "motion/action/guard-stance"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/plate/gothic-plate",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/solemn-ritual",
+    "background": "backgrounds/fantasy/elemental/umbral-shade-realm",
+    "back": "heroes/angel-primes/luzariel/wings/luzariel-wings",
+    "companion": "heroes/angel-primes/luzariel/companion/corvin-beside",
+    "effects": "Tendrils of dark violet shadow coil around the figure, scorched feather fragments and ember-sparks drifting upward."
+  }
+}

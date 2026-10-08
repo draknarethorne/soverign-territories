@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/sandalyn/wings/sandalyn-wings",
+  "kind": "back",
+  "name": "Sandalyn - wings",
+  "description": "a pair of broad, sturdy wings of warm russet and cream feathers, thick and strong",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "earth"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "artId": "ravaelle-x-pose-cutout-monokini",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/ravaelle.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/Ravaelle/3_Layers/one-piece/Ravaelle_X_Pose_CutoutMonokini.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/one-piece/cutout-monokini.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

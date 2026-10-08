@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/baracel/companion/eldrin-beside",
+  "kind": "companion",
+  "name": "Eldrin beside Baracel",
+  "description": "an ancient tortoise with a huge moss-covered shell studded with small glowing crystals and slow, wise eyes, plodding at his side, its shell as high as his knee",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "ancient tortoise"
+  ]
+}

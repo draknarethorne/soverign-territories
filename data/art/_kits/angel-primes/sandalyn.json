@@ -1,0 +1,38 @@
+{
+  "hero": "Sandalyn",
+  "group": "angel-primes",
+  "slug": "sandalyn",
+  "element": "Earth",
+  "alignmentRank": 5,
+  "identity": "data/art/heroes/angel-primes/sandalyn.json",
+  "underlayers": [
+    "wardrobe/swimwear/lingerie/corset-set",
+    "wardrobe/swimwear/bikini/sarong-and-bikini",
+    "wardrobe/swimwear/athletic/boy-short-bikini"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/corset-dress",
+    "wardrobe/clothing/sets/bodice-and-skirt",
+    "wardrobe/clothing/gowns/velvet-long-sleeve-gown"
+  ],
+  "armor": [
+    "wardrobe/armor/bronze/amazon-bronze-set",
+    "wardrobe/armor/plate/female-plate"
+  ],
+  "motions": [
+    "motion/standing/hand-on-hip-power",
+    "motion/action/guard-stance",
+    "motion/action/ground-slam-cast",
+    "motion/walking/strut-runway"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/plate/female-plate",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/composed-commanding",
+    "background": "backgrounds/fantasy/elemental/bedrock-stone-realm",
+    "back": "heroes/angel-primes/sandalyn/wings/sandalyn-wings",
+    "companion": "heroes/angel-primes/sandalyn/companion/cairn-beside",
+    "effects": "Loose stones and golden dust drift upward around the feet, warm {{MAGIC}} light running through cracks in the ground."
+  }
+}

@@ -1,0 +1,24 @@
+=== Nyxene · Head / Close-up (group: X_Head) — Edit (img2img) ===
+Incoming image: an A-pose (or hair variant) of Nyxene. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Close-up framed from the upper chest up: the head, face and hair fill the frame, with the bust and the length of the hair falling beside it visible at the bottom of the frame.
+
+View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

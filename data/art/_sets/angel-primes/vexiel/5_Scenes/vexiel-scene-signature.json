@@ -1,0 +1,22 @@
+{
+  "artId": "vexiel-scene-signature",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/vexiel.json",
+  "template": "data/art/_templates/heroes/scene-with-companion-human.txt",
+  "output": "prompts/angel-primes/Vexiel/5_Scenes/Vexiel_Scene_Signature.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Signature",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "data/art/motion/expressions/intense/predatory-grin.json",
+    "wearing": "data/art/wardrobe/armor/leather/assassin-leathers.json",
+    "jewelry": "a simple {{METAL}} chain with a small pendant",
+    "legs_feet": "data/art/wardrobe/footwear/boots/knight-boots.json",
+    "back": "data/art/heroes/angel-primes/vexiel/wings/vexiel-wings.json",
+    "effects": "Wisps of {{MAGIC}} venom-mist curl around the figure, droplets of glowing toxin and drifting spores catching the light.",
+    "companion": "data/art/heroes/angel-primes/vexiel/companion/sting-beside.json",
+    "background": "data/art/backgrounds/fantasy/elemental/venom-mire-realm.json"
+  },
+  "notes": "Complete scene from the A-pose: outfit, wings, element effect, bonded pet and an element realm."
+}

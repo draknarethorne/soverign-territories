@@ -1,0 +1,34 @@
+=== Sandalyn · Scene (Outfit + Companion): Signature (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Sandalyn (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing fitted Warm Terracotta-toned plate with a sculpted breastplate shaped to the figure, a cinched waist, flared tassets over a short bronze battle skirt, pauldrons and a plunging antique bronze-edged neckline, the midriff covered by a segmented plate belt.
+
+Jewelry: a simple antique bronze necklace and small matching earrings.
+Back: a pair of broad, sturdy wings of warm russet and cream feathers, thick and strong.
+Legs & feet: bare feet, no footwear.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. composed, commanding, lips softly together. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Loose stones and golden dust drift upward around the feet, warm warm amber light running through cracks in the ground.
+
+Eyes: irises softly aglow with warm amber light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle warm amber catchlight, no light spilling beyond the eyelids.
+
+Companion: a sturdy russet-and-cream mountain ram with heavy curled horns ringed in stone-grey bands and a thick, weather-worn coat, standing on a boulder beside her, horns lowered and steady.
+
+Environment: an elemental earth realm: huge floating boulders and crystal clusters over a canyon of ochre rock, glowing seams of ore and drifting dust in amber light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

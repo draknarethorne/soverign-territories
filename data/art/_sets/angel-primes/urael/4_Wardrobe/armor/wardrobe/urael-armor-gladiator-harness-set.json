@@ -1,0 +1,20 @@
+{
+  "artId": "urael-armor-gladiator-harness-set",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/urael.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/Urael/4_Wardrobe/armor/wardrobe/Urael_Armor_GladiatorHarnessSet.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Gladiator Harness Set",
+  "aesthetic": "a clean studio presentation of the gladiator harness set",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/leather/gladiator-harness-set.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} chain with a small pendant",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

@@ -1,0 +1,37 @@
+{
+  "hero": "Baracel",
+  "group": "angel-primes",
+  "slug": "baracel",
+  "element": "Earth",
+  "alignmentRank": 5,
+  "identity": "data/art/heroes/angel-primes/baracel.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/athletic-trunks",
+    "wardrobe/swimwear/athletic/compression-shorts"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/gambeson-and-trousers",
+    "wardrobe/clothing/sets/leather-jerkin-and-trousers",
+    "wardrobe/clothing/sets/kilt-and-vest"
+  ],
+  "armor": [
+    "wardrobe/armor/bronze/hoplite-bronze",
+    "wardrobe/armor/plate/plate-tank"
+  ],
+  "motions": [
+    "motion/action/shield-brace",
+    "motion/action/guard-stance",
+    "motion/action/overhead-strike",
+    "motion/standing/side-profile-elegant"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/bronze/hoplite-bronze",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/composed-commanding",
+    "background": "backgrounds/fantasy/elemental/bedrock-stone-realm",
+    "back": "heroes/angel-primes/baracel/wings/baracel-wings",
+    "companion": "heroes/angel-primes/baracel/companion/eldrin-beside",
+    "effects": "Loose stones and golden dust drift upward around the feet, warm {{MAGIC}} light running through cracks in the ground."
+  }
+}

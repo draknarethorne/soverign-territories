@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Sting",
+  "kind": "scorpion",
+  "element": "Poison",
+  "bondedTo": "data/art/heroes/angel-primes/vexiel.json",
+  "size": "cat-sized",
+  "look": "a cat-sized scorpion with glossy violet-black armoured plates, a raised tail and a green venom-glow at the stinger",
+  "temperament": "Silent, spiteful and efficient; it strikes when he smiles",
+  "scenePlacement": "on a rock at his feet, tail raised and venom-tip glowing",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

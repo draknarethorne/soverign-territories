@@ -1,0 +1,38 @@
+{
+  "hero": "Sammara",
+  "group": "angel-primes",
+  "slug": "sammara",
+  "element": "Poison",
+  "alignmentRank": 9,
+  "identity": "data/art/heroes/angel-primes/sammara.json",
+  "underlayers": [
+    "wardrobe/swimwear/lingerie/lace-bodysuit",
+    "wardrobe/swimwear/backless/strapless-plunge-bodysuit",
+    "wardrobe/swimwear/lingerie/strapless-bralette-set"
+  ],
+  "clothing": [
+    "wardrobe/clothing/dresses/cutout-dress",
+    "wardrobe/clothing/gowns/backless-halter-gown",
+    "wardrobe/clothing/dresses/slip-dress"
+  ],
+  "armor": [
+    "wardrobe/armor/scale/serpent-scale-armor",
+    "wardrobe/armor/robes/hooded-assassin-robes"
+  ],
+  "motions": [
+    "motion/standing/unpredictable-seductive",
+    "motion/romantic/sultry-over-shoulder",
+    "motion/walking/slow-sensual-walk",
+    "motion/dynamic/kneeling-glamour"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/scale/serpent-scale-armor",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/intense/predatory-grin",
+    "background": "backgrounds/fantasy/elemental/venom-mire-realm",
+    "back": "heroes/angel-primes/sammara/wings/sammara-wings",
+    "companion": "heroes/angel-primes/sammara/companion/viridia-beside",
+    "effects": "Wisps of {{MAGIC}} venom-mist curl around the figure, droplets of glowing toxin and drifting spores catching the light."
+  }
+}

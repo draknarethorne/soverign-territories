@@ -128,6 +128,10 @@ During a session you can point a workflow at any other image; a reset (or `--res
 dropping a chosen render into a workspace's input folder under that name is all it takes; `inputs --reset` repoints every workflow (a missing file is reported, not copied).
 Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tuned.
 
+**Angel Primes.** The twenty angels use the same names. Their original photo is expected as `<slug>_photo_944x1104.png` (`seraphine_photo_944x1104.png`, `auriel_photo_944x1104.png` ...) in the
+`Angel Primes` input folder, already padded to the standard size; change a name with `inputs --set --hero Seraphine --photo <file>`. The male angels have no Barefoot or Heels step, so their `apose`
+role points at the Alpha 2 Bare image and their golden image is the Bare. The workspace stays `planned` until its ComfyUI install exists.
+
 **Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
 before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen
 templates pass it through unchanged; FireRed resizes to 1 MP (947x1107) and the VAE trims it back. The reset sequence for a hero:

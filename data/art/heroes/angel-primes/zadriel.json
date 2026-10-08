@@ -1,0 +1,43 @@
+{
+  "testBed": true,
+  "name": "Zadriel",
+  "profile": {
+    "element": "Water",
+    "alignment": "Merciful (good)",
+    "alignmentRank": 2,
+    "archetype": "Keeper of mercy",
+    "inspiredBy": "the archangel of mercy and forgiveness",
+    "wings": "a pair of broad pearl-grey wings with blue-silver edges, calm and wide",
+    "pair": "ravaelle",
+    "pet": "data/art/pets/angel-primes/marlo.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Tidal Blue",
+      "accentColors": [
+        "Polished Silver",
+        "Pale Teal"
+      ],
+      "metal": "polished silver",
+      "magicColor": "cool teal",
+      "gemColor": "sapphire",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/natural.json"
+    },
+    "physique": {
+      "build": "Lean, gentle, swimmer's build; long and fluid",
+      "chest": "Smooth, lean, lightly defined chest",
+      "arms": "Long, lean, sinewy arms",
+      "waist": "Narrow, lean waist",
+      "legs": "Long, lean legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    }
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

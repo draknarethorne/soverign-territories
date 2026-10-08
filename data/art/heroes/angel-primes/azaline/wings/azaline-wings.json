@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/azaline/wings/azaline-wings",
+  "kind": "back",
+  "name": "Azaline - wings",
+  "description": "a pair of pale frost-white wings of crystalline, ice-edged feathers, fine frost on every tip",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "ice"
+  ]
+}

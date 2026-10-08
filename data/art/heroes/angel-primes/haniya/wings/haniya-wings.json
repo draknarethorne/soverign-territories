@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/haniya/wings/haniya-wings",
+  "kind": "back",
+  "name": "Haniya - wings",
+  "description": "a pair of soft cream wings whose feather tips curl like green leaves, tiny blossoms caught among the feathers",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "grass"
+  ]
+}

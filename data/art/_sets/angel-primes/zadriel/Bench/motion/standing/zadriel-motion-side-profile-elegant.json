@@ -1,0 +1,10 @@
+{
+  "artId": "zadriel-motion-side-profile-elegant",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/zadriel.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Zadriel/Bench/motion/standing/Zadriel_Motion_Standing_SideProfileElegant.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/standing/side-profile-elegant.json"
+}

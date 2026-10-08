@@ -1,0 +1,37 @@
+{
+  "hero": "Metrael",
+  "group": "angel-primes",
+  "slug": "metrael",
+  "element": "Ice",
+  "alignmentRank": 7,
+  "identity": "data/art/heroes/angel-primes/metrael.json",
+  "underlayers": [
+    "wardrobe/swimwear/one-piece/second-skin-bodysuit-male",
+    "wardrobe/swimwear/trunks/swim-brief"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/tailored-dress-shirt-set",
+    "wardrobe/clothing/sets/long-coat",
+    "wardrobe/clothing/sets/robes-and-sash"
+  ],
+  "armor": [
+    "wardrobe/armor/crystal/frost-crystal-armor",
+    "wardrobe/armor/robes/battle-mage-robes"
+  ],
+  "motions": [
+    "motion/standing/side-profile-elegant",
+    "motion/standing/three-quarter-glamour",
+    "motion/walking/relaxed-stroll",
+    "motion/action/throw-release"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/crystal/frost-crystal-armor",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/serious-poised",
+    "background": "backgrounds/fantasy/elemental/frost-spire-realm",
+    "back": "heroes/angel-primes/metrael/wings/metrael-wings",
+    "companion": "heroes/angel-primes/metrael/companion/quill-beside",
+    "effects": "Drifting snow and fine frost crystals glitter in the air, a pale {{MAGIC}} chill glowing at the feet."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/gavrielle/wings/gavrielle-wings",
+  "kind": "back",
+  "name": "Gavrielle - wings",
+  "description": "a pair of long, narrow silver-white wings swept back, the feathers lifting and fanning in the wind",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "wind"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Spark",
+  "kind": "fox",
+  "element": "Lightning",
+  "bondedTo": "data/art/heroes/angel-primes/remiah.json",
+  "size": "medium",
+  "look": "a lean silver fox with electric-blue markings and a pair of tails whose tips crackle with static, bright pale eyes",
+  "temperament": "Quick, clever and restless; it darts ahead, always a step before the thunder",
+  "scenePlacement": "crouched at her feet with its tails raised, static arcing between them",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

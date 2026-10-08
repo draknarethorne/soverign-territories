@@ -1,0 +1,14 @@
+{
+  "artId": "sandalyn-alpha-bare-figure",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/sandalyn.json",
+  "template": "data/art/_templates/heroes/bare-human.txt",
+  "output": "prompts/angel-primes/Sandalyn/1_Alpha/2_Bare/Sandalyn_Alpha_2_Bare_Figure.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Bare edit: bare skin figure",
+  "components": {
+    "wearing": "data/art/wardrobe/swimwear/base/edit/bare-skin-study.json"
+  },
+  "notes": "Alpha 2 Bare: fed the Prime, sets the individual build and likeness."
+}

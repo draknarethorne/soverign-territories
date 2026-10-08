@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Zephyra",
+  "kind": "pegasus foal",
+  "element": "Wind",
+  "bondedTo": "data/art/heroes/angel-primes/gavrielle.json",
+  "size": "pony-sized",
+  "look": "a young pale pegasus foal with a silver-white coat, a flowing cloud-grey mane and tail and a pair of small silver-white wings still too big for it",
+  "temperament": "Skittish and playful; it will not stay on the ground and shadows her through the air",
+  "scenePlacement": "cantering at her side with its small wings half spread, mane streaming",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

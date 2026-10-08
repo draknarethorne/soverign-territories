@@ -31,6 +31,7 @@ def run_on_copy(mutate):
         vd.check_art_cards(report)
         vd.check_variants(report, cards)
         vd.check_kits(report)
+        vd.check_pets(report)
         vd.check_piece_refs(report)
         vd.check_animation_cards(report)
         return report.errors
@@ -128,6 +129,9 @@ CASES = [
     ("variant artCard belonging to a different hero",
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update(
          {"artCard": "data/art/_sets/drakn-sisters/draknora/5_Scenes/signature/draknora-scene-signature-shiny.json"})), "belongs to"),
+    ("pet bonded to a different angel than the one that lists it",
+     lambda r: edit(r / "data/art/pets/angel-primes/lumen.json",
+                    lambda d: d.update({"bondedTo": "data/art/heroes/angel-primes/auriel.json"})), "does not point back"),
 ]
 
 

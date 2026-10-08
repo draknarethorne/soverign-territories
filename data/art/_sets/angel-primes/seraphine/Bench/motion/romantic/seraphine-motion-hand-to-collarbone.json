@@ -1,0 +1,10 @@
+{
+  "artId": "seraphine-motion-hand-to-collarbone",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/seraphine.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Seraphine/Bench/motion/romantic/Seraphine_Motion_Romantic_HandToCollarbone.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/romantic/hand-to-collarbone.json"
+}

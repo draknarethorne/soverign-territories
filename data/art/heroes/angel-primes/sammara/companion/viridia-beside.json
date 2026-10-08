@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/sammara/companion/viridia-beside",
+  "kind": "companion",
+  "name": "Viridia beside Sammara",
+  "description": "a sinuous emerald viper banded in violet, its scales jewel-bright and its eyes amethyst, a thin trace of green venom at its fangs, coiled around her forearm with its head raised near her shoulder",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "viper"
+  ]
+}

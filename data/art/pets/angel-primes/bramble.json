@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Bramble",
+  "kind": "bear",
+  "element": "Grass",
+  "bondedTo": "data/art/heroes/angel-primes/verael.json",
+  "size": "huge",
+  "look": "a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes",
+  "temperament": "Gentle, slow and enormous; it sits where it is told and eats berries from his hand",
+  "scenePlacement": "standing at his side, shoulders as high as his own, flowers in its fur",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

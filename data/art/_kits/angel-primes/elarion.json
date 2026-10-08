@@ -1,0 +1,37 @@
+{
+  "hero": "Elarion",
+  "group": "angel-primes",
+  "slug": "elarion",
+  "element": "Wind",
+  "alignmentRank": 4,
+  "identity": "data/art/heroes/angel-primes/elarion.json",
+  "underlayers": [
+    "wardrobe/swimwear/athletic/fitted-tank-and-shorts",
+    "wardrobe/swimwear/trunks/swim-brief"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/long-coat",
+    "wardrobe/clothing/sets/sleeveless-tunic-and-trousers",
+    "wardrobe/clothing/sets/open-vest-and-trousers"
+  ],
+  "armor": [
+    "wardrobe/armor/leather/leather-rogue",
+    "wardrobe/armor/leather/assassin-leathers"
+  ],
+  "motions": [
+    "motion/standing/over-the-shoulder-glance",
+    "motion/action/bow-draw-aim",
+    "motion/action/throw-release",
+    "motion/walking/catwalk-confident"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/leather/leather-rogue",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/serious-poised",
+    "background": "backgrounds/fantasy/elemental/gale-eyrie-realm",
+    "back": "heroes/angel-primes/elarion/wings/elarion-wings",
+    "companion": "heroes/angel-primes/elarion/companion/gale-beside",
+    "effects": "Loose feathers and streaks of pale cloud spiral around the figure, hair and wings lifted by a rising gale."
+  }
+}

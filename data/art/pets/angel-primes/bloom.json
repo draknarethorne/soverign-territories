@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Bloom",
+  "kind": "fawn",
+  "element": "Grass",
+  "bondedTo": "data/art/heroes/angel-primes/haniya.json",
+  "size": "small",
+  "look": "a slender white-spotted fawn with huge dark eyes and tiny antler buds from which small flower blossoms grow",
+  "temperament": "Shy and trusting; it follows her barefoot through the grass and flowers open where it steps",
+  "scenePlacement": "standing close at her side among the flowers, head raised toward her",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

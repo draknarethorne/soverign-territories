@@ -1,0 +1,37 @@
+{
+  "hero": "Judiel",
+  "group": "angel-primes",
+  "slug": "judiel",
+  "element": "Lightning",
+  "alignmentRank": 6,
+  "identity": "data/art/heroes/angel-primes/judiel.json",
+  "underlayers": [
+    "wardrobe/swimwear/athletic/compression-shorts",
+    "wardrobe/swimwear/trunks/swim-brief"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/skintight-training-suit",
+    "wardrobe/clothing/sets/doublet-and-hose",
+    "wardrobe/clothing/sets/long-coat"
+  ],
+  "armor": [
+    "wardrobe/armor/runic/runic-warplate",
+    "wardrobe/armor/leather/leather-striker"
+  ],
+  "motions": [
+    "motion/action/overhead-strike",
+    "motion/action/sword-lunge",
+    "motion/action/ground-slam-cast",
+    "motion/action/draw-weapon"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/runic/runic-warplate",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/intense/fierce-focused",
+    "background": "backgrounds/fantasy/elemental/storm-crown-realm",
+    "back": "heroes/angel-primes/judiel/wings/judiel-wings",
+    "companion": "heroes/angel-primes/judiel/companion/thunder-beside",
+    "effects": "Thin arcs of {{MAGIC}} lightning crackle between the fingers and along the edges of the wings, the air charged and bright."
+  }
+}

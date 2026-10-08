@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/vexiel/companion/sting-beside",
+  "kind": "companion",
+  "name": "Sting beside Vexiel",
+  "description": "a cat-sized scorpion with glossy violet-black armoured plates, a raised tail and a green venom-glow at the stinger, on a rock at his feet, tail raised and venom-tip glowing",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "scorpion"
+  ]
+}

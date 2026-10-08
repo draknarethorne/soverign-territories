@@ -1,0 +1,10 @@
+{
+  "artId": "verael-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/verael.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/Verael/2_Studies/head/Verael_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Verael head, the golden head."
+}

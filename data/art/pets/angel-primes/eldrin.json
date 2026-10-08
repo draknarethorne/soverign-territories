@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Eldrin",
+  "kind": "ancient tortoise",
+  "element": "Earth",
+  "bondedTo": "data/art/heroes/angel-primes/baracel.json",
+  "size": "large",
+  "look": "an ancient tortoise with a huge moss-covered shell studded with small glowing crystals and slow, wise eyes",
+  "temperament": "Slow, patient and wise; it has seen every storm pass and it does not hurry",
+  "scenePlacement": "plodding at his side, its shell as high as his knee",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

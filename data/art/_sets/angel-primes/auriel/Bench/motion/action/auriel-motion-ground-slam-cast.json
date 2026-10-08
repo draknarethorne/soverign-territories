@@ -1,0 +1,10 @@
+{
+  "artId": "auriel-motion-ground-slam-cast",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/auriel.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Auriel/Bench/motion/action/Auriel_Motion_Action_GroundSlamCast.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/ground-slam-cast.json"
+}

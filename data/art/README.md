@@ -185,6 +185,46 @@ A folder only exists to group related cards; one-card groups stay flat. Workflow
 folder, so the cards, the prompts and the render folders can never drift apart. `tools/workflows/organize_outputs.py` sorts images rendered earlier into the same
 folders (preview first, then `--apply`).
 
+## Angel Primes: the clean test bed
+
+Twenty angels (ten female, ten male, all human, no gameplay card, `testBed: true`) are the place to try new things before they touch the Drakn sisters: themes, backgrounds,
+creatures, clothing, weapons, motions. Only what works is pulled into the Drakn workspaces, so those stay small and Drakness stops being the test-everything hero. No historical
+angel is used by name; each character echoes a tradition (`profile.inspiredBy`). They sit on a good-to-evil spectrum (`profile.alignmentRank`, 1 purest good, 10 fully fallen), one
+female and one male per element in each of ten pairs, and each has a bonded pet that is never a dragon (`data/art/pets/angel-primes/`, schema `pet-identity.schema.json`).
+
+| Rank | Element | Alignment | Female (pet) | Male (pet) |
+| --- | --- | --- | --- | --- |
+| 1 | Light | Radiant (pure good) | Seraphine (Lumen, fairy) | Auriel (Solaris, lion) |
+| 2 | Water | Merciful (good) | Ravaelle (Pearl, swan) | Zadriel (Marlo, otter) |
+| 3 | Grass | Gentle (good) | Haniya (Bloom, fawn) | Verael (Bramble, bear) |
+| 4 | Wind | Free-spirited (good) | Gavrielle (Zephyra, pegasus foal) | Elarion (Gale, gyrfalcon) |
+| 5 | Earth | Steadfast (lawful good) | Sandalyn (Cairn, mountain ram) | Baracel (Eldrin, ancient tortoise) |
+| 6 | Lightning | Stern (lawful neutral) | Remiah (Spark, fox) | Judiel (Thunder, wolf) |
+| 7 | Ice | Cold (true neutral) | Azaline (Hoarfrost, snow leopard) | Metrael (Quill, snowy owl) |
+| 8 | Fire | Zealous (chaotic neutral) | Camaris (Cinder, firebird) | Urael (Ember, war-stallion) |
+| 9 | Poison | Corrupt (chaotic evil) | Sammara (Viridia, viper) | Vexiel (Sting, scorpion) |
+| 10 | Darkness | Fallen (evil) | Nyxene (Shade, panther) | Luzariel (Corvin, raven) |
+
+What each angel has, and where it lives:
+
+| Piece | File |
+| --- | --- |
+| Look (physique with her or his own build and bust line, wardrobe colour scheme, hair style, `profile`) | `heroes/angel-primes/<slug>.json` (eyes, hair colour and skin stay adaptive: the reference photo's own likeness is enhanced) |
+| Wings (`back` slot) and the pet beside the angel (`companion` slot) | `heroes/angel-primes/<slug>/wings/`, `heroes/angel-primes/<slug>/companion/` |
+| The pet itself (look, temperament, scene placement; `bondedTo` and `profile.pet` link both ways) | `pets/angel-primes/<pet>.json` |
+| The kit: underlayers, clothing, armor, motions, heels and the signature scene, chosen to fit the angel | `_kits/angel-primes/<slug>.json` |
+
+The trimmed set is written by `python tools/generators/scaffold_angel_set.py --all` (or `--slug seraphine`; re-runnable, existing cards are kept): per angel the Alpha chain (Prime, Bare Figure; the
+female angels add Bare Chest, Barefoot and Heels, the males have no Barefoot or Heels step), the head and a face close-up, three underlayer tests, two outfits and two armors from the kit, four motions
+and one signature scene with wings, an element effect, the pet and an element realm (16 cards for a male angel, 20 for a female). Males use `bare-male-human.txt` and `bare-skin-study-male`. Then
+`gen_prompt.py --group angel-primes` and `comfy_workflows.py make --create --group angel-primes`. Every angel has a different mix of outfits and motions from the library so one run covers a wide
+variety; add a piece to a kit and re-run the scaffolder to try something new on one angel. Angelica and Angelo (`angelica-prime`, `angelo-prime`) are the older pair and are left as they were.
+
+**Bust and contour.** Every female hero (sister or angel) is built with a full, firm, lifted bust and a crisp cleavage in the Alpha images, so clothing and armor have something to follow:
+the shared `bustKey` in `_settings/phrases.json` for the Prime, the hero's own `bust` line for the Bare step (`ownBust` in `keyDetails`). Outfit, armor, showcase and scene prompts also carry
+the body contour line (`wardrobe/effects/contour/fitted-contour`, `armor-contour`, `sheer-contour`; `-male` variants for male heroes), which tells the model to follow and support the bust,
+waist and hips unless a card opts out with `components.body_contour: "off"` or names another piece.
+
 ## Where rendered images live (convention)
 
 The prompt file path is the identity of an image. A rendered PNG sits at the same path under `assets/art/` with the
@@ -222,7 +262,7 @@ data/art/
 │   │   └── <slug>/<phase>/<family>/*.json    armor + 1 clothing for Drakness; all 10 now have a
 │   │                               signature scene — 3 bespoke [Drakness/Draknora/Drakneta],
 │   │                               7 first-pass minimal reusing proven wardrobe defaults)
-│   ├── angel-primes/                ✅ 4 cards (Angelo + Angelica × pose/head)
+│   ├── angel-primes/                ✅ the clean test bed: 20 angels (see "Angel Primes" below) plus Angelo and Angelica
 │   │   └── <slug>/<phase>/<family>/*.json
 │   ├── drakn-bound/                ✅ 40 cards (10 male heroes × pose/head/armor/scene) — each now
 │   │   └── <slug>/<stage>/*.json   has its OWN signature weapon (heroes/drakn-bound/<slug>/weapons/),
@@ -242,7 +282,7 @@ data/art/
 │   │   └── <slug>.json             art identity (palette/physique, male build/chest/waist/legs schema),
 │   │                               linked to its card by cardId — first-pass invented palettes, no
 │   │                               archived source material.
-│   └── angel-primes/               ✅ GROUP: Angelo Prime / Angelica Prime — calibration test-bed
+│   └── angel-primes/               ✅ GROUP: the 20 Angel Primes (testBed: true, no card) plus the older Angelo Prime / Angelica Prime
 │       └── <slug>.json             heroes (testBed: true, no card), not part of any real card series.
 │
 ├── races/                          🔶 CATEGORY: shared by every hero/NPC of a race — narrower than

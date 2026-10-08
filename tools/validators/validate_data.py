@@ -62,6 +62,8 @@ def art_piece_files():
             continue  # identity, not a piece
         if parts[0] == "dragons":
             continue
+        if parts[0] == "pets":
+            continue  # pet identities, not pieces
         if parts[0] in ("brand", "cards"):
             continue  # brand and card-art identities, not pieces
         if parts[0] == "themes" and parts[-1] == "theme.json":
@@ -78,6 +80,7 @@ REGISTRY = [
     ("gameplay cards", card_files, SCHEMAS / "codex-schema.json"),
     ("art hero identities", hero_identity_files, ART_SCHEMAS / "hero-identity.schema.json"),
     ("art dragon identities", lambda: rglob("data/art/dragons/**/*.json"), ART_SCHEMAS / "dragon-identity.schema.json"),
+    ("art pet identities", lambda: rglob("data/art/pets/**/*.json"), ART_SCHEMAS / "pet-identity.schema.json"),
     ("art brand identities", lambda: rglob("data/art/brand/*.json"), ART_SCHEMAS / "brand-identity.schema.json"),
     ("art card-art identities", lambda: rglob("data/art/cards/*.json"), ART_SCHEMAS / "cardart-identity.schema.json"),
     ("art pieces", art_piece_files, ART_SCHEMAS / "art-piece.schema.json"),
@@ -317,15 +320,30 @@ def check_kits(report):
         elif isinstance(v, dict):
             for x in v.values():
                 yield from paths(x)
-    for f in rglob("data/art/_kits/*.json"):
+    for f in rglob("data/art/_kits/**/*.json"):
         d, where = load(f), rel(f)
-        for key in ("hero", "slug", "group"):
+        for key in (("hero", "slug", "group") if f.parent.name == "_kits" else ()):
             if key not in d:
                 report.error(where, f"kit is missing '{key}'")
         for ref in paths({k: v for k, v in d.items() if k != "motions" or v != "all"}):
             full = ref if ref.startswith("data/art/") else "data/art/" + ref
             if not (ROOT / (full if full.endswith(".json") else full + ".json")).exists():
                 report.error(where, f"kit names {ref}, which does not exist")
+
+
+def check_pets(report):
+    """A pet and its angel point at each other (profile.pet <-> bondedTo), and every angel with a profile has a pet."""
+    for f in rglob("data/art/pets/**/*.json"):
+        d, where = load(f), rel(f)
+        hero = d.get("bondedTo")
+        if not hero or not (ROOT / hero).exists():
+            report.error(where, f"bondedTo {hero} does not exist")
+        elif load(ROOT / hero).get("profile", {}).get("pet") != where:
+            report.error(where, f"{hero} profile.pet does not point back at this pet (link must be bidirectional)")
+    for f in hero_identity_files():
+        pet = load(f).get("profile", {}).get("pet")
+        if pet and not (ROOT / pet).exists():
+            report.error(rel(f), f"profile.pet {pet} does not exist")
 
 
 def check_animation_cards(report):
@@ -454,6 +472,7 @@ def main():
     check_art_cards(report)
     check_variants(report, cards)
     check_kits(report)
+    check_pets(report)
     check_piece_refs(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)

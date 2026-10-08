@@ -1,0 +1,37 @@
+{
+  "hero": "Zadriel",
+  "group": "angel-primes",
+  "slug": "zadriel",
+  "element": "Water",
+  "alignmentRank": 2,
+  "identity": "data/art/heroes/angel-primes/zadriel.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/board-shorts",
+    "wardrobe/swimwear/athletic/compression-shorts"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/robes-and-sash",
+    "wardrobe/clothing/sets/open-vest-and-trousers",
+    "wardrobe/clothing/sets/sleeveless-tunic-and-trousers"
+  ],
+  "armor": [
+    "wardrobe/armor/robes/arcane-robe",
+    "wardrobe/armor/mail/mail-and-leather"
+  ],
+  "motions": [
+    "motion/standing/side-profile-elegant",
+    "motion/walking/relaxed-stroll",
+    "motion/standing/three-quarter-glamour",
+    "motion/action/throw-release"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/robes/arcane-robe",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/composed-serene",
+    "background": "backgrounds/fantasy/elemental/tide-reef-realm",
+    "back": "heroes/angel-primes/zadriel/wings/zadriel-wings",
+    "companion": "heroes/angel-primes/zadriel/companion/marlo-beside",
+    "effects": "Droplets of {{MAGIC}} water hang in the air around the figure, a gentle mist curling about the feet and light rippling across the wings."
+  }
+}

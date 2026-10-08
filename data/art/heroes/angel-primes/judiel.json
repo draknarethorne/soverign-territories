@@ -1,0 +1,43 @@
+{
+  "testBed": true,
+  "name": "Judiel",
+  "profile": {
+    "element": "Lightning",
+    "alignment": "Stern (lawful neutral)",
+    "alignmentRank": 6,
+    "archetype": "Lightning judge",
+    "inspiredBy": "the angels of judgment and divine thunder",
+    "wings": "a pair of hard-edged steel-blue wings with lightning running through the feathers",
+    "pair": "remiah",
+    "pet": "data/art/pets/angel-primes/thunder.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Storm Indigo",
+      "accentColors": [
+        "Electric Silver",
+        "Bright Gold"
+      ],
+      "metal": "steel",
+      "magicColor": "electric white",
+      "gemColor": "sapphire",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/swept-left.json"
+    },
+    "physique": {
+      "build": "Athletic, wiry-muscular, sharp and angular build",
+      "chest": "Lean, hard, sharply defined chest",
+      "arms": "Wiry, hard, defined arms",
+      "waist": "Tight, narrow waist",
+      "legs": "Long, lean, hard legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    }
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Ember",
+  "kind": "war-stallion",
+  "element": "Fire",
+  "bondedTo": "data/art/heroes/angel-primes/urael.json",
+  "size": "huge",
+  "look": "a huge black war-stallion with a flame-orange mane and tail and hooves that leave glowing prints, dark eyes lit from within",
+  "temperament": "Fierce, proud and hard to hold; it answers only to him",
+  "scenePlacement": "rearing or standing close behind him, mane streaming sparks",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

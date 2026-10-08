@@ -10,7 +10,7 @@ Result: she is wearing celestial armor of burnished copper-gold: two small ornat
 
 Critical details - these must be clearly visible:
 Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends.
-Bust: very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, tight cleavage with no gap between them; realistic skin texture and natural, anatomically accurate detail.
+Bust: very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
 Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.
 Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
 
@@ -21,4 +21,4 @@ Change nothing else: keep the face, expression, makeup, the pose, the full-lengt
 ----------------------------------------------------------------
 negative prompt:
 
-bikini bottom, bikini top, flat discs, plates standing out, plates sticking out, straps, strings, chains, large plates, full coverage, extra people, extra limbs, extra digits, deformed hands, changed face, all-over blonde hair, fully dyed hair, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.
+bikini bottom, bikini top, flat discs, plates standing out, plates sticking out, straps, strings, chains, large plates, full coverage, extra people, extra limbs, extra digits, deformed hands, changed face, all-over blonde hair, fully dyed hair, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, fair skin, washed-out skin, text, watermark, logo.

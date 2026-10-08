@@ -1,0 +1,37 @@
+{
+  "hero": "Verael",
+  "group": "angel-primes",
+  "slug": "verael",
+  "element": "Grass",
+  "alignmentRank": 3,
+  "identity": "data/art/heroes/angel-primes/verael.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/athletic-trunks",
+    "wardrobe/swimwear/trunks/board-shorts"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/leather-jerkin-and-trousers",
+    "wardrobe/clothing/sets/kilt-and-vest",
+    "wardrobe/clothing/sets/gambeson-and-trousers"
+  ],
+  "armor": [
+    "wardrobe/armor/hide/barbarian-hide",
+    "wardrobe/armor/leather/studded-leather"
+  ],
+  "motions": [
+    "motion/action/shield-brace",
+    "motion/walking/high-energy-stride",
+    "motion/action/crouch-ready",
+    "motion/action/ground-slam-cast"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/hide/barbarian-hide",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/composed/serious-poised",
+    "background": "backgrounds/fantasy/elemental/verdant-bloom-realm",
+    "back": "heroes/angel-primes/verael/wings/verael-wings",
+    "companion": "heroes/angel-primes/verael/companion/bramble-beside",
+    "effects": "Green leaves and blossom petals swirl on the breeze around the figure, soft {{MAGIC}} light glowing among them."
+  }
+}

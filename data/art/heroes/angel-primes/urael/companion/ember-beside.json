@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/urael/companion/ember-beside",
+  "kind": "companion",
+  "name": "Ember beside Urael",
+  "description": "a huge black war-stallion with a flame-orange mane and tail and hooves that leave glowing prints, dark eyes lit from within, rearing or standing close behind him, mane streaming sparks",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "war-stallion"
+  ]
+}

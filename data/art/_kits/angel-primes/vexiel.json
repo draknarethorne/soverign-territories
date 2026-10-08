@@ -1,0 +1,37 @@
+{
+  "hero": "Vexiel",
+  "group": "angel-primes",
+  "slug": "vexiel",
+  "element": "Poison",
+  "alignmentRank": 9,
+  "identity": "data/art/heroes/angel-primes/vexiel.json",
+  "underlayers": [
+    "wardrobe/swimwear/trunks/swim-brief",
+    "wardrobe/swimwear/athletic/compression-shorts"
+  ],
+  "clothing": [
+    "wardrobe/clothing/sets/doublet-and-hose",
+    "wardrobe/clothing/sets/open-vest-and-trousers",
+    "wardrobe/clothing/sets/long-coat"
+  ],
+  "armor": [
+    "wardrobe/armor/robes/hooded-assassin-robes",
+    "wardrobe/armor/leather/assassin-leathers"
+  ],
+  "motions": [
+    "motion/action/crouch-ready",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/action/draw-weapon",
+    "motion/walking/relaxed-stroll"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/armor/leather/assassin-leathers",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/intense/predatory-grin",
+    "background": "backgrounds/fantasy/elemental/venom-mire-realm",
+    "back": "heroes/angel-primes/vexiel/wings/vexiel-wings",
+    "companion": "heroes/angel-primes/vexiel/companion/sting-beside",
+    "effects": "Wisps of {{MAGIC}} venom-mist curl around the figure, droplets of glowing toxin and drifting spores catching the light."
+  }
+}

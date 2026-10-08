@@ -1,0 +1,38 @@
+{
+  "hero": "Gavrielle",
+  "group": "angel-primes",
+  "slug": "gavrielle",
+  "element": "Wind",
+  "alignmentRank": 4,
+  "identity": "data/art/heroes/angel-primes/gavrielle.json",
+  "underlayers": [
+    "wardrobe/swimwear/athletic/leggings-and-crop-top",
+    "wardrobe/swimwear/bikini/high-waist-bikini",
+    "wardrobe/swimwear/lingerie/lace-bralette-set"
+  ],
+  "clothing": [
+    "wardrobe/clothing/gowns/empire-gown",
+    "wardrobe/clothing/dresses/high-low-dress",
+    "wardrobe/clothing/gowns/cape-gown"
+  ],
+  "armor": [
+    "wardrobe/armor/robes/silk-battle-dress",
+    "wardrobe/armor/mail/mail-skirt-and-bandeau"
+  ],
+  "motions": [
+    "motion/walking/high-energy-stride",
+    "motion/dynamic/hair-flip-toss",
+    "motion/standing/over-the-shoulder-glance",
+    "motion/action/bow-draw-aim"
+  ],
+  "heels": "wardrobe/footwear/heels/stiletto-pumps",
+  "scene": {
+    "wearing": "wardrobe/clothing/gowns/cape-gown",
+    "pose": "motion/standing/three-quarter-glamour",
+    "expression": "motion/expressions/glamour/glamorous-confident",
+    "background": "backgrounds/fantasy/elemental/gale-eyrie-realm",
+    "back": "heroes/angel-primes/gavrielle/wings/gavrielle-wings",
+    "companion": "heroes/angel-primes/gavrielle/companion/zephyra-beside",
+    "effects": "Loose feathers and streaks of pale cloud spiral around the figure, hair and wings lifted by a rising gale."
+  }
+}

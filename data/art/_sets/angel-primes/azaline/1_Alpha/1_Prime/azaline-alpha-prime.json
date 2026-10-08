@@ -1,0 +1,11 @@
+{
+  "artId": "azaline-alpha-prime",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/angel-primes/azaline.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/Azaline/1_Alpha/1_Prime/Azaline_Alpha_1_Prime.txt",
+  "denoise": "~1.0",
+  "figureProfile": "standard",
+  "notes": "Azaline Prime A-pose, built from the original photo."
+}

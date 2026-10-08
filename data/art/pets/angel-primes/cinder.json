@@ -1,0 +1,12 @@
+{
+  "testBed": true,
+  "name": "Cinder",
+  "kind": "firebird",
+  "element": "Fire",
+  "bondedTo": "data/art/heroes/angel-primes/camaris.json",
+  "size": "large",
+  "look": "a crimson and gold firebird the size of an eagle with long flame-coloured tail feathers that trail sparks",
+  "temperament": "Proud, fierce and quick to anger; it perches on her gauntlet and screams when she does",
+  "scenePlacement": "perched on her raised forearm, tail feathers trailing sparks",
+  "notes": "Test-bed creature for Angel Primes; never a dragon (the Elder Dragons are the Drakn line). Use it to try creature art, then move what works into the main roster."
+}

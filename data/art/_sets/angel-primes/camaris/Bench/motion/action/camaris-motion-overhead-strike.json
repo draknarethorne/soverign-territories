@@ -1,0 +1,10 @@
+{
+  "artId": "camaris-motion-overhead-strike",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/camaris.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/Camaris/Bench/motion/action/Camaris_Motion_Action_OverheadStrike.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/overhead-strike.json"
+}
