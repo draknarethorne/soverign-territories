@@ -16,9 +16,9 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Expression: a joyful, candid laugh - a wide open smile showing teeth, eyes crinkling at the corners, cheeks high and dimples showing if present.
 
-Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; black lush lashes, defined lash line.
+Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; natural lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

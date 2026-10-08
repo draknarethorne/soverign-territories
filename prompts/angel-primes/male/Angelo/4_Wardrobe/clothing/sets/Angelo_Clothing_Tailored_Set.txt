@@ -27,4 +27,4 @@ Eyes: natural studio eyes, not glowing.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, text, wording, watermark, logo.
