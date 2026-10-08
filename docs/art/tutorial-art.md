@@ -95,10 +95,10 @@ are the tuned renders.
 python tools/validators/validate_data.py            # 1. is the data valid? (or bin\validate.cmd)
 python tools/generators/gen_prompt.py               # 2. cards -> prompts   (or bin\prompts.cmd)
 python tools/workflows/comfy_workflows.py make --create --hero Draknisa --stage scene   # 3. prompts -> workflows
-python tools/workflows/comfy_workflows.py deploy --hero Draknisa --stage scene          # 4. workflows -> ComfyUI dev
+python tools/workflows/comfy_workflows.py deploy --hero Draknisa --stage scene          # 4. workflows -> the hero's home workspace in ComfyUI
 ```
 
-`bin\refresh-dev.cmd Draknisa scene` runs steps 2 to 4. Then open the workflow in ComfyUI, pick the A-pose input
+`bin\refresh.cmd Draknisa scene` runs steps 2 to 4. Then open the workflow in ComfyUI, pick the A-pose input
 image, render, and review against [output-qa-checklist.md](output-qa-checklist.md).
 
 ## Recipe 1: add a piece
@@ -145,6 +145,11 @@ Rules that trip people up:
 - **Backgrounds live under a realm folder** (`backgrounds/fantasy/...`). The folder is the realm. A hero's own scenery goes in
   `heroes/<group>/<slug>/backgrounds/fantasy/<family>/` and usually carries a `mood`.
 - **`compatibleStages`** is `["pose"]` for an A-pose underlayer, `["scene"]` for scene pieces, `["clothing"]` and so on.
+- **Build on a piece instead of copying it.** A hero's own necklace is the library necklace plus her details: set `"extends": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"`
+  and write `"description": "+, with a tiny {{GEM}} sun hanging from the pendant"` (`+` appends to the base text; `{{BASE}}` puts it anywhere). Change the base and every piece built on it follows.
+  See "Pieces that build on pieces" in [data/art/README.md](../../data/art/README.md). The angels' signature weapon, armor, gown, circlet and jewelry are made this way.
+- **Scene-only text belongs in the scene; anything reusable becomes a piece.** If the same sentence about a wardrobe item, a weapon, an effect or a motion appears
+  in several cards, move it into a piece (`python tools/art/extract_literals.py` finds and pulls out repeats) and reference the piece.
 
 ## Recipe 2: add a scene card
 
@@ -238,7 +243,7 @@ showcase shots). The scaffold writes the cards; the workflow tool then sends her
 python tools/generators/scaffold_sister_studio.py --slug draknara
 python tools/generators/gen_prompt.py --group drakn-sisters --slug draknara
 python tools/workflows/comfy_workflows.py make --hero Draknara --class studio --create
-python tools/workflows/comfy_workflows.py deploy --to uat --hero Draknara --class studio
+python tools/workflows/comfy_workflows.py deploy --hero Draknara --class studio
 ```
 
 Copy `data/art/_kits/draknara.json` for the next sister and change the pieces. A **showcase** card is a studio shot on a coloured
@@ -290,7 +295,7 @@ Each sister has a `Lineup` scene card (`<hero>-scene-lineup.json`): her dawn gow
 by the same dawn light, full figure, effects kept within arm's reach so she cuts out cleanly. Refresh and run them:
 
 ```bash
-bin\refresh-dev.cmd Draknora scene     # or run the whole set; the workflows are named <Hero>_Qwen_Scene_Lineup
+bin\refresh.cmd Draknora scene     # or run the whole set; the workflows are named <Hero>_Qwen_Scene_Lineup
 ```
 
 Pick the best render for each. Check that the light comes from the **right** in all ten; a render lit from the left will not
@@ -368,4 +373,4 @@ her colours, and did the assistant touch only data files?
 - [ ] `python tools/validators/validate_data.py` passes (and `test_validate_data.py` if you changed the validator).
 - [ ] Prompts regenerated and the diff under `prompts/` is only what you meant.
 - [ ] No hard-coded hero colours in a shared piece; no negations in positive text.
-- [ ] Workflows refreshed (`bin\refresh-dev.cmd`) if you want to render it.
+- [ ] Workflows refreshed (`bin\refresh.cmd`) if you want to render it.

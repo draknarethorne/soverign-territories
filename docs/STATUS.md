@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-04 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-08 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -11,12 +11,12 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Area | State |
 | --- | --- |
 | Art pipeline | Working. `data/art/` identities + pieces + templates compile to prompts via `tools/generators/gen_prompt.py`. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving). Every sister has Signature, Glamour, Elegant Casting, Staged Enchanted Evening, **The Dawn** (rising in her homeland) and **Robe** scenes, each with its own background. How to add to it: [art/tutorial-art.md](art/tutorial-art.md). |
-| ComfyUI workflows | Automated. `tools/workflows/comfy_workflows.py` builds workflows from prompts and syncs them across dev, per-sister UAT and series PROD workspaces (`workflows/workspaces.json`, [../workflows/README.md](../workflows/README.md)); `bin/*.cmd` are the quick launchers. Three engines: Qwen (card-art look, tracked in git), FireRed (photoreal, local test copies with a real-then-magic effects instruction) and MiniMax video (tracked). The `ST0`-`ST6` templates are the only masters. Hand-tuned workflows are kept in `workflows/_curated/` and never regenerated. |
+| ComfyUI workflows | Automated. `tools/workflows/comfy_workflows.py` builds workflows from prompts and syncs them to the home workspace of each set (Drakn Sisters, Sovereign Dawn Series, Sovereign Territories, Angel Primes; temporary copies in other workspaces on request) (`workflows/workspaces.json`, [../workflows/README.md](../workflows/README.md)); `bin/*.cmd` are the quick launchers. Three engines: Qwen (card-art look, tracked in git), FireRed (photoreal, local test copies with a real-then-magic effects instruction) and MiniMax video (tracked). The `ST0`-`ST6` templates are the only masters. Hand-tuned workflows are kept in `workflows/_curated/` and never regenerated. |
 | Video | First pipeline built: `data/animation` cards (actions as `Motion:`/`Scene:` blocks with transitions) -> `gen_animation.py` -> MiniMax H3 workflow from `ST6_MiniMax_Video`. Three Drakness example clips are deployed; none rendered yet. Guide: [art/tutorial-video.md](art/tutorial-video.md). |
-| Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and dev workflows built; none rendered yet. |
+| Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
 | Gameplay cards | `data/cards/sovereign-dawn/`: 219 cards, ids `SD-001`..`SD-219`. `SD-041`+ is legacy content (Fire/Water/Earth + Neutral). |
-| Validation | `tools/validators/validate_data.py` (schemas + card/art links) and its mutation self-test run in pre-commit and CI. |
+| Validation | `tools/validators/validate_data.py` (schemas + card/art links) and its mutation self-test run in pre-commit and CI. The self-test changes real files in place and undoes them (a copy of `data/` per case cost a minute on Windows): `--quick` takes under 2 minutes, the full run about 6 (it was 15). |
 | Starter decks, packs, manifests | **Broken** (see Data debt). |
 | Unity client, backend | Not started. |
 
@@ -36,8 +36,15 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 - **Art and video are data-driven (Oct 2026).** Pieces, cards and animation cards generate prompts; prompts generate workflows. Prompts
   are never hand-edited. Work is **studio** (cream backdrop: poses, heads, hair, armor) or **scene** (realm, background, effects; video
   counts as scene); everything goes to the one workspace per group (see the pipeline phases below).
-- **Dev/UAT/Prod workspaces** in ComfyUI: dev builds and proves, UAT is acceptance, PROD is the series workspace. Workflows are
-  promoted (moved) up the tiers.
+- **Workspaces are tied to sets of cards (Oct 2026).** Each set has a *home* workspace (`homes` in `workflows/workspaces.json`): `Drakn Sisters`
+  (the whole sister pipeline; final art is made there), `Sovereign Dawn Series` (the Sovereign Dawn card set), `Sovereign Territories` (the art and brand set and the `ST?_` templates),
+  `Angel Primes`, and the planned `Drakn Bound` and `Elder Dragons`. A deploy goes to the set's home and nowhere else; a set with no home stops the command (a missing home once
+  silently filled the brand workspace with 174 card workflows, and the workspaces cloned from it carried the leftovers). A workspace may also take a set on request, for a while, if it lists it under `accepts`:
+  `Sovereign Territories` accepts any set (promotional videos for reels and feeds, a scene kept next to the art), `Sovereign Dawn Series` accepts the Drakn sets; you ask with `deploy -w` and remove the copy
+  with `cleanup -w` when you are done, and a workspace that neither homes nor accepts a set is refused. Only `active` workspaces with an install are written to. `Drakness` stays as a deliberate second copy of one
+  sister for working through issues with `zz_` items, and any sister can get a temporary one. Hand-made `zz_Shots`, `zz_Curated` and `zz_Test` workflows are mastered in the workspace and never replaced, moved or
+  removed by deploy, cleanup or tidy. `cleanup -w` removes what a workspace is not home for (only when the home workspace has an identical copy; to backup; empty folders pruned). Details and rules:
+  [../workflows/README.md](../workflows/README.md#workspaces-one-home-per-set).
 - **A hand-made workflow is never overwritten.** Anything tuned by hand is forked or pulled into `workflows/_curated/`; patterns that
   recur graduate into pieces, motions, transitions or templates.
 - Prompt injection into ComfyUI workflows is automated; delivering rendered images back to cards is still manual (C1).
@@ -48,11 +55,10 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   to the client, not the baked art. Every card hero has a Holo (the ascended weapon descriptions are a start for equipment art).
 - **One workspace per group, hero first, by pipeline phase (Oct 2026, replaces the per-sister workspaces).** `Drakn Sisters` holds every sister laid out
   `<Hero>/<phase>/...`: `1_Alpha`, `2_Studies`, `3_Layers`, `4_Wardrobe`, `5_Scenes`, `6_Finish` (`polish`, `final` skeletons per sister; upscale is not built yet),
-  `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The other permanent workspaces are Angel Primes, Drakn Bound, Elder Dragons and
-  Sovereign Territories (dev and brand). A single-sister workspace is spun up only while needed and discarded; only `Drakness` is kept (and kept in sync) until her
+  `7_Video`, and `Bench/motion` (a test run on any phase's image, not a phase). The other permanent workspaces are Angel Primes, Drakn Bound, Elder Dragons, Sovereign Dawn Series and
+  Sovereign Territories (brand). A single-sister workspace is spun up only while needed and discarded; only `Drakness` is kept (and kept in sync) until her
   hand-made armor, clothing and scenes are covered by the generated set. The chosen image of each later phase is named `_00000` too (`<Hero>_Qwen_Scene_00000.png`
-  feeds Polish, `_Polish_00000.png` feeds Final), so a skipped phase shows as a missing image. The card folders (`data/art/_sets/`), the prompts and the output all use these same phase folders (one layout everywhere). Dev keeps whatever is not
-  delivered, edited or hand-curated: `comfy_workflows.py cleanup` previews (and with `--apply` moves to backup) only the plain duplicates. Every sister has
+  feeds Polish, `_Polish_00000.png` feeds Final), so a skipped phase shows as a missing image. The card folders (`data/art/_sets/`), the prompts and the output all use these same phase folders (one layout everywhere). `comfy_workflows.py cleanup -w` previews (and with `--apply` moves to backup) the workflows a workspace is not meant to hold. Every sister has
   a studio kit; first proven with Draknara: a studio kit (`data/art/_kits/<slug>.json`, built by `tools/generators/scaffold_sister_studio.py`) lists the A-pose
   bases, outfits, armor, motions and showcase shots that suit her class and element.
 - **Three kinds of hand-made workflow (Oct 2026).** `zz_Curated` = older hand-written workflows and new ones written from scratch; `zz_Shots` =
@@ -105,7 +111,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   `Alpha_2_Bare_Figure` is the intended Bare step; the hand-made `Alpha_2_Bare_Skin` shots are temporary while it is tuned and are not kept long term.
   Bare, Barefoot and Heels are the three golden images, named `<Hero>_Qwen_Alpha_1_Prime|Alpha_2_Bare|Alpha_3_Barefoot|Alpha_3_Heels_00000.png` (the `_00000`
   sorts above the numbered renders); `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose` (the Barefoot image), `heels`
-  (`workspaces.json` `inputRoles` and `inputs`, `inputs --set --prime`). Sisters only so far; dragons, bound heroes and Angel Primes keep their X Pose in `poses/`. The Barefoot and
+  (`workspaces.json` `inputRoles` and `inputs`, `inputs --set --prime`). Sisters and Angel Primes (Angelica and Angelo included) use it; dragons and bound heroes keep their X Pose in `poses/` for now. The Barefoot and
   Heels cards still use the photo-oriented `pose-female-human.txt`; an edit-focused template for them is open, as is the same for the other stages.
 - **Individual physique, standard X Pose (Oct 2026).** The 10 sisters and 10 bound heroes each carry their own build (`physique`: `torso` and `arms` are new optional fields; the male
   schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_.md`); its colours, metals, prompt-assembly sections and
@@ -129,15 +135,53 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   outfit to follow and support the bust, waist and hips unless a card opts out. Explicit anatomical wording stays in the hand-made `zz_Shots`, never in generated files.
 - **Angel Primes is the clean test bed (Oct 2026).** Twenty angels (ten female, ten male, humans only, no card, `testBed`) on a good-to-evil spectrum, one female and one male
   per element in each of ten pairs, each with a bonded non-dragon pet (`data/art/pets/angel-primes/`). New things (themes, backgrounds, creatures, clothing, weapons,
-  motions) are tried here and only the ones that work are pulled into the Drakn workspaces; Drakness is no longer the test-everything hero. Roster, kits and the trimmed
-  set (about 16-20 cards each) are in [../data/art/README.md](../data/art/README.md#angel-primes-the-clean-test-bed). Angelica and Angelo stay as the older pair
-  (the only ones named Prime); every other angel has a family name, shared by the pair.
+  motions) are tried here and only the ones that work are pulled into the Drakn workspaces; Drakness is no longer the test-everything hero. Roster, kits and the full
+  set (about 179 prompts per female angel and about 105 per male angel) are in [../data/art/README.md](../data/art/README.md#angel-primes-the-clean-test-bed). Angelica and Angelo stay as the older pair
+  (the only ones named Prime; their art slugs are `angelica` and `angelo`, like every other angel); every other angel has a family name, shared by the pair. Every angel owns signature items
+  (weapon, armor, gown or attire, circlet, jewelry, elemental drift) under `heroes/angel-primes/<division>/<slug>/`, each built with `extends` on a library piece plus her element and alignment
+  (written by `scaffold_angel_library.py`; her signature, battle, spell-calling, armor-stand and elegant-casting cards use them). The male angels now have the full set too (see the male wardrobe pack decision below).
+- **Pieces can extend pieces (Oct 2026).** A piece may name a base (`"extends"`), carry only what differs, and use `{{BASE}}` or a leading `+` to splice the base text in: a standard
+  silver necklace plus a hero's own details instead of a second full description. Validator-checked (exists, same kind, no cycle) and tested (`tools/generators/test_gen_prompt_extends.py`).
+  `tools/art/extract_literals.py` moved repeated inline sentences (jewelry, anklets, effects, companions) out of 1,604 card slots into 67 pieces with every prompt unchanged. Still inline by design:
+  generic fillers ("bare arms", "empty hands") and the long pose literals of the sisters' scenes (a motion piece needs many fields); converting more sister signature items to `extends` is open.
+- **Frames, designs and shared poses (Oct 2026).** A base piece can be a frame with named gaps (`[[SLOT]]`); a piece that extends it fills them with `vars`, or takes them from one design file
+  (`"varsFrom"`, kind `design`) so several pieces of one hero share one set of values. The ten sisters' four celestial armor pieces (plate, fitted plate, skin armor, skin suit) are now four frames
+  in `wardrobe/armor/celestial/frame/` plus one `celestial-design.json` per sister (metal, breast and hip shapes, engraving, gem); every prompt is unchanged. Repeated scene poses and expressions became
+  pieces too (kinds `pose` and `expression` in `motion/scene/` and `motion/expressions/scene/`, or in a hero's own folder): the 405-character lineup pose, the battle leap and the bond pose that all
+  ten sisters (and every angel) carried inline. Still inline by design: generic fillers ("bare arms", "empty hands"), one-off pose sentences and each sister's own gown, robe and regalia wording (a frame fits
+  them, but their grammar differs; do it when one is rewritten anyway).
+- **Realism is a setting, not a rewrite (Oct 2026).** The default realm line says "a high-fantasy, Dungeons & Dragons-style realm ... living magic", which pulls Qwen toward illustrated, game-box art. A second realm,
+  `realms/fantasy-cinematic`, describes the same fantasy backgrounds as a film still shot on location (real materials, natural light, subtle magic, with bans on cartoon, illustration and cel shading). A realm is
+  chosen per card (`components.realm`), per hero (`art.defaultRealm`) or for a whole group (`_settings/studio.json` `realmByGroup`). Angel Primes, the test bed, uses the cinematic realm and grounded versions of
+  the ten elemental realms (`backgrounds/fantasy/elemental/grounded/`); each angel also has a Signature (illustrated) twin in the old realm so the two looks sit side by side. The sisters are unchanged until
+  you have compared renders. `python tools/art/style_audit.py` ranks the pieces that lean illustrated (the realm line, the elemental realms, forests, caves and libraries score highest; most other
+  backgrounds are already grounded). Open: pick the look per set after the first comparison, rewrite the worst-scoring backgrounds, and decide where a card-like (cartoon) look is wanted on purpose.
+- **Default images are pulled back from the workspaces (Oct 2026).** The photo and golden images a workflow loads are chosen inside ComfyUI (Load Image node) and live in `workspaces.json` (`photos`, `inputs`). `inputs --pull` reads the choices back
+  (generated Qwen workflows only; placeholders and other heroes' images ignored; unanimous per hero and role, otherwise `MIXED`), `status` flags `inputs-changed`, `setup` pulls first and `inputs --reset` stops until a choice is pulled, so a reset cannot undo it.
+  The ten women's photos and Angelica's were pulled this way. Angelica and Angelo now have the same Phase 1 and 2 as every other angel (the old `X_Pose` card and workflow are retired; her pastel bikini no longer carries heels).
+- **Male wardrobe pack (Oct 2026).** Ten swimwear and underlayer pieces, twelve clothing sets (tuxedo, suit, military dress, trench coat ...) and one man's outfit for each of the 26 theme packs, written in
+  realistic tailoring terms. The male angels now get wardrobe, theme, showcase and scene cards (about 105 prompts each, up from 57). Library pieces are written for women, so for a male hero the generator turns
+  she/her into he/his/him in the finished prompt (`masculine()` in `gen_prompt.py`); before this the male angels' motion and hair prompts said "her". Male-angel themes use only male or unisex outfits,
+  armor, headwear and jewelry; footwear, props and weapons unless tagged female.
 - **One tree in every layer, with divisions (Oct 2026).** A group listed in `data/art/_settings/groups.json` files its work below a division folder
   (`angel-primes`: `female`, `male`, `pets`, `units`, `buildings`, `equipment`, `tactics`, `workers`, the Sovereign Dawn card categories with heroes split by sex). The same path is used for the identity
   (`data/art/heroes/angel-primes/female/seraphine.json`), the cards (`_sets/angel-primes/female/seraphine/...`), the prompts
   (`prompts/angel-primes/female/Seraphine/...`) and the ComfyUI output and workspace folders (`female/Seraphine/1_Alpha/...`), so the Angel Primes workspace is one tree for a
   whole test deck instead of a workspace per kind. The Drakn groups and the Elder Dragons stay as separate groups and workspaces (decided Oct 2026: ten story characters each, they
   will not grow); the Sovereign Territories set is expected to use the division scheme.
+
+## Planned workspaces: what is left
+
+The workspace tool skips any workspace whose `status` is not `active` or whose install folder is missing, so these can be prepared in the repo first.
+
+| Workspace | Home of | Ready in the repo | Still to do |
+| --- | --- | --- | --- |
+| Drakn Bound | the ten bound heroes | identities and the `homes` rule | art sets and prompts (clone the sister kit: `scaffold-sister`), an install (clone Drakn Sisters, then `cleanup` it), set `status` to `active`, then `setup-workspace "Drakn Bound" --apply` |
+| Elder Dragons | the ten dragons (text-to-image plates, heads, lairs) | identities, lair backgrounds, the `homes` rule | dragon card sets (heads, lairs, a plate stage), the install, `active`, `setup-workspace` |
+| FireRed workspace | the photoreal engine's copies (today local test files, not in git) | `--engine firered` builds, `refresh-firered` | decide whether it gets its own install or stays a folder in each home; a FireRed template check |
+| Sovereign Territories set | title, logo, icons, key art, plates | 22 workflows, 4 curated pulled into the repo | divisions for units, buildings, tactics art; the Drakn videos are not published there (publish a set only when you want it: `publish`) |
+
+Order: Drakn Bound first (its heroes mirror the sisters, so the generators already fit), then Elder Dragons.
 
 ## Open decisions
 
@@ -147,6 +191,42 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | O2 | Does "exactly one hero per formation" survive? | Written before the art pipeline made a larger roster cheap. Revisit after a playtest. |
 | O3 | How are vision cards obtained? | All 30 have empty `acquisition` today. Needs pack/reward/campaign rules, including the quest-earned Celestial edition, the pack-chance share and the codex teaser. |
 | O4 | Transcendent format legality | 64 points exceeds any starter budget; decide special formats (Phase 2+). |
+
+## Agreed next steps (Oct 8, 2026)
+
+Four steps, done in this order. Each one ends with a pause: a summary of what was done, then the go-ahead for the next. Step 3 is itself split into phases (3a to 3d) with a pause after each.
+
+| Step | What | Plan |
+| --- | --- | --- |
+| 0 | Commit and push everything | Four commits on `ideation/hero-roster-10-elements`: (1) tooling, schemas, launchers and docs, (2) art and animation data, (3) generated prompts, (4) workflows and `workspaces.json`; then push to GitHub. Backups (`workflows/.sync/`) stay ignored. |
+| 1 | Alpha test sets: `angel-primes/alpha/female` and `alpha/male` | Two reusable test-bed heroes in a new `alpha` division, so any photo can be tried as an angel without touching a real angel's folders or output. A small version of the phases (see below). |
+| 2 | Higher denoise for edits that change a lot | Raise the denoise of the Bare, footwear, pose, motion and scene edits (0.7 holds the pose too tight); let the prompt's positive likeness text carry the likeness. Find what you actually used in the Drakness `zz_Shots` first. |
+| 3 | Signature items for Angelica and Angelo | The same definition and art as the other twenty angels: element and alignment, wings, pet, signature weapon, armor, gown or attire, circlet, jewelry, elemental drift, and the cards that use them. |
+
+### Step 1: alpha test sets
+
+- **Where:** division `alpha` of group `angel-primes`, one test-bed hero per sex (`data/art/heroes/angel-primes/alpha/<slug>.json`, `_sets/angel-primes/alpha/<slug>/`, `prompts/angel-primes/alpha/<Hero>/`, workspace and output folder `alpha/<Hero>/...`). Their identity is as generic as Angelica's and Angelo's (the reference photo's own face, hair and eyes, no fixed look), so any photo works.
+- **What is in the small set:** Phase 1 complete (Prime, Bare, Bare chest, Barefoot and Heels for the woman; Prime and Bare for the man), Phase 2 core (head, face close-up, a few head and body views, two hairstyles), two layer tests, one clothing and one armor card, a few motions and two scenes. Enough to see whether a photo makes a better angel; not the 180-card suite.
+- **Using it:** put the photo in the `Angel Primes` input folder, pick it in the Prime workflow's Load Image node, run Phase 1 and 2, and compare. If it wins, give that photo to an angel (`inputs --set` or the same pick in her Prime workflow, then `inputs --pull`). `inputs --pull` also picks up the test photo, so it never overwrites an angel's.
+- **To decide at the start:** the hero names (proposed `Female` and `Male`, giving `alpha/Female/...`) and whether the set reuses the angels' generators (proposed: yes, a trimmed list in `scaffold_angel_set.py`).
+
+### Step 2: denoise
+
+- **Today:** each card carries a hint (`~0.5-0.7`) and `denoise_for` picks the high end (0.7); a full redraw from the photo is 1.0 and drops to 0.7 when fed a golden image. At 0.7 the edit keeps the person and also the pose.
+- **Plan:**
+  - (a) Read the denoise values saved in the Drakness `zz_Shots` and curated workflows (Drakn Sisters and Drakness) to see what you settled on.
+  - (b) Set the new values per stage in one table in `workspaces.json` (`denoise.stages`, over the card hints); proposed starting points are about 0.9 for Bare and footwear edits, motions and scene edits,
+    tuned on one angel set first.
+  - (c) Strengthen the likeness wording in the positive "Critical details" and fidelity paragraphs of the edit templates, because a higher denoise leans on the prompt.
+  - (d) Apply with `denoise --reset` (preview first), which changes only the denoise widget in the repo and the workspaces, so seeds and inputs stay.
+- **Risk to watch:** higher denoise loosens the likeness; compare a few renders per stage before regenerating everything, and keep hand-made `zz_` workflows untouched.
+
+### Step 3: signature items for Angelica and Angelo
+
+- **3a. Definition.** Decide their element and alignment (they are the older pair with no element; the repo's elements include Neutral), add the matching entries to the generator tables (material, motif, weapon family), and write a kit for each so they join `scaffold_angel_set.py --all` like the others. Also their wings and bonded pet pieces.
+- **3b. Signature pieces.** The same six signature pieces as every angel (weapon, armor, gown or attire, circlet, jewelry, elemental drift), each extending a library piece plus their element and alignment tone, and the signature armor and gown wardrobe cards.
+- **3c. Cards.** The rest of the angel suite around those pieces (showcases, signature, battle, spell-calling and glamour scenes, theme scenes, video), keeping their hand-picked layers, clothing and modern scenes.
+- **3d. Regenerate and verify.** Validate, regenerate prompts and workflows, deploy to Angel Primes, run the Phase 1 and 2 audit, update the docs.
 
 ## Next work (in order)
 

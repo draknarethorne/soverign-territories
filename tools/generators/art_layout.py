@@ -13,6 +13,7 @@ A group listed in data/art/_settings/groups.json (angel-primes) has a division f
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
 Hair and motion cards already carry their own family folders and are left as they are.
 """
+import functools
 import json
 import pathlib
 
@@ -24,6 +25,8 @@ STAGE_FOLDER = {"pose": "poses"}
 BRAND_FAMILIES = {"key-art": "key-art", "title": "title", "plate": "plate", "logo": "logo", "icon": "icon", "harmonize": "edit"}
 # Sister scenes are grouped into a few broad buckets. A folder only exists to hold closely related cards: a shiny or
 # holo edition sits beside its signature card, and one-card groups stay flat in the stage folder.
+# The Angel Primes test bed follows the sisters (signature, glamour, story and one folder per theme).
+SCENE_GROUPS = {"drakn-sisters", "angel-primes"}
 SCENE_BUCKETS = {
     "signature": ["signature", "lineup"],
     "glamour": ["glamour", "glamour-test", "elegant-casting", "robe"],
@@ -58,8 +61,10 @@ def showcase_family(art_id):
 
 def scene_family(art_id, group):
     rest = art_id.split("-scene-", 1)[1] if "-scene-" in art_id else art_id
-    if group != "drakn-sisters":
-        return ["modern"] if rest.startswith("modern-") else []
+    if group != "drakn-sisters" and rest.startswith("modern-"):
+        return ["modern"]
+    if group not in SCENE_GROUPS:
+        return []
     if rest.removeprefix("staged-") in THEMES:
         return ["themes"]
     if rest.startswith("signature-"):
@@ -224,10 +229,16 @@ def parse_dirs(dirs):
     return p, rest
 
 
+@functools.lru_cache(maxsize=8)
+def _division_table(path, mtime_ns):
+    return json.loads(pathlib.Path(path).read_text(encoding="utf-8")).get("divisions", {})
+
+
 def divisions(group=None):
-    """data/art/_settings/groups.json: the division folders of a group (or {group: [...]} for all); empty for a group without divisions."""
+    """data/art/_settings/groups.json: the division folders of a group (or {group: [...]} for all); empty for a group without divisions. Cached per file version: it is asked for once per art file."""
+    path = ROOT / "data/art/_settings/groups.json"
     try:
-        table = json.loads((ROOT / "data/art/_settings/groups.json").read_text(encoding="utf-8")).get("divisions", {})
+        table = _division_table(str(path), path.stat().st_mtime_ns)
     except OSError:
         table = {}
     return table.get(group, []) if group else table

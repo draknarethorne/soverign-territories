@@ -51,17 +51,17 @@ Start with the [documentation hub](docs/README.md), then read:
 Card art and short video clips are generated from small JSON files, never hand-written prompts. The guides:
 
 - [Tutorial: creating art JSON](docs/art/tutorial-art.md) and [tutorial: creating video JSON](docs/art/tutorial-video.md), by hand or with an AI.
-- [Workflows and launchers](workflows/README.md): the ComfyUI workspaces (dev, UAT, prod), the Qwen, FireRed and MiniMax engines, and
+- [Workflows and launchers](workflows/README.md): the ComfyUI workspaces (one home per set, temporary copies on request), the Qwen, FireRed and MiniMax engines, and
   hand-curated workflows.
 - [Art structure reference](data/art/README.md) and [status](docs/STATUS.md).
 
 The commands you will run most (from the repo root; `bin\help.cmd` lists every launcher):
 
 ```text
-bin\validate.cmd                        # data checks and validator self-tests
+bin\validate.cmd                        # data checks and tool tests (--quick or --full add the validator self-test)
 bin\prompts.cmd                         # art JSON -> prompts
-bin\refresh-dev.cmd Draknora scene      # prompts -> workflows -> ComfyUI dev (add --dry-run to preview)
-bin\animate.cmd Drakness                # video cards -> prompts -> MiniMax workflows -> dev
+bin\refresh.cmd Draknora scene      # prompts -> workflows -> the home workspace (add --dry-run to preview)
+bin\animate.cmd Drakness                # video cards -> prompts -> MiniMax workflows -> the home workspace
 bin\status.cmd --hero Drakness          # what is where
 ```
 

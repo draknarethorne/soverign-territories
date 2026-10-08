@@ -41,7 +41,7 @@ If a number or rule here disagrees with those docs, the docs win.
 - 10 elements (Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison, plus Neutral), released in stages.
   8 rarity tiers: Basic 0, Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 16, Mythic 32, Transcendent 64 budget points.
 - Order of change: design rule -> schema -> validator/tooling -> implementation -> tests.
-- After data or art changes run `python tools/validators/validate_data.py` and `python tools/validators/test_validate_data.py`.
+- After data or art changes run `python tools/validators/validate_data.py`; after validator or schema changes also `python tools/validators/test_validate_data.py` (`--quick` for a short run).
   Commit hooks run `pre-commit` (markdownlint, validators).
 
 ## C# conventions (when Unity work starts)

@@ -30,8 +30,21 @@ SCHEMAS = ROOT / "data/schemas"
 ART_SCHEMAS = ROOT / "data/art/_schema"
 
 
+_TEXT = {}
+
+
 def load(path):
-    return json.loads(pathlib.Path(path).read_text(encoding="utf-8-sig"))
+    """Parsed JSON of a file. The text is cached by (volume, file id, mtime, size), so a file read twice, or hard-linked into the self-test's copies, is read from disk once;
+    parsing stays per call, so a caller may modify what it gets."""
+    p = pathlib.Path(path)
+    st = p.stat()
+    key = (st.st_dev, st.st_ino, st.st_mtime_ns, st.st_size) if st.st_ino else None
+    text = _TEXT.get(key) if key else None
+    if text is None:
+        text = p.read_text(encoding="utf-8-sig")
+        if key:
+            _TEXT[key] = text
+    return json.loads(text)
 
 
 def rel(path):
@@ -235,7 +248,10 @@ def check_art_cards(report):
         if bg.startswith("data/art/") and "/backgrounds/" in bg and d["stage"] == "scene":
             parts = bg.split("/")
             bg_realm = parts[parts.index("backgrounds") + 1]
-            realm = pathlib.PurePosixPath(d.get("components", {}).get("realm", "data/art/realms/fantasy.json")).stem
+            group_realm = load(ROOT / "data/art/_settings/studio.json").get("realmByGroup", {}).get(pathlib.PurePosixPath(rel(f)).parts[3] if len(pathlib.PurePosixPath(rel(f)).parts) > 3 else "")
+            realm_ref = d.get("components", {}).get("realm") or group_realm or "data/art/realms/fantasy.json"
+            realm_piece = load(ROOT / realm_ref) if (ROOT / realm_ref).exists() else {}
+            realm = realm_piece.get("backgroundRealm") or pathlib.PurePosixPath(realm_ref).stem
             if bg_realm != realm:
                 report.error(where, f"scene realm is '{realm}' but background {bg} is under backgrounds/{bg_realm}/ "
                                     f"(set components.realm to match, or pick a {realm} background)")
@@ -433,6 +449,44 @@ def check_piece_refs(report):
                 report.error(rel(f / "theme.json"), f"id must be 'themes/{group.name}/{f.name}'")
     for f in art_piece_files():
         d = load(f)
+        base = d.get("extends")
+        if base:
+            chain, cur = [rel(f)], base
+            while cur:
+                if not (ROOT / cur).exists():
+                    report.error(rel(f), f"extends {cur}, which does not exist")
+                    break
+                if cur in chain:
+                    report.error(rel(f), f"extends forms a cycle: {' -> '.join(chain + [cur])}")
+                    break
+                chain.append(cur)
+                parent = load(ROOT / cur)
+                if parent.get("kind") != d.get("kind"):
+                    report.error(rel(f), f"extends {cur} of kind {parent.get('kind')!r}, but this piece is kind {d.get('kind')!r}")
+                cur = parent.get("extends")
+            texts, supplied, own = [], {}, {}
+            for step in reversed(chain):
+                piece = d if step == chain[0] else load(ROOT / step)
+                ref = piece.get("varsFrom")
+                if ref:
+                    if not (ROOT / ref).exists():
+                        report.error(rel(f), f"varsFrom {ref} does not exist")
+                    elif load(ROOT / ref).get("kind") != "design":
+                        report.error(rel(f), f"varsFrom {ref} is not a kind 'design' piece")
+                    else:
+                        supplied.update(load(ROOT / ref).get("vars") or {})
+                supplied.update(piece.get("vars") or {})
+                own.update(piece.get("vars") or {})
+                texts += [x for k, v in piece.items() if k not in ("notes", "name", "id") for x in ([v] if isinstance(v, str) else v if isinstance(v, list) else []) if isinstance(x, str)]
+            wanted = set(re.findall(r"\[\[([A-Za-z0-9_]+)\]\]", "\n".join(texts)))
+            if wanted - set(supplied):
+                report.error(rel(f), f"slot(s) {', '.join(sorted(wanted - set(supplied)))} of its base are not filled; add them to \"vars\" or its varsFrom design")
+            if set(own) - wanted:
+                report.error(rel(f), f"vars {', '.join(sorted(set(own) - wanted))} fill no [[SLOT]] in the base")
+        elif d.get("vars") and d.get("kind") != "design":
+            report.error(rel(f), "vars only make sense in a piece that extends a frame")
+        elif any(isinstance(v, str) and "{{BASE}}" in v for v in d.values()):
+            report.error(rel(f), "{{BASE}} is only meaningful in a piece that extends another")
         for field in ("defaultGaze", "defaultExpression"):
             val = d.get(field)
             if isinstance(val, str) and looks_like_path(val) and not (ROOT / val).exists():

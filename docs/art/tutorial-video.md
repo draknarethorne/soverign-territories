@@ -32,7 +32,7 @@ tool puts that prompt (and the size and length) into the `ST6_MiniMax_Video` tem
 ```bash
 python tools/generators/gen_animation.py                                            # cards -> prompts/<group>/<Hero>/7_Video/<family>/
 python tools/workflows/comfy_workflows.py make --engine minimax --create --hero Drakness   # prompts -> workflows (tracked in git)
-python tools/workflows/comfy_workflows.py deploy --engine minimax --hero Drakness          # workflows -> ComfyUI dev
+python tools/workflows/comfy_workflows.py deploy --engine minimax --hero Drakness          # workflows -> the hero's home workspace in ComfyUI
 ```
 
 `bin\animate.cmd Drakness` does all three. In ComfyUI: open the workflow, check the image in the loader (it must exist in the
@@ -195,7 +195,7 @@ Keep the description short: the video model sees the image, so you are only orie
 ## Hand tuning without losing it
 
 - To tweak one clip freely in ComfyUI, run `bin\fork.cmd WORKFLOW Tag` (or `comfy_workflows.py fork NAME --as Tag`), edit it in
-  ComfyUI, save, then `bin\pull-dev.cmd HERO` to keep your changes. It lives in `workflows/_curated/` and is never regenerated.
+  ComfyUI, save, then `bin\pull.cmd HERO` to keep your changes. It lives in `workflows/_curated/` and is never regenerated.
 - If you keep making the same tweak, that is a motion, transition or look waiting to be written. Add it, regenerate, and retire
   the curated copy.
 

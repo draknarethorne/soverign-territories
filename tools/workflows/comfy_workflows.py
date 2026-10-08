@@ -4,33 +4,41 @@
 Repo layout follows the prompts:  workflows/<set>/<Hero>/<Hero>_Qwen_<Stage>_<Name>.json
 (<set> is the prompt group: drakn-sisters, drakn-bound, angel-primes, elder-dragons ...).
 
-ComfyUI workspaces are DEPLOY TARGETS configured in workflows/workspaces.json, in three tiers:
-  dev    where workflows are built and proven (Sovereign Territories; the default target of every deploy)
-  uat    acceptance: a hero's own workspace or a group workspace (Drakness, Angel Primes ...)
-  prod   a card-series workspace for the final art ("Sovereign Dawn Series"); holds only the cards of that series
-Which workspace serves which hero or set is configured under "production"; nothing is hard-coded.
+ComfyUI workspaces are DEPLOY TARGETS configured in workflows/workspaces.json. A workspace is tied to a set of cards (a prompt group):
+  home      the workspace(s) a set lives in (the "homes" rules): the default target of every command (Drakn Sisters for the sisters, Sovereign Dawn Series for the
+            Sovereign Dawn cards, Sovereign Territories for the brand set, Angel Primes ...). A hero may have several (Drakness is kept beside Drakn Sisters
+            to work through issues with zz_ items without polluting the shared workspace).
+  accepts   a workspace may also take a set on request, for a while: Sovereign Territories accepts any set (promotional videos, reels, a scene kept next to the art),
+            Sovereign Dawn Series accepts the Drakn sets. You ask with deploy -w "<Workspace>" --group G; the copy is temporary and `cleanup -w` removes it when you are done.
+            A workspace that neither homes nor accepts a set is refused, so a set can never land in the wrong place.
+Which workspace is home for which set is configured under "homes"; nothing is hard-coded, and a set with no home workspace stops the command instead of landing
+somewhere else. Only workspaces whose status is "active" and whose install exists are written to; a planned one is skipped with a message.
+
+Hand-made workflows are mastered in the workspace: anything under a zz_ folder (zz_Curated, zz_Test, zz_Shots) or named zz_Curated_ or test_ is never
+replaced, moved or removed by deploy, cleanup or tidy. Bring them into the repo with pull.
 
 Commands
-  list                                 workspaces, routes and repo contents
-  status  [targets] [filters] [--lint]      repo vs workspace(s): aligned / stale / missing / install-only / legacy
+  list                                 workspaces, homes and repo contents
+  status  [targets] [filters] [--lint]      repo vs workspace(s): aligned / stale / missing / install-only / published / unrouted / legacy
   make    [filters] [--create]         prompt -> repo workflow: set positive, negative, filename prefix (and file name)
-  deploy  [targets] [filters]          repo -> workspace (default: dev). Existing workflows only get the three
+  deploy  [targets] [filters]          repo -> home workspace(s), or -w a workspace that accepts the set. Existing workflows only get the three
                                        prompt values updated, so input image, seed and toggles survive. --overwrite replaces.
-  cleanup [filters] [--apply]          preview (or --apply) removing plain duplicates from dev that are identical in their UAT workspace;
-                                       everything else stays (not in the repo, edited, not delivered). Moved to backup, never deleted.
-  promote --to uat|prod [--from dev|uat] <filters>
-                                       MOVE approved workflows up a tier: capture the source workspace copy into the repo
-                                       master, copy it to the next tier, then take it out of the source workspace (backed up)
+  cleanup -w WORKSPACE [filters] [--apply]
+                                       preview (or --apply) removing the generated workflows the workspace is not home for (clone leftovers and finished temporary
+                                       publishes), once their home workspace has an identical copy; also removes empty folders (not zz_). Everything else stays
+                                       (hand-made, not in the repo, edited, not delivered). Moved to backup, never deleted.
+  setup   -w WORKSPACE [--apply]       the whole job for one workspace: deploy every set it is home for (plus curated workflows and shots), tidy the folders,
+                                       cleanup what it is not home for, show the status. A preview unless --apply.
   pull    [targets] [filters]          workspace -> repo. Files we did not generate are kept as CURATED workflows
                                        (workflows/_curated/<set>/<Hero>/); later edits to a curated file are captured too.
                                        --force also replaces generated repo copies.
-  fork    NAME --as TAG                copy a generated workflow to _curated as NAME_TAG and put it in dev, to hand-edit in ComfyUI
+  fork    NAME --as TAG                copy a generated workflow to _curated as NAME_TAG and put it in the hero's home workspace, to hand-edit in ComfyUI
   deploy  ... --curated                also copy curated workflows a workspace lacks (a differing workspace copy is never overwritten)
   inputs  [--fix]                      which A-pose image each hero's workflows read
 
-targets:  (none) = dev   |   --to dev|uat|prod   |   -w <Workspace> (repeatable)
+targets:  (none) = home   |   -w <Workspace> (repeatable; must be home for the set or accept it)
 filters:  --hero H  --group G  --stage S  --class studio|scene  --match TEXT   (stage = prompt folder: poses, head, scene, hair, motion, armor, clothing)
-          deploy and promote need at least one filter, or --all.
+          deploy needs at least one filter, or --all.
 
 The four values that always agree for a prompt Hero_Stage_Name.txt:
   positive prompt, negative prompt, SaveImage prefix <set>/<Hero>/<stage>/[family/]<Hero>_Qwen_<Stage>_<Name>, workflow file <Hero>_Qwen_<Stage>_<Name>.json
@@ -70,7 +78,6 @@ TEST_DIR = "zz_Test"
 SHOTS = WF / "_shots"
 SHOTS_DIR = "zz_Shots"
 CAPTURED_NAME = re.compile(r"_\d{5}")
-TIERS = ("dev", "uat", "prod")
 
 
 def plain_name(name):
@@ -136,6 +143,63 @@ def install_exists(cfg, ws, root=None):
     return (pathlib.Path(root or cfg["installsRoot"]) / ws / "ComfyUI").is_dir()
 
 
+def workspace_ready(cfg, ws, root=None):
+    """(True, '') when a workspace may receive or lose files: it is listed, its status is active and its install exists. Otherwise (False, why)."""
+    info = cfg["workspaces"].get(ws)
+    if info is None:
+        return False, "not listed under workspaces in workspaces.json"
+    if info.get("status") != "active":
+        return False, f"status is '{info.get('status')}', not active (set it to active in workflows/workspaces.json when the install is ready)"
+    if not install_exists(cfg, ws, root):
+        return False, f"workspace not created yet under {root or cfg['installsRoot']}"
+    return True, ""
+
+
+def ready_or_skip(cfg, ws, root=None):
+    ok, why = workspace_ready(cfg, ws, root)
+    if not ok:
+        print(f"{ws}: {why}, skipped")
+    return ok
+
+
+def template_workspaces(cfg):
+    """Workspaces flagged "templates": true; the ST stage templates are deployed to and pulled from these."""
+    return [ws for ws, info in cfg["workspaces"].items() if info.get("templates")]
+
+
+def is_hand_made(cfg, ws, path, root=None):
+    """True for a workflow that is mastered in the workspace: anything under a zz_ folder (zz_Curated, zz_Test, zz_Shots) or named zz_Curated_ or test_.
+    Tools never replace, move or remove these unless you ask for it by name; bring them into the repo with pull."""
+    path = pathlib.Path(path)
+    try:
+        rel = path.relative_to(install_dir(cfg, ws, root))
+    except ValueError:
+        rel = pathlib.Path(path.name)
+    return rel.parts[0].startswith("zz_") or path.name.startswith((CURATED_PREFIX, TEST_PREFIX))
+
+
+def empty_dirs(d, ignore=()):
+    """Folders below d that hold no file (counting the files in `ignore` as already gone), deepest first. Top-level zz_ folders and folders starting with . or _ are left alone."""
+    ignore = set(ignore)
+    out = []
+    for folder in sorted((q for q in d.rglob("*") if q.is_dir()), key=lambda q: len(q.parts), reverse=True):
+        if folder.relative_to(d).parts[0].startswith(("zz_", ".", "_")):
+            continue
+        if not any(f.is_file() and f not in ignore for f in folder.rglob("*")):
+            out.append(folder)
+    return out
+
+
+def prune_empty_dirs(d, apply):
+    """Remove the empty folders below d (only if apply); returns them. A folder with any file in it, even a non-workflow one, stays."""
+    folders = empty_dirs(d)
+    if apply:
+        for folder in folders:
+            if folder.is_dir() and not any(folder.iterdir()):
+                folder.rmdir()
+    return folders
+
+
 def excluded(cfg, name):
     return any(fnmatch.fnmatch(name, pat) for pat in cfg.get("exclude", []))
 
@@ -180,15 +244,12 @@ def route_stage(args):
     return args.stage or (dict(zip(("studio", "scene"), CLASS_PROBE))[args.cls] if args.cls else None)
 
 
-def targets_for(cfg, tier, group, hero, stage=None):
-    """Workspaces that serve this hero and stage for a tier. Dev: the default dev workspace. UAT and prod: every matching rule, so a sister's own
-    workspace and the shared one can both hold her work.
+def home_workspaces(cfg, group, hero, stage=None):
+    """The workspaces a hero's workflows live in (the "homes" rules). Every matching rule counts, so a sister's own workspace and the shared one can both hold her work.
 
     A rule may carry "class": "studio" or "scene"; it then applies only to stages of that class."""
-    if tier == "dev":
-        return [cfg["dev"][0]]
     out = []
-    for r in cfg.get("production", {}).get(tier, []):
+    for r in cfg.get("homes", []):
         if "groups" in r and group not in r["groups"]:
             continue
         if "heroes" in r and hero not in r["heroes"]:
@@ -199,23 +260,48 @@ def targets_for(cfg, tier, group, hero, stage=None):
     return out
 
 
-def holds(cfg, ws, group, hero, stage=None):
+def is_home(cfg, ws, group, hero, stage=None):
     stages = [stage] if stage else list(CLASS_PROBE)
-    return ws in cfg["dev"] or any(ws in targets_for(cfg, t, group, hero, s) for t in TIERS for s in stages)
+    return any(ws in home_workspaces(cfg, group, hero, s) for s in stages)
 
 
-def tier_workspaces(cfg, tier, hero=None, group=None, stage=None):
-    """Every workspace that serves some (filtered) hero and stage for a tier."""
+def accepts(cfg, ws, group):
+    """True when a workspace may take this set on request (its "accepts" list names the group, or "*" for any set)."""
+    acc = cfg["workspaces"].get(ws, {}).get("accepts", [])
+    return "*" in acc or group in acc
+
+
+def holds(cfg, ws, group, hero, stage=None):
+    """True when the workspace may hold this hero's workflows: it is a home for the set, or it accepts the set on request."""
+    return is_home(cfg, ws, group, hero, stage) or accepts(cfg, ws, group)
+
+
+def home_names(cfg, hero=None, group=None, stage=None):
+    """Every home workspace of the (filtered) heroes and stage."""
     names = []
     stages = [stage] if stage else list(CLASS_PROBE)
     for h, g in hero_groups().items():
         if (hero and h.lower() != hero.lower()) or (group and g != group):
             continue
         for s in stages:
-            for w in targets_for(cfg, tier, g, h, s):
+            for w in home_workspaces(cfg, g, h, s):
                 if w not in names:
                     names.append(w)
     return names
+
+
+def groups_without_home(cfg, hero=None, group=None, stage=None):
+    """The sets (filtered) that have no home workspace: a configuration gap, not something to fall back from."""
+    stages = [stage] if stage else list(CLASS_PROBE)
+    return sorted({g for h, g in hero_groups().items() if not ((hero and h.lower() != hero.lower()) or (group and g != group))
+                   and not any(home_workspaces(cfg, g, h, s) for s in stages)})
+
+
+def refused_groups(cfg, ws, hero=None, group=None, stage=None):
+    """The (filtered) sets a workspace is neither home for nor accepts; deploying them there would be a mistake."""
+    stages = [stage] if stage else list(CLASS_PROBE)
+    return sorted({g for h, g in hero_groups().items() if not ((hero and h.lower() != hero.lower()) or (group and g != group))
+                   and not accepts(cfg, ws, g) and not any(is_home(cfg, ws, g, h, s) for s in stages)})
 
 
 # ---------- files ----------
@@ -634,20 +720,30 @@ def input_index(cfg):
 # ---------- selection ----------
 
 def pick_targets(cfg, args, default):
-    """Workspaces to act on: -w names, --to tier, else the default ('testing' or all)."""
+    """Workspaces to act on: -w names, else the templates workspaces (--templates), else the home workspace(s) of the selected heroes.
+
+    A set with no home workspace stops the command: there is no fallback workspace, so a missing home can never turn into a silent deploy somewhere else.
+    With -w, the workspace must be home for the selected sets or accept them (deploy refuses it otherwise)."""
     ws = cfg["workspaces"]
     if args.workspace:
         bad = [n for n in args.workspace if n not in ws]
         if bad:
             sys.exit(f"Unknown workspace(s): {bad}. Known: {list(ws)}")
         return list(args.workspace)
-    tier = args.to or default
-    if tier == "all":
+    if default == "all":
         return list(ws)
-    names = [n for n in (tier_workspaces(cfg, tier, args.hero, args.group, route_stage(args)) if tier != "dev" else [cfg["dev"][0]])]
+    if getattr(args, "templates", False):
+        return template_workspaces(cfg)
+    stage = route_stage(args)
+    missing = groups_without_home(cfg, args.hero, args.group, stage)
+    if missing:
+        sys.exit(f"No workspace is home for: {', '.join(missing)}. Add a rule under homes in workflows/workspaces.json (and create the workspace) or narrow the filter with --hero/--group.")
+    names = home_names(cfg, args.hero, args.group, stage)
+    if not names:
+        sys.exit("No home workspace is configured for the selected heroes (homes in workflows/workspaces.json).")
     unknown = [n for n in names if n not in ws]
     for n in unknown:
-        print(f"note: '{n}' is a {tier} target but is not listed under workspaces in workspaces.json")
+        print(f"note: '{n}' is a home workspace but is not listed under workspaces in workflows/workspaces.json")
     return [n for n in names if n in ws]
 
 
@@ -659,11 +755,11 @@ def name_matches(pattern, text):
     return pattern.lower() in text.lower()
 
 
-def selected(cfg, ws, args, repo):
-    """Repo files a workspace should hold, after the filters."""
+def selected(cfg, ws, args, repo, home_only=False):
+    """Repo files a workspace should hold, after the filters. With home_only, only the sets the workspace is home for (what status compares); otherwise also the sets it accepts."""
     out = {}
     for name, (group, hero, p) in repo.items():
-        if not holds(cfg, ws, group, hero, stage_of(name)):
+        if not (is_home(cfg, ws, group, hero, stage_of(name)) if home_only else holds(cfg, ws, group, hero, stage_of(name))):
             continue
         if args.hero and hero.lower() != args.hero.lower():
             continue
@@ -694,22 +790,22 @@ def cmd_list(args):
     cfg = load_cfg()
     repo = repo_files(cfg)
     print(f"installs root: {cfg['installsRoot']}")
-    print(f"dev workspaces (default deploy target first): {', '.join(cfg['dev'])}")
+    print(f"stage templates workspace(s): {', '.join(template_workspaces(cfg)) or '-'}")
     print("workspaces:")
     for ws, info in cfg["workspaces"].items():
         found = "found" if install_exists(cfg, ws, args.root) else "MISSING"
         flags = ",".join(k for k in ("templates", "legacy") if info.get(k))
-        held = sum(1 for n, (g, h, _p) in repo.items() if holds(cfg, ws, g, h, stage_of(n)))
-        print(f"  {ws:22} {info['status']:9} install={found:7} holds={held:3} {flags:16} {info['role']}")
+        home = sum(1 for n, (g, h, _p) in repo.items() if is_home(cfg, ws, g, h, stage_of(n)))
+        acc = info.get("accepts", [])
+        takes = "any set" if "*" in acc else ", ".join(acc) if acc else "-"
+        print(f"  {ws:22} {info['status']:9} install={found:7} home for {home:4} workflows  accepts: {takes:40} {flags:16} {info['role']}")
     print("sets (repo):")
     for g in sorted({g for g, _, _ in repo.values()}):
         for h in sorted({h for gg, h, _ in repo.values() if gg == g}):
             stages = collections.Counter(stage_of(n) for n, (gg, hh, _) in repo.items() if hh == h)
-            def route(tier):
-                studio, scene = targets_for(cfg, tier, g, h, "poses"), targets_for(cfg, tier, g, h, "scene")
-                return (",".join(studio) or "-") if studio == scene else f"studio {','.join(studio) or '-'} / scene {','.join(scene) or '-'}"
-            print(f"  {g}/{h:12} {sum(stages.values()):3}  uat->{route('uat')}  prod->{route('prod')}   "
-                  + ", ".join(f"{s} {c}" for s, c in sorted(stages.items())))
+            studio, scene = home_workspaces(cfg, g, h, "poses"), home_workspaces(cfg, g, h, "scene")
+            home = (",".join(studio) or "-") if studio == scene else f"studio {','.join(studio) or '-'} / scene {','.join(scene) or '-'}"
+            print(f"  {g}/{h:12} {sum(stages.values()):3}  home: {home}   " + ", ".join(f"{s} {c}" for s, c in sorted(stages.items())))
 
 
 def curated_files(folder=None):
@@ -808,11 +904,22 @@ def cmd_status(args):
         info = cfg["workspaces"][ws]
         inst = install_files(cfg, ws, args.root)
         rows = collections.defaultdict(list)
-        for name, (g, h, p) in selected(cfg, ws, args, repo).items():
-            rows["staged" if name not in inst and is_staged(name) else "missing" if name not in inst else classify(p, inst[name])].append(name)
+        for name, (g, h, p) in selected(cfg, ws, args, repo, home_only=True).items():
+            if name not in inst:
+                rows["staged" if is_staged(name) else "missing"].append(name)
+            else:
+                rows[classify(p, inst[name])].append(name)
         for name in inst:
             h = hero_of(name)
-            if name in repo or not h or not holds(cfg, ws, groups[h], h, stage_of(name)):
+            if not h:
+                continue
+            if not holds(cfg, ws, groups[h], h, stage_of(name)):
+                if not (args.hero and h.lower() != args.hero.lower()) and not (args.group and groups[h] != args.group):
+                    rows["unrouted"].append(name)
+                continue
+            if name in repo:
+                if not is_home(cfg, ws, groups[h], h, stage_of(name)) and not (args.hero and h.lower() != args.hero.lower()) and not (args.group and groups[h] != args.group):
+                    rows["published"].append(name)
                 continue
             if args.hero and h.lower() != args.hero.lower():
                 continue
@@ -823,7 +930,7 @@ def cmd_status(args):
                 rows["test" if same_workflow(tst[name][2], inst[name]) else "test-changed"].append(name)
                 continue
             rows["legacy" if info.get("legacy") else "install-only"].append(name)
-        for name in selected(cfg, ws, args, cur):
+        for name in selected(cfg, ws, args, cur, home_only=True):
             if name not in inst:
                 rows["curated-missing"].append(name)
         have = workspace_shots(cfg, ws, args.root)
@@ -833,16 +940,22 @@ def cmd_status(args):
                 continue
             rows["shots-new" if key not in store else "shots" if same_workflow(store[key][1], p) else "shots-changed"].append(key[1])
         for key, (g, p) in store.items():
-            if key not in have and holds(cfg, ws, g, key[0], None) and not (args.hero and key[0].lower() != args.hero.lower()):
+            if key not in have and is_home(cfg, ws, g, key[0], None) and not (args.hero and key[0].lower() != args.hero.lower()):
                 rows["shots-missing"].append(key[1])
-        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "curated", "curated-changed", "curated-missing", "test", "test-changed", "shots", "shots-new", "shots-changed", "shots-missing", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
+        counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "published", "unrouted", "curated", "curated-changed", "curated-missing", "test", "test-changed", "shots", "shots-new", "shots-changed", "shots-missing", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
         print(f"{ws} [{info['status']}]: {counts}")
         hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull: keeps it as a curated workflow", "curated-changed": "pull: captures your edits",
+                 "published": "a temporary copy of a set whose home is elsewhere; cleanup -w removes it when you are done",
+                 "unrouted": "this workspace is neither home for it nor accepts it; cleanup -w moves plain copies to backup once their home workspace holds them, hand-made zz_ ones stay",
                  "curated-missing": "deploy --curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt",
                  "shots-new": "pull --shots", "shots-changed": "pull --shots", "shots-missing": "deploy --shots"}
         for k, names in rows.items():
             if k in hints and names and (args.verbose or len(names) <= 5):
                 print(f"    {k} ({hints[k]}): " + ", ".join(names))
+        flagged = [c for c in input_choices(cfg, [ws], args.root, args.hero) if c["state"] != "same"]
+        if flagged:
+            print("    inputs-changed (inputs --pull: keeps the default images you chose here in workspaces.json): "
+                  + ", ".join(f"{c['hero']} {c['role']}" + (" (mixed)" if c["state"] == "mixed" else "") for c in flagged))
         if args.templates:
             tpl, itpl = template_files(cfg), {n: p for n, p in inst.items() if is_template(cfg, n)}
             st = collections.Counter("missing" if n not in itpl else ("aligned" if same_bytes(p, itpl[n]) else "differs") for n, p in tpl.items())
@@ -865,10 +978,15 @@ def cmd_deploy(args):
     if not args.templates and not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
         sys.exit("Deploy needs a filter (--hero, --group, --stage, --class, --match) or --all, so a whole playground is never pushed by accident.")
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    targets = pick_targets(cfg, args, "dev")
+    targets = pick_targets(cfg, args, "home")
+    if args.workspace and not args.templates:
+        for ws in targets:
+            refused = refused_groups(cfg, ws, args.hero, args.group, route_stage(args))
+            if refused:
+                sys.exit(f"{ws} is neither home for nor accepts: {', '.join(refused)}. Narrow the filter with --group/--hero, or list the set under \"accepts\" "
+                         f"for that workspace in workflows/workspaces.json if it really should go there.")
     for ws in targets:
-        if not install_exists(cfg, ws, args.root):
-            print(f"{ws}: workspace not created yet under {args.root or cfg['installsRoot']}, skipped")
+        if not ready_or_skip(cfg, ws, args.root):
             continue
         dest = install_dir(cfg, ws, args.root)
         inst = install_files(cfg, ws, args.root)
@@ -899,6 +1017,10 @@ def cmd_deploy(args):
                 continue
             if name not in inst and is_staged(name) and not getattr(args, "staged", False):
                 tally["staged held back"] += 1
+                continue
+            if name in inst and is_hand_made(cfg, ws, inst[name], args.root):
+                print(f"  KEEP     {ws}/{name} is hand-made (zz_ folder or zz_Curated_/test_ name); deploy never changes it")
+                tally["hand-made kept"] += 1
                 continue
             if name in inst and getattr(args, "new_only", False):
                 tally["kept"] += 1
@@ -986,10 +1108,10 @@ def cmd_deploy(args):
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
 
 
-def same_copy(dev_p, uat_p, master_p):
+def same_copy(a_path, b_path, master_path):
     """Loose duplicate test: same prompt values as the repo master and the same input image; seeds and other run-to-run values are ignored."""
     try:
-        a, b, m = read_wf(dev_p), read_wf(uat_p), read_wf(master_p)
+        a, b, m = read_wf(a_path), read_wf(b_path), read_wf(master_path)
     except ValueError:
         return False
     return get_values(a) == get_values(b) == get_values(m) and input_image(a) == input_image(b)
@@ -1002,49 +1124,66 @@ def cleanup_orphans(cfg, args):
         sys.exit("--orphans needs --match, e.g. --match \"_X_Pose(_Barefoot|_Heels)?$\"")
     repo, cur, tst = repo_files(cfg), curated_files(), test_files()
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    apply = args.apply and not args.dry_run
     moved = 0
     for ws in args.workspace or list(cfg["workspaces"]):
-        if not install_exists(cfg, ws, args.root):
+        if not workspace_ready(cfg, ws, args.root)[0]:
+            if args.workspace:
+                ready_or_skip(cfg, ws, args.root)
             continue
         d = install_dir(cfg, ws, args.root)
+        gone = []
         for name, p in sorted(install_files(cfg, ws, args.root).items()):
             h = hero_of(name)
             if not h or name in repo or name in cur or name in tst or is_template(cfg, name) or excluded(cfg, name):
                 continue
             rel = p.relative_to(d)
-            if rel.parts[0].startswith("zz_") or (args.hero and h.lower() != args.hero.lower()) or not name_matches(args.match, name):
+            if is_hand_made(cfg, ws, p, args.root) or (args.hero and h.lower() != args.hero.lower()) or not name_matches(args.match, name):
                 continue
-            print(f"  {'move ' if args.apply else 'would move'}  {ws}: {rel.as_posix()}")
+            print(f"  {'move ' if apply else 'would move'}  {ws}: {rel.as_posix()}")
             moved += 1
-            if args.apply:
+            gone.append(p)
+            if apply:
                 b = BACKUPS / stamp / (ws + " (orphans)") / rel
                 b.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(p), str(b))
-    print(f"orphans: {moved} workflow(s) " + ("moved to workflows/.sync/backup" if args.apply else "would be moved (preview; use --apply)"))
+        if gone:
+            for folder in (prune_empty_dirs(d, apply) if apply else empty_dirs(d, gone)):
+                print(f"  {'removed' if apply else 'would remove'} empty folder  {ws}: {folder.relative_to(d).as_posix()}")
+    print(f"orphans: {moved} workflow(s) " + ("moved to workflows/.sync/backup" if apply else "would be moved (preview; use --apply)"))
 
 
 def cmd_cleanup(args):
-    """Remove plain duplicates from the dev workspace once the same workflow sits in its routed UAT workspace(s).
+    """Remove the generated workflows a workspace is not routed to hold, once a workspace that is routed to hold them has an identical copy.
 
-    A dev file is removed only if it is a generated workflow and every UAT workspace that serves it holds an identical copy.
-    Anything else stays: files not in the repo (yours, curated or renamed), edited copies, and files not yet delivered.
-    Strict by default (identical graphs); --loose ignores seeds and other values that change every run. Default is a preview; --apply moves the duplicates to workflows/.sync/backup/ (nothing is deleted)."""
+    The workspace is named with -w; there is no default. A file is removed only if all of these hold: it is a generated workflow in the repo, no route sends it to
+    this workspace, it is not hand-made (a zz_ folder or a zz_Curated_/test_ name), and every home workspace that serves it is active and holds an identical copy.
+    Anything else stays and is listed with its reason. Strict by default (identical graphs); --loose ignores seeds and other values that change every run.
+    Temporary copies you published on request (a set this workspace accepts but is not home for) are removed the same way once you are done.
+    Empty folders are removed afterwards (never the top-level zz_ ones). Default is a preview; --apply moves the files to workflows/.sync/backup/ (nothing is deleted)."""
     cfg = load_cfg()
     if args.orphans:
         return cleanup_orphans(cfg, args)
+    if not args.workspace:
+        sys.exit("cleanup needs -w WORKSPACE: it removes what that workspace is not home for (see `list`). Use --orphans --match ... for renamed or removed cards.")
     repo = repo_files(cfg)
     groups = hero_groups()
-    src = args.workspace[0] if args.workspace else cfg["dev"][0]
-    if not install_exists(cfg, src, args.root):
-        sys.exit(f"{src}: workspace not found")
+    src = args.workspace[0]
+    if src not in cfg["workspaces"]:
+        sys.exit(f"Unknown workspace '{src}'. Known: {list(cfg['workspaces'])}")
+    ok, why = workspace_ready(cfg, src, args.root)
+    if not ok:
+        sys.exit(f"{src}: {why}.")
+    apply = args.apply and not args.dry_run
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     cache, tally, kept = {}, collections.Counter(), collections.defaultdict(list)
 
     def files_of(ws):
         if ws not in cache:
-            cache[ws] = install_files(cfg, ws, args.root) if install_exists(cfg, ws, args.root) else None
+            cache[ws] = install_files(cfg, ws, args.root) if workspace_ready(cfg, ws, args.root)[0] else None
         return cache[ws]
 
+    gone = []
     for name, p in sorted(install_files(cfg, src, args.root).items()):
         h = hero_of(name)
         if not h or is_template(cfg, name) or excluded(cfg, name):
@@ -1053,17 +1192,22 @@ def cmd_cleanup(args):
         if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group) or not stage_ok(args, name) \
                 or (args.match and not name_matches(args.match, name)):
             continue
+        if is_home(cfg, src, g, h, stage_of(name)):
+            tally["home here"] += 1
+            continue
         why = None
-        dests = [w for w in targets_for(cfg, "uat", g, h, stage_of(name)) if w != src]
-        if name not in repo:
+        dests = [w for w in home_workspaces(cfg, g, h, stage_of(name)) if w != src]
+        if is_hand_made(cfg, src, p, args.root):
+            why = "hand-made (zz_ folder or zz_Curated_/test_ name): never removed; pull it into the repo or delete it yourself"
+        elif name not in repo:
             why = "not a generated workflow in the repo (yours, curated or renamed)"
         elif not dests:
-            why = "no UAT workspace serves it"
+            why = "no home workspace is configured for it"
         else:
             for w in dests:
                 held = files_of(w)
                 if held is None:
-                    why = f"{w} does not exist yet"
+                    why = f"{w} is not an active workspace with an install yet"
                 elif name not in held:
                     why = f"not delivered to {w} yet"
                 elif not (same_copy(p, held[name], repo[name][2]) if args.loose else same_workflow(p, held[name])):
@@ -1073,9 +1217,10 @@ def cmd_cleanup(args):
         if why:
             kept[why].append(name)
             continue
-        print(f"  {'remove ' if args.apply else 'would remove'}  {name}  (also in {', '.join(dests)})")
+        print(f"  {'remove ' if apply else 'would remove'}  {name}  (held by {', '.join(dests)})")
         tally["duplicates"] += 1
-        if args.apply:
+        gone.append(p)
+        if apply:
             b = BACKUPS / stamp / (src + " (cleaned)") / name
             b.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(str(p), str(b))
@@ -1083,64 +1228,11 @@ def cmd_cleanup(args):
         print(f"  KEEP {len(names):4}  {why}")
         for n in names[: args.show]:
             print(f"           {n}")
-    print(f"{src}: {tally['duplicates']} duplicate(s) " + ("moved to backup" if args.apply else "would be removed (preview; use --apply)") + f", {sum(map(len, kept.values()))} kept")
-
-
-def cmd_promote(args):
-    """Move approved workflows up a tier without leaving duplicates behind."""
-    cfg = load_cfg()
-    if not (args.hero or args.group or args.stage or args.cls or args.match or args.all):
-        sys.exit("Promote needs a filter (--hero, --group, --stage, --class, --match) or --all.")
-    if args.src == args.to or TIERS.index(args.src) > TIERS.index(args.to):
-        sys.exit(f"Promote goes up: dev -> uat -> prod (got {args.src} -> {args.to}).")
-    groups = hero_groups()
-    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    moved = collections.Counter()
-    if args.workspace:
-        sources = args.workspace
-    elif args.src == "dev":
-        sources = [cfg["dev"][0]]
-    else:
-        sources = tier_workspaces(cfg, args.src, args.hero, args.group, route_stage(args))
-    for src_ws in sources:
-        if src_ws not in cfg["workspaces"] or not install_exists(cfg, src_ws, args.root):
-            print(f"{src_ws}: source workspace not found, skipped")
-            continue
-        inst = install_files(cfg, src_ws, args.root)
-        for name, p in inst.items():
-            h = hero_of(name)
-            if not h or is_template(cfg, name):
-                continue
-            g = groups[h]
-            if not holds(cfg, src_ws, g, h, stage_of(name)):
-                continue
-            if (args.hero and h.lower() != args.hero.lower()) or (args.group and g != args.group):
-                continue
-            if not stage_ok(args, name) or (args.match and not name_matches(args.match, name)):
-                continue
-            dests = [w for w in targets_for(cfg, args.to, g, h, stage_of(name)) if w in cfg["workspaces"] and install_exists(cfg, w, args.root)]
-            if not dests:
-                print(f"  HOLD     {name}: no {args.to} workspace exists yet for {h} (left in {src_ws})")
-                moved["held"] += 1
-                continue
-            wf = read_wf(p)
-            print(f"  promote  {name}: {src_ws} -> {', '.join(dests)}" + ("" if args.keep else f" (leaves {src_ws})"))
-            if args.dry_run:
-                moved["promoted"] += 1
-                continue
-            write_wf(repo_path(cfg, g, h, name), wf)
-            for w in dests:
-                existing = install_files(cfg, w, args.root).get(name)
-                if existing:
-                    backup(stamp, w, name, existing)
-                write_wf(existing or install_dir(cfg, w, args.root) / name, wf)
-            if not args.keep:
-                b = BACKUPS / stamp / (src_ws + " (promoted)") / name
-                b.parent.mkdir(parents=True, exist_ok=True)
-                shutil.move(str(p), str(b))
-            moved["promoted"] += 1
-        print(f"{src_ws}: " + ", ".join(f"{v} {k}" for k, v in moved.items()) + (" (dry run)" if args.dry_run else ""))
-    print("Restart the affected ComfyUI workspaces to see changes.")
+    d = install_dir(cfg, src, args.root)
+    for folder in (prune_empty_dirs(d, apply) if apply else empty_dirs(d, gone)):
+        print(f"  {'removed' if apply else 'would remove'} empty folder  {folder.relative_to(d).as_posix()}")
+    print(f"{src}: {tally['duplicates']} workflow(s) this workspace is not home for " + ("moved to backup" if apply else "would be removed (preview; use --apply)")
+          + f", {sum(map(len, kept.values()))} kept, {tally['home here']} home here and left alone")
 
 
 def pull_shots(cfg, ws, args, stamp, seen=None):
@@ -1184,11 +1276,10 @@ def cmd_pull(args):
     groups = hero_groups()
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     seen, scanned = set(), set()
-    if args.prune and not (args.shots and args.hero and (args.workspace or args.to)):
-        sys.exit("--prune needs --shots, --hero and an explicit target (-w or --to), so a shot another workspace holds is never removed by mistake.")
-    for ws in pick_targets(cfg, args, "dev"):
-        if not install_exists(cfg, ws, args.root):
-            print(f"{ws}: workspace not found, skipped")
+    if args.prune and not (args.shots and args.hero and args.workspace):
+        sys.exit("--prune needs --shots, --hero and an explicit workspace (-w), so a shot another workspace holds is never removed by mistake.")
+    for ws in pick_targets(cfg, args, "home"):
+        if not ready_or_skip(cfg, ws, args.root):
             continue
         info = cfg["workspaces"][ws]
         done = skipped = 0
@@ -1291,8 +1382,13 @@ def cmd_fork(args):
     if args.dry_run:
         return
     write_wf(dst, wf)
-    ws = cfg["dev"][0]
-    if not args.no_deploy and install_exists(cfg, ws, args.root):
+    homes = [w for w in home_workspaces(cfg, g, h, "poses") if workspace_ready(cfg, w, args.root)[0]]
+    if args.no_deploy:
+        return
+    if not homes:
+        print(f"  no active home workspace for {h}: the curated copy stays in the repo (deploy --curated --hero {h} puts it in a workspace later)")
+        return
+    for ws in homes:
         write_wf(install_dir(cfg, ws, args.root) / special_dir(ws, CURATED_DIR, h) / new, wf)
         print(f"  deployed to {ws}: open {new} in ComfyUI, edit it, save it, then run pull to keep your changes")
 
@@ -1379,22 +1475,61 @@ def cmd_make(args):
         print("      (use --create to build the missing workflows from the master template)")
 
 
+def cmd_setup(args):
+    """Bring one workspace to its intended state in one go: deploy every set it is home for (plus the curated workflows and shots the repo keeps for them), tidy the folders,
+    remove what it is not home for (a clone's leftovers) and show the status. A preview unless --apply; every step is the normal command, so all the guards apply."""
+    cfg = load_cfg()
+    if not args.workspace or len(args.workspace) != 1:
+        sys.exit("setup needs exactly one -w WORKSPACE.")
+    ws = args.workspace[0]
+    if ws not in cfg["workspaces"]:
+        sys.exit(f"Unknown workspace '{ws}'. Known: {list(cfg['workspaces'])}")
+    ok, why = workspace_ready(cfg, ws, args.root)
+    if not ok:
+        sys.exit(f"{ws}: {why}.")
+    groups = hero_groups()
+    homes = {h: g for h, g in groups.items() if is_home(cfg, ws, g, h)}
+    whole = sorted(g for g in set(homes.values()) if all(h in homes for h, gg in groups.items() if gg == g))
+    partial = sorted(h for h, g in homes.items() if g not in whole)
+    root = ["--root", args.root] if args.root else []
+    dry = [] if args.apply else ["--dry-run"]
+    apply = ["--apply"] if args.apply else []
+    print(f"setup {ws} ({'APPLY' if args.apply else 'preview; add --apply to do it'}): home for {len(whole)} whole set(s) {whole} and {len(partial)} hero(es) {partial}")
+    steps = [["inputs", "--pull", "-w", ws, *([] if args.apply else ["--dry-run"])]]
+    if cfg["workspaces"][ws].get("templates"):
+        steps.append(["deploy", "--templates", "-w", ws, *dry])
+    for g in whole:
+        steps.append(["deploy", "--group", g, "-w", ws, "--curated", "--shots", *dry])
+    for h in partial:
+        steps.append(["deploy", "--hero", h, "-w", ws, "--curated", "--shots", *dry])
+    steps += [["tidy", "-w", ws, *apply], ["cleanup", "-w", ws, *apply], ["status", "-w", ws]]
+    for step in steps:
+        print("\n== " + " ".join(step))
+        main([step[0], *root, *step[1:]])
+
+
 def cmd_tidy(args):
     """Move generated workflows that sit loose in a workspace into <stage>/<family>/ folders, and curated and test ones into zz_Curated/ and zz_Test/, so the ComfyUI list shows folders, not hundreds of files."""
     cfg = load_cfg()
     repo, cur, tst = repo_files(cfg), curated_files(), test_files()
     for ws in pick_targets(cfg, args, "all"):
-        if not install_exists(cfg, ws, args.root):
+        if not ready_or_skip(cfg, ws, args.root):
             continue
         d = install_dir(cfg, ws, args.root)
         moved = 0
         for name, p in install_files(cfg, ws, args.root).items():
+            top = p.relative_to(d).parts[0]
             if name in cur or name in tst:
                 if args.hero and (cur.get(name) or tst[name])[1].lower() != args.hero.lower():
                     continue
-                want = d / special_dir(ws, CURATED_DIR if name in cur else TEST_DIR, hero_of(name)) / name
+                home_dir = CURATED_DIR if name in cur else TEST_DIR
+                if top == home_dir:
+                    continue  # already where hand-made workflows live, in whatever subfolder you keep it
+                want = d / special_dir(ws, home_dir, hero_of(name)) / name
             elif name not in repo or (args.hero and repo[name][1].lower() != args.hero.lower()):
                 continue
+            elif is_hand_made(cfg, ws, p, args.root):
+                continue  # a generated name inside a zz_ folder is yours; never move it out
             else:
                 want = d / workspace_subdir(ws, read_wf(repo[name][2])) / name
             if p == want:
@@ -1406,10 +1541,9 @@ def cmd_tidy(args):
                 shutil.move(str(p), str(want))
             moved += 1
         print(f"{ws}: {moved} workflow(s) {'moved' if args.apply else 'would move'}")
-        if args.apply:  # moving leaves empty folders behind (an old hero-first layout), which ComfyUI would still list
-            for folder in sorted((q for q in d.rglob("*") if q.is_dir()), key=lambda q: len(q.parts), reverse=True):
-                if not any(folder.iterdir()) and not folder.relative_to(d).parts[0].startswith("zz_"):
-                    folder.rmdir()
+        # moving leaves empty folders behind (an old layout), which ComfyUI would still list; zz_ folders are never removed
+        for folder in prune_empty_dirs(d, args.apply):
+            print(f"  {'removed' if args.apply else 'would remove'} empty folder  {ws}: {folder.relative_to(d).as_posix()}")
     if not args.apply:
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
@@ -1417,6 +1551,13 @@ def cmd_tidy(args):
 def reset_inputs(cfg, args, workspaces=None, include_repo=True):
     """Point every generated workflow at its default incoming image (see default_input), in the repo and in the workspaces, and copy any image a
     workspace is missing into its input folder. Curated, test and shot workflows are left alone; a changed file is backed up first."""
+    pending = [c for c in input_choices(cfg, workspaces, args.root, args.hero) if c["state"] != "same"]
+    if pending and not getattr(args, "force", False):
+        print("inputs reset STOPPED: the workspaces hold default images that workspaces.json does not (a reset would overwrite your choice):")
+        for c in pending:
+            print(f"    {c['hero']:10} {c['role']:6} {c['state']:8} {c['counts']}   (configured: {c['configured'] or '-'})")
+        print("Run  inputs --pull  first to keep them (or --force to overwrite them; a changed workflow is backed up first).")
+        return
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     idx, repo = input_index(cfg), repo_files(cfg)
     needs = collections.defaultdict(set)
@@ -1453,10 +1594,10 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
         for name, (g, h, p) in repo.items():
             retarget(p, name, None)
     for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
-        if not install_exists(cfg, ws, args.root):
+        if not workspace_ready(cfg, ws, args.root)[0]:
             continue
         for name, p in install_files(cfg, ws, args.root).items():
-            if name in repo:
+            if name in repo and not is_hand_made(cfg, ws, p, args.root):
                 retarget(p, name, ws)
     for ws, names in needs.items():
         d = input_dir(cfg, ws, args.root) if args.root else input_dir(cfg, ws)
@@ -1516,6 +1657,94 @@ def find_image(cfg, name):
     return None
 
 
+def dump_cfg(v, level=0):
+    """workspaces.json as text, in its own compact style (one line per small object) so a change to one image does not rewrite the file."""
+    pad = "  " * level
+    if isinstance(v, dict) and v:
+        flat = json.dumps(v, ensure_ascii=False)
+        scalar = not any(isinstance(x, (dict, list)) for x in v.values())
+        if level >= 2 and len(flat) <= 300 or level == 1 and (len(flat) <= 100 or scalar and len(flat) <= 300):
+            return flat
+        inner = ",\n".join(f"{pad}  {json.dumps(k, ensure_ascii=False)}: {dump_cfg(x, level + 1)}" for k, x in v.items())
+        return "{\n" + inner + "\n" + pad + "}"
+    if isinstance(v, list) and v:
+        flat = json.dumps(v, ensure_ascii=False)
+        if len(flat) <= 300:
+            return flat
+        return "[\n" + ",\n".join(f"{pad}  {dump_cfg(x, level + 1)}" for x in v) + "\n" + pad + "]"
+    return json.dumps(v, ensure_ascii=False)
+
+
+def write_cfg(cfg):
+    CFG_PATH.write_text(dump_cfg(cfg) + "\n", encoding="utf-8")
+
+
+PLACEHOLDER_IMAGE = re.compile(r"_00001_\.png$")
+LEGACY_APOSE = re.compile(r"^([A-Za-z]+)_Qwen_X_Pose\.json$")  # the old single A-pose workflow, which read the photo (now Alpha 1 Prime)
+
+
+def input_choices(cfg, workspaces=None, root=None, hero=None):
+    """The default images you chose inside the workspaces' generated Qwen workflows, set against workspaces.json.
+
+    Per (hero, role) - photo, prime, bare, apose, scene, polish - it looks at every generated Qwen workflow whose role that is. The tool's own placeholders (..._00001_.png) and
+    images named for another hero are not a choice. One image that differs from the configured one is "changed" (pull it); several different ones are "mixed" (reported,
+    never pulled); otherwise "same". The old <Hero>_Qwen_X_Pose.json counts as the photo workflow."""
+    idx, repo, groups = input_index(cfg), repo_files(cfg), hero_groups()
+    seen = collections.defaultdict(collections.Counter)
+    for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
+        if not workspace_ready(cfg, ws, root)[0]:
+            continue
+        for name, p in install_files(cfg, ws, root).items():
+            if "_Qwen_" not in name:
+                continue
+            base = name[:-5] if name.endswith(".json") else name
+            legacy = LEGACY_APOSE.match(name)
+            if legacy and base not in idx:
+                h, role = legacy.group(1), "photo"
+            elif base in idx and name in repo:
+                h, stage, family = idx[base]
+                role = input_role(cfg, h, stage, family)
+            else:
+                continue
+            if not role or (hero and h.lower() != hero.lower()) or is_hand_made(cfg, ws, p, root):
+                continue
+            wf = read_wf(p)
+            img = input_image(wf) if isinstance(wf, dict) else None
+            others = [o.lower() + "_" for o in groups if o.lower() != h.lower()]
+            if img and not PLACEHOLDER_IMAGE.search(img) and not any(img.lower().startswith(o) for o in others):
+                seen[(h, role)][img] += 1
+    out = []
+    for (h, role), counts in sorted(seen.items()):
+        conf = cfg.get("inputs", {}).get(h)
+        conf = conf if isinstance(conf, dict) else {}
+        want = cfg.get("photos", {}).get(h) if role == "photo" else (conf.get(role) or conf.get("apose"))
+        state = "same" if set(counts) <= {want} else ("changed" if len(counts) == 1 else "mixed")
+        out.append({"hero": h, "role": role, "configured": want, "counts": dict(counts), "state": state, "chosen": next(iter(counts)) if len(counts) == 1 else None})
+    return out
+
+
+def pull_inputs(cfg, args, workspaces=None):
+    """Write the default images you chose in the workspaces into workspaces.json (photos / inputs), so a later `inputs --reset` or a rebuilt workflow keeps them."""
+    found = input_choices(cfg, workspaces, args.root, getattr(args, "hero", None))
+    changed = [c for c in found if c["state"] == "changed"]
+    for c in found:
+        if c["state"] == "mixed":
+            print(f"  MIXED    {c['hero']} {c['role']}: the workflows load different images {c['counts']}; set the one you want with: inputs --set {c['hero']} --{'photo' if c['role'] == 'photo' else c['role']} NAME")
+    for c in changed:
+        print(f"  pull     {c['hero']:10} {c['role']:6} {c['configured'] or '-'} -> {c['chosen']}  ({sum(c['counts'].values())} workflow(s))")
+        if not args.dry_run:
+            if c["role"] == "photo":
+                cfg.setdefault("photos", {})[c["hero"]] = c["chosen"]
+            else:
+                conf = cfg.setdefault("inputs", {}).get(c["hero"])
+                cfg["inputs"][c["hero"]] = conf = conf if isinstance(conf, dict) else {}
+                conf[c["role"]] = c["chosen"]
+    if changed and not args.dry_run:
+        write_cfg(cfg)
+    print(f"inputs pull: {len(changed)} default image(s) " + ("would be " if args.dry_run else "") + "taken from the workspaces" + ("" if changed else " (workspaces.json already matches)") + (" - now run: inputs --reset" if changed and not args.dry_run else ""))
+    return len(changed)
+
+
 def inputs_status(cfg):
     """Per hero: the configured photo, barefoot A-pose and bare-skin images, where each was found and whether it is the standard size."""
     std = tuple(cfg.get("standardSize") or ())
@@ -1551,7 +1780,7 @@ def set_inputs(cfg, args):
     if args.dry_run:
         print("(dry run, nothing written)")
     else:
-        CFG_PATH.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        write_cfg(cfg)
         print("workspaces.json updated; now run: inputs --reset --hero " + hero)
 
 
@@ -1593,8 +1822,8 @@ def cmd_denoise(args):
     repo = repo_files(cfg)
     spots = [(None, p, name) for name, (g, h, p) in repo.items()]
     for ws in cfg["workspaces"]:
-        if install_exists(cfg, ws, args.root):
-            spots += [(ws, p, name) for name, p in install_files(cfg, ws, args.root).items() if name in repo]
+        if workspace_ready(cfg, ws, args.root)[0]:
+            spots += [(ws, p, name) for name, p in install_files(cfg, ws, args.root).items() if name in repo and not is_hand_made(cfg, ws, p, args.root)]
     for ws, p, name in spots:
         stem = name[:-5] if name.endswith(".json") else name
         if stem not in wanted:
@@ -1621,8 +1850,11 @@ def cmd_inputs(args):
     if args.set:
         set_inputs(cfg, args)
         return
+    if args.pull:
+        pull_inputs(cfg, args, args.workspace)
+        return
     if args.reset:
-        reset_inputs(cfg, args)
+        reset_inputs(cfg, args, args.workspace)
         return
     for h in sorted(hero_groups()):
         if not hero_files(h):
@@ -1653,8 +1885,7 @@ def main(argv=None):
         p.add_argument("--root", help="override installsRoot (testing)")
         p.add_argument("--dry-run", action="store_true")
         if targets:
-            p.add_argument("--to", choices=list(TIERS), help="target tier (default: dev)")
-            p.add_argument("-w", "--workspace", action="append", help="a specific workspace (repeatable)")
+            p.add_argument("-w", "--workspace", action="append", help="a specific workspace (repeatable); for deploy it must be home for the set or accept it")
         if filters:
             p.add_argument("--hero")
             p.add_argument("--group", help="prompt group, e.g. drakn-sisters, angel-primes")
@@ -1684,23 +1915,16 @@ def main(argv=None):
     s.add_argument("--reset-inputs", action="store_true", help="after deploying, also point the deployed workspaces' generated workflows back at their default incoming images")
     s = sub.add_parser("cleanup")
     common(s, False, True)
-    s.add_argument("-w", "--workspace", action="append", help="workspace to clean (default: the dev workspace)")
-    s.add_argument("--apply", action="store_true", help="really move the duplicates to backup (default: preview only)")
-    s.add_argument("--loose", action="store_true", help="treat a dev file as a duplicate when prompts and input image match (ignores seeds and other run-to-run changes)")
+    s.add_argument("-w", "--workspace", action="append", help="the workspace to clean (required): removes what it is not home for, once the home workspace holds an identical copy")
+    s.add_argument("--apply", action="store_true", help="really move the files to backup (default: preview only)")
+    s.add_argument("--loose", action="store_true", help="treat a file as an identical copy when prompts and input image match (ignores seeds and other run-to-run changes)")
     s.add_argument("--show", type=int, default=5, help="names to list per kept reason")
     s.add_argument("--orphans", action="store_true", help="instead: move workflows no prompt defines any more (renamed or removed cards) to backup; needs --match, honours -w and --hero")
     s = sub.add_parser("fork")
     common(s)
     s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
     s.add_argument("--as", dest="tag", required=True, help="short tag added to the new name, e.g. Hand")
-    s.add_argument("--no-deploy", action="store_true", help="only create the curated copy; do not put it in the dev workspace")
-    s = sub.add_parser("promote")
-    common(s, False, True)
-    s.add_argument("--from", dest="src", choices=list(TIERS), default="dev", help="source tier (default: dev)")
-    s.add_argument("--to", choices=list(TIERS), required=True, help="destination tier")
-    s.add_argument("-w", "--workspace", action="append", help="source workspace(s), when not the default")
-    s.add_argument("--all", action="store_true")
-    s.add_argument("--keep", action="store_true", help="copy instead of move: leave the source workspace copy")
+    s.add_argument("--no-deploy", action="store_true", help="only create the curated copy; do not put it in the hero's home workspace")
     s = sub.add_parser("pull")
     common(s, True, True)
     s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
@@ -1714,7 +1938,9 @@ def main(argv=None):
     s.add_argument("--input", help="LoadImage file for created workflows")
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("inputs")
-    common(s)
+    common(s, True)
+    s.add_argument("--pull", action="store_true", help="take the default images you chose inside the workspaces' workflows into workspaces.json (photos / inputs); run it before --reset")
+    s.add_argument("--force", action="store_true", help="with --reset: overwrite images chosen in the workspaces that have not been pulled")
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
     s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
     s.add_argument("--hero", help="with --reset: only this hero")
@@ -1735,12 +1961,15 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
+    s = sub.add_parser("setup")
+    common(s, True, False)
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s = sub.add_parser("tidy")
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
     s.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "promote": cmd_promote, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup}[args.cmd](args)
 
 
 if __name__ == "__main__":

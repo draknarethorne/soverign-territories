@@ -2,38 +2,48 @@
 echo.
 echo  Sovereign Territories command scripts. Run them from a terminal, or double-click menu.cmd.
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.
-echo  Add --dry-run as the last argument to any deploy, promote or make script to preview.
+echo  A set is deployed to its HOME workspace (see workspaces.cmd). Add --dry-run as the last argument to a deploy, refresh or make script to preview.
 echo.
-echo  BUILD
-echo    prompts.cmd [filters]          regenerate prompts from data/art (all, or gen_prompt.py filters)
-echo    videoprompts.cmd [card.json]   regenerate video prompts from data/animation cards
-echo    validate.cmd                   schema and link checks plus the validator self-tests
-echo    check.cmd                      every pre-commit hook
+echo  THE USUAL LOOP
+echo    refresh.cmd HERO [STAGE]        prompts, workflows and deploy for one hero (to her home workspace^(s^))
+echo    refresh-group.cmd GROUP         the same for a whole set: angel-primes, sovereign-dawn, sovereign-territories, drakn-sisters
+echo    refresh-firered.cmd HERO [STAGE]  the loop for FireRed (local test workflows, not in git)
+echo    animate.cmd HERO                video prompts, MiniMax workflows, deploy
+echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated and zz_Shots are captured)
 echo.
-echo  WORKFLOWS (repo masters)
-echo    make.cmd HERO [STAGE]          create or refresh that hero's workflows from the prompts
-echo    update.cmd                     refresh prompt text in every existing repo workflow
-echo    inputs.cmd                     show which A-pose image each hero's workflows read
+echo  WORKSPACES
+echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
+echo    status.cmd [filters]            repo against every workspace
+echo    workspaces.cmd                  workspaces, homes, what each accepts and what the repo holds
+echo    publish.cmd HERO "WS" [STAGE]   a TEMPORARY copy in a workspace that accepts the set (Sovereign Territories takes any set: reels, feeds)
+echo    cleanup.cmd "WS" [--apply]      remove what that workspace is not home for (clone leftovers, finished temporary copies)
+echo    tidy.cmd "WS"^|all [--apply]     sort loose workflows into folders, remove empty folders
 echo.
-echo  DEPLOY AND PROMOTE
-echo    refresh-dev.cmd HERO [STAGE]   prompts, then make, then deploy to DEV (the usual loop)
-echo    refresh-firered.cmd HERO [STAGE] the same loop for FireRed (local test workflows, not in git)
-echo    animate.cmd HERO               video prompts, MiniMax workflows, then deploy to DEV
-echo    deploy-dev.cmd HERO [STAGE]    repo to DEV (Sovereign Territories)
-echo    deploy-uat.cmd HERO [STAGE]    repo to the hero or group UAT workspace
-echo    deploy-prod.cmd HERO [STAGE]   repo to the series PROD workspace
-echo    promote-uat.cmd HERO [STAGE]   MOVE approved workflows from DEV to UAT
-echo    promote-prod.cmd HERO [STAGE]  MOVE approved workflows from UAT to PROD
-echo    pull-dev.cmd HERO [STAGE]      keep what you made or edited in DEV (new = curated; edits to curated are captured)
-echo    fork.cmd WORKFLOW TAG          copy a generated workflow to hand-edit it (curated), and put it in DEV
-echo    deploy-curated.cmd HERO        copy hand-curated workflows to a workspace that lacks them
-echo    pull-shots.cmd HERO            keep what you saved under zz_Shots (seeds, Turbo or not) in the repo, subfolders included
-echo    deploy-shots.cmd HERO          copy kept shots to a workspace that lacks them
-echo    deploy-templates.cmd           put the ST stage templates in DEV
+echo  DEPLOY AND PULL, FINER CONTROL
+echo    deploy.cmd HERO [STAGE]         repo to the hero's home workspace(s)
+echo    deploy-group.cmd GROUP          repo to a whole set's home workspace
+echo    make.cmd HERO [STAGE]           create or refresh that hero's workflows from the prompts (repo only)
+echo    update.cmd [filters]            refresh prompt text in every existing repo workflow
+echo    fork.cmd WORKFLOW TAG           copy a generated workflow to hand-edit it (curated), and put it in the home workspace
+echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspace that lacks them
+echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots
+echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
+echo    inputs.cmd [--status ^| --pull -w WS ^| --reset --hero H]  which images each hero's workflows read; --pull keeps the default images you chose in ComfyUI in workspaces.json (do it before --reset)
+echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
-echo  LOOK
-echo    status.cmd [filters]           repo against every workspace
-echo    workspaces.cmd                 workspaces, routes and what the repo holds
+echo  ART DATA
+echo    prompts.cmd [filters]           regenerate prompts from data\art (all, or gen_prompt.py filters such as --group G --slug S)
+echo    videoprompts.cmd [card.json]    regenerate video prompts from data\animation cards
+echo    scaffold-angels.cmd [SLUG]      write the standard card set for the angels; --coverage reports library use
+echo    scaffold-sister.cmd SLUG        write a sister's studio kit cards
+echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piece and every reference to it
+echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)
+echo    style-audit.cmd [--prompts]     rank art wording by how illustrated (vs photographic) it reads; changes nothing
 echo.
-echo  See workflows\README.md for the model: DEV, UAT, PROD.
+echo  CHECKS
+echo    validate.cmd [--quick^|--full]   schema and link checks + tool tests; --quick adds a short validator self-test (under 2 min), --full all of it (about 6 min)
+echo    test.cmd                        the workflow tool tests only (routing, accepts, zz_ guards)
+echo    check.cmd                       every commit hook (or the same checks directly when pre-commit is not installed)
+echo.
+echo  See workflows\README.md for the model: one home workspace per set, temporary copies where a workspace accepts them, zz_ items mastered in the workspace.
 echo.

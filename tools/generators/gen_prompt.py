@@ -37,6 +37,73 @@ def load_json(path):
     return json.loads(pathlib.Path(path).read_text(encoding="utf-8-sig"))
 
 
+_SLOT = re.compile(r"\[\[([A-Za-z0-9_]+)\]\]")
+
+
+def piece_slots(text):
+    """Names of the [[SLOT]] markers in a piece's text."""
+    return set(_SLOT.findall(text)) if isinstance(text, str) else set()
+
+
+def _load_chain(path, _seen=()):
+    path = pathlib.Path(path)
+    piece = load_json(path)
+    base_ref = piece.get("extends") if isinstance(piece, dict) else None
+    if not base_ref:
+        return piece
+    if str(path) in _seen:
+        sys.exit(f"ERROR: {path} extends itself through {' -> '.join(_seen)}")
+    base_path = ROOT / base_ref
+    if not base_path.exists():
+        sys.exit(f"ERROR: {path} extends {base_ref}, which does not exist")
+    base = _load_chain(base_path, _seen + (str(path),))
+    out = {k: v for k, v in base.items() if k not in ("id", "name", "notes", "tags")}
+    for key, val in piece.items():
+        if key in ("extends", "vars", "varsFrom"):
+            continue
+        if key == "negatives":
+            val = list(dict.fromkeys(list(base.get("negatives", [])) + list(val)))
+        elif isinstance(val, str) and isinstance(base.get(key), str):
+            if "{{BASE}}" in val:
+                val = val.replace("{{BASE}}", base[key].rstrip())
+            elif val.startswith("+"):
+                tail = val[1:].strip()
+                val = base[key].rstrip() + ("" if tail[:1] in ",;.:" else " ") + tail
+        out[key] = val
+    design = load_json(ROOT / piece["varsFrom"]).get("vars", {}) if piece.get("varsFrom") else {}
+    if "vars" in base or design or "vars" in piece:
+        out["vars"] = {**base.get("vars", {}), **design, **piece.get("vars", {})}
+    return out
+
+
+def load_piece(path):
+    """A reusable art piece with its `extends` chain resolved.
+
+    A piece may name a base piece ("extends": "data/art/...json") and then only carry what is different, so a hero's own necklace is the library necklace plus her details
+    instead of a second full description. Its own fields replace the base's; in a text field `{{BASE}}` is replaced by the base's text (put the base wherever it reads best),
+    and a value starting with "+" is the base's text followed by the rest (no space is added when the rest starts with , ; . or :, so "+, with fine engraving" continues the base's sentence);
+    `negatives` are the base's plus its own. Bases may extend further bases; a cycle is an error.
+
+    A base can also be a frame with named gaps, `[[SLOT]]` in its text; a piece that extends it fills them with `"vars": {"SLOT": "text"}`, so ten heroes share one frame and
+    each writes only her own metal, shape or engraving. `"varsFrom": "data/art/...json"` takes the values from a design file (kind `design`) so several pieces of one hero
+    share one set of values. Every slot of a derived piece must be filled."""
+    piece = _load_chain(path)
+    if not isinstance(piece, dict):
+        return piece
+    derived = bool(load_json(path).get("extends"))
+    values = piece.pop("vars", {})
+    if not derived and not values:
+        return piece
+
+    def fill(text):
+        return _SLOT.sub(lambda m: str(values[m.group(1)]) if m.group(1) in values else m.group(0), text)
+
+    out = {k: fill(v) if isinstance(v, str) else [fill(x) if isinstance(x, str) else x for x in v] if isinstance(v, list) else v for k, v in piece.items()}
+    left = sorted(set().union(*(piece_slots(v) for v in out.values() if isinstance(v, str))))
+    if derived and left:
+        sys.exit(f"ERROR: {path} leaves slot(s) {', '.join(left)} unfilled; add them to its \"vars\"")
+    return out
+
 _CARD_INDEX = None
 
 
@@ -223,6 +290,12 @@ def studio_defaults():
     return json.loads((ROOT / "data/art/_settings/studio.json").read_text(encoding="utf-8"))
 
 
+def group_of(card_path):
+    """The set group (angel-primes, drakn-sisters ...) of a card file under data/art/_sets."""
+    parts = pathlib.PurePath(str(card_path).replace("\\", "/")).parts
+    return parts[parts.index("_sets") + 1] if "_sets" in parts else None
+
+
 def default_slot(slot, stage, sex):
     entry = SLOT_DEFAULTS[slot]
     value = entry.get(stage, entry.get("*"))
@@ -400,7 +473,7 @@ def tokens_for_dragon(dragon):
     }
 
 
-_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood", "element", "tags"}
+_COMPONENT_META_KEYS = {"id", "kind", "name", "compatibleStages", "sourceVariant", "status", "notes", "mood", "element", "tags", "backgroundRealm"}
 
 
 # A motion's own default gaze/expression are stored under these names so the
@@ -424,7 +497,7 @@ def _resolve_field_value(key, val):
     if not (isinstance(val, str) and val.lower().endswith(".json") and (ROOT / val).exists()):
         return val
     canonical = _FIELD_ALIASES.get(key, key)
-    piece = load_json(ROOT / val)
+    piece = load_piece(ROOT / val)
     return piece.get(canonical, val)
 
 
@@ -438,7 +511,7 @@ def resolve_component_tokens(card):
     ref = card.get("component")
     if not ref:
         return {}
-    component = load_json(ROOT / ref)
+    component = load_piece(ROOT / ref)
     toks = {}
     for key, val in component.items():
         if key in _COMPONENT_META_KEYS:
@@ -514,7 +587,7 @@ def resolve_components_tokens(card):
         if _is_literal_ref(ref):
             piece_content[slot] = {slot: ref}
             continue
-        piece = load_json(ROOT / ref)
+        piece = load_piece(ROOT / ref)
         content = {k: v for k, v in piece.items() if k not in _COMPONENT_META_KEYS}
         for field in content:
             canonical = _FIELD_ALIASES.get(field, field)
@@ -583,12 +656,15 @@ def generate(card_path, tokens_only=False):
     sex = None
     if "art" in hero:
         sex = "female" if "bust" in hero["art"]["physique"] else "male"
-        hero_defaults = {"underlayer": "defaultUnderlayer", "footwear": "defaultFootwear", "sheen": "defaultSheen"}
+        hero_defaults = {"underlayer": "defaultUnderlayer", "footwear": "defaultFootwear", "sheen": "defaultSheen", "realm": "defaultRealm"}
         for slot in SLOT_DEFAULTS:
             # Footwear and sheen tokens live inside the underlayer pieces, so any template with an underlayer needs them.
             uses_slot = "{{" + slot.upper() + "}}" in template or (slot in ("footwear", "sheen") and "{{UNDERLAYER}}" in template)
             if uses_slot:
                 default = default_slot(slot, card["stage"], sex)
+                # The realm (how realistic the world looks) can be set for a whole group in _settings/studio.json realmByGroup, and a hero's art.defaultRealm wins over it.
+                if slot == "realm":
+                    default = studio_defaults().get("realmByGroup", {}).get(group_of(card_path), default)
                 # A hero can carry her own default underlayer (her signature metallic look) and shoe.
                 if hero["art"].get(hero_defaults.get(slot, "")):
                     default = hero["art"][hero_defaults[slot]]
@@ -655,6 +731,8 @@ def generate(card_path, tokens_only=False):
     for key, val in toks.items():
         out = out.replace("{{" + key + "}}", val)
     out = cleanup(out)
+    if sex == "male":
+        out = masculine(out)
 
     # Rare escape hatch: base-set card may still remove a specific negative term
     # that neither the universal template nor the hero's own data accounts for.
@@ -678,6 +756,21 @@ def generate(card_path, tokens_only=False):
     dst.write_text(out, encoding="utf-8")
     print(f"wrote {card['output']}")
     return card["output"]
+
+
+_NOT_POSSESSIVE = r"(?:and|or|to|with|as|in|on|at|from|so|while|by|toward|towards|into|onto|of|for|than|but|then|when|until|if)"
+_MASCULINE = [
+    (r"\bherself\b", "himself"), (r"\bHerself\b", "Himself"), (r"\bhers\b", "his"), (r"\bShe\b", "He"), (r"\bshe\b", "he"),
+    (rf"\bher(?=\s+(?!{_NOT_POSSESSIVE}\b)[A-Za-z-])", "his"), (rf"\bHer(?=\s+(?!{_NOT_POSSESSIVE}\b)[A-Za-z-])", "His"),
+    (r"\bher\b", "him"), (r"\bHer\b", "Him"),
+]
+
+
+def masculine(text):
+    """Pieces and scene text are mostly written for women (a motion's "her hair", a hairstyle's "she"); a male hero's finished prompt gets he / his / him instead."""
+    for pattern, repl in _MASCULINE:
+        text = re.sub(pattern, repl, text)
+    return text
 
 
 def cleanup_orphans(expected_outputs, apply=False):

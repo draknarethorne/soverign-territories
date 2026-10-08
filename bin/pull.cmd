@@ -1,7 +1,7 @@
 @echo off
 call "%~dp0_env.cmd"
 if "%~1"=="" (
-  echo Usage: pull-dev HERO [STAGE] [--dry-run]    keeps workflows you made or edited in DEV: new ones become curated workflows, edits to curated ones are captured
+  echo Usage: pull HERO [STAGE] [--dry-run]    keeps what you made or edited in the hero's home workspace: new workflows become curated, edits to curated ones and shots are captured in the repo
   call "%~dp0_end.cmd" 1
   exit /b 1
 )

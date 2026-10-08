@@ -164,7 +164,7 @@ If one of these returns to the plan, it needs a template first.
 ### Stage 2: stock templates and experiments to remove, and the models tied to them (127.7 GB)
 
 The stock templates and the early `X_*` experiments live in the base `ComfyUI` workspace
-(`B:\Comfy-Desktop\ComfyUI-Installs\ComfyUI\ComfyUI\user\default\workflows`); the `Sovereign Territories` dev workspace holds only the ST templates.
+(`B:\Comfy-Desktop\ComfyUI-Installs\ComfyUI\ComfyUI\user\default\workflows`); the `Sovereign Territories` brand workspace holds only the brand set and the ST templates.
 Remove these workflow files from it:
 
 - Stock templates: `image_chrono_edit_14B`, `image_flux_kontext_dev_basic`, `image_flux2`, `image_flux2_klein_9b_kv_image_edit`, `image_hidream_e1_1`,

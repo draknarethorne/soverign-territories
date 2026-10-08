@@ -1,29 +1,102 @@
 #!/usr/bin/env python3
-"""Mutation tests for validate_data.py: corrupt a throwaway copy of data/ in each way the
-art/gameplay separation is meant to prevent, and assert the validator catches it. Guards
-against the validator silently going dead (as the old CI schema workflow did).
+"""Mutation tests for validate_data.py: corrupt the data in each way the art/gameplay separation is meant to
+prevent, and assert the validator catches it. Guards against the validator silently going dead (as the old CI
+schema workflow did).
 
-Run: python tools/validators/test_validate_data.py
+Each case changes a few real files in place, runs the validator, and puts them back (copying a 7,000-file tree
+per case cost a minute on Windows, so a case undoes itself instead). Every change is first written to a journal
+in the temp folder, so if a run is killed half-way the next run restores the files before it starts.
+
+Run: python tools/validators/test_validate_data.py            all cases (about 5 minutes)
+     python tools/validators/test_validate_data.py --quick    the baseline plus one case per kind of check (about 1 minute)
 """
 import json
 import pathlib
 import shutil
 import sys
 import tempfile
+import time
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import validate_data as vd  # noqa: E402
 
 REAL_ROOT = vd.ROOT
+JOURNAL = pathlib.Path(tempfile.gettempdir()) / "sovereign-validator-selftest" / "journal.json"
+_ops = []  # undo steps of the running case, newest last
 
 
-def run_on_copy(mutate):
-    """Copy data/ to a temp dir, apply mutate(root), run the full validation, return errors."""
-    tmp = pathlib.Path(tempfile.mkdtemp())
+def _save_journal():
+    JOURNAL.parent.mkdir(parents=True, exist_ok=True)
+    JOURNAL.write_text(json.dumps(_ops), encoding="utf-8")
+
+
+def _undo(op):
+    kind = op[0]
+    if kind == "restore":  # put a file's original bytes back
+        shutil.copy2(op[2], op[1])
+    elif kind == "delete":  # remove a file or folder the case created
+        target = pathlib.Path(op[1])
+        if target.is_dir():
+            shutil.rmtree(target, ignore_errors=True)
+        elif target.exists():
+            target.unlink()
+    elif kind == "move":  # move something back
+        if pathlib.Path(op[1]).exists():
+            pathlib.Path(op[2]).parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(op[1], op[2])
+
+
+def _record(op):
+    _ops.append(op)
+    _save_journal()
+
+
+def undo_all():
+    while _ops:
+        _undo(_ops.pop())
+    if JOURNAL.exists():
+        JOURNAL.unlink()
+
+
+def recover():
+    """Undo what a killed run left behind."""
+    if JOURNAL.exists():
+        for op in reversed(json.loads(JOURNAL.read_text(encoding="utf-8"))):
+            _undo(op)
+        JOURNAL.unlink()
+        print("restored files left changed by an interrupted run")
+
+
+def edit(path, fn):
+    d = json.loads(path.read_text(encoding="utf-8-sig"))
+    backup = JOURNAL.parent / f"backup-{len(_ops)}-{path.name}"
+    backup.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(path, backup)
+    _record(["restore", str(path), str(backup)])
+    fn(d)
+    path.write_text(json.dumps(d, indent=2), encoding="utf-8")
+
+
+def make_dir(path, exist_ok=False):
+    if not path.exists():
+        _record(["delete", str(path)])
+    path.mkdir(exist_ok=exist_ok)
+
+
+def copy_file(src, dst):
+    _record(["delete", str(dst)])
+    shutil.copy(src, dst)
+
+
+def move(src, dst):
+    _record(["move", str(dst), str(src)])
+    shutil.move(str(src), str(dst))
+
+
+def run_validation(mutate):
+    """Apply a case's change to the real data, run the full validation, undo the change, return the errors."""
     try:
-        shutil.copytree(REAL_ROOT / "data", tmp / "data")
-        mutate(tmp)
-        vd.ROOT = tmp
+        mutate(REAL_ROOT)
         report = vd.Report()
         counts = {}
         vd.check_instances(report, counts)
@@ -36,14 +109,7 @@ def run_on_copy(mutate):
         vd.check_animation_cards(report)
         return report.errors
     finally:
-        vd.ROOT = REAL_ROOT
-        shutil.rmtree(tmp, ignore_errors=True)
-
-
-def edit(path, fn):
-    d = json.loads(path.read_text(encoding="utf-8-sig"))
-    fn(d)
-    path.write_text(json.dumps(d, indent=2), encoding="utf-8")
+        undo_all()
 
 
 CARD = "data/cards/sovereign-dawn/heroes/hero-drakness-thorne.json"
@@ -51,6 +117,7 @@ IDENT = "data/art/heroes/drakn-sisters/drakness-thorne.json"
 SCENE = "data/art/_sets/drakn-sisters/drakness/5_Scenes/signature/drakness-scene-signature.json"
 ANIM = "data/animation/_sets/drakn-sisters/drakness/drakness-anim-x-pose-kiss-toss-laugh.json"
 SIB_SCENE = "data/art/_sets/drakn-sisters/draknora/5_Scenes/signature/draknora-scene-signature.json"
+CELESTIAL = "data/art/heroes/drakn-sisters/draknava/armor/celestial-plate-armor.json"
 HOLO_SCENE = "data/art/_sets/drakn-sisters/drakness/5_Scenes/signature/drakness-scene-signature-holo.json"
 
 CASES = [
@@ -81,9 +148,18 @@ CASES = [
     ("modern background slipping into a canon (fantasy-realm) scene",
      lambda r: edit(r / SCENE, lambda d: d["components"].update({"background": "data/art/backgrounds/modern/urban/city-street-daytime.json"})), "scene realm"),
     ("background piece outside fantasy/modern/studio",
-     lambda r: shutil.copy(r / "data/art/backgrounds/studio/cream-even.json", r / "data/art/backgrounds/stray.json"), "fantasy/, modern/ or studio/"),
+     lambda r: copy_file(r / "data/art/backgrounds/studio/cream-even.json", r / "data/art/backgrounds/stray.json"), "fantasy/, modern/ or studio/"),
     ("piece id no longer equal to its path (stale id after a move)",
      lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"id": "wardrobe/weapons/greatsword"})), "must equal its path"),
+    ("piece extending a base that does not exist",
+     lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"extends": "data/art/wardrobe/weapons/swords/no-such-sword.json"})), "which does not exist"),
+    ("piece extending a base of another kind",
+     lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"extends": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json"})), "of kind"),
+    ("pieces extending each other in a cycle",
+     lambda r: (edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"extends": "data/art/wardrobe/weapons/swords/longsword.json"})),
+                edit(r / "data/art/wardrobe/weapons/swords/longsword.json", lambda d: d.update({"extends": "data/art/wardrobe/weapons/swords/greatsword.json"}))), "cycle"),
+    ("{{BASE}} in a piece that extends nothing",
+     lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"description": "{{BASE}} with a plain grip"})), "{{BASE}}"),
     ("complete scene card switched to the staged template without being renamed",
      lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/scene-staged-human.txt"})), "staged scenes must use"),
     ("staged-looking name on a complete scene",
@@ -110,9 +186,9 @@ CASES = [
      lambda r: edit(r / "data/art/_sets/drakn-sisters/draknora/1_Alpha/1_Prime/draknora-alpha-prime.json",
                     lambda d: d.update({"output": d["output"].replace("/1_Alpha/1_Prime/", "/3_Layers/")})), "must sit in the 'alpha' folder"),
     ("scene file name no longer matching its artId",
-     lambda r: (r / SCENE).rename((r / SCENE).with_name("signature.json")), "scene file name must equal"),
+     lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
-     lambda r: (r / "data/art/themes/seasonal/stray").mkdir(), "no theme.json"),
+     lambda r: make_dir(r / "data/art/themes/seasonal/stray"), "no theme.json"),
     ("variant art card that does not carry its finish",
      lambda r: edit(r / HOLO_SCENE, lambda d: d.pop("finish")), "bidirectional"),
     ("art card with a finish that its card does not list",
@@ -124,8 +200,8 @@ CASES = [
     ("scene output not in its family folder",
      lambda r: edit(r / SCENE, lambda d: d.update({"output": d["output"].replace("/5_Scenes/signature/", "/5_Scenes/")})), "below its hero folder"),
     ("card file filed in the wrong family folder",
-     lambda r: (r / "data/art/_sets/drakn-sisters/drakness/5_Scenes/story").mkdir(exist_ok=True) or shutil.move(
-         str(r / HOLO_SCENE), str(r / "data/art/_sets/drakn-sisters/drakness/5_Scenes/story/drakness-scene-signature-holo.json")), "card file must sit in"),
+     lambda r: (make_dir(r / "data/art/_sets/drakn-sisters/drakness/5_Scenes/story", exist_ok=True),
+                move(r / HOLO_SCENE, r / "data/art/_sets/drakn-sisters/drakness/5_Scenes/story/drakness-scene-signature-holo.json")), "card file must sit in"),
     ("variant artCard belonging to a different hero",
      lambda r: edit(r / CARD, lambda d: d["art"]["variants"][0].update(
          {"artCard": "data/art/_sets/drakn-sisters/draknora/5_Scenes/signature/draknora-scene-signature-shiny.json"})), "belongs to"),
@@ -133,24 +209,38 @@ CASES = [
      lambda r: edit(r / "data/art/pets/angel-primes/lumen.json",
                     lambda d: d.update({"bondedTo": "data/art/heroes/angel-primes/male/auriel.json"})), "does not point back"),
     ("angel card filed outside its division folder",
-     lambda r: shutil.move(str(r / "data/art/_sets/angel-primes/female/seraphine"), str(r / "data/art/_sets/angel-primes/seraphine")), "division folder"),
+     lambda r: move(r / "data/art/_sets/angel-primes/female/seraphine", r / "data/art/_sets/angel-primes/seraphine"), "division folder"),
     ("angel output with a different division than its card file",
      lambda r: edit(r / "data/art/_sets/angel-primes/female/seraphine/1_Alpha/1_Prime/seraphine-alpha-prime.json",
                     lambda d: d.update({"output": d["output"].replace("/female/", "/male/")})), "same division folder"),
+    ("piece extending a frame without filling its slots",
+     lambda r: edit(r / CELESTIAL, lambda d: d.pop("varsFrom")), "not filled"),
+    ("vars that fill no slot of the frame",
+     lambda r: edit(r / CELESTIAL, lambda d: d.update({"vars": {"NO_SUCH_SLOT": "x"}})), "fill no [[SLOT]]"),
+    ("vars on a piece that extends nothing",
+     lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"vars": {"A": "b"}})), "vars only make sense"),
+    ("varsFrom pointing at something that is not a design",
+     lambda r: edit(r / CELESTIAL, lambda d: d.update({"varsFrom": "data/art/wardrobe/weapons/swords/greatsword.json"})), "not a kind 'design'"),
 ]
 
 
+# One case per kind of check, for --quick.
+QUICK = {"baseline is clean", "animation action pointing at a motion piece that does not exist", "art direction creeping back onto a gameplay card",
+         "typo'd piece path would silently render as prompt text", "unknown field on a reusable piece", "piece extending a base that does not exist",
+         "pieces extending each other in a cycle", "piece extending a frame without filling its slots", "output folder not matching the card's stage", "studio kit naming a piece that does not exist",
+         "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder"}
+
+
 def main():
-    failures = 0
-    for name, mutate, needle in CASES:
-        errors = run_on_copy(mutate)
-        if needle is None:
-            ok = not errors
-        else:
-            ok = any(needle in e for e in errors)
-        print(f"{'PASS' if ok else 'FAIL'}  {name}" + ("" if ok else f"\n      got: {errors[:3]}"))
+    recover()
+    cases = [c for c in CASES if "--quick" not in sys.argv or c[0] in QUICK]
+    failures, started = 0, time.time()
+    for name, mutate, needle in cases:
+        errors = run_validation(mutate)
+        ok = (not errors) if needle is None else any(needle in e for e in errors)
+        print(f"{'PASS' if ok else 'FAIL'}  {name}" + ("" if ok else f"\n      got: {errors[:3]}"), flush=True)
         failures += not ok
-    print(f"\n{len(CASES) - failures}/{len(CASES)} validator tests passed")
+    print(f"\n{len(cases) - failures}/{len(cases)} validator tests passed in {int(time.time() - started)} s")
     return 1 if failures else 0
 
 

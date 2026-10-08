@@ -4,7 +4,7 @@
 "inject prompts into workflows" deferral.
 
 > **Update (2026-10-04):** the find-or-create materializer is built as `tools/workflows/comfy_workflows.py` (prompts to
-> workflows to dev, UAT and prod workspaces, for Qwen, FireRed and MiniMax video); see [../../workflows/README.md](../../workflows/README.md).
+> workflows to the home workspace of each set, with temporary copies in other workspaces on request, for Qwen, FireRed and MiniMax video); see [../../workflows/README.md](../../workflows/README.md).
 > Still open: running the workflows through the API and delivering the rendered images back to cards (C1).
 
 The pipeline ends at "a prompt `.txt` exists". Everything after that is copy-paste: paste the prompt, load the input

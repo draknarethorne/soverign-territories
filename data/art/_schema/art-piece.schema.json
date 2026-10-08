@@ -4,15 +4,19 @@
   "description": "A reusable art piece: wardrobe, hero-signature item, background, hairstyle, motion, expression or gaze. Required content fields depend on kind. Field names are the shared vocabulary in data/art/_schema/field-vocabulary.json -- reuse them, never invent synonyms.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "kind", "name", "compatibleStages"],
+  "required": ["id", "kind", "name"],
   "properties": {
     "id": {"type": "string", "minLength": 3},
     "kind": {
       "type": "string",
-      "enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "hair", "motion", "expression", "gaze", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]
+      "enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "hair", "motion", "pose", "design", "expression", "gaze", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]
     },
     "tags": {"type": "array", "items": {"type": "string"}, "description": "Free-form search/ideation tags (e.g. studio, profile, swimwear); never rendered into a prompt."},
     "name": {"type": "string", "minLength": 1},
+    "extends": {"type": "string", "description": "Path of a base piece (data/art/...json) this piece builds on. Its own fields replace the base's; {{BASE}} in a text field is the base's text, a value starting with + is the base's text followed by the rest, negatives are merged. Same kind as the base; no cycles."},
+    "vars": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Fills the [[SLOT]] gaps of the base piece's text (a frame shared by several heroes), e.g. {\"SHAPE\": \"a curved feather\"}. Only with extends (a kind \"design\" piece is the exception: it only carries vars); every slot must be filled."},
+    "backgroundRealm": {"type": "string", "enum": ["fantasy", "modern", "studio"], "description": "A realm piece only: which backgrounds/ folder its scenes draw from, when that is not the realm's own name (fantasy-cinematic uses backgrounds/fantasy)."},
+    "varsFrom": {"type": "string", "description": "Path of a kind \"design\" piece whose vars fill this piece's [[SLOT]] gaps, so several pieces of one hero share one set of values; the piece's own vars win."},
     "compatibleStages": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["pose", "head", "hair", "motion", "armor", "clothing", "showcase", "scene", "final"]}},
     "notes": {"type": "string"},
     "sourceVariant": {"type": "string"},
@@ -40,23 +44,35 @@
   },
   "allOf": [
     {
-      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]}}},
+      "if": {"not": {"required": ["extends"]}},
+      "then": {"required": ["compatibleStages"]}
+    },
+    {
+      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]}}, "not": {"required": ["extends"]}},
       "then": {"required": ["description"]}
     },
     {
-      "if": {"properties": {"kind": {"const": "hair"}}},
+      "if": {"properties": {"kind": {"const": "hair"}}, "not": {"required": ["extends"]}},
       "then": {"required": ["a_pose_style", "breeze", "hair_change", "extras"]}
     },
     {
-      "if": {"properties": {"kind": {"const": "motion"}}},
+      "if": {"properties": {"kind": {"const": "motion"}}, "not": {"required": ["extends"]}},
       "then": {"required": ["editorial", "breeze", "body", "head", "pose", "defaultGaze", "defaultExpression", "extras"]}
     },
     {
-      "if": {"properties": {"kind": {"const": "expression"}}},
+      "if": {"properties": {"kind": {"const": "expression"}}, "not": {"required": ["extends"]}},
       "then": {"required": ["expression"]}
     },
     {
-      "if": {"properties": {"kind": {"const": "gaze"}}},
+      "if": {"properties": {"kind": {"const": "design"}}},
+      "then": {"required": ["vars"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "pose"}}},
+      "then": {"required": ["pose"]}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "gaze"}}, "not": {"required": ["extends"]}},
       "then": {"required": ["gaze"]}
     }
   ]

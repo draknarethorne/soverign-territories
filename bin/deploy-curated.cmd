@@ -1,7 +1,7 @@
 @echo off
 call "%~dp0_env.cmd"
 if "%~1"=="" (
-  echo Usage: deploy-curated HERO [--dry-run]    copies the hand-curated workflows a workspace lacks; never overwrites your edits
+  echo Usage: deploy-curated HERO [--dry-run]    a normal deploy that also copies the hand-curated workflows the workspace lacks; a curated copy that differs is never overwritten
   call "%~dp0_end.cmd" 1
   exit /b 1
 )

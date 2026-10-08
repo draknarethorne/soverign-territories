@@ -15,8 +15,8 @@ Library (per hero):
 The front-facing A-pose and the default glamour-smile head are the hero's existing X cards.
 
 Example:
-  python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime \
-      --hero Angelica --underlayer data/art/heroes/angel-primes/female/angelica-prime/wearing/angelic-pastel-bikini.json
+  python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica \
+      --hero Angelica --underlayer data/art/heroes/angel-primes/female/angelica/wearing/angelic-pastel-bikini.json
 """
 import argparse
 import json
@@ -72,7 +72,7 @@ def write(path, card):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--group", required=True, help="_sets group, e.g. angel-primes")
-    ap.add_argument("--slug", required=True, help="hero slug, e.g. angelica-prime")
+    ap.add_argument("--slug", required=True, help="hero slug, e.g. angelica")
     ap.add_argument("--hero", required=True, help="prompts/<group>/<hero>/ folder name, e.g. Angelica")
     ap.add_argument("--identity", help="hero identity json (default: data/art/heroes/<group>/[<division>/]<slug>.json)")
     ap.add_argument("--division", default="", help="division folder of a group that has them (female, male ...), see _settings/groups.json")

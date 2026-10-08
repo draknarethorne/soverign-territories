@@ -11,7 +11,7 @@ A kit lists what to try for ONE hero, chosen to suit her class and element:
 Studio work (everything here) deploys to the sister's own workspace; her scenes stay in the shared one.
 
 Then:  gen_prompt.py --group G --slug S ; comfy_workflows.py make --hero H --class studio --create ;
-       comfy_workflows.py deploy --to uat --hero H --class studio
+       comfy_workflows.py deploy --hero H --class studio
 
 Example:  python tools/generators/scaffold_sister_studio.py --slug draknara
           python tools/generators/scaffold_sister_studio.py --slug drakness --celestial-only
@@ -29,11 +29,12 @@ import art_layout  # noqa: E402
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
 TPL = "data/art/_templates/heroes"
+NECKLACE = "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
 DEFAULT_SHOWCASE = {
-    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "jewelry": NECKLACE,
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
 }
-STUDIO = {"arms": "bare arms", "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+STUDIO = {"arms": "bare arms", "jewelry": NECKLACE,
           "back": "the back of the armor fully visible", "holding": "empty hands relaxed at the sides",
           "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"}
 
@@ -113,7 +114,7 @@ def main():
     motions = kit.get("motions", [])
     if motions == "all":
         motions = [p.relative_to(ROOT).as_posix() for p in sorted((ART / "motion").glob("*/*.json"))
-                   if p.parent.name not in ("expressions", "gaze")]
+                   if p.parent.name not in ("expressions", "gaze", "scene")]
     for path in motions:
         path = norm(path)
         fam, short = pathlib.Path(path).parent.name, pathlib.Path(path).stem

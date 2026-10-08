@@ -1,7 +1,7 @@
 # Workflows
 
 Workflows are generated from the prompts and stored by **set**, mirroring `prompts/`. ComfyUI workspaces are **deploy
-targets**; which workspace is dev, which is acceptance and which makes the final art is configuration
+targets tied to sets of cards**: each set has a *home* workspace, and which workspace serves which set is configuration
 (`workspaces.json`), not folder structure. The repo copy is always the master.
 
 ```text
@@ -10,7 +10,7 @@ workflows/
   _templates/                                    the official ST0-ST6 stage templates; new workflows are cloned from them
   _curated/<set>/<Hero>/                         hand-tuned workflows; never regenerated (see Hand-curated workflows)
   .test/firered/<set>/<Hero>/                    generated FireRed test workflows (not in git)
-  workspaces.json                                workspaces, routes (dev, uat, prod), engines, defaults and excludes
+  workspaces.json                                workspaces, homes (which workspace is home for which set), engines, defaults and excludes
   _archive/                                      old layouts and hand-made copies (ignored)
 ```
 
@@ -24,37 +24,61 @@ every studio stage.
 | --- | --- |
 | Check the data is valid | `bin\validate.cmd` |
 | Regenerate art prompts from the JSON | `bin\prompts.cmd` |
-| Build and push a hero's Qwen workflows to dev | `bin\refresh-dev.cmd Draknora scene` |
+| Build and push a hero's Qwen workflows to her home workspace | `bin\refresh.cmd Draknora scene` |
 | The same for FireRed (local test copies) | `bin\refresh-firered.cmd Draknora scene` |
 | Animate: video prompts, workflows, deploy | `bin\animate.cmd Drakness` |
 | Regenerate only the video prompts | `bin\videoprompts.cmd` |
 | See what is where | `bin\status.cmd --hero Drakness`, `bin\workspaces.cmd` |
-| Move finished studio work to a sister's own workspace | `bin\promote-uat.cmd Drakness studio --dry-run` |
-| Move chosen scenes to the shared scene workspace | `bin\promote-uat.cmd Drakness scene --dry-run` |
-| Copy a sister's work to her workspace and to the shared batch workspace | `python tools\workflows\comfy_workflows.py deploy --to uat --hero Draknara` (both get everything; add `--new-only` to protect work in progress) |
-| See which dev files are now duplicates, then remove them | `python tools\workflows\comfy_workflows.py cleanup --group drakn-sisters` (preview), add `--apply` (moves to backup; keeps edited, curated and undelivered files) |
+| Deploy a set to its home workspace | `python tools\workflows\comfy_workflows.py deploy --group sovereign-dawn` (goes to Sovereign Dawn Series; nothing else needed) |
+| Deploy a sister to Drakn Sisters and to Drakness | `python tools\workflows\comfy_workflows.py deploy --hero Drakness` (every home workspace gets everything; add `--new-only` to protect work in progress) |
+| Put a temporary copy of a set in another workspace (reels, feeds, a scene next to the art) | `bin\publish.cmd Drakness "Sovereign Territories"`, or `python tools\workflows\comfy_workflows.py deploy --group drakn-sisters -w "Sovereign Territories" --dry-run` |
+| Remove what a workspace is not home for (clone leftovers, finished temporary copies), then its empty folders | `bin\cleanup.cmd "Angel Primes"` (preview), add `--apply` (moves to backup; keeps hand-made `zz_` items, edited and undelivered files) |
 | Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
-| Keep what I made or changed in ComfyUI | `bin\pull-dev.cmd Drakness` |
+| Keep what I made or changed in ComfyUI | `bin\pull.cmd Drakness` |
 | Sort loose workflows in the workspaces into folders | `python tools\workflows\comfy_workflows.py tidy` (preview), add `--apply` |
-| Add the staged scenes (held back by default) | `python tools\workflows\comfy_workflows.py deploy --to uat --group drakn-sisters --class scene --staged` |
-| Put the ST templates in dev | `bin\deploy-templates.cmd` |
+| Add the staged scenes (held back by default) | `python tools\workflows\comfy_workflows.py deploy --group drakn-sisters --class scene --staged` |
+| Put the ST templates in the templates workspace | `bin\deploy-templates.cmd` |
+| Set a whole workspace up in one go: deploy its sets, tidy, clean leftovers, status (a preview until `--apply`) | `bin\setup-workspace.cmd "Angel Primes"` |
+| Write or extend an angel's card set (and her signature items) | `bin\scaffold-angels.cmd [slug]`, `--coverage` for library use |
+| Find or safely move an art piece and every reference to it (including `extends`) | `bin\art-refs.cmd where-used PATH` |
+| Find art wording that leans illustrated (realism audit) | `bin\style-audit.cmd` (`--prompts` counts it in the generated prompts) |
+| Turn text pasted into several cards into reusable pieces | `bin\extract-literals.cmd` (preview), add `--apply` |
 | Run every commit hook | `bin\check.cmd` |
 
-## Dev, UAT, Prod
+## Workspaces: one home per set
 
-| Tier | Flag | Workspaces | Purpose |
-| --- | --- | --- | --- |
-| **dev** (default) | none | `Sovereign Territories`; later themed ones such as `Sovereign Territories Halloween` | build and prove workflows, ideation, mass changes |
-| **uat** | `--to uat` | one workspace per group: `Drakn Sisters`, `Drakn Bound`, `Elder Dragons`, `Angel Primes` (plus `Drakness`, kept in sync until her hand-made workflows are covered) | acceptance: pick the goldens, curate, generate 8-16 images; a single-sister workspace is only spun up while needed and discarded after |
-| **prod** | `--to prod` | `<Series> Series`, such as `Sovereign Dawn Series` | final art and polish for the actual cards of that series |
+A workspace is tied to a set of cards. `homes` in `workspaces.json` says which workspace is home for which set; a deploy goes to those home workspaces and nowhere else, unless you name another
+workspace with `-w` that **accepts** the set (see below).
+There is no catch-all workspace and no fallback: a set with no home stops the command with a message instead of landing somewhere else (that silent fallback once filled the brand workspace with 174 card workflows).
 
-UAT and prod targets come from the `production` rules in `workspaces.json`: they match on `groups` and/or `heroes`, and
-`{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
-stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a
-scene is studio). Every matching UAT rule receives the work: `Drakn Sisters` holds every sister's whole pipeline, and the `Drakness` rule
-(a `heroes` filter) also sends her work to her own workspace, so a deploy keeps the two in step. `list` shows the routes per hero. A workspace that does not
-exist yet is skipped. All workspaces share one output
-folder, and the `SaveImage` prefix (`<Hero>/<stage>/...`) sorts renders into hero folders whichever workspace ran them.
+| Workspace | Home of | Also accepts, on request |
+| --- | --- | --- |
+| `Drakn Sisters` | the ten sisters (`drakn-sisters`): the whole image pipeline, Alpha to Video; final art is made here; `zz_Shots`, `zz_Curated`, `zz_Test` are mastered here | |
+| `Drakness` | Drakness, as a second copy beside Drakn Sisters, kept in sync on purpose (see below) | |
+| `Sovereign Dawn Series` | the Sovereign Dawn cards (`sovereign-dawn`: units, pets, buildings, equipment, tactics, workers) | the Drakn sets |
+| `Sovereign Territories` | the art and brand set (`sovereign-territories`: title, logo, icons, key art, plates) and the `ST?_` stage templates | **any set**: promotional videos for reels and feeds, a scene kept next to the art, media for posts |
+| `Angel Primes` | the angel test bed (`angel-primes`); it never produces final artwork | |
+| `Drakn Bound`, `Elder Dragons` | their own sets; `planned`, so skipped by every command until the install exists and the status is `active` | |
+
+Home rules match on `groups` and/or `heroes`, and `{hero}` stands for the hero's name. A rule may also carry `"class": "studio"` or `"scene"` and then applies only to
+stages of that class (the class of each stage folder is defined in `data/art/_schema/stages.json`; anything that is not a scene is studio). `list` shows the home of every hero and what each workspace accepts.
+
+- **Homes and temporary copies.** Every set has a home (the default of every command). Any workspace whose `accepts` list names the set (or `"*"` for any set) may also be given a
+  copy on request: `deploy --group G -w "Workspace"` (or `bin\publish.cmd`). A workspace that is neither home for nor accepts a set is refused, so a set can never land in the wrong place.
+  The copy is temporary: when you are done, `cleanup -w "Workspace"` removes it. Nothing is ever published automatically.
+- **Duplicates in Drakness and Drakn Sisters are intentional.** While we work on one sister, a deploy puts her in both workspaces (the `Drakness` rule has a `heroes` filter), so we can
+  work through issues with `zz_Shots`, `zz_Curated` or test items in her own workspace without polluting Drakn Sisters. Any other sister can get a temporary workspace the same way
+  (add a `homes` rule with `heroes`, create the install, set it `active`) and be discarded afterwards. `cleanup` never treats these as duplicates to remove.
+- **Only active workspaces with an install are written to.** A workspace whose status is `planned`, or whose install folder does not exist, is skipped with a message by deploy, pull,
+  cleanup, tidy, denoise and the input reset. Create the install, then set its `status` to `active`. Groups listed under `skipGroups` (today Drakn Bound and Elder Dragons) have no generated workflows yet.
+- **Hand-made items are mastered in the workspace.** Anything under a `zz_` folder (`zz_Curated`, `zz_Test`, `zz_Shots`) or named `zz_Curated_...` / `test_...` is never replaced, moved or removed by `deploy` (even with
+  `--overwrite`), `cleanup`, `cleanup --orphans`, `tidy` or the input and denoise resets. That is what lets you refine a prompt directly in ComfyUI, fix the art JSON afterwards and redeploy without
+  losing the hand-tuned version. Bring one into the repo with `pull` (`pull --shots` for shots); delete one yourself if you want it gone.
+- **`cleanup -w WORKSPACE`** removes the generated workflows that workspace is not home for (a clone's leftovers, or copies you published and are finished with), but only when their home workspace holds an
+  identical copy and the repo has the master; everything goes to `workflows/.sync/backup/` and the empty folders are pruned afterwards (never a top-level `zz_` folder, never a folder with any file in it).
+  Preview first. `status` shows `published` (a temporary copy of a set whose home is elsewhere) and `unrouted` (the workspace is neither home for it nor accepts it) next to the usual counts.
+
+All workspaces that share an output project folder (see Where files live) write there, and the `SaveImage` prefix (`<set>/<Hero>/<phase>/...`) sorts renders into hero folders whichever workspace ran them.
 
 ### Stage templates
 
@@ -119,11 +143,24 @@ behaviour (the A-pose most of her workflows already read). Images are plain name
 
 ```bash
 python tools/workflows/comfy_workflows.py inputs --reset --hero Drakness --dry-run   # preview: repo and every workspace; copies missing images into each workspace's inputs
-python tools/workflows/comfy_workflows.py deploy --to uat --hero Drakness --patch-only --reset-inputs   # deploy prompts and also reset the inputs
+python tools/workflows/comfy_workflows.py deploy --hero Drakness --patch-only --reset-inputs   # deploy prompts and also reset the inputs
 ```
 
 During a session you can point a workflow at any other image; a reset (or `--reset-inputs`) puts it back. To keep a custom input, save the workflow under
-`zz_Shots/`. The golden images are named by step with a `_00000` counter, so they sort above the numbered renders: `<Hero>_Qwen_Alpha_1_Prime_00000.png`,
+`zz_Shots/`.
+
+**Choosing a default inside ComfyUI.** Open the generated workflow (for example `<Hero>_Qwen_Alpha_1_Prime`), pick the image in its Load Image node and save it; that is how you set a hero's photo
+or golden image. Then bring the choice back into `workspaces.json` so it survives a rebuild or a reset:
+
+```bash
+python tools/workflows/comfy_workflows.py inputs --pull --dry-run -w "Angel Primes"   # preview: which defaults you changed in the workspace
+python tools/workflows/comfy_workflows.py inputs --pull -w "Angel Primes"             # write them into photos / inputs in workspaces.json
+python tools/workflows/comfy_workflows.py inputs --reset --hero Seraphine             # push them into the repo copies (and the rest of her workflows)
+```
+
+`--pull` reads only the generated Qwen workflows, ignores the tool's own `..._00001_` placeholders and images named for another hero, and takes a default only when all the workflows of that role agree
+(otherwise it reports `MIXED` and leaves it to `inputs --set`). `status` shows `inputs-changed` for any default you set in a workspace that `workspaces.json` does not hold yet, `setup` pulls first, and
+`inputs --reset` **stops** while such a choice is unpulled (`--force` overrides it, with a backup) so a reset can never silently undo your pick. The golden images are named by step with a `_00000` counter, so they sort above the numbered renders: `<Hero>_Qwen_Alpha_1_Prime_00000.png`,
 `<Hero>_Qwen_Alpha_2_Bare_00000.png`, `<Hero>_Qwen_Alpha_3_Barefoot_00000.png` and `<Hero>_Qwen_Alpha_3_Heels_00000.png`. These are already the names in `inputs`, so
 dropping a chosen render into a workspace's input folder under that name is all it takes; `inputs --reset` repoints every workflow (a missing file is reported, not copied).
 Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tuned.
@@ -131,7 +168,9 @@ Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tun
 **Angel Primes.** The `Angel Primes` workspace is one tree for a whole test deck: `female/<Hero>/<phase>/...`, `male/<Hero>/<phase>/...`, and later `pets/`, `units/`, `buildings/`, `equipment/`, `tactics/` and `workers/`
 (the divisions in `data/art/_settings/groups.json`; the repo copies of the workflows stay flat per hero). The twenty angels use the same golden-image names. Their original photo is expected as `<slug>_photo_944x1104.png` (`seraphine_photo_944x1104.png`, `auriel_photo_944x1104.png` ...) in the
 `Angel Primes` input folder, already padded to the standard size; change a name with `inputs --set --hero Seraphine --photo <file>`. The male angels have no Barefoot or Heels step, so their `apose`
-role points at the Alpha 2 Bare image and their golden image is the Bare. The workspace stays `planned` until its ComfyUI install exists.
+role points at the Alpha 2 Bare image and their golden image is the Bare. The ten women's photos are the `various_image_...` files you chose in ComfyUI, pulled into `photos`.
+Angelica and Angelo follow the same Phase 1 and Phase 2 as every other angel (Alpha 1 Prime, 2 Bare, 3 Footwear and the 2b experiments for her; Prime and Bare for him; heads, views, body views and hair for both);
+their old single `X_Pose` workflow was retired (its photo went into `photos`, and the file is in `workflows/_archive/legacy-x-pose/`). The workspace is `active`; a clone of another install is cleaned with `cleanup -w "Angel Primes"` (preview first).
 
 **Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
 before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen
@@ -170,8 +209,8 @@ Generated workflows are rebuilt from prompts, so a hand edit to one would be ove
 
 | You want to | Run | What happens |
 | --- | --- | --- |
-| Start from a generated workflow and tune it | `fork NAME --as Tag` (`bin\fork.cmd`) | Copies it to `_curated` as `zz_Curated_NAME_Tag` (its output folder uses `NAME_Tag`, and it records what it came from), and puts it in DEV |
-| Keep what you did in ComfyUI | `pull --hero H` (`bin\pull-dev.cmd`) | A workflow that exists only in the workspace is kept as curated (and renamed `zz_Curated_...` in both places); edits to a curated one are captured |
+| Start from a generated workflow and tune it | `fork NAME --as Tag` (`bin\fork.cmd`) | Copies it to `_curated` as `zz_Curated_NAME_Tag` (its output folder uses `NAME_Tag`, and it records what it came from), and puts it in the hero's home workspace(s) |
+| Keep what you did in ComfyUI | `pull --hero H` (`bin\pull.cmd`) | A workflow that exists only in the workspace is kept as curated (and renamed `zz_Curated_...` in both places); edits to a curated one are captured |
 | Put curated workflows in another workspace | `deploy --curated --hero H` (`bin\deploy-curated.cmd`) | Copies the ones the workspace lacks; a copy there that differs is skipped, never overwritten, unless you add `--overwrite` |
 | See what is where | `status --hero H` | Shows `curated`, `curated-changed` (pull it) and `curated-missing` (deploy it) next to the generated counts, and `install-only` for anything not yet kept |
 
@@ -195,61 +234,61 @@ python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine minima
 
 Files are named `<Hero>_Video_<scene or pose it animates>_<Name>`, for example `Drakness_Video_Scene_Staged_EnchantedEvening_Awakening`.
 
-### Splitting a hero: studio to her workspace, scenes where you choose
+### Working on one sister: Drakness beside Drakn Sisters
 
-Every command takes `--class studio|scene` (all studio stages, or just scenes), `--stage`, `--match` and `--dry-run`.
-Promote **moves** (the dev copy is retired); `--keep` or `deploy` **copies** (dev keeps its copy).
+Every command takes `--class studio|scene` (all studio stages, or just scenes), `--stage`, `--match` and `--dry-run`. `deploy` **copies** to every home workspace of the hero, or to the workspace you name with `-w`.
 
 ```bash
-# studio done: move it to each sister's own workspace
-python tools/workflows/comfy_workflows.py promote --to uat --hero Drakness --class studio --dry-run
-# move only chosen scenes to Drakn Sisters; the rest stay in dev
-python tools/workflows/comfy_workflows.py promote --to uat --hero Drakness --class scene --match Glamour --dry-run
-# copy all sister scenes to Drakn Sisters and keep them in dev too
-python tools/workflows/comfy_workflows.py deploy --to uat --group drakn-sisters --class scene --dry-run
+# put one sister's scenes in her workspaces (Drakn Sisters and, for Drakness, her own), keeping what is there
+python tools/workflows/comfy_workflows.py deploy --hero Drakness --class scene --new-only --dry-run
+# put a temporary copy of her videos where promotional media is kept, then remove it when done
+python tools/workflows/comfy_workflows.py deploy --hero Drakness --stage video -w "Sovereign Territories" --dry-run
+python tools/workflows/comfy_workflows.py cleanup -w "Sovereign Territories"
 ```
 
 ## The loop
 
-1. `refresh-dev HERO [STAGE]` regenerates prompts, creates or refreshes the repo workflows and deploys them to dev.
-2. Run and refine in dev. Change the input image, seed or prompts as needed.
-3. `promote-uat HERO [STAGE]` **moves** approved workflows to the hero's UAT workspace. The dev copy (with your
-   tuning) becomes the new repo master, is copied to UAT and is taken out of dev, so it lives in one place. The removed
-   copy is kept in `workflows/.sync/backup/`; `--keep` copies instead.
-4. `promote-prod HERO [STAGE]` does the same from UAT to the series workspace.
+1. `bin\refresh.cmd HERO [STAGE]` regenerates prompts, creates or refreshes the repo workflows and deploys them to the hero's home workspace(s).
+2. Run and refine there. Change the input image, seed or prompts as needed. Save a render-specific tuning under `zz_Shots/` or a hand-written one under `zz_Curated/`; both are guarded.
+3. `bin\pull.cmd HERO` keeps what you made or edited in ComfyUI: new workflows become curated, edits to curated ones and shots are captured in the repo. Fix the art JSON, regenerate and redeploy: generated workflows follow
+   the new prompts, and the hand-made ones stay as they are.
+4. Need the set somewhere else for a while (reels, feeds, a scene next to the art)? `publish HERO "Workspace"` puts a copy there if that workspace accepts it; `cleanup "Workspace"` removes it when you are done.
 
-If the destination workspace does not exist yet, the workflow is left where it is (reported as `HOLD`).
+If a destination workspace is not active or its install does not exist, the workflow is left where it is (skipped, with a message).
 
 ## Scripts
 
 Run these from a terminal, or double-click `bin\menu.cmd`. `bin\help.cmd` lists them all.
 
 ```text
-bin\refresh-dev.cmd Draknara scene           prompts + workflows + deploy to dev
+bin\refresh.cmd Draknara scene           prompts + workflows + deploy to the home workspace
 bin\refresh-firered.cmd Draknora scene       the same for FireRed (local test workflows)
-bin\animate.cmd Drakness                     video prompts + MiniMax workflows + deploy to dev
-bin\deploy-dev.cmd | deploy-uat.cmd | deploy-prod.cmd HERO [STAGE]
-bin\promote-uat.cmd | promote-prod.cmd HERO [STAGE]
-bin\fork.cmd | pull-dev.cmd | deploy-curated.cmd      hand-curated workflows
+bin\animate.cmd Drakness                     video prompts + MiniMax workflows + deploy to the home workspace
+bin\deploy.cmd HERO [STAGE]              deploy to the hero's home workspace(s)
+bin\publish.cmd HERO "Workspace" [STAGE]     a temporary copy in a workspace that accepts the set
+bin\cleanup.cmd "Workspace" [--apply]        remove what that workspace is not home for (preview unless --apply)
+bin\setup-workspace.cmd "Workspace" [--apply]   deploy its sets, tidy, cleanup and status in one go
+bin\fork.cmd | pull.cmd | deploy-curated.cmd      hand-curated workflows
 bin\status.cmd | workspaces.cmd | inputs.cmd
-bin\prompts.cmd | videoprompts.cmd | validate.cmd | check.cmd
+bin\prompts.cmd | videoprompts.cmd | validate.cmd | check.cmd | style-audit.cmd | extract-literals.cmd
 ```
 
-Add `--dry-run` as the last argument to preview. The tool behind them is `tools/workflows/comfy_workflows.py`.
+Add `--dry-run` as the last argument to preview. The tool behind them is `tools/workflows/comfy_workflows.py`; its tests (`python tools/workflows/test_comfy_workflows.py`) run in pre-commit and pin the homes, the `accepts` rule and the `zz_` guards.
 
 ## Rules worth knowing
 
-- **Deploy and promote need a filter** (hero, group, stage or match), or `--all`.
+- **Deploy needs a filter** (hero, group, stage or match), or `--all`. A set with no home workspace stops the command, and a workspace given with `-w` must be home for the set or accept it.
 - **Deploy keeps your tuning.** An existing workflow only gets its positive prompt, negative prompt and filename prefix
   updated; input image, seed and toggles stay. `--overwrite` replaces the whole file. A `legacy` workspace (Drakness, which
-  still holds hand-made experiments) always gets whole-file replacement.
-- **Nothing is deleted;** anything changed or moved out of a workspace is first copied to `workflows/.sync/backup/`.
+  still holds hand-made experiments) always gets whole-file replacement. Hand-made `zz_` items are never touched either way.
+- **Nothing is deleted;** anything changed, moved or cleaned out of a workspace is first copied to `workflows/.sync/backup/`.
 - **Input images:** new workflows read the A-pose the hero's other workflows already use (`inputs`). Pin one in
   `workspaces.json` under `inputs` once you choose a golden pose.
-- **Stage templates:** `deploy-templates` puts the `ST?_` templates in dev. They are the only templates: `make --create` clones
-  them (`templates` and `engines` in `workspaces.json`), so tune one in dev, `pull --templates` it back, and every new workflow follows.
+- **Stage templates:** `deploy-templates` puts the `ST?_` templates in the workspace flagged `"templates": true` (Sovereign Territories). They are the only templates: `make --create` clones
+  them (`templates` and `engines` in `workspaces.json`), so tune one there, `pull --templates` it back, and every new workflow follows.
 - **`X_*` files are never mirrored** (`exclude` in `workspaces.json`, plus `.gitignore`).
 - `pull -w <Workspace>` brings workflows that only exist in a workspace into the repo; it is off for `legacy` workspaces.
+- **A new install is a clone, so clean it:** cloning a workspace copies everything it holds. Add its `homes` rule, set it `active`, deploy its set, then `cleanup -w "<Workspace>"` (preview, then `--apply`).
 
 ## Where files live
 
@@ -268,9 +307,9 @@ output directory), and the prefix inside it does not change:
 
 | Output project folder | Written by | Sets inside |
 | --- | --- | --- |
-| `Sovereign Territories` | Drakn Sisters, Drakness, Drakn Bound, Elder Dragons, the Sovereign Territories brand and dev workspace | `drakn-sisters`, `drakn-bound`, `elder-dragons`, `sovereign-territories` |
-| `Angel Primes` | the Angel Primes workspace (a test bed; it never produces production art) | `angel-primes` |
-| `Sovereign Dawn Series` | the production workspace: final art, kept apart from experiments | the series' sets |
+| `Sovereign Territories` | Drakn Sisters, Drakness, Drakn Bound, Elder Dragons and the Sovereign Territories brand workspace | `drakn-sisters`, `drakn-bound`, `elder-dragons`, `sovereign-territories` |
+| `Angel Primes` | the Angel Primes workspace (a test bed; it never produces final artwork) | `angel-primes` |
+| `Sovereign Dawn Series` | the Sovereign Dawn Series workspace: the card set, kept apart from experiments | `sovereign-dawn` |
 
 Everything under `Comfy-Desktop` is a transient copy of something that lives in the repo or on the working drive.
 `python tools\workflows\sync_inputs.py` copies, into each workspace's own folder, exactly the images that workspace's workflows load

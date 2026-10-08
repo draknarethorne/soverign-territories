@@ -54,3 +54,19 @@ repos:
         pass_filenames: false
         files: ^(tools/validators/|data/schemas/codex-schema\.json|data/art/_schema/)
         stages: [pre-commit, pre-push]
+
+      - id: workflow-tool-tests
+        name: Workflow tool tests (homes, accepts and zz_ guards)
+        entry: python tools/workflows/test_comfy_workflows.py
+        language: python
+        pass_filenames: false
+        files: ^tools/workflows/
+        stages: [pre-commit, pre-push]
+
+      - id: generator-tests
+        name: Generator tests (piece extends)
+        entry: python tools/generators/test_gen_prompt_extends.py
+        language: python
+        pass_filenames: false
+        files: ^tools/generators/
+        stages: [pre-commit, pre-push]
