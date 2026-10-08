@@ -1,0 +1,32 @@
+=== Sammara Nightshade · Showcase: Spell Calling (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Sammara Nightshade (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing strips of Toxic Orchid Magenta and violet cloth wound around the torso and hips, layered over a short tunic with a tarnished brass clasp at the shoulder, a tied sash, every plate and trim engraved with a coiled serpent beside a nightshade bloom in violet; worn, scorched at the edges and trimmed with dark feathers.
+
+Jewelry: a simple tarnished brass necklace and small matching earrings, the pendant and the earrings echoing a coiled serpent beside a nightshade bloom, each set with a small amethyst gem.
+Back: a pair of sleek, partly tattered deep-violet wings with acid-green edges and dark, venom-bright veins.
+Legs & feet: bare feet with a delicate tarnished brass anklet set with amethyst stones and a thin toe ring.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
+
+Holding a bandolier of slim tarnished brass throwing knives across the chest, one held between the fingers ready to throw, its metal worked with a coiled serpent beside a nightshade bloom in violet, curling green venom mist and falling drops gathering along it when it is raised; worn, scorched at the edges and trimmed with dark feathers.
+
+Swirling curling green venom mist and falling drops rise and circle around her, toxic violet-green light streaming from the weapon in her hand.
+
+Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle toxic violet-green catchlight, no light spilling beyond the eyelids.
+
+Studio backdrop: a seamless pale studio backdrop split by soft rainbow light prisms and glittering crystalline reflections that scatter across the floor and backdrop.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, environment, landscape, room, furniture, text, wording, watermark, logo.

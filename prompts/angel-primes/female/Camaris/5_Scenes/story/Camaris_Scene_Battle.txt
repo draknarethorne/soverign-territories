@@ -1,0 +1,36 @@
+=== Camaris Cinderfane · Scene (Outfit + Effects): Battle (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Camaris Cinderfane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing gleaming parade plate etched with burnished copper filigree and copper enamel, a sunburst on the breastplate, winged pauldrons and a long Flame Red tabard open at the sides, every plate and trim engraved with a rising flame with scattered embers in copper; worn, scorched at the edges and trimmed with dark feathers.
+
+Headwear: a crown of fresh flowers and trailing copper ribbon woven with small ruby gems, a rising flame with scattered embers rising at the centre of the brow, set with a ruby gem; worn, scorched at the edges and trimmed with dark feathers.
+
+Jewelry: a simple burnished copper necklace and small matching earrings, the pendant and the earrings echoing a rising flame with scattered embers, each set with a small ruby gem.
+Back: a pair of broad crimson feathered wings fading to gold, the tips glowing like embers.
+Legs & feet: articulated Flame Red-toned plate greaves over the shin with matching sabatons on the feet, copper trim and burnished copper rivets.
+
+She leaps mid-air with her weapon swept behind her and her free hand flung forward, wings spread wide, a calm, fierce gaze straight to the camera; full figure visible.
+
+Holding a heavy two-handed copper-edged greatsword, gripped in both hands, Flame Red-wrapped hilt, its metal worked with a rising flame with scattered embers in copper, dancing flame, embers and sparks gathering along it when it is raised; worn, scorched at the edges and trimmed with dark feathers.
+
+A surge of dancing flame, embers and sparks bursts out from her free hand, tearing banners and debris sideways, ember orange light marking the currents.
+
+Eyes: irises softly aglow with ember orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle ember orange catchlight, no light spilling beyond the eyelids.
+
+Environment: a long stone crypt corridor lined with burial niches and carved skulls, flickering wall torches, cobwebs and a faint green mist along the floor.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

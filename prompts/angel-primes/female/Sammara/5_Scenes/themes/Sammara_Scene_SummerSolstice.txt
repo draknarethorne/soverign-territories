@@ -1,0 +1,38 @@
+=== Sammara Nightshade · Scene (Outfit + Effects): Summer Solstice (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Sammara Nightshade (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a short flowing sundress in Toxic Orchid Magenta cotton with a sunburst violet embroidered bodice, thin straps, a plunging back and a flared hem.
+
+Headwear: a crown of sunflowers, daisies and golden wheat with fine tarnished brass sun rays fanning above it.
+
+Jewelry: a set of a amethyst sunstone pendant on a tarnished brass chain, daisy-chain bracelets, tiny sun earrings and a woven wheat ring.
+Back: a pair of sleek, partly tattered deep-violet wings with acid-green edges and dark, venom-bright veins.
+Legs & feet: light tarnished brass strappy sandals with ribbon ties up the ankle and a small sun charm.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a soft, wondering smile, eyes lifted and glowing. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Holding a gilded tarnished brass bow with radiating sun-ray tips, a string of toxic violet-green light and an arrow of golden light nocked.
+
+A drift of curling green venom mist and falling drops circles her, toxic violet-green light glinting within it.
+
+Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle toxic violet-green catchlight, no light spilling beyond the eyelids.
+
+Makeup: summer makeup - a sun-kissed glow with fine freckles, a gold lid shimmer, a peach flush on the cheekbones and a juicy coral lip.
+
+Environment: a calm lake shore at dusk with a crackling bonfire, floating flower lanterns on the water, fireflies and a pink-gold sky reflected on the surface.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

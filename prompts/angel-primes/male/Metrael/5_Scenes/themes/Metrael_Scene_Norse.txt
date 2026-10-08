@@ -1,0 +1,34 @@
+=== Metrael Rimeward · Scene (Outfit + Effects): Norse (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Metrael Rimeward (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a Winter Slate wool tunic with white trim and a wide leather belt with polished silver buckle, wool breeches, a fur-trimmed cloak pinned with a torque brooch.
+
+Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a six-pointed snowflake of frost and set with a small pale sapphire gem.
+Back: a pair of pale slate-white wings with perfectly ordered feathers rimmed with frost.
+Legs & feet: calf-high Winter Slate leather boots lined and cuffed with thick fur and bound with white leather cross-lacing.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Holding a heavy short-hafted war hammer in one hand, its iron head etched with frost blue lightning runes, crackling arcs of frost blue lightning jumping from the head, the haft wrapped in Winter Slate leather.
+
+A drift of swirling frost, snowflakes and ice crystals circles him, frost blue light glinting within it.
+
+Eyes: irises softly aglow with frost blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle frost blue catchlight, no light spilling beyond the eyelids.
+
+Environment: a high-fantasy Norse fjord village at night, a great timber longhall with carved dragon-head gables and glowing windows, snow-dusted pines and dark water, green and violet aurora rippling across a starry sky.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

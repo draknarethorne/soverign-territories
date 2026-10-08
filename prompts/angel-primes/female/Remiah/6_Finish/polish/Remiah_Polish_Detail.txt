@@ -1,0 +1,16 @@
+=== Remiah Stormcrown · Polish: Detail pass (group: Finish, detail pass on a finished image) — Edit (img2img) ===
+Incoming image: a finished, chosen image of Remiah Stormcrown (a scene, outfit or studio image). This pass only refines detail; nothing in the picture changes. Denoise ~0.2-0.4.
+
+----------------------------------------------------------------
+prompt:
+
+Refine the incoming image without changing it: natural skin texture with fine pores, crisp eyes with clear catchlights and individual lashes, individual strands of hair, clean fabric weave and metal detail, sharp clean edges.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Change nothing else: keep the pose, outfit, composition, framing, background, colours and lighting exactly as in the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed face, changed pose, changed outfit, new objects, extra people, extra limbs, deformed hands, plastic skin, over-smoothed skin, airbrushed, oversharpened, halos, text, watermark, logo.

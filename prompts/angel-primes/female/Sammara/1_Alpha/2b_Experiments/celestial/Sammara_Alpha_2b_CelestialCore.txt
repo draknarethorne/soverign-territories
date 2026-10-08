@@ -1,0 +1,24 @@
+=== Sammara Nightshade · Alpha 2 Bare: Bare edit: celestial skin armor (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Sammara Nightshade. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only celestial skin armor, thin polished tarnished brass metallic designs in her Toxic Orchid Magenta colour scheme with fine violet edge lines, formed directly onto the skin as if the metal had been bound to the body by a magical spell, slightly raised and form-fitting so the contour of the body shows through; every design is open filigree with bare skin visible between its lines, and none is a cup or a plate; Breasts: on each breast one delicate design in the form of a curved feather sweeping outward at the tip, made of fine curving lines and swirls with fine barbs of filigree and tiny drifting stars, about 3 cm (one and a quarter inches) across, centred on the breast, with one tiny amethyst gem accent at its centre; Pelvic area: one small, form-fitting design in the form of a small halo ring with two short feathers, following the contour of the pelvic area, with its fine lines curving beneath the body and continuing as a narrow design over the lower back, so the rear is mostly bare skin and modestly covered; Everywhere else: the skin outside these three designs is unchanged natural skin, matte, with no metal, no metallic sheen, no paint and no tint, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs, hands and bare feet; only the two breast designs and the one pelvic design carry any metal; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, firm, rounded bust with a sleek high lift and a pronounced inner curve, natural medium detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: slender, sinuous, flexible build; sleek and sensual; narrow, supple waist; slender, supple arms; softly curved, swaying hips; long, slender, sinuous legs.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+anklets, armor plates, bikini, body covered in metal, body paint over the whole body, bra, bracelets, bump on the pelvic area, chains, coloured skin, cups, full coverage, full-body suit, metallic skin, painted arms, painted legs, painted skin, painted stomach, plates, raised bump, shoes, straps, strings, tinted skin, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, watermark, logo.

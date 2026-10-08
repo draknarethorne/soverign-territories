@@ -1,0 +1,34 @@
+=== Metrael Rimeward · Scene (Outfit + Effects): Greek (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Metrael Rimeward (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a short Winter Slate linen chiton pinned at both shoulders with white brooches, a gold-threaded cord belt, and a draped wool cloak pinned on the left side.
+
+Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a six-pointed snowflake of frost and set with a small pale sapphire gem.
+Back: a pair of pale slate-white wings with perfectly ordered feathers rimmed with frost.
+Legs & feet: gold lace-up Greek sandals wrapping the ankle and calves in thin straps, the toes bare.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a playful, knowing smile, eyes bright with mischief. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
+
+Holding a tall gilded trident in one hand, its three prongs wrapped with a sculpted coil of white sea-glass, a thin ribbon of water curling around the shaft.
+
+A drift of swirling frost, snowflakes and ice crystals circles him, frost blue light glinting within it.
+
+Eyes: irises softly aglow with frost blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle frost blue catchlight, no light spilling beyond the eyelids.
+
+Environment: a white marble Greek-style temple of fluted columns on a high-fantasy sea cliff at golden hour, the deep blue sea glittering below, olive trees and a stone stair, warm light on the marble.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

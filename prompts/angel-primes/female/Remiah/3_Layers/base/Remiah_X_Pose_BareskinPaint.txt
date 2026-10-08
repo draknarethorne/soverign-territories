@@ -1,0 +1,42 @@
+=== Remiah Stormcrown · A-Pose Base (group: X_Pose) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. The Critical details are set here; downstream stages assume them and do not repeat them.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Legs: long, lean, toned legs.
+
+Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
+
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+
+Figure: athletic, toned, wiry-strong build; quick and lean; flat, defined midriff with a tight waist; toned, sinewy arms; narrow, athletic hips with a gentle curve.
+
+Wearing: no clothing at all. Remove all clothing, swimwear, straps, strings, jewelry and shoes from the reference image completely, so that the whole body from head to bare feet is shown in the frame; bare shoulders, bare arms, bare back, bare stomach, bare hips, bare thighs, bare legs and bare feet. Body paint only: a smooth, matte, nude-tone body paint matching her skin exactly (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone) is painted on exactly three areas, two round areas about two inches across on the centre of each breast and one small area about the size of a playing card on the front pelvic area. It is paint on skin, so the natural shape of the body shows through with no relief, texture or edge, and the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture. Nothing else is painted or worn; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes.
+
+Hair: gathered into a high, sleek ponytail with a few long tendrils left loose to frame the temples and cheekbones; light breeze (fully replace the source photo's hairstyle).
+
+Makeup: soft and natural - violet-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Gold.
+
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+
+Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, thick thighs, wide hips, boyish figure, stick-like, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, bikini, black bikini, swimsuit, bra, panties, thong, straps, strings, ties, waistband, lingerie, lace, fabric, chains, jewelry, shoes, white spots, polka dots, stickers, dark clothing, headshot, close-up, cropped body, cropped feet, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

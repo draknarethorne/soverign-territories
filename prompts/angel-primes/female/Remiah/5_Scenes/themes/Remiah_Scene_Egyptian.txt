@@ -1,0 +1,38 @@
+=== Remiah Stormcrown · Scene (Outfit + Effects): Egyptian (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Remiah Stormcrown (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a fitted Egyptian kalasiris sheath gown of fine pleated Electric Gold linen with sheer panels, a plunging neckline held by broad shoulder straps, a gold-beaded violet sash at the hip.
+
+Headwear: a slim gold Egyptian diadem across the brow with a rearing cobra uraeus at the front, a trailing violet bead strand at each temple, the face and eyes fully clear.
+
+Jewelry: an Egyptian usekh broad collar of gold and violet beaded rows resting on the chest, matching wide gold cuffs, a pair of serpent armlets and gold hoop earrings.
+Back: a pair of sharp, angular white wings edged with crackling electric blue-white light.
+Legs & feet: simple gold-trimmed Egyptian papyrus sandals with a thin strap between the toes and a gold anklet, the toes bare.
+
+A candid high-fashion editorial shot, refined seated glamour. No breeze. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a fierce, focused gaze, chin raised. one hand resting on the knee, the other draped gracefully at her side.
+
+Holding a small ornate canopic jar with a carved jackal-head lid in one hand, a thin electric blue-white toxic vapour seeping from its seal, a gold stirring rod in the other.
+
+A drift of crackling arcs of lightning and sparks circles her, electric blue-white light glinting within it.
+
+Eyes: irises softly aglow with electric blue-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle electric blue-white catchlight, no light spilling beyond the eyelids.
+
+Makeup: dramatic Egyptian makeup - thick winged black kohl liner extending toward the temples, gold-washed lids with a violet accent, defined brows and a warm terracotta lip.
+
+Environment: a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

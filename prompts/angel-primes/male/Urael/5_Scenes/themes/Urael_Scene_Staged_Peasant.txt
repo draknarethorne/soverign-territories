@@ -1,0 +1,27 @@
+=== Urael Cinderfane · STAGED Scene (needs a pre-rendered stage image): Village Peasant (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Urael Cinderfane already staged in the village peasant outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a playful, knowing smile, eyes bright with mischief. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
+
+A drift of dancing flame, embers and sparks circles him, molten orange light glinting within it.
+
+Eyes: irises softly aglow with molten orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle molten orange catchlight, no light spilling beyond the eyelids.
+
+Environment: a high-fantasy wheat field at golden hour, a thatched stone cottage with smoking chimney, a wooden fence and a distant windmill under a wide soft sky.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Crimson dominant, with iron accents; all glow is molten orange.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

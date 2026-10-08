@@ -1,0 +1,38 @@
+=== Sandalyn Stonehaven · Scene (Outfit + Effects): Tropical Isles (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Sandalyn Stonehaven (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a short wrap sundress in Warm Terracotta with a bold bronze hibiscus print, a plunging neckline and a knotted side tie.
+
+Headwear: a woven crown of tropical flowers, Warm Terracotta hibiscus and pale shells with a few trailing ribbons.
+
+Jewelry: a set of layered shell and pearl necklaces, a amber pearl pendant, shell anklets, wrapped cord armlets and a pearl ear cuff.
+Back: a pair of broad, sturdy wings of warm russet and cream feathers, thick and strong.
+Legs & feet: bare feet with a beaded antique bronze anklet and a few Warm Terracotta shells.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Holding a long carved war paddle with a sharpened edge and bronze tribal patterns, held in both hands.
+
+A drift of stone shards, dust and glowing crystals circles her, warm amber light glinting within it.
+
+Eyes: irises softly aglow with warm amber light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle warm amber catchlight, no light spilling beyond the eyelids.
+
+Makeup: island makeup - sun-glossed bronze skin with golden shimmer on the cheekbones, a coral lid, a flower-pink lip and a few fine painted bronze dots at the temple.
+
+Environment: a high-fantasy tropical lagoon of impossibly clear turquoise water over coral, palms along a white sand beach, outrigger canoes and a smoking green volcano under a bright sky.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

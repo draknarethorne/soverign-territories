@@ -1,0 +1,34 @@
+=== Zadriel Tidehollow · Scene (Outfit + Companion): Enchanted Evening (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Zadriel Tidehollow (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a flowing Tidal Blue silk kaftan with wide sleeves and silver embroidered edge panels, worn over white linen trousers and a dark woven belt.
+
+Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a scallop shell over curling waves and set with a small sapphire gem.
+Back: a pair of broad pearl-grey wings with blue-silver edges, calm and wide.
+Legs & feet: flat leather strap sandals in Tidal Blue with thin silver buckles, the toes bare.
+
+A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
+
+a faint cool teal glow lingers softly, ambient and understated, nothing overtly magical.
+
+Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle cool teal catchlight, no light spilling beyond the eyelids.
+
+Companion: a sleek silver-blue sea otter with bright black eyes, whiskers beaded with water and a small pearl held in its paws, sitting upright on a rock at his feet, holding a small glowing pearl.
+
+Environment: a high-fantasy sea-cliff harbor at moonrise, a stone lighthouse tower, wooden sailing ships with lantern-lit masts, waves breaking against black rocks, silver moonlight on the water.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

@@ -1,0 +1,34 @@
+=== Verael Verdane · Scene (Outfit + Effects): Robe (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Verael Verdane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing layered Forest Green cloth robes with wrapped sashes, a deep hood, long sleeves and a brown half-cape, a face scarf pulled down at the throat.
+
+Jewelry: a simple antique bronze chain with a small pendant, the pendant formed as twining leaves and a budding vine and set with a small emerald gem.
+Back: a pair of heavy brown-and-moss-green feathered wings with flowering vines wound through them.
+Legs & feet: flat leather strap sandals in Forest Green with thin brown buckles, the toes bare.
+
+A candid high-fashion editorial shot, relaxed casual stroll, soft natural movement. Light breeze. strolling casually, body relaxed and unposed, weight shifting naturally with each step. level, relaxed, facing forward. soft, easy gaze to camera. relaxed, natural smile. arms swinging loosely and naturally with the stroll.
+
+Holding a slender wand of dark wood in one hand, its tip glowing with a small leaf green light.
+
+The hem of the robe and his scarves lift gently in a passing breeze, faint leaf green light and drifting living vines, leaves and petals around him.
+
+Eyes: irises softly aglow with leaf green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle leaf green catchlight, no light spilling beyond the eyelids.
+
+Environment: a twilight forest glade lit by glowing mushrooms and floating fireflies, a still pool reflecting violet light, curling roots and soft mist.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

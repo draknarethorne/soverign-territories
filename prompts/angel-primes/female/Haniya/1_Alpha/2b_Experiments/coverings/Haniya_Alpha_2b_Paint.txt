@@ -1,0 +1,24 @@
+=== Haniya Verdane · Alpha 2 Bare: Bare edit: skin-tone body paint (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Haniya Verdane. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing only body paint on exactly three small areas, each described separately; Breasts: a small round area of smooth, matte, nude-tone body paint, about one inch (2.5 cm) across, on the centre of each breast, matching her skin; Pelvic area: one small, smooth area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone); the paint is thin, so the natural shape of the body shows through it with no relief, texture or edge; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: petite, slender, lightly built with a youthful, springy frame; small, neat waist; slim, light arms; softly curved, neat feminine hips; slender, lightly toned legs.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini, black bikini, swimsuit, bra, panties, thong, straps, strings, ties, waistband, lingerie, lace, fabric, chains, jewelry, shoes, white spots, polka dots, stickers, playing card, square patch, large patches, full coverage, bump on the pelvic area, raised bump, dark clothing, body paint over the whole body, painted body, tinted skin, coloured skin, headshot, close-up, cropped body, cropped feet, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, watermark, logo.

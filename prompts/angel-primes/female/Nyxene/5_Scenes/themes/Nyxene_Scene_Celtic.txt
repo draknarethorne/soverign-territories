@@ -1,0 +1,38 @@
+=== Nyxene Duskfall · Scene (Outfit + Effects): Celtic (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Nyxene Duskfall (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a long Celtic gown of Midnight Violet wool with wide trailing sleeves, silver Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder.
+
+Headwear: a slim silver Celtic circlet worked with interlaced knotwork across the brow, a small black opal gem at the centre, the hair flowing freely beneath.
+
+Jewelry: Celtic silver jewelry - a triskele pendant on a braided chain, a penannular brooch pinning the mantle, knotwork arm cuffs and drop earrings set with black opal stones.
+Back: a pair of large black feathered wings, ragged at the tips, with a faint dark-violet glow along the edges.
+Legs & feet: soft ankle-high Midnight Violet leather moor boots laced up the front with silver cord.
+
+A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. a warm, radiant smile, eyes full of light. one foot forward for an elegant line; arms relaxed with a graceful hand.
+
+Holding a small carved Celtic harp cradled against the shoulder in the crook of one arm, its strings shimmering with dark violet light, a knotwork pattern carved along the frame, the other hand lightly plucking the strings.
+
+A drift of drifting shadow, smoke and pale starlight circles her, dark violet light glinting within it.
+
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle dark violet catchlight, no light spilling beyond the eyelids.
+
+Makeup: Celtic makeup - a soft smoky green-grey eye, a delicate silver woad spiral painted at one temple and a small triskele dot on the cheekbone, a natural flushed lip.
+
+Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

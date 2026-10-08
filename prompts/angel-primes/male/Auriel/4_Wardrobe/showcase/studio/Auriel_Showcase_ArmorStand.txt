@@ -1,0 +1,30 @@
+=== Auriel Solspire · Showcase: Armor Stand (group: Showcase, studio shot with magic and flair, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Auriel Solspire (chosen hair). Apply the outfit, pose, effects and backdrop together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing segmented bronze lorica with a Radiant Pearl White tunic skirt, a crested bronze helm held under one arm, a studded military belt and a flowing cape, every plate and trim engraved with a radiant sunburst in gold; pristine, luminous and unmarked.
+
+Jewelry: a simple polished gold chain with a small pendant, the pendant formed as a radiant sunburst and set with a small citrine gem.
+Back: a pair of enormous golden-white wings with gilded feather tips, glowing softly at the edges.
+Legs & feet: bare feet, no footwear.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. bold, confident, a hint of a smirk. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
+
+A curtain of golden light and drifting motes hangs in the air behind him in a protective arc, bright sunrise gold light running through it.
+
+Eyes: irises softly aglow with bright sunrise gold light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle bright sunrise gold catchlight, no light spilling beyond the eyelids.
+
+Studio backdrop: a seamless deep charcoal studio backdrop with a soft pool of bright sunrise gold light glowing behind the figure and a gentle low haze at his feet.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, environment, landscape, room, furniture, text, wording, watermark, logo.

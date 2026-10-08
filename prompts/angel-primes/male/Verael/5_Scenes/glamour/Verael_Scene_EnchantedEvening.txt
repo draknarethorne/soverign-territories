@@ -1,0 +1,34 @@
+=== Verael Verdane · Scene (Outfit + Companion): Enchanted Evening (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Verael Verdane (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a Forest Green leather jerkin laced up the front over a linen shirt with rolled sleeves, fitted dark trousers and a broad belt with antique bronze buckles.
+
+Jewelry: a simple antique bronze chain with a small pendant, the pendant formed as twining leaves and a budding vine and set with a small emerald gem.
+Back: a pair of heavy brown-and-moss-green feathered wings with flowering vines wound through them.
+Legs & feet: polished Forest Green leather shoes with a low heel and antique bronze buckles.
+
+A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
+
+a faint leaf green glow lingers softly, ambient and understated, nothing overtly magical.
+
+Eyes: irises softly aglow with leaf green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle leaf green catchlight, no light spilling beyond the eyelids.
+
+Companion: a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes, standing at his side, shoulders as high as his own, flowers in its fur.
+
+Environment: an overgrown ancient stone amphitheater with tiers of mossy seats and a cracked central stage, wildflowers and a violet dusk sky.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

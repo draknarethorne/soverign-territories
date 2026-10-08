@@ -1,0 +1,38 @@
+=== Gavrielle Skyharrow · Scene (Outfit + Effects): Summer Solstice (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Gavrielle Skyharrow (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a set of a knotted Sky Silver wrap top with a flower-embroidered edge, a low sun-gold wrap skirt that ties at the hip and a woven flower belt.
+
+Headwear: a crown of sunflowers, daisies and golden wheat with fine polished nickel sun rays fanning above it.
+
+Jewelry: a set of a moonstone sunstone pendant on a polished nickel chain, daisy-chain bracelets, tiny sun earrings and a woven wheat ring.
+Back: a pair of long, narrow silver-white wings swept back, the feathers lifting and fanning in the wind.
+Legs & feet: light polished nickel strappy sandals with ribbon ties up the ankle and a small sun charm.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
+
+Holding a tall staff topped with a bound sheaf of golden wheat and a glowing pale sky-silver sun disc, ribbons trailing.
+
+A drift of racing wind, feathers and leaves circles her, pale sky-silver light glinting within it.
+
+Eyes: irises softly aglow with pale sky-silver light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle pale sky-silver catchlight, no light spilling beyond the eyelids.
+
+Makeup: summer makeup - a sun-kissed glow with fine freckles, a gold lid shimmer, a peach flush on the cheekbones and a juicy coral lip.
+
+Environment: a rolling flower meadow at golden hour with a ribbon-hung maypole, garlands strung between trees, a crowd's picnic blankets and a low glowing sun over distant hills.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

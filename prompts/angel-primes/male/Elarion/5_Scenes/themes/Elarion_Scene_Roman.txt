@@ -1,0 +1,34 @@
+=== Elarion Skyharrow · Scene (Outfit + Effects): Roman (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Elarion Skyharrow (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a white linen tunic with grey trim, a Storm Sky Blue wool toga draped over one shoulder, a wide leather belt with steel studs, and tied sandals.
+
+Jewelry: a simple steel chain with a small pendant, the pendant formed as a spiral of swept feathers and set with a small blue topaz gem.
+Back: a pair of long, slender storm-grey wings swept back, built for speed.
+Legs & feet: open Roman caligae sandals of Storm Sky Blue leather laced up the shin with grey studs, the toes bare.
+
+A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as he channels a spell. level, chin lifted. focused forward, intense. a soft, wondering smile, eyes lifted and glowing. one arm raised and channeling energy, the other hand cupped at his side.
+
+Holding a small bronze brazier on a chain raised in one hand, a sacred pale storm-white-tinted flame dancing in it, sparks drifting upward.
+
+A drift of racing wind, feathers and leaves circles him, pale storm-white light glinting within it.
+
+Eyes: irises softly aglow with pale storm-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle pale storm-white catchlight, no light spilling beyond the eyelids.
+
+Environment: a grand high-fantasy Roman forum at dusk, towering marble colonnades and a domed temple, bronze braziers burning along the steps, banners with eagle standards, warm torch glow on pale stone.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

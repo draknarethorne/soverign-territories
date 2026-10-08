@@ -1,0 +1,32 @@
+=== Urael Cinderfane · Scene (Outfit + Effects): Elegant Casting (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Urael Cinderfane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing an open Crimson vest worn over a bare chest, a blackened gold chain across the front, and loose dark trousers held by a wide sash, the neckline, cuffs and hem embroidered with a rising flame with scattered embers in iron; worn, scorched at the edges and trimmed with dark feathers.
+
+Jewelry: a simple blackened gold chain with a small pendant, the pendant formed as a rising flame with scattered embers and set with a small garnet gem.
+Back: a pair of great black-and-crimson wings burning at the edges with embers.
+Legs & feet: soft Crimson slippers embroidered with iron thread and a turned-up toe.
+
+He is caught mid-turn in a spinning cast, one leg lifted behind him, both arms sweeping upward in a spiral gesture that draws a column of dancing flame, embers and sparks around him, his head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with his bare hands only.
+
+A shimmering column of dancing flame, embers and sparks, visible as streaming ribbons and molten orange light, spirals around him.
+
+Eyes: irises softly aglow with molten orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle molten orange catchlight, no light spilling beyond the eyelids.
+
+Environment: a vaulted underground sanctum of carved columns and a central glowing crystal altar, runes pulsing on the walls and a cool blue light.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

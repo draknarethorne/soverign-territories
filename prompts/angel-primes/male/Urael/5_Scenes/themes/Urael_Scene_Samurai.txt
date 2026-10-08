@@ -1,0 +1,34 @@
+=== Urael Cinderfane · Scene (Outfit + Effects): Samurai (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Urael Cinderfane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a Crimson silk kimono with iron collar trim, a black lacquered haori jacket, a tied obi sash, and pleated iron hakama trousers.
+
+Jewelry: a simple blackened gold chain with a small pendant, the pendant formed as a rising flame with scattered embers and set with a small garnet gem.
+Back: a pair of great black-and-crimson wings burning at the edges with embers.
+Legs & feet: white split-toe tabi socks with tall lacquered Crimson geta sandals on two wooden blocks.
+
+A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a fierce, focused gaze, chin raised. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
+
+Holding a long curved katana with a blackened gold tsuba and Crimson silk-wrapped hilt held in one hand, a shorter wakizashi sheathed at the sash.
+
+A drift of dancing flame, embers and sparks circles him, molten orange light glinting within it.
+
+Eyes: irises softly aglow with molten orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle molten orange catchlight, no light spilling beyond the eyelids.
+
+Environment: a long path of red torii gates up a misty mountainside shrine, stone lanterns, crimson maple leaves falling and a distant pagoda in the clouds.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

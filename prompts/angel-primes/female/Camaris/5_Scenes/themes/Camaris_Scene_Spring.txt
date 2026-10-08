@@ -1,0 +1,38 @@
+=== Camaris Cinderfane · Scene (Outfit + Effects): Spring Bloom (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Camaris Cinderfane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a spring set of a floral-embroidered Flame Red bralette with ribbon ties, a flared mini skirt of overlapping copper petals and a thin woven vine belt.
+
+Headwear: a woven crown of fresh blossoms, Flame Red and copper flowers and green leaves with a few trailing ribbons.
+
+Jewelry: a delicate jewelry set of a burnished copper chain with a ruby dewdrop pendant, tiny petal earrings, a vine-wrapped armlet and a flower ring.
+Back: a pair of broad crimson feathered wings fading to gold, the tips glowing like embers.
+Legs & feet: soft Flame Red sandals with ribbon straps wrapped to the knee and a small flower at each ankle.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serene, knowing smile, eyes calm and bright. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Holding a slender branch staff just bursting into blossom, Flame Red flowers and fresh leaves along its length and a glowing ember orange bud at the tip, held in one hand.
+
+A drift of dancing flame, embers and sparks circles her, ember orange light glinting within it.
+
+Eyes: irises softly aglow with ember orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle ember orange catchlight, no light spilling beyond the eyelids.
+
+Makeup: spring makeup - a dewy glow, a soft petal-pink wash across the cheekbones, a pale copper lid shimmer with a thin line of tiny freckles and a natural glossy rose lip.
+
+Environment: a rolling high-fantasy meadow of wildflowers under a bright spring shower, a rainbow arcing over distant hills, a mossy ruin half-hidden in blossoms.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

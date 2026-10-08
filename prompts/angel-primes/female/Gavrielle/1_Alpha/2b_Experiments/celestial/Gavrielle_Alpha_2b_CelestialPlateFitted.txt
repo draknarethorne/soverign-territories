@@ -1,0 +1,24 @@
+=== Gavrielle Skyharrow · Alpha 2 Bare: Bare edit: celestial plate armor, form-fitting (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Gavrielle Skyharrow. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: she is wearing celestial armor of polished polished nickel: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form instead of standing out, covering the centre of each breast fully, and one matching small ornate plate in the form of a small halo ring with two short feathers curved to follow the contour of the pelvic area, tapering and sitting flush against the skin so that no edge stands out, covering the whole front of the pelvic area completely; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a moonstone gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Body: shape the figure to this individual build, keeping her height, head and pose: tall, willowy, long-limbed build with a dancer's poise; narrow, long waist; long, slender arms with elegant hands; narrow, gently curved feminine hips; extremely long, slender legs.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+bikini bottom, bikini top, chains, flat discs, full coverage, large plates, plates sticking out, plates standing out, straps, strings, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, watermark, logo.

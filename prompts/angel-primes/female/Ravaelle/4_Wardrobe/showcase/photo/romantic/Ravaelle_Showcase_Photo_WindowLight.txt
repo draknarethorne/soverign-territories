@@ -1,0 +1,28 @@
+=== Ravaelle Tidehollow · Showcase: Photo: Window Light (group: Showcase, real-world photo shot, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Ravaelle Tidehollow (chosen hair). Place her in the real-world location below, in the outfit and pose described; keep face, body, and hair from the incoming image. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+A candid, photorealistic lifestyle photograph shot on location with natural light, lifelike skin texture, razor-sharp focus on her, natural depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Shot: three-quarter length, framed from mid-thigh up, the location visible around her.
+
+Wearing a Pearl Aqua bias-cut silk slip dress with thin straps and a cowl neckline, falling close to the body to mid-calf with a soft sheen and silver lace at the hem.
+
+Legs & feet: bare feet, no footwear.
+
+A candid high-fashion editorial shot, dreamy romantic moment, wind-caught hair. Strong breeze flowing towards her. standing softly, head tilted back slightly, basking in the breeze. tilted back gently, eyes soft or closed. soft, dreamy, eyes closed or half-lidded. serene, dreamy, soft closed-mouth smile. arms relaxed at her sides, hair caught fully in the wind.
+
+Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a bright apartment room beside a tall window with sheer white curtains moving in a light breeze, soft morning light streaming in across a wooden floor.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, studio backdrop, cream backdrop, fantasy architecture, castle, medieval setting, magic effects, glowing effects, dragons, fantasy creatures, text, wording, watermark, logo.

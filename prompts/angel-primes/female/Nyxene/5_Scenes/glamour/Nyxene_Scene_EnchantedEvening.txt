@@ -1,0 +1,34 @@
+=== Nyxene Duskfall · Scene (Outfit + Companion): Enchanted Evening (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Nyxene Duskfall (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a Midnight Violet gown of many floaty layers of tulle in shades of silver, a fitted bodice with thin straps and a skirt that swirls to the floor.
+
+Jewelry: delicate matching silver bracelets at the wrists, otherwise bare forearms.
+Back: a pair of large black feathered wings, ragged at the tips, with a faint dark-violet glow along the edges.
+Legs & feet: open-toed Midnight Violet heeled sandals with thin straps across the foot and a strap around the ankle fastened with a blackened silver clasp.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+a faint dark violet glow lingers softly, ambient and understated, nothing overtly magical.
+
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle dark violet catchlight, no light spilling beyond the eyelids.
+
+Companion: a sleek black panther whose coat holds a faint violet sheen, with glowing violet eyes and silent, heavy paws, padding at her side, head level with her hip, violet eyes on the viewer.
+
+Environment: the roofless ruin of a gothic abbey in moonlight, tall empty windows, ivy and fallen stone, drifting mist and a lone raven on an arch.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -1,0 +1,23 @@
+=== Auriel Solspire · Hairstyle (group: Hair) — Edit (img2img) ===
+Incoming image: an A-pose of Auriel Solspire. Change ONLY the hairstyle; keep face, body, and outfit from the incoming image. Denoise ~0.4-0.6.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure and proportions, all exactly as shown; keep the hair colour and highlights.
+
+Maintain existing outfit expressly.
+
+Very light breeze.
+
+Hair is swept up into a high bun, with several long, loose tendrils deliberately left loose to trail along the neck and temples, an exotic, alluring fantasy-glamour look.
+
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, text, wording, watermark, logo.

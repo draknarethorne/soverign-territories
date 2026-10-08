@@ -1,0 +1,27 @@
+=== Auriel Solspire · STAGED Scene (needs a pre-rendered stage image): Autumn Harvest Woods (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Auriel Solspire already staged in the autumn harvest woods outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+A drift of golden light and drifting motes circles him, bright sunrise gold light glinting within it.
+
+Eyes: irises softly aglow with bright sunrise gold light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle bright sunrise gold catchlight, no light spilling beyond the eyelids.
+
+Environment: a rustic timber lodge at dusk with a crackling bonfire, hanging corn and gourds, long tables of harvest food, drifting leaves and sparks over a hillside orchard.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Radiant Pearl White dominant, with gold accents; all glow is bright sunrise gold.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

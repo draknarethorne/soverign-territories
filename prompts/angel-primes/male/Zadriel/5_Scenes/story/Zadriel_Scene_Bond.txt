@@ -1,0 +1,34 @@
+=== Zadriel Tidehollow · Scene (Outfit + Companion): Bond (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Zadriel Tidehollow (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a black lambskin leather jacket with polished silver zippers and hardware, worn over a Tidal Blue cotton t-shirt and dark indigo jeans with natural fading.
+
+Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a scallop shell over curling waves and set with a small sapphire gem.
+Back: a pair of broad pearl-grey wings with blue-silver edges, calm and wide.
+Legs & feet: bare feet, no footwear.
+
+He stands close to his bonded companion, one hand raised and gently resting against it, his other hand relaxed at his side, his face turned toward the camera with wonder and quiet certainty; the companion turns toward him and both are fully in frame.
+
+A thread of cool teal light runs from his hand to his companion where they touch, the bond glowing, motes of flowing water and drifting spray rising between them.
+
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint cool teal glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Companion: a sleek silver-blue sea otter with bright black eyes, whiskers beaded with water and a small pearl held in its paws, sitting upright on a rock at his feet, holding a small glowing pearl.
+
+Environment: a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools, luminous blue-green bioluminescence on the cave walls.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

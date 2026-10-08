@@ -1,0 +1,16 @@
+=== Urael Cinderfane · Final: Final look (group: Finish, terminal look on a polished image) — Edit (img2img) ===
+Incoming image: the polished image of Urael Cinderfane. This pass sets the final photographic look; nothing in the picture changes. Denoise ~0.6-0.8.
+
+----------------------------------------------------------------
+prompt:
+
+Give the incoming image its final photographic finish: a cohesive, natural colour grade, soft realistic contrast, true-to-life skin tones and lifelike material rendering, as one clean professional photograph.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Change nothing else: keep the pose, outfit, composition, framing and background as in the incoming image.
+
+----------------------------------------------------------------
+negative prompt:
+
+changed face, changed pose, changed outfit, new objects, extra people, extra limbs, deformed hands, plastic skin, airbrushed, oversaturated, heavy filter, text, watermark, logo.

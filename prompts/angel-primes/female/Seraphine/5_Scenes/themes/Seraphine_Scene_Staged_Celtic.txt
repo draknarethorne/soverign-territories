@@ -1,0 +1,27 @@
+=== Seraphine Solspire · STAGED Scene (needs a pre-rendered stage image): Celtic (group: Scene-Staged) — Edit (img2img) ===
+Incoming image: Seraphine Solspire already staged in the celtic outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
+Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. a fierce, focused gaze, chin raised. one foot forward for an elegant line; arms relaxed with a graceful hand.
+
+A drift of golden light and drifting motes circles her, warm golden-white light glinting within it.
+
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
+
+Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+A light breeze moves the clothing and a few strands of hair.
+
+Palette: Radiant Pearl White dominant, with gold accents; all glow is warm golden-white.
+Full-body hero framing, slight low camera angle for an imposing presence.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra fingers, duplicate or second weapon, text, watermark, logo, studio equipment, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, cluttered background, washed-out colour, blown-out highlights, altered face, altered outfit, altered hairstyle.

@@ -18,9 +18,9 @@ a faint gold glow lingers softly, ambient and understated, nothing overtly magic
 
 Environment: an elegant moonlit castle terrace in a high-fantasy realm, soft silver moonlight washing over carved stone balustrades and ivy, lantern light glowing from distant tower windows, a gentle evening haze drifting low.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

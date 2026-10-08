@@ -1,0 +1,36 @@
+=== Baracel Stonehaven · Scene (Outfit + Companion): Signature (illustrated) (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Baracel Stonehaven (chosen hair). Apply the outfit, casting effect, companion, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a molded bronze muscle cuirass over a Deep Sienna linen tunic with leather pteruges at the waist and shoulders, bronze greaves and a crested grey plume.
+
+Headwear: a slender copper tiara with a central peak set with a tiger's eye stone and smaller gems along the arc, a faceted crystal set in carved stone rising at the centre of the brow, set with a tiger's eye gem; clean, with a quiet shine.
+
+Jewelry: a simple copper chain with a small pendant, the pendant formed as a faceted crystal set in carved stone and set with a small tiger's eye gem.
+Back: a pair of thick, heavy wings of earth-brown and grey feathers, rough as granite.
+Legs & feet: heavy Deep Sienna leather boots with plate knee-caps and shin guards, copper buckles and thick soles.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. composed, commanding, lips softly together. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Loose stones and golden dust drift upward around the feet, warm amber gold light running through cracks in the ground.
+
+Eyes: irises softly aglow with amber gold light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle amber gold catchlight, no light spilling beyond the eyelids.
+
+Companion: an ancient tortoise with a huge moss-covered shell studded with small glowing crystals and slow, wise eyes, plodding at his side, its shell as high as his knee.
+
+Environment: an elemental earth realm: huge floating boulders and crystal clusters over a canyon of ochre rock, glowing seams of ore and drifting dust in amber light.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, text, wording, watermark, logo.
