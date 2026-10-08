@@ -1,11 +1,15 @@
 === Draknava Thorne · STAGED Scene (needs a pre-rendered stage image): Celtic Bard (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknava Thorne already staged in the celtic bard outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring.
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a playful, knowing smile, eyes bright with mischief. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 

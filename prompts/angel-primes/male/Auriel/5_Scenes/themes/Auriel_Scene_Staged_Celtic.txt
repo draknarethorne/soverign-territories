@@ -1,11 +1,15 @@
 === Auriel Solspire · STAGED Scene (needs a pre-rendered stage image): Celtic (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Auriel Solspire already staged in the celtic outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a fierce, focused gaze, chin raised. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 

@@ -1,11 +1,15 @@
 === Drakniya Thorne · STAGED Scene (needs a pre-rendered stage image): Halloween Druid (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakniya Thorne already staged in the halloween druid outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: deep forest-emerald irises with radiating sage striations and a dark pine limbal ring.
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
 
 A moody candid shot beside a bubbling cauldron. Light breeze. leaning over a cauldron, weight on one leg, torso turned to the camera. chin tilted down, eyes up to the camera. sly, mischievous eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. one hand stirring a bubbling cauldron with a long spoon, the other trailing a finger through rising green mist.
 

@@ -1,11 +1,15 @@
 === Draknara Thorne · STAGED Scene (needs a pre-rendered stage image): Autumn Harvest Woods Shaman (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknara Thorne already staged in the autumn harvest woods shaman outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
 
 A joyful autumn shot tossing leaves. A gust whirling the leaves. standing in a drift of leaves, one knee lifted, torso leaning forward. head thrown back, laughing. bright eyes lifted then to camera. warm and content, a gentle smile, eyes soft and glowing in the amber light. both hands flinging a shower of leaves up around her.
 

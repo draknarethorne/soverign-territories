@@ -1,11 +1,15 @@
 === Draknoxa Thorne · STAGED Scene (needs a pre-rendered stage image): Halloween Alchemist (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknoxa Thorne already staged in the halloween alchemist outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
 
 A low action shot, slight upward camera angle. Light breeze. a low crouch on the balls of the feet, one hand near the ground. head up, eyes forward. sharp, predatory eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. one hand braced on the ground, the other holding the weapon back, coiled to spring.
 

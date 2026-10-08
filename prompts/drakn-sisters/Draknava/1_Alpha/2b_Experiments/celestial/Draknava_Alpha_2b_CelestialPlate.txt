@@ -1,5 +1,5 @@
 === Draknava Thorne · Alpha 2 Bare: Bare edit: celestial plate armor (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
-Incoming image: the Prime A-pose of Draknava Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.5-0.7.
+Incoming image: the Prime A-pose of Draknava Thorne. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:

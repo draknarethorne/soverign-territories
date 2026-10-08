@@ -1,0 +1,29 @@
+=== Seraphine Solspire · Video: ArabianNightsMotion (group: Video) — MiniMax H3 image-to-video ===
+Source image: Seraphine_Qwen_Scene_ArabianNights_00001_.png
+Size: 640x960
+Length: 7.5
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Seraphine Solspire, wearing a flowing Radiant Pearl White silk gown with a deep neckline, wide gilded sleeves and a high slit, in a high-fantasy desert bazaar at night, colourful silk awnings and hanging brass lanterns, spice stalls.
+
+Timeline:
+[0s-2.5s] Motion: Hanging lamps flicker to life one by one and a drift of rose petals and silk streams past on a warm desert breeze; at the same time, fine dust motes float through slanting shafts of light, glowing and tumbling slowly in the still air.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, warm golden light blooms outward from her, glowing motes rising through the air and a soft halo gathering behind her; at the same time, tiny points of light sparkle and drift across the frame, glittering on skin, metal and cloth as a shimmer sweeps through.
+[5s-7.5s] Motion: As the previous motion settles, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: a plucked oud and a warm wind; a soft room tone; a soft rising choir; faint rising chimes; a rushing wind
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

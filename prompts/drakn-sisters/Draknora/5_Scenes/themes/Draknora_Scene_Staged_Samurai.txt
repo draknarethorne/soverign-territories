@@ -1,11 +1,15 @@
 === Draknora Thorne · STAGED Scene (needs a pre-rendered stage image): Samurai Magician (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknora Thorne already staged in the samurai magician outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
 
 A cinematic shot slicing through falling petals. Wind spinning the petals. a deep forward stance mid-slash, hair and sleeves streaming. turned over the shoulder to the camera. focused eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. the katana swept in a diagonal cut, petals parting around the blade.
 

@@ -1,11 +1,15 @@
 === Draknisa Thorne · STAGED Scene (needs a pre-rendered stage image): Spring Bloom Enchanter (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknisa Thorne already staged in the spring bloom enchanter outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring.
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
 
 A joyful spring editorial with swirling petals. Playful gusts swirling petals. mid-twirl, skirt flared, weight on the ball of one foot. head tilted back, laughing toward the camera. bright, delighted eyes to camera. radiant and fresh, a soft glowing smile, eyes bright and slightly misty with joy. both arms lifted out to the sides, fingers spread, petals swirling around her.
 

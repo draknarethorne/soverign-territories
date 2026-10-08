@@ -1,0 +1,42 @@
+=== Angelica Prime · A-Pose Base (group: X_Pose) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. The Critical details are set here; downstream stages assume them and do not repeat them.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
+Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Legs: long, slender legs with slim, tapering thighs.
+
+Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
+
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+
+Figure: lithe, slender, well-proportioned build; slim waist; shapely feminine hips, gently curved (not wide).
+
+Wearing: only a Soft Pearl White fitted monokini one-piece with a deep plunge and large side cut-outs at the waist that leave the midriff and sides bare, high-cut at the hips; arms and legs bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes.
+
+Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
+
+Makeup: soft and natural - neutral-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light White.
+
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; natural lush lashes.
+
+Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, ponytail, bun, updo, braids, hair tied back, hair pulled up, pinned-up hair, bangs, side part, hair covering eyes, hair across the face, recoloured hair, dyed hair, changed hair colour, added highlights, thick thighs, wide hips, boyish figure, stick-like, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

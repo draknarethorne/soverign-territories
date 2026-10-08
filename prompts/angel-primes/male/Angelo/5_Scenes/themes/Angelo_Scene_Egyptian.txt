@@ -1,0 +1,39 @@
+=== Angelo Prime · Scene (Outfit + Effects): Egyptian (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Angelo Prime (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
+Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a fine white linen kalasiris skirt with pleats, a wide gold collar with gold cartouche inlay, a tied linen sash, and woven sandals.
+
+Jewelry: a simple gold chain with a small pendant, the pendant formed as a single white feather within a plain ring and set with a small gold gem.
+Back: a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold.
+Legs & feet: simple gold-trimmed Egyptian papyrus sandals with a thin strap between the toes and a gold anklet, the toes bare.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
+
+Holding a small ornate canopic jar with a carved jackal-head lid in one hand, a thin gold toxic vapour seeping from its seal, a gold stirring rod in the other.
+
+A drift of soft white light, drifting pale feathers and motes circles him, gold light glinting within it.
+
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+
+Environment: a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

@@ -1,0 +1,29 @@
+=== Sandalyn Stonehaven · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
+Source image: Sandalyn_Qwen_Scene_Signature_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Sandalyn Stonehaven, wearing fitted Warm Terracotta-toned plate with a sculpted breastplate shaped to the figure, a cinched waist, in a sandstone canyon at golden hour, tall ochre rock walls with layered strata; a sturdy russet-and-cream mountain ram with heavy curled horns ringed in stone-grey bands and a thick.
+
+Timeline:
+[0s-2.5s] Motion: Stones and loose earth lift from the ground and orbit slowly around her as dust drifts off them; at the same time, great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she spreads her wings wide as her halo ignites, and Cairn rises beside her; at the same time, the companion in the background moves too: it banks, beats its wings and turns its head toward her, its eyes catching the magic light, while the flames, candles and smoke around it sway.
+[5.5s-8s] Motion: As the previous motion settles, she turns a calm, radiant look to the camera as the light and the feathers settle.
+
+World: The realm is alive: stone shards, dust and glowing crystals stream and swirl through the air, feathers drift down and clouds sweep past.
+
+The camera rises slowly from below her eye line while panning gently from left to right, following the action upward; smooth, no cuts, her full figure stays in frame.
+
+Audio: a soaring choral and string melody and the call of her bonded companion; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

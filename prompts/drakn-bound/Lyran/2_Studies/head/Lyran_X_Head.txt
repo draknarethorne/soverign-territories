@@ -1,5 +1,5 @@
 === Lyran Frostfall · Head / Close-up (group: X_Head) — Edit (img2img) ===
-Incoming image: an A-pose (or hair variant) of Lyran Frostfall. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+Incoming image: an A-pose (or hair variant) of Lyran Frostfall. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,6 +13,11 @@ Close-up framed from the upper chest up: the head, face and hair fill the frame,
 View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
+
+Critical details - these must be clearly visible:
+Hair: platinum-blonde hair, short and neatly combed.
+Eyes: glacial cyan irises with faint frost striations and a deep navy limbal ring.
+Skin: fair, cool-toned complexion, evenly toned.
 
 Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 

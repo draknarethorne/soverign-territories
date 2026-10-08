@@ -1,11 +1,15 @@
 === Drakness Thorne · STAGED Scene (needs a pre-rendered stage image): Halloween Necromancer (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakness Thorne already staged in the halloween necromancer outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
 An action shot of a ready defensive stance. Light breeze. knees bent, weight low and centred, one foot forward. level, watching the camera. steady, watchful eyes to camera. wicked delight, a slow mischievous smile, eyes wide and bright, brows playfully arched. the weapon held across the body in a guard, the free hand forward and open.
 

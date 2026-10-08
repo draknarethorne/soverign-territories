@@ -1,5 +1,5 @@
 === Draknoxa Thorne · Head / Close-up (group: X_Head) — Edit (img2img) ===
-Incoming image: an A-pose (or hair variant) of Draknoxa Thorne. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+Incoming image: an A-pose (or hair variant) of Draknoxa Thorne. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,6 +13,11 @@ Medium close-up framed from the top of the head to the mid-chest: the face, the 
 View: front-facing, head level and squarely toward the camera, looking straight into the lens, wide open eyes level and symmetrical.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
+
+Critical details - these must be clearly visible:
+Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a bold peekaboo underlayer of acid-lime strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light.
+Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
+Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
 
 Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 

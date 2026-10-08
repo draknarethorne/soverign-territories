@@ -1,11 +1,15 @@
 === Drakniss Thorne · STAGED Scene (needs a pre-rendered stage image): Egyptian Cleric (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakniss Thorne already staged in the egyptian cleric outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring.
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. composed, commanding, lips softly together. one arm raised and channeling energy, the other hand cupped at her side.
 

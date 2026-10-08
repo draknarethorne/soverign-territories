@@ -1,5 +1,5 @@
 === Drakneta Thorne · Head / Close-up (group: X_Head) — Edit (img2img) ===
-Incoming image: an A-pose (or hair variant) of Drakneta Thorne. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.4-0.6.
+Incoming image: an A-pose (or hair variant) of Drakneta Thorne. Zoom in to a studio head shot; keep the face, body, hair, and wardrobe from the incoming image. This zoom-in forces the clean, canonical eyes / lashes / iris / lip detail the full-body A-pose is too small to resolve. Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
@@ -13,6 +13,11 @@ Close-up framed from the upper chest up: the head, face and hair fill the frame,
 View: clean side profile, the head and shoulders turned 90 degrees to face frame-left, the eyes looking ahead toward frame-left, the profile line of the forehead, nose, lips and chin clearly defined.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
+
+Critical details - these must be clearly visible:
+Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
 
 Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 

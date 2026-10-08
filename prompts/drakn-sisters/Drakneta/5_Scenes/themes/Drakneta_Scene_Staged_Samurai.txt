@@ -1,11 +1,15 @@
 === Drakneta Thorne · STAGED Scene (needs a pre-rendered stage image): Samurai Summoner (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakneta Thorne already staged in the samurai summoner outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
 
 A precise action shot at the moment of the draw. Light breeze. a low wide stance, weight sunk, torso turned side-on. head turned to the camera, chin level. calm, piercing eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. one hand drawing the katana a few inches from its sheath, the other gripping the scabbard at the hip.
 

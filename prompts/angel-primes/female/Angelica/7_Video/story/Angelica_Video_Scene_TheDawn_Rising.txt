@@ -1,0 +1,29 @@
+=== Angelica Prime · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Angelica_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Angelica Prime, wearing a Soft Pearl White halter-neck dress with a plunging front held by a neck tie, in a high limestone plateau at first light, short pale grass and a few weathered standing stones, thin cloud on the horizon.
+
+Timeline:
+[0s-2.5s] Motion: Soft pearl-white light spreads outward from her, loose white feathers drifting through the air and a faint halo gathering behind her; at the same time, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises upright through the centre of the great column, her wings opening wide and her arms lifted, turning gently in the light.
+[5.5s-8s] Motion: As the previous motion settles, she turns a joyful, radiant look to the camera as the light settles and feathers drift down around her.
+
+World: The realm is alive: soft white light, drifting pale feathers and motes stream and swirl through the air, feathers drift down and clouds sweep past.
+
+The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame.
+
+Audio: a soaring choral and string melody; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

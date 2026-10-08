@@ -1,11 +1,15 @@
 === Drakneta Thorne · STAGED Scene (needs a pre-rendered stage image): Steppe Horde Summoner (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakneta Thorne already staged in the steppe horde summoner outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
 
 A dynamic action shot, side-on to the camera. Light breeze. feet planted wide, torso turned side-on, drawn bow arm extended. turned along the arrow line, one eye lined up on the target. locked on a target beyond the frame. wild and free, a fierce open grin, windswept hair, eyes alight with the thrill of the ride. the string hand drawn back to the cheek with the arrow nocked, the other arm straight and steady.
 

@@ -1,0 +1,29 @@
+=== Remiah Stormcrown · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Remiah_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Remiah Stormcrown, wearing a Electric Gold pinafore dress with wide straps and a square neckline worn over a white blouse with puffed, in a bare black basalt headland under a heavy storm front, wet rock.
+
+Timeline:
+[0s-2.5s] Motion: Arcs of lightning crackle around her and leap between nearby objects, flashing the scene gold-white; at the same time, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, she rises upright through the centre of the great column, her wings opening wide and her arms lifted, turning gently in the light.
+[5.5s-8s] Motion: As the previous motion settles, she turns a joyful, radiant look to the camera as the light settles and feathers drift down around her.
+
+World: The realm is alive: crackling arcs of lightning and sparks stream and swirl through the air, feathers drift down and clouds sweep past.
+
+The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame.
+
+Audio: a soaring choral and string melody; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

@@ -1,11 +1,15 @@
 === Draknara Thorne · STAGED Scene (needs a pre-rendered stage image): Aztec Sun Court Shaman (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknara Thorne already staged in the aztec sun court shaman outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
 
 A fierce action portrait. Light breeze. low warrior crouch, one knee near the ground, torso coiled. head up, glaring at the camera. fierce eyes to camera. proud and regal, chin high, eyes bright, a faint confident curve of the lips. a war club held back ready to swing, the other hand braced on the stone.
 

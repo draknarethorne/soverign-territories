@@ -1,11 +1,15 @@
 === Draknava Thorne · STAGED Scene (needs a pre-rendered stage image): Samurai Bard (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknava Thorne already staged in the samurai bard outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: silver-grey irises with radiating pale jade striations and a deep slate limbal ring.
+Skin: light sun-kissed fair tan complexion, evenly tanned, no pale areas.
 
 A dynamic action shot, side-on to the camera. Light breeze. feet planted wide, torso turned side-on, drawn bow arm extended. turned along the arrow line, one eye lined up on the target. locked on a target beyond the frame. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. the string hand drawn back to the cheek with the arrow nocked, the other arm straight and steady.
 

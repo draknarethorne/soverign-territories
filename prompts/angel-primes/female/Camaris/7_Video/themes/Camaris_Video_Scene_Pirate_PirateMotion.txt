@@ -1,0 +1,29 @@
+=== Camaris Cinderfane · Video: PirateMotion (group: Video) — MiniMax H3 image-to-video ===
+Source image: Camaris_Qwen_Scene_Pirate_00001_.png
+Size: 640x960
+Length: 7.5
+
+----------------------------------------------------------------
+prompt:
+
+Painterly fantasy card-art animation: rich saturated colour, stylised dramatic lighting, crisp detail, magical effects with a strong glow and bloom.
+
+Scene: The first frame shows Camaris Cinderfane, wearing a buccaneer outfit of a laced Flame Red bustier top under an open striped shirt, a wide knotted copper sash, in a hidden high-fantasy smugglers' cove at night, a weathered galleon at anchor, lantern-lit rope bridges.
+
+Timeline:
+[0s-2.5s] Motion: The deck pitches in the swell, rigging creaks, sails snap and spray flies up over the rail in sheets of sunlit foam; at the same time, fine dust motes float through slanting shafts of light, glowing and tumbling slowly in the still air.
+[2.5s-5s] Motion: Blending seamlessly out of the previous action, flames flare around her and along the ground, tongues of fire curling upward and throwing hot orange light across everything; at the same time, tiny points of light sparkle and drift across the frame, glittering on skin, metal and cloth as a shimmer sweeps through.
+[5s-7.5s] Motion: As the previous motion settles, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+
+World: Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, water, foliage, banners, birds and creatures - while cloth and hair respond to the air.
+
+The camera glides in a slow arc from left to right, following her movement and keeping her full figure from head to toe in frame, so the whole setting passes through view; smooth and continuous, no cuts.
+
+Audio: creaking timber, crashing waves and gulls; a soft room tone; a roaring flame; faint rising chimes; a rushing wind
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+photograph, flat colours, morphing face, flicker, blur

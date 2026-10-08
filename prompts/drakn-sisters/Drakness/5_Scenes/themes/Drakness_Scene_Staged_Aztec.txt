@@ -1,11 +1,15 @@
 === Drakness Thorne · STAGED Scene (needs a pre-rendered stage image): Aztec Sun Court Necromancer (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakness Thorne already staged in the aztec sun court necromancer outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
 A frozen action shot at the moment of a throw. Light breeze. a long step forward, torso rotating through the throw. turned toward the target. locked on the target. proud and regal, chin high, eyes bright, a faint confident curve of the lips. the throwing arm extended forward just after release, the other arm pulled back.
 

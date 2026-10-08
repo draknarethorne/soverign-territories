@@ -1,11 +1,15 @@
 === Draknira Thorne · STAGED Scene (needs a pre-rendered stage image): Samurai Wizard (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Draknira Thorne already staged in the samurai wizard outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
+Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
 An action shot of a weapon being drawn. Light breeze. a half-turn stance, weight on the back foot. turned toward the camera over one shoulder. confident eyes to camera. calm and resolute, steady unwavering eyes, lips closed, a stillness before action. one hand pulling a blade from its sheath at the hip, the other hand on the scabbard.
 

@@ -1,0 +1,29 @@
+=== Vexiel Nightshade · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
+Source image: Vexiel_Qwen_Scene_TheDawn_00001_.png
+Size: 640x960
+Length: 8
+
+----------------------------------------------------------------
+prompt:
+
+Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
+
+Scene: The first frame shows Vexiel Nightshade, wearing a Venom Green cotton Henley shirt with purple trim on the placket and cuffs, in a still mangrove swamp at dusk, dark water skinned with green algae, twisted roots and pale fungi on rotting wood.
+
+Timeline:
+[0s-2.5s] Motion: Wisps of toxic mist coil around his and drip and bubble along the ground, shimmering in sickly colours; at the same time, clouds race across the sky in time-lapse, shadows sweeping over the land below as the light shifts.
+[2.5s-5.5s] Motion: Blending seamlessly out of the previous action, he rises upright through the centre of the great column, his wings opening wide and his arms lifted, turning gently in the light.
+[5.5s-8s] Motion: As the previous motion settles, he turns a joyful, radiant look to the camera as the light settles and feathers drift down around his.
+
+World: The realm is alive: curling green venom mist and falling drops stream and swirl through the air, feathers drift down and clouds sweep past.
+
+The camera slowly orbits a quarter turn around her, starting slightly to one side and finishing on the other, revealing the setting behind her; smooth and continuous, her full figure stays in frame.
+
+Audio: a soaring choral and string melody; no speech
+
+Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; no new people, no cuts, smooth natural motion, no text, no subtitles, no logos.
+
+----------------------------------------------------------------
+negative prompt:
+
+cartoon, anime, painting, 3d render, plastic skin, morphing face, flicker

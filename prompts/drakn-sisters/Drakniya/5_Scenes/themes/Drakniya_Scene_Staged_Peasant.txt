@@ -1,11 +1,15 @@
 === Drakniya Thorne · STAGED Scene (needs a pre-rendered stage image): Village Peasant Druid (group: Scene-Staged) — Edit (img2img) ===
 Incoming image: Drakniya Thorne already staged in the village peasant druid outfit render. This final pass ONLY adds the scene (background, atmosphere, spell glow, companion) and small pose/wind adjustments. Do NOT redraw the subject, their hair, makeup, outfit, or any held item — carry them from the incoming image. Only the eyes (glow override) change from the base.
-Denoise ~0.5-0.7.
+Denoise ~0.7-0.8.
 
 ----------------------------------------------------------------
 prompt:
 
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+
+Critical details - these must be clearly visible:
+Eyes: deep forest-emerald irises with radiating sage striations and a dark pine limbal ring.
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
 
 A candid farm portrait. Light breeze. leaning relaxed on a pitchfork, one foot crossed over the other. tilted, grinning at the camera. cheeky eyes to camera. honest warmth, an easy open smile, a little rosy and sun-flushed. both hands on the pitchfork handle, a straw stalk between the teeth.
 

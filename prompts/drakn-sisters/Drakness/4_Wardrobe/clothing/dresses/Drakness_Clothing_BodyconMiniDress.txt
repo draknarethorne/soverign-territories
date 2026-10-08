@@ -1,5 +1,5 @@
 === Drakness Thorne · Clothing: Bodycon Mini Dress (group: Clothing) — Edit (img2img) ===
-Incoming image: an A-pose of Drakness Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.5-0.7.
+Incoming image: an A-pose of Drakness Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:
@@ -9,6 +9,12 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: rich black hair with warm espresso depth, noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension.
+Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
 Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
