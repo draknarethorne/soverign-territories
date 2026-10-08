@@ -128,7 +128,7 @@ During a session you can point a workflow at any other image; a reset (or `--res
 dropping a chosen render into a workspace's input folder under that name is all it takes; `inputs --reset` repoints every workflow (a missing file is reported, not copied).
 Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tuned.
 
-**Angel Primes.** The `Angel Primes` workspace is one tree for a whole test deck: `female/<Hero>/<phase>/...`, `male/<Hero>/<phase>/...`, and later `creatures/`, `buildings/`, `equipment/`, `tactics/` and `workers/`
+**Angel Primes.** The `Angel Primes` workspace is one tree for a whole test deck: `female/<Hero>/<phase>/...`, `male/<Hero>/<phase>/...`, and later `pets/`, `units/`, `buildings/`, `equipment/`, `tactics/` and `workers/`
 (the divisions in `data/art/_settings/groups.json`; the repo copies of the workflows stay flat per hero). The twenty angels use the same golden-image names. Their original photo is expected as `<slug>_photo_944x1104.png` (`seraphine_photo_944x1104.png`, `auriel_photo_944x1104.png` ...) in the
 `Angel Primes` input folder, already padded to the standard size; change a name with `inputs --set --hero Seraphine --photo <file>`. The male angels have no Barefoot or Heels step, so their `apose`
 role points at the Alpha 2 Bare image and their golden image is the Bare. The workspace stays `planned` until its ComfyUI install exists.

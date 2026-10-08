@@ -8,7 +8,7 @@ ComfyUI output folder all use the same folders:
   ComfyUI output: <group>/[<division>/]<Hero>/<phase folders...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
 
 (1_Alpha, 2_Studies, 3_Layers, 4_Wardrobe, 5_Scenes, 6_Finish, 7_Video, Bench; brand and card art keep <stage>/<family>.)
-A group listed in data/art/_settings/groups.json (angel-primes) has a division folder (female, male, creatures ...) between the group and the hero.
+A group listed in data/art/_settings/groups.json (angel-primes) has a division folder (female, male, pets, units ...) between the group and the hero.
 
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
 Hair and motion cards already carry their own family folders and are left as they are.

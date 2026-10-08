@@ -206,10 +206,12 @@ female and one male per element in each of ten pairs, and each has a bonded pet 
 | 10 | Darkness | Duskfall | Fallen (evil) | Nyxene (Shade, panther) | Luzariel (Corvin, raven) |
 
 **One tree, with divisions.** Angel Primes is the test bed for a whole deck, so its work is filed below a division folder, the same in every layer
-(`data/art/_settings/groups.json` lists them: `female`, `male`, `creatures`, then `buildings`, `equipment`, `tactics`, `workers`):
+(`data/art/_settings/groups.json` lists them: `female` and `male` for heroes, then `pets`, `units`, `buildings`, `equipment`, `tactics`, `workers`, the Sovereign Dawn card categories):
 `heroes/angel-primes/female/seraphine.json`, `_sets/angel-primes/female/seraphine/<phase>/...`, `prompts/angel-primes/female/Seraphine/<phase>/...`, and in ComfyUI
 `female/Seraphine/<phase>/...` in the Angel Primes workspace. A pair shares a family name; only Angelica and Angelo are named Prime. The scaffolders take the division
 from the identity path (`--division` on the older ones), and the validator rejects a card outside a division of its group.
+
+**How this lines up with Sovereign Dawn.** `data/cards/sovereign-dawn/` has eight categories (heroes 35, units 108, buildings 20, equipment 14, tactics 12, pets 10, workers 10, dragons 10), so the divisions use the same names, with heroes split by their card's `sex`. The mass card art for those cards (`_sets/sovereign-dawn/<category>/card/`, `prompts/sovereign-dawn/<Category>/card/`) is flat first-draft art, one folder per category, and stays as it is; a test-bed building or unit is filed as `buildings/<Name>/<phase>/...`, one folder per item, because it is worked through the phases like a hero. Dragons stay in `elder-dragons`.
 
 What each angel has, and where it lives:
 

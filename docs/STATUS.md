@@ -133,11 +133,11 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   set (about 16-20 cards each) are in [../data/art/README.md](../data/art/README.md#angel-primes-the-clean-test-bed). Angelica and Angelo stay as the older pair
   (the only ones named Prime); every other angel has a family name, shared by the pair.
 - **One tree in every layer, with divisions (Oct 2026).** A group listed in `data/art/_settings/groups.json` files its work below a division folder
-  (`angel-primes`: `female`, `male`, `creatures`, then `buildings`, `equipment`, `tactics`, `workers`). The same path is used for the identity
+  (`angel-primes`: `female`, `male`, `pets`, `units`, `buildings`, `equipment`, `tactics`, `workers`, the Sovereign Dawn card categories with heroes split by sex). The same path is used for the identity
   (`data/art/heroes/angel-primes/female/seraphine.json`), the cards (`_sets/angel-primes/female/seraphine/...`), the prompts
   (`prompts/angel-primes/female/Seraphine/...`) and the ComfyUI output and workspace folders (`female/Seraphine/1_Alpha/...`), so the Angel Primes workspace is one tree for a
-  whole test deck instead of a workspace per kind. The Drakn groups and the Elder Dragons keep their separate groups until we choose to fold them in; the Sovereign Territories
-  set is expected to use the same scheme.
+  whole test deck instead of a workspace per kind. The Drakn groups and the Elder Dragons stay as separate groups and workspaces (decided Oct 2026: ten story characters each, they
+  will not grow); the Sovereign Territories set is expected to use the division scheme.
 
 ## Open decisions
 
