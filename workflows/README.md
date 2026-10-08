@@ -172,6 +172,12 @@ role points at the Alpha 2 Bare image and their golden image is the Bare. The te
 Angelica and Angelo follow the same Phase 1 and Phase 2 as every other angel (Alpha 1 Prime, 2 Bare, 3 Footwear and the 2b experiments for her; Prime and Bare for him; heads, views, body views and hair for both);
 their old single `X_Pose` workflow was retired (its photo went into `photos`, and the file is in `workflows/_archive/legacy-x-pose/`). The workspace is `active`; a clone of another install is cleaned with `cleanup -w "Angel Primes"` (preview first).
 
+**Alpha test sets.** `alpha/Female` and `alpha/Male` in the `Angel Primes` workspace (`prompts/angel-primes/alpha/<Hero>/`, output `Angel Primes/alpha/<Hero>/...`) are two generic test heroes for trying a photo before giving it to an angel, in a short version
+of the phases (the woman has 23 workflows, the man 20): Phase 1 (Prime, Bare, and for her Bare chest, Barefoot and Heels), Phase 2 (head, face close-up, two head views, three body views, two hairstyles), two layer tests, one outfit, one armor, a Glamour
+and a Signature scene with generic white wings, and three motions. Nothing of them touches an angel's folders, images or `photos`. To use one: copy the photo into the `Angel Primes` input folder, open `alpha/Female/1_Alpha/1_Prime/Female_Qwen_Alpha_1_Prime`
+and pick it in the Load Image node, run Phase 1 and 2 and compare with the angel you have. If the photo wins, pick it in that angel's Prime workflow instead and run `inputs --pull -w "Angel Primes"` (it then holds the new photo for her, and the test
+set stays free for the next photo). `bin\scaffold-angels.cmd --alpha` rewrites the cards, then `refresh-group angel-primes` (or `setup-workspace "Angel Primes"`) builds and deploys them.
+
 **Standard size (Oct 2026, provisional).** `standardSize` in `workspaces.json` is `[944, 1104]`: every original is scaled to fit and padded (not cropped) to that size
 before the first X Pose, and the X Pose, Bare Skin and Barefoot images are expected at the same size. 944x1104 is one of the Kontext scaler's buckets, so the Qwen
 templates pass it through unchanged; FireRed resizes to 1 MP (947x1107) and the VAE trims it back. The reset sequence for a hero:
@@ -186,8 +192,9 @@ python tools/workflows/comfy_workflows.py inputs --reset --hero Draknara --dry-r
 
 ### Denoise defaults
 
-New generated workflows start at the high end of their card's denoise range (1.0 only for the X Pose from the original photo), not at 1.0. `make --create` sets it,
-`comfy_workflows.py denoise` previews the plan and `denoise --reset` applies it to the repo and every workspace (backups first; `zz_Shots` is never touched).
+New generated workflows start at the high end of the range in their stage template (`Denoise ~0.8-0.9.` in `data/art/_templates/heroes/*.txt`; 1.0 only for the Prime from the original photo), not at 1.0. Since Oct 2026 the edit stages run at 0.8 to 0.95
+(0.7 held the pose too tight) and state the likeness in a Critical details block. `make --create` sets it, `comfy_workflows.py denoise` previews the plan and `denoise --reset` applies it to the repo and every workspace (backups first; `zz_Shots` and curated
+workflows are never touched, and a denoise you set by hand in a workspace is listed as `KEPT`, not overwritten, unless you add `--force`).
 The table and the tuning rules are in [docs/art/comfyui-art-pipeline.md](../docs/art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
 
 ### Shots (zz_Shots)
