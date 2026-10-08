@@ -1,0 +1,22 @@
+{
+  "id": "wardrobe/jewelry/sets/classic-gem-set",
+  "kind": "jewelry",
+  "name": "Classic Gem Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/pendant-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/gem-stud-earrings.json",
+    "data/art/wardrobe/jewelry/rings/gem-solitaire-ring.json",
+    "data/art/wardrobe/jewelry/anklets/chain-anklet.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "gem"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows; the set itself carries no text."
+}

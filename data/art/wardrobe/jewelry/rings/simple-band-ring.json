@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/rings/simple-band-ring",
+  "kind": "jewelry",
+  "name": "Simple Band Ring",
+  "description": "a slim polished {{METAL}} band on the ring finger",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "ring",
+    "plain",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

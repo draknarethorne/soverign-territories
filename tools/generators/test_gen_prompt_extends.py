@@ -37,6 +37,21 @@ class ExtendsTests(unittest.TestCase):
         p = self.put("a.json", description=self.BASE)
         self.assertEqual(gp.load_piece(p)["description"], self.BASE)
 
+    def test_a_set_joins_the_descriptions_of_the_pieces_it_includes(self):
+        self.put("ring.json", description="a slim {{METAL}} band.")
+        self.put("ear.json", description="small {{METAL}} studs")
+        p = self.put("set.json", includes=["ring.json", "ear.json"])
+        out = gp.load_piece(p)
+        self.assertEqual(out["description"], "a slim {{METAL}} band; small {{METAL}} studs")
+        self.assertNotIn("includes", out)
+
+    def test_a_set_can_include_a_piece_that_extends_a_frame(self):
+        self.put("base.json", description="a pendant of [[SHAPE]]")
+        self.put("hero.json", extends="base.json", vars={"SHAPE": "a curved feather"})
+        self.put("ring.json", description="a slim band")
+        p = self.put("set.json", includes=["hero.json", "ring.json"])
+        self.assertEqual(gp.load_piece(p)["description"], "a pendant of a curved feather; a slim band")
+
     def test_base_placeholder_splices_the_base_text(self):
         self.put("base.json", description=self.BASE)
         p = self.put("hero.json", extends="base.json", description="{{BASE}} A tiny {{GEM}} sun hangs from it.")

@@ -449,6 +449,20 @@ def check_piece_refs(report):
                 report.error(rel(f / "theme.json"), f"id must be 'themes/{group.name}/{f.name}'")
     for f in art_piece_files():
         d = load(f)
+        inc = d.get("includes")
+        if inc:
+            if d.get("description") or d.get("extends"):
+                report.error(rel(f), "a set (includes) takes its description from the pieces it includes: no description and no extends of its own")
+            for ref in inc:
+                target = ROOT / ref
+                if not target.exists():
+                    report.error(rel(f), f"includes {ref}, which does not exist")
+                    continue
+                t = load(target)
+                if t.get("kind") != d.get("kind"):
+                    report.error(rel(f), f"includes {ref} of kind {t.get('kind')!r}, but this set is kind {d.get('kind')!r}")
+                if ref == rel(f) or rel(f) in (t.get("includes") or []):
+                    report.error(rel(f), f"includes {ref}, which includes it back")
         base = d.get("extends")
         if base:
             chain, cur = [rel(f)], base

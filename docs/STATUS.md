@@ -295,15 +295,16 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
 
 ## Library gaps (audit of Oct 8)
 
-`tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin and who leans on it. What it found, in the order to work through it:
+`tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin, over-used or built from shortcuts, and is meant to be re-run as the library grows. **Over-use is the signal, not unused pieces** (pieces are written ahead of their scenes):
+a piece doing most of a folder's work for many heroes means the look repeats, unless it is on purpose (a studio default, ten sisters in one base robe), which is recorded with its reason in `data/art/_settings/library-audit.json`. What it found, in the order to work through it:
 
 | Order | Gap | Evidence | Plan |
 | --- | --- | --- | --- |
 | 1 | Robes (done) | 1 robe piece served 22 cards; all 11 female angels wore `silk-robe` | 15 robes added, each angel's robe scene re-pointed by element (11 different robes for the women and 11 for the men; three are shared across the pairs) |
-| 2 | Unused pieces | all 8 helms, 7 of 8 cloaks, 6 bracers, 5 curios, 5 instruments, 10 of 12 shared effects, 10 expression pieces | wire them into robe, armor and scene cards before writing anything new: cloaks and hoods (3) pair with the new hooded robes |
+| 2 | Over-used, not yet allowlisted | modern backgrounds (one beach, garden and pool for 21 heroes), `footwear/flats` and `sandals`, `hair/short`, `jewelry/sets` (90% one set), `staves`, `wands`, the armor families (bronze, hide, runic, bone, ceremonial, crystal), `effects/shared` | each needs more variants; if any is on purpose, add it to the allowlist. Pieces nothing uses yet (8 helms, 7 cloaks, 6 bracers) are information only: they pair with the new hooded robes when scenes call for them |
 | 3 | Modern backgrounds | `coast` 2, `rural` 2, `resort` 1, each used by 21 heroes: the same beach, garden and pool for every angel | 6 to 10 more modern settings (city rooftop, cafe, gallery, garden terrace, marina ...) in realistic wording |
 | 4 | Staves and wands | `staves` 2 (20 cards), `wands` 1 (8 cards) | elemental staves and wands (crystal, driftwood, bone, iron, glass) so casting scenes stop sharing one prop |
-| 5 | Jewelry and headwear | `jewelry/sets` 2 (62 cards), bracelets, earrings, circlets, hats, hoods 3 each | more matched sets and circlets, tied to element and metal |
+| 5 | Jewelry (started) and headwear | the jewelry was shortcuts: bundles (necklace, earrings and rings in one sentence), `matching-...` stand-ins, no belly rings, a hard-coded gold or silver | **started:** a set piece (`includes`) composes real pieces; 31 atomic rings, earrings, necklaces, bracelets, belly rings and anklets and four sets are added. Next: move cards from the old bundles to the new pieces and sets (changes their prompts), grow each type, then circlets, hats and hoods (3 each) |
 | 6 | Makeup and cosmetics | 3 makeup pieces; one lip and nail colour per identity | more looks, and per-outfit lip and nail colour (the Drakness curated prompts vary them by outfit) |
 | 7 | Armor families | bone, bronze, crystal, ceremonial 3 each; runic, padded 2 | grow with the bound heroes and units that need them |
 | 8 | Races | seven non-human races are one `race.json` each; dark-elf has one hair piece; `hair/short` has 1 (16 cards) | flesh out when the `{{RACE}}` slot is wired for bound heroes |

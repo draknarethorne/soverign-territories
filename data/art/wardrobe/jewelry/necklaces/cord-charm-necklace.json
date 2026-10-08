@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/necklaces/cord-charm-necklace",
+  "kind": "jewelry",
+  "name": "Cord Charm Necklace",
+  "description": "a short black cord necklace with a small {{METAL}} charm",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "cord",
+    "casual",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

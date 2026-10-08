@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/necklaces/pendant-necklace",
+  "kind": "jewelry",
+  "name": "Pendant Necklace",
+  "description": "a fine {{METAL}} chain with a single teardrop {{GEM}} pendant resting at the collarbones",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "necklace",
+    "pendant",
+    "gem",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

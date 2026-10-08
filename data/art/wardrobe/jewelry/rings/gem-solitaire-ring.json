@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/rings/gem-solitaire-ring",
+  "kind": "jewelry",
+  "name": "Gem Solitaire Ring",
+  "description": "a {{METAL}} ring set with a single {{GEM}} stone in a raised setting",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "ring",
+    "gem",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

@@ -86,10 +86,16 @@ def load_piece(path):
 
     A base can also be a frame with named gaps, `[[SLOT]]` in its text; a piece that extends it fills them with `"vars": {"SLOT": "text"}`, so ten heroes share one frame and
     each writes only her own metal, shape or engraving. `"varsFrom": "data/art/...json"` takes the values from a design file (kind `design`) so several pieces of one hero
-    share one set of values. Every slot of a derived piece must be filled."""
+    share one set of values. Every slot of a derived piece must be filled.
+
+    A set piece has `"includes": [piece, piece, ...]` instead of a description: its description is theirs joined with "; " (a jewellery set is a real ring, earring and necklace)."""
     piece = _load_chain(path)
     if not isinstance(piece, dict):
         return piece
+    if piece.get("includes"):  # a set: the description is the included pieces' descriptions in order
+        piece = dict(piece)
+        parts = [load_piece(ROOT / ref).get("description", "") for ref in piece.pop("includes")]
+        piece["description"] = "; ".join(p.strip().rstrip(".;") for p in parts if p)
     derived = bool(load_json(path).get("extends"))
     values = piece.pop("vars", {})
     if not derived and not values:

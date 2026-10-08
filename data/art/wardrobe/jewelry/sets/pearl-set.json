@@ -1,0 +1,21 @@
+{
+  "id": "wardrobe/jewelry/sets/pearl-set",
+  "kind": "jewelry",
+  "name": "Pearl Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/pearl-strand-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/pearl-drop-earrings.json",
+    "data/art/wardrobe/jewelry/rings/simple-band-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "pearl"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows; the set itself carries no text."
+}

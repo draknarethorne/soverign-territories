@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/earrings/threader-chain-earrings",
+  "kind": "jewelry",
+  "name": "Threader Chain Earrings",
+  "description": "fine {{METAL}} threader chain earrings falling to the jaw",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "chain",
+    "drop",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

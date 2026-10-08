@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/anklets/chain-anklet",
+  "kind": "jewelry",
+  "name": "Chain Anklet",
+  "description": "a fine {{METAL}} chain anklet on the left ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "anklet",
+    "chain",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

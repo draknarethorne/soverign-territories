@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/belly-rings/gem-dangle-belly-ring",
+  "kind": "jewelry",
+  "name": "Gem Dangle Belly Ring",
+  "description": "a belly-button ring with a short {{METAL}} chain dangling a {{GEM}} drop",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "belly-ring",
+    "gem",
+    "dangle",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

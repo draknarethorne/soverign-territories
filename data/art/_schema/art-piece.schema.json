@@ -14,6 +14,7 @@
     "tags": {"type": "array", "items": {"type": "string"}, "description": "Free-form search/ideation tags (e.g. studio, profile, swimwear); never rendered into a prompt."},
     "name": {"type": "string", "minLength": 1},
     "extends": {"type": "string", "description": "Path of a base piece (data/art/...json) this piece builds on. Its own fields replace the base's; {{BASE}} in a text field is the base's text, a value starting with + is the base's text followed by the rest, negatives are merged. Same kind as the base; no cycles."},
+    "includes": {"type": "array", "minItems": 2, "items": {"type": "string"}, "description": "A set built from other pieces of the same kind (data/art/...json): its description is theirs, joined with '; ', so a jewellery set is a real ring, earring and necklace instead of one pasted sentence. Instead of description (not with it) and not with extends."},
     "vars": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Fills the [[SLOT]] gaps of the base piece's text (a frame shared by several heroes), e.g. {\"SHAPE\": \"a curved feather\"}. Only with extends (a kind \"design\" piece is the exception: it only carries vars); every slot must be filled."},
     "backgroundRealm": {"type": "string", "enum": ["fantasy", "modern", "studio"], "description": "A realm piece only: which backgrounds/ folder its scenes draw from, when that is not the realm's own name (fantasy-cinematic uses backgrounds/fantasy)."},
     "varsFrom": {"type": "string", "description": "Path of a kind \"design\" piece whose vars fill this piece's [[SLOT]] gaps, so several pieces of one hero share one set of values; the piece's own vars win."},
@@ -48,7 +49,7 @@
       "then": {"required": ["compatibleStages"]}
     },
     {
-      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]}}, "not": {"required": ["extends"]}},
+      "if": {"properties": {"kind": {"enum": ["wearing", "arms", "back", "legs_feet", "holding", "jewelry", "accessory", "effects", "companion", "background", "view", "framing", "realm", "headwear", "makeup", "highlights", "hoard", "sheen", "race"]}}, "not": {"anyOf": [{"required": ["extends"]}, {"required": ["includes"]}]}},
       "then": {"required": ["description"]}
     },
     {

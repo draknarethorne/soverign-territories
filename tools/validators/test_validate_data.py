@@ -191,6 +191,10 @@ CASES = [
     ("sister scene that types the dragon instead of naming the piece",
      lambda r: edit(r / "data/art/_sets/drakn-sisters/draknora/5_Scenes/story/draknora-scene-bond.json",
                     lambda d: d["components"].update({"companion": "her aligned Elder Dragon, Pyraxis, beside her"})), "not type the dragon"),
+    ("set that includes a piece that does not exist",
+     lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/jewelry/rings/no-such-ring.json")), "includes data/art/wardrobe/jewelry/rings/no-such-ring.json, which does not exist"),
+    ("set that includes a piece of another kind",
+     lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/footwear/heels/stiletto-pumps.json")), "but this set is kind"),
     ("scene file name no longer matching its artId",
      lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
@@ -235,7 +239,8 @@ QUICK = {"baseline is clean", "animation action pointing at a motion piece that 
          "typo'd piece path would silently render as prompt text", "unknown field on a reusable piece", "piece extending a base that does not exist",
          "pieces extending each other in a cycle", "piece extending a frame without filling its slots", "output folder not matching the card's stage", "studio kit naming a piece that does not exist",
          "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder",
-         "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece"}
+         "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece",
+         "set that includes a piece that does not exist", "set that includes a piece of another kind"}
 
 
 def main():

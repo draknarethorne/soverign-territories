@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/tennis-bracelet",
+  "kind": "arms",
+  "name": "Tennis Bracelet",
+  "description": "a {{METAL}} tennis bracelet of small {{GEM}} stones on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "gem",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

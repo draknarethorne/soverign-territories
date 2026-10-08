@@ -1,0 +1,23 @@
+{
+  "id": "wardrobe/jewelry/sets/skull-set",
+  "kind": "jewelry",
+  "name": "Skull Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/skull-pendant-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/skull-stud-earrings.json",
+    "data/art/wardrobe/jewelry/rings/skull-ring.json",
+    "data/art/wardrobe/jewelry/belly-rings/skull-belly-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "skull",
+    "gothic"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows; the set itself carries no text."
+}

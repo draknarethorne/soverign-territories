@@ -1,0 +1,26 @@
+{
+  "intentional": {
+    "wardrobe/jewelry/studio": "the neutral studio default (a plain necklace and earrings) every studio card starts from",
+    "wardrobe/footwear/barefoot": "bare feet are the studio default for every Alpha and body step",
+    "wardrobe/footwear/studio": "the studio anklet look that goes with bare feet",
+    "wardrobe/effects/ambient": "the soft ambient glow is the default scene lighting effect",
+    "wardrobe/effects/editorial": "the editorial lighting presets are the studio defaults",
+    "wardrobe/effects/eyes": "natural eyes are the default for every card",
+    "studio/framing": "one framing per head card; every hero has the same set by design",
+    "studio/shots": "full-length is the default framing for every card",
+    "studio/views": "every hero gets the same body and head views by design",
+    "motion/standing": "every hero gets the same Bench motions by design",
+    "motion/walking": "every hero gets the same Bench motions by design",
+    "motion/dynamic": "every hero gets the same Bench motions by design",
+    "motion/romantic": "every hero gets the same Bench motions by design",
+    "backgrounds/studio": "the studio backdrops are a shared test set",
+    "wardrobe/swimwear/bikini": "the sisters' default A-pose underlayer (a hero's defaultUnderlayer) and a standard Bench layer card for every hero",
+    "wardrobe/swimwear/trunks": "the standard swim layer for the male heroes",
+    "wardrobe/swimwear/one-piece": "every hero gets the standard swimwear layer cards by design",
+    "wardrobe/footwear/heels": "the default heel for every A-pose and heel step",
+    "wardrobe/finishes": "high-gloss is the default sheen of the studio underlayers",
+    "wardrobe/effects/contour": "the default body contour for the bare and underlayer steps",
+    "motion/expressions": "every hero gets the same head expression cards by design",
+    "motion/scene": "the lineup stance is how all ten sisters stand in the unified picture, on purpose"
+  }
+}

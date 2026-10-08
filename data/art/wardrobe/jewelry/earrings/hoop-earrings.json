@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/earrings/hoop-earrings",
+  "kind": "jewelry",
+  "name": "Hoop Earrings",
+  "description": "medium polished {{METAL}} hoop earrings, slim and round",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "hoop",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

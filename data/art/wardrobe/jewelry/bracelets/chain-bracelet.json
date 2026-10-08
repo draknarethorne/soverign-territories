@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/chain-bracelet",
+  "kind": "arms",
+  "name": "Chain Bracelet",
+  "description": "a fine {{METAL}} chain bracelet with a small {{GEM}} charm on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "chain",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

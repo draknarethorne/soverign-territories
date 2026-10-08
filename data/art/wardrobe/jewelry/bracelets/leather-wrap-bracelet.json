@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/leather-wrap-bracelet",
+  "kind": "arms",
+  "name": "Leather Wrap Bracelet",
+  "description": "a {{PRIMARY}} leather wrap bracelet with a {{METAL}} clasp on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "leather",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

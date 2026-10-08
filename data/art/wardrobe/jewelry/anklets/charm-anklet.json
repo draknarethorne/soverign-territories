@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/jewelry/anklets/charm-anklet",
+  "kind": "jewelry",
+  "name": "Charm Anklet",
+  "description": "a {{METAL}} chain anklet with three tiny charms on the left ankle",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "anklet",
+    "charm",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/jewelry/bracelets/cuff-bracelet",
+  "kind": "arms",
+  "name": "Cuff Bracelet",
+  "description": "a slim {{METAL}} cuff bracelet on each wrist",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "bracelet",
+    "cuff",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

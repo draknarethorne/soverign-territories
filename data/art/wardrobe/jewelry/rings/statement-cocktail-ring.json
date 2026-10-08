@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/rings/statement-cocktail-ring",
+  "kind": "jewelry",
+  "name": "Statement Cocktail Ring",
+  "description": "a large {{GEM}} stone in an ornate {{METAL}} setting, worn on the index finger",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "ring",
+    "statement",
+    "gem",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

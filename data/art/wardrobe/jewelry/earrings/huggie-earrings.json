@@ -1,0 +1,19 @@
+{
+  "id": "wardrobe/jewelry/earrings/huggie-earrings",
+  "kind": "jewelry",
+  "name": "Huggie Earrings",
+  "description": "tiny {{METAL}} huggie hoops hugging the ear lobes",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "hoop",
+    "small",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}

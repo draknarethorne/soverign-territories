@@ -1,0 +1,20 @@
+{
+  "id": "wardrobe/jewelry/earrings/skull-stud-earrings",
+  "kind": "jewelry",
+  "name": "Skull Stud Earrings",
+  "description": "tiny {{METAL}} skull stud earrings",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "earring",
+    "skull",
+    "gothic",
+    "stud",
+    "atomic"
+  ],
+  "notes": "One real item in her palette tokens (metal, gem, primary); combine items with a set (includes) instead of describing them together."
+}
