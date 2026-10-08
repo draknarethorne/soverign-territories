@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/hooded-wizard-robe",
+  "kind": "wearing",
+  "name": "Hooded Wizard Robe",
+  "description": "a floor-length {{PRIMARY}} wool robe with wide bell sleeves and a deep hood resting down on the shoulders, {{ACCENT_SOFT}} trim at the cuffs and hem, tied at the waist with a heavy cord",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "hooded",
+    "wool"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

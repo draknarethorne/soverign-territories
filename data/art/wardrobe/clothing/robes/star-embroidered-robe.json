@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/star-embroidered-robe",
+  "kind": "wearing",
+  "name": "Star-Embroidered Robe",
+  "description": "a deep {{PRIMARY}} velvet robe embroidered all over with {{METAL}} thread in a pattern of crescent moons and scattered stars, long sleeves, a wide collar and a {{ACCENT_SOFT}} sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "velvet",
+    "embroidered"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

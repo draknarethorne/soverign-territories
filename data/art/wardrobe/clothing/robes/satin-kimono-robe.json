@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/satin-kimono-robe",
+  "kind": "wearing",
+  "name": "Satin Kimono Robe",
+  "description": "a long {{PRIMARY}} satin kimono-style robe with wide sleeves, {{ACCENT_SOFT}} floral embroidery on the sleeves and back, a loosely tied sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "satin",
+    "kimono",
+    "lounge"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

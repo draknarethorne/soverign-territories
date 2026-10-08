@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/tattered-wanderer-robe",
+  "kind": "wearing",
+  "name": "Tattered Wanderer Robe",
+  "description": "a long, weathered {{PRIMARY}} linen robe with a frayed, ragged hem and torn sleeves, patched in places, belted with a length of rope",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "tattered",
+    "linen"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

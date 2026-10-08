@@ -9,7 +9,7 @@
   "name": "Robe",
   "components": {
     "pose": "data/art/motion/walking/relaxed-stroll.json",
-    "wearing": "data/art/wardrobe/armor/robes/battle-mage-robes.json",
+    "wearing": "data/art/wardrobe/armor/robes/arcane-robe.json",
     "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/slippers.json",
     "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",

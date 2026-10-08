@@ -293,6 +293,23 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
   The FireRed steps read the same input images as their Qwen twins, so a FireRed Bare starts from the Qwen Prime; pick another image in ComfyUI to run a pure FireRed chain. Which engine each phase should use is still a test, and the documents that name one are assumptions until you decide.
 - **Filename case (Oct 8).** Git tracked 20 older-angel prompts and workflows as `Head_Face_Closeup` while the generator writes `Head_face_closeup`; a branch switch rewrote them and Angel Primes showed 20 missing. They are renamed to the generator's case. Many "missing" and "install-only" pairs that differ only by case point to this.
 
+## Library gaps (audit of Oct 8)
+
+`tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin and who leans on it. What it found, in the order to work through it:
+
+| Order | Gap | Evidence | Plan |
+| --- | --- | --- | --- |
+| 1 | Robes (done) | 1 robe piece served 22 cards; all 11 female angels wore `silk-robe` | 15 robes added, each angel's robe scene re-pointed by element (11 different robes for the women and 11 for the men; three are shared across the pairs) |
+| 2 | Unused pieces | all 8 helms, 7 of 8 cloaks, 6 bracers, 5 curios, 5 instruments, 10 of 12 shared effects, 10 expression pieces | wire them into robe, armor and scene cards before writing anything new: cloaks and hoods (3) pair with the new hooded robes |
+| 3 | Modern backgrounds | `coast` 2, `rural` 2, `resort` 1, each used by 21 heroes: the same beach, garden and pool for every angel | 6 to 10 more modern settings (city rooftop, cafe, gallery, garden terrace, marina ...) in realistic wording |
+| 4 | Staves and wands | `staves` 2 (20 cards), `wands` 1 (8 cards) | elemental staves and wands (crystal, driftwood, bone, iron, glass) so casting scenes stop sharing one prop |
+| 5 | Jewelry and headwear | `jewelry/sets` 2 (62 cards), bracelets, earrings, circlets, hats, hoods 3 each | more matched sets and circlets, tied to element and metal |
+| 6 | Makeup and cosmetics | 3 makeup pieces; one lip and nail colour per identity | more looks, and per-outfit lip and nail colour (the Drakness curated prompts vary them by outfit) |
+| 7 | Armor families | bone, bronze, crystal, ceremonial 3 each; runic, padded 2 | grow with the bound heroes and units that need them |
+| 8 | Races | seven non-human races are one `race.json` each; dark-elf has one hair piece; `hair/short` has 1 (16 cards) | flesh out when the `{{RACE}}` slot is wired for bound heroes |
+
+Step 1 is built. The rest are a plan, not started: say which to take next (2 is the cheapest and 3 the most visible).
+
 ## Next work (in order)
 
 1. **G1 Grass set.** Only 4 Grass cards exist (sister, bound hero, dragon, pet) and no legacy Grass heroes; Fire has 53,

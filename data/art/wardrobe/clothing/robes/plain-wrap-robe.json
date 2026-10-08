@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/plain-wrap-robe",
+  "kind": "wearing",
+  "name": "Plain Wrap Robe",
+  "description": "a simple {{PRIMARY}} cotton wrap robe crossed over the chest and tied with a plain sash at the waist, long straight sleeves and an ankle-length hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "wrap",
+    "cotton",
+    "simple"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

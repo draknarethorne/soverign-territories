@@ -9,7 +9,7 @@
   "name": "Robe",
   "components": {
     "pose": "data/art/motion/walking/relaxed-stroll.json",
-    "wearing": "data/art/wardrobe/armor/robes/velvet-doublet-armor.json",
+    "wearing": "data/art/wardrobe/clothing/robes/ceremonial-court-robe.json",
     "jewelry": "data/art/heroes/angel-primes/male/urael/jewelry/urael-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
     "back": "data/art/heroes/angel-primes/male/urael/wings/urael-wings.json",

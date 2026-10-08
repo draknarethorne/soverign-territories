@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/oilskin-travel-robe",
+  "kind": "wearing",
+  "name": "Oilskin Travel Robe",
+  "description": "a long waxed-canvas {{PRIMARY}} travel robe with a high collar, a hood resting down on the shoulders, brass buttons and a wide belt, dark with rain at the hem",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "oilskin",
+    "travel",
+    "hooded"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

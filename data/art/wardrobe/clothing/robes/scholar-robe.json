@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/scholar-robe",
+  "kind": "wearing",
+  "name": "Scholar's Robe",
+  "description": "a knee-to-ankle {{PRIMARY}} wool scholar's robe with a high buttoned collar and long sleeves, an {{ACCENT_SOFT}} leather strap across the chest, ink-stained cuffs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "scholar",
+    "wool"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

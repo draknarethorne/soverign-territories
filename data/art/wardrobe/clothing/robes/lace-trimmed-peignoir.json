@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/lace-trimmed-peignoir",
+  "kind": "wearing",
+  "name": "Lace-Trimmed Peignoir",
+  "description": "a long, sheer {{PRIMARY}} chiffon peignoir edged in fine lace, open at the front over a satin slip, the sleeves loose and flowing",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "chiffon",
+    "lace",
+    "lounge"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

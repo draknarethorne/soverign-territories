@@ -1,0 +1,18 @@
+{
+  "id": "wardrobe/clothing/robes/druid-woven-robe",
+  "kind": "wearing",
+  "name": "Woven Hermit Robe",
+  "description": "a loose, earth-toned robe of coarse woven linen in {{PRIMARY}}, layered with a draped shawl, a leather belt hung with small pouches and bundles of dried herbs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "woven",
+    "linen",
+    "nature"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

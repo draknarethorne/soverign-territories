@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/clothing/robes/desert-burnoose-robe",
+  "kind": "wearing",
+  "name": "Desert Burnoose Robe",
+  "description": "a loose, airy {{PRIMARY}} cotton robe with wide sleeves and a long shawl wrapped across the shoulders, {{ACCENT_SOFT}} embroidery at the neckline, tied with a woven sash",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "clothing",
+    "robe",
+    "desert",
+    "cotton"
+  ],
+  "notes": "Library robe: realistic garment wording (fabric, cut, trim) so the render stays grounded; pair it with a headwear/hoods piece when a hood is wanted."
+}

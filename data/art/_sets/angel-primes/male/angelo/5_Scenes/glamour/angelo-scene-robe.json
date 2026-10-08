@@ -9,7 +9,7 @@
   "name": "Robe",
   "components": {
     "pose": "data/art/motion/walking/relaxed-stroll.json",
-    "wearing": "data/art/wardrobe/armor/robes/hooded-assassin-robes.json",
+    "wearing": "data/art/wardrobe/armor/robes/monk-wraps.json",
     "jewelry": "data/art/heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/slippers.json",
     "back": "data/art/heroes/angel-primes/male/angelo/wings/angelo-wings.json",

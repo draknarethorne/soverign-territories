@@ -9,7 +9,7 @@
   "name": "Robe",
   "components": {
     "pose": "data/art/motion/walking/slow-sensual-walk.json",
-    "wearing": "data/art/wardrobe/clothing/robes/silk-robe.json",
+    "wearing": "data/art/wardrobe/clothing/robes/plain-wrap-robe.json",
     "headwear": "data/art/wardrobe/headwear/hats/feathered-hat.json",
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/platform-heels.json",
