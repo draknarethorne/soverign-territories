@@ -98,9 +98,10 @@ All workspaces that share an output project folder (see Where files live) write 
 
 ### FireRed test engine (not in git)
 
-Scenes can also be built for FireRed to compare with Qwen. They are generated into `workflows/.test/firered/` (ignored by
-git), named `<Hero>_FireRed_Scene_<Name>.json`, from the template in `workspaces.json` under `engines`. They carry the
-positive prompt only and read the same A-pose as the Qwen scene, and they deploy next to the Qwen ones by the same
+Scenes can also be built for FireRed to compare with Qwen, and **every 1_Alpha step (Prime, Bare, Footwear, the 2b experiments) is built for FireRed too**, for every hero in every set, so the first images can be
+compared engine against engine. The Angel Primes test sets `alpha/female` and `alpha/male` carry the **whole suite in both engines** (23 and 20 workflows each). They are generated into `workflows/.test/firered/` (ignored by
+git), named `<Hero>_FireRed_<Stage>_<Name>.json`, from the template in `workspaces.json` under `engines`. They carry the
+positive prompt only and read the same input images as their Qwen twins (so a FireRed Bare reads the Qwen Prime, until you pick another image in ComfyUI), and they deploy next to the Qwen ones by the same
 routing. `--engine qwen|firered` limits any command to one engine. FireRed workflows default to **turbo** (`engines.firered.turbo`;
 untick the switch on one workflow for a slow run) and the engine adds a real-then-magic effects instruction to the prompt
 (`engines.firered.fx`, for the scenes in `fxScenes`, `"*"` meaning all).
@@ -108,7 +109,11 @@ untick the switch on one workflow for a slow run) and the engine adds a real-the
 ```bash
 python tools/workflows/comfy_workflows.py make --group drakn-sisters --engine firered --create
 python tools/workflows/comfy_workflows.py deploy --hero Drakness --engine firered --dry-run
-# FireRed versions of the bare study and celestial steps (a regex needs a trailing $):
+# FireRed for every 1_Alpha step of every hero (what `setup` then deploys):
+python tools/workflows/comfy_workflows.py make --engine firered --stage alpha --create
+# the whole suite of an alpha test set in FireRed (studio stages; its scenes are built by default):
+python tools/workflows/comfy_workflows.py make --engine firered --group angel-primes --hero Female --class studio --create
+# FireRed versions of just the bare study and celestial steps (a regex needs a trailing $):
 python tools/workflows/comfy_workflows.py make --engine firered --group drakn-sisters --stage alpha --match "Alpha_2_Bare_(Figure|Chest)$|Alpha_2b_Celestial[A-Za-z]*$" --create
 ```
 
@@ -203,6 +208,10 @@ A shot is a workflow you tuned for one render: a chosen seed, Turbo on or off, a
 `pull --shots` (`bin\pull-shots.cmd HERO`) keeps it in the repo under `workflows/_shots/<set>/<Hero>/` with the same subfolders and captures later edits; its file name and output prefix stay as you set them.
 `deploy --shots` (`bin\deploy-shots.cmd HERO`) copies kept shots to a workspace that lacks them and never overwrites a differing copy.
 `status` shows `shots`, `shots-new` (pull it), `shots-changed` and `shots-missing`.
+**Numbered saves count as shots too.** A workflow ComfyUI saves from a render keeps a counter in its name (`Azaline_Qwen_Alpha_1_Prime_00004_.json`) and the seed of that render, so one left loose in the workflow list (outside the `zz_` folders) is treated as a shot, not as an install-only or a curated workflow:
+`status` lists it as `shots-new`, `pull --shots` keeps it in `workflows/_shots/<set>/<Hero>/` (the workspace copy stays where you saved it), and `cleanup` and `tidy` leave it alone. The name is the only test: a counter name that is already kept in `workflows/_curated` stays curated.
+If two workspaces hold a different shot under one file name (another seed), `pull --shots` keeps the first one pulled and prints `CONFLICT` for the other; rename one of them to keep both.
+Later, a seed worth keeping can move from a shot into the art data, so the Qwen and FireRed workflows are built with it (not built yet).
 A shot is not a curated workflow: curated ones are the older hand-written workflows (and new ones written from scratch to test a concept), shots are the ones in use. Shots are captured even from a legacy workspace such as Drakness.
 
 ### Hand-curated workflows

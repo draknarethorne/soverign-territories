@@ -267,6 +267,44 @@ class HandMadeGuardTests(unittest.TestCase):
             self.assertEqual(len(moved), 1)
 
 
+class SavedShotTests(unittest.TestCase):
+    """A workflow ComfyUI saved from a render (Hero_Qwen_..._00004_) keeps the seed of that render, so it counts as a saved shot wherever it sits."""
+
+    def test_numbered_save_is_a_shot_not_an_install_only_workflow(self):
+        with World() as w:
+            w.master("Alice_Qwen_Scene_One.json")
+            w.put("A-Home", "scene/Alice_Qwen_Scene_One.json")
+            w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json")
+            self.assertNotIn("Alice_Qwen_Alpha_1_Prime_00004_.json", cw.install_files(w.cfg, "A-Home"))
+            self.assertIn("Alice_Qwen_Scene_One.json", cw.install_files(w.cfg, "A-Home"))
+            self.assertEqual(list(cw.workspace_shots(w.cfg, "A-Home")), [("Alice", "Alice_Qwen_Alpha_1_Prime_00004_.json")])
+            out, _ = w.run("status", "-w", "A-Home")
+            self.assertIn("1 shots-new", out)
+            self.assertIn("0 install-only", out)
+
+    def test_pull_shots_keeps_the_save_in_the_repo_and_leaves_the_workspace_copy(self):
+        with World() as w, mock.patch.object(cw, "SHOTS", w.repo / "_shots"), mock.patch.object(cw, "ROOT", w.tmp):
+            save = w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json", {"nodes": [], "id": "seed-4"})
+            w.run("pull", "--shots", "-w", "A-Home")
+            kept = w.repo / "_shots" / "set-a" / "Alice" / "Alice_Qwen_Alpha_1_Prime_00004_.json"
+            self.assertEqual(json.loads(kept.read_text())["id"], "seed-4")
+            self.assertTrue(save.exists())
+
+    def test_two_workspaces_with_different_shots_of_one_name_do_not_overwrite_each_other(self):
+        with World() as w, mock.patch.object(cw, "SHOTS", w.repo / "_shots"), mock.patch.object(cw, "ROOT", w.tmp):
+            w.put("A-Home", "zz_Shots/Alice_Qwen_Alpha_2_Bare_Skin.json", {"nodes": [], "id": "seed-1"})
+            w.put("Alice-Own", "zz_Shots/Alice_Qwen_Alpha_2_Bare_Skin.json", {"nodes": [], "id": "seed-2"})
+            out, _ = w.run("pull", "--shots", "--hero", "Alice")
+            kept = w.repo / "_shots" / "set-a" / "Alice" / "Alice_Qwen_Alpha_2_Bare_Skin.json"
+            self.assertEqual(json.loads(kept.read_text())["id"], "seed-1", "the first pulled copy stays")
+            self.assertIn("CONFLICT", out)
+
+    def test_a_generated_workflow_is_never_a_save(self):
+        self.assertFalse(cw.is_capture("scene/Alice_Qwen_Scene_One.json", "Alice_Qwen_Scene_One.json"))
+        self.assertFalse(cw.is_capture("zz_Shots/Alice_Qwen_Scene_One_00001_.json", "Alice_Qwen_Scene_One_00001_.json"))
+        self.assertTrue(cw.is_capture("Alice_Qwen_Scene_One_00001_.json", "Alice_Qwen_Scene_One_00001_.json"))
+
+
 class CleanupTests(unittest.TestCase):
     def build(self, w):
         """Guest is home for nothing here; each case below is one reason to remove or keep."""

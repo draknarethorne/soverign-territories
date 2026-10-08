@@ -87,6 +87,14 @@ def plain_name(name):
     return name
 
 
+def is_capture(rel, name):
+    """A workflow ComfyUI saved from a render (a name with a counter, Hero_Qwen_Alpha_1_Prime_00004_) that sits outside the zz_ folders. It is a saved shot: it keeps the seed of that render,
+    so it is captured as a shot (workflows/_shots) and never treated as a generated or an install-only workflow. A counter name already kept in workflows/_curated stays curated."""
+    if not CAPTURED_NAME.search(name) or name.startswith((CURATED_PREFIX, TEST_PREFIX)) or pathlib.PurePath(rel).parts[0].startswith("zz_"):
+        return False
+    return name not in curated_files() and name not in test_files()
+
+
 def curated_name(name):
     return name if name.startswith((CURATED_PREFIX, TEST_PREFIX)) or CAPTURED_NAME.search(name) else CURATED_PREFIX + name
 
@@ -407,7 +415,7 @@ def install_files(cfg, ws, root=None):
     if d.is_dir():
         for p in sorted(d.rglob("*.json")):
             rel = p.relative_to(d)
-            if rel.parts[0] == SHOTS_DIR or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name):
+            if rel.parts[0] == SHOTS_DIR or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name) or is_capture(rel, p.name):
                 continue
             out.setdefault(p.name, p)
     return out
@@ -849,6 +857,12 @@ def workspace_shots(cfg, ws, root=None):
                 continue
             sub = parts[1:] if parts[0] == hero and len(parts) > 1 else parts
             out[(hero, "/".join(sub))] = p
+    top = install_dir(cfg, ws, root)
+    if top.is_dir():  # saves made from a render, left in the workflow list outside zz_Shots
+        for p in sorted(top.rglob("*.json")):
+            rel = p.relative_to(top)
+            if not any(x.startswith((".", "_")) for x in rel.parts) and is_capture(rel, p.name) and hero_of(p.name):
+                out.setdefault((hero_of(p.name), p.name), p)
     return out
 
 
@@ -1236,7 +1250,7 @@ def cmd_cleanup(args):
 
 
 def pull_shots(cfg, ws, args, stamp, seen=None):
-    """Keep the workflows under zz_Shots/ in a workspace as repo shots (workflows/_shots/<set>/<Hero>/, same subfolders). Edits are captured again."""
+    """Keep the workflows under zz_Shots/ in a workspace, and the numbered saves (Hero_Qwen_..._00004_) loose in its list, as repo shots (workflows/_shots/<set>/<Hero>/, same subfolders). Edits are captured again."""
     groups = hero_groups()
     done = skipped = 0
     for (h, rel), p in workspace_shots(cfg, ws, args.root).items():
@@ -1246,10 +1260,15 @@ def pull_shots(cfg, ws, args, stamp, seen=None):
                 or (args.match and not name_matches(args.match, p.name)):
             continue
         dst = SHOTS / groups[h] / h / rel
+        first = args.__dict__.setdefault("_shot_sources", {}).setdefault(dst, (ws, p))
+        if first[1] != p and not same_workflow(first[1], p):  # two workspaces save a different shot under one name (another seed, say): the first one pulled stays, rename one of them to keep both
+            print(f"  CONFLICT {ws}/{p.relative_to(install_dir(cfg, ws, args.root)).as_posix()} differs from the copy in {first[0]}, already pulled to {dst.relative_to(ROOT).as_posix()}; rename one of them to keep both")
+            skipped += 1
+            continue
         if dst.exists() and same_workflow(dst, p):
             skipped += 1
             continue
-        print(f"  shot   {ws}/{SHOTS_DIR}/{rel} -> {dst.relative_to(ROOT).as_posix()}" + (" (update)" if dst.exists() else ""))
+        print(f"  shot   {ws}/{p.relative_to(install_dir(cfg, ws, args.root)).as_posix()} -> {dst.relative_to(ROOT).as_posix()}" + (" (update)" if dst.exists() else ""))
         if not args.dry_run:
             write_wf(dst, read_wf(p))
         done += 1
