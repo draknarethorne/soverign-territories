@@ -1,0 +1,12 @@
+{
+  "id": "wardrobe/footwear/heels/accent-pointed-toe-heels",
+  "kind": "legs_feet",
+  "name": "Matching Accent Pointed-Toe Heels",
+  "description": "matching {{ACCENT_SOFT}} pointed-toe high heels with closed toes",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Elegant_Pony and zz_Curated_Drakness_Qwen_Clothing_Dress (workflows/_curated/drakn-sisters/Drakness)."
+}

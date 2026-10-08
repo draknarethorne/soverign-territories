@@ -1,5 +1,5 @@
-=== Drakness Thorne · Armor: Raven (group: Armor) — Edit (img2img) ===
-Incoming image: an A-pose of Drakness Thorne (chosen hair) in the bikini underlayer. Apply the armor; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+=== Drakness Thorne · Clothing: Bikini-Strap Gown (group: Clothing) — Edit (img2img) ===
+Incoming image: an A-pose of Drakness Thorne (chosen hair) in the bikini underlayer. Apply the outfit; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
 prompt:
@@ -16,21 +16,17 @@ Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, 
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
 Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
 
-Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
-Wearing revealing Iridescent Shadow Steel bikini armor with Necrotic-Violet and Tarnished Silver ornate designs, bare midriff, silver chains with a simple design and minimal gems draping from the underside of the breastplate; flowing sheer Iridescent-Shadow waist-drapes with delicate Amethyst and silver glowing fibre-optic threads woven throughout; a thin Amethyst and Tarnished Silver belt at the waist with a small ornate satchel and a skull design at the hip.
+Wearing a skimpy Midnight Violet evening gown of ornate design with amethyst and polished silver detail and bikini-style straps, cut low with most of her breasts exposed, the belly and mid-section covered, a slit on the right side up to mid-thigh, delicate amethyst and silver glowing fibre-optic threads woven throughout.
 
-Arms: matching bicep bands and bracers, otherwise bare forearms.
+Arms: simple silver bracelets.
 
-Jewelry: an ultra-thin Tarnished Silver and Amethyst runic choker; matching earrings and rings; a small bellybutton ring with a gem.
+Jewelry: necklace with a small ornate pendant; matching earrings with small gems, anklet, and rings.
 
-Back: raven-feather pauldrons with silver accents resting on the shoulders.
+Legs & feet: matching amethyst pointed-toe high heels with closed toes.
 
-Legs & feet: Iridescent Shadow Steel thigh-high plated high-heel boots, Necrotic-Violet and Tarnished Silver ornate designs, with a matching band on the upper left thigh.
-
-Holding a small ornate dagger with its sheath, worn high on the hip.
-
-Overall, luxurious necromancer aesthetic; a little D&D armor flair is fine, the outfit stays revealing.
+Overall, elegant, seductive, necromancer-adjacent evening look; the outfit stays skimpy.
 
 Eyes: natural studio eyes, not glowing.
 

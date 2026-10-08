@@ -1,0 +1,12 @@
+{
+  "id": "wardrobe/footwear/heels/gothic-buckle-closed-toe-heels",
+  "kind": "legs_feet",
+  "name": "Gothic-Buckle Closed-Toe Heels",
+  "description": "slender closed-toe {{PRIMARY}} high heels with ornate {{METAL}} accents, small {{GEM}} cabochons and delicate {{METAL}} gothic buckles",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Bikini (workflows/_curated/drakn-sisters/Drakness)."
+}

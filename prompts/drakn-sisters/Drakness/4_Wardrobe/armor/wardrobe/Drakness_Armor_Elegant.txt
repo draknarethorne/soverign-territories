@@ -1,4 +1,4 @@
-=== Drakness Thorne · Armor: Raven (group: Armor) — Edit (img2img) ===
+=== Drakness Thorne · Armor: Elegant (group: Armor) — Edit (img2img) ===
 Incoming image: an A-pose of Drakness Thorne (chosen hair) in the bikini underlayer. Apply the armor; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
 
 ----------------------------------------------------------------
@@ -18,19 +18,19 @@ Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale 
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
 
-Wearing revealing Iridescent Shadow Steel bikini armor with Necrotic-Violet and Tarnished Silver ornate designs, bare midriff, silver chains with a simple design and minimal gems draping from the underside of the breastplate; flowing sheer Iridescent-Shadow waist-drapes with delicate Amethyst and silver glowing fibre-optic threads woven throughout; a thin Amethyst and Tarnished Silver belt at the waist with a small ornate satchel and a skull design at the hip.
+Wearing skimpy Midnight Violet bikini armor of ornate design with amethyst and polished silver detail, most of her breasts exposed and her belly exposed; a skimpy matching bikini bottom, her legs exposed.
 
-Arms: matching bicep bands and bracers, otherwise bare forearms.
+Arms: delicate matching amethyst bracelets at the wrists, otherwise bare forearms.
 
-Jewelry: an ultra-thin Tarnished Silver and Amethyst runic choker; matching earrings and rings; a small bellybutton ring with a gem.
+Jewelry: necklace with a small ornate pendant; matching earrings with small gems, anklet, and rings.
 
-Back: raven-feather pauldrons with silver accents resting on the shoulders.
+Back: an ethereal wrap of sheer fabric that flows around her waist and legs, frosted amethyst over a matte underlayer, with delicate amethyst and silver glowing fibre-optic threads woven throughout.
 
-Legs & feet: Iridescent Shadow Steel thigh-high plated high-heel boots, Necrotic-Violet and Tarnished Silver ornate designs, with a matching band on the upper left thigh.
+Legs & feet: matching amethyst open-toed high heels.
 
-Holding a small ornate dagger with its sheath, worn high on the hip.
+Holding nothing in hand, fingers relaxed at her side.
 
-Overall, luxurious necromancer aesthetic; a little D&D armor flair is fine, the outfit stays revealing.
+Overall, luxurious necromancer aesthetic; a little D&D armor flair is fine, the outfit stays skimpy.
 
 Eyes: natural studio eyes, not glowing.
 

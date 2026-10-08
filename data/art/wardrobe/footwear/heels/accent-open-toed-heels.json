@@ -1,0 +1,12 @@
+{
+  "id": "wardrobe/footwear/heels/accent-open-toed-heels",
+  "kind": "legs_feet",
+  "name": "Matching Accent Open-Toed Heels",
+  "description": "matching {{ACCENT_SOFT}} open-toed high heels",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "notes": "Cross-cutting wardrobe piece, reusable by any hero in her own palette. Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Armor_Elegant (workflows/_curated/drakn-sisters/Drakness)."
+}

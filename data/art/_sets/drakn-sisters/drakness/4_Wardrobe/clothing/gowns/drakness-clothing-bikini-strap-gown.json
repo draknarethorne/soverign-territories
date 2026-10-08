@@ -1,0 +1,18 @@
+{
+  "artId": "drakness-clothing-bikini-strap-gown",
+  "kind": "base-set",
+  "stage": "clothing",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Bikini-Strap Gown",
+  "aesthetic": "elegant, seductive, necromancer-adjacent evening look; the outfit stays skimpy",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/gowns/bikini-strap-evening-gown.json",
+    "arms": "data/art/wardrobe/jewelry/bracelets/simple-silver.json",
+    "jewelry": "data/art/wardrobe/jewelry/necklaces/ornate-gem-pendant.json",
+    "legs_feet": "data/art/wardrobe/footwear/heels/accent-pointed-toe-heels.json"
+  },
+  "template": "data/art/_templates/heroes/clothing-human.txt",
+  "denoise": "~0.5-0.7",
+  "output": "prompts/drakn-sisters/Drakness/4_Wardrobe/clothing/gowns/Drakness_Clothing_BikiniStrapGown.txt",
+  "notes": "Grounded in the hand-made workflow zz_Curated_Drakness_Qwen_Clothing_Dress: the low-cut bikini-strap evening gown with a right-side slit and pointed-toe heels."
+}
