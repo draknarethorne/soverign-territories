@@ -1,8 +1,0 @@
-{
-  "id": "heroes/angel-primes/angelo-prime/wearing/simple-evening-wear",
-  "kind": "wearing",
-  "name": "Simple Evening Wear (Angelo signature)",
-  "description": "a simple, elegant {{PRIMARY}} fitted outfit with {{ACCENT_SOFT}} trim; open-toed sandals in a matching tone",
-  "compatibleStages": ["scene"],
-  "notes": "Deliberately compound/bundled (footwear baked into the one wearing piece, not decomposed) — a test-bed hero doesn't need the full wardrobe-slot decomposition yet. One file covers the whole outfit."
-}

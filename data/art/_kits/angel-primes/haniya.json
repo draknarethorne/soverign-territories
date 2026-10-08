@@ -4,7 +4,7 @@
   "slug": "haniya",
   "element": "Grass",
   "alignmentRank": 3,
-  "identity": "data/art/heroes/angel-primes/haniya.json",
+  "identity": "data/art/heroes/angel-primes/female/haniya.json",
   "underlayers": [
     "wardrobe/swimwear/bikini/bandeau-bikini",
     "wardrobe/swimwear/lingerie/bralette-set",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/glamour/soft-closed-smile",
     "background": "backgrounds/fantasy/elemental/verdant-bloom-realm",
-    "back": "heroes/angel-primes/haniya/wings/haniya-wings",
-    "companion": "heroes/angel-primes/haniya/companion/bloom-beside",
+    "back": "heroes/angel-primes/female/haniya/wings/haniya-wings",
+    "companion": "heroes/angel-primes/female/haniya/companion/bloom-beside",
     "effects": "Green leaves and blossom petals swirl on the breeze around the figure, soft {{MAGIC}} light glowing among them."
   }
 }

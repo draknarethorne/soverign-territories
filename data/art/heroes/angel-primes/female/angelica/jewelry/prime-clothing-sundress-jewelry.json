@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/angelica/jewelry/prime-clothing-sundress-jewelry",
+  "kind": "jewelry",
+  "name": "Sundress - jewelry",
+  "description": "a simple thin necklace",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "clothing"
+  ],
+  "notes": "Extracted from the angelica-prime-clothing-sundress card so the item is a library piece (pre-stageable) instead of inline text."
+}

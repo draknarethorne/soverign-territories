@@ -1,0 +1,10 @@
+{
+  "artId": "gavrielle-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/2_Studies/head/Gavrielle_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Gavrielle head, the golden head."
+}

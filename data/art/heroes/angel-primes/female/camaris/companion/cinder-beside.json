@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/camaris/companion/cinder-beside",
+  "kind": "companion",
+  "name": "Cinder beside Camaris",
+  "description": "a crimson and gold firebird the size of an eagle with long flame-coloured tail feathers that trail sparks, perched on her raised forearm, tail feathers trailing sparks",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "firebird"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/zadriel/companion/marlo-beside",
+  "kind": "companion",
+  "name": "Marlo beside Zadriel",
+  "description": "a sleek silver-blue sea otter with bright black eyes, whiskers beaded with water and a small pearl held in its paws, sitting upright on a rock at his feet, holding a small glowing pearl",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "otter"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "testBed": true,
+  "name": "Remiah Stormcrown",
+  "profile": {
+    "element": "Lightning",
+    "alignment": "Stern (lawful neutral)",
+    "alignmentRank": 6,
+    "archetype": "Thunder judge",
+    "inspiredBy": "the archangels of thunder and judgment",
+    "wings": "a pair of sharp, angular white wings edged with crackling electric blue-white light",
+    "pair": "judiel",
+    "pet": "data/art/pets/angel-primes/spark.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Electric Gold",
+      "accentColors": [
+        "Storm Violet",
+        "Bright White"
+      ],
+      "metal": "bright gold",
+      "magicColor": "electric blue-white",
+      "gemColor": "topaz",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/high-ponytail-loose-tendrils.json"
+    },
+    "physique": {
+      "build": "Athletic, toned, wiry-strong build; quick and lean",
+      "torso": "Flat, defined midriff with a tight waist",
+      "bust": "Full, firm, athletic bust, high and compactly rounded with a tight pronounced inner curve and refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Toned, sinewy arms",
+      "hips": "Narrow, athletic hips with a gentle curve",
+      "legs": "Long, lean, toned legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    },
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

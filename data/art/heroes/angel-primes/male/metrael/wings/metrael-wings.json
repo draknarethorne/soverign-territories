@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/male/metrael/wings/metrael-wings",
+  "kind": "back",
+  "name": "Metrael - wings",
+  "description": "a pair of pale slate-white wings with perfectly ordered feathers rimmed with frost",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "ice"
+  ]
+}

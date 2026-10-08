@@ -4,7 +4,7 @@
   "slug": "elarion",
   "element": "Wind",
   "alignmentRank": 4,
-  "identity": "data/art/heroes/angel-primes/elarion.json",
+  "identity": "data/art/heroes/angel-primes/male/elarion.json",
   "underlayers": [
     "wardrobe/swimwear/athletic/fitted-tank-and-shorts",
     "wardrobe/swimwear/trunks/swim-brief"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/serious-poised",
     "background": "backgrounds/fantasy/elemental/gale-eyrie-realm",
-    "back": "heroes/angel-primes/elarion/wings/elarion-wings",
-    "companion": "heroes/angel-primes/elarion/companion/gale-beside",
+    "back": "heroes/angel-primes/male/elarion/wings/elarion-wings",
+    "companion": "heroes/angel-primes/male/elarion/companion/gale-beside",
     "effects": "Loose feathers and streaks of pale cloud spiral around the figure, hair and wings lifted by a rising gale."
   }
 }

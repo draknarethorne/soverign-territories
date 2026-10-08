@@ -4,7 +4,7 @@
   "slug": "metrael",
   "element": "Ice",
   "alignmentRank": 7,
-  "identity": "data/art/heroes/angel-primes/metrael.json",
+  "identity": "data/art/heroes/angel-primes/male/metrael.json",
   "underlayers": [
     "wardrobe/swimwear/one-piece/second-skin-bodysuit-male",
     "wardrobe/swimwear/trunks/swim-brief"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/serious-poised",
     "background": "backgrounds/fantasy/elemental/frost-spire-realm",
-    "back": "heroes/angel-primes/metrael/wings/metrael-wings",
-    "companion": "heroes/angel-primes/metrael/companion/quill-beside",
+    "back": "heroes/angel-primes/male/metrael/wings/metrael-wings",
+    "companion": "heroes/angel-primes/male/metrael/companion/quill-beside",
     "effects": "Drifting snow and fine frost crystals glitter in the air, a pale {{MAGIC}} chill glowing at the feet."
   }
 }

@@ -192,25 +192,31 @@ creatures, clothing, weapons, motions. Only what works is pulled into the Drakn 
 angel is used by name; each character echoes a tradition (`profile.inspiredBy`). They sit on a good-to-evil spectrum (`profile.alignmentRank`, 1 purest good, 10 fully fallen), one
 female and one male per element in each of ten pairs, and each has a bonded pet that is never a dragon (`data/art/pets/angel-primes/`, schema `pet-identity.schema.json`).
 
-| Rank | Element | Alignment | Female (pet) | Male (pet) |
-| --- | --- | --- | --- | --- |
-| 1 | Light | Radiant (pure good) | Seraphine (Lumen, fairy) | Auriel (Solaris, lion) |
-| 2 | Water | Merciful (good) | Ravaelle (Pearl, swan) | Zadriel (Marlo, otter) |
-| 3 | Grass | Gentle (good) | Haniya (Bloom, fawn) | Verael (Bramble, bear) |
-| 4 | Wind | Free-spirited (good) | Gavrielle (Zephyra, pegasus foal) | Elarion (Gale, gyrfalcon) |
-| 5 | Earth | Steadfast (lawful good) | Sandalyn (Cairn, mountain ram) | Baracel (Eldrin, ancient tortoise) |
-| 6 | Lightning | Stern (lawful neutral) | Remiah (Spark, fox) | Judiel (Thunder, wolf) |
-| 7 | Ice | Cold (true neutral) | Azaline (Hoarfrost, snow leopard) | Metrael (Quill, snowy owl) |
-| 8 | Fire | Zealous (chaotic neutral) | Camaris (Cinder, firebird) | Urael (Ember, war-stallion) |
-| 9 | Poison | Corrupt (chaotic evil) | Sammara (Viridia, viper) | Vexiel (Sting, scorpion) |
-| 10 | Darkness | Fallen (evil) | Nyxene (Shade, panther) | Luzariel (Corvin, raven) |
+| Rank | Element | Family | Alignment | Female (pet) | Male (pet) |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Light | Solspire | Radiant (pure good) | Seraphine (Lumen, fairy) | Auriel (Solaris, lion) |
+| 2 | Water | Tidehollow | Merciful (good) | Ravaelle (Pearl, swan) | Zadriel (Marlo, otter) |
+| 3 | Grass | Verdane | Gentle (good) | Haniya (Bloom, fawn) | Verael (Bramble, bear) |
+| 4 | Wind | Skyharrow | Free-spirited (good) | Gavrielle (Zephyra, pegasus foal) | Elarion (Gale, gyrfalcon) |
+| 5 | Earth | Stonehaven | Steadfast (lawful good) | Sandalyn (Cairn, mountain ram) | Baracel (Eldrin, ancient tortoise) |
+| 6 | Lightning | Stormcrown | Stern (lawful neutral) | Remiah (Spark, fox) | Judiel (Thunder, wolf) |
+| 7 | Ice | Rimeward | Cold (true neutral) | Azaline (Hoarfrost, snow leopard) | Metrael (Quill, snowy owl) |
+| 8 | Fire | Cinderfane | Zealous (chaotic neutral) | Camaris (Cinder, firebird) | Urael (Ember, war-stallion) |
+| 9 | Poison | Nightshade | Corrupt (chaotic evil) | Sammara (Viridia, viper) | Vexiel (Sting, scorpion) |
+| 10 | Darkness | Duskfall | Fallen (evil) | Nyxene (Shade, panther) | Luzariel (Corvin, raven) |
+
+**One tree, with divisions.** Angel Primes is the test bed for a whole deck, so its work is filed below a division folder, the same in every layer
+(`data/art/_settings/groups.json` lists them: `female`, `male`, `creatures`, then `buildings`, `equipment`, `tactics`, `workers`):
+`heroes/angel-primes/female/seraphine.json`, `_sets/angel-primes/female/seraphine/<phase>/...`, `prompts/angel-primes/female/Seraphine/<phase>/...`, and in ComfyUI
+`female/Seraphine/<phase>/...` in the Angel Primes workspace. A pair shares a family name; only Angelica and Angelo are named Prime. The scaffolders take the division
+from the identity path (`--division` on the older ones), and the validator rejects a card outside a division of its group.
 
 What each angel has, and where it lives:
 
 | Piece | File |
 | --- | --- |
-| Look (physique with her or his own build and bust line, wardrobe colour scheme, hair style, `profile`) | `heroes/angel-primes/<slug>.json` (eyes, hair colour and skin stay adaptive: the reference photo's own likeness is enhanced) |
-| Wings (`back` slot) and the pet beside the angel (`companion` slot) | `heroes/angel-primes/<slug>/wings/`, `heroes/angel-primes/<slug>/companion/` |
+| Look (physique with her or his own build and bust line, wardrobe colour scheme, hair style, `profile`) | `heroes/angel-primes/<division>/<slug>.json` (eyes, hair colour and skin stay adaptive: the reference photo's own likeness is enhanced) |
+| Wings (`back` slot) and the pet beside the angel (`companion` slot) | `heroes/angel-primes/<division>/<slug>/wings/`, `heroes/angel-primes/<division>/<slug>/companion/` |
 | The pet itself (look, temperament, scene placement; `bondedTo` and `profile.pet` link both ways) | `pets/angel-primes/<pet>.json` |
 | The kit: underlayers, clothing, armor, motions, heels and the signature scene, chosen to fit the angel | `_kits/angel-primes/<slug>.json` |
 
@@ -630,7 +636,7 @@ library with one command, then `gen_prompt.py` to produce prompts:
 
 ```bash
 python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime --hero Angelica \
-    --underlayer data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json
+    --underlayer data/art/heroes/angel-primes/female/angelica-prime/wearing/angelic-pastel-bikini.json
 python tools/generators/gen_prompt.py --group angel-primes --slug angelica-prime
 ```
 

@@ -1,0 +1,20 @@
+{
+  "artId": "seraphine-armor-paladin-holy-plate",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/4_Wardrobe/armor/wardrobe/Seraphine_Armor_PaladinHolyPlate.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Paladin Holy Plate",
+  "aesthetic": "a clean studio presentation of the paladin holy plate",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/plate/paladin-holy-plate.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

@@ -1,0 +1,45 @@
+{
+  "testBed": true,
+  "name": "Sammara Nightshade",
+  "profile": {
+    "element": "Poison",
+    "alignment": "Corrupt (chaotic evil)",
+    "alignmentRank": 9,
+    "archetype": "Tempter and accuser",
+    "inspiredBy": "the accusing, venom-tongued angels who tempt and deceive",
+    "wings": "a pair of sleek, partly tattered deep-violet wings with acid-green edges and dark, venom-bright veins",
+    "pair": "vexiel",
+    "pet": "data/art/pets/angel-primes/viridia.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Toxic Orchid Magenta",
+      "accentColors": [
+        "Deep Violet",
+        "Acid Green"
+      ],
+      "metal": "tarnished brass",
+      "magicColor": "toxic violet-green",
+      "gemColor": "amethyst",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json"
+    },
+    "physique": {
+      "build": "Slender, sinuous, flexible build; sleek and sensual",
+      "torso": "Narrow, supple waist",
+      "bust": "Full, firm, rounded bust with a sleek high lift and a pronounced inner curve, natural medium detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Slender, supple arms",
+      "hips": "Softly curved, swaying hips",
+      "legs": "Long, slender, sinuous legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    },
+    "defaultUnderlayer": "data/art/wardrobe/swimwear/bikini/metallic-triangle-bikini.json"
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

@@ -1,0 +1,23 @@
+=== Verael Verdane · Alpha 2 Bare: Bare edit: bare skin figure (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Verael Verdane. This pass removes clothing, applies his individual build and sets his likeness (hair, eyes, skin) for every later stage. Feed the result to the poses, armor, showcase and scene stages (males have no Barefoot or Heels step). Denoise ~0.5-0.7.
+
+----------------------------------------------------------------
+prompt:
+
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+
+Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; the only covering is one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin with no clothing, no paint and no tint, keeping his natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Body: shape the figure to this individual build, keeping his height, head and pose: big, broad, powerfully built; bear-strong and solid; broad, thick, powerful chest; thick, heavily muscled arms; solid, thick waist; thick, strong legs.
+
+Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+
+----------------------------------------------------------------
+negative prompt:
+
+swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, bump on the pelvic area, raised bump, square patch, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, text, watermark, logo.

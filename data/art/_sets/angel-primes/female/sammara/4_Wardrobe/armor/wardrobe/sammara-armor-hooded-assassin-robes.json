@@ -1,0 +1,20 @@
+{
+  "artId": "sammara-armor-hooded-assassin-robes",
+  "kind": "base-set",
+  "stage": "armor",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/armor-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/4_Wardrobe/armor/wardrobe/Sammara_Armor_HoodedAssassinRobes.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Hooded Cloth Robes",
+  "aesthetic": "a clean studio presentation of the hooded cloth robes",
+  "components": {
+    "wearing": "data/art/wardrobe/armor/robes/hooded-assassin-robes.json",
+    "arms": "bare arms",
+    "jewelry": "a simple {{METAL}} necklace and small matching earrings",
+    "back": "the back of the armor fully visible",
+    "holding": "empty hands relaxed at the sides",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
+  },
+  "notes": "WARDROBE TEST: same hero, only the piece differs."
+}

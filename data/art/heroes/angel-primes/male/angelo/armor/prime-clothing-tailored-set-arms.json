@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/male/angelo/armor/prime-clothing-tailored-set-arms",
+  "kind": "arms",
+  "name": "Tailored Shirt and Trousers - arms",
+  "description": "rolled sleeves showing bare forearms, a simple watch on one wrist",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "extracted",
+    "clothing"
+  ],
+  "notes": "Extracted from the angelo-prime-clothing-tailored-set card so the item is a library piece (pre-stageable) instead of inline text."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/male/vexiel/wings/vexiel-wings",
+  "kind": "back",
+  "name": "Vexiel - wings",
+  "description": "a pair of ragged green-black wings with a violet sheen and venom-bright tips",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "poison"
+  ]
+}

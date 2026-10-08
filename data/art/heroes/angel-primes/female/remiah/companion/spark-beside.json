@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/remiah/companion/spark-beside",
+  "kind": "companion",
+  "name": "Spark beside Remiah",
+  "description": "a lean silver fox with electric-blue markings and a pair of tails whose tips crackle with static, bright pale eyes, crouched at her feet with its tails raised, static arcing between them",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "fox"
+  ]
+}

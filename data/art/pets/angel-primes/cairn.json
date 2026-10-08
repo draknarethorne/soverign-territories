@@ -3,7 +3,7 @@
   "name": "Cairn",
   "kind": "mountain ram",
   "element": "Earth",
-  "bondedTo": "data/art/heroes/angel-primes/sandalyn.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/sandalyn.json",
   "size": "large",
   "look": "a sturdy russet-and-cream mountain ram with heavy curled horns ringed in stone-grey bands and a thick, weather-worn coat",
   "temperament": "Stubborn, loyal and immovable; it plants itself between her and any danger",

@@ -1,0 +1,43 @@
+{
+  "testBed": true,
+  "name": "Auriel Solspire",
+  "profile": {
+    "element": "Light",
+    "alignment": "Radiant (pure good)",
+    "alignmentRank": 1,
+    "archetype": "Captain of the dawn host",
+    "inspiredBy": "the warrior archangels of light",
+    "wings": "a pair of enormous golden-white wings with gilded feather tips, glowing softly at the edges",
+    "pair": "seraphine",
+    "pet": "data/art/pets/angel-primes/solaris.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Radiant Pearl White",
+      "accentColors": [
+        "Burnished Gold",
+        "Ivory"
+      ],
+      "metal": "polished gold",
+      "magicColor": "bright sunrise gold",
+      "gemColor": "citrine",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/voluminous-blowout.json"
+    },
+    "physique": {
+      "build": "Tall, radiant, heroic build; broad-shouldered and noble",
+      "chest": "Broad, defined, naturally muscular chest, open and strong",
+      "arms": "Strong, well-defined arms",
+      "waist": "Trim, athletic waist",
+      "legs": "Long, strong, well-proportioned legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    }
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

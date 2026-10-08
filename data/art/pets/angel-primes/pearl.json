@@ -3,7 +3,7 @@
   "name": "Pearl",
   "kind": "swan",
   "element": "Water",
-  "bondedTo": "data/art/heroes/angel-primes/ravaelle.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/ravaelle.json",
   "size": "large",
   "look": "a large pearl-white swan with faint aqua tinting along the edges of its feathers, a long graceful neck and calm dark eyes",
   "temperament": "Serene and protective; it glides beside her and hisses at anything that threatens her patients",

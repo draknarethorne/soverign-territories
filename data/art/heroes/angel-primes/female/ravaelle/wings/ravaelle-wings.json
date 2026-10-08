@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/ravaelle/wings/ravaelle-wings",
+  "kind": "back",
+  "name": "Ravaelle - wings",
+  "description": "a pair of broad pearl-white wings with aqua-tinted feather edges that shimmer like water",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "water"
+  ]
+}

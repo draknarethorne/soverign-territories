@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/male/judiel/wings/judiel-wings",
+  "kind": "back",
+  "name": "Judiel - wings",
+  "description": "a pair of hard-edged steel-blue wings with lightning running through the feathers",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "lightning"
+  ]
+}

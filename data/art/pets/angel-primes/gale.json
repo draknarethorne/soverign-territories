@@ -3,7 +3,7 @@
   "name": "Gale",
   "kind": "gyrfalcon",
   "element": "Wind",
-  "bondedTo": "data/art/heroes/angel-primes/elarion.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/elarion.json",
   "size": "large",
   "look": "a storm-grey and white gyrfalcon with a barred chest, sharp dark eyes and long pointed wings",
   "temperament": "Restless, sharp and fiercely independent; it comes when it chooses",

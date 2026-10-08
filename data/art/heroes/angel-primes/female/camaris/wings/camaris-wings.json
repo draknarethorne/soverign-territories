@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/camaris/wings/camaris-wings",
+  "kind": "back",
+  "name": "Camaris - wings",
+  "description": "a pair of broad crimson feathered wings fading to gold, the tips glowing like embers",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "fire"
+  ]
+}

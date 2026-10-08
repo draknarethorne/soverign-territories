@@ -131,7 +131,12 @@ CASES = [
          {"artCard": "data/art/_sets/drakn-sisters/draknora/5_Scenes/signature/draknora-scene-signature-shiny.json"})), "belongs to"),
     ("pet bonded to a different angel than the one that lists it",
      lambda r: edit(r / "data/art/pets/angel-primes/lumen.json",
-                    lambda d: d.update({"bondedTo": "data/art/heroes/angel-primes/auriel.json"})), "does not point back"),
+                    lambda d: d.update({"bondedTo": "data/art/heroes/angel-primes/male/auriel.json"})), "does not point back"),
+    ("angel card filed outside its division folder",
+     lambda r: shutil.move(str(r / "data/art/_sets/angel-primes/female/seraphine"), str(r / "data/art/_sets/angel-primes/seraphine")), "division folder"),
+    ("angel output with a different division than its card file",
+     lambda r: edit(r / "data/art/_sets/angel-primes/female/seraphine/1_Alpha/1_Prime/seraphine-alpha-prime.json",
+                    lambda d: d.update({"output": d["output"].replace("/female/", "/male/")})), "same division folder"),
 ]
 
 

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/remiah/wings/remiah-wings",
+  "kind": "back",
+  "name": "Remiah - wings",
+  "description": "a pair of sharp, angular white wings edged with crackling electric blue-white light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "lightning"
+  ]
+}

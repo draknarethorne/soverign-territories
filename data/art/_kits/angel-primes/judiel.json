@@ -4,7 +4,7 @@
   "slug": "judiel",
   "element": "Lightning",
   "alignmentRank": 6,
-  "identity": "data/art/heroes/angel-primes/judiel.json",
+  "identity": "data/art/heroes/angel-primes/male/judiel.json",
   "underlayers": [
     "wardrobe/swimwear/athletic/compression-shorts",
     "wardrobe/swimwear/trunks/swim-brief"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/intense/fierce-focused",
     "background": "backgrounds/fantasy/elemental/storm-crown-realm",
-    "back": "heroes/angel-primes/judiel/wings/judiel-wings",
-    "companion": "heroes/angel-primes/judiel/companion/thunder-beside",
+    "back": "heroes/angel-primes/male/judiel/wings/judiel-wings",
+    "companion": "heroes/angel-primes/male/judiel/companion/thunder-beside",
     "effects": "Thin arcs of {{MAGIC}} lightning crackle between the fingers and along the edges of the wings, the air charged and bright."
   }
 }

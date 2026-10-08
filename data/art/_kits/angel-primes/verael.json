@@ -4,7 +4,7 @@
   "slug": "verael",
   "element": "Grass",
   "alignmentRank": 3,
-  "identity": "data/art/heroes/angel-primes/verael.json",
+  "identity": "data/art/heroes/angel-primes/male/verael.json",
   "underlayers": [
     "wardrobe/swimwear/trunks/athletic-trunks",
     "wardrobe/swimwear/trunks/board-shorts"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/serious-poised",
     "background": "backgrounds/fantasy/elemental/verdant-bloom-realm",
-    "back": "heroes/angel-primes/verael/wings/verael-wings",
-    "companion": "heroes/angel-primes/verael/companion/bramble-beside",
+    "back": "heroes/angel-primes/male/verael/wings/verael-wings",
+    "companion": "heroes/angel-primes/male/verael/companion/bramble-beside",
     "effects": "Green leaves and blossom petals swirl on the breeze around the figure, soft {{MAGIC}} light glowing among them."
   }
 }

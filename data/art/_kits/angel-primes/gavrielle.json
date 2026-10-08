@@ -4,7 +4,7 @@
   "slug": "gavrielle",
   "element": "Wind",
   "alignmentRank": 4,
-  "identity": "data/art/heroes/angel-primes/gavrielle.json",
+  "identity": "data/art/heroes/angel-primes/female/gavrielle.json",
   "underlayers": [
     "wardrobe/swimwear/athletic/leggings-and-crop-top",
     "wardrobe/swimwear/bikini/high-waist-bikini",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/glamour/glamorous-confident",
     "background": "backgrounds/fantasy/elemental/gale-eyrie-realm",
-    "back": "heroes/angel-primes/gavrielle/wings/gavrielle-wings",
-    "companion": "heroes/angel-primes/gavrielle/companion/zephyra-beside",
+    "back": "heroes/angel-primes/female/gavrielle/wings/gavrielle-wings",
+    "companion": "heroes/angel-primes/female/gavrielle/companion/zephyra-beside",
     "effects": "Loose feathers and streaks of pale cloud spiral around the figure, hair and wings lifted by a rising gale."
   }
 }

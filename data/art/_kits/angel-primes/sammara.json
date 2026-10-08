@@ -4,7 +4,7 @@
   "slug": "sammara",
   "element": "Poison",
   "alignmentRank": 9,
-  "identity": "data/art/heroes/angel-primes/sammara.json",
+  "identity": "data/art/heroes/angel-primes/female/sammara.json",
   "underlayers": [
     "wardrobe/swimwear/lingerie/lace-bodysuit",
     "wardrobe/swimwear/backless/strapless-plunge-bodysuit",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/intense/predatory-grin",
     "background": "backgrounds/fantasy/elemental/venom-mire-realm",
-    "back": "heroes/angel-primes/sammara/wings/sammara-wings",
-    "companion": "heroes/angel-primes/sammara/companion/viridia-beside",
+    "back": "heroes/angel-primes/female/sammara/wings/sammara-wings",
+    "companion": "heroes/angel-primes/female/sammara/companion/viridia-beside",
     "effects": "Wisps of {{MAGIC}} venom-mist curl around the figure, droplets of glowing toxin and drifting spores catching the light."
   }
 }

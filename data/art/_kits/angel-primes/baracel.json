@@ -4,7 +4,7 @@
   "slug": "baracel",
   "element": "Earth",
   "alignmentRank": 5,
-  "identity": "data/art/heroes/angel-primes/baracel.json",
+  "identity": "data/art/heroes/angel-primes/male/baracel.json",
   "underlayers": [
     "wardrobe/swimwear/trunks/athletic-trunks",
     "wardrobe/swimwear/athletic/compression-shorts"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/composed-commanding",
     "background": "backgrounds/fantasy/elemental/bedrock-stone-realm",
-    "back": "heroes/angel-primes/baracel/wings/baracel-wings",
-    "companion": "heroes/angel-primes/baracel/companion/eldrin-beside",
+    "back": "heroes/angel-primes/male/baracel/wings/baracel-wings",
+    "companion": "heroes/angel-primes/male/baracel/companion/eldrin-beside",
     "effects": "Loose stones and golden dust drift upward around the feet, warm {{MAGIC}} light running through cracks in the ground."
   }
 }

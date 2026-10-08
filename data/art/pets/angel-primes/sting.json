@@ -3,7 +3,7 @@
   "name": "Sting",
   "kind": "scorpion",
   "element": "Poison",
-  "bondedTo": "data/art/heroes/angel-primes/vexiel.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/vexiel.json",
   "size": "cat-sized",
   "look": "a cat-sized scorpion with glossy violet-black armoured plates, a raised tail and a green venom-glow at the stinger",
   "temperament": "Silent, spiteful and efficient; it strikes when he smiles",

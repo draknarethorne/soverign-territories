@@ -38,8 +38,9 @@ def build(slug):
     hero = kit["hero"]
     female = "bust" in load(ident)["art"]["physique"]
     sex = "female" if female else "male"
-    wr = Writer(ART / "_sets" / GROUP / slug, GROUP)
-    out = lambda folder, name: f"prompts/{GROUP}/{hero}/{folder}/{name}.txt"
+    division = pathlib.PurePosixPath(ident).parts[4]  # data/art/heroes/angel-primes/<division>/<slug>.json
+    wr = Writer(ART / "_sets" / GROUP / division / slug, GROUP)
+    out = lambda folder, name: f"prompts/{GROUP}/{division}/{hero}/{folder}/{name}.txt"
     studio = dict(STUDIO)
     if not female:
         studio["jewelry"] = MALE_NECKLACE

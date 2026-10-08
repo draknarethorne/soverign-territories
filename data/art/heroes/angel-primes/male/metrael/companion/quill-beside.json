@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/metrael/companion/quill-beside",
+  "kind": "companion",
+  "name": "Quill beside Metrael",
+  "description": "a large snowy owl with silver-grey barring, pale gold eyes and a soft ruff of white feathers dusted with frost, perched on his shoulder, head turned toward the viewer",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "snowy owl"
+  ]
+}

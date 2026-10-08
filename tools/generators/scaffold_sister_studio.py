@@ -56,8 +56,9 @@ class Writer:
     def write(self, sub, art_id, card):
         fam = art_layout.family(card, self.group, ROOT)  # the card decides its folder; hair and motion keep theirs
         if fam is not None:
-            hero, stem = card["output"].split("/")[2], pathlib.PurePosixPath(card["output"]).stem
-            card["output"] = art_layout.output_for(card, self.group, hero, stem, ROOT)
+            _, division, hero, _, _ = art_layout.split_output(card["output"])
+            stem = pathlib.PurePosixPath(card["output"]).stem
+            card["output"] = art_layout.output_for(card, self.group, hero, stem, ROOT, division)
         sub = "/".join(art_layout.card_dirs(card, self.group, ROOT))
         target = self.base / sub / f"{art_id}.json"
         if target.exists() or card.get("output") in self.outputs:

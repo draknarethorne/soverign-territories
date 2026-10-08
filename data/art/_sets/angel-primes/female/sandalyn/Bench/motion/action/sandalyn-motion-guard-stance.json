@@ -1,0 +1,10 @@
+{
+  "artId": "sandalyn-motion-guard-stance",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/Bench/motion/action/Sandalyn_Motion_Action_GuardStance.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/action/guard-stance.json"
+}

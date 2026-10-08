@@ -4,7 +4,7 @@
   "slug": "seraphine",
   "element": "Light",
   "alignmentRank": 1,
-  "identity": "data/art/heroes/angel-primes/seraphine.json",
+  "identity": "data/art/heroes/angel-primes/female/seraphine.json",
   "underlayers": [
     "wardrobe/swimwear/bikini/push-up-bikini",
     "wardrobe/swimwear/lingerie/balconette-set",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/reverent-serene",
     "background": "backgrounds/fantasy/elemental/radiant-sun-realm",
-    "back": "heroes/angel-primes/seraphine/wings/seraphine-wings",
-    "companion": "heroes/angel-primes/seraphine/companion/lumen-beside",
+    "back": "heroes/angel-primes/female/seraphine/wings/seraphine-wings",
+    "companion": "heroes/angel-primes/female/seraphine/companion/lumen-beside",
     "effects": "Soft {{MAGIC}} light radiates from the wings and a faint halo above the head, motes of golden light drifting slowly upward."
   }
 }

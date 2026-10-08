@@ -1,0 +1,10 @@
+{
+  "artId": "sandalyn-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/2_Studies/head/Sandalyn_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Sandalyn head, the golden head."
+}

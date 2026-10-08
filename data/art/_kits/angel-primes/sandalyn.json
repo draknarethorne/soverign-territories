@@ -4,7 +4,7 @@
   "slug": "sandalyn",
   "element": "Earth",
   "alignmentRank": 5,
-  "identity": "data/art/heroes/angel-primes/sandalyn.json",
+  "identity": "data/art/heroes/angel-primes/female/sandalyn.json",
   "underlayers": [
     "wardrobe/swimwear/lingerie/corset-set",
     "wardrobe/swimwear/bikini/sarong-and-bikini",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/composed-commanding",
     "background": "backgrounds/fantasy/elemental/bedrock-stone-realm",
-    "back": "heroes/angel-primes/sandalyn/wings/sandalyn-wings",
-    "companion": "heroes/angel-primes/sandalyn/companion/cairn-beside",
+    "back": "heroes/angel-primes/female/sandalyn/wings/sandalyn-wings",
+    "companion": "heroes/angel-primes/female/sandalyn/companion/cairn-beside",
     "effects": "Loose stones and golden dust drift upward around the feet, warm {{MAGIC}} light running through cracks in the ground."
   }
 }

@@ -1,0 +1,15 @@
+{
+  "id": "heroes/angel-primes/female/seraphine/wings/seraphine-wings",
+  "kind": "back",
+  "name": "Seraphine - wings",
+  "description": "three pairs of long, luminous white feathered wings with rose-gold tips, glowing softly at the edges",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "wings",
+    "angel",
+    "light"
+  ]
+}

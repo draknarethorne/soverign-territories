@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/nyxene/companion/shade-beside",
+  "kind": "companion",
+  "name": "Shade beside Nyxene",
+  "description": "a sleek black panther whose coat holds a faint violet sheen, with glowing violet eyes and silent, heavy paws, padding at her side, head level with her hip, violet eyes on the viewer",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "panther"
+  ]
+}

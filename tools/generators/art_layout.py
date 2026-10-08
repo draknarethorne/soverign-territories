@@ -3,11 +3,12 @@
 Every card is filed under the pipeline PHASE its prompt belongs to (phase_path), then a FAMILY; the card file, the prompt and the
 ComfyUI output folder all use the same folders:
 
-  data/art/_sets/<group>/<slug>/<phase folders...>/<artId>.json
-  prompts/<group>/<Hero>/<phase folders...>/<Hero>_<Stage>_<Name>.txt
-  ComfyUI output: <group>/<Hero>/<phase folders...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
+  data/art/_sets/<group>/[<division>/]<slug>/<phase folders...>/<artId>.json
+  prompts/<group>/[<division>/]<Hero>/<phase folders...>/<Hero>_<Stage>_<Name>.txt
+  ComfyUI output: <group>/[<division>/]<Hero>/<phase folders...>/<Hero>_<Engine>_<Stage>_<Name>_00001_.png
 
 (1_Alpha, 2_Studies, 3_Layers, 4_Wardrobe, 5_Scenes, 6_Finish, 7_Video, Bench; brand and card art keep <stage>/<family>.)
+A group listed in data/art/_settings/groups.json (angel-primes) has a division folder (female, male, creatures ...) between the group and the hero.
 
 The family comes from the card, never from a hand-typed folder, so a new card cannot end up in the wrong place.
 Hair and motion cards already carry their own family folders and are left as they are.
@@ -223,20 +224,40 @@ def parse_dirs(dirs):
     return p, rest
 
 
-def output_for(card, group, hero, stem, root=None):
-    return "/".join(["prompts", group, hero, *dirs_for(stage_folder(card["stage"]), family(card, group, root) or []), stem + ".txt"])
+def divisions(group=None):
+    """data/art/_settings/groups.json: the division folders of a group (or {group: [...]} for all); empty for a group without divisions."""
+    try:
+        table = json.loads((ROOT / "data/art/_settings/groups.json").read_text(encoding="utf-8")).get("divisions", {})
+    except OSError:
+        table = {}
+    return table.get(group, []) if group else table
+
+
+def split_under(parts):
+    """(group, division or None, hero, dirs, file) for parts that start at the group: <group>/[<division>/]<Hero>/<dirs...>/<file>."""
+    group, rest = parts[0], list(parts[1:])
+    division = rest.pop(0) if rest and rest[0] in divisions(group) else None
+    return group, division, rest[0], rest[1:-1], rest[-1]
+
+
+def split_output(path):
+    """split_under for a card's output path (prompts/<group>/...)."""
+    return split_under(pathlib.PurePosixPath(path).parts[1:])
+
+
+def output_for(card, group, hero, stem, root=None, division=None):
+    return "/".join(["prompts", group, *([division] if division else []), hero, *dirs_for(stage_folder(card["stage"]), family(card, group, root) or []), stem + ".txt"])
 
 
 def card_dirs(card, group, root=None):
     """Folders below <slug>/ for a card file: the same as its prompt's folders below <Hero>/. Hair and motion cards keep the family their output names."""
     fam = family(card, group, root)
     if fam is None:
-        return list(pathlib.PurePosixPath(card["output"]).parts[3:-1])
+        return split_output(card["output"])[3]
     return dirs_for(stage_folder(card["stage"]), fam)
 
 
 def video_family(source_output):
     """Video prompts mirror the family of the picture they animate (the golden pose becomes 'poses')."""
-    parts = pathlib.PurePosixPath(source_output).parts  # prompts/<group>/<Hero>/<phase folders...>/<file>
-    stage, fam = parse_dirs(parts[3:-1])
+    stage, fam = parse_dirs(split_output(source_output)[3])
     return fam or [stage]

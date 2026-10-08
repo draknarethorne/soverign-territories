@@ -160,6 +160,8 @@ def output_path(card, toks):
         return card["output"]
     hero = toks["HERO"].split()[0]
     group = pathlib.PurePosixPath(card["heroArt"]).parts[3]
+    ident = pathlib.PurePosixPath(card["heroArt"]).parts
+    division = ident[4] if len(ident) > 5 and ident[4] in art_layout.divisions(group) else None
     art = card.get("source", {}).get("artCard")
     source, fam = "", []
     if art:
@@ -167,7 +169,7 @@ def output_path(card, toks):
         stem = pathlib.PurePosixPath(src_out).stem
         source = stem[len(hero) + 1:] + "_" if stem.startswith(hero + "_") else stem + "_"
         fam = art_layout.video_family(src_out)
-    return "/".join(["prompts", group, hero, *art_layout.dirs_for("video", fam), f"{hero}_Video_{source}{card['name']}.txt"])
+    return "/".join(["prompts", group, *([division] if division else []), hero, *art_layout.dirs_for("video", fam), f"{hero}_Video_{source}{card['name']}.txt"])
 
 
 def camera_text(card, toks):

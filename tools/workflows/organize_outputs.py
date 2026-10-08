@@ -54,12 +54,13 @@ def main():
         if args.hero and hero.lower() != args.hero.lower():
             continue
         project = cfg.get("paths", {}).get("outputFolders", {}).get(group, "")
+        hero_dir = cw.hero_dir(hero)  # 'female/Seraphine' in a division group
         for root in search:
-            for folder in dict.fromkeys([root / hero, root / group / hero, root / project / group / hero if project else root / group / hero]):
+            for folder in dict.fromkeys([root / hero, root / group / hero_dir, root / project / group / hero_dir if project else root / group / hero_dir]):
                 if folder.is_dir():
                     sources.append((hero, group, folder))
     for hero, group, folder in sources:
-        new_home = home(group) / hero
+        new_home = home(group) / cw.hero_dir(hero)
         for f in sorted(p for p in folder.rglob("*") if p.is_file()):
             rel = f.relative_to(folder)
             m = NAME.match(f.name)

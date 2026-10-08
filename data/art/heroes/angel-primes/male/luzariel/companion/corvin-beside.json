@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/luzariel/companion/corvin-beside",
+  "kind": "companion",
+  "name": "Corvin beside Luzariel",
+  "description": "a large black raven with ember-gold eyes and the tips of its feathers singed to red, a faint wisp of smoke at its wings, perched on his shoulder, wings half open, ember-gold eyes on the viewer",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "raven"
+  ]
+}

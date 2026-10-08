@@ -1,0 +1,6 @@
+{
+  "description": "Groups whose heroes, cards and creatures are organised into divisions, one folder level between the group and the hero. The same tree is used in every layer: data/art/heroes/<group>/<division>/<slug>.json, data/art/_sets/<group>/<division>/<slug>/..., prompts/<group>/<division>/<Hero>/..., and the ComfyUI output folders and workflow lists. A group that is not listed here has no divisions (drakn-sisters, drakn-bound, elder-dragons ...). Add a division here before you create its first card: female and male heroes, creatures (pets and units), then the other card types of a full deck.",
+  "divisions": {
+    "angel-primes": ["female", "male", "creatures", "buildings", "equipment", "tactics", "workers"]
+  }
+}

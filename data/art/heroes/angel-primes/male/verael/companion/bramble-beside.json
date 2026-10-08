@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/male/verael/companion/bramble-beside",
+  "kind": "companion",
+  "name": "Bramble beside Verael",
+  "description": "a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes, standing at his side, shoulders as high as his own, flowers in its fur",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "bear"
+  ]
+}

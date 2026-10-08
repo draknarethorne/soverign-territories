@@ -3,7 +3,7 @@
   "name": "Spark",
   "kind": "fox",
   "element": "Lightning",
-  "bondedTo": "data/art/heroes/angel-primes/remiah.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/remiah.json",
   "size": "medium",
   "look": "a lean silver fox with electric-blue markings and a pair of tails whose tips crackle with static, bright pale eyes",
   "temperament": "Quick, clever and restless; it darts ahead, always a step before the thunder",

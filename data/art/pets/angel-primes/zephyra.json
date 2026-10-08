@@ -3,7 +3,7 @@
   "name": "Zephyra",
   "kind": "pegasus foal",
   "element": "Wind",
-  "bondedTo": "data/art/heroes/angel-primes/gavrielle.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/gavrielle.json",
   "size": "pony-sized",
   "look": "a young pale pegasus foal with a silver-white coat, a flowing cloud-grey mane and tail and a pair of small silver-white wings still too big for it",
   "temperament": "Skittish and playful; it will not stay on the ground and shadows her through the air",

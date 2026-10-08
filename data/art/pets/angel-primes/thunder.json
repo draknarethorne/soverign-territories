@@ -3,7 +3,7 @@
   "name": "Thunder",
   "kind": "wolf",
   "element": "Lightning",
-  "bondedTo": "data/art/heroes/angel-primes/judiel.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/judiel.json",
   "size": "large",
   "look": "a big grey wolf with white lightning-like streaks through its coat, pale gold eyes and a heavy ruff",
   "temperament": "Disciplined, grim and loyal; it walks at his heel and stares down anyone who lies",

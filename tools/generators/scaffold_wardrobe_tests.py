@@ -49,17 +49,18 @@ def main():
     ap.add_argument("--group", required=True, help="_sets group, e.g. drakn-sisters")
     ap.add_argument("--slug", required=True, help="hero folder slug under _sets/<group>/, e.g. drakness")
     ap.add_argument("--hero", required=True, help="display name used in output files, e.g. Drakness")
-    ap.add_argument("--identity", help="art identity path (default: first data/art/heroes/<group>/<slug>*.json)")
+    ap.add_argument("--identity", help="art identity path (default: first data/art/heroes/<group>/[<division>/]<slug>*.json)")
+    ap.add_argument("--division", default="", help="division folder of a group that has them (female, male ...), see _settings/groups.json")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("paths", nargs="+", help="folders or files under data/art/wardrobe")
     args = ap.parse_args()
 
-    ident = args.identity or sorted((ART / "heroes" / args.group).glob(f"{args.slug}*.json"))[0].relative_to(ROOT).as_posix()
+    ident = args.identity or sorted((ART / "heroes" / args.group / args.division).glob(f"{args.slug}*.json"))[0].relative_to(ROOT).as_posix()
     female = "bust" in json.loads((ROOT / ident).read_text(encoding="utf-8"))["art"]["physique"]
     sex = "female" if female else "male"
     other = "male" if female else "female"
     made = skipped = 0
-    base = ART / "_sets" / args.group / args.slug
+    base = ART / "_sets" / args.group / args.division / args.slug
     outputs = {json.loads(p.read_text(encoding="utf-8")).get("output") for p in base.rglob("*.json")} if base.exists() else set()
     for arg in args.paths:
         for f in pieces_under(arg):
@@ -82,7 +83,7 @@ def main():
                 card = {"artId": art_id, "kind": "base-set", "stage": stage, "components": {"wearing": pid}}
             fam = art_layout.family(card, args.group, ROOT)
             folder = "/".join(art_layout.dirs_for(folder, fam))
-            target = ART / "_sets" / args.group / args.slug / folder / f"{art_id}.json"
+            target = base / folder / f"{art_id}.json"
             if target.exists():
                 skipped += 1
                 continue
@@ -97,7 +98,7 @@ def main():
                 card = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "name": piece["name"],
                         "aesthetic": f"a clean studio presentation of the {piece['name'].lower()}",
                         "components": comps, "template": f"{TEMPLATES}/{stage}-human.txt", "denoise": "~0.5-0.7"}
-            card["output"] = f"prompts/{args.group}/{args.hero}/{folder}/{out_name}.txt"
+            card["output"] = "/".join(filter(None, ["prompts", args.group, args.division, args.hero, folder, out_name + ".txt"]))
             if card["output"] in outputs:
                 skipped += 1
                 continue

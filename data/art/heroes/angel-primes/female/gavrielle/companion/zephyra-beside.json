@@ -1,0 +1,13 @@
+{
+  "id": "heroes/angel-primes/female/gavrielle/companion/zephyra-beside",
+  "kind": "companion",
+  "name": "Zephyra beside Gavrielle",
+  "description": "a young pale pegasus foal with a silver-white coat, a flowing cloud-grey mane and tail and a pair of small silver-white wings still too big for it, cantering at her side with its small wings half spread, mane streaming",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "pet",
+    "pegasus foal"
+  ]
+}

@@ -3,7 +3,7 @@
   "name": "Hoarfrost",
   "kind": "snow leopard",
   "element": "Ice",
-  "bondedTo": "data/art/heroes/angel-primes/azaline.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/azaline.json",
   "size": "large",
   "look": "a snow leopard with a dense smoky-white coat, ice-blue rosettes, pale blue eyes and a long thick tail",
   "temperament": "Aloof, patient and watchful; it will wait for hours and never look away",

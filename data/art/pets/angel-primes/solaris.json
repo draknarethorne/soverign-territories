@@ -3,7 +3,7 @@
   "name": "Solaris",
   "kind": "lion",
   "element": "Light",
-  "bondedTo": "data/art/heroes/angel-primes/auriel.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/auriel.json",
   "size": "large",
   "look": "a large adult lion with a golden coat and a full white-gold mane, calm amber eyes and a faint glow of light in the mane",
   "temperament": "Calm, regal and utterly loyal; it never roars unless he does",

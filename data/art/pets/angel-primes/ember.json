@@ -3,7 +3,7 @@
   "name": "Ember",
   "kind": "war-stallion",
   "element": "Fire",
-  "bondedTo": "data/art/heroes/angel-primes/urael.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/urael.json",
   "size": "huge",
   "look": "a huge black war-stallion with a flame-orange mane and tail and hooves that leave glowing prints, dark eyes lit from within",
   "temperament": "Fierce, proud and hard to hold; it answers only to him",

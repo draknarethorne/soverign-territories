@@ -1,0 +1,10 @@
+{
+  "artId": "metrael-x-head",
+  "kind": "base-set",
+  "stage": "head",
+  "heroArt": "data/art/heroes/angel-primes/male/metrael.json",
+  "template": "data/art/_templates/heroes/head-human.txt",
+  "output": "prompts/angel-primes/male/Metrael/2_Studies/head/Metrael_X_Head.txt",
+  "denoise": "~0.4-0.6",
+  "notes": "Metrael head, the golden head."
+}

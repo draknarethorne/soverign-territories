@@ -1,0 +1,42 @@
+=== Gavrielle Skyharrow · A-Pose Base (group: X_Pose) — Build (img2img) ===
+Incoming image: a real/AI source photo of the subject. Build the clean full-body A-pose base that every later stage edits. The Critical details are set here; downstream stages assume them and do not repeat them.
+Denoise ~1.0.
+
+----------------------------------------------------------------
+prompt:
+
+Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Legs: extremely long, slender legs.
+
+Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+
+Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
+
+Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
+
+Figure: tall, willowy, long-limbed build with a dancer's poise; narrow, long waist; long, slender arms with elegant hands; narrow, gently curved feminine hips.
+
+Wearing: only a Sky Silver fitted crop top and matching high-waist full-length leggings with polished nickel piping; midriff bare; matching flat trainers.
+
+Hair: drifting backward on both sides with a slight swirl, as if caught mid-breeze; breeze blowing towards her (fully replace the source photo's hairstyle).
+
+Makeup: soft and natural - white-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Silver.
+
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+
+Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, thick thighs, wide hips, boyish figure, stick-like, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

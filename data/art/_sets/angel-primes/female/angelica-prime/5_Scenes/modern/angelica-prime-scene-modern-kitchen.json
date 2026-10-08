@@ -1,0 +1,18 @@
+{
+  "artId": "angelica-prime-scene-modern-kitchen",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/angelica-prime.json",
+  "name": "Modern Kitchen (fun test)",
+  "components": {
+    "wearing": "data/art/wardrobe/clothing/dresses/fitted-cocktail-dress.json",
+    "pose": "data/art/motion/romantic/hand-to-collarbone.json",
+    "effects": "Soft natural window light only, no magical or glowing effects.",
+    "background": "data/art/backgrounds/modern/interior/home-kitchen-morning.json",
+    "realm": "data/art/realms/modern.json"
+  },
+  "template": "data/art/_templates/heroes/scene-minimal-human.txt",
+  "output": "prompts/angel-primes/female/Angelica/5_Scenes/modern/Angelica_Scene_Modern_Kitchen.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "NOT canon. Realism experiment: in a home kitchen."
+}

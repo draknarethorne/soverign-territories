@@ -222,13 +222,31 @@ def tier_workspaces(cfg, tier, hero=None, group=None, stage=None):
 
 def hero_groups():
     """{hero: group} from prompts/<group>/<Hero>/."""
+    return {hero: group for hero, (group, _division) in hero_homes().items()}
+
+
+def hero_homes():
+    """{hero: (group, division or None)} from prompts/<group>/[<division>/]<Hero>/; a division folder is one listed in data/art/_settings/groups.json."""
     out = {}
     for g in sorted(PROMPTS.iterdir()):
         if g.is_dir() and not g.name.startswith(("_", ".")):
+            divs = art_layout.divisions(g.name)
             for h in sorted(g.iterdir()):
-                if h.is_dir() and not h.name.startswith(("_", ".")):
-                    out[h.name] = g.name
+                if not h.is_dir() or h.name.startswith(("_", ".")):
+                    continue
+                if h.name in divs:
+                    for hh in sorted(h.iterdir()):
+                        if hh.is_dir() and not hh.name.startswith(("_", ".")):
+                            out[hh.name] = (g.name, h.name)
+                else:
+                    out[h.name] = (g.name, None)
     return out
+
+
+def hero_dir(hero):
+    """The folder of a hero below her group in the output tree: 'female/Seraphine' for a division group, 'Draknara' otherwise."""
+    _group, division = hero_homes().get(hero, (None, None))
+    return f"{division}/{hero}" if division else hero
 
 
 def engine_roots(cfg):
@@ -254,14 +272,15 @@ def workspace_subdir(ws, wf):
     first in a workspace that serves several heroes. Curated and test workflows are placed by CURATED_DIR and TEST_DIR instead."""
     s = save_node(wf)
     parts = s["widgets_values"][0].split("/") if s else []
-    if len(parts) < 4 or parts[2].startswith(("_", ".")):
+    n = 2 if len(parts) > 1 and parts[1] in art_layout.divisions(parts[0]) else 1  # index of the hero folder (a division sits before it)
+    if len(parts) < n + 3 or parts[n + 1].startswith(("_", ".")):
         return pathlib.Path()
-    sub = pathlib.Path(*parts[2:-1])
+    sub = pathlib.Path(*parts[n + 1:-1])
     if ws in hero_groups():
         return sub
     if load_cfg().get("layouts", {}).get(ws) == "stage-first":
-        return sub / parts[1]  # a batch workspace: one stage and family holds every hero side by side
-    return pathlib.Path(parts[1]) / sub
+        return sub / parts[n]  # a batch workspace: one stage and family holds every hero side by side
+    return pathlib.Path(*parts[1:n + 1]) / sub
 
 
 def special_dir(ws, base, hero):
@@ -370,12 +389,12 @@ def get_values(wf):
 def curated_prefix(group, hero, name):
     """Hand-curated workflows write to <group>/<Hero>/_curated/<name>, apart from the generated art (the sort prefix is not part of the output name)."""
     name = plain_name(name)
-    return f"{group}/{hero}/_curated/{name[:-5] if name.endswith('.json') else name}"
+    return f"{group}/{hero_dir(hero)}/_curated/{name[:-5] if name.endswith('.json') else name}"
 
 
 def test_prefix(group, hero, name):
     name = plain_name(name)
-    return f"{group}/{hero}/_test/{name[:-5] if name.endswith('.json') else name}"
+    return f"{group}/{hero_dir(hero)}/_test/{name[:-5] if name.endswith('.json') else name}"
 
 
 def set_prefix(wf, prefix):
@@ -508,17 +527,16 @@ def prompt_index(cfg, engine="qwen"):
         rel = p.relative_to(PROMPTS)
         if "_archive" in rel.parts or len(rel.parts) < 4 or rel.parts[0] in cfg.get("skipGroups", []):
             continue
-        group, hero = rel.parts[0], rel.parts[1]
-        stagedir, family = art_layout.parse_dirs(rel.parts[2:-1])  # prompts sit in the pipeline phase folders, which are also the output folders
+        group, division, hero, dirs, _file = art_layout.split_under(rel.parts)
+        stagedir, family = art_layout.parse_dirs(dirs)  # prompts sit in the pipeline phase folders, which are also the output folders
         if (stagedir == "video") != (engine == "minimax"):  # video prompts feed only the MiniMax engine
             continue
         stem = p.stem
         if not stem.startswith(hero + "_"):
             continue
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
-        dirs = list(rel.parts[2:-1])
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
-                    "prefix": "/".join([group, hero] + dirs + [name])})
+                    "prefix": "/".join([group] + ([division] if division else []) + [hero] + dirs + [name])})
     return out
 
 

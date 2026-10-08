@@ -1,0 +1,43 @@
+{
+  "testBed": true,
+  "name": "Elarion Skyharrow",
+  "profile": {
+    "element": "Wind",
+    "alignment": "Free-spirited (good)",
+    "alignmentRank": 4,
+    "archetype": "Herald of storms",
+    "inspiredBy": "the messenger and revelation angels",
+    "wings": "a pair of long, slender storm-grey wings swept back, built for speed",
+    "pair": "gavrielle",
+    "pet": "data/art/pets/angel-primes/gale.json"
+  },
+  "art": {
+    "palette": {
+      "primaryColor": "Storm Sky Blue",
+      "accentColors": [
+        "Slate Grey",
+        "Silver"
+      ],
+      "metal": "steel",
+      "magicColor": "pale storm-white",
+      "gemColor": "blue topaz",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColorNegatives": [],
+      "skinColorNegatives": [],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/low-ponytail-sleek.json"
+    },
+    "physique": {
+      "build": "Slim, agile, long-limbed build; light on his feet",
+      "chest": "Lean, defined chest",
+      "arms": "Long, lean, wiry arms",
+      "waist": "Narrow waist",
+      "legs": "Long, lean, springy legs",
+      "distinguishingMarks": [],
+      "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
+    }
+  },
+  "notes": "Angel Primes test-bed hero (group: angel-primes), no gameplay card. Eyes, hair colour and skin are adaptive wording (the reference photo's own likeness is enhanced, not replaced); the physique, palette scheme, element, alignment and pet are this angel's own. Part of the Oct 2026 clean test-bed: ten good-to-evil pairs of one female and one male angel per element."
+}

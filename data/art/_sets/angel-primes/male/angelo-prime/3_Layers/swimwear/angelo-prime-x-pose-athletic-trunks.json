@@ -1,0 +1,14 @@
+{
+  "artId": "angelo-prime-x-pose-athletic-trunks",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo-prime.json",
+  "name": "Athletic Trunks",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/trunks/athletic-trunks.json"
+  },
+  "template": "data/art/_templates/heroes/pose-male-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/3_Layers/swimwear/Angelo_X_Pose_Athletic_Trunks.txt",
+  "denoise": "~1.0",
+  "notes": "Swimwear library test (male)."
+}

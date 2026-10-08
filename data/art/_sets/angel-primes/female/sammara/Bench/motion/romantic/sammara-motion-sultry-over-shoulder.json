@@ -1,0 +1,10 @@
+{
+  "artId": "sammara-motion-sultry-over-shoulder",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/sammara.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Sammara/Bench/motion/romantic/Sammara_Motion_Romantic_SultryOverShoulder.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/romantic/sultry-over-shoulder.json"
+}

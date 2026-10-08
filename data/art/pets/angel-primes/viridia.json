@@ -3,7 +3,7 @@
   "name": "Viridia",
   "kind": "viper",
   "element": "Poison",
-  "bondedTo": "data/art/heroes/angel-primes/sammara.json",
+  "bondedTo": "data/art/heroes/angel-primes/female/sammara.json",
   "size": "long",
   "look": "a sinuous emerald viper banded in violet, its scales jewel-bright and its eyes amethyst, a thin trace of green venom at its fangs",
   "temperament": "Patient, sly and affectionate in a dangerous way; it whispers what it overhears",

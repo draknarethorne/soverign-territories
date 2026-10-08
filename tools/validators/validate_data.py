@@ -58,7 +58,7 @@ def art_piece_files():
         parts = p.relative_to(ROOT / "data/art").parts
         if parts[0] in ("_schema", "_sets", "_kits", "_settings"):
             continue
-        if parts[0] == "heroes" and len(parts) == 3:
+        if parts[0] == "heroes" and (len(parts) == 3 or (len(parts) == 4 and parts[2] in art_layout.divisions(parts[1]))):
             continue  # identity, not a piece
         if parts[0] == "dragons":
             continue
@@ -73,7 +73,11 @@ def art_piece_files():
 
 
 def hero_identity_files():
-    return [p for p in rglob("data/art/heroes/*/*.json")]
+    out = list(rglob("data/art/heroes/*/*.json"))
+    for group, divs in art_layout.divisions().items():
+        for div in divs:
+            out += rglob(f"data/art/heroes/{group}/{div}/*.json")
+    return sorted(out)
 
 
 REGISTRY = [
@@ -205,6 +209,11 @@ def check_art_cards(report):
         d = load(f)
         where = rel(f)
         group = f.relative_to(ROOT / "data/art/_sets").parts[0]
+        set_parts = f.relative_to(ROOT / "data/art/_sets").parts
+        division = set_parts[1] if len(set_parts) > 2 and set_parts[1] in art_layout.divisions(group) else None
+        lead = 3 if division else 2  # folders before the phase folders: <group>/[<division>/]<slug>
+        if art_layout.divisions(group) and division is None:
+            report.error(where, f"group {group} files its cards below a division folder ({', '.join(art_layout.divisions(group))}), see _settings/groups.json")
         for key in ("heroArt", "template"):
             if key in d and not (ROOT / d[key]).exists():
                 report.error(where, f"{key} {d[key]} does not exist")
@@ -233,7 +242,7 @@ def check_art_cards(report):
         # Staged vs complete scenes: a staged scene expects a pre-rendered stage image, so it must say
         # so in its name (and use the staged template); every other scene must be complete from the A-pose.
         if d["stage"] == "scene":
-            slug = f.relative_to(ROOT / "data/art/_sets").parts[1]
+            slug = set_parts[lead - 1]
             hero = pathlib.PurePosixPath(d.get("output", "")).name
             if f.stem != d["artId"]:
                 report.error(where, f"scene file name must equal its artId ({d['artId']}.json)")
@@ -250,19 +259,21 @@ def check_art_cards(report):
         # (tools/generators/art_layout.py). Hair and motion cards name their own family in their output.
         if out:
             want = art_layout.card_dirs(d, group, ROOT)
-            card_dirs = list(f.relative_to(ROOT / "data/art/_sets").parts[2:-1])
+            card_dirs = list(set_parts[lead:-1])
             where_to = "/".join(want) or "(slug root)"
             if card_dirs != want:
                 report.error(where, f"card file must sit in {where_to}/ (the phase and family come from the card, see tools/generators/art_layout.py)")
-            if out.split("/")[3:-1] != want:
+            if art_layout.split_output(out)[3] != want:
                 report.error(where, f"output {out} must sit in the folder '{where_to}' below its hero folder")
+            if art_layout.split_output(out)[1] != division:
+                report.error(where, f"output {out} must use the same division folder as the card file ({division or 'none'})")
         if out:
             if out.split("/")[1] != group:
                 report.error(where, f"output {out} is not under prompts/{group}/")
             folder = stages["cardStageToFolder"].get(d["stage"], d["stage"])
             if folder not in known_folders:
                 report.error(where, f"stage folder '{folder}' is in no class (studio or scene) in _schema/stages.json")
-            elif len(out.split("/")) < 5 or art_layout.parse_dirs(out.split("/")[3:-1])[0] != folder:
+            elif len(out.split("/")) < 5 or art_layout.parse_dirs(art_layout.split_output(out)[3])[0] != folder:
                 report.error(where, f"output {out} must sit in the '{folder}' folder for stage '{d['stage']}'")
             if out in outputs:
                 report.error(where, f"output {out} is also produced by {outputs[out]} (one would overwrite the other)")

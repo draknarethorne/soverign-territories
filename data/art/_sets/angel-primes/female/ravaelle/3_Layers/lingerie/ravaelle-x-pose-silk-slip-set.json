@@ -1,0 +1,13 @@
+{
+  "artId": "ravaelle-x-pose-silk-slip-set",
+  "kind": "base-set",
+  "stage": "pose",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/3_Layers/lingerie/Ravaelle_X_Pose_SilkSlipSet.txt",
+  "denoise": "~1.0",
+  "components": {
+    "underlayer": "data/art/wardrobe/swimwear/lingerie/silk-slip-set.json"
+  },
+  "notes": "UNDERLAYER TEST: fed the Bare image; only the underlayer piece differs."
+}

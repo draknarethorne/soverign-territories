@@ -706,7 +706,9 @@ def iter_card_paths(group="*", slug="*", stage="*", family=None):
     """Every card under data/art/_sets/<group>/<slug>/ (the folders below the slug are the pipeline phase and family), narrowed by the
     card's own stage (as written in the card or as its prompt folder, e.g. pose or poses) and by a family folder of its output."""
     base = ROOT / "data/art/_sets"
-    paths = sorted(base.glob(f"{group}/{slug}/**/*.json"))
+    paths = sorted(base.glob(f"{group}/**/*.json"))
+    if slug != "*":  # the slug folder follows the group, or the group's division folder
+        paths = [p for p in paths if slug in p.relative_to(base).parts[1:3]]
     if stage == "*" and not family:
         return paths
     keep = []

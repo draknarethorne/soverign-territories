@@ -1,0 +1,10 @@
+{
+  "artId": "haniya-motion-cafe-seated",
+  "kind": "base-set",
+  "stage": "motion",
+  "heroArt": "data/art/heroes/angel-primes/female/haniya.json",
+  "template": "data/art/_templates/heroes/motion-human.txt",
+  "output": "prompts/angel-primes/female/Haniya/Bench/motion/photo/Haniya_Motion_Photo_CafeSeated.txt",
+  "denoise": "~0.4-0.6",
+  "component": "data/art/motion/photo/cafe-seated.json"
+}

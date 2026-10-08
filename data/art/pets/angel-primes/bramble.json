@@ -3,7 +3,7 @@
   "name": "Bramble",
   "kind": "bear",
   "element": "Grass",
-  "bondedTo": "data/art/heroes/angel-primes/verael.json",
+  "bondedTo": "data/art/heroes/angel-primes/male/verael.json",
   "size": "huge",
   "look": "a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes",
   "temperament": "Gentle, slow and enormous; it sits where it is told and eats berries from his hand",

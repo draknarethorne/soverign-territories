@@ -16,7 +16,7 @@ The front-facing A-pose and the default glamour-smile head are the hero's existi
 
 Example:
   python tools/generators/scaffold_studio_library.py --group angel-primes --slug angelica-prime \
-      --hero Angelica --underlayer data/art/heroes/angel-primes/angelica-prime/wearing/angelic-pastel-bikini.json
+      --hero Angelica --underlayer data/art/heroes/angel-primes/female/angelica-prime/wearing/angelic-pastel-bikini.json
 """
 import argparse
 import json
@@ -74,14 +74,15 @@ def main():
     ap.add_argument("--group", required=True, help="_sets group, e.g. angel-primes")
     ap.add_argument("--slug", required=True, help="hero slug, e.g. angelica-prime")
     ap.add_argument("--hero", required=True, help="prompts/<group>/<hero>/ folder name, e.g. Angelica")
-    ap.add_argument("--identity", help="hero identity json (default: data/art/heroes/<group>/<slug>.json)")
+    ap.add_argument("--identity", help="hero identity json (default: data/art/heroes/<group>/[<division>/]<slug>.json)")
+    ap.add_argument("--division", default="", help="division folder of a group that has them (female, male ...), see _settings/groups.json")
     ap.add_argument("--underlayer", help="underlayer piece to keep identical to the hero's A-pose (pose views only)")
     args = ap.parse_args()
 
-    identity = args.identity or f"data/art/heroes/{args.group}/{args.slug}.json"
+    identity = args.identity or "/".join(filter(None, ["data/art/heroes", args.group, args.division, args.slug + ".json"]))
     if not (ROOT / identity).exists():
         raise SystemExit(f"identity not found: {identity}")
-    base = ROOT / "data/art/_sets" / args.group / args.slug
+    base = ROOT / "data/art/_sets" / args.group / args.division / args.slug
     PV, HV, HC = ("/".join(art_layout.dirs_for(s, [f])) for s, f in (("poses", "views"), ("head", "views"), ("head", "closeups")))
 
     def card(art_id, stage, name, template, output, denoise, components, note):
@@ -97,25 +98,25 @@ def main():
             comps["underlayer"] = args.underlayer
         write(base / PV / f"{args.slug}-view-{slug}.json", card(
             f"{args.slug}-view-{slug}", "pose", name, POSE_VIEW_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/{PV}/{args.hero}_View_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{PV}/{args.hero}_View_{slug.replace('-', '_')}.txt",
             "~0.5-0.7", comps, "Reference-library body view, edited from the front A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_VIEWS:
         write(base / HV / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/{HV}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HV}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"view": piece}, "Reference-library head view, zoomed from the A-pose. Scaffolded."))
 
     for slug, name, piece in HEAD_FRAMING:
         write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"framing": piece}, "Reference-library head framing (front view). Scaffolded."))
 
     for slug, name, piece in HEAD_EXPRESSIONS:
         write(base / HC / f"{args.slug}-head-{slug}.json", card(
             f"{args.slug}-head-{slug}", "head", name, HEAD_TEMPLATE,
-            f"prompts/{args.group}/{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
+            f"prompts/{args.group}/{args.division + '/' if args.division else ''}{args.hero}/{HC}/{args.hero}_Head_{slug.replace('-', '_')}.txt",
             "~0.4-0.6", {"expression": piece}, "Reference-library head expression (front view). Scaffolded."))
 
 

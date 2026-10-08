@@ -4,7 +4,7 @@
   "slug": "urael",
   "element": "Fire",
   "alignmentRank": 8,
-  "identity": "data/art/heroes/angel-primes/urael.json",
+  "identity": "data/art/heroes/angel-primes/male/urael.json",
   "underlayers": [
     "wardrobe/swimwear/trunks/athletic-trunks",
     "wardrobe/swimwear/trunks/swim-brief"
@@ -30,8 +30,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/intense/battle-cry",
     "background": "backgrounds/fantasy/elemental/rising-flames",
-    "back": "heroes/angel-primes/urael/wings/urael-wings",
-    "companion": "heroes/angel-primes/urael/companion/ember-beside",
+    "back": "heroes/angel-primes/male/urael/wings/urael-wings",
+    "companion": "heroes/angel-primes/male/urael/companion/ember-beside",
     "effects": "Embers and licks of flame rise from the ground and drift off the wings, a warm {{MAGIC}} glow on everything nearby."
   }
 }

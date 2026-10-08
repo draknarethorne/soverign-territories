@@ -4,7 +4,7 @@
   "slug": "nyxene",
   "element": "Darkness",
   "alignmentRank": 10,
-  "identity": "data/art/heroes/angel-primes/nyxene.json",
+  "identity": "data/art/heroes/angel-primes/female/nyxene.json",
   "underlayers": [
     "wardrobe/swimwear/lingerie/bustier-set",
     "wardrobe/swimwear/backless/backless-halter-one-piece",
@@ -31,8 +31,8 @@
     "pose": "motion/standing/three-quarter-glamour",
     "expression": "motion/expressions/composed/solemn-ritual",
     "background": "backgrounds/fantasy/elemental/umbral-shade-realm",
-    "back": "heroes/angel-primes/nyxene/wings/nyxene-wings",
-    "companion": "heroes/angel-primes/nyxene/companion/shade-beside",
+    "back": "heroes/angel-primes/female/nyxene/wings/nyxene-wings",
+    "companion": "heroes/angel-primes/female/nyxene/companion/shade-beside",
     "effects": "Tendrils of dark violet shadow coil around the figure, scorched feather fragments and ember-sparks drifting upward."
   }
 }
