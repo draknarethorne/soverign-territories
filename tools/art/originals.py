@@ -4,9 +4,14 @@
 The library is <work root>/<Root>/<Name>/gallery (your originals) and <Name>/gallery_944x1104 (what this makes), for the roots
 Angels, Models, Prospects and Artists (workspaces.json paths.photoRoots). For every <Name> folder that has a gallery:
 
-  1. RENAME  each original after the FOLDER it is in:  <name>_image_<id>.jpg, <name>_screenshot_<date>_<time>.jpg, <name>_<description>.ext.
-             Move an original from Prospects/Various/gallery into Angels/Angelica/gallery and it becomes angelica_image_<id>
-             (the id never changes). A rename that would overwrite another file is skipped with a warning, never forced.
+  1. RENAME  each original after the FOLDER it is in. Whatever it was called before (another angel, a sister, a prospect, an artist, a facebook
+             download, a phone screenshot), the id in the name is kept and only the prefix changes:
+               azaline_image_123.jpg, eva_emily_image_123.jpg, various_image_123.jpg, facebook_<time>_123.jpg  ->  angelica_image_123.jpg
+               Screenshot_<date>_<time>_Facebook.jpg                                                          ->  angelica_screenshot_<date>_<time>_facebook.jpg
+               azaline_photo_wings.jpg (another folder's prefix, no id)                                       ->  angelica_photo_wings.jpg
+             A name with no id at all (a Google download such as `images (3).jpeg`) becomes angelica_images_3_h<8 hex>.jpg: its words plus an id made from
+             the picture's bytes, so it is unique and keeps the same id when you move it on. A rename that would overwrite another file is skipped with a
+             warning, never forced; two files with the same picture id are flagged as probable duplicates.
   2. SCALE   each original onto a cream 944x1104 canvas (shape kept, EXIF rotation applied) as <name>_..._944x1104.png.
              A copy that is already newer than its original is left alone (--force makes them all again).
   3. PRUNE   every image in gallery_944x1104 that no original in that folder's gallery makes any more (you deleted or moved the
@@ -34,32 +39,51 @@ import comfy_workflows as cw  # noqa: E402
 CREAM = (245, 240, 230)
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 EXT = r"(?:jpe?g|png|webp|bmp)"
+# Names that carry their own unique id keep it, whatever prefix they had before: the prefix is simply swapped for the folder's.
 RULES = [
     (re.compile(rf"^facebook_.*_(\d+)\.{EXT}$", re.I), lambda m, p: f"{p}_image_{m[1]}"),
-    (re.compile(rf"^Screenshot_(\d{{8}})_(\d{{6}})(?:_.*)?\.{EXT}$", re.I), lambda m, p: f"{p}_screenshot_{m[1]}_{m[2]}"),
-    (re.compile(rf"^.*_image_(\d+)\.{EXT}$", re.I), lambda m, p: f"{p}_image_{m[1]}"),
-    (re.compile(rf"^.*_screenshot_(\d{{8}}_\d{{6}})\.{EXT}$", re.I), lambda m, p: f"{p}_screenshot_{m[1]}"),
+    (re.compile(rf"^(?:.*_)?image_(\d+)\.{EXT}$", re.I), lambda m, p: f"{p}_image_{m[1]}"),
+    (re.compile(rf"^(?:.*_)?screenshot_(\d{{8}})_(\d{{6}})(?:_(.*?))?\.{EXT}$", re.I),
+     lambda m, p: f"{p}_screenshot_{m[1]}_{m[2]}" + (f"_{re.sub('[^a-z0-9]+', '', m[3].lower())}" if m[3] and re.sub("[^a-z0-9]+", "", m[3].lower()) else "")),
     (re.compile(rf"^(?:Drakn\w+|[a-zA-Z0-9\-]+)\s+(Base|Face.*|Pose.*)\.{EXT}$", re.I), lambda m, p: f"{p}_" + re.sub(r"\s+", "_", m[1].lower().strip())),
 ]
+SLUG_MAX = 24
 
 
 def prefix_of(folder):
     return re.sub(r"\s+", "_", folder.lower().strip())
 
 
-def standard_name(name, prefix):
-    """The name an original gets in the folder with this prefix."""
-    stem, ext = os.path.splitext(name[1:] if name.startswith(".") else name)
+def content_id(path):
+    """A short id from the picture's bytes: the same picture keeps it when it is renamed or moved, two different pictures never share it."""
+    import hashlib
+    return "h" + hashlib.sha1(pathlib.Path(path).read_bytes()).hexdigest()[:8]
+
+
+def standard_name(name, prefix, known=(), digest=None):
+    """The name an original gets in the folder with this prefix.
+
+    An id in the name (facebook, `..._image_<id>`, a screenshot's date and time) is kept and only the prefix changes, so an original moved between an angel, a
+    sister, a prospect or an artist is renamed for its new folder. A name that already starts with another known folder's prefix (`azaline_photo_x`) swaps
+    that prefix. Anything else (a Google download, `images (3).jpeg`) becomes <prefix>_<its words>_h<id from the picture's bytes>, so it is unique and stays
+    the same when moved. `known` are the prefixes of all library folders (longest first); `digest` is that id, or a function that makes it."""
+    plain = name[1:] if name.startswith(".") else name
+    stem, ext = os.path.splitext(plain)
     ext = ext.lower()
     ext = ".jpg" if ext == ".jpeg" else ext
     for pattern, build in RULES:
-        m = pattern.match(name[1:] if name.startswith(".") else name)
+        m = pattern.match(plain)
         if m:
             return build(m, prefix) + ext
-    if stem.lower().startswith(prefix + "_"):
+    low = stem.lower()
+    if low.startswith(prefix + "_"):
         return stem + ext
-    tail = re.sub(r"\s+", "_", stem.lower().strip())
-    return f"{prefix}_{tail}{ext}"
+    for other in known:
+        if low.startswith(other + "_") and len(low) > len(other) + 1:
+            return f"{prefix}_{stem[len(other) + 1:]}{ext}"
+    slug = re.sub(r"[^a-z0-9]+", "_", low).strip("_")[:SLUG_MAX].strip("_") or "image"
+    ident = digest() if callable(digest) else digest
+    return f"{prefix}_{slug}_{ident}{ext}" if ident else f"{prefix}_{slug}{ext}"
 
 
 def images(folder):
@@ -103,7 +127,7 @@ def process_folder(folder, label, size, args, tally):
     taken = {p.name.lower() for p in files}
     sources = []
     for p in files:
-        new = standard_name(p.name, prefix)
+        new = standard_name(p.name, prefix, args.known, lambda p=p: content_id(p))
         path, final = p, p.name
         if p.name != new:
             case_only = p.name.lower() == new.lower()
@@ -125,6 +149,14 @@ def process_folder(folder, label, size, args, tally):
             final = new
             tally["renamed"] += 1
         sources.append((path, final))
+    ids = {}
+    for _, final in sources:
+        m = cw.PHOTO_KEY.search(final)
+        if m:
+            ids.setdefault(m[1].lower(), []).append(final)
+    for names in ids.values():
+        if len(names) > 1:
+            print(f"  WARNING the same picture id is in {len(names)} files, probably duplicates (delete one): {', '.join(names)}")
 
     wanted, made = {}, 0
     for path, final in sources:
@@ -187,6 +219,8 @@ def main(argv=None):
     if not roots:
         sys.exit(f"No photo folders found under {args.root or cw.work_root(cfg)}")
     print(f"library: {', '.join(r.name for r in roots)}   size {size[0]}x{size[1]}   " + ("" if args.apply else "(preview; use --apply)"))
+    # every folder's prefix, longest first: an original that still carries another folder's prefix gets this folder's instead
+    args.known = sorted({prefix_of(f.name) for r in roots for f in r.iterdir() if f.is_dir()} | {"various"}, key=len, reverse=True)
     tally = {"renamed": 0, "made": 0, "pruned": 0, "skipped": 0}
     for root in roots:
         for folder in sorted(p for p in root.iterdir() if p.is_dir()):

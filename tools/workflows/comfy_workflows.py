@@ -1893,7 +1893,7 @@ def photo_library(cfg, base=None):
     return out
 
 
-PHOTO_KEY = re.compile(r"(image_\d+|screenshot_\d{8}_\d{6})", re.I)
+PHOTO_KEY = re.compile(r"(image_\d+|screenshot_\d{8}_\d{6}|(?<=_)h[0-9a-f]{8}(?=_|\.))", re.I)
 
 
 def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):

@@ -63,12 +63,63 @@ class OriginalsTests(unittest.TestCase):
     def test_names_follow_the_folder(self):
         self.assertEqual(originals.standard_name("facebook_17000_123.jpeg", "angelica"), "angelica_image_123.jpg")
         self.assertEqual(originals.standard_name("various_image_123.JPG", "angelica"), "angelica_image_123.jpg")
-        self.assertEqual(originals.standard_name("Screenshot_20260922_114223_Facebook.png", "remiah"), "remiah_screenshot_20260922_114223.png")
+        self.assertEqual(originals.standard_name("Screenshot_20260922_114223_Facebook.png", "remiah"), "remiah_screenshot_20260922_114223_facebook.png")
         self.assertEqual(originals.standard_name("various_screenshot_20260922_114223.jpg", "remiah"), "remiah_screenshot_20260922_114223.jpg")
         self.assertEqual(originals.standard_name("Draknara Face Left.png", "draknara"), "draknara_face_left.png")
-        self.assertEqual(originals.standard_name("Some Walk.png", "drakness"), "drakness_some_walk.png")
+        self.assertEqual(originals.standard_name("Some Walk.png", "drakness", digest="habcdef12"), "drakness_some_walk_habcdef12.png")
         self.assertEqual(originals.standard_name("Some Pose.png", "drakness"), "drakness_pose.png")
         self.assertEqual(originals.standard_name("drakneta_screenshot_20260918_101800_facebook.jpg", "drakneta"), "drakneta_screenshot_20260918_101800_facebook.jpg")
+
+    def test_shuffling_between_angels_sisters_prospects_and_artists_swaps_only_the_prefix(self):
+        known = ["eva_emily", "eva", "azaline", "drakneta", "various"]
+        n = lambda name: originals.standard_name(name, "angelica", known)  # noqa: E731
+        self.assertEqual(n("azaline_image_7508203306632658676.jpg"), "angelica_image_7508203306632658676.jpg")
+        self.assertEqual(n("eva_emily_image_555.jpg"), "angelica_image_555.jpg")
+        self.assertEqual(n("drakneta_screenshot_20260918_101800_facebook.jpg"), "angelica_screenshot_20260918_101800_facebook.jpg")
+        self.assertEqual(n("azaline_photo_wings.jpg"), "angelica_photo_wings.jpg")
+        self.assertEqual(n("eva_emily_pose_1.jpg"), "angelica_pose_1.jpg", "the longest known prefix wins")
+        self.assertEqual(n("angelica_image_5.jpg"), "angelica_image_5.jpg", "already right")
+
+    def test_a_download_with_no_id_gets_one_from_its_bytes_and_keeps_it_when_moved(self):
+        self.assertEqual(originals.standard_name("images (3).jpeg", "angelica", [], "h1234abcd"), "angelica_images_3_h1234abcd.jpg")
+        self.assertEqual(originals.standard_name("angelica_images_3_h1234abcd.jpg", "azaline", ["angelica"], "hother000"), "azaline_images_3_h1234abcd.jpg")
+        p = self.tmp / "a.jpg"
+        jpeg(p, (10, 10))
+        q = self.tmp / "b.jpg"
+        shutil.copy(p, q)
+        self.assertEqual(originals.content_id(p), originals.content_id(q))
+        jpeg(q, (12, 10))
+        self.assertNotEqual(originals.content_id(p), originals.content_id(q))
+
+    def test_a_download_moved_between_folders_end_to_end(self):
+        src = self.gallery("Prospects", "Various") / "download (2).jpg"
+        jpeg(src)
+        self.run_tool()
+        first = self.names("Prospects", "Various", "gallery")
+        self.assertEqual(len(first), 1)
+        self.assertRegex(first[0], r"^various_download_2_h[0-9a-f]{8}\.jpg$")
+        moved = self.gallery("Angels", "Angelica") / first[0]
+        shutil.move(self.lib / "Prospects" / "Various" / "gallery" / first[0], moved)
+        self.run_tool()
+        now = self.names("Angels", "Angelica", "gallery")
+        self.assertEqual(now, [first[0].replace("various_", "angelica_")], "same words, same id, new prefix")
+
+    def test_a_shuffle_between_two_angels_renames_for_the_new_folder(self):
+        g = self.gallery("Angels", "Azaline")
+        jpeg(g / "azaline_image_77.jpg")
+        self.gallery("Angels", "Angelica")
+        self.run_tool()
+        shutil.move(g / "azaline_image_77.jpg", self.lib / "Angels" / "Angelica" / "gallery" / "azaline_image_77.jpg")
+        self.run_tool()
+        self.assertEqual(self.names("Angels", "Angelica", "gallery"), ["angelica_image_77.jpg"])
+        self.assertEqual(self.names("Angels", "Angelica"), ["angelica_image_77_94x110.png"])
+        self.assertEqual(self.names("Angels", "Azaline"), [])
+
+    def test_two_files_with_the_same_picture_id_are_flagged(self):
+        g = self.gallery("Angels", "Angelica")
+        jpeg(g / "Screenshot_20260902_203835_Facebook.jpg")
+        jpeg(g / "angelica_screenshot_20260902_203835.jpg")
+        self.assertIn("probably duplicates", self.run_tool())
 
     def test_a_preview_changes_nothing(self):
         jpeg(self.gallery("Prospects", "Various") / "various_image_1.jpg")
@@ -119,10 +170,11 @@ class OriginalsTests(unittest.TestCase):
     def test_two_files_for_one_name_are_reported_not_overwritten(self):
         g = self.gallery("Angels", "Angelica")
         jpeg(g / "Foo Bar.jpg")
-        jpeg(g / "angelica_foo_bar.jpg")
+        shutil.copy(g / "Foo Bar.jpg", g / "foo-bar.jpg")  # the same picture under two spellings makes the same new name
         out = self.run_tool()
         self.assertIn("already used", out)
-        self.assertEqual(self.names("Angels", "Angelica", "gallery"), ["Foo Bar.jpg", "angelica_foo_bar.jpg"])
+        self.assertEqual(len(self.names("Angels", "Angelica", "gallery")), 2)
+        self.assertEqual(len(self.names("Angels", "Angelica")), 1)
 
     def test_the_copy_is_the_standard_size_shape_kept_and_a_second_run_changes_nothing(self):
         jpeg(self.gallery("Angels", "Angelica") / "angelica_image_1.jpg", (60, 30))
