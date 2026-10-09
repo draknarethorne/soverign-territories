@@ -22,7 +22,8 @@
 ## Elements (10 + Neutral)
 
 Darkness · Fire · Grass · Ice · Water · Light · Earth · Lightning · Wind · Poison ·
-**Neutral** (element-agnostic cards)
+**Neutral** (element-agnostic cards: tactics, items, utility and lower-tier cards, and the Angel Primes herald
+pair Angelica and Angelo; there are no Neutral Drakn sisters, Drakn Bound heroes or Elder Dragons, on purpose)
 
 ## Rarity tiers (0–7)
 
@@ -41,6 +42,8 @@ Darkness · Fire · Grass · Ice · Water · Light · Earth · Lightning · Wind
 
 - **Sovereign Dawn** — the launch series (`SD-###` numbering; 219 cards; see the series
   decision in [`sovereign_dawn_codex.md`](sovereign_dawn_codex.md)).
+- **Angel Primes** — a planned exclusive series (`AP-###`, 22 cards; women AP-001 to AP-011, men AP-012 to AP-022;
+  see [`angel_primes_codex.md`](angel_primes_codex.md)). Not in the card data yet.
 - Expansion name pool: **Nether Realm** · **Primal Wilds** ·
   **Celestial Gate** · **Awakening** · **Shadow Sovereign**.
 
@@ -77,7 +80,8 @@ Darkness · Fire · Grass · Ice · Water · Light · Earth · Lightning · Wind
 ## Creature types / species
 
 > Broad taxonomy values (Humanoid, Dragon, Beast, Elemental, Undead, Construct, Spirit) sit
-> alongside specific species used for creature cards and bonded companions.
+> alongside specific species used for creature cards and bonded companions. The Drakn sisters' `companion` is the
+> name of their Elder Dragon (Umbrath, Pyraxis, Sylvanya, Glaciora, Aquaria, Lumira, Terrador, Fulgora, Zephyros, Venomis).
 
 | | | | |
 | --- | --- | --- | --- |

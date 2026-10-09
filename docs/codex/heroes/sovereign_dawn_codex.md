@@ -13,7 +13,7 @@
 ## Roster shape
 
 - **10 female heroes** — the **"Drakn" line** (`7 - Transcendent`), each paired to an Elder
-  Dragon of the same element. Each has a Dragon pet companion.
+  Dragon of the same element. Each has that Elder Dragon as her pet companion (the card's `companion`).
 - **10 male heroes** (`6 - Mythic`) — only **Draknare Thorne** carries the Drakn name; the
   rest are standalone signature characters.
 - **10 Elder Dragons** (`6 - Mythic`) — aligned by element to the female heroes. They
@@ -28,16 +28,16 @@
 
 | Card ID | Card Name        | Rarity           | Element   | Archetype           | Class       | Creature Type | Race      | Sex    | Pet Companion |
 | ------- | ---------------- | ---------------- | --------- | ------------------- | ----------- | ------------- | --------- | ------ | ------------- |
-| SD-001  | Drakness Thorne  | 7 - Transcendent | Darkness  | Summoner / Spawner  | Necromancer | Humanoid      | Dark Elf  | Female | Dragon        |
-| SD-002  | Draknora Thorne  | 7 - Transcendent | Fire      | Caster / Magic      | Magician    | Humanoid      | Human     | Female | Dragon        |
-| SD-003  | Drakniya Thorne  | 7 - Transcendent | Grass     | Support / Healer    | Druid       | Humanoid      | Wood Elf  | Female | Dragon        |
-| SD-004  | Draknira Thorne  | 7 - Transcendent | Ice       | Caster / Magic      | Wizard      | Humanoid      | High Elf  | Female | Dragon        |
-| SD-005  | Draknisa Thorne  | 7 - Transcendent | Water     | Control / Disruptor | Enchanter   | Humanoid      | Human     | Female | Dragon        |
-| SD-006  | Drakniss Thorne  | 7 - Transcendent | Light     | Support / Healer    | Cleric      | Humanoid      | Human     | Female | Dragon        |
-| SD-007  | Draknara Thorne  | 7 - Transcendent | Earth     | Specialist / Hybrid | Shaman      | Humanoid      | Barbarian | Female | Dragon        |
-| SD-008  | Drakneta Thorne  | 7 - Transcendent | Lightning | Summoner / Spawner  | Summoner    | Humanoid      | Celestial | Female | Dragon        |
-| SD-009  | Draknava Thorne  | 7 - Transcendent | Wind      | Support / Healer    | Bard        | Humanoid      | Wood Elf  | Female | Dragon        |
-| SD-010  | Draknoxa Thorne  | 7 - Transcendent | Poison    | Control / Disruptor | Alchemist   | Humanoid      | Dark Elf  | Female | Dragon        |
+| SD-001  | Drakness Thorne  | 7 - Transcendent | Darkness  | Summoner / Spawner  | Necromancer | Humanoid      | Dark Elf  | Female | Umbrath       |
+| SD-002  | Draknora Thorne  | 7 - Transcendent | Fire      | Caster / Magic      | Magician    | Humanoid      | Human     | Female | Pyraxis       |
+| SD-003  | Drakniya Thorne  | 7 - Transcendent | Grass     | Support / Healer    | Druid       | Humanoid      | Wood Elf  | Female  | Sylvanya      |
+| SD-004  | Draknira Thorne  | 7 - Transcendent | Ice       | Caster / Magic      | Wizard      | Humanoid      | High Elf  | Female  | Glaciora      |
+| SD-005  | Draknisa Thorne  | 7 - Transcendent | Water     | Control / Disruptor | Enchanter   | Humanoid      | Human     | Female | Aquaria       |
+| SD-006  | Drakniss Thorne  | 7 - Transcendent | Light     | Support / Healer    | Cleric      | Humanoid      | Human     | Female | Lumira        |
+| SD-007  | Draknara Thorne  | 7 - Transcendent | Earth     | Specialist / Hybrid | Shaman      | Humanoid      | Barbarian | Female  | Terrador      |
+| SD-008  | Drakneta Thorne  | 7 - Transcendent | Lightning | Summoner / Spawner  | Summoner    | Humanoid      | Celestial | Female | Fulgora       |
+| SD-009  | Draknava Thorne  | 7 - Transcendent | Wind      | Support / Healer    | Bard        | Humanoid      | Wood Elf  | Female  | Zephyros      |
+| SD-010  | Draknoxa Thorne  | 7 - Transcendent | Poison    | Control / Disruptor | Alchemist   | Humanoid      | Dark Elf  | Female | Venomis       |
 
 ---
 
@@ -62,16 +62,16 @@
 
 | Card ID | Card Name | Rarity     | Element   | Archetype       | Class        | Creature Type | Race | Sex    | Pet Companion |
 | ------- | --------- | ---------- | --------- | --------------- | ------------ | ------------- | ---- | ------ | ------------- |
-| SD-021  | Umbrath   | 6 - Mythic | Darkness  | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
-| SD-022  | Pyraxis   | 6 - Mythic | Fire      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
-| SD-023  | Sylvanya  | 6 - Mythic | Grass     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
-| SD-024  | Glaciora  | 6 - Mythic | Ice       | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
-| SD-025  | Aquaria   | 6 - Mythic | Water     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
-| SD-026  | Lumira    | 6 - Mythic | Light     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
-| SD-027  | Terrador  | 6 - Mythic | Earth     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
-| SD-028  | Fulgora   | 6 - Mythic | Lightning | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
-| SD-029  | Zephyros  | 6 - Mythic | Wind      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
-| SD-030  | Venomis   | 6 - Mythic | Poison    | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-021  | Umbrath   | 6 - Mythic | Darkness  | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Male   | n/a           |
+| SD-022  | Pyraxis   | 6 - Mythic | Fire      | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Male   | n/a           |
+| SD-023  | Sylvanya  | 6 - Mythic | Grass     | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
+| SD-024  | Glaciora  | 6 - Mythic | Ice       | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
+| SD-025  | Aquaria   | 6 - Mythic | Water     | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
+| SD-026  | Lumira    | 6 - Mythic | Light     | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
+| SD-027  | Terrador  | 6 - Mythic | Earth     | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Male   | n/a           |
+| SD-028  | Fulgora   | 6 - Mythic | Lightning | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
+| SD-029  | Zephyros  | 6 - Mythic | Wind      | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Male   | n/a           |
+| SD-030  | Venomis   | 6 - Mythic | Poison    | Aerial / Flying | Elder Dragon | Dragon        | Dragon| Female | n/a           |
 
 ---
 

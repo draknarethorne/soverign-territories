@@ -1428,7 +1428,9 @@ def cmd_make(args):
         for i in its:
             i["engine"] = engine
         if engine == "firered" and not (args.stage or args.cls):
-            its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])]
+            # the class list limits what --create builds; a FireRed workflow that already exists (an Alpha test card, a Final) is always refreshed
+            its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])
+                   or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
         its = [i for i in its if engine in cfg.get("stageEngines", {}).get(i["stage"], [engine])]  # e.g. final is FireRed only
         items += its
     if args.group:

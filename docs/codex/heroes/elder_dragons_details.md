@@ -1,44 +1,34 @@
-# Sovereign Territories — Dragon Codex: Elder Dragons (SD-021 – SD-030)
+# Sovereign Territories — Elder Dragons: Visual Architecture (SD-021 – SD-030)
 ## Visual Architecture & Elemental Morphology Matrix
 
 ---
 
-## 1. Schema Optimization: Single-Description vs. Structured Model
+## 1. What the Identity JSON Holds
 
-The baseline schema provides a concise narrative description:
+The dragon identity JSON (`data/art/dragons/elder-dragons/<name>.json`) holds the description and the structured morphology the image models need:
 
-{
-  "id": "dragons/elder-dragons/aquaria",
-  "kind": "dragon",
-  "cardId": "UNIT_AQUARIA",
-  "description": "an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum",
-  "notes": "Skeletal identity, first pass -- aligned to Draknisa Thorne (Water)..."
-}
+1. `description`: the one-sentence master description (it also gives the scale colours).
+2. `silhouette`, `scaleTexture`, `wingMembrane`, `hornsAndCrest`, `elementalVenting`: explicit mechanical tokens so flight mechanics, membranes and vents render correctly.
+3. `notes`: which sister the dragon is aligned to and why.
 
-### Recommended Adjustments for Image Generation Pipelines:
-A single prose string works well for UI tooltips, but diffusion engines (FLUX / SDXL / Qwen-VL) render anatomical deformities if flight mechanics, wing membrane textures, and elemental vents are not structured. 
-
-To bridge Codex storage and ComfyUI prompts, each dragon retains:
-1. description: The clean 1-sentence master description for the Codex card view.
-2. morphology: Explicit mechanical tokens (scaleTexture, wingMembrane, hornsAndCrest, elementalVenting, silhouette).
-3. palette: Explicit color pairing linked to the bonded Transcendent Hero's glamour palette.
+The dragon's name, element and sex are not in this file: they come from the card (`data/cards/sovereign-dawn/`, `UNIT_<NAME>`, `SD-021` to `SD-030`), and the card's `companion` field on the sister names the dragon. There is no separate palette field; the colours are in the description and echo the bonded sister's palette. The companion frames (`tools/art/dragon_companions.py`) place each dragon beside her.
 
 ---
 
 ## 2. Master Elder Dragon Registry (Mythic Tier SD-021 – SD-030)
 
-| Card ID | Dragon Name | Element | Bonded Sister | Archetype | Sex | Primary Palette |
+| Card ID | Dragon Name | Element | Bonded Sister | Archetype | Sex | Scale colours (from the description) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| SD-021 | Umbrath | Darkness | Drakness (Necro) | Aerial / Flying | Male | Obsidian, Void-Violet, Smoked Chrome |
-| SD-022 | Pyraxis | Fire | Draknora (Mage) | Aerial / Flying | Male | Molten Crimson, Blackened Basalt, Cinder Gold |
-| SD-023 | Sylvanya | Grass | Drakniya (Druid) | Aerial / Flying | Female | Deep Moss, Emerald-Jade, Living Briar Copper |
-| SD-024 | Glaciora | Ice | Draknira (Wizard) | Aerial / Flying | Female | Glacial Cyan, Permafrost White, Frosted Silver |
-| SD-025 | Aquaria | Water | Draknisa (Enchanter)| Aerial / Flying | Female | Oceanic Blue, Deep Teal, Polished Platinum |
-| SD-026 | Lumira | Light | Drakniss (Cleric) | Aerial / Flying | Female | Solar Alabaster, Radiant Pearl, Sun-Forged Gold |
-| SD-027 | Terrador | Earth | Draknara (Shaman) | Aerial / Flying | Male | Petrified Ochre, Granite Slate, Raw Bronze |
-| SD-028 | Fulgora | Lightning| Drakneta (Summoner)| Aerial / Flying | Female | Storm Cobalt, Arc Violet, Fulgurite Silver |
-| SD-029 | Zephyros | Wind | Draknava (Bard) | Aerial / Flying | Male | Sky Cerulean, Cloud-Ivory, Burnished Brass |
-| SD-030 | Venomis | Poison | Draknoxa (Alchem.) | Aerial / Flying | Female | Toxic Malachite, Bioluminescent Acid, Dark Iron |
+| SD-021 | Umbrath | Darkness | Drakness (Necro) | Aerial / Flying | Male | obsidian-black and midnight-violet |
+| SD-022 | Pyraxis | Fire | Draknora (Mage) | Aerial / Flying | Male | flame-red and burnished-gold |
+| SD-023 | Sylvanya | Grass | Drakniya (Druid) | Aerial / Flying | Female | emerald-green and forest-sage |
+| SD-024 | Glaciora | Ice | Draknira (Wizard) | Aerial / Flying | Female | glacial-cyan and frost-white |
+| SD-025 | Aquaria | Water | Draknisa (Enchanter)| Aerial / Flying | Female | deep oceanic-blue and deep-teal |
+| SD-026 | Lumira | Light | Drakniss (Cleric) | Aerial / Flying | Female | radiant rose-gold and radiant-gold |
+| SD-027 | Terrador | Earth | Draknara (Shaman) | Aerial / Flying | Male | deep burnt-sienna and antique-bronze |
+| SD-028 | Fulgora | Lightning| Drakneta (Summoner)| Aerial / Flying | Female | electric-gold and arc-white |
+| SD-029 | Zephyros | Wind | Draknava (Bard) | Aerial / Flying | Male | windswept-jade and gossamer-silver |
+| SD-030 | Venomis | Poison | Draknoxa (Alchem.) | Aerial / Flying | Female | toxic-orchid-magenta and tarnished-brass |
 
 ---
 
@@ -46,230 +36,192 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ### SD-021: Umbrath (Darkness Elder Dragon)
 * Bond: Drakness Thorne (SD-001)
-* Master Description: An Elder Dragon of armored obsidian and void-violet scales, trailing vaporous black miasma, with razor-faceted wings like fractured eclipse-glass edged in smoked chrome.
-* Biomechanical Morphology: Skeletal, predatory drake frame; elongated bat-like wing joints; hollow eye sockets burning with cold violet flame; ribcage glowing with subterranean necromantic marrow.
-* Schema Block:
+* Master Description: An Elder Dragon of obsidian-black and midnight-violet scales, wreathed in creeping shadow, wings like tattered sheets of darkness edged in amethyst light.
+* Morphology in short: Predatory, long-necked wyrm with high skeletal shoulder ridges and a razor-tapered tail; scales: overlapping matte obsidian plates with a faint midnight-violet sheen; wings: semi-translucent, tattered shadow-glass on slender razor-edged struts, edged in amethyst light; horns: swept-back crown of serrated obsidian horns with violet light in the fissures; venting: cold black shadow-mist curling from the throat and spine.
+* Identity JSON (`data/art/dragons/elder-dragons/umbrath.json`):
   * id: "dragons/elder-dragons/umbrath"
   * kind: "dragon"
-  * cardId: "SD-021"
-  * name: "Umbrath"
-  * element: "Darkness"
-  * sex: "Male"
-  * description: "an Elder Dragon of armored obsidian and void-violet scales, trailing vaporous black miasma, with razor-faceted wings like fractured eclipse-glass edged in smoked chrome"
-  * silhouette: "Predatory, long-necked wyrm with high skeletal shoulder ridges and razor-tapered tail"
-  * scaleTexture: "Overlapping jet-black obsidian plates, matte-finished with dark violet iridescence"
-  * wingMembrane: "Semi-translucent smoked eclipse-glass edged with razor-sharp smoked chrome struts"
-  * hornsAndCrest: "Swept-back crown of serrated obsidian horns with violet interior energy fissures"
-  * elementalVenting: "Black cold miasma leaking from throat valves and spinal spines"
-  * palette: ["Obsidian Black", "Void Violet", "Smoked Chrome"]
-  * notes: "Aligned to Drakness Thorne (Darkness | Necromancer). Mirroring her predatory, aristocratic silhouette."
+  * cardId: "UNIT_UMBRATH" (the card is SD-021)
+  * description: "an Elder Dragon of obsidian-black and midnight-violet scales, wreathed in creeping shadow, wings like tattered sheets of darkness edged in amethyst light"
+  * silhouette: "Predatory, long-necked wyrm with high skeletal shoulder ridges and a razor-tapered tail"
+  * scaleTexture: "Overlapping matte obsidian plates with a faint midnight-violet sheen"
+  * wingMembrane: "Semi-translucent, tattered shadow-glass on slender razor-edged struts, edged in amethyst light"
+  * hornsAndCrest: "Swept-back crown of serrated obsidian horns with violet light in the fissures"
+  * elementalVenting: "Cold black shadow-mist curling from the throat and spine"
+  * notes: "Skeletal identity, first pass -- aligned to Drakness Thorne (Darkness) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Drakness's own palette (Midnight Violet / Vibrant Amethyst / Polished Silver)."
 
 ---
 
 ### SD-022: Pyraxis (Fire Elder Dragon)
 * Bond: Draknora Thorne (SD-002)
-* Master Description: An Elder Dragon of blackened basalt plates over a pulsing core of magma-gold, exhaling rolling thermal heatwash, with broad jagged wings like cooling volcanic glass edged in burnished cinder-brass.
-* Biomechanical Morphology: Massive, muscular quad-pedal body; heavy anvil-shaped skull; thick chest plates that vent bright orange superheated gas through volcanic fissures between the scales.
-* Schema Block:
+* Master Description: An Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze.
+* Morphology in short: Heavy, broad-chested colossus with an anvil-shaped skull and armoured haunches; scales: thick overlapping scutes in flame-red and burnished gold, with glowing seams between them; wings: broad, jagged membrane like cooling molten bronze, glowing near the joints and darkening toward the edges; horns: heavy crown of jagged horns glowing dull red at the tips; venting: heat haze and ember ribbons rising from the chest and shoulders.
+* Identity JSON (`data/art/dragons/elder-dragons/pyraxis.json`):
   * id: "dragons/elder-dragons/pyraxis"
   * kind: "dragon"
-  * cardId: "SD-022"
-  * name: "Pyraxis"
-  * element: "Fire"
-  * sex: "Male"
-  * description: "an Elder Dragon of blackened basalt plates over a pulsing core of magma-gold, exhaling rolling thermal heatwash, with broad jagged wings like cooling volcanic glass edged in burnished cinder-brass"
-  * silhouette: "Heavy, broad-chested colossus drake with anvil-shaped skull and thick armored haunches"
-  * scaleTexture: "Thick volcanic basalt scutes interlocking over glowing molten-gold subdermal fissures"
-  * wingMembrane: "Charred volcanic glass texture, incandescent near the wing joints, fading to soot-black at edges"
-  * hornsAndCrest: "Heavy crown of jagged basalt horns that glow dull red at their tips"
-  * elementalVenting: "Superheated thermal ripples and ember ribbons venting continuously from gills and chest plates"
-  * palette: ["Basalt Black", "Magma Gold", "Cinder Brass", "Incandescent Amber"]
-  * notes: "Aligned to Draknora Thorne (Fire | Magician). Built to reflect explosive evocation and sovereign heat."
+  * cardId: "UNIT_PYRAXIS" (the card is SD-022)
+  * description: "an Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze"
+  * silhouette: "Heavy, broad-chested colossus with an anvil-shaped skull and armoured haunches"
+  * scaleTexture: "Thick overlapping scutes in flame-red and burnished gold, with glowing seams between them"
+  * wingMembrane: "Broad, jagged membrane like cooling molten bronze, glowing near the joints and darkening toward the edges"
+  * hornsAndCrest: "Heavy crown of jagged horns glowing dull red at the tips"
+  * elementalVenting: "Heat haze and ember ribbons rising from the chest and shoulders"
+  * notes: "Fire Elder Dragon (SD-022), the aligned companion of Draknora Thorne (Fire): her card's companion is Pyraxis, and the companion frames place him beside her. Skeletal identity grounded in the Element Alignment table of docs/codex/heroes/sovereign_dawn_codex.md."
 
 ---
 
 ### SD-023: Sylvanya (Grass Elder Dragon)
 * Bond: Drakniya Thorne (SD-003)
-* Master Description: An Elder Dragon of layered moss-green and polished jade scales, trailing floating pollen motes and wild vines, with sweeping leaf-veined wings like translucent viridian canopy glass edged in living briar-copper.
-* Biomechanical Morphology: Slender, serpentine woodland dragon; agile four-limbed stance; antlered horn structures resembling ancient ironwood roots; prehensile tail tipped with a blooming floral spike.
-* Schema Block:
+* Master Description: An Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold.
+* Morphology in short: Slender, serpentine woodland dragon with a high crest and agile, runner-like limbs; scales: overlapping leaf-shaped scales in emerald green and forest sage, patched with moss; wings: broad, leaf-like membrane veined in moss-gold; horns: high-branching antlers like ironwood roots, wound with flowering vines; venting: drifting leaves, pollen and glowing spores around the wings.
+* Identity JSON (`data/art/dragons/elder-dragons/sylvanya.json`):
   * id: "dragons/elder-dragons/sylvanya"
   * kind: "dragon"
-  * cardId: "SD-023"
-  * name: "Sylvanya"
-  * element: "Grass"
-  * sex: "Female"
-  * description: "an Elder Dragon of layered moss-green and polished jade scales, trailing floating pollen motes and wild vines, with sweeping leaf-veined wings like translucent viridian canopy glass edged in living briar-copper"
-  * silhouette: "Serpentine, lithe arborial dragon with high crest and elegant runner-like limbs"
-  * scaleTexture: "Overlapping leaf-shaped jade scales intertwined with living lichen and moss plating"
-  * wingMembrane: "Translucent viridian canopy glass patterned with glowing botanical veins"
-  * hornsAndCrest: "High-branching ironwood antlers wrapped in flowering thorn vines"
-  * elementalVenting: "Bioluminescent emerald spore clouds and suspended dewdrops swirling around her wings"
-  * palette: ["Deep Moss Green", "Polished Jade", "Viridian", "Briar Copper"]
-  * notes: "Aligned to Drakniya Thorne (Grass | Druid). Mirrors her wiry, agile, canopy-tracking grace."
+  * cardId: "UNIT_SYLVANYA" (the card is SD-023)
+  * description: "an Elder Dragon of emerald-green and forest-sage scales, trailing drifting leaves and spores, wings like broad canopy leaves veined in moss-gold"
+  * silhouette: "Slender, serpentine woodland dragon with a high crest and agile, runner-like limbs"
+  * scaleTexture: "Overlapping leaf-shaped scales in emerald green and forest sage, patched with moss"
+  * wingMembrane: "Broad, leaf-like membrane veined in moss-gold"
+  * hornsAndCrest: "High-branching antlers like ironwood roots, wound with flowering vines"
+  * elementalVenting: "Drifting leaves, pollen and glowing spores around the wings"
+  * notes: "Skeletal identity, first pass -- aligned to Drakniya Thorne (Grass) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Drakniya's own palette (Emerald Green / Forest Sage / Moss Gold)."
 
 ---
 
 ### SD-024: Glaciora (Ice Elder Dragon)
 * Bond: Draknira Thorne (SD-004)
-* Master Description: An Elder Dragon of faceted permafrost-white and glacial-cyan scales, venting plumes of sub-zero mist, with rigid crystalline wings like sheer sheets of polar ice edged in frosted silver filigree.
-* Biomechanical Morphology: Statuesque, razor-edged drake; geometric ice crystal formations along spine and jaw; long, elegant neck; translucent wings that scatter light into prismatic refractions.
-* Schema Block:
+* Master Description: An Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome.
+* Morphology in short: Statuesque, razor-edged dragon with a long, elegant neck and a needle-tipped tail; scales: faceted, crystalline scales in frost-white and glacial cyan; wings: rigid panes of translucent frosted crystal edged in brushed chrome, scattering light into prisms; horns: symmetrical crown of needle-sharp ice spires like a frozen diadem; venting: drifting ice crystals and cold mist from the jaw and wing claws.
+* Identity JSON (`data/art/dragons/elder-dragons/glaciora.json`):
   * id: "dragons/elder-dragons/glaciora"
   * kind: "dragon"
-  * cardId: "SD-024"
-  * name: "Glaciora"
-  * element: "Ice"
-  * sex: "Female"
-  * description: "an Elder Dragon of faceted permafrost-white and glacial-cyan scales, venting plumes of sub-zero mist, with rigid crystalline wings like sheer sheets of polar ice edged in frosted silver filigree"
-  * silhouette: "Geometric, razor-sharp posture; long aristocratic neck and crystalline needle-like tail"
-  * scaleTexture: "Faceted rhomboid scales resembling dense compacted permafrost and cyan diamond"
-  * wingMembrane: "Rigid sheets of translucent sheet-ice that refract blue spectrum light"
-  * hornsAndCrest: "Crown of symmetrical, needle-sharp glacial spires resembling a frozen royal diadem"
-  * elementalVenting: "Freezing condensation and sub-zero mist pouring from jaw joints and wing talons"
-  * palette: ["Permafrost White", "Glacial Cyan", "Frosted Silver", "Deep Arctic Navy"]
-  * notes: "Aligned to Draknira Thorne (Ice | Wizard). Mirrors her aloof, unyielding high-elven royal geometry."
+  * cardId: "UNIT_GLACIORA" (the card is SD-024)
+  * description: "an Elder Dragon of glacial-cyan and frost-white scales, wreathed in drifting ice crystals, wings like panes of frosted crystal edged in brushed chrome"
+  * silhouette: "Statuesque, razor-edged dragon with a long, elegant neck and a needle-tipped tail"
+  * scaleTexture: "Faceted, crystalline scales in frost-white and glacial cyan"
+  * wingMembrane: "Rigid panes of translucent frosted crystal edged in brushed chrome, scattering light into prisms"
+  * hornsAndCrest: "Symmetrical crown of needle-sharp ice spires like a frozen diadem"
+  * elementalVenting: "Drifting ice crystals and cold mist from the jaw and wing claws"
+  * notes: "Skeletal identity, first pass -- aligned to Draknira Thorne (Ice) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Draknira's own palette (Glacial Cyan / Frost White / Brushed Chrome)."
 
 ---
 
 ### SD-025: Aquaria (Water Elder Dragon)
 * Bond: Draknisa Thorne (SD-005)
-* Master Description: An Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of suspended seawater, with wings like rippling sheets of tide-glass edged in polished platinum.
-* Biomechanical Morphology: Hydrodynamic, finned serpentine drake; smooth interlocking fish-scale armor; broad aquatic rudders on wrists and ankles; undulating dorsal fins that glow with bioluminescent pelagic blue.
-* Schema Block:
+* Master Description: An Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum.
+* Morphology in short: Supple, serpentine dragon with finned limbs and a broad tail fluke; scales: smooth, seamless fish-scale armour in oceanic blue and deep teal, catching rippling caustic light; wings: flexible tide-glass that ripples like manta-ray fins, edged in polished platinum; horns: sweeping crown of curved, nautilus-like horns and translucent fin-frills; venting: streams of seawater, floating droplets and sea-spray trailing the body.
+* Identity JSON (`data/art/dragons/elder-dragons/aquaria.json`):
   * id: "dragons/elder-dragons/aquaria"
   * kind: "dragon"
-  * cardId: "SD-025"
-  * name: "Aquaria"
-  * element: "Water"
-  * sex: "Female"
-  * description: "an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of suspended seawater, with wings like rippling sheets of tide-glass edged in polished platinum"
-  * silhouette: "Supple, serpentine body with wide aquatic rudder wings and finned tail fluke"
-  * scaleTexture: "Smooth, seamless iridescent fish-scale armor that reflects underwater caustic light"
-  * wingMembrane: "Flexible tide-glass that ripples like manta-ray fins, trimmed in polished platinum bone"
-  * hornsAndCrest: "Sweeping aquatic crown resembling curving nautilus horns and translucent fin-frills"
-  * elementalVenting: "Suspended liquid vortexes, floating water droplets, and sea-spray trailing her path"
-  * palette: ["Oceanic Blue", "Deep Teal", "Polished Platinum", "Bioluminescent Seafoam"]
-  * notes: "Aligned to Draknisa Thorne (Water | Enchanter). Matches her fluid, serpentine, hypnotic rhythm."
+  * cardId: "UNIT_AQUARIA" (the card is SD-025)
+  * description: "an Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of seawater, wings like rippling sheets of tide-glass edged in polished platinum"
+  * silhouette: "Supple, serpentine dragon with finned limbs and a broad tail fluke"
+  * scaleTexture: "Smooth, seamless fish-scale armour in oceanic blue and deep teal, catching rippling caustic light"
+  * wingMembrane: "Flexible tide-glass that ripples like manta-ray fins, edged in polished platinum"
+  * hornsAndCrest: "Sweeping crown of curved, nautilus-like horns and translucent fin-frills"
+  * elementalVenting: "Streams of seawater, floating droplets and sea-spray trailing the body"
+  * notes: "Skeletal identity, first pass -- aligned to Draknisa Thorne (Water) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Draknisa's own palette (Deep Oceanic Blue / Deep Teal / Polished Platinum)."
 
 ---
 
 ### SD-026: Lumira (Light Elder Dragon)
 * Bond: Drakniss Thorne (SD-006)
-* Master Description: An Elder Dragon of brilliant solar-alabaster scales veined with molten dawn-gold, radiating an aura of warm blinding daylight, with feathered-glass wings edged in pure sun-forged aurum.
-* Biomechanical Morphology: Regal, falcon-crested celestial dragon; broad breastplate shaped like a golden crusader aegis; quad-wing formation (four primary wings); smooth, unblemished scales reflecting brilliant white halos.
-* Schema Block:
+* Master Description: An Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold.
+* Morphology in short: Regal, proud-necked dragon with a broad, shield-like breastplate; scales: smooth, pearlescent rose-gold and gold scales with a soft inner radiance; wings: panes of stained light with segmented, feather-like ribs, edged in polished white gold; horns: halo-like corona of golden horns fanned out behind the head; venting: soft solar glow, floating golden motes and sun-dust drifting from the wings.
+* Identity JSON (`data/art/dragons/elder-dragons/lumira.json`):
   * id: "dragons/elder-dragons/lumira"
   * kind: "dragon"
-  * cardId: "SD-026"
-  * name: "Lumira"
-  * element: "Light"
-  * sex: "Female"
-  * description: "an Elder Dragon of brilliant solar-alabaster scales veined with molten dawn-gold, radiating an aura of warm blinding daylight, with feathered-glass wings edged in pure sun-forged aurum"
-  * silhouette: "Regal, quad-winged celestial drake with proud eagle-like carriage and massive breastplate"
-  * scaleTexture: "Smooth pearlescent alabaster scales that emit internal warm ambient radiance"
-  * wingMembrane: "Feather-segmented prismatic crystal sheets that glow gold from within, edged in pure aurum"
-  * hornsAndCrest: "Halo-like corona of golden horns that form a radiant sunburst behind the head"
-  * elementalVenting: "Pillars of diffuse daylight, floating golden glyphs, and soft sun-dust drifting from wings"
-  * palette: ["Solar Alabaster", "Dawn Gold", "Sun-Forged Aurum", "Warm Pearl"]
-  * notes: "Aligned to Drakniss Thorne (Light | Cleric). Embodies holy martial sanctuary and unyielding defense."
+  * cardId: "UNIT_LUMIRA" (the card is SD-026)
+  * description: "an Elder Dragon of radiant rose-gold and radiant-gold scales, wreathed in soft solar glow, wings like panes of stained light edged in polished white gold"
+  * silhouette: "Regal, proud-necked dragon with a broad, shield-like breastplate"
+  * scaleTexture: "Smooth, pearlescent rose-gold and gold scales with a soft inner radiance"
+  * wingMembrane: "Panes of stained light with segmented, feather-like ribs, edged in polished white gold"
+  * hornsAndCrest: "Halo-like corona of golden horns fanned out behind the head"
+  * elementalVenting: "Soft solar glow, floating golden motes and sun-dust drifting from the wings"
+  * notes: "Skeletal identity, first pass -- aligned to Drakniss Thorne (Light) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Drakniss's own palette (Radiant Rose Gold / Radiant Gold / Polished White Gold)."
 
 ---
 
 ### SD-027: Terrador (Earth Elder Dragon)
 * Bond: Draknara Thorne (SD-007)
-* Master Description: An Elder Dragon of petrified-ochre and rough granite-slate armor plates, crushing stone underfoot, with heavy jagged wings like tectonic bedrock slabs laced with veins of raw ancient bronze.
-* Biomechanical Morphology: Heavily armored, four-legged fortress drake; low center of gravity; spiked clubbed tail; broad horned brow capable of battering through fortress walls; subterranean tectonic cracks pulsing with amber resonance.
-* Schema Block:
+* Master Description: An Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze.
+* Morphology in short: Massive, low-slung, heavily armoured dragon with a club-tipped tail and colossal shoulders; scales: coarse, stone-like plates in burnt sienna and antique bronze, veined with vivid turquoise; wings: heavy slabs of weathered stone joined by thick, flexible tendon, edged in antique bronze; horns: four forward-curving battering-ram horns of rough stone; venting: orbiting stone fragments and drifting dust.
+* Identity JSON (`data/art/dragons/elder-dragons/terrador.json`):
   * id: "dragons/elder-dragons/terrador"
   * kind: "dragon"
-  * cardId: "SD-027"
-  * name: "Terrador"
-  * element: "Earth"
-  * sex: "Male"
-  * description: "an Elder Dragon of petrified-ochre and rough granite-slate armor plates, crushing stone underfoot, with heavy jagged wings like tectonic bedrock slabs laced with veins of raw ancient bronze"
-  * silhouette: "Massive, low-slung quadruped juggernaut drake with broad club tail and colossal shoulders"
-  * scaleTexture: "Coarse, unworked granite slabs and petrified stone bark overgrown with quartz clusters"
-  * wingMembrane: "Segmented tectonic shale plates interconnected by thick, flexible earthen tendon cords"
-  * hornsAndCrest: "Four massive forward-curving battering ram horns carved from solid bedrock"
-  * elementalVenting: "Orbiting stone fragments, ground-tremor shockwaves, and amber seismic dust"
-  * palette: ["Petrified Ochre", "Granite Slate", "Raw Bronze", "Deep Amber Quartz"]
-  * notes: "Aligned to Draknara Thorne (Earth | Shaman). Embodies grounded, primal barbarian earth power."
+  * cardId: "UNIT_TERRADOR" (the card is SD-027)
+  * description: "an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze"
+  * silhouette: "Massive, low-slung, heavily armoured dragon with a club-tipped tail and colossal shoulders"
+  * scaleTexture: "Coarse, stone-like plates in burnt sienna and antique bronze, veined with vivid turquoise"
+  * wingMembrane: "Heavy slabs of weathered stone joined by thick, flexible tendon, edged in antique bronze"
+  * hornsAndCrest: "Four forward-curving battering-ram horns of rough stone"
+  * elementalVenting: "Orbiting stone fragments and drifting dust"
+  * notes: "Skeletal identity, first pass -- aligned to Draknara Thorne (Earth) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Draknara's own palette (Deep Burnt Sienna / Vivid Turquoise / Antique Bronze)."
 
 ---
 
 ### SD-028: Fulgora (Lightning Elder Dragon)
 * Bond: Drakneta Thorne (SD-008)
-* Master Description: An Elder Dragon of storm-cobalt and polished fulgurite scales, crackling with continuous arc-violet kinetic discharge, with swept delta wings like sheets of ion-glass edged in conductivity-pure silver.
-* Biomechanical Morphology: Sleek, aerodynamic spear-head silhouette; sharp needle-like talons; jagged, split-fork tail; spine configured like high-voltage capacitors that vent branching lightning arcs during flight.
-* Schema Block:
+* Master Description: An Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning.
+* Morphology in short: Sleek, needle-nosed dragon with swept delta wings and a forked tail; scales: overlapping polished scales in electric gold and arc-white with a metallic sheen; wings: swept membrane like storm cloud, with branching lightning running through it; horns: rearward-swept, lightning-rod horns arcing with static; venting: branching lightning forks along the spine and off the wingtips.
+* Identity JSON (`data/art/dragons/elder-dragons/fulgora.json`):
   * id: "dragons/elder-dragons/fulgora"
   * kind: "dragon"
-  * cardId: "SD-028"
-  * name: "Fulgora"
-  * element: "Lightning"
-  * sex: "Female"
-  * description: "an Elder Dragon of storm-cobalt and polished fulgurite scales, crackling with continuous arc-violet kinetic discharge, with swept delta wings like sheets of ion-glass edged in conductivity-pure silver"
-  * silhouette: "Ultra-sleek, needle-nosed delta wyrm built for supersonic velocity and kinetic lunges"
-  * scaleTexture: "Overlapping dark storm-cobalt scales with mirror-polished metallic conductivity"
-  * wingMembrane: "Vibrating violet ion-glass that crackles with internal electrical branches, edged in silver"
-  * hornsAndCrest: "Swept rearward lightning-rod horns that continuously arc with static violet voltage"
-  * elementalVenting: "Branching electrical lightning forks running down the spinal ridges and snapping off wingtips"
-  * palette: ["Storm Cobalt", "Arc Violet", "Fulgurite Black", "Conductivity Silver"]
-  * notes: "Aligned to Drakneta Thorne (Lightning | Summoner). Mirrors her celestial, high-voltage kinetic speed."
+  * cardId: "UNIT_FULGORA" (the card is SD-028)
+  * description: "an Elder Dragon of electric-gold and arc-white scales, wreathed in crackling static, wings like sheets of storm-cloud laced with lightning"
+  * silhouette: "Sleek, needle-nosed dragon with swept delta wings and a forked tail"
+  * scaleTexture: "Overlapping polished scales in electric gold and arc-white with a metallic sheen"
+  * wingMembrane: "Swept membrane like storm cloud, with branching lightning running through it"
+  * hornsAndCrest: "Rearward-swept, lightning-rod horns arcing with static"
+  * elementalVenting: "Branching lightning forks along the spine and off the wingtips"
+  * notes: "Skeletal identity, first pass -- aligned to Drakneta Thorne (Lightning) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Drakneta's own palette (Electric Gold / Bright Gold / Arc White)."
 
 ---
 
 ### SD-029: Zephyros (Wind Elder Dragon)
 * Bond: Draknava Thorne (SD-009)
-* Master Description: An Elder Dragon of sky-cerulean and feathered cloud-ivory scales, riding gale-force slipstreams, with elongated swept wings like translucent barometric vapor-glass edged in burnished wind-brass.
-* Biomechanical Morphology: Exceptionally light, hollow-boned aerodynamic wyrm; long streamer-like tail rudders; triple-jointed wings designed for hovering and rapid banking maneuvers; air-intake cowlings along the jawline.
-* Schema Block:
+* Master Description: An Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk.
+* Morphology in short: Lithe, light-boned soaring dragon with a long streamer tail and high-aspect wings; scales: fine overlapping scales in windswept jade and gossamer silver, feathering toward the edges; wings: vast, translucent sails of sea-glass silk; horns: backward-swept, fluted crest; venting: spiralling wind eddies and wisps of racing cloud trailing the body.
+* Identity JSON (`data/art/dragons/elder-dragons/zephyros.json`):
   * id: "dragons/elder-dragons/zephyros"
   * kind: "dragon"
-  * cardId: "SD-029"
-  * name: "Zephyros"
-  * element: "Wind"
-  * sex: "Male"
-  * description: "an Elder Dragon of sky-cerulean and feathered cloud-ivory scales, riding gale-force slipstreams, with elongated swept wings like translucent barometric vapor-glass edged in burnished wind-brass"
-  * silhouette: "Lithe, hollow-boned soaring drake with elongated streamer tail and high-aspect wings"
-  * scaleTexture: "Ultra-light overlapping ivory scutes transitioning into aerodynamic cerulean plumes"
-  * wingMembrane: "Translucent barometric vapor-glass that bends incoming air, framed in burnished wind-brass"
-  * hornsAndCrest: "Backward-swept fluted crest that whistles harmonious wind tones during high-speed dives"
-  * elementalVenting: "Turbulent vortex rings, howling slipstreams, and spiral wind eddies trailing the body"
-  * palette: ["Sky Cerulean", "Cloud Ivory", "Burnished Wind-Brass", "Atmospheric Teal"]
-  * notes: "Aligned to Draknava Thorne (Wind | Bard). Reflects high-tempo acrobatic flight and breath endurance."
+  * cardId: "UNIT_ZEPHYROS" (the card is SD-029)
+  * description: "an Elder Dragon of windswept-jade and gossamer-silver scales, trailing wisps of racing cloud, wings like vast sails of sea-glass silk"
+  * silhouette: "Lithe, light-boned soaring dragon with a long streamer tail and high-aspect wings"
+  * scaleTexture: "Fine overlapping scales in windswept jade and gossamer silver, feathering toward the edges"
+  * wingMembrane: "Vast, translucent sails of sea-glass silk"
+  * hornsAndCrest: "Backward-swept, fluted crest"
+  * elementalVenting: "Spiralling wind eddies and wisps of racing cloud trailing the body"
+  * notes: "Skeletal identity, first pass -- aligned to Draknava Thorne (Wind) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Draknava's own palette (Windswept Jade / Gossamer Silver / Polished Nickel)."
 
 ---
 
 ### SD-030: Venomis (Poison Elder Dragon)
 * Bond: Draknoxa Thorne (SD-010)
-* Master Description: An Elder Dragon of toxic malachite and chitinous dark-iron scales, dripping caustic green venom from hollow fangs, with ragged ribbed wings like corroded acid-glass edged in tarnished blackened steel.
-* Biomechanical Morphology: Low-slung, predatory viper-drake; throat sac that glows with bioluminescent acid; four forward-facing viper fangs; segmented scorpion-like tail tipped with a hollow injecting stinger.
-* Schema Block:
+* Master Description: An Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime.
+* Morphology in short: Low-slung, hunched viper-dragon with a wide, flared neck hood; scales: segmented plates in toxic orchid magenta and tarnished brass; wings: tattered, perforated membrane veined in vibrant acid lime; horns: flared neck hood crowned with curved, venom-grooved spines; venting: drips of acid-lime venom and a sickly mist from the jaws.
+* Identity JSON (`data/art/dragons/elder-dragons/venomis.json`):
   * id: "dragons/elder-dragons/venomis"
   * kind: "dragon"
-  * cardId: "SD-030"
-  * name: "Venomis"
-  * element: "Poison"
-  * sex: "Female"
-  * description: "an Elder Dragon of toxic malachite and chitinous dark-iron scales, dripping caustic green venom from hollow fangs, with ragged ribbed wings like corroded acid-glass edged in tarnished blackened steel"
-  * silhouette: "Low-slung, hunching viper-wyvern with wide venom-gland hood and barbed scorpion tail"
-  * scaleTexture: "Segmented chitinous plates of mottled malachite green and corroded black iron"
-  * wingMembrane: "Perforated, semi-translucent acid-glass membranes leaking green caustic vapors"
-  * hornsAndCrest: "Flared cobralike neck hood crowned with curved, venom-grooved dark iron spines"
-  * elementalVenting: "Hissing droplets of bright emerald acid melting the ground below; sickly green mist plume"
-  * palette: ["Toxic Malachite", "Corroded Iron", "Bioluminescent Acid Green", "Tarnished Steel"]
-  * notes: "Aligned to Draknoxa Thorne (Poison | Alchemist). Matches her clinical, venomous, predatory precision."
+  * cardId: "UNIT_VENOMIS" (the card is SD-030)
+  * description: "an Elder Dragon of toxic-orchid-magenta and tarnished-brass scales, wreathed in drifting toxic mist, wings like tattered sheets veined in vibrant acid-lime"
+  * silhouette: "Low-slung, hunched viper-dragon with a wide, flared neck hood"
+  * scaleTexture: "Segmented plates in toxic orchid magenta and tarnished brass"
+  * wingMembrane: "Tattered, perforated membrane veined in vibrant acid lime"
+  * hornsAndCrest: "Flared neck hood crowned with curved, venom-grooved spines"
+  * elementalVenting: "Drips of acid-lime venom and a sickly mist from the jaws"
+  * notes: "Skeletal identity, first pass -- aligned to Draknoxa Thorne (Poison) per docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table. No archived source material; colours grounded in Draknoxa's own palette (Toxic Orchid Magenta / Vibrant Acid Lime / Tarnished Brass)."
 
 ---
 
-## 4. AI Image Generation Prompts (Studio A-Pose & Codex Flight Plates)
+## 4. How the Fields Reach the Prompt
 
-When batch-rendering Elder Dragon reference plates across ComfyUI (Qwen-VL / Kontext / FLUX):
+The dragons are text-to-image (no incoming photo). The prompts come from the templates in `data/art/_templates/dragons/` through `tools/generators/gen_prompt.py`:
 
-### Standardized Prompt Architecture:
-Full-body portrait of an Elder Dragon, [Card Name], sovereign elemental avatar of [Element], [scaleTexture], [wingMembrane], [hornsAndCrest], [elementalVenting], magnificent massive wings fully spread in majestic display, predatory reptilian anatomy, sharp golden dragon eyes with vertical slit pupils, dynamic studio lighting, neutral cream studio background (#F5F0E6), octane render, high-detail fantasy concept art, sharp focus, masterwork creature design, 944x1104
+| Template | Card | What it uses |
+| --- | --- | --- |
+| `pose-dragon.txt` | `<Name>_X_Pose` (1_Alpha) | A full-body, head-to-tail studio shot on a cream backdrop: the dragon's name, `description`, then the morphology line (silhouette, scales, wings, horns and crest, venting), standing in a neutral three-quarter stance with wings folded |
+| `head-dragon.txt` | `<Name>_X_Head` (2_Studies) | The head close-up; the morphology line uses only the head fields (`scaleTexture`, `hornsAndCrest`) |
+| `scene-lair-dragon.txt` | `<Name>_Scene_Lair` (5_Scenes) | The dragon in its lair |
 
-### Universal Negative Prompt for Elder Dragons:
-human, humanoid, girl, female face, clothes, armor, cute, cartoon, chibi, eastern snake dragon without wings, western cartoon dragon, blurry, low resolution, clipped wings, out of frame, extra limbs, deformed wings, plastic skin texture, modern buildings
+The negative prompt keeps out extra limbs, extra heads or wings, deformed anatomy, mismatched scales, humanoid features and text. The companion frames place the dragon beside her bonded sister (see `tools/art/dragon_companions.py`).

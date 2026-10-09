@@ -8,5 +8,5 @@
   "wingMembrane": "Broad, jagged membrane like cooling molten bronze, glowing near the joints and darkening toward the edges",
   "hornsAndCrest": "Heavy crown of jagged horns glowing dull red at the tips",
   "elementalVenting": "Heat haze and ember ribbons rising from the chest and shoulders",
-  "notes": "Skeletal identity for the dragons/ category's first real entry — grounded in docs/codex/heroes/sovereign_dawn_codex.md's Element Alignment table (SD-022 Pyraxis, Fire) and the archived prompts/_archive/Draknora/final/Draknora_Qwen_Fire_Dragon.json / Draknora_Qwen_Dragon_1.json experiments, which show a generic unnamed fire dragon flying toward Draknora — Draknora is the Fire-element Drakn sister, so Pyraxis is her aligned companion. Not yet wired into a card as a hero's bonded pet; only referenced today via Draknora's own companion/ placement piece."
+  "notes": "Fire Elder Dragon (SD-022), the aligned companion of Draknora Thorne (Fire): her card's companion is Pyraxis, and the companion frames place him beside her. Skeletal identity grounded in the Element Alignment table of docs/codex/heroes/sovereign_dawn_codex.md."
 }

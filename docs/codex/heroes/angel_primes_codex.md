@@ -23,7 +23,9 @@ Neutral is the eleventh element slot. The Drakn sisters, the Drakn Bound heroes 
 so Neutral stays free for the cards that belong to no element: tactics, items and equipment, utility and the lower-tier cards, and
 Angelica and Angelo. The intent is that the herald pair are heroes any deck can play, whatever elements it is built on. How a Neutral
 card is allowed into a deck is a rule for the deck and combat docs and is not written there yet (see the open items). The same idea is
-recorded in [sovereign_dawn_codex.md](./sovereign_dawn_codex.md).
+recorded in [sovereign_dawn_codex.md](./sovereign_dawn_codex.md). Their Prime look is kept from the original test-bed outfit: Angelica's iridescent
+pastel colour-blocked bikini (soft rose, sky blue, mint, lilac) and Angelo's matching pearlescent trunks, a lighter sheen on a male. Their hair, eye
+and skin colours are fixed like the other angels (the colours were free to follow the photo before).
 
 ## Roster
 

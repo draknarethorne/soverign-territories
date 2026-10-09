@@ -8,13 +8,14 @@
 Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent Drakn Sisters divide into two distinct layers:
 
 ### The Shared Skeletal & Foundation Core (Universal)
-* **Bust Geometry:** Full, very voluptuous, noticeably enlarged bust lifted high and pressed firmly together at the center by a push-up contour; inner curves meet at the center line in a deep, tight, narrow cleavage with no gap; soft, naturally rounded, full shape throughout.
-* **Frame & Silhouette:** Narrow, corseted waistline tapering cleanly into shapely feminine hips (gently curved, not wide); very long, elegant legs.
-* **Studio Base Uniform:** High-gloss metallic triangle bikini underlayer, signature stiletto heels, high-gloss skin finish (`defaultSheen`).
+* **Bust:** every sister has her own bust shape in her `bust` field (round, teardrop, conical, compact, soft and generous), all full, high and lifted, with a deep, crisp, clearly defined cleavage. The 1_Prime prompt carries a shared key detail (`bustKey` in `data/art/_settings/phrases.json`) that sets the bust before anything else, so it overrides a smaller bust in the source photo.
+* **Frame & Silhouette:** narrow waist, shapely feminine hips (gently curved) and very long legs. This is the family standard, so ten sisters read as one bloodline. What differs is the build preset (section 5), the amount of visible tone in the abs, arms and legs, and the race.
+* **Studio Base Uniform:** high-gloss metallic triangle bikini underlayer (`defaultUnderlayer`), bare feet in the A-pose (the studio default `aPoseFootwear: barefoot` in `data/art/_settings/studio.json`; each sister's signature heels are her `defaultFootwear` and appear in the Heels cards), high-gloss skin finish (`defaultSheen`).
 * **Master Canvas Standard:** `944 × 1104` with studio cream padding (`#F5F0E6`), scaling to `1080 × 1350` (4:5) for final mobile card production.
 
 ### The Elemental Glamour Phenotype (Individualized)
 * Each sister carries an individualized racial/elemental phenotype across **hair, eyes, skin tone, cosmetics, and metals**, complete with strict negative prompts to prevent cross-bleeding (e.g., Draknara explicitly banning violet eyes and pale skin in favor of malachite-hazel and terracotta tan).
+* Hair, eye and skin colour are forced at 1_Prime (the Critical details block) so the photo is changed to match; the full individual build and bust are applied at 2_Bare (`python tools/art/identity_audit.py` checks this for every hero).
 
 ---
 
@@ -277,25 +278,17 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-## 4. Master Prompt Assembly Algorithm for Studio A-Pose Plates
+## 4. How the Fields Reach the Prompt
 
-When the pipeline generates a master plate from any of the 10 sister JSON files, it dynamically concatenates tokens following this strict order:
+The real prompt is assembled from the shared templates in `data/art/_templates/heroes/` (not from a fixed concatenation), by `tools/generators/gen_prompt.py`. For a sister:
 
-```text
-[Master Shot & Camera]: 
-"Full-body master portrait, neutral studio A-pose character plate, single female hero, centered composition, front view, eye-level framing, 944x1104 resolution"
+| Stage | What it carries |
+| --- | --- |
+| 1_Alpha / 1_Prime (`pose-female-human.txt`) | Critical details first (hair, bust, eyes, skin, legs), then the **standard figure** (`figureProfile: standard`: lithe, slender build, slim waist, shapely hips, very long legs), the underlayer, hair, eyes, lips and expression. Negatives come from her `eyeColorNegatives`, `skinColorNegatives` and `hairColorNegatives` |
+| 1_Alpha / 2_Bare | Removes the clothing and applies her **individual build** (`build`, `torso`, `arms`, `hips`, `legs`) and bust, and sets her likeness for every later stage |
+| 3 onward | Footwear, layers, armor and scenes edit the Bare image, so they carry the build instead of repeating it |
 
-+ [Bloodline Core Physique]:
-"{physique.build}, {physique.torso}, {physique.bust}, {physique.arms}, {physique.hips}, {physique.legs}"
-
-+ [Elemental Phenotype & Cosmetics]:
-"{palette.skinTone}, {palette.eyeColor}, {palette.hairColor}, {palette.lipColor} lips, {palette.eyeshadowColor} eyeshadow, {palette.nailColor} polished nails"
-
-+ [Underlayer Uniform & Finish]:
-"wearing metallic triangle bikini underlayer in {palette.primaryColor} with {palette.metal} hardware and signature high stiletto heels in {palette.primaryColor}, {defaultSheen} finish on swimwear and smooth skin"
-
-+ [Studio Environment & Lighting]:
-"neutral cream studio background (#F5F0E6), clean soft studio ambient lighting with subtle directional rim highlights, sharp focus, 8k resolution, photorealistic masterwork"
+The text of each field is the identity JSON (`data/art/heroes/drakn-sisters/<name>-thorne.json`); the section 3 blocks above mirror it.
 
 ---
 

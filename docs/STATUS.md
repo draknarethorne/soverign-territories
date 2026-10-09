@@ -191,6 +191,13 @@ Order: Drakn Bound first (its heroes mirror the sisters, so the generators alrea
 | O2 | Does "exactly one hero per formation" survive? | Written before the art pipeline made a larger roster cheap. Revisit after a playtest. |
 | O3 | How are vision cards obtained? | All 30 have empty `acquisition` today. Needs pack/reward/campaign rules, including the quest-earned Celestial edition, the pack-chance share and the codex teaser. |
 | O4 | Transcendent format legality | 64 points exceeds any starter budget; decide special formats (Phase 2+). |
+| O5 | Deck rule for Neutral cards | Neutral cards (tactics, items, utility, lower-tier cards, and the Angel Primes herald pair Angelica and Angelo) are meant to be playable in any deck. Write the rule (always legal, count limits, can a Neutral hero lead a deck) into the deck and combat docs. |
+| O6 | Angel Primes spells and abilities | Not defined for any angel. The nearest art-side hooks are the signature weapon and the element's magic colour. |
+| O7 | Story link between each angel and the same-element Drakn sister | Ally, mirror or rival; the alignment ladder (1 radiant to 10 fallen) is only the starting material. |
+| O8 | Adopt `AP-###` into data | Proposal: women AP-001 to AP-011, men AP-012 to AP-022 (Angelica AP-001, Angelo AP-012). Needs a series entry and cards. |
+| O9 | Roster page names | `sovereign_dawn_codex.md`, `angel_primes_codex.md` are rosters, not the codex (the JSON is). Rename to `*_roster.md`? |
+| O10 | Wording to fix in Draknara | Her arms say "toned forearms without bulk" (a negation that names bulk). Left unchanged until you decide. |
+| O11 | Move the Drakn Bound men to the 1_Alpha chain | They still use the older single `X_Pose` Prime card; the sisters and angels use standard figure at 1_Prime and the individual build at 2_Bare. |
 
 ## Agreed next steps (Oct 8, 2026)
 
@@ -315,7 +322,12 @@ If one photo needs brightening, do it on that angel's own identity, not as a def
 - **Standard male figure.** Male Prime cards get `figureProfile: standard` like the women (`standardFigure.male` in `phrases.json`; the scaffold sets it for both sexes). The individual build is applied at 2_Bare.
 - **Audit.** `python tools/art/identity_audit.py` (`bin\identity-audit.cmd`, run by `validate.cmd`) checks every angel, sister and bound hero: colours defined and carried by the Prime prompt, the Bare prompt applies the build, no strength words on a female angel. The alpha test heroes follow the photo on purpose. Bound heroes still use the older `X_Pose` Prime card.
 - **Docs.** New `angel_primes_codex.md` and `angel_primes_physique.md`; `ideation_codex.md` is now `sovereign_dawn_codex.md`. Series IDs fixed: Sovereign Dawn is `SD-###` (the roster wrongly said `ST-###`); the angels are planned as `AP-###` (proposal: women AP-001 to AP-011, men AP-012 to AP-022). The roster tables no longer carry art-progress columns; use `python tools/workflows/comfy_workflows.py inputs --status`.
-- **Open:** spells and abilities for the angels, the story link between each angel and the same-element Drakn sister, gameplay cards, and whether the roster pages should be called `*_roster.md` since the JSON is the real codex.
+- **Angelica and Angelo keep their look.** Her Prime still wears the iridescent pastel colour-blocked bikini (rose, sky blue, mint, lilac) and nothing in the colour work touched it. His trunks said "iridescent" too; they now say "softly pearlescent" so the sheen is lighter on a male (tune `angelic-pastel-trunks.json` if they look odd when rendered; no male Prime has been rendered yet). Their identity notes were rewritten (they said the colours followed the photo).
+- **Roster pages now match the data (Oct 9).** The pages in `docs/codex/heroes` had drifted from the JSON:
+  the sisters' and bound men's palette and build text, the dragons' morphology, the pet column (the card's `companion` is the Elder Dragon's name), the dragon race, and the "prompt assembly" sections (the real prompt comes from the templates, bare feet are the A-pose default, the men wear a swim brief). All were brought into line, with the reason for each build written down (`drakn_sisters_physique.md` section 5, `drakn_bound_physique.md` section 5).
+  `python tools/art/codex_drift.py` (`bin\codex-drift.cmd`, run by `validate.cmd`) now compares the roster tables, the sister, bound, dragon and angel pages with the cards and identities, so a change in the JSON that is not carried into the page fails the check.
+- **FireRed refresh fixed.** `comfy_workflows.py make --engine firered` only refreshed the scene class, so the FireRed Alpha cards (1_Prime, Bare, Barefoot, Heels, 2b) and Finals stayed stale after every prompt change. It now refreshes every FireRed workflow that already exists (the class list only limits `--create`). 436 stale FireRed workflows were updated and 351 missing ones created under `workflows/.test/firered` (a local test engine, kept out of git).
+- **Open decisions** are listed under O5 to O11 in the table above.
 
 ## Library gaps (audit of Oct 8)
 

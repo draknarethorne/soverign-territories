@@ -8,9 +8,9 @@
 Aligning with the `HERO_*.json` schema structure established by the Transcendent tier, the Mythic Male Heroes represent distinct humanoid races, martial bloodlines, and combat roles. 
 
 ### The Foundational Male Core (Universal Studio Setup)
-* **Master Studio Base Uniform:** Minimalist athletic compression combat-brief underlayer (`data/art/wardrobe/underlayers/briefs/athletic-compression-brief.json`), signature low-profile combat greaves/barefoot wraps (`defaultFootwear`), satin-matte/light-specular finish (`defaultSheen`).
+* **Master Studio Base Uniform:** a fitted swim brief in the hero's primary colour (`data/art/wardrobe/swimwear/trunks/swim-brief.json`), bare feet in the A-pose (`aPoseFootwear: barefoot` in `data/art/_settings/studio.json`).
 * **Render Standards:** Master Canvas `944 × 1104` with studio cream background padding (`#F5F0E6`), scaling downstream to `1080 × 1350` (4:5) for mobile UI card frames.
-* **Structural Archetypes:** Broad shoulder-to-waist V-taper, defined functional core without cartoonish distortion, clear masculine neck and jawline geometry, grounded combat-ready A-pose.
+* **Structural Archetypes:** broad shoulder-to-waist V-taper, a defined functional core, clear masculine neck and jawline geometry, grounded combat-ready A-pose. Unlike the sisters, the men are not one skeleton: each has his own build, from lean duelist to heavy juggernaut (section 5).
 
 ### The Elemental Glamour Phenotype (Individualized)
 * Each hero possesses fully specified facial planes, eye coloration, skin undertone, hair styling, accent metals, and strict negative arrays to prevent cross-contamination in diffusion passes.
@@ -19,18 +19,18 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ## 2. Master Card Registry & Phenotype Alignment
 
-| Card ID | Hero Name | Element | Class | Race Presentation | Primary Colors & Metals | Eye / Hair Phenotype | Physical Preset Category |
+| Card ID | Hero Name | Element | Class | Race Presentation | Primary & Accent Colors | Eye / Hair / Skin Phenotype | Physical Preset Category |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **SD-011** | Draknare Thorne | Darkness | Shadow Knight | Human | Obsidian, Void Violet, Smoked Chrome | Dark Violet Irises / Obsidian-Black Hair | Heavy Armor / Imposing Commander |
-| **SD-012** | Ignis Emberstride | Fire | Warrior | Human | Molten Crimson, Cinder Brass, Gold | Amber-Gold / Copper-Brown Hair | Lean Martial / Greatsword Striker |
-| **SD-013** | Nizaras Featherstone | Grass | Rogue | Wood Elf | Forest Moss, Living Bronze, Bark | Leaf-Green / Deep Chestnut-Brunette | Wiry / Woodland Infiltrator |
-| **SD-014** | Lyran Frostfall | Ice | Knight | High Elf | Glacial Cyan, Frosted Silver, Arctic Navy | Crystalline Frost-Blue / Silver-Platinum Hair | Statuesque / Regal Bastion |
-| **SD-015** | Corin Tidewalker | Water | Beast Lord | Human | Deep Pelagic Blue, Teal, Sea-Platinum | Sea-Grey Blue / Dark Sand-Brown Hair | Taut / Pelagic Vanguard |
-| **SD-016** | Hauk Hammerfell | Light | Paladin | Human | Solar Alabaster, Sun-Gold, Polished Steel | Bright Amber / Honey-Brown Hair | Heavy Armor / Unyielding Bulwark |
-| **SD-017** | Torvald Stonebreaker | Earth | Berserker | Barbarian | Burnt Ochre, Granite Slate, Raw Bronze | Slate-Grey Hazel / Dark Ash-Brown Hair | Brutal / Dense Juggernaut |
-| **SD-018** | Dorian Stormstrike | Lightning | Monk | Celestial | Storm Cobalt, Arc Violet, Fulgurite Silver | Luminous Azure / Pale Platinum-White Hair | Wiry / Kinetic Conduit |
-| **SD-019** | Zephyr Galeheart | Wind | Warrior | High Elf | Sky Cerulean, Wind-Brass, Cloud White | Wind-Grey Cyan / Sun-Bleached Blonde Hair | Lean Martial / Aerodynamic Duelist |
-| **SD-020** | Malakor Venomcaller | Poison | Assassin | Orc | Toxic Malachite, Corroded Iron, Black Steel | Acid-Yellow / Coarse Jet-Black Hair | Brutal / Coiled Stalker |
+| **SD-011** | Draknare Thorne | Darkness | Shadow Knight | Human | Obsidian Black, Tarnished Silver, Deep Amethyst | Deep violet eyes / Rich black hair / Pale | Heavy Armor / Imposing Commander |
+| **SD-012** | Ignis Emberstride | Fire | Warrior | Human | Ember Red, Burnished Bronze, Charcoal Black | Molten amber eyes / Dark auburn hair / Warm sun-bronzed | Lean Martial / Greatsword Striker |
+| **SD-013** | Nizaras Featherstone | Grass | Rogue | Wood Elf | Forest Green, Moss Brown, Pale Gold | Verdant green eyes / Dark umber hair / Light olive | Wiry / Woodland Infiltrator |
+| **SD-014** | Lyran Frostfall | Ice | Knight | High Elf | Glacial Cyan, Frost White, Steel Grey | Glacial cyan eyes / Platinum-blonde hair / Fair | Statuesque / Regal Bastion |
+| **SD-015** | Corin Tidewalker | Water | Beast Lord | Human | Deep Oceanic Blue, Seafoam Green, Driftwood Tan | Deep teal eyes / Sun-streaked brown hair / Sun-weathered tan | Taut / Pelagic Vanguard |
+| **SD-016** | Hauk Hammerfell | Light | Paladin | Human | Radiant Rose Gold, Ivory White, Polished Bronze | Radiant amber-gold eyes / Golden-blonde hair / Warm | Heavy Armor / Unyielding Bulwark |
+| **SD-017** | Torvald Stonebreaker | Earth | Berserker | Barbarian | Deep Rust Brown, Iron Grey, Warm Sand | Deep umber eyes / Dark brown hair / Deep sun-weathered tan | Brutal / Dense Juggernaut |
+| **SD-018** | Dorian Stormstrike | Lightning | Monk | Celestial | Storm Gold, Arc White, Storm Grey | Electric cobalt eyes / Jet-black hair / Warm golden-tan | Wiry / Kinetic Conduit |
+| **SD-019** | Zephyr Galeheart | Wind | Warrior | High Elf | Windswept Jade, Cloud White, Pale Silver | Pale sky-blue eyes / Silvery-blonde hair / Fair | Lean Martial / Aerodynamic Duelist |
+| **SD-020** | Malakor Venomcaller | Poison | Assassin | Orc | Toxic Orchid Magenta, Tarnished Brass, Charcoal Black | Acid-green eyes / Black hair / Deep olive-toned | Brutal / Coiled Stalker |
 
 ---
 
@@ -41,20 +41,21 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Darkness | Shadow Knight | Human
 * **Physique Profile:** Imposing athletic tank build; broad-shouldered, tall, commanding warrior posture.
 * **Palette & Cosmetics:**
-  * primaryColor: "Midnight Obsidian", accentColors: ["Void Violet", "Smoked Chrome"], metal: "smoked chrome"
-  * eyeColor: "Intense dark violet iris with sharp black limbal ring and calculating cold specular highlight"
-  * hairColor: "Obsidian-black hair, clean swept-back masculine cut"
-  * skinTone: "Pale alabaster-fair complexion with cool neutral undertones, battle-hardened and unblemished"
-  * eyeColorNegatives: ["blue eyes", "green eyes", "brown eyes", "amber eyes", "red eyes"]
-  * skinColorNegatives: ["tanned skin", "sunburnt skin", "ruddy complexion", "warm peach skin"]
+  * primaryColor: "Obsidian Black", accentColors: ["Tarnished Silver", "Deep Amethyst"], magicColor: "violet shadow"
+  * eyeColor: "Deep violet iris with obsidian limbal ring, faint shadow striations"
+  * hairColor: "Rich black hair, short and neatly cropped"
+  * skinTone: "Pale, cool-toned complexion, evenly toned"
+  * eyeColorNegatives: ["blue eyes", "green eyes", "brown eyes", "hazel eyes", "amber eyes"]
+  * skinColorNegatives: ["ruddy skin", "sunburnt skin", "overly tanned skin"]
+  * hairColorNegatives: ["brown hair", "grey hair", "blonde hair"]
 * **Physique Block:**
-  * build: "Imposing athletic tank build; broad-shouldered, tall, commanding warrior posture"
-  * torso: "Deep, powerful chest plate contour tapering into a disciplined waist; firm, flat athletic midsection with subtle core definition"
-  * shouldersAndArms: "Broad, squared shoulders with defined deltoids; muscular forearms with prominent vascular grip definition"
-  * hips: "Narrow athletic hips, disciplined masculine pelvis alignment"
-  * legs: "Strong, heavily muscled legs; grounded stance capable of anchoring massive armor weight"
+  * build: "Imposing athletic tank build; broad-shouldered, tall and commanding"
+  * chest: "Deep, powerful chest tapering into a disciplined waist"
+  * arms: "Broad, squared shoulders with defined deltoids; muscular forearms with prominent vascular definition"
+  * waist: "Firm, flat athletic midsection with subtle core definition; narrow athletic hips"
+  * legs: "Strong, heavily muscled legs"
   * distinguishingMarks: []
-  * raceAlignment: "Human patriarch presentation aligned to heavy dread-knight characteristics (imposing, tactical, unyielding authority)"
+  * raceAlignment: "Human presentation aligned to heavy dread-knight characteristics (imposing, tactical, unyielding authority)"
 
 ---
 
@@ -63,19 +64,20 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Fire | Warrior | Human
 * **Physique Profile:** Chiseled athletic striker build; functional swordsman frame with high explosive power.
 * **Palette & Cosmetics:**
-  * primaryColor: "Molten Crimson", accentColors: ["Cinder Brass", "Burnished Gold"], metal: "cinder brass"
-  * eyeColor: "Piercing amber-gold iris with bronze limbal ring and faint incandescent flecks"
-  * hairColor: "Dark copper-brown hair, textured and cropped with warm bronze undertones"
-  * skinTone: "Warm bronze-tanned complexion, forge-tempered, healthy radiant warmth"
-  * eyeColorNegatives: ["blue eyes", "violet eyes", "grey eyes", "green eyes"]
-  * skinColorNegatives: ["pale skin", "ghostly white skin", "cold blue skin"]
+  * primaryColor: "Ember Red", accentColors: ["Burnished Bronze", "Charcoal Black"], magicColor: "fiery orange"
+  * eyeColor: "Molten amber iris with dark charcoal limbal ring, faint ember striations"
+  * hairColor: "Dark auburn hair, short and windswept"
+  * skinTone: "Warm sun-bronzed complexion, evenly tanned"
+  * eyeColorNegatives: ["blue eyes", "green eyes", "grey eyes", "violet eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["black hair", "bright orange hair", "blonde hair"]
 * **Physique Block:**
-  * build: "Chiseled athletic striker build; functional swordsman frame with high explosive power"
-  * torso: "Pronounced athletic V-taper; defined pectoral plates; tight, flat core with visible upper abdominal tone and serratus cuts"
-  * shouldersAndArms: "Sculpted deltoids; powerful biceps and conditioned forearms scarred from forge and fire"
-  * hips: "Narrow, mobile hips built for rapid rotational torque"
-  * legs: "Toned, spring-loaded thighs; athletic combat-ready forward stagger stance"
-  * distinguishingMarks: []
+  * build: "Chiseled athletic striker build; functional swordsman frame with explosive power"
+  * chest: "Pronounced athletic V-taper with defined pectorals"
+  * arms: "Sculpted deltoids; powerful biceps and conditioned forearms"
+  * waist: "Tight, flat core with visible upper abdominal tone and serratus definition; narrow, mobile hips"
+  * legs: "Toned, spring-loaded thighs"
+  * distinguishingMarks: ["faint forge-burn scars on the forearms"]
   * raceAlignment: "Human presentation aligned to frontline vanguard warrior characteristics (forged, explosive, high stamina)"
 
 ---
@@ -85,18 +87,19 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Grass | Rogue | Wood Elf
 * **Physique Profile:** Lithe, sinewy wood-elven scout build; ultra-lean, flexible, long-limbed silhouette.
 * **Palette & Cosmetics:**
-  * primaryColor: "Deep Forest Moss", accentColors: ["Living Bronze", "Weathered Bark"], metal: "living bronze"
-  * eyeColor: "Sharp forest-green iris with dark umber limbal ring and gold moss specks"
-  * hairColor: "Deep chestnut-brown hair, tied in a practical leather-bound scout braid"
-  * skinTone: "Sun-dappled warm olive complexion, weathered by forest canopy exposure"
-  * eyeColorNegatives: ["violet eyes", "blue eyes", "red eyes", "black eyes"]
-  * skinColorNegatives: ["chalky white skin", "porcelain skin", "grey skin"]
+  * primaryColor: "Forest Green", accentColors: ["Moss Brown", "Pale Gold"], magicColor: "bright leaf-green"
+  * eyeColor: "Verdant green iris with mossy-brown limbal ring, faint golden striations"
+  * hairColor: "Dark umber hair with a faint mossy-green sheen, short and tousled"
+  * skinTone: "Light olive complexion, evenly toned"
+  * eyeColorNegatives: ["blue eyes", "brown eyes", "grey eyes", "red eyes"]
+  * skinColorNegatives: ["pale skin", "ruddy skin", "overly tanned skin"]
+  * hairColorNegatives: ["black hair", "all-over green hair", "blonde hair"]
 * **Physique Block:**
-  * build: "Lithe, sinewy wood-elven scout build; ultra-lean, flexible, long-limbed silhouette"
-  * torso: "Compact, flat midriff with distinct oblique fluting; narrow waist and light, agile ribcage"
-  * shouldersAndArms: "Slender, defined shoulders; corded, fibrous forearm muscles showing pronounced tendon precision"
-  * hips: "Narrow, flexible hips with silent, predatory balance"
-  * legs: "Long, lean runner legs with high, springy calves and agile, silent footwork"
+  * build: "Lithe, sinewy wood-elven scout build; ultra-lean, flexible and long-limbed"
+  * chest: "Lean chest over a light, agile ribcage"
+  * arms: "Slender, defined shoulders; corded, fibrous forearms with pronounced tendons"
+  * waist: "Compact, flat midriff with distinct oblique fluting; narrow waist and narrow, flexible hips"
+  * legs: "Long, lean runner legs with high, springy calves"
   * distinguishingMarks: []
   * raceAlignment: "Wood elf presentation aligned to canopy tracker characteristics (whiplash agility, low body fat, corded sinew)"
 
@@ -107,18 +110,19 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Ice | Knight | High Elf
 * **Physique Profile:** Tall, statuesque high-elven knight; aristocratic, perfectly symmetrical athletic frame.
 * **Palette & Cosmetics:**
-  * primaryColor: "Glacial Cyan", accentColors: ["Frosted Silver", "Deep Arctic Navy"], metal: "frosted silver"
-  * eyeColor: "Crystalline frost-blue iris with deep navy limbal ring and diamond-sharp catchlights"
-  * hairColor: "Lustrous silver-platinum hair, perfectly kept and straight, reaching shoulder length"
-  * skinTone: "Cool alabaster-fair complexion, immaculate porcelain finish with faint frosty rim highlights"
-  * eyeColorNegatives: ["brown eyes", "amber eyes", "hazel eyes", "green eyes", "red eyes"]
-  * skinColorNegatives: ["tanned skin", "terracotta skin", "ruddy skin", "sunburnt skin"]
+  * primaryColor: "Glacial Cyan", accentColors: ["Frost White", "Steel Grey"], magicColor: "icy cyan"
+  * eyeColor: "Glacial cyan iris with deep navy limbal ring, faint frost striations"
+  * hairColor: "Platinum-blonde hair, short and neatly combed"
+  * skinTone: "Fair, cool-toned complexion, evenly toned"
+  * eyeColorNegatives: ["brown eyes", "green eyes", "amber eyes", "red eyes"]
+  * skinColorNegatives: ["ruddy skin", "sunburnt skin", "overly tanned skin"]
+  * hairColorNegatives: ["yellow-gold hair", "grey hair", "white hair with blue tint"]
 * **Physique Block:**
-  * build: "Tall, statuesque high-elven knight; aristocratic, perfectly symmetrical athletic frame"
-  * torso: "Firm, sculpted athletic torso with smooth contours; unblemished flat core with clean vertical line"
-  * shouldersAndArms: "Square, elevated shoulders; long, powerful arms with clean, elegant muscle flow and fine wrists"
-  * hips: "Narrow, elegant hips flowing into tall vertical leg lines"
-  * legs: "Exceptionally long, straight, armor-ready legs with rigid, balanced posture"
+  * build: "Tall, statuesque high-elven knight; aristocratic, symmetrical athletic frame"
+  * chest: "Firm, sculpted athletic chest with smooth contours"
+  * arms: "Square, elevated shoulders; long, powerful arms with clean, elegant muscle and fine wrists"
+  * waist: "Unblemished flat core with a clean vertical line; narrow, elegant hips"
+  * legs: "Exceptionally long, straight legs"
   * distinguishingMarks: []
   * raceAlignment: "High elf presentation aligned to royal knight bastion characteristics (geometric balance, unyielding poise, crystalline nobility)"
 
@@ -129,18 +133,19 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Water | Beast Lord | Human
 * **Physique Profile:** Lean, powerful swimmer build; broad back, wiry endurance frame conditioned by wind and tide.
 * **Palette & Cosmetics:**
-  * primaryColor: "Deep Pelagic Blue", accentColors: ["Sea-Teal", "Polished Sea-Platinum"], metal: "sea-platinum"
-  * eyeColor: "Deep sea-grey blue iris with dark slate limbal ring and aqua catchlights"
-  * hairColor: "Dark sand-brown hair, windblown, salt-textured, and naturally tousled"
-  * skinTone: "Weathered salt-bronze tan complexion with clean, natural maritime specular highlights"
-  * eyeColorNegatives: ["amber eyes", "violet eyes", "red eyes", "hazel eyes"]
-  * skinColorNegatives: ["pale white skin", "ghostly pale skin", "ashen skin"]
+  * primaryColor: "Deep Oceanic Blue", accentColors: ["Seafoam Green", "Driftwood Tan"], magicColor: "aqua"
+  * eyeColor: "Deep teal iris with dark navy limbal ring, faint seafoam striations"
+  * hairColor: "Sun-streaked brown hair, short and wind-tousled"
+  * skinTone: "Sun-weathered tan complexion, evenly toned"
+  * eyeColorNegatives: ["brown eyes", "grey eyes", "amber eyes", "violet eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["all-over blonde hair", "grey hair", "black hair"]
 * **Physique Block:**
-  * build: "Lean, powerful swimmer build; broad back, wiry endurance frame conditioned by wind and tide"
-  * torso: "Wide latissimus taper; lean, flat midriff with visible functional core definition and serratus ribs"
-  * shouldersAndArms: "Mobile, rounded deltoids; strong, rope-weathered forearms with prominent grip strength"
-  * hips: "Grounded athletic hips built for pitching deck balance"
-  * legs: "Dense, balanced legs; grounded low stance adapted for maritime footing and beast handling"
+  * build: "Lean, powerful swimmer build; broad back and a wiry endurance frame"
+  * chest: "Wide latissimus taper over a strong chest"
+  * arms: "Mobile, rounded deltoids; strong, rope-weathered forearms with prominent grip strength"
+  * waist: "Lean, flat midriff with visible functional core definition and serratus; grounded athletic hips"
+  * legs: "Dense, balanced legs built for steady footing"
   * distinguishingMarks: []
   * raceAlignment: "Human presentation aligned to pelagic vanguard characteristics (swimmer back, functional endurance, sea-weathered resilience)"
 
@@ -151,18 +156,19 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Light | Paladin | Human
 * **Physique Profile:** Massive, powerful tank physique; dense heavy-armor frame with broad structural mass.
 * **Palette & Cosmetics:**
-  * primaryColor: "Solar Alabaster", accentColors: ["Sun-Forged Gold", "Polished Steel"], metal: "sun-forged gold"
-  * eyeColor: "Warm radiant amber iris with dark bronze limbal ring and bright golden flecks"
-  * hairColor: "Warm honey-brown hair with golden-blonde streaks, short military trim"
-  * skinTone: "Healthy sun-hardened cream-tan complexion, firm and clean"
-  * eyeColorNegatives: ["violet eyes", "green eyes", "blue eyes", "black eyes"]
-  * skinColorNegatives: ["corrupted skin", "ashen grey skin", "pale sickly skin"]
+  * primaryColor: "Radiant Rose Gold", accentColors: ["Ivory White", "Polished Bronze"], magicColor: "warm golden-white"
+  * eyeColor: "Radiant amber-gold iris with warm bronze limbal ring, faint golden striations"
+  * hairColor: "Golden-blonde hair, short and neatly combed"
+  * skinTone: "Warm, sun-kissed complexion, evenly toned"
+  * eyeColorNegatives: ["blue eyes", "green eyes", "grey eyes", "violet eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["brown hair", "white hair", "red hair"]
 * **Physique Block:**
   * build: "Massive, powerful tank physique; dense heavy-armor frame with broad structural mass"
-  * torso: "Deep barrel chest; thick, powerful abdominal wall; solid, wide waistline built for heavy plate load"
-  * shouldersAndArms: "Heavily developed trapezius and deltoids; thick, hammer-wielding forearms and broad hands"
-  * hips: "Wide, sturdy pelvis anchored for maximum kinetic shock absorption"
-  * legs: "Heavy, pillar-like thighs and dense calves anchored in a wide, immovable stance"
+  * chest: "Deep barrel chest"
+  * arms: "Heavily developed trapezius and deltoids; thick forearms and broad hands"
+  * waist: "Thick, powerful abdominal wall; solid, wide waistline and a sturdy pelvis"
+  * legs: "Heavy, pillar-like thighs and dense calves"
   * distinguishingMarks: []
   * raceAlignment: "Human presentation aligned to holy bastion characteristics (unshakeable mass, dense muscle wall, radiant vanguard authority)"
 
@@ -173,20 +179,21 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Earth | Berserker | Barbarian
 * **Physique Profile:** Massive, raw-boned barbarian powerhouse; thick heavy frame with colossal functional mass.
 * **Palette & Cosmetics:**
-  * primaryColor: "Deep Burnt Ochre", accentColors: ["Granite Slate", "Raw Ancient Bronze"], metal: "raw ancient bronze"
-  * eyeColor: "Hard slate-grey hazel iris with dark charcoal limbal ring and stone-brown flecks"
-  * hairColor: "Coarse dark ash-brown hair, thick, unkempt, and bound with raw leather cords"
-  * skinTone: "Harshly weathered ruddy-tan complexion, scarred from mountain exposure and rockfall"
-  * eyeColorNegatives: ["violet eyes", "blue eyes", "bright green eyes", "golden eyes"]
-  * skinColorNegatives: ["pale porcelain skin", "soft ivory skin", "unblemished smooth skin"]
+  * primaryColor: "Deep Rust Brown", accentColors: ["Iron Grey", "Warm Sand"], magicColor: "warm amber"
+  * eyeColor: "Deep umber iris with dark iron limbal ring, faint rust striations"
+  * hairColor: "Dark brown hair, short and rugged"
+  * skinTone: "Deep sun-weathered tan complexion, evenly toned"
+  * eyeColorNegatives: ["blue eyes", "green eyes", "grey eyes", "violet eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["black hair", "blonde hair", "red hair"]
 * **Physique Block:**
-  * build: "Massive, raw-boned barbarian powerhouse; thick heavy frame with colossal functional mass"
-  * torso: "Wide, dense ribcage; thick powerlifter abdominal wall; massive oblique slabs and heavy chest"
-  * shouldersAndArms: "Massive neck and bull traps merging into dense shoulders; heavy, rock-crushing forearms"
-  * hips: "Broad, heavy-boned hips supporting immense physical torque"
-  * legs: "Huge, tree-trunk thighs and dense calves capable of lunging through shattered bedrock"
-  * distinguishingMarks: ["faint battle scars across chest and left shoulder"]
-  * raceAlignment: "Barbarian presentation aligned to primal mountain juggernaut characteristics (thick skeletal density, raw kinetic power, heavy mass)"
+  * build: "Massive, raw-boned barbarian powerhouse; thick, heavy frame with colossal functional mass"
+  * chest: "Wide, dense ribcage and a heavy chest"
+  * arms: "Massive neck and heavy trapezius merging into dense shoulders; thick, heavy forearms"
+  * waist: "Thick powerlifter abdominal wall with massive oblique slabs; broad, heavy-boned hips"
+  * legs: "Huge, tree-trunk thighs and dense calves"
+  * distinguishingMarks: ["faint battle scars across the chest and left shoulder"]
+  * raceAlignment: "Barbarian presentation aligned to primal mountain juggernaut characteristics (thick skeletal density, raw power, heavy mass)"
 
 ---
 
@@ -195,20 +202,21 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Lightning | Monk | Celestial
 * **Physique Profile:** Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined kinetic silhouette.
 * **Palette & Cosmetics:**
-  * primaryColor: "Storm Cobalt", accentColors: ["Arc Violet", "Fulgurite Silver"], metal: "fulgurite silver"
-  * eyeColor: "Luminous electric-blue iris with glowing silver limbal ring and kinetic arc filaments"
-  * hairColor: "Pale platinum-white hair with faint azure-violet highlights, cropped close"
-  * skinTone: "Luminous celestial-alabaster complexion, flawless, reflecting faint arc-light sheen"
-  * eyeColorNegatives: ["brown eyes", "hazel eyes", "dark eyes", "yellow eyes"]
-  * skinColorNegatives: ["muddy skin", "tanned skin", "ruddy red skin"]
+  * primaryColor: "Storm Gold", accentColors: ["Arc White", "Storm Grey"], magicColor: "white-hot electric"
+  * eyeColor: "Electric cobalt iris with midnight-indigo limbal ring, faint arc-white striations"
+  * hairColor: "Jet-black hair, short and neatly cropped"
+  * skinTone: "Warm golden-tan complexion, evenly toned"
+  * eyeColorNegatives: ["brown eyes", "green eyes", "grey eyes", "red eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["brown hair", "grey hair", "blonde hair"]
 * **Physique Block:**
-  * build: "Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined kinetic silhouette"
-  * torso: "Carved, tight midriff with deep serratus contours and chiseled abdominal plates; narrow waist"
-  * shouldersAndArms: "Striated deltoids and triceps; calloused, energized iron fists with blue specular energy trace"
-  * hips: "Tight, narrow hips aligned for instantaneous directional change"
-  * legs: "Tightly coiled athletic legs; light spring-loaded feet poised on balls of the toes"
+  * build: "Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined silhouette"
+  * chest: "Carved chest with deep serratus contours"
+  * arms: "Striated deltoids and triceps; calloused, conditioned hands"
+  * waist: "Tight midriff with chiselled abdominal definition; narrow waist and narrow hips"
+  * legs: "Tightly coiled athletic legs"
   * distinguishingMarks: []
-  * raceAlignment: "Celestial presentation aligned to barehanded kinetic conduit characteristics (zero body fat, wire-taut muscle fibers, electric stillness)"
+  * raceAlignment: "Celestial presentation aligned to barehanded kinetic conduit characteristics (zero body fat, wire-taut muscle, electric stillness)"
 
 ---
 
@@ -217,18 +225,19 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Wind | Warrior | High Elf
 * **Physique Profile:** Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach.
 * **Palette & Cosmetics:**
-  * primaryColor: "Sky Cerulean", accentColors: ["Burnished Wind-Brass", "Cloud Ivory"], metal: "burnished wind-brass"
-  * eyeColor: "Clear wind-grey cyan iris with thin platinum limbal ring and bright breezy catchlights"
-  * hairColor: "Sun-bleached pale golden-blonde hair, fine-textured, flowing back in natural swept locks"
-  * skinTone: "Fair ivory complexion with smooth, soft wind-brushed clarity"
-  * eyeColorNegatives: ["violet eyes", "brown eyes", "black eyes", "red eyes"]
-  * skinColorNegatives: ["dark brown skin", "ashen skin", "scarred rough skin"]
+  * primaryColor: "Windswept Jade", accentColors: ["Cloud White", "Pale Silver"], magicColor: "pale silver-jade"
+  * eyeColor: "Pale sky-blue iris with silver limbal ring, faint cyan striations"
+  * hairColor: "Silvery-blonde hair, short and windswept"
+  * skinTone: "Fair, cool-toned complexion, evenly toned"
+  * eyeColorNegatives: ["brown eyes", "green eyes", "amber eyes", "red eyes"]
+  * skinColorNegatives: ["ruddy skin", "sunburnt skin", "overly tanned skin"]
+  * hairColorNegatives: ["golden-yellow hair", "grey hair", "white hair"]
 * **Physique Block:**
   * build: "Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach"
-  * torso: "Clean, flat athletic stomach; natural narrow waist taper; smooth pectoral contours without bulk"
-  * shouldersAndArms: "Broad, flexible shoulders; long slender arms with clean, rapid blade-drawing mechanics"
-  * hips: "Slender, flexible hips facilitating frictionless footwork"
-  * legs: "Long, elegant duelist legs; agile, open-stance footwork poised for immediate lateral steps"
+  * chest: "Smooth pectoral contours without bulk"
+  * arms: "Broad, flexible shoulders; long, slender arms"
+  * waist: "Clean, flat athletic stomach with a natural narrow waist taper; slender hips"
+  * legs: "Long, elegant duelist legs"
   * distinguishingMarks: []
   * raceAlignment: "High elf presentation aligned to wind duelist characteristics (aerodynamic reach, parrying leverage, unforced grace)"
 
@@ -239,39 +248,56 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 * **Element / Class / Race:** Poison | Assassin | Orc
 * **Physique Profile:** Dense yet agile orcish assassin build; heavy bone structure stripped down to corded predator muscle.
 * **Palette & Cosmetics:**
-  * primaryColor: "Toxic Malachite", accentColors: ["Corroded Dark Iron", "Blackened Steel"], metal: "corroded dark iron"
-  * eyeColor: "Acidic yellow-amber iris with jagged black limbal ring and toxic green catchlights"
-  * hairColor: "Coarse jet-black hair, shaved at temples with a topknot warrior crest"
-  * skinTone: "Mottled slate-green orc hide, tough and leathery with a subtle oily toxic sheen"
-  * eyeColorNegatives: ["blue eyes", "violet eyes", "soft brown eyes", "white eyes"]
-  * skinColorNegatives: ["pale white human skin", "fair skin", "rosy skin"]
+  * primaryColor: "Toxic Orchid Magenta", accentColors: ["Tarnished Brass", "Charcoal Black"], magicColor: "sickly lime-green"
+  * eyeColor: "Acid-green iris with blackened limbal ring, faint toxic-violet striations"
+  * hairColor: "Black hair, short and slicked back"
+  * skinTone: "Deep olive-toned complexion, evenly toned"
+  * eyeColorNegatives: ["blue eyes", "brown eyes", "grey eyes", "amber eyes"]
+  * skinColorNegatives: ["pale skin", "fair skin", "washed-out skin"]
+  * hairColorNegatives: ["brown hair", "purple hair", "grey hair"]
 * **Physique Block:**
-  * build: "Dense yet agile orcish assassin build; heavy bone structure stripped down to corded predator muscle"
-  * torso: "Broad chest plate with heavy ribcage; tight, conditioned midsection held in a stalking flex"
-  * shouldersAndArms: "Thick, muscular shoulders; long heavy arms with knotty forearm cords and sharp claws"
-  * hips: "Heavy, low-slung hips built for powerful forward lunges"
-  * legs: "Powerful, bowed stalking legs with thick calves built for explosive low-angle lunges"
-  * distinguishingMarks: ["subtle ritual scarification lines along jaw and forearms"]
-  * raceAlignment: "Orcish presentation aligned to predatory stalker characteristics (dense jaw/neck architecture, leathery hide, silent lethal momentum)"
+  * build: "Dense yet agile orcish assassin build; heavy bone structure stripped down to corded muscle"
+  * chest: "Broad chest with a heavy ribcage"
+  * arms: "Thick, muscular shoulders; long, heavy arms with knotty forearm cords"
+  * waist: "Tight, conditioned midsection; heavy, low-slung hips"
+  * legs: "Powerful, bowed legs with thick calves"
+  * distinguishingMarks: ["subtle ritual scarification lines along the jaw and forearms"]
+  * raceAlignment: "Orcish presentation aligned to predatory stalker characteristics (dense jaw and neck architecture, leathery hide, silent lethal momentum)"
 
 ---
 
-## 4. Master Prompt Assembly Algorithm for Male Hero Studio A-Pose Plates
+## 4. How the Fields Reach the Prompt
 
-When the pipeline renders a master plate for any Mythic Male Hero, tokens concatenate in this strict sequence:
+The real prompt is assembled from the shared templates in `data/art/_templates/heroes/` by `tools/generators/gen_prompt.py`, not from a fixed concatenation. The Drakn Bound men still use the older single Prime card (`<Name>_X_Pose`, template `pose-male-human.txt`), not the 1_Alpha chain the sisters and angels use:
 
-```text
-[Master Shot & Camera]:
-"Full-body master portrait, neutral studio A-pose character plate, single male hero, centered composition, front view, eye-level framing, 944x1104 resolution"
+| Field | Where it goes |
+| --- | --- |
+| `build`, `chest`, `arms`, `waist`, `legs`, `distinguishingMarks` | The `Figure:` line of the Prime, so the whole individual build is set at the first pass |
+| `skinTone`, `hairColor`, `eyeColor` | The `Skin:`, `Hair:` and `Eyes:` lines, with the three negative lists in the negative prompt |
+| Underlayer | The fitted swim brief in `primaryColor`, bare feet |
 
-+ [Bloodline Core Physique]:
-"{physique.build}, {physique.torso}, {physique.shouldersAndArms}, {physique.hips}, {physique.legs}, {physique.raceAlignment}"
+Moving the Drakn Bound set to the 1_Alpha chain (standard figure at 1_Prime, individual build at 2_Bare, like the angels) is an open item in `docs/STATUS.md`. The text of each field is the identity JSON (`data/art/heroes/drakn-bound/`); the section 3 blocks above mirror it.
 
-+ [Elemental Phenotype & Grooming]:
-"{palette.skinTone}, {palette.eyeColor}, {palette.hairColor}, sharp masculine jawline, clean groomed facial features"
+---
 
-+ [Underlayer Uniform & Finish]:
-"wearing athletic compression combat brief in {palette.primaryColor} with {palette.metal} accents and low-profile combat wraps in {palette.primaryColor}, satin-matte finish on garments and clean specular skin highlights"
+## 5. Build Rationale
 
-+ [Studio Environment & Lighting]:
-"neutral cream studio background (#F5F0E6), directional studio key lighting with rim highlights carving muscular contours, sharp focus, 8k resolution, photorealistic masterwork creature and character design"
+Unlike the sisters, who share one family skeleton, the ten Drakn Bound men are separate people of different races and roles, so their
+builds are a deliberate range from lean to massive. Each build follows race and class; none of them is left to the photo. Tone and mass
+are welcome here, because the men are fighters (the limit that applies to the women, no body-builder look, does not apply to them).
+
+| Hero | Race, class | Build | Why |
+| --- | --- | --- | --- |
+| Draknare | Human, Shadow Knight | Imposing athletic tank, tall, heavily muscled legs | The commander of the line; heavy armor needs a heavy frame |
+| Ignis | Human, Warrior | Chiseled athletic striker | A greatsword striker: explosive, not massive |
+| Nizaras | Wood Elf, Rogue | Lithe, sinewy, ultra-lean | A woodland infiltrator: light, flexible, quiet |
+| Lyran | High Elf, Knight | Tall, statuesque, symmetrical | An aristocratic bastion: long and regal rather than bulky |
+| Corin | Human, Beast Lord | Lean swimmer, broad back, wiry endurance | A pelagic vanguard: endurance over mass |
+| Hauk | Human, Paladin | Massive tank, pillar-like thighs | The unyielding bulwark; the heaviest of the humans |
+| Torvald | Barbarian, Berserker | Massive, raw-boned powerhouse, tree-trunk thighs | The juggernaut of the set |
+| Dorian | Celestial, Monk | Hyper-conditioned, razor-defined, coiled legs | A kinetic martial artist: dense but not bulky |
+| Zephyr | High Elf, Warrior | Tall, aerodynamic, long reach | An aerial duelist: lithe and graceful |
+| Malakor | Orc, Assassin | Dense yet agile, corded muscle, bowed legs | A coiled stalker: orcish mass stripped down to speed |
+
+The same mixture (lean, heroic, heavy by element and role) is used for the Angel Primes men; see
+[angel_primes_physique.md](./angel_primes_physique.md). The sisters' rationale is in [drakn_sisters_physique.md](./drakn_sisters_physique.md).
