@@ -51,7 +51,10 @@ class FinalsTests(unittest.TestCase):
         self.w.master("Alice_Qwen_Alpha_1_Prime.json", PRIME)
         self.w.master("Alice_Qwen_Alpha_2_Bare_Figure.json", BARE)
         self.w.master("Alice_Qwen_Scene_Glamour.json", SCENE)
-        self.w.cfg["paths"] = {"outputRoot": str(self.w.tmp / "out"), "outputFolders": {"set-a": "Proj"}}
+        self.w.cfg["paths"] = {"outputRoot": str(self.w.tmp / "out"), "outputFolders": {"set-a": "Proj"}, "inputsRoot": str(self.w.tmp / "in")}
+        for name in ("A-Home", "Alice-Own"):
+            (self.w.tmp / "in" / name).mkdir(parents=True)
+        self.w.cfg["inputs"] = {"Alice": {"prime": "old.png"}}
         self.d = self.w.dir("A-Home")
 
     def names(self):
@@ -243,6 +246,21 @@ class FinalsTests(unittest.TestCase):
         self.w.run("finals", "record", "--apply")
         self.assertEqual(cw.final_record(self.w.cfg, "Alice_Qwen_Alpha_1_Prime.json")["seed"], 4242)
         self.assertIsNone(cw.final_record(self.w.cfg, "Alice_Qwen_Alpha_2_Bare_Figure.json"))
+
+    def test_use_as_makes_the_render_the_default_input_only_when_asked(self):
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00004_.png", b"the-prime")
+        self.w.put("A-Home", "zz_Candidates/Alice_Qwen_Alpha_1_Prime_00004_.json", {**PRIME, "id": "c"})
+        saved = []
+        with mock.patch.object(cw, "write_cfg", lambda cfg: saved.append(cw.json.loads(cw.json.dumps(cfg["inputs"])))):
+            self.w.run("finals", "promote", "Alice_Qwen_Alpha_1_Prime_00004", "-w", "A-Home", "--apply")
+            self.assertEqual(saved, [], "a plain promote changes no default")
+            out, _ = self.w.run("finals", "promote", "Alice_Qwen_Alpha_1_Prime_00004", "-w", "A-Home", "--use-as", "prime")
+            self.assertIn("would set", out)
+            self.assertEqual(saved, [])
+            self.assertFalse(list((self.w.tmp / "in").rglob("*.png")))
+            self.w.run("finals", "promote", "Alice_Qwen_Alpha_1_Prime_00004", "-w", "A-Home", "--use-as", "prime", "--apply")
+        self.assertEqual(saved[-1]["Alice"]["prime"], "Alice_Qwen_Alpha_1_Prime_00004_.png")
+        self.assertEqual(sorted(p.parent.name for p in (self.w.tmp / "in").rglob("*.png")), ["A-Home", "Alice-Own"])
 
     def test_status_counts_and_slots(self):
         self.w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json")

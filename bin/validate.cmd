@@ -23,6 +23,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\workflows\test_templates.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\workflows\test_cli_surface.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
@@ -49,6 +54,11 @@ if errorlevel 1 (
   exit /b 1
 )
 %PY% tools\art\identity_audit.py --check
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% tools\art\test_todo_report.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

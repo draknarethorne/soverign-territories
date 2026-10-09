@@ -579,6 +579,39 @@ def set_video(wf, prompt_text, engine_cfg):
     return src.group(1) if src and not src.group(1).startswith("(") else None
 
 
+def standard_megapixels(cfg):
+    """The total pixels of the standard image size (944x1104 = 1.042176 MP): what the edit templates' resize-to-total-pixels nodes must target so an output keeps the standard size until the final upscale."""
+    w, h = cfg.get("standardSize") or (944, 1104)
+    return round(w * h / 1e6, 6)
+
+
+def size_nodes(wf):
+    """The nodes inside a template's subgraph that rescale the incoming image to a total number of pixels (ImageScaleToTotalPixels, and ResizeImageMaskNode in 'scale total pixels' mode)
+    when that number is not driven by another node. Left at 1 megapixel they shrink a 944x1104 image to about 925x1082 (Flux.2 also wants multiples of 16)."""
+    for node in subgraph_nodes(wf):
+        linked = {i["name"] for i in node.get("inputs", []) if i.get("link") is not None}
+        if node.get("type") == "ImageScaleToTotalPixels" and "megapixels" not in linked:
+            yield node
+        elif node.get("type") == "ResizeImageMaskNode" and node.get("widgets_values", [None])[0] == "scale total pixels" and "resize_type.megapixels" not in linked:
+            yield node
+
+
+def align_size(wf, cfg):
+    """Point every such node at the standard size's megapixels (and a resolution step of 16 where the node has one). Returns True if anything changed."""
+    mp, changed = standard_megapixels(cfg), False
+    for node in size_nodes(wf):
+        wv, named = node["widgets_values"], node.get("widgets_values_named")
+        pairs = [(1, "resize_type.megapixels", mp)] if node["type"] == "ResizeImageMaskNode" else [(1, "megapixels", mp), (2, "resolution_steps", max(wv[2], 16))]
+        for idx, key, val in pairs:
+            if wv[idx] != val:
+                wv[idx] = val
+                changed = True
+            if isinstance(named, dict) and key in named and named[key] != val:
+                named[key] = val
+                changed = True
+    return changed
+
+
 def input_image(wf):
     n = node_of(wf, "LoadImage")
     return n["widgets_values"][0] if n else None
@@ -1045,7 +1078,17 @@ def cmd_deploy(args):
                 continue
             state = classify(p, inst[name])
             if state == "aligned" and not replace:
-                tally["aligned"] += 1
+                stale_size = align_size(read_wf(inst[name]), cfg)
+                if not stale_size:
+                    tally["aligned"] += 1
+                    continue
+                print(f"  size     {ws}/{name}  (total pixels set to the standard size; prompt, seed and input untouched)")
+                if not args.dry_run:
+                    backup(stamp, ws, name, inst[name])
+                    swf = read_wf(inst[name])
+                    align_size(swf, cfg)
+                    write_wf(inst[name], swf)
+                tally["updated"] += 1
                 continue
             if state == "unreadable" and not replace:
                 print(f"  SKIP     {ws}/{name} is not a Qwen workflow in one of the two places; use --overwrite")
@@ -1059,6 +1102,7 @@ def cmd_deploy(args):
                 else:
                     wf = read_wf(inst[name])
                     patch_wf(wf, *get_values(read_wf(p)))
+                    align_size(wf, cfg)
                     write_wf(inst[name], wf)
             tally["updated"] += 1
         if getattr(args, "tests", False):
@@ -1450,6 +1494,7 @@ def cmd_make(args):
             wf = read_wf(target)
             resized = is_text_item(cfg, it) and set_size(wf, it["path"].read_text(encoding="utf-8"))
             replayed = bool(rec) and apply_final_settings(wf, rec)
+            resized = (not is_text_item(cfg, it) and align_size(wf, cfg)) or resized
             if patch_wf(wf, pos, neg, it["prefix"]) or resized or replayed:
                 if not args.dry_run:
                     write_wf(target, wf)
@@ -1479,6 +1524,8 @@ def cmd_make(args):
             dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), input_role(cfg, it["hero"], it["stage"], it["family"]))
             if dn is not None:
                 set_denoise(wf, dn)
+        if not is_text:
+            align_size(wf, cfg)
         if rec:
             apply_final_settings(wf, rec)  # a stage you finalised replays its seed, denoise and turbo
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
@@ -2163,6 +2210,33 @@ def finals_find(cfg, ws, args):
     return [(p, q) for p, q in found if q and want in p.name.lower()]
 
 
+USE_AS_ROLES = ("prime", "bare", "apose", "heels", "scene", "polish")
+
+
+def use_final_as_input(cfg, ws, args, final_path, parsed):
+    """Make the render of a final the hero's default image for a role (the Prime final feeds the Alpha 2 workflows, the Bare final the footwear, and so on): the PNG is copied into the input
+    folder of every workspace that is home for the hero and workspaces.json says so; `inputs reset` then points the workflows at it. Only when you ask (--use-as); a plain promote never changes a default."""
+    role, hero, group = args.use_as, parsed["hero"], hero_groups().get(parsed["hero"])
+    src = final_image_source(cfg, read_wf(final_path), parsed["counter"])
+    if not src:
+        print(f"  --use-as {role}: the render of {final_path.name} was not found in the output folders (no render counter in the name, or it is not on disk); nothing changed")
+        return
+    homes = [w for w in home_workspaces(cfg, group, hero) if w in cfg["workspaces"]]
+    for w in homes:
+        dest = input_dir(cfg, w, ) / src.name
+        print(f"  {'copy' if args.apply else 'would copy'}  {src.name} -> {w} input folder")
+        if args.apply and not dest.exists():
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dest)
+    conf = cfg["inputs"].get(hero)
+    conf = conf if isinstance(conf, dict) else {}
+    print(f"  {'set' if args.apply else 'would set'}  workspaces.json inputs.{hero}.{role} = {src.name} (was {conf.get(role)}); then run: inputs reset --hero {hero} --apply")
+    if args.apply:
+        conf[role] = src.name
+        cfg["inputs"][hero] = conf
+        write_cfg(cfg)
+
+
 def finals_promote(cfg, ws, args, stamp):
     d = install_dir(cfg, ws, args.root)
     hits = finals_find(cfg, ws, args)
@@ -2180,6 +2254,8 @@ def finals_promote(cfg, ws, args, stamp):
     dest = d / FINAL_DIR / workspace_subdir(ws, wf) / canon_name(parsed)
     if dest.exists() and same_workflow(dest, src):
         print(f"{ws}: {src.name} is already the final for {parsed['stem']}")
+        if args.use_as:
+            use_final_as_input(cfg, ws, args, dest, parsed)
         return
     for e in finals_entries(cfg, ws, args.root):
         if e["kind"] == "final" and e["parsed"] and e["parsed"]["stem"] == parsed["stem"] and e["path"] != dest:
@@ -2200,6 +2276,8 @@ def finals_promote(cfg, ws, args, stamp):
         shutil.copy2(src, dest)
     else:
         print("Preview only: add --apply to promote it.")
+    if args.use_as:
+        use_final_as_input(cfg, ws, args, dest if args.apply else src, parsed)
 
 
 def finals_pull(cfg, ws, args, stamp=None):
@@ -2539,6 +2617,7 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy, reclassify, images and record preview by default; pull writes unless --dry-run)")
     s.add_argument("--force", action="store_true", help="with record: replace a record you edited by hand")
+    s.add_argument("--use-as", choices=list(USE_AS_ROLES), help="with promote: also make this final's render the hero's default image for a role (prime feeds the Alpha 2 workflows, bare the footwear, apose head and motion); a plain promote changes no default")
     args = ap.parse_args(argv)
     previewed = normalise(args)
     {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,

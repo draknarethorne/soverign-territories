@@ -200,6 +200,12 @@ python tools/workflows/comfy_workflows.py inputs reset --hero Draknara --dry-run
 
 `--set` only needs the roles you give it (`--photo`, `--apose`, `--bare`); with `--dry-run` it prints and writes nothing. Workflows in `zz_Shots/` are never reset.
 
+### Image size (templates)
+
+Stills keep the standard size (`standardSize` in `workspaces.json`, 944x1104 = 1.042176 MP) until the final upscale. Qwen snaps 944x1104 to itself (`FluxKontextImageScale`); FireRed and Flux rescale to a total number of pixels, which was 1 MP (about 925x1082) and is now the standard megapixels.
+`python tools/workflows/align_templates.py --apply` sets that in the repo templates, `make` applies it to every edit workflow it builds or refreshes, and `deploy` applies it to the workflows a workspace holds (prompt, seed and input untouched, a backup first).
+`tools/workflows/test_templates.py` fails if a template pulled back from a workspace undoes it. Text-to-image templates (1024x1280, 4:5) take their size from each prompt's `Size:` line, and video size and length come from each animation card (plan Phase 7.5).
+
 ### Denoise defaults
 
 New generated workflows start at the high end of the range in their stage template (`Denoise ~0.8-0.9.` in `data/art/_templates/heroes/*.txt`; 1.0 only for the Prime from the original photo), not at 1.0. Since Oct 2026 the edit stages run at 0.8 to 0.95
@@ -234,6 +240,7 @@ python tools/workflows/comfy_workflows.py finals status -w "Angel Primes"       
 python tools/workflows/comfy_workflows.py finals sort -w "Angel Primes" --apply      # file them where their name says (preview without --apply)
 python tools/workflows/comfy_workflows.py finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w "Angel Primes" --apply   # make it the final; the earlier final is archived in zz_Final/_previous
 python tools/workflows/comfy_workflows.py finals deploy -w "Angel Primes" --apply    # put repo candidates and finals the workspace lacks into their folders
+python tools/workflows/comfy_workflows.py finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w "Angel Primes" --use-as prime --apply   # also make its render the hero's default Prime image (copied to her workspaces' input folders and workspaces.json; then inputs reset --hero Remiah --apply)
 python tools/workflows/comfy_workflows.py finals reclassify --apply                  # clean the repo with the same rules (preview without --apply)
 python tools/workflows/comfy_workflows.py finals record --apply                      # write each final's seed, denoise and inputs into data/art/finals/<set>.json (after pull)
 ```
@@ -245,7 +252,8 @@ python tools/workflows/comfy_workflows.py finals record --apply                 
 - **Nothing is deleted.** An identical duplicate goes to `workflows/.sync/backup/`; a different file at the same place is reported as a `CONFLICT` and left alone.
 - **What cannot be placed is left exactly where it is** (never moved to another folder) and is listed as `not placeable`. The same applies in the repo, and to `zz_Curated`, which is not rearranged. A shot you saved into a subfolder of your own stays there; one saved straight into `zz_Shots` is filed by phase, keeping its name.
 - **`finals reclassify`** does the same for what is already in git: numbered saves at the top of a hero's `_shots` folder were candidates and move to `_candidates`, and everything is moved to its proper path. Run it, then `pull` and `setup` a few times, and the repo and the workspaces converge on one structure.
-- **A final keeps its image.** `pull` (or `finals images --apply`) copies the render a final was saved from (`<output project>/<SaveImage prefix>_<counter>_.png`) into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`, the prompt-path convention in [data/art/README.md](../data/art/README.md#where-rendered-images-live-convention) with the engine in the name so a Qwen and a FireRed final stay apart. A newer final of the same stage replaces the image (the old one is copied to backup first).
+- **A final keeps its image.** `pull` (or `finals images --apply`) copies the render a final was saved from (`<output project>/<SaveImage prefix>_<counter>_.png`) into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`, the prompt-path convention in [data/art/README.md](../data/art/README.md#where-rendered-images-live-convention) with the engine in the name so a Qwen and a FireRed final stay apart.
+  A newer final of the same stage replaces the image (the old one is copied to backup first).
   **Only finals get an image**: candidates and shots never do. Watch the size with `finals images` (it prints the PNG total of `assets/art`); the convention allows Git LFS or external storage if it grows.
 - **A final's settings are replayed by `make`.** `finals record --apply` reads every final kept in the repo (`workflows/_final`) and writes its seed, denoise, turbo (the Lightning LoRA), steps, cfg, sampler and the images it loaded into `data/art/finals/<set>.json`, one record per workflow name (so a Qwen and a FireRed final of a stage each have their own).
   `make` then builds or refreshes that stage's workflow with the record's **seed (its control set to fixed), denoise and turbo** and the new prompt, so a regenerated stage keeps the composition you chose.
