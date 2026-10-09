@@ -39,6 +39,7 @@ import itertools
 import json
 import os
 import pathlib
+import random
 import re
 import shutil
 import sys
@@ -153,21 +154,24 @@ def settings(cfg):
 
 
 def matches(key, patterns):
-    return any(fnmatch.fnmatch(key.lower(), p.lower()) for p in patterns)
+    """Does a folder key like 'Artists/Pierre' match a pattern like 'Artists/*'? A star stands for one folder name, so 'Artists/*' is the artist folders and not the people grouped inside them."""
+    parts = key.lower().split("/")
+    for p in patterns:
+        pp = p.lower().split("/")
+        if len(pp) == len(parts) and all(fnmatch.fnmatch(a, b) for a, b in zip(parts, pp)):
+            return True
+    return False
 
 
-def read_library(cfg, work, cache, embed, st, progress=True, only=None):
-    """Every original in the person folders and the pool (other mixed folders are skipped: many people, never used)."""
+def read_library(cfg, work, cache, embed, st, progress=True, with_mixed=False):
+    """Every original in the person folders and the pool. The other mixed folders (many people, never used to describe one) are skipped unless with_mixed."""
     photos, todo = [], []
-    for root in cw.photo_roots(cfg, work):
-        for folder in sorted(p for p in root.iterdir() if p.is_dir()):
-            key = f"{root.name}/{folder.name}"
-            if not (folder / "gallery").is_dir():
-                continue
-            if matches(key, st["mixed"]) and not matches(key, st["pool"]):
-                continue
-            for p in originals.images(folder / "gallery"):
-                todo.append((p, root.name, folder.name))
+    for group, name, folder in cw.photo_folders(cfg, work):
+        key = f"{group}/{name}"
+        if matches(key, st["mixed"]) and not matches(key, st["pool"]) and not with_mixed:
+            continue
+        for p in originals.images(folder / "gallery"):
+            todo.append((p, group, name))
     done = 0
     for p, group, folder in todo:
         sha = cache.sha(p)
@@ -264,19 +268,20 @@ def invent_name(seed, taken):
 # ---------- plans ----------
 
 class Move:
-    def __init__(self, photo, to, reason, score=None):
-        self.photo, self.to, self.reason, self.score = photo, to, reason, score
+    def __init__(self, photo, to, reason, score=None, bucket="gallery"):
+        self.photo, self.to, self.reason, self.score, self.bucket = photo, to, reason, score, bucket
 
     def as_dict(self):
-        return {"file": str(self.photo.path), "to": self.to, "reason": self.reason, "score": None if self.score is None else round(self.score, 3)}
+        return {"file": str(self.photo.path), "to": self.to, "bucket": self.bucket, "reason": self.reason, "score": None if self.score is None else round(self.score, 3)}
 
 
 def chosen_keys(cfg):
     return {cw.photo_key(n) for n in cfg.get("photos", {}).values() if cw.photo_key(n)}
 
 
-def plan_sort(space, st, cfg, taken):
-    """Moves for the pool photos: to the person folder they match confidently, or into a new folder when several look like one new person."""
+def plan_sort(space, st, cfg, taken, singles=False):
+    """Moves for the pool photos: to the person folder they match confidently, or into a new folder when several look like one new person.
+    With singles, a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool is left holding only photos with no usable face."""
     pool = [p for p in space.photos if matches(p.key, st["pool"]) and p.usable(st["minFace"])]
     protected = chosen_keys(cfg)
     moves, left = [], []
@@ -291,26 +296,29 @@ def plan_sort(space, st, cfg, taken):
     if left:
         vecs = np.array([p.vec for p in left])
         for g in cluster(vecs, st["cluster"]):
-            if len(g) >= st["minCluster"]:
+            if len(g) >= st["minCluster"] or singles:
                 members = [left[i] for i in g]
                 name = invent_name("|".join(sorted(m.sha for m in members)), taken | {m.to.split("/", 1)[-1] for m in moves})
                 new = f"Prospects/{name}"
                 taken = taken | {name}
                 near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
                 note = f"; alike {near[0][1]} ({near[0][0]:.2f})" if near and near[0][0] >= st["alike"] else ""
+                what = f"one new person ({len(members)} photos{note})" if len(members) >= st["minCluster"] else f"a face that matches nobody{note}"
                 for m in members:
-                    moves.append(Move(m, new, f"one new person ({len(members)} photos{note})", None))
+                    moves.append(Move(m, new, what, None))
     return moves
 
 
 def execute(moves, work, apply, cache, log=True):
-    """Move the files into <to>/gallery (a duplicate of what is already there goes to the source folder's gallery_org, a different file with the same name is kept under a new one)."""
+    """Move the files into <to>/<bucket> (gallery, or review for photos to look at; a duplicate of what is already there goes to the source folder's gallery_org, a different file with the same name is kept under a new one)."""
     batch = {"id": datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), "moves": []}
     made = 0
     for m in moves:
         src = m.photo.path
-        dest_dir = pathlib.Path(work) / m.to / "gallery"
+        dest_dir = pathlib.Path(work) / m.to / m.bucket
         dst = dest_dir / src.name
+        if dst == src:
+            continue
         if apply:
             dest_dir.mkdir(parents=True, exist_ok=True)
             if dst.exists():
@@ -335,10 +343,10 @@ def execute(moves, work, apply, cache, log=True):
 def print_plan(moves, space, work=None):
     by = collections.defaultdict(list)
     for m in moves:
-        by[m.to].append(m)
-    for to, ms in sorted(by.items()):
+        by[(m.to, m.bucket)].append(m)
+    for (to, bucket), ms in sorted(by.items()):
         new = to not in space.by_key and not (work and (pathlib.Path(work) / to).is_dir())
-        print(f"  -> {to}{'  (NEW folder)' if new else ''}: {len(ms)} photo(s)")
+        print(f"  -> {to}{'/review' if bucket == 'review' else ''}{'  (NEW folder)' if new else ''}: {len(ms)} photo(s)")
         for m in ms:
             print(f"       {m.photo.key}/{m.photo.name}   {m.reason}")
 
@@ -379,18 +387,21 @@ def make_sheet(rows, out, size=(112, 140)):
 
 # ---------- commands ----------
 
-def build(args):
+def build(args, with_mixed=False):
     cfg = cw.load_cfg()
     st = settings(cfg)
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     cache = Cache(args.cache or DATA / "likeness_cache.json")
     embed = args.embedder or Embedder()
-    photos = read_library(cfg, work, cache, embed, st)
+    photos = read_library(cfg, work, cache, embed, st, with_mixed=with_mixed)
     return cfg, st, work, cache, Space(photos, st)
 
 
 def folder_key(space, name):
-    hits = [k for k in space.keys if k.lower() == name.lower() or k.split("/", 1)[1].lower() == name.lower()]
+    n = name.lower()
+    hits = [k for k in space.keys if k.lower() == n or k.split("/", 1)[1].lower() == n]
+    if not hits:
+        hits = [k for k in space.keys if k.split("/")[-1].lower() == n]
     if len(hits) != 1:
         sys.exit(f"'{name}' matches {hits or 'no person folder'}; known: {', '.join(k.split('/', 1)[1] for k in space.keys)}")
     return hits[0]
@@ -551,8 +562,8 @@ def cmd_like(args):
 
 def cmd_sort(args):
     cfg, st, work, cache, space = build(args)
-    taken = {p.name for r in cw.photo_roots(cfg, work) for p in r.iterdir() if p.is_dir()}
-    moves = plan_sort(space, st, cfg, taken)
+    taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+    moves = plan_sort(space, st, cfg, taken, singles=args.singles)
     pool = [p for p in space.photos if matches(p.key, st["pool"])]
     print(f"{len(pool)} photo(s) in the pool; {len(moves)} would move (assign >= {st['assign']} with a margin of {st['margin']}, or a new person of {st['minCluster']}+ photos at {st['cluster']}):")
     print_plan(moves, space, work)
@@ -634,6 +645,439 @@ def cmd_undo(args):
         after_moves(args, back > 0)
 
 
+# ---------- renders, identities, cleaning, grouping, pairing ----------
+
+# each angel and the Drakn sister of her element (the codex's pairs); Angelica is the Neutral herald and has no sister
+PAIRS = {"Seraphine": "Drakniss", "Ravaelle": "Draknisa", "Haniya": "Drakniya", "Gavrielle": "Draknava", "Sandalyn": "Draknara",
+         "Remiah": "Drakneta", "Azaline": "Draknira", "Camaris": "Draknora", "Sammara": "Draknoxa", "Nyxene": "Drakness"}
+FIXED_ANGELS = ["Angelica"]
+SAME_LOOK = 0.35  # a render and a photo of the same person score at least this
+
+
+def core_scores(vecs, seed=None, first=0.2, thr=0.3, rounds=3):
+    """(scores, core indices, core centroid): each row of vecs scored against the centroid of the rows that belong together (a photo is left out of its own centroid).
+    The core starts from seed (a chosen photo, say) or the folder's average and is refined a few times, so a few photos of other people cannot drag it away."""
+    vecs = np.asarray(vecs)
+    c = nz(seed) if seed is not None else nz(vecs.mean(0))
+    core = list(range(len(vecs)))
+    for r in range(rounds):
+        sc = vecs @ c
+        core = [i for i, s in enumerate(sc) if s >= (first if seed is not None and r == 0 else thr)] or core
+        c = nz(vecs[core].mean(0))
+    total = vecs[core].sum(0)
+    inside = set(core)
+    scores = [float(v @ nz(total - v if i in inside and len(core) > 1 else total)) for i, v in enumerate(vecs)]
+    return scores, core, c
+
+
+class Renders:
+    """The pictures ComfyUI made, whose faces say which look you chose: the sisters' old X_Pose renders and the renders you saved as candidates for the angels."""
+
+    def __init__(self, cfg, cache, embed, st, space, limit=40):
+        self.cfg, self.cache, self.embed, self.st, self.space, self.limit, self.memo = cfg, cache, embed, st, space, limit, {}
+        self.files = {}
+        roots = []
+        try:
+            roots.append(cw.output_root(cfg))
+            roots.append(pathlib.Path(cfg.get("sharedOutput", "")))
+        except (KeyError, TypeError):
+            pass
+        for r in roots:
+            if r and r.is_dir():
+                for f in r.rglob("*.png"):
+                    self.files.setdefault(f.name, f)
+
+    def sister_files(self, hero):
+        pre = (f"{hero}_Qwen_X_Pose_", f"{hero}_Qwen_Alpha_1_Prime_")
+        return sorted(f for n, f in self.files.items() if n.startswith(pre))
+
+    def angel_files(self, hero):
+        d = cw.WF / "_candidates" / "angel-primes" / hero
+        names = {p.stem + ".png" for p in d.rglob("*.json")} if d.is_dir() else set()
+        return sorted(self.files[n] for n in names if n in self.files)
+
+    def centroid(self, hero, kind):
+        """(centroid of the faces in that hero's renders, how many), or None."""
+        key = (hero.lower(), kind)
+        if key not in self.memo:
+            files = self.sister_files(hero) if kind == "sister" else self.angel_files(hero)
+            if len(files) > self.limit:
+                files = [files[i] for i in np.linspace(0, len(files) - 1, self.limit).astype(int)]
+            vs, added = [], False
+            for f in files:
+                sha = self.cache.sha(f)
+                if sha not in self.cache.emb:
+                    self.cache.emb[sha] = self.embed(f) or {"faces": -1}
+                    added = True
+                d = self.cache.emb[sha]
+                if d.get("v") and d.get("px", 0) >= self.st["minFace"]:
+                    vs.append(nz(np.array(d["v"]) - self.space.mean))
+            if added:
+                self.cache.save()
+            self.memo[key] = None
+            if vs:
+                _, core, c = core_scores(np.array(vs))
+                self.memo[key] = (c, len(core))
+        return self.memo[key]
+
+
+def kind_of(key):
+    return {"Models": "sister", "Angels": "angel"}.get(key.split("/")[0])
+
+
+def identity(space, cfg, st, rend, key, extra=()):
+    """What a person folder is: her chosen photo (and any anchors from `likeness.anchors` or --anchor), her renders when they agree with it, and a seed made of both."""
+    ps = space.by_key.get(key, [])
+    hero = key.split("/")[-1]
+    parts = list(extra) + list(st.get("anchors", {}).get(hero, []))
+    chosen = {cw.photo_key(n) for h, n in cfg.get("photos", {}).items() if h.lower() == hero.lower() and cw.photo_key(n)}
+    anchors = [p for p in ps if cw.photo_key(p.name) in chosen or any(a and a in p.name for a in parts)]
+    a = nz(np.mean([p.vec for p in anchors], axis=0)) if anchors else None
+    got = rend.centroid(hero, kind_of(key)) if rend and kind_of(key) else None
+    r = got[0] if got else None
+    seeds, conflict = [], False
+    if a is not None:
+        seeds.append(a)
+    if r is not None:
+        if a is None or float(a @ r) >= SAME_LOOK:
+            seeds.append(r)
+        else:
+            conflict = True
+    return {"anchors": anchors, "a": a, "r": r, "nr": got[1] if got else 0, "seed": nz(np.sum(seeds, axis=0)) if seeds else None, "conflict": conflict}
+
+
+def folder_core(space, key, ident=None):
+    ps = space.by_key[key]
+    scores, core, c = core_scores(np.array([p.vec for p in ps]), ident["seed"] if ident else None)
+    return ps, scores, core, c
+
+
+def identity_vec(c, ident):
+    """The vector that stands for a person: her photos' core, joined with her renders when those are the same person."""
+    r = ident["r"] if ident else None
+    return nz(c + r) if r is not None and float(c @ r) >= SAME_LOOK else c
+
+
+def anchor_args(values):
+    out = collections.defaultdict(list)
+    for v in values or []:
+        h, _, part = v.partition("=")
+        out[h.lower()].append(part)
+    return out
+
+
+def cmd_clean(args):
+    cfg, st, work, cache, space = build(args)
+    rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
+    extra = anchor_args(args.anchor)
+    names = [n.lower() for n in (args.names or [])]
+    keys = [k for k in space.keys if (not names or k.split("/")[-1].lower() in names) and (not args.group or k.split("/")[0].lower() == args.group.lower())]
+    moves, rows, sheet = [], [], []
+    for key in keys:
+        ident = identity(space, cfg, st, rend, key, extra.get(key.split("/")[-1].lower(), []))
+        ps = space.by_key[key]
+        if len(ps) < 3 and ident["seed"] is None:
+            rows.append((key, len(ps), "skipped: fewer than 3 photos and nothing to compare them with"))
+            continue
+        ps, scores, core, c = folder_core(space, key, ident)
+        protected = {id(p) for p in ident["anchors"]}
+        mine, keep = [], 0
+        for p, s in zip(ps, scores):
+            if id(p) in protected or s >= args.keep:
+                keep += 1
+            elif s >= st["odd"] or p.faces > 1 or ident["conflict"]:
+                mine.append(Move(p, key, f"borderline for {key} ({s:.2f})", s, bucket="review"))
+            else:
+                rank = [r for r in space.ranking(p.vec, skip=p, own=key) if r[1] != key]
+                dest = rank[0][1] if rank and rank[0][0] >= st["assign"] and (len(rank) < 2 or rank[0][0] - rank[1][0] >= st["margin"]) else "Prospects/Various"
+                mine.append(Move(p, dest, f"does not look like {key} ({s:.2f})", s))
+        rev = sum(1 for m in mine if m.bucket == "review")
+        note = ""
+        if ident["conflict"]:
+            note = f"  NOTE: her renders look like someone else than her chosen photo (render~photo {float(ident['a'] @ ident['r']):.2f}); nothing sent away, only set aside to review"
+        elif ident["r"] is not None:
+            note = f"  (renders: {ident['nr']} faces, {float(c @ ident['r']):.2f} like her photos)"
+        rows.append((key, len(ps), f"keep {keep}, review {rev}, out {len(mine) - rev}{note}"))
+        moves += mine
+        if mine:
+            sheet += [(key.split("/")[-1], [ps[i] for i in core][:10]), ("  set aside", [m.photo for m in mine][:10])]
+    for key, n, text in rows:
+        print(f"  {key:32} {n:3} photos: {text}")
+    dests = collections.Counter((m.to + ("/review" if m.bucket == "review" else "")) for m in moves)
+    print(f"\n{len(moves)} photo(s) to move: " + ", ".join(f"{v} -> {k}" for k, v in dests.most_common(12)))
+    if args.sheet and sheet:
+        make_sheet(sheet, args.sheet)
+    if args.apply and moves:
+        n = execute(moves, work, True, cache)
+        print(f"{n} photo(s) moved")
+        after_moves(args, n > 0)
+    elif moves:
+        print("preview only; add --apply to move them")
+
+
+def cmd_group(args):
+    cfg, st, work, cache, space = build(args, with_mixed=True)
+    taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+    names = [n.lower() for n in (args.names or [])]
+    artists = sorted({p.key for p in space.photos if p.key.startswith("Artists/") and p.key.count("/") == 1})
+    moves, sheet = [], []
+    for ak in artists:
+        if names and ak.split("/")[1].lower() not in names:
+            continue
+        ps = [p for p in space.photos if p.key == ak and p.usable(st["minFace"])]
+        if len(ps) < st["minCluster"]:
+            continue
+        groups = [g for g in cluster(np.array([p.vec for p in ps]), args.cluster or st["cluster"]) if len(g) >= st["minCluster"]]
+        grouped = sum(len(g) for g in groups)
+        print(f"{ak}: {len(ps)} usable photos -> {len(groups)} group(s) of {st['minCluster']}+ ({grouped} photos); {len(ps) - grouped} stay where they are")
+        for g in sorted(groups, key=len, reverse=True):
+            members = [ps[i] for i in g]
+            name = invent_name("|".join(sorted(m.sha for m in members)), taken)
+            taken = taken | {name}
+            near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
+            note = f"; alike {near[0][1]} ({near[0][0]:.2f})" if near and near[0][0] >= st["alike"] else ""
+            print(f"    {ak}/{name}: {len(members)} photos{note}")
+            moves += [Move(m, f"{ak}/{name}", f"one person in {ak} ({len(members)} photos{note})") for m in members]
+            sheet.append((name, members[:10]))
+    if args.sheet and sheet:
+        make_sheet(sheet, args.sheet)
+    if args.apply and moves:
+        n = execute(moves, work, True, cache)
+        print(f"{n} photo(s) moved")
+        after_moves(args, n > 0)
+    elif moves:
+        print("preview only; add --apply to group them")
+
+
+def cmd_sisters(args):
+    """Do the sisters read as one family? Drakness is the anchor; a sister who is too different (or too alike another) is a candidate to replace."""
+    cfg, st, work, cache, space = build(args)
+    rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
+    keys = [k for k in space.keys if k.startswith("Models/")]
+    anchor = f"Models/{args.anchor_sister}"
+    if anchor not in keys:
+        sys.exit(f"anchor sister {args.anchor_sister} not found; sisters: {', '.join(k.split('/')[1] for k in keys)}")
+    info = {}
+    for k in keys:
+        ident = identity(space, cfg, st, rend, k)
+        ps, scores, core, c = folder_core(space, k, ident)
+        info[k] = {"vec": identity_vec(c, ident), "c": c, "r": ident["r"], "nr": ident["nr"], "n": len(ps), "core": len(core)}
+    low, high = st.get("pairLow", 0.15), st.get("pairHigh", 0.40)
+    print(f"{len(keys)} sisters; {args.anchor_sister} is the anchor. A sister should look like Drakness's sister: {low} to {high} against her, and not like another sister (below 0.45).")
+    print(f"  {'sister':10} {'photos':>6} {'renders~photos':>15} {'to ' + args.anchor_sister:>12}  nearest other sister          verdict")
+    flagged, md = [], []
+    for k in sorted(keys, key=lambda k: (k != anchor, k)):
+        v, name = info[k], k.split("/")[1]
+        to_a = float(v["vec"] @ info[anchor]["vec"]) if k != anchor else 1.0
+        others = sorted(((float(v["vec"] @ info[o]["vec"]), o.split("/")[1]) for o in keys if o != k), reverse=True)
+        rp = float(v["c"] @ v["r"]) if v["r"] is not None else None
+        verdict = []
+        if k != anchor and to_a < low:
+            verdict.append("TOO DIFFERENT from " + args.anchor_sister)
+        if others and others[0][0] >= 0.45:
+            verdict.append(f"TOO ALIKE {others[0][1]}")
+        if rp is not None and rp < SAME_LOOK:
+            verdict.append("her old renders do not match her photos")
+        if verdict and k != anchor:
+            flagged.append(k)
+        txt = ", ".join(verdict) or "ok"
+        print(f"  {name:10} {v['n']:6} {('%.2f' % rp) if rp is not None else '-':>15} {to_a:12.2f}  {others[0][1]:10} {others[0][0]:5.2f}   {txt}")
+        md.append((name, v["n"], rp, to_a, others[0][1], others[0][0], txt))
+    mean = np.mean([float(info[a]["vec"] @ info[b]["vec"]) for a, b in itertools.combinations(keys, 2)])
+    print(f"\nthe family as a whole: sisters score {mean:.2f} against each other on average (any two people in the library: about 0.01)")
+    if flagged:
+        print("\nif you would swap a flagged sister, these look most like Drakness's sister (similar, not the same) and are not another sister:")
+        cands = [k for k in space.keys if not k.startswith("Models/") and len(space.by_key[k]) >= 3]
+        for k in flagged:
+            rows = []
+            for c in cands:
+                vc = nz(np.mean([p.vec for p in space.by_key[c]], axis=0))
+                s = float(vc @ info[anchor]["vec"])
+                worst = max(float(vc @ info[o]["vec"]) for o in keys if o != anchor and o != k)
+                rows.append((abs(s - 0.28) + 2 * max(0.0, worst - 0.30), s, worst, c))
+            print(f"  instead of {k.split('/')[1]}: " + "; ".join(f"{c} ({s:.2f} to {args.anchor_sister}, {w:.2f} to another sister)" for _, s, w, c in sorted(rows)[:3]))
+    if args.sheet:
+        make_sheet([(k.split("/")[1], space.by_key[k][:8]) for k in sorted(keys, key=lambda k: (k != anchor, k))], args.sheet)
+    if args.md:
+        lines = ["| Sister | Photos | Old renders match her photos | Against Drakness | Nearest other sister | Verdict |", "| --- | --- | --- | --- | --- | --- |"]
+        for name, n, rp, to_a, on, os_, txt in md:
+            lines.append(f"| {name} | {n} | {('%.2f' % rp) if rp is not None else '-'} | {to_a:.2f} | {on} {os_:.2f} | {txt} |")
+        pathlib.Path(args.md).write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"table written: {args.md}")
+
+
+def best_photo(space, key, c):
+    """The photo of this person to start a render from: a clear single face that looks like her, large, portrait."""
+    from PIL import Image
+    best = None
+    for p in space.by_key[key]:
+        try:
+            with Image.open(p.path) as im:
+                w, h = im.size
+        except Exception:  # noqa: BLE001
+            continue
+        score = float(p.vec @ c) + min(p.px, 500) / 2500 - (0.15 if p.faces > 1 else 0) - (0.10 if w > h else 0)
+        if best is None or score > best[0]:
+            best = (score, p)
+    return best[1] if best else None
+
+
+def cmd_pairs(args):
+    """Pair every angel with the sister of her element from ALL the faces in the library (angels, prospects, grouped artists), similar to the sister but not the same, and not like anyone else."""
+    cfg, st, work, cache, space = build(args)
+    rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
+    pairs = dict(PAIRS)
+    pairs.update(st.get("pairs", {}))
+    low, high, target = st.get("pairLow", 0.15), st.get("pairHigh", 0.40), args.target
+    sis_key = {s: f"Models/{s}" for s in set(pairs.values()) if f"Models/{s}" in space.by_key}
+    angel_dir = {}
+    for k in space.keys:
+        if k.startswith("Angels/"):
+            angel_dir[k.split("/")[-1].lower()] = k
+    ident_of = {}
+
+    def vec_of(key):
+        if key not in ident_of:
+            ident = identity(space, cfg, st, rend, key)
+            ps, scores, core, c = folder_core(space, key, ident)
+            ident_of[key] = (identity_vec(c, ident), c)
+        return ident_of[key][0]
+    sis_vec = {s: vec_of(k) for s, k in sis_key.items()}
+    wanted = {s.lower() for s in (args.sister or [])}
+    slots = [a for a, s in pairs.items() if s in sis_vec and (not wanted or s.lower() in wanted)]
+    fixed_keys = [angel_dir[a.lower()] for a in FIXED_ANGELS if a.lower() in angel_dir]
+    kept = [angel_dir[a.lower()] for a in pairs if a not in slots and a.lower() in angel_dir]
+    cands = [k for k in space.keys if not k.startswith("Models/") and k not in fixed_keys and k not in kept and len(space.by_key[k]) >= args.min_photos]
+    if not slots or not cands:
+        sys.exit("nothing to pair: need sisters with photos and candidate people with enough photos")
+    cv = np.array([vec_of(k) for k in cands])
+    ca = {k: i for i, k in enumerate(cands)}
+    sv_names = list(sis_vec)
+    SV = np.array([sis_vec[s] for s in sv_names])
+    sim_cs = cv @ SV.T
+    sim_cc = cv @ cv.T
+    fixed_vec = [vec_of(k) for k in fixed_keys + kept]
+    sim_cf = cv @ np.array(fixed_vec).T if fixed_vec else np.zeros((len(cands), 0))
+    n_photos = np.array([len(space.by_key[k]) for k in cands])
+
+    def pair_cost(ci, slot):
+        sname = pairs[slot]
+        s = sim_cs[ci, sv_names.index(sname)]
+        cost = abs(s - target) + 2 * max(0.0, low - s) + 2 * max(0.0, s - high)
+        others = [sim_cs[ci, j] for j, nme in enumerate(sv_names) if nme != sname]
+        cost += 2.0 * max(0.0, max(others) - 0.28) if others else 0.0
+        cost += 0.02 * max(0, 6 - n_photos[ci])
+        if cands[ci] == angel_dir.get(slot.lower()):
+            cost -= args.keep_bonus
+        return cost
+
+    def clash(ci, cj):
+        return 4.0 * max(0.0, sim_cc[ci, cj] - 0.30)
+
+    def fixed_clash(ci):
+        return sum(4.0 * max(0.0, x - 0.30) for x in sim_cf[ci])
+
+    def total(assign):
+        t = sum(pair_cost(ci, a) + fixed_clash(ci) for a, ci in assign.items())
+        return t + sum(clash(x, y) for x, y in itertools.combinations(assign.values(), 2))
+
+    rng = random.Random(7)
+    best_assign, best_total = None, 1e9
+    for trial in range(args.trials):
+        order = slots[:]
+        rng.shuffle(order)
+        assign = {}
+        for slot in order:
+            opts = [(pair_cost(ci, slot) + fixed_clash(ci) + sum(clash(ci, cj) for cj in assign.values()) + (rng.random() * 0.08 if trial else 0), ci) for ci in range(len(cands)) if ci not in assign.values()]
+            assign[slot] = min(opts)[1]
+        t = total(assign)
+        if t < best_total:
+            best_assign, best_total = dict(assign), t
+    improved = True
+    while improved:
+        improved = False
+        for slot in slots:
+            for ci in range(len(cands)):
+                if ci in best_assign.values():
+                    continue
+                trial_assign = dict(best_assign)
+                trial_assign[slot] = ci
+                t = total(trial_assign)
+                if t < best_total - 1e-9:
+                    best_assign, best_total, improved = trial_assign, t, True
+    print(f"pairing {len(slots)} angel(s) with their sisters from {len(cands)} people (target {target:.2f} against the sister; {low} to {high} is the band); {len(fixed_keys)} fixed ({', '.join(FIXED_ANGELS)}), {len(kept)} kept as they are")
+    print(f"  {'angel':10} {'sister':10}  {'now':32} {'to sister':>9}   {'recommended':34} {'to sister':>9}  clashes with")
+    result, md = [], []
+    for slot in slots:
+        sname = pairs[slot]
+        j = sv_names.index(sname)
+        cur = angel_dir.get(slot.lower())
+        cur_s = float(vec_of(cur) @ SV[j]) if cur else None
+        ci = best_assign[slot]
+        rec = cands[ci]
+        s = float(sim_cs[ci, j])
+        near = sorted(((float(sim_cc[ci, ca[cands[cj]]]), cands[cj].split("/", 1)[1]) for slot2, cj in best_assign.items() if slot2 != slot), reverse=True)[:1]
+        clash_txt = f"{near[0][1]} {near[0][0]:.2f}" if near else ""
+        mark = "(keep)" if rec == cur else ""
+        print(f"  {slot:10} {sname:10}  {cur or '(no folder)':32} {('%.2f' % cur_s) if cur_s is not None else '-':>9}   {rec + ' ' + mark:34} {s:9.2f}  {clash_txt}")
+        alts = sorted(((pair_cost(c2, slot) + fixed_clash(c2), c2) for c2 in range(len(cands)) if c2 != ci))[:3]
+        result.append({"slot": slot, "sister": sname, "now": cur, "now_s": cur_s, "rec": rec, "rec_s": s, "alts": [cands[c2] for _, c2 in alts]})
+        md.append((slot, sname, cur or "-", cur_s, rec, s, ", ".join(c.split("/", 1)[1] for c in [cands[c2] for _, c2 in alts])))
+    if args.sheet:
+        rows = []
+        for r in result:
+            rows.append((f"{r['sister']} (sister)", space.by_key[sis_key[r['sister']]][:6]))
+            rows.append((f"-> {r['slot']}: {r['rec'].split('/', 1)[1]}", space.by_key[r["rec"]][:6]))
+        make_sheet(rows, args.sheet)
+    if args.md:
+        lines = ["| Angel | Sister | Folder now | Now vs sister | Recommended | Vs sister | Alternatives |", "| --- | --- | --- | --- | --- | --- | --- |"]
+        for slot, sname, cur, cs, rec, s, alts in md:
+            lines.append(f"| {slot} | {sname} | {cur} | {('%.2f' % cs) if cs is not None else '-'} | {rec} | {s:.2f} | {alts} |")
+        pathlib.Path(args.md).write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"table written: {args.md}")
+    if not args.apply:
+        print("\npreview only; add --apply to arrange the folders, set the recommended photos and re-point the workflows")
+        return
+    # arrange: each photo of a chosen person goes to the gallery of the angel it was chosen for; an angel folder nobody chose goes to that angel's review folder
+    chosen_for = {r["rec"]: r["slot"] for r in result}
+    moves, pick = [], {}
+    dir_of = {a.lower(): angel_dir.get(a.lower(), f"Angels/{a}") for a in pairs}
+    for r in result:
+        slot, rec = r["slot"], r["rec"]
+        to = dir_of[slot.lower()]
+        ident = identity(space, cfg, st, rend, rec)
+        ps, scores, core, c = folder_core(space, rec, ident)
+        bp = best_photo(space, rec, c)
+        pick[slot] = bp.sha if bp else None
+        if rec != to:
+            moves += [Move(p, to, f"{rec.split('/', 1)[1]} is the new {slot} (paired with {r['sister']}, {r['rec_s']:.2f})") for p in space.by_key[rec]]
+    for slot in slots:
+        cur = angel_dir.get(slot.lower())
+        if cur and cur not in chosen_for:
+            moves += [Move(p, cur, f"{slot}'s earlier photos, set aside for the new {slot}", bucket="review") for p in space.by_key[cur]]
+    n = execute(moves, work, True, cache)
+    print(f"\n{n} photo(s) moved")
+    after_moves(args, n > 0)
+    # set the recommended photo and point the angel's workflows at it
+    cfg2 = cw.load_cfg()
+    cache2 = Cache(args.cache or DATA / "likeness_cache.json")
+    renames = {}
+    for slot, sha in pick.items():
+        folder = work / dir_of[slot.lower()] / "gallery"
+        found = next((p for p in originals.images(folder) if cache2.sha(p) == sha), None) if sha else None
+        hero = next((h for h in cfg2.get("photos", {}) if h.lower() == slot.lower()), None)
+        if not found or not hero:
+            print(f"  no photo set for {slot} ({'photo not found' if not found else 'not in workspaces.json photos'})")
+            continue
+        scaled = found.parent.parent / f"gallery_{cfg2['standardSize'][0]}x{cfg2['standardSize'][1]}" / f"{found.stem}_{cfg2['standardSize'][0]}x{cfg2['standardSize'][1]}.png"
+        if scaled.exists() and cfg2["photos"][hero] != scaled.name:
+            renames[hero] = (cfg2["photos"][hero], scaled)
+            print(f"  photo for {slot}: {cfg2['photos'][hero]} -> {scaled.name}")
+    if renames:
+        touched = cw.repoint_photos(cfg2, renames, False)
+        print("workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
+
+
 def main(argv=None, embedder=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--root", help="the folder that holds Angels, Models, Prospects and Artists (default: workspaces.json paths.workRoot)")
@@ -662,8 +1106,30 @@ def main(argv=None, embedder=None):
     add("like", cmd_like).add_argument("paths", nargs="+")
     s = add("sort", cmd_sort, apply=True, sheet=True)
     s.add_argument("--plan", help="also write the moves to this JSON file")
+    s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
+    s = add("clean", cmd_clean, apply=True, sheet=True)
+    s.add_argument("names", nargs="*", help="folders to clean (default: every person folder; with --group, that kind)")
+    s.add_argument("--group", help="Angels, Models or Prospects")
+    s.add_argument("--keep", type=float, default=0.25, help="photos scoring at least this against the folder's core are kept (default 0.25); between the 'odd' score and this they go to the folder's review folder")
+    s.add_argument("--anchor", action="append", help="HERO=part of a photo's name that is certainly her (repeatable); the chosen photo and `likeness.anchors` in workspaces.json are used too")
+    s.add_argument("--no-renders", action="store_true", help="ignore the ComfyUI renders when deciding what she looks like")
+    s = add("group", cmd_group, apply=True, sheet=True)
+    s.add_argument("names", nargs="*", help="artist folders (default: all)")
+    s.add_argument("--cluster", type=float, help="average similarity needed to be one person (default: settings cluster)")
+    s = add("sisters", cmd_sisters, sheet=True)
+    s.add_argument("--anchor-sister", default="Drakness")
+    s.add_argument("--no-renders", action="store_true")
+    s.add_argument("--md", help="also write the table as markdown to this file")
+    s = add("pairs", cmd_pairs, apply=True, sheet=True)
+    s.add_argument("--sister", action="append", help="only (re-)pair the angel of this sister (repeatable); the other angels stay as they are")
+    s.add_argument("--target", type=float, default=0.28, help="how alike an angel should be to her sister (similar, not the same)")
+    s.add_argument("--keep-bonus", type=float, default=0.06, help="how much better a replacement must be than the angel already in the folder")
+    s.add_argument("--min-photos", type=int, default=3, help="a person needs this many photos to be considered")
+    s.add_argument("--trials", type=int, default=1500)
+    s.add_argument("--no-renders", action="store_true")
+    s.add_argument("--md", help="also write the table as markdown to this file")
     add("undo", cmd_undo, apply=True)
     args = ap.parse_args(argv)
     args.embedder = embedder

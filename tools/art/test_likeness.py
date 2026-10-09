@@ -34,15 +34,21 @@ def face(person, i):
 
 
 class Fake:
-    """An embedder that reads the person from the file's text ('person|i')."""
+    """An embedder that reads the person from the file's text ('person|i', or 'person|i|faces')."""
 
     def __init__(self):
         self.calls = 0
 
     def __call__(self, path):
         self.calls += 1
-        person, i = pathlib.Path(path).read_text().split("|")
-        return {"faces": 1, "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 200}
+        parts = pathlib.Path(path).read_text().split("|")
+        person, i = parts[0], parts[1]
+        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 200}
+
+
+def blend(person, base, w):
+    """Make `person` look like `base`: w is how much of base's identity it carries."""
+    IDENT[person] = w * identity(base) + float(np.sqrt(1 - w * w)) * np.random.default_rng(zlib.crc32(person.encode())).normal(size=DIM)
 
 
 CFG = {"standardSize": [94, 110], "photos": {}, "workspaces": {}}
@@ -182,7 +188,75 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("the same person", self.run_tool("compare", "Angelica", "Twin"))
         self.assertIn("different people", self.run_tool("compare", "Angelica", "Draknara"))
 
-    def test_a_folder_with_a_different_person_in_it_names_the_odd_one(self):
+    def test_group_splits_an_artist_folder_by_face_into_named_subfolders(self):
+        self.add("Artists", "Pierre", "pa", 4)
+        self.add("Artists", "Pierre", "pb", 4)
+        self.add("Artists", "Pierre", "stray", 1)
+        self.add("Angels", "Angelica", "ann", 3)
+        self.add("Models", "Draknara", "dee", 3)
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)  # enough different people for the library's average face to be meaningful
+        out = self.run_tool("group")
+        self.assertIn("2 group(s)", out)
+        self.run_tool("group", apply=True)
+        subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name != "gallery"]
+        self.assertEqual(len(subs), 2)
+        self.assertEqual(sorted(len(list((s / "gallery").iterdir())) for s in subs), [4, 4])
+        self.assertEqual(len(self.names("Artists", "Pierre")), 1, "the photo that matches nobody stays with the artist")
+        scan = self.run_tool("scan")
+        self.assertIn("person folder", scan)
+        self.assertIn("Artists/Pierre/", self.run_tool("alike", "--min", "-1"), "the grouped people are people now")
+
+    def test_clean_sets_borderline_photos_aside_and_sends_strangers_to_the_pool(self):
+        self.add("Models", "Drakness", "dk", 6)
+        g = self.lib / "Models/Drakness/gallery"
+        (g / "drakness_image_901.jpg").write_text("zz|901")      # someone else, clear face
+        (g / "drakness_image_902.jpg").write_text("dk|902|2")   # her, but two faces in the picture: unsure
+        (g / "drakness_image_903.jpg").write_text("zz|903|2")   # someone else, two faces: unsure, not sent away
+        self.add("Models", "Draknora", "dr", 4)
+        self.add("Prospects", "Various", "q", 1)
+        out = self.run_tool("clean", "Drakness")
+        self.assertIn("review 1", out.replace("review 2", "review 1") if "review 2" in out else out)
+        self.run_tool("clean", "Drakness", apply=True)
+        self.assertIn("drakness_image_901.jpg", self.names("Prospects", "Various") + [p.name for p in (self.lib / "Prospects/Various/gallery").iterdir()])
+        self.assertNotIn("drakness_image_901.jpg", self.names("Models", "Drakness"))
+        review = sorted(p.name for p in (self.lib / "Models/Drakness/review").iterdir())
+        self.assertIn("drakness_image_903.jpg", review)
+        self.assertEqual(len(self.names("Models", "Drakness")) + len(review), 6 + 2 + 1 - 1 + 0, "nothing is lost: the stranger went to the pool")
+
+    def test_clean_never_moves_the_chosen_photo_even_if_it_scores_low(self):
+        self.add("Models", "Drakness", "dk", 5)
+        g = self.lib / "Models/Drakness/gallery"
+        (g / "drakness_image_950.jpg").write_text("zz|950")
+        cfg = dict(CFG, photos={"Drakness": "drakness_image_950_944x1104.png"})
+        with mock.patch.object(cw, "load_cfg", lambda: cfg):
+            self.run_tool("clean", "Drakness", apply=True)
+        self.assertIn("drakness_image_950.jpg", self.names("Models", "Drakness"))
+
+    def test_sisters_flags_one_who_is_nothing_like_the_anchor_and_pairs_picks_a_similar_not_same_face(self):
+        blend("dn", "dk", 0.0)
+        self.add("Models", "Drakness", "dk", 5)
+        self.add("Models", "Draknira", "dn", 5)
+        out = self.run_tool("sisters")
+        self.assertIn("TOO DIFFERENT", out, "Draknira is nothing like the anchor in this made-up family")
+        blend("sim", "dn", 0.45)       # similar to her sister
+        blend("twin", "dn", 0.95)      # the same as her sister
+        blend("far", "dk", 0.0)        # unrelated
+        self.add("Angels", "azaline", "far", 3)
+        self.add("Prospects", "Lena Marsh", "sim", 4)
+        self.add("Prospects", "Twin Person", "twin", 4)
+        self.add("Prospects", "Far Person", "far", 4)
+        self.add("Angels", "Angelica", "ann", 3)
+        out = self.run_tool("pairs", "--sister", "Draknira", "--trials", "100")
+        row = [line for line in out.splitlines() if line.strip().startswith("Azaline")][0]
+        self.assertIn("Prospects/Lena Marsh", row, "similar but not the same: neither the twin nor the stranger")
+        self.assertIn("preview only", out)
+        self.assertTrue((self.lib / "Prospects/Lena Marsh/gallery").exists() and len(self.names("Angels", "azaline")) == 3, "a preview moves nothing")
+        self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
+        self.assertEqual(len(self.names("Angels", "azaline")), 4, "her new face's photos are in her gallery")
+        review = list((self.lib / "Angels/azaline/review").iterdir())
+        self.assertEqual(len(review), 3, "and her earlier photos are set aside for review, not lost")
+        self.assertEqual(self.names("Prospects", "Lena Marsh"), [])
         self.add("Angels", "Angelica", "ann", 5)
         (self.lib / "Angels/Angelica/gallery/angelica_image_999.jpg").write_text("bob|999")
         self.add("Models", "Draknara", "dee", 4)

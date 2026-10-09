@@ -1881,15 +1881,27 @@ def photo_roots(cfg, base=None):
     return [base / n for n in cfg.get("paths", {}).get("photoRoots", ["Angels", "Models", "Prospects", "Artists"]) if (base / n).is_dir()]
 
 
-def photo_library(cfg, base=None):
-    """[(folder name, path)] of every scaled original: <root>/<Name>/gallery_<W>x<H>/*.png (the _org archive folders are not part of it)."""
-    w, h = cfg.get("standardSize") or (944, 1104)
+def photo_folders(cfg, base=None):
+    """[(group, name, path)] of every library folder that has a gallery: <root>/<Name>, and <root>/<Name>/<Sub> (an artist's folder grouped by the face in it); name is 'Name' or 'Name/Sub'."""
     out = []
     for root in photo_roots(cfg, base):
         for d in sorted(p for p in root.iterdir() if p.is_dir()):
-            g = d / f"gallery_{w}x{h}"
-            if g.is_dir():
-                out += [(d.name, f) for f in sorted(g.glob("*.png"))]
+            if (d / "gallery").is_dir():
+                out.append((root.name, d.name, d))
+            for s in sorted(p for p in d.iterdir() if p.is_dir()):
+                if (s / "gallery").is_dir():
+                    out.append((root.name, f"{d.name}/{s.name}", s))
+    return out
+
+
+def photo_library(cfg, base=None):
+    """[(folder name, path)] of every scaled original: <folder>/gallery_<W>x<H>/*.png (the _org archive folders are not part of it)."""
+    w, h = cfg.get("standardSize") or (944, 1104)
+    out = []
+    for group, name, d in photo_folders(cfg, base):
+        g = d / f"gallery_{w}x{h}"
+        if g.is_dir():
+            out += [(name, f) for f in sorted(g.glob("*.png"))]
     return out
 
 
@@ -1939,6 +1951,15 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
     if not renames:
         print("inputs photos: every chosen photo is where workspaces.json says")
         return 0
+    touched = repoint_photos(cfg, renames, dry_run, root)
+    print(f"inputs photos: {len(renames)} photo(s) re-pointed" + (" (dry run)" if dry_run else "") + "; workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
+    return len(renames)
+
+
+def repoint_photos(cfg, renames, dry_run, root=None):
+    """renames: {hero: (old image name, path of the scaled new image)}. Point every generated workflow of that hero that loads the old name at the new one (repo and
+    workspaces; a changed workspace file is backed up first), copy the new image into each workspace input folder that needed it, and write the new name into workspaces.json
+    "photos". Returns {where: number of workflows changed}."""
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     repo, touched, copied = repo_files(cfg), collections.Counter(), set()
 
@@ -1975,10 +1996,9 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
                 retarget(p, ws)
     if not dry_run:
         for h, (old, newp) in renames.items():
-            cfg["photos"][h] = newp.name
+            cfg.setdefault("photos", {})[h] = newp.name
         write_cfg(cfg)
-    print(f"inputs photos: {len(renames)} photo(s) re-pointed" + (" (dry run)" if dry_run else "") + "; workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
-    return len(renames)
+    return touched
 
 
 def denoise_plan(cfg):

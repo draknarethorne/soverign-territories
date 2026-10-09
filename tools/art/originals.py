@@ -238,15 +238,14 @@ def main(argv=None):
     if not roots:
         sys.exit(f"No photo folders found under {args.root or cw.work_root(cfg)}")
     print(f"library: {', '.join(r.name for r in roots)}   size {size[0]}x{size[1]}   " + ("" if args.apply else "(preview; use --apply)"))
+    folders = cw.photo_folders(cfg, args.root)
     # every folder's prefix, longest first: an original that still carries another folder's prefix gets this folder's instead
-    args.known = sorted({prefix_of(f.name) for r in roots for f in r.iterdir() if f.is_dir()} | {"various"}, key=len, reverse=True)
+    args.known = sorted({prefix_of(d.name) for _, _, d in folders} | {"various"}, key=len, reverse=True)
     tally = {"renamed": 0, "made": 0, "pruned": 0, "skipped": 0}
-    for root in roots:
-        for folder in sorted(p for p in root.iterdir() if p.is_dir()):
-            if args.only and not any(fnmatch.fnmatch(folder.name.lower(), pat.lower()) for pat in args.only):
-                continue
-            if (folder / "gallery").is_dir():
-                process_folder(folder, f"{root.name}/{folder.name}", size, args, tally)
+    for group, name, folder in folders:
+        if args.only and not any(fnmatch.fnmatch(folder.name.lower(), pat.lower()) or fnmatch.fnmatch(name.lower(), pat.lower()) for pat in args.only):
+            continue
+        process_folder(folder, f"{group}/{name}", size, args, tally)
     print("==========================================================")
     print(f"{tally['renamed']} renamed, {tally['made']} {'made' if args.apply else 'to make'}, {tally['pruned']} {'pruned' if args.apply else 'to prune'}, {tally['skipped']} skipped" + ("" if args.apply else " (preview)"))
     if args.no_repoint:

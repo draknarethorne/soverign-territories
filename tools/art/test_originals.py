@@ -221,6 +221,16 @@ class OriginalsTests(unittest.TestCase):
         with Image.open(png) as im:
             self.assertEqual(im.getpixel((2, 55)), originals.CREAM, "upright: cream at the sides, not top and bottom")
 
+    def test_an_artists_grouped_people_are_named_after_their_own_folder(self):
+        g = self.lib / "Artists" / "Pierre" / "Elanore Swift" / "gallery"
+        g.mkdir(parents=True)
+        jpeg(g / "pierre_image_5.jpg")
+        jpeg(self.gallery("Artists", "Pierre") / "pierre_image_6.jpg")
+        self.run_tool()
+        self.assertEqual(sorted(p.name for p in g.iterdir()), ["elanore_swift_image_5.jpg"])
+        self.assertEqual(sorted(p.name for p in (g.parent / "gallery_94x110").iterdir()), ["elanore_swift_image_5_94x110.png"])
+        self.assertEqual(self.names("Artists", "Pierre", "gallery"), ["pierre_image_6.jpg"], "the artist's own folder keeps its prefix")
+
     def test_only_limits_the_folders(self):
         jpeg(self.gallery("Angels", "Angelica") / "angelica_image_1.jpg")
         jpeg(self.gallery("Angels", "Remiah") / "remiah_image_1.jpg")
