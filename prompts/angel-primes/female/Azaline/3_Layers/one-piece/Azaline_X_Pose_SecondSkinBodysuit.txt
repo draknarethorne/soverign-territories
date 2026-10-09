@@ -22,7 +22,7 @@ Maintain strict fidelity to the reference image's facial features, facial bone s
 
 Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: slim, poised, elegant build with precise posture; slim, straight waist; slim, precise arms with long fingers; slim, gently curved hips.
+Figure: tall, slim, poised, elegant build with precise posture; slim, straight waist; slim, precise arms with long fingers; slim, gently curved hips.
 
 Wearing: only a Glacial Cyan matte full-length second-skin bodysuit with a high neck, long sleeves and full-length legs, cut smooth and close to the body with clean seamless lines; hands and feet bare.
 

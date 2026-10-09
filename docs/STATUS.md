@@ -307,7 +307,7 @@ If one photo needs brightening, do it on that angel's own identity, not as a def
 
 ## Angel Primes: builds, colours, roster docs (Oct 9)
 
-- **Slender women.** Camaris, Sandalyn, Remiah, Nyxene, Ravaelle and Haniya had strength wording (Sandalyn came out "ape" muscular). All 11 angel women are now slender; the men stay a deliberate mix of lean, heroic and heavy.
+- **No bulky women.** Camaris, Sandalyn, Remiah, Nyxene, Ravaelle and Haniya had strength wording (Sandalyn came out "ape" muscular). The women now vary by height, leg length, softness and curve (petite Haniya, tall Gavrielle/Nyxene/Seraphine, curvy Camaris/Ravaelle/Sandalyn, medium Angelica) and none uses bulk words; the men stay a deliberate mix of lean, heroic and heavy.
 - **Colours forced.** All 22 angels now define hair, eye and skin colour (plus their negative lists), so the 1_Prime and 2_Bare prompts change the photo to match. Angelica and Angelo used to follow the photo; their colours are a first choice that can be edited. The bound heroes gained `hairColorNegatives` (they already forced hair, eyes and skin).
 - **Standard male figure.** Male Prime cards get `figureProfile: standard` like the women (`standardFigure.male` in `phrases.json`; the scaffold sets it for both sexes). The individual build is applied at 2_Bare.
 - **Audit.** `python tools/art/identity_audit.py` (`bin\identity-audit.cmd`, run by `validate.cmd`) checks every angel, sister and bound hero: colours defined and carried by the Prime prompt, the Bare prompt applies the build, no strength words on a female angel. The alpha test heroes follow the photo on purpose. Bound heroes still use the older `X_Pose` Prime card.

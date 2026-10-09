@@ -7,7 +7,7 @@ For each hero:
   COLOURS   hair, eye and skin colour are defined (not left to the photo) and each has its negative list, so the Prime forces them onto the photo;
   PRIME     the generated Prime prompt (1_Alpha/1_Prime, or the older X_Pose) carries those exact colours;
   BARE      the generated Bare prompt (1_Alpha/2_Bare) applies her or his individual build, and the Prime does NOT (it uses the standard figure) where the card says so;
-  SLENDER   female angels only: no strength words (strong, muscular, sturdy, solid, powerful ...) in the build, so every angel is slender (the men may range from lean to heavily built).
+  BULK      female angels only: no bulk words (strong, muscular, sturdy, solid, powerful ...) in the build, so no woman reads as an ape; height, leg length, softness and curve may vary freely (the men may range from lean to heavily built).
 The test heroes (alpha/female, alpha/male) are left to the photo on purpose: they exist to try a photo before it becomes an angel.
 """
 import argparse

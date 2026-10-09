@@ -54,3 +54,6 @@ workflows/.test/
 # Workflows that must never be committed (NSFW experiments and the general ComfyUI workspace)
 workflows/ComfyUI/
 workflows/**/X_*.json
+
+# Temporary files
+tmp/

@@ -48,12 +48,12 @@
       ]
     },
     "physique": {
-      "build": "Slender, grounded hourglass build; steady and sure-footed",
-      "torso": "Narrow, firm waist",
+      "build": "Medium-tall, soft hourglass build with a grounded, steady bearing",
+      "torso": "Defined, softly curved waist",
       "bust": "Full, firm, softly rounded bust with a supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
-      "arms": "Slender, capable arms",
-      "hips": "Shapely feminine hips, gently curved",
-      "legs": "Long, slender legs with gently shapely thighs",
+      "arms": "Soft, graceful arms",
+      "hips": "Wide, softly rounded feminine hips",
+      "legs": "Shapely legs with softly rounded thighs and a steady stance",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

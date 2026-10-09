@@ -8,8 +8,8 @@ class IdentityAuditTests(unittest.TestCase):
         for text in ("Strong, sturdy build", "Muscular legs", "Full, powerful hips"):
             self.assertTrue(ia.STRONG.search(text), text)
 
-    def test_slender_words_pass(self):
-        for text in ("Lithe, slender, long-limbed build", "Slender, grounded hourglass build; steady and sure-footed"):
+    def test_varied_feminine_words_pass(self):
+        for text in ("Petite, short, compact build", "Medium-tall, soft hourglass build with a grounded, steady bearing", "Soft, curvy, gently rounded build"):
             self.assertFalse(ia.STRONG.search(text), text)
 
     def test_photo_wording_is_flagged(self):
