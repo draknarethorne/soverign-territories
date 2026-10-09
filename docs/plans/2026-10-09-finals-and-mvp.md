@@ -73,8 +73,8 @@ Built as `comfy_workflows.py finals ...` (`bin\finals.cmd`), with `tools/workflo
 
 Run in this order; each step previews first, and everything is recoverable (git for the repo, `workflows/.sync/backup/` for the rest).
 
-- [ ] 1. `finals reclassify` (preview, then `--apply`): the 64 numbered saves in `_shots` become `_candidates`, the 8 old `X_Pose` saves resolve as Primes, plain top-level shots are filed by phase; commit it on its own.
-- [ ] 2. `pull` for each workspace (Angel Primes, Drakn Sisters, Drakness, Sovereign Dawn Series): keeps what the workspaces hold in the repo at the proper paths.
+- [x] 1. `finals reclassify --apply` (done Oct 9, commit `a5e0f5881`, pure renames): the 72 numbered saves in `_shots` (8 of them old `X_Pose` saves, resolved as Primes) are now in `_candidates/<set>/<Hero>/<phase>/`.
+- [ ] 2. (next, needs your go-ahead because it changes the live workspaces) `pull` for each workspace (Angel Primes, Drakn Sisters, Drakness, Sovereign Dawn Series): keeps what the workspaces hold in the repo at the proper paths.
 - [ ] 3. `finals reclassify` again: any duplicate created by step 2 goes to backup.
 - [ ] 4. `setup -w "<workspace>" --apply` for each workspace: `finals sort` re-files the workspace copies, `finals deploy` puts back what the repo holds and the workspace lacks, `deploy --shots` and `--curated` run as before.
 - [ ] 5. `finals status` for each workspace: `not placeable` should list only the files that really have no home; decide those by hand.
