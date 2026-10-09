@@ -22,7 +22,7 @@ The raw brain-dump this came from is kept word for word at the end.
 | Fold `tidy`, `finals sort`, `finals reclassify` into one `tidy`, `list` into `status`, `--class` into `--stage` | later (6.3b) |
 | Watch the size of `assets/art`; decide Git LFS only if it grows | you, as finals appear |
 | Several input images per workflow (backgrounds, wardrobe, weapons as separate images) | deferred to the next art phase (3.8) |
-| Confirm a FireRed render comes out 944x1104 (7.3); decide video size and duration (7.5, D11) | you |
+| Confirm a FireRed render comes out 944x1104 (7.3); answer V1 to V5 for the video template (Phase 8, D11) | you |
 | Run `finals record`, `finals images` and `todo` after you promote your first finals | whenever you have finals |
 
 ## The six threads
@@ -71,7 +71,7 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 | D8 | Phase 3: where do a final's seed and denoise live? | In the art data, a small generated file per set that you can also edit | Decided (Oct 9): in the art data (`data/art/finals/<set>.json`), generated from the finals, hand-editable; `make` applies it |
 | D9 | Phase 3: does a final's image feed the workflows after it? | Yes, as a default you choose, never forced | Decided (Oct 9), **refined later the same day**: a final can be the default source of an input role, but only when you choose it; any workflow may take any image (or several) instead. See 3.4 |
 | D10 | Phase 4: which cards does the todo table list? | All 52 plus the alpha test heroes | Decided (Oct 9): 22 angels, 10 sisters, 10 bound men, 10 dragons and the two alpha heroes, each with the slots it really has |
-| D11 | Video size and duration (added Oct 9, you raised it) | Decide by testing: see Phase 7.5 | Open |
+| D11 | Video size and duration (added Oct 9, you raised it) | See the analysis and V1 to V5 in `docs/art/minimax-h3-video-templates.md` | Open: waiting for V1 to V5 |
 
 ### Phase 1: source photos and picks (you, existing tools)
 
@@ -172,25 +172,35 @@ The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the que
 
 ### Phase 7: image and video sizes (added Oct 9, you raised it)
 
-Stills should keep the standard size (`workspaces.json` `standardSize`, 944x1104 = 1.042176 MP, both sides multiples of 16) until the final upscale. What each template does with a 944x1104 input:
+Stills should keep the standard size (`workspaces.json` `standardSize`, 944x1104, both sides multiples of 16) until the final upscale. ComfyUI counts a megapixel as 1024 x 1024 pixels, so the right `megapixels` value is 0.993896 (not 1.042176). What each template does with a 944x1104 input:
 
 | Template | Size mechanism | Before | Now |
 | --- | --- | --- | --- |
 | Qwen edit and polish (`ST1_Qwen_A_Pose`, `ST2_Qwen_Edit`, `ST4_Qwen_Polish`) | `FluxKontextImageScale` snaps to a preferred size; 944x1104 is one | 944x1104 (you saw it snapping) | unchanged |
-| FireRed final (`ST3_FireRed_Final`, used for scenes and finals) | `ResizeImageMaskNode`, scale total pixels = 1 MP | about 925x1082 | 1.042176 MP, so 944x1104 |
-| Flux final and polish (`ST3_Flux_Final`, `ST4_Flux_Polish`; not used by `make`) | `ImageScaleToTotalPixels` 1 MP, resolution step 1; the 1024x1024 empty latent is linked to the scaled image, so it is unused | about 925x1082, not a multiple of 16 | 1.042176 MP, step 16 |
+| FireRed final (`ST3_FireRed_Final`, used for scenes and finals) | `ResizeImageMaskNode`, scale total pixels = 1 MP | 947x1107 (1.0 MP = 1,048,576 pixels) | 0.993896 MP, so exactly 944x1104 |
+| Flux final and polish (`ST3_Flux_Final`, `ST4_Flux_Polish`; not used by `make`) | `ImageScaleToTotalPixels` 1 MP, resolution step 1; the 1024x1024 empty latent is linked to the scaled image, so it is unused | 947x1107, not a multiple of 16 | 0.993896 MP, step 16: 944x1104 |
 | MageFlow (`ST2_MageFlow_Edit`, not used) | `ImageScaleToTotalPixels`, megapixels driven by another node | n/a | left alone (it is linked) |
 | Qwen B pose (`ST1_Qwen_B_Pose`, not used) | empty latent 1024x1024, linked to the input | n/a | left alone |
 | Text to image (`ST0_*_Text`, brand set) | empty latent 1024x1280 (4:5), overridden per prompt by its `Size:` line | by design | unchanged |
 
 - [x] 7.1 Inventory above (Oct 9).
 - [x] 7.2 Fix: `tools/workflows/align_templates.py` sets the resize nodes of the repo templates; `make` applies the same policy to every edit workflow it builds or refreshes; `deploy` applies it to the workflows a workspace already holds (prompt, seed and input untouched, a backup first). Run on all five workspaces: 1,593 FireRed workflows refreshed; Qwen workflows needed nothing.
+  **Correction (same day):** my first pass used 1.042176, counting a megapixel as 1,000,000; ComfyUI counts 1024 x 1024, which would have made FireRed 967x1130. It is corrected to 0.993896 and re-applied everywhere (the check below now tests the real arithmetic).
   `test_templates.py` fails if a template pulled back from a workspace undoes it (then run `align_templates.py --apply`).
 - [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
-- [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1 MP to 1.042176 MP (4% more pixels); harmless, and brand plates are set by their own prompts.
-- [ ] 7.5 **Video size and duration (D11, open).** What exists: each animation card has a `size` (default 640x960, 2:3) and its length is the sum of its beats (66 cards 8 s, 24 cards 7.5 s, 9 cards 7 s, 2 cards 9 s); the `ST6_MiniMax_Video` template defaults to 640x960 and 6 s with the 8-step turbo LoRA, and `make` overwrites width, height and length from the card's prompt header.
-  The stills that feed it are 944x1104 (0.855), so a 2:3 video crops or distorts the start image. To decide, by testing: (a) keep 2:3 (card format) and accept a crop, (b) match the still's aspect (a size near 0.855 that the model accepts, multiples of 16 or 32), (c) both (one clip per format). Duration: what the card total should be and whether 6 to 9 s is right for each use.
-  Once chosen, the default goes in one place (a project default in `data/animation` read by `gen_animation.py`, and the template's own defaults) instead of per card.
+- [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and brand plates are set by their own prompts.
+- [ ] 7.5 Video size and duration moved to Phase 8 (analysis done; decisions V1 to V5 open).
+
+### Phase 8: video (added Oct 9, you raised it; the new iv2 template)
+
+Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-templates.md). In short: our `ST6_MiniMax_Video` is the older image-to-video template, not the r2v; the iv2 you saved is its newer version.
+
+- [x] 8.1 Analysis (Oct 9): ST6 against iv2 (a `ResolutionSelector`, landscape 1344x768 and 5 s defaults, turbo off, the int8 video VAE which is not installed, a cleaner outer node, notes, and two unconnected helper nodes that could read the size from the image); the node source for the constraints; the r2v for later.
+- [x] 8.2 The finding that matters: `MiniMaxH3ImageToVideo` takes sizes in steps of 32 and **stretches the first frame to the canvas**. Our default 640x960 (2:3) against 944x1104 stills (0.855) squeezes the picture by about 22%. `ResolutionSelector` has no aspect near 0.855 (nearest 3:4 = 12% off). Our 944x1104 is not a multiple of 32, so the video needs its own size: 928x1088 (0.853) at 0.95 MP, or 896x1056 at 0.9 MP, read from the still by the helper chain.
+- [ ] 8.3 Decide V1 to V5 (option A, B or C and the defaults for megapixels, length, turbo, VAE). Recommended: C, which adopts iv2 as the new ST6 base, deletes the selector, connects the size chain, keeps turbo and our defaults.
+- [ ] 8.4 Build the decision: new `ST6` from iv2, `set_video` sets megapixels, seconds and turbo instead of width and height, the card `size` field retired, a test that a 944x1104 still gives 928x1088, `align`-style check in `test_templates.py`.
+- [ ] 8.5 Render one clip and check it is not squeezed; then regenerate the video workflows (`make --engine minimax`) and deploy.
+- [ ] 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
 
 ## The daily pattern (my view)
 

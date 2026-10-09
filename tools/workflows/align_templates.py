@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Point the stage templates' resize-to-total-pixels nodes at the standard image size (workspaces.json `standardSize`, 944x1104 = 1.042176 MP), so an edit keeps the standard size until the final upscale.
+"""Point the stage templates' resize-to-total-pixels nodes at the standard image size (workspaces.json `standardSize`, 944x1104 = 0.993896 MP, because ComfyUI counts a megapixel as 1024 x 1024), so an edit keeps the standard size until the final upscale.
 
     python tools/workflows/align_templates.py            preview
     python tools/workflows/align_templates.py --apply    write workflows/_templates/ST*.json
 
-Left at 1 megapixel, FireRed and Flux shrink a 944x1104 image to about 925x1082 (Flux.2 also wants multiples of 16). Qwen needs nothing: its FluxKontextImageScale snaps 944x1104 to itself.
+Left at 1 megapixel, FireRed and Flux turn a 944x1104 image into 947x1107, which is not a multiple of 16. Qwen needs nothing: its FluxKontextImageScale snaps 944x1104 to itself.
 A pulled-back template that undoes this fails `test_templates.py`; run this again (then `make`, and `deploy` to bring the workspaces along: deploy also fixes the workflows they hold).
 """
 import argparse

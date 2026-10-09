@@ -205,7 +205,7 @@ Order: Drakn Bound first (its heroes mirror the sisters, so the generators alrea
 | O8 | Adopt `AP-###` into data | Proposal: women AP-001 to AP-011, men AP-012 to AP-022 (Angelica AP-001, Angelo AP-012). Needs a series entry and cards. |
 | O9 | Roster page names | `sovereign_dawn_codex.md`, `angel_primes_codex.md` are rosters, not the codex (the JSON is). Rename to `*_roster.md`? |
 | O10 | Wording to fix in Draknara | Her arms say "toned forearms without bulk" (a negation that names bulk). Left unchanged until you decide. |
-| O12 | Video size and duration | Video cards default to 640x960 (2:3) and a length equal to their beats (7 to 9 s); the stills are 944x1104. Decide by testing (plan Phase 7.5); the choice then becomes one project default. |
+| O12 | Video size and duration | Video cards default to 640x960 (2:3) and a length equal to their beats (7 to 9 s); the stills are 944x1104. The stills are squeezed about 22% today because the video model stretches its first frame; analysis and options V1 to V5 in `docs/art/minimax-h3-video-templates.md` (plan Phase 8). |
 | O11 | Move the Drakn Bound men to the 1_Alpha chain | They still use the older single `X_Pose` Prime card; the sisters and angels use standard figure at 1_Prime and the individual build at 2_Bare. |
 
 ## Agreed next steps (Oct 8, 2026)

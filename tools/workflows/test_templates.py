@@ -22,7 +22,8 @@ class TemplateSizeTests(unittest.TestCase):
         cfg = cw.load_cfg()
         w, h = cfg["standardSize"]
         mp = cw.standard_megapixels(cfg)
-        scale = (mp * 1e6 / (w * h)) ** 0.5
+        scale = (int(mp * 1024 * 1024) / (w * h)) ** 0.5  # ComfyUI counts a megapixel as 1024 x 1024
+        self.assertEqual((round(w * scale), round(h * scale)), (w, h))
         self.assertEqual((round(w * scale / 16) * 16, round(h * scale / 16) * 16), (w, h))
         self.assertEqual(w % 16, 0)
         self.assertEqual(h % 16, 0)
@@ -32,7 +33,7 @@ class TemplateSizeTests(unittest.TestCase):
         node = {"type": "ImageScaleToTotalPixels", "widgets_values": ["area", 1, 1], "widgets_values_named": {"megapixels": 1, "resolution_steps": 1}, "inputs": [{"name": "megapixels", "link": None}]}
         wf = {"definitions": {"subgraphs": [{"nodes": [node]}]}}
         self.assertTrue(cw.align_size(wf, cfg))
-        self.assertEqual((node["widgets_values"][1], node["widgets_values"][2], node["widgets_values_named"]["megapixels"]), (1.042176, 16, 1.042176))
+        self.assertEqual((node["widgets_values"][1], node["widgets_values"][2], node["widgets_values_named"]["megapixels"]), (0.993896, 16, 0.993896))
         self.assertFalse(cw.align_size(wf, cfg))
 
     def test_a_node_driven_by_another_node_is_left_alone(self):

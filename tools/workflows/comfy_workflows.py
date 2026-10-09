@@ -580,14 +580,15 @@ def set_video(wf, prompt_text, engine_cfg):
 
 
 def standard_megapixels(cfg):
-    """The total pixels of the standard image size (944x1104 = 1.042176 MP): what the edit templates' resize-to-total-pixels nodes must target so an output keeps the standard size until the final upscale."""
+    """The 'megapixels' value that makes the edit templates' resize-to-total-pixels nodes keep the standard size (944x1104 = 0.993896). ComfyUI counts a megapixel as 1024 x 1024 pixels,
+    so 1.0 is 1,048,576 pixels: at 1.0 a 944x1104 image came out 947x1107 (not a multiple of 16)."""
     w, h = cfg.get("standardSize") or (944, 1104)
-    return round(w * h / 1e6, 6)
+    return round(w * h / (1024 * 1024), 6)
 
 
 def size_nodes(wf):
     """The nodes inside a template's subgraph that rescale the incoming image to a total number of pixels (ImageScaleToTotalPixels, and ResizeImageMaskNode in 'scale total pixels' mode)
-    when that number is not driven by another node. Left at 1 megapixel they shrink a 944x1104 image to about 925x1082 (Flux.2 also wants multiples of 16)."""
+    when that number is not driven by another node. Left at 1 megapixel (1,048,576 pixels) they turn a 944x1104 image into 947x1107 (Flux.2 also wants multiples of 16)."""
     for node in subgraph_nodes(wf):
         linked = {i["name"] for i in node.get("inputs", []) if i.get("link") is not None}
         if node.get("type") == "ImageScaleToTotalPixels" and "megapixels" not in linked:
