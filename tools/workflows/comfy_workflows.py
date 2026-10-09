@@ -1893,7 +1893,17 @@ def photo_library(cfg, base=None):
     return out
 
 
-PHOTO_KEY = re.compile(r"(image_\d+|screenshot_\d{8}_\d{6}|(?<=_)h[0-9a-f]{8}(?=_|\.))", re.I)
+PHOTO_KEY = re.compile(r"(image_\d+|(?:screenshot|shot)_\d{8}_?\d{6}|pic_[0-9a-f]{8})", re.I)
+
+
+def photo_key(name):
+    """The id inside an original's name (a Facebook id, a screenshot's date and time in either spelling, or pic_<hex>), or None: it identifies the picture whatever folder or prefix it has."""
+    m = PHOTO_KEY.search(name)
+    if not m:
+        return None
+    key = m[1].lower()
+    shot = re.match(r"(?:screenshot|shot)_(\d{8})_?(\d{6})$", key)
+    return f"shot_{shot[1]}{shot[2]}" if shot else key
 
 
 def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
@@ -1903,15 +1913,15 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
     by_name, by_key = collections.defaultdict(list), collections.defaultdict(list)
     for folder, p in photo_library(cfg, work):
         by_name[p.name.lower()].append((folder, p))
-        m = PHOTO_KEY.search(p.name)
-        if m:
-            by_key[m[1].lower()].append((folder, p))
+        k = photo_key(p.name)
+        if k:
+            by_key[k].append((folder, p))
     renames = {}
     for h, name in sorted(cfg.get("photos", {}).items()):
         if hero and h.lower() != hero.lower():
             continue
-        m = PHOTO_KEY.search(name)
-        mine = [(f, p) for f, p in by_key.get(m[1].lower(), []) if f.lower() == h.lower()] if m else []
+        m = photo_key(name)
+        mine = [(f, p) for f, p in by_key.get(m, []) if f.lower() == h.lower()] if m else []
         if any(p.name == name for _, p in mine):
             continue
         if mine:
@@ -1919,8 +1929,8 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
             print(f"  photo    {h:10} {name} -> {mine[0][1].name}")
         elif by_name.get(name.lower()):
             continue  # a photo kept in another folder on purpose (Female uses an Artists photo)
-        elif m and by_key.get(m[1].lower()):
-            print(f"  ELSEWHERE {h}: {name} is now in {', '.join(sorted({f for f, _ in by_key[m[1].lower()]}))}, not in {h}'s folder; move the original there, or choose it with: inputs set {h} --photo NAME")
+        elif m and by_key.get(m):
+            print(f"  ELSEWHERE {h}: {name} is now in {', '.join(sorted({f for f, _ in by_key[m]}))}, not in {h}'s folder; move the original there, or choose it with: inputs set {h} --photo NAME")
         elif not find_image(cfg, name):
             if m:
                 print(f"  MISSING  {h}: {name} is not in the library or any input folder (its original was removed?); choose another with: inputs set {h} --photo NAME")

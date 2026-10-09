@@ -675,6 +675,19 @@ class PhotoRepointTests(unittest.TestCase):
         finally:
             w.__exit__()
 
+    def test_a_photo_renamed_to_the_shot_convention_is_found_by_its_date_and_time(self):
+        w = self.world(new_name="alice_shot_20260101120000_944x1104.png")
+        try:
+            w.cfg["photos"]["Alice"] = "various_screenshot_20260101_120000_facebook_944x1104.png"
+            self.assertEqual(cw.photo_key("various_screenshot_20260101_120000_facebook_944x1104.png"), cw.photo_key("alice_shot_20260101120000_944x1104.png"))
+            out, _ = w.run("inputs", "photos")
+            self.assertEqual(w.cfg["photos"]["Alice"], "alice_shot_20260101120000_944x1104.png")
+            self.assertEqual(cw.photo_key("alice_pic_1234abcd_944x1104.png"), "pic_1234abcd")
+            self.assertEqual(cw.photo_key("alice_image_77_944x1104.png"), "image_77")
+            self.assertIsNone(cw.photo_key("angelo_photo_944x1104.png"))
+        finally:
+            w.__exit__()
+
     def test_find_image_looks_in_the_library(self):
         w = self.world()
         try:

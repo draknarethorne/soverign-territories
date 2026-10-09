@@ -38,11 +38,13 @@ The first rule that fits wins; `<n>` is the folder's name in lower case with und
 | The file is called | It becomes | Why |
 | --- | --- | --- |
 | `azaline_image_123.jpg`, `eva_emily_image_123.jpg`, `various_image_123.jpg`, `facebook_<time>_123.jpg` | `<n>_image_123.jpg` | the id (a Facebook id) is kept, the prefix is swapped |
-| `Screenshot_<date>_<time>_Facebook.jpg`, `drakneta_screenshot_<date>_<time>_facebook.jpg` | `<n>_screenshot_<date>_<time>_facebook.jpg` | the date and time are the id; the app name is kept in lower case |
+| `Screenshot_<date>_<time>_Facebook.jpg`, `drakneta_screenshot_<date>_<time>.jpg` (any older spelling) | `<n>_shot_<yyyymmddhhmmss>.jpg` | the date and time are the id, written together with no `_`; the app name is dropped |
 | `Draknara Base.jpg`, `Draknara Face left.jpg`, `Draknara Pose 2.jpg` | `<n>_base.jpg`, `<n>_face_left.jpg`, `<n>_pose_2.jpg` | the descriptor is kept |
 | `<n>_anything.jpg` | unchanged | already right |
 | `azaline_photo_wings.jpg` (another folder's prefix, no id) | `<n>_photo_wings.jpg` | the other folder's prefix is swapped |
-| `images (3).jpeg`, `download.jpg`, any Google or web name | `<n>_images_3_h<8 hex>.jpg` | its words (up to 24 characters) plus an id made from the picture's bytes: unique, and the same wherever you move it |
+| `images (3).jpeg`, `download.jpg`, any Google or web name | `<n>_pic_<8 hex>.jpg` | an id made from the picture's bytes: unique, and the same wherever you move it |
+
+Three forms, then: `<n>_image_<facebook id>`, `<n>_shot_<yyyymmddhhmmss>` and `<n>_pic_<8 hex>`. Rename a folder (Pierre to `Awesome Fantasy`) and the next run renames everything in it, including descriptive names that still carry the old prefix (read from the ids in the folder's other files); move files out and they take the new folder's prefix, move them back and they take the first folder's again.
 
 Two files with the same picture id in one folder (the same screenshot saved twice) are flagged as probable duplicates; delete one.
 

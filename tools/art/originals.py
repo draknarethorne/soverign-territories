@@ -5,13 +5,15 @@ The library is <work root>/<Root>/<Name>/gallery (your originals) and <Name>/gal
 Angels, Models, Prospects and Artists (workspaces.json paths.photoRoots). For every <Name> folder that has a gallery:
 
   1. RENAME  each original after the FOLDER it is in. Whatever it was called before (another angel, a sister, a prospect, an artist, a facebook
-             download, a phone screenshot), the id in the name is kept and only the prefix changes:
+             download, a phone screenshot), its id is kept and only the prefix changes. Rename the folder itself and every name follows.
+             The convention is  <name>_image_<facebook id>,  <name>_shot_<yyyymmddhhmmss>  (a screenshot) and  <name>_pic_<8 hex>  (anything with
+             no id, such as a Google image; the id is made from the picture's bytes, so it is unique and stays the same when you move it on):
                azaline_image_123.jpg, eva_emily_image_123.jpg, various_image_123.jpg, facebook_<time>_123.jpg  ->  angelica_image_123.jpg
-               Screenshot_<date>_<time>_Facebook.jpg                                                          ->  angelica_screenshot_<date>_<time>_facebook.jpg
-               azaline_photo_wings.jpg (another folder's prefix, no id)                                       ->  angelica_photo_wings.jpg
-             A name with no id at all (a Google download such as `images (3).jpeg`) becomes angelica_images_3_h<8 hex>.jpg: its words plus an id made from
-             the picture's bytes, so it is unique and keeps the same id when you move it on. A rename that would overwrite another file is skipped with a
-             warning, never forced; two files with the same picture id are flagged as probable duplicates.
+               Screenshot_<date>_<time>_Facebook.jpg, drakneta_screenshot_<date>_<time>.jpg                   ->  angelica_shot_<date><time>.jpg
+               images (3).jpeg, download.jpg                                                                  ->  angelica_pic_<8 hex>.jpg
+               azaline_photo_wings.jpg (another folder's prefix)                                              ->  angelica_photo_wings.jpg
+             A rename that would overwrite another file is skipped with a warning, never forced; two files with the same picture id are flagged as
+             probable duplicates.
   2. SCALE   each original onto a cream 944x1104 canvas (shape kept, EXIF rotation applied) as <name>_..._944x1104.png.
              A copy that is already newer than its original is left alone (--force makes them all again).
   3. PRUNE   every image in gallery_944x1104 that no original in that folder's gallery makes any more (you deleted or moved the
@@ -43,10 +45,13 @@ EXT = r"(?:jpe?g|png|webp|bmp)"
 RULES = [
     (re.compile(rf"^facebook_.*_(\d+)\.{EXT}$", re.I), lambda m, p: f"{p}_image_{m[1]}"),
     (re.compile(rf"^(?:.*_)?image_(\d+)\.{EXT}$", re.I), lambda m, p: f"{p}_image_{m[1]}"),
-    (re.compile(rf"^(?:.*_)?screenshot_(\d{{8}})_(\d{{6}})(?:_(.*?))?\.{EXT}$", re.I),
-     lambda m, p: f"{p}_screenshot_{m[1]}_{m[2]}" + (f"_{re.sub('[^a-z0-9]+', '', m[3].lower())}" if m[3] and re.sub("[^a-z0-9]+", "", m[3].lower()) else "")),
+    # a screenshot: old spellings (screenshot, date_time, an app name) all become shot_<date><time>
+    (re.compile(rf"^(?:.*[_-])?(?:screenshot|shot)[_-](\d{{8}})[_-]?(\d{{6}})(?:[_-].*?)?\.{EXT}$", re.I), lambda m, p: f"{p}_shot_{m[1]}{m[2]}"),
+    (re.compile(rf"^(?:.*_)?pic_([0-9a-f]{{8}})\.{EXT}$", re.I), lambda m, p: f"{p}_pic_{m[1].lower()}"),
     (re.compile(rf"^(?:Drakn\w+|[a-zA-Z0-9\-]+)\s+(Base|Face.*|Pose.*)\.{EXT}$", re.I), lambda m, p: f"{p}_" + re.sub(r"\s+", "_", m[1].lower().strip())),
 ]
+# the part of a name before its id, i.e. the prefix an original carried in the folder it came from
+OLD_PREFIX = re.compile(r"^(.+?)_(?:image_\d|shot_\d|screenshot_\d|pic_[0-9a-f]{8})", re.I)
 SLUG_MAX = 24
 
 
@@ -57,16 +62,26 @@ def prefix_of(folder):
 def content_id(path):
     """A short id from the picture's bytes: the same picture keeps it when it is renamed or moved, two different pictures never share it."""
     import hashlib
-    return "h" + hashlib.sha1(pathlib.Path(path).read_bytes()).hexdigest()[:8]
+    return hashlib.sha1(pathlib.Path(path).read_bytes()).hexdigest()[:8]
+
+
+def folder_prefixes(names, prefix):
+    """The prefixes the originals in one folder still carry from before (the folder was renamed, or they came from another one), read from the ids in their names."""
+    out = set()
+    for n in names:
+        m = OLD_PREFIX.match(n)
+        if m and m[1].lower() != prefix and m[1].lower() != "facebook":
+            out.add(m[1].lower())
+    return out
 
 
 def standard_name(name, prefix, known=(), digest=None):
     """The name an original gets in the folder with this prefix.
 
-    An id in the name (facebook, `..._image_<id>`, a screenshot's date and time) is kept and only the prefix changes, so an original moved between an angel, a
-    sister, a prospect or an artist is renamed for its new folder. A name that already starts with another known folder's prefix (`azaline_photo_x`) swaps
-    that prefix. Anything else (a Google download, `images (3).jpeg`) becomes <prefix>_<its words>_h<id from the picture's bytes>, so it is unique and stays
-    the same when moved. `known` are the prefixes of all library folders (longest first); `digest` is that id, or a function that makes it."""
+    An id in the name (a facebook id, `..._image_<id>`, a screenshot's date and time, `pic_<hex>`) is kept and only the prefix changes, so an original moved between an
+    angel, a sister, a prospect or an artist, or kept in a folder you renamed, follows the folder. A name that starts with another known prefix (`azaline_photo_x`)
+    swaps that prefix. Anything else (a Google download, `images (3).jpeg`) becomes <prefix>_pic_<id from the picture's bytes>: unique, and the same wherever it is moved.
+    `known` are the other prefixes in the library (longest first); `digest` is that id, or a function that makes it."""
     plain = name[1:] if name.startswith(".") else name
     stem, ext = os.path.splitext(plain)
     ext = ext.lower()
@@ -81,9 +96,11 @@ def standard_name(name, prefix, known=(), digest=None):
     for other in known:
         if low.startswith(other + "_") and len(low) > len(other) + 1:
             return f"{prefix}_{stem[len(other) + 1:]}{ext}"
-    slug = re.sub(r"[^a-z0-9]+", "_", low).strip("_")[:SLUG_MAX].strip("_") or "image"
     ident = digest() if callable(digest) else digest
-    return f"{prefix}_{slug}_{ident}{ext}" if ident else f"{prefix}_{slug}{ext}"
+    if ident:
+        return f"{prefix}_pic_{ident}{ext}"
+    slug = re.sub(r"[^a-z0-9]+", "_", low).strip("_")[:SLUG_MAX].strip("_") or "image"
+    return f"{prefix}_{slug}{ext}"
 
 
 def images(folder):
@@ -125,9 +142,11 @@ def process_folder(folder, label, size, args, tally):
     print(f"----------------------------------------------------------\n>>> {label}   (prefix: {prefix})")
     files = images(gallery)
     taken = {p.name.lower() for p in files}
+    # prefixes these files still carry (the folder was renamed, or they came from another one) are swapped like any other folder's
+    known = sorted(set(args.known) | folder_prefixes([p.name for p in files], prefix), key=len, reverse=True)
     sources = []
     for p in files:
-        new = standard_name(p.name, prefix, args.known, lambda p=p: content_id(p))
+        new = standard_name(p.name, prefix, known, lambda p=p: content_id(p))
         path, final = p, p.name
         if p.name != new:
             case_only = p.name.lower() == new.lower()
@@ -151,9 +170,9 @@ def process_folder(folder, label, size, args, tally):
         sources.append((path, final))
     ids = {}
     for _, final in sources:
-        m = cw.PHOTO_KEY.search(final)
-        if m:
-            ids.setdefault(m[1].lower(), []).append(final)
+        k = cw.photo_key(final)
+        if k:
+            ids.setdefault(k, []).append(final)
     for names in ids.values():
         if len(names) > 1:
             print(f"  WARNING the same picture id is in {len(names)} files, probably duplicates (delete one): {', '.join(names)}")
