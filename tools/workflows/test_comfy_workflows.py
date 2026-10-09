@@ -268,25 +268,29 @@ class HandMadeGuardTests(unittest.TestCase):
 
 
 class SavedShotTests(unittest.TestCase):
-    """A workflow ComfyUI saved from a render (Hero_Qwen_..._00004_) keeps the seed of that render, so it counts as a saved shot wherever it sits."""
+    """A workflow ComfyUI saved from a render (Hero_Qwen_..._00004_) keeps the seed of that render. Left loose in the list it is a candidate (not a shot, not install-only);
+    `pull` keeps it in workflows/_candidates and `finals sort` files it into zz_Candidates."""
 
-    def test_numbered_save_is_a_shot_not_an_install_only_workflow(self):
+    def test_numbered_save_is_a_candidate_not_an_install_only_workflow(self):
         with World() as w:
             w.master("Alice_Qwen_Scene_One.json")
+            w.master("Alice_Qwen_Alpha_1_Prime.json")
             w.put("A-Home", "scene/Alice_Qwen_Scene_One.json")
             w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json")
             self.assertNotIn("Alice_Qwen_Alpha_1_Prime_00004_.json", cw.install_files(w.cfg, "A-Home"))
             self.assertIn("Alice_Qwen_Scene_One.json", cw.install_files(w.cfg, "A-Home"))
-            self.assertEqual(list(cw.workspace_shots(w.cfg, "A-Home")), [("Alice", "Alice_Qwen_Alpha_1_Prime_00004_.json")])
+            self.assertEqual(list(cw.workspace_shots(w.cfg, "A-Home")), [])
+            entries = cw.finals_entries(w.cfg, "A-Home")
+            self.assertEqual([(e["kind"], e["loose"]) for e in entries], [("candidate", True)])
             out, _ = w.run("status", "-w", "A-Home")
-            self.assertIn("1 shots-new", out)
             self.assertIn("0 install-only", out)
 
-    def test_pull_shots_keeps_the_save_in_the_repo_and_leaves_the_workspace_copy(self):
-        with World() as w, mock.patch.object(cw, "SHOTS", w.repo / "_shots"), mock.patch.object(cw, "ROOT", w.tmp):
+    def test_pull_keeps_the_save_in_the_repo_as_a_candidate_and_leaves_the_workspace_copy(self):
+        with World() as w, mock.patch.object(cw, "CANDIDATES", w.repo / "_candidates"), mock.patch.object(cw, "FINALS", w.repo / "_final"), mock.patch.object(cw, "ROOT", w.tmp):
+            w.master("Alice_Qwen_Alpha_1_Prime.json")
             save = w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json", {"nodes": [], "id": "seed-4"})
-            w.run("pull", "--shots", "-w", "A-Home")
-            kept = w.repo / "_shots" / "set-a" / "Alice" / "Alice_Qwen_Alpha_1_Prime_00004_.json"
+            w.run("pull", "-w", "A-Home")
+            kept = w.repo / "_candidates" / "set-a" / "Alice" / "Alice_Qwen_Alpha_1_Prime_00004_.json"
             self.assertEqual(json.loads(kept.read_text())["id"], "seed-4")
             self.assertTrue(save.exists())
 

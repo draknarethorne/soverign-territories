@@ -26,7 +26,7 @@ The raw brain-dump this came from is kept word for word at the end.
 | `zz_Final` | The candidate (or shot) you chose in the end: the workflow you treat as the final one, with seed, denoise and input | Whatever it was | `workflows/_final/<set>/<Hero>/` (new) |
 | `test_` | Temporary experiments | Edited | `workflows/_test/` (exists) |
 
-**The tool can tell a candidate from a shot by itself**: compare the saved workflow's positive prompt with the generated prompt in `prompts/`. Same text means candidate; changed text means shot.
+**Candidate or shot is decided by where you save it, not by comparing prompts.** A numbered ComfyUI save left loose or in `zz_Candidates` is a candidate; what you save into `zz_Shots` is a shot. (A prompt comparison would mislabel every older candidate once the identity JSON changes and the prompts are regenerated.)
 A final is never guessed: it exists only because you promoted it.
 
 **One final per slot.** A slot is hero × engine × stage, because Qwen and FireRed are being compared. First slots: photo, Prime, Bare, golden A-pose (the four default inputs the pipeline already uses).
@@ -38,14 +38,14 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 
 ### Phase 0: decisions
 
-| ID | Question | My recommendation |
-| --- | --- | --- |
-| D1 | Folder names and the four-way split above | Settled by your description: `zz_Candidates`, `zz_Shots`, `zz_Curated`, `zz_Final` |
-| D2 | Final slots | hero × engine × stage; photo, Prime, Bare, golden pose first |
-| D3 | Do finals also copy the chosen image into the repo? | The workflow only; images stay in ComfyUI outputs |
-| D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release |
-| D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it |
-| D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked |
+| ID | Question | Recommendation | Answer |
+| --- | --- | --- | --- |
+| D1 | Folder names and the four-way split above | Settled by your description: `zz_Candidates`, `zz_Shots`, `zz_Curated`, `zz_Final` | Settled (Oct 9) |
+| D2 | Final slots | hero × engine × stage; photo, Prime, Bare, golden pose first | Provisional (Oct 9): recommendation used while the user was away; confirm or change |
+| D3 | Do finals also copy the chosen image into the repo? | The workflow only; images stay in ComfyUI outputs | Provisional (Oct 9): recommendation used while the user was away; confirm or change |
+| D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release | Open: needs the user (which four elements follow Darkness and Light) |
+| D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Open |
+| D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Open |
 
 ### Phase 1: source photos and picks (you, existing tools)
 
@@ -54,17 +54,31 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 - [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
 - [ ] Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare.
 
-### Phase 2: candidate and final convention (tool change, I do this once D1 to D3 are agreed)
+### Phase 2: candidate and final convention (tool change; built Oct 9 on the provisional D2 and D3)
 
-- [ ] 2.1 Config: the slots and folder names in `workflows/workspaces.json`.
-- [ ] 2.2 Name parser: hero (fuzzy match against the known heroes), engine, stage and counter, reusing `art_layout.parse_dirs`; tests for typos, a wrong folder and a drop into the `zz_Final` root.
-- [ ] 2.3 Classifier: generated prompt equal means candidate, changed means shot.
-- [ ] 2.4 `tidy`: file loose numbered saves into the right `zz_Candidates` or `zz_Shots` subfolder; move a misplaced file into its proper subfolder; anything unplaceable goes to `zz_Unsorted` and is reported. Moves only, inside the workspace, with backups.
-- [ ] 2.5 Guards: `zz_Candidates`, `zz_Final` and `zz_Unsorted` are hand-made, so `deploy`, `cleanup` and `denoise --reset` never touch them (extend `is_hand_made`, add tests).
-- [ ] 2.6 `pull`: keep candidates and finals in the repo under `_candidates` and `_final`; re-classify the 98 existing repo shots once.
-- [ ] 2.7 `promote NAME --as final`: copy into `zz_Final`, archive the previous final for that slot, record where it came from.
-- [ ] 2.8 `status`: per workspace, candidates, shots, finals, unsorted, and slots still missing a final.
-- [ ] 2.9 Docs: the workflows README section, `bin\help.cmd`, a launcher or two.
+Built as `comfy_workflows.py finals ...` (`bin\finals.cmd`), with `tools/workflows/finals.py` for the name rules; documented in `workflows/README.md` ("Candidates and finals").
+
+- [x] 2.1 Config: slots and aliases are optional under `finals` in `workflows/workspaces.json`; the defaults are in the code (Prime, Bare, golden pose; `X_Pose` is the Prime).
+- [x] 2.2 Name parser: hero, engine and stage matched to what exists, tolerant of case and typos, ambiguous matches refused (`test_finals.py`, 9 tests).
+- [x] 2.3 Classifier, **changed**: a prompt comparison would call every older candidate a shot once the identity JSON changes and prompts are regenerated. So a numbered save is always a candidate, and a shot is only what you save into `zz_Shots`.
+- [x] 2.4 `finals sort`: files loose numbered saves into `zz_Candidates`, misplaced files into their proper subfolder, shots saved straight into `zz_Shots` by phase. **What cannot be placed is left exactly where it is** (no `zz_Unsorted`), in every `zz_` folder and in the repo. Moves only, nothing deleted: an identical duplicate goes to backup, a different file is a conflict.
+- [x] 2.5 Guards: any `zz_` folder is already hand-made, so `deploy`, `cleanup`, `tidy` and `denoise --reset` never touch these (tested).
+- [x] 2.6 `pull` keeps candidates and finals in the repo (`_candidates`, `_final`); `finals reclassify` cleans what is already in git.
+- [x] 2.7 `finals promote NAME`: copies into `zz_Final`, archives the earlier final of that slot in `zz_Final/_previous/<stamp>/`.
+- [x] 2.8 `finals status`: candidates, finals, shots, not placeable, files to re-file, and a per-hero slot table.
+- [x] 2.9 Docs, `bin\finals.cmd`, `bin\help.cmd`, `validate.cmd` runs the new tests (47 existing + 9 + 14).
+- [x] 2.10 `setup` runs `finals sort` and `finals deploy`, and `pull` runs `finals pull`, so the loop is: save anywhere, pull, setup.
+
+### Phase 2b: converge the repo and the workspaces (a few rounds of reclassify, pull and push)
+
+Run in this order; each step previews first, and everything is recoverable (git for the repo, `workflows/.sync/backup/` for the rest).
+
+- [ ] 1. `finals reclassify` (preview, then `--apply`): the 64 numbered saves in `_shots` become `_candidates`, the 8 old `X_Pose` saves resolve as Primes, plain top-level shots are filed by phase; commit it on its own.
+- [ ] 2. `pull` for each workspace (Angel Primes, Drakn Sisters, Drakness, Sovereign Dawn Series): keeps what the workspaces hold in the repo at the proper paths.
+- [ ] 3. `finals reclassify` again: any duplicate created by step 2 goes to backup.
+- [ ] 4. `setup -w "<workspace>" --apply` for each workspace: `finals sort` re-files the workspace copies, `finals deploy` puts back what the repo holds and the workspace lacks, `deploy --shots` and `--curated` run as before.
+- [ ] 5. `finals status` for each workspace: `not placeable` should list only the files that really have no home; decide those by hand.
+- [ ] 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
 
 ### Phase 3: finals feed the art data (later)
 
@@ -72,7 +86,7 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 
 ### Phase 4: `docs/todo.md`, driven by automation
 
-- [ ] A report tool writes `docs/todo.md`: per hero, which slots have a final (from Phase 2 `status`), plus the unchecked boxes of the active plans. You add your own notes in a section the tool leaves alone.
+- [ ] A report tool writes `docs/todo.md`: per hero, which slots have a final (from `finals status`), plus the unchecked boxes of the active plans. You add your own notes in a section the tool leaves alone.
 - [ ] No hand-ticked progress, since hand-kept progress went stale before.
 
 ### Phase 5: MVP rescope (docs only; needs your approval before I edit)

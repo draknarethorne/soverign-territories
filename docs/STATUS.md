@@ -24,7 +24,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 | Plan | Summary |
 | --- | --- |
-| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. |
+| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. Built: the `finals` command (sort, promote, status, pull, deploy, reclassify); next: converge the repo and workspaces (Phase 2b), then your photo and Prime/Bare picks. |
 
 ## Decisions made
 

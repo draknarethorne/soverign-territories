@@ -27,6 +27,7 @@ echo    update.cmd [filters]            refresh prompt text in every existing re
 echo    fork.cmd WORKFLOW TAG           copy a generated workflow to hand-edit it (curated), and put it in the home workspace
 echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspace that lacks them
 echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots
+echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
 echo    inputs.cmd [--status ^| --pull -w WS ^| --reset --hero H]  which images each hero's workflows read; --pull keeps the default images you chose in ComfyUI in workspaces.json (do it before --reset)
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd

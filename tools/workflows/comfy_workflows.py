@@ -59,6 +59,8 @@ import uuid
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "generators"))
 import art_layout  # noqa: E402  (phase_path: the pipeline folders of a workflow and its output)
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import finals  # noqa: E402  (candidates and finals: tolerant name parsing and slots)
 WF = ROOT / "workflows"
 PROMPTS = ROOT / "prompts"
 CFG_PATH = WF / "workspaces.json"
@@ -415,7 +417,7 @@ def install_files(cfg, ws, root=None):
     if d.is_dir():
         for p in sorted(d.rglob("*.json")):
             rel = p.relative_to(d)
-            if rel.parts[0] == SHOTS_DIR or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name) or is_capture(rel, p.name):
+            if rel.parts[0] in (SHOTS_DIR, CANDIDATES_DIR, FINAL_DIR) or any(part.startswith((".", "_")) for part in rel.parts) or excluded(cfg, p.name) or is_capture(rel, p.name):
                 continue
             out.setdefault(p.name, p)
     return out
@@ -857,12 +859,6 @@ def workspace_shots(cfg, ws, root=None):
                 continue
             sub = parts[1:] if parts[0] == hero and len(parts) > 1 else parts
             out[(hero, "/".join(sub))] = p
-    top = install_dir(cfg, ws, root)
-    if top.is_dir():  # saves made from a render, left in the workflow list outside zz_Shots
-        for p in sorted(top.rglob("*.json")):
-            rel = p.relative_to(top)
-            if not any(x.startswith((".", "_")) for x in rel.parts) and is_capture(rel, p.name) and hero_of(p.name):
-                out.setdefault((hero_of(p.name), p.name), p)
     return out
 
 
@@ -1320,8 +1316,10 @@ def cmd_pull(args):
             pull_shots(cfg, ws, args, stamp, seen)
             scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
             print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); only its zz_Shots were captured; use --include-legacy for the rest")
+            finals_pull(cfg, ws, args)
             continue
         pull_shots(cfg, ws, args, stamp, seen)
+        finals_pull(cfg, ws, args)  # candidates and finals (and numbered saves loose in the list), arranged like the main tree
         scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
         if args.shots:
             continue
@@ -1523,7 +1521,7 @@ def cmd_setup(args):
         steps.append(["deploy", "--group", g, "-w", ws, "--curated", "--shots", *dry])
     for h in partial:
         steps.append(["deploy", "--hero", h, "-w", ws, "--curated", "--shots", *dry])
-    steps += [["tidy", "-w", ws, *apply], ["cleanup", "-w", ws, *apply], ["status", "-w", ws]]
+    steps += [["tidy", "-w", ws, *apply], ["finals", "sort", "-w", ws, *apply], ["finals", "deploy", "-w", ws, *apply], ["cleanup", "-w", ws, *apply], ["status", "-w", ws]]
     for step in steps:
         print("\n== " + " ".join(step))
         main([step[0], *root, *step[1:]])
@@ -1908,6 +1906,320 @@ def cmd_inputs(args):
                     write_wf(p, wf)
 
 
+# ---------- candidates and finals ----------
+# zz_Candidates: a generated workflow kept for a render with only small changes (seed, denoise, input, toggles); a numbered ComfyUI save (Hero_Qwen_..._00015_) is one.
+# zz_Final: the candidate (or shot) you chose; one per slot (hero x engine x stage). zz_Shots (edited prompts) and zz_Curated (hand-written) are separate.
+# All of them are hand-made (the zz_ guard), kept in the repo under workflows/_candidates and _final, and arranged like the main tree. `finals sort` puts a file where its NAME
+# says it belongs (a misspelling, a wrong folder or a drop into the zz_Final root are corrected), never deleting: an identical duplicate goes to backup, a different one is a conflict.
+CANDIDATES_DIR = "zz_Candidates"
+FINAL_DIR = "zz_Final"
+PREVIOUS_DIR = "_previous"
+CANDIDATES = WF / "_candidates"
+FINALS = WF / "_final"
+DEFAULT_ALIASES = {"X_Pose": "Alpha_1_Prime"}  # the Prime was once called X_Pose; saves from then are still the Prime
+DEFAULT_SLOTS = {"prime": ["Alpha_1_Prime", "X_Pose"], "bare": ["Alpha_2_Bare_Figure", "Alpha_2_Bare_Skin"], "golden": ["Alpha_3_Barefoot"]}
+
+
+def finals_slots(cfg):
+    return cfg.get("finals", {}).get("slots") or DEFAULT_SLOTS
+
+
+def finals_index(cfg):
+    """{stem: (group, hero, path)} for every generated workflow: what a saved candidate or final can be matched to."""
+    return {n[:-5]: v for n, v in repo_files(cfg).items()}
+
+
+def output_sub(wf):
+    """The phase folders of a workflow's output below the hero (1_Alpha/1_Prime), so the repo copy of a candidate or final mirrors the main tree."""
+    s = save_node(wf)
+    parts = s["widgets_values"][0].split("/") if s else []
+    n = 2 if len(parts) > 1 and parts[1] in art_layout.divisions(parts[0]) else 1
+    if len(parts) < n + 3 or parts[n + 1].startswith(("_", ".")):
+        return pathlib.Path()
+    return pathlib.Path(*parts[n + 1:-1])
+
+
+def parse_saved(cfg, name, heroes, stems):
+    return finals.parse_name(name, heroes, stems, cfg.get("finals", {}).get("aliases", DEFAULT_ALIASES))
+
+
+def canon_name(parsed):
+    return parsed["file_stem"] + (f"_{parsed['counter']}_" if parsed["counter"] else "") + ".json"
+
+
+def finals_entries(cfg, ws, root=None):
+    """The candidates and finals a workspace holds (those in zz_Candidates and zz_Final, and numbered saves loose in the list), each with where it belongs: want (None = stay put)."""
+    d = install_dir(cfg, ws, root)
+    out = []
+    if not d.is_dir():
+        return out
+    idx = finals_index(cfg)
+    heroes, stems = list(hero_groups()), list(idx)
+    for p in sorted(d.rglob("*.json")):
+        rel = p.relative_to(d)
+        top = rel.parts[0]
+        if any(x.startswith(".") for x in rel.parts) or PREVIOUS_DIR in rel.parts:
+            continue
+        if top == SHOTS_DIR:
+            parsed = parse_saved(cfg, p.name, heroes, stems)
+            below = len(rel.parts) - 1  # a shot saved straight into zz_Shots (or straight into its hero folder) is filed by phase; one in a subfolder you made stays there
+            if parsed and (below == 1 or (below == 2 and rel.parts[1] == parsed["hero"])):
+                group, _hero, master = idx[parsed["stem"]]
+                wf = read_wf(master)
+                out.append({"path": p, "kind": "shot", "loose": False, "parsed": parsed, "group": group, "hero": parsed["hero"], "sub": output_sub(wf),
+                            "want": d / special_dir(ws, SHOTS_DIR, parsed["hero"]) / output_sub(wf) / p.name})
+            continue
+        if top in (CANDIDATES_DIR, FINAL_DIR):
+            kind, loose = ("candidate" if top == CANDIDATES_DIR else "final"), False
+        elif is_capture(rel, p.name) and not any(x.startswith("_") for x in rel.parts):
+            kind, loose = "candidate", True
+        else:
+            continue
+        parsed = parse_saved(cfg, p.name, heroes, stems)
+        e = {"path": p, "kind": kind, "loose": loose, "parsed": parsed, "want": None}
+        if parsed:
+            group, _hero, master = idx[parsed["stem"]]
+            wf = read_wf(master)
+            e.update(group=group, hero=parsed["hero"], sub=output_sub(wf),
+                     want=d / (CANDIDATES_DIR if kind == "candidate" else FINAL_DIR) / workspace_subdir(ws, wf) / canon_name(parsed))
+        out.append(e)
+    return out
+
+
+def _tidy_empty(base):
+    """Remove the empty folders below a zz_ folder (never the folder itself)."""
+    if base.is_dir():
+        for f in sorted((q for q in base.rglob("*") if q.is_dir()), key=lambda q: len(q.parts), reverse=True):
+            if not any(f.iterdir()):
+                f.rmdir()
+
+
+def finals_sort(cfg, ws, args, stamp):
+    d = install_dir(cfg, ws, args.root)
+    moved = dup = conflicts = stray = 0
+    for e in finals_entries(cfg, ws, args.root):
+        p, want, parsed = e["path"], e["want"], e["parsed"]
+        rel = p.relative_to(d).as_posix()
+        if parsed is None:
+            print(f"  ?        {ws}/{rel}: cannot tell where it belongs from its name (left where it is)")
+            stray += 1
+            continue
+        if args.hero and parsed["hero"].lower() != args.hero.lower():
+            continue
+        if want is None or p == want:
+            continue
+        note = f" (name corrected: {p.name} -> {want.name})" if want.name != p.name else ""
+        if want.exists():
+            if same_workflow(want, p):
+                print(f"  duplicate {ws}/{rel}: the proper copy is already at {want.relative_to(d).as_posix()}; this one goes to backup")
+                if args.apply:
+                    backup(stamp, ws, p.name, p)
+                    p.unlink()
+                dup += 1
+            else:
+                print(f"  CONFLICT {ws}/{rel} differs from {want.relative_to(d).as_posix()}; rename one of them")
+                conflicts += 1
+            continue
+        print(f"  {'move' if args.apply else 'would move'}  {ws}/{rel} -> {want.relative_to(d).as_posix()}{note}")
+        if args.apply:
+            want.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(p), str(want))
+        moved += 1
+    if args.apply:
+        for z in (CANDIDATES_DIR, FINAL_DIR, SHOTS_DIR):
+            _tidy_empty(d / z)
+    print(f"{ws} finals sort: {moved} {'moved' if args.apply else 'to move'}, {dup} duplicate(s) to backup, {conflicts} conflict(s), {stray} not placeable")
+
+
+def finals_find(cfg, ws, args):
+    """Candidates and shots in a workspace whose name contains --match / the given name: [(path, parsed)]."""
+    heroes, stems = list(hero_groups()), list(finals_index(cfg))
+    want = args.name.lower().removesuffix(".json")
+    found = [(e["path"], e["parsed"]) for e in finals_entries(cfg, ws, args.root) if e["kind"] == "candidate"]
+    shots = install_dir(cfg, ws, args.root) / SHOTS_DIR
+    if shots.is_dir():
+        found += [(p, parse_saved(cfg, p.name, heroes, stems)) for p in sorted(shots.rglob("*.json"))]
+    return [(p, q) for p, q in found if q and want in p.name.lower()]
+
+
+def finals_promote(cfg, ws, args, stamp):
+    d = install_dir(cfg, ws, args.root)
+    hits = finals_find(cfg, ws, args)
+    if not hits:
+        print(f"{ws}: no candidate or shot matches '{args.name}'")
+        return
+    if len(hits) > 1:
+        print(f"{ws}: '{args.name}' matches {len(hits)} files; give more of the name:")
+        for p, _q in hits[:12]:
+            print("    " + p.relative_to(d).as_posix())
+        return
+    src, parsed = hits[0]
+    idx = finals_index(cfg)
+    wf = read_wf(idx[parsed["stem"]][2])
+    dest = d / FINAL_DIR / workspace_subdir(ws, wf) / canon_name(parsed)
+    if dest.exists() and same_workflow(dest, src):
+        print(f"{ws}: {src.name} is already the final for {parsed['stem']}")
+        return
+    for e in finals_entries(cfg, ws, args.root):
+        if e["kind"] == "final" and e["parsed"] and e["parsed"]["stem"] == parsed["stem"] and e["path"] != dest:
+            old = d / FINAL_DIR / PREVIOUS_DIR / stamp / e["path"].name
+            print(f"  {'archive' if args.apply else 'would archive'}  the earlier final {e['path'].relative_to(d).as_posix()} -> {old.relative_to(d).as_posix()}")
+            if args.apply:
+                old.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(e["path"]), str(old))
+    if dest.exists():
+        old = d / FINAL_DIR / PREVIOUS_DIR / stamp / dest.name
+        print(f"  {'archive' if args.apply else 'would archive'}  the earlier final {dest.relative_to(d).as_posix()} (same file name, other render)")
+        if args.apply:
+            old.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(dest), str(old))
+    print(f"  {'promote' if args.apply else 'would promote'}  {src.relative_to(d).as_posix()} -> {dest.relative_to(d).as_posix()} (the original stays)")
+    if args.apply:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dest)
+    else:
+        print("Preview only: add --apply to promote it.")
+
+
+def finals_pull(cfg, ws, args):
+    done = same = 0
+    for e in finals_entries(cfg, ws, args.root):
+        parsed = e["parsed"]
+        if e["kind"] == "shot" or not parsed or (args.hero and parsed["hero"].lower() != args.hero.lower()):
+            continue
+        dst = (CANDIDATES if e["kind"] == "candidate" else FINALS) / e["group"] / e["hero"] / e["sub"] / canon_name(parsed)
+        if dst.exists() and same_workflow(dst, e["path"]):
+            same += 1
+            continue
+        print(f"  {e['kind']:9} {ws}/{e['path'].relative_to(install_dir(cfg, ws, args.root)).as_posix()} -> {dst.relative_to(ROOT).as_posix()}" + (" (update)" if dst.exists() else ""))
+        if not args.dry_run:
+            write_wf(dst, read_wf(e["path"]))
+        done += 1
+    print(f"{ws} finals pull: {done} kept in the repo, {same} already there" + (" (dry run)" if args.dry_run else ""))
+
+
+def finals_deploy(cfg, ws, args):
+    """Repo candidates and finals of the heroes this workspace is home for that it lacks, into their proper folders. A file the workspace already has (wherever it sits) is left for `finals sort`."""
+    d = install_dir(cfg, ws, args.root)
+    idx = finals_index(cfg)
+    heroes, stems = list(hero_groups()), list(idx)
+    have = {e["parsed"]["stem"] + (e["parsed"]["counter"] or "") + e["kind"] for e in finals_entries(cfg, ws, args.root) if e["parsed"] and e["kind"] != "shot"}
+    done = 0
+    for kind, root, base in (("candidate", CANDIDATES, CANDIDATES_DIR), ("final", FINALS, FINAL_DIR)):
+        for p in sorted(root.rglob("*.json")) if root.is_dir() else []:
+            parts = p.relative_to(root).parts
+            group, hero = parts[0], parts[1]
+            parsed = parse_saved(cfg, p.name, heroes, stems)
+            if not parsed or not is_home(cfg, ws, group, hero) or (args.hero and hero.lower() != args.hero.lower()):
+                continue
+            if parsed["stem"] + (parsed["counter"] or "") + kind in have:
+                continue
+            dest = d / base / workspace_subdir(ws, read_wf(idx[parsed["stem"]][2])) / p.name
+            print(f"  {kind:9} {'copy' if args.apply else 'would copy'}  {p.relative_to(ROOT).as_posix()} -> {ws}/{dest.relative_to(d).as_posix()}")
+            if args.apply:
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(p, dest)
+            done += 1
+    print(f"{ws} finals deploy: {done} {'copied' if args.apply else 'to copy'}")
+
+
+def finals_status(cfg, ws, args):
+    entries = finals_entries(cfg, ws, args.root)
+    d = install_dir(cfg, ws, args.root)
+    count = collections.Counter(e["kind"] for e in entries)
+    loose = sum(1 for e in entries if e["loose"])
+    misplaced = sum(1 for e in entries if e["want"] is not None and e["path"] != e["want"])
+    shots = sum(1 for _ in (d / SHOTS_DIR).rglob("*.json")) if (d / SHOTS_DIR).is_dir() else 0
+    stray = sum(1 for e in entries if e["parsed"] is None)
+    print(f"{ws}: {count['candidate']} candidates ({loose} loose), {count['final']} finals, {shots} shots, {stray} not placeable (left where they are), {misplaced} to re-file (finals sort)")
+    idx, slots = finals_index(cfg), finals_slots(cfg)
+    heroes = sorted(h for h, g in hero_groups().items() if is_home(cfg, ws, g, h) and (not args.hero or h.lower() == args.hero.lower()))
+    marks = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.Counter()))
+    for e in entries:
+        if e["parsed"] and e["kind"] != "shot":
+            marks[(e["parsed"]["hero"], e["parsed"]["engine"])][e["parsed"]["stem"]][e["kind"]] += 1
+    rows, idle = [], 0
+    for h in heroes:
+        active = False
+        for engine in finals.ENGINES:
+            cells = []
+            for label in slots:
+                stem = next((f"{h}_{engine}_{n}" for n in slots[label] if f"{h}_{engine}_{n}" in idx), None)
+                if stem is None:
+                    continue
+                c = marks.get((h, engine), {}).get(stem, collections.Counter())
+                cells.append(f"{label} " + ("FINAL" if c["final"] else f"c{c['candidate']}" if c["candidate"] else "-"))
+                active = active or bool(c["final"] or c["candidate"])
+            if cells and any(not x.endswith(" -") for x in cells):
+                rows.append(f"    {h:12} {engine:8} " + "   ".join(cells))
+        idle += 0 if active else 1
+    for r in rows:
+        print(r)
+    print(f"    {len(heroes)} hero(es) are home here; {idle} have no candidate or final yet (c<N> = candidates kept, FINAL = a final is set, - = none)")
+
+
+def finals_reclassify(cfg, args, stamp):
+    """Clean the repo with the same name rules as `finals sort`: numbered saves at the top of a hero's _shots folder were candidates all along and move to _candidates (a shot in a subfolder was
+    deliberate and stays; a shot at the top of the hero folder is filed into its phase folder, keeping its name); candidates and finals already kept are moved to their proper path (typos corrected); an identical duplicate goes to backup (git history keeps it too);
+    a different file at the same path is a conflict. A name that cannot be placed is left exactly where it is. Preview unless --apply."""
+    heroes, idx = list(hero_groups()), finals_index(cfg)
+    sources = [(p, "candidate" if CAPTURED_NAME.search(rel) else "shot") for (_h, rel), (_g, p) in shot_files().items() if "/" not in rel]
+    for kind, root in (("candidate", CANDIDATES), ("final", FINALS)):
+        sources += [(p, kind) for p in (sorted(root.rglob("*.json")) if root.is_dir() else [])]
+    moved = dup = conflicts = 0
+    left = []
+    for p, kind in sources:
+        parsed = parse_saved(cfg, p.name, heroes, list(idx))
+        if not parsed or (args.hero and parsed["hero"].lower() != args.hero.lower()):
+            if not parsed:
+                left.append(p)
+            continue
+        group, _h, master = idx[parsed["stem"]]
+        dst = (SHOTS if kind == "shot" else CANDIDATES if kind == "candidate" else FINALS) / group / parsed["hero"] / output_sub(read_wf(master)) / (p.name if kind == "shot" else canon_name(parsed))
+        if p == dst:
+            continue
+        rel = p.relative_to(ROOT).as_posix()
+        if dst.exists():
+            if same_workflow(dst, p):
+                print(f"  duplicate {rel}: the proper copy is already at {dst.relative_to(ROOT).as_posix()}; this one goes to backup")
+                if args.apply:
+                    b = BACKUPS / stamp / "repo duplicates" / p.relative_to(WF)
+                    b.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(p), str(b))
+                dup += 1
+            else:
+                print(f"  CONFLICT {rel} differs from {dst.relative_to(ROOT).as_posix()}; left where it is")
+                conflicts += 1
+            continue
+        print(f"  {'move' if args.apply else 'would move'}  {rel} -> {dst.relative_to(ROOT).as_posix()}")
+        if args.apply:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(p), str(dst))
+        moved += 1
+    if args.apply:
+        for root in (CANDIDATES, FINALS, SHOTS):
+            _tidy_empty(root)
+    for p in left[:20]:
+        print(f"  ?        {p.relative_to(ROOT).as_posix()}: cannot tell where it belongs; left in place")
+    print(f"finals reclassify: {moved} {'moved' if args.apply else 'to move'}, {dup} duplicate(s) to backup, {conflicts} conflict(s), {len(left)} left in place" + ("" if args.apply else " (preview: add --apply)"))
+
+
+def cmd_finals(args):
+    cfg = load_cfg()
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    if args.action == "reclassify":
+        return finals_reclassify(cfg, args, stamp)
+    if args.action == "promote" and not args.name:
+        sys.exit("finals promote needs the file name (or part of it) of the candidate or shot, e.g.  finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w \"Angel Primes\" --apply")
+    for ws in pick_targets(cfg, args, "all"):
+        if not ready_or_skip(cfg, ws, args.root):
+            continue
+        {"sort": lambda: finals_sort(cfg, ws, args, stamp), "promote": lambda: finals_promote(cfg, ws, args, stamp), "pull": lambda: finals_pull(cfg, ws, args),
+         "deploy": lambda: finals_deploy(cfg, ws, args), "status": lambda: finals_status(cfg, ws, args)}[args.action]()
+    if args.action in ("sort", "deploy", "promote") and not args.apply:
+        print("Preview only: add --apply to do it. Reload the ComfyUI workflow list afterwards.")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -2000,8 +2312,17 @@ def main(argv=None):
     common(s, True, True)
     s.add_argument("--apply", action="store_true", help="really move the files (default: preview only)")
     s.add_argument("-v", "--verbose", action="store_true")
+    s = sub.add_parser("finals")
+    common(s, True)
+    s.add_argument("action", choices=["sort", "promote", "status", "pull", "deploy", "reclassify"],
+                   help="sort: file candidates and finals where their name says (never deletes); promote: make a candidate or shot the final for its slot; status: candidates, finals and slots per workspace; "
+                        "pull: keep them in the repo (_candidates, _final); deploy: put repo ones a workspace lacks into their folders; reclassify: one-off, move numbered repo shots to _candidates")
+    s.add_argument("name", nargs="?", help="with promote: the file name (or part of it) of the candidate or shot")
+    s.add_argument("--hero")
+    s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy and reclassify preview by default; pull writes unless --dry-run)")
     args = ap.parse_args(argv)
-    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup}[args.cmd](args)
+    {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,
+     "finals": cmd_finals}[args.cmd](args)
 
 
 if __name__ == "__main__":

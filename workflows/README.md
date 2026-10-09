@@ -208,11 +208,38 @@ A shot is a workflow you tuned for one render: a chosen seed, Turbo on or off, a
 `pull --shots` (`bin\pull-shots.cmd HERO`) keeps it in the repo under `workflows/_shots/<set>/<Hero>/` with the same subfolders and captures later edits; its file name and output prefix stay as you set them.
 `deploy --shots` (`bin\deploy-shots.cmd HERO`) copies kept shots to a workspace that lacks them and never overwrites a differing copy.
 `status` shows `shots`, `shots-new` (pull it), `shots-changed` and `shots-missing`.
-**Numbered saves count as shots too.** A workflow ComfyUI saves from a render keeps a counter in its name (`Azaline_Qwen_Alpha_1_Prime_00004_.json`) and the seed of that render, so one left loose in the workflow list (outside the `zz_` folders) is treated as a shot, not as an install-only or a curated workflow:
-`status` lists it as `shots-new`, `pull --shots` keeps it in `workflows/_shots/<set>/<Hero>/` (the workspace copy stays where you saved it), and `cleanup` and `tidy` leave it alone. The name is the only test: a counter name that is already kept in `workflows/_curated` stays curated.
+**Numbered saves are candidates, not shots.** A workflow ComfyUI saves from a render keeps a counter in its name (`Azaline_Qwen_Alpha_1_Prime_00004_.json`) and the seed of that render. Left loose in the workflow list it is a *candidate* (see below), not a shot, not an install-only and not a curated workflow.
 If two workspaces hold a different shot under one file name (another seed), `pull --shots` keeps the first one pulled and prints `CONFLICT` for the other; rename one of them to keep both.
 Later, a seed worth keeping can move from a shot into the art data, so the Qwen and FireRed workflows are built with it (not built yet).
 A shot is not a curated workflow: curated ones are the older hand-written workflows (and new ones written from scratch to test a concept), shots are the ones in use. Shots are captured even from a legacy workspace such as Drakness.
+
+### Candidates and finals (zz_Candidates, zz_Final)
+
+| Folder | What it is | Repo copy |
+| --- | --- | --- |
+| `zz_Candidates` | A generated workflow kept for a render with only small changes (seed, denoise, input image, Turbo, toggles). Every numbered save is one. Provisional | `workflows/_candidates/<set>/<Hero>/<phase>/` |
+| `zz_Shots` | Started from a generated prompt, then edited more heavily (may carry explicit wording). Different from a candidate | `workflows/_shots/<set>/<Hero>/` |
+| `zz_Curated` | The older originals, or hand-written from scratch | `workflows/_curated/` |
+| `zz_Final` | The candidate or shot you chose: one per slot (hero, engine and stage; photo, Prime, Bare and golden pose first). Holds the seed, denoise and input | `workflows/_final/<set>/<Hero>/<phase>/` |
+
+All of them are hand-made, so `deploy`, `cleanup`, `tidy` and `denoise --reset` never touch them. They are arranged like the main tree (`zz_Final/female/Remiah/1_Alpha/1_Prime/...`), and **the file name decides where a file belongs**, so a save in the wrong place is fine:
+
+```bash
+python tools/workflows/comfy_workflows.py finals status -w "Angel Primes"             # candidates, finals, and which slots still lack a final
+python tools/workflows/comfy_workflows.py finals sort -w "Angel Primes" --apply      # file them where their name says (preview without --apply)
+python tools/workflows/comfy_workflows.py finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w "Angel Primes" --apply   # make it the final; the earlier final is archived in zz_Final/_previous
+python tools/workflows/comfy_workflows.py finals deploy -w "Angel Primes" --apply    # put repo candidates and finals the workspace lacks into their folders
+python tools/workflows/comfy_workflows.py finals reclassify --apply                  # clean the repo with the same rules (preview without --apply)
+```
+
+(`bin\finals.cmd` wraps these.) `pull` keeps candidates and finals in the repo as part of its normal run, and `setup` sorts and deploys them, so the loop is: save anywhere, `pull`, `setup` (or `finals sort`).
+
+- **A misspelled hero, engine or stage** (`Remaih_Qwn_Alpha_1_Prim_00004_`), the wrong case, a wrong folder or a drop straight into the `zz_Final` root is matched to the closest known workflow and filed (the file name is corrected to the real one). An ambiguous match is refused, never guessed.
+- **A renamed stage** still resolves: `X_Pose` saves are filed as the Prime (`finals.aliases` in `workspaces.json`) and keep their own file name.
+- **Nothing is deleted.** An identical duplicate goes to `workflows/.sync/backup/`; a different file at the same place is reported as a `CONFLICT` and left alone.
+- **What cannot be placed is left exactly where it is** (never moved to another folder) and is listed as `not placeable`. The same applies in the repo, and to `zz_Curated`, which is not rearranged. A shot you saved into a subfolder of your own stays there; one saved straight into `zz_Shots` is filed by phase, keeping its name.
+- **`finals reclassify`** does the same for what is already in git: numbered saves at the top of a hero's `_shots` folder were candidates and move to `_candidates`, and everything is moved to its proper path. Run it, then `pull` and `setup` a few times, and the repo and the workspaces converge on one structure.
+- `finals.slots` in `workspaces.json` (optional) sets which stages count as a slot; the default is Prime (`Alpha_1_Prime`, `X_Pose`), Bare (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Skin`) and golden pose (`Alpha_3_Barefoot`).
 
 ### Hand-curated workflows
 
