@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/light/terrace-stair-road",
+  "kind": "background",
+  "name": "Terrace stair road",
+  "description": "a long stone stair and path climbing between olive terraces in bright morning sun, white walls and clear mountain air",
+  "mood": "bright, climbing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "light",
+    "road",
+    "realistic"
+  ],
+  "notes": "The light homeland (realms/light-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

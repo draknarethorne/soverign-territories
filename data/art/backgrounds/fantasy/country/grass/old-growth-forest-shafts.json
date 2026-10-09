@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/grass/old-growth-forest-shafts",
+  "kind": "background",
+  "name": "Old growth forest shafts",
+  "description": "an old-growth forest of huge oaks and beeches, shafts of green-gold light through the leaves, a carpet of moss and fern and soft mist between the trunks",
+  "mood": "reverent, green",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "grass",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The grass homeland (realms/grass-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

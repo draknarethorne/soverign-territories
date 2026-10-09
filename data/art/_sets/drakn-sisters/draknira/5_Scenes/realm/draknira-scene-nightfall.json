@@ -1,0 +1,22 @@
+{
+  "artId": "draknira-scene-nightfall",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
+  "name": "Nightfall",
+  "components": {
+    "pose": "She stands at the edge of her homeland as the last light goes, with swirling frost, snowflakes and ice crystals gathered low in one open hand like a lantern that lights her face, looking to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/signature-robe.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknira/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknira/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknira/footwear/scene-robe-legs-feet.json",
+    "effects": "Swirling frost, snowflakes and ice crystals light the land around her and {{MAGIC}} light glows warm against the dark.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/country/ice/aurora-night-camp.json",
+    "realm": "data/art/realms/ice-lands.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknira/5_Scenes/realm/Draknira_Scene_Nightfall.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "REALM SERIES: Nightfall in her ice homeland (night); realistic, from realms/ice-lands and backgrounds/fantasy/country/ice."
+}

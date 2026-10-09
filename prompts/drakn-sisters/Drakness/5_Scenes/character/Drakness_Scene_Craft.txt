@@ -31,11 +31,11 @@ Cold drifting shadow, smoke and pale starlight seep out of the tomb along the fl
 
 Eyes: irises softly aglow with amethyst light, brightest near the pupil and fading to the natural deep violet irises at the rim, iris detail still visible, a gentle amethyst catchlight, no light spilling beyond the eyelids.
 
-Environment: a deep stone vault heaped with gold coins, jewelled goblets and chests, iron-bound doors ajar and shafts of torchlight glittering across the hoard.
+Environment: a narrow stone stair descending into an ossuary, walls patterned in stacked bone and a lantern on a hook.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a grounded, cinematic moorland of fog and old stone photographed on location like a feature-film still - standing stones, ruined abbeys, crypts and black lakes, candle and lantern light in thick mist, cold desaturated colour and deep shadows; any magic is a faint cold glow; nothing from the modern world.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

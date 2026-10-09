@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/summoner/rooftop-observatory-circle",
+  "kind": "background",
+  "name": "Rooftop observatory circle",
+  "description": "a stone rooftop observatory under a clear night, a brass sighting ring and star charts pinned to a table, cold bright stars",
+  "mood": "clear, cold",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "summoner",
+    "realistic"
+  ],
+  "notes": "A place a summoner spends her time, in realistic wording (use with an element realm)."
+}

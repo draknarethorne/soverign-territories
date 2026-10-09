@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/fire/forge-village-smoke",
+  "kind": "background",
+  "name": "Forge village smoke",
+  "description": "a hill village of dark stone houses and forges with chimneys smoking, glowing doorways and anvils ringing, ash dusting the cobbles",
+  "mood": "busy, hot",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "fire",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The fire homeland (realms/fire-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

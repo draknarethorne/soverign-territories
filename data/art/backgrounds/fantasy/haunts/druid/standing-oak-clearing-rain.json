@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/druid/standing-oak-clearing-rain",
+  "kind": "background",
+  "name": "Standing oak clearing rain",
+  "description": "a forest clearing with a single great oak in soft rain, the leaves dripping, a thrush singing and the ground steaming faintly",
+  "mood": "fresh, quiet",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "druid",
+    "realistic"
+  ],
+  "notes": "A place a druid spends her time, in realistic wording (use with an element realm)."
+}

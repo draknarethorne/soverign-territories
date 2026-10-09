@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/ice/snowy-pass-mule-track",
+  "kind": "background",
+  "name": "Snowy pass mule track",
+  "description": "a snow-packed mule track climbing a mountain pass between dark pines, fresh footprints, a frozen stream and a pale low sun",
+  "mood": "hushed, steep",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "ice",
+    "road",
+    "realistic"
+  ],
+  "notes": "The ice homeland (realms/ice-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

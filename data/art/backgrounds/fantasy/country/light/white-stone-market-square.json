@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/light/white-stone-market-square",
+  "kind": "background",
+  "name": "White stone market square",
+  "description": "a market square of pale stone with a fountain and colonnade, awnings and baskets of fruit, warm midday light and soft shadows",
+  "mood": "lively, sunlit",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "light",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The light homeland (realms/light-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

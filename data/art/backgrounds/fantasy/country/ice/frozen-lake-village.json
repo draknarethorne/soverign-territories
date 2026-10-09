@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/ice/frozen-lake-village",
+  "kind": "background",
+  "name": "Frozen lake village",
+  "description": "a mountain village of low timber houses around a frozen lake, smoke rising from chimneys, ice-fishing holes and sledges, soft overcast light",
+  "mood": "snug, still",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "ice",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The ice homeland (realms/ice-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

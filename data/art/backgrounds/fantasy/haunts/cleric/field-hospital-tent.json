@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/cleric/field-hospital-tent",
+  "kind": "background",
+  "name": "Field hospital tent",
+  "description": "a canvas field hospital tent with rows of cots, clean linen, a basin and lantern light, rain on the roof",
+  "mood": "tender, tired",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "cleric",
+    "realistic"
+  ],
+  "notes": "A place a cleric spends her time, in realistic wording (use with an element realm)."
+}

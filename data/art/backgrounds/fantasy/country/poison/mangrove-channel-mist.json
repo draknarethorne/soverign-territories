@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/poison/mangrove-channel-mist",
+  "kind": "background",
+  "name": "Mangrove channel mist",
+  "description": "a wide black-water channel through mangroves at first light, tangled roots rising from the water and thin mist hanging between the trees",
+  "mood": "heavy, humid",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "poison",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The poison homeland (realms/poison-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

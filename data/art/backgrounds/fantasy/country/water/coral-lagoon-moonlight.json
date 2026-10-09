@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/water/coral-lagoon-moonlight",
+  "kind": "background",
+  "name": "Coral lagoon moonlight",
+  "description": "a shallow reef lagoon at night under a bright moon, clear water over pale sand and coral heads, a lantern boat drifting in the distance",
+  "mood": "serene, silver",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "water",
+    "night",
+    "realistic"
+  ],
+  "notes": "The water homeland (realms/water-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

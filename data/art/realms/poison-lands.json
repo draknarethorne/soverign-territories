@@ -1,0 +1,38 @@
+{
+  "id": "realms/poison-lands",
+  "kind": "realm",
+  "name": "Realm: mangrove bayou (realistic)",
+  "description": "Setting: a grounded, cinematic mangrove bayou photographed on location like a feature-film still - black water, tangled roots, hanging moss, stilted timber houses and lantern boats, thick humid air with low mist and muted green-grey light; any magic is a faint pale glow in the mist; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "poison"
+  ],
+  "notes": "The poison homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/poison/ (set components.realm)."
+}

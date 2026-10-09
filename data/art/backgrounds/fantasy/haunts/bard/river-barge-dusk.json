@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/bard/river-barge-dusk",
+  "kind": "background",
+  "name": "River barge dusk",
+  "description": "the deck of a slow river barge at dusk, strings of lanterns, coils of rope and the banks drifting by in blue light",
+  "mood": "dreamy, drifting",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "bard",
+    "realistic"
+  ],
+  "notes": "A place a bard spends her time, in realistic wording (use with an element realm)."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/poison/lantern-boat-night-bayou",
+  "kind": "background",
+  "name": "Lantern boat night bayou",
+  "description": "a lantern boat poling through a bayou at night, the light reflected in black water, hanging moss and pale mist, fireflies in the dark",
+  "mood": "eerie, quiet",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "poison",
+    "night",
+    "realistic"
+  ],
+  "notes": "The poison homeland (realms/poison-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

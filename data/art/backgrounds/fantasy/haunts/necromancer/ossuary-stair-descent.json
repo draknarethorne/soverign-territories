@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/necromancer/ossuary-stair-descent",
+  "kind": "background",
+  "name": "Ossuary stair descent",
+  "description": "a narrow stone stair descending into an ossuary, walls patterned in stacked bone and a lantern on a hook",
+  "mood": "claustrophobic, old",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "necromancer",
+    "realistic"
+  ],
+  "notes": "A place a necromancer spends her time, in realistic wording (use with an element realm)."
+}

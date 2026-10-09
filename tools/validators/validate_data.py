@@ -579,7 +579,20 @@ def check_scene_recipes(report):
     missing = {c for c in classes if c} - {x["class"] for x in r.get("craft", [])}
     if missing:
         report.error(where, f"craft has no recipe for the class {', '.join(sorted(missing))}")
-    for x in [y for k in ("duty", "quiet", "domain", "craft") for y in r.get(k, [])]:
+    roles = {x["role"] for x in r.get("realm", [])}
+    rids = [x["id"] for x in r.get("realm", [])] + ([r["haunt"]["id"]] if r.get("haunt") else [])
+    if len(rids) != len(set(rids)) or set(rids) & set(ids) | (set(rids) & {"domain", "craft", "lineup"}):
+        report.error(where, "realm and haunt recipe ids must be unique and must not reuse a duty, quiet, domain, craft or lineup id")
+    for element in elements:
+        if not (ROOT / f"data/art/realms/{element.lower()}-lands.json").exists():
+            report.error(where, f"no realm data/art/realms/{element.lower()}-lands.json for the element {element}")
+        have = {role for f in rglob(f"data/art/backgrounds/fantasy/country/{element.lower()}/*.json") for role in (load(f).get("tags") or [])}
+        if roles - have:
+            report.error(where, f"the {element} homeland has no background for the role(s) {', '.join(sorted(roles - have))} (tag it in backgrounds/fantasy/country/{element.lower()}/)")
+    for klass in {c for c in classes if c}:
+        if not rglob(f"data/art/backgrounds/fantasy/haunts/{klass.lower().replace(' ', '-')}/*.json"):
+            report.error(where, f"no haunt backgrounds for the class {klass} (data/art/backgrounds/fantasy/haunts/{klass.lower().replace(' ', '-')}/)")
+    for x in [y for k in ("duty", "quiet", "domain", "craft", "realm") for y in r.get(k, [])] + ([r["haunt"]] if r.get("haunt") else []):
         for key in ("holding", "realm"):
             val = x.get(key)
             if isinstance(val, str) and val.endswith(".json") and not (ROOT / val).exists():

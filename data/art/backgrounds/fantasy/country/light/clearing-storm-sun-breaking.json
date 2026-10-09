@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/light/clearing-storm-sun-breaking",
+  "kind": "background",
+  "name": "Clearing storm sun breaking",
+  "description": "a hilltop after a storm, the cloud breaking apart and long beams of sun falling across wet fields and a rainbow low on the horizon",
+  "mood": "uplifting, clearing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "light",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The light homeland (realms/light-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

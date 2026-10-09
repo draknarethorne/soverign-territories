@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/magician/gaming-room-green-baize",
+  "kind": "background",
+  "name": "Gaming room green baize",
+  "description": "a candlelit gaming room with a green baize table, scattered cards and coins, dark panelled walls and a smoky haze",
+  "mood": "sly, smoky",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "magician",
+    "realistic"
+  ],
+  "notes": "A place a magician spends her time, in realistic wording (use with an element realm)."
+}

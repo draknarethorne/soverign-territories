@@ -1,0 +1,38 @@
+{
+  "id": "realms/light-lands",
+  "kind": "realm",
+  "name": "Realm: radiant uplands (realistic)",
+  "description": "Setting: a grounded, cinematic sunlit upland photographed on location like a feature-film still - white stone monasteries and colonnades, terraced hillsides, clear mountain air and bright warm sun with soft golden shadows; any magic is a faint warmth in the light; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "light"
+  ],
+  "notes": "The light homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/light/ (set components.realm)."
+}

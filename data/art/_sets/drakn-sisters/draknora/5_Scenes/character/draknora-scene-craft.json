@@ -12,10 +12,11 @@
     "legs_feet": "data/art/heroes/drakn-sisters/draknora/footwear/scene-robe-legs-feet.json",
     "effects": "Dancing flame, embers and sparks flicker along her knuckles and drift off, {{MAGIC}} light on her cheek.",
     "eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json",
-    "background": "data/art/backgrounds/fantasy/tavern/inn-bedchamber-candlelit.json"
+    "background": "data/art/backgrounds/fantasy/haunts/magician/gaming-room-green-baize.json",
+    "realm": "data/art/realms/fire-lands.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknora/5_Scenes/character/Draknora_Scene_Craft.txt",
   "denoise": "~0.5-0.7",
-  "notes": "CRAFT: what a Magician does; from data/art/_settings/scene-recipes.json."
+  "notes": "CRAFT: what a Magician does, in her class's own place and her element's realm; from data/art/_settings/scene-recipes.json."
 }

@@ -1,0 +1,22 @@
+{
+  "artId": "drakness-scene-settlement",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
+  "name": "Settlement",
+  "components": {
+    "pose": "She stands at the edge of a small settlement in her homeland with one hand resting on a weathered post or wall, homes and people as soft shapes behind her, a calm, assessing look to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/signature-robe.json",
+    "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakness/footwear/scene-robe-legs-feet.json",
+    "effects": "Drifting shadow, smoke and pale starlight gather faintly around her hand where it touches the wall, {{MAGIC}} light very soft.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "background": "data/art/backgrounds/fantasy/country/darkness/moor-hamlet-lamplight.json",
+    "realm": "data/art/realms/darkness-lands.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakness/5_Scenes/realm/Drakness_Scene_Settlement.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "REALM SERIES: Settlement in her darkness homeland (settlement); realistic, from realms/darkness-lands and backgrounds/fantasy/country/darkness."
+}

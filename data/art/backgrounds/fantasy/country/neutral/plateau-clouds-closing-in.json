@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/neutral/plateau-clouds-closing-in",
+  "kind": "background",
+  "name": "Plateau clouds closing in",
+  "description": "the plateau as a bank of low cloud rolls in, the far edge vanishing in white, the stone wet and the light flat and silver",
+  "mood": "hushed, pale",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "neutral",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The neutral homeland (realms/neutral-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

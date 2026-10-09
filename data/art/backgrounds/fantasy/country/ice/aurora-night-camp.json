@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/ice/aurora-night-camp",
+  "kind": "background",
+  "name": "Aurora night camp",
+  "description": "a snowfield camp under a green aurora, a small tent and a low fire, stars sharp over black peaks, deep blue snow",
+  "mood": "magical, still",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "ice",
+    "night",
+    "realistic"
+  ],
+  "notes": "The ice homeland (realms/ice-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

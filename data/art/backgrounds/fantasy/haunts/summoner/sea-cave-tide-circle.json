@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/summoner/sea-cave-tide-circle",
+  "kind": "background",
+  "name": "Sea cave tide circle",
+  "description": "a sea cave at low tide with a ring of stones set into the wet sand, light from the mouth and dripping dark walls",
+  "mood": "damp, echoing",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "summoner",
+    "realistic"
+  ],
+  "notes": "A place a summoner spends her time, in realistic wording (use with an element realm)."
+}

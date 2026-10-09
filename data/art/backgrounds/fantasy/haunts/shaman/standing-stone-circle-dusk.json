@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/shaman/standing-stone-circle-dusk",
+  "kind": "background",
+  "name": "Standing stone circle dusk",
+  "description": "a circle of weathered standing stones on a hilltop at dusk, a small fire in the centre and bundles of feathers and bone charms tied to the stones, thin smoke rising",
+  "mood": "ritual, ancient",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "shaman",
+    "realistic"
+  ],
+  "notes": "A place a shaman spends her time, in realistic wording (use with an element realm)."
+}

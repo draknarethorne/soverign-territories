@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/light/hillside-monastery-sunrise",
+  "kind": "background",
+  "name": "Hillside monastery sunrise",
+  "description": "a white stone monastery on a hillside at sunrise, terraced fields below and the whole valley washed in warm gold light, a few thin clouds",
+  "mood": "serene, radiant",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "light",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The light homeland (realms/light-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

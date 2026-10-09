@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/poison/boardwalk-marsh-road",
+  "kind": "background",
+  "name": "Boardwalk marsh road",
+  "description": "a long weathered timber boardwalk across a foggy marsh, reeds and standing water on either side and a lantern on a post",
+  "mood": "damp, narrow",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "poison",
+    "road",
+    "realistic"
+  ],
+  "notes": "The poison homeland (realms/poison-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

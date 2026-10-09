@@ -13,10 +13,11 @@
     "holding": "data/art/wardrobe/props/tomes/spellbook.json",
     "effects": "The rune hangs glowing in the air where her finger passed and swirling frost, snowflakes and ice crystals thread along the page, {{MAGIC}} light on her fingertips.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
-    "background": "data/art/backgrounds/fantasy/temple/sunlit-cathedral-sanctum.json"
+    "background": "data/art/backgrounds/fantasy/haunts/wizard/rooftop-observatory-wizard.json",
+    "realm": "data/art/realms/ice-lands.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknira/5_Scenes/character/Draknira_Scene_Craft.txt",
   "denoise": "~0.5-0.7",
-  "notes": "CRAFT: what a Wizard does; from data/art/_settings/scene-recipes.json."
+  "notes": "CRAFT: what a Wizard does, in her class's own place and her element's realm; from data/art/_settings/scene-recipes.json."
 }

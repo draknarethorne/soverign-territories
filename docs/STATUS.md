@@ -322,11 +322,17 @@ Scenes now have three tiers (explained in [data/art/README.md](../data/art/READM
 That is 140 new cards, each with a prompt, a Qwen and a FireRed workflow, deployed to Angel Primes, Drakn Sisters and Drakness. The recipes live in `data/art/_settings/scene-recipes.json` (add a scene type there, then `bin\scaffold-characters.cmd`); the validator checks every rank, element and sister class has one.
 Also new: two realms (`fantasy-gothic` for the fallen and grieving, `fantasy-pastoral` for gentle scenes) and five theme packs (31 in all, with a new `ceremony` group).
 
+**Realistic realms for every element and class (Oct 8).** Each sister now has her own country and place, in the library so the males and later common and uncommon cards can use the same ones:
+- **11 element homelands** (`realms/<element>-lands`): red-rock canyonlands (Draknara), ashen volcanic badlands (Draknora), tidal coast and reefs (Draknisa), glacial highlands (Draknira), windswept highlands (Draknava), storm plains (Drakneta), ancient greenwood (Drakniya), mangrove bayou (Draknoxa), radiant uplands (Drakniss), fogbound moors and crypts (Draknare and Drakness) and the meridian highlands (the neutral pair).
+- **55 country environments** (`backgrounds/fantasy/country/<element>/`, five per element, tagged establishing, road, settlement, weather and night) and **33 class haunts** (`backgrounds/fantasy/haunts/<class>/`, three per class, eleven classes).
+- **A realm series for the sisters** (`5_Scenes/realm/`): Homeland, Wayfarer, Settlement, Weather and Nightfall in her own country, plus her class's Haunt, 60 cards; her Craft scene now also uses her class's haunt and her element's realm. All have prompts, Qwen and FireRed workflows, deployed to Drakn Sisters and Drakness.
+- **The angels can opt in** to the same series (`scaffold_angel_set.py --realm`, 110 cards); not run yet, to keep Angel Primes quiet while you test.
+
 **Marketing series, still to decide:** the series scenes are the same pose and template for everyone but each hero stands in her own element realm, so a composite needs either the Lineup (flat backdrop) or a shared backdrop per series scene. A "series cut-out" variant of The Dawn, The Bond, Robe and Casting on one common backdrop would make them composable like the Lineup; say if you want it.
 
 **Still open (needs your thinking):**
 - **More character scenes.** Each hero could have more: a scene per sister's lore, the pair (an angel with her paired angel), the pet's own scene, seasonal portraits at home, travel and adventure, sports and action, night city.
-- **More realms.** Noir city, historic, desert and storm, each with backgrounds, effects and wording of its own.
+- **More realms.** Noir city, historic, desert and storm, and a place for each of the sisters' pets and dragons' lairs in the same realistic style; each with backgrounds, effects and wording of its own.
 - **More themes.** Valentine, lunar new year, slavic winter, fey court, gaslamp, circus, jungle explorer; the audit does not cover themes yet, and theme makeup, jewelry and robes could extend the new library pieces.
 - **Moving over.** The sisters' pieces and the older bundles can be rebuilt on the atomic pieces whenever you want; that changes their prompts, so it is a choice.
 

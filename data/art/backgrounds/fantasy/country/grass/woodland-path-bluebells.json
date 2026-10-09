@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/grass/woodland-path-bluebells",
+  "kind": "background",
+  "name": "Woodland path bluebells",
+  "description": "a narrow woodland path through beech trees carpeted in bluebells, dappled light and a fallen mossy log, birdsong in the air",
+  "mood": "gentle, spring",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "grass",
+    "road",
+    "realistic"
+  ],
+  "notes": "The grass homeland (realms/grass-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

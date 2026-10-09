@@ -1,0 +1,22 @@
+{
+  "artId": "draknoxa-scene-weather",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
+  "name": "Weather",
+  "components": {
+    "pose": "She stands in the open as the weather of her homeland closes in, her clothing and hair lifting, one hand raised against it and her eyes narrowed and then turned to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknoxa/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknoxa/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknoxa/footwear/scene-battle-legs-feet.json",
+    "effects": "Curling green venom mist and falling drops are caught up in the weather and stream around her, {{MAGIC}} light flickering in it.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/backgrounds/fantasy/country/poison/flooded-cypress-swamp-rain.json",
+    "realm": "data/art/realms/poison-lands.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknoxa/5_Scenes/realm/Draknoxa_Scene_Weather.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "REALM SERIES: Weather in her poison homeland (weather); realistic, from realms/poison-lands and backgrounds/fantasy/country/poison."
+}

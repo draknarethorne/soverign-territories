@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/enchanter/mirrored-salon-chandelier",
+  "kind": "background",
+  "name": "Mirrored salon chandelier",
+  "description": "a salon of tall gilt mirrors and a crystal chandelier, velvet chairs and soft candlelight multiplying in the glass",
+  "mood": "elegant, glittering",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "enchanter",
+    "realistic"
+  ],
+  "notes": "A place a enchanter spends her time, in realistic wording (use with an element realm)."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/magician/fairground-tent-evening",
+  "kind": "background",
+  "name": "Fairground tent evening",
+  "description": "the striped canvas tent of a travelling fair at evening, strings of bulbs, sawdust underfoot and a painted sign, distant music",
+  "mood": "colourful, nostalgic",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "magician",
+    "realistic"
+  ],
+  "notes": "A place a magician spends her time, in realistic wording (use with an element realm)."
+}

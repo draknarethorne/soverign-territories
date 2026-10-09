@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/water/harbor-village-fog",
+  "kind": "background",
+  "name": "Harbor village fog",
+  "description": "a small timber harbour village in sea fog, fishing boats at a stone quay, nets drying and lamplit windows in whitewashed cottages",
+  "mood": "damp, cosy",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "water",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The water homeland (realms/water-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

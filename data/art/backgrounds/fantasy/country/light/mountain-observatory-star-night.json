@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/light/mountain-observatory-star-night",
+  "kind": "background",
+  "name": "Mountain observatory star night",
+  "description": "a stone mountain observatory terrace on a clear night, a vast field of stars above and a single warm lamp in a doorway",
+  "mood": "still, luminous",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "light",
+    "night",
+    "realistic"
+  ],
+  "notes": "The light homeland (realms/light-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

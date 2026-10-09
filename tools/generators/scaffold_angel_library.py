@@ -645,6 +645,30 @@ class Angel:
                      "jewelry": one("jewelry") or self.sig["jewelry"], "legs_feet": one("footwear") or (pick(boots, i) if "armor" in wear else bare), "makeup": one("makeup"), "effects": self.sig["effects"], "background": bg}
             write(pack, t["name"], comps, f"{t['name']} celebration scene for her element: every item is a library or theme-pack piece.")
 
+    def realm_series(self):
+        """Opt-in (scaffold_angel_set.py --realm): her element's homeland as a place, scene by scene, in the realistic element realm (no class, so no haunt). Existing cards are kept."""
+        recipes = json.loads((ART / "_settings/scene-recipes.json").read_text(encoding="utf-8"))
+        realm = f"data/art/realms/{self.element.lower()}-lands.json"
+        country = ART / "backgrounds/fantasy/country" / self.element.lower()
+        if not (ROOT / realm).exists() or not country.is_dir():
+            return
+        robes = (self.pool("wardrobe/clothing/robes") or self.pool("wardrobe/clothing/gowns")) if self.female else (self.pool("wardrobe/armor/robes") or self.pool("wardrobe/clothing/sets"))
+        boots = self.npool("wardrobe/footwear/boots")
+        bare = ANKLETS if self.female else BAREFOOT
+        for r in recipes.get("realm", []):
+            pool = [p.relative_to(ROOT).as_posix() for p in sorted(country.glob("*.json")) if r["role"] in tags_of(p)]
+            if not pool:
+                continue
+            kind = r["wearing"]
+            wear = {"armor": self.sig["armor"], "gown": self.sig["gown"], "robe": self.sig["gown"]}[kind]
+            hold = {"weapon": self.sig["weapon"], "none": ""}.get(r.get("holding", "none"), r.get("holding"))
+            comps = {"pose": self.effect(r["pose"]), "wearing": wear, "headwear": self.sig["headwear"] if kind != "robe" else "", "jewelry": self.sig["jewelry"],
+                     "legs_feet": pick(boots, self.i) if kind == "armor" and boots else bare, "back": self.scene["back"], "holding": hold, "effects": cap(self.effect(r["effects"])),
+                     "eye_effect": EYES + r["eyes"] + ".json" if r.get("eyes") else "", "background": pool[0], "realm": realm}
+            art = r["id"]
+            self.write("scene", f"{self.slug}-scene-{art}", self.card(f"{self.slug}-scene-{art}", "scene", "scene", f"{self.hero}_Scene_{camel(art)}", "scene-with-outfit-human.txt",
+                       {k: v for k, v in comps.items() if v}, name=r["name"], note=f"REALM SERIES: {r['name']} in her {self.element.lower()} homeland ({r['role']}); realistic."))
+
     def finish(self):
         for stage, name, tpl, denoise, note in (
                 ("polish", "Detail", "polish-human.txt", "~0.2-0.4", "SKELETON: a detail-only pass on her chosen finished image (input role scene); tune the wording once there are scenes to polish."),

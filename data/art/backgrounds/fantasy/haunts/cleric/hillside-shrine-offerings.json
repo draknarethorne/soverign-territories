@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/cleric/hillside-shrine-offerings",
+  "kind": "background",
+  "name": "Hillside shrine offerings",
+  "description": "a small stone hillside shrine with candles and flowers left as offerings, wind in the grass and a wide valley below at dusk",
+  "mood": "peaceful, humble",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "cleric",
+    "realistic"
+  ],
+  "notes": "A place a cleric spends her time, in realistic wording (use with an element realm)."
+}

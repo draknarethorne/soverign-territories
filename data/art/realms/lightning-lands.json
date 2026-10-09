@@ -1,0 +1,38 @@
+{
+  "id": "realms/lightning-lands",
+  "kind": "realm",
+  "name": "Realm: storm plains (realistic)",
+  "description": "Setting: a grounded, cinematic storm plain photographed on location like a feature-film still - wide flat farmland and low hills under towering thunderheads, stone watchtowers and wet roads, dramatic hard light breaking through rain, cool slate and gold tones; any magic is a faint charge in the air; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "lightning"
+  ],
+  "notes": "The lightning homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/lightning/ (set components.realm)."
+}

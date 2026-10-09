@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/neutral/quiet-valley-river-night",
+  "kind": "background",
+  "name": "Quiet valley river night",
+  "description": "a quiet valley river at night, still water mirroring the stars and a faint white shimmer on the pale rocks",
+  "mood": "calm, silver",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "neutral",
+    "night",
+    "realistic"
+  ],
+  "notes": "The neutral homeland (realms/neutral-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

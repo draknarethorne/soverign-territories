@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/wind/grass-ridge-drovers-road",
+  "kind": "background",
+  "name": "Grass ridge drovers road",
+  "description": "an old drovers' road along a grass ridge with a low stone wall, the wind combing the grass and a wide sky of high cloud",
+  "mood": "open, breezy",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "wind",
+    "road",
+    "realistic"
+  ],
+  "notes": "The wind homeland (realms/wind-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

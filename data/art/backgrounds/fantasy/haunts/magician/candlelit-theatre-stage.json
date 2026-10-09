@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/magician/candlelit-theatre-stage",
+  "kind": "background",
+  "name": "Candlelit theatre stage",
+  "description": "an old theatre stage with a worn velvet curtain half drawn, footlights glowing and rows of empty red seats fading into the dark",
+  "mood": "dramatic, intimate",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "magician",
+    "realistic"
+  ],
+  "notes": "A place a magician spends her time, in realistic wording (use with an element realm)."
+}

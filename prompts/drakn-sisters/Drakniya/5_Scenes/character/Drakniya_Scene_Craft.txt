@@ -29,11 +29,11 @@ Living vines, leaves and petals run faintly up the bark and over her hand, brigh
 
 Eyes: natural deep forest-emerald irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
 
-Environment: terraced vineyards on a hillside at dusk, rows of vines heavy with grapes, a stone villa and a rose-coloured sky.
+Environment: a sacred grove around an enormous ancient yew, roots like walls, moss and ferns, soft green light and a ring of small offerings.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a grounded, cinematic old-growth forest photographed on location like a feature-film still - huge oaks and beeches, moss, fern and wildflower meadow, timber houses among the trees, shafts of green-gold light through leaves and soft mist; any magic is a faint glow in new growth; nothing from the modern world.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

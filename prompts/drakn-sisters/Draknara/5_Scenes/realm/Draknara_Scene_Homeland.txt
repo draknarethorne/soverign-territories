@@ -1,0 +1,39 @@
+=== Draknara Thorne · Scene (Outfit + Effects): Homeland (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknara Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a floor-length ceremonial spirit-walker robe of Deep Burnt Sienna woven cloth and soft hide, painted ochre spirals and turquoise beadwork on the chest and sleeves, wide fringed sleeves, a mantle of feathers and painted hide, an open front over a fitted Deep Burnt Sienna bodice and long slit skirt, a wide antique bronze belt hung with bone and bead talismans, a hem of long swinging fringe.
+
+Headwear: a feather crown with a antique bronze headband set with turquoise beads.
+
+Jewelry: turquoise bead necklaces with bone talismans, antique bronze cuffs, feather earrings.
+Legs & feet: soft Deep Burnt Sienna moccasin boots with turquoise beading.
+
+She stands on a high vantage with her homeland spread out behind her, one hand lifted slightly toward it, her face turned to the camera with quiet ownership; full figure visible, the land wide and clear behind her.
+
+Stone shards, dust and glowing crystals drift softly in the air around her, a trace of warm turquoise light that belongs to this country.
+
+Eyes: natural rich malachite-hazel irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Environment: the rim of a deep red-rock canyon at dawn, layered sandstone walls glowing orange, a sliver of river far below, dry juniper and sage in the foreground, long soft shadows.
+
+Setting: a grounded, cinematic red-rock canyonland photographed on location like a feature-film still - layered sandstone, dust and dry scrub, adobe and timber settlements, hard clear sun and long low shadows, warm orange-red earth tones; any magic is a faint glow deep in the stone; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

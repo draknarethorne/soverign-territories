@@ -1,113 +1,496 @@
 {
-  "_notes": "Scene recipes: what a hero is doing, driven by who she is. 'duty' and 'quiet' follow an angel's alignment rank (1 pristine .. 10 fallen); 'domain' follows the element (angels and sisters); 'craft' follows a sister's class; 'celebration' maps an element to a theme pack for a ceremony, holiday or battle scene. {mat} becomes the element's material (a drift of light, a curl of frost ...), {{MAGIC}} her magic colour. wearing: armor | gown | robe | regalia (her own pieces); holding: weapon | staff | none | a piece path | literal text; background: folders of backgrounds/fantasy/ (the element realm for 'realm'); realm: a realm piece for the scene (angels only). Add a recipe here and re-run scaffold_angel_set.py --character / scaffold_sister_character.py.",
+  "_notes": "Scene recipes: what a hero is doing, driven by who she is. 'duty' and 'quiet' follow an angel's alignment rank (1 pristine .. 10 fallen); 'domain' follows the element (angels and sisters); 'craft' follows a sister's class; 'celebration' maps an element to a theme pack for a ceremony, holiday or battle scene. {mat} becomes the element's material (a drift of light, a curl of frost ...), {{MAGIC}} her magic colour. wearing: armor | gown | robe | regalia (her own pieces); holding: weapon | staff | none | a piece path | literal text; background: folders of backgrounds/fantasy/ (the element realm for 'realm'); realm: a realm piece for the scene (angels only). Add a recipe here and re-run scaffold_angel_set.py --character / scaffold_sister_character.py. 'realm' is a series for a hero's homeland: each recipe asks for a background by role (establishing, road, settlement, weather, night) from backgrounds/fantasy/country/<element>/ and sets realms/<element>-lands; 'haunt' is the place her class spends time (backgrounds/fantasy/haunts/<class>/).",
   "duty": [
-    {"id": "vigil", "name": "Vigil", "ranks": [1, 3], "wearing": "armor", "holding": "weapon", "eyes": "partial-glow", "background": ["castle", "highlands", "mountains"],
-     "pose": "She stands upright on a high stone gatehouse at first light, her weapon planted point-down before her with both hands resting on it, wings folded behind her, her gaze steady and calm toward the camera; full figure visible.",
-     "effects": "The first light of dawn lies along her wings and {mat} drift in the cold air around her, {{MAGIC}} light on the edge of her weapon."},
-    {"id": "blessing", "name": "Blessing", "ranks": [4, 5], "wearing": "gown", "holding": "none", "eyes": "iris-kindling", "background": ["temple", "interiors", "library"],
-     "pose": "She stands with both palms open and lifted in front of her, her wings half spread, her head bowed slightly and then lifting her eyes to the camera with a gentle, grave warmth; full figure visible.",
-     "effects": "Soft {mat} gather above her open palms and fall away like light rain, {{MAGIC}} motes drifting down through the air."},
-    {"id": "judgment", "name": "Judgment", "ranks": [6, 7], "wearing": "armor", "holding": "weapon", "eyes": "partial-glow", "background": ["temple", "ruins", "castle"],
-     "pose": "She stands on broad stone steps with her weapon held low in one hand, its point near the ground, the other hand raised flat as if halting someone below, wings arched back, an unyielding, level gaze to the camera; full figure visible.",
-     "effects": "A hard, cold light falls from above onto the steps and {mat} gather heavily at her feet, {{MAGIC}} light along the edge of her weapon."},
-    {"id": "reckoning", "name": "Reckoning", "ranks": [8, 9], "wearing": "armor", "holding": "weapon", "eyes": "partial-glow", "background": ["battlefield", "ruins"], "realm": "data/art/realms/fantasy-gothic.json",
-     "pose": "She walks out of smoke and wreckage toward the camera, her weapon dragging a line through the ash behind her, her wings scorched and ragged at the edges, her jaw set and her eyes direct; full figure visible.",
-     "effects": "Smoke and drifting ash roll past her and {mat} gutter around her like a dying fire, {{MAGIC}} light low and dull."},
-    {"id": "exile", "name": "Exile", "ranks": [10, 10], "wearing": "gown", "holding": "none", "eyes": "natural", "background": ["ruins", "dungeons"], "realm": "data/art/realms/fantasy-gothic.json",
-     "pose": "She kneels alone among cold ash with her wings drooping and a few black feathers falling around her, one hand resting on the ground and her face lifted to the camera, weary and unrepentant; full figure visible.",
-     "effects": "Black feathers and fine ash drift down around her and {mat} lie dim and low along the ground, a faint {{MAGIC}} ember in her open hand."}
+    {
+      "id": "vigil",
+      "name": "Vigil",
+      "ranks": [
+        1,
+        3
+      ],
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "partial-glow",
+      "background": [
+        "castle",
+        "highlands",
+        "mountains"
+      ],
+      "pose": "She stands upright on a high stone gatehouse at first light, her weapon planted point-down before her with both hands resting on it, wings folded behind her, her gaze steady and calm toward the camera; full figure visible.",
+      "effects": "The first light of dawn lies along her wings and {mat} drift in the cold air around her, {{MAGIC}} light on the edge of her weapon."
+    },
+    {
+      "id": "blessing",
+      "name": "Blessing",
+      "ranks": [
+        4,
+        5
+      ],
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "background": [
+        "temple",
+        "interiors",
+        "library"
+      ],
+      "pose": "She stands with both palms open and lifted in front of her, her wings half spread, her head bowed slightly and then lifting her eyes to the camera with a gentle, grave warmth; full figure visible.",
+      "effects": "Soft {mat} gather above her open palms and fall away like light rain, {{MAGIC}} motes drifting down through the air."
+    },
+    {
+      "id": "judgment",
+      "name": "Judgment",
+      "ranks": [
+        6,
+        7
+      ],
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "partial-glow",
+      "background": [
+        "temple",
+        "ruins",
+        "castle"
+      ],
+      "pose": "She stands on broad stone steps with her weapon held low in one hand, its point near the ground, the other hand raised flat as if halting someone below, wings arched back, an unyielding, level gaze to the camera; full figure visible.",
+      "effects": "A hard, cold light falls from above onto the steps and {mat} gather heavily at her feet, {{MAGIC}} light along the edge of her weapon."
+    },
+    {
+      "id": "reckoning",
+      "name": "Reckoning",
+      "ranks": [
+        8,
+        9
+      ],
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "partial-glow",
+      "background": [
+        "battlefield",
+        "ruins"
+      ],
+      "realm": "data/art/realms/fantasy-gothic.json",
+      "pose": "She walks out of smoke and wreckage toward the camera, her weapon dragging a line through the ash behind her, her wings scorched and ragged at the edges, her jaw set and her eyes direct; full figure visible.",
+      "effects": "Smoke and drifting ash roll past her and {mat} gutter around her like a dying fire, {{MAGIC}} light low and dull."
+    },
+    {
+      "id": "exile",
+      "name": "Exile",
+      "ranks": [
+        10,
+        10
+      ],
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "natural",
+      "background": [
+        "ruins",
+        "dungeons"
+      ],
+      "realm": "data/art/realms/fantasy-gothic.json",
+      "pose": "She kneels alone among cold ash with her wings drooping and a few black feathers falling around her, one hand resting on the ground and her face lifted to the camera, weary and unrepentant; full figure visible.",
+      "effects": "Black feathers and fine ash drift down around her and {mat} lie dim and low along the ground, a faint {{MAGIC}} ember in her open hand."
+    }
   ],
   "quiet": [
-    {"id": "cloister", "name": "Cloister", "ranks": [1, 3], "wearing": "gown", "holding": "none", "eyes": "natural", "background": ["temple", "interiors"], "realm": "data/art/realms/fantasy-pastoral.json",
-     "pose": "She sits on a low stone bench in a sunlit cloister, her wings folded loosely, one hand resting in her lap and her face lifted toward the camera in quiet contentment; full figure visible.",
-     "effects": "Sunlight falls through the arches in long bars and {mat} drift in it."},
-    {"id": "garden", "name": "Garden", "ranks": [4, 5], "wearing": "gown", "holding": "none", "eyes": "natural", "background": ["farmland", "forests", "jungle"], "realm": "data/art/realms/fantasy-pastoral.json",
-     "pose": "She kneels in a walled garden with one hand touching the leaves of a plant, her wings lowered, glancing up at the camera with a small, unguarded smile; full figure visible.",
-     "effects": "{mat} lie faintly on the leaves and soil around her, with the softest {{MAGIC}} light."},
-    {"id": "study", "name": "Study", "ranks": [6, 7], "wearing": "robe", "holding": "data/art/wardrobe/props/tomes/spellbook.json", "eyes": "natural", "background": ["library", "interiors"],
-     "pose": "She sits at a heavy wooden desk by candlelight with a book open before her and a hand resting on the page, her wings drawn tight, looking up at the camera as if interrupted; full figure visible.",
-     "effects": "Candlelight and {mat} gather over the open page, {{MAGIC}} light faint on her fingers."},
-    {"id": "watch-fire", "name": "Watch Fire", "ranks": [8, 9], "wearing": "armor", "holding": "weapon", "eyes": "natural", "background": ["camp", "highlands", "mountains"], "realm": "data/art/realms/fantasy-gothic.json",
-     "pose": "She sits on a rock beside a low camp fire at night with her weapon across her knees and her wings wrapped around her shoulders, staring into the flames and then toward the camera; full figure visible.",
-     "effects": "Firelight flickers along her wings while {mat} curl in the heat above the fire, {{MAGIC}} light low in her eyes."},
-    {"id": "ruin", "name": "Ruin", "ranks": [10, 10], "wearing": "gown", "holding": "none", "eyes": "natural", "background": ["ruins", "dungeons"], "realm": "data/art/realms/fantasy-gothic.json",
-     "pose": "She sits alone on the broken steps of a ruined chapel, her wings hanging heavy, her chin resting on one hand as she looks toward the camera with a tired, knowing calm; full figure visible.",
-     "effects": "A few black feathers lie on the stone around her and {mat} hang faintly in the still air, {{MAGIC}} light almost gone."}
+    {
+      "id": "cloister",
+      "name": "Cloister",
+      "ranks": [
+        1,
+        3
+      ],
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "natural",
+      "background": [
+        "temple",
+        "interiors"
+      ],
+      "realm": "data/art/realms/fantasy-pastoral.json",
+      "pose": "She sits on a low stone bench in a sunlit cloister, her wings folded loosely, one hand resting in her lap and her face lifted toward the camera in quiet contentment; full figure visible.",
+      "effects": "Sunlight falls through the arches in long bars and {mat} drift in it."
+    },
+    {
+      "id": "garden",
+      "name": "Garden",
+      "ranks": [
+        4,
+        5
+      ],
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "natural",
+      "background": [
+        "farmland",
+        "forests",
+        "jungle"
+      ],
+      "realm": "data/art/realms/fantasy-pastoral.json",
+      "pose": "She kneels in a walled garden with one hand touching the leaves of a plant, her wings lowered, glancing up at the camera with a small, unguarded smile; full figure visible.",
+      "effects": "{mat} lie faintly on the leaves and soil around her, with the softest {{MAGIC}} light."
+    },
+    {
+      "id": "study",
+      "name": "Study",
+      "ranks": [
+        6,
+        7
+      ],
+      "wearing": "robe",
+      "holding": "data/art/wardrobe/props/tomes/spellbook.json",
+      "eyes": "natural",
+      "background": [
+        "library",
+        "interiors"
+      ],
+      "pose": "She sits at a heavy wooden desk by candlelight with a book open before her and a hand resting on the page, her wings drawn tight, looking up at the camera as if interrupted; full figure visible.",
+      "effects": "Candlelight and {mat} gather over the open page, {{MAGIC}} light faint on her fingers."
+    },
+    {
+      "id": "watch-fire",
+      "name": "Watch Fire",
+      "ranks": [
+        8,
+        9
+      ],
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "natural",
+      "background": [
+        "camp",
+        "highlands",
+        "mountains"
+      ],
+      "realm": "data/art/realms/fantasy-gothic.json",
+      "pose": "She sits on a rock beside a low camp fire at night with her weapon across her knees and her wings wrapped around her shoulders, staring into the flames and then toward the camera; full figure visible.",
+      "effects": "Firelight flickers along her wings while {mat} curl in the heat above the fire, {{MAGIC}} light low in her eyes."
+    },
+    {
+      "id": "ruin",
+      "name": "Ruin",
+      "ranks": [
+        10,
+        10
+      ],
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "natural",
+      "background": [
+        "ruins",
+        "dungeons"
+      ],
+      "realm": "data/art/realms/fantasy-gothic.json",
+      "pose": "She sits alone on the broken steps of a ruined chapel, her wings hanging heavy, her chin resting on one hand as she looks toward the camera with a tired, knowing calm; full figure visible.",
+      "effects": "A few black feathers lie on the stone around her and {mat} hang faintly in the still air, {{MAGIC}} light almost gone."
+    }
   ],
   "domain": [
-    {"element": "Light", "wearing": "armor", "holding": "none", "eyes": "full-glow",
-     "pose": "She stands on a high ledge with her arms swept wide and her head back, wings spread, as a burst of brightness pours out from her; her eyes find the camera; full figure visible.",
-     "effects": "{mat} fan out from her in every direction and {{MAGIC}} light washes across the ground and the air."},
-    {"element": "Water", "wearing": "gown", "holding": "none", "eyes": "iris-kindling",
-     "pose": "She wades knee-deep through shallow water with one hand trailing across the surface and the other raised, a low wave curling around her legs, glancing back to the camera; full figure visible.",
-     "effects": "{mat} rise in smooth ribbons around her arms and the water holds her reflection, {{MAGIC}} light moving under the surface."},
-    {"element": "Grass", "wearing": "gown", "holding": "none", "eyes": "iris-kindling",
-     "pose": "She crouches with one hand pressed into the soil while vines and flowers rise around it, the other hand lifting, looking up to the camera with calm delight; full figure visible.",
-     "effects": "{mat} unfurl around her hand and climb her arm, with {{MAGIC}} light at the tips of every new leaf."},
-    {"element": "Wind", "wearing": "gown", "holding": "none", "eyes": "iris-kindling",
-     "pose": "She stands on a cliff edge with her arms out, hair and clothing streaming in a strong wind, leaning into it with her eyes to the camera; full figure visible.",
-     "effects": "{mat} stream around her in long lines and {{MAGIC}} light traces the currents of the wind."},
-    {"element": "Earth", "wearing": "armor", "holding": "none", "eyes": "partial-glow",
-     "pose": "She stands braced with one hand pressed flat to a rock face and the other raised, loose stones lifting from the ground around her, her gaze steady on the camera; full figure visible.",
-     "effects": "{mat} rise from the ground in slow, heavy columns and {{MAGIC}} light runs through the cracks in the rock."},
-    {"element": "Lightning", "wearing": "armor", "holding": "none", "eyes": "full-glow",
-     "pose": "She stands with one arm raised toward a storm sky and the other hand open at her side, lightning arcing between them, her eyes bright and fixed on the camera; full figure visible.",
-     "effects": "{mat} crack in forks between her hands and the clouds, {{MAGIC}} light flashing across her armor and the wet ground."},
-    {"element": "Ice", "wearing": "gown", "holding": "none", "eyes": "iris-kindling",
-     "pose": "She stands in falling snow with one hand outstretched and frost spreading across the ground from her fingers, her breath misting as she looks to the camera; full figure visible.",
-     "effects": "{mat} spread outward in fine patterns and {{MAGIC}} light glints in every crystal."},
-    {"element": "Fire", "wearing": "armor", "holding": "none", "eyes": "full-glow",
-     "pose": "She stands before a forge-bright glow with a flame held in her open palm and the other hand raised, sparks flying around her, her face lit warm as she looks to the camera; full figure visible.",
-     "effects": "{mat} rise off her palm in a tall, steady flame, {{MAGIC}} light in the heat haze."},
-    {"element": "Poison", "wearing": "gown", "holding": "none", "eyes": "partial-glow",
-     "pose": "She stands among drifting green mist with a small vial held up in one hand and a curl of vapour trailing from the other, a measured smile as she looks to the camera; full figure visible.",
-     "effects": "{mat} coil slowly around her wrists and the vial, {{MAGIC}} light pale inside the mist."},
-    {"element": "Darkness", "wearing": "gown", "holding": "none", "eyes": "partial-glow",
-     "pose": "She stands at the edge of a deep shadow that pools around her feet and climbs her clothing, one hand lifted as the dark curls up it, her eyes calm and direct to the camera; full figure visible.",
-     "effects": "{mat} pool and roll along the ground and up her arm, a cold {{MAGIC}} light at the edges."},
-    {"element": "Neutral", "wearing": "gown", "holding": "none", "eyes": "natural",
-     "pose": "She stands in a still, open space with both hands held out level at her sides, palms up, feathers drifting slowly down around her as she looks quietly to the camera; full figure visible.",
-     "effects": "{mat} drift down in the still air and {{MAGIC}} light rests softly on every feather."}
+    {
+      "element": "Light",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "full-glow",
+      "pose": "She stands on a high ledge with her arms swept wide and her head back, wings spread, as a burst of brightness pours out from her; her eyes find the camera; full figure visible.",
+      "effects": "{mat} fan out from her in every direction and {{MAGIC}} light washes across the ground and the air."
+    },
+    {
+      "element": "Water",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "pose": "She wades knee-deep through shallow water with one hand trailing across the surface and the other raised, a low wave curling around her legs, glancing back to the camera; full figure visible.",
+      "effects": "{mat} rise in smooth ribbons around her arms and the water holds her reflection, {{MAGIC}} light moving under the surface."
+    },
+    {
+      "element": "Grass",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "pose": "She crouches with one hand pressed into the soil while vines and flowers rise around it, the other hand lifting, looking up to the camera with calm delight; full figure visible.",
+      "effects": "{mat} unfurl around her hand and climb her arm, with {{MAGIC}} light at the tips of every new leaf."
+    },
+    {
+      "element": "Wind",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "pose": "She stands on a cliff edge with her arms out, hair and clothing streaming in a strong wind, leaning into it with her eyes to the camera; full figure visible.",
+      "effects": "{mat} stream around her in long lines and {{MAGIC}} light traces the currents of the wind."
+    },
+    {
+      "element": "Earth",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "partial-glow",
+      "pose": "She stands braced with one hand pressed flat to a rock face and the other raised, loose stones lifting from the ground around her, her gaze steady on the camera; full figure visible.",
+      "effects": "{mat} rise from the ground in slow, heavy columns and {{MAGIC}} light runs through the cracks in the rock."
+    },
+    {
+      "element": "Lightning",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "full-glow",
+      "pose": "She stands with one arm raised toward a storm sky and the other hand open at her side, lightning arcing between them, her eyes bright and fixed on the camera; full figure visible.",
+      "effects": "{mat} crack in forks between her hands and the clouds, {{MAGIC}} light flashing across her armor and the wet ground."
+    },
+    {
+      "element": "Ice",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "pose": "She stands in falling snow with one hand outstretched and frost spreading across the ground from her fingers, her breath misting as she looks to the camera; full figure visible.",
+      "effects": "{mat} spread outward in fine patterns and {{MAGIC}} light glints in every crystal."
+    },
+    {
+      "element": "Fire",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "full-glow",
+      "pose": "She stands before a forge-bright glow with a flame held in her open palm and the other hand raised, sparks flying around her, her face lit warm as she looks to the camera; full figure visible.",
+      "effects": "{mat} rise off her palm in a tall, steady flame, {{MAGIC}} light in the heat haze."
+    },
+    {
+      "element": "Poison",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "partial-glow",
+      "pose": "She stands among drifting green mist with a small vial held up in one hand and a curl of vapour trailing from the other, a measured smile as she looks to the camera; full figure visible.",
+      "effects": "{mat} coil slowly around her wrists and the vial, {{MAGIC}} light pale inside the mist."
+    },
+    {
+      "element": "Darkness",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "partial-glow",
+      "pose": "She stands at the edge of a deep shadow that pools around her feet and climbs her clothing, one hand lifted as the dark curls up it, her eyes calm and direct to the camera; full figure visible.",
+      "effects": "{mat} pool and roll along the ground and up her arm, a cold {{MAGIC}} light at the edges."
+    },
+    {
+      "element": "Neutral",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "natural",
+      "pose": "She stands in a still, open space with both hands held out level at her sides, palms up, feathers drifting slowly down around her as she looks quietly to the camera; full figure visible.",
+      "effects": "{mat} drift down in the still air and {{MAGIC}} light rests softly on every feather."
+    }
   ],
   "craft": [
-    {"class": "Shaman", "wearing": "armor", "holding": "none", "eyes": "iris-kindling", "background": ["camp", "forests", "highlands"],
-     "pose": "She kneels at a small stone altar, shaking a bundle of bone and feather charms with one hand and drawing a line of ash across her other palm, her eyes to the camera; full figure visible.",
-     "effects": "Ash and {mat} lift from the altar in a thin spiral and {{MAGIC}} light gathers on the charms."},
-    {"class": "Shadow Knight", "wearing": "armor", "holding": "weapon", "eyes": "partial-glow", "background": ["castle", "ruins", "dungeons"],
-     "pose": "She stands in a low guard with her dark blade held two-handed at her side, shadow pooling at her boots, her gaze level and unafraid toward the camera; full figure visible.",
-     "effects": "{mat} pool around her feet and cling to the blade, {{MAGIC}} light cold along its edge."},
-    {"class": "Bard", "wearing": "gown", "holding": "data/art/wardrobe/props/instruments/lute.json", "eyes": "natural", "background": ["tavern", "evening", "interiors"],
-     "pose": "She stands mid-song with one hand on her instrument and the other raised, her mouth slightly open and her head tilted, playing straight to the camera; full figure visible.",
-     "effects": "{mat} drift out from the strings in slow ribbons and {{MAGIC}} light glints in the air with each note."},
-    {"class": "Necromancer", "wearing": "robe", "holding": "data/art/wardrobe/props/arcane/skull-and-candle.json", "eyes": "partial-glow", "background": ["dungeons", "ruins"],
-     "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera without fear; full figure visible.",
-     "effects": "Cold {mat} seep out of the tomb along the floor and {{MAGIC}} light gathers pale around her fingers."},
-    {"class": "Summoner", "wearing": "robe", "holding": "none", "eyes": "full-glow", "background": ["library", "temple", "interiors"],
-     "pose": "She stands inside a drawn ring of chalk glyphs, her hands pressed together and then parting as a small shape of light forms between them, her eyes bright and on the camera; full figure visible.",
-     "effects": "{mat} turn around the ring and gather between her palms, {{MAGIC}} light tracing the chalk lines."},
-    {"class": "Wizard", "wearing": "robe", "holding": "data/art/wardrobe/props/tomes/spellbook.json", "eyes": "iris-kindling", "background": ["library", "interiors", "temple"],
-     "pose": "She stands at a tall lectern turning a page of a large book with one hand while the other draws a rune in the air, glancing up to the camera; full figure visible.",
-     "effects": "The rune hangs glowing in the air where her finger passed and {mat} thread along the page, {{MAGIC}} light on her fingertips."},
-    {"class": "Enchanter", "wearing": "gown", "holding": "data/art/wardrobe/props/curios/hand-mirror.json", "eyes": "iris-kindling", "background": ["interiors", "evening", "library"],
-     "pose": "She holds a hand mirror up beside her face with one hand while the other weaves a thread of light that wraps around its glass, her eyes meeting the camera in the reflection; full figure visible.",
-     "effects": "{mat} wind around the mirror's frame and {{MAGIC}} light shimmers on its surface."},
-    {"class": "Cleric", "wearing": "armor", "holding": "none", "eyes": "iris-kindling", "background": ["temple", "battlefield", "ruins"],
-     "pose": "She kneels beside a sword planted in the ground, one hand resting on its hilt and her head bowed in prayer, then lifting her eyes to the camera; full figure visible.",
-     "effects": "Soft {mat} gather around the sword and her hand, {{MAGIC}} light rising from the blade like a quiet flame."},
-    {"class": "Druid", "wearing": "robe", "holding": "none", "eyes": "natural", "background": ["forests", "farmland", "jungle"],
-     "pose": "She stands barefoot in a forest clearing with one hand resting on a tree trunk and the other held out, palm up, with a few seeds in it, a small bird landing on her fingers as she looks to the camera; full figure visible.",
-     "effects": "{mat} run faintly up the bark and over her hand, {{MAGIC}} light in the new leaves."},
-    {"class": "Magician", "wearing": "gown", "holding": "none", "eyes": "full-glow", "background": ["evening", "tavern", "interiors"],
-     "pose": "She stands with a coin of flame walking across her knuckles and the other hand raised, a showwoman's smile, her eyes bright and straight to the camera; full figure visible.",
-     "effects": "{mat} flicker along her knuckles and drift off, {{MAGIC}} light on her cheek."},
-    {"class": "Alchemist", "wearing": "robe", "holding": "data/art/wardrobe/props/alchemy/mortar-and-pestle.json", "eyes": "natural", "background": ["interiors", "library", "tavern"],
-     "pose": "She stands at a workbench of glass vessels, pouring one glowing liquid into another with a steady hand, a fine cloud rising, glancing up at the camera over the glass; full figure visible.",
-     "effects": "{mat} rise from the flask in a thin cloud and {{MAGIC}} light glows through the glass."}
+    {
+      "class": "Shaman",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "background": [
+        "camp",
+        "forests",
+        "highlands"
+      ],
+      "pose": "She kneels at a small stone altar, shaking a bundle of bone and feather charms with one hand and drawing a line of ash across her other palm, her eyes to the camera; full figure visible.",
+      "effects": "Ash and {mat} lift from the altar in a thin spiral and {{MAGIC}} light gathers on the charms."
+    },
+    {
+      "class": "Shadow Knight",
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "partial-glow",
+      "background": [
+        "castle",
+        "ruins",
+        "dungeons"
+      ],
+      "pose": "She stands in a low guard with her dark blade held two-handed at her side, shadow pooling at her boots, her gaze level and unafraid toward the camera; full figure visible.",
+      "effects": "{mat} pool around her feet and cling to the blade, {{MAGIC}} light cold along its edge."
+    },
+    {
+      "class": "Bard",
+      "wearing": "gown",
+      "holding": "data/art/wardrobe/props/instruments/lute.json",
+      "eyes": "natural",
+      "background": [
+        "tavern",
+        "evening",
+        "interiors"
+      ],
+      "pose": "She stands mid-song with one hand on her instrument and the other raised, her mouth slightly open and her head tilted, playing straight to the camera; full figure visible.",
+      "effects": "{mat} drift out from the strings in slow ribbons and {{MAGIC}} light glints in the air with each note."
+    },
+    {
+      "class": "Necromancer",
+      "wearing": "robe",
+      "holding": "data/art/wardrobe/props/arcane/skull-and-candle.json",
+      "eyes": "partial-glow",
+      "background": [
+        "dungeons",
+        "ruins"
+      ],
+      "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera without fear; full figure visible.",
+      "effects": "Cold {mat} seep out of the tomb along the floor and {{MAGIC}} light gathers pale around her fingers."
+    },
+    {
+      "class": "Summoner",
+      "wearing": "robe",
+      "holding": "none",
+      "eyes": "full-glow",
+      "background": [
+        "library",
+        "temple",
+        "interiors"
+      ],
+      "pose": "She stands inside a drawn ring of chalk glyphs, her hands pressed together and then parting as a small shape of light forms between them, her eyes bright and on the camera; full figure visible.",
+      "effects": "{mat} turn around the ring and gather between her palms, {{MAGIC}} light tracing the chalk lines."
+    },
+    {
+      "class": "Wizard",
+      "wearing": "robe",
+      "holding": "data/art/wardrobe/props/tomes/spellbook.json",
+      "eyes": "iris-kindling",
+      "background": [
+        "library",
+        "interiors",
+        "temple"
+      ],
+      "pose": "She stands at a tall lectern turning a page of a large book with one hand while the other draws a rune in the air, glancing up to the camera; full figure visible.",
+      "effects": "The rune hangs glowing in the air where her finger passed and {mat} thread along the page, {{MAGIC}} light on her fingertips."
+    },
+    {
+      "class": "Enchanter",
+      "wearing": "gown",
+      "holding": "data/art/wardrobe/props/curios/hand-mirror.json",
+      "eyes": "iris-kindling",
+      "background": [
+        "interiors",
+        "evening",
+        "library"
+      ],
+      "pose": "She holds a hand mirror up beside her face with one hand while the other weaves a thread of light that wraps around its glass, her eyes meeting the camera in the reflection; full figure visible.",
+      "effects": "{mat} wind around the mirror's frame and {{MAGIC}} light shimmers on its surface."
+    },
+    {
+      "class": "Cleric",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "background": [
+        "temple",
+        "battlefield",
+        "ruins"
+      ],
+      "pose": "She kneels beside a sword planted in the ground, one hand resting on its hilt and her head bowed in prayer, then lifting her eyes to the camera; full figure visible.",
+      "effects": "Soft {mat} gather around the sword and her hand, {{MAGIC}} light rising from the blade like a quiet flame."
+    },
+    {
+      "class": "Druid",
+      "wearing": "robe",
+      "holding": "none",
+      "eyes": "natural",
+      "background": [
+        "forests",
+        "farmland",
+        "jungle"
+      ],
+      "pose": "She stands barefoot in a forest clearing with one hand resting on a tree trunk and the other held out, palm up, with a few seeds in it, a small bird landing on her fingers as she looks to the camera; full figure visible.",
+      "effects": "{mat} run faintly up the bark and over her hand, {{MAGIC}} light in the new leaves."
+    },
+    {
+      "class": "Magician",
+      "wearing": "gown",
+      "holding": "none",
+      "eyes": "full-glow",
+      "background": [
+        "evening",
+        "tavern",
+        "interiors"
+      ],
+      "pose": "She stands with a coin of flame walking across her knuckles and the other hand raised, a showwoman's smile, her eyes bright and straight to the camera; full figure visible.",
+      "effects": "{mat} flicker along her knuckles and drift off, {{MAGIC}} light on her cheek."
+    },
+    {
+      "class": "Alchemist",
+      "wearing": "robe",
+      "holding": "data/art/wardrobe/props/alchemy/mortar-and-pestle.json",
+      "eyes": "natural",
+      "background": [
+        "interiors",
+        "library",
+        "tavern"
+      ],
+      "pose": "She stands at a workbench of glass vessels, pouring one glowing liquid into another with a steady hand, a fine cloud rising, glancing up at the camera over the glass; full figure visible.",
+      "effects": "{mat} rise from the flask in a thin cloud and {{MAGIC}} light glows through the glass."
+    }
   ],
   "celebration": {
-    "Light": "coronation", "Neutral": "coronation", "Earth": "coronation",
-    "Darkness": "masquerade-ball", "Poison": "masquerade-ball", "Water": "masquerade-ball",
-    "Ice": "midwinter-festival", "Wind": "midwinter-festival", "Grass": "midwinter-festival",
-    "Fire": "siege-defense", "Lightning": "victory-feast"
+    "Light": "coronation",
+    "Neutral": "coronation",
+    "Earth": "coronation",
+    "Darkness": "masquerade-ball",
+    "Poison": "masquerade-ball",
+    "Water": "masquerade-ball",
+    "Ice": "midwinter-festival",
+    "Wind": "midwinter-festival",
+    "Grass": "midwinter-festival",
+    "Fire": "siege-defense",
+    "Lightning": "victory-feast"
+  },
+  "realm": [
+    {
+      "id": "homeland",
+      "name": "Homeland",
+      "role": "establishing",
+      "wearing": "robe",
+      "holding": "none",
+      "eyes": "natural",
+      "pose": "She stands on a high vantage with her homeland spread out behind her, one hand lifted slightly toward it, her face turned to the camera with quiet ownership; full figure visible, the land wide and clear behind her.",
+      "effects": "{mat} drift softly in the air around her, a trace of {{MAGIC}} light that belongs to this country."
+    },
+    {
+      "id": "wayfarer",
+      "name": "Wayfarer",
+      "role": "road",
+      "wearing": "armor",
+      "holding": "weapon",
+      "eyes": "natural",
+      "pose": "She walks along an old road through her homeland with a pack on one shoulder, glancing back at the camera mid-stride, dust and weather on her boots; full figure visible.",
+      "effects": "A little {mat} stirs at her heels and {{MAGIC}} light glints faintly along her gear."
+    },
+    {
+      "id": "settlement",
+      "name": "Settlement",
+      "role": "settlement",
+      "wearing": "robe",
+      "holding": "none",
+      "eyes": "natural",
+      "pose": "She stands at the edge of a small settlement in her homeland with one hand resting on a weathered post or wall, homes and people as soft shapes behind her, a calm, assessing look to the camera; full figure visible.",
+      "effects": "{mat} gather faintly around her hand where it touches the wall, {{MAGIC}} light very soft."
+    },
+    {
+      "id": "weather",
+      "name": "Weather",
+      "role": "weather",
+      "wearing": "armor",
+      "holding": "none",
+      "eyes": "partial-glow",
+      "pose": "She stands in the open as the weather of her homeland closes in, her clothing and hair lifting, one hand raised against it and her eyes narrowed and then turned to the camera; full figure visible.",
+      "effects": "{mat} are caught up in the weather and stream around her, {{MAGIC}} light flickering in it."
+    },
+    {
+      "id": "nightfall",
+      "name": "Nightfall",
+      "role": "night",
+      "wearing": "robe",
+      "holding": "none",
+      "eyes": "iris-kindling",
+      "pose": "She stands at the edge of her homeland as the last light goes, with {mat} gathered low in one open hand like a lantern that lights her face, looking to the camera; full figure visible.",
+      "effects": "{mat} light the land around her and {{MAGIC}} light glows warm against the dark."
+    }
+  ],
+  "haunt": {
+    "id": "haunt",
+    "name": "Haunt",
+    "wearing": "robe",
+    "holding": "none",
+    "eyes": "natural",
+    "pose": "She stands at ease in her usual place, one hand resting on something familiar, a small, knowing smile toward the camera; full figure visible.",
+    "effects": "{mat} gather faintly around her and {{MAGIC}} light stays low and warm."
   }
 }

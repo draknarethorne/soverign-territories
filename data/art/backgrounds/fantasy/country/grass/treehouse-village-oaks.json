@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/grass/treehouse-village-oaks",
+  "kind": "background",
+  "name": "Treehouse village oaks",
+  "description": "a village of timber houses and rope walkways built among giant oaks, lanterns and smoke, children's laughter as distant shapes",
+  "mood": "lived-in, leafy",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "grass",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The grass homeland (realms/grass-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

@@ -73,11 +73,29 @@ def build(slug, index):
                 "legs_feet": piece("footwear", "scene-battle-legs-feet" if armor else "scene-robe-legs-feet"), "holding": hold, "effects": library.cap(r["effects"].replace("{mat}", mat)),
                 "eye_effect": EYES + r["eyes"] + ".json" if r.get("eyes") else "", "background": background}
 
+    realm_piece = exists(f"data/art/realms/{element.lower()}-lands.json")
+    country = ROOT / "data/art/backgrounds/fantasy/country" / element.lower()
+
+    def country_pool(role):
+        return [p.relative_to(ROOT).as_posix() for p in sorted(country.glob("*.json")) if role in library.tags_of(p)]
+
     d = next(x for x in recipes["domain"] if x["element"] == element)
     card("domain", "Domain", build_comps(d, dawn), f"DOMAIN: her {element} element at work in her homeland; from data/art/_settings/scene-recipes.json.")
     c = next(x for x in recipes["craft"] if x["class"] == klass)
-    pool = [p for f in c["background"] for p in library.lib(f"backgrounds/fantasy/{f}", "female")]
-    card("craft", "Craft", build_comps(c, library.pick(pool, index * 5)), f"CRAFT: what a {klass} does; from data/art/_settings/scene-recipes.json.")
+    haunts = library.lib(f"backgrounds/fantasy/haunts/{klass.lower().replace(' ', '-')}", "female")
+    pool = haunts or [p for f in c["background"] for p in library.lib(f"backgrounds/fantasy/{f}", "female")]
+    craft = build_comps(c, library.pick(pool, index))
+    card("craft", "Craft", dict(craft, realm=realm_piece), f"CRAFT: what a {klass} does, in her class's own place and her element's realm; from data/art/_settings/scene-recipes.json.")
+
+    # the realm series: her homeland as a place, scene by scene, and her haunt
+    for r in recipes.get("realm", []):
+        pool = country_pool(r["role"])
+        if pool:
+            card(r["id"], r["name"], dict(build_comps(r, library.pick(pool, 0)), realm=realm_piece),
+                 f"REALM SERIES: {r['name']} in her {element.lower()} homeland ({r['role']}); realistic, from realms/{element.lower()}-lands and backgrounds/fantasy/country/{element.lower()}.")
+    if recipes.get("haunt") and haunts:
+        h = recipes["haunt"]
+        card(h["id"], h["name"], dict(build_comps(h, library.pick(haunts, index + 1)), realm=realm_piece), f"HAUNT: the place a {klass} spends her time, in her element's realm.")
 
     pack = recipes["celebration"].get(element)
     t = library.themes("female").get(pack) if pack else None

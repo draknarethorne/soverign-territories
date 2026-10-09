@@ -29,11 +29,11 @@ Crackling arcs of lightning and sparks turn around the ring and gather between h
 
 Eyes: fully glowing white-hot electric, irises and pupils blazing with luminous white-hot electric light and no visible pupil, a faint white-hot electric glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
-Environment: a soaring marble cathedral nave with tall arched windows pouring golden sunbeams through drifting incense, rows of carved pews and a glowing altar.
+Environment: a bare stone hall with a large chalk circle of glyphs drawn on the floor, candles at its edges and tall narrow windows letting in grey light.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a grounded, cinematic storm plain photographed on location like a feature-film still - wide flat farmland and low hills under towering thunderheads, stone watchtowers and wet roads, dramatic hard light breaking through rain, cool slate and gold tones; any magic is a faint charge in the air; nothing from the modern world.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

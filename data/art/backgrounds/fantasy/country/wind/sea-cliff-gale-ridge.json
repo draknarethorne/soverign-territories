@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/wind/sea-cliff-gale-ridge",
+  "kind": "background",
+  "name": "Sea cliff gale ridge",
+  "description": "a high grassy sea-cliff ridge in a strong gale, long grass streaming flat, cloud shadows racing across the water far below, bright broken light",
+  "mood": "exhilarating, open",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "wind",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The wind homeland (realms/wind-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

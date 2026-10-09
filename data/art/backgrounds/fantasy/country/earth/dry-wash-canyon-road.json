@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/earth/dry-wash-canyon-road",
+  "kind": "background",
+  "name": "Dry wash canyon road",
+  "description": "an old dirt road winding along a dry wash between red sandstone walls, wagon ruts in the dust, scrub oak and a hawk high above, clear afternoon light",
+  "mood": "open, dry",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "earth",
+    "road",
+    "realistic"
+  ],
+  "notes": "The earth homeland (realms/earth-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

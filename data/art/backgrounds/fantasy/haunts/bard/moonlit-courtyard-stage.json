@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/bard/moonlit-courtyard-stage",
+  "kind": "background",
+  "name": "Moonlit courtyard stage",
+  "description": "a stone courtyard with a low wooden stage lit by hanging lanterns, ivy on the walls and an audience as soft shapes in the dark",
+  "mood": "romantic, bright",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "bard",
+    "realistic"
+  ],
+  "notes": "A place a bard spends her time, in realistic wording (use with an element realm)."
+}

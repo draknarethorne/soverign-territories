@@ -1,0 +1,38 @@
+{
+  "id": "realms/earth-lands",
+  "kind": "realm",
+  "name": "Realm: red-rock canyonlands (realistic)",
+  "description": "Setting: a grounded, cinematic red-rock canyonland photographed on location like a feature-film still - layered sandstone, dust and dry scrub, adobe and timber settlements, hard clear sun and long low shadows, warm orange-red earth tones; any magic is a faint glow deep in the stone; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "earth"
+  ],
+  "notes": "The earth homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/earth/ (set components.realm)."
+}

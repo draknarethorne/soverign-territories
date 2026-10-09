@@ -12,10 +12,11 @@
     "legs_feet": "data/art/heroes/drakn-sisters/drakniya/footwear/scene-robe-legs-feet.json",
     "effects": "Living vines, leaves and petals run faintly up the bark and over her hand, {{MAGIC}} light in the new leaves.",
     "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
-    "background": "data/art/backgrounds/fantasy/farmland/vineyard-terraces-dusk.json"
+    "background": "data/art/backgrounds/fantasy/haunts/druid/sacred-grove-ancient-yew.json",
+    "realm": "data/art/realms/grass-lands.json"
   },
   "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakniya/5_Scenes/character/Drakniya_Scene_Craft.txt",
   "denoise": "~0.5-0.7",
-  "notes": "CRAFT: what a Druid does; from data/art/_settings/scene-recipes.json."
+  "notes": "CRAFT: what a Druid does, in her class's own place and her element's realm; from data/art/_settings/scene-recipes.json."
 }

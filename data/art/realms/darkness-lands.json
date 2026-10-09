@@ -1,0 +1,38 @@
+{
+  "id": "realms/darkness-lands",
+  "kind": "realm",
+  "name": "Realm: fogbound moors and crypts (realistic)",
+  "description": "Setting: a grounded, cinematic moorland of fog and old stone photographed on location like a feature-film still - standing stones, ruined abbeys, crypts and black lakes, candle and lantern light in thick mist, cold desaturated colour and deep shadows; any magic is a faint cold glow; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "darkness"
+  ],
+  "notes": "The darkness homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/darkness/ (set components.realm)."
+}

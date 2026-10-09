@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/necromancer/fogbound-graveyard-night",
+  "kind": "background",
+  "name": "Fogbound graveyard night",
+  "description": "an old graveyard at night in fog, leaning headstones and a rusted iron gate, a single raven on a cross and a thin moon",
+  "mood": "gothic, still",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "necromancer",
+    "realistic"
+  ],
+  "notes": "A place a necromancer spends her time, in realistic wording (use with an element realm)."
+}

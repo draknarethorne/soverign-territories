@@ -260,6 +260,7 @@ def build_character(slug):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--character", action="store_true", help="only the character scenes (Lineup, duty, quiet, domain, celebration) for every kit angel, or --slug")
+    ap.add_argument("--realm", action="store_true", help="opt in: the realm series (homeland, wayfarer, settlement, weather, nightfall in her element's realistic realm) for every kit angel, or --slug")
     ap.add_argument("--slug")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--alpha", action="store_true", help="only the two alpha test heroes (alpha/female, alpha/male)")
@@ -269,6 +270,17 @@ def main():
         library.coverage()
         return
     kits = {p.stem for p in (ART / "_kits" / GROUP).glob("*.json")}
+    if args.realm:
+        for slug in ([args.slug] if args.slug else sorted(kits)):
+            kit = load(f"data/art/_kits/angel-primes/{slug}.json")
+            ident = kit["identity"]
+            sex = "female" if "bust" in load(ident)["art"]["physique"] else "male"
+            division = pathlib.PurePosixPath(ident).parts[4]
+            wr = Writer(ART / "_sets" / GROUP / division / slug, GROUP)
+            out = lambda folder, name, d=division, h=kit["hero"]: f"prompts/{GROUP}/{d}/{h}/{folder}/{name}.txt"
+            library.Angel(slug, kit, ident, sex, division, wr, out).realm_series()
+            print(f"{slug}: made {wr.made} realm cards, {wr.skipped} already existed")
+        return
     if args.character:
         for slug in ([args.slug] if args.slug else sorted(kits)):
             build_character(slug)

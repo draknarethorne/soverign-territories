@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/wind/mountain-pass-cloud-sea",
+  "kind": "background",
+  "name": "Mountain pass cloud sea",
+  "description": "a high mountain pass above a sea of cloud, mist streaming through the gap and torn cloud racing past bare rock, cold clear light",
+  "mood": "dramatic, high",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "wind",
+    "weather",
+    "realistic"
+  ],
+  "notes": "The wind homeland (realms/wind-lands). Role 'weather' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

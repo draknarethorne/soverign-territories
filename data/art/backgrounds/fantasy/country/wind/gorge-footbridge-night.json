@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/wind/gorge-footbridge-night",
+  "kind": "background",
+  "name": "Gorge footbridge night",
+  "description": "a stone footbridge over a windy gorge at night under a moon veiled by fast cloud, a single lantern swinging at its centre",
+  "mood": "tense, moonlit",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "wind",
+    "night",
+    "realistic"
+  ],
+  "notes": "The wind homeland (realms/wind-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

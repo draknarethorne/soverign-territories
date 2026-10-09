@@ -1,0 +1,39 @@
+=== Drakniss Thorne · Scene (Outfit + Effects): Homeland (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniss Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish.
+Bust: very full, ample bust with a generous, softly rounded shape and a heavy natural swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring.
+Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a floor-length ceremonial sunrobe of ivory and Radiant Rose Gold silk with radiant rose gold sun embroidery, wide bell sleeves, a halo collar of radiant rose gold rays, an open front over a fitted ivory bodice and long slit skirt, a radiant rose gold sash with a sunburst clasp, a trailing hem of pleated gold-dusted gauze.
+
+Headwear: a slim radiant rose gold circlet with a small sunburst at the brow.
+
+Jewelry: a radiant rose gold sunburst pendant, drop earrings, radiant rose gold bangles.
+Legs & feet: soft ivory slippers embroidered in radiant rose gold.
+
+She stands on a high vantage with her homeland spread out behind her, one hand lifted slightly toward it, her face turned to the camera with quiet ownership; full figure visible, the land wide and clear behind her.
+
+Golden light and drifting motes drift softly in the air around her, a trace of warm golden-white light that belongs to this country.
+
+Eyes: natural radiant topaz-gold irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Environment: a white stone monastery on a hillside at sunrise, terraced fields below and the whole valley washed in warm gold light, a few thin clouds.
+
+Setting: a grounded, cinematic sunlit upland photographed on location like a feature-film still - white stone monasteries and colonnades, terraced hillsides, clear mountain air and bright warm sun with soft golden shadows; any magic is a faint warmth in the light; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

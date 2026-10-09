@@ -1,0 +1,38 @@
+{
+  "id": "realms/ice-lands",
+  "kind": "realm",
+  "name": "Realm: glacial highlands (realistic)",
+  "description": "Setting: a grounded, cinematic glacial highland photographed on location like a feature-film still - blue ice, snowfields, bare rock and dark pine, timber and stone mountain villages, thin cold light with long blue shadows and drifting breath-mist; any magic is a faint cold glow in the ice; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "ice"
+  ],
+  "notes": "The ice homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/ice/ (set components.realm)."
+}

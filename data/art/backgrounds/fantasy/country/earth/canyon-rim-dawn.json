@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/earth/canyon-rim-dawn",
+  "kind": "background",
+  "name": "Canyon rim dawn",
+  "description": "the rim of a deep red-rock canyon at dawn, layered sandstone walls glowing orange, a sliver of river far below, dry juniper and sage in the foreground, long soft shadows",
+  "mood": "vast, warm",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "earth",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The earth homeland (realms/earth-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

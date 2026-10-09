@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/necromancer/bone-crypt-candlelit",
+  "kind": "background",
+  "name": "Bone crypt candlelit",
+  "description": "a low stone crypt lined with shelves of old bones and skulls, rows of guttering candles and a heavy iron door standing open",
+  "mood": "cold, hushed",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "necromancer",
+    "realistic"
+  ],
+  "notes": "A place a necromancer spends her time, in realistic wording (use with an element realm)."
+}

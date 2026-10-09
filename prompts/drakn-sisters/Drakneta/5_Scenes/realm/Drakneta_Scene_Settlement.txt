@@ -1,0 +1,39 @@
+=== Drakneta Thorne · Scene (Outfit + Effects): Settlement (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakneta Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
+Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
+Skin: warm golden tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a floor-length ceremonial stormcaller robe of Electric Gold and arc-white silk with bright gold lightning-fork and copper-coil embroidery, wide sleeves of sheer white gauze, a high winged collar of bright gold, an open front over a fitted Electric Gold bodice and long slit skirt, a sash of woven gold wire with a spark clasp, a long hem edged in gold wire.
+
+Headwear: a slim bright gold circlet with a small forked crest.
+
+Jewelry: a bright gold coil pendant, spark earrings, bright gold cuffs.
+Legs & feet: soft arc-white slippers with bright gold stitching.
+
+She stands at the edge of a small settlement in her homeland with one hand resting on a weathered post or wall, homes and people as soft shapes behind her, a calm, assessing look to the camera; full figure visible.
+
+Crackling arcs of lightning and sparks gather faintly around her hand where it touches the wall, white-hot electric light very soft.
+
+Eyes: natural dark storm-charcoal, almost black irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Environment: a farm village of stone barns and a church spire under a darkening sky, laundry whipping in the first gusts and shutters being closed.
+
+Setting: a grounded, cinematic storm plain photographed on location like a feature-film still - wide flat farmland and low hills under towering thunderheads, stone watchtowers and wet roads, dramatic hard light breaking through rain, cool slate and gold tones; any magic is a faint charge in the air; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, amber eyes, topaz eyes, light brown eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

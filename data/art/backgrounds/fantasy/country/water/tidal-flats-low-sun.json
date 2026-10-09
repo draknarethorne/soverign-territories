@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/water/tidal-flats-low-sun",
+  "kind": "background",
+  "name": "Tidal flats low sun",
+  "description": "wide tidal flats at low tide under a low sun, shallow channels mirroring the sky, wading birds and a line of old timber stakes, soft gold light",
+  "mood": "calm, vast",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "water",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The water homeland (realms/water-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

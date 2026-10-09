@@ -46,6 +46,18 @@ def _character_scene_ids():
 SCENE_BUCKETS["character"] = _character_scene_ids()
 
 
+def _realm_scene_ids():
+    """The realm series (a hero's homeland, by role) and her haunt share 5_Scenes/realm/."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return []
+    recipes = json.loads(path.read_text(encoding="utf-8"))
+    return [r["id"] for r in recipes.get("realm", [])] + ([recipes["haunt"]["id"]] if recipes.get("haunt") else [])
+
+
+SCENE_BUCKETS["realm"] = _realm_scene_ids()
+
+
 # Real-world photo showcases group by mood; showcases on a studio backdrop group by kind (celestial armor, elemental magic, studio display, editorial).
 SHOWCASE_STUDIO = {"armor-stand", "runway-flair"}
 SHOWCASE_ELEMENTAL = {"elemental-casting", "elemental-dance", "spell-calling", "mirror-spirit", "ancestral-fire", "earthen-casting",

@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/fire/volcanic-ridge-lava-glow",
+  "kind": "background",
+  "name": "Volcanic ridge lava glow",
+  "description": "a black volcanic ridge at dusk with a glowing lava flow far below, drifting ash and heat shimmer, the sky smoky orange",
+  "mood": "grand, fierce",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "fire",
+    "establishing",
+    "realistic"
+  ],
+  "notes": "The fire homeland (realms/fire-lands). Role 'establishing' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

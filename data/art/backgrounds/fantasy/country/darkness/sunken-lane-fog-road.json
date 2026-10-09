@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/darkness/sunken-lane-fog-road",
+  "kind": "background",
+  "name": "Sunken lane fog road",
+  "description": "a sunken country lane between high earth banks and dead hedgerow in fog, a lantern glow far ahead and wet cobbles",
+  "mood": "narrow, cold",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "darkness",
+    "road",
+    "realistic"
+  ],
+  "notes": "The darkness homeland (realms/darkness-lands). Role 'road' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

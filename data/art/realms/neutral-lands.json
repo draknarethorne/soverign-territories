@@ -1,0 +1,38 @@
+{
+  "id": "realms/neutral-lands",
+  "kind": "realm",
+  "name": "Realm: meridian highlands (realistic)",
+  "description": "Setting: a grounded, cinematic high plateau of pale stone photographed on location like a feature-film still - clean white rock, short grass, gatehouses and quiet valleys under a wide clear sky, calm even light and soft neutral tones; any magic is a faint white shimmer; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "homeland",
+    "neutral"
+  ],
+  "notes": "The neutral homeland as a place: use it with the backgrounds in backgrounds/fantasy/country/neutral/ (set components.realm)."
+}

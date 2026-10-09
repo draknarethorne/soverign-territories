@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/lightning/standing-stones-lightning-night",
+  "kind": "background",
+  "name": "Standing stones lightning night",
+  "description": "a ring of standing stones on a hilltop at night, lightning lighting the clouds from within and the wet stones shining",
+  "mood": "ancient, charged",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "lightning",
+    "night",
+    "realistic"
+  ],
+  "notes": "The lightning homeland (realms/lightning-lands). Role 'night' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

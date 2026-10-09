@@ -1,0 +1,18 @@
+{
+  "id": "backgrounds/fantasy/country/lightning/farm-village-before-storm",
+  "kind": "background",
+  "name": "Farm village before storm",
+  "description": "a farm village of stone barns and a church spire under a darkening sky, laundry whipping in the first gusts and shutters being closed",
+  "mood": "tense, domestic",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "country",
+    "lightning",
+    "settlement",
+    "realistic"
+  ],
+  "notes": "The lightning homeland (realms/lightning-lands). Role 'settlement' is what a series scene asks for: establishing, road, settlement, weather or night."
+}

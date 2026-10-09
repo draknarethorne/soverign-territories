@@ -1,0 +1,17 @@
+{
+  "id": "backgrounds/fantasy/haunts/wizard/great-archive-reading-gallery",
+  "kind": "background",
+  "name": "Great archive reading gallery",
+  "description": "the reading gallery of a great archive, long wooden tables, green-shaded lamps and tall shelves with rolling ladders, dust in the light",
+  "mood": "quiet, vast",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "haunt",
+    "wizard",
+    "realistic"
+  ],
+  "notes": "A place a wizard spends her time, in realistic wording (use with an element realm)."
+}

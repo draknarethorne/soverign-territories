@@ -1,0 +1,22 @@
+{
+  "artId": "draknara-scene-settlement",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Settlement",
+  "components": {
+    "pose": "She stands at the edge of a small settlement in her homeland with one hand resting on a weathered post or wall, homes and people as soft shapes behind her, a calm, assessing look to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/signature-robe.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknara/footwear/scene-robe-legs-feet.json",
+    "effects": "Stone shards, dust and glowing crystals gather faintly around her hand where it touches the wall, {{MAGIC}} light very soft.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "background": "data/art/backgrounds/fantasy/country/earth/mesa-trading-post.json",
+    "realm": "data/art/realms/earth-lands.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/5_Scenes/realm/Draknara_Scene_Settlement.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "REALM SERIES: Settlement in her earth homeland (settlement); realistic, from realms/earth-lands and backgrounds/fantasy/country/earth."
+}

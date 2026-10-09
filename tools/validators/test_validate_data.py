@@ -200,6 +200,8 @@ CASES = [
      lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["duty"].pop(0)), "must cover alignment ranks 1 to 10"),
     ("celebration naming a theme pack that does not exist",
      lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["celebration"].update({"Fire": "no-such-pack"})), "which does not exist"),
+    ("realm series asking for a role no homeland background has",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["realm"][0].update({"role": "no-such-role"})), "has no background for the role"),
     ("scene file name no longer matching its artId",
      lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
@@ -246,7 +248,7 @@ QUICK = {"baseline is clean", "animation action pointing at a motion piece that 
          "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder",
          "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece",
          "set that includes a piece that does not exist", "set that includes a piece of another kind",
-         "scene recipes that skip an alignment rank", "celebration naming a theme pack that does not exist"}
+         "scene recipes that skip an alignment rank", "celebration naming a theme pack that does not exist", "realm series asking for a role no homeland background has"}
 
 
 def main():
