@@ -16,7 +16,7 @@
 | Haniya | haniya_image_7~ | Q c1 | - | - | - | - | 1 |
 | Nyxene | nyxene_image_7~ | Q c4 | - | - | - | - | 4 |
 | Ravaelle | ravaelle_image~ | Q c3 | - | - | - | - | 3 |
-| Remiah | remiah_shot_20~ | Q c4 | - | - | - | - | 4 |
+| Remiah | remiah_image_7~ | Q c4 | - | - | - | - | 4 |
 | Sammara | sammara_image_~ | Q c1 | - | - | - | - | 1 |
 | Sandalyn | sandalyn_image~ | Q c3 | Q c1 | - | - | - | 4 |
 | Seraphine | seraphine_imag~ | Q c1 | - | - | - | - | 1 |
@@ -97,7 +97,7 @@ From [2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md).
 
 **Phase 1: source photos and picks (you, existing tools)**
 
-- [ ] To decide with it: `likeness alike --sheet alike.png`, keep one angel per look-alike family, `likeness retire NAME --apply` for the others, then `likeness sort` to give the pool to people it matches or to new ...
+- [ ] To review (details and order in the report): the angel pairs (`pairs_final.png`), Drakneta and Drakniya (far from Drakness), Draknoxa (only 4 clear photos; 24 were another woman, now Ravaelle's face), the `review` ...
 - [ ] To pick: move or drop originals into each angel's folder, delete the ones that did not work out, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` and `inputs reset --hero HERO`. `inputs photos --dry-run` ...
 - [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
 - [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.

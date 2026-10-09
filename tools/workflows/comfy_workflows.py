@@ -1895,13 +1895,15 @@ def photo_folders(cfg, base=None):
 
 
 def photo_library(cfg, base=None):
-    """[(folder name, path)] of every scaled original: <folder>/gallery_<W>x<H>/*.png (the _org archive folders are not part of it)."""
+    """[(folder name, path)] of every scaled original: <folder>/gallery_<W>x<H>/*.png, for each library folder and each person grouped inside an artist's folder (the _org archive folders are not part of it)."""
     w, h = cfg.get("standardSize") or (944, 1104)
     out = []
-    for group, name, d in photo_folders(cfg, base):
-        g = d / f"gallery_{w}x{h}"
-        if g.is_dir():
-            out += [(name, f) for f in sorted(g.glob("*.png"))]
+    for root in photo_roots(cfg, base):
+        for d in sorted(p for p in root.iterdir() if p.is_dir()):
+            for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
+                g = folder / f"gallery_{w}x{h}"
+                if g.is_dir():
+                    out += [(name, f) for f in sorted(g.glob("*.png"))]
     return out
 
 

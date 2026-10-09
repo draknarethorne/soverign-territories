@@ -238,7 +238,7 @@ class LikenessTests(unittest.TestCase):
         self.add("Models", "Drakness", "dk", 5)
         self.add("Models", "Draknira", "dn", 5)
         out = self.run_tool("sisters")
-        self.assertIn("TOO DIFFERENT", out, "Draknira is nothing like the anchor in this made-up family")
+        self.assertIn("VASTLY UNLIKE", out, "Draknira is nothing like the anchor in this made-up family")
         blend("sim", "dn", 0.45)       # similar to her sister
         blend("twin", "dn", 0.95)      # the same as her sister
         blend("far", "dk", 0.0)        # unrelated

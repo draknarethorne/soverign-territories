@@ -462,7 +462,13 @@ def cmd_alike(args):
     print(f"{len(rows)} pair(s) at or above {args.min if args.min is not None else st['alike']} (median pair {np.median(v):.2f}, p95 {np.percentile(v, 95):.2f}):")
     for s, a, b in rows:
         ga, gb = a.split("/")[0], b.split("/")[0]
-        note = "  <- an angel and a sister: do not use both" if {ga, gb} == {"Angels", "Models"} else "  <- two angels" if ga == gb == "Angels" else ""
+        note = ""
+        if {ga, gb} == {"Angels", "Models"}:
+            angel, sister = (a, b) if ga == "Angels" else (b, a)
+            mine = PAIRS.get(angel.split("/")[-1].capitalize()) or PAIRS.get(angel.split("/")[-1])
+            note = "  <- her own sister: the intended pair" if mine and mine.lower() == sister.split("/")[-1].lower() else "  <- an angel who resembles a DIFFERENT sister"
+        elif ga == gb == "Angels":
+            note = "  <- two angels"
         print(f"  {s:.2f}  {a}  ~  {b}  (percentile {np.mean(v <= s):.0%}){note}")
     chosen_heroes = {h.lower() for h in cfg.get("photos", {})}
     thr = args.min if args.min is not None else st["alike"]
@@ -697,13 +703,17 @@ class Renders:
         return sorted(self.files[n] for n in names if n in self.files)
 
     def centroid(self, hero, kind):
-        """(centroid of the faces in that hero's renders, how many), or None."""
+        """(centroid of the faces in that hero's renders, how many), or None. Centred like the photos, so it can be set against them."""
+        got = self._load(hero, kind)
+        return got and (got[0], got[1])
+
+    def _load(self, hero, kind):
         key = (hero.lower(), kind)
         if key not in self.memo:
             files = self.sister_files(hero) if kind == "sister" else self.angel_files(hero)
             if len(files) > self.limit:
                 files = [files[i] for i in np.linspace(0, len(files) - 1, self.limit).astype(int)]
-            vs, added = [], False
+            raws, added = [], False
             for f in files:
                 sha = self.cache.sha(f)
                 if sha not in self.cache.emb:
@@ -711,14 +721,30 @@ class Renders:
                     added = True
                 d = self.cache.emb[sha]
                 if d.get("v") and d.get("px", 0) >= self.st["minFace"]:
-                    vs.append(nz(np.array(d["v"]) - self.space.mean))
+                    raws.append(np.array(d["v"]))
             if added:
                 self.cache.save()
             self.memo[key] = None
-            if vs:
-                _, core, c = core_scores(np.array(vs))
-                self.memo[key] = (c, len(core))
+            if raws:
+                vs = np.array([nz(r - self.space.mean) for r in raws])
+                _, core, c = core_scores(vs)
+                self.memo[key] = (c, len(core), np.array(raws), core)
         return self.memo[key]
+
+    def render_space(self, heroes, kind):
+        """{hero: unit vector} of each hero's renders centred on the average of ALL these renders. Renders share a look of their own (the model's), which centring on photos leaves in;
+        set renders against each other only in this space."""
+        got = {h: self._load(h, kind) for h in heroes}
+        got = {h: g for h, g in got.items() if g}
+        if not got:
+            return {}
+        mean = np.vstack([g[2] for g in got.values()]).mean(0)
+        out = {}
+        for h, g in got.items():
+            vs = nz(g[2] - mean)
+            _, core, c = core_scores(vs)
+            out[h] = c
+        return out
 
 
 def kind_of(key):
@@ -781,11 +807,12 @@ def cmd_clean(args):
             continue
         ps, scores, core, c = folder_core(space, key, ident)
         protected = {id(p) for p in ident["anchors"]}
+        out_thr = args.sister_out if key.startswith("Models/") else st["odd"]  # a sister's folder only loses photos that are clearly someone else
         mine, keep = [], 0
         for p, s in zip(ps, scores):
             if id(p) in protected or s >= args.keep:
                 keep += 1
-            elif s >= st["odd"] or p.faces > 1 or ident["conflict"]:
+            elif s >= out_thr or p.faces > 1 or ident["conflict"]:
                 mine.append(Move(p, key, f"borderline for {key} ({s:.2f})", s, bucket="review"))
             else:
                 rank = [r for r in space.ranking(p.vec, skip=p, own=key) if r[1] != key]
@@ -862,18 +889,26 @@ def cmd_sisters(args):
         ident = identity(space, cfg, st, rend, k)
         ps, scores, core, c = folder_core(space, k, ident)
         info[k] = {"vec": identity_vec(c, ident), "c": c, "r": ident["r"], "nr": ident["nr"], "n": len(ps), "core": len(core)}
-    low, high = st.get("pairLow", 0.15), st.get("pairHigh", 0.40)
-    print(f"{len(keys)} sisters; {args.anchor_sister} is the anchor. A sister should look like Drakness's sister: {low} to {high} against her, and not like another sister (below 0.45).")
-    print(f"  {'sister':10} {'photos':>6} {'renders~photos':>15} {'to ' + args.anchor_sister:>12}  nearest other sister          verdict")
+    rspace = rend.render_space([k.split("/")[1] for k in keys], "sister") if rend else {}
+    # where each sister falls, against Drakness, among ALL the people in the library (photo space): a sister near the bottom is vastly unlike her
+    others_all = [k for k in space.keys if k not in keys and len(space.by_key[k]) >= 3]
+    pool = np.array([float(nz(np.mean([p.vec for p in space.by_key[k]], axis=0)) @ info[anchor]["c"]) for k in others_all]) if others_all else np.zeros(1)
+
+    def pct(x):
+        return float(np.mean(pool <= x))
+    print(f"{len(keys)} sisters; {args.anchor_sister} is the anchor. Her sisters are different women, so the question is whether any is VASTLY unlike her: the bottom 10% of the library against her.")
+    print(f"  {'sister':10} {'photos':>6} {'renders~photos':>15} {'photos vs ' + args.anchor_sister[:4]:>15} {'(library %ile)':>14} {'renders vs ' + args.anchor_sister[:4]:>17}  nearest other sister (photos)   verdict")
     flagged, md = [], []
     for k in sorted(keys, key=lambda k: (k != anchor, k)):
         v, name = info[k], k.split("/")[1]
-        to_a = float(v["vec"] @ info[anchor]["vec"]) if k != anchor else 1.0
-        others = sorted(((float(v["vec"] @ info[o]["vec"]), o.split("/")[1]) for o in keys if o != k), reverse=True)
+        to_p = float(v["c"] @ info[anchor]["c"]) if k != anchor else 1.0
+        rk = name in rspace and args.anchor_sister in rspace
+        to_a = float(rspace[name] @ rspace[args.anchor_sister]) if rk and k != anchor else (1.0 if rk else None)
+        others = sorted(((float(v["c"] @ info[o]["c"]), o.split("/")[1]) for o in keys if o != k), reverse=True)
         rp = float(v["c"] @ v["r"]) if v["r"] is not None else None
         verdict = []
-        if k != anchor and to_a < low:
-            verdict.append("TOO DIFFERENT from " + args.anchor_sister)
+        if k != anchor and pct(to_p) <= 0.10:
+            verdict.append(f"VASTLY UNLIKE {args.anchor_sister} (bottom {pct(to_p):.0%} of the library)")
         if others and others[0][0] >= 0.45:
             verdict.append(f"TOO ALIKE {others[0][1]}")
         if rp is not None and rp < SAME_LOOK:
@@ -881,10 +916,13 @@ def cmd_sisters(args):
         if verdict and k != anchor:
             flagged.append(k)
         txt = ", ".join(verdict) or "ok"
-        print(f"  {name:10} {v['n']:6} {('%.2f' % rp) if rp is not None else '-':>15} {to_a:12.2f}  {others[0][1]:10} {others[0][0]:5.2f}   {txt}")
-        md.append((name, v["n"], rp, to_a, others[0][1], others[0][0], txt))
-    mean = np.mean([float(info[a]["vec"] @ info[b]["vec"]) for a, b in itertools.combinations(keys, 2)])
-    print(f"\nthe family as a whole: sisters score {mean:.2f} against each other on average (any two people in the library: about 0.01)")
+        print(f"  {name:10} {v['n']:6} {('%.2f' % rp) if rp is not None else '-':>15} {to_p:15.2f} {('%.0f%%' % (pct(to_p) * 100)) if k != anchor else '-':>14} {('%.2f' % to_a) if to_a is not None else '-':>17}  {others[0][1]:10} {others[0][0]:5.2f}            {txt}")
+        md.append((name, v["n"], rp, to_p, (pct(to_p) if k != anchor else None), to_a, f"{others[0][1]} {others[0][0]:.2f}", txt))
+    order = sorted(((float(info[k]["c"] @ info[anchor]["c"]), k.split("/")[1]) for k in keys if k != anchor), reverse=True)
+    print(f"\nclosest to {args.anchor_sister} by photos: " + ", ".join(f"{n} {s:.2f}" for s, n in order[:4]) + "; furthest: " + ", ".join(f"{n} {s:.2f}" for s, n in order[-3:]))
+    if rspace:
+        ro = sorted(((float(rspace[k.split('/')[1]] @ rspace[args.anchor_sister]), k.split("/")[1]) for k in keys if k != anchor and k.split("/")[1] in rspace), reverse=True)
+        print(f"closest to {args.anchor_sister} by renders (compared only with other renders): " + ", ".join(f"{n} {s:.2f}" for s, n in ro[:3]) + "; furthest: " + ", ".join(f"{n} {s:.2f}" for s, n in ro[-3:]))
     if flagged:
         print("\nif you would swap a flagged sister, these look most like Drakness's sister (similar, not the same) and are not another sister:")
         cands = [k for k in space.keys if not k.startswith("Models/") and len(space.by_key[k]) >= 3]
@@ -892,16 +930,16 @@ def cmd_sisters(args):
             rows = []
             for c in cands:
                 vc = nz(np.mean([p.vec for p in space.by_key[c]], axis=0))
-                s = float(vc @ info[anchor]["vec"])
-                worst = max(float(vc @ info[o]["vec"]) for o in keys if o != anchor and o != k)
+                s = float(vc @ info[anchor]["c"])
+                worst = max(float(vc @ info[o]["c"]) for o in keys if o != anchor and o != k)
                 rows.append((abs(s - 0.28) + 2 * max(0.0, worst - 0.30), s, worst, c))
             print(f"  instead of {k.split('/')[1]}: " + "; ".join(f"{c} ({s:.2f} to {args.anchor_sister}, {w:.2f} to another sister)" for _, s, w, c in sorted(rows)[:3]))
     if args.sheet:
         make_sheet([(k.split("/")[1], space.by_key[k][:8]) for k in sorted(keys, key=lambda k: (k != anchor, k))], args.sheet)
     if args.md:
-        lines = ["| Sister | Photos | Old renders match her photos | Against Drakness | Nearest other sister | Verdict |", "| --- | --- | --- | --- | --- | --- |"]
-        for name, n, rp, to_a, on, os_, txt in md:
-            lines.append(f"| {name} | {n} | {('%.2f' % rp) if rp is not None else '-'} | {to_a:.2f} | {on} {os_:.2f} | {txt} |")
+        lines = ["| Sister | Photos | Old renders match her photos | Photos vs Drakness | Library percentile | Renders vs Drakness | Nearest other sister | Verdict |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+        for name, n, rp, to_p, pc, to_a, near, txt in md:
+            lines.append(f"| {name} | {n} | {('%.2f' % rp) if rp is not None else '-'} | {to_p:.2f} | {('%.0f%%' % (pc * 100)) if pc is not None else '-'} | {('%.2f' % to_a) if to_a is not None else '-'} | {near} | {txt} |")
         pathlib.Path(args.md).write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(f"table written: {args.md}")
 
@@ -922,6 +960,28 @@ def best_photo(space, key, c):
     return best[1] if best else None
 
 
+def retire_empty(work, keys, keep=()):
+    """A person folder whose gallery and review folders are now empty is moved to <work>/_retired/<its path>, with its scaled copies and archives, so it stops showing up as a person. Nothing is deleted."""
+    done = []
+    for key in sorted(set(keys)):
+        if key in keep:
+            continue
+        d = pathlib.Path(work) / key
+        if not d.is_dir():
+            continue
+        left = [p for sub in ("gallery", "review") for p in originals.images(d / sub)]
+        nested = [s for s in d.iterdir() if s.is_dir() and (s / "gallery").is_dir()]
+        if left or nested:
+            continue
+        dest = pathlib.Path(work) / "_retired" / key
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if dest.exists():
+            dest = dest.with_name(dest.name + "_" + datetime.datetime.now().strftime("%H%M%S"))
+        shutil.move(str(d), str(dest))
+        done.append(key)
+    return done
+
+
 def cmd_pairs(args):
     """Pair every angel with the sister of her element from ALL the faces in the library (angels, prospects, grouped artists), similar to the sister but not the same, and not like anyone else."""
     cfg, st, work, cache, space = build(args)
@@ -935,12 +995,14 @@ def cmd_pairs(args):
         if k.startswith("Angels/"):
             angel_dir[k.split("/")[-1].lower()] = k
     ident_of = {}
+    cohesion = {}
 
     def vec_of(key):
         if key not in ident_of:
             ident = identity(space, cfg, st, rend, key)
             ps, scores, core, c = folder_core(space, key, ident)
             ident_of[key] = (identity_vec(c, ident), c)
+            cohesion[key] = float(np.mean(scores)) if len(ps) > 1 else 0.0
         return ident_of[key][0]
     sis_vec = {s: vec_of(k) for s, k in sis_key.items()}
     wanted = {s.lower() for s in (args.sister or [])}
@@ -948,6 +1010,10 @@ def cmd_pairs(args):
     fixed_keys = [angel_dir[a.lower()] for a in FIXED_ANGELS if a.lower() in angel_dir]
     kept = [angel_dir[a.lower()] for a in pairs if a not in slots and a.lower() in angel_dir]
     cands = [k for k in space.keys if not k.startswith("Models/") and k not in fixed_keys and k not in kept and len(space.by_key[k]) >= args.min_photos]
+    weak = [k for k in cands if (vec_of(k) is not None) and cohesion[k] < args.min_cohesion and k not in {angel_dir.get(a.lower()) for a in slots}]
+    if weak:
+        print(f"left out ({len(weak)}): too few photos that agree on one face (cohesion below {args.min_cohesion}): " + ", ".join(f"{k.split('/', 1)[1]} {cohesion[k]:.2f}" for k in weak[:12]))
+    cands = [k for k in cands if k not in weak]
     if not slots or not cands:
         sys.exit("nothing to pair: need sisters with photos and candidate people with enough photos")
     cv = np.array([vec_of(k) for k in cands])
@@ -972,7 +1038,7 @@ def cmd_pairs(args):
         return cost
 
     def clash(ci, cj):
-        return 4.0 * max(0.0, sim_cc[ci, cj] - 0.30)
+        return 4.0 * max(0.0, sim_cc[ci, cj] - 0.22)
 
     def fixed_clash(ci):
         return sum(4.0 * max(0.0, x - 0.30) for x in sim_cf[ci])
@@ -1006,7 +1072,7 @@ def cmd_pairs(args):
                 if t < best_total - 1e-9:
                     best_assign, best_total, improved = trial_assign, t, True
     print(f"pairing {len(slots)} angel(s) with their sisters from {len(cands)} people (target {target:.2f} against the sister; {low} to {high} is the band); {len(fixed_keys)} fixed ({', '.join(FIXED_ANGELS)}), {len(kept)} kept as they are")
-    print(f"  {'angel':10} {'sister':10}  {'now':32} {'to sister':>9}   {'recommended':34} {'to sister':>9}  clashes with")
+    print(f"  {'angel':10} {'sister':10}  {'now':32} {'to sister':>9}   {'recommended':34} {'to sister':>9}  clashes with / note")
     result, md = [], []
     for slot in slots:
         sname = pairs[slot]
@@ -1017,12 +1083,21 @@ def cmd_pairs(args):
         rec = cands[ci]
         s = float(sim_cs[ci, j])
         near = sorted(((float(sim_cc[ci, ca[cands[cj]]]), cands[cj].split("/", 1)[1]) for slot2, cj in best_assign.items() if slot2 != slot), reverse=True)[:1]
-        clash_txt = f"{near[0][1]} {near[0][0]:.2f}" if near else ""
-        mark = "(keep)" if rec == cur else ""
-        print(f"  {slot:10} {sname:10}  {cur or '(no folder)':32} {('%.2f' % cur_s) if cur_s is not None else '-':>9}   {rec + ' ' + mark:34} {s:9.2f}  {clash_txt}")
+        note = f"{near[0][1]} {near[0][0]:.2f}" if near else ""
         alts = sorted(((pair_cost(c2, slot) + fixed_clash(c2), c2) for c2 in range(len(cands)) if c2 != ci))[:3]
-        result.append({"slot": slot, "sister": sname, "now": cur, "now_s": cur_s, "rec": rec, "rec_s": s, "alts": [cands[c2] for _, c2 in alts]})
-        md.append((slot, sname, cur or "-", cur_s, rec, s, ", ".join(c.split("/", 1)[1] for c in [cands[c2] for _, c2 in alts])))
+        alt_names = [cands[c2] for _, c2 in alts]
+        # a replacement only counts when it is inside the band; otherwise the angel already in the folder stays and the slot waits for better candidates
+        # (unless she is a near twin of a fixed angel such as Angelica: then even a candidate below the band is better)
+        twin = max((float(vec_of(cur) @ fv) for fv in fixed_vec), default=-1.0) if cur and fixed_vec else -1.0
+        if cur and rec != cur and s < low and (cur_s is None or cur_s <= high) and twin < args.twin:
+            note = f"no candidate in the band yet (best {rec.split('/', 1)[1]} {s:.2f}); kept. {note}"
+            rec, s = cur, cur_s if cur_s is not None else 0.0
+        elif cur and rec != cur and twin >= args.twin:
+            note = f"{cur.split('/', 1)[1]} is a near twin of a fixed angel ({twin:.2f}); replaced by the best available even though it is below the band. {note}"
+        mark = "(keep)" if rec == cur else ""
+        print(f"  {slot:10} {sname:10}  {cur or '(no folder)':32} {('%.2f' % cur_s) if cur_s is not None else '-':>9}   {rec + ' ' + mark:34} {s:9.2f}  {note}")
+        result.append({"slot": slot, "sister": sname, "now": cur, "now_s": cur_s, "rec": rec, "rec_s": s, "alts": alt_names, "note": note})
+        md.append((slot, sname, cur or "-", cur_s, rec, s, ", ".join(c.split("/", 1)[1] for c in alt_names), note))
     if args.sheet:
         rows = []
         for r in result:
@@ -1030,9 +1105,9 @@ def cmd_pairs(args):
             rows.append((f"-> {r['slot']}: {r['rec'].split('/', 1)[1]}", space.by_key[r["rec"]][:6]))
         make_sheet(rows, args.sheet)
     if args.md:
-        lines = ["| Angel | Sister | Folder now | Now vs sister | Recommended | Vs sister | Alternatives |", "| --- | --- | --- | --- | --- | --- | --- |"]
-        for slot, sname, cur, cs, rec, s, alts in md:
-            lines.append(f"| {slot} | {sname} | {cur} | {('%.2f' % cs) if cs is not None else '-'} | {rec} | {s:.2f} | {alts} |")
+        lines = ["| Angel | Sister | Folder now | Now vs sister | Recommended | Vs sister | Alternatives | Note |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+        for slot, sname, cur, cs, rec, s, alts, note in md:
+            lines.append(f"| {slot} | {sname} | {cur} | {('%.2f' % cs) if cs is not None else '-'} | {rec} | {s:.2f} | {alts} | {note} |")
         pathlib.Path(args.md).write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(f"table written: {args.md}")
     if not args.apply:
@@ -1047,7 +1122,7 @@ def cmd_pairs(args):
         to = dir_of[slot.lower()]
         ident = identity(space, cfg, st, rend, rec)
         ps, scores, core, c = folder_core(space, rec, ident)
-        bp = best_photo(space, rec, c)
+        bp = best_photo(space, rec, c) if rec != r["now"] else None  # a kept angel keeps the photo you chose
         pick[slot] = bp.sha if bp else None
         if rec != to:
             moves += [Move(p, to, f"{rec.split('/', 1)[1]} is the new {slot} (paired with {r['sister']}, {r['rec_s']:.2f})") for p in space.by_key[rec]]
@@ -1057,12 +1132,17 @@ def cmd_pairs(args):
             moves += [Move(p, cur, f"{slot}'s earlier photos, set aside for the new {slot}", bucket="review") for p in space.by_key[cur]]
     n = execute(moves, work, True, cache)
     print(f"\n{n} photo(s) moved")
+    gone = retire_empty(work, [m.photo.key for m in moves], keep={cur for cur in angel_dir.values()} | {k for k in space.keys if k.startswith(("Models/", "Angels/"))})
+    if gone:
+        print("emptied folders moved to _retired: " + ", ".join(gone))
     after_moves(args, n > 0)
     # set the recommended photo and point the angel's workflows at it
     cfg2 = cw.load_cfg()
     cache2 = Cache(args.cache or DATA / "likeness_cache.json")
     renames = {}
     for slot, sha in pick.items():
+        if not sha:
+            continue  # a kept angel keeps her photo
         folder = work / dir_of[slot.lower()] / "gallery"
         found = next((p for p in originals.images(folder) if cache2.sha(p) == sha), None) if sha else None
         hero = next((h for h in cfg2.get("photos", {}) if h.lower() == slot.lower()), None)
@@ -1113,6 +1193,7 @@ def main(argv=None, embedder=None):
     s.add_argument("names", nargs="*", help="folders to clean (default: every person folder; with --group, that kind)")
     s.add_argument("--group", help="Angels, Models or Prospects")
     s.add_argument("--keep", type=float, default=0.25, help="photos scoring at least this against the folder's core are kept (default 0.25); between the 'odd' score and this they go to the folder's review folder")
+    s.add_argument("--sister-out", type=float, default=0.05, help="in a sister's folder only photos scoring below this leave it (default 0.05); the rest of the doubtful ones go to her review folder")
     s.add_argument("--anchor", action="append", help="HERO=part of a photo's name that is certainly her (repeatable); the chosen photo and `likeness.anchors` in workspaces.json are used too")
     s.add_argument("--no-renders", action="store_true", help="ignore the ComfyUI renders when deciding what she looks like")
     s = add("group", cmd_group, apply=True, sheet=True)
@@ -1126,7 +1207,9 @@ def main(argv=None, embedder=None):
     s.add_argument("--sister", action="append", help="only (re-)pair the angel of this sister (repeatable); the other angels stay as they are")
     s.add_argument("--target", type=float, default=0.28, help="how alike an angel should be to her sister (similar, not the same)")
     s.add_argument("--keep-bonus", type=float, default=0.06, help="how much better a replacement must be than the angel already in the folder")
-    s.add_argument("--min-photos", type=int, default=3, help="a person needs this many photos to be considered")
+    s.add_argument("--min-photos", type=int, default=4, help="a person needs this many photos to be considered")
+    s.add_argument("--min-cohesion", type=float, default=0.45, help="and their photos must agree on one face this well (average score against the person's own core)")
+    s.add_argument("--twin", type=float, default=0.45, help="an angel this alike a fixed angel (Angelica) is replaced even when no candidate is in the band")
     s.add_argument("--trials", type=int, default=1500)
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
