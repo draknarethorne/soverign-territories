@@ -9,9 +9,9 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: dark brown hair with faint copper lights.
+Eyes: deep brown irises with faint amber striations and a dark iron limbal ring.
+Skin: deep warm brown complexion with a golden undertone, evenly toned.
 
 Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
@@ -25,7 +25,7 @@ A candid high-fashion editorial shot, confident power stance. Light breeze. stan
 
 A drift of stone shards, dust and glowing crystals circles him, amber gold light glinting within it.
 
-Eyes: irises softly aglow with amber gold light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle amber gold catchlight.
+Eyes: irises softly aglow with amber gold light, brightest near the pupil and fading to the natural deep brown irises at the rim, iris detail still visible, a gentle amber gold catchlight.
 
 Environment: a vast stone coronation hall at dawn, long banners hanging between tall pillars, a red carpet leading to a raised dais and a throne, light pouring through high windows.
 
@@ -34,4 +34,4 @@ Setting: a grounded, cinematic fantasy world photographed on location like a fea
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

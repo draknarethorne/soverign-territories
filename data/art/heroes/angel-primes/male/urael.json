@@ -21,13 +21,31 @@
       "metal": "blackened gold",
       "magicColor": "molten orange",
       "gemColor": "garnet",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/wrapped-ponytail.json"
+      "eyeColor": "Molten orange-amber irises with faint ember striations and a dark charcoal limbal ring",
+      "eyeColorGlamour": "Molten orange-amber irises with faint ember striations and a dark charcoal limbal ring",
+      "hairColor": "Dark auburn-black hair with ember-red lights",
+      "skinTone": "Deep bronzed warm complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/wrapped-ponytail.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Heavily muscled, broad warrior build",

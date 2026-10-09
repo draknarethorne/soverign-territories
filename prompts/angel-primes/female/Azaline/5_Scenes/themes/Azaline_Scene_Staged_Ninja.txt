@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale steel-blue irises with radiating frost-white striations and a deep navy limbal ring.
+Skin: fair neutral-cool complexion with a faint blue-pink undertone, evenly toned and smooth.
 
 A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a fierce, focused gaze, chin raised. one hand resting on the knee, the other draped gracefully at her side.
 
 A drift of swirling frost, snowflakes and ice crystals circles her, pale ice blue light glinting within it.
 
-Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
+Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural pale steel-blue irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
 
 Environment: a high-fantasy rooftop scene of tiered pagoda roofs under a full moon, paper lanterns far below, drifting mist and a silhouette of distant hills.
 

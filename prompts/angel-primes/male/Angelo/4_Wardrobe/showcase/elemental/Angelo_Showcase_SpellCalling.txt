@@ -9,9 +9,9 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged, with natural shine.
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: light ash-brown hair with soft champagne lights.
+Eyes: clear steel-grey irises with faint soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion, evenly toned.
 
 Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
@@ -27,11 +27,11 @@ Holding a tall halberd with an axe blade, spear tip and hook of gold on a Soft P
 
 Swirling soft white light, drifting pale feathers and motes rise and circle him, gold light streaming from the weapon in his hand.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural clear steel-grey irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Studio backdrop: a warm dark seamless studio backdrop filled with drifting dust and glowing ember motes, with a soft golden lens flare behind one shoulder.
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, environment, landscape, room, furniture, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, tanned skin, bronze skin, sun-weathered skin, ruddy skin, environment, landscape, room, furniture, text, wording, watermark, logo.

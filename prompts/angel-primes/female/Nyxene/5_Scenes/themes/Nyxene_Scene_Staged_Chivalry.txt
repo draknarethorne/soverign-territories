@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep garnet-red irises with radiating dark-violet striations and a black limbal ring.
+Skin: pale cool alabaster complexion, evenly toned and flawless.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serene, knowing smile, eyes calm and bright. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 A drift of drifting shadow, smoke and pale starlight circles her, dark violet light glinting within it.
 
-Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle dark violet catchlight.
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural deep garnet-red irises at the rim, iris detail still visible, a gentle dark violet catchlight.
 
 Environment: a high-fantasy tournament field with striped silk pavilions, rows of fluttering heraldic banners, a wooden tilt barrier, cheering stands and a golden afternoon sky over a castle on a hill.
 

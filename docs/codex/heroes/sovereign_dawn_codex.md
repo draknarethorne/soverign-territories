@@ -1,12 +1,14 @@
-# Hero & Dragon Roster — Ideation Codex
+# Sovereign Dawn Roster: Heroes and Elder Dragons (SD-001 to SD-030)
 
-> **Status:** Ideation only — not yet canonical. To be reconciled into the main Codex
-> ([`docs/game-bible.md`](../../game-bible.md)), card data (`data/cards/`), and schemas
-> (`data/schemas/`) on this branch (`ideation/hero-roster-10-elements`).
+> **What this is:** the readable roster of the first Sovereign Dawn heroes and Elder Dragons, with the decisions behind them. It started as ideation and became this document.
+> It is **not the codex itself**: the card data is `data/cards/sovereign-dawn/` (JSON, validated by `data/schemas/codex-schema.json`), and where the two differ the JSON wins.
+> The wider rules are in [`docs/game-bible.md`](../../game-bible.md) and the design docs.
 >
-> **Element expansion:** This roster moves the game from the original element set to a
-> **10-element** model: **Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind,
-> Poison.**
+> **Card series:** `SD-###` is the Sovereign Dawn series (this document). The Angel Primes are a separate series, `AP-###`, in
+> [`angel_primes_codex.md`](angel_primes_codex.md) (build rationale in [`angel_primes_physique.md`](angel_primes_physique.md)).
+>
+> **Element expansion:** this roster moves the game from the original element set to a **10-element** model: **Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind,
+> Poison** (plus Neutral for element-agnostic cards).
 
 ## Roster shape
 
@@ -18,60 +20,58 @@
   surface in **"combined" cards** and appear in the **background of certain female-hero
   series**.
 
-**Art tracking is retired.** The `Head Shot` / `A Pose` / `Game Pose` / `Art Progress` columns below were a manual
-checklist and are no longer maintained (all show `FALSE`/`0%` although art identities and prompts exist for every card).
-The source of truth is `data/art/` plus `prompts/`; the validator reports coverage.
+**Art status is not tracked in this document.** Which images exist is shown by `data/art/` and `prompts/` (the validator reports coverage), and which key images have been pulled back into the repo or set as a workspace default is shown by `python tools/workflows/comfy_workflows.py inputs --status` (see [workflows/README.md](../../../workflows/README.md)).
 
 ---
 
 ## Female Heroes — The Drakn Line
 
-| Card ID | Card Name        | Rarity           | Element   | Archetype           | Class       | Creature Type | Race      | Sex    | Pet Companion | Head Shot | A Pose | Game Pose | Art Progress |
-| ------- | ---------------- | ---------------- | --------- | ------------------- | ----------- | ------------- | --------- | ------ | ------------- | --------- | ------ | --------- | ------------ |
-| ST-001  | Drakness Thorne  | 7 - Transcendent | Darkness  | Summoner / Spawner  | Necromancer | Humanoid      | Dark Elf  | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-002  | Draknora Thorne  | 7 - Transcendent | Fire      | Caster / Magic      | Magician    | Humanoid      | Human     | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-003  | Drakniya Thorne  | 7 - Transcendent | Grass     | Support / Healer    | Druid       | Humanoid      | Wood Elf  | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-004  | Draknira Thorne  | 7 - Transcendent | Ice       | Caster / Magic      | Wizard      | Humanoid      | High Elf  | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-005  | Draknisa Thorne  | 7 - Transcendent | Water     | Control / Disruptor | Enchanter   | Humanoid      | Human     | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-006  | Drakniss Thorne  | 7 - Transcendent | Light     | Support / Healer    | Cleric      | Humanoid      | Human     | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-007  | Draknara Thorne  | 7 - Transcendent | Earth     | Specialist / Hybrid | Shaman      | Humanoid      | Barbarian | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-008  | Drakneta Thorne  | 7 - Transcendent | Lightning | Summoner / Spawner  | Summoner    | Humanoid      | Celestial | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-009  | Draknava Thorne  | 7 - Transcendent | Wind      | Support / Healer    | Bard        | Humanoid      | Wood Elf  | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-010  | Draknoxa Thorne  | 7 - Transcendent | Poison    | Control / Disruptor | Alchemist   | Humanoid      | Dark Elf  | Female | Dragon        | FALSE     | FALSE  | FALSE     | 0%           |
+| Card ID | Card Name        | Rarity           | Element   | Archetype           | Class       | Creature Type | Race      | Sex    | Pet Companion |
+| ------- | ---------------- | ---------------- | --------- | ------------------- | ----------- | ------------- | --------- | ------ | ------------- |
+| SD-001  | Drakness Thorne  | 7 - Transcendent | Darkness  | Summoner / Spawner  | Necromancer | Humanoid      | Dark Elf  | Female | Dragon        |
+| SD-002  | Draknora Thorne  | 7 - Transcendent | Fire      | Caster / Magic      | Magician    | Humanoid      | Human     | Female | Dragon        |
+| SD-003  | Drakniya Thorne  | 7 - Transcendent | Grass     | Support / Healer    | Druid       | Humanoid      | Wood Elf  | Female | Dragon        |
+| SD-004  | Draknira Thorne  | 7 - Transcendent | Ice       | Caster / Magic      | Wizard      | Humanoid      | High Elf  | Female | Dragon        |
+| SD-005  | Draknisa Thorne  | 7 - Transcendent | Water     | Control / Disruptor | Enchanter   | Humanoid      | Human     | Female | Dragon        |
+| SD-006  | Drakniss Thorne  | 7 - Transcendent | Light     | Support / Healer    | Cleric      | Humanoid      | Human     | Female | Dragon        |
+| SD-007  | Draknara Thorne  | 7 - Transcendent | Earth     | Specialist / Hybrid | Shaman      | Humanoid      | Barbarian | Female | Dragon        |
+| SD-008  | Drakneta Thorne  | 7 - Transcendent | Lightning | Summoner / Spawner  | Summoner    | Humanoid      | Celestial | Female | Dragon        |
+| SD-009  | Draknava Thorne  | 7 - Transcendent | Wind      | Support / Healer    | Bard        | Humanoid      | Wood Elf  | Female | Dragon        |
+| SD-010  | Draknoxa Thorne  | 7 - Transcendent | Poison    | Control / Disruptor | Alchemist   | Humanoid      | Dark Elf  | Female | Dragon        |
 
 ---
 
 ## Male Heroes
 
-| Card ID | Card Name            | Rarity     | Element   | Archetype            | Class         | Creature Type | Race      | Sex  | Pet Companion | Head Shot | A Pose | Game Pose | Art Progress |
-| ------- | -------------------- | ---------- | --------- | -------------------- | ------------- | ------------- | --------- | ---- | ------------- | --------- | ------ | --------- | ------------ |
-| ST-011  | Draknare Thorne      | 6 - Mythic | Darkness  | Defense / Tank       | Shadow Knight | Humanoid      | Human     | Male | Reaper        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-012  | Ignis Emberstride    | 6 - Mythic | Fire      | Melee / Striker      | Warrior       | Humanoid      | Human     | Male | Elemental     | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-013  | Nizaras Featherstone | 6 - Mythic | Grass     | Specialist / Hybrid  | Rogue         | Humanoid      | Wood Elf  | Male | Treant        | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-014  | Lyran Frostfall      | 6 - Mythic | Ice       | Defense / Tank       | Knight        | Humanoid      | High Elf  | Male | Frost Owl     | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-015  | Corin Tidewalker     | 6 - Mythic | Water     | Specialist / Hybrid  | Beast Lord    | Humanoid      | Human     | Male | Shark         | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-016  | Hauk Hammerfell      | 6 - Mythic | Light     | Defense / Tank       | Paladin       | Humanoid      | Human     | Male | Angel         | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-017  | Torvald Stonebreaker | 6 - Mythic | Earth     | Melee / Striker      | Berserker     | Humanoid      | Barbarian | Male | Dire Bear     | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-018  | Dorian Stormstrike   | 6 - Mythic | Lightning | Melee / Striker      | Monk          | Humanoid      | Celestial | Male | Gryphon       | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-019  | Zephyr Galeheart     | 6 - Mythic | Wind      | Melee / Striker      | Warrior       | Humanoid      | High Elf  | Male | Giant Eagle   | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-020  | Malakor Venomcaller  | 6 - Mythic | Poison    | Assassin / Burst DPS | Assassin      | Humanoid      | Orc       | Male | Basilisk      | FALSE     | FALSE  | FALSE     | 0%           |
+| Card ID | Card Name            | Rarity     | Element   | Archetype            | Class         | Creature Type | Race      | Sex  | Pet Companion |
+| ------- | -------------------- | ---------- | --------- | -------------------- | ------------- | ------------- | --------- | ---- | ------------- |
+| SD-011  | Draknare Thorne      | 6 - Mythic | Darkness  | Defense / Tank       | Shadow Knight | Humanoid      | Human     | Male | Reaper        |
+| SD-012  | Ignis Emberstride    | 6 - Mythic | Fire      | Melee / Striker      | Warrior       | Humanoid      | Human     | Male | Elemental     |
+| SD-013  | Nizaras Featherstone | 6 - Mythic | Grass     | Specialist / Hybrid  | Rogue         | Humanoid      | Wood Elf  | Male | Treant        |
+| SD-014  | Lyran Frostfall      | 6 - Mythic | Ice       | Defense / Tank       | Knight        | Humanoid      | High Elf  | Male | Frost Owl     |
+| SD-015  | Corin Tidewalker     | 6 - Mythic | Water     | Specialist / Hybrid  | Beast Lord    | Humanoid      | Human     | Male | Shark         |
+| SD-016  | Hauk Hammerfell      | 6 - Mythic | Light     | Defense / Tank       | Paladin       | Humanoid      | Human     | Male | Angel         |
+| SD-017  | Torvald Stonebreaker | 6 - Mythic | Earth     | Melee / Striker      | Berserker     | Humanoid      | Barbarian | Male | Dire Bear     |
+| SD-018  | Dorian Stormstrike   | 6 - Mythic | Lightning | Melee / Striker      | Monk          | Humanoid      | Celestial | Male | Gryphon       |
+| SD-019  | Zephyr Galeheart     | 6 - Mythic | Wind      | Melee / Striker      | Warrior       | Humanoid      | High Elf  | Male | Giant Eagle   |
+| SD-020  | Malakor Venomcaller  | 6 - Mythic | Poison    | Assassin / Burst DPS | Assassin      | Humanoid      | Orc       | Male | Basilisk      |
 
 ---
 
 ## Elder Dragons
 
-| Card ID | Card Name | Rarity     | Element   | Archetype       | Class        | Creature Type | Race | Sex    | Pet Companion | Head Shot | A Pose | Game Pose | Art Progress |
-| ------- | --------- | ---------- | --------- | --------------- | ------------ | ------------- | ---- | ------ | ------------- | --------- | ------ | --------- | ------------ |
-| ST-021  | Umbrath   | 6 - Mythic | Darkness  | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-022  | Pyraxis   | 6 - Mythic | Fire      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-023  | Sylvanya  | 6 - Mythic | Grass     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-024  | Glaciora  | 6 - Mythic | Ice       | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-025  | Aquaria   | 6 - Mythic | Water     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-026  | Lumira    | 6 - Mythic | Light     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-027  | Terrador  | 6 - Mythic | Earth     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-028  | Fulgora   | 6 - Mythic | Lightning | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-029  | Zephyros  | 6 - Mythic | Wind      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
-| ST-030  | Venomis   | 6 - Mythic | Poison    | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           | FALSE     | FALSE  | FALSE     | 0%           |
+| Card ID | Card Name | Rarity     | Element   | Archetype       | Class        | Creature Type | Race | Sex    | Pet Companion |
+| ------- | --------- | ---------- | --------- | --------------- | ------------ | ------------- | ---- | ------ | ------------- |
+| SD-021  | Umbrath   | 6 - Mythic | Darkness  | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
+| SD-022  | Pyraxis   | 6 - Mythic | Fire      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
+| SD-023  | Sylvanya  | 6 - Mythic | Grass     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-024  | Glaciora  | 6 - Mythic | Ice       | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-025  | Aquaria   | 6 - Mythic | Water     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-026  | Lumira    | 6 - Mythic | Light     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-027  | Terrador  | 6 - Mythic | Earth     | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
+| SD-028  | Fulgora   | 6 - Mythic | Lightning | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
+| SD-029  | Zephyros  | 6 - Mythic | Wind      | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Male   | n/a           |
+| SD-030  | Venomis   | 6 - Mythic | Poison    | Aerial / Flying | Elder Dragon | Dragon        | n/a  | Female | n/a           |
 
 ---
 
@@ -113,7 +113,7 @@ The source of truth is `data/art/` plus `prompts/`; the validator reports covera
 - **Archetype retained** as a differentiation field, now first-class in the card schema
   alongside `class`, `creatureType`, `race`, `sex`, and `companion`.
 - **Thorne naming is canonical** for the Drakn bloodline (the ten heroines + Draknare Thorne).
-  Other heroes use names fitting their role/origin. `ST-###` IDs are adjustable.
+  Other heroes use names fitting their role/origin. `SD-###` collection numbers are adjustable.
 - **Staged element rollout (revised Oct 2026; supersedes "all 10 elements from launch").** All ten
   elements are *designed* and their art pipeline is proven, but they release in stages: **Grass,
   Fire, Water** first (MVP), with **Darkness + Light** either folded into the first public push
@@ -232,5 +232,5 @@ and in the same ballpark as the prior 174-card base set — expanded for 10-elem
   "combined" card (stats, art, deck legality).
 - **Class vs. archetype:** Confirm whether `Class` (Necromancer, Druid, etc.) and
   `Archetype` (Summoner / Spawner, etc.) both persist as card fields in `codex-schema.json`.
-- **Naming:** Confirm the `ST-###` ID scheme and the `<Name> Thorne` convention for the
+- **Naming:** Confirm the `SD-###` numbering scheme and the `<Name> Thorne` convention for the
   Drakn line as canonical.

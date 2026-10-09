@@ -21,13 +21,33 @@
       "metal": "polished silver",
       "magicColor": "frost blue",
       "gemColor": "pale sapphire",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json"
+      "eyeColor": "Pale frost-blue irises with faint ice-white striations and a deep slate limbal ring",
+      "eyeColorGlamour": "Pale frost-blue irises with faint ice-white striations and a deep slate limbal ring",
+      "hairColor": "Ash-grey silver hair, fine and neat",
+      "skinTone": "Cool fair complexion, evenly toned and smooth",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "black hair",
+        "brown hair",
+        "red hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, slim, poised, scholarly-athletic build",

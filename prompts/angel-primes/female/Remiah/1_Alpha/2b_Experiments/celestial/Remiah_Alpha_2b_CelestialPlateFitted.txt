@@ -9,16 +9,16 @@ Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry
 Result: she is wearing celestial armor of polished bright gold: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form, covering the centre of each breast fully, and one matching small ornate plate in the form of a small halo ring with two short feathers curved to follow the contour of the pelvic area, tapering and sitting flush against the skin, covering the whole front of the pelvic area completely; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a topaz gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Bust: full, firm, athletic bust, high and compactly rounded with a tight pronounced inner curve and refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: sleek dark-brown hair with a subtle storm-violet sheen.
+Bust: full, firm, high and compactly rounded bust with a tight pronounced inner curve and refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: bright electric-blue irises with radiating white-gold striations and a deep indigo limbal ring.
+Skin: warm olive complexion, evenly toned and clear.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: athletic, toned, wiry-strong build; quick and lean; flat, defined midriff with a tight waist; toned, sinewy arms; narrow, athletic hips with a gentle curve; long, lean, toned legs.
+Body: shape the figure to this individual build, keeping her height, head and pose: slender, lean, agile build; quick and light; flat, narrow midriff with a tight waist; slender, lightly defined arms; narrow hips with a gentle curve; long, lean, slender legs.
 
 Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:
 
-bikini bottom, bikini top, chains, flat discs, full coverage, large plates, plates sticking out, plates standing out, straps, strings, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, watermark, logo.
+bikini bottom, bikini top, chains, flat discs, full coverage, large plates, plates sticking out, plates standing out, straps, strings, extra people, extra limbs, extra digits, deformed hands, changed face, blonde hair, black hair, red hair, grey hair, uniform flat one-tone hair, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, changed pose, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, pale skin, washed-out skin, ruddy skin, text, watermark, logo.

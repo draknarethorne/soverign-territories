@@ -9,10 +9,10 @@ Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait pho
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Hair: soft champagne-blonde hair with warm honey lights, silky and luminous.
 Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous.
 
 Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
@@ -26,7 +26,7 @@ A candid high-fashion editorial shot, flirty playful romantic energy. Light bree
 
 A gentle drift of soft white light, drifting pale feathers and motes lifts her hair and hem, faint gold light glinting within it - understated.
 
-Eyes: the natural the reference image's own eye colour, unchanged, in clear irises kept intact, with a faint gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
+Eyes: the natural clear light-grey irises kept intact, with a faint gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a high limestone plateau at first light, short pale grass and a few weathered standing stones, thin cloud on the horizon, soft even daylight and a light wind in the grass.
 
@@ -35,4 +35,4 @@ Setting: a grounded, cinematic fantasy world photographed on location like a fea
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, cluttered background, busy effects, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, tanned skin, bronze skin, sun-weathered skin, ruddy skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, cluttered background, busy effects, text, wording, watermark, logo.

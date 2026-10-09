@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale lavender-blue irises with radiating silver striations and a soft slate limbal ring.
+Skin: light warm-beige complexion with a faint wind-flushed cheek, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 a faint pale sky-silver glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with pale sky-silver light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle pale sky-silver catchlight.
+Eyes: irises softly aglow with pale sky-silver light, brightest near the pupil and fading to the natural pale lavender-blue irises at the rim, iris detail still visible, a gentle pale sky-silver catchlight.
 
 Companion: a young pale pegasus foal with a silver-white coat, a flowing cloud-grey mane and tail and a pair of small silver-white wings still too big for it, cantering at her side with its small wings half spread, mane streaming.
 

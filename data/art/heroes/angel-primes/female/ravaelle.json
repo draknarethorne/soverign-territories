@@ -21,21 +21,42 @@
       "metal": "platinum",
       "magicColor": "soft aqua",
       "gemColor": "aquamarine",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/beach-waves.json"
+      "eyeColor": "Soft aqua-teal irises with radiating pearl-white striations and a pale seafoam limbal ring",
+      "eyeColorGlamour": "Soft aqua-teal irises with radiating pearl-white striations and a pale seafoam limbal ring",
+      "hairColor": "Pale silver-blonde hair with a soft pearl sheen, fine and flowing",
+      "skinTone": "Fair cool-neutral complexion with a faint pearl undertone, evenly toned and smooth",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/beach-waves.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
-      "build": "Soft, curvy, gently rounded build; warm and approachable",
-      "torso": "Soft waist with a gentle taper",
-      "bust": "Very full, soft and generous bust with a heavy natural weight yet firmly supported and lifted, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
-      "arms": "Soft, rounded, graceful arms",
-      "hips": "Full, shapely feminine hips with a generous curve",
-      "legs": "Smooth, softly rounded legs with shapely thighs",
+      "build": "Soft, slender, gently curved build; warm and approachable",
+      "torso": "Narrow waist with a gentle taper",
+      "bust": "Full, soft and generous bust, firmly supported and lifted, with broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Soft, slender, graceful arms",
+      "hips": "Shapely feminine hips, gently curved",
+      "legs": "Smooth, slender legs with softly rounded thighs",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

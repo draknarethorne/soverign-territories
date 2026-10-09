@@ -26,6 +26,13 @@
       "torso": "Slim waist",
       "hips": "Shapely feminine hips, gently curved",
       "legs": "Very long, slender legs with slim, tapering thighs"
+    },
+    "male": {
+      "build": "Athletic, well-proportioned build",
+      "chest": "Defined, healthy chest and core",
+      "arms": "Toned, balanced arms",
+      "waist": "Trim waist",
+      "legs": "Long, well-proportioned legs"
     }
   },
   "dragonMorphology": {

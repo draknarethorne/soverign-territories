@@ -19,23 +19,34 @@
         "Warm Champagne Gold",
         "Dove Grey"
       ],
-      "eyeColor": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
-      "eyeColorGlamour": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
-      "hairColor": "the exact hair colour of the reference image, unchanged, with natural shine",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
+      "eyeColor": "Clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring",
+      "eyeColorGlamour": "Clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring",
+      "hairColor": "Soft champagne-blonde hair with warm honey lights, silky and luminous",
+      "skinTone": "Fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous",
       "eyeColorNegatives": [
-        "changed eye colour",
-        "recoloured eyes"
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
       ],
-      "skinColorNegatives": [],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/center-part-natural.json",
       "lashColor": "natural",
       "eyeshadowColor": "neutral",
       "hairColorNegatives": [
-        "recoloured hair",
-        "dyed hair",
-        "changed hair colour",
-        "added highlights"
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
       ]
     },
     "physique": {

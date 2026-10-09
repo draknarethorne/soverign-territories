@@ -24,7 +24,12 @@
         "sunburnt skin",
         "overly tanned skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "brown hair",
+        "grey hair",
+        "blonde hair"
+      ]
     },
     "physique": {
       "build": "Imposing athletic tank build; broad-shouldered, tall and commanding",
@@ -36,5 +41,5 @@
       "raceAlignment": "Human presentation aligned to heavy dread-knight characteristics (imposing, tactical, unyielding authority)"
     }
   },
-  "notes": "Core ART hero definition for Draknare Thorne (Darkness, Shadow Knight, Defense/Tank). Only male hero to carry the Thorne name (per docs/codex/heroes/ideation_codex.md). First-pass palette/physique, no archived source material — mirrors Drakness's own Darkness/amethyst-silver palette family but as a distinct, darker male variant."
+  "notes": "Core ART hero definition for Draknare Thorne (Darkness, Shadow Knight, Defense/Tank). Only male hero to carry the Thorne name (per docs/codex/heroes/sovereign_dawn_codex.md). First-pass palette/physique, no archived source material — mirrors Drakness's own Darkness/amethyst-silver palette family but as a distinct, darker male variant."
 }

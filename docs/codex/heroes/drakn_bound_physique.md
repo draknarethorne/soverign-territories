@@ -1,4 +1,4 @@
-# Sovereign Territories — Hero Card Roster: Mythic Tier (ST-011 – ST-020)
+# Sovereign Territories — Hero Card Roster: Mythic Tier (SD-011 – SD-020)
 ## Male Heroes Character Architecture & Physical Specification Matrix (Schema-Aligned)
 
 ---
@@ -21,22 +21,22 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 | Card ID | Hero Name | Element | Class | Race Presentation | Primary Colors & Metals | Eye / Hair Phenotype | Physical Preset Category |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ST-011** | Draknare Thorne | Darkness | Shadow Knight | Human | Obsidian, Void Violet, Smoked Chrome | Dark Violet Irises / Obsidian-Black Hair | Heavy Armor / Imposing Commander |
-| **ST-012** | Ignis Emberstride | Fire | Warrior | Human | Molten Crimson, Cinder Brass, Gold | Amber-Gold / Copper-Brown Hair | Lean Martial / Greatsword Striker |
-| **ST-013** | Nizaras Featherstone | Grass | Rogue | Wood Elf | Forest Moss, Living Bronze, Bark | Leaf-Green / Deep Chestnut-Brunette | Wiry / Woodland Infiltrator |
-| **ST-014** | Lyran Frostfall | Ice | Knight | High Elf | Glacial Cyan, Frosted Silver, Arctic Navy | Crystalline Frost-Blue / Silver-Platinum Hair | Statuesque / Regal Bastion |
-| **ST-015** | Corin Tidewalker | Water | Beast Lord | Human | Deep Pelagic Blue, Teal, Sea-Platinum | Sea-Grey Blue / Dark Sand-Brown Hair | Taut / Pelagic Vanguard |
-| **ST-016** | Hauk Hammerfell | Light | Paladin | Human | Solar Alabaster, Sun-Gold, Polished Steel | Bright Amber / Honey-Brown Hair | Heavy Armor / Unyielding Bulwark |
-| **ST-017** | Torvald Stonebreaker | Earth | Berserker | Barbarian | Burnt Ochre, Granite Slate, Raw Bronze | Slate-Grey Hazel / Dark Ash-Brown Hair | Brutal / Dense Juggernaut |
-| **ST-018** | Dorian Stormstrike | Lightning | Monk | Celestial | Storm Cobalt, Arc Violet, Fulgurite Silver | Luminous Azure / Pale Platinum-White Hair | Wiry / Kinetic Conduit |
-| **ST-019** | Zephyr Galeheart | Wind | Warrior | High Elf | Sky Cerulean, Wind-Brass, Cloud White | Wind-Grey Cyan / Sun-Bleached Blonde Hair | Lean Martial / Aerodynamic Duelist |
-| **ST-020** | Malakor Venomcaller | Poison | Assassin | Orc | Toxic Malachite, Corroded Iron, Black Steel | Acid-Yellow / Coarse Jet-Black Hair | Brutal / Coiled Stalker |
+| **SD-011** | Draknare Thorne | Darkness | Shadow Knight | Human | Obsidian, Void Violet, Smoked Chrome | Dark Violet Irises / Obsidian-Black Hair | Heavy Armor / Imposing Commander |
+| **SD-012** | Ignis Emberstride | Fire | Warrior | Human | Molten Crimson, Cinder Brass, Gold | Amber-Gold / Copper-Brown Hair | Lean Martial / Greatsword Striker |
+| **SD-013** | Nizaras Featherstone | Grass | Rogue | Wood Elf | Forest Moss, Living Bronze, Bark | Leaf-Green / Deep Chestnut-Brunette | Wiry / Woodland Infiltrator |
+| **SD-014** | Lyran Frostfall | Ice | Knight | High Elf | Glacial Cyan, Frosted Silver, Arctic Navy | Crystalline Frost-Blue / Silver-Platinum Hair | Statuesque / Regal Bastion |
+| **SD-015** | Corin Tidewalker | Water | Beast Lord | Human | Deep Pelagic Blue, Teal, Sea-Platinum | Sea-Grey Blue / Dark Sand-Brown Hair | Taut / Pelagic Vanguard |
+| **SD-016** | Hauk Hammerfell | Light | Paladin | Human | Solar Alabaster, Sun-Gold, Polished Steel | Bright Amber / Honey-Brown Hair | Heavy Armor / Unyielding Bulwark |
+| **SD-017** | Torvald Stonebreaker | Earth | Berserker | Barbarian | Burnt Ochre, Granite Slate, Raw Bronze | Slate-Grey Hazel / Dark Ash-Brown Hair | Brutal / Dense Juggernaut |
+| **SD-018** | Dorian Stormstrike | Lightning | Monk | Celestial | Storm Cobalt, Arc Violet, Fulgurite Silver | Luminous Azure / Pale Platinum-White Hair | Wiry / Kinetic Conduit |
+| **SD-019** | Zephyr Galeheart | Wind | Warrior | High Elf | Sky Cerulean, Wind-Brass, Cloud White | Wind-Grey Cyan / Sun-Bleached Blonde Hair | Lean Martial / Aerodynamic Duelist |
+| **SD-020** | Malakor Venomcaller | Poison | Assassin | Orc | Toxic Malachite, Corroded Iron, Black Steel | Acid-Yellow / Coarse Jet-Black Hair | Brutal / Coiled Stalker |
 
 ---
 
 ## 3. Individual Character JSON-Ready Specifications
 
-### ST-011: Draknare Thorne
+### SD-011: Draknare Thorne
 * **Card ID:** `HERO_DRAKNARE_THORNE`
 * **Element / Class / Race:** Darkness | Shadow Knight | Human
 * **Physique Profile:** Imposing athletic tank build; broad-shouldered, tall, commanding warrior posture.
@@ -58,7 +58,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-012: Ignis Emberstride
+### SD-012: Ignis Emberstride
 * **Card ID:** `HERO_IGNIS_EMBERSTRIDE`
 * **Element / Class / Race:** Fire | Warrior | Human
 * **Physique Profile:** Chiseled athletic striker build; functional swordsman frame with high explosive power.
@@ -80,7 +80,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-013: Nizaras Featherstone
+### SD-013: Nizaras Featherstone
 * **Card ID:** `HERO_NIZARAS_FEATHERSTONE`
 * **Element / Class / Race:** Grass | Rogue | Wood Elf
 * **Physique Profile:** Lithe, sinewy wood-elven scout build; ultra-lean, flexible, long-limbed silhouette.
@@ -102,7 +102,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-014: Lyran Frostfall
+### SD-014: Lyran Frostfall
 * **Card ID:** `HERO_LYRAN_FROSTFALL`
 * **Element / Class / Race:** Ice | Knight | High Elf
 * **Physique Profile:** Tall, statuesque high-elven knight; aristocratic, perfectly symmetrical athletic frame.
@@ -124,7 +124,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-015: Corin Tidewalker
+### SD-015: Corin Tidewalker
 * **Card ID:** `HERO_CORIN_TIDEWALKER`
 * **Element / Class / Race:** Water | Beast Lord | Human
 * **Physique Profile:** Lean, powerful swimmer build; broad back, wiry endurance frame conditioned by wind and tide.
@@ -146,7 +146,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-016: Hauk Hammerfell
+### SD-016: Hauk Hammerfell
 * **Card ID:** `HERO_HAUK_HAMMERFELL`
 * **Element / Class / Race:** Light | Paladin | Human
 * **Physique Profile:** Massive, powerful tank physique; dense heavy-armor frame with broad structural mass.
@@ -168,7 +168,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-017: Torvald Stonebreaker
+### SD-017: Torvald Stonebreaker
 * **Card ID:** `HERO_TORVALD_STONEBREAKER`
 * **Element / Class / Race:** Earth | Berserker | Barbarian
 * **Physique Profile:** Massive, raw-boned barbarian powerhouse; thick heavy frame with colossal functional mass.
@@ -190,7 +190,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-018: Dorian Stormstrike
+### SD-018: Dorian Stormstrike
 * **Card ID:** `HERO_DORIAN_STORMSTRIKE`
 * **Element / Class / Race:** Lightning | Monk | Celestial
 * **Physique Profile:** Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined kinetic silhouette.
@@ -212,7 +212,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-019: Zephyr Galeheart
+### SD-019: Zephyr Galeheart
 * **Card ID:** `HERO_ZEPHYR_GALEHEART`
 * **Element / Class / Race:** Wind | Warrior | High Elf
 * **Physique Profile:** Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach.
@@ -234,7 +234,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
 
 ---
 
-### ST-020: Malakor Venomcaller
+### SD-020: Malakor Venomcaller
 * **Card ID:** `HERO_MALAKOR_VENOMCALLER`
 * **Element / Class / Race:** Poison | Assassin | Orc
 * **Physique Profile:** Dense yet agile orcish assassin build; heavy bone structure stripped down to corded predator muscle.

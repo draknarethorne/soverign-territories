@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "black hair",
+        "bright orange hair",
+        "blonde hair"
+      ]
     },
     "physique": {
       "build": "Chiseled athletic striker build; functional swordsman frame with explosive power",

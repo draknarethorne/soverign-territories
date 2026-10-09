@@ -13,9 +13,9 @@ A candid high-fashion editorial shot, refined seated glamour.
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: chestnut-brown hair with a faint green-bronze sheen.
+Eyes: warm hazel-green irises with faint golden striations and a dark moss limbal ring.
+Skin: warm tan complexion, evenly toned.
 
 Maintain the existing outfit and hairstyle expressly.
 
@@ -37,4 +37,4 @@ Pose: one hand resting on the knee, the other draped gracefully at his side.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, brown eyes, grey eyes, amber eyes, red eyes, violet eyes, text, wording, watermark, logo.

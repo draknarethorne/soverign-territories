@@ -1,4 +1,4 @@
-# Sovereign Territories — Hero Card Roster: Transcendent Tier (ST-001 – ST-010)
+# Sovereign Territories — Hero Card Roster: Transcendent Tier (SD-001 – SD-010)
 ## Character Architecture & Physical Specification Matrix (Revised Schema Alignment)
 
 ---
@@ -22,22 +22,22 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 | Card ID | Card Name | Element | Class | Race Presentation | Primary Colors & Metals | Eye / Hair Phenotype | Physical Preset Category |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **ST-001** | Drakness Thorne | Darkness | Necromancer | Dark Elf | Void Violet, Obsidian, Smoked Chrome | Deep Violet Irises / Obsidian-Black Hair | Ethereal & Aristocratic (Predatory) |
-| **ST-002** | Draknora Thorne | Fire | Magician | Human | Molten Crimson, Cinder Brass, Gold | Incandescent Amber / Warm Copper-Auburn | Ethereal & Aristocratic (Statuesque) |
-| **ST-003** | Drakniya Thorne | Grass | Druid | Wood Elf | Forest Emerald, Living Copper, Moss | Leaf-Green / Deep Chestnut-Brunette | Agile & Gymnastic (Runner) |
-| **ST-004** | Draknira Thorne | Ice | Wizard | High Elf | Glacial Cyan, Frosted Silver, Pearl | Frosted Ice-Blue / Platinum-White Hair | Ethereal & Aristocratic (Crystalline) |
-| **ST-005** | Draknisa Thorne | Water | Enchanter | Human | Oceanic Blue, Deep Teal, Platinum | Deep Sea-Sapphire / Blue-Black Raven Hair | Ethereal & Aristocratic (Serpentine) |
-| **ST-006** | Drakniss Thorne | Light | Cleric | Human | Solar Alabaster, Sun-Gold, Aurum | Radiant Golden-Amber / Warm Honey-Blonde | Grounded & Martial (Armored Endurance) |
-| **ST-007** | Draknara Thorne | Earth | Shaman | Barbarian | Burnt Sienna, Turquoise, Antique Bronze | Malachite-Hazel / Bronze-Brown Hair | Grounded & Martial (Taut Core) |
-| **ST-008** | Drakneta Thorne | Lightning | Summoner | Celestial | Arc Violet, Storm Cobalt, Silver | Electric Violet-Blue / Luminous Pale Silver | Ethereal & Aristocratic (Kinetic) |
-| **ST-009** | Draknava Thorne | Wind | Bard | Wood Elf | Sky Cerulean, Wind-Brass, Ivory | Wind-Grey Cyan / Sun-Bleached Ash Brown | Agile & Gymnastic (Coiled Agility) |
-| **ST-010** | Draknoxa Thorne | Poison | Alchemist | Dark Elf | Acid Malachite, Dark Iron, Black Steel | Toxic Yellow-Green / Midnight Jet Black | Agile & Gymnastic (Clinical/Predatory) |
+| **SD-001** | Drakness Thorne | Darkness | Necromancer | Dark Elf | Void Violet, Obsidian, Smoked Chrome | Deep Violet Irises / Obsidian-Black Hair | Ethereal & Aristocratic (Predatory) |
+| **SD-002** | Draknora Thorne | Fire | Magician | Human | Molten Crimson, Cinder Brass, Gold | Incandescent Amber / Warm Copper-Auburn | Ethereal & Aristocratic (Statuesque) |
+| **SD-003** | Drakniya Thorne | Grass | Druid | Wood Elf | Forest Emerald, Living Copper, Moss | Leaf-Green / Deep Chestnut-Brunette | Agile & Gymnastic (Runner) |
+| **SD-004** | Draknira Thorne | Ice | Wizard | High Elf | Glacial Cyan, Frosted Silver, Pearl | Frosted Ice-Blue / Platinum-White Hair | Ethereal & Aristocratic (Crystalline) |
+| **SD-005** | Draknisa Thorne | Water | Enchanter | Human | Oceanic Blue, Deep Teal, Platinum | Deep Sea-Sapphire / Blue-Black Raven Hair | Ethereal & Aristocratic (Serpentine) |
+| **SD-006** | Drakniss Thorne | Light | Cleric | Human | Solar Alabaster, Sun-Gold, Aurum | Radiant Golden-Amber / Warm Honey-Blonde | Grounded & Martial (Armored Endurance) |
+| **SD-007** | Draknara Thorne | Earth | Shaman | Barbarian | Burnt Sienna, Turquoise, Antique Bronze | Malachite-Hazel / Bronze-Brown Hair | Grounded & Martial (Taut Core) |
+| **SD-008** | Drakneta Thorne | Lightning | Summoner | Celestial | Arc Violet, Storm Cobalt, Silver | Electric Violet-Blue / Luminous Pale Silver | Ethereal & Aristocratic (Kinetic) |
+| **SD-009** | Draknava Thorne | Wind | Bard | Wood Elf | Sky Cerulean, Wind-Brass, Ivory | Wind-Grey Cyan / Sun-Bleached Ash Brown | Agile & Gymnastic (Coiled Agility) |
+| **SD-010** | Draknoxa Thorne | Poison | Alchemist | Dark Elf | Acid Malachite, Dark Iron, Black Steel | Toxic Yellow-Green / Midnight Jet Black | Agile & Gymnastic (Clinical/Predatory) |
 
 ---
 
 ## 3. Individual Character JSON-Ready Specifications
 
-### ST-001: Drakness Thorne
+### SD-001: Drakness Thorne
 * **Card ID:** `HERO_DRAKNESS_THORNE`
 * **Element / Class / Race:** Darkness | Necromancer | Dark Elf
 * **Physique Profile:** Aristocratic, predatory-lithe with sinewy tension.
@@ -60,7 +60,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-002: Draknora Thorne
+### SD-002: Draknora Thorne
 * **Card ID:** `HERO_DRAKNORA_THORNE`
 * **Element / Class / Race:** Fire | Magician | Human
 * **Physique Profile:** Warm, statuesque, and dignified.
@@ -83,7 +83,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-003: Drakniya Thorne
+### SD-003: Drakniya Thorne
 * **Card ID:** `HERO_DRAKNIYA_THORNE`
 * **Element / Class / Race:** Grass | Druid | Wood Elf
 * **Physique Profile:** Wiry, low-fat runner build with trackless agility.
@@ -106,7 +106,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-004: Draknira Thorne
+### SD-004: Draknira Thorne
 * **Card ID:** `HERO_DRAKNIRA_THORNE`
 * **Element / Class / Race:** Ice | Wizard | High Elf
 * **Physique Profile:** Crystalline, ethereal, and aloof.
@@ -129,7 +129,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-005: Draknisa Thorne
+### SD-005: Draknisa Thorne
 * **Card ID:** `HERO_DRAKNISA_THORNE`
 * **Element / Class / Race:** Water | Enchanter | Human
 * **Physique Profile:** Fluid, serpentine dancer with a supple hourglass.
@@ -152,7 +152,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-006: Drakniss Thorne
+### SD-006: Drakniss Thorne
 * **Card ID:** `HERO_DRAKNISS_THORNE`
 * **Element / Class / Race:** Light | Cleric | Human
 * **Physique Profile:** Armored athletic endurance with regal martial poise.
@@ -175,7 +175,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-007: Draknara Thorne
+### SD-007: Draknara Thorne
 * **Card ID:** `HERO_DRAKNARA_THORNE`
 * **Element / Class / Race:** Earth | Shaman | Barbarian
 * **Physique Profile:** Taut, grounded athletic core with primal tone.
@@ -198,7 +198,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-008: Drakneta Thorne
+### SD-008: Drakneta Thorne
 * **Card ID:** `HERO_DRAKNETA_THORNE`
 * **Element / Class / Race:** Lightning | Summoner | Celestial
 * **Physique Profile:** Statuesque, radiant, and kinetic.
@@ -221,7 +221,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-009: Draknava Thorne
+### SD-009: Draknava Thorne
 * **Card ID:** `HERO_DRAKNAVA_THORNE`
 * **Element / Class / Race:** Wind | Bard | Wood Elf
 * **Physique Profile:** Gymnastic, coiled-spring agility.
@@ -244,7 +244,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
 
 ---
 
-### ST-010: Draknoxa Thorne
+### SD-010: Draknoxa Thorne
 * **Card ID:** `HERO_DRAKNOXA_THORNE`
 * **Element / Class / Race:** Poison | Alchemist | Dark Elf
 * **Physique Profile:** Compact, clinical, and predatory.

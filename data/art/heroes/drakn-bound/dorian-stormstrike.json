@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "brown hair",
+        "grey hair",
+        "blonde hair"
+      ]
     },
     "physique": {
       "build": "Hyper-conditioned celestial martial artist build; ultra-dense, razor-defined silhouette",

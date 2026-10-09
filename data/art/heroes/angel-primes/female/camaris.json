@@ -21,21 +21,38 @@
       "metal": "burnished copper",
       "magicColor": "ember orange",
       "gemColor": "ruby",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wild-tossed.json"
+      "eyeColor": "Fierce amber-orange irises with radiating ember striations and a dark brown limbal ring",
+      "eyeColorGlamour": "Fierce amber-orange irises with radiating ember striations and a dark brown limbal ring",
+      "hairColor": "Dark mahogany-brown hair with burnished copper lights, thick and glossy",
+      "skinTone": "Warm golden-brown complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wild-tossed.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "black hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
-      "build": "Curvy, athletic, powerful hourglass build; a fighter's frame",
-      "torso": "Strong, defined waist",
-      "bust": "Very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
-      "arms": "Strong, toned arms",
-      "hips": "Full, powerful hips",
-      "legs": "Strong, shapely, muscular legs",
+      "build": "Slender, athletic-graceful hourglass build; light and quick, with a dancer's poise",
+      "torso": "Narrow, defined waist",
+      "bust": "Very full, firm, lifted bust, a bold, softly rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
+      "arms": "Slender, lightly defined arms",
+      "hips": "Shapely feminine hips, gently curved",
+      "legs": "Long, slender, shapely legs",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

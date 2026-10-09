@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "brown hair",
+        "white hair",
+        "red hair"
+      ]
     },
     "physique": {
       "build": "Massive, powerful tank physique; dense heavy-armor frame with broad structural mass",

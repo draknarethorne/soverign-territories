@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "all-over blonde hair",
+        "grey hair",
+        "black hair"
+      ]
     },
     "physique": {
       "build": "Lean, powerful swimmer build; broad back and a wiry endurance frame",

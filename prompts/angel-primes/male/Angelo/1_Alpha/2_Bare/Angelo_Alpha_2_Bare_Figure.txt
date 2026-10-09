@@ -6,12 +6,12 @@ prompt:
 
 Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (natural skin tone exactly as in the reference image, evenly toned), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
+Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (fair warm-neutral complexion, evenly toned), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged, with natural shine.
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: light ash-brown hair with soft champagne lights.
+Eyes: clear steel-grey irises with faint soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion, evenly toned.
 
 Body: shape the figure to this individual build, keeping his height, head and pose: athletic, broad-shouldered, well-proportioned build; defined, naturally muscular chest and core, toned and healthy; trim, athletic waist; long, strong, well-proportioned legs.
 
@@ -20,4 +20,4 @@ Keep the face, expression, makeup, the pose, the full-length framing from head t
 ----------------------------------------------------------------
 negative prompt:
 
-swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, recoloured hair, dyed hair, changed hair colour, added highlights, changed eye colour, recoloured eyes, changed pose, text, watermark, logo.
+swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, blonde hair, black hair, red hair, grey hair, uniform flat one-tone hair, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, changed pose, tanned skin, bronze skin, sun-weathered skin, ruddy skin, text, watermark, logo.

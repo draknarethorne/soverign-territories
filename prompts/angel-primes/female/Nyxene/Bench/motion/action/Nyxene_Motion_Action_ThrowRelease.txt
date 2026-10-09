@@ -13,10 +13,10 @@ A frozen action shot at the moment of a throw.
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
+Hair: blue-black hair with a cold midnight sheen, long and sleek.
 Bust: very full, firm, high, statuesque bust, boldly rounded with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep garnet-red irises with radiating dark-violet striations and a black limbal ring.
+Skin: pale cool alabaster complexion, evenly toned and flawless.
 
 Maintain the existing outfit and hairstyle expressly.
 
@@ -38,4 +38,4 @@ Pose: the throwing arm extended forward just after release, the other arm pulled
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

@@ -9,10 +9,10 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Bust: very full, soft and generous bust with a heavy natural weight yet firmly supported and lifted, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: pale silver-blonde hair with a soft pearl sheen, fine and flowing.
+Bust: full, soft and generous bust, firmly supported and lifted, with broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: soft aqua-teal irises with radiating pearl-white striations and a pale seafoam limbal ring.
+Skin: fair cool-neutral complexion with a faint pearl undertone, evenly toned and smooth.
 
 Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
@@ -30,7 +30,7 @@ Holding a slim platinum-tipped javelin on a Pearl Aqua-banded shaft, held back o
 
 The first light of dawn lies along her wings and flowing water and drifting spray drift in the cold air around her, soft aqua light on the edge of her weapon.
 
-Eyes: irises softly aglow with soft aqua light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle soft aqua catchlight.
+Eyes: irises softly aglow with soft aqua light, brightest near the pupil and fading to the natural soft aqua-teal irises at the rim, iris detail still visible, a gentle soft aqua catchlight.
 
 Environment: windswept high-fantasy highland cliffs above a sea of clouds, tall standing stones and a lone ruined watchtower, long grass and banners streaming in the wind, bright open sky.
 
@@ -39,4 +39,4 @@ Setting: a grounded, cinematic fantasy world photographed on location like a fea
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, tanned skin, bronze skin, sun-weathered skin, ruddy skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

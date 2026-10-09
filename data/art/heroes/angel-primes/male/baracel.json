@@ -5,7 +5,7 @@
     "element": "Earth",
     "alignment": "Steadfast (lawful good)",
     "alignmentRank": 5,
-    "archetype": "Bearer of blessings",
+    "archetype": "Bearer of the mountain's blessings",
     "inspiredBy": "the angels of blessing and endurance",
     "wings": "a pair of thick, heavy wings of earth-brown and grey feathers, rough as granite",
     "pair": "sandalyn",
@@ -21,13 +21,31 @@
       "metal": "copper",
       "magicColor": "amber gold",
       "gemColor": "tiger's eye",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "eyeColor": "Deep brown irises with faint amber striations and a dark iron limbal ring",
+      "eyeColorGlamour": "Deep brown irises with faint amber striations and a dark iron limbal ring",
+      "hairColor": "Dark brown hair with faint copper lights",
+      "skinTone": "Deep warm brown complexion with a golden undertone, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "grey eyes",
+        "hazel eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "fair skin",
+        "washed-out skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "black hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Stocky, thick-set, immovably strong build",

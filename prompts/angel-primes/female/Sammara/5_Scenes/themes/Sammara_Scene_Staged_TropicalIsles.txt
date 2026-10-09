@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring.
+Skin: fair cool-ivory complexion with a faint violet undertone, evenly toned and smooth.
 
 A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. a warm, radiant smile, eyes full of light. one foot forward for an elegant line; arms relaxed with a graceful hand.
 
 A drift of curling green venom mist and falling drops circles her, toxic violet-green light glinting within it.
 
-Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle toxic violet-green catchlight.
+Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural deep orchid-violet irises at the rim, iris detail still visible, a gentle toxic violet-green catchlight.
 
 Environment: a high-fantasy tropical lagoon of impossibly clear turquoise water over coral, palms along a white sand beach, outrigger canoes and a smoking green volcano under a bright sky.
 

@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale steel-blue irises with radiating frost-white striations and a deep navy limbal ring.
+Skin: fair neutral-cool complexion with a faint blue-pink undertone, evenly toned and smooth.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
 
 A drift of swirling frost, snowflakes and ice crystals circles her, pale ice blue light glinting within it.
 
-Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
+Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural pale steel-blue irises at the rim, iris detail still visible, a gentle pale ice blue catchlight.
 
 Environment: the courtyard of a crumbling gothic manor at night, candle-lit windows, cobwebbed iron gates, ivy-covered statues, floating candles and ghostly lights in the mist.
 

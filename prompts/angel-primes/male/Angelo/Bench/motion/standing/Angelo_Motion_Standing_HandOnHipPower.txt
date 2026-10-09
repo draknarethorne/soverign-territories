@@ -13,9 +13,9 @@ A candid high-fashion editorial shot, confident power stance.
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged, with natural shine.
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: light ash-brown hair with soft champagne lights.
+Eyes: clear steel-grey irises with faint soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion, evenly toned.
 
 Maintain the existing outfit and hairstyle expressly.
 
@@ -37,4 +37,4 @@ Pose: one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, text, wording, watermark, logo.

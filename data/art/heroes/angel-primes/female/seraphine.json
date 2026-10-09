@@ -21,13 +21,33 @@
       "metal": "rose gold",
       "magicColor": "warm golden-white",
       "gemColor": "pink opal",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/hollywood-glam-waves.json"
+      "eyeColor": "Pale sky-blue irises with radiating dawn-gold striations and a soft rose-gold limbal ring",
+      "eyeColorGlamour": "Pale sky-blue irises with radiating dawn-gold striations and a soft rose-gold limbal ring",
+      "hairColor": "Soft rose-gold blonde hair, silky and luminous with a gentle dawn sheen",
+      "skinTone": "Fair porcelain complexion with a warm rosy undertone, evenly toned and luminous",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/hollywood-glam-waves.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, graceful, elegant build; long-limbed with a regal bearing",

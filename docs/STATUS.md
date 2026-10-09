@@ -305,6 +305,15 @@ They keep only the detail (evenly toned, healthy shine and dimension, crisp defi
 The eye string is now "irises in their natural colour ..." so it also reads correctly inside the glow pieces (it used to say "natural natural"). 3,260 angel prompts regenerated and deployed.
 If one photo needs brightening, do it on that angel's own identity, not as a default.
 
+## Angel Primes: builds, colours, roster docs (Oct 9)
+
+- **Slender women.** Camaris, Sandalyn, Remiah, Nyxene, Ravaelle and Haniya had strength wording (Sandalyn came out "ape" muscular). All 11 angel women are now slender; the men stay a deliberate mix of lean, heroic and heavy.
+- **Colours forced.** All 22 angels now define hair, eye and skin colour (plus their negative lists), so the 1_Prime and 2_Bare prompts change the photo to match. Angelica and Angelo used to follow the photo; their colours are a first choice that can be edited. The bound heroes gained `hairColorNegatives` (they already forced hair, eyes and skin).
+- **Standard male figure.** Male Prime cards get `figureProfile: standard` like the women (`standardFigure.male` in `phrases.json`; the scaffold sets it for both sexes). The individual build is applied at 2_Bare.
+- **Audit.** `python tools/art/identity_audit.py` (`bin\identity-audit.cmd`, run by `validate.cmd`) checks every angel, sister and bound hero: colours defined and carried by the Prime prompt, the Bare prompt applies the build, no strength words on a female angel. The alpha test heroes follow the photo on purpose. Bound heroes still use the older `X_Pose` Prime card.
+- **Docs.** New `angel_primes_codex.md` and `angel_primes_physique.md`; `ideation_codex.md` is now `sovereign_dawn_codex.md`. Series IDs fixed: Sovereign Dawn is `SD-###` (the roster wrongly said `ST-###`); the angels are planned as `AP-###` (proposal AP-001 to AP-022, herald pair first). The roster tables no longer carry art-progress columns; use `python tools/workflows/comfy_workflows.py inputs --status`.
+- **Open:** spells and abilities for the angels, the story link between each angel and the same-element Drakn sister, gameplay cards, and whether the roster pages should be called `*_roster.md` since the JSON is the real codex.
+
 ## Library gaps (audit of Oct 8)
 
 `tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin, over-used or built from shortcuts, and is meant to be re-run as the library grows. **Over-use is the signal, not unused pieces** (pieces are written ahead of their scenes):

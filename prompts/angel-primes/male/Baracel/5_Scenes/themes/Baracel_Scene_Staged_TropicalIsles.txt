@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep brown irises with faint amber striations and a dark iron limbal ring.
+Skin: deep warm brown complexion with a golden undertone, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
 
 A drift of stone shards, dust and glowing crystals circles him, amber gold light glinting within it.
 
-Eyes: irises softly aglow with amber gold light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle amber gold catchlight.
+Eyes: irises softly aglow with amber gold light, brightest near the pupil and fading to the natural deep brown irises at the rim, iris detail still visible, a gentle amber gold catchlight.
 
 Environment: a high-fantasy tropical lagoon of impossibly clear turquoise water over coral, palms along a white sand beach, outrigger canoes and a smoking green volcano under a bright sky.
 

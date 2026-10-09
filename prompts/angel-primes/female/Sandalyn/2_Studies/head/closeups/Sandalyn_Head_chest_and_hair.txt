@@ -15,9 +15,9 @@ View: front-facing, head level and squarely toward the camera, looking straight 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown. Keep the wardrobe unchanged.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: deep chestnut-brown hair with soft copper lights, thick and glossy.
+Eyes: warm amber-brown irises with radiating golden-sand striations and a dark bronze limbal ring.
+Skin: warm medium-brown complexion with a golden undertone, evenly toned and glowing.
 
 Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
@@ -26,4 +26,4 @@ Eyes: natural studio eyes, both eyes matched, crisp corneal catchlights; black l
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra digits, deformed hands, extra clothing, extra hair, recolored eyes, glowing eyes, blue eyes, green eyes, grey eyes, hazel eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, mismatched eyes, squinting, crossed eyes, backlight, rim light, text, watermark, logo.

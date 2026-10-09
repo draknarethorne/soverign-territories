@@ -23,7 +23,12 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "brown hair",
+        "purple hair",
+        "grey hair"
+      ]
     },
     "physique": {
       "build": "Dense yet agile orcish assassin build; heavy bone structure stripped down to corded muscle",

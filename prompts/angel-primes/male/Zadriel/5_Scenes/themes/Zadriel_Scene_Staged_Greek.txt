@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep sea-teal irises with faint pale-aqua striations and a dark navy limbal ring.
+Skin: light olive-tan complexion, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as he channels a spell. level, chin lifted. focused forward, intense. a serene, knowing smile, eyes calm and bright. one arm raised and channeling energy, the other hand cupped at his side.
 
 A drift of flowing water and drifting spray circles him, cool teal light glinting within it.
 
-Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle cool teal catchlight.
+Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural deep sea-teal irises at the rim, iris detail still visible, a gentle cool teal catchlight.
 
 Environment: a white marble Greek-style temple of fluted columns on a high-fantasy sea cliff at golden hour, the deep blue sea glittering below, olive trees and a stone stair, warm light on the marble.
 

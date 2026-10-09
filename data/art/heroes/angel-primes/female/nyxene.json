@@ -21,21 +21,40 @@
       "metal": "blackened silver",
       "magicColor": "dark violet",
       "gemColor": "black opal",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/loose-glamour-curls.json"
+      "eyeColor": "Deep garnet-red irises with radiating dark-violet striations and a black limbal ring",
+      "eyeColorGlamour": "Deep garnet-red irises with radiating dark-violet striations and a black limbal ring",
+      "hairColor": "Blue-black hair with a cold midnight sheen, long and sleek",
+      "skinTone": "Pale cool alabaster complexion, evenly toned and flawless",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/loose-glamour-curls.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, statuesque, commanding build with long lines",
-      "torso": "Long, defined waist",
+      "torso": "Long, narrow waist",
       "bust": "Very full, firm, high, statuesque bust, boldly rounded with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
-      "arms": "Long, strong, elegant arms",
-      "hips": "Shapely, commanding hips",
-      "legs": "Very long, strong, elegant legs",
+      "arms": "Long, slender, elegant arms",
+      "hips": "Shapely feminine hips, gently curved",
+      "legs": "Very long, slender, elegant legs",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

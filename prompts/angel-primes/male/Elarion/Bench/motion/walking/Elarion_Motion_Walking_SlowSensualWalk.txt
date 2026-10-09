@@ -13,9 +13,9 @@ A candid high-fashion editorial shot, slow sensual movement, deliberate pacing.
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: pale ash-blond hair, fine and wind-swept.
+Eyes: pale storm-grey irises with faint silver striations and a slate limbal ring.
+Skin: fair cool-toned complexion with a faint wind-flushed cheek, evenly toned.
 
 Maintain the existing outfit and hairstyle expressly.
 
@@ -37,4 +37,4 @@ Pose: arms relaxed and barely moving, weight settling into each slow step.
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, mismatched footwear, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, text, wording, watermark, logo.

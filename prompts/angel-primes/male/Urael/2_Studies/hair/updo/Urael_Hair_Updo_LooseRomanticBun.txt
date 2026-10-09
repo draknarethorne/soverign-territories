@@ -11,8 +11,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure and proportions, all exactly as shown; keep the hair colour and highlights.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: molten orange-amber irises with faint ember striations and a dark charcoal limbal ring.
+Skin: deep bronzed warm complexion, evenly toned.
 
 Maintain existing outfit expressly.
 
@@ -24,4 +24,4 @@ Hair is gathered into a soft, loose bun with a few face-framing tendrils left lo
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, text, wording, watermark, logo.

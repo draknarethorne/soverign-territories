@@ -75,7 +75,7 @@ document disagree on an implementation detail, the canonical document wins.
 ## 📖 Prologue — The Sundering *(story canon · draft)*
 
 > **Status:** Draft lore — the shape of the myth is set; the finer details are still being
-> forged. Card roster and elements: [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md).
+> forged. Card roster and elements: [`codex/heroes/sovereign_dawn_codex.md`](codex/heroes/sovereign_dawn_codex.md).
 
 Before there were ten territories, there was one dominion, and it belonged to shadow.
 
@@ -359,7 +359,7 @@ one is ever stranded without a formation.
 ### 2.9 The Drakn Line & the Thorne name *(story canon)*
 
 > **Status:** Vision (Transcendent tier) · **Authority:**
-> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md) (roster),
+> [`codex/heroes/sovereign_dawn_codex.md`](codex/heroes/sovereign_dawn_codex.md) (roster),
 > [`design/deck-progression-rules.md`](design/deck-progression-rules.md) (tier cost)
 
 At the summit of the collection stand the **ten Drakn heroines** — the story's central
@@ -777,7 +777,7 @@ excitement without permanent loss.
 ### Staged element rollout, one symmetric template *(structure)*
 
 > **Status:** Decided Oct 2026 · **Authority:**
-> [`codex/heroes/ideation_codex.md`](codex/heroes/ideation_codex.md)
+> [`codex/heroes/sovereign_dawn_codex.md`](codex/heroes/sovereign_dawn_codex.md)
 
 The game is designed for **ten elements**, but it does **not** launch with all ten. Each element
 is built from the same symmetric per-element template (see the ideation blueprint), and elements

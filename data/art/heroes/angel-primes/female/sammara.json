@@ -21,13 +21,32 @@
       "metal": "tarnished brass",
       "magicColor": "toxic violet-green",
       "gemColor": "amethyst",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json"
+      "eyeColor": "Deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring",
+      "eyeColorGlamour": "Deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring",
+      "hairColor": "Glossy deep plum-black hair with a faint violet sheen, long and sleek",
+      "skinTone": "Fair cool-ivory complexion with a faint violet undertone, evenly toned and smooth",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/sleek-side-part.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Slender, sinuous, flexible build; sleek and sensual",

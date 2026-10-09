@@ -17,19 +17,19 @@ Standing A-pose: upright, feet set apart, arms relaxed slightly away from the si
 
 Figure: heavily muscled, broad warrior build; massive, heavily muscled chest; thick, heavily muscled arms; solid, tapering waist; thick, powerful legs.
 
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Skin: deep bronzed warm complexion, evenly toned.
 
 Wearing: only a lightweight woven sarong in Crimson with iron geometric pattern, wrapped and knotted at the hip; chest, abdomen, and one leg bare; bare feet.
 
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension; a polished ponytail with a strand wrapped neatly around the base; light breeze (override the source hairstyle).
+Hair: dark auburn-black hair with ember-red lights; a polished ponytail with a strand wrapped neatly around the base; light breeze (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, bare-faced. Reset any heavy styling from the source photo. Fingernails natural or Light Crimson.
 
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
+Eyes: molten orange-amber irises with faint ember striations and a dark charcoal limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
 
 Expression: a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, scowl, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, scowl, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, pale skin, fair skin, washed-out skin, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

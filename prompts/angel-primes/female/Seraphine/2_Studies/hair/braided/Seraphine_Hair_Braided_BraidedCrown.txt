@@ -11,8 +11,8 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure and proportions, all exactly as shown; keep the hair colour and highlights.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale sky-blue irises with radiating dawn-gold striations and a soft rose-gold limbal ring.
+Skin: fair porcelain complexion with a warm rosy undertone, evenly toned and luminous.
 
 Maintain existing outfit expressly.
 
@@ -24,4 +24,4 @@ Hair is woven into a delicate braided crown encircling the head, with the length
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, crowns, head gear, pauldrons, shoulder armor, recolored eyes, glowing eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

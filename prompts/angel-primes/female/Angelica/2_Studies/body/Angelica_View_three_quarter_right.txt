@@ -11,10 +11,10 @@ Background: a basic cream-coloured studio backdrop with even, soft, neutral fron
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Hair: soft champagne-blonde hair with warm honey lights, silky and luminous.
 Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous.
 
 Standing A-pose, the same stance as the incoming image: upright, feet set apart, arms relaxed slightly away from the sides, open hands.
 
@@ -29,4 +29,4 @@ Expression: a relaxed, warm, softly alluring smile - lips gently parted with at 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, changed outfit, changed hairstyle, recolored eyes, glowing eyes, changed eye colour, recoloured eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, changed outfit, changed hairstyle, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

@@ -21,13 +21,34 @@
       "metal": "dark gold",
       "magicColor": "ember red",
       "gemColor": "black diamond",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/half-up-half-down.json"
+      "eyeColor": "Dark crimson irises with faint ember striations and a black limbal ring",
+      "eyeColorGlamour": "Dark crimson irises with faint ember striations and a black limbal ring",
+      "hairColor": "Jet-black hair with a cold gloss",
+      "skinTone": "Pale cool alabaster complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/half-up-half-down.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, commanding, perfectly proportioned build; striking beauty and menace",

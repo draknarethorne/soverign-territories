@@ -1,4 +1,4 @@
-# Sovereign Territories — Dragon Codex: Elder Dragons (ST-021 – ST-030)
+# Sovereign Territories — Dragon Codex: Elder Dragons (SD-021 – SD-030)
 ## Visual Architecture & Elemental Morphology Matrix
 
 ---
@@ -25,33 +25,33 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-## 2. Master Elder Dragon Registry (Mythic Tier ST-021 – ST-030)
+## 2. Master Elder Dragon Registry (Mythic Tier SD-021 – SD-030)
 
 | Card ID | Dragon Name | Element | Bonded Sister | Archetype | Sex | Primary Palette |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| ST-021 | Umbrath | Darkness | Drakness (Necro) | Aerial / Flying | Male | Obsidian, Void-Violet, Smoked Chrome |
-| ST-022 | Pyraxis | Fire | Draknora (Mage) | Aerial / Flying | Male | Molten Crimson, Blackened Basalt, Cinder Gold |
-| ST-023 | Sylvanya | Grass | Drakniya (Druid) | Aerial / Flying | Female | Deep Moss, Emerald-Jade, Living Briar Copper |
-| ST-024 | Glaciora | Ice | Draknira (Wizard) | Aerial / Flying | Female | Glacial Cyan, Permafrost White, Frosted Silver |
-| ST-025 | Aquaria | Water | Draknisa (Enchanter)| Aerial / Flying | Female | Oceanic Blue, Deep Teal, Polished Platinum |
-| ST-026 | Lumira | Light | Drakniss (Cleric) | Aerial / Flying | Female | Solar Alabaster, Radiant Pearl, Sun-Forged Gold |
-| ST-027 | Terrador | Earth | Draknara (Shaman) | Aerial / Flying | Male | Petrified Ochre, Granite Slate, Raw Bronze |
-| ST-028 | Fulgora | Lightning| Drakneta (Summoner)| Aerial / Flying | Female | Storm Cobalt, Arc Violet, Fulgurite Silver |
-| ST-029 | Zephyros | Wind | Draknava (Bard) | Aerial / Flying | Male | Sky Cerulean, Cloud-Ivory, Burnished Brass |
-| ST-030 | Venomis | Poison | Draknoxa (Alchem.) | Aerial / Flying | Female | Toxic Malachite, Bioluminescent Acid, Dark Iron |
+| SD-021 | Umbrath | Darkness | Drakness (Necro) | Aerial / Flying | Male | Obsidian, Void-Violet, Smoked Chrome |
+| SD-022 | Pyraxis | Fire | Draknora (Mage) | Aerial / Flying | Male | Molten Crimson, Blackened Basalt, Cinder Gold |
+| SD-023 | Sylvanya | Grass | Drakniya (Druid) | Aerial / Flying | Female | Deep Moss, Emerald-Jade, Living Briar Copper |
+| SD-024 | Glaciora | Ice | Draknira (Wizard) | Aerial / Flying | Female | Glacial Cyan, Permafrost White, Frosted Silver |
+| SD-025 | Aquaria | Water | Draknisa (Enchanter)| Aerial / Flying | Female | Oceanic Blue, Deep Teal, Polished Platinum |
+| SD-026 | Lumira | Light | Drakniss (Cleric) | Aerial / Flying | Female | Solar Alabaster, Radiant Pearl, Sun-Forged Gold |
+| SD-027 | Terrador | Earth | Draknara (Shaman) | Aerial / Flying | Male | Petrified Ochre, Granite Slate, Raw Bronze |
+| SD-028 | Fulgora | Lightning| Drakneta (Summoner)| Aerial / Flying | Female | Storm Cobalt, Arc Violet, Fulgurite Silver |
+| SD-029 | Zephyros | Wind | Draknava (Bard) | Aerial / Flying | Male | Sky Cerulean, Cloud-Ivory, Burnished Brass |
+| SD-030 | Venomis | Poison | Draknoxa (Alchem.) | Aerial / Flying | Female | Toxic Malachite, Bioluminescent Acid, Dark Iron |
 
 ---
 
 ## 3. Individual Dragon Specifications & JSON Schemas
 
-### ST-021: Umbrath (Darkness Elder Dragon)
-* Bond: Drakness Thorne (ST-001)
+### SD-021: Umbrath (Darkness Elder Dragon)
+* Bond: Drakness Thorne (SD-001)
 * Master Description: An Elder Dragon of armored obsidian and void-violet scales, trailing vaporous black miasma, with razor-faceted wings like fractured eclipse-glass edged in smoked chrome.
 * Biomechanical Morphology: Skeletal, predatory drake frame; elongated bat-like wing joints; hollow eye sockets burning with cold violet flame; ribcage glowing with subterranean necromantic marrow.
 * Schema Block:
   * id: "dragons/elder-dragons/umbrath"
   * kind: "dragon"
-  * cardId: "ST-021"
+  * cardId: "SD-021"
   * name: "Umbrath"
   * element: "Darkness"
   * sex: "Male"
@@ -66,14 +66,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-022: Pyraxis (Fire Elder Dragon)
-* Bond: Draknora Thorne (ST-002)
+### SD-022: Pyraxis (Fire Elder Dragon)
+* Bond: Draknora Thorne (SD-002)
 * Master Description: An Elder Dragon of blackened basalt plates over a pulsing core of magma-gold, exhaling rolling thermal heatwash, with broad jagged wings like cooling volcanic glass edged in burnished cinder-brass.
 * Biomechanical Morphology: Massive, muscular quad-pedal body; heavy anvil-shaped skull; thick chest plates that vent bright orange superheated gas through volcanic fissures between the scales.
 * Schema Block:
   * id: "dragons/elder-dragons/pyraxis"
   * kind: "dragon"
-  * cardId: "ST-022"
+  * cardId: "SD-022"
   * name: "Pyraxis"
   * element: "Fire"
   * sex: "Male"
@@ -88,14 +88,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-023: Sylvanya (Grass Elder Dragon)
-* Bond: Drakniya Thorne (ST-003)
+### SD-023: Sylvanya (Grass Elder Dragon)
+* Bond: Drakniya Thorne (SD-003)
 * Master Description: An Elder Dragon of layered moss-green and polished jade scales, trailing floating pollen motes and wild vines, with sweeping leaf-veined wings like translucent viridian canopy glass edged in living briar-copper.
 * Biomechanical Morphology: Slender, serpentine woodland dragon; agile four-limbed stance; antlered horn structures resembling ancient ironwood roots; prehensile tail tipped with a blooming floral spike.
 * Schema Block:
   * id: "dragons/elder-dragons/sylvanya"
   * kind: "dragon"
-  * cardId: "ST-023"
+  * cardId: "SD-023"
   * name: "Sylvanya"
   * element: "Grass"
   * sex: "Female"
@@ -110,14 +110,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-024: Glaciora (Ice Elder Dragon)
-* Bond: Draknira Thorne (ST-004)
+### SD-024: Glaciora (Ice Elder Dragon)
+* Bond: Draknira Thorne (SD-004)
 * Master Description: An Elder Dragon of faceted permafrost-white and glacial-cyan scales, venting plumes of sub-zero mist, with rigid crystalline wings like sheer sheets of polar ice edged in frosted silver filigree.
 * Biomechanical Morphology: Statuesque, razor-edged drake; geometric ice crystal formations along spine and jaw; long, elegant neck; translucent wings that scatter light into prismatic refractions.
 * Schema Block:
   * id: "dragons/elder-dragons/glaciora"
   * kind: "dragon"
-  * cardId: "ST-024"
+  * cardId: "SD-024"
   * name: "Glaciora"
   * element: "Ice"
   * sex: "Female"
@@ -132,14 +132,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-025: Aquaria (Water Elder Dragon)
-* Bond: Draknisa Thorne (ST-005)
+### SD-025: Aquaria (Water Elder Dragon)
+* Bond: Draknisa Thorne (SD-005)
 * Master Description: An Elder Dragon of deep oceanic-blue and deep-teal scales, trailing streams of suspended seawater, with wings like rippling sheets of tide-glass edged in polished platinum.
 * Biomechanical Morphology: Hydrodynamic, finned serpentine drake; smooth interlocking fish-scale armor; broad aquatic rudders on wrists and ankles; undulating dorsal fins that glow with bioluminescent pelagic blue.
 * Schema Block:
   * id: "dragons/elder-dragons/aquaria"
   * kind: "dragon"
-  * cardId: "ST-025"
+  * cardId: "SD-025"
   * name: "Aquaria"
   * element: "Water"
   * sex: "Female"
@@ -154,14 +154,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-026: Lumira (Light Elder Dragon)
-* Bond: Drakniss Thorne (ST-006)
+### SD-026: Lumira (Light Elder Dragon)
+* Bond: Drakniss Thorne (SD-006)
 * Master Description: An Elder Dragon of brilliant solar-alabaster scales veined with molten dawn-gold, radiating an aura of warm blinding daylight, with feathered-glass wings edged in pure sun-forged aurum.
 * Biomechanical Morphology: Regal, falcon-crested celestial dragon; broad breastplate shaped like a golden crusader aegis; quad-wing formation (four primary wings); smooth, unblemished scales reflecting brilliant white halos.
 * Schema Block:
   * id: "dragons/elder-dragons/lumira"
   * kind: "dragon"
-  * cardId: "ST-026"
+  * cardId: "SD-026"
   * name: "Lumira"
   * element: "Light"
   * sex: "Female"
@@ -176,14 +176,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-027: Terrador (Earth Elder Dragon)
-* Bond: Draknara Thorne (ST-007)
+### SD-027: Terrador (Earth Elder Dragon)
+* Bond: Draknara Thorne (SD-007)
 * Master Description: An Elder Dragon of petrified-ochre and rough granite-slate armor plates, crushing stone underfoot, with heavy jagged wings like tectonic bedrock slabs laced with veins of raw ancient bronze.
 * Biomechanical Morphology: Heavily armored, four-legged fortress drake; low center of gravity; spiked clubbed tail; broad horned brow capable of battering through fortress walls; subterranean tectonic cracks pulsing with amber resonance.
 * Schema Block:
   * id: "dragons/elder-dragons/terrador"
   * kind: "dragon"
-  * cardId: "ST-027"
+  * cardId: "SD-027"
   * name: "Terrador"
   * element: "Earth"
   * sex: "Male"
@@ -198,14 +198,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-028: Fulgora (Lightning Elder Dragon)
-* Bond: Drakneta Thorne (ST-008)
+### SD-028: Fulgora (Lightning Elder Dragon)
+* Bond: Drakneta Thorne (SD-008)
 * Master Description: An Elder Dragon of storm-cobalt and polished fulgurite scales, crackling with continuous arc-violet kinetic discharge, with swept delta wings like sheets of ion-glass edged in conductivity-pure silver.
 * Biomechanical Morphology: Sleek, aerodynamic spear-head silhouette; sharp needle-like talons; jagged, split-fork tail; spine configured like high-voltage capacitors that vent branching lightning arcs during flight.
 * Schema Block:
   * id: "dragons/elder-dragons/fulgora"
   * kind: "dragon"
-  * cardId: "ST-028"
+  * cardId: "SD-028"
   * name: "Fulgora"
   * element: "Lightning"
   * sex: "Female"
@@ -220,14 +220,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-029: Zephyros (Wind Elder Dragon)
-* Bond: Draknava Thorne (ST-009)
+### SD-029: Zephyros (Wind Elder Dragon)
+* Bond: Draknava Thorne (SD-009)
 * Master Description: An Elder Dragon of sky-cerulean and feathered cloud-ivory scales, riding gale-force slipstreams, with elongated swept wings like translucent barometric vapor-glass edged in burnished wind-brass.
 * Biomechanical Morphology: Exceptionally light, hollow-boned aerodynamic wyrm; long streamer-like tail rudders; triple-jointed wings designed for hovering and rapid banking maneuvers; air-intake cowlings along the jawline.
 * Schema Block:
   * id: "dragons/elder-dragons/zephyros"
   * kind: "dragon"
-  * cardId: "ST-029"
+  * cardId: "SD-029"
   * name: "Zephyros"
   * element: "Wind"
   * sex: "Male"
@@ -242,14 +242,14 @@ To bridge Codex storage and ComfyUI prompts, each dragon retains:
 
 ---
 
-### ST-030: Venomis (Poison Elder Dragon)
-* Bond: Draknoxa Thorne (ST-010)
+### SD-030: Venomis (Poison Elder Dragon)
+* Bond: Draknoxa Thorne (SD-010)
 * Master Description: An Elder Dragon of toxic malachite and chitinous dark-iron scales, dripping caustic green venom from hollow fangs, with ragged ribbed wings like corroded acid-glass edged in tarnished blackened steel.
 * Biomechanical Morphology: Low-slung, predatory viper-drake; throat sac that glows with bioluminescent acid; four forward-facing viper fangs; segmented scorpion-like tail tipped with a hollow injecting stinger.
 * Schema Block:
   * id: "dragons/elder-dragons/venomis"
   * kind: "dragon"
-  * cardId: "ST-030"
+  * cardId: "SD-030"
   * name: "Venomis"
   * element: "Poison"
   * sex: "Female"

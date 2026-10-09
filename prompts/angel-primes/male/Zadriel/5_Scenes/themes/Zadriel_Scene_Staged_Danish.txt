@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep sea-teal irises with faint pale-aqua striations and a dark navy limbal ring.
+Skin: light olive-tan complexion, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
 
 A drift of flowing water and drifting spray circles him, cool teal light glinting within it.
 
-Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle cool teal catchlight.
+Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural deep sea-teal irises at the rim, iris detail still visible, a gentle cool teal catchlight.
 
 Environment: a snowbound fairy-tale harbour town at dusk: tall colourful gabled houses with snow on the steep roofs along a frozen canal, wooden sailing ships locked in the ice, warm lantern light in the windows, and across the water a white palace of ice spires under a pale rose-and-blue winter sky with snow falling softly.
 

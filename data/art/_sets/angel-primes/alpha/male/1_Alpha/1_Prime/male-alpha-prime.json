@@ -6,5 +6,6 @@
   "template": "data/art/_templates/heroes/pose-male-human.txt",
   "output": "prompts/angel-primes/alpha/Male/1_Alpha/1_Prime/Male_Alpha_1_Prime.txt",
   "denoise": "~1.0",
-  "notes": "Male Prime A-pose, built from the original photo."
+  "notes": "Male Prime A-pose, built from the original photo.",
+  "figureProfile": "standard"
 }

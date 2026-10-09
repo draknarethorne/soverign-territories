@@ -23,7 +23,12 @@
         "sunburnt skin",
         "overly tanned skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "yellow-gold hair",
+        "grey hair",
+        "white hair with blue tint"
+      ]
     },
     "physique": {
       "build": "Tall, statuesque high-elven knight; aristocratic, symmetrical athletic frame",

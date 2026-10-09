@@ -17,19 +17,19 @@ Standing A-pose: upright, feet set apart, arms relaxed slightly away from the si
 
 Figure: slim, agile, long-limbed build; light on his feet; lean, defined chest; long, lean, wiry arms; narrow waist; long, lean, springy legs.
 
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Skin: fair cool-toned complexion with a faint wind-flushed cheek, evenly toned.
 
 Wearing: only a Storm Sky Blue fitted sleeveless tank top and matching short training shorts with steel piping; arms, lower legs and feet bare.
 
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension; swept back into a sleek, low ponytail at the nape of the neck; still air (override the source hairstyle).
+Hair: pale ash-blond hair, fine and wind-swept; swept back into a sleek, low ponytail at the nape of the neck; still air (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, bare-faced. Reset any heavy styling from the source photo. Fingernails natural or Light Blue.
 
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
+Eyes: pale storm-grey irises with faint silver striations and a slate limbal ring, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
 
 Expression: a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, scowl, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, side ties, extra straps, recolored eyes, glowing eyes, blue eyes, green eyes, brown eyes, hazel eyes, amber eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, scowl, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, boyish figure, stick-like, tanned skin, bronze skin, sun-weathered skin, ruddy skin, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

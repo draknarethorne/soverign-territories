@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep garnet-red irises with radiating dark-violet striations and a black limbal ring.
+Skin: pale cool alabaster complexion, evenly toned and flawless.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions. Random slight breeze. chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position. following the body's unpredictable shift. seductive, unpredictable. a playful, knowing smile, eyes bright with mischief. hands in unpredictable positions, touching her body.
 
 A drift of drifting shadow, smoke and pale starlight circles her, dark violet light glinting within it.
 
-Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle dark violet catchlight.
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural deep garnet-red irises at the rim, iris detail still visible, a gentle dark violet catchlight.
 
 Environment: a high-fantasy winter market square at dusk, timber stalls with garlands and string lights, a huge glowing tree, steaming mulled wine, lanterns and gently falling snow.
 

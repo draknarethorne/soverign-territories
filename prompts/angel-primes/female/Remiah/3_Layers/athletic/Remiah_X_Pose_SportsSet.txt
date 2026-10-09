@@ -8,11 +8,11 @@ prompt:
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
+Hair: sleek dark-brown hair with a subtle storm-violet sheen.
 Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
-Legs: long, lean, toned legs.
+Eyes: bright electric-blue irises with radiating white-gold striations and a deep indigo limbal ring.
+Skin: warm olive complexion, evenly toned and clear.
+Legs: long, lean, slender legs.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
@@ -22,7 +22,7 @@ Maintain strict fidelity to the reference image's facial features, facial bone s
 
 Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: athletic, toned, wiry-strong build; quick and lean; flat, defined midriff with a tight waist; toned, sinewy arms; narrow, athletic hips with a gentle curve.
+Figure: slender, lean, agile build; quick and light; flat, narrow midriff with a tight waist; slender, lightly defined arms; narrow hips with a gentle curve.
 
 Wearing: only a Electric Gold athletic set in a lustrous satin-metallic finish with a subtle bright gold sheen and a hairline bright gold edge trim: a fitted compression sports bra with a low scoop neckline and thin racerback straps that lifts and centres the bust into a tight cleavage, and matching low-rise bike shorts; midriff bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes.
 
@@ -39,4 +39,4 @@ Expression: a relaxed, warm, softly alluring smile - lips gently parted with at 
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, thick thighs, wide hips, boyish figure, stick-like, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.
+extra people, studio equipment, props, extra limbs, extra fingers, extra digits, deformed hands, extra feet, extra clothing, bra, padded bra, sports bra, molded cups, panties, underwear, briefs, wide waistband, thick side bands, full coverage, bow-ties, bikini ties, side ties, tied bows, hip bows, dangling strings, loose string ends, recolored eyes, glowing eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, wide smile, broad grin, toothy smile, showing all teeth, laughing, cheeks pushed high, squinting smile, closed neutral mouth, flat expression, resting face, pout, squinting, half-closed eyes, asymmetrical eyes, uneven eyes, crossed eyes, eyes looking away, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, hair covering breasts, blonde hair, black hair, red hair, grey hair, uniform flat one-tone hair, thick thighs, wide hips, boyish figure, stick-like, pale skin, washed-out skin, ruddy skin, shoes, heels, high heels, sandals, boots, footwear, socks, stockings, heavy makeup, over-rouged cheeks, backlight, rim light, illustration, painting, drawing, digital art, concept art, 3d render, cgi, cartoon, anime, stylized, airbrushed, plastic skin, doll-like, text, watermark, logo.

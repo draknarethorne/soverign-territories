@@ -6,12 +6,12 @@ prompt:
 
 Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (natural skin tone exactly as in the reference image, evenly toned), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
+Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (cool fair complexion, evenly toned and smooth), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: ash-grey silver hair, fine and neat.
+Eyes: pale frost-blue irises with faint ice-white striations and a deep slate limbal ring.
+Skin: cool fair complexion, evenly toned and smooth.
 
 Body: shape the figure to this individual build, keeping his height, head and pose: tall, slim, poised, scholarly-athletic build; lean, even, lightly defined chest; long, slim, precise arms; narrow, straight waist; long, slim legs.
 
@@ -20,4 +20,4 @@ Keep the face, expression, makeup, the pose, the full-length framing from head t
 ----------------------------------------------------------------
 negative prompt:
 
-swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, changed pose, text, watermark, logo.
+swim trunks, swim brief, shorts, underwear, straps, strings, ties, waistband, fabric, chains, jewelry, shoes, stickers, body paint, painted body, white spots, polka dots, dark clothing, headshot, close-up, cropped body, cropped feet, censored, blurred, mosaic, extra people, extra limbs, extra digits, deformed hands, changed face, blonde hair, black hair, brown hair, red hair, uniform flat one-tone hair, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, changed pose, tanned skin, bronze skin, sun-weathered skin, ruddy skin, text, watermark, logo.

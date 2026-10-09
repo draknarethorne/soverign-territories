@@ -21,13 +21,32 @@
       "metal": "antique gold",
       "magicColor": "soft spring green",
       "gemColor": "peridot",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/side-braid.json"
+      "eyeColor": "Bright spring-green irises with radiating golden striations and a soft moss limbal ring",
+      "eyeColorGlamour": "Bright spring-green irises with radiating golden striations and a soft moss limbal ring",
+      "hairColor": "Warm strawberry-blonde hair with soft golden lights, bouncy and full of life",
+      "skinTone": "Light peachy complexion with a warm blush undertone and a few faint freckles, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "washed-out skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/side-braid.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Petite, slender, lightly built with a youthful, springy frame",
@@ -35,7 +54,7 @@
       "bust": "Full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slim, light arms",
       "hips": "Softly curved, neat feminine hips",
-      "legs": "Slender, lightly toned legs",
+      "legs": "Slender, light legs",
       "distinguishingMarks": [],
       "raceAlignment": "Human - standard human presentation (angelic only through wings, light and bearing)"
     },

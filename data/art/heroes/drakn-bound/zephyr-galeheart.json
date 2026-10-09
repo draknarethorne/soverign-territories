@@ -23,7 +23,12 @@
         "sunburnt skin",
         "overly tanned skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json"
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/short/textured-crop.json",
+      "hairColorNegatives": [
+        "golden-yellow hair",
+        "grey hair",
+        "white hair"
+      ]
     },
     "physique": {
       "build": "Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach",

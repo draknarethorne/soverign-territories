@@ -9,10 +9,10 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
+Hair: glossy deep plum-black hair with a faint violet sheen, long and sleek.
 Bust: full, firm, rounded bust with a sleek high lift and a pronounced inner curve, natural medium detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: deep orchid-violet irises with radiating acid-green striations and a blackened plum limbal ring.
+Skin: fair cool-ivory complexion with a faint violet undertone, evenly toned and smooth.
 
 Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
@@ -26,7 +26,7 @@ She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms 
 
 A shimmering column of curling green venom mist and falling drops, visible as streaming ribbons and toxic violet-green light, spirals around her.
 
-Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle toxic violet-green catchlight.
+Eyes: irises softly aglow with toxic violet-green light, brightest near the pupil and fading to the natural deep orchid-violet irises at the rim, iris detail still visible, a gentle toxic violet-green catchlight.
 
 Environment: a rope bridge strung between giant jungle trees high above the forest floor, glowing flowers, drifting mist and a golden sky through the leaves.
 
@@ -35,4 +35,4 @@ Setting: a grounded, cinematic fantasy world photographed on location like a fea
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, tanned skin, bronze skin, sun-weathered skin, ruddy skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

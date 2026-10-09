@@ -40,7 +40,7 @@ Darkness · Fire · Grass · Ice · Water · Light · Earth · Lightning · Wind
 ## Card series (base + expansion name pool)
 
 - **Sovereign Dawn** — the launch series (`SD-###` numbering; 219 cards; see the series
-  decision in [`ideation_codex.md`](ideation_codex.md)).
+  decision in [`sovereign_dawn_codex.md`](sovereign_dawn_codex.md)).
 - Expansion name pool: **Nether Realm** · **Primal Wilds** ·
   **Celestial Gate** · **Awakening** · **Shadow Sovereign**.
 

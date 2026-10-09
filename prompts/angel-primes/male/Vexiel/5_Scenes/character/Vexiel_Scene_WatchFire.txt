@@ -9,9 +9,9 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Hair: dark green-black hair with a faint venom-green sheen.
+Eyes: acid yellow-green irises with faint violet striations and a blackened limbal ring.
+Skin: pale olive complexion with a cool undertone, evenly toned.
 
 Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
@@ -29,7 +29,7 @@ Holding a bandolier of slim tarnished silver throwing knives across the chest, o
 
 Firelight flickers along his wings while curling green venom mist and falling drops curl in the heat above the fire, acid green light low in his eyes.
 
-Eyes: natural irises, exactly as in the incoming image, calm and clear with crisp catchlights.
+Eyes: natural acid yellow-green irises, exactly as in the incoming image, calm and clear with crisp catchlights.
 
 Environment: the carved stone entrance of a mountain hall, giant statues flanking huge bronze doors, glowing forge-light spilling out and a snowy peak above.
 
@@ -38,4 +38,4 @@ Setting: a grounded, cinematic gothic fantasy world photographed on location lik
 ----------------------------------------------------------------
 negative prompt:
 
-extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, bald, shaved head, thinning hair, pale skin, washed-out skin, ruddy skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

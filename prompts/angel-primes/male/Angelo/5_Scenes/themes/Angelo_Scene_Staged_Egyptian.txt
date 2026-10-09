@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: clear steel-grey irises with faint soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
 
 A drift of soft white light, drifting pale feathers and motes circles him, gold light glinting within it.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural clear steel-grey irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Environment: a vast high-fantasy Egyptian hypostyle temple hall, towering painted papyrus columns covered in hieroglyphs, torchlight flickering on gold-leafed walls, statues of jackal and falcon gods in the shadows, drifting incense smoke.
 

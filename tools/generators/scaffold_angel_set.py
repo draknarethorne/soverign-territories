@@ -68,7 +68,7 @@ def alpha_chain(wr, card, slug, hero, female, heels):
     (Barefoot and Heels A-poses fed the Bare image). Men stay barefoot in every A-pose, so they have no footwear step."""
     sex = "female" if female else "male"
     wr.write("alpha", f"{slug}-alpha-prime", card(f"{slug}-alpha-prime", "alpha", "alpha", f"{hero}_Alpha_1_Prime", f"pose-{sex}-human.txt", denoise="~1.0",
-             note=f"{hero} Prime A-pose, built from the original photo.", **({"figureProfile": "standard"} if female else {})))
+             note=f"{hero} Prime A-pose, built from the original photo.", figureProfile="standard"))
     bare_tpl = "bare-human.txt" if female else "bare-male-human.txt"
     study = "bare-skin-study" if female else "bare-skin-study-male"
     wr.write("alpha", f"{slug}-alpha-bare-figure", card(f"{slug}-alpha-bare-figure", "alpha", "alpha", f"{hero}_Alpha_2_Bare_Figure", bare_tpl,

@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale sky-blue irises with radiating dawn-gold striations and a soft rose-gold limbal ring.
+Skin: fair porcelain complexion with a warm rosy undertone, evenly toned and luminous.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
 
 A drift of golden light and drifting motes circles her, warm golden-white light glinting within it.
 
-Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle warm golden-white catchlight.
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural pale sky-blue irises at the rim, iris detail still visible, a gentle warm golden-white catchlight.
 
 Environment: a rustic timber lodge at dusk with a crackling bonfire, hanging corn and gourds, long tables of harvest food, drifting leaves and sparks over a hillside orchard.
 

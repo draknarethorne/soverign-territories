@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: bright spring-green irises with radiating golden striations and a soft moss limbal ring.
+Skin: light peachy complexion with a warm blush undertone and a few faint freckles, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a playful, knowing smile, eyes bright with mischief. one arm raised and channeling energy, the other hand cupped at her side.
 
 A drift of living vines, leaves and petals circles her, soft spring green light glinting within it.
 
-Eyes: irises softly aglow with soft spring green light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle soft spring green catchlight.
+Eyes: irises softly aglow with soft spring green light, brightest near the pupil and fading to the natural bright spring-green irises at the rim, iris detail still visible, a gentle soft spring green catchlight.
 
 Environment: the deck of a high-fantasy galleon in a storm, taut rigging and flapping patched sails, crashing grey waves, flashes of lightning and rain-slick planks.
 

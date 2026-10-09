@@ -37,7 +37,8 @@ data debt, and the readiness gates.
 | Art-direction pipeline | `../data/art/README.md` | Authoritative for how card art is produced (identity files, components, templates, `gen_prompt.py`). |
 | How to create art and video | `art/tutorial-art.md`, `art/tutorial-video.md` | Step-by-step for writing and tuning the art and animation JSON, by hand or with an AI assistant. |
 | ComfyUI workflows and launchers | `../workflows/README.md` | Workspaces (one home per set, temporary copies on request, `zz_` guards), the Qwen, FireRed and MiniMax engines, hand-curated workflows, the common commands and `../bin/*.cmd`. |
-| Hero/dragon vision roster | `codex/heroes/ideation_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline. **Ideation-tier vision**, not MVP scope — a subset ships first. |
+| Hero/dragon vision roster | `codex/heroes/sovereign_dawn_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline (`SD-001` to `SD-030`). **Ideation-tier vision**, not MVP scope — a subset ships first. A roster, not the codex: the JSON wins. |
+| Angel Primes roster and builds | `codex/heroes/angel_primes_codex.md`, `angel_primes_physique.md` | The 22 angels (a proposed exclusive `AP-001` to `AP-022` series): element, alignment, colours, and why each is built as they are. The art identities win. |
 | Current state, decisions, backlog | `STATUS.md` | Wins on "what is done / open / next". Rules still live in the rows above. |
 | Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
 | Art packs, dynamic ComfyUI prompts | `art/art-packs-and-comfy-node-proposal.md` | Proposal: zip packs of art JSON and custom nodes on one shared prompt library. |
@@ -51,7 +52,7 @@ data debt, and the readiness gates.
 | 2+ | Exploration, economies, deeper progression, or more elements/heroes from the vision roster after separate design and data validation. |
 | 3+ | PvP, alliances, territory conquest, trade, and live-service operations after fairness and operational gates. |
 
-> **Vision vs. MVP:** `codex/heroes/ideation_codex.md` describes the full 10-element / 30-hero arc (the 10 Drakn
+> **Vision vs. MVP:** `codex/heroes/sovereign_dawn_codex.md` describes the full 10-element / 30-hero arc (the 10 Drakn
 > sisters, their 10 bound heroes, their 10 Elder Dragons, introduced across generations Pokémon-style). The art
 > phase proved we can *produce* art for all of it; the MVP ships a **subset of elements**, not the whole roster.
 > The two are a staged timeline, not a contradiction — see the reconciliation plan for the open "which 3–4

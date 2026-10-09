@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: warm amber-brown irises with radiating golden-sand striations and a dark bronze limbal ring.
+Skin: warm medium-brown complexion with a golden undertone, evenly toned and glowing.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-cast. Light breeze. standing tall, weight shifted onto one leg, chin lifted, commanding and composed as she channels a spell. level, chin lifted. focused forward, intense. a playful, knowing smile, eyes bright with mischief. one arm raised and channeling energy, the other hand cupped at her side.
 
 A drift of stone shards, dust and glowing crystals circles her, warm amber light glinting within it.
 
-Eyes: irises softly aglow with warm amber light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle warm amber catchlight.
+Eyes: irises softly aglow with warm amber light, brightest near the pupil and fading to the natural warm amber-brown irises at the rim, iris detail still visible, a gentle warm amber catchlight.
 
 Environment: a high-fantasy desert bazaar at night, colourful silk awnings and hanging brass lanterns, spice stalls, white domes and minarets under a crescent moon and a sky of stars.
 

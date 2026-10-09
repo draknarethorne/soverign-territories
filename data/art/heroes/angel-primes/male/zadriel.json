@@ -21,13 +21,33 @@
       "metal": "polished silver",
       "magicColor": "cool teal",
       "gemColor": "sapphire",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/natural.json"
+      "eyeColor": "Deep sea-teal irises with faint pale-aqua striations and a dark navy limbal ring",
+      "eyeColorGlamour": "Deep sea-teal irises with faint pale-aqua striations and a dark navy limbal ring",
+      "hairColor": "Sandy dark-blond hair with cool sea-salt highlights",
+      "skinTone": "Light olive-tan complexion, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "washed-out skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/natural.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Lean, gentle, swimmer's build; long and fluid",

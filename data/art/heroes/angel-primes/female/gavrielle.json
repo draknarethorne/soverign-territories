@@ -21,13 +21,32 @@
       "metal": "polished nickel",
       "magicColor": "pale sky-silver",
       "gemColor": "moonstone",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/drifting-back.json"
+      "eyeColor": "Pale lavender-blue irises with radiating silver striations and a soft slate limbal ring",
+      "eyeColorGlamour": "Pale lavender-blue irises with radiating silver striations and a soft slate limbal ring",
+      "hairColor": "Soft golden-wheat blonde hair with pale sun-bleached ends, light and airy",
+      "skinTone": "Light warm-beige complexion with a faint wind-flushed cheek, evenly toned",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "washed-out skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/drifting-back.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, willowy, long-limbed build with a dancer's poise",

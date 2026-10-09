@@ -21,13 +21,31 @@
       "metal": "tarnished silver",
       "magicColor": "acid green",
       "gemColor": "green tourmaline",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wet-look-slicked-back.json"
+      "eyeColor": "Acid yellow-green irises with faint violet striations and a blackened limbal ring",
+      "eyeColorGlamour": "Acid yellow-green irises with faint violet striations and a blackened limbal ring",
+      "hairColor": "Dark green-black hair with a faint venom-green sheen",
+      "skinTone": "Pale olive complexion with a cool undertone, evenly toned",
+      "eyeColorNegatives": [
+        "blue eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes"
+      ],
+      "skinColorNegatives": [
+        "pale skin",
+        "washed-out skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wet-look-slicked-back.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Lean, sinewy, sly build; fluid and predatory",

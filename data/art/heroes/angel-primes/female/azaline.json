@@ -21,13 +21,33 @@
       "metal": "brushed chrome",
       "magicColor": "pale ice blue",
       "gemColor": "diamond",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/sleek-middle-part-tucked.json"
+      "eyeColor": "Pale steel-blue irises with radiating frost-white striations and a deep navy limbal ring",
+      "eyeColorGlamour": "Pale steel-blue irises with radiating frost-white striations and a deep navy limbal ring",
+      "hairColor": "Sleek jet-black hair with a cold blue-steel sheen",
+      "skinTone": "Fair neutral-cool complexion with a faint blue-pink undertone, evenly toned and smooth",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/sleek-middle-part-tucked.json",
+      "hairColorNegatives": [
+        "blonde hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Slim, poised, elegant build with precise posture",

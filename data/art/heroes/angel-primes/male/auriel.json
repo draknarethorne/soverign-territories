@@ -21,13 +21,33 @@
       "metal": "polished gold",
       "magicColor": "bright sunrise gold",
       "gemColor": "citrine",
-      "eyeColor": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "eyeColorGlamour": "irises in their natural colour exactly as in the reference image, with crisp definition",
-      "hairColor": "natural hair colour exactly as in the reference image, with healthy shine and dimension",
-      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
-      "eyeColorNegatives": [],
-      "skinColorNegatives": [],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/voluminous-blowout.json"
+      "eyeColor": "Clear sky-blue irises with faint dawn-gold striations and a soft gold limbal ring",
+      "eyeColorGlamour": "Clear sky-blue irises with faint dawn-gold striations and a soft gold limbal ring",
+      "hairColor": "Warm golden-blonde hair with sunlit highlights",
+      "skinTone": "Fair warm complexion with a golden undertone, evenly toned",
+      "eyeColorNegatives": [
+        "green eyes",
+        "brown eyes",
+        "grey eyes",
+        "hazel eyes",
+        "amber eyes",
+        "red eyes",
+        "violet eyes"
+      ],
+      "skinColorNegatives": [
+        "tanned skin",
+        "bronze skin",
+        "sun-weathered skin",
+        "ruddy skin"
+      ],
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/voluminous-blowout.json",
+      "hairColorNegatives": [
+        "black hair",
+        "brown hair",
+        "red hair",
+        "grey hair",
+        "uniform flat one-tone hair"
+      ]
     },
     "physique": {
       "build": "Tall, radiant, heroic build; broad-shouldered and noble",

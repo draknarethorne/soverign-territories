@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: soft aqua-teal irises with radiating pearl-white striations and a pale seafoam limbal ring.
+Skin: fair cool-neutral complexion with a faint pearl undertone, evenly toned and smooth.
 
 A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a soft, wondering smile, eyes lifted and glowing. one hand resting on the knee, the other draped gracefully at her side.
 
 A drift of flowing water and drifting spray circles her, soft aqua light glinting within it.
 
-Eyes: irises softly aglow with soft aqua light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle soft aqua catchlight.
+Eyes: irises softly aglow with soft aqua light, brightest near the pupil and fading to the natural soft aqua-teal irises at the rim, iris detail still visible, a gentle soft aqua catchlight.
 
 Environment: a high-fantasy observatory terrace of white stone under a total solar eclipse, a black sun ringed with shimmering corona light, huge brass astrolabes and starfields appearing in the darkened sky.
 

@@ -15,7 +15,7 @@ Maintain strict fidelity to the reference image's facial features, facial bone s
 
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: athletic, broad-shouldered, well-proportioned build; defined, naturally muscular chest and core, toned and healthy; trim, athletic waist; long, strong, well-proportioned legs.
+Figure: athletic, well-proportioned build; defined, healthy chest and core; toned, balanced arms; trim waist; long, well-proportioned legs.
 
 Skin: natural skin tone exactly as in the reference image, evenly toned.
 

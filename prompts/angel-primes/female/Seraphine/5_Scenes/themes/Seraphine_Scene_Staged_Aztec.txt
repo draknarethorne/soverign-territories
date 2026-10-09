@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: pale sky-blue irises with radiating dawn-gold striations and a soft rose-gold limbal ring.
+Skin: fair porcelain complexion with a warm rosy undertone, evenly toned and luminous.
 
 A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a soft, wondering smile, eyes lifted and glowing. one hand resting on the knee, the other draped gracefully at her side.
 
 A drift of golden light and drifting motes circles her, warm golden-white light glinting within it.
 
-Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle warm golden-white catchlight.
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural pale sky-blue irises at the rim, iris detail still visible, a gentle warm golden-white catchlight.
 
 Environment: a hidden jungle sanctuary around a turquoise cenote, moss-covered carved stone faces, hanging vines, shafts of light through the canopy and drifting mist over the water.
 

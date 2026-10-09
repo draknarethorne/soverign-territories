@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone exactly as in the reference image, evenly toned.
+Eyes: clear light-grey irises with radiating soft-gold striations and a pale champagne limbal ring.
+Skin: fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serene, knowing smile, eyes calm and bright. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 A drift of soft white light, drifting pale feathers and motes circles her, gold light glinting within it.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural clear light-grey irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Environment: a high-fantasy frontier town's dusty main street at sundown, weathered timber storefronts with hanging signs, a saloon with swinging doors, tumbling sage, long amber shadows and red mesas beyond.
 
