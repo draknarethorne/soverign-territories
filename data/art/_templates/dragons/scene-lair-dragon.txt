@@ -18,7 +18,7 @@ Hoard: {{HOARD}}.
 
 {{EFFECTS}}
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

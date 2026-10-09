@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She stands in a dramatic lunge, weight over her front leg, one arm thrown out to the side with an open palm releasing a rolling wave of flame, the other hand drawn back at her shoulder shaping a bright ball of fire between her fingers, torso arched, chin lifted, a fierce, confident gaze to the camera. A hot, gusting wind whips her gown, hem and hair upward. No weapon or staff - casting with her bare hands only.",
+    "pose": "She stands in a dramatic lunge, weight over her front leg, one arm thrown out to the side with an open palm releasing a rolling wave of flame, the other hand drawn back at her shoulder shaping a bright ball of fire between her fingers, torso arched, chin lifted, a fierce, confident gaze to the camera. A hot, gusting wind whips her gown, hem and hair upward. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/draknora/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

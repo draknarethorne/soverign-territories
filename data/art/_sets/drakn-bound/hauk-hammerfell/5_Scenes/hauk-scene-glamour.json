@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/hauk/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/hauk-hammerfell/weapons/radiant-warhammer.json",
-    "effects": "Soft rays of {{MAGIC}} light fall around him, a few golden motes drifting like dust in sunlight - understated, nothing busy.",
+    "effects": "Soft rays of {{MAGIC}} light fall around him, a few golden motes drifting like dust in sunlight - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/temple/sunlit-cathedral-sanctum.json"
   },

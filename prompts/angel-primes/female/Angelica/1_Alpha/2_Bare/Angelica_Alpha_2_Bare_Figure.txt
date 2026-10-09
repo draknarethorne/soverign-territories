@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Angelica Prime. This pass removes clothing, 
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look, with no clothing, underwear, waistband or clothing lines and no marks or tan lines anywhere; completely bare natural skin with no paint and no tint, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced).
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe, slender, well-proportioned build; slim waist; shapely feminine hips, gently curved (not wide); long, slender legs with slim, tapering thighs.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, slender, well-proportioned build; slim waist; shapely feminine hips, gently curved; long, slender legs with slim, tapering thighs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

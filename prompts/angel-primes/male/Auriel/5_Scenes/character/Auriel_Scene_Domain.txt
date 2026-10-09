@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing segmented bronze lorica with a Radiant Pearl White tunic skirt, a crested bronze helm held under one arm, a studded military belt and a flowing cape, every plate and trim engraved with a radiant sunburst in gold; pristine, luminous and unmarked.
 
@@ -31,7 +31,7 @@ Eyes: fully glowing bright sunrise gold, irises and pupils blazing with luminous
 
 Environment: a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

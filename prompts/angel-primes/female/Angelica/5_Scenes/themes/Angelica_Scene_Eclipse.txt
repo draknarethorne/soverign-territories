@@ -9,12 +9,12 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced).
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a sleek gown of Soft Pearl White silk fading to black at the hem, a radiant gold sunburst embroidered across the bodice, a deep plunge neckline, a high slit and a long train.
 
@@ -24,19 +24,19 @@ Jewelry: a jewelry set of a black onyx disc pendant ringed in gold rays on a cha
 Back: a pair of large pearl-white feathered wings, softly layered, each feather edged in warm champagne gold at the tip.
 Legs & feet: thigh-high black obsidian-sheen stiletto boots with gold crescent buckles and Soft Pearl White corona inlay on the heel.
 
-A candid high-fashion editorial shot, refined seated glamour. No breeze. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a fierce, focused gaze, chin raised. one hand resting on the knee, the other draped gracefully at her side.
+A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a fierce, focused gaze, chin raised. one hand resting on the knee, the other draped gracefully at her side.
 
 Holding a ritual mace with a round black head ringed by a gold corona that glows gold at its edge, held in one hand.
 
 A drift of soft white light, drifting pale feathers and motes circles her, gold light glinting within it.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Makeup: eclipse makeup - a deep black-plum lid fading into a thin gold corona flick, metallic gold dots along the brow, an elongated glow on the cheekbones and a deep wine lip.
 
 Environment: a windswept mountain summit with a ring of standing stones under a black sun, corona rays streaking the sky, pale light shimmering across the rocks and robed silhouettes far below.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

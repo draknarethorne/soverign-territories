@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/dresses/flowing-sundress.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
-    "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around her - understated, nothing busy.",
+    "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around her - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/drakniya/backgrounds/fantasy/throne/living-root-throne.json"
   },

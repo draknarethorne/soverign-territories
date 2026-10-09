@@ -9,27 +9,27 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing Soft Pearl White-toned half-plate: a polished breastplate and backplate, pauldrons and a waist guard over a quilted gold arming doublet, the arms and legs in leather with plate vambraces.
 
 Jewelry: a simple gold chain with a small pendant.
 Back: a pair of large, softly layered white feathered wings spread behind the shoulders, every feather clearly defined with a soft pearl sheen at the tips.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. bold, confident, a hint of a smirk. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 
-a faint gold glow lingers softly, ambient and understated, nothing overtly magical.
+a faint gold glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Environment: a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

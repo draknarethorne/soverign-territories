@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknara/clothing/elegant-casting-gown",
   "kind": "wearing",
   "name": "Elegant Casting Gown (Draknara signature)",
-  "description": "a sculpted one-shoulder {{PRIMARY}} suede-and-silk wrap gown with an asymmetric neckline and bare midriff, a skirt of draped cloth strips and woven leather cords slit high on one thigh, long beaded {{ACCENT_SOFT}} fringe swaying at the hip, carved {{METAL}} beads and small stone charms, no headwear and her hair fully visible",
+  "description": "a sculpted one-shoulder {{PRIMARY}} suede-and-silk wrap gown with an asymmetric neckline and bare midriff, a skirt of draped cloth strips and woven leather cords slit high on one thigh, long beaded {{ACCENT_SOFT}} fringe swaying at the hip, carved {{METAL}} beads and small stone charms, her hair fully visible",
   "compatibleStages": ["scene"],
   "notes": "Shaman casting outfit: cloth strips, cords and charms, hands-only casting."
 }

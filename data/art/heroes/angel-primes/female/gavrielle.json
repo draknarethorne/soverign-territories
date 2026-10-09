@@ -21,10 +21,10 @@
       "metal": "polished nickel",
       "magicColor": "pale sky-silver",
       "gemColor": "moonstone",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/drifting-back.json"
@@ -32,7 +32,7 @@
     "physique": {
       "build": "Tall, willowy, long-limbed build with a dancer's poise",
       "torso": "Narrow, long waist",
-      "bust": "Full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Long, slender arms with elegant hands",
       "hips": "Narrow, gently curved feminine hips",
       "legs": "Extremely long, slender legs",

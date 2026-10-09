@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/eyes/iris-kindling",
   "kind": "effects",
   "name": "Eyes: iris kindling (glow just starting)",
-  "description": "Eyes: the natural {{EYE_SOFT}} kept intact, with a faint {{MAGIC}} glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.",
+  "description": "Eyes: the natural {{EYE_SOFT}} kept intact, with a faint {{MAGIC}} glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.",
   "compatibleStages": ["scene"],
   "notes": "Level 1 of 4. The moment before a cast; element colour hinted, iris colour still dominant."
 }

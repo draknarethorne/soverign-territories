@@ -2,7 +2,7 @@
   "id": "motion/expressions/composed/serious-poised",
   "kind": "expression",
   "name": "Serious, Poised",
-  "expression": "a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct, no smile",
+  "expression": "a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct",
   "compatibleStages": ["head", "pose", "motion"],
   "tags": ["serious", "neutral", "reference"]
 }

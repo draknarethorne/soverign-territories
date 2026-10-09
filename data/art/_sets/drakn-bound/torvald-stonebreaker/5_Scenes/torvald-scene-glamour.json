@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/torvald/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/torvald-stonebreaker/weapons/stone-greataxe.json",
-    "effects": "A few fine motes of {{MAGIC}} dust drift around his feet in the warm light - understated, nothing busy.",
+    "effects": "A few fine motes of {{MAGIC}} dust drift around his feet in the warm light - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/canyon/ancient-canyon-ruins.json"
   },

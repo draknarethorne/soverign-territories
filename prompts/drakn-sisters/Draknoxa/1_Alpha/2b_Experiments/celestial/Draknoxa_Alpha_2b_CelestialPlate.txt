@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknoxa Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
 Result: she is wearing celestial armor of tarnished brass: two small ornate filigree plates, each in the form of a teardrop flask shape rimmed by a coiling serpent, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small coiled-serpent oval covering the front of the hips; every plate is engraved with etched droplets and a tiny stopper ornament and set with an acid-lime gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
 Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a bold peekaboo underlayer of acid-lime strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light.
-Bust: very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
 Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved (not wide), narrow and agile; very long, wiry legs with slender calves.
+Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved, narrow and agile; very long, wiry legs with slender calves.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

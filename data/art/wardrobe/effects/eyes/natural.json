@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/eyes/natural",
   "kind": "effects",
   "name": "Eyes: natural (no glow)",
-  "description": "Eyes: natural {{EYE_SOFT}}, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.",
+  "description": "Eyes: natural {{EYE_SOFT}}, exactly as in the incoming image, calm and clear with crisp catchlights.",
   "compatibleStages": ["scene"],
   "notes": "Level 0 of 4. Use for quiet/portrait scenes where the face should stay the focus."
 }

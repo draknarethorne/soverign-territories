@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/fitted-cocktail-dress.json",
     "pose": "data/art/motion/romantic/hand-to-collarbone.json",
-    "effects": "Soft natural window light only, no magical or glowing effects.",
+    "effects": "Soft natural window light only.",
     "background": "data/art/backgrounds/modern/interior/home-kitchen-morning.json",
     "realm": "data/art/realms/modern.json"
   },

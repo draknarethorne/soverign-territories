@@ -7,9 +7,9 @@
   "aesthetic": "swift warrior aesthetic",
   "components": {
     "wearing": "data/art/heroes/drakn-bound/zephyr/clothing/armor-default-wearing.json",
-    "arms": "bare forearms, no additional arm pieces",
+    "arms": "bare forearms",
     "jewelry": "none, unadorned",
-    "back": "no cape or back piece",
+    "back": "the bare back of the armor in full view",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/zephyr-galeheart/weapons/gale-saber.json"
   },

@@ -9,12 +9,12 @@ Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait pho
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Radiant Pearl White A-line dress with a fitted bodice, wide boat neckline, short cap sleeves and a skirt that flares gently to the knee, gold piping at the waist.
 
@@ -22,17 +22,17 @@ Jewelry: coiled rose gold armlets set with pink opal stones worn on the upper ar
 Back: three pairs of long, luminous white feathered wings with rose-gold tips, glowing softly at the edges.
 Legs & feet: open-toed Radiant Pearl White heeled sandals with thin straps across the foot and a strap around the ankle fastened with a rose gold clasp.
 
-Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions. No breeze. close-up shot from thighs to head, legs exposed. position varies. remains focused on camera. glamorous, confident. one hand blowing a kiss, the other in an elegant, alluring gesture. Bold décolletage.
+Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions. Still air. close-up shot from thighs to head, legs exposed. position varies. remains focused on camera. glamorous, confident. one hand blowing a kiss, the other in an elegant, alluring gesture. Bold décolletage.
 Straight hair, same length, behind her shoulders.
 Bright Red lipstick (override).
 
-A gentle drift of golden light and drifting motes lifts her hair and hem, faint warm golden-white light glinting within it - understated, nothing busy.
+A gentle drift of golden light and drifting motes lifts her hair and hem, faint warm golden-white light glinting within it - understated.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

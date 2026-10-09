@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
-Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a wizard's frost-plate battle gown: a fitted cuirass of white-silver plate etched with snowflake runes, a long split skirt of Glacial Cyan silk lined with white fur, crystal-edged pauldrons and a high fur-lined collar.
 
@@ -27,11 +27,11 @@ She stands in the open as the weather of her homeland closes in, her clothing an
 
 Swirling frost, snowflakes and ice crystals are caught up in the weather and stream around her, icy white-cyan light flickering in it.
 
-Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight.
 
 Environment: a pine valley in a driving blizzard, snow streaming sideways, dark trunks half-lost in white and a faint lantern glow in the distance.
 
-Setting: a grounded, cinematic glacial highland photographed on location like a feature-film still - blue ice, snowfields, bare rock and dark pine, timber and stone mountain villages, thin cold light with long blue shadows and drifting breath-mist; any magic is a faint cold glow in the ice; nothing from the modern world.
+Setting: a grounded, cinematic glacial highland photographed on location like a feature-film still - blue ice, snowfields, bare rock and dark pine, timber and stone mountain villages, thin cold light with long blue shadows and drifting breath-mist; any magic is a faint cold glow in the ice.
 
 ----------------------------------------------------------------
 negative prompt:

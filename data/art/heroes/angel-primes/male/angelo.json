@@ -19,10 +19,10 @@
         "Warm Champagne Gold",
         "Dove Grey"
       ],
-      "eyeColor": "the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition",
-      "eyeColorGlamour": "the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition",
-      "hairColor": "the exact hair colour of the reference image, unchanged and not recoloured, with natural shine",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "eyeColorGlamour": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "hairColor": "the exact hair colour of the reference image, unchanged, with natural shine",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [
         "changed eye colour",
         "recoloured eyes"
@@ -40,7 +40,7 @@
     },
     "physique": {
       "build": "Athletic, broad-shouldered, well-proportioned build",
-      "chest": "Defined, naturally muscular chest and core, toned and healthy, not exaggerated",
+      "chest": "Defined, naturally muscular chest and core, toned and healthy",
       "waist": "Trim, athletic waist",
       "legs": "Long, strong, well-proportioned legs",
       "distinguishingMarks": [],

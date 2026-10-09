@@ -28,7 +28,7 @@
         "uniform flat one-tone hair",
         "fully dyed hair"
       ],
-      "skinTone": "Warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Warm deep sun-kissed golden-bronze tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "blue eyes",
         "green eyes",
@@ -47,10 +47,10 @@
     },
     "physique": {
       "build": "Slender, long-limbed build with an aristocratic dark-elven bearing and sinewy tension",
-      "torso": "Ultra-narrow, tightly cinched waistline; smooth flat midriff with no abdominal lines",
-      "bust": "Full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "torso": "Ultra-narrow, tightly cinched waistline; smooth flat midriff",
+      "bust": "Full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender arms with delicate wrists and elongated fingers; slight wiry tension in the forearms",
-      "hips": "Shapely feminine hips, gently curved (not wide), with a high, tapering hip line",
+      "hips": "Shapely feminine hips, gently curved, with a high, tapering hip line",
       "legs": "Very long, slender legs with elegant tapering down to slim ankles",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to dark elf characteristics (sinewy elegance, aristocratic detachment)"

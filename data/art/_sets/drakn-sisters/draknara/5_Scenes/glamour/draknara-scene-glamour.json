@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/sets/bodice-and-skirt.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/knee-high-boots.json",
-    "effects": "A few fine motes of {{MAGIC}} dust drift around her feet in the warm light - understated, nothing busy.",
+    "effects": "A few fine motes of {{MAGIC}} dust drift around her feet in the warm light - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknara/backgrounds/fantasy/throne/red-rock-totem-throne.json"
   },

@@ -25,7 +25,7 @@
       "hairHighlights": "data/art/cosmetics/highlights/painted/balayage.json",
       "hairHighlightColor": "soft moss-gold",
       "hairColorNegatives": ["all-over green hair", "fully dyed hair"],
-      "skinTone": "Warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas",
+      "skinTone": "Warm sun-kissed golden-olive tan complexion, evenly tanned",
       "eyeColorNegatives": [
         "blue eyes",
         "brown eyes",
@@ -45,9 +45,9 @@
     "physique": {
       "build": "Lithe, wiry athletic build; low-fat runner physique with wood-elven agility",
       "torso": "Tight, lithe midriff with faint oblique fluting and subtle vertical definition; slender waist tapering cleanly into the hips",
-      "bust": "Full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, lightly defined arms; subtle deltoid contours and lithe forearms",
-      "hips": "Shapely feminine hips, gently curved (not wide), with an athletic pelvis",
+      "hips": "Shapely feminine hips, gently curved, with an athletic pelvis",
       "legs": "Very long, lean athletic legs; subtly toned quadriceps and elongated calves",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to wood elf characteristics (agile, trackless, low-fat runner vitality)"

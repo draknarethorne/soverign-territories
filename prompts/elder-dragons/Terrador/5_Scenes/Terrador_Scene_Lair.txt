@@ -16,9 +16,9 @@ Lair: a deep cavern of giant crystal geodes and carved stone halls, warm dust-go
 
 Hoard: mounds of raw gemstones and cut geodes, gold nuggets and ore carts, antique bronze statues, carved stone tablets, turquoise and amber, ancient mining tools.
 
-A few fine motes of dust drift in the warm light - understated, nothing busy.
+A few fine motes of dust drift in the warm light - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous glamour posing, mild-energy fashion photography.
 
@@ -14,9 +14,9 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: rich black hair with warm espresso depth, noticeable, vibrant deep plum-amethyst bold face-framing streaks that catch the light, tone-on-tone dimension.
-Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, rounded, naturally heavy bust with a soft inner swell and a smooth, weighted curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: deep violet irises with radiating amethyst striations and an obsidian limbal ring.
-Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned, no pale areas.
+Skin: warm deep sun-kissed golden-bronze tan complexion, evenly tanned.
 
 Maintain the existing outfit and hairstyle expressly.
 
@@ -30,7 +30,7 @@ Gaze: remains focused on camera.
 
 Expression: alluring, confident smile, lips slightly parted; lips full and expressive.
 
-Eyes: natural studio eyes, not glowing.
+Eyes: natural studio eyes.
 
 Pose: hips and shoulders positioned for the step; arms swinging with the walk; one foot stepping forward more.
 

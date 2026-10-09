@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/dresses/fitted-cocktail-dress.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "effects": "A few warm {{MAGIC}} embers drift upward around her, a faint ember glow catching the hem of her dress - understated, nothing busy.",
+    "effects": "A few warm {{MAGIC}} embers drift upward around her, a faint ember glow catching the hem of her dress - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknora/backgrounds/fantasy/throne/molten-iron-throne-hall.json"
   },

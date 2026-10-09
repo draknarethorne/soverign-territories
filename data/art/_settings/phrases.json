@@ -4,14 +4,14 @@
     "female": "Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.",
     "male": "Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown."
   },
-  "bustKey": "full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart",
+  "bustKey": "full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart",
   "figureNegatives": {
     "female": "flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups",
     "male": ""
   },
   "faceStyle": {
-    "female": "Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush}, {brows}, softly defined eyes; never heavy.",
-    "male": "Grooming: natural, clean and well-groomed, {brows}, no cosmetics.",
+    "female": "Makeup: soft and natural - {eyeshadow}-toned eyeshadow, {blush}, {brows}, softly defined eyes.",
+    "male": "Grooming: natural, clean and well-groomed, {brows}, bare-faced.",
     "blush": "a light natural {blush} blush",
     "blushDefault": "a light natural blush",
     "brows": "groomed {brow} brows",
@@ -24,7 +24,7 @@
     "female": {
       "build": "Lithe, slender, long-limbed build",
       "torso": "Slim waist",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "hips": "Shapely feminine hips, gently curved",
       "legs": "Very long, slender legs with slim, tapering thighs"
     }
   },

@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends.
-Bust: very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.
-Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+Skin: warm sun-bronzed olive tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a flame-forged magician's battle dress: a fitted breastplate of burnished copper and red-gold scales with flame-cut edges, a short layered skirt of Flame Red silk over armoured thigh guards, bracers etched with fire runes and a scorched cape.
 
@@ -31,7 +31,7 @@ Eyes: fully glowing fiery orange-gold, irises and pupils blazing with luminous f
 
 Environment: the heart of an erupting volcano at dawn: a vast caldera of black rock and glowing lava lake, fountains of lava arcing high and falling back in curtains, rivers of fire running down the crater walls, a smoke-dark sky lit orange by sunrise, fire salamanders and glowing lava lizards clinging to the rocks, ember-winged ash birds wheeling overhead.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

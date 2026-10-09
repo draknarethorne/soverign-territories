@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing wrapped Soft Pearl White cloth bindings across the chest and hips, a short sash with gold knotted ends, bare midriff and arms, and hand wraps with gold knuckle studs.
 
@@ -27,11 +27,11 @@ Holding a long wooden shepherd's crook with a curled top and a worn leather grip
 
 The hem of the robe and his scarves lift gently in a passing breeze, faint gold light and drifting soft white light, drifting pale feathers and motes around him.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Environment: a still bayou of twisted mangrove roots and hanging moss at twilight, a leaning wooden dock with a lantern, fireflies and low drifting mist.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

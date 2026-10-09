@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Drakniya Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
 Result: she is wearing celestial armor of antique gold: two small ornate filigree plates, each in the form of a pointed leaf with a central vein and serrated edges, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small open blossom covering the front of the hips; every plate is engraved with fine vein filigree and tiny budding blossoms and set with an emerald; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
 Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension.
-Bust: full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: deep forest-emerald irises with radiating sage striations and a dark pine limbal ring.
-Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe, wiry athletic build; low-fat runner physique with wood-elven agility; tight, lithe midriff with faint oblique fluting and subtle vertical definition; slender waist tapering cleanly into the hips; slender, lightly defined arms; subtle deltoid contours and lithe forearms; shapely feminine hips, gently curved (not wide), with an athletic pelvis; very long, lean athletic legs; subtly toned quadriceps and elongated calves.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, wiry athletic build; low-fat runner physique with wood-elven agility; tight, lithe midriff with faint oblique fluting and subtle vertical definition; slender waist tapering cleanly into the hips; slender, lightly defined arms; subtle deltoid contours and lithe forearms; shapely feminine hips, gently curved, with an athletic pelvis; very long, lean athletic legs; subtly toned quadriceps and elongated calves.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -2,7 +2,7 @@
   "id": "backgrounds/studio/grey-seamless",
   "kind": "background",
   "name": "Studio: neutral grey seamless backdrop",
-  "description": "a neutral mid-grey seamless studio backdrop with soft, even frontal lighting and gentle falloff; no backlight or rim light",
+  "description": "a neutral mid-grey seamless studio backdrop with soft, even frontal lighting and gentle falloff",
   "compatibleStages": ["pose", "head", "armor", "clothing"],
   "tags": ["studio", "grey", "neutral"],
   "notes": "Alternative to cream when a light-coloured outfit or hair would blend into the cream backdrop."

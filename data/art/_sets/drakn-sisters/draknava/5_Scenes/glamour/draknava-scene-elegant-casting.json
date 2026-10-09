@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknava-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a cyclone of air around her, her head turned back to the camera with a bright, playful gaze. A strong wind lifts her gown, scarves and hair dramatically. No weapon or staff - casting with her bare hands only.",
+    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a cyclone of air around her, her head turned back to the camera with a bright, playful gaze. A strong wind lifts her gown, scarves and hair dramatically. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/draknava/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

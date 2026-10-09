@@ -9,27 +9,27 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a flowing Tidal Blue silk kaftan with wide sleeves and silver embroidered edge panels, worn over white linen trousers and a dark woven belt.
 
 Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a scallop shell over curling waves and set with a small sapphire gem.
 Back: a pair of broad pearl-grey wings with blue-silver edges, calm and wide.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 Fast, graceful ascent: he rises upright through the centre of a great column of flowing water and drifting spray with his wings half open and his body turning gently, arms out and lifted, head lifted and gaze to the camera, joyful and free; full figure from head to toe visible.
 
 A great spiral of flowing water and drifting spray rises in a swirling column around him, streaks of cool teal light tracing the air, clouds swept back.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint cool teal glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint cool teal glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a rocky tide-pool shore at low tide, wet dark stone and shallow clear water over coral and shells, sunlight slanting through the shallows, soft sea haze.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

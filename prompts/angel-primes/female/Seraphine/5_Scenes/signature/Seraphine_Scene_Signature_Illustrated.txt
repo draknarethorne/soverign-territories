@@ -9,32 +9,32 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Radiant Pearl White over a matte underlayer, with delicate warm golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Radiant Pearl White over a matte underlayer, with delicate warm golden-white glowing fibre-optic threads woven throughout; secured on her shoulders, her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Headwear: a fine rose gold chain headpiece that drapes across the forehead with pink opal drops at the temples, a radiant sunburst rising at the centre of the brow, set with a pink opal gem; pristine, luminous and unmarked.
 
 Jewelry: a simple rose gold necklace and small matching earrings, the pendant and the earrings echoing a radiant sunburst, each set with a small pink opal gem.
 Back: three pairs of long, luminous white feathered wings with rose-gold tips, glowing softly at the edges.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. serene and reverent, eyes soft and slightly lifted, lips gently closed. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 Soft warm golden-white light radiates from the wings and a faint halo above the head, motes of golden light drifting slowly upward.
 
-Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle warm golden-white catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with warm golden-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle warm golden-white catchlight.
 
 Companion: a tiny dawn-light fairy no bigger than a hand, translucent gold-and-pink dragonfly wings, a soft pearl glow in its small body and a trail of fine sparkles, hovering beside her raised hand, a trail of golden sparkles behind it.
 
 Environment: an elemental light realm: a terrace of white and gold marble ringed by shafts of sunlight, glowing floating motes and a halo of warm light overhead.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

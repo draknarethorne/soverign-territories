@@ -9,12 +9,12 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced).
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a simple Soft Pearl White cotton wrap robe crossed over the chest and tied with a plain sash at the waist, long straight sleeves and an ankle-length hem.
 
@@ -30,11 +30,11 @@ Holding a long wooden shepherd's crook with a curled top and a worn leather grip
 
 The hem of the robe and her scarves lift gently in a passing breeze, faint gold light and drifting soft white light, drifting pale feathers and motes around her.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Environment: a still bayou of twisted mangrove roots and hanging moss at twilight, a leaning wooden dock with a lantern, fireflies and low drifting mist.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

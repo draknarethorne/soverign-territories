@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a black lambskin leather jacket with dark gold zippers and hardware, worn over a Obsidian Black cotton t-shirt and dark indigo jeans with natural fading.
 
@@ -23,15 +23,15 @@ Legs & feet: soft Obsidian Black slippers embroidered with crimson thread and a 
 
 A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
 
-a faint ember red glow lingers softly, ambient and understated, nothing overtly magical.
+a faint ember red glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with ember red light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle ember red catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with ember red light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle ember red catchlight.
 
 Companion: a large black raven with ember-gold eyes and the tips of its feathers singed to red, a faint wisp of smoke at its wings, perched on his shoulder, wings half open, ember-gold eyes on the viewer.
 
 Environment: the roofless ruin of a gothic abbey in moonlight, tall empty windows, ivy and fallen stone, drifting mist and a lone raven on an arch.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

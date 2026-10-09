@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/draknare/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/draknare-thorne/weapons/cursed-blade.json",
-    "effects": "A few faint wisps of {{MAGIC}} shadow curl low around his boots - understated, nothing busy.",
+    "effects": "A few faint wisps of {{MAGIC}} shadow curl low around his boots - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/castle/ancient-stone-hall.json"
   },

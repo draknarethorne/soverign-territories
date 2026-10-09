@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknira Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing a bare upper body and a single small covering; Upper body: completely bare, the shoulders, arms, back, bare chest and stomach, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, with the natural shape, fullness and cleavage of the bust clearly visible and no clothing, paint, pasties or tint of any kind; Pelvic area: one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin, keeping her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free), including the hips, thighs, legs and bare feet
+Result: she is wearing a bare upper body and a single small covering; Upper body: completely bare, the shoulders, arms, back, bare chest and stomach, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, with the natural shape, fullness and cleavage of the bust clearly visible and no clothing, paint, pasties or tint of any kind; Pelvic area: one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat; Everywhere else: completely bare natural skin, keeping her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free), including the hips, thighs, legs and bare feet
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
-Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach with no muscle definition; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved (not wide), narrow and elegant; extremely long, smooth, slender legs.
+Body: shape the figure to this individual build, keeping her height, head and pose: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved, narrow and elegant; extremely long, smooth, slender legs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -2,7 +2,7 @@
   "id": "wardrobe/footwear/barefoot/barefoot",
   "kind": "legs_feet",
   "name": "Barefoot",
-  "description": "bare feet, no footwear",
+  "description": "bare feet",
   "compatibleStages": ["armor", "clothing", "scene"],
   "tags": ["footwear", "barefoot", "core"]
 }

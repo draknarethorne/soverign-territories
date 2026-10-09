@@ -2,7 +2,7 @@
   "id": "wardrobe/effects/contour/sheer-contour",
   "kind": "effects",
   "name": "Contour: sheer fabric shows the body",
-  "description": "Fit the outfit to the body in the incoming image, with the bust supported and lifted into a full, firm shape with a clear, defined cleavage; where the fabric is sheer, thin or translucent let her real body show through it realistically, as it would in life: her natural shape and skin tone visible beneath the fabric and softened by it, with nothing painted on top.",
+  "description": "Fit the outfit to the body in the incoming image, with the bust supported and lifted into a full, firm shape with a clear, defined cleavage; where the fabric is sheer, thin or translucent let her real body show through it realistically, as it would in life: her natural shape and skin tone visible beneath the fabric and softened by it.",
   "compatibleStages": [
     "armor",
     "clothing",

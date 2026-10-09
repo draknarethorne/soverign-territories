@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/robes/silk-robe.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "effects": "A few droplets of water hang in the sea air around her, faint {{MAGIC}} light rippling softly through them - understated, nothing busy.",
+    "effects": "A few droplets of water hang in the sea air around her, faint {{MAGIC}} light rippling softly through them - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/throne/pearl-shell-throne-grotto.json"
   },

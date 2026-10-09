@@ -10,26 +10,26 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
-Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
-Wearing a floor-length gown of icy Glacial Cyan crystal-beaded organza over a nude underlayer, a deep V neckline, sheer sleeves frosted with tiny crystals, a high slit, a cape-like train of frosted tulle, brushed chrome filigree frost patterns along the bodice and hem, no headwear and her hair fully visible.
+Wearing a floor-length gown of icy Glacial Cyan crystal-beaded organza over a nude underlayer, a deep V neckline, sheer sleeves frosted with tiny crystals, a high slit, a cape-like train of frosted tulle, brushed chrome filigree frost patterns along the bodice and hem, her hair fully visible.
 
 Jewelry: brushed chrome with diamond-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Glacial Cyan high heels with glowing icy white-cyan straps.
 
-She stands tall in a poised, asymmetrical stance, one hand raised with fingers fanned to scatter a storm of ice shards, the other sweeping low to freeze a spiral of frost across the ground, shoulders squared, a cold, imperious gaze to the camera. A biting wind streams her train, sleeves and hair. No weapon or staff - casting with her bare hands only.
+She stands tall in a poised, asymmetrical stance, one hand raised with fingers fanned to scatter a storm of ice shards, the other sweeping low to freeze a spiral of frost across the ground, shoulders squared, a cold, imperious gaze to the camera. A biting wind streams her train, sleeves and hair. Casting with her bare hands only.
 
 Glittering ice shards and spirals of icy white-cyan frost-light burst from her hands, frost creeping across the ground.
 
-Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with icy white-cyan light, brightest near the pupil and fading to the natural glacial cyan irises at the rim, iris detail still visible, a gentle icy white-cyan catchlight.
 
 Environment: a vast frozen lake in a high-fantasy winter realm, jagged ice spires rising from the surface, snow swirling across the ice, a shimmering aurora of pale green and cyan across a star-filled sky.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

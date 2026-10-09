@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/draknisa/clothing/elegant-casting-gown",
   "kind": "wearing",
   "name": "Elegant Casting Gown (Draknisa signature)",
-  "description": "a flowing mermaid-cut gown of translucent {{PRIMARY}} silk chiffon with wave-like pleats, a plunging neckline over a fitted bodice shimmering with scale-like sequins, a high slit, a trailing train of layered tulle like sea foam, strands of pearls and {{METAL}} detailing, no headwear and her hair fully visible",
+  "description": "a flowing mermaid-cut gown of translucent {{PRIMARY}} silk chiffon with wave-like pleats, a plunging neckline over a fitted bodice shimmering with scale-like sequins, a high slit, a trailing train of layered tulle like sea foam, strands of pearls and {{METAL}} detailing, her hair fully visible",
   "compatibleStages": ["scene"],
   "notes": "Water-mage casting outfit: sea-foam train and pearls, hands-only casting."
 }

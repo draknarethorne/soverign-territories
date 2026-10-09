@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing layered Forest Green hide and fur: a fur mantle over one shoulder, a leather chest wrap with bone toggles, a hide kilt and rough leather wrist wraps, the arms bare.
 
@@ -23,17 +23,17 @@ Jewelry: a simple antique bronze chain with a small pendant, the pendant formed 
 Back: a pair of heavy brown-and-moss-green feathered wings with flowering vines wound through them.
 Legs & feet: heavy Forest Green leather boots with plate knee-caps and shin guards, antique bronze buckles and thick soles.
 
-A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct, no smile one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 Green leaves and blossom petals swirl on the breeze around the figure, soft leaf green light glowing among them.
 
-Eyes: irises softly aglow with leaf green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle leaf green catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with leaf green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle leaf green catchlight.
 
 Companion: a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes, standing at his side, shoulders as high as his own, flowers in its fur.
 
 Environment: a wildflower meadow beside a mossy stone ruin, tall grass and flowers swaying, pollen and seeds drifting in warm afternoon sun, a small stream over mossy rock.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -18,7 +18,7 @@ Background: {{BACKGROUND}}.
 
 Expression: {{EXPRESSION}}.
 
-Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
+Eyes: natural studio eyes, both eyes matched, crisp corneal catchlights; {{LASH}} lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

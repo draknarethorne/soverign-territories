@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknisa Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look, with no clothing, underwear, waistband or clothing lines and no marks or tan lines anywhere; completely bare natural skin with no paint and no tint, keeping her natural skin tone (warm sun-kissed medium tan complexion, evenly tanned, no pale areas), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm sun-kissed medium tan complexion, evenly tanned), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
 Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour.
-Bust: full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring.
-Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+Skin: warm sun-kissed medium tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe, supple dancer physique with flowing, serpentine human grace; soft, completely flat midriff tapering smoothly into an exceptionally narrow waist; no muscle cuts; smooth, slender arms with graceful wrists; shapely feminine hips, gently curved (not wide), with supple, pronounced curves; very long, smooth, slender legs with dancer-like fluid lines.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, supple dancer physique with flowing, serpentine human grace; soft, completely flat midriff tapering smoothly into an exceptionally narrow waist; smooth, slender arms with graceful wrists; shapely feminine hips, gently curved, with supple, pronounced curves; very long, smooth, slender legs with dancer-like fluid lines.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

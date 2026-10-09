@@ -13,7 +13,7 @@
     "jewelry": "data/art/wardrobe/jewelry/bracelets/armlets.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
     "back": "data/art/heroes/angel-primes/female/seraphine/wings/seraphine-wings.json",
-    "effects": "A gentle drift of golden light and drifting motes lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",
+    "effects": "A gentle drift of golden light and drifting motes lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/elemental/grounded/radiant-sun-realm.json"
   },

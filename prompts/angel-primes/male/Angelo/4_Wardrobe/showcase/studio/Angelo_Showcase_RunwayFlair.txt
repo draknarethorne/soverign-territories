@@ -9,23 +9,23 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing armor of clear prismatic glass plates edged in gold, scattering rainbow light across the Soft Pearl White silk beneath, a layered glass skirt and shard bracers.
 
 Jewelry: a simple gold chain with a small pendant, the pendant formed as a single white feather within a plain ring and set with a small gold gem.
 Back: a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
 
 Gusts of soft white light, drifting pale feathers and motes stream along the floor either side of him, rising around him.
 
-Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises at the rim, iris detail still visible, a gentle gold catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with gold light, brightest near the pupil and fading to the natural the reference image's own eye colour, unchanged, in clear irises at the rim, iris detail still visible, a gentle gold catchlight.
 
 Studio backdrop: a black glossy mirror-floor studio with a soft Soft Pearl White glow rising behind the figure and a clear reflection of the figure on the floor.
 

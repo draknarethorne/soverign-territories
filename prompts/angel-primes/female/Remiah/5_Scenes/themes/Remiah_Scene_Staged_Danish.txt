@@ -8,18 +8,18 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a composed, quietly commanding look, eyes steady on the camera. one hand firmly on the hip, elbow out; the other arm relaxed at her side.
 
 A drift of crackling arcs of lightning and sparks circles her, electric blue-white light glinting within it.
 
-Eyes: irises softly aglow with electric blue-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle electric blue-white catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with electric blue-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle electric blue-white catchlight.
 
 Environment: a snowbound fairy-tale harbour town at dusk: tall colourful gabled houses with snow on the steep roofs along a frozen canal, wooden sailing ships locked in the ice, warm lantern light in the windows, and across the water a white palace of ice spires under a pale rose-and-blue winter sky with snow falling softly.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 A light breeze moves the clothing and a few strands of hair.
 
 Palette: Electric Gold dominant, with violet accents; all glow is electric blue-white.

@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a long Tidal Blue arcane robe with wide sleeves, silver embroidered runes along the hem and cuffs, a high collar and a sash at the waist.
 
@@ -27,13 +27,13 @@ A candid high-fashion editorial shot, dynamic natural movement, confident contra
 
 Droplets of cool teal water hang in the air around the figure, a gentle mist curling about the feet and light rippling across the wings.
 
-Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle cool teal catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with cool teal light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle cool teal catchlight.
 
 Companion: a sleek silver-blue sea otter with bright black eyes, whiskers beaded with water and a small pearl held in its paws, sitting upright on a rock at his feet, holding a small glowing pearl.
 
 Environment: an elemental water realm: a luminous undersea terrace of coral and pearl columns, shafts of light from the surface, drifting jellyfish and ribbons of living water.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

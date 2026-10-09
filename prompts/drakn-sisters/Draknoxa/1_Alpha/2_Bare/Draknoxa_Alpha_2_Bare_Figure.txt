@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknoxa Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look, with no clothing, underwear, waistband or clothing lines and no marks or tan lines anywhere; completely bare natural skin with no paint and no tint, keeping her natural skin tone (pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
 Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a bold peekaboo underlayer of acid-lime strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light.
-Bust: very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
 Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved (not wide), narrow and agile; very long, wiry legs with slender calves.
+Body: shape the figure to this individual build, keeping her height, head and pose: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved, narrow and agile; very long, wiry legs with slender calves.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

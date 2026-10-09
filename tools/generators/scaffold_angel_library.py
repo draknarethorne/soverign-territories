@@ -532,7 +532,7 @@ class Angel:
         # glamour
         scene("glamour", "glamour", "scene-glamour-human.txt", {
             "pose": norm(pick(self.poses("romantic") if self.female else self.poses("standing"), i)), "wearing": pick(dresses, i * 3), "jewelry": self.jewel(0), "legs_feet": pick(feet, i), **common,
-            "effects": self.effect("A gentle drift of {mat} lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy."),
+            "effects": self.effect("A gentle drift of {mat} lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated."),
             "eye_effect": EYES + "iris-kindling.json", "background": realm}, "Glamour", "GLAMOUR: a relaxed, beautiful portrait in her element's realm.")
         evening_bg = self.bg("evening")
         scene("enchanted-evening", "enchanted-evening", "scene-with-companion-human.txt", {
@@ -545,7 +545,7 @@ class Angel:
             stem=f"{hero}_Scene_Staged_EnchantedEvening",
             base_description="{{HERO}} already staged with her chosen hair, makeup and outfit (an outfit render, or just the metallic bikini A-pose to start)")
         scene("elegant-casting", "elegant-casting", "scene-with-outfit-human.txt", {
-            "pose": self.effect("She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of {mat} around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only."),
+            "pose": self.effect("She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of {mat} around her, her head turned back to the camera with a bright, serene gaze. Casting with her bare hands only."),
             "wearing": self.sig["gown"], "jewelry": self.sig["jewelry"], "legs_feet": pick(feet, i + 5), **common,
             "effects": self.effect("A shimmering column of {mat}, visible as streaming ribbons and {{MAGIC}} light, spirals around her."), "background": self.bg("casting")},
             "Elegant Casting", "ELEGANT CASTING: a hands-only complex casting stance in her element.")

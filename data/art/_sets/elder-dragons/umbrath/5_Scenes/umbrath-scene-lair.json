@@ -8,7 +8,7 @@
     "pose": "The dragon looms among its relics, wings half-folded like torn shadow, head lowered then raised toward the camera with a cold, knowing gaze, shadows pooling at its feet.",
     "background": "data/art/backgrounds/fantasy/lairs/darkness-crypt-vault.json",
     "hoard": "data/art/hoards/darkness-hoard.json",
-    "effects": "A few soft wisps of shadow and a faint amethyst haze drift across the hoard - understated, nothing busy."
+    "effects": "A few soft wisps of shadow and a faint amethyst haze drift across the hoard - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Umbrath/5_Scenes/Umbrath_Scene_Lair.txt",

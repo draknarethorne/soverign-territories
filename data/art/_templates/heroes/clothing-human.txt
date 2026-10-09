@@ -28,7 +28,7 @@ Legs & feet: {{LEGS_FEET}}.
 
 Overall, {{AESTHETIC}}.
 
-Eyes: natural studio eyes, not glowing.
+Eyes: natural studio eyes.
 
 ----------------------------------------------------------------
 negative prompt:

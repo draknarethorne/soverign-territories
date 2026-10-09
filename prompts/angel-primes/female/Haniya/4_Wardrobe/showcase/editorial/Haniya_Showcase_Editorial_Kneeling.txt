@@ -9,23 +9,23 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a floor-length Spring Emerald evening gown in flowing satin, a deep V neckline, a high thigh slit and gold beaded trim at the waist, a short train sweeping behind.
 
 Jewelry: a fine antique gold chain with a single teardrop peridot pendant resting at the collarbones; fine antique gold threader chain earrings falling to the jaw; a antique gold ring set with a single peridot stone in a raised setting.
 Legs & feet: fitted Spring Emerald leather thigh-high boots with a stiletto heel and a antique gold zip up the back, bare thighs above the top edge.
 
-A candid high-fashion editorial shot, low dynamic glamour pose. No breeze. lowered into a graceful kneeling pose, one knee down, the other leg bent with foot planted. level, facing the camera. direct, alluring eyes to camera. sultry, composed half-smile. one hand resting on the raised knee, the other braced lightly on the ground.
+A candid high-fashion editorial shot, low dynamic glamour pose. Still air. lowered into a graceful kneeling pose, one knee down, the other leg bent with foot planted. level, facing the camera. direct, alluring eyes to camera. sultry, composed half-smile. one hand resting on the raised knee, the other braced lightly on the ground.
 
-A crisp fashion spotlight with a faint glittering shimmer on skin, jewelry and fabric, sharp specular highlights and long soft shadows. No magical effects, only fashion lighting.
+A crisp fashion spotlight with a faint glittering shimmer on skin, jewelry and fabric, sharp specular highlights and long soft shadows. Fashion lighting only.
 
-Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition, exactly as in the incoming image, calm and clear with crisp catchlights.
 
 Makeup: a graphic eye - a bold black liner drawn in a sharp geometric line above the lid, bare lips, groomed brows and fresh skin.
 

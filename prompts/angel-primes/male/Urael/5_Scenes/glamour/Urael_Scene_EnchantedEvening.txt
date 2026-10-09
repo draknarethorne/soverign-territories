@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a formal black wool tuxedo with a single-breasted jacket, satin lapels, and blackened gold buttons, a crisp white dress shirt with the collar open, and black wool trousers with a satin side stripe.
 
@@ -23,15 +23,15 @@ Legs & feet: polished Crimson leather shoes with a low heel and blackened gold b
 
 A candid high-fashion editorial shot, bold runway strut, powerful stride. Breeze flowing any direction. striding forward with purpose, hips rolling with each step, shoulders back. level, facing forward. fixed ahead, confident. fierce, focused, lips softly together. arms swinging in rhythm with the stride; one foot placed directly in front of the other.
 
-a faint molten orange glow lingers softly, ambient and understated, nothing overtly magical.
+a faint molten orange glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with molten orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle molten orange catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with molten orange light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle molten orange catchlight.
 
 Companion: a huge black war-stallion with a flame-orange mane and tail and hooves that leave glowing prints, dark eyes lit from within, rearing or standing close behind him, mane streaming sparks.
 
 Environment: a cold desert night of silver dunes under a sky thick with stars and a bright moon, a lone fire and a faint trail of footprints.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

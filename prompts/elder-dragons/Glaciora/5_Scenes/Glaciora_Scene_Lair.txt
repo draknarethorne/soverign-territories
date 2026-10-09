@@ -16,9 +16,9 @@ Lair: a vaulted ice cavern deep beneath a glacier, towering blue ice columns, sh
 
 Hoard: coins, crowns and jewelled goblets frozen inside blocks of clear ice, frost-rimed swords and shields, heaps of uncut diamonds and snowflake crystals, a few glittering frozen relics.
 
-A few fine ice crystals glitter in the air above the hoard - understated, nothing busy.
+A few fine ice crystals glitter in the air above the hoard - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

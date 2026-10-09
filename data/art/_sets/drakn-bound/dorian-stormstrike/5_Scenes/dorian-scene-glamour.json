@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/dorian/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/dorian-stormstrike/weapons/storm-wrapped-fists.json",
-    "effects": "A few small {{MAGIC}} sparks of static dance along his knuckles and the ends of his hair - understated, nothing busy.",
+    "effects": "A few small {{MAGIC}} sparks of static dance along his knuckles and the ends of his hair - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/mountains/storm-peak-ruins.json"
   },

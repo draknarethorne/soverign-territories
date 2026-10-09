@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Angelica Prime. This pass removes clothing, 
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing only matte Soft Pearl White body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Soft Pearl White body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), with no paint or colour anywhere except those three areas; the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+Result: she is wearing only matte Soft Pearl White body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Soft Pearl White body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced); the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced).
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Bust: full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe, slender, well-proportioned build; slim waist; shapely feminine hips, gently curved (not wide); long, slender legs with slim, tapering thighs.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe, slender, well-proportioned build; slim waist; shapely feminine hips, gently curved; long, slender legs with slim, tapering thighs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

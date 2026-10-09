@@ -2,7 +2,7 @@
   "id": "wardrobe/swimwear/base/skin-tone-base-layer",
   "kind": "wearing",
   "name": "Skin-tone base layer (neutral A-pose foundation)",
-  "description": "only a seamless, skin-tone-matched base layer that follows the body exactly and shows no straps, strings, seams, lines, edges or colour of its own, so nothing of it can bleed into a later outfit; {{FOOTWEAR}}",
+  "description": "only a seamless, skin-tone-matched base layer that follows the body exactly and shows no straps, strings, seams, lines, edges or colour of its own; {{FOOTWEAR}}",
   "compatibleStages": [
     "pose"
   ],

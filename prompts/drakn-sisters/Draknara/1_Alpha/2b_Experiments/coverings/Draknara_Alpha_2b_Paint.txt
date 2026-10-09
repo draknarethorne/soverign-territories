@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknara Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing only body paint on exactly three small areas, each described separately; Breasts: a small round area of smooth, matte, nude-tone body paint, about one inch (2.5 cm) across, on the centre of each breast, matching her skin; Pelvic area: one small, smooth area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas); the paint is thin, so the natural shape of the body shows through it with no relief, texture or edge; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+Result: she is wearing only body paint on exactly three small areas, each described separately; Breasts: a small round area of smooth, matte, nude-tone body paint, about one inch (2.5 cm) across, on the centre of each breast, matching her skin; Pelvic area: one small, smooth area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (deep sun-weathered terracotta tan complexion, evenly tanned); the paint is thin, so the natural shape of the body shows through it with no relief, texture or edge; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
-Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
-Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved (not wide); very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved; very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

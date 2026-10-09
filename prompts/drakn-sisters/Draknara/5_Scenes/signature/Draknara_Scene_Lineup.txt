@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
-Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
-Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing an ornate floor-length dawn gown of Deep Burnt Sienna woven cloth and soft hide with turquoise beadwork in bands and spirals, a fitted bodice with fringed antique bronze edging, a shoulder mantle of feathers and painted hide, and a skirt of layered fringe and woven panels that swings wide around her; sweetheart neckline.
 
@@ -27,11 +27,11 @@ She stands tall and square to the camera, feet a little apart, one arm relaxed s
 
 Small stones and sparks of warm turquoise light orbit her hands, a pebble of glowing earth hovers above her palm, a little dust rises at her feet.
 
-Eyes: the natural rich malachite-hazel irises kept intact, with a faint warm turquoise glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural rich malachite-hazel irises kept intact, with a faint warm turquoise glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
-Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop and nothing else in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
+Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop with the subject alone in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
 
-Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame.
+Setting: a plain studio shot against one flat backdrop, the subject alone in the frame.
 
 ----------------------------------------------------------------
 negative prompt:

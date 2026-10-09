@@ -8,7 +8,7 @@
   "denoise": "~0.5-0.7",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of stone shards, dust and glowing crystals around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only.",
+    "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of stone shards, dust and glowing crystals around her, her head turned back to the camera with a bright, serene gaze. Casting with her bare hands only.",
     "wearing": "data/art/heroes/angel-primes/male/baracel/clothing/baracel-signature-attire.json",
     "jewelry": "data/art/heroes/angel-primes/male/baracel/jewelry/baracel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",

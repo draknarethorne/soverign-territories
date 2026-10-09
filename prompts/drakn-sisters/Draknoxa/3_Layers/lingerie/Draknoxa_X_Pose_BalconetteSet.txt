@@ -9,32 +9,32 @@ Modify the subject from the reference image into a clean, full-length, photoreal
 
 Critical details - these must be clearly visible:
 Hair: deep dark burgundy-black hair with a rich red tint and cool espresso depth, a bold peekaboo underlayer of acid-lime strands in the layer beneath the top hair, clearly visible along the nape and where the hair falls and parts, vivid against the dark top layer and catching the light.
-Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
 Eyes: acid lime-emerald irises with radiating toxic magenta striations and a blackened moss limbal ring.
 Skin: pale olive complexion with a faint cool-grey cast, evenly toned, smooth and blemish-free.
 Legs: very long, wiry legs with slender calves.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
 
 Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved (not wide), narrow and agile.
+Figure: compact, wiry dark-elven build; predatory poise with clinical, measured precision; flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips; slender, wiry arms with defined tendon lines at the wrists; steady, precise hands; shapely feminine hips, gently curved, narrow and agile.
 
-Wearing: only a Toxic Orchid Magenta lingerie-style set in a high-gloss, mirror-polished liquid-metal finish with crisp bright specular highlights, glossy reflections and deep saturated colour with a subtle tarnished brass sheen and a hairline tarnished brass edge trim: a balconette bra with underwired half-cups that lift the bust and bring it together into a deep, tight cleavage, thin shoulder straps and a narrow band under the bust; and matching low-rise briefs with thin side bands; midriff and abdomen bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes.
+Wearing: only a Toxic Orchid Magenta lingerie-style set in a high-gloss, mirror-polished liquid-metal finish with crisp bright specular highlights, glossy reflections and deep saturated colour with a subtle tarnished brass sheen and a hairline tarnished brass edge trim: a balconette bra with underwired half-cups that lift the bust and bring it together into a deep, tight cleavage, thin shoulder straps and a narrow band under the bust; and matching low-rise briefs with thin side bands; midriff and abdomen bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes.
 
 Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
 
-Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, groomed dark burgundy-black brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Magenta.
+Makeup: soft and natural - lime-toned eyeshadow, a light natural soft mauve blush, groomed dark burgundy-black brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Magenta.
 
-Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights; black lush lashes.
 
-Lips: natural, subtle deep orchid-berry-tinted satin - keep lips natural, no heavy lipstick.
+Lips: natural, subtle deep orchid-berry-tinted satin - keep lips natural.
 
-Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:

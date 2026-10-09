@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknara Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
 Result: she is wearing only a full-body celestial suit, an open filigree of thin antique bronze metallic design in her Deep Burnt Sienna colour scheme with fine antique bronze edge lines, formed directly onto the skin as if the metal had been bound to the whole body by a magical spell, slightly raised and form-fitting so the contour of the body shows through, with bare skin visible between the lines everywhere; Chest: on each breast a denser design in the form of a round carved totem-face disc with a spiral border, made of fine curving lines and swirls with carved spirals and tiny turquoise inlays, with one tiny turquoise accent at its centre; Pelvic area: a denser, form-fitting design in the form of a small mountain-peak chevron, following the contour of the pelvic area; Body: from those designs the fine open lines flow in elegant swirls over the shoulders, the arms to the wrists, the torso, the hips and the legs to the ankles, getting lighter and more open away from the chest and pelvic area, so the whole body reads as a magical suit of metal tracery on the skin; Not covered: the face, neck, hair, hands and feet stay natural unpainted skin; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
-Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
-Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved (not wide); very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved; very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

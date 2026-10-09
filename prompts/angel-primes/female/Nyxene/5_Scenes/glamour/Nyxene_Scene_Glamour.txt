@@ -9,12 +9,12 @@ Photo-realistic glamour portrait, full-body shot, head to toe, 85mm portrait pho
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, firm, high, statuesque bust, boldly rounded with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: very full, firm, high, statuesque bust, boldly rounded with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Midnight Violet fitted dress to mid-thigh with a high neck and long sleeves, large cut-outs at the waist and a keyhole at the chest that leave the midriff bare, blackened silver ring details at the cut-outs.
 
@@ -24,13 +24,13 @@ Legs & feet: delicate blackened silver flat sandals with a toe ring, thin chain 
 
 A candid high-fashion editorial shot, soft romantic portraiture. Light breeze. standing softly, weight settled on one leg, chest open toward camera. tilted slightly, chin soft. soft, romantic gaze to camera. soft, romantic, lips slightly parted. one hand resting gently at her collarbone, the other relaxed at her side.
 
-A gentle drift of drifting shadow, smoke and pale starlight lifts her hair and hem, faint dark violet light glinting within it - understated, nothing busy.
+A gentle drift of drifting shadow, smoke and pale starlight lifts her hair and hem, faint dark violet light glinting within it - understated.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint dark violet glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint dark violet glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: an abandoned stone terrace at night under a clear moon, long cool shadows, still black water and low mist, moonlight the only light.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

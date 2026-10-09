@@ -8,7 +8,7 @@
   "components": {
     "wearing": "data/art/wardrobe/armor/bikini/chain-disc-bikini.json",
     "arms": "data/art/wardrobe/jewelry/bracelets/matching-bracelets.json",
-    "back": "no cape or wrap behind her, the bare back visible",
+    "back": "the bare back visible",
     "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/armor-iridescent-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/gothic-buckle-closed-toe-heels.json",
     "holding": "data/art/heroes/drakn-sisters/drakness/weapons/armor-iridescent-holding.json"

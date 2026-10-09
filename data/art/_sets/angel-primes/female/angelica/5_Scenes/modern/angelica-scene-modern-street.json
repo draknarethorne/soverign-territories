@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/flowing-sundress.json",
     "pose": "data/art/motion/walking/relaxed-stroll.json",
-    "effects": "Natural daylight only, no magical or glowing effects.",
+    "effects": "Natural daylight only.",
     "background": "data/art/backgrounds/modern/urban/city-street-daytime.json",
     "realm": "data/art/realms/modern.json"
   },

@@ -16,9 +16,9 @@ Lair: the ruined stone temple of a high mountain peak, towering dark storm cloud
 
 Hoard: heaps of gold and copper coils, glassy fulgurite formations fused by lightning, tuning forks and bronze bells, silver ingots, citrine gems and a few crackling crystals.
 
-A few small sparks of static dance across the hoard - understated, nothing busy.
+A few small sparks of static dance across the hoard - understated.
 
-A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic; nothing from the modern world.
+A high-fantasy, Dungeons & Dragons-style realm - ancient stone, torchlight, natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

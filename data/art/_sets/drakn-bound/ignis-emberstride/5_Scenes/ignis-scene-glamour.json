@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/ignis/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/ignis-emberstride/weapons/ember-blade.json",
-    "effects": "A few warm {{MAGIC}} embers drift upward around him - understated, nothing busy.",
+    "effects": "A few warm {{MAGIC}} embers drift upward around him - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/elemental/rising-flames.json"
   },

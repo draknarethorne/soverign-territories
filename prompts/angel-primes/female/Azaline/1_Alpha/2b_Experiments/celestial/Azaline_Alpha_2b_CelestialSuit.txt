@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Azaline Rimeward. This pass removes clothing
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
 Result: she is wearing only a full-body celestial suit, an open filigree of thin polished brushed chrome metallic design in her Glacial Cyan colour scheme with fine white edge lines, formed directly onto the skin as if the metal had been bound to the whole body by a magical spell, slightly raised and form-fitting so the contour of the body shows through, with bare skin visible between the lines everywhere; Chest: on each breast a denser design in the form of a curved feather sweeping outward at the tip, made of fine curving lines and swirls with fine barbs of filigree and tiny drifting stars, with one tiny diamond gem accent at its centre; Pelvic area: a denser, form-fitting design in the form of a small halo ring with two short feathers, following the contour of the pelvic area; Body: from those designs the fine open lines flow in elegant swirls over the shoulders, the arms to the wrists, the torso, the hips and the legs to the ankles, getting lighter and more open away from the chest and pelvic area, so the whole body reads as a magical suit of metal tracery on the skin; Not covered: the face, neck, hair, hands and feet stay natural unpainted skin; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, high conical bust, pointed and lifted with a sharp clean line and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, high conical bust, pointed and lifted with a sharp clean line and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: slim, poised, elegant build with precise posture; slim, straight waist; slim, precise arms with long fingers; slim, gently curved hips; long, slim legs with a clean line.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

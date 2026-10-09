@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknoxa-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She stands in a slinking, hip-shifted stance, one hand held out with fingers delicately curled releasing a tendril of toxic mist, the other held at her chest rolling a glowing droplet between her fingertips, chin lowered, a sly, knowing gaze to the camera. A swirling breeze moves her skirt, the mist and her hair. No weapon or staff - casting with her bare hands only.",
+    "pose": "She stands in a slinking, hip-shifted stance, one hand held out with fingers delicately curled releasing a tendril of toxic mist, the other held at her chest rolling a glowing droplet between her fingertips, chin lowered, a sly, knowing gaze to the camera. A swirling breeze moves her skirt, the mist and her hair. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/draknoxa/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

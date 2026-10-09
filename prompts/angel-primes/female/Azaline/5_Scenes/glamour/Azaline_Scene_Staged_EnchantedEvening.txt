@@ -8,20 +8,20 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. alluring, confident; lips slightly parted; expressive, sultry brows. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
-a faint pale ice blue glow lingers softly, ambient and understated, nothing overtly magical.
+a faint pale ice blue glow lingers softly, ambient and understated.
 
-Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle pale ice blue catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with pale ice blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle pale ice blue catchlight.
 
 Companion: a snow leopard with a dense smoky-white coat, ice-blue rosettes, pale blue eyes and a long thick tail, sitting at her feet with its tail curled around them, eyes on the viewer.
 
 Environment: terraced vineyards on a hillside at dusk, rows of vines heavy with grapes, a stone villa and a rose-coloured sky.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 A light breeze moves the clothing and a few strands of hair.
 
 Palette: Glacial Cyan dominant, with white accents; all glow is pale ice blue.

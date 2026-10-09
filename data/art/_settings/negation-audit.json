@@ -1,0 +1,20 @@
+{
+  "_notes": "Image models read a negation as the thing it names: 'do not recolour' recolours, 'no squint' squints, 'not glowing' glows. State the positive instead (or leave it to the negative prompt, which the Qwen workflows have). tools/art/negation_audit.py scans every generated positive prompt with these rules. command = an instruction to not do something; flip = a known qualifier that names the unwanted thing; review = any other no/not/nothing/without, counted but not failing. allow = places where a negative is the only tool (a video model has no negative prompt) or the text is not ours to change.",
+  "command": [
+    "\\b(?:do not|does not|don't|doesn't|must not|should not|shall not|never|avoid)\\b"
+  ],
+  "flip": [
+    "\\bnot (?:glowing|squinting|recolou?red|flattened|wide|exaggerated|smaller)\\b",
+    "\\bno (?:pale areas|gap between|heavy lipstick|glow|light spilling|backlight|squint|breeze|footwear|shoes|shine|bump|marks or tan lines|paint|metal|metallic sheen|magical or glowing)\\b",
+    "\\brather than (?:drooping|tousled)\\b",
+    "\\bnothing from the modern world\\b",
+    "\\bchange nothing else\\b",
+    "\\bnothing of (?:the original|it can bleed)\\b"
+  ],
+  "review": "\\b(?:no|not|nothing|without|nor|none of|instead of|except|neither)\\b",
+  "allow": [
+    {"paths": "prompts/*_Video_*", "why": "video prompts: the video model has no negative prompt, so 'no cuts', 'no subtitles' and the like are the only way to say it"},
+    {"paths": "prompts/sovereign-dawn/*", "why": "gameplay card art is drafted from each card's name and lore, which the card owns (data/cards); edit the card, not the art"},
+    {"paths": "prompts/sovereign-territories/*", "why": "brand art is text-to-image; 'no text' and 'no frame' belong to the title and plate designs"}
+  ]
+}

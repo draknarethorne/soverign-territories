@@ -41,6 +41,7 @@ echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piec
 echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)
 echo    style-audit.cmd [--prompts]     rank art wording by how illustrated (vs photographic) it reads; changes nothing
 echo    library-audit.cmd [--scope S]   find thin library folders that many cards lean on, and pieces no card uses; changes nothing
+echo    negation-audit.cmd [--review]   find negations (do not, never, no X) in the positive prompts, which a model reads as the thing named; changes nothing
 echo.
 echo  CHECKS
 echo    validate.cmd [--quick^|--full]   schema and link checks + tool tests; --quick adds a short validator self-test (under 2 min), --full all of it (about 6 min)

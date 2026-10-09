@@ -21,10 +21,10 @@
       "metal": "antique gold",
       "magicColor": "soft spring green",
       "gemColor": "peridot",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/side-braid.json"
@@ -32,7 +32,7 @@
     "physique": {
       "build": "Petite, slender, lightly built with a youthful, springy frame",
       "torso": "Small, neat waist",
-      "bust": "Full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Full, perky, youthful bust, high-set and firm with a fresh rounded shape and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slim, light arms",
       "hips": "Softly curved, neat feminine hips",
       "legs": "Slender, lightly toned legs",

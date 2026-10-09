@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknira Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing only matte Glacial Cyan body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Glacial Cyan body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free), with no paint or colour anywhere except those three areas; the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+Result: she is wearing only matte Glacial Cyan body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Glacial Cyan body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free); the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
-Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, slightly conical, pointed shape - delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach with no muscle definition; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved (not wide), narrow and elegant; extremely long, smooth, slender legs.
+Body: shape the figure to this individual build, keeping her height, head and pose: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved, narrow and elegant; extremely long, smooth, slender legs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

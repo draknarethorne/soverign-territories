@@ -18,6 +18,16 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\art\test_negation_audit.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% tools\art\negation_audit.py --no-sources --check
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 if /i "%~1"=="--quick" %PY% tools\validators\test_validate_data.py --quick
 if /i "%~1"=="--full" %PY% tools\validators\test_validate_data.py
 call "%~dp0_end.cmd" %errorlevel%

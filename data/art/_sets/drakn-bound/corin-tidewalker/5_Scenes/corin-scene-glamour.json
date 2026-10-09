@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/corin/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/corin-tidewalker/weapons/coral-trident.json",
-    "effects": "A few droplets of water hang in the sea air around him, faint {{MAGIC}} light rippling softly through them - understated, nothing busy.",
+    "effects": "A few droplets of water hang in the sea air around him, faint {{MAGIC}} light rippling softly through them - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/coast/sea-cliff-harbor-moonrise.json"
   },

@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Camaris Cinderfane. This pass removes clothi
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look, with no clothing, underwear, waistband or clothing lines and no marks or tan lines anywhere; completely bare natural skin with no paint and no tint, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: curvy, athletic, powerful hourglass build; a fighter's frame; strong, defined waist; strong, toned arms; full, powerful hips; strong, shapely, muscular legs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

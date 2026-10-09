@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
-    "effects": "Warm sunset light only, no magical or glowing effects.",
+    "effects": "Warm sunset light only.",
     "background": "data/art/backgrounds/modern/urban/rooftop-sunset.json",
     "realm": "data/art/realms/modern.json"
   },

@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic beauty glamour shot, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Medium close-up framed from the top of the head to the mid-chest: the face, the full bust and the whole length of the hair falling beside it are all visible, showing the hair's highlights and ends.
 
@@ -19,9 +19,9 @@ Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost 
 Eyes: glacial cyan irises with radiating frost-silver striations and a deep navy limbal ring.
 Skin: cool fair porcelain complexion, evenly toned, smooth and blemish-free.
 
-Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
-Eyes: natural studio eyes, not glowing, both eyes matched, not squinting, crisp corneal catchlights; soft dark brown lush lashes, defined lash line.
+Eyes: natural studio eyes, both eyes matched, crisp corneal catchlights; soft dark brown lush lashes, defined lash line.
 
 ----------------------------------------------------------------
 negative prompt:

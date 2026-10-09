@@ -13,7 +13,7 @@ Hair: silvery-blonde hair, short and windswept.
 Eyes: pale sky-blue irises with faint cyan striations and a silver limbal ring.
 Skin: fair, cool-toned complexion, evenly toned.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing fitted Windswept Jade-toned banded leather armor across the chest and shoulders, Cloud White stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; a feathered half-cloak at one shoulder, wind-sigils stitched along the collar.
 
@@ -30,7 +30,7 @@ Companion: his bonded Giant Eagle, a soaring raptor with wind-swept feathers, ci
 
 Environment: the skyline of a medieval high-fantasy walled citadel at dusk behind them, slate-roofed stone towers and timber-framed houses climbing to a distant keep and cathedral spires, banners stirring on the battlements, lantern and torch light glowing in the windows and streets below, warm last light on the rooftops.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

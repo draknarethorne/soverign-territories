@@ -9,14 +9,14 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, soft and generous bust with a heavy natural weight yet firmly supported and lifted, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: very full, soft and generous bust with a heavy natural weight yet firmly supported and lifted, broad natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Pearl Aqua over a matte underlayer, with delicate soft aqua glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Pearl Aqua over a matte underlayer, with delicate soft aqua glowing fibre-optic threads woven throughout; secured on her shoulders, her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: a broad platinum collar necklace set with a row of aquamarine stones, resting on the collarbones.
 Back: a pair of broad pearl-white wings with aqua-tinted feather edges that shimmer like water.
@@ -26,13 +26,13 @@ She stands close to her bonded companion, one hand raised and gently resting aga
 
 A thread of soft aqua light runs from her hand to her companion where they touch, the bond glowing, motes of flowing water and drifting spray rising between them.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint soft aqua glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint soft aqua glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Companion: a large pearl-white swan with faint aqua tinting along the edges of its feathers, a long graceful neck and calm dark eyes, gliding beside her on shallow water, its wings half raised.
 
 Environment: a vast sea-cave grotto opening onto a moonlit ocean, glittering tide pools, luminous blue-green bioluminescence on the cave walls.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

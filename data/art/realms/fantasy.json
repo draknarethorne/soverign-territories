@@ -2,7 +2,7 @@
   "id": "realms/fantasy",
   "kind": "realm",
   "name": "Realm: high fantasy (canon)",
-  "description": "Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world",
+  "description": "Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic",
   "negatives": ["modern objects", "modern buildings", "skyscrapers", "cars", "power lines", "electric street lights", "neon", "plastic", "smartphones", "contemporary clothing", "sci-fi technology"],
   "compatibleStages": ["scene"],
   "tags": ["realm", "fantasy", "canon", "default"],

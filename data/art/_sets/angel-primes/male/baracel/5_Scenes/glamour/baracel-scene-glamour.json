@@ -13,7 +13,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/baracel/jewelry/baracel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/leather-sandals.json",
     "back": "data/art/heroes/angel-primes/male/baracel/wings/baracel-wings.json",
-    "effects": "A gentle drift of stone shards, dust and glowing crystals lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",
+    "effects": "A gentle drift of stone shards, dust and glowing crystals lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/elemental/grounded/bedrock-stone-realm.json"
   },

@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension.
-Bust: full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: deep forest-emerald irises with radiating sage striations and a dark pine limbal ring.
-Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a long Celtic gown of Emerald Green wool with wide trailing sleeves, sage Celtic knotwork embroidered at the neckline, cuffs and hem, a laced bodice and a woven belt, a light plaid mantle pinned at one shoulder.
 
@@ -29,13 +29,13 @@ Holding a gnarled living-wood staff in one hand, the bark twisting naturally up 
 
 Curling bright emerald-green vines, petals and floating leaves unfurl around her.
 
-Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with bright emerald-green light, brightest near the pupil and fading to the natural deep forest-emerald irises at the rim, iris detail still visible, a gentle bright emerald-green catchlight.
 
 Makeup: Celtic makeup - a soft smoky green-grey eye, a delicate sage woad spiral painted at one temple and a small triskele dot on the cheekbone, a natural flushed lip.
 
 Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -8,15 +8,15 @@ prompt:
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 Legs: strong, shapely, muscular legs.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
 
@@ -28,13 +28,13 @@ Wearing: only a Flame Red silk slip set: a short camisole with lace trim at the 
 
 Hair: tossed wildly to one side, parted above the ear, full of movement; moderate breeze towards her (fully replace the source photo's hairstyle).
 
-Makeup: soft and natural - copper-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Red.
+Makeup: soft and natural - copper-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Red.
 
-Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights; black lush lashes.
 
-Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+Lips: natural, subtle berry-tinted satin - keep lips natural.
 
-Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:

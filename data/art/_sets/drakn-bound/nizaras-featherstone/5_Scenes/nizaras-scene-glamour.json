@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/nizaras/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/nizaras-featherstone/weapons/thorn-daggers.json",
-    "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around him - understated, nothing busy.",
+    "effects": "A few drifting leaves and soft {{MAGIC}} motes of pollen glow in the sunbeams around him - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/forests/ancient-grove.json"
   },

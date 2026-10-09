@@ -8,7 +8,7 @@
     "pose": "The dragon lies like a mountain on a bed of ore, heavy limbs folded beneath it, head raised and turned toward the camera with a slow, unshakable gaze.",
     "background": "data/art/backgrounds/fantasy/lairs/earth-crystal-geode-cavern.json",
     "hoard": "data/art/hoards/earth-hoard.json",
-    "effects": "A few fine motes of dust drift in the warm light - understated, nothing busy."
+    "effects": "A few fine motes of dust drift in the warm light - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Terrador/5_Scenes/Terrador_Scene_Lair.txt",

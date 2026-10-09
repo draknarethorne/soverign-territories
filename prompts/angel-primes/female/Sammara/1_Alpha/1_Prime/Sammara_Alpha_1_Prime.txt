@@ -8,33 +8,33 @@ prompt:
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high rather than drooping, even where the reference bust is smaller or spread apart.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 Legs: very long, slender legs with slim, tapering thighs.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, height and overall proportions; the Critical details above override the reference.
 
 Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides, open hands; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved (not wide).
+Figure: lithe, slender, long-limbed build; slim waist; shapely feminine hips, gently curved.
 
-Wearing: only a Toxic Orchid Magenta string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle tarnished brass sheen and a hairline tarnished brass edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together, with thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only, no bands, no wide waistband, no thick sides; midriff, abdomen, and hips bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes, no shoes.
+Wearing: only a Toxic Orchid Magenta string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle tarnished brass sheen and a hairline tarnished brass edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together, with thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only; midriff, abdomen, and hips bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes.
 
-Hair: sleek and straight with a deep side part; no breeze (fully replace the source photo's hairstyle).
+Hair: sleek and straight with a deep side part; still air (fully replace the source photo's hairstyle).
 
-Makeup: soft and natural - violet-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes; never heavy. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Magenta.
+Makeup: soft and natural - violet-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Magenta.
 
-Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights; black lush lashes.
+Eyes: both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights; black lush lashes.
 
-Lips: natural, subtle berry-tinted satin - keep lips natural, no heavy lipstick.
+Lips: natural, subtle berry-tinted satin - keep lips natural.
 
-Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open (no squint), chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a relaxed, warm, softly alluring smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases and faint dimples, cheeks only slightly raised and the eyes kept wide open, chin very slightly lowered, brows relaxed, eyes warm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:

@@ -2,7 +2,7 @@
   "id": "backgrounds/studio/dawn-rim-grey",
   "kind": "background",
   "name": "Studio: grey backdrop, dawn rim light (cut-outs)",
-  "description": "completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop and nothing else in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow",
+  "description": "completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop with the subject alone in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow",
   "compatibleStages": [
     "scene"
   ],

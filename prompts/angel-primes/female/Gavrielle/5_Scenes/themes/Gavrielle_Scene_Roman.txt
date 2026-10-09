@@ -9,12 +9,12 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Roman stola of Sky Silver silk with a gold-embroidered hem, belted high under the bust, draped with a long white palla shawl across one shoulder and the arm.
 
@@ -24,19 +24,19 @@ Jewelry: Roman gold jewelry - a pair of ornate fibula brooches pinning the garme
 Back: a pair of long, narrow silver-white wings swept back, the feathers lifting and fanning in the wind.
 Legs & feet: open Roman caligae sandals of Sky Silver leather laced up the shin with white studs, the toes bare.
 
-A candid high-fashion editorial shot, refined seated glamour. No breeze. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a soft, wondering smile, eyes lifted and glowing. one hand resting on the knee, the other draped gracefully at her side.
+A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a soft, wondering smile, eyes lifted and glowing. one hand resting on the knee, the other draped gracefully at her side.
 
 Holding a small bronze brazier on a chain raised in one hand, a sacred pale sky-silver-tinted flame dancing in it, sparks drifting upward.
 
 A drift of racing wind, feathers and leaves circles her, pale sky-silver light glinting within it.
 
-Eyes: irises softly aglow with pale sky-silver light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle pale sky-silver catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with pale sky-silver light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle pale sky-silver catchlight.
 
 Makeup: classic Roman makeup - dark kohl-lined eyes with a subtle white shadow, defined brows, rouged cheekbones and a deep rose lip.
 
 Environment: a grand high-fantasy Roman forum at dusk, towering marble colonnades and a domed temple, bronze braziers burning along the steps, banners with eagle standards, warm torch glow on pale stone.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

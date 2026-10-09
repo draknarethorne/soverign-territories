@@ -9,29 +9,29 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing an open Soft Pearl White vest worn over a bare chest, a gold chain across the front, and loose dark trousers held by a wide sash.
 
 Jewelry: a simple gold chain with a small pendant, the pendant formed as a single white feather within a plain ring and set with a small gold gem.
 Back: a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 He stands close to his bonded companion, one hand raised and gently resting against it, his other hand relaxed at his side, his face turned toward the camera with wonder and quiet certainty; the companion turns toward him and both are fully in frame.
 
 A thread of gold light runs from his hand to his companion where they touch, the bond glowing, motes of soft white light, drifting pale feathers and motes rising between them.
 
-Eyes: the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises kept intact, with a faint gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural the reference image's own eye colour, unchanged, in clear irises kept intact, with a faint gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Companion: a lean pale hound with a short pearl-white coat, dove-grey ears and mask and amber eyes, standing at his side facing the viewer with its ears up and its tail low.
 
 Environment: a high limestone plateau at first light, short pale grass and a few weathered standing stones, thin cloud on the horizon, soft even daylight and a light wind in the grass.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

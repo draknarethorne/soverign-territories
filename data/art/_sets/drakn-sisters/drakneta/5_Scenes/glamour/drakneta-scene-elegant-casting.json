@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She stands in a sharp, athletic stance, one arm thrust forward with fingers spread as bolts arc from her fingertips, the other hand held back at her hip gathering a crackling sphere, torso twisted and hips cocked, a bold, smirking gaze to the camera. A violent gust whips her hem, sleeves and hair. No weapon or staff - casting with her bare hands only.",
+    "pose": "She stands in a sharp, athletic stance, one arm thrust forward with fingers spread as bolts arc from her fingertips, the other hand held back at her hip gathering a crackling sphere, torso twisted and hips cocked, a bold, smirking gaze to the camera. A violent gust whips her hem, sleeves and hair. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/drakneta/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

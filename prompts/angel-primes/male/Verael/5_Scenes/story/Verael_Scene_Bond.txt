@@ -9,29 +9,29 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a Forest Green wool military-dress jacket with antique bronze buttons in rows, a stiff collar, and a brown stripe down each trouser leg; chest and shoulders squared and formal.
 
 Jewelry: a simple antique bronze chain with a small pendant, the pendant formed as twining leaves and a budding vine and set with a small emerald gem.
 Back: a pair of heavy brown-and-moss-green feathered wings with flowering vines wound through them.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 He stands close to his bonded companion, one hand raised and gently resting against it, his other hand relaxed at his side, his face turned toward the camera with wonder and quiet certainty; the companion turns toward him and both are fully in frame.
 
 A thread of leaf green light runs from his hand to his companion where they touch, the bond glowing, motes of living vines, leaves and petals rising between them.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint leaf green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint leaf green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Companion: a huge brown bear with moss growing on its shoulders and flowering vines twined along its back, small kind dark eyes, standing at his side, shoulders as high as his own, flowers in its fur.
 
 Environment: a hollow beneath a vast enchanted tree in a sun-dappled grove, towering mossy roots and standing stones, shafts of golden light through the canopy, soft ferns and wildflowers.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

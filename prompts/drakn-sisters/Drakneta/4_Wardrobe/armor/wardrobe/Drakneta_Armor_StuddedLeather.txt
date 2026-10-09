@@ -6,17 +6,17 @@ prompt:
 
 Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
 Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
-Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
-Skin: warm golden tan complexion, evenly tanned, no pale areas.
+Skin: warm golden tan complexion, evenly tanned.
 
-Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
+Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre; the waist is cinched and defined and the hips follow their natural curve.
 
 Wearing a Electric Gold studded leather jerkin over a linen shirt with bright gold studs in rows, a leather skirt split for movement and layered pauldrons.
 
@@ -26,13 +26,13 @@ Jewelry: a simple bright gold necklace and small matching earrings.
 
 Back: the back of the armor fully visible.
 
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 Holding empty hands relaxed at the sides.
 
 Overall, a clean studio presentation of the studded leather armor.
 
-Eyes: natural studio eyes, not glowing.
+Eyes: natural studio eyes.
 
 ----------------------------------------------------------------
 negative prompt:

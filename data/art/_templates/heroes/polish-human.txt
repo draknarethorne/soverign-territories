@@ -8,7 +8,7 @@ Refine the incoming image without changing it: natural skin texture with fine po
 
 {{KEEP_LINE}}
 
-Change nothing else: keep the pose, outfit, composition, framing, background, colours and lighting exactly as in the incoming image.
+Keep the pose, outfit, composition, framing, background, colours and lighting exactly as in the incoming image.
 
 ----------------------------------------------------------------
 negative prompt:

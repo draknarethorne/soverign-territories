@@ -21,10 +21,10 @@
       "metal": "brushed chrome",
       "magicColor": "pale ice blue",
       "gemColor": "diamond",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/sleek-middle-part-tucked.json"
@@ -32,7 +32,7 @@
     "physique": {
       "build": "Slim, poised, elegant build with precise posture",
       "torso": "Slim, straight waist",
-      "bust": "Full, firm, high conical bust, pointed and lifted with a sharp clean line and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Full, firm, high conical bust, pointed and lifted with a sharp clean line and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slim, precise arms with long fingers",
       "hips": "Slim, gently curved hips",
       "legs": "Long, slim legs with a clean line",

@@ -6,16 +6,16 @@ prompt:
 
 Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
+Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build.
 
 Wearing a knee-length hauberk of small overlapping bronze scales over a Storm Sky Blue tunic, a wide leather belt with an grey buckle.
 
@@ -25,13 +25,13 @@ Jewelry: a simple steel chain with a small pendant.
 
 Back: the back of the armor fully visible.
 
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 Holding empty hands relaxed at the sides.
 
 Overall, a clean studio presentation of hoplite bronze armor.
 
-Eyes: natural studio eyes, not glowing.
+Eyes: natural studio eyes.
 
 ----------------------------------------------------------------
 negative prompt:

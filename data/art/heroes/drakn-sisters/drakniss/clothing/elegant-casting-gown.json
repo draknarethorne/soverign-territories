@@ -2,7 +2,7 @@
   "id": "heroes/drakn-sisters/drakniss/clothing/elegant-casting-gown",
   "kind": "wearing",
   "name": "Elegant Casting Gown (Drakniss signature)",
-  "description": "a radiant {{PRIMARY}} satin gown with gold-leaf detailing, a sunburst-patterned corset bodice and plunging neckline, sheer sleeves like folded wings of light, a high thigh slit, a long train of pleated tulle, a {{METAL}} sunburst brooch and {{GEM}} accents at the waist, no headwear and her hair fully visible",
+  "description": "a radiant {{PRIMARY}} satin gown with gold-leaf detailing, a sunburst-patterned corset bodice and plunging neckline, sheer sleeves like folded wings of light, a high thigh slit, a long train of pleated tulle, a {{METAL}} sunburst brooch and {{GEM}} accents at the waist, her hair fully visible",
   "compatibleStages": ["scene"],
   "notes": "Cleric casting outfit: sunburst corset and wing sleeves, hands-only casting."
 }

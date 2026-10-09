@@ -9,7 +9,7 @@
     "wearing": "data/art/wardrobe/clothing/gowns/long-evening-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",
-    "effects": "A few fine ice crystals glitter in the air around her, faint {{MAGIC}} frost-light on her shoulders - understated, nothing busy.",
+    "effects": "A few fine ice crystals glitter in the air around her, faint {{MAGIC}} frost-light on her shoulders - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/heroes/drakn-sisters/draknira/backgrounds/fantasy/throne/glacier-ice-throne.json"
   },

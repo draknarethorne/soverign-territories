@@ -13,7 +13,7 @@
     "jewelry": "data/art/wardrobe/jewelry/rings/signet-rings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/lace-up-heels.json",
     "back": "data/art/heroes/angel-primes/female/gavrielle/wings/gavrielle-wings.json",
-    "effects": "A gentle drift of racing wind, feathers and leaves lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",
+    "effects": "A gentle drift of racing wind, feathers and leaves lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/elemental/grounded/gale-eyrie-realm.json"
   },

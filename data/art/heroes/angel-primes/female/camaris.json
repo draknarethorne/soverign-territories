@@ -21,10 +21,10 @@
       "metal": "burnished copper",
       "magicColor": "ember orange",
       "gemColor": "ruby",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/wild-tossed.json"
@@ -32,7 +32,7 @@
     "physique": {
       "build": "Curvy, athletic, powerful hourglass build; a fighter's frame",
       "torso": "Strong, defined waist",
-      "bust": "Very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Strong, toned arms",
       "hips": "Full, powerful hips",
       "legs": "Strong, shapely, muscular legs",

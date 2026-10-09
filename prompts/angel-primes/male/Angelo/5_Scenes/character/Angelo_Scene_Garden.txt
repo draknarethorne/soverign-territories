@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
-Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: the exact hair colour of the reference image, unchanged, with natural shine.
+Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a long Soft Pearl White coat with a high collar, a double row of gold buttons and wide cuffs, worn over a fitted dark vest and shirt with matching trousers, the neckline, cuffs and hem embroidered with a single white feather within a plain ring in gold; clean, with a quiet shine.
 
@@ -21,17 +21,17 @@ Headwear: a wreath of gold laurel leaves resting on the brow, tied with gold rib
 
 Jewelry: a simple gold chain with a small pendant, the pendant formed as a single white feather within a plain ring and set with a small gold gem.
 Back: a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 He kneels in a walled garden with one hand touching the leaves of a plant, his wings lowered, glancing up at the camera with a small, unguarded smile; full figure visible.
 
 Soft white light, drifting pale feathers and motes lie faintly on the leaves and soil around him, with the softest gold light.
 
-Eyes: natural the reference image's own eye colour, unchanged and not recoloured, in clear irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+Eyes: natural the reference image's own eye colour, unchanged, in clear irises, exactly as in the incoming image, calm and clear with crisp catchlights.
 
 Environment: an orchard of heavy apple trees in the afternoon sun, baskets of fruit and wooden ladders, a stone farmhouse and long soft shadows.
 
-Setting: a grounded, cinematic pastoral fantasy world photographed on location like a feature-film still - sunlit meadows, timber and stone farms and villages, hedgerows and orchards, warm natural light with soft atmosphere and gentle, true-to-life colour; any magic is a faint warm glow or drifting seeds and petals; nothing from the modern world.
+Setting: a grounded, cinematic pastoral fantasy world photographed on location like a feature-film still - sunlit meadows, timber and stone farms and villages, hedgerows and orchards, warm natural light with soft atmosphere and gentle, true-to-life colour; any magic is a faint warm glow or drifting seeds and petals.
 
 ----------------------------------------------------------------
 negative prompt:

@@ -44,9 +44,9 @@
     "physique": {
       "build": "Compact, wiry dark-elven build; predatory poise with clinical, measured precision",
       "torso": "Flat, tightly controlled midriff; narrow waistline tapering cleanly into the hips",
-      "bust": "Very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Very full, generous bust with a heavy, rounded shape and a pronounced inner swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Slender, wiry arms with defined tendon lines at the wrists; steady, precise hands",
-      "hips": "Shapely feminine hips, gently curved (not wide), narrow and agile",
+      "hips": "Shapely feminine hips, gently curved, narrow and agile",
       "legs": "Very long, wiry legs with slender calves",
       "distinguishingMarks": [],
       "raceAlignment": "Human presentation aligned to dark elf apothecary characteristics (clinical precision, venomous focus)"

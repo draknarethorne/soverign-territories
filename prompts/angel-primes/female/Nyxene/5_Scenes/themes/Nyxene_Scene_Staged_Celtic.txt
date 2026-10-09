@@ -8,18 +8,18 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. a warm, radiant smile, eyes full of light. one foot forward for an elegant line; arms relaxed with a graceful hand.
 
 A drift of drifting shadow, smoke and pale starlight circles her, dark violet light glinting within it.
 
-Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle dark violet catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle dark violet catchlight.
 
 Environment: a high-fantasy Celtic moor at dawn, a ring of ancient carved standing stones in rolling heather and green hills, low silver mist drifting between the stones, soft golden light breaking through cloud.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 A light breeze moves the clothing and a few strands of hair.
 
 Palette: Midnight Violet dominant, with silver accents; all glow is dark violet.

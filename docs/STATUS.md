@@ -293,6 +293,14 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
   The FireRed steps read the same input images as their Qwen twins, so a FireRed Bare starts from the Qwen Prime; pick another image in ComfyUI to run a pure FireRed chain. Which engine each phase should use is still a test, and the documents that name one are assumptions until you decide.
 - **Filename case (Oct 8).** Git tracked 20 older-angel prompts and workflows as `Head_Face_Closeup` while the generator writes `Head_face_closeup`; a branch switch rewrote them and Angel Primes showed 20 missing. They are renamed to the generator's case. Many "missing" and "install-only" pairs that differ only by case point to this.
 
+## Negations in prompts (Oct 9)
+
+"Do not recolour" recoloured and "no pale areas" paled: a model reads a negation as the thing it names. A scan of all 5,475 positive prompts found **39,755 negation hits**, nearly all from a few shared sources (the angels' palette strings, the eye-effect pieces, the contour pieces, the sisters' build text, the studio lighting, the realms and the shared templates).
+They are removed at the source (243 data files plus the hair-motion scaffold; about 50 rules, each dropping a tail whose positive half was already in the sentence) and all prompts regenerated: **0 command phrases ("do not", "never", "avoid") and 0 flip-risk phrases are left**; the generic review list fell from about 31,000 hits to about 360 (descriptive ones such as "without bulk"), plus 1,428 in allowlisted video prompts.
+Examples: `do not recolour` (5,687), `do not alter undertone` (3,260), `no backlight or rim light` (3,300), `no gap between them ... rather than drooping` (2,540), `not glowing` (1,886), `no pale areas` (1,447), `no footwear` (1,299), `not squinting` and `no squint` (about 2,500), `nothing from the modern world` (929), `no breeze` became `still air`, and "Change nothing else: keep" became "Keep".
+`tools/art/negation_audit.py` (`bin\negation-audit.cmd`) now keeps it that way: `validate.cmd` runs it in check mode, and the rules and allowlist are in `data/art/_settings/negation-audit.json`. The README rule is "Write positives, not negations".
+**Left on purpose:** the video prompts (no negative prompt on the video model), gameplay-card lore (the card owns it), brand text ("no text"), and the 2b covering experiments, which say "only these three coverings" and "no clothing at all" as part of what they test. **Possibly next:** "lightly enhanced" in the angels' skin, hair and eye strings invites change as much as the old negatives did; say if you want it replaced by "exactly as in the reference image".
+
 ## Library gaps (audit of Oct 8)
 
 `tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin, over-used or built from shortcuts, and is meant to be re-run as the library grows. **Over-use is the signal, not unused pieces** (pieces are written ahead of their scenes):

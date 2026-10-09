@@ -3,7 +3,7 @@
   "kind": "motion",
   "name": "Blowing a Kiss (Full Body)",
   "editorial": "Candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, mid-motion, asymmetrical body language, fluid spontaneous, mild-energy, body in all positions.",
-  "breeze": "No breeze.",
+  "breeze": "Still air.",
   "body": "full head-to-toe shot, feet placed on the floor in glamour positions, legs exposed.",
   "head": "position varies.",
   "defaultGaze": "data/art/motion/gaze/focused-on-camera.json",

@@ -2,7 +2,7 @@
   "id": "backgrounds/studio/cream-even",
   "kind": "background",
   "name": "Studio: cream backdrop, even light (default)",
-  "description": "a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light",
+  "description": "a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light",
   "compatibleStages": ["pose", "head", "hair", "motion", "armor", "clothing"],
   "tags": ["studio", "cream", "even-light", "default"],
   "notes": "The standard 'shot' background (vs a scene): cream backdrop + flat studio light so the subject, armor or outfit reads clearly. Default for every cream-stage template."

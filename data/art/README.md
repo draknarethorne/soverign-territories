@@ -790,6 +790,14 @@ element's hue (Dorian is a darker "Storm Gold" so he is not a twin of Drakneta).
   `wardrobe/swimwear/triangle-bikini.json`; outfits and scenes can also override colour directly in their own pieces.
 - Eyes avoid repeating the primary where it would blur the identity (Draknava silver-grey, Drakneta espresso-brown).
 
+## Write positives, not negations
+
+An image model reads a negation as the thing it names: "do not recolour" recolours, "no squint" squints, "not glowing" glows, "rather than drooping" droops. So the positive prompt says only what should be there.
+Say "natural studio eyes", not "eyes, not glowing"; "evenly tanned", not "evenly tanned, no pale areas"; "keep the face, expression and pose", not "change nothing else"; "still air", not "no breeze".
+If the positive half is already in the sentence, drop the negative half. What must be kept out belongs in the piece's `negatives` list (the negative prompt, which the Qwen workflows have; FireRed has none, so a FireRed prompt has to be a positive).
+`python tools/art/negation_audit.py` (`bin\negation-audit.cmd`, run by `validate.cmd`) scans every generated positive prompt: **command** phrases (do not, never, avoid) and a list of known **flip-risk** qualifiers fail the check, any other no/not/nothing/without is listed under `--review` for a look,
+and each phrase is traced to the data file it comes from, so the fix goes to the source. `data/art/_settings/negation-audit.json` holds the rules and the allowlist (video prompts, which have no negative prompt; gameplay-card lore; brand text).
+
 ## Eyes, makeup, expression and hair: what each stage says
 
 Every cream-backdrop (studio) stage uses the **same** studio eyes and makeup, so a full-body shot and the close-up agree.

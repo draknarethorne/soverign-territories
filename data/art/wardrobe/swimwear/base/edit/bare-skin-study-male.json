@@ -2,7 +2,7 @@
   "id": "wardrobe/swimwear/base/edit/bare-skin-study-male",
   "kind": "wearing",
   "name": "Bare edit: figure study, bare skin (male)",
-  "description": "nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look, with no clothing, underwear, waistband or clothing lines and no marks or tan lines anywhere; completely bare natural skin with no paint and no tint, keeping his natural skin tone ({{SKIN}}), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible",
+  "description": "nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone ({{SKIN}}), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible",
   "compatibleStages": [
     "showcase"
   ],

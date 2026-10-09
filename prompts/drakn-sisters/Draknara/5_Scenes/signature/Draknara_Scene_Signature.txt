@@ -10,13 +10,13 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
-Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
-Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
-Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Burnt Sienna over a matte underlayer, with delicate warm turquoise glowing fibre-optic threads woven throughout; secured on her shoulders, no headwear and her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
+Wearing a layered ethereal gown of sheer fabric that flows around her - frosted bright Deep Burnt Sienna over a matte underlayer, with delicate warm turquoise glowing fibre-optic threads woven throughout; secured on her shoulders, her hair fully visible. The fabric is translucent, the thin bikini underlayer visible behind it.
 
 Jewelry: antique bronze with turquoise-jewelled bracelets, necklace, and belly-button ring.
 Legs & feet: bright Deep Burnt Sienna high heels with glowing warm turquoise straps.
@@ -27,13 +27,13 @@ Holding a tall carved wooden spirit-totem staff in one hand, planted upright, it
 
 Fine motes of warm turquoise dust and drifting leaf litter swirl gently around her feet, stirred by unseen earth magic.
 
-Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with warm turquoise light, brightest near the pupil and fading to the natural rich malachite-hazel irises at the rim, iris detail still visible, a gentle warm turquoise catchlight.
 
 Companion: her aligned Elder Dragon, Terrador, visible in the distance among the trees, an Elder Dragon of deep burnt-sienna and antique-bronze scales veined with vivid turquoise, trailing drifting dust and stone fragments, wings like slabs of weathered stone edged in antique bronze.
 
 Environment: a sacred high-fantasy spirit grove of standing stones and tall carved totem poles hung with feathers, beads and bone-and-stone wind chimes, low ancestral fires glowing between the stones, earthy mist and warm dust-gold light through the trees.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

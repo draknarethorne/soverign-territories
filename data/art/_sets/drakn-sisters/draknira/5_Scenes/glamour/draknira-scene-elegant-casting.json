@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknira-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She stands tall in a poised, asymmetrical stance, one hand raised with fingers fanned to scatter a storm of ice shards, the other sweeping low to freeze a spiral of frost across the ground, shoulders squared, a cold, imperious gaze to the camera. A biting wind streams her train, sleeves and hair. No weapon or staff - casting with her bare hands only.",
+    "pose": "She stands tall in a poised, asymmetrical stance, one hand raised with fingers fanned to scatter a storm of ice shards, the other sweeping low to freeze a spiral of frost across the ground, shoulders squared, a cold, imperious gaze to the camera. A biting wind streams her train, sleeves and hair. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/draknira/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

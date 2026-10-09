@@ -8,18 +8,18 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a playful, knowing smile, eyes bright with mischief. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 
 A drift of drifting shadow, smoke and pale starlight circles him, ember red light glinting within it.
 
-Eyes: irises softly aglow with ember red light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle ember red catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with ember red light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle ember red catchlight.
 
 Environment: a high-fantasy winter market square at dusk, timber stalls with garlands and string lights, a huge glowing tree, steaming mulled wine, lanterns and gently falling snow.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 A light breeze moves the clothing and a few strands of hair.
 
 Palette: Obsidian Black dominant, with crimson accents; all glow is ember red.

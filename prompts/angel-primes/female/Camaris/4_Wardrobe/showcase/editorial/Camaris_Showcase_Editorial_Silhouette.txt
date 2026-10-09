@@ -9,12 +9,12 @@ Photo-realistic studio portrait, full-body shot, head to toe, 85mm portrait phot
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: very full, firm, lifted bust, a bold and powerful rounded shape with generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing a Flame Red strapless sweetheart cocktail dress with a boned bodice, a burnished copper waist sash and a short pleated tulip skirt, shoulders and arms bare.
 
@@ -23,9 +23,9 @@ Legs & feet: classic Flame Red stiletto pumps with a pointed toe and a slim burn
 
 A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. composed, serene; lips softly together; expressive, sultry brows. one foot forward for an elegant line; arms relaxed with a graceful hand.
 
-Clean, flattering fashion lighting with soft shadows and gentle highlights on skin and fabric. No magical effects.
+Clean, flattering fashion lighting with soft shadows and gentle highlights on skin and fabric.
 
-Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition, exactly as in the incoming image, calm and clear with crisp catchlights.
 
 Studio backdrop: a hazy studio space with a bright diffused backlight behind the subject, a soft glow around her outline and drifting fine haze in the air.
 

@@ -18,7 +18,7 @@ Standing A-pose, the same stance as the incoming image: upright, feet set apart,
 
 Keep the exact outfit from the incoming image.
 
-Eyes: natural studio eyes, not glowing.
+Eyes: natural studio eyes.
 
 Expression: {{EXPRESSION}}.
 

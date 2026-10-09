@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Seraphine Solspire. This pass removes clothi
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing celestial armor of polished rose gold: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form instead of standing out, covering the centre of each breast fully, and one matching small ornate plate in the form of a small halo ring with two short feathers curved to follow the contour of the pelvic area, tapering and sitting flush against the skin so that no edge stands out, covering the whole front of the pelvic area completely; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a pink opal gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+Result: she is wearing celestial armor of polished rose gold: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form, covering the centre of each breast fully, and one matching small ornate plate in the form of a small halo ring with two short feathers curved to follow the contour of the pelvic area, tapering and sitting flush against the skin, covering the whole front of the pelvic area completely; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a pink opal gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: tall, graceful, elegant build; long-limbed with a regal bearing; slim, softly defined waist; long, slender, graceful arms; shapely feminine hips, gently curved; very long, slender legs with a graceful line.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

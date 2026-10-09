@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing plate armor whose panels are cut from banded geode stone, edged in polished silver, the cut faces glittering with small pale sapphire crystals.
 
@@ -23,17 +23,17 @@ Jewelry: a simple polished silver chain with a small pendant, the pendant formed
 Back: a pair of pale slate-white wings with perfectly ordered feathers rimmed with frost.
 Legs & feet: heavy Winter Slate leather boots with plate knee-caps and shin guards, polished silver buckles and thick soles.
 
-A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct, no smile one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a serious, poised, neutral expression - lips closed and relaxed, jaw soft, brows level, eyes steady and direct one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
 
 Drifting snow and fine frost crystals glitter in the air, a pale frost blue chill glowing at the feet.
 
-Eyes: irises softly aglow with frost blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour at the rim, iris detail still visible, a gentle frost blue catchlight, no light spilling beyond the eyelids.
+Eyes: irises softly aglow with frost blue light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle frost blue catchlight.
 
 Companion: a large snowy owl with silver-grey barring, pale gold eyes and a soft ruff of white feathers dusted with frost, perched on his shoulder, head turned toward the viewer.
 
 Environment: an elemental ice realm: towering spires of blue ice and frozen waterfalls under a pale sky, drifting snow glitter and glowing frost flowers.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

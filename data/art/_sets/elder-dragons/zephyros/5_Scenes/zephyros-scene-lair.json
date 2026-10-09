@@ -8,7 +8,7 @@
     "pose": "The dragon perches on a wind-carved stone arch with wings half-spread, tail trailing in the breeze, head raised and turned toward the camera with a free, playful gaze.",
     "background": "data/art/backgrounds/fantasy/lairs/wind-cloud-eyrie.json",
     "hoard": "data/art/hoards/wind-hoard.json",
-    "effects": "A few feathers and wisps of cloud drift past on the breeze - understated, nothing busy."
+    "effects": "A few feathers and wisps of cloud drift past on the breeze - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Zephyros/5_Scenes/Zephyros_Scene_Lair.txt",

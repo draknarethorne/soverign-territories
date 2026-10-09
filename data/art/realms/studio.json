@@ -2,7 +2,7 @@
   "id": "realms/studio",
   "kind": "realm",
   "name": "Realm: plain studio (for cut-outs)",
-  "description": "Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame",
+  "description": "Setting: a plain studio shot against one flat backdrop, the subject alone in the frame",
   "negatives": [
     "landscape",
     "scenery",

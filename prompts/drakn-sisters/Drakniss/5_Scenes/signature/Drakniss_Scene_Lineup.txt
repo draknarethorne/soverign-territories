@@ -10,11 +10,11 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 
 Critical details - these must be clearly visible:
 Hair: pale luminous champagne-gold blonde hair, soft and sultry with a gentle radiant sheen, classic evenly woven bright sun-gold foil highlights running through the lengths, bright and luminous, with a polished glossy finish.
-Bust: very full, ample bust with a generous, softly rounded shape and a heavy natural swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: very full, ample bust with a generous, softly rounded shape and a heavy natural swell, generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: radiant topaz-gold irises with radiating solar champagne striations and a warm bronze limbal ring.
-Skin: warm radiant fair-golden tan complexion, evenly tanned, no pale areas.
+Skin: warm radiant fair-golden tan complexion, evenly tanned.
 
-Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
 
 Wearing an ornate floor-length dawn gown of ivory and Radiant Rose Gold silk with a fitted bodice embroidered with radiant rose gold sunbursts, a high halo-shaped collar of radiant rose gold rays, long sleeves of sheer gold-dusted gauze, and a skirt of pleated panels that fan out like rays of light behind her; sweetheart neckline.
 
@@ -27,11 +27,11 @@ She stands tall and square to the camera, feet a little apart, one arm relaxed s
 
 A soft halo of golden light glows behind her head, a mote of light glows above her palm, a few sparks of light drift close to her.
 
-Eyes: the natural radiant topaz-gold irises kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural radiant topaz-gold irises kept intact, with a faint warm golden-white glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
-Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop and nothing else in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
+Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop with the subject alone in the frame, lit from the right by strong low warm golden dawn light that rims her hair, shoulders and gown, with a soft cool blue fill from the left, her feet fully visible on the plain floor with a faint soft shadow.
 
-Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame.
+Setting: a plain studio shot against one flat backdrop, the subject alone in the frame.
 
 ----------------------------------------------------------------
 negative prompt:

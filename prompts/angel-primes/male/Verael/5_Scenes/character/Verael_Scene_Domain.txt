@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing an open Forest Green vest worn over a bare chest, a antique bronze chain across the front, and loose dark trousers held by a wide sash, the neckline, cuffs and hem embroidered with twining leaves and a budding vine in brown; pristine, luminous and unmarked.
 
@@ -21,17 +21,17 @@ Headwear: an ornate antique bronze crown with high arches, filigree and emerald 
 
 Jewelry: a simple antique bronze chain with a small pendant, the pendant formed as twining leaves and a budding vine and set with a small emerald gem.
 Back: a pair of heavy brown-and-moss-green feathered wings with flowering vines wound through them.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 He crouches with one hand pressed into the soil while vines and flowers rise around it, the other hand lifting, looking up to the camera with calm delight; full figure visible.
 
 Living vines, leaves and petals unfurl around his hand and climb his arm, with leaf green light at the tips of every new leaf.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint leaf green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint leaf green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a wildflower meadow beside a mossy stone ruin, tall grass and flowers swaying, pollen and seeds drifting in warm afternoon sun, a small stream over mossy rock.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

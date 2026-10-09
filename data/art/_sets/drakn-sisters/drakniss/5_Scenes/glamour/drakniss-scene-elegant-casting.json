@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She stands with her arms open and raised in an invocation, palms turned up, back slightly arched and one foot lightly lifted, drawing a column of light down from above into her hands, a serene, luminous gaze to the camera. A warm rising wind lifts her train, sleeves and hair. No weapon or staff - casting with her bare hands only.",
+    "pose": "She stands with her arms open and raised in an invocation, palms turned up, back slightly arched and one foot lightly lifted, drawing a column of light down from above into her hands, a serene, luminous gaze to the camera. A warm rising wind lifts her train, sleeves and hair. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

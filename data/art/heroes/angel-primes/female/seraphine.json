@@ -21,10 +21,10 @@
       "metal": "rose gold",
       "magicColor": "warm golden-white",
       "gemColor": "pink opal",
-      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour",
-      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "eyeColorGlamour": "natural eye colour from the reference image, clarified and gently enhanced with crisp definition",
+      "hairColor": "natural hair colour from the reference image, lightly enhanced with healthy shine and dimension",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [],
       "skinColorNegatives": [],
       "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/hollywood-glam-waves.json"
@@ -32,7 +32,7 @@
     "physique": {
       "build": "Tall, graceful, elegant build; long-limbed with a regal bearing",
       "torso": "Slim, softly defined waist",
-      "bust": "Full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail",
+      "bust": "Full, firm, high and softly rounded bust with an elegant, symmetrical shape and small refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail",
       "arms": "Long, slender, graceful arms",
       "hips": "Shapely feminine hips, gently curved",
       "legs": "Very long, slender legs with a graceful line",

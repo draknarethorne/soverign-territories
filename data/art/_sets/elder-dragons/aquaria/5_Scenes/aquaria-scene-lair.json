@@ -8,7 +8,7 @@
     "pose": "The dragon rests half-submerged in a still tide pool, coils draped over a mound of treasure, head raised and turned toward the camera with a calm, regal gaze, water streaming from its wings.",
     "background": "data/art/backgrounds/fantasy/lairs/water-sea-cave-grotto.json",
     "hoard": "data/art/hoards/water-hoard.json",
-    "effects": "A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated, nothing busy."
+    "effects": "A few droplets of water hang in the air, faint bioluminescent light rippling across the hoard - understated."
   },
   "template": "data/art/_templates/dragons/scene-lair-dragon.txt",
   "output": "prompts/elder-dragons/Aquaria/5_Scenes/Aquaria_Scene_Lair.txt",

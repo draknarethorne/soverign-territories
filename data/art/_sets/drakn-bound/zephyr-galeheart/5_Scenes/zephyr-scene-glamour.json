@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/zephyr/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/zephyr-galeheart/weapons/gale-saber.json",
-    "effects": "A playful breeze lifts his half-cloak, faint {{MAGIC}} light glinting in the wind - understated, nothing busy.",
+    "effects": "A playful breeze lifts his half-cloak, faint {{MAGIC}} light glinting in the wind - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/highlands/windswept-cliffs.json"
   },

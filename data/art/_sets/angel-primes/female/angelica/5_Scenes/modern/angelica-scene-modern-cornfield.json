@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/flowing-sundress.json",
     "pose": "data/art/motion/standing/three-quarter-glamour.json",
-    "effects": "Warm natural golden-hour light only, no magical or glowing effects.",
+    "effects": "Warm natural golden-hour light only.",
     "background": "data/art/backgrounds/modern/rural/cornfield-golden-hour.json",
     "realm": "data/art/realms/modern.json"
   },

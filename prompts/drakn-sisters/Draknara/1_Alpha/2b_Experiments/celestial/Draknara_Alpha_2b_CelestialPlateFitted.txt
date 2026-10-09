@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Draknara Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing celestial armor of antique bronze: two small ornate filigree plates, each in the form of a round carved totem-face disc with a spiral border, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form instead of standing out, covering the centre of each breast fully, and one matching small ornate plate in the form of a small mountain-peak chevron curved to follow the contour of the pelvic area, tapering and sitting flush against the skin so that no edge stands out, covering the whole front of the pelvic area completely; every plate is engraved with carved spirals and tiny turquoise inlays and set with a turquoise; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+Result: she is wearing celestial armor of antique bronze: two small ornate filigree plates, each in the form of a round carved totem-face disc with a spiral border, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form, covering the centre of each breast fully, and one matching small ornate plate in the form of a small mountain-peak chevron curved to follow the contour of the pelvic area, tapering and sitting flush against the skin, covering the whole front of the pelvic area completely; every plate is engraved with carved spirals and tiny turquoise inlays and set with a turquoise; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
-Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: rich malachite-hazel irises with radiating terracotta striations and a dark umber limbal ring.
-Skin: deep sun-weathered terracotta tan complexion, evenly tanned, no pale areas.
+Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved (not wide); very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
+Body: shape the figure to this individual build, keeping her height, head and pose: lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone; flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips; slender, lightly defined arms; faint deltoid contours and toned forearms without bulk; shapely feminine hips, gently curved; very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

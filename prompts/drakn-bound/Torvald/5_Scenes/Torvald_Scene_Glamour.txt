@@ -13,7 +13,7 @@ Hair: dark brown hair, short and rugged.
 Eyes: deep umber irises with faint rust striations and a dark iron limbal ring.
 Skin: deep sun-weathered tan complexion, evenly toned.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing fitted Deep Rust Brown-toned banded leather armor across the chest and shoulders, Iron Grey stitching and buckles, arms left bare for freedom of movement, a reinforced belt and leg wraps; fur-trimmed pauldrons and a necklace of carved stone fetishes across the chest.
 
@@ -23,13 +23,13 @@ He stands angled about 45 degrees to the camera in a heroic three-quarter pose, 
 
 Holding a massive two-handed greataxe, its Deep Rust Brown-toned stone head bound in grey iron bands, gripped in both hands, faint earthen tremors humming from the stone, fine dust sifting from its edge with every motion.
 
-A few fine motes of warm amber dust drift around his feet in the warm light - understated, nothing busy.
+A few fine motes of warm amber dust drift around his feet in the warm light - understated.
 
-Eyes: the natural deep umber irises kept intact, with a faint warm amber glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural deep umber irises kept intact, with a faint warm amber glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a deep red-rock canyon in a high-fantasy realm, carved stone statues and ancient ruined stairways in the cliff walls, warm dust-gold light, scattered boulders.
 
-Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic.
 
 ----------------------------------------------------------------
 negative prompt:

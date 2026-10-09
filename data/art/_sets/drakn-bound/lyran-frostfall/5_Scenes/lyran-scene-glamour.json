@@ -9,7 +9,7 @@
     "wearing": "data/art/heroes/drakn-bound/lyran/clothing/armor-default-wearing.json",
     "legs_feet": "data/art/wardrobe/footwear/boots/combat-boots.json",
     "holding": "data/art/heroes/drakn-bound/lyran-frostfall/weapons/frostbrand.json",
-    "effects": "A few fine ice crystals glitter in the air around him, faint {{MAGIC}} frost-light on his armor - understated, nothing busy.",
+    "effects": "A few fine ice crystals glitter in the air around him, faint {{MAGIC}} frost-light on his armor - understated.",
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/backgrounds/fantasy/frozen/glacier-citadel-courtyard.json"
   },

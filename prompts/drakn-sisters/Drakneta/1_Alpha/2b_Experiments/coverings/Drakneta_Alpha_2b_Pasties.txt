@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Drakneta Thorne. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing only these three small coverings, each described separately; Breasts: one small, flat, matte, nude-tone pasty, about one inch (2.5 cm) across, on the centre of each breast, matching her skin; Pelvic area: one small, smooth, form-fitting nude-tone patch in a soft tapered triangular shape that follows the contour of the pelvic area, flat and smooth with no bump; Everywhere else: completely bare natural skin with no covering, no paint and no tint, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (warm golden tan complexion, evenly tanned, no pale areas); the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+Result: she is wearing only these three small coverings, each described separately; Breasts: one small, flat, matte, nude-tone pasty, about one inch (2.5 cm) across, on the centre of each breast, matching her skin; Pelvic area: one small, smooth, form-fitting nude-tone patch in a soft tapered triangular shape that follows the contour of the pelvic area, flat and smooth; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (warm golden tan complexion, evenly tanned); the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
 Hair: light golden-brown dark-blonde hair, sleek and sultry, a few bold, sharp electric white-silver streaks forked like lightning bolts through the lengths, noticeably bright against the base colour and catching the light, tone-on-tone dimension.
-Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Bust: full, generous, well-rounded bust, firm and high with a pronounced inner curve, generous natural detail, lifted and pressed toward the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
 Eyes: dark storm-charcoal, almost black irises with radiating white-hot gold striations and a thin bright electric-gold limbal ring.
-Skin: warm golden tan complexion, evenly tanned, no pale areas.
+Skin: warm golden tan complexion, evenly tanned.
 
-Body: shape the figure to this individual build, keeping her height, head and pose: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved (not wide), narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
+Body: shape the figure to this individual build, keeping her height, head and pose: tall, statuesque celestial build; ultra-long-limbed, commanding and radiant; taut, perfectly flat midriff; narrow waistline with seamless transitions into the hips; long, slender arms with fine, elegant hands; shapely feminine hips, gently curved, narrow and regal, with a high-waisted line; exceptionally long, statuesque legs with sharp, clean shin contours.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

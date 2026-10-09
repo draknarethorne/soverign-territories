@@ -4,19 +4,19 @@ Incoming image: the Prime A-pose of Sandalyn Stonehaven. This pass removes cloth
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject, so that nothing of the original swimsuit or any strap or string at the neck, back, sides or hips remains.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing a bare upper body and a single small covering; Upper body: completely bare, the shoulders, arms, back, bare chest and stomach, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, with the natural shape, fullness and cleavage of the bust clearly visible and no clothing, paint, pasties or tint of any kind; Pelvic area: one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat with no bump and no straps; Everywhere else: completely bare natural skin, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone), including the hips, thighs, legs and bare feet
+Result: she is wearing a bare upper body and a single small covering; Upper body: completely bare, the shoulders, arms, back, bare chest and stomach, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, with the natural shape, fullness and cleavage of the bust clearly visible and no clothing, paint, pasties or tint of any kind; Pelvic area: one small, smooth, form-fitting nude-tone covering over the pelvic area only, in a soft tapered shape that follows the contour of the body, perfectly flat; Everywhere else: completely bare natural skin, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced), including the hips, thighs, legs and bare feet
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Bust: very full, heavy, firmly rounded bust with a strong supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Bust: very full, heavy, firmly rounded bust with a strong supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: strong, sturdy hourglass build with solid shoulders and thighs; firm, defined waist; strong, capable arms; wide, strong feminine hips; strong, muscular legs with solid thighs.
 
-Change nothing else: keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
+Keep the face, expression, makeup, the pose, the full-length framing from head to feet, the cream studio background and the lighting as in the incoming image; where the Critical details above differ from the incoming image, the Critical details win.
 
 ----------------------------------------------------------------
 negative prompt:

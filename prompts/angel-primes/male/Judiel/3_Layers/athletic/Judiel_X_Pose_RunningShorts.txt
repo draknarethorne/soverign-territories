@@ -9,7 +9,7 @@ Modify the subject from the reference image into a clean, full-length, photoreal
 
 Professional full-body studio beauty photography, 85mm lens, high anatomical definition, clean baseline model plate, razor-sharp optical focus, soft depth of field falloff, raw photographic capture, photorealistic with lifelike skin texture and natural pores.
 
-Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
 Maintain strict fidelity to the reference image's facial features, facial bone structure, overall physical body shape, and proportions.
 
@@ -17,17 +17,17 @@ Standing A-pose: upright, feet set apart, arms relaxed slightly away from the si
 
 Figure: athletic, wiry-muscular, sharp and angular build; lean, hard, sharply defined chest; wiry, hard, defined arms; tight, narrow waist; long, lean, hard legs.
 
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
 Wearing: only Storm Indigo nylon running shorts with a drawstring waist and inner mesh brief, mid-thigh cut with silver side panels; chest, abdomen, and calves bare; bare feet.
 
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour; parted just above the right ear and pulled over the top, blowing left, right ear exposed; minimal breeze flowing to left (override the source hairstyle).
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension; parted just above the right ear and pulled over the top, blowing left, right ear exposed; minimal breeze flowing to left (override the source hairstyle).
 
-Grooming: natural, clean and well-groomed, groomed brows, no cosmetics. Reset any heavy styling from the source photo. Fingernails natural or Light Indigo.
+Grooming: natural, clean and well-groomed, groomed brows, bare-faced. Reset any heavy styling from the source photo. Fingernails natural or Light Indigo.
 
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, both eyes matched, level and symmetrical, wide open and looking straight at the camera, not squinting, crisp catchlights.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
 
-Expression: a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth (never a broad or toothy smile), the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open (no squint), jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
+Expression: a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
 
 ----------------------------------------------------------------
 negative prompt:

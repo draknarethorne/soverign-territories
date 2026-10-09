@@ -8,10 +8,10 @@
         "Warm Champagne Gold",
         "Dove Grey"
       ],
-      "eyeColor": "the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition",
-      "eyeColorGlamour": "the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition",
-      "hairColor": "the exact hair colour of the reference image, unchanged and not recoloured, with natural shine",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone",
+      "eyeColor": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "eyeColorGlamour": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
+      "hairColor": "the exact hair colour of the reference image, unchanged, with natural shine",
+      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
       "eyeColorNegatives": [
         "changed eye colour",
         "recoloured eyes"
@@ -30,12 +30,12 @@
     "physique": {
       "build": "Lithe, slender, well-proportioned build",
       "torso": "Slim waist",
-      "bust": "Full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout (not flattened or reduced)",
-      "hips": "Shapely feminine hips, gently curved (not wide)",
+      "bust": "Full, naturally rounded bust, softly enhanced - breasts lifted and centred with a gentle push-up-bra style contour, forming a narrow décolletage; soft, naturally rounded shape throughout",
+      "hips": "Shapely feminine hips, gently curved",
       "legs": "Long, slender legs with slim, tapering thighs",
       "distinguishingMarks": [],
       "raceAlignment": "Human — standard human presentation"
     }
   },
-  "notes": "Alpha test hero (group: angel-primes, division: alpha) - NOT an angel. A generic stand-in for any photo: its eyes, hair and skin wording is adaptive (the reference photo's own look, unchanged and not recoloured), so you can try a photo through a small version of the phases before giving it to a real angel. Physique and palette are the same generic wardrobe scheme as Angelica and Angelo (Soft Pearl White / Warm Champagne Gold / Dove Grey, female build). Its prompts, workflows and renders live under angel-primes/alpha/Female/, apart from every angel."
+  "notes": "Alpha test hero (group: angel-primes, division: alpha) - NOT an angel. A generic stand-in for any photo: its eyes, hair and skin wording is adaptive (the reference photo's own look, unchanged), so you can try a photo through a small version of the phases before giving it to a real angel. Physique and palette are the same generic wardrobe scheme as Angelica and Angelo (Soft Pearl White / Warm Champagne Gold / Dove Grey, female build). Its prompts, workflows and renders live under angel-primes/alpha/Female/, apart from every angel."
 }

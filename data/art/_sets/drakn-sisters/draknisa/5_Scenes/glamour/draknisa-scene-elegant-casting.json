@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
   "name": "Elegant Casting",
   "components": {
-    "pose": "She balances on one leg with the other extended behind her in a dancer's pose, both arms flowing in a wide arc as if guiding a tide, one hand palm-up lifting a ribbon of water that spirals around her body, the other trailing droplets, head tilted, a serene gaze to the camera. Sea wind billows her gown, train and hair. No weapon or staff - casting with her bare hands only.",
+    "pose": "She balances on one leg with the other extended behind her in a dancer's pose, both arms flowing in a wide arc as if guiding a tide, one hand palm-up lifting a ribbon of water that spirals around her body, the other trailing droplets, head tilted, a serene gaze to the camera. Sea wind billows her gown, train and hair. Casting with her bare hands only.",
     "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/elegant-casting-gown.json",
     "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json",

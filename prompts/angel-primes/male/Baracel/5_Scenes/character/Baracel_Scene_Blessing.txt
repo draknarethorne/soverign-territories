@@ -9,11 +9,11 @@ Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sh
 Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
 
-Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would.
 
 Wearing a tailored Deep Sienna dress shirt with the collar open and sleeves rolled, and slim dark trousers with an grey belt, the neckline, cuffs and hem embroidered with a faceted crystal set in carved stone in grey; clean, with a quiet shine.
 
@@ -21,17 +21,17 @@ Headwear: a slender copper tiara with a central peak set with a tiger's eye ston
 
 Jewelry: a simple copper chain with a small pendant, the pendant formed as a faceted crystal set in carved stone and set with a small tiger's eye gem.
 Back: a pair of thick, heavy wings of earth-brown and grey feathers, rough as granite.
-Legs & feet: bare feet, no footwear.
+Legs & feet: bare feet.
 
 He stands with both palms open and lifted in front of him, his wings half spread, his head bowed slightly and then lifting his eyes to the camera with a gentle, grave warmth; full figure visible.
 
 Soft stone shards, dust and glowing crystals gather above his open palms and fall away like light rain, amber gold motes drifting down through the air.
 
-Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint amber gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition kept intact, with a faint amber gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated.
 
 Environment: a Victorian-style glasshouse conservatory of exotic plants and orchids, curved iron beams, a stone fountain and soft green light.
 
-Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally.
 
 ----------------------------------------------------------------
 negative prompt:

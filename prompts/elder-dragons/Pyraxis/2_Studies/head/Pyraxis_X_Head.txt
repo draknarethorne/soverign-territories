@@ -6,7 +6,7 @@ prompt:
 
 Photo-realistic, cinematic creature photography. Close-up portrait shot of an Elder Dragon's head and upper neck, 85mm lens, razor-sharp optical focus on the eyes, soft depth of field falloff.
 
-Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting, no backlight or rim light.
+Background: a basic cream-coloured studio backdrop. Even soft neutral frontal studio lighting.
 
 Pyraxis, an Elder Dragon of flame-red and burnished-gold scales, wreathed in heat haze, wings like sheets of molten bronze.
 
