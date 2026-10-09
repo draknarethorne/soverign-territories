@@ -596,6 +596,94 @@ class InputPullTests(unittest.TestCase):
         self.assertEqual(json.loads(cw.dump_cfg(cfg)), cfg)
 
 
+class PhotoRepointTests(unittest.TestCase):
+    """A chosen original photo that was renamed or moved (the originals tool) is found again by its id and re-pointed in workspaces.json, the workflows and the input folders."""
+
+    OLD, NEW = "various_image_123_944x1104.png", "alice_image_123_944x1104.png"
+    PRIME = "Alice_Qwen_Alpha_1_Prime.json"
+
+    def world(self, folder="Alice", new_name=None):
+        w = World().__enter__()
+        lib = w.tmp / "lib"
+        (lib / "Angels" / folder / "gallery_944x1104").mkdir(parents=True)
+        (lib / "Angels" / folder / "gallery_944x1104_org").mkdir()
+        (lib / "Angels" / folder / "gallery_944x1104" / (new_name or self.NEW)).write_bytes(b"png")
+        (lib / "Angels" / folder / "gallery_944x1104_org" / self.OLD).write_bytes(b"old")
+        w.cfg.update({"standardSize": [944, 1104], "photos": {"Alice": self.OLD}, "inputs": {}, "sharedInput": str(w.tmp / "shared-input"), "sharedOutput": str(w.tmp / "shared-output")})
+        (w.tmp / "shared-input").mkdir()
+        patches = [mock.patch.object(cw, "work_root", lambda cfg: lib), mock.patch.object(cw, "CFG_PATH", w.tmp / "workspaces.json")]
+        for p in patches:
+            p.start()
+        w.patches += patches
+        w.master(self.PRIME, image_wf(self.OLD))
+        w.path = w.put("A-Home", "alpha/" + self.PRIME, image_wf(self.OLD))
+        return w
+
+    def test_a_renamed_photo_is_repointed_everywhere(self):
+        w = self.world()
+        try:
+            out, _ = w.run("inputs", "photos", "--dry-run")
+            self.assertIn(f"{self.OLD} -> {self.NEW}", out)
+            self.assertEqual(w.cfg["photos"]["Alice"], self.OLD, "a dry run changes nothing")
+            self.assertEqual(cw.input_image(cw.read_wf(w.path)), self.OLD)
+            out, _ = w.run("inputs", "photos")
+            self.assertEqual(w.cfg["photos"]["Alice"], self.NEW)
+            self.assertEqual(json.loads((w.tmp / "workspaces.json").read_text(encoding="utf-8"))["photos"]["Alice"], self.NEW)
+            self.assertEqual(cw.input_image(cw.read_wf(w.path)), self.NEW)
+            self.assertEqual(cw.input_image(cw.read_wf(w.masters[self.PRIME][2])), self.NEW)
+            self.assertTrue((w.tmp / "shared-input" / self.NEW).exists(), "the scaled photo is copied to the input folder")
+            self.assertTrue(list((w.tmp / "backup").rglob(self.PRIME)), "the changed workspace file is backed up")
+            out, _ = w.run("inputs", "photos")
+            self.assertIn("every chosen photo is where", out)
+        finally:
+            w.__exit__()
+
+    def test_a_workflow_that_loads_something_else_is_left_alone(self):
+        w = self.world()
+        try:
+            other = w.put("A-Home", "alpha/Alice_Qwen_Alpha_2_Bare.json", image_wf("my_own_choice.png"))
+            w.master("Alice_Qwen_Alpha_2_Bare.json", image_wf("placeholder.png"))
+            w.run("inputs", "photos")
+            self.assertEqual(cw.input_image(cw.read_wf(other)), "my_own_choice.png")
+        finally:
+            w.__exit__()
+
+    def test_a_photo_in_another_heros_folder_is_reported_not_guessed(self):
+        w = self.world(folder="Various")
+        try:
+            out, _ = w.run("inputs", "photos")
+            self.assertIn("ELSEWHERE", out)
+            self.assertEqual(w.cfg["photos"]["Alice"], self.OLD)
+        finally:
+            w.__exit__()
+
+    def test_a_photo_whose_original_is_gone_is_reported(self):
+        w = self.world(new_name="alice_image_999_944x1104.png")
+        try:
+            out, _ = w.run("inputs", "photos")
+            self.assertIn("MISSING", out)
+            self.assertEqual(w.cfg["photos"]["Alice"], self.OLD)
+        finally:
+            w.__exit__()
+
+    def test_a_photo_already_in_the_heros_folder_is_left_alone(self):
+        w = self.world()
+        try:
+            w.cfg["photos"]["Alice"] = self.NEW
+            out, _ = w.run("inputs", "photos")
+            self.assertIn("every chosen photo is where", out)
+        finally:
+            w.__exit__()
+
+    def test_find_image_looks_in_the_library(self):
+        w = self.world()
+        try:
+            self.assertEqual(cw.find_image(w.cfg, self.NEW).name, self.NEW)
+            self.assertIsNone(cw.find_image(w.cfg, self.OLD), "the _org archive is not part of the library")
+        finally:
+            w.__exit__()
+
+
 def denoise_wf(value):
     """A workflow with the outer subgraph node that exposes a denoise widget, as the generated ones do."""
     return {"nodes": [{"type": "sg", "widgets_values": ["pos", "neg", value], "widgets_values_named": {"positive": "pos", "negative": "neg", "denoise": value}}],

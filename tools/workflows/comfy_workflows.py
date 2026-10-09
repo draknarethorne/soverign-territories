@@ -1738,6 +1738,9 @@ def find_image(cfg, name):
     for d in input_dirs(cfg):
         if (d / name).exists():
             return d / name
+    for folder, p in photo_library(cfg):
+        if p.name == name:
+            return p
     for root in output_roots(cfg):
         hit = next(root.rglob(name), None)
         if hit:
@@ -1872,6 +1875,102 @@ def set_inputs(cfg, args):
         print("workspaces.json updated; now run: inputs reset --hero " + hero)
 
 
+def photo_roots(cfg, base=None):
+    """The folders that hold the original-photo library: <work root>/<name> for each of paths.photoRoots (Angels, Models, Prospects, Artists)."""
+    base = pathlib.Path(base) if base else work_root(cfg)
+    return [base / n for n in cfg.get("paths", {}).get("photoRoots", ["Angels", "Models", "Prospects", "Artists"]) if (base / n).is_dir()]
+
+
+def photo_library(cfg, base=None):
+    """[(folder name, path)] of every scaled original: <root>/<Name>/gallery_<W>x<H>/*.png (the _org archive folders are not part of it)."""
+    w, h = cfg.get("standardSize") or (944, 1104)
+    out = []
+    for root in photo_roots(cfg, base):
+        for d in sorted(p for p in root.iterdir() if p.is_dir()):
+            g = d / f"gallery_{w}x{h}"
+            if g.is_dir():
+                out += [(d.name, f) for f in sorted(g.glob("*.png"))]
+    return out
+
+
+PHOTO_KEY = re.compile(r"(image_\d+|screenshot_\d{8}_\d{6})", re.I)
+
+
+def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
+    """A chosen photo whose original was renamed (moved into the hero's own folder, or renamed by the originals tool) is found again by its id and re-pointed:
+    in workspaces.json ("photos"), in every generated workflow of that hero that loads it (repo and workspaces; a changed workspace file is backed up first), and its
+    scaled image is copied into the input folder of each workspace that needed it. A photo whose original is gone, or sits in another hero's folder, is reported, never guessed."""
+    by_name, by_key = collections.defaultdict(list), collections.defaultdict(list)
+    for folder, p in photo_library(cfg, work):
+        by_name[p.name.lower()].append((folder, p))
+        m = PHOTO_KEY.search(p.name)
+        if m:
+            by_key[m[1].lower()].append((folder, p))
+    renames = {}
+    for h, name in sorted(cfg.get("photos", {}).items()):
+        if hero and h.lower() != hero.lower():
+            continue
+        m = PHOTO_KEY.search(name)
+        mine = [(f, p) for f, p in by_key.get(m[1].lower(), []) if f.lower() == h.lower()] if m else []
+        if any(p.name == name for _, p in mine):
+            continue
+        if mine:
+            renames[h] = (name, mine[0][1])
+            print(f"  photo    {h:10} {name} -> {mine[0][1].name}")
+        elif by_name.get(name.lower()):
+            continue  # a photo kept in another folder on purpose (Female uses an Artists photo)
+        elif m and by_key.get(m[1].lower()):
+            print(f"  ELSEWHERE {h}: {name} is now in {', '.join(sorted({f for f, _ in by_key[m[1].lower()]}))}, not in {h}'s folder; move the original there, or choose it with: inputs set {h} --photo NAME")
+        elif not find_image(cfg, name):
+            if m:
+                print(f"  MISSING  {h}: {name} is not in the library or any input folder (its original was removed?); choose another with: inputs set {h} --photo NAME")
+            else:
+                print(f"  NO PHOTO {h}: {name} is a placeholder; put originals in {h}'s library folder, run originals, then: inputs set {h} --photo NAME")
+    if not renames:
+        print("inputs photos: every chosen photo is where workspaces.json says")
+        return 0
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    repo, touched, copied = repo_files(cfg), collections.Counter(), set()
+
+    def retarget(p, ws):
+        wf = read_wf(p)
+        ln = node_of(wf, "LoadImage") if isinstance(wf, dict) else None
+        if not ln:
+            return
+        for h, (old, newp) in renames.items():
+            if ln["widgets_values"][0] == old and p.name.split("_", 1)[0].lower() == h.lower():
+                touched[ws or "repo"] += 1
+                if not dry_run:
+                    if ws:
+                        backup(stamp, ws, p.name, p)
+                    ln["widgets_values"][0] = newp.name
+                    if isinstance(ln.get("widgets_values_named"), dict) and "image" in ln["widgets_values_named"]:
+                        ln["widgets_values_named"]["image"] = newp.name
+                    write_wf(p, wf)
+                if ws and (ws, newp.name) not in copied:
+                    copied.add((ws, newp.name))
+                    d = input_dir(cfg, ws)
+                    print(f"  {'would copy' if dry_run else 'copied   '} {newp.name} -> {d}")
+                    if not dry_run and not (d / newp.name).exists():
+                        shutil.copy2(newp, d / newp.name)
+
+    for name, (g, h, p) in repo.items():
+        if h in renames:
+            retarget(p, None)
+    for ws in list(cfg["workspaces"]):
+        if not workspace_ready(cfg, ws, root)[0]:
+            continue
+        for name, p in install_files(cfg, ws, root).items():
+            if name in repo and repo[name][1] in renames and not is_hand_made(cfg, ws, p, root):
+                retarget(p, ws)
+    if not dry_run:
+        for h, (old, newp) in renames.items():
+            cfg["photos"][h] = newp.name
+        write_cfg(cfg)
+    print(f"inputs photos: {len(renames)} photo(s) re-pointed" + (" (dry run)" if dry_run else "") + "; workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
+    return len(renames)
+
+
 def denoise_plan(cfg):
     """{workflow name: (hero, stage, family, role, denoise)} for every Qwen and FireRed workflow whose card gives a hint."""
     plan = {}
@@ -1953,6 +2052,9 @@ def cmd_inputs(args):
         return
     if args.reset:
         reset_inputs(cfg, args, args.workspace)
+        return
+    if args.photos:
+        reconcile_photos(cfg, args.dry_run, args.root, args.hero)
         return
     for h in sorted(hero_groups()):
         if not hero_files(h):
@@ -2527,7 +2629,7 @@ def normalise(args):
             setattr(args, args.action, True)
     if args.cmd not in WRITES:
         return False
-    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set)) and not (args.cmd == "denoise" and not args.reset)
+    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set or args.photos)) and not (args.cmd == "denoise" and not args.reset)
     explicit = args.dry_run
     args.dry_run = args.dry_run or not args.apply
     return writes and not args.apply and not explicit
@@ -2594,8 +2696,9 @@ def main(argv=None):
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("inputs")
     common(s, True)
-    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set"],
+    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set", "photos"],
                    help="status: which images each hero uses; pull: take the defaults you chose in the workspaces into workspaces.json; reset: point every workflow back at its default image; fix: replace placeholder inputs; "
+                        "photos: re-point a chosen photo that the originals tool renamed or moved (workspaces.json, workflows, input folders); "
                         "set HERO --photo/--prime/--bare/--apose ...: write a hero's images into workspaces.json. No action lists the configured and inferred A-poses")
     s.add_argument("target", nargs="?", help="with set: the hero")
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
@@ -2618,7 +2721,7 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
-    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None)
+    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None, photos=False)
     s = sub.add_parser("setup")
     common(s, True, False)
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")

@@ -174,6 +174,10 @@ python tools/workflows/comfy_workflows.py inputs reset --hero Seraphine --apply 
 `inputs reset` **stops** while such a choice is unpulled (`--force` overrides it, with a backup) so a reset can never silently undo your pick. The golden images are named by step with a `_00000` counter, so they sort above the numbered renders: `<Hero>_Qwen_Alpha_1_Prime_00000.png`,
 `<Hero>_Qwen_Alpha_2_Bare_00000.png`, `<Hero>_Qwen_Alpha_3_Barefoot_00000.png` and `<Hero>_Qwen_Alpha_3_Heels_00000.png`. These are already the names in `inputs`, so
 dropping a chosen render into a workspace's input folder under that name is all it takes; `inputs reset` repoints every workflow (a missing file is reported, not copied).
+
+The **original photos** come from the library that `bin\originals.cmd` keeps (names follow the folder, scaled to 944x1104, see [docs/art/original-photos.md](../docs/art/original-photos.md)). When it renames a photo you had chosen, `inputs photos`
+(run by `originals` itself) finds it again by its id and re-points `photos` in `workspaces.json`, the generated workflows that load it (a changed workspace file is backed up) and the workspaces' input folders; a photo whose original
+moved to another hero's folder or was removed is reported, not guessed (`--dry-run` previews).
 Retire the temporary `Alpha_2_Bare_Skin` shots once `Alpha_2_Bare_Figure` is tuned.
 
 **Angel Primes.** The `Angel Primes` workspace is one tree for a whole test deck: `female/<Hero>/<phase>/...`, `male/<Hero>/<phase>/...`, and later `pets/`, `units/`, `buildings/`, `equipment/`, `tactics/` and `workers/`

@@ -64,15 +64,15 @@ class SimplerOptionsTests(unittest.TestCase):
                 self.assertEqual(code, 2, argv)
 
     def test_inputs_actions_map_to_the_switches(self):
-        for action in ("pull", "reset", "fix", "status"):
-            a = types.SimpleNamespace(cmd="inputs", action=action, target=None, status=False, pull=False, reset=False, fix=False, set=None, apply=True, dry_run=False)
+        for action in ("pull", "reset", "fix", "status", "photos"):
+            a = types.SimpleNamespace(cmd="inputs", action=action, target=None, status=False, pull=False, reset=False, fix=False, photos=False, set=None, apply=True, dry_run=False)
             cw.normalise(a)
             self.assertTrue(getattr(a, action), action)
-        a = types.SimpleNamespace(cmd="inputs", action="set", target="Remiah", status=False, pull=False, reset=False, fix=False, set=None, apply=True, dry_run=False)
+        a = types.SimpleNamespace(cmd="inputs", action="set", target="Remiah", status=False, pull=False, reset=False, fix=False, photos=False, set=None, apply=True, dry_run=False)
         cw.normalise(a)
         self.assertEqual(a.set, "Remiah")
         with self.assertRaises(SystemExit):
-            cw.normalise(types.SimpleNamespace(cmd="inputs", action="set", target=None, status=False, pull=False, reset=False, fix=False, set=None, apply=True, dry_run=False))
+            cw.normalise(types.SimpleNamespace(cmd="inputs", action="set", target=None, status=False, pull=False, reset=False, fix=False, photos=False, set=None, apply=True, dry_run=False))
 
     def test_pull_only_maps_to_the_kinds(self):
         for only, attr in (("shots", "shots"), ("templates", "templates"), ("finals", "only_finals")):

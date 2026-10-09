@@ -75,6 +75,9 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 
 ### Phase 1: source photos and picks (you, existing tools)
 
+- [x] Tooling built Oct 9: `bin\originals.cmd` keeps the photo library in step (names follow the folder an original is in, scaled copies are made, copies of removed originals move to `gallery_944x1104_org`) and re-points a chosen photo that was renamed (`inputs photos`). Guide: [docs/art/original-photos.md](../art/original-photos.md). Run on the whole library the same day: 28 originals renamed, 976 copies made at 944x1104, the previous scaled folders kept as `gallery_944x1104_org`,
+  11 angels' photos re-pointed.
+- [ ] To pick: move or drop originals into each angel's folder, delete the ones that did not work out, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` and `inputs reset --hero HERO`. `inputs photos --dry-run` lists the heroes with no photo yet (12 today: the male angels and `Male`).
 - [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
 - [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
 - [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.

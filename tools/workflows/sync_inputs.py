@@ -41,7 +41,7 @@ def source_index(cfg):
     """{file name: path}, first folder wins."""
     new_out = cw.output_root(cfg)
     legacy = [pathlib.Path(cfg["sharedInput"]), pathlib.Path(cfg["sharedOutput"])]  # last: old renders must never shadow new ones
-    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", new_out, *legacy]
+    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", *[p for p in cw.photo_roots(cfg) if p.name != "Models"], new_out, *legacy]
     index = {}
     for root in roots:
         if root.is_dir():

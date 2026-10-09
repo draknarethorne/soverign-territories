@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Point every workflow at the renamed original photos (preview unless --apply).
 
+SUPERSEDED by `inputs photos` (comfy_workflows.py, run by tools/art/originals.py), which re-points a chosen photo by its id and needs no rename map;
+see docs/art/original-photos.md. Kept for the old facebook_/Screenshot_ map.
+
 After tools/art/rename_originals.py renamed the originals, the copies in the shared ComfyUI input folder and every workflow that loads
 them still use the old facebook_/Screenshot_ names. This tool:
   1. renames those copies in the shared input folder (old name -> new name, from tools/art/originals_rename_map.json),

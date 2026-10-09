@@ -29,7 +29,8 @@ echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspa
 echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots  ^(= pull --only shots / deploy --include shots^)
 echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
-echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset)
+echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
+echo    originals.cmd [--dry-run] [--only NAME]   the photo library: name originals after their folder, scale to 944x1104, move copies of removed originals to the _org archive, re-point chosen photos  ^(docs\art\original-photos.md^)
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA

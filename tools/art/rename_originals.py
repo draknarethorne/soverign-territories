@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Rename the original reference photos to <hero>_image_<id> / <hero>_screenshot_<date>_<time>_<app> (preview unless --apply).
 
+SUPERSEDED by tools/art/originals.py (bin\\originals.cmd), which names originals after the folder they are in, for every library root,
+and also scales and prunes; see docs/art/original-photos.md. Kept for the rename map it wrote.
+
 The library has one folder per hero (Draknara/, Drakness/ ...) with an optional gallery/ inside. Files keep their folder; only the
 name changes, so a photo is never confused with another hero's once it is uploaded to ComfyUI:
 

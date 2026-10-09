@@ -9,17 +9,17 @@
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Angelica | 75137735308050~ | Q c8 | Q c1 | - | - | - | 9 |
-| Azaline | 75082033066326~ | Q c3 | - | - | - | - | 3 |
-| Camaris | 75137745540378~ | Q c5 | - | - | - | - | 5 |
-| Gavrielle | 75137734858506~ | Q c2 | Q c1 | - | - | - | 3 |
-| Haniya | 75137747209071~ | Q c1 | - | - | - | - | 1 |
-| Nyxene | 75137742704524~ | Q c4 | - | - | - | - | 4 |
-| Ravaelle | 75137726177305~ | Q c3 | - | - | - | - | 3 |
-| Remiah | 20260922_114223 | Q c4 | - | - | - | - | 4 |
-| Sammara | 75137732265008~ | Q c1 | - | - | - | - | 1 |
-| Sandalyn | 75137732051912~ | Q c3 | Q c1 | - | - | - | 4 |
-| Seraphine | 75137745969539~ | Q c1 | - | - | - | - | 1 |
+| Angelica | angelica_image~ | Q c8 | Q c1 | - | - | - | 9 |
+| Azaline | azaline_image_~ | Q c3 | - | - | - | - | 3 |
+| Camaris | camaris_image_~ | Q c5 | - | - | - | - | 5 |
+| Gavrielle | gavrielle_imag~ | Q c2 | Q c1 | - | - | - | 3 |
+| Haniya | haniya_image_7~ | Q c1 | - | - | - | - | 1 |
+| Nyxene | nyxene_image_7~ | Q c4 | - | - | - | - | 4 |
+| Ravaelle | ravaelle_image~ | Q c3 | - | - | - | - | 3 |
+| Remiah | remiah_screens~ | Q c4 | - | - | - | - | 4 |
+| Sammara | sammara_image_~ | Q c1 | - | - | - | - | 1 |
+| Sandalyn | sandalyn_image~ | Q c3 | Q c1 | - | - | - | 4 |
+| Seraphine | seraphine_imag~ | Q c1 | - | - | - | - | 1 |
 
 ### Angel men (11)
 
@@ -97,6 +97,7 @@ From [2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md).
 
 **Phase 1: source photos and picks (you, existing tools)**
 
+- [ ] To pick: move or drop originals into each angel's folder, delete the ones that did not work out, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` and `inputs reset --hero HERO`. `inputs photos --dry-run` ...
 - [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
 - [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
 - [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
