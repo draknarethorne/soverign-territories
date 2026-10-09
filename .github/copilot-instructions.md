@@ -8,6 +8,7 @@ territory maps, AFK economy and backend (Nakama) are later-phase vision, not cur
 
 - [docs/STATUS.md](../docs/STATUS.md) - current state, decisions, open questions, next work. Read before design or data work.
 - [docs/README.md](../docs/README.md) - which document owns which topic.
+- [docs/plans/README.md](../docs/plans/README.md) - how we work: tmp draft -> agreed plan in `docs/plans/` -> one line in STATUS.md. Read the active plans listed in STATUS.md before starting work they cover.
 - [data/art/README.md](../data/art/README.md) - the art/prompt pipeline.
 
 Rules live in `docs/mvp/`, `docs/design/` (combat, deck, tutorial) and win over `docs/game-bible.md`, which is vision.
@@ -59,4 +60,8 @@ If a number or rule here disagrees with those docs, the docs win.
 - **Ignore every `_archive` folder** when reading documentation, data, or prompts, and do not cite or link to it,
   unless the user explicitly asks for archived material. Folders like `data/art/_templates`, `_sets`, `_schema` are active.
 - Do not make major design decisions without user approval, and do not commit code that fails the validators.
+- **Plans:** the user thinks in `tmp/<topic>.md` (git-ignored). When a draft is agreed, move it to `docs/plans/YYYY-MM-DD-<slug>.md`
+  with a `Status:` line, add one line to "Active plans" in `docs/STATUS.md`, ask open decisions one at a time, tick the checkboxes
+  as steps finish, and close it with a `Result` (it stays as history; only a superseded plan goes to `_archive`). `docs/todo.md` is
+  generated from tool status and plan checkboxes, not ticked by hand. Never delete a tmp draft until its text is copied into the plan.
 - Do not create art assets; describe them for the artist or generate prompts through the pipeline.

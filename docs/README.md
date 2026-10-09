@@ -40,6 +40,7 @@ data debt, and the readiness gates.
 | Hero/dragon vision roster | `codex/heroes/sovereign_dawn_codex.md` | The 10-element / 30-hero long-horizon roster + the Sundering storyline (`SD-001` to `SD-030`). **Ideation-tier vision**, not MVP scope — a subset ships first. A roster, not the codex: the JSON wins, and `python tools/art/codex_drift.py` checks the pages against it. |
 | Angel Primes roster and builds | `codex/heroes/angel_primes_codex.md`, `angel_primes_physique.md` | The 22 angels (a proposed exclusive `AP-001` to `AP-022` series): element, alignment, colours, and why each is built as they are. The art identities win. |
 | Current state, decisions, backlog | `STATUS.md` | Wins on "what is done / open / next". Rules still live in the rows above. |
+| Plans of action | `plans/YYYY-MM-DD-<slug>.md` | One file per piece of work we agreed to act on: status line, steps as checkboxes, decisions, result. Drafts start in `tmp/` (git-ignored). `STATUS.md` has one line per active plan; finished plans stay, marked `done`. |
 | Render QA | `art/output-qa-checklist.md` | Human check of rendered images (identity, anatomy, text, wardrobe). |
 | Art packs, dynamic ComfyUI prompts | `art/art-packs-and-comfy-node-proposal.md` | Proposal: zip packs of art JSON and custom nodes on one shared prompt library. |
 

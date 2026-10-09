@@ -20,6 +20,12 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Starter decks, packs, manifests | **Broken** (see Data debt). |
 | Unity client, backend | Not started. |
 
+## Active plans
+
+| Plan | Summary |
+| --- | --- |
+| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. |
+
 ## Decisions made
 
 - **A card is defined once, in the codex** (`data/cards/**`, `codex-schema.json`). Art is built for it and linked by
