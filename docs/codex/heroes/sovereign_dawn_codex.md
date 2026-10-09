@@ -96,7 +96,7 @@
 
 **Confirmed on this branch:**
 
-- **10 elements:** Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison
+- **10 elements plus Neutral:** Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison
   (plus Neutral for element-agnostic cards). Proposed strength/weakness cycles:
   - **Duality:** Light ⟷ Darkness.
   - **Primal triangle:** Fire / Water / Earth.
@@ -105,6 +105,12 @@
     exact directions, and multipliers. Owned by
     [`design/combat-calculation-spec.md`](../../design/combat-calculation-spec.md); elements are
     visual-only until finalized.
+- **Neutral is a real element slot, held back from the heroes on purpose.** There is no Neutral Drakn sister, no Neutral Drakn Bound
+  hero and no Neutral Elder Dragon: the ten elements carry the story heroes. Neutral is for the cards that belong to no element and
+  can be used across elements: tactics, items and equipment, utility cards and lower-tier cards, and the herald pair of the Angel
+  Primes, Angelica and Angelo (`AP-001` and `AP-012`, see [`angel_primes_codex.md`](angel_primes_codex.md)), who are meant to be heroes
+  any deck can play. How Neutral cards enter a deck is a deck and combat rule that is not written yet (open question below); the
+  shared Neutral pool in the blueprint is the starting point.
 - **Transcendent = new 7th rarity tier** (above Mythic), rarity-budget cost **64**. Reserved
   for the ten Drakn story heroines. Treated as apex chase/showcase cards; standard-format
   legality is an open Phase 2 decision (see deck-progression rules).
@@ -205,6 +211,7 @@
 | Workers | ~8 | resource producers (Farmer, Miner, Lumberjack, …) — art-only in MVP |
 | Equipment | ~14 | weapons / armor / accessories |
 | Neutral tactics | ~4 | element-agnostic (Charge, Heal, Shield Wall, …) |
+| Neutral heroes | 2 | Angelica and Angelo of the Angel Primes (`AP-001`, `AP-012`), a separate series usable in any deck; not in the subtotal |
 | **Shared subtotal** | **~38** | |
 
 **Base Set total ≈ 198 cards** (160 element + ~38 shared). Large but coherent as a single set,
@@ -215,7 +222,7 @@ and in the same ballpark as the prior 174-card base set — expanded for 10-elem
 - Every element gets the **same role/rarity template**, so no element is mechanically favored.
 - Creature-type and archetype variety lives **within** each element's 8 units.
 - Neutral economy/equipment is shared, keeping the elemental identity focused on heroes, dragons,
-  units, and tactics.
+  units, and tactics. Neutral is also the home of utility and lower-tier cards that any deck can use.
 - Expansions add new units/creatures/mechanics (and possibly new card types) on top — never by
   reworking this foundation.
 
@@ -230,6 +237,9 @@ and in the same ballpark as the prior 174-card base set — expanded for 10-elem
   females. The bible's six-tier ladder (Common → Mythic) would need a defined 7th tier.
 - **Combined cards:** Define how a female hero + her aligned Elder Dragon fuse into a
   "combined" card (stats, art, deck legality).
+- **Neutral cards and decks:** Neutral cards (utility, tactics, items, lower-tier cards, and the Angel Primes herald pair) are
+  meant to be playable in any deck whatever its elements. Define the deck-building rule (always legal, any count limits, whether a
+  Neutral hero can lead a deck) in the deck and combat docs. Neutral heroes beyond Angelica and Angelo are not planned.
 - **Class vs. archetype:** Confirm whether `Class` (Necromancer, Druid, etc.) and
   `Archetype` (Summoner / Spawner, etc.) both persist as card fields in `codex-schema.json`.
 - **Naming:** Confirm the `SD-###` numbering scheme and the `<Name> Thorne` convention for the

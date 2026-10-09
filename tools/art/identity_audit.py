@@ -7,7 +7,8 @@ For each hero:
   COLOURS   hair, eye and skin colour are defined (not left to the photo) and each has its negative list, so the Prime forces them onto the photo;
   PRIME     the generated Prime prompt (1_Alpha/1_Prime, or the older X_Pose) carries those exact colours;
   BARE      the generated Bare prompt (1_Alpha/2_Bare) applies her or his individual build, and the Prime does NOT (it uses the standard figure) where the card says so;
-  BULK      female angels only: no bulk words (strong, muscular, sturdy, solid, powerful ...) in the build, so no woman reads as an ape; height, leg length, softness and curve may vary freely (the men may range from lean to heavily built).
+  BULK      female angels only: no bulk words (strong, muscular, sturdy, solid, powerful ...) in the build, so no woman reads as a body builder; toned abs, arms and legs are welcome, and height, leg length, softness and curve may vary freely (the men may range from lean to heavily built).
+  NOTES     (information only) a woman's build that names bulk, even as a negation ("without bulk"), because a model reads it as the thing named.
 The test heroes (alpha/female, alpha/male) are left to the photo on purpose: they exist to try a photo before it becomes an angel.
 """
 import argparse
@@ -20,6 +21,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
 STRONG = re.compile(r"\b(strong|muscul\w*|sturdy|solid|powerful|massive|heavily|thick|stocky|burly|brawny|wiry-strong)\b", re.I)
 PHOTO = re.compile(r"reference|photo|unchanged", re.I)
+NOTES = []
 
 
 def norm(text):
@@ -82,6 +84,10 @@ def audit():
                 problems.append("the Bare prompt does not apply the individual build")
             if prime and body and body in positive(prime):
                 problems.append("the Prime prompt carries the individual build (it should use the standard figure)")
+        if group in ("angel-primes", "drakn-sisters") and female:
+            named = re.findall(r"\b(?:bulk\w*|bodybuild\w*|body-build\w*)\b", " ".join(str(phy.get(k, "")) for k in ("build", "torso", "arms", "hips", "legs")), re.I)
+            if named:
+                NOTES.append(f"{group:14} {hero:11} names bulk ({', '.join(sorted(set(n.lower() for n in named)))}); a model reads a negation as the thing named, so describe the toned look positively")
         rows.append((group, hero, problems))
     return rows
 
@@ -96,7 +102,9 @@ def main():
         if problems:
             bad += len(problems)
             print(f"{group:14} {hero:11} " + "; ".join(problems))
-    print(f"\n{len(rows)} heroes checked: " + ("all colours defined and carried by the Prime prompt" if not bad else f"{bad} problem(s)"))
+    for note in NOTES:
+        print("NOTE  " + note)
+    print(f"\n{len(rows)} heroes checked: " + ("all colours defined and carried by the Prime prompt" if not bad else f"{bad} problem(s)") + (f"; {len(NOTES)} note(s) (information only)" if NOTES else ""))
     return 1 if (bad and args.check) else 0
 
 
