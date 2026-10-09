@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Finals records",
+  "description": "Settings of the workflows chosen as finals (data/art/finals/<set>.json), one record per generated workflow name (Hero_Engine_Stage). Written by `comfy_workflows.py finals record` from the finals kept in workflows/_final and replayed by `make`: the same seed (set to fixed), denoise and turbo with the new prompt. A record may be edited by hand.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["finals"],
+  "properties": {
+    "description": {"type": "string"},
+    "finals": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[A-Za-z0-9]+_(Qwen|FireRed|MiniMax)_[A-Za-z0-9_]+$"},
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["seed"],
+        "properties": {
+          "seed": {"type": "integer", "minimum": 0, "description": "The seed of the render; make sets it with its control fixed"},
+          "denoise": {"type": "number", "minimum": 0, "maximum": 1},
+          "turbo": {"type": "boolean", "description": "The Lightning LoRA (few steps) on or off"},
+          "steps": {"type": "integer", "minimum": 1},
+          "cfg": {"type": "number", "minimum": 0},
+          "sampler": {"type": "string"},
+          "scheduler": {"type": "string"},
+          "inputs": {"type": "array", "items": {"type": "string"}, "description": "Every image the final loaded (the original photo, a Prime image, ...)"},
+          "render": {"type": ["string", "null"], "description": "The counter of the render it came from (Hero_Engine_Stage_00015_)"},
+          "date": {"type": "string"}
+        }
+      }
+    }
+  }
+}

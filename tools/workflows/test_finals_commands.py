@@ -24,9 +24,16 @@ BARE = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha/
 SCENE = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/5_Scenes/Alice_Qwen_Scene_Glamour"]}], "id": "master"}
 
 
+def wf_with(seed=1, denoise=0.9, turbo=True, prefix="set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime", image="photo.png"):
+    named = {"prompt": "p", "prompt_1": "n", "value": turbo, "seed": seed, "denoise": denoise}
+    sg = {"id": "sg1", "nodes": [{"type": "KSampler", "widgets_values": [111, "randomize", 40, 3, "euler", "simple", 1]}]}
+    return {"nodes": [{"type": "LoadImage", "widgets_values": [image, "image"]}, {"type": "sg1", "widgets_values": list(named.values()), "widgets_values_named": named},
+                      {"type": "SaveImage", "widgets_values": [prefix]}], "definitions": {"subgraphs": [sg]}, "id": "x"}
+
+
 def patched(w):
     return (mock.patch.object(cw, "CANDIDATES", w.repo / "_candidates"), mock.patch.object(cw, "FINALS", w.repo / "_final"), mock.patch.object(cw, "ROOT", w.tmp),
-            mock.patch.object(cw, "ASSETS", w.tmp / "assets" / "art"))
+            mock.patch.object(cw, "ASSETS", w.tmp / "assets" / "art"), mock.patch.object(cw, "RECORDS", w.tmp / "data" / "art" / "finals"))
 
 
 def world():
@@ -186,6 +193,56 @@ class FinalsTests(unittest.TestCase):
         self.assertFalse(list((self.w.tmp / "assets").rglob("*.png")))
         self.w.run("finals", "images", "--apply")
         self.assertEqual(len(list((self.w.tmp / "assets").rglob("*.png"))), 1)
+
+    def final_in_repo(self, counter, **kw):
+        cw.write_wf(self.w.repo / f"_final/set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_{counter}_.json", wf_with(**kw))
+
+    def records(self):
+        import json
+        p = self.w.tmp / "data" / "art" / "finals" / "set-a.json"
+        return json.loads(p.read_text())["finals"] if p.exists() else None
+
+    def test_record_reads_the_settings_of_a_final_and_previews_by_default(self):
+        self.final_in_repo("00007", seed=4242, denoise=0.8, turbo=False, image="me.png")
+        out, _ = self.w.run("finals", "record")
+        self.assertIsNone(self.records())
+        self.assertIn("would record", out)
+        self.w.run("finals", "record", "--apply")
+        rec = self.records()["Alice_Qwen_Alpha_1_Prime"]
+        self.assertEqual((rec["seed"], rec["denoise"], rec["turbo"], rec["steps"], rec["sampler"], rec["inputs"], rec["render"]), (4242, 0.8, False, 40, "euler", ["me.png"], "00007"))
+
+    def test_a_record_edited_by_hand_is_kept_until_forced_and_a_new_final_replaces_it(self):
+        import json
+        self.final_in_repo("00007", seed=4242)
+        self.w.run("finals", "record", "--apply")
+        path = self.w.tmp / "data" / "art" / "finals" / "set-a.json"
+        data = json.loads(path.read_text())
+        data["finals"]["Alice_Qwen_Alpha_1_Prime"]["seed"] = 7
+        path.write_text(json.dumps(data))
+        out, _ = self.w.run("finals", "record", "--apply")
+        self.assertIn("hand edits", out)
+        self.assertEqual(self.records()["Alice_Qwen_Alpha_1_Prime"]["seed"], 7)
+        self.w.run("finals", "record", "--apply", "--force")
+        self.assertEqual(self.records()["Alice_Qwen_Alpha_1_Prime"]["seed"], 4242)
+        (self.w.repo / "_final/set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.json").unlink()
+        self.final_in_repo("00009", seed=999)
+        self.w.run("finals", "record", "--apply")
+        self.assertEqual((self.records()["Alice_Qwen_Alpha_1_Prime"]["seed"], self.records()["Alice_Qwen_Alpha_1_Prime"]["render"]), (999, "00009"))
+
+    def test_make_replays_a_record_seed_fixed_denoise_and_turbo(self):
+        wf = wf_with(seed=1, denoise=1.0, turbo=True)
+        changed = cw.apply_final_settings(wf, {"seed": 4242, "denoise": 0.8, "turbo": False})
+        named = wf["nodes"][1]["widgets_values_named"]
+        self.assertTrue(changed)
+        self.assertEqual((named["seed"], named["denoise"]), (4242, 0.8))
+        self.assertEqual(wf["definitions"]["subgraphs"][0]["nodes"][0]["widgets_values"][1], "fixed")
+        self.assertFalse(cw.apply_final_settings(wf, {"seed": 4242, "denoise": 0.8}), "replaying again changes nothing")
+
+    def test_final_record_lookup_by_workflow_name(self):
+        self.final_in_repo("00007", seed=4242)
+        self.w.run("finals", "record", "--apply")
+        self.assertEqual(cw.final_record(self.w.cfg, "Alice_Qwen_Alpha_1_Prime.json")["seed"], 4242)
+        self.assertIsNone(cw.final_record(self.w.cfg, "Alice_Qwen_Alpha_2_Bare_Figure.json"))
 
     def test_status_counts_and_slots(self):
         self.w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json")

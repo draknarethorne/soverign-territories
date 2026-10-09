@@ -1445,10 +1445,12 @@ def cmd_make(args):
         target = engine_roots(cfg)[it["engine"]] / it["group"] / it["hero"] / f"{it['name']}.json"
         pos, neg = split_prompt(it["path"].read_text(encoding="utf-8"))
         pos = engine_prompt(cfg, it, pos)
+        rec = final_record(cfg, it["name"] + ".json")
         if target.exists():
             wf = read_wf(target)
             resized = is_text_item(cfg, it) and set_size(wf, it["path"].read_text(encoding="utf-8"))
-            if patch_wf(wf, pos, neg, it["prefix"]) or resized:
+            replayed = bool(rec) and apply_final_settings(wf, rec)
+            if patch_wf(wf, pos, neg, it["prefix"]) or resized or replayed:
                 if not args.dry_run:
                     write_wf(target, wf)
                 tally["updated"] += 1
@@ -1477,6 +1479,8 @@ def cmd_make(args):
             dn = denoise_for(cfg, it["path"].read_text(encoding="utf-8"), input_role(cfg, it["hero"], it["stage"], it["family"]))
             if dn is not None:
                 set_denoise(wf, dn)
+        if rec:
+            apply_final_settings(wf, rec)  # a stage you finalised replays its seed, denoise and turbo
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
@@ -1948,6 +1952,77 @@ def canon_name(parsed):
 
 
 ASSETS = ROOT / "assets" / "art"
+RECORDS = ROOT / "data" / "art" / "finals"
+# A final's settings are kept in the art data (data/art/finals/<set>.json, one record per workflow name) and replayed by `make`: the same seed (set to fixed), denoise and turbo,
+# with the new prompt, so a regenerated stage keeps the composition you chose. `finals record` reads them from the finals in the repo; a record you edited by hand is kept.
+RECORD_NOTE = "Settings of the workflows you chose as finals, one record per workflow name (Hero_Engine_Stage). Written by `finals record`, replayed by `make`; you may edit a record by hand (it is kept while the render it came from is still the final)."
+
+
+def subgraph_nodes(wf):
+    for sg in wf.get("definitions", {}).get("subgraphs", []):
+        yield from sg.get("nodes", [])
+
+
+def final_settings(wf):
+    """What a final workflow holds that is worth replaying: seed, denoise, turbo (the Lightning LoRA) from the outer node, steps, cfg, sampler and scheduler from its KSampler, and every image it loads."""
+    n = prompt_node(wf)
+    named = (n.get("widgets_values_named") if n else None) or {}
+    out = {"seed": named.get("seed"), "denoise": named.get("denoise"), "turbo": named.get("value") if isinstance(named.get("value"), bool) else None}
+    for node in subgraph_nodes(wf):
+        if node.get("type") == "KSampler" and len(node.get("widgets_values", [])) >= 7:
+            _seed, _control, out["steps"], out["cfg"], out["sampler"], out["scheduler"], _denoise = node["widgets_values"][:7]
+    out["inputs"] = [x["widgets_values"][0] for x in list(wf.get("nodes", [])) + list(subgraph_nodes(wf)) if x.get("type") == "LoadImage" and x.get("widgets_values")]
+    return {k: v for k, v in out.items() if v is not None}
+
+
+def apply_final_settings(wf, rec):
+    """Replay a record on a generated workflow: seed (and its control set to fixed), denoise and turbo. Returns True if anything changed."""
+    changed = False
+    n = prompt_node(wf)
+    named = n.get("widgets_values_named") if n else None
+    if isinstance(named, dict):
+        names = list(named)
+        for key in ("seed", "denoise"):
+            if rec.get(key) is not None and key in named and named[key] != rec[key]:
+                named[key] = n["widgets_values"][names.index(key)] = rec[key]
+                changed = True
+        if isinstance(rec.get("turbo"), bool) and isinstance(named.get("value"), bool) and named["value"] != rec["turbo"]:
+            set_turbo(wf, rec["turbo"])
+            changed = True
+    if rec.get("seed") is not None:
+        for node in subgraph_nodes(wf):
+            if node.get("type") == "KSampler" and len(node.get("widgets_values", [])) >= 2 and node["widgets_values"][1] != "fixed":
+                node["widgets_values"][1] = "fixed"
+                changed = True
+    return changed
+
+
+def record_path(group):
+    return RECORDS / f"{group}.json"
+
+
+_RECORD_CACHE = {}
+
+
+def load_records(group):
+    """{workflow name: record} for a set (read once per file version: make asks for every workflow)."""
+    p = record_path(group)
+    if not p.is_file():
+        return {}
+    key = (str(p), p.stat().st_mtime_ns)
+    if key not in _RECORD_CACHE:
+        _RECORD_CACHE.clear()
+        _RECORD_CACHE[key] = json.loads(p.read_text(encoding="utf-8")).get("finals", {})
+    return _RECORD_CACHE[key]
+
+
+def final_record(cfg, name):
+    """The record for a generated workflow name (Hero_Qwen_Alpha_1_Prime.json), or None."""
+    stem = name[:-5] if name.endswith(".json") else name
+    group = hero_groups().get(stem.split("_", 1)[0])
+    return load_records(group).get(stem) if group else None
+
+
 # The image of a final is kept with it: assets/art/<set>/[<division>/]<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png (the prompt-path convention, with the engine in the name so a Qwen and a FireRed final
 # of one stage stay apart). Only finals get an image: candidates and shots never do.
 
@@ -2216,6 +2291,37 @@ def finals_status(cfg, ws, args, brief=False):
     print(f"    {len(heroes)} hero(es) are home here; {idle} have no candidate or final yet (c<N> = candidates kept, FINAL = a final is set, - = none)")
 
 
+def finals_record(cfg, args):
+    """Write the settings of every final kept in the repo (workflows/_final) into data/art/finals/<set>.json. Preview unless --apply. A record you edited by hand is kept while its render is still the final."""
+    heroes, idx = list(hero_groups()), finals_index(cfg)
+    today = datetime.date.today().isoformat()
+    per_group, tally = {}, collections.Counter()
+    for p in sorted(FINALS.rglob("*.json")) if FINALS.is_dir() else []:
+        parsed = parse_saved(cfg, p.name, heroes, list(idx))
+        if not parsed or (args.hero and parsed["hero"].lower() != args.hero.lower()):
+            continue
+        group = idx[parsed["stem"]][0]
+        records = per_group.setdefault(group, dict(load_records(group)))
+        fresh = final_settings(read_wf(p))
+        fresh.update(render=parsed["counter"], date=today)
+        old = records.get(parsed["stem"])
+        if old and old.get("render") == fresh["render"] and any(old.get(k) != v for k, v in fresh.items() if k != "date") and not getattr(args, "force", False):
+            print(f"  kept     {parsed['stem']}: the record differs from the final it came from (hand edits); --force replaces it")
+            tally["kept"] += 1
+            continue
+        if old and {k: v for k, v in old.items() if k != "date"} == {k: v for k, v in fresh.items() if k != "date"}:
+            tally["same"] += 1
+            continue
+        print(f"  {'record' if args.apply else 'would record'}  {parsed['stem']}: seed {fresh.get('seed')}, denoise {fresh.get('denoise')}, turbo {fresh.get('turbo')}, {len(fresh.get('inputs', []))} input(s)" + (" (replaces the earlier record)" if old else ""))
+        records[parsed["stem"]] = fresh
+        tally["recorded"] += 1
+    if args.apply:
+        for group, records in per_group.items():
+            record_path(group).parent.mkdir(parents=True, exist_ok=True)
+            record_path(group).write_text(json.dumps({"description": RECORD_NOTE, "finals": dict(sorted(records.items()))}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    print(f"finals record: {tally['recorded']} {'written' if args.apply else 'to write'}, {tally['same']} unchanged, {tally['kept']} hand-edited kept" + ("" if args.apply else " (preview: add --apply)"))
+
+
 def finals_images(cfg, args, stamp):
     """Copy the render of every final kept in the repo (workflows/_final) into assets/art; preview unless --apply. Run it after `pull`, or to catch up."""
     heroes, idx = list(hero_groups()), finals_index(cfg)
@@ -2283,6 +2389,8 @@ def cmd_finals(args):
         return finals_reclassify(cfg, args, stamp)
     if args.action == "images":
         return finals_images(cfg, args, stamp)
+    if args.action == "record":
+        return finals_record(cfg, args)
     if args.action == "promote" and not args.name:
         sys.exit("finals promote needs the file name (or part of it) of the candidate or shot, e.g.  finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w \"Angel Primes\" --apply")
     for ws in pick_targets(cfg, args, "all"):
@@ -2424,12 +2532,13 @@ def main(argv=None):
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("finals")
     common(s, True)
-    s.add_argument("action", choices=["sort", "promote", "status", "pull", "deploy", "reclassify", "images"],
+    s.add_argument("action", choices=["sort", "promote", "status", "pull", "deploy", "reclassify", "images", "record"],
                    help="sort: file candidates and finals where their name says (never deletes); promote: make a candidate or shot the final for its slot; status: candidates, finals and slots per workspace; "
-                        "pull: keep them in the repo (_candidates, _final); deploy: put repo ones a workspace lacks into their folders; reclassify: clean the repo with the same rules; images: copy the render of each final into assets/art")
+                        "pull: keep them in the repo (_candidates, _final); deploy: put repo ones a workspace lacks into their folders; reclassify: clean the repo with the same rules; images: copy the render of each final into assets/art; record: write each final's seed, denoise and inputs into data/art/finals so make replays them")
     s.add_argument("name", nargs="?", help="with promote: the file name (or part of it) of the candidate or shot")
     s.add_argument("--hero")
-    s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy and reclassify preview by default; pull writes unless --dry-run)")
+    s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy, reclassify, images and record preview by default; pull writes unless --dry-run)")
+    s.add_argument("--force", action="store_true", help="with record: replace a record you edited by hand")
     args = ap.parse_args(argv)
     previewed = normalise(args)
     {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,

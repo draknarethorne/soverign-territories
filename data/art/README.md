@@ -337,7 +337,7 @@ defines the prompt path, the image path is derived, not stored twice; a tool (or
 it exists, and Unity import can mirror the folder. Large binaries should use Git LFS or external storage. Still to
 decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fields point at these.
 **Finals (Oct 9, 2026):** the render of every workflow you save as a final (`zz_Final`, see [workflows/README.md](../../workflows/README.md#candidates-and-finals-zz_candidates-zz_final)) is copied here automatically, from any stage, as
-`assets/art/<set>/[<division>/]<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`: the same path rule, with the engine in the name because Qwen and FireRed finals of one stage are both kept. Images of candidates and shots are not kept.
+`assets/art/<set>/[<division>/]<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`: the same path rule, with the engine in the name because Qwen and FireRed finals of one stage are both kept. Images of candidates and shots are not kept. The settings of those finals (seed, denoise, turbo, the images they loaded) are kept in `data/art/finals/<set>.json` by `finals record` and replayed by `make`.
 
 ## Directory map
 

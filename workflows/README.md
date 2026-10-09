@@ -235,6 +235,7 @@ python tools/workflows/comfy_workflows.py finals sort -w "Angel Primes" --apply 
 python tools/workflows/comfy_workflows.py finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w "Angel Primes" --apply   # make it the final; the earlier final is archived in zz_Final/_previous
 python tools/workflows/comfy_workflows.py finals deploy -w "Angel Primes" --apply    # put repo candidates and finals the workspace lacks into their folders
 python tools/workflows/comfy_workflows.py finals reclassify --apply                  # clean the repo with the same rules (preview without --apply)
+python tools/workflows/comfy_workflows.py finals record --apply                      # write each final's seed, denoise and inputs into data/art/finals/<set>.json (after pull)
 ```
 
 (`bin\finals.cmd` wraps these.) `pull` keeps candidates and finals in the repo as part of its normal run, and `setup` sorts and deploys them, so the loop is: save anywhere, `pull`, `setup` (or `finals sort`).
@@ -246,6 +247,12 @@ python tools/workflows/comfy_workflows.py finals reclassify --apply             
 - **`finals reclassify`** does the same for what is already in git: numbered saves at the top of a hero's `_shots` folder were candidates and move to `_candidates`, and everything is moved to its proper path. Run it, then `pull` and `setup` a few times, and the repo and the workspaces converge on one structure.
 - **A final keeps its image.** `pull` (or `finals images --apply`) copies the render a final was saved from (`<output project>/<SaveImage prefix>_<counter>_.png`) into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`, the prompt-path convention in [data/art/README.md](../data/art/README.md#where-rendered-images-live-convention) with the engine in the name so a Qwen and a FireRed final stay apart. A newer final of the same stage replaces the image (the old one is copied to backup first).
   **Only finals get an image**: candidates and shots never do. Watch the size with `finals images` (it prints the PNG total of `assets/art`); the convention allows Git LFS or external storage if it grows.
+- **A final's settings are replayed by `make`.** `finals record --apply` reads every final kept in the repo (`workflows/_final`) and writes its seed, denoise, turbo (the Lightning LoRA), steps, cfg, sampler and the images it loaded into `data/art/finals/<set>.json`, one record per workflow name (so a Qwen and a FireRed final of a stage each have their own).
+  `make` then builds or refreshes that stage's workflow with the record's **seed (its control set to fixed), denoise and turbo** and the new prompt, so a regenerated stage keeps the composition you chose.
+  Not replayed: the input image (nothing is forced, you pick inputs yourself) and steps and cfg (the template sets them from turbo).
+  A record you edited by hand is kept while the render it came from is still the final (`--force` replaces it).
+  `deploy` still only updates prompt text in a workflow a workspace already has, so your seed there survives; a workflow a workspace lacks (or `deploy --mode overwrite`) comes from the repo copy with the record applied.
+  If ComfyUI still changes the seed after a run, set the seed widget's control to `fixed` once in the UI and tell me.
 - `finals.slots` in `workspaces.json` (optional) sets which stages `finals status` lists as slots to fill (any stage can still be a final, and counts as `+N other`); the default is Prime (`Alpha_1_Prime`, `X_Pose`), Bare (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Skin`) and golden pose (`Alpha_3_Barefoot`).
 
 ### Hand-curated workflows

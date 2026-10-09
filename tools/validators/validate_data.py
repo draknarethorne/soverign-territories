@@ -79,6 +79,8 @@ def art_piece_files():
             continue  # pet identities, not pieces
         if parts[0] in ("brand", "cards"):
             continue  # brand and card-art identities, not pieces
+        if parts[0] == "finals":
+            continue  # settings of the finals (data/art/finals/<set>.json), checked against their own schema
         if parts[0] == "themes" and parts[-1] == "theme.json":
             continue  # theme manifest, not a piece
         out.append(p)
@@ -103,6 +105,7 @@ REGISTRY = [
     ("art pieces", art_piece_files, ART_SCHEMAS / "art-piece.schema.json"),
     ("art themes", lambda: rglob("data/art/themes/**/theme.json"), ART_SCHEMAS / "theme.schema.json"),
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
+    ("art finals records", lambda: rglob("data/art/finals/*.json"), ART_SCHEMAS / "finals-record.schema.json"),
 ]
 
 # Known, tracked debt: files with no schema that actually fits them yet.
@@ -602,6 +605,20 @@ def check_scene_recipes(report):
                 report.error(where, f"{x.get('id') or x.get('element') or x.get('class')}: background folder {folder!r} does not exist")
 
 
+def check_finals_records(report):
+    """Every record in data/art/finals/<set>.json names a workflow some prompt of that set generates (Hero_Engine_Stage <- prompts/<set>/**/Hero_Stage.txt)."""
+    for path in rglob("data/art/finals/*.json"):
+        group, where = path.stem, rel(path)
+        have = {f.stem for f in (ROOT / "prompts" / group).rglob("*.txt")} if (ROOT / "prompts" / group).is_dir() else set()
+        if not have:
+            report.error(where, f"no prompts/{group}/ folder: the file name must be a prompt set")
+            continue
+        for name in load(path).get("finals", {}):
+            hero, _engine, stage = name.split("_", 2)
+            if f"{hero}_{stage}" not in have:
+                report.error(where, f"{name}: no prompt {hero}_{stage}.txt in prompts/{group}/")
+
+
 def main():
     report = Report()
     counts = {}
@@ -614,6 +631,7 @@ def main():
     check_pets(report)
     check_piece_refs(report)
     check_scene_recipes(report)
+    check_finals_records(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)
     if report.errors:
