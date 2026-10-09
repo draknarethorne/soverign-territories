@@ -75,10 +75,11 @@ Built as `comfy_workflows.py finals ...` (`bin\finals.cmd`), with `tools/workflo
 Run in this order; each step previews first, and everything is recoverable (git for the repo, `workflows/.sync/backup/` for the rest).
 
 - [x] 1. `finals reclassify --apply` (done Oct 9, commit `a5e0f5881`, pure renames): the 72 numbered saves in `_shots` (8 of them old `X_Pose` saves, resolved as Primes) are now in `_candidates/<set>/<Hero>/<phase>/`.
-- [ ] 2. (next, needs your go-ahead because it changes the live workspaces) `pull` for each workspace (Angel Primes, Drakn Sisters, Drakness, Sovereign Dawn Series): keeps what the workspaces hold in the repo at the proper paths.
-- [ ] 3. `finals reclassify` again: any duplicate created by step 2 goes to backup.
-- [ ] 4. `setup -w "<workspace>" --apply` for each workspace: `finals sort` re-files the workspace copies, `finals deploy` puts back what the repo holds and the workspace lacks, `deploy --include shots,curated` run as before.
-- [ ] 5. `finals status` for each workspace: `not placeable` should list only the files that really have no home; decide those by hand.
+- [x] 2. `pull` previewed for all five workspaces (Oct 9): nothing new to keep; the 72 candidates are already in `_candidates` (identical to the workspace copies after step 1).
+- [x] 3. `finals reclassify` again: 0 to move, 0 duplicates.
+- [x] 4. Applied on the live Angel Primes workspace (with your go-ahead, Oct 9): `finals sort -w "Angel Primes" --apply` moved the 72 numbered saves into `zz_Candidates/<female|male>/<Hero>/1_Alpha/...`; a second preview shows 0 to move and `pull` shows them already in the repo. `cleanup` and `tidy` previews are clean for every workspace (nothing to remove or move). Drakn Sisters, Drakness, Sovereign Dawn Series and Sovereign Territories had nothing to file.
+- [ ] 5. One thing left that is yours to decide: `Drakness_Qwen_Alpha_2_Bare_Skin` exists as a shot with two different seeds (Drakn Sisters 517397163969845 and Drakness 119517098111188). `pull` for Drakn Sisters would replace the repo copy (the Drakness one) with the Drakn Sisters one, so I left it. Rename one of them in its workspace (for example add `_Alt`) to keep both, or tell me which to keep.
+- [ ] 5b. `status` for Angel Primes lists 11 heroes as `inputs-changed (mixed)`: each Prime workflow loads a rendered image you chose (for example `Azaline_Qwen_Alpha_1_Prime_00004_.png`) while the nine workflows after it still load the placeholder. Nothing is overwritten until you run `inputs reset`, which stops and asks while this is unresolved. Setting each hero's prime is your picking step (Phase 1): `inputs set Azaline --prime <image> --apply`, then `inputs reset --hero Azaline --apply`.
 - [ ] 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
 
 ### Phase 2c: a final keeps its image (built Oct 9, D3)
