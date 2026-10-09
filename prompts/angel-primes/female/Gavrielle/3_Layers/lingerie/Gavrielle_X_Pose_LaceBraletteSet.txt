@@ -8,10 +8,10 @@ prompt:
 Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
 Bust: full, firm, voluptuous, noticeably enlarged, lifted high and pressed together at the centre in a deep, crisp, clearly defined cleavage held high, even where the reference bust is smaller or spread apart.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 Legs: extremely long, slender legs.
 
 Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.

@@ -17,15 +17,15 @@ Standing A-pose: upright, feet set apart, arms relaxed slightly away from the si
 
 Figure: tall, commanding, perfectly proportioned build; striking beauty and menace; broad, defined, sculpted chest; long, strong, sculpted arms; trim, tapering waist; long, strong, elegant legs.
 
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Wearing: only a Obsidian Black fitted swim brief, low-rise and body-skimming fit; chest, abdomen, and legs bare; bare feet.
 
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension; half gathered back at the crown, the rest left down in soft waves; minimal breeze (override the source hairstyle).
+Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension; half gathered back at the crown, the rest left down in soft waves; minimal breeze (override the source hairstyle).
 
 Grooming: natural, clean and well-groomed, groomed brows, bare-faced. Reset any heavy styling from the source photo. Fingernails natural or Light Black.
 
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition, both eyes matched, level and symmetrical, wide open and looking straight at the camera, crisp catchlights.
 
 Expression: a confident, relaxed, natural smile - lips gently parted with at most a hint of the upper teeth, the corners of the mouth lifted just enough to show soft smile creases, cheeks only slightly raised and the eyes kept wide open, jaw soft, brows relaxed, eyes calm and engaged with the camera (replace the source photo's expression entirely).
 

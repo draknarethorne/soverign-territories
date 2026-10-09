@@ -6,13 +6,13 @@ prompt:
 
 Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (natural skin tone exactly as in the reference image, evenly toned), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
 Bust: very full, heavy, firmly rounded bust with a strong supportive shape and generous natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: strong, sturdy hourglass build with solid shoulders and thighs; firm, defined waist; strong, capable arms; wide, strong feminine hips; strong, muscular legs with solid thighs.
 

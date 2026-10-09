@@ -9,7 +9,7 @@ Preserve the subject from the reference image exactly - facial likeness and bone
 
 Critical details - these must be clearly visible:
 Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a playful, knowing smile, eyes bright with mischief. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 

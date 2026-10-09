@@ -6,13 +6,13 @@ prompt:
 
 Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing only matte Electric Gold body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Electric Gold body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced); the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
+Result: she is wearing only matte Electric Gold body paint on exactly three small areas, each described separately; Breasts: a small round area of matte Electric Gold body paint with soft, clean edges, about one inch (2.5 cm) across, on the centre of each breast; Pelvic area: one small area of the same body paint in a soft tapered shape that follows the contour of the pelvic area, perfectly flat; Everywhere else: completely bare natural skin, including the face, neck, shoulders, arms, back, stomach, hips, thighs, legs and feet, which keep her natural skin tone (natural skin tone exactly as in the reference image, evenly toned); the paint is thin, so the natural shape of the body shows through it; the natural shape, fullness and cleavage of the bust stay clearly visible, with natural anatomy and realistic skin texture
 
 Critical details - these must be clearly visible:
-Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension.
+Hair: natural hair colour exactly as in the reference image, with healthy shine and dimension.
 Bust: full, firm, athletic bust, high and compactly rounded with a tight pronounced inner curve and refined natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail.
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Body: shape the figure to this individual build, keeping her height, head and pose: athletic, toned, wiry-strong build; quick and lean; flat, defined midriff with a tight waist; toned, sinewy arms; narrow, athletic hips with a gentle curve; long, lean, toned legs.
 

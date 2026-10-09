@@ -13,7 +13,7 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 Critical details - these must be clearly visible:
 Hair: the exact hair colour of the reference image, unchanged, with natural shine.
 Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build.
 

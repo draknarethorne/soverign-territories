@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, elegant glamour posing. Light breeze. full side profile to the camera, long neck, shoulders back, chest lifted. in profile, chin lifted. off-camera into the distance, head slightly tilted to camera angle for a more dynamic profile. a fierce, focused gaze, chin raised. one foot forward for an elegant line; arms relaxed with a graceful hand.
 
 A drift of living vines, leaves and petals circles her, soft spring green light glinting within it.
 
-Eyes: irises softly aglow with soft spring green light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle soft spring green catchlight.
+Eyes: irises softly aglow with soft spring green light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle soft spring green catchlight.
 
 Environment: a high-fantasy rooftop scene of tiered pagoda roofs under a full moon, paper lanterns far below, drifting mist and a silhouette of distant hills.
 

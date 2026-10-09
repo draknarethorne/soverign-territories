@@ -6,12 +6,12 @@ prompt:
 
 Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (natural skin tone from the reference image, evenly toned and lightly enhanced), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
+Result: he is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping his natural skin tone (natural skin tone exactly as in the reference image, evenly toned), including the shoulders, arms, chest, back, stomach, hips, thighs, legs and bare feet; his natural muscular shape and definition stay clearly visible
 
 Critical details - these must be clearly visible:
 Hair: the exact hair colour of the reference image, unchanged, with natural shine.
 Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Body: shape the figure to this individual build, keeping his height, head and pose: athletic, broad-shouldered, well-proportioned build; defined, naturally muscular chest and core, toned and healthy; trim, athletic waist; long, strong, well-proportioned legs.
 

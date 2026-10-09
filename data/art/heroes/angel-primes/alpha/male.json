@@ -11,7 +11,7 @@
       "eyeColor": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
       "eyeColorGlamour": "the reference image's own eye colour, unchanged, in clear irises with crisp definition",
       "hairColor": "the exact hair colour of the reference image, unchanged, with natural shine",
-      "skinTone": "natural skin tone from the reference image, evenly toned and lightly enhanced",
+      "skinTone": "natural skin tone exactly as in the reference image, evenly toned",
       "eyeColorNegatives": [
         "changed eye colour",
         "recoloured eyes"

@@ -15,7 +15,7 @@ Maintain strict fidelity to the incoming image: the subject's face, eye colour, 
 Critical details - these must be clearly visible:
 Hair: the exact hair colour of the reference image, unchanged, with natural shine.
 Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 Maintain the existing outfit and hairstyle expressly.
 

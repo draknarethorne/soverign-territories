@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, refined seated glamour. Still air. seated elegantly, legs crossed at the knee, spine long and upright. tilted slightly, chin level. to camera. a fierce, focused gaze, chin raised. one hand resting on the knee, the other draped gracefully at her side.
 
 A drift of drifting shadow, smoke and pale starlight circles her, dark violet light glinting within it.
 
-Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle dark violet catchlight.
+Eyes: irises softly aglow with dark violet light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle dark violet catchlight.
 
 Environment: a high-fantasy sun court with a great stepped pyramid of carved stone, stone serpents and sun-disc reliefs, braziers and feathered banners, jungle canopy beyond and blazing midday light.
 

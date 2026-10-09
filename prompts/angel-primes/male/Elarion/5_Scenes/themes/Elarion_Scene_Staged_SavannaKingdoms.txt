@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, confident glamour posing. Light breeze. 3/4 back to the camera, weight shifted onto one leg, spine gently curved, showing the line of the back. turned over the shoulder toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one hand at the hip, the other relaxed; glancing back over the shoulder, mid-motion.
 
 A drift of racing wind, feathers and leaves circles him, pale storm-white light glinting within it.
 
-Eyes: irises softly aglow with pale storm-white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle pale storm-white catchlight.
+Eyes: irises softly aglow with pale storm-white light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle pale storm-white catchlight.
 
 Environment: a vast golden-grass savanna at sunset with giant baobab trees, a distant herd and drifting dust, a huge orange sun low on the horizon and a rocky kopje.
 

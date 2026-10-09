@@ -8,14 +8,14 @@ prompt:
 Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
 
 Critical details - these must be clearly visible:
-Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Eyes: irises in their natural colour exactly as in the reference image, with crisp definition.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, confident power stance. Light breeze. standing tall, weight on one leg, shoulders squared to the camera. level, facing the camera directly. direct, confident eyes to camera. a playful, knowing smile, eyes bright with mischief. one hand firmly on the hip, elbow out; the other arm relaxed at his side.
 
 A drift of crackling arcs of lightning and sparks circles him, electric white light glinting within it.
 
-Eyes: irises softly aglow with electric white light, brightest near the pupil and fading to the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition at the rim, iris detail still visible, a gentle electric white catchlight.
+Eyes: irises softly aglow with electric white light, brightest near the pupil and fading to the natural irises at the rim, iris detail still visible, a gentle electric white catchlight.
 
 Environment: a high-fantasy winter market square at dusk, timber stalls with garlands and string lights, a huge glowing tree, steaming mulled wine, lanterns and gently falling snow.
 

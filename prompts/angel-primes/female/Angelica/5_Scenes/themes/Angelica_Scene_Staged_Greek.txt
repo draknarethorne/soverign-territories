@@ -9,7 +9,7 @@ Preserve the subject from the reference image exactly - facial likeness and bone
 
 Critical details - these must be clearly visible:
 Eyes: the reference image's own eye colour, unchanged, in clear irises with crisp definition.
-Skin: natural skin tone from the reference image, evenly toned and lightly enhanced.
+Skin: natural skin tone exactly as in the reference image, evenly toned.
 
 A candid high-fashion editorial shot, dynamic natural movement, expressive glamour pose, asymmetrical body language, fluid spontaneous, low-energy, seductive body positions. Random slight breeze. chest facing an unpredictable direction, hips shifting in unpredictable directions, shoulders pivoting unpredictably, legs spread apart in an elegant pose position. following the body's unpredictable shift. seductive, unpredictable. a playful, knowing smile, eyes bright with mischief. hands in unpredictable positions, touching her body.
 
