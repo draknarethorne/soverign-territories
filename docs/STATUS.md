@@ -437,6 +437,7 @@ before the systems they describe; `docs/specs/*.md` holds their narrative notes.
 
 ## Deferred
 
+- **Several input images per workflow (Oct 9).** The Qwen and FireRed templates accept three images, but the generated workflows wire one. Rendering weapons, backgrounds and wardrobe as separate images is a next phase of artwork, only if scenes as they are made today do not work; see Phase 3.8 of `plans/2026-10-09-finals-and-mvp.md`.
 - **Asset delivery (C1).** The chain now reaches a ready ComfyUI workflow; it stops at the rendered image. Needs: where rendered PNGs live and how they are named,
   how the card's `portraitAsset`/`fullArtAsset` and each variant's `fullArtAsset`/`videoAsset` fields point at them, how Unity loads them (provisional
   card-art target 512x768, 2:3), and a validator check that referenced files exist. Running workflows through the ComfyUI API is
