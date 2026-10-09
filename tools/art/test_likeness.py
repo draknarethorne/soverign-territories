@@ -189,11 +189,11 @@ class LikenessTests(unittest.TestCase):
         self.add("Prospects", "Bobbie", "bob", 3)
         out = self.run_tool("folder", "Angelica")
         lines = [line for line in out.splitlines() if "angelica_image_999" in line]
-        self.assertEqual(len(lines), 2, "once in the scores, once in the plan to move it")
-        self.assertIn("odd one out", lines[0])
-        self.assertIn("Prospects/Bobbie", lines[0], "and who it looks like instead")
+        self.assertEqual(len(lines), 2, "once in the photos to check, once in the plan to move it")
+        self.assertIn("suggest -> Prospects/Bobbie", lines[0], "and who it looks like instead")
         self.assertIn("-> Prospects/Bobbie", out, "the plan sends it there")
-        self.assertEqual(out.count("odd one out"), 2, "in the scores and in the reason of the plan")
+        self.assertIn("1 look like someone else", out)
+        self.assertNotIn("(NEW folder)", out, "Bobbie exists")
 
 
 if __name__ == "__main__":

@@ -332,12 +332,12 @@ def execute(moves, work, apply, cache, log=True):
     return made
 
 
-def print_plan(moves, space):
+def print_plan(moves, space, work=None):
     by = collections.defaultdict(list)
     for m in moves:
         by[m.to].append(m)
     for to, ms in sorted(by.items()):
-        new = to not in space.by_key
+        new = to not in space.by_key and not (work and (pathlib.Path(work) / to).is_dir())
         print(f"  -> {to}{'  (NEW folder)' if new else ''}: {len(ms)} photo(s)")
         for m in ms:
             print(f"       {m.photo.key}/{m.photo.name}   {m.reason}")
@@ -485,28 +485,54 @@ def cmd_folder(args):
     key = folder_key(space, args.name)
     ps = space.by_key[key]
     if len(ps) < 3:
-        sys.exit(f"{key} has {len(ps)} usable photo(s); need 3 or more to say which one is the odd one")
-    print(f"{key}: {len(ps)} photos; each against the others in the folder (a photo below {st['odd']} may be another person):")
-    odd = []
-    for p in sorted(ps, key=lambda p: float(p.vec @ space.centroid(key, skip=p))):
-        s = float(p.vec @ space.centroid(key, skip=p))
-        rank = space.ranking(p.vec, skip=p, own=key)
-        other = next((r for r in rank if r[1] != key), None)
-        flag = "  <- odd one out" if s < st["odd"] else ""
-        print(f"  {s:5.2f}  {p.name}   (closest other folder: {other[1]} {other[0]:.2f}){flag}")
-        if s < st["odd"]:
-            odd.append((p, other))
+        sys.exit(f"{key} has {len(ps)} usable photo(s); need 3 or more to say whether they are one person")
+    scored = sorted(((float(p.vec @ space.centroid(key, skip=p)), p) for p in ps), key=lambda t: t[0])
+    odd = [(s, p) for s, p in scored if s < st["odd"]]
+    mid = [(s, p) for s, p in scored if st["odd"] <= s < 0.25]
+    good = len(scored) - len(odd) - len(mid)
+    agree = good / len(scored)
+    one = agree >= 0.9 and len(odd) <= max(1, len(scored) // 20)
+    print(f"{key}: {len(ps)} usable photos (each scored against the rest of the folder; {st['odd']} and up is the same person as the rest, 0.25+ is solid)")
+    print(f"  {good} agree, {len(mid)} borderline ({st['odd']} to 0.25), {len(odd)} look like someone else (below {st['odd']})")
+    print("  VERDICT: " + ("one person." if one else "probably more than one person: see the photos below." if len(odd) > len(scored) // 10 else "mostly one person, a few photos to check."))
+    other_of = lambda p, s: next((r for r in space.ranking(p.vec, skip=p, own=key) if r[1] != key), None)  # noqa: E731
+    shown = scored if args.all else odd + mid
+    if shown:
+        print("\n  photos to check (lowest first):")
+        for s, p in shown:
+            o = other_of(p, s)
+            note = f"  [{p.faces} faces in the picture]" if p.faces > 1 else ""
+            if s < st["odd"]:
+                dest = o[1] if o and o[0] >= st["assign"] else "Prospects/Various (holding)"
+                where = f"suggest -> {dest}"
+            else:
+                where = "keep for now" if s >= st["odd"] else ""
+            print(f"    {s:5.2f}  {p.name}   closest elsewhere: {o[1] if o else '-'} {o[0] if o else 0:.2f}   {where}{note}")
+    outside = []
+    if one or args.outside:
+        cen = space.centroid(key)
+        rows = sorted(((float(p.vec @ cen), p) for p in space.photos if p.key != key and p.vec is not None and p.usable(st["minFace"])), key=lambda t: -t[0])
+        outside = rows[:8]
+        best = rows[0][0] if rows else 0
+        print(f"\n  who else in the library looks like {key.split('/', 1)[1]} (a photo of her would score 0.45 or more):")
+        print("    " + ("nobody clearly: the closest is " + f"{best:.2f}" if best < st["assign"] else "these may be her:"))
+        for s, p in outside:
+            print(f"    {s:5.2f}  {p.key}/{p.name}")
     if args.sheet:
-        make_sheet([(key.split("/", 1)[1], ps[:10])] + [(f"odd: {o[0].name[-12:]}", [o[0]]) for o in odd], args.sheet)
-    moves = [Move(p, o[1] if o and o[0] >= st["assign"] else "Prospects/Various", f"odd one out of {key}") for p, o in odd]
+        rows = [(key.split("/", 1)[1], ps[:10])] + [(f"{s:.2f} low", [p]) for s, p in odd + mid[:6]] + [(f"{s:.2f} {p.key.split('/')[1][:11]}", [p]) for s, p in outside[:6]]
+        make_sheet(rows, args.sheet)
+    moves = []
+    for s, p in odd:
+        o = other_of(p, s)
+        moves.append(Move(p, o[1] if o and o[0] >= st["assign"] else "Prospects/Various", f"looks like someone else than the rest of {key} ({s:.2f})"))
     if moves:
-        print("\nwould move the odd ones:")
-        print_plan(moves, space)
+        print(f"\n  would move the {len(moves)} that look like someone else (the borderline ones stay):")
+        print_plan(moves, space, work)
         if args.apply:
             execute(moves, work, True, cache)
             after_moves(args, True)
         else:
-            print("preview only; add --apply to move them")
+            print("  preview only; add --apply to move them")
 
 
 def cmd_like(args):
@@ -529,7 +555,7 @@ def cmd_sort(args):
     moves = plan_sort(space, st, cfg, taken)
     pool = [p for p in space.photos if matches(p.key, st["pool"])]
     print(f"{len(pool)} photo(s) in the pool; {len(moves)} would move (assign >= {st['assign']} with a margin of {st['margin']}, or a new person of {st['minCluster']}+ photos at {st['cluster']}):")
-    print_plan(moves, space)
+    print_plan(moves, space, work)
     if args.sheet:
         rows = []
         for to in sorted({m.to for m in moves}):
@@ -630,7 +656,9 @@ def main(argv=None, embedder=None):
     add("calibrate", cmd_calibrate)
     add("alike", cmd_alike, sheet=True).add_argument("--min", type=float, help="show pairs at or above this score (default: settings alike)")
     add("compare", cmd_compare, "a", "b", sheet=True)
-    add("folder", cmd_folder, "name", apply=True, sheet=True)
+    s = add("folder", cmd_folder, "name", apply=True, sheet=True)
+    s.add_argument("--all", action="store_true", help="list every photo's score, not just the ones to check")
+    s.add_argument("--outside", action="store_true", help="always list who else in the library looks like this folder (done automatically when the folder is one person)")
     add("like", cmd_like).add_argument("paths", nargs="+")
     s = add("sort", cmd_sort, apply=True, sheet=True)
     s.add_argument("--plan", help="also write the moves to this JSON file")
@@ -639,9 +667,9 @@ def main(argv=None, embedder=None):
     add("undo", cmd_undo, apply=True)
     args = ap.parse_args(argv)
     args.embedder = embedder
-    for k in ("apply", "sheet", "plan"):
+    for k in ("apply", "sheet", "plan", "all", "outside"):
         if not hasattr(args, k):
-            setattr(args, k, None if k != "apply" else False)
+            setattr(args, k, None if k not in ("apply", "all", "outside") else False)
     args.fn(args)
 
 
