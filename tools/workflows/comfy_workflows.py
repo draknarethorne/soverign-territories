@@ -954,17 +954,18 @@ def cmd_status(args):
                 rows["shots-missing"].append(key[1])
         counts = ", ".join(f"{len(rows[k])} {k}" for k in ("aligned", "stale", "missing", "install-only", "published", "unrouted", "curated", "curated-changed", "curated-missing", "test", "test-changed", "shots", "shots-new", "shots-changed", "shots-missing", "staged", "legacy", "unreadable") if rows[k] or k in ("aligned", "stale", "missing", "install-only"))
         print(f"{ws} [{info['status']}]: {counts}")
+        finals_status(cfg, ws, args, brief=True)
         hints = {"stale": "deploy", "missing": "deploy", "install-only": "pull: keeps it as a curated workflow", "curated-changed": "pull: captures your edits",
                  "published": "a temporary copy of a set whose home is elsewhere; cleanup -w removes it when you are done",
                  "unrouted": "this workspace is neither home for it nor accepts it; cleanup -w moves plain copies to backup once their home workspace holds them, hand-made zz_ ones stay",
-                 "curated-missing": "deploy --curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt",
-                 "shots-new": "pull --shots", "shots-changed": "pull --shots", "shots-missing": "deploy --shots"}
+                 "curated-missing": "deploy --include curated", "test-changed": "pull: captures your edits", "legacy": "old hand-made, no generated prompt",
+                 "shots-new": "pull --only shots", "shots-changed": "pull --only shots", "shots-missing": "deploy --include shots"}
         for k, names in rows.items():
             if k in hints and names and (args.verbose or len(names) <= 5):
                 print(f"    {k} ({hints[k]}): " + ", ".join(names))
         flagged = [c for c in input_choices(cfg, [ws], args.root, args.hero) if c["state"] != "same"]
         if flagged:
-            print("    inputs-changed (inputs --pull: keeps the default images you chose here in workspaces.json): "
+            print("    inputs-changed (inputs pull: keeps the default images you chose here in workspaces.json): "
                   + ", ".join(f"{c['hero']} {c['role']}" + (" (mixed)" if c["state"] == "mixed" else "") for c in flagged))
         if args.templates:
             tpl, itpl = template_files(cfg), {n: p for n, p in inst.items() if is_template(cfg, n)}
@@ -1313,15 +1314,17 @@ def cmd_pull(args):
             print(f"{ws} templates: pulled {done}, left {skipped} existing" + (" (dry run)" if args.dry_run else ""))
             continue
         if info.get("pull") is False and not (args.force or args.include_legacy):
-            pull_shots(cfg, ws, args, stamp, seen)
+            if not args.only_finals:
+                pull_shots(cfg, ws, args, stamp, seen)
             scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
             print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); only its zz_Shots were captured; use --include-legacy for the rest")
             finals_pull(cfg, ws, args)
             continue
-        pull_shots(cfg, ws, args, stamp, seen)
+        if not args.only_finals:
+            pull_shots(cfg, ws, args, stamp, seen)
         finals_pull(cfg, ws, args)  # candidates and finals (and numbered saves loose in the list), arranged like the main tree
         scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
-        if args.shots:
+        if args.shots or args.only_finals:
             continue
         for name, p in install_files(cfg, ws, args.root).items():
             h = hero_of(name)
@@ -1511,16 +1514,15 @@ def cmd_setup(args):
     whole = sorted(g for g in set(homes.values()) if all(h in homes for h, gg in groups.items() if gg == g))
     partial = sorted(h for h, g in homes.items() if g not in whole)
     root = ["--root", args.root] if args.root else []
-    dry = [] if args.apply else ["--dry-run"]
     apply = ["--apply"] if args.apply else []
     print(f"setup {ws} ({'APPLY' if args.apply else 'preview; add --apply to do it'}): home for {len(whole)} whole set(s) {whole} and {len(partial)} hero(es) {partial}")
-    steps = [["inputs", "--pull", "-w", ws, *([] if args.apply else ["--dry-run"])]]
+    steps = [["inputs", "pull", "-w", ws, *apply]]
     if cfg["workspaces"][ws].get("templates"):
-        steps.append(["deploy", "--templates", "-w", ws, *dry])
+        steps.append(["deploy", "--templates", "-w", ws, *apply])
     for g in whole:
-        steps.append(["deploy", "--group", g, "-w", ws, "--curated", "--shots", *dry])
+        steps.append(["deploy", "--group", g, "-w", ws, "--include", "curated,shots", *apply])
     for h in partial:
-        steps.append(["deploy", "--hero", h, "-w", ws, "--curated", "--shots", *dry])
+        steps.append(["deploy", "--hero", h, "-w", ws, "--include", "curated,shots", *apply])
     steps += [["tidy", "-w", ws, *apply], ["finals", "sort", "-w", ws, *apply], ["finals", "deploy", "-w", ws, *apply], ["cleanup", "-w", ws, *apply], ["status", "-w", ws]]
     for step in steps:
         print("\n== " + " ".join(step))
@@ -2175,7 +2177,7 @@ def finals_deploy(cfg, ws, args):
     print(f"{ws} finals deploy: {done} {'copied' if args.apply else 'to copy'}")
 
 
-def finals_status(cfg, ws, args):
+def finals_status(cfg, ws, args, brief=False):
     entries = finals_entries(cfg, ws, args.root)
     d = install_dir(cfg, ws, args.root)
     count = collections.Counter(e["kind"] for e in entries)
@@ -2183,7 +2185,10 @@ def finals_status(cfg, ws, args):
     misplaced = sum(1 for e in entries if e["want"] is not None and e["path"] != e["want"])
     shots = sum(1 for _ in (d / SHOTS_DIR).rglob("*.json")) if (d / SHOTS_DIR).is_dir() else 0
     stray = sum(1 for e in entries if e["parsed"] is None)
-    print(f"{ws}: {count['candidate']} candidates ({loose} loose), {count['final']} finals, {shots} shots, {stray} not placeable (left where they are), {misplaced} to re-file (finals sort)")
+    print(f"    candidates and finals: {count['candidate']} candidates ({loose} loose), {count['final']} finals, {shots} shots, {stray} not placeable (left where they are), {misplaced} to re-file (finals sort)"
+          if brief else f"{ws}: {count['candidate']} candidates ({loose} loose), {count['final']} finals, {shots} shots, {stray} not placeable (left where they are), {misplaced} to re-file (finals sort)")
+    if brief:
+        return
     idx, slots = finals_index(cfg), finals_slots(cfg)
     heroes = sorted(h for h, g in hero_groups().items() if is_home(cfg, ws, g, h) and (not args.hero or h.lower() == args.hero.lower()))
     marks = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.Counter()))
@@ -2291,6 +2296,68 @@ def cmd_finals(args):
         print("Preview only: add --apply to do it. Reload the ComfyUI workflow list afterwards.")
 
 
+WRITES = ("deploy", "pull", "make", "inputs", "denoise", "fork")
+INCLUDE_KINDS = ("curated", "tests", "shots", "staged", "finals")
+DEPLOY_MODES = {"overwrite": "overwrite", "existing": "existing", "patch_only": "patch", "new_only": "new"}
+
+
+def hide(parser, *flags):
+    """Keep an old option working but out of --help (it is replaced by a simpler spelling)."""
+    for a in parser._actions:
+        if any(f in a.option_strings for f in flags):
+            a.help = argparse.SUPPRESS
+
+
+def note(old, new):
+    print(f"note: {old} is now {new}", file=sys.stderr)
+
+
+def normalise(args):
+    """Map the old spellings onto the new ones (each still works, with a one-line note), and make every command that changes files preview unless --apply.
+    Returns True when a command that would write ran as a preview, so the caller can say so."""
+    if args.cmd == "deploy":
+        for kind in ("curated", "tests", "shots", "staged"):
+            if getattr(args, kind):
+                note(f"--{kind}", f"--include {kind}")
+        for kind in filter(None, (args.include or "").split(",")):
+            if kind not in INCLUDE_KINDS:
+                sys.exit(f"--include knows {', '.join(INCLUDE_KINDS)}, not '{kind}'.")
+            setattr(args, kind, True)
+        for attr, mode in DEPLOY_MODES.items():
+            if getattr(args, attr):
+                note("--" + attr.replace("_", "-"), f"--mode {mode}")
+        if args.mode:
+            setattr(args, {m: a for a, m in DEPLOY_MODES.items()}[args.mode], True)
+        if args.reset_inputs:
+            note("--reset-inputs", "a separate step: inputs reset --apply")
+        args.finals = "finals" in (args.include or "").split(",")
+    if args.cmd == "pull":
+        for kind in ("shots", "templates"):
+            if getattr(args, kind) and args.only != kind:
+                note(f"--{kind}", f"--only {kind}")
+        args.shots = args.shots or args.only == "shots"
+        args.templates = args.templates or args.only == "templates"
+        args.only_finals = args.only == "finals"
+    if args.cmd == "inputs":
+        for flag, action in (("status", "status"), ("pull", "pull"), ("reset", "reset"), ("fix", "fix")):
+            if getattr(args, flag) and args.action != action:
+                note(f"--{flag}", f"the action: inputs {action}")
+        if args.set and args.action != "set":
+            note("--set HERO", "the action: inputs set HERO")
+        if args.action == "set":
+            if not args.target:
+                sys.exit("inputs set needs the hero:  inputs set Remiah --photo name.png")
+            args.set = args.target
+        elif args.action:
+            setattr(args, args.action, True)
+    if args.cmd not in WRITES:
+        return False
+    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set)) and not (args.cmd == "denoise" and not args.reset)
+    explicit = args.dry_run
+    args.dry_run = args.dry_run or not args.apply
+    return writes and not args.apply and not explicit
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -2327,6 +2394,11 @@ def main(argv=None):
     s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
     s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
     s.add_argument("--reset-inputs", action="store_true", help="after deploying, also point the deployed workspaces' generated workflows back at their default incoming images")
+    s.add_argument("--include", help="extra kinds to deploy besides the generated workflows, comma separated: curated, shots, tests, staged (scenes held back by default), finals (candidates and finals kept in the repo)")
+    s.add_argument("--mode", choices=["patch", "new", "existing", "overwrite"],
+                   help="patch: only update prompt values in place (also in a legacy workspace); new: only add files the workspace lacks; existing: only refresh files it already has; overwrite: replace the whole file")
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
+    hide(s, "--curated", "--tests", "--shots", "--staged", "--existing", "--patch-only", "--new-only", "--overwrite", "--reset-inputs")
     s = sub.add_parser("cleanup")
     common(s, False, True)
     s.add_argument("-w", "--workspace", action="append", help="the workspace to clean (required): removes what it is not home for, once the home workspace holds an identical copy")
@@ -2339,20 +2411,30 @@ def main(argv=None):
     s.add_argument("name", help="generated workflow to copy, e.g. Drakness_MiniMax_Video_X_Pose_Laugh")
     s.add_argument("--as", dest="tag", required=True, help="short tag added to the new name, e.g. Hand")
     s.add_argument("--no-deploy", action="store_true", help="only create the curated copy; do not put it in the hero's home workspace")
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s = sub.add_parser("pull")
     common(s, True, True)
     s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
     s.add_argument("--force", action="store_true", help="also replace repo copies")
     s.add_argument("--shots", action="store_true", help="only capture the workflows under zz_Shots/ (new and edited ones); other pulls also include them")
     s.add_argument("--prune", action="store_true", help="with --shots: also move repo shots that the pulled workspaces no longer hold to backup")
+    s.add_argument("--only", choices=["shots", "templates", "finals"], help="pull only this kind: shots (zz_Shots), templates (the ST stage templates) or finals (candidates and finals); the default is everything")
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
+    hide(s, "--shots", "--templates")
     s.add_argument("--include-legacy", action="store_true", help="also pull from a workspace whose pulling is turned off (its old hand-made workflows); generated copies are never replaced")
     s = sub.add_parser("make")
     common(s, False, True)
     s.add_argument("--create", action="store_true", help="also build workflows that do not exist yet")
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s.add_argument("--input", help="LoadImage file for created workflows")
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("inputs")
     common(s, True)
+    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set"],
+                   help="status: which images each hero uses; pull: take the defaults you chose in the workspaces into workspaces.json; reset: point every workflow back at its default image; fix: replace placeholder inputs; "
+                        "set HERO --photo/--prime/--bare/--apose ...: write a hero's images into workspaces.json. No action lists the configured and inferred A-poses")
+    s.add_argument("target", nargs="?", help="with set: the hero")
+    s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s.add_argument("--pull", action="store_true", help="take the default images you chose inside the workspaces' workflows into workspaces.json (photos / inputs); run it before --reset")
     s.add_argument("--force", action="store_true", help="with --reset: overwrite images chosen in the workspaces that have not been pulled")
     s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
@@ -2371,11 +2453,13 @@ def main(argv=None):
     s.add_argument("--bare", help="with --set: Alpha 2 Bare image (bare skin, individual figure)")
     s = sub.add_parser("denoise")
     common(s, True)
+    s.add_argument("--apply", action="store_true", help="with --reset: really do it (default: preview only)")
     s.add_argument("--reset", action="store_true", help="set every generated workflow's denoise (repo and workspaces) from its stage template's range; without it, only show the plan. A workspace workflow whose denoise you changed by hand is kept")
     s.add_argument("--force", action="store_true", help="with --reset: also overwrite denoise values you set by hand in a workspace (a changed file is backed up first)")
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
+    hide(sub.choices["inputs"], "--pull", "--reset", "--fix", "--status", "--set")
     s = sub.add_parser("setup")
     common(s, True, False)
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
@@ -2392,8 +2476,15 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy and reclassify preview by default; pull writes unless --dry-run)")
     args = ap.parse_args(argv)
+    previewed = normalise(args)
     {"list": cmd_list, "status": cmd_status, "deploy": cmd_deploy, "cleanup": cmd_cleanup, "pull": cmd_pull, "make": cmd_make, "inputs": cmd_inputs, "denoise": cmd_denoise, "fork": cmd_fork, "tidy": cmd_tidy, "setup": cmd_setup,
      "finals": cmd_finals}[args.cmd](args)
+    if args.cmd == "deploy" and args.finals:
+        for ws in pick_targets(load_cfg(), args, "home"):
+            if ready_or_skip(load_cfg(), ws, args.root):
+                finals_deploy(load_cfg(), ws, args)
+    if previewed:
+        print("Preview only: add --apply to do it.")
 
 
 if __name__ == "__main__":

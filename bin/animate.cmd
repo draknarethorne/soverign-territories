@@ -16,7 +16,7 @@ if errorlevel 1 (
   exit /b 1
 )
 echo == video workflows
-%PY% tools\workflows\comfy_workflows.py make --engine minimax --create --hero %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py make --apply --engine minimax --create --hero %~1 %EXTRA%
 echo == deploy to the home workspace
-%PY% tools\workflows\comfy_workflows.py deploy --engine minimax --hero %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --engine minimax --hero %~1 %EXTRA%
 call "%~dp0_end.cmd" %errorlevel%

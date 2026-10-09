@@ -20,9 +20,9 @@ if errorlevel 1 (
   exit /b 1
 )
 echo == workflows
-%PY% tools\workflows\comfy_workflows.py make --create --group %~1 %EXTRA%
-%PY% tools\workflows\comfy_workflows.py make --create --engine minimax --group %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py make --apply --create --group %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py make --apply --create --engine minimax --group %~1 %EXTRA%
 echo == deploy to the home workspace
-%PY% tools\workflows\comfy_workflows.py deploy --group %~1 %EXTRA%
-%PY% tools\workflows\comfy_workflows.py deploy --engine minimax --group %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --group %~1 %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --engine minimax --group %~1 %EXTRA%
 call "%~dp0_end.cmd" %errorlevel%

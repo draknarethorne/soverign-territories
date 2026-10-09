@@ -95,6 +95,10 @@ class World:
     def run(self, *argv):
         out = io.StringIO()
         code = None
+        argv = list(argv)
+        if argv and argv[0] in cw.WRITES and "--dry-run" not in argv and "--apply" not in argv and "--preview" not in argv:
+            argv.append("--apply")  # the commands preview unless --apply; these tests are about what they do when applying
+        argv = [a for a in argv if a != "--preview"]
         with contextlib.redirect_stdout(out):
             try:
                 cw.main(list(argv))

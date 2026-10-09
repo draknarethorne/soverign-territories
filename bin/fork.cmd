@@ -7,5 +7,5 @@ if "%~2"=="" (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\workflows\comfy_workflows.py fork %~1 --as %~2 %3 %4
+%PY% tools\workflows\comfy_workflows.py fork --apply %~1 --as %~2 %3 %4
 call "%~dp0_end.cmd" %errorlevel%

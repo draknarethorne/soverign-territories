@@ -110,9 +110,11 @@ Run in this order; each step previews first, and everything is recoverable (git 
 The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the question is whether the options and launchers around them are still all needed. Draft with the numbers and proposals: `tmp/2026-10-09-cli-review.md`.
 
 - [x] 6.1 Inventory: 12 sub-commands, 123 long options (the same six filters repeated on six commands), 43 launchers.
-- [ ] 6.2 Review the draft together and answer C1 to C5 (preview-by-default, which launchers you type, one `audit` front door, `inputs` as actions, what `status` shows).
-- [ ] 6.3 Implement the agreed changes one at a time, every old command and option still working and printing what replaces it; parser tests pin each old spelling.
-- [ ] 6.4 Update `bin\help.cmd` and `workflows/README.md` once, at the end, to describe the new surface only.
+- [x] 6.2 Answers (Oct 9): C1 yes, preview by default everywhere with `--apply` (the launchers add `--apply`, so your habits do not change); C2 left to me (I chose the launcher changes below); C3 one `audit` front door (my recommendation: it lists what exists and runs the cheap checks, and the old `*-audit` launchers keep working); C4 yes, `inputs` as actions; C5 yes, `status` shows candidates and finals.
+- [x] 6.3 Built Oct 9, old spellings still working with a one-line note: every changing command previews unless `--apply` (`--dry-run` always previews); `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` (replace 8 switches); `pull --only shots|templates|finals` (replaces 2); `inputs status|pull|reset|fix|set HERO` (replaces 5 flags); `status` lists candidates and finals;
+  `setup` uses the new spellings; `bin\audit.cmd NAME|all`; the launchers add `--apply` and the shots, curated and templates ones use the new options. Tests: `test_cli_surface.py` (9) plus the 47 existing ones, which still pass with the old spellings.
+- [ ] 6.3b Not done on purpose (needs a separate decision): folding `tidy`, `finals sort` and `finals reclassify` into one `tidy` (`tidy --repo`), folding `list` into `status`, and removing the `--class` flag in favour of `--stage scene|studio`.
+- [x] 6.4 `bin\help.cmd` and `workflows/README.md` describe the new spellings (a note at the top explains preview-by-default and the replacements).
 - [ ] 6.5 After a few weeks, remove the forwarders you no longer type.
 
 ## The daily pattern (my view)

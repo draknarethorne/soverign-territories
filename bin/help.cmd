@@ -2,14 +2,14 @@
 echo.
 echo  Sovereign Territories command scripts. Run them from a terminal, or double-click menu.cmd.
 echo  HERO is a hero name such as Draknara. STAGE is optional: poses, head, scene, hair, motion, armor, clothing, video, or "studio" for every studio stage.
-echo  A set is deployed to its HOME workspace (see workspaces.cmd). Add --dry-run as the last argument to a deploy, refresh or make script to preview.
+echo  A set is deployed to its HOME workspace (see workspaces.cmd). The scripts that change files do it for real; the underlying tool previews unless you give it --apply, so add --dry-run as the last argument to preview a script.
 echo.
 echo  THE USUAL LOOP
 echo    refresh.cmd HERO [STAGE]        prompts, workflows and deploy for one hero (to her home workspace^(s^))
 echo    refresh-group.cmd GROUP         the same for a whole set: angel-primes, sovereign-dawn, sovereign-territories, drakn-sisters
 echo    refresh-firered.cmd HERO [STAGE]  the loop for FireRed (local test workflows, not in git)
 echo    animate.cmd HERO                video prompts, MiniMax workflows, deploy
-echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated and zz_Shots are captured)
+echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated, zz_Shots, candidates and finals are captured; a final's image goes to assets\art)
 echo.
 echo  WORKSPACES
 echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
@@ -25,11 +25,11 @@ echo    deploy-group.cmd GROUP          repo to a whole set's home workspace
 echo    make.cmd HERO [STAGE]           create or refresh that hero's workflows from the prompts (repo only)
 echo    update.cmd [filters]            refresh prompt text in every existing repo workflow
 echo    fork.cmd WORKFLOW TAG           copy a generated workflow to hand-edit it (curated), and put it in the home workspace
-echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspace that lacks them
-echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots
+echo    deploy-curated.cmd HERO         copy hand-curated workflows to a workspace that lacks them  ^(= deploy --include curated^)
+echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved under zz_Shots  ^(= pull --only shots / deploy --include shots^)
 echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
-echo    inputs.cmd [--status ^| --pull -w WS ^| --reset --hero H]  which images each hero's workflows read; --pull keeps the default images you chose in ComfyUI in workspaces.json (do it before --reset)
+echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset)
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA
@@ -40,6 +40,7 @@ echo    scaffold-sister.cmd SLUG        write a sister's studio kit cards
 echo    scaffold-characters.cmd         write the character scenes (angels: Lineup, duty, quiet, domain, celebration; sisters: domain, craft, celebration) from scene-recipes.json
 echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piece and every reference to it
 echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)
+echo    audit.cmd NAME                  one front door for the audits below: identity, negation, library, style, codex, all (the cheap checks validate runs); changes nothing
 echo    style-audit.cmd [--prompts]     rank art wording by how illustrated (vs photographic) it reads; changes nothing
 echo    library-audit.cmd [--scope S]   find thin library folders that many cards lean on, and pieces no card uses; changes nothing
 echo    negation-audit.cmd [--review]   find negations (do not, never, no X) in the positive prompts, which a model reads as the thing named; changes nothing

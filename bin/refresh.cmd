@@ -19,7 +19,7 @@ if errorlevel 1 (
   exit /b 1
 )
 echo == workflows
-%PY% tools\workflows\comfy_workflows.py make --create --hero %~1 %STAGE% %EXTRA%
+%PY% tools\workflows\comfy_workflows.py make --apply --create --hero %~1 %STAGE% %EXTRA%
 echo == deploy to the home workspace
-%PY% tools\workflows\comfy_workflows.py deploy --hero %~1 %STAGE% %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --hero %~1 %STAGE% %EXTRA%
 call "%~dp0_end.cmd" %errorlevel%

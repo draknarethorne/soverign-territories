@@ -11,5 +11,5 @@ set "EXTRA=%~4"
 if not "%~3"=="" (
   if "%~3"=="--dry-run" (set "EXTRA=--dry-run") else (if "%~3"=="studio" (set "STAGE=--class studio") else (set "STAGE=--stage %~3"))
 )
-%PY% tools\workflows\comfy_workflows.py deploy --hero %~1 -w "%~2" %STAGE% %EXTRA%
+%PY% tools\workflows\comfy_workflows.py deploy --apply --hero %~1 -w "%~2" %STAGE% %EXTRA%
 call "%~dp0_end.cmd" %errorlevel%
