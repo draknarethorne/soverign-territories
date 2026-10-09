@@ -69,7 +69,7 @@ CURATED = WF / "_curated"
 TEST = WF / "_test"
 # Curated workflow files carry this prefix so they sort to the bottom of a workspace list; a name with a render counter
 # (Name_00001) is a workflow captured from a render and keeps its name. Test workflows (experiments, bisects) are kept in
-# workflows/_test under a test_ prefix and are only pushed to a workspace on request (deploy --tests).
+# workflows/_test under a test_ prefix and are only pushed to a workspace on request (deploy --include tests).
 CURATED_PREFIX = "zz_Curated_"
 TEST_PREFIX = "test_"
 # Inside a workspace, curated and test workflows sit in these folders, which sort after every generated stage folder.
@@ -1114,8 +1114,6 @@ def cmd_deploy(args):
                     print(f"  SKIP     {ws}/{SHOTS_DIR}/{rel} differs from the repo copy (your edits?): pull it, or use --overwrite")
                     tally["skipped"] += 1
         print(f"{ws}: " + ", ".join(f"{v} {k}" for k, v in tally.items()) + (" (dry run)" if args.dry_run else ""))
-    if getattr(args, "reset_inputs", False):
-        reset_inputs(cfg, args, workspaces=targets, include_repo=False)
     print("Restart the ComfyUI workspace (or reload the workflow list) to see changes.")
 
 
@@ -1406,7 +1404,7 @@ def cmd_fork(args):
     if args.no_deploy:
         return
     if not homes:
-        print(f"  no active home workspace for {h}: the curated copy stays in the repo (deploy --curated --hero {h} puts it in a workspace later)")
+        print(f"  no active home workspace for {h}: the curated copy stays in the repo (deploy --include curated --hero {h} puts it in a workspace later)")
         return
     for ws in homes:
         write_wf(install_dir(cfg, ws, args.root) / special_dir(ws, CURATED_DIR, h) / new, wf)
@@ -1577,7 +1575,7 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
         print("inputs reset STOPPED: the workspaces hold default images that workspaces.json does not (a reset would overwrite your choice):")
         for c in pending:
             print(f"    {c['hero']:10} {c['role']:6} {c['state']:8} {c['counts']}   (configured: {c['configured'] or '-'})")
-        print("Run  inputs --pull  first to keep them (or --force to overwrite them; a changed workflow is backed up first).")
+        print("Run  inputs pull  first to keep them (or --force to overwrite them; a changed workflow is backed up first).")
         return
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     idx, repo = input_index(cfg), repo_files(cfg)
@@ -1745,12 +1743,12 @@ def input_choices(cfg, workspaces=None, root=None, hero=None):
 
 
 def pull_inputs(cfg, args, workspaces=None):
-    """Write the default images you chose in the workspaces into workspaces.json (photos / inputs), so a later `inputs --reset` or a rebuilt workflow keeps them."""
+    """Write the default images you chose in the workspaces into workspaces.json (photos / inputs), so a later `inputs reset` or a rebuilt workflow keeps them."""
     found = input_choices(cfg, workspaces, args.root, getattr(args, "hero", None))
     changed = [c for c in found if c["state"] == "changed"]
     for c in found:
         if c["state"] == "mixed":
-            print(f"  MIXED    {c['hero']} {c['role']}: the workflows load different images {c['counts']}; set the one you want with: inputs --set {c['hero']} --{'photo' if c['role'] == 'photo' else c['role']} NAME")
+            print(f"  MIXED    {c['hero']} {c['role']}: the workflows load different images {c['counts']}; set the one you want with: inputs set {c['hero']} --{'photo' if c['role'] == 'photo' else c['role']} NAME")
     for c in changed:
         print(f"  pull     {c['hero']:10} {c['role']:6} {c['configured'] or '-'} -> {c['chosen']}  ({sum(c['counts'].values())} workflow(s))")
         if not args.dry_run:
@@ -1762,7 +1760,7 @@ def pull_inputs(cfg, args, workspaces=None):
                 conf[c["role"]] = c["chosen"]
     if changed and not args.dry_run:
         write_cfg(cfg)
-    print(f"inputs pull: {len(changed)} default image(s) " + ("would be " if args.dry_run else "") + "taken from the workspaces" + ("" if changed else " (workspaces.json already matches)") + (" - now run: inputs --reset" if changed and not args.dry_run else ""))
+    print(f"inputs pull: {len(changed)} default image(s) " + ("would be " if args.dry_run else "") + "taken from the workspaces" + ("" if changed else " (workspaces.json already matches)") + (" - now run: inputs reset" if changed and not args.dry_run else ""))
     return len(changed)
 
 
@@ -1785,7 +1783,7 @@ def inputs_status(cfg):
 
 
 def set_inputs(cfg, args):
-    """Write --photo / --prime / --bare / --apose for one hero into workspaces.json (then run inputs --reset)."""
+    """Write --photo / --prime / --bare / --apose for one hero into workspaces.json (then run inputs reset)."""
     hero = next((h for h in cfg.get("photos", {}) if h.lower() == args.set.lower()), None)
     if not hero:
         sys.exit(f"Unknown hero '{args.set}'. Known: {list(cfg.get('photos', {}))}")
@@ -1802,7 +1800,7 @@ def set_inputs(cfg, args):
         print("(dry run, nothing written)")
     else:
         write_cfg(cfg)
-        print("workspaces.json updated; now run: inputs --reset --hero " + hero)
+        print("workspaces.json updated; now run: inputs reset --hero " + hero)
 
 
 def denoise_plan(cfg):
@@ -2301,49 +2299,22 @@ INCLUDE_KINDS = ("curated", "tests", "shots", "staged", "finals")
 DEPLOY_MODES = {"overwrite": "overwrite", "existing": "existing", "patch_only": "patch", "new_only": "new"}
 
 
-def hide(parser, *flags):
-    """Keep an old option working but out of --help (it is replaced by a simpler spelling)."""
-    for a in parser._actions:
-        if any(f in a.option_strings for f in flags):
-            a.help = argparse.SUPPRESS
-
-
-def note(old, new):
-    print(f"note: {old} is now {new}", file=sys.stderr)
-
-
 def normalise(args):
-    """Map the old spellings onto the new ones (each still works, with a one-line note), and make every command that changes files preview unless --apply.
-    Returns True when a command that would write ran as a preview, so the caller can say so."""
+    """Turn the readable options (deploy --include/--mode, pull --only, inputs ACTION) into the switches the commands read, and make every command that changes files
+    preview unless --apply. Returns True when a command that would write ran as a preview, so the caller can say so."""
     if args.cmd == "deploy":
-        for kind in ("curated", "tests", "shots", "staged"):
-            if getattr(args, kind):
-                note(f"--{kind}", f"--include {kind}")
         for kind in filter(None, (args.include or "").split(",")):
             if kind not in INCLUDE_KINDS:
                 sys.exit(f"--include knows {', '.join(INCLUDE_KINDS)}, not '{kind}'.")
             setattr(args, kind, True)
-        for attr, mode in DEPLOY_MODES.items():
-            if getattr(args, attr):
-                note("--" + attr.replace("_", "-"), f"--mode {mode}")
         if args.mode:
             setattr(args, {m: a for a, m in DEPLOY_MODES.items()}[args.mode], True)
-        if args.reset_inputs:
-            note("--reset-inputs", "a separate step: inputs reset --apply")
         args.finals = "finals" in (args.include or "").split(",")
     if args.cmd == "pull":
-        for kind in ("shots", "templates"):
-            if getattr(args, kind) and args.only != kind:
-                note(f"--{kind}", f"--only {kind}")
-        args.shots = args.shots or args.only == "shots"
-        args.templates = args.templates or args.only == "templates"
+        args.shots = args.only == "shots"
+        args.templates = args.only == "templates"
         args.only_finals = args.only == "finals"
     if args.cmd == "inputs":
-        for flag, action in (("status", "status"), ("pull", "pull"), ("reset", "reset"), ("fix", "fix")):
-            if getattr(args, flag) and args.action != action:
-                note(f"--{flag}", f"the action: inputs {action}")
-        if args.set and args.action != "set":
-            note("--set HERO", "the action: inputs set HERO")
         if args.action == "set":
             if not args.target:
                 sys.exit("inputs set needs the hero:  inputs set Remiah --photo name.png")
@@ -2385,20 +2356,11 @@ def main(argv=None):
     common(s, True, True)
     s.add_argument("--all", action="store_true", help="allow a deploy with no filter")
     s.add_argument("--templates", action="store_true", help="deploy the ST?_ stage templates instead of hero workflows")
-    s.add_argument("--overwrite", action="store_true", help="replace the workspace file instead of updating its prompt values")
-    s.add_argument("--curated", action="store_true", help="also copy hand-curated workflows (workflows/_curated) the workspace lacks")
-    s.add_argument("--tests", action="store_true", help="also copy test workflows (workflows/_test, test_ prefix) the workspace lacks")
-    s.add_argument("--shots", action="store_true", help="also copy shots (workflows/_shots) the workspace lacks, into zz_Shots/ with their subfolders")
-    s.add_argument("--staged", action="store_true", help="also add staged scenes (Scene_Staged_*) the workspace lacks; they are held back by default")
-    s.add_argument("--existing", action="store_true", help="only refresh files the workspace already has; add nothing new")
-    s.add_argument("--patch-only", action="store_true", help="in a legacy workspace too, only update prompt values in place; never replace a whole workflow")
-    s.add_argument("--new-only", action="store_true", help="only add files the workspace lacks; never touch ones it already has (even in a legacy workspace)")
-    s.add_argument("--reset-inputs", action="store_true", help="after deploying, also point the deployed workspaces' generated workflows back at their default incoming images")
     s.add_argument("--include", help="extra kinds to deploy besides the generated workflows, comma separated: curated, shots, tests, staged (scenes held back by default), finals (candidates and finals kept in the repo)")
     s.add_argument("--mode", choices=["patch", "new", "existing", "overwrite"],
                    help="patch: only update prompt values in place (also in a legacy workspace); new: only add files the workspace lacks; existing: only refresh files it already has; overwrite: replace the whole file")
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
-    hide(s, "--curated", "--tests", "--shots", "--staged", "--existing", "--patch-only", "--new-only", "--overwrite", "--reset-inputs")
+    s.set_defaults(curated=False, tests=False, shots=False, staged=False, existing=False, patch_only=False, new_only=False, overwrite=False)
     s = sub.add_parser("cleanup")
     common(s, False, True)
     s.add_argument("-w", "--workspace", action="append", help="the workspace to clean (required): removes what it is not home for, once the home workspace holds an identical copy")
@@ -2414,13 +2376,11 @@ def main(argv=None):
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     s = sub.add_parser("pull")
     common(s, True, True)
-    s.add_argument("--templates", action="store_true", help="pull the ST?_ stage templates instead of hero workflows")
     s.add_argument("--force", action="store_true", help="also replace repo copies")
-    s.add_argument("--shots", action="store_true", help="only capture the workflows under zz_Shots/ (new and edited ones); other pulls also include them")
-    s.add_argument("--prune", action="store_true", help="with --shots: also move repo shots that the pulled workspaces no longer hold to backup")
+    s.add_argument("--prune", action="store_true", help="with --only shots: also move repo shots that the pulled workspaces no longer hold to backup")
     s.add_argument("--only", choices=["shots", "templates", "finals"], help="pull only this kind: shots (zz_Shots), templates (the ST stage templates) or finals (candidates and finals); the default is everything")
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
-    hide(s, "--shots", "--templates")
+    s.set_defaults(shots=False, templates=False)
     s.add_argument("--include-legacy", action="store_true", help="also pull from a workspace whose pulling is turned off (its old hand-made workflows); generated copies are never replaced")
     s = sub.add_parser("make")
     common(s, False, True)
@@ -2435,15 +2395,10 @@ def main(argv=None):
                         "set HERO --photo/--prime/--bare/--apose ...: write a hero's images into workspaces.json. No action lists the configured and inferred A-poses")
     s.add_argument("target", nargs="?", help="with set: the hero")
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
-    s.add_argument("--pull", action="store_true", help="take the default images you chose inside the workspaces' workflows into workspaces.json (photos / inputs); run it before --reset")
-    s.add_argument("--force", action="store_true", help="with --reset: overwrite images chosen in the workspaces that have not been pulled")
-    s.add_argument("--fix", action="store_true", help="replace placeholder 00001 inputs with the inferred or configured pick")
-    s.add_argument("--reset", action="store_true", help="point every generated workflow at its default incoming image (cfg inputRoles: photo, barefoot A-pose, bare skin) in the repo and the workspaces, copying missing images into each workspace's input folder")
+    s.add_argument("--force", action="store_true", help="with reset: overwrite images chosen in the workspaces that have not been pulled")
     s.add_argument("--hero", help="with --reset: only this hero")
     s.add_argument("--stage", help="with --reset: only this prompt folder (alpha, poses, armor ...)")
     s.add_argument("--match", help="with --reset: only workflows whose name contains this")
-    s.add_argument("--status", action="store_true", help="per hero: the photo, A-pose and bare-skin images, where they are found and whether they match standardSize")
-    s.add_argument("--set", metavar="HERO", help="write --photo/--prime/--bare/--apose for this hero into workspaces.json (then run --reset)")
     s.add_argument("--photo", help="with --set: original photo file name")
     s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
     s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
@@ -2459,7 +2414,7 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
-    hide(sub.choices["inputs"], "--pull", "--reset", "--fix", "--status", "--set")
+    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None)
     s = sub.add_parser("setup")
     common(s, True, False)
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")

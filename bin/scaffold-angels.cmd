@@ -1,6 +1,6 @@
 @echo off
 call "%~dp0_env.cmd"
-rem scaffold-angels                 write the standard card set for all 20 angels (existing cards are kept)
+rem scaffold-angels                 write the standard card set for all 22 angels (existing cards are kept)
 rem scaffold-angels SLUG            one angel, e.g. scaffold-angels seraphine
 rem scaffold-angels --alpha         only the two alpha test heroes (alpha/female, alpha/male) for trying other photos
 rem scaffold-angels --coverage      report which library pieces the angels use; writes nothing

@@ -12,7 +12,7 @@ The raw brain-dump this came from is kept word for word at the end.
 | 2 | `docs/todo.md`: a checklist for the top-tier cards (photo, Prime, Bare, golden pose, ...), driven by automation instead of hand-ticked | New file, new report tool |
 | 3 | Candidates vs finals: everything saved so far is provisional; `zz_Final` is the workflow you decide on, with its seed and denoise | Workflow tooling |
 | 4 | Organized, not flat: the file name says where a save belongs, even if it is misspelled, in the wrong folder or dropped straight into `zz_Final` | `art_layout`, `tidy`, `pull` |
-| 5 | Source photos: the 200-render alpha batches may give better starting photos for angels and sisters | `workspaces.json` `photos`, `inputs --pull` |
+| 5 | Source photos: the 200-render alpha batches may give better starting photos for angels and sisters | `workspaces.json` `photos`, `inputs pull` |
 | 6 | Regeneration loop: identity JSON edits mean new batches and new picks; nothing is decided yet | Process |
 
 ## Vocabulary: what each kind of workflow is
@@ -51,7 +51,7 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 ### Phase 1: source photos and picks (you, existing tools)
 
 - [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
-- [ ] Set it in the workspace and run `inputs --pull -w "<workspace>"` so it is written into `workspaces.json`.
+- [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
 - [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
 - [ ] Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare.
 
@@ -77,7 +77,7 @@ Run in this order; each step previews first, and everything is recoverable (git 
 - [x] 1. `finals reclassify --apply` (done Oct 9, commit `a5e0f5881`, pure renames): the 72 numbered saves in `_shots` (8 of them old `X_Pose` saves, resolved as Primes) are now in `_candidates/<set>/<Hero>/<phase>/`.
 - [ ] 2. (next, needs your go-ahead because it changes the live workspaces) `pull` for each workspace (Angel Primes, Drakn Sisters, Drakness, Sovereign Dawn Series): keeps what the workspaces hold in the repo at the proper paths.
 - [ ] 3. `finals reclassify` again: any duplicate created by step 2 goes to backup.
-- [ ] 4. `setup -w "<workspace>" --apply` for each workspace: `finals sort` re-files the workspace copies, `finals deploy` puts back what the repo holds and the workspace lacks, `deploy --shots` and `--curated` run as before.
+- [ ] 4. `setup -w "<workspace>" --apply` for each workspace: `finals sort` re-files the workspace copies, `finals deploy` puts back what the repo holds and the workspace lacks, `deploy --include shots,curated` run as before.
 - [ ] 5. `finals status` for each workspace: `not placeable` should list only the files that really have no home; decide those by hand.
 - [ ] 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
 
@@ -111,8 +111,8 @@ The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the que
 
 - [x] 6.1 Inventory: 12 sub-commands, 123 long options (the same six filters repeated on six commands), 43 launchers.
 - [x] 6.2 Answers (Oct 9): C1 yes, preview by default everywhere with `--apply` (the launchers add `--apply`, so your habits do not change); C2 left to me (I chose the launcher changes below); C3 one `audit` front door (my recommendation: it lists what exists and runs the cheap checks, and the old `*-audit` launchers keep working); C4 yes, `inputs` as actions; C5 yes, `status` shows candidates and finals.
-- [x] 6.3 Built Oct 9, old spellings still working with a one-line note: every changing command previews unless `--apply` (`--dry-run` always previews); `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` (replace 8 switches); `pull --only shots|templates|finals` (replaces 2); `inputs status|pull|reset|fix|set HERO` (replaces 5 flags); `status` lists candidates and finals;
-  `setup` uses the new spellings; `bin\audit.cmd NAME|all`; the launchers add `--apply` and the shots, curated and templates ones use the new options. Tests: `test_cli_surface.py` (9) plus the 47 existing ones, which still pass with the old spellings.
+- [x] 6.3 Built Oct 9, and the old switches removed (you chose to break old habits): every changing command previews unless `--apply` (`--dry-run` always previews); `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` (replace 8 switches); `pull --only shots|templates|finals` (replaces 2); `inputs status|pull|reset|fix|set HERO` (replaces 5 flags); `status` lists candidates and finals;
+  `setup` uses the new spellings; `bin\audit.cmd NAME|all`; the launchers add `--apply` and the shots, curated and templates ones use the new options. Tests: `test_cli_surface.py` (9) plus the 47 existing ones, updated to the new spellings (the old switches are rejected, tested).
 - [ ] 6.3b Not done on purpose (needs a separate decision): folding `tidy`, `finals sort` and `finals reclassify` into one `tidy` (`tidy --repo`), folding `list` into `status`, and removing the `--class` flag in favour of `--stage scene|studio`.
 - [x] 6.4 `bin\help.cmd` and `workflows/README.md` describe the new spellings (a note at the top explains preview-by-default and the replacements).
 - [ ] 6.5 After a few weeks, remove the forwarders you no longer type.

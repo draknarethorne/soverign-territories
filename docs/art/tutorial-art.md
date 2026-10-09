@@ -86,7 +86,7 @@ A-pose supplies the layer under them. Fully pre-staged scenes (a finished bone-a
 **Render and keep.** Qwen is the default engine; FireRed (local, not in git) is the photoreal comparison and takes the positive prompt only, so the
 negatives in a card do not apply to it. Run the A-pose and bare stages in non-Turbo mode overnight when you want the most realistic base, since
 everything after them inherits it. Save a workflow you tuned for one render (seed, Turbo or not) in the workspace under `zz_Shots/` and run
-`pull --shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
+`pull --only shots`; see [workflows/README.md](../../workflows/README.md#shots-zz_shots). Cards, pieces and templates are the permanent record; shots
 are the tuned renders.
 
 ## The loop you will run every time

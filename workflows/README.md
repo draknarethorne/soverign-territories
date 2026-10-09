@@ -18,8 +18,8 @@ workflows/
 
 **Preview by default (Oct 2026).** Every command that changes files (`deploy`, `pull`, `make`, `inputs`, `denoise`, `fork`, and the older `cleanup`, `tidy`, `setup`, `finals`) shows what it would do unless you add `--apply`; `--dry-run` still works and always previews. The `bin\*.cmd` launchers add `--apply` for you, so they do the work and `--dry-run` as the last argument previews them.
 
-The options were simplified at the same time, and the old spellings still work (with a one-line note saying what replaces them):
-`deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` replace `--curated --shots --tests --staged` and `--patch-only --new-only --existing --overwrite`; `pull --only shots|templates|finals` replaces `--shots` and `--templates`; `inputs status|pull|reset|fix|set HERO` replaces `inputs --status|--pull|--reset|--fix|--set`. `status` also lists candidates and finals.
+The options were simplified at the same time and the old switches are gone:
+`deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` replace the old `--curated --shots --tests --staged` and `--patch-only --new-only --existing --overwrite`; `pull --only shots|templates|finals` replaces `--shots` and `--templates`; `inputs status|pull|reset|fix|set HERO` replaces `inputs status|--pull|--reset|--fix|--set`. `status` also lists candidates and finals.
 
 Run the scripts from a terminal or double-click `bin\menu.cmd` (`bin\help.cmd` lists everything). Add `--dry-run` as the last
 argument to preview. STAGE is optional: `poses`, `head`, `scene`, `hair`, `motion`, `armor`, `clothing`, `video`, or `studio` for
@@ -142,7 +142,7 @@ A new workflow is saved in the workspace under its output folder, hero first and
 
 The card folders, the prompts and the ComfyUI output all use these phase folders (`art_layout.phase_path` maps a stage and family to its phase, `parse_dirs` goes back); the SaveImage prefix is the prompt's folder.
 ComfyUI shows these as folders.
-`tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a single-hero workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --staged`, so the lists hold the scenes you are working on.
+`tidy` moves loose files into them (and removes folders it empties); curated files go to a `zz_Curated/` folder, test files to `zz_Test/` and shots to `zz_Shots/`, which sort after every stage folder (flat in a single-hero workspace, one folder per hero in a shared one). Staged scenes (`Scene_Staged_*`) are built and kept in the repo but only added to a workspace with `deploy --include staged`, so the lists hold the scenes you are working on.
 
 ### Default incoming images
 
@@ -252,7 +252,7 @@ python tools/workflows/comfy_workflows.py finals reclassify --apply             
 
 Curated workflows write to their own output folder, `<set>/<Hero>/_curated/<name>` (for example `drakn-sisters/Drakness/_curated/`), so hand-tuned renders never mix with the generated families. `fork` and `pull` set this prefix for you (and patch the workspace copy to match); only the SaveImage prefix changes.
 Curated files are named `zz_Curated_<Hero>_...` so they sort to the bottom of a workspace list and are never mistaken for generated ones; a workflow you captured from a render keeps its counter name (`..._00001`) and is left as it is.
-Test workflows (experiments, A/B and bisect variants) are named `test_<Hero>_...` and live in `workflows/_test/<set>/<Hero>/`, writing renders to `<set>/<Hero>/_test/`. They are not kept in workspaces: put them there when needed with `deploy --tests --hero H --match test_`, and `pull` saves new or edited ones back to `_test` before you remove them from the workspace. Prefix summary: no prefix is generated, `zz_Curated_` is hand-tuned and kept, `test_` is temporary.
+Test workflows (experiments, A/B and bisect variants) are named `test_<Hero>_...` and live in `workflows/_test/<set>/<Hero>/`, writing renders to `<set>/<Hero>/_test/`. They are not kept in workspaces: put them there when needed with `deploy --include tests --hero H --match test_`, and `pull` saves new or edited ones back to `_test` before you remove them from the workspace. Prefix summary: no prefix is generated, `zz_Curated_` is hand-tuned and kept, `test_` is temporary.
 
 Generated workflows are rebuilt from prompts, so a hand edit to one would be overwritten. Anything you tune by hand lives in
 `workflows/_curated/<set>/<Hero>/` instead. `make` and `deploy` never touch that folder.

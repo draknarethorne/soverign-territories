@@ -158,4 +158,4 @@ before it becomes an angel. They carry the whole suite in both Qwen and FireRed 
 | Gameplay cards | None yet; only art identities and prompts exist |
 | Story link to the Drakn sisters | Not decided (ally, mirror or rival) |
 | Archetype for each element's class | Each angel has a story archetype; a gameplay class is still to be chosen |
-| Art status | Not tracked here; use `python tools/workflows/comfy_workflows.py inputs --status` |
+| Art status | Not tracked here; use `python tools/workflows/comfy_workflows.py inputs status` |

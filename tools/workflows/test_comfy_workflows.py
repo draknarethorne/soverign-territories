@@ -237,7 +237,7 @@ class HandMadeGuardTests(unittest.TestCase):
             w.master("Alice_Qwen_Scene_One.json")
             hand = {"nodes": [], "id": "mine"}
             path = w.put("A-Home", "zz_Curated/Alice/Alice_Qwen_Scene_One.json", hand)
-            out, _ = w.run("deploy", "--hero", "Alice", "--overwrite")
+            out, _ = w.run("deploy", "--hero", "Alice", "--mode", "overwrite")
             self.assertEqual(json.loads(path.read_text()), hand)
             self.assertIn("hand-made", out)
             self.assertEqual(w.names("A-Home"), ["Alice_Qwen_Scene_One.json"], "no second copy is created beside it")
@@ -302,7 +302,7 @@ class SavedShotTests(unittest.TestCase):
         with World() as w, mock.patch.object(cw, "SHOTS", w.repo / "_shots"), mock.patch.object(cw, "ROOT", w.tmp):
             w.put("A-Home", "zz_Shots/Alice_Qwen_Alpha_2_Bare_Skin.json", {"nodes": [], "id": "seed-1"})
             w.put("Alice-Own", "zz_Shots/Alice_Qwen_Alpha_2_Bare_Skin.json", {"nodes": [], "id": "seed-2"})
-            out, _ = w.run("pull", "--shots", "--hero", "Alice")
+            out, _ = w.run("pull", "--only", "shots", "--hero", "Alice")
             kept = w.repo / "_shots" / "set-a" / "Alice" / "Alice_Qwen_Alpha_2_Bare_Skin.json"
             self.assertEqual(json.loads(kept.read_text())["id"], "seed-1", "the first pulled copy stays")
             self.assertIn("CONFLICT", out)
@@ -490,7 +490,7 @@ def image_wf(image):
 
 
 class InputPullTests(unittest.TestCase):
-    """The default images you choose inside a workspace are read back into workspaces.json (inputs --pull), flagged by status, and never overwritten by a reset."""
+    """The default images you choose inside a workspace are read back into workspaces.json (inputs pull), flagged by status, and never overwritten by a reset."""
 
     PRIME, BARE = "Alice_Qwen_Alpha_1_Prime.json", "Alice_Qwen_Alpha_2_Bare_Figure.json"
 
@@ -518,14 +518,14 @@ class InputPullTests(unittest.TestCase):
         try:
             w.put("A-Home", "alpha/" + self.PRIME, image_wf("my_photo.png"))
             w.put("A-Home", "alpha/" + self.BARE, image_wf("alice_prime.png"))
-            out, _ = w.run("inputs", "--pull", "--dry-run", "-w", "A-Home")
+            out, _ = w.run("inputs", "pull", "--dry-run", "-w", "A-Home")
             self.assertIn("alice_photo.png -> my_photo.png", out)
             self.assertEqual(w.cfg["photos"]["Alice"], "alice_photo.png", "a dry run changes nothing")
-            out, _ = w.run("inputs", "--pull", "-w", "A-Home")
+            out, _ = w.run("inputs", "pull", "-w", "A-Home")
             self.assertEqual(w.cfg["photos"]["Alice"], "my_photo.png")
             self.assertEqual(w.cfg["inputs"]["Alice"]["prime"], "alice_prime.png", "an image that already matches is not touched")
             self.assertEqual(json.loads((w.tmp / "workspaces.json").read_text(encoding="utf-8"))["photos"]["Alice"], "my_photo.png")
-            out, _ = w.run("inputs", "--pull", "-w", "A-Home")
+            out, _ = w.run("inputs", "pull", "-w", "A-Home")
             self.assertIn("0 default image", out)
         finally:
             w.__exit__()
@@ -535,7 +535,7 @@ class InputPullTests(unittest.TestCase):
         try:
             w.put("A-Home", "alpha/" + self.PRIME, image_wf("Alice_Qwen_X_Pose_00001_.png"))
             w.put("A-Home", "alpha/" + self.BARE, image_wf("bob_image_123.png"))
-            out, _ = w.run("inputs", "--pull", "-w", "A-Home")
+            out, _ = w.run("inputs", "pull", "-w", "A-Home")
             self.assertIn("0 default image", out)
             self.assertEqual(w.cfg["photos"]["Alice"], "alice_photo.png")
         finally:
@@ -545,7 +545,7 @@ class InputPullTests(unittest.TestCase):
         w = self.world()
         try:
             w.put("A-Home", "alpha/Alice_Qwen_X_Pose.json", image_wf("legacy_choice.png"))
-            w.run("inputs", "--pull", "-w", "A-Home")
+            w.run("inputs", "pull", "-w", "A-Home")
             self.assertEqual(w.cfg["photos"]["Alice"], "legacy_choice.png")
         finally:
             w.__exit__()
@@ -557,7 +557,7 @@ class InputPullTests(unittest.TestCase):
             w.master("Alice_Qwen_Alpha_3_Extra.json", image_wf("placeholder.png"))
             w.put("A-Home", "alpha/" + self.BARE, image_wf("one.png"))
             w.put("A-Home", "alpha/Alice_Qwen_Alpha_3_Extra.json", image_wf("two.png"))
-            out, _ = w.run("inputs", "--pull", "-w", "A-Home")
+            out, _ = w.run("inputs", "pull", "-w", "A-Home")
             self.assertIn("MIXED", out)
             self.assertEqual(w.cfg["inputs"]["Alice"]["prime"], "alice_prime.png")
         finally:
@@ -570,7 +570,7 @@ class InputPullTests(unittest.TestCase):
             out, _ = w.run("status", "-w", "A-Home")
             self.assertIn("inputs-changed", out)
             self.assertIn("Alice photo", out)
-            w.run("inputs", "--pull", "-w", "A-Home")
+            w.run("inputs", "pull", "-w", "A-Home")
             out, _ = w.run("status", "-w", "A-Home")
             self.assertNotIn("inputs-changed", out)
         finally:
@@ -581,11 +581,11 @@ class InputPullTests(unittest.TestCase):
         try:
             w.cfg["homes"][0]["workspace"] = "A-Home"
             path = w.put("A-Home", "alpha/" + self.PRIME, image_wf("my_photo.png"))
-            out, _ = w.run("inputs", "--reset", "--hero", "Alice")
+            out, _ = w.run("inputs", "reset", "--hero", "Alice")
             self.assertIn("STOPPED", out)
             self.assertEqual(cw.input_image(cw.read_wf(path)), "my_photo.png", "your choice survives")
-            w.run("inputs", "--pull", "-w", "A-Home")
-            out, _ = w.run("inputs", "--reset", "--hero", "Alice")
+            w.run("inputs", "pull", "-w", "A-Home")
+            out, _ = w.run("inputs", "reset", "--hero", "Alice")
             self.assertNotIn("STOPPED", out)
             self.assertEqual(cw.input_image(cw.read_wf(path)), "my_photo.png", "the pulled photo is now the default, so the reset keeps it")
         finally:

@@ -20,7 +20,7 @@
   surface in **"combined" cards** and appear in the **background of certain female-hero
   series**.
 
-**Art status is not tracked in this document.** Which images exist is shown by `data/art/` and `prompts/` (the validator reports coverage), and which key images have been pulled back into the repo or set as a workspace default is shown by `python tools/workflows/comfy_workflows.py inputs --status` (see [workflows/README.md](../../../workflows/README.md)).
+**Art status is not tracked in this document.** Which images exist is shown by `data/art/` and `prompts/` (the validator reports coverage), and which key images have been pulled back into the repo or set as a workspace default is shown by `python tools/workflows/comfy_workflows.py inputs status` (see [workflows/README.md](../../../workflows/README.md)).
 
 ---
 
