@@ -1,6 +1,6 @@
 === Seraphine Solspire · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
 Source image: Seraphine_Qwen_Scene_Signature_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------

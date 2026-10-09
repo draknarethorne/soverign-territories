@@ -1,6 +1,6 @@
 === Sammara Nightshade · Video: SteppeMotion (group: Video) — MiniMax H3 image-to-video ===
 Source image: Sammara_Qwen_Scene_Steppe_00001_.png
-Size: 640x960
+Format: reel
 Length: 7.5
 
 ----------------------------------------------------------------

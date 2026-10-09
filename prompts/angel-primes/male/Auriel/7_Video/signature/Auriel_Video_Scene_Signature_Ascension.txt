@@ -1,6 +1,6 @@
 === Auriel Solspire · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
 Source image: Auriel_Qwen_Scene_Signature_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------
@@ -8,7 +8,7 @@ prompt:
 
 Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
 
-Scene: The first frame shows Auriel Solspire, wearing parade armor of polished gold with Radiant Pearl White enamel panels, a high collar, in a sunlit white marble terrace with gold-veined columns; a large adult lion with a golden coat and a full white-gold mane.
+Scene: The first frame shows Auriel Solspire, wearing a polished silver state cuirass engraved with fine scrollwork, in a sunlit white marble terrace with gold-veined columns; a large adult lion with a golden coat and a full white-gold mane.
 
 Timeline:
 [0s-2.5s] Motion: Warm golden light blooms outward from his, glowing motes rising through the air and a soft halo gathering behind his; at the same time, great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.

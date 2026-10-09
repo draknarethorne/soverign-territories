@@ -34,9 +34,5 @@
     }
   ],
   "notes": "THE DAWN, in motion: the angel rises through her element's realm.",
-  "size": [
-    640,
-    960
-  ],
   "template": "data/animation/_templates/video-minimax.txt"
 }

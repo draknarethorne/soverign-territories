@@ -134,7 +134,6 @@
     "poses": "workflows/_templates/ST1_Qwen_A_Pose.json",
     "default": "workflows/_templates/ST2_Qwen_Edit.json",
     "text": "workflows/_templates/ST0_Qwen_Text.json",
-    "video": "workflows/_templates/ST6_MiniMax_Video.json",
     "byStage": {"polish": "workflows/_templates/ST4_Qwen_Polish.json"}
   },
   "stageEngines": {"polish": ["qwen"], "final": ["firered"]},
@@ -148,7 +147,7 @@
       "envFirst": ["Signature"],
       "fx": "Magic and spell effects: first render every physical effect realistically, with real-world behaviour and texture - real fire, real smoke, real sparks, dust, spray and mist - then layer the magic on top of it: the same smoke, flames and particles also glow from within with luminous light in the colour of her magic, with bright cores, arcs of energy, glowing runes, strong bloom and a subtle lens flare. A spell forming in her hand is a real, tangible presence (swirling, dense, physical) that is also radiantly lit and vivid, like the visual effects of a big-budget fantasy film. The magic light must visibly illuminate and colour her skin, gown, hair and the surroundings. Keep the person, clothing, skin and environment photographic and lifelike."
     },
-    "minimax": {"template": "workflows/_templates/ST6_MiniMax_Video.json", "turbo": true, "dir": "workflows", "classes": ["scene"]}
+    "minimax": {"templates": {"reel": "workflows/_templates/ST6_MiniMax_Reel.json", "match": "workflows/_templates/ST6_MiniMax_Match.json"}, "format": "reel", "turbo": true, "dir": "workflows", "classes": ["scene"]}
   },
   "stageFolders": {"scene": "scenes"},
   "textGroups": {"sovereign-territories": ["key-art", "plate", "title", "logo", "icon"], "sovereign-dawn": ["card"]},

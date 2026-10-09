@@ -710,7 +710,7 @@ class Angel:
             stem = pathlib.PurePosixPath(art["output"]).stem  # <Hero>_Scene_<Name>
             card = {"animId": anim_id, "kind": "animation", "name": name, "heroArt": self.ident,
                     "source": {"artCard": path.relative_to(ROOT).as_posix(), "image": stem.replace("_Scene_", "_Qwen_Scene_") + "_00001_.png"}, **cfg,
-                    "size": [640, 960], "template": "data/animation/_templates/video-minimax.txt"}
+                    "template": "data/animation/_templates/video-minimax.txt"}
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
             self.made += 1

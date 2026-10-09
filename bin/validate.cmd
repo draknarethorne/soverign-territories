@@ -28,6 +28,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\workflows\test_video_templates.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\workflows\test_cli_surface.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1

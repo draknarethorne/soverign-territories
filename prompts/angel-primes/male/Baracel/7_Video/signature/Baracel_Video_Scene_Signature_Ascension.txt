@@ -1,6 +1,6 @@
 === Baracel Stonehaven · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
 Source image: Baracel_Qwen_Scene_Signature_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------
@@ -8,7 +8,7 @@ prompt:
 
 Live-action cinematic fantasy film footage: photorealistic skin, hair and fabric with natural movement, fine film grain, shallow depth of field, soft cinematic lighting.
 
-Scene: The first frame shows Baracel Stonehaven, wearing a molded bronze muscle cuirass over a Deep Sienna linen tunic with leather pteruges at the waist and, in a sandstone canyon at golden hour, tall ochre rock walls with layered strata; an ancient tortoise with a huge moss-covered shell studded with small glowing crystals and slow, wise eyes.
+Scene: The first frame shows Baracel Stonehaven, wearing a light bronze breastplate moulded to the torso over a Deep Sienna tunic, in a sandstone canyon at golden hour, tall ochre rock walls with layered strata; an ancient tortoise with a huge moss-covered shell studded with small glowing crystals and slow, wise eyes.
 
 Timeline:
 [0s-2.5s] Motion: Stones and loose earth lift from the ground and orbit slowly around his as dust drifts off them; at the same time, great shafts of light slide slowly across the scene through breaks in the clouds, catching mist and dust as they sweep.

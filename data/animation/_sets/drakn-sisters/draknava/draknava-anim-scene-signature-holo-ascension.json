@@ -28,10 +28,6 @@
       "transition": "settle"
     }
   ],
-  "size": [
-    640,
-    960
-  ],
   "template": "data/animation/_templates/video-minimax.txt",
   "notes": "The Holo edition in motion: her ascended moment with the dragon and the world moving around her."
 }

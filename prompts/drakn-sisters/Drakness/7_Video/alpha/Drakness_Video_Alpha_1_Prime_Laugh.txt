@@ -1,6 +1,6 @@
 === Drakness Thorne · Video: Laugh (group: Video) — MiniMax H3 image-to-video ===
 Source image: Drakness_Qwen_X_Pose_00142_.png
-Size: 640x960
+Format: reel
 Length: 7
 
 ----------------------------------------------------------------

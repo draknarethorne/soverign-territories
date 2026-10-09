@@ -21,6 +21,7 @@ import gen_prompt  # noqa: E402
 
 CARDS = ROOT / "data" / "animation" / "_sets"
 DEFAULT_CAMERA = "data/animation/cameras/follow-pan.json"
+DEFAULT_FORMAT = "reel"  # reel = 9:16 for Facebook; match = keep the source image's own shape (see workflows/_templates/ST6_MiniMax_*.json)
 DEFAULT_WORLD = ("Everything in the scene is alive, not only her: whatever is in the setting moves naturally - flames, candles, smoke, mist, "
                  "water, foliage, banners, birds and creatures - while cloth and hair respond to the air.")
 DEFAULT_CONSTRAINTS = ("Keep her face, hair, outfit, body proportions and the setting exactly as in the first frame; "
@@ -191,11 +192,10 @@ def generate(card_path):
     card["output"] = output_path(card, toks)
     look = load(card["look"])
     tl, total, motion_audio = timeline(card, toks)
-    width, height = card.get("size", [640, 960])
     values = {
         "HERO": toks["HERO"], "NAME": card["name"],
         "SOURCE_IMAGE": card.get("source", {}).get("image", "(choose the image to animate)"),
-        "WIDTH": str(width), "HEIGHT": str(height), "SECONDS": f"{total:g}",
+        "FORMAT": card.get("format", DEFAULT_FORMAT), "SECONDS": f"{total:g}",
         "LOOK": fill(look["description"], toks), "SUBJECT": subject(card, toks, art_toks), "TIMELINE": tl,
         "CAMERA": camera_text(card, toks), "WORLD": world_text(card, toks, art_toks),
         "AUDIO": card.get("audio") or "; ".join(motion_audio) or "soft ambient score, no speech",

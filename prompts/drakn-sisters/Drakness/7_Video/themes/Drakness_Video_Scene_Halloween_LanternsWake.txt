@@ -1,6 +1,6 @@
 === Drakness Thorne · Video: LanternsWake (group: Video) — MiniMax H3 image-to-video ===
 Source image: Drakness_Qwen_Scene_Halloween_00001_.png
-Size: 640x960
+Format: reel
 Length: 7
 
 ----------------------------------------------------------------

@@ -1,6 +1,6 @@
 # MiniMax H3 video templates: what we have, what ComfyUI ships now, and what to do
 
-Analysis of Oct 9, 2026. Sources: our template `workflows/_templates/ST6_MiniMax_Video.json`; ComfyUI's current templates `video_minimax_h3_i2v` (the "iv2" you just saved to `ComfyUI-Installs/ComfyUI/ComfyUI/user/default/workflows/`) and `video_minimax_h3_r2v` (the "rv2"); the node source in `ComfyUI/comfy_extras/nodes_minimax_h3.py` and `nodes_resolution.py`.
+Analysis of Oct 9, 2026. Sources: our former template `workflows/_archive/ST6_MiniMax_Video_legacy.json`; ComfyUI's current templates `video_minimax_h3_i2v` (the "iv2" you just saved to `ComfyUI-Installs/ComfyUI/ComfyUI/user/default/workflows/`) and `video_minimax_h3_r2v` (the "rv2"); the node source in `ComfyUI/comfy_extras/nodes_minimax_h3.py` and `nodes_resolution.py`.
 
 ## Which is which
 
@@ -44,26 +44,34 @@ Candidate sizes that keep the still's aspect (all multiples of 32):
 | 928x1088 | 0.853 | 1.01 | closest to 0.855, about the "official 768p" pixel count (1344x768 = 1.03 MP) |
 | 960x1120 | 0.857 | 1.08 | largest of the four |
 
-## Options
+## What we built (Oct 9, you delegated V1 to V5; the clips are for Facebook reels)
+
+Facebook reels are **9:16** (1080x1920 at best), which the 0.855 stills are not, so one size cannot serve both a reel and a clip that keeps the whole picture. There are two templates, built from our own template (same subgraph, same installed models) by `tools/workflows/video_templates.py`, which also checks every link. The old template is archived as `workflows/_archive/ST6_MiniMax_Video_legacy.json`.
+
+| Template | Canvas | How | When |
+| --- | --- | --- | --- |
+| `ST6_MiniMax_Reel` (default) | 640x1152 (9:16, 0.7 MP, steps of 32) | a Resolution Selector sets width and height; a Scale Image node cover-crops the still to that canvas (centre), so nothing is stretched | Facebook reels and feeds |
+| `ST6_MiniMax_Match` | 928x1088 for a 944x1104 still | Scale Image to Total Pixels (lanczos, 0.95 MP, step 32) feeds the first frame and, through Get Image Size, the width and height | cut-scenes, the title and key-art clips, anything that keeps the whole picture |
+
+| ID | Decision |
+| --- | --- |
+| V1 | Option C in spirit, our template as the base (the iv2's subgraph is the same); the helper chain is used for `Match`, the selector for `Reel` |
+| V2 | 0.95 MP for `Match` (928x1088); 0.7 MP for `Reel` (640x1152, about the size the 8-step turbo model handles comfortably; upscale for posting) |
+| V3 | 8 s default; the card's own length (the sum of its actions, 7 to 9 s) replaces it, never below 5 s |
+| V4 | Turbo on in both (this machine), off for a slower, better run |
+| V5 | No int8 VAE download needed: both templates keep the installed fp16 video VAE |
+
+A card chooses with `"format": "reel" | "match"` (default `reel`); the prompt header shows `Format:`. The card `size` field is retired. Caveat: a 9:16 crop of a 944x1104 still drops about a third of the width (the centre is kept), so for reels frame the hero centrally, or later outpaint the stills to 9:16.
+
+## Options considered
 
 | Option | What it is | Good | Costs |
 | --- | --- | --- | --- |
 | A | Keep ST6, add the auto-size chain (LoadImage, scale to total pixels with step 32, get size, width and height) | one change, size follows every still, no distortion | keeps the older template and VAE |
 | B | Adopt iv2 as it is and teach `make` to set the selector | the shipped template, notes and exposure | selector has no 0.855, so distortion stays; needs the int8 VAE |
-| **C (recommended)** | Adopt iv2 as the new ST6 base (its exposure, notes and int8 VAE once installed), delete the `ResolutionSelector`, connect the helper chain, keep our turbo and defaults | friendly outer node and the right size for our stills | one template rebuild and a `set_video` change |
+| C | Adopt iv2 as the new ST6 base, delete the `ResolutionSelector`, connect the helper chain, keep our turbo and defaults | friendly outer node and the right size for our stills | one template rebuild and a `set_video` change |
 
-With C, `make` stops writing width and height (the image decides) and instead sets the megapixels (a card field, default 0.95, so 928x1088 for our stills), the seconds (the card's total) and turbo. The card `size` field would be retired or kept only for non-portrait experiments.
-
-## Decisions for you
-
-| ID | Question | Recommendation |
-| --- | --- | --- |
-| V1 | Which option (A, B or C)? | C |
-| V2 | Default megapixels (cost against detail) | 0.95, which gives 928x1088 for our stills (0.853, the closest to the still's 0.855); 0.9 gives 896x1056; 0.8 gives 832x992 for drafts |
-| V3 | Default length | what each card's beats add up to (7 to 9 s today), never below 5 s |
-| V4 | Turbo LoRA (8 steps) default | on for drafts, off for finals |
-| V5 | Download the int8 video VAE? | yes, if you adopt C (smaller and the new templates expect it) |
-
+`make` no longer writes width and height (the template's size nodes decide, and a wired input is left alone); it still sets the seconds (the card's total) and turbo.
 ## The rv2 and the multi-image phase
 
 The reference-to-video template takes several reference images (two in the sample) and a prompt, with its own model (`ref2va`, installed) and a 4-step turbo LoRA (v0.1, installed). That is the "background, bare skin, armor and weapon as separate images" idea of the next art phase (plan Phase 3.8), done directly in video. Worth a test later, after the still pipeline is settled; nothing to build now.

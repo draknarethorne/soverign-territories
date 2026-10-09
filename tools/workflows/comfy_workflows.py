@@ -558,13 +558,29 @@ def set_turbo(wf, on):
                 node["widgets_values"][0] = on
 
 
+def video_format(prompt_text):
+    m = re.search(r"^Format:\s*(\w+)", prompt_text, re.M)
+    return m.group(1).lower() if m else None
+
+
+def video_template(cfg, prompt_text):
+    """The MiniMax master for a video prompt: its 'Format:' header picks one of engines.minimax.templates (reel = 9:16 for Facebook, match = the still's own shape)."""
+    mm = cfg["engines"]["minimax"]
+    fmt = video_format(prompt_text) or mm.get("format", "reel")
+    if fmt not in mm["templates"]:
+        sys.exit(f"Unknown video format '{fmt}'. Known: {list(mm['templates'])}")
+    return mm["templates"][fmt]
+
+
 def set_video(wf, prompt_text, engine_cfg):
-    """Apply a video prompt's header (Size, Length) and the engine's turbo setting to a MiniMax workflow; return the source image name."""
+    """Apply a video prompt's header (Length, Source image) and the engine's turbo setting to a MiniMax workflow; return the source image name.
+    The canvas size is not set here: the template's own size nodes derive it from the still (a width or height that is wired is left alone)."""
     n = prompt_node(wf)
     named = n.get("widgets_values_named") or {}
     names = list(named)
+    wired = {i["name"] for i in n.get("inputs", []) if i.get("link") is not None}
     def put(key, val):
-        if key in named:
+        if key in named and key not in wired:
             n["widgets_values"][names.index(key)] = val
             named[key] = val
     size = re.search(r"^Size:\s*(\d+)x(\d+)", prompt_text, re.M)
@@ -1511,7 +1527,8 @@ def cmd_make(args):
             continue
         is_apose = it["stage"] == "alpha" and not it["family"]  # Alpha 1 Prime: the only workflow that takes the hero's source photo
         is_text = is_text_item(cfg, it)
-        master = ROOT / (cfg["engines"][it["engine"]]["template"] if it["engine"] in ("firered", "minimax")
+        master = ROOT / (video_template(cfg, it["path"].read_text(encoding="utf-8")) if it["engine"] == "minimax"
+                         else cfg["engines"][it["engine"]]["template"] if it["engine"] == "firered"
                          else cfg["templates"].get("byStage", {}).get(it["stage"]) or cfg["templates"]["text" if is_text else "poses" if is_apose else "default"])
         if not master.exists():
             sys.exit(f"Master template not found: {master}")

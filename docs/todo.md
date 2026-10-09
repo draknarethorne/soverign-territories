@@ -127,8 +127,14 @@ From [2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md).
 **Phase 7: image and video sizes (added Oct 9, you raised it)**
 
 - [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
-- [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1 MP to 1.042176 MP (4% more pixels); harmless, and brand plates are set by their own prompts.
-- [ ] 7.5 **Video size and duration (D11, open).** What exists: each animation card has a `size` (default 640x960, 2:3) and its length is the sum of its beats (66 cards 8 s, 24 cards 7.5 s, 9 cards 7 s, 2 cards 9 s); the ...
+- [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and ...
+- [ ] 7.5 Video size and duration moved to Phase 8 (built; try the two templates).
+
+**Phase 8: video (added Oct 9, you raised it; the new iv2 template)**
+
+- [ ] 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo ...
+- [ ] 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
+- [ ] 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred.
 
 ## Notes
 

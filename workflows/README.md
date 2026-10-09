@@ -99,7 +99,8 @@ All workspaces that share an output project folder (see Where files live) write 
 | `ST3_Flux_Final` | Flux final | none |
 | `ST4_Qwen_Polish` | Qwen polish (int8) | none |
 | `ST4_Flux_Polish` | Flux polish | none |
-| `ST6_MiniMax_Video` | MiniMax H3 image to video (portrait, turbo) | `engines.minimax.template` |
+| `ST6_MiniMax_Reel` | MiniMax H3 image to video, 9:16 for Facebook reels (640x1152, still cover-cropped, 8 s, turbo) | `engines.minimax.templates.reel` (the default format) |
+| `ST6_MiniMax_Match` | the same, the video keeps the still's shape (944x1104 gives 928x1088) | `engines.minimax.templates.match` |
 
 ### FireRed test engine (not in git)
 
@@ -204,7 +205,7 @@ python tools/workflows/comfy_workflows.py inputs reset --hero Draknara --dry-run
 
 Stills keep the standard size (`standardSize` in `workspaces.json`, 944x1104) until the final upscale. Qwen snaps 944x1104 to itself (`FluxKontextImageScale`); FireRed and Flux rescale to a total number of pixels. ComfyUI counts a megapixel as 1024 x 1024, so the old value 1.0 turned 944x1104 into 947x1107; it is now 0.993896, which gives exactly 944x1104.
 `python tools/workflows/align_templates.py --apply` sets that in the repo templates, `make` applies it to every edit workflow it builds or refreshes, and `deploy` applies it to the workflows a workspace holds (prompt, seed and input untouched, a backup first).
-`tools/workflows/test_templates.py` fails if a template pulled back from a workspace undoes it. Text-to-image templates (1024x1280, 4:5) take their size from each prompt's `Size:` line, and video size and length come from each animation card (plan Phase 7.5).
+`tools/workflows/test_templates.py` fails if a template pulled back from a workspace undoes it. Text-to-image templates (1024x1280, 4:5) take their size from each prompt's `Size:` line. Video clips are sized by the `ST6_MiniMax_Reel` and `ST6_MiniMax_Match` templates themselves (the card's `format` picks one; see [docs/art/tutorial-video.md](../docs/art/tutorial-video.md)), and their length comes from the animation card.
 
 ### Denoise defaults
 

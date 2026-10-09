@@ -15,7 +15,7 @@ finished image (art card or any picture) + a list of actions --(animation card)-
 
 You write a card that lists what should happen, in order. The generator turns each action into its own timed block, joins them
 with transitions, adds a short summary of the image so the model knows what it is looking at, and writes a prompt. The workflow
-tool puts that prompt (and the size and length) into the `ST6_MiniMax_Video` template.
+tool puts that prompt (and the length) into one of the two `ST6_MiniMax_*` templates, chosen by the card's `format`.
 
 | File | Where | What it is |
 | --- | --- | --- |
@@ -105,7 +105,6 @@ and adds the magic the still left out:
   },
   "look": "data/animation/looks/cinematic-photoreal.json",
   "audio": "a low, rising shimmer, a soft swell of energy, then a gentle chime; no speech",
-  "size": [640, 960],
   "template": "data/animation/_templates/video-minimax.txt",
   "actions": [
     { "motion": "data/animation/motions/magic/eyes-glow.json" },
@@ -173,7 +172,6 @@ When there is no art card (a photo, an image from elsewhere), describe the first
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "source": { "describe": "{{HERO}} on a rooftop at sunset in a long black coat, hair blowing in the wind", "image": "rooftop_photo.png" },
   "look": "data/animation/looks/cinematic-photoreal.json",
-  "size": [640, 960],
   "template": "data/animation/_templates/video-minimax.txt",
   "actions": [ "{{She}} turns toward the camera and lifts a hand in a slow wave.", { "motion": "data/animation/motions/candid/hair-toss.json" } ]
 }
@@ -183,13 +181,24 @@ When there is no art card (a photo, an image from elsewhere), describe the first
 needs a `heroArt`, which supplies pronouns and colour tokens and decides where the files are filed, so pick the closest hero.
 Keep the description short: the video model sees the image, so you are only orienting it.
 
-## Size, length and what this machine can do
+## Format, length and what this machine can do
 
-- Cards default to **640×960 portrait** (2:3, the shape of our art) and the workflow runs in **turbo** (8-step LoRA), which is what
-  this machine can manage. The examples run 7 to 9 seconds. Length is the sum of the actions; change it by adding or
-  trimming actions, or by editing the length value in the workflow.
-- Size and length are applied when a workflow is **created**. Changing them in a card later does not rewrite a workflow you
-  already have; delete it (or `fork` it) and run `make --create` again.
+The video model **stretches** the first frame to whatever size it is given, so the templates size the still themselves and nothing is squeezed. A card picks one with an optional `"format"` (the prompt header shows it as `Format:`):
+
+| `format` | Template | Canvas | Use for |
+| --- | --- | --- | --- |
+| `reel` (default) | `ST6_MiniMax_Reel` | 9:16, 640x1152 (0.7 MP, steps of 32); the still is **cover-cropped** to it | Facebook reels and feeds |
+| `match` | `ST6_MiniMax_Match` | the still's own shape, scaled to 0.95 MP in steps of 32 (a 944x1104 still gives 928x1088) | a clip that keeps the whole picture: cut-scenes, the title and key-art clips |
+
+- A reel crops about a third off the width of a 944x1104 still (it keeps the centre), so frame the hero centrally, or use `match`.
+  The size is set in the template, not in the card; there is no `size` any more. To change the canvas, edit the template's
+  Resolution Selector (reel) or Scale Image to Total Pixels (match) node; `tools/workflows/video_templates.py` rebuilds both
+  from the archived legacy template if you want the defaults regenerated.
+- Both run **turbo** (the 8-step LoRA) for **8 seconds** by default; the length of a card is the sum of its actions (7 to 9 s in
+  the examples), and the workflow takes that value. Turn turbo off in the workflow for a slower, higher-quality run.
+- Length and format are applied when a workflow is **created**. Changing them in a card later does not rewrite a workflow you
+  already have; delete it (or `fork` it) and run `make --engine minimax --create` again.
+- Game animation (animated cards, PNG sequences in Unity) is a separate, later approach; these templates are for reels and cut-scenes.
 - The model also makes audio. Use the `audio` line (or the motions' audio) to say what you want, and `no speech` if you do not.
 
 ## Hand tuning without losing it

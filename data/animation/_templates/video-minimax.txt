@@ -1,6 +1,6 @@
 === {{HERO}} · Video: {{NAME}} (group: Video) — MiniMax H3 image-to-video ===
 Source image: {{SOURCE_IMAGE}}
-Size: {{WIDTH}}x{{HEIGHT}}
+Format: {{FORMAT}}
 Length: {{SECONDS}}
 
 ----------------------------------------------------------------

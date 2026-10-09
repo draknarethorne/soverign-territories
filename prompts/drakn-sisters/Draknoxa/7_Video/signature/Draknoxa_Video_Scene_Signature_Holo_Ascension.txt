@@ -1,6 +1,6 @@
 === Draknoxa Thorne · Video: Ascension (group: Video) — MiniMax H3 image-to-video ===
 Source image: Draknoxa_Qwen_Scene_Signature_Holo_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------

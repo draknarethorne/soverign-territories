@@ -1,6 +1,6 @@
 === Drakness Thorne · Video: KissTossLaugh (group: Video) — MiniMax H3 image-to-video ===
 Source image: Drakness_FireRed_Scene_Glamour_00003_.png
-Size: 640x960
+Format: reel
 Length: 9
 
 ----------------------------------------------------------------

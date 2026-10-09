@@ -22,7 +22,7 @@ The raw brain-dump this came from is kept word for word at the end.
 | Fold `tidy`, `finals sort`, `finals reclassify` into one `tidy`, `list` into `status`, `--class` into `--stage` | later (6.3b) |
 | Watch the size of `assets/art`; decide Git LFS only if it grows | you, as finals appear |
 | Several input images per workflow (backgrounds, wardrobe, weapons as separate images) | deferred to the next art phase (3.8) |
-| Confirm a FireRed render comes out 944x1104 (7.3); answer V1 to V5 for the video template (Phase 8, D11) | you |
+| Confirm a FireRed render comes out 944x1104 (7.3); try one clip from each video template (8.5) | you |
 | Run `finals record`, `finals images` and `todo` after you promote your first finals | whenever you have finals |
 
 ## The six threads
@@ -71,7 +71,7 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 | D8 | Phase 3: where do a final's seed and denoise live? | In the art data, a small generated file per set that you can also edit | Decided (Oct 9): in the art data (`data/art/finals/<set>.json`), generated from the finals, hand-editable; `make` applies it |
 | D9 | Phase 3: does a final's image feed the workflows after it? | Yes, as a default you choose, never forced | Decided (Oct 9), **refined later the same day**: a final can be the default source of an input role, but only when you choose it; any workflow may take any image (or several) instead. See 3.4 |
 | D10 | Phase 4: which cards does the todo table list? | All 52 plus the alpha test heroes | Decided (Oct 9): 22 angels, 10 sisters, 10 bound men, 10 dragons and the two alpha heroes, each with the slots it really has |
-| D11 | Video size and duration (added Oct 9, you raised it) | See the analysis and V1 to V5 in `docs/art/minimax-h3-video-templates.md` | Open: waiting for V1 to V5 |
+| D11 | Video size and duration (added Oct 9, you raised it) | Two templates: `ST6_MiniMax_Reel` (9:16, the default, for Facebook reels) and `ST6_MiniMax_Match` (the still's shape), picked by the card's `format`; 8 s, turbo on, fp16 VAE | Decided (you delegated it); you try them (8.5) |
 
 ### Phase 1: source photos and picks (you, existing tools)
 
@@ -189,18 +189,19 @@ Stills should keep the standard size (`workspaces.json` `standardSize`, 944x1104
   `test_templates.py` fails if a template pulled back from a workspace undoes it (then run `align_templates.py --apply`).
 - [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
 - [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and brand plates are set by their own prompts.
-- [ ] 7.5 Video size and duration moved to Phase 8 (analysis done; decisions V1 to V5 open).
+- [ ] 7.5 Video size and duration moved to Phase 8 (built; try the two templates).
 
 ### Phase 8: video (added Oct 9, you raised it; the new iv2 template)
 
-Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-templates.md). In short: our `ST6_MiniMax_Video` is the older image-to-video template, not the r2v; the iv2 you saved is its newer version.
+Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-templates.md). In short: our old `ST6_MiniMax_Video` was the older image-to-video template, not the r2v; the iv2 you saved is its newer version. The old one is archived as `workflows/_archive/ST6_MiniMax_Video_legacy.json`.
 
 - [x] 8.1 Analysis (Oct 9): ST6 against iv2 (a `ResolutionSelector`, landscape 1344x768 and 5 s defaults, turbo off, the int8 video VAE which is not installed, a cleaner outer node, notes, and two unconnected helper nodes that could read the size from the image); the node source for the constraints; the r2v for later.
-- [x] 8.2 The finding that matters: `MiniMaxH3ImageToVideo` takes sizes in steps of 32 and **stretches the first frame to the canvas**. Our default 640x960 (2:3) against 944x1104 stills (0.855) squeezes the picture by about 22%. `ResolutionSelector` has no aspect near 0.855 (nearest 3:4 = 12% off). Our 944x1104 is not a multiple of 32, so the video needs its own size: 928x1088 (0.853) at 0.95 MP, or 896x1056 at 0.9 MP, read from the still by the helper chain.
-- [ ] 8.3 Decide V1 to V5 (option A, B or C and the defaults for megapixels, length, turbo, VAE). Recommended: C, which adopts iv2 as the new ST6 base, deletes the selector, connects the size chain, keeps turbo and our defaults.
-- [ ] 8.4 Build the decision: new `ST6` from iv2, `set_video` sets megapixels, seconds and turbo instead of width and height, the card `size` field retired, a test that a 944x1104 still gives 928x1088, `align`-style check in `test_templates.py`.
-- [ ] 8.5 Render one clip and check it is not squeezed; then regenerate the video workflows (`make --engine minimax`) and deploy.
+- [x] 8.2 The finding that matters: `MiniMaxH3ImageToVideo` takes sizes in steps of 32 and **stretches the first frame to the canvas**. Our default 640x960 (2:3) against 944x1104 stills (0.855) squeezed the picture by about 22%. `ResolutionSelector` has no aspect near 0.855 (nearest 3:4 = 12% off). Our 944x1104 is not a multiple of 32, so a clip that keeps the still's shape needs its own size: 928x1088 (0.853) at 0.95 MP.
+- [x] 8.3 Decided (you delegated it; the videos are for Facebook reels): two templates instead of one, picked by the card's `format`. `ST6_MiniMax_Reel` (default): 9:16, 640x1152, the still cover-cropped to it. `ST6_MiniMax_Match`: the still's shape, 928x1088 for a 944x1104 still. Both: 8 s, turbo on, the video VAE we have installed (fp16). The iv2's int8 video VAE is not needed.
+- [x] 8.4 Built: `tools/workflows/video_templates.py` (builds both from the legacy template and checks the links), `video_template()` and `set_video` in `comfy_workflows.py` (a wired width or height is left alone), a `Format:` header in the video prompts, the card `size` field retired (the title and key-art clips use `"format": "match"`), `tools/workflows/test_video_templates.py`. All 102 video prompts and workflows regenerated and deployed over the existing ones in the four workspaces that hold them (the two stale `X_Pose` Drakness copies in the repo were dropped; the workspaces still have them under `7_Video/poses`).
+- [ ] 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the crop.
 - [ ] 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
+- [ ] 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred.
 
 ## The daily pattern (my view)
 

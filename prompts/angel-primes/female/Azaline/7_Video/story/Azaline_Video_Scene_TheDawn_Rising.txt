@@ -1,6 +1,6 @@
 === Azaline Rimeward · Video: Rising (group: Video) — MiniMax H3 image-to-video ===
 Source image: Azaline_Qwen_Scene_TheDawn_00001_.png
-Size: 640x960
+Format: reel
 Length: 8
 
 ----------------------------------------------------------------

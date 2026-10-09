@@ -39,9 +39,5 @@
     }
   ],
   "notes": "The signature scene in motion: wings, element light and the bonded pet.",
-  "size": [
-    640,
-    960
-  ],
   "template": "data/animation/_templates/video-minimax.txt"
 }
