@@ -120,11 +120,12 @@
   alongside `class`, `creatureType`, `race`, `sex`, and `companion`.
 - **Thorne naming is canonical** for the Drakn bloodline (the ten heroines + Draknare Thorne).
   Other heroes use names fitting their role/origin. `SD-###` collection numbers are adjustable.
-- **Staged element rollout (revised Oct 2026; supersedes "all 10 elements from launch").** All ten
-  elements are *designed* and their art pipeline is proven, but they release in stages: **Grass,
-  Fire, Water** first (MVP), with **Darkness + Light** either folded into the first public push
-  (five elements) or following as the first expansion; the remaining elements arrive in later
-  expansions in an order driven by the story. Balance is still held by the symmetric per-element
+- **Staged element rollout (revised Oct 9, 2026; supersedes "Grass, Fire, Water first").** All ten
+  elements are *designed* and their art pipeline is proven, but they release in stages: the **MVP is
+  Darkness and Light only** (a small playable beta, the first quests are about the two), the **next
+  cycle is Fire, Grass, Water and Earth** (added for the real release), and Ice, Lightning, Wind and
+  Poison follow in an order driven by the story. Scaling the MVP to two elements follows from how much work a
+  full element is (the sisters and angels showed it). Balance is still held by the symmetric per-element
   template (see the blueprint below) -- it now describes one element's worth of content, repeated per
   release. Real expansions also arrive later as new *themes*.
 - **Card taxonomy** — card `type` is a **mechanical role** with six values today

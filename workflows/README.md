@@ -220,7 +220,7 @@ A shot is not a curated workflow: curated ones are the older hand-written workfl
 | `zz_Candidates` | A generated workflow kept for a render with only small changes (seed, denoise, input image, Turbo, toggles). Every numbered save is one. Provisional | `workflows/_candidates/<set>/<Hero>/<phase>/` |
 | `zz_Shots` | Started from a generated prompt, then edited more heavily (may carry explicit wording). Different from a candidate | `workflows/_shots/<set>/<Hero>/` |
 | `zz_Curated` | The older originals, or hand-written from scratch | `workflows/_curated/` |
-| `zz_Final` | The candidate or shot you chose: one per slot (hero, engine and stage; photo, Prime, Bare and golden pose first). Holds the seed, denoise and input | `workflows/_final/<set>/<Hero>/<phase>/` |
+| `zz_Final` | The candidate or shot you chose, **from any stage** (Prime, Bare, a scene, a theme ...): one per hero, engine and stage. Holds the seed, denoise and input | `workflows/_final/<set>/<Hero>/<phase>/` |
 
 All of them are hand-made, so `deploy`, `cleanup`, `tidy` and `denoise --reset` never touch them. They are arranged like the main tree (`zz_Final/female/Remiah/1_Alpha/1_Prime/...`), and **the file name decides where a file belongs**, so a save in the wrong place is fine:
 
@@ -239,7 +239,9 @@ python tools/workflows/comfy_workflows.py finals reclassify --apply             
 - **Nothing is deleted.** An identical duplicate goes to `workflows/.sync/backup/`; a different file at the same place is reported as a `CONFLICT` and left alone.
 - **What cannot be placed is left exactly where it is** (never moved to another folder) and is listed as `not placeable`. The same applies in the repo, and to `zz_Curated`, which is not rearranged. A shot you saved into a subfolder of your own stays there; one saved straight into `zz_Shots` is filed by phase, keeping its name.
 - **`finals reclassify`** does the same for what is already in git: numbered saves at the top of a hero's `_shots` folder were candidates and move to `_candidates`, and everything is moved to its proper path. Run it, then `pull` and `setup` a few times, and the repo and the workspaces converge on one structure.
-- `finals.slots` in `workspaces.json` (optional) sets which stages count as a slot; the default is Prime (`Alpha_1_Prime`, `X_Pose`), Bare (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Skin`) and golden pose (`Alpha_3_Barefoot`).
+- **A final keeps its image.** `pull` (or `finals images --apply`) copies the render a final was saved from (`<output project>/<SaveImage prefix>_<counter>_.png`) into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`, the prompt-path convention in [data/art/README.md](../data/art/README.md#where-rendered-images-live-convention) with the engine in the name so a Qwen and a FireRed final stay apart. A newer final of the same stage replaces the image (the old one is copied to backup first).
+  **Only finals get an image**: candidates and shots never do. Watch the size with `finals images` (it prints the PNG total of `assets/art`); the convention allows Git LFS or external storage if it grows.
+- `finals.slots` in `workspaces.json` (optional) sets which stages `finals status` lists as slots to fill (any stage can still be a final, and counts as `+N other`); the default is Prime (`Alpha_1_Prime`, `X_Pose`), Bare (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Skin`) and golden pose (`Alpha_3_Barefoot`).
 
 ### Hand-curated workflows
 

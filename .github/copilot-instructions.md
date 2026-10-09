@@ -39,7 +39,8 @@ If a number or rule here disagrees with those docs, the docs win.
   Gameplay and art data never define the same attribute.
 - `cardId` is the stable machine id; `collectionNumber` (`SD-###`) is the human number. Products reference ids or pools,
   never copies of card definitions.
-- 10 elements (Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison, plus Neutral), released in stages.
+- 10 elements (Darkness, Fire, Grass, Ice, Water, Light, Earth, Lightning, Wind, Poison, plus Neutral), released in stages:
+  the MVP is Darkness and Light only; the next cycle is Fire, Grass, Water and Earth (decided Oct 9, 2026).
   8 rarity tiers: Basic 0, Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 16, Mythic 32, Transcendent 64 budget points.
 - Order of change: design rule -> schema -> validator/tooling -> implementation -> tests.
 - After data or art changes run `python tools/validators/validate_data.py`; after validator or schema changes also `python tools/validators/test_validate_data.py` (`--quick` for a short run).

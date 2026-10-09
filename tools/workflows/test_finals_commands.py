@@ -21,8 +21,12 @@ PRIME = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha
 BARE = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/1_Alpha/2_Bare/Alice_Qwen_Alpha_2_Bare_Figure"]}], "id": "master"}
 
 
+SCENE = {"nodes": [{"type": "SaveImage", "widgets_values": ["set-a/Alice/5_Scenes/Alice_Qwen_Scene_Glamour"]}], "id": "master"}
+
+
 def patched(w):
-    return (mock.patch.object(cw, "CANDIDATES", w.repo / "_candidates"), mock.patch.object(cw, "FINALS", w.repo / "_final"), mock.patch.object(cw, "ROOT", w.tmp))
+    return (mock.patch.object(cw, "CANDIDATES", w.repo / "_candidates"), mock.patch.object(cw, "FINALS", w.repo / "_final"), mock.patch.object(cw, "ROOT", w.tmp),
+            mock.patch.object(cw, "ASSETS", w.tmp / "assets" / "art"))
 
 
 def world():
@@ -39,6 +43,8 @@ class FinalsTests(unittest.TestCase):
         self.addCleanup(self.w.__exit__, None, None, None)
         self.w.master("Alice_Qwen_Alpha_1_Prime.json", PRIME)
         self.w.master("Alice_Qwen_Alpha_2_Bare_Figure.json", BARE)
+        self.w.master("Alice_Qwen_Scene_Glamour.json", SCENE)
+        self.w.cfg["paths"] = {"outputRoot": str(self.w.tmp / "out"), "outputFolders": {"set-a": "Proj"}}
         self.d = self.w.dir("A-Home")
 
     def names(self):
@@ -135,6 +141,51 @@ class FinalsTests(unittest.TestCase):
         self.assertEqual(self.names(), ["zz_Final/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00001_.json", "zz_Final/misfiled/Alice_Qwen_Alpha_2_Bare_Figure_00002_.json"])
         self.w.run("finals", "sort", "-w", "A-Home", "--apply")
         self.assertIn("zz_Final/Alice/1_Alpha/2_Bare/Alice_Qwen_Alpha_2_Bare_Figure_00002_.json", self.names())
+
+    def render(self, rel, data):
+        path = self.w.tmp / "out" / "Proj" / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+
+    def test_a_final_of_any_stage_is_allowed_a_scene_counts_as_another_final(self):
+        self.w.put("A-Home", "zz_Candidates/Alice_Qwen_Scene_Glamour_00003_.json", {"nodes": [], "id": "scene"})
+        self.w.run("finals", "promote", "Alice_Qwen_Scene_Glamour_00003", "-w", "A-Home", "--apply")
+        self.assertIn("zz_Final/Alice/5_Scenes/Alice_Qwen_Scene_Glamour_00003_.json", self.names())
+        out, _ = self.w.run("finals", "status", "-w", "A-Home")
+        self.assertIn("+1 other final(s)", out)
+
+    def test_pull_copies_the_render_of_a_final_into_assets_but_never_of_a_candidate_or_shot(self):
+        self.w.master("Alice_Qwen_Alpha_1_Prime.json", PRIME)
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.png", b"final-render")
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00008_.png", b"candidate-render")
+        self.w.put("A-Home", "zz_Final/Alice_Qwen_Alpha_1_Prime_00007_.json", {**PRIME, "id": "f"})
+        self.w.put("A-Home", "zz_Candidates/Alice_Qwen_Alpha_1_Prime_00008_.json", {**PRIME, "id": "c"})
+        out, _ = self.w.run("pull", "-w", "A-Home")
+        image = self.w.tmp / "assets" / "art" / "set-a" / "Alice" / "1_Alpha" / "1_Prime" / "Alice_Qwen_Alpha_1_Prime.png"
+        self.assertEqual(image.read_bytes(), b"final-render")
+        self.assertEqual(len(list((self.w.tmp / "assets").rglob("*.png"))), 1)
+        self.assertIn("final images: 1 copied", out)
+
+    def test_a_new_final_replaces_the_image_and_the_old_one_goes_to_backup(self):
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.png", b"first")
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00009_.png", b"second")
+        self.w.put("A-Home", "zz_Final/Alice_Qwen_Alpha_1_Prime_00007_.json", {**PRIME, "id": "1"})
+        self.w.run("pull", "-w", "A-Home")
+        (self.d / "zz_Final" / "Alice_Qwen_Alpha_1_Prime_00007_.json").unlink()
+        self.w.put("A-Home", "zz_Final/Alice_Qwen_Alpha_1_Prime_00009_.json", {**PRIME, "id": "2"})
+        self.w.run("pull", "-w", "A-Home")
+        image = self.w.tmp / "assets" / "art" / "set-a" / "Alice" / "1_Alpha" / "1_Prime" / "Alice_Qwen_Alpha_1_Prime.png"
+        self.assertEqual(image.read_bytes(), b"second")
+        self.assertEqual([f.read_bytes() for f in (self.w.tmp / "backup").rglob("Alice_Qwen_Alpha_1_Prime.png")], [b"first"])
+
+    def test_images_action_catches_up_on_finals_already_in_the_repo(self):
+        self.render("set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.png", b"img")
+        cw.write_wf(self.w.repo / "_final/set-a/Alice/1_Alpha/1_Prime/Alice_Qwen_Alpha_1_Prime_00007_.json", {**PRIME, "id": "f"})
+        out, _ = self.w.run("finals", "images")
+        self.assertIn("1 to copy", out)
+        self.assertFalse(list((self.w.tmp / "assets").rglob("*.png")))
+        self.w.run("finals", "images", "--apply")
+        self.assertEqual(len(list((self.w.tmp / "assets").rglob("*.png"))), 1)
 
     def test_status_counts_and_slots(self):
         self.w.put("A-Home", "Alice_Qwen_Alpha_1_Prime_00004_.json")

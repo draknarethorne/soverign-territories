@@ -1,6 +1,6 @@
 # 2026-10-09 plan: finals, candidates, source photos and the MVP scope
 
-**Status:** active (agreed Oct 9; D1 is settled, D2 to D6 are asked one at a time and recorded in the table below).
+**Status:** active (agreed Oct 9; decisions D1 to D7 are answered in the table below; Phase 2 and 2c built, Phase 5 docs done, Phase 2b step 2 onward, 3, 4 and 6 open).
 Plans live in `docs/plans/YYYY-MM-DD-<slug>.md`: a tmp draft becomes a plan once we agree to act on it, `docs/STATUS.md` carries one line per active plan, and finished plans stay here marked `done`.
 The raw brain-dump this came from is kept word for word at the end.
 
@@ -41,11 +41,12 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 | ID | Question | Recommendation | Answer |
 | --- | --- | --- | --- |
 | D1 | Folder names and the four-way split above | Settled by your description: `zz_Candidates`, `zz_Shots`, `zz_Curated`, `zz_Final` | Settled (Oct 9) |
-| D2 | Final slots | hero × engine × stage; photo, Prime, Bare, golden pose first | Provisional (Oct 9): recommendation used while the user was away; confirm or change |
-| D3 | Do finals also copy the chosen image into the repo? | The workflow only; images stay in ComfyUI outputs | Provisional (Oct 9): recommendation used while the user was away; confirm or change |
-| D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release | Open: needs the user (which four elements follow Darkness and Light) |
-| D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Open |
-| D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Open |
+| D2 | Final slots | hero x engine x stage; photo, Prime, Bare, golden pose first | Decided (Oct 9): yes, and a final can come from **any** stage (scenes, themes, any workflow) to keep its seed, denoise and input; status lists them as `+N other` |
+| D3 | Do finals also copy the chosen image into the repo? | The workflow only; images stay in ComfyUI outputs | Decided (Oct 9), **changed**: yes, the image of a final is saved into `assets/art/...` automatically (the size will be monitored; Git LFS or external storage is the fallback) |
+| D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release | Decided (Oct 9): Darkness and Light for the MVP; Fire, Grass, Water and Earth are the next cycle |
+| D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Decided (Oct 9): Grass is in the next cycle with Fire, Water and Earth; directions and multipliers stay open in the combat spec |
+| D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Decided (Oct 9): the wording is fine in git; **no images are kept for `zz_Shots`**, only for `zz_Final` (including the Bare) |
+| D7 | Step back on the command line (`comfy_workflows.py` options and `bin\*.cmd`)? | Yes: inventory first, then simplify with old names forwarding | Decided (Oct 9): add it to today's plan (Phase 6); draft in `tmp/2026-10-09-cli-review.md` |
 
 ### Phase 1: source photos and picks (you, existing tools)
 
@@ -80,6 +81,12 @@ Run in this order; each step previews first, and everything is recoverable (git 
 - [ ] 5. `finals status` for each workspace: `not placeable` should list only the files that really have no home; decide those by hand.
 - [ ] 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
 
+### Phase 2c: a final keeps its image (built Oct 9, D3)
+
+- [x] `pull` (or `finals images --apply`) copies the render of every final into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`; a newer final of the same stage replaces it (the old image goes to backup); candidates and shots never get an image (D6). `finals images` also reports the PNG total of `assets/art` for the size watch.
+- [x] A final can be any stage: `promote` and `status` do not limit it to the four slots.
+- [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows.
+
 ### Phase 3: finals feed the art data (later)
 
 - [ ] Read seed, denoise and input from each final workflow and store them per hero, so `make` builds the Qwen and FireRed workflows with them (the README lists this as not built yet).
@@ -91,11 +98,22 @@ Run in this order; each step previews first, and everything is recoverable (git 
 
 ### Phase 5: MVP rescope (docs only; needs your approval before I edit)
 
-- [ ] Confirm D4 and D5.
-- [ ] Rewrite O1 and G1 and the "Next work" list in STATUS; the first quests are about Darkness and Light.
-- [ ] Update the staged-rollout bullet in `sovereign_dawn_codex.md` and the MVP docs; the first combat cycle is just Light and Darkness.
-- [ ] Record the Grass placement so the later cycle is not reopened.
-- [ ] Angels keep going in parallel as the test bed; no full Fire/Grass/Water/Earth deck in the MVP.
+- [x] D4 and D5 confirmed.
+- [x] STATUS: the element decision, O1 (answered), and the "Next work" list now say Darkness and Light first.
+- [x] `sovereign_dawn_codex.md` and `game-bible.md` staged-rollout text, and the `copilot-instructions.md` element line.
+- [x] `combat-calculation-spec.md`: Grass is recorded in the next cycle with Fire, Water and Earth; the MVP only needs the Light and Darkness duality.
+- [ ] `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light.
+- [x] Angels keep going in parallel as the test bed; no full Fire/Grass/Water/Earth deck in the MVP.
+
+### Phase 6: step back on the command line (D7)
+
+The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the question is whether the options and launchers around them are still all needed. Draft with the numbers and proposals: `tmp/2026-10-09-cli-review.md`.
+
+- [x] 6.1 Inventory: 12 sub-commands, 123 long options (the same six filters repeated on six commands), 43 launchers.
+- [ ] 6.2 Review the draft together and answer C1 to C5 (preview-by-default, which launchers you type, one `audit` front door, `inputs` as actions, what `status` shows).
+- [ ] 6.3 Implement the agreed changes one at a time, every old command and option still working and printing what replaces it; parser tests pin each old spelling.
+- [ ] 6.4 Update `bin\help.cmd` and `workflows/README.md` once, at the end, to describe the new surface only.
+- [ ] 6.5 After a few weeks, remove the forwarders you no longer type.
 
 ## The daily pattern (my view)
 

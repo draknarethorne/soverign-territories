@@ -1947,6 +1947,52 @@ def canon_name(parsed):
     return parsed["file_stem"] + (f"_{parsed['counter']}_" if parsed["counter"] else "") + ".json"
 
 
+ASSETS = ROOT / "assets" / "art"
+# The image of a final is kept with it: assets/art/<set>/[<division>/]<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png (the prompt-path convention, with the engine in the name so a Qwen and a FireRed final
+# of one stage stay apart). Only finals get an image: candidates and shots never do.
+
+
+def final_image_source(cfg, wf, counter):
+    """The rendered PNG a final was saved from: <output project>/<SaveImage prefix>_<counter>_.png (or None: no counter in the name, or the render is not on disk)."""
+    s = save_node(wf)
+    if not counter or not s:
+        return None
+    prefix = s["widgets_values"][0]
+    paths = cfg.get("paths", {})
+    project = paths.get("outputFolders", {}).get(prefix.split("/")[0])
+    base = paths.get("outputRoot") or cfg.get("sharedOutput")
+    roots = ([pathlib.Path(base) / project] if base and project else []) + [pathlib.Path(x) for x in (base, cfg.get("sharedOutput")) if x]
+    for r in roots:
+        if (r / f"{prefix}_{counter}_.png").is_file():
+            return r / f"{prefix}_{counter}_.png"
+    return None
+
+
+def final_image_dest(parsed, master_wf):
+    s = save_node(master_wf)
+    return ASSETS / pathlib.PurePosixPath(s["widgets_values"][0]).parent / (parsed["stem"] + ".png") if s else None
+
+
+def capture_final_image(cfg, wf, parsed, master_wf, stamp, dry_run):
+    """Copy the render of a final into assets/art. An image it replaces is copied to backup first. Returns 'copied', 'same', 'no image' or 'no counter'."""
+    src, dst = final_image_source(cfg, wf, parsed["counter"]), final_image_dest(parsed, master_wf)
+    if not parsed["counter"]:
+        return "no counter"
+    if not src or not dst:
+        return "no image"
+    if dst.exists() and dst.stat().st_size == src.stat().st_size and dst.read_bytes() == src.read_bytes():
+        return "same"
+    if not dry_run:
+        if dst.exists():
+            b = BACKUPS / stamp / "assets (replaced)" / dst.relative_to(ASSETS)
+            b.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(dst, b)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+    print(f"  image     {src.name} ({src.stat().st_size // 1024} KB) -> {dst.relative_to(ROOT).as_posix()}" + (" (replaces the earlier image)" if dst.exists() else ""))
+    return "copied"
+
+
 def finals_entries(cfg, ws, root=None):
     """The candidates and finals a workspace holds (those in zz_Candidates and zz_Final, and numbered saves loose in the list), each with where it belongs: want (None = stay put)."""
     d = install_dir(cfg, ws, root)
@@ -2081,13 +2127,17 @@ def finals_promote(cfg, ws, args, stamp):
         print("Preview only: add --apply to promote it.")
 
 
-def finals_pull(cfg, ws, args):
+def finals_pull(cfg, ws, args, stamp=None):
+    stamp = stamp or datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     done = same = 0
+    images = collections.Counter()
     for e in finals_entries(cfg, ws, args.root):
         parsed = e["parsed"]
         if e["kind"] == "shot" or not parsed or (args.hero and parsed["hero"].lower() != args.hero.lower()):
             continue
         dst = (CANDIDATES if e["kind"] == "candidate" else FINALS) / e["group"] / e["hero"] / e["sub"] / canon_name(parsed)
+        if e["kind"] == "final":
+            images[capture_final_image(cfg, read_wf(e["path"]), parsed, read_wf(finals_index(cfg)[parsed["stem"]][2]), stamp, args.dry_run)] += 1
         if dst.exists() and same_workflow(dst, e["path"]):
             same += 1
             continue
@@ -2095,7 +2145,9 @@ def finals_pull(cfg, ws, args):
         if not args.dry_run:
             write_wf(dst, read_wf(e["path"]))
         done += 1
-    print(f"{ws} finals pull: {done} kept in the repo, {same} already there" + (" (dry run)" if args.dry_run else ""))
+    print(f"{ws} finals pull: {done} kept in the repo, {same} already there" + (f"; final images: {images['copied']} copied, {images['same']} already in assets/art"
+          + (f", {images['no image']} render not found" if images["no image"] else "") + (f", {images['no counter']} name has no render counter" if images["no counter"] else "") if sum(images.values()) else "")
+          + (" (dry run)" if args.dry_run else ""))
 
 
 def finals_deploy(cfg, ws, args):
@@ -2150,12 +2202,29 @@ def finals_status(cfg, ws, args):
                 c = marks.get((h, engine), {}).get(stem, collections.Counter())
                 cells.append(f"{label} " + ("FINAL" if c["final"] else f"c{c['candidate']}" if c["candidate"] else "-"))
                 active = active or bool(c["final"] or c["candidate"])
-            if cells and any(not x.endswith(" -") for x in cells):
-                rows.append(f"    {h:12} {engine:8} " + "   ".join(cells))
+            slot_stems = {f"{h}_{engine}_{n}" for names in slots.values() for n in names}
+            other = sum(c["final"] for s, c in marks.get((h, engine), {}).items() if s not in slot_stems)
+            active = active or bool(other)
+            if cells and any(not x.endswith(" -") for x in cells) or other:
+                rows.append(f"    {h:12} {engine:8} " + "   ".join(cells) + (f"   +{other} other final(s)" if other else ""))
         idle += 0 if active else 1
     for r in rows:
         print(r)
     print(f"    {len(heroes)} hero(es) are home here; {idle} have no candidate or final yet (c<N> = candidates kept, FINAL = a final is set, - = none)")
+
+
+def finals_images(cfg, args, stamp):
+    """Copy the render of every final kept in the repo (workflows/_final) into assets/art; preview unless --apply. Run it after `pull`, or to catch up."""
+    heroes, idx = list(hero_groups()), finals_index(cfg)
+    tally = collections.Counter()
+    for p in sorted(FINALS.rglob("*.json")) if FINALS.is_dir() else []:
+        parsed = parse_saved(cfg, p.name, heroes, list(idx))
+        if not parsed or (args.hero and parsed["hero"].lower() != args.hero.lower()):
+            continue
+        tally[capture_final_image(cfg, read_wf(p), parsed, read_wf(idx[parsed["stem"]][2]), stamp, not args.apply)] += 1
+    size = sum(f.stat().st_size for f in ASSETS.rglob("*.png")) if ASSETS.is_dir() else 0
+    print(f"finals images: {tally['copied']} {'copied' if args.apply else 'to copy'}, {tally['same']} already in assets/art, {tally['no image']} render not found, {tally['no counter']} without a render counter; "
+          f"assets/art holds {size / 1024 / 1024:.0f} MB of PNG" + ("" if args.apply else " (preview: add --apply)"))
 
 
 def finals_reclassify(cfg, args, stamp):
@@ -2209,12 +2278,14 @@ def cmd_finals(args):
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     if args.action == "reclassify":
         return finals_reclassify(cfg, args, stamp)
+    if args.action == "images":
+        return finals_images(cfg, args, stamp)
     if args.action == "promote" and not args.name:
         sys.exit("finals promote needs the file name (or part of it) of the candidate or shot, e.g.  finals promote Remiah_Qwen_Alpha_1_Prime_00015 -w \"Angel Primes\" --apply")
     for ws in pick_targets(cfg, args, "all"):
         if not ready_or_skip(cfg, ws, args.root):
             continue
-        {"sort": lambda: finals_sort(cfg, ws, args, stamp), "promote": lambda: finals_promote(cfg, ws, args, stamp), "pull": lambda: finals_pull(cfg, ws, args),
+        {"sort": lambda: finals_sort(cfg, ws, args, stamp), "promote": lambda: finals_promote(cfg, ws, args, stamp), "pull": lambda: finals_pull(cfg, ws, args, stamp),
          "deploy": lambda: finals_deploy(cfg, ws, args), "status": lambda: finals_status(cfg, ws, args)}[args.action]()
     if args.action in ("sort", "deploy", "promote") and not args.apply:
         print("Preview only: add --apply to do it. Reload the ComfyUI workflow list afterwards.")
@@ -2314,9 +2385,9 @@ def main(argv=None):
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("finals")
     common(s, True)
-    s.add_argument("action", choices=["sort", "promote", "status", "pull", "deploy", "reclassify"],
+    s.add_argument("action", choices=["sort", "promote", "status", "pull", "deploy", "reclassify", "images"],
                    help="sort: file candidates and finals where their name says (never deletes); promote: make a candidate or shot the final for its slot; status: candidates, finals and slots per workspace; "
-                        "pull: keep them in the repo (_candidates, _final); deploy: put repo ones a workspace lacks into their folders; reclassify: one-off, move numbered repo shots to _candidates")
+                        "pull: keep them in the repo (_candidates, _final); deploy: put repo ones a workspace lacks into their folders; reclassify: clean the repo with the same rules; images: copy the render of each final into assets/art")
     s.add_argument("name", nargs="?", help="with promote: the file name (or part of it) of the candidate or shot")
     s.add_argument("--hero")
     s.add_argument("--apply", action="store_true", help="really do it (sort, promote, deploy and reclassify preview by default; pull writes unless --dry-run)")

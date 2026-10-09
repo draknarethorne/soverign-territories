@@ -785,14 +785,13 @@ are released in stages, introduced the way long-running TCGs add new types over 
 
 | Release | Elements | Notes |
 | --- | --- | --- |
-| MVP / first playable | **Grass, Fire, Water** | The classic trio; the minimum for a meaningful starter deck. |
-| First public push *(preferred)* | Grass, Fire, Water **+ Darkness, Light** | Five elements make the first public release more interesting; chosen if a complete card set per element is achievable. |
-| Expansion 1 *(if the MVP ships as three)* | Darkness, Light | Follows quickly after the trio. |
-| Later expansions | Earth, Ice, Lightning, Wind, Poison | Order and grouping TBD, driven by the Sundering storyline as it is written. |
+| MVP / first playable *(decided Oct 9, 2026)* | **Darkness, Light** | A small playable beta to test the whole flow with friends; the first quests are about the two. |
+| Next cycle: the real release | **Fire, Grass, Water, Earth** | Added with the release so it opens with enough variety; Grass joins the Fire/Water/Earth primal group. |
+| Later expansions | Ice, Lightning, Wind, Poison | Order and grouping TBD, driven by the Sundering storyline as it is written. |
 
-Which of the two first-release shapes (3 vs 5) ships depends on how much work a complete, balanced
-card set per element turns out to be. The art pipeline already supports all ten elements, so
-this is a content-and-balance decision, not an art constraint. True **expansions** may also
+The MVP is scaled to two elements because a complete, balanced card set for even one element is a lot of work (the sisters and
+angels showed it). The art pipeline already supports all ten elements, so this is a content-and-balance decision, not an art
+constraint. True **expansions** may also
 introduce new themes (Storm Rising, Valhalla, Cyber Dominion), **new card types and mechanics**.
 
 **Ideas on the horizon** *(vision, unscheduled)*:

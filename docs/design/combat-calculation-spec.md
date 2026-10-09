@@ -102,9 +102,9 @@ The current design intent groups the ten elements into strength/weakness relatio
 
 **Open decisions before this becomes canonical**:
 
-1. **Grass placement.** Grass is not yet in a cycle. Recommended option: fold Grass into the
-   primal group to form a **Fire → Grass → Water → Earth → Fire** four-cycle (cleanly
-   covering all four), or pair it opposite another element.
+1. **Grass placement.** *Decided Oct 9, 2026:* Grass joins Fire, Water and Earth as the **next cycle** after the MVP
+   (the MVP is Darkness and Light only). The recommended shape is a **Fire → Grass → Water → Earth → Fire** four-cycle;
+   the directions and multipliers below are still open.
 2. **Direction of the primal cycle.** Confirm who beats whom (e.g., Water > Fire > Earth >
    Water) and the exact multiplier (1.25× vs 1.5×).
 3. **Structure of the storm group.** Confirm whether Ice/Lightning/Wind/Poison is a single
@@ -112,7 +112,8 @@ The current design intent groups the ten elements into strength/weakness relatio
 4. **Neutral behavior.** Confirm Neutral deals/receives normal damage to all elements.
 
 Until these are decided and the card set is rebalanced, MVP combat treats elements as
-identity only.
+identity only. The MVP element set is Darkness and Light, so the only matchup it needs is the
+Light ⟷ Darkness duality; the primal cycle is decided with the next cycle (Fire, Grass, Water, Earth).
 
 ## Data and implementation notes
 

@@ -24,7 +24,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 
 | Plan | Summary |
 | --- | --- |
-| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. Built: the `finals` command (sort, promote, status, pull, deploy, reclassify); next: converge the repo and workspaces (Phase 2b), then your photo and Prime/Bare picks. |
+| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. Built: the `finals` command (any stage can be a final; its image is saved into `assets/art`); the MVP is rescoped to Darkness and Light (decided Oct 9). Next: converge the repo and workspaces (Phase 2b), your photo and Prime/Bare picks, and a step back on the command-line surface (Phase 6). |
 
 ## Decisions made
 
@@ -32,8 +32,10 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   `cardId`. Gameplay and art data never define the same attribute; see `data/art/README.md`.
 - **First series is Sovereign Dawn.** `cardId` (machine, stable) is separate from `collectionNumber` (`SD-###`, human).
   Products reference card ids or pools; they never copy card definitions.
-- **10 elements**, released in stages: Grass/Fire/Water first, then Darkness + Light, then Earth, Ice, Lightning, Wind,
-  Poison in story order. Elements are cosmetic in the MVP.
+- **10 elements plus Neutral, released in stages (revised Oct 9, 2026).** The MVP is **Darkness and Light only**, a small
+  playable beta to test the whole flow with friends. The next cycle is **Fire, Grass, Water and Earth** (Grass joins the
+  Fire/Water/Earth primal group), added as part of the real release; Ice, Lightning, Wind and Poison follow in story order.
+  Elements are cosmetic identity in the MVP; the only matchup is the Light and Darkness duality.
 - **8 rarity tiers** (Basic 0, Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 16, Mythic 32, Transcendent 64 points).
 - **Starter decks stay low-rarity (Oct 2026).** Starter heroes are Rare-Legendary "lower-level" heroes under the
   40-point budget. Bound heroes and dragons (Mythic) and sisters (Transcendent) are earned from packs, campaign
@@ -193,7 +195,7 @@ Order: Drakn Bound first (its heroes mirror the sisters, so the generators alrea
 
 | ID | Question | Notes |
 | --- | --- | --- |
-| O1 | 3 or 5 elements in the first public release? | Estimate from a finished Grass set (G1). |
+| O1 | ~~3 or 5 elements in the first public release?~~ Answered Oct 9 | The MVP is Darkness and Light only; Fire, Grass, Water and Earth are the next cycle, added for the real release. The cost of one full element (seen from the sisters and angels) is the reason. |
 | O2 | Does "exactly one hero per formation" survive? | Written before the art pipeline made a larger roster cheap. Revisit after a playtest. |
 | O3 | How are vision cards obtained? | All 30 have empty `acquisition` today. Needs pack/reward/campaign rules, including the quest-earned Celestial edition, the pack-chance share and the codex teaser. |
 | O4 | Transcendent format legality | 64 points exceeds any starter budget; decide special formats (Phase 2+). |
@@ -380,14 +382,15 @@ Also new: two realms (`fantasy-gothic` for the fallen and grieving, `fantasy-pas
 
 ## Next work (in order)
 
-1. **G1 Grass set.** Only 4 Grass cards exist (sister, bound hero, dragon, pet) and no legacy Grass heroes; Fire has 53,
-   Water 46. Define heroes, units, tactics in the codex, then art. Best end-to-end test of the card -> art -> prompt flow.
-2. **D3 Starter decks and products.** Rebuild around Grass/Fire/Water using the starter-hero decision above; include
+1. **G1 Darkness and Light set (the MVP).** Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no
+   legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then art. Best end-to-end
+   test of the card -> art -> prompt flow, and the beta's content.
+2. **D3 Starter decks and products.** Rebuild around Darkness and Light (plus Neutral cards) using the starter-hero decision above; include
    lower-level heroes, and decide where bound heroes and dragons enter (O3). Fixes everything under Data debt.
 3. **D2 Rule reconciliation.** Re-check `combat-calculation-spec.md` and `deck-progression-rules.md` against the 8-tier
-   model and the chosen elements.
-4. **G2 Decide O1** with G1's cost in hand.
-5. **Art for the 15 legacy heroes** that lack art identities, plus full sets for Grass, Darkness, Light.
+   model and the MVP elements (the Light and Darkness duality, Neutral normal).
+4. **G2 Plan the next cycle** (Fire, Grass, Water, Earth) once the Darkness and Light beta has shown what a full element costs.
+5. **Art for the 15 legacy heroes** that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth.
 
 ### Art and video track (runs alongside)
 
