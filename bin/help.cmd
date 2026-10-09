@@ -31,6 +31,7 @@ echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(fi
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
 echo    originals.cmd [--dry-run] [--only NAME]   the photo library: name originals after their folder, scale to 944x1104, move copies of removed originals to the _org archive, re-point chosen photos  ^(docs\art\original-photos.md^)
+echo    likeness.cmd alike ^| compare A B ^| folder NAME ^| like FILE ^| sort ^| merge A B ^| retire NAME ^| undo   compare faces; look-alike angels and sisters; empty Prospects\Various into people ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA
