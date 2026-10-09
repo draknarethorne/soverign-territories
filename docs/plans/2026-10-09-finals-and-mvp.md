@@ -47,6 +47,9 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 | D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Decided (Oct 9): Grass is in the next cycle with Fire, Water and Earth; directions and multipliers stay open in the combat spec |
 | D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Decided (Oct 9): the wording is fine in git; **no images are kept for `zz_Shots`**, only for `zz_Final` (including the Bare) |
 | D7 | Step back on the command line (`comfy_workflows.py` options and `bin\*.cmd`)? | Yes: inventory first, then simplify with old names forwarding | Decided (Oct 9): add it to today's plan (Phase 6); draft in `tmp/2026-10-09-cli-review.md` |
+| D8 | Phase 3: where do a final's seed and denoise live? | In the art data, a small generated file per set that you can also edit | Decided (Oct 9): in the art data (`data/art/finals/<set>.json`), generated from the finals, hand-editable; `make` applies it |
+| D9 | Phase 3: does a final's image become the default input of the workflows after it? | Yes | Decided (Oct 9): yes (Prime final feeds the Bare workflows, Bare feeds footwear, golden pose feeds head and motion); this replaces `inputs set` |
+| D10 | Phase 4: which cards does the todo table list? | All 52 plus the alpha test heroes | Decided (Oct 9): 22 angels, 10 sisters, 10 bound men, 10 dragons and the two alpha heroes, each with the slots it really has |
 
 ### Phase 1: source photos and picks (you, existing tools)
 
@@ -88,14 +91,29 @@ Run in this order; each step previews first, and everything is recoverable (git 
 - [x] A final can be any stage: `promote` and `status` do not limit it to the four slots.
 - [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows.
 
-### Phase 3: finals feed the art data (later)
+### Phase 3: finals feed the art data
 
-- [ ] Read seed, denoise and input from each final workflow and store them per hero, so `make` builds the Qwen and FireRed workflows with them (the README lists this as not built yet).
+What a final already holds: in the Qwen workflow's `KSampler` the seed (set to randomize), steps, CFG, sampler and denoise, the Lightning LoRA (Turbo), and the Load Image name. Today `make` and `deploy` never set a seed and `deploy` only updates the prompt text, so a rebuilt workflow forgets your composition. The aim: after you change an identity JSON and regenerate, the workflow for a stage you finalised replays the same seed (fixed) with the new prompt.
 
-### Phase 4: `docs/todo.md`, driven by automation
+- [ ] 3.1 Schema and file (D8): `data/art/finals/<set>.json`, one record per hero, engine and stage stem: `seed`, `denoise`, `steps`, `cfg`, `sampler`, `turbo`, `input` (the original photo or image used), `render` (the counter of the render it came from), `date`. Add a schema in `data/schemas` or `data/art/_schema`, and the validator checks it (the stem must exist).
+- [ ] 3.2 Capture: `finals record` (also run by `finals promote`'s follow-up `pull`) reads those values from each final workflow in the repo and writes or updates the record; hand edits to a record are kept (a record you edited is not overwritten without `--force`).
+- [ ] 3.3 Apply: `make` builds (and `make --refresh` rewrites) a stage's workflow with its record: seed with "fixed", denoise, steps, CFG, Turbo. Order of precedence: record, then the stage template's denoise range. `deploy` keeps its rule (prompt text only, your seed and toggles survive) except through `make`.
+- [ ] 3.4 Inputs from finals (D9): the Prime final's image is the default `prime` input for the Alpha 2 workflows, the Bare final's image the `bare` input for footwear, the golden-pose final's image the `apose` input for head and motion. The image is the render copied into `assets/art` (Phase 2c) and into each workspace's input folder by `sync_inputs`. `inputs set` stays only for the original photos; the `mixed` state goes away because a role has one source.
+- [ ] 3.5 Engines: a Qwen and a FireRed final of the same stage each keep their own record (the stem includes the engine). Which engine feeds the next stage is a setting per hero (default Qwen), so you can test the FireRed chain end to end.
+- [ ] 3.6 Tests: record round trip, hand edits kept, `make` applies seed and denoise, a stage with no record is unchanged, the input default follows the final, the `mixed` state cannot arise.
+- [ ] 3.7 Docs: workflows README, art README (`finals/`), tutorial-art.
 
-- [ ] A report tool writes `docs/todo.md`: per hero, which slots have a final (from `finals status`), plus the unchecked boxes of the active plans. You add your own notes in a section the tool leaves alone.
-- [ ] No hand-ticked progress, since hand-kept progress went stale before.
+### Phase 4: `docs/todo.md`, driven by automation (D10)
+
+`bin\todo.cmd` (`tools/art/todo_report.py`) writes `docs/todo.md` from data, never from hand ticks, and a drift check fails if the committed file is out of date (like `codex_drift`).
+
+- [ ] 4.1 The table, one row per card: 22 angels, 10 sisters, 10 bound men, 10 dragons, and the two alpha test heroes. Columns are the slots that card really has: photo (from `workspaces.json` `photos`), Prime, Bare, golden pose and heels for the women and the sisters; photo, Prime and Bare for the angel men (they have no Barefoot or Heels); the bound men's single Prime (`X_Pose`) until they move to the 1_Alpha chain; the dragons' pose, head and lair.
+  Each cell is `FINAL` (with the engine), `c<N>` (candidates kept) or empty, read from the repo's `_final` and `_candidates`; `other finals` counts scenes and themes.
+- [ ] 4.2 Open work: the unchecked boxes of every `Status: active` plan in `docs/plans/`, grouped by plan and phase, so the list of what is left is always the plan's own.
+- [ ] 4.3 Your notes: a section between `<!-- notes -->` markers that the tool never rewrites.
+- [ ] 4.4 Slots per group live in `workspaces.json` (`finals.slots`, now per group), so adding a stage to the table is a config change.
+- [ ] 4.5 `validate.cmd` runs the drift check; `bin\help.cmd` and the plans README mention it.
+- [ ] 4.6 Order: build it after Phase 3.1 so the `render` and `input` of each final can show in the table too.
 
 ### Phase 5: MVP rescope (docs only; needs your approval before I edit)
 
