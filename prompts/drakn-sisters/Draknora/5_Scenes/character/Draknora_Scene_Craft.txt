@@ -1,0 +1,39 @@
+=== Draknora Thorne · Scene (Outfit + Effects): Craft (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknora Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: vivid copper-red hair, warm and glossy, a smooth ombré gradient, the base colour at the roots melting gradually into warm burnished gold through the lower lengths and ends.
+Bust: very full, generous bust, firm and lifted with a deep rounded curve, generous natural detail, pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.
+Skin: warm sun-bronzed olive tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a daring backless Flame Red satin halter gown with a deep plunging V, the fitted bodice flaring into a tiered skirt of flame-cut petals graded to gold at the hem, high thigh slits on both sides, a burnished copper chain harness across the waist and ember-glow edging, no headwear and her hair fully visible.
+
+Headwear: a slim burnished copper circlet with a single ruby stone at the brow.
+
+Jewelry: burnished copper sun-disc pendant, flame-cut earrings, burnished copper bangles.
+Legs & feet: soft Flame Red slippers with burnished copper flame stitching.
+
+She stands with a coin of flame walking across her knuckles and the other hand raised, a showwoman's smile, her eyes bright and straight to the camera; full figure visible.
+
+Dancing flame, embers and sparks flicker along her knuckles and drift off, fiery orange-gold light on her cheek.
+
+Eyes: fully glowing fiery orange-gold, irises and pupils blazing with luminous fiery orange-gold light and no visible pupil, a faint fiery orange-gold glow reaching the lashes and upper cheeks (override the incoming eye colour).
+
+Environment: a rustic inn bedchamber with a carved four-poster bed, patchwork quilts, a small fireplace and candles on the sill, rain tapping at a leaded window.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, green eyes, brown eyes, grey eyes, hazel eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

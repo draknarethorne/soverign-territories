@@ -551,6 +551,44 @@ def coverage(report, counts, cards, identity_of):
         print("            without art yet: " + ", ".join(unlinked[:8]) + (" ..." if len(unlinked) > 8 else ""))
 
 
+def check_scene_recipes(report):
+    """data/art/_settings/scene-recipes.json drives the character scenes: every alignment rank, element and sister class must have a recipe, and its pieces must exist."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return
+    where, r = rel(path), load(path)
+    elements = {"Darkness", "Fire", "Grass", "Ice", "Water", "Light", "Earth", "Lightning", "Wind", "Poison", "Neutral"}
+    for kind in ("duty", "quiet"):
+        ranks = [n for x in r.get(kind, []) for n in range(x["ranks"][0], x["ranks"][1] + 1)]
+        if sorted(ranks) != list(range(1, 11)):
+            report.error(where, f"{kind} recipes must cover alignment ranks 1 to 10 exactly once; they cover {sorted(ranks)}")
+    ids = [x["id"] for k in ("duty", "quiet") for x in r.get(k, [])]
+    if len(ids) != len(set(ids)) or {"domain", "craft", "lineup"} & set(ids):
+        report.error(where, "recipe ids must be unique and must not reuse domain, craft or lineup")
+    missing = elements - {x["element"] for x in r.get("domain", [])}
+    if missing:
+        report.error(where, f"domain has no recipe for {', '.join(sorted(missing))}")
+    missing = elements - set(r.get("celebration", {}))
+    if missing:
+        report.error(where, f"celebration maps no theme pack for {', '.join(sorted(missing))}")
+    packs = {p.parent.name for p in rglob("data/art/themes/*/*/theme.json")}
+    for element, pack in r.get("celebration", {}).items():
+        if pack not in packs:
+            report.error(where, f"celebration for {element} names the theme pack {pack!r}, which does not exist")
+    classes = {load(f).get("class") for f in rglob("data/cards/sovereign-dawn/heroes/hero-drakn*-thorne.json")} | {load(f).get("class") for f in rglob("data/cards/sovereign-dawn/heroes/hero-drakness-thorne.json")}
+    missing = {c for c in classes if c} - {x["class"] for x in r.get("craft", [])}
+    if missing:
+        report.error(where, f"craft has no recipe for the class {', '.join(sorted(missing))}")
+    for x in [y for k in ("duty", "quiet", "domain", "craft") for y in r.get(k, [])]:
+        for key in ("holding", "realm"):
+            val = x.get(key)
+            if isinstance(val, str) and val.endswith(".json") and not (ROOT / val).exists():
+                report.error(where, f"{x.get('id') or x.get('element') or x.get('class')}: {key} {val} does not exist")
+        for folder in x.get("background", []) or []:
+            if not (ROOT / "data/art/backgrounds/fantasy" / folder).is_dir():
+                report.error(where, f"{x.get('id') or x.get('element') or x.get('class')}: background folder {folder!r} does not exist")
+
+
 def main():
     report = Report()
     counts = {}
@@ -562,6 +600,7 @@ def main():
     check_kits(report)
     check_pets(report)
     check_piece_refs(report)
+    check_scene_recipes(report)
     check_animation_cards(report)
     coverage(report, counts, cards, identity_of)
     if report.errors:

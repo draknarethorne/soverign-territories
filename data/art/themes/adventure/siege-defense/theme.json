@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/siege-defense",
+  "kind": "theme",
+  "name": "Siege Defense",
+  "type": "event",
+  "description": "Holding the wall: padded gambesons, battered steel, soot and smoke on castle wall-walks and behind breached gates.",
+  "realm": "fantasy",
+  "tags": [
+    "siege",
+    "battle",
+    "defense"
+  ]
+}

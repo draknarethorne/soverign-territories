@@ -195,7 +195,8 @@ The core library is the D&D mass every theme and hero draws on; themes sit on to
 | Area | Now | Gap and where it lands |
 | --- | --- | --- |
 | `themes/` (packs) | 26 in 7 groups: ancient (greek, roman, egyptian, aztec), northern (norse, celtic, danish), eastern (samurai, ninja, steppe, imperial-dynasty), southern (arabian-nights, savanna-kingdoms, tropical-isles), western (frontier, chivalry) | each group is the place to add the next pack of its kind |
-| `themes/` (events and genres) | seasonal (halloween, christmas, spring, autumn, thanksgiving, summer-solstice), adventure (pirate, alchemist, peasant, eclipse) | northern: slavic winter, fey court; ancient: persian, indian; seasonal: valentine, lunar new year; adventure: gaslamp, circus, vampire gothic, jungle explorer; one theme per element realm later |
+| `themes/` (events and genres) | seasonal (halloween, christmas, spring, autumn, thanksgiving, summer-solstice, **midwinter-festival**), adventure (pirate, alchemist, peasant, eclipse, **siege-defense**, **victory-feast**), **ceremony** (**coronation**, **masquerade-ball**); 31 packs in all | each new pack: gown, male outfit, crown or mask, jewelry set, makeup, two backgrounds. Next: valentine, lunar new year, slavic winter, fey court, gaslamp, circus, jungle explorer |
+| `realms/` | 6: fantasy, fantasy-cinematic, **fantasy-gothic**, **fantasy-pastoral**, modern, studio | the gothic realm (cold, mist, dark stone) is used by the fallen angels' scenes and the pastoral realm (warm, sunlit) by the gentle ones; next: noir city, historic, desert, storm |
 | `backgrounds/fantasy/` | 27 families, 104 pieces (3-10 per family; `lairs` 10) | more variety inside a family as scenes need it; modern and studio realms are separate |
 | `wardrobe/armor/` | 97 pieces across the class and material families (bone, bronze, ceremonial, crystal, hide and runic each grew by 3, and the angel cards now spread across them) | per-class sets as bound heroes and units need them; padded, shadow and wood are still 2-3 pieces |
 | `wardrobe/clothing/` | gowns 21, dresses 24, sets 43, **robes 16** (was 1: the 11 female angels all wore `silk-robe`; now 15 fabric-and-cut robes, matched to each angel's element) | more robe families when a theme needs them (monastic, desert, court); the lounge robes (silk, satin kimono, terry, peignoir) are the glamour ones |
@@ -485,6 +486,21 @@ folder: `<slug>-companion.json` (the identity's description with `[[PLACEMENT]]`
 for scenes that word the dragon themselves). The sister's piece (`heroes/drakn-sisters/<sister>/companion/*.json`) `extends` a frame and sets `vars` for where the dragon is,
 and her scene cards name that piece. Change a dragon's look in its identity, then run `python tools/art/dragon_companions.py --apply` and regenerate; the validator
 rejects a sister companion piece that does not extend a dragon frame, and a scene card that types the dragon instead of naming a piece.
+
+### Scenes: series, character, theme
+
+Scenes come in three tiers, and a card's tier decides who shares it:
+
+| Tier | Cards | Shared across | Purpose |
+| --- | --- | --- | --- |
+| **Series** | Lineup, The Dawn, The Bond, Robe, Casting (elegant-casting), Battle, Enchanted Evening, Signature | every angel and every sister, same pose, framing and template | the consolidated marketing pictures: the same scene for all of them, side by side or composited (the Lineup is the flat-backdrop cut-out made for compositing, the others differ only in her own outfit, effect and element realm) |
+| **Character** | per hero: *duty* and *quiet* (angels, by alignment rank), *domain* (angels and sisters, by element), *craft* (sisters, by class) | no one: it is what she is doing because of who she is | unique cards for each hero, not only signature cards |
+| **Theme** | one folder per theme pack, plus a *celebration* scene per hero from her element's pack (coronation, masquerade ball, midwinter festival, siege defense, victory feast) | heroes of the same element share a pack, never a scene | holidays, ceremonies, battles and celebrations |
+
+The character tier is **data, not code**: `data/art/_settings/scene-recipes.json` holds a recipe per scene (the pose, the effect, what she wears and holds, which backgrounds, an optional realm) and `bin\scaffold-characters.cmd` writes the cards from it (re-runnable; existing cards are kept).
+*Duty* and *quiet* follow the angel's alignment rank: pristine angels keep **Vigil** and sit in a **Cloister**, the fallen walk out of the **Reckoning** and sit in a **Ruin**, with Blessing and Garden, Judgment and Study, Reckoning and Watch Fire between. The darker bands also use the gothic realm and the gentle ones the pastoral realm.
+*Domain* is the element at work in its realm (eleven recipes), *craft* is what a Shaman, Shadow Knight, Bard, Necromancer, Summoner, Wizard, Enchanter, Cleric, Druid, Magician or Alchemist does, and *celebration* maps an element to a theme pack. To add a scene type, add a recipe; the validator checks every rank, element and class is covered.
+`{mat}` in a recipe is the element's material phrase (plural, so use plural verbs) and `{{MAGIC}}` her magic colour; the cards write in `5_Scenes/character/`.
 
 ### Complete vs staged scenes
 

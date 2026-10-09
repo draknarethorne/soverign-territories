@@ -1,0 +1,40 @@
+=== Gavrielle Skyharrow · Scene (Outfit + Effects): Blessing (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Gavrielle Skyharrow (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Bust: full, high, slightly teardrop bust, firm and lifted with a graceful curve and delicate natural detail, lifted and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a Sky Silver floor-length gown with a fitted bodice, narrow straps and a skirt slit from the hip to the floor, the leg visible with each step, polished nickel clasp at the hip, the neckline, cuffs and hem embroidered with a spiral of swept feathers in white; clean, with a quiet shine.
+
+Headwear: a wreath of polished nickel laurel leaves resting on the brow, tied with white ribbon, a spiral of swept feathers rising at the centre of the brow, set with a moonstone gem; clean, with a quiet shine.
+
+Jewelry: a simple polished nickel necklace and small matching earrings, the pendant and the earrings echoing a spiral of swept feathers, each set with a small moonstone gem.
+Back: a pair of long, narrow silver-white wings swept back, the feathers lifting and fanning in the wind.
+Legs & feet: bare feet, fine polished nickel anklets.
+
+She stands with both palms open and lifted in front of her, her wings half spread, her head bowed slightly and then lifting her eyes to the camera with a gentle, grave warmth; full figure visible.
+
+Soft racing wind, feathers and leaves gather above her open palms and fall away like light rain, pale sky-silver motes drifting down through the air.
+
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint pale sky-silver glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a quiet stone scriptorium with sloped writing desks, quills and inkwells, parchment scrolls, tall candles and snow outside a small arched window.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

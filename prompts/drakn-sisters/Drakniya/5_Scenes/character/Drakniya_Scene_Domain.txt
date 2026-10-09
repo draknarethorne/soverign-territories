@@ -1,0 +1,39 @@
+=== Drakniya Thorne · Scene (Outfit + Effects): Domain (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Drakniya Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension.
+Bust: full, firm bust with a gently rounded, softly proportioned shape and fine, delicate natural detail, lifted high and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: deep forest-emerald irises with radiating sage striations and a dark pine limbal ring.
+Skin: warm sun-kissed golden-olive tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a romantic Emerald Green silk-chiffon gown with an off-the-shoulder bodice embroidered with leaves and blossoms, a plunging neckline, a layered petal-shaped skirt with a high slit, living flowers and vines woven at the waist, delicate antique gold leaf accents and peridot dewdrops, no headwear and her hair fully visible.
+
+Headwear: a crown of woven twigs, blossoms and antique gold leaves, with two small curved horns of pale wood.
+
+Jewelry: antique gold leaf pendant, acorn earrings, braided vine bracelets.
+Legs & feet: bare feet, a ring of moss and tiny flowers around them.
+
+She crouches with one hand pressed into the soil while vines and flowers rise around it, the other hand lifting, looking up to the camera with calm delight; full figure visible.
+
+Living vines, leaves and petals unfurl around her hand and climb her arm, with bright emerald-green light at the tips of every new leaf.
+
+Eyes: the natural deep forest-emerald irises kept intact, with a faint bright emerald-green glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a primeval forest valley waking at dawn: colossal moss-hung trees, roots uncoiling and flowers bursting open all around, ferns unfurling, shafts of gold light through the canopy, a stag and doe at the edge of a clearing, foxes, owls, hummingbirds and clouds of fireflies and butterflies lifting into the air.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, blue eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

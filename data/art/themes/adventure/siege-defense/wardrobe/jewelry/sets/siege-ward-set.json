@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/siege-defense/wardrobe/jewelry/sets/siege-ward-set",
+  "kind": "jewelry",
+  "name": "Siege Ward Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/cord-charm-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/huggie-earrings.json",
+    "data/art/wardrobe/jewelry/rings/twisted-wire-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "jewelry"
+  ]
+}

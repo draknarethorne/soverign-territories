@@ -1,0 +1,23 @@
+{
+  "artId": "remiah-scene-lineup",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/remiah.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Remiah/5_Scenes/signature/Remiah_Scene_Lineup.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Lineup",
+  "components": {
+    "pose": "data/art/motion/scene/lineup-square-stance.json",
+    "wearing": "data/art/heroes/angel-primes/female/remiah/clothing/remiah-signature-gown.json",
+    "headwear": "data/art/heroes/angel-primes/female/remiah/headwear/remiah-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/female/remiah/jewelry/remiah-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
+    "back": "data/art/heroes/angel-primes/female/remiah/wings/remiah-wings.json",
+    "effects": "crackling arcs of lightning and sparks orbit her hands in a small, close ring and a little {{MAGIC}} light rises at her feet.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/studio/dawn-rim-grey.json",
+    "realm": "data/art/realms/studio.json"
+  },
+  "notes": "GROUP SHOT cut-out: her signature outfit on the flat grey backdrop with the shared dawn lighting, full figure, effects kept close, to be composited with the other angels (the sisters' Lineup is the same)."
+}

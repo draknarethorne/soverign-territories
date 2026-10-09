@@ -1,0 +1,22 @@
+{
+  "artId": "angelo-scene-blessing",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/angelo.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Angelo/5_Scenes/character/Angelo_Scene_Blessing.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Blessing",
+  "components": {
+    "pose": "She stands with both palms open and lifted in front of her, her wings half spread, her head bowed slightly and then lifting her eyes to the camera with a gentle, grave warmth; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/male/angelo/clothing/angelo-signature-attire.json",
+    "headwear": "data/art/heroes/angel-primes/male/angelo/headwear/angelo-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/male/angelo/jewelry/angelo-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/male/angelo/wings/angelo-wings.json",
+    "effects": "Soft soft white light, drifting pale feathers and motes gather above her open palms and fall away like light rain, {{MAGIC}} motes drifting down through the air.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/interiors/bathhouse-marble-steam.json"
+  },
+  "notes": "DUTY: Blessing, for her alignment (rank 5); from data/art/_settings/scene-recipes.json."
+}

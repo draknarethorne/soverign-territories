@@ -1,0 +1,19 @@
+{
+  "id": "themes/ceremony/coronation/cosmetics/makeup/regal/regal-composed-look",
+  "kind": "makeup",
+  "name": "Regal Composed Look",
+  "description": "a regal finish - a luminous satin base, softly sculpted cheeks, a refined {{EYESHADOW}} lid with defined lashes, groomed brows and a composed {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "makeup"
+  ]
+}

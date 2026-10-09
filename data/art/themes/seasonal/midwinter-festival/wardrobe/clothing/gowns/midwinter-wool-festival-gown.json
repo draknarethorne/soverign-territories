@@ -1,0 +1,14 @@
+{
+  "id": "themes/seasonal/midwinter-festival/wardrobe/clothing/gowns/midwinter-wool-festival-gown",
+  "kind": "wearing",
+  "name": "Midwinter Festival Gown",
+  "description": "a long {{PRIMARY}} wool festival gown with a fitted bodice, full sleeves and a hem embroidered with {{ACCENT_SOFT}} evergreen sprigs, a thick knitted shawl over the shoulders",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "midwinter-festival",
+    "wearing"
+  ]
+}

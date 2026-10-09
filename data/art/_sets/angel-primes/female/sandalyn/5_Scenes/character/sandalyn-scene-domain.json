@@ -1,0 +1,22 @@
+{
+  "artId": "sandalyn-scene-domain",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/sandalyn.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Sandalyn/5_Scenes/character/Sandalyn_Scene_Domain.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Domain",
+  "components": {
+    "pose": "She stands braced with one hand pressed flat to a rock face and the other raised, loose stones lifting from the ground around her, her gaze steady on the camera; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/female/sandalyn/armor/sandalyn-signature-armor.json",
+    "headwear": "data/art/heroes/angel-primes/female/sandalyn/headwear/sandalyn-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/female/sandalyn/jewelry/sandalyn-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/knee-high-boots.json",
+    "back": "data/art/heroes/angel-primes/female/sandalyn/wings/sandalyn-wings.json",
+    "effects": "Stone shards, dust and glowing crystals rise from the ground in slow, heavy columns and {{MAGIC}} light runs through the cracks in the rock.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/partial-glow.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/bedrock-stone-realm.json"
+  },
+  "notes": "DOMAIN: her Earth element at work in its realm; from data/art/_settings/scene-recipes.json."
+}

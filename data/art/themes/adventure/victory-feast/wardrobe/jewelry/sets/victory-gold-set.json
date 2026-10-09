@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/victory-feast/wardrobe/jewelry/sets/victory-gold-set",
+  "kind": "jewelry",
+  "name": "Victory Gold Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/layered-chains.json",
+    "data/art/wardrobe/jewelry/earrings/hoop-earrings.json",
+    "data/art/wardrobe/jewelry/rings/stacked-rings.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "jewelry"
+  ]
+}

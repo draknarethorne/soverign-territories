@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/victory-feast/wardrobe/clothing/gowns/victory-feast-gown",
+  "kind": "wearing",
+  "name": "Victory Feast Gown",
+  "description": "a long {{PRIMARY}} silk feast gown with open sleeves and a {{METAL}}-embroidered bodice, a deep {{ACCENT_SOFT}} sash and a loose flowing skirt",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "wearing"
+  ]
+}

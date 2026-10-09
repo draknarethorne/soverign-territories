@@ -1,0 +1,13 @@
+{
+  "id": "themes/ceremony/masquerade-ball",
+  "kind": "theme",
+  "name": "Masquerade Ball",
+  "type": "event",
+  "description": "A candlelit masked ball: full-skirted satin gowns and tailcoats, ornate half masks, glittering eyes, ballrooms and moonlit palace terraces.",
+  "realm": "fantasy",
+  "tags": [
+    "masquerade",
+    "ball",
+    "evening"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "artId": "elarion-scene-garden",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/elarion.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Elarion/5_Scenes/character/Elarion_Scene_Garden.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Garden",
+  "components": {
+    "pose": "She kneels in a walled garden with one hand touching the leaves of a plant, her wings lowered, glancing up at the camera with a small, unguarded smile; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/male/elarion/clothing/elarion-signature-attire.json",
+    "headwear": "data/art/heroes/angel-primes/male/elarion/headwear/elarion-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/male/elarion/jewelry/elarion-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/male/elarion/wings/elarion-wings.json",
+    "effects": "Racing wind, feathers and leaves lie faintly on the leaves and soil around her, with the softest {{MAGIC}} light.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "background": "data/art/backgrounds/fantasy/farmland/vineyard-terraces-dusk.json",
+    "realm": "data/art/realms/fantasy-pastoral.json"
+  },
+  "notes": "QUIET: Garden, for her alignment (rank 4); from data/art/_settings/scene-recipes.json."
+}

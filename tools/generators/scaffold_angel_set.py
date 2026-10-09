@@ -245,8 +245,21 @@ def build(slug):
     print(f"{slug}: made {wr.made} cards, {wr.skipped} already existed")
 
 
+def build_character(slug):
+    """Only the character scenes (Lineup, duty, quiet, domain, celebration) for a kit angel; everything else is left as it is."""
+    kit = load(f"data/art/_kits/angel-primes/{slug}.json")
+    ident = kit["identity"]
+    sex = "female" if "bust" in load(ident)["art"]["physique"] else "male"
+    division = pathlib.PurePosixPath(ident).parts[4]
+    wr = Writer(ART / "_sets" / GROUP / division / slug, GROUP)
+    out = lambda folder, name: f"prompts/{GROUP}/{division}/{kit['hero']}/{folder}/{name}.txt"
+    library.Angel(slug, kit, ident, sex, division, wr, out).character()
+    print(f"{slug}: made {wr.made} character cards, {wr.skipped} already existed")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--character", action="store_true", help="only the character scenes (Lineup, duty, quiet, domain, celebration) for every kit angel, or --slug")
     ap.add_argument("--slug")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--alpha", action="store_true", help="only the two alpha test heroes (alpha/female, alpha/male)")
@@ -256,6 +269,10 @@ def main():
         library.coverage()
         return
     kits = {p.stem for p in (ART / "_kits" / GROUP).glob("*.json")}
+    if args.character:
+        for slug in ([args.slug] if args.slug else sorted(kits)):
+            build_character(slug)
+        return
     slugs = sorted(kits) if args.all else [args.slug]
     if args.all:
         slugs = sorted(kits | set(OLDER) | set(ALPHA))

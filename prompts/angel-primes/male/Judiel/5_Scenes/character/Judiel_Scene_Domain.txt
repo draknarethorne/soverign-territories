@@ -1,0 +1,39 @@
+=== Judiel Stormcrown · Scene (Outfit + Effects): Domain (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Judiel Stormcrown (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing Storm Indigo-toned half-plate: a polished breastplate and backplate, pauldrons and a waist guard over a quilted silver arming doublet, the arms and legs in leather with plate vambraces, every plate and trim engraved with a forked lightning bolt inside a ring of cloud in silver; plain, severe and unornamented.
+
+Headwear: a thin steel circlet with a single sapphire gem resting on the forehead, a forked lightning bolt inside a ring of cloud rising at the centre of the brow, set with a sapphire gem; plain, severe and unornamented.
+
+Jewelry: a simple steel chain with a small pendant, the pendant formed as a forked lightning bolt inside a ring of cloud and set with a small sapphire gem.
+Back: a pair of hard-edged steel-blue wings with lightning running through the feathers.
+Legs & feet: supple Storm Indigo leather knee-high boots with silver buckles and a low heel.
+
+He stands with one arm raised toward a storm sky and the other hand open at his side, lightning arcing between them, his eyes bright and fixed on the camera; full figure visible.
+
+Crackling arcs of lightning and sparks crack in forks between his hands and the clouds, electric white light flashing across his armor and the wet ground.
+
+Eyes: fully glowing electric white, irises and pupils blazing with luminous electric white light and no visible pupil, a faint electric white glow reaching the lashes and upper cheeks (override the incoming eye colour).
+
+Environment: a bare black basalt headland under a heavy storm front, wet rock, a slate and violet sky with a distant lightning strike and a thin gold line at the horizon.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

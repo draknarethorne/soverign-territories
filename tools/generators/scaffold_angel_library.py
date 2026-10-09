@@ -94,6 +94,10 @@ TONES = [(3, "pristine, luminous and unmarked"), (5, "clean, with a quiet shine"
          (9, "worn, scorched at the edges and trimmed with dark feathers"), (10, "tattered, shadow-edged and trimmed with black feathers")]
 
 
+def cap(text):
+    return text[:1].upper() + text[1:]
+
+
 def cinematic():
     """True when Angel Primes renders in the cinematic (realistic) realm, set in _settings/studio.json realmByGroup."""
     settings = json.loads((ROOT / "data/art/_settings/studio.json").read_text(encoding="utf-8"))
@@ -588,6 +592,58 @@ class Angel:
                 staged["realm"] = comps["realm"]
             scene(f"staged-{pack}", f"staged-{pack}", "scene-staged-human.txt", staged, title, f"STAGED path: feed the {slug}-clothing-{pack} studio render; only the scene, effects and pose are added.",
                   stem=f"{hero}_Scene_Staged_{camel(pack)}", base_description=f"{{{{HERO}}}} already staged in the {title.lower()} outfit render")
+
+    # ----- character scenes: what she is doing follows who she is (recipes in data/art/_settings/scene-recipes.json)
+
+    def character(self):
+        """The Lineup (a shared-backdrop cut-out, like the sisters'), a duty and a quiet scene from her alignment, a domain scene from her element and, when the element has a theme pack,
+        one celebration scene. Existing cards are kept, so this is safe to re-run."""
+        recipes = json.loads((ART / "_settings/scene-recipes.json").read_text(encoding="utf-8"))
+        i, hero, slug, rank = self.i, self.hero, self.slug, self.kit["alignmentRank"]
+        wings = self.scene["back"]
+        if self.female:
+            robes = self.pool("wardrobe/clothing/robes") or self.pool("wardrobe/clothing/gowns")
+        else:
+            robes = self.pool("wardrobe/armor/robes") or self.pool("wardrobe/clothing/sets")
+        boots = self.npool("wardrobe/footwear/boots")
+        bare = ANKLETS if self.female else BAREFOOT
+
+        def write(art, title, comps, note, template="scene-with-outfit-human.txt"):
+            comps = {k: v for k, v in comps.items() if v}
+            self.write("scene", f"{slug}-scene-{art}", self.card(f"{slug}-scene-{art}", "scene", "scene", f"{hero}_Scene_{camel(art)}", template, comps, name=title, note=note))
+
+        write("lineup", "Lineup", {
+            "pose": "data/art/motion/scene/lineup-square-stance.json", "wearing": self.sig["gown"], "headwear": self.sig["headwear"], "jewelry": self.sig["jewelry"], "legs_feet": bare, "back": wings,
+            "effects": self.effect("{mat} orbit her hands in a small, close ring and a little {{MAGIC}} light rises at her feet."), "eye_effect": EYES + "iris-kindling.json",
+            "background": "data/art/backgrounds/studio/dawn-rim-grey.json", "realm": "data/art/realms/studio.json"},
+            "GROUP SHOT cut-out: her signature outfit on the flat grey backdrop with the shared dawn lighting, full figure, effects kept close, to be composited with the other angels (the sisters' Lineup is the same).")
+
+        def recipe_card(r, k):
+            wear = {"armor": self.sig["armor"], "gown": self.sig["gown"], "robe": pick(robes, i)}[r["wearing"]]
+            hold = {"weapon": self.sig["weapon"], "staff": pick(self.npool("wardrobe/weapons/staves"), i), "none": ""}.get(r.get("holding", "none"), r.get("holding"))
+            pool = [p for d in r["background"] for p in lib(f"backgrounds/fantasy/{d}", "female")] if r.get("background") else []
+            bg = pick(pool, i * 7 + k) if pool else self.scene["background"]
+            comps = {"pose": self.effect(r["pose"]), "wearing": wear, "headwear": self.sig["headwear"] if r["wearing"] != "robe" else "", "jewelry": self.sig["jewelry"],
+                     "legs_feet": pick(boots, i) if r["wearing"] == "armor" and boots else bare, "back": wings, "holding": hold, "effects": cap(self.effect(r["effects"])),
+                     "eye_effect": EYES + r["eyes"] + ".json" if r.get("eyes") else "", "background": bg, "realm": r.get("realm", "")}
+            return comps
+
+        for kind, label in (("duty", "DUTY"), ("quiet", "QUIET")):
+            r = next(x for x in recipes[kind] if x["ranks"][0] <= rank <= x["ranks"][1])
+            write(r["id"], r["name"], recipe_card(r, 0), f"{label}: {r['name']}, for her alignment (rank {rank}); from data/art/_settings/scene-recipes.json.")
+        r = next(x for x in recipes["domain"] if x["element"] == self.element)
+        write("domain", "Domain", recipe_card(dict(r, background=None), 0), f"DOMAIN: her {self.element} element at work in its realm; from data/art/_settings/scene-recipes.json.")
+
+        pack = recipes["celebration"].get(self.element)
+        t = themes(self.sex).get(pack) if pack else None
+        if t:
+            def one(key, k=0):
+                return pick(t[key], i + k)
+            wear = one("armor") if t.get("armor") and pack == "siege-defense" else one("clothing")
+            bg = one("background")
+            comps = {"pose": norm(pick(self.poses("standing") or self.poses("walking"), i)), "expression": pick(EXPRESSIONS, i), "wearing": wear, "back": wings, "headwear": one("headwear"),
+                     "jewelry": one("jewelry") or self.sig["jewelry"], "legs_feet": one("footwear") or (pick(boots, i) if "armor" in wear else bare), "makeup": one("makeup"), "effects": self.sig["effects"], "background": bg}
+            write(pack, t["name"], comps, f"{t['name']} celebration scene for her element: every item is a library or theme-pack piece.")
 
     def finish(self):
         for stage, name, tpl, denoise, note in (

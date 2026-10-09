@@ -1,0 +1,23 @@
+{
+  "artId": "zadriel-scene-cloister",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/zadriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Zadriel/5_Scenes/character/Zadriel_Scene_Cloister.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Cloister",
+  "components": {
+    "pose": "She sits on a low stone bench in a sunlit cloister, her wings folded loosely, one hand resting in her lap and her face lifted toward the camera in quiet contentment; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/male/zadriel/clothing/zadriel-signature-attire.json",
+    "headwear": "data/art/heroes/angel-primes/male/zadriel/headwear/zadriel-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/male/zadriel/jewelry/zadriel-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "back": "data/art/heroes/angel-primes/male/zadriel/wings/zadriel-wings.json",
+    "effects": "Sunlight falls through the arches in long bars and flowing water and drifting spray drift in it.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "background": "data/art/backgrounds/fantasy/interiors/grand-ballroom-chandeliers.json",
+    "realm": "data/art/realms/fantasy-pastoral.json"
+  },
+  "notes": "QUIET: Cloister, for her alignment (rank 2); from data/art/_settings/scene-recipes.json."
+}

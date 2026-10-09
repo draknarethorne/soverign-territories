@@ -1,0 +1,21 @@
+{
+  "artId": "drakniss-scene-craft",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Craft",
+  "components": {
+    "pose": "She kneels beside a sword planted in the ground, one hand resting on its hilt and her head bowed in prayer, then lifting her eyes to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniss/footwear/scene-battle-legs-feet.json",
+    "effects": "Soft golden light and drifting motes gather around the sword and her hand, {{MAGIC}} light rising from the blade like a quiet flame.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/temple/forest-shrine-stone-lanterns.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/5_Scenes/character/Drakniss_Scene_Craft.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "CRAFT: what a Cleric does; from data/art/_settings/scene-recipes.json."
+}

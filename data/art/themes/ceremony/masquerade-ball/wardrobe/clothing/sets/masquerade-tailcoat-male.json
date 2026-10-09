@@ -1,0 +1,15 @@
+{
+  "id": "themes/ceremony/masquerade-ball/wardrobe/clothing/sets/masquerade-tailcoat-male",
+  "kind": "wearing",
+  "name": "Masquerade Tailcoat",
+  "description": "a fitted black tailcoat with {{ACCENT_SOFT}} satin lapels over a {{PRIMARY}} waistcoat, a white shirt with a cravat, dark trousers and polished shoes",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "wearing",
+    "male"
+  ]
+}

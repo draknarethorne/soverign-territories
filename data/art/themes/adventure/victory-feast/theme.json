@@ -1,0 +1,13 @@
+{
+  "id": "themes/adventure/victory-feast",
+  "kind": "theme",
+  "name": "Victory Feast",
+  "type": "event",
+  "description": "The night after the win: silk feast gowns and velvet doublets, laurel crowns, banquet halls and hillside bonfires.",
+  "realm": "fantasy",
+  "tags": [
+    "victory",
+    "feast",
+    "celebration"
+  ]
+}

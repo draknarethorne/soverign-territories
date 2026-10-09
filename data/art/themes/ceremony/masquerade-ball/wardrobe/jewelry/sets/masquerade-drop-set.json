@@ -1,0 +1,19 @@
+{
+  "id": "themes/ceremony/masquerade-ball/wardrobe/jewelry/sets/masquerade-drop-set",
+  "kind": "jewelry",
+  "name": "Masquerade Drop Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/pendant-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/pearl-drop-earrings.json",
+    "data/art/wardrobe/jewelry/rings/gem-solitaire-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "jewelry"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "themes/ceremony/coronation",
+  "kind": "theme",
+  "name": "Coronation",
+  "type": "event",
+  "description": "A crowning day: velvet state gowns and coats with ermine trim, heavy crowns, coronation halls and cathedral steps at dawn.",
+  "realm": "fantasy",
+  "tags": [
+    "coronation",
+    "ceremony",
+    "royal"
+  ]
+}

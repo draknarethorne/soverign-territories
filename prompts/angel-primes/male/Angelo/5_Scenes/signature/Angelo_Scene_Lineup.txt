@@ -1,0 +1,39 @@
+=== Angelo Prime · Scene (Outfit + Effects): Lineup (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Angelo Prime (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: the exact hair colour of the reference image, unchanged and not recoloured, with natural shine.
+Eyes: the reference image's own eye colour, unchanged and not recoloured, in clear irises with crisp definition.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a long Soft Pearl White coat with a high collar, a double row of gold buttons and wide cuffs, worn over a fitted dark vest and shirt with matching trousers, the neckline, cuffs and hem embroidered with a single white feather within a plain ring in gold; clean, with a quiet shine.
+
+Headwear: a wreath of gold laurel leaves resting on the brow, tied with gold ribbon, a single white feather within a plain ring rising at the centre of the brow, set with a gold gem; clean, with a quiet shine.
+
+Jewelry: a simple gold chain with a small pendant, the pendant formed as a single white feather within a plain ring and set with a small gold gem.
+Back: a pair of broad pearl-white feathered wings with dove-grey primaries, each feather edged in warm champagne gold.
+Legs & feet: bare feet, no footwear.
+
+He stands tall and square to the camera, feet a little apart, one arm relaxed slightly away from his side and the other palm held open at waist height, chin level, a calm, commanding gaze straight to the camera; his full figure from head to toe is visible, centred, filling the frame height with space on all sides; every magical effect stays within arm's reach of his body so he can be cut out cleanly.
+
+soft white light, drifting pale feathers and motes orbit his hands in a small, close ring and a little gold light rises at his feet.
+
+Eyes: the natural the reference image's own eye colour, unchanged and not recoloured, in clear irises kept intact, with a faint gold glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: completely replace the cream backdrop of the incoming image with a plain, flat, mid-grey seamless studio backdrop and nothing else in the frame, lit from the right by strong low warm golden dawn light that rims his hair, shoulders and gown, with a soft cool blue fill from the left, his feet fully visible on the plain floor with a faint soft shadow.
+
+Setting: a plain studio shot against one flat backdrop - no landscape, no buildings, no scenery, no props, nothing else in the frame.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, changed eye colour, recoloured eyes, bald, shaved head, thinning hair, landscape, scenery, buildings, trees, sky, clouds, horizon, furniture, props, other people, text, wording, watermark, logo.

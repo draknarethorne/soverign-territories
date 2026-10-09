@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/coronation/backgrounds/fantasy/castle/coronation-hall-at-dawn",
+  "kind": "background",
+  "name": "Coronation Hall at Dawn",
+  "description": "a vast stone coronation hall at dawn, long banners hanging between tall pillars, a red carpet leading to a raised dais and a throne, light pouring through high windows",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "background"
+  ],
+  "mood": "solemn, radiant"
+}

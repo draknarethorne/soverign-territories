@@ -1,0 +1,22 @@
+{
+  "artId": "drakniya-scene-midwinter-festival",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniya-thorne.json",
+  "name": "Midwinter Festival",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "wearing": "data/art/themes/seasonal/midwinter-festival/wardrobe/clothing/gowns/midwinter-wool-festival-gown.json",
+    "headwear": "data/art/themes/seasonal/midwinter-festival/wardrobe/headwear/crowns/midwinter-evergreen-wreath-crown.json",
+    "jewelry": "data/art/themes/seasonal/midwinter-festival/wardrobe/jewelry/sets/midwinter-frost-set.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniya/footwear/scene-robe-legs-feet.json",
+    "makeup": "data/art/themes/seasonal/midwinter-festival/cosmetics/makeup/natural/winter-flush-look.json",
+    "effects": "data/art/heroes/drakn-sisters/drakniya/effects/elemental-aura.json",
+    "background": "data/art/themes/seasonal/midwinter-festival/backgrounds/fantasy/tavern/festival-hall-long-tables.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniya/5_Scenes/themes/Drakniya_Scene_MidwinterFestival.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Midwinter Festival celebration scene for her element: every item is a library or theme-pack piece."
+}

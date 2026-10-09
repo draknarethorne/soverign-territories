@@ -1,0 +1,21 @@
+{
+  "artId": "drakniss-scene-domain",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakniss-thorne.json",
+  "name": "Domain",
+  "components": {
+    "pose": "She stands on a high ledge with her arms swept wide and her head back, wings spread, as a burst of brightness pours out from her; her eyes find the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakniss/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/drakniss/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakniss/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakniss/footwear/scene-battle-legs-feet.json",
+    "effects": "Golden light and drifting motes fan out from her in every direction and {{MAGIC}} light washes across the ground and the air.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json",
+    "background": "data/art/heroes/drakn-sisters/drakniss/backgrounds/fantasy/dawn/cloud-sea-sunrise-summit.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakniss/5_Scenes/character/Drakniss_Scene_Domain.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "DOMAIN: her Light element at work in her homeland; from data/art/_settings/scene-recipes.json."
+}

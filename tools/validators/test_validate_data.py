@@ -106,6 +106,7 @@ def run_validation(mutate):
         vd.check_kits(report)
         vd.check_pets(report)
         vd.check_piece_refs(report)
+        vd.check_scene_recipes(report)
         vd.check_animation_cards(report)
         return report.errors
     finally:
@@ -195,6 +196,10 @@ CASES = [
      lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/jewelry/rings/no-such-ring.json")), "includes data/art/wardrobe/jewelry/rings/no-such-ring.json, which does not exist"),
     ("set that includes a piece of another kind",
      lambda r: edit(r / "data/art/wardrobe/jewelry/sets/skull-set.json", lambda d: d["includes"].append("data/art/wardrobe/footwear/heels/stiletto-pumps.json")), "but this set is kind"),
+    ("scene recipes that skip an alignment rank",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["duty"].pop(0)), "must cover alignment ranks 1 to 10"),
+    ("celebration naming a theme pack that does not exist",
+     lambda r: edit(r / "data/art/_settings/scene-recipes.json", lambda d: d["celebration"].update({"Fire": "no-such-pack"})), "which does not exist"),
     ("scene file name no longer matching its artId",
      lambda r: move(r / SCENE, (r / SCENE).with_name("signature.json")), "scene file name must equal"),
     ("theme folder without a theme.json manifest",
@@ -240,7 +245,8 @@ QUICK = {"baseline is clean", "animation action pointing at a motion piece that 
          "pieces extending each other in a cycle", "piece extending a frame without filling its slots", "output folder not matching the card's stage", "studio kit naming a piece that does not exist",
          "pet bonded to a different angel than the one that lists it", "angel card filed outside its division folder",
          "sister companion piece that no longer extends her Elder Dragon's frame", "sister scene that types the dragon instead of naming the piece",
-         "set that includes a piece that does not exist", "set that includes a piece of another kind"}
+         "set that includes a piece that does not exist", "set that includes a piece of another kind",
+         "scene recipes that skip an alignment rank", "celebration naming a theme pack that does not exist"}
 
 
 def main():

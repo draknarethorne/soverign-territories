@@ -1,0 +1,38 @@
+{
+  "id": "realms/fantasy-pastoral",
+  "kind": "realm",
+  "name": "Realm: pastoral fantasy (realistic)",
+  "description": "Setting: a grounded, cinematic pastoral fantasy world photographed on location like a feature-film still - sunlit meadows, timber and stone farms and villages, hedgerows and orchards, warm natural light with soft atmosphere and gentle, true-to-life colour; any magic is a faint warm glow or drifting seeds and petals; nothing from the modern world",
+  "negatives": [
+    "modern objects",
+    "modern buildings",
+    "skyscrapers",
+    "cars",
+    "power lines",
+    "electric street lights",
+    "neon",
+    "plastic",
+    "smartphones",
+    "contemporary clothing",
+    "sci-fi technology",
+    "cartoon",
+    "illustration",
+    "painterly",
+    "cel shading",
+    "game art",
+    "3D render",
+    "oversaturated colours"
+  ],
+  "backgroundRealm": "fantasy",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "realm",
+    "fantasy",
+    "realistic",
+    "pastoral",
+    "cinematic"
+  ],
+  "notes": "For quiet, gentle scenes: the same fantasy backgrounds (backgrounds/fantasy/) in warm, soft daylight. Choose it per card with components.realm."
+}

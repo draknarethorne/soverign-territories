@@ -1,0 +1,39 @@
+=== Judiel Stormcrown · Scene (Outfit + Effects): Study (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Judiel Stormcrown (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing strips of Storm Indigo and silver cloth wound around the torso and hips, layered over a short tunic with a steel clasp at the shoulder, a tied sash.
+
+Jewelry: a simple steel chain with a small pendant, the pendant formed as a forked lightning bolt inside a ring of cloud and set with a small sapphire gem.
+Back: a pair of hard-edged steel-blue wings with lightning running through the feathers.
+Legs & feet: bare feet, no footwear.
+
+He sits at a heavy wooden desk by candlelight with a book open before him and a hand resting on the page, his wings drawn tight, looking up at the camera as if interrupted; full figure visible.
+
+Holding a heavy leather-bound spellbook open in one hand, its pages glowing faintly electric white, a ribbon bookmark trailing.
+
+Candlelight and crackling arcs of lightning and sparks gather over the open page, electric white light faint on his fingers.
+
+Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Environment: a towering round library of floor-to-ceiling bookshelves with spiral ladders, floating books and glowing orbs, a huge astrolabe and warm lamplight.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

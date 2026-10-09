@@ -1,0 +1,39 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Domain (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour.
+Bust: full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring.
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a flowing mermaid-cut gown of translucent Deep Oceanic Blue silk chiffon with wave-like pleats, a plunging neckline over a fitted bodice shimmering with scale-like sequins, a high slit, a trailing train of layered tulle like sea foam, strands of pearls and polished platinum detailing, no headwear and her hair fully visible.
+
+Headwear: a delicate polished platinum tiara of pearls and shell.
+
+Jewelry: a pearl pendant on a polished platinum chain, pearl drop earrings, polished platinum shell bangles.
+Legs & feet: barefoot with fine polished platinum anklets.
+
+She wades knee-deep through shallow water with one hand trailing across the surface and the other raised, a low wave curling around her legs, glancing back to the camera; full figure visible.
+
+Flowing water and drifting spray rise in smooth ribbons around her arms and the water holds her reflection, aqua light moving under the surface.
+
+Eyes: the natural deep sapphire irises kept intact, with a faint aqua glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: the open sea at sunrise above a vivid coral reef: a gold and rose sky, a warm shallow sea so clear the reef is visible below, dolphins leaping, manta rays gliding under the surface, sea turtles, schools of silver fish flashing, jellyfish glowing in the water, seabirds wheeling, a distant island of palms.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

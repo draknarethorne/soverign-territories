@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/victory-feast/backgrounds/fantasy/camp/bonfire-victory-night-camp",
+  "kind": "background",
+  "name": "Bonfire Night Camp",
+  "description": "a hillside camp at night around a huge bonfire, tents and banners, drifting sparks and figures dancing as dark shapes against the glow",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "victory-feast",
+    "background"
+  ],
+  "mood": "wild, celebratory"
+}

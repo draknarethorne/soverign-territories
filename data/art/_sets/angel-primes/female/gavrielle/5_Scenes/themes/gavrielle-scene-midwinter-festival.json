@@ -1,0 +1,23 @@
+{
+  "artId": "gavrielle-scene-midwinter-festival",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/gavrielle.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Gavrielle/5_Scenes/themes/Gavrielle_Scene_MidwinterFestival.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Midwinter Festival",
+  "components": {
+    "pose": "data/art/motion/standing/seated-elegant.json",
+    "expression": "a soft, wondering smile, eyes lifted and glowing.",
+    "wearing": "data/art/themes/seasonal/midwinter-festival/wardrobe/clothing/gowns/midwinter-wool-festival-gown.json",
+    "back": "data/art/heroes/angel-primes/female/gavrielle/wings/gavrielle-wings.json",
+    "headwear": "data/art/themes/seasonal/midwinter-festival/wardrobe/headwear/crowns/midwinter-evergreen-wreath-crown.json",
+    "jewelry": "data/art/themes/seasonal/midwinter-festival/wardrobe/jewelry/sets/midwinter-frost-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
+    "makeup": "data/art/themes/seasonal/midwinter-festival/cosmetics/makeup/natural/winter-flush-look.json",
+    "effects": "data/art/heroes/angel-primes/female/gavrielle/effects/gavrielle-elemental-drift.json",
+    "background": "data/art/themes/seasonal/midwinter-festival/backgrounds/fantasy/tavern/festival-hall-long-tables.json"
+  },
+  "notes": "Midwinter Festival celebration scene for her element: every item is a library or theme-pack piece."
+}

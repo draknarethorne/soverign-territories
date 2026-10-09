@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/masquerade-ball/backgrounds/fantasy/castle/palace-terrace-moonlit-ball",
+  "kind": "background",
+  "name": "Palace Terrace, Moonlit",
+  "description": "a palace terrace at night with stone balustrades and potted trees, warm light and music spilling from tall open doors, a moonlit garden below",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "background"
+  ],
+  "mood": "intimate, moonlit"
+}

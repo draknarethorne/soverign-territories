@@ -1,0 +1,21 @@
+{
+  "artId": "draknara-scene-craft",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "name": "Craft",
+  "components": {
+    "pose": "She kneels at a small stone altar, shaking a bundle of bone and feather charms with one hand and drawing a line of ash across her other palm, her eyes to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknara/clothing/battle-gear.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknara/headwear/scene-battle-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknara/jewelry/scene-battle-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknara/footwear/scene-battle-legs-feet.json",
+    "effects": "Ash and stone shards, dust and glowing crystals lift from the altar in a thin spiral and {{MAGIC}} light gathers on the charms.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/backgrounds/fantasy/camp/adventurers-campfire.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/5_Scenes/character/Draknara_Scene_Craft.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "CRAFT: what a Shaman does; from data/art/_settings/scene-recipes.json."
+}

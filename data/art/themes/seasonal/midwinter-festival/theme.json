@@ -1,0 +1,13 @@
+{
+  "id": "themes/seasonal/midwinter-festival",
+  "kind": "theme",
+  "name": "Midwinter Festival",
+  "type": "event",
+  "description": "A deep-winter celebration: wool festival gowns with evergreen embroidery, coats with fur collars, wreath crowns, snowy market squares and feast halls hung with garlands.",
+  "realm": "fantasy",
+  "tags": [
+    "midwinter",
+    "winter",
+    "festival"
+  ]
+}

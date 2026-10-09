@@ -1,0 +1,39 @@
+=== Zadriel Tidehollow · Scene (Outfit + Effects): Domain (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Zadriel Tidehollow (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a Tidal Blue leather jerkin laced up the front over a linen shirt with rolled sleeves, fitted dark trousers and a broad belt with polished silver buckles, the neckline, cuffs and hem embroidered with a scallop shell over curling waves in silver; pristine, luminous and unmarked.
+
+Headwear: a slim silver circlet resting on the brow, set with a small silver gem, the hair flowing freely beneath it, a scallop shell over curling waves rising at the centre of the brow, set with a sapphire gem; pristine, luminous and unmarked.
+
+Jewelry: a simple polished silver chain with a small pendant, the pendant formed as a scallop shell over curling waves and set with a small sapphire gem.
+Back: a pair of broad pearl-grey wings with blue-silver edges, calm and wide.
+Legs & feet: bare feet, no footwear.
+
+He wades knee-deep through shallow water with one hand trailing across the surface and the other raised, a low wave curling around his legs, glancing back to the camera; full figure visible.
+
+Flowing water and drifting spray rise in smooth ribbons around his arms and the water holds his reflection, cool teal light moving under the surface.
+
+Eyes: the natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour kept intact, with a faint cool teal glow just kindling around the inner rim of each iris, pupils clear and dark, subtle and understated, no light spilling onto the lids or cheeks.
+
+Environment: a rocky tide-pool shore at low tide, wet dark stone and shallow clear water over coral and shells, sunlight slanting through the shallows, soft sea haze.
+
+Setting: a grounded, cinematic fantasy world photographed on location like a feature-film still - real weathered stone, timber, iron, fabric and foliage, natural and practical light with believable shadows and depth, true-to-life scale and atmosphere; any magic is subtle, a restrained glow or drifting particles that lights the subjects naturally; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

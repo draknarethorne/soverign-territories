@@ -1,0 +1,22 @@
+{
+  "artId": "seraphine-scene-domain",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/seraphine.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Seraphine/5_Scenes/character/Seraphine_Scene_Domain.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Domain",
+  "components": {
+    "pose": "She stands on a high ledge with her arms swept wide and her head back, wings spread, as a burst of brightness pours out from her; her eyes find the camera; full figure visible.",
+    "wearing": "data/art/heroes/angel-primes/female/seraphine/armor/seraphine-signature-armor.json",
+    "headwear": "data/art/heroes/angel-primes/female/seraphine/headwear/seraphine-signature-circlet.json",
+    "jewelry": "data/art/heroes/angel-primes/female/seraphine/jewelry/seraphine-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/boots/ankle-boots.json",
+    "back": "data/art/heroes/angel-primes/female/seraphine/wings/seraphine-wings.json",
+    "effects": "Golden light and drifting motes fan out from her in every direction and {{MAGIC}} light washes across the ground and the air.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json",
+    "background": "data/art/backgrounds/fantasy/elemental/grounded/radiant-sun-realm.json"
+  },
+  "notes": "DOMAIN: her Light element at work in its realm; from data/art/_settings/scene-recipes.json."
+}

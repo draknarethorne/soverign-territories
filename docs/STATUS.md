@@ -307,11 +307,28 @@ a piece doing most of a folder's work for many heroes means the look repeats, un
 | 5 | Hair | 10 short styles added (6 male, 4 female) | the male angels' default hair is still the textured crop (allowlisted until their photos are chosen); add hair study cards for the new styles |
 | 6 | Races | not started: seven non-human races are one `race.json` each | flesh out when the `{{RACE}}` slot is wired for bound heroes |
 
-**Beyond the library (needs your thinking, not built):**
-- **Scene types.** The angels have glamour, signature, story, theme, battle, spell-calling, daily-photo, romantic, editorial and celestial scenes. Missing kinds worth deciding on: travel and adventure, seasonal portraits at home, sports and action, workspace and craft, night city, festival and ceremony.
-- **Realms.** Only four (fantasy, fantasy-cinematic, modern, studio). Candidates: gothic, pastoral, noir city, historic, coastal and desert-modern, each with its own backgrounds, effects and wording.
-- **Themes.** 26 packs; the audit does not cover them. Their makeup, jewelry and robes could reuse the new library pieces (extend instead of re-describe).
-- **Moving over.** Sisters' pieces and the older bundles can be rebuilt on the atomic pieces whenever you want; that changes their prompts, so it is a choice.
+## Scenes: series, character and theme (Oct 8)
+
+Scenes now have three tiers (explained in [data/art/README.md](../data/art/README.md#scenes-series-character-theme)): a **series** the whole cast shares for the marketing pictures (Lineup, The Dawn, The Bond, Robe, Casting, Battle, Enchanted Evening, Signature), **character** scenes unique to each hero, and **theme** scenes.
+
+| Added | For | Count |
+| --- | --- | --- |
+| **Lineup** (the flat-backdrop group cut-out the sisters already had) | the 22 angels | 22 |
+| **Duty** and **Quiet**, from the alignment rank: Vigil, Blessing, Judgment, Reckoning, Exile; Cloister, Garden, Study, Watch Fire, Ruin | the 22 angels | 44 |
+| **Domain**: the element at work in its realm (11 recipes) | angels and sisters | 32 |
+| **Craft**: what the class does (Shaman, Shadow Knight, Bard, Necromancer, Summoner, Wizard, Enchanter, Cleric, Druid, Magician, Alchemist) | the 10 sisters | 10 |
+| **Celebration** from a new theme pack, by element: coronation, masquerade ball, midwinter festival, siege defense, victory feast | angels and sisters | 32 |
+
+That is 140 new cards, each with a prompt, a Qwen and a FireRed workflow, deployed to Angel Primes, Drakn Sisters and Drakness. The recipes live in `data/art/_settings/scene-recipes.json` (add a scene type there, then `bin\scaffold-characters.cmd`); the validator checks every rank, element and sister class has one.
+Also new: two realms (`fantasy-gothic` for the fallen and grieving, `fantasy-pastoral` for gentle scenes) and five theme packs (31 in all, with a new `ceremony` group).
+
+**Marketing series, still to decide:** the series scenes are the same pose and template for everyone but each hero stands in her own element realm, so a composite needs either the Lineup (flat backdrop) or a shared backdrop per series scene. A "series cut-out" variant of The Dawn, The Bond, Robe and Casting on one common backdrop would make them composable like the Lineup; say if you want it.
+
+**Still open (needs your thinking):**
+- **More character scenes.** Each hero could have more: a scene per sister's lore, the pair (an angel with her paired angel), the pet's own scene, seasonal portraits at home, travel and adventure, sports and action, night city.
+- **More realms.** Noir city, historic, desert and storm, each with backgrounds, effects and wording of its own.
+- **More themes.** Valentine, lunar new year, slavic winter, fey court, gaslamp, circus, jungle explorer; the audit does not cover themes yet, and theme makeup, jewelry and robes could extend the new library pieces.
+- **Moving over.** The sisters' pieces and the older bundles can be rebuilt on the atomic pieces whenever you want; that changes their prompts, so it is a choice.
 
 ## Next work (in order)
 

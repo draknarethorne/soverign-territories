@@ -1,0 +1,22 @@
+{
+  "artId": "draknora-scene-siege-defense",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknora-thorne.json",
+  "name": "Siege Defense",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a composed, quietly commanding look, eyes steady on the camera.",
+    "wearing": "data/art/themes/adventure/siege-defense/wardrobe/armor/plate/siege-defender-plate.json",
+    "headwear": "data/art/themes/adventure/siege-defense/wardrobe/headwear/helms/siege-open-helm.json",
+    "jewelry": "data/art/themes/adventure/siege-defense/wardrobe/jewelry/sets/siege-ward-set.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknora/footwear/scene-robe-legs-feet.json",
+    "makeup": "data/art/themes/adventure/siege-defense/cosmetics/makeup/dramatic/soot-and-sweat-look.json",
+    "effects": "data/art/heroes/drakn-sisters/draknora/effects/elemental-aura.json",
+    "background": "data/art/themes/adventure/siege-defense/backgrounds/fantasy/battlefield/breached-gate-courtyard.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknora/5_Scenes/themes/Draknora_Scene_SiegeDefense.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Siege Defense celebration scene for her element: every item is a library or theme-pack piece."
+}

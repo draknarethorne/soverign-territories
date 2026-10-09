@@ -1,0 +1,21 @@
+{
+  "artId": "drakneta-scene-craft",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/drakneta-thorne.json",
+  "name": "Craft",
+  "components": {
+    "pose": "She stands inside a drawn ring of chalk glyphs, her hands pressed together and then parting as a small shape of light forms between them, her eyes bright and on the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/drakneta/clothing/signature-robe.json",
+    "headwear": "data/art/heroes/drakn-sisters/drakneta/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/drakneta/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/drakneta/footwear/scene-robe-legs-feet.json",
+    "effects": "Crackling arcs of lightning and sparks turn around the ring and gather between her palms, {{MAGIC}} light tracing the chalk lines.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/full-glow.json",
+    "background": "data/art/backgrounds/fantasy/temple/marble-cathedral-sunbeams.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Drakneta/5_Scenes/character/Drakneta_Scene_Craft.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "CRAFT: what a Summoner does; from data/art/_settings/scene-recipes.json."
+}

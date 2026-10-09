@@ -1,0 +1,14 @@
+{
+  "id": "themes/adventure/siege-defense/backgrounds/fantasy/battlefield/breached-gate-courtyard",
+  "kind": "background",
+  "name": "Breached Gate Courtyard",
+  "description": "the courtyard behind a breached castle gate, splintered timber and scattered shields, torchlight and smoke, defenders as dark shapes in the haze",
+  "compatibleStages": [
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "background"
+  ],
+  "mood": "desperate, dim"
+}

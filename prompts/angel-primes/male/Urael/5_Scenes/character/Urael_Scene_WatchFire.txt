@@ -1,0 +1,41 @@
+=== Urael Cinderfane · Scene (Outfit + Effects): Watch Fire (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Urael Cinderfane (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, figure and proportions, and the hair colour, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: natural hair colour from the reference image, lightly enhanced with healthy shine and dimension - do not recolour.
+Eyes: natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour.
+Skin: natural skin tone from the reference image, evenly toned and lightly enhanced - do not alter undertone.
+
+Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
+
+Wearing a long Crimson arcane robe with wide sleeves, iron embroidered runes along the hem and cuffs, a high collar and a sash at the waist, every plate and trim engraved with a rising flame with scattered embers in iron; worn, scorched at the edges and trimmed with dark feathers.
+
+Headwear: a crown of fresh flowers and trailing iron ribbon woven with small garnet gems, a rising flame with scattered embers rising at the centre of the brow, set with a garnet gem; worn, scorched at the edges and trimmed with dark feathers.
+
+Jewelry: a simple blackened gold chain with a small pendant, the pendant formed as a rising flame with scattered embers and set with a small garnet gem.
+Back: a pair of great black-and-crimson wings burning at the edges with embers.
+Legs & feet: Crimson leather boots laced with iron cord from the toe to the knee, a low heel and a turned-over cuff.
+
+He sits on a rock beside a low camp fire at night with his weapon across his knees and his wings wrapped around his shoulders, staring into the flames and then toward the camera; full figure visible.
+
+Holding a heavy two-handed iron-edged greatsword, gripped in both hands, Crimson-wrapped hilt, its metal worked with a rising flame with scattered embers in iron, dancing flame, embers and sparks gathering along it when it is raised; worn, scorched at the edges and trimmed with dark feathers.
+
+Firelight flickers along his wings while dancing flame, embers and sparks curl in the heat above the fire, molten orange light low in his eyes.
+
+Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
+
+Environment: a woodland clearing with a crackling campfire, bedrolls and a canvas lean-to, sparks rising toward a sky full of stars and the Milky Way.
+
+Setting: a grounded, cinematic gothic fantasy world photographed on location like a feature-film still - weathered dark stone, wet slate, iron and worn cloth, cold low light with mist and the warm pinpoints of candles and torches, desaturated colour with deep believable shadows; any magic is a faint ember or a cold glow; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, bald, shaved head, thinning hair, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, cartoon, illustration, painterly, cel shading, game art, 3D render, oversaturated colours, text, wording, watermark, logo.

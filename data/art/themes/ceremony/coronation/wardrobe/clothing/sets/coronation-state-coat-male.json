@@ -1,0 +1,15 @@
+{
+  "id": "themes/ceremony/coronation/wardrobe/clothing/sets/coronation-state-coat-male",
+  "kind": "wearing",
+  "name": "Coronation State Coat",
+  "description": "a long {{PRIMARY}} velvet state coat with an ermine-trimmed collar and {{METAL}} braid across the chest, dark trousers and polished boots, under a heavy trailing mantle",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "wearing",
+    "male"
+  ]
+}

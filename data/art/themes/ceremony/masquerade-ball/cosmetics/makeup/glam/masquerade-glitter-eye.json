@@ -1,0 +1,19 @@
+{
+  "id": "themes/ceremony/masquerade-ball/cosmetics/makeup/glam/masquerade-glitter-eye",
+  "kind": "makeup",
+  "name": "Masquerade Glitter Eye",
+  "description": "a masquerade eye - a sweep of {{EYESHADOW}} shadow with a line of fine gold glitter along the lid, winged {{LASH}} liner, defined lashes and a {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "masquerade-ball",
+    "makeup"
+  ]
+}

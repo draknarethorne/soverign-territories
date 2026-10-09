@@ -1,0 +1,21 @@
+{
+  "artId": "auriel-scene-coronation",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/male/auriel.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/male/Auriel/5_Scenes/themes/Auriel_Scene_Coronation.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Coronation",
+  "components": {
+    "pose": "data/art/motion/standing/commanding-cast.json",
+    "expression": "a serene, knowing smile, eyes calm and bright.",
+    "wearing": "data/art/themes/ceremony/coronation/wardrobe/clothing/sets/coronation-state-coat-male.json",
+    "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
+    "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
+    "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
+    "effects": "data/art/heroes/angel-primes/male/auriel/effects/auriel-elemental-drift.json",
+    "background": "data/art/themes/ceremony/coronation/backgrounds/fantasy/castle/coronation-hall-at-dawn.json"
+  },
+  "notes": "Coronation celebration scene for her element: every item is a library or theme-pack piece."
+}

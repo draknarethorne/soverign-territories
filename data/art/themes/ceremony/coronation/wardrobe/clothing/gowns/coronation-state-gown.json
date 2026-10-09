@@ -1,0 +1,14 @@
+{
+  "id": "themes/ceremony/coronation/wardrobe/clothing/gowns/coronation-state-gown",
+  "kind": "wearing",
+  "name": "Coronation State Gown",
+  "description": "a floor-length {{PRIMARY}} velvet coronation gown with a high waist, long sleeves and a long train, an ermine-trimmed mantle across the shoulders and {{METAL}} embroidery along the hem and cuffs",
+  "compatibleStages": [
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "coronation",
+    "wearing"
+  ]
+}

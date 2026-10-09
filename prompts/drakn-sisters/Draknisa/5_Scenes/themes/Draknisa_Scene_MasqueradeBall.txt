@@ -1,0 +1,41 @@
+=== Draknisa Thorne · Scene (Outfit + Effects): Masquerade Ball (group: Scene, complete from the A-pose) — Edit (img2img) ===
+Incoming image: an A-pose of Draknisa Thorne (chosen hair). Apply the outfit, casting effect, and full scene together; keep face, body, and hair from the incoming image. Denoise ~0.8-0.9.
+
+----------------------------------------------------------------
+prompt:
+
+Photo-realistic full-body shot, head to toe, 85mm portrait photography, razor-sharp focus, soft depth of field.
+
+Maintain strict fidelity to the incoming image: the subject's face, eye colour, skin tone, makeup, figure, proportions and bust size, and the hair colour, highlights, length and full volume, all exactly as shown.
+
+Critical details - these must be clearly visible:
+Hair: dark chocolate-brown hair, glossy and deep, a soft dip-dye of deep teal on only the last few inches of the ends, blended gently upward, the rest of the hair keeping its natural base colour.
+Bust: full, firm, classically proportioned bust, softly rounded and well supported with natural medium detail, lifted high and pressed together at the centre; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage with no gap between them, held firm and high rather than drooping; realistic skin texture and natural, anatomically accurate detail.
+Eyes: deep sapphire irises with radiating deep teal striations and an oceanic indigo limbal ring.
+Skin: warm sun-kissed medium tan complexion, evenly tanned, no pale areas.
+
+Fit the outfit closely to the body in the incoming image, following her contour at the bust, waist, hips and legs unless this prompt says otherwise: the garment supports and lifts the bust like a well-made structured bodice or a push-up, shaping it into a full, firm, rounded form with a crisp, clearly defined cleavage at the centre, so the bust is never hidden, flattened or lost behind loose fabric; the waist is defined and the hips follow their natural curve, as a real fitted garment on her body would.
+
+Wearing a full-skirted Deep Oceanic Blue satin ball gown with a fitted bodice, an off-the-shoulder neckline and layered tulle, teal appliqué scattered over the skirt.
+
+Headwear: an ornate half-face masquerade mask of Deep Oceanic Blue lacquer edged in polished platinum, tied behind the head with a satin ribbon.
+
+Jewelry: a fine polished platinum chain with a single teardrop aquamarine pendant resting at the collarbones; pearl drop earrings on short polished platinum posts, each pearl a soft white; a polished platinum ring set with a single aquamarine stone in a raised setting.
+Legs & feet: barefoot with fine polished platinum anklets.
+
+A candid high-fashion editorial shot, dynamic natural movement, confident contrapposto posing. Light breeze. angled about 45 degrees to the camera (3/4 turn), weight on the back leg, hips and shoulders counter-rotated into a soft S-curve. turned back toward the camera, chin slightly down. eyes to camera. a warm, radiant smile, eyes full of light. one foot forward and lightly crossed; a hand resting at the hip, the other relaxed; poised mid-motion.
+
+Floating ribbons of aqua water and glittering droplets orbit her.
+
+Eyes: irises softly aglow with aqua light, brightest near the pupil and fading to the natural deep sapphire irises at the rim, iris detail still visible, a gentle aqua catchlight, no light spilling beyond the eyelids.
+
+Makeup: a masquerade eye - a sweep of teal shadow with a line of fine gold glitter along the lid, winged dark brown-black liner, defined lashes and a coral-pink lip.
+
+Environment: a grand ballroom lit by hundreds of candles in crystal chandeliers, a polished parquet floor, tall mirrors and masked guests as soft blurs.
+
+Setting: a high-fantasy, Dungeons & Dragons-style realm - medieval-fantasy architecture, stone, timber, torchlight, candlelight and natural light, living magic; nothing from the modern world.
+
+----------------------------------------------------------------
+negative prompt:
+
+extra people, extra limbs, extra digits, deformed hands, extra feet, recolored eyes, green eyes, brown eyes, grey eyes, hazel eyes, amber eyes, red eyes, violet eyes, bald, shaved head, thinning hair, pale skin, fair skin, washed-out skin, modern objects, modern buildings, skyscrapers, cars, power lines, electric street lights, neon, plastic, smartphones, contemporary clothing, sci-fi technology, flat chest, small bust, narrow bust, flattened breasts, drooping breasts, sagging bust, low-hanging breasts, wide-set breasts, wide cleavage gap, reduced bust size, breasts spread apart, separated breasts, gap between breasts, widely spaced bikini cups, text, wording, watermark, logo.

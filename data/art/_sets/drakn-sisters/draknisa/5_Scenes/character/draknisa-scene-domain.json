@@ -1,0 +1,21 @@
+{
+  "artId": "draknisa-scene-domain",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Domain",
+  "components": {
+    "pose": "She wades knee-deep through shallow water with one hand trailing across the surface and the other raised, a low wave curling around her legs, glancing back to the camera; full figure visible.",
+    "wearing": "data/art/heroes/drakn-sisters/draknisa/clothing/elegant-casting-gown.json",
+    "headwear": "data/art/heroes/drakn-sisters/draknisa/headwear/scene-robe-headwear.json",
+    "jewelry": "data/art/heroes/drakn-sisters/draknisa/jewelry/scene-robe-jewelry.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknisa/footwear/scene-robe-legs-feet.json",
+    "effects": "Flowing water and drifting spray rise in smooth ribbons around her arms and the water holds her reflection, {{MAGIC}} light moving under the surface.",
+    "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
+    "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/dawn/sunrise-coral-reef-surface.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/character/Draknisa_Scene_Domain.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "DOMAIN: her Water element at work in her homeland; from data/art/_settings/scene-recipes.json."
+}

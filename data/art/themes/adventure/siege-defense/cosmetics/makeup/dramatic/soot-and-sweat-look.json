@@ -1,0 +1,19 @@
+{
+  "id": "themes/adventure/siege-defense/cosmetics/makeup/dramatic/soot-and-sweat-look",
+  "kind": "makeup",
+  "name": "Soot and Sweat",
+  "description": "a battle-worn finish - smudged soot along the cheekbones and brow, a bare lid, chapped natural lips and a streak of {{BLUSH}} flush",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "siege-defense",
+    "makeup"
+  ]
+}

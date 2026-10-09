@@ -36,6 +36,7 @@ echo    prompts.cmd [filters]           regenerate prompts from data\art (all, o
 echo    videoprompts.cmd [card.json]    regenerate video prompts from data\animation cards
 echo    scaffold-angels.cmd [SLUG^|--alpha]  write the standard card set for the angels (--alpha: the two alpha test heroes); --coverage reports library use
 echo    scaffold-sister.cmd SLUG        write a sister's studio kit cards
+echo    scaffold-characters.cmd         write the character scenes (angels: Lineup, duty, quiet, domain, celebration; sisters: domain, craft, celebration) from scene-recipes.json
 echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piece and every reference to it
 echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)
 echo    style-audit.cmd [--prompts]     rank art wording by how illustrated (vs photographic) it reads; changes nothing

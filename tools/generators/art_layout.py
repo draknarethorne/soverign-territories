@@ -34,6 +34,18 @@ SCENE_BUCKETS = {
 }
 
 
+def _character_scene_ids():
+    """Scenes that come from a hero's own character (alignment, element, class), named in data/art/_settings/scene-recipes.json; they share one folder, 5_Scenes/character/."""
+    path = ROOT / "data/art/_settings/scene-recipes.json"
+    if not path.exists():
+        return []
+    recipes = json.loads(path.read_text(encoding="utf-8"))
+    return [r["id"] for kind in ("duty", "quiet") for r in recipes.get(kind, [])] + ["domain", "craft"]
+
+
+SCENE_BUCKETS["character"] = _character_scene_ids()
+
+
 # Real-world photo showcases group by mood; showcases on a studio backdrop group by kind (celestial armor, elemental magic, studio display, editorial).
 SHOWCASE_STUDIO = {"armor-stand", "runway-flair"}
 SHOWCASE_ELEMENTAL = {"elemental-casting", "elemental-dance", "spell-calling", "mirror-spirit", "ancestral-fire", "earthen-casting",

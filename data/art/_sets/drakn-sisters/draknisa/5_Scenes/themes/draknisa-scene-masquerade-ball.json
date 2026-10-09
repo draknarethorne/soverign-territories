@@ -1,0 +1,22 @@
+{
+  "artId": "draknisa-scene-masquerade-ball",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/drakn-sisters/draknisa-thorne.json",
+  "name": "Masquerade Ball",
+  "components": {
+    "pose": "data/art/motion/standing/three-quarter-glamour.json",
+    "expression": "a warm, radiant smile, eyes full of light.",
+    "wearing": "data/art/themes/ceremony/masquerade-ball/wardrobe/clothing/gowns/masquerade-ball-gown.json",
+    "headwear": "data/art/themes/ceremony/masquerade-ball/wardrobe/headwear/hats/masquerade-half-mask.json",
+    "jewelry": "data/art/themes/ceremony/masquerade-ball/wardrobe/jewelry/sets/masquerade-drop-set.json",
+    "legs_feet": "data/art/heroes/drakn-sisters/draknisa/footwear/scene-robe-legs-feet.json",
+    "makeup": "data/art/themes/ceremony/masquerade-ball/cosmetics/makeup/glam/masquerade-glitter-eye.json",
+    "effects": "data/art/heroes/drakn-sisters/draknisa/effects/elemental-aura.json",
+    "background": "data/art/themes/ceremony/masquerade-ball/backgrounds/fantasy/interiors/candlelit-ballroom-chandeliers.json"
+  },
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/drakn-sisters/Draknisa/5_Scenes/themes/Draknisa_Scene_MasqueradeBall.txt",
+  "denoise": "~0.5-0.7",
+  "notes": "Masquerade Ball celebration scene for her element: every item is a library or theme-pack piece."
+}

@@ -1,0 +1,23 @@
+{
+  "artId": "ravaelle-scene-masquerade-ball",
+  "kind": "base-set",
+  "stage": "scene",
+  "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
+  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "output": "prompts/angel-primes/female/Ravaelle/5_Scenes/themes/Ravaelle_Scene_MasqueradeBall.txt",
+  "denoise": "~0.5-0.7",
+  "name": "Masquerade Ball",
+  "components": {
+    "pose": "data/art/motion/standing/hand-on-hip-power.json",
+    "expression": "a playful, knowing smile, eyes bright with mischief.",
+    "wearing": "data/art/themes/ceremony/masquerade-ball/wardrobe/clothing/gowns/masquerade-ball-gown.json",
+    "back": "data/art/heroes/angel-primes/female/ravaelle/wings/ravaelle-wings.json",
+    "headwear": "data/art/themes/ceremony/masquerade-ball/wardrobe/headwear/hats/masquerade-half-mask.json",
+    "jewelry": "data/art/themes/ceremony/masquerade-ball/wardrobe/jewelry/sets/masquerade-drop-set.json",
+    "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
+    "makeup": "data/art/themes/ceremony/masquerade-ball/cosmetics/makeup/glam/masquerade-glitter-eye.json",
+    "effects": "data/art/heroes/angel-primes/female/ravaelle/effects/ravaelle-elemental-drift.json",
+    "background": "data/art/themes/ceremony/masquerade-ball/backgrounds/fantasy/interiors/candlelit-ballroom-chandeliers.json"
+  },
+  "notes": "Masquerade Ball celebration scene for her element: every item is a library or theme-pack piece."
+}
