@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/farmhouse-porch-morning",
+  "kind": "background",
+  "name": "Modern: farmhouse porch, morning",
+  "description": "the wooden porch of a white farmhouse in soft morning light, a rocking chair, potted flowers and a green lawn beyond",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

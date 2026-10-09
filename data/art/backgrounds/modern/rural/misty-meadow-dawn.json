@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/misty-meadow-dawn",
+  "kind": "background",
+  "name": "Modern: misty meadow, dawn",
+  "description": "a wide meadow at dawn with low mist over the grass, wildflowers dewed with light, trees dark and soft in the distance",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

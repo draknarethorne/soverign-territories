@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/bone-carved-staff",
+  "kind": "holding",
+  "name": "Carved Bone Staff",
+  "description": "a staff of pale carved bone with a small skull at the top and a {{METAL}} ring below it, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "bone",
+    "gothic"
+  ]
+}

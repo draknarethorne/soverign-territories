@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/crystal/geode-plate-armor",
+  "kind": "wearing",
+  "name": "Geode Plate Armor",
+  "description": "plate armor whose panels are cut from banded geode stone, edged in {{METAL}}, the cut faces glittering with small {{GEM}} crystals",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "crystal",
+    "geode",
+    "unisex"
+  ]
+}

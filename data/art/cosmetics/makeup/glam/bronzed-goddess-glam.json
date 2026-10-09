@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/bronzed-goddess-glam",
+  "kind": "makeup",
+  "name": "Bronzed Glam",
+  "description": "a bronzed glam - a warm bronze lid with a gold inner-corner highlight, sculpted and bronzed cheeks, defined lashes and a glossy peach lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

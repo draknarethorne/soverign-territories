@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/cut-crease-evening",
+  "kind": "makeup",
+  "name": "Evening Cut Crease",
+  "description": "an evening cut crease - a sharp {{EYESHADOW}} crease over a bright lid, winged {{LASH}} liner, full lashes, sculpted cheeks and a satin {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

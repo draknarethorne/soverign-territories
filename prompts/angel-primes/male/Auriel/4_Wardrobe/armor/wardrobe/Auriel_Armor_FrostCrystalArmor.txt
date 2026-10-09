@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing a cuirass of translucent ice crystal in Radiant Pearl White and white, jagged crystal pauldrons, a layered crystal skirt and polished gold filigree catching bright sunrise gold light.
+Wearing plates of polished clear quartz set in a steel frame over a Radiant Pearl White cloth tunic, the plates throwing soft reflections.
 
 Arms: bare arms.
 

@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/face-framing/money-piece",
+  "kind": "highlights",
+  "name": "Money Piece",
+  "description": "a bright {{HIGHLIGHT_COLOR}} money-piece framing the face, two wide front sections lightened, the rest of the hair in its natural base colour",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "face-framing"
+  ]
+}

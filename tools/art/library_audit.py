@@ -33,11 +33,17 @@ def load_allow():
     return json.loads(ALLOW.read_text(encoding="utf-8")).get("intentional", {}) if ALLOW.exists() else {}
 
 
+def load_ignored_groups():
+    """Groups whose cards share pieces on purpose (ten sisters in one scene or robe for a unified picture); their use is not counted as over-use."""
+    return json.loads(ALLOW.read_text(encoding="utf-8")).get("ignoreGroups", {}) if ALLOW.exists() else {}
+
+
 def usage():
     refs, users, indirect = collections.Counter(), collections.defaultdict(set), set()
+    ignored = load_ignored_groups()
     for d in ("_sets", "_kits", "heroes"):
         for p in (ART / d).rglob("*.json"):
-            if "_archive" in p.parts:
+            if "_archive" in p.parts or p.relative_to(ART / d).parts[0] in ignored:
                 continue
             for m in set(REF.findall(p.read_text(encoding="utf-8"))):
                 key = m if m.startswith("data/art/") else "data/art/" + m
@@ -97,6 +103,7 @@ def main():
     ap.add_argument("--unused", action="store_true", help="also list folders with 5+ pieces no card uses")
     args = ap.parse_args()
     allow = load_allow()
+    ignored = load_ignored_groups()
     refs, users, indirect = usage()
     rows, bundles = [], []
     for f, files in sorted(folders(args.scope).items()):
@@ -109,9 +116,15 @@ def main():
             bundles += shortcuts(files)
 
     over = [r for r in rows if r["topheroes"] >= args.heroes and r["share"] >= args.share]
-    flagged = [r for r in over if not allowed(r["folder"], allow)]
-    intended = [r for r in over if allowed(r["folder"], allow)]
+    # an allowlist entry can be a whole folder, or one piece (folder/piece) that is that piece's job by design
+    def why_allowed(r):
+        return allowed(r["folder"], allow) or allowed(r["folder"] + "/" + r["top"], allow)
+
+    flagged = [r for r in over if not why_allowed(r)]
+    intended = [r for r in over if why_allowed(r)]
     print(f"OVER-USED: one piece does {int(args.share * 100)}%+ of its folder's work for {args.heroes}+ heroes (add a folder to data/art/_settings/library-audit.json if it is on purpose):")
+    if ignored:
+        print("  (not counted, shared on purpose: " + "; ".join(f"{g}: {why}" for g, why in ignored.items()) + ")")
     for r in sorted(flagged, key=lambda r: -r["topheroes"]):
         print(f"  {r['folder']:48} {r['pieces']:2} pieces   {r['top']} in {r['toprefs']} cards for {r['topheroes']} heroes ({int(r['share'] * 100)}%)")
     if not flagged:

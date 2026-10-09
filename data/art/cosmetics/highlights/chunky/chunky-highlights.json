@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/chunky/chunky-highlights",
+  "kind": "highlights",
+  "name": "Chunky Highlights",
+  "description": "bold, chunky {{HIGHLIGHT_COLOR}} highlights in wide sections through the lengths, clearly visible against the base colour",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "chunky"
+  ]
+}

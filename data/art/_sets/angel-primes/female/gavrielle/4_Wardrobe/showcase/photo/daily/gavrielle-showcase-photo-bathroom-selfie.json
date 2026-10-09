@@ -10,7 +10,8 @@
     "background": "data/art/backgrounds/modern/interior/bathroom-mirror-bright.json",
     "framing": "data/art/studio/shots/mirror-selfie.json",
     "realm": "data/art/realms/modern.json",
-    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "makeup": "data/art/cosmetics/makeup/natural/sun-kissed-bronze.json"
   },
   "template": "data/art/_templates/heroes/showcase-photo-human.txt",
   "denoise": "~0.6-0.8",

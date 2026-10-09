@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/siren-elongated-eye",
+  "kind": "makeup",
+  "name": "Siren Eye",
+  "description": "a siren eye - a long, elongated flick of {{LASH}} liner drawn out and slightly upward, a smoky {{EYESHADOW}} outer corner, thick lashes and a soft nude lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

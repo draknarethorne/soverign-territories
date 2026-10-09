@@ -9,7 +9,7 @@
   "name": "Runic Warplate",
   "aesthetic": "a clean studio presentation of runic warplate",
   "components": {
-    "wearing": "data/art/wardrobe/armor/runic/runic-warplate.json",
+    "wearing": "data/art/wardrobe/armor/runic/rune-embroidered-tabard-armor.json",
     "arms": "bare arms",
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "back": "the back of the armor fully visible",

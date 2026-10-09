@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/leather-thong-sandals",
+  "kind": "legs_feet",
+  "name": "Leather Thong Sandals",
+  "description": "simple {{PRIMARY}} leather thong sandals with a flat sole and a slim strap between the toes",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "unisex"
+  ]
+}

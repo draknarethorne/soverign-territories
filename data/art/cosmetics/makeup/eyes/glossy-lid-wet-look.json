@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/glossy-lid-wet-look",
+  "kind": "makeup",
+  "name": "Glossy Lid",
+  "description": "a wet-look eye - a clear glossy sheen over the lids with a wash of {{EYESHADOW}}, separated lashes, fresh skin and a tinted lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/chrome-metallic-lid",
+  "kind": "makeup",
+  "name": "Chrome Lid",
+  "description": "a chrome eye - a mirror-bright metallic {{METAL}} shadow pressed on the lid, a clean lash line, soft skin and a neutral lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

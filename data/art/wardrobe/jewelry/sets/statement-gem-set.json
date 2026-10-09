@@ -1,0 +1,22 @@
+{
+  "id": "wardrobe/jewelry/sets/statement-gem-set",
+  "kind": "jewelry",
+  "name": "Statement Gem Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/gem-collar.json",
+    "data/art/wardrobe/jewelry/earrings/chandelier-earrings.json",
+    "data/art/wardrobe/jewelry/rings/statement-cocktail-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "gem",
+    "statement"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows. No belly ring here, so it suits gowns and dresses as well as armor; add a belly-ring piece to a bikini or armor card on its own."
+}

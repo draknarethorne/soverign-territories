@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/necklaces/gem-collar.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glass-slippers.json",
     "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
+    "holding": "data/art/wardrobe/weapons/staves/gnarled-oak-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting swirling frost, snowflakes and ice crystals around her.",
     "background": "data/art/backgrounds/fantasy/swamp/glowing-fen.json"
   },

@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing layered Radiant Pearl White hide and fur: a fur mantle over one shoulder, a leather chest wrap with bone toggles, a hide kilt and rough leather wrist wraps, the arms bare.
+Wearing a bikini-cut set of Radiant Pearl White leather trimmed in thick white fur: a laced top, a low-slung skirt of fur and leather and a fur-edged shoulder wrap, the midriff bare.
 
 Arms: bare arms.
 

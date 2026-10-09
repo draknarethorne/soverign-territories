@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/wands/bone-and-silver-wand",
+  "kind": "holding",
+  "name": "Bone and Silver Wand",
+  "description": "a thin wand of pale bone bound in {{METAL}} wire, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "bone",
+    "gothic"
+  ]
+}

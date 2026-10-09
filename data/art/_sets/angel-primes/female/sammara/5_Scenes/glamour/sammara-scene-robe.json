@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/lace-up-heels.json",
     "back": "data/art/heroes/angel-primes/female/sammara/wings/sammara-wings.json",
-    "holding": "data/art/wardrobe/weapons/wands/arcane-wand.json",
+    "holding": "data/art/wardrobe/weapons/wands/iron-spiral-wand.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting curling green venom mist and falling drops around her.",
     "background": "data/art/backgrounds/fantasy/temple/sunlit-cathedral-sanctum.json"
   },

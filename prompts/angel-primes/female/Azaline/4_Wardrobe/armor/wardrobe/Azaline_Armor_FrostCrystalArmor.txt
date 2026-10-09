@@ -18,7 +18,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
 
-Wearing a cuirass of translucent ice crystal in Glacial Cyan and white, jagged crystal pauldrons, a layered crystal skirt and brushed chrome filigree catching pale ice blue light.
+Wearing faceted amethyst crystal plates over a Glacial Cyan silk bodice, shard-shaped pauldrons that glow pale ice blue from within, a skirt of hanging crystal slivers and brushed chrome filigree.
 
 Arms: bare arms.
 

@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/golden-light-motes-drifting",
+  "kind": "effects",
+  "name": "Golden light motes",
+  "description": "Warm motes of {{MAGIC}}-tinted light drift slowly through the air around her, catching the light like dust in a sunbeam.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

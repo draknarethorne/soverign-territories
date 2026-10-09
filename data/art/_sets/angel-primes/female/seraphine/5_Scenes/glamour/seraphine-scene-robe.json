@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/earrings/chandelier-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/wedge-sandals.json",
     "back": "data/art/heroes/angel-primes/female/seraphine/wings/seraphine-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
+    "holding": "data/art/wardrobe/weapons/staves/bone-carved-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting golden light and drifting motes around her.",
     "background": "data/art/backgrounds/fantasy/temple/forest-shrine-stone-lanterns.json"
   },

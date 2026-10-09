@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/glass-skin-glow",
+  "kind": "makeup",
+  "name": "Glass Skin",
+  "description": "a glass-skin finish - dewy, almost translucent skin with a glassy highlight on the cheekbones, brows brushed soft, clear lashes and a sheer {{LIP}} gloss",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

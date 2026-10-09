@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/brows/laminated-brows",
+  "kind": "makeup",
+  "name": "Laminated Brows",
+  "description": "a brow-forward look - laminated, brushed-up brows with a glossy finish, a clean skin-like base, curled lashes and a soft balm lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "brows"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

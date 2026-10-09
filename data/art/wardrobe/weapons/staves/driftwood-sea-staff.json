@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/driftwood-sea-staff",
+  "kind": "holding",
+  "name": "Driftwood Staff",
+  "description": "a bleached driftwood staff curved like a wave at the top, wrapped with a length of rope and a small {{GEM}} bead, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "driftwood",
+    "sea"
+  ]
+}

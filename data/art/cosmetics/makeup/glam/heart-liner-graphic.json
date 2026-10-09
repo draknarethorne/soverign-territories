@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/heart-liner-graphic",
+  "kind": "makeup",
+  "name": "Graphic Hearts",
+  "description": "a graphic look - a clean winged {{LASH}} liner with a small drawn heart at the outer corner of each eye, a bare cheek and a soft pink lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

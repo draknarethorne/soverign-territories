@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/sandals/huarache-sandals",
+  "kind": "legs_feet",
+  "name": "Huarache Sandals",
+  "description": "woven {{PRIMARY}} leather huarache sandals with a flat sole and an interlaced upper",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "sandals",
+    "unisex"
+  ]
+}

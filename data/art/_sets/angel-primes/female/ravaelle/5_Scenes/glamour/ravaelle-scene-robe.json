@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/gladiator-sandals.json",
     "back": "data/art/heroes/angel-primes/female/ravaelle/wings/ravaelle-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "holding": "data/art/wardrobe/weapons/staves/driftwood-sea-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting flowing water and drifting spray around her.",
     "background": "data/art/backgrounds/fantasy/interiors/grand-ballroom-chandeliers.json"
   },

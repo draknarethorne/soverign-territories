@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/hotel-terrace-breakfast-morning",
+  "kind": "background",
+  "name": "Modern: hotel terrace, morning",
+  "description": "a sunlit hotel terrace in the morning, a small round table set for breakfast with white linen, potted olive trees and a view over a sparkling bay",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "wardrobe/jewelry/sets/evening-gem-set",
+  "kind": "jewelry",
+  "name": "Evening Gem Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/pendant-necklace.json",
+    "data/art/wardrobe/jewelry/earrings/threader-chain-earrings.json",
+    "data/art/wardrobe/jewelry/rings/gem-solitaire-ring.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "evening",
+    "gem"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows. No belly ring here, so it suits gowns and dresses as well as armor; add a belly-ring piece to a bikini or armor card on its own."
+}

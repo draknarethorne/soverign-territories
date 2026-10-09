@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/seaside-cliff-path-overcast",
+  "kind": "background",
+  "name": "Modern: cliff path, overcast",
+  "description": "a grassy cliff-top path above the sea under a soft overcast sky, wind-bent grass, a low stone wall and the grey-green water far below",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/runic/runic-brigandine",
+  "kind": "wearing",
+  "name": "Runic Brigandine",
+  "description": "a brigandine of {{PRIMARY}} cloth with steel plates riveted inside, the plates engraved with runes, laced at the side",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "runic",
+    "brigandine",
+    "unisex"
+  ]
+}

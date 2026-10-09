@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/lips/blurred-lip-liner",
+  "kind": "makeup",
+  "name": "Blurred Lip Liner",
+  "description": "a blurred lip - a deeper {{LIP}} liner drawn on the outer lip and smudged inward with a matte lip colour, fresh skin and brushed brows",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "lips"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

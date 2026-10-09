@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/soft-focus-matte",
+  "kind": "makeup",
+  "name": "Soft-Focus Matte",
+  "description": "a soft-focus matte finish - velvety, blurred skin with no shine, a barely-there taupe lid, soft lashes and a matte nude-rose lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

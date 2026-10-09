@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/pastel-wash-eye",
+  "kind": "makeup",
+  "name": "Pastel Wash",
+  "description": "a pastel eye - a sheer wash of pale {{EYESHADOW}} across the lid to the brow bone, softly defined lashes, a dewy cheek and a sheer pink lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

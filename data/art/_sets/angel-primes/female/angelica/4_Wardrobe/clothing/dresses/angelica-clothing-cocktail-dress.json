@@ -7,7 +7,7 @@
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/fitted-cocktail-dress.json",
     "arms": "data/art/wardrobe/jewelry/bracelets/simple-silver.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/pearl-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/glowing-strap-heels.json"
   },
   "template": "data/art/_templates/heroes/clothing-human.txt",

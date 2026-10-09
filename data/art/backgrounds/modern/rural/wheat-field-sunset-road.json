@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/rural/wheat-field-sunset-road",
+  "kind": "background",
+  "name": "Modern: wheat field road, sunset",
+  "description": "a golden wheat field at sunset with a quiet dirt road running through it, the low sun warm and long shadows across the crop",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "rural"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

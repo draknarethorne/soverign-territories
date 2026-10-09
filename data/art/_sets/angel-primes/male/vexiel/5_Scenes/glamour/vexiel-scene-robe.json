@@ -13,7 +13,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/vexiel/jewelry/vexiel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/leather-shoes.json",
     "back": "data/art/heroes/angel-primes/male/vexiel/wings/vexiel-wings.json",
-    "holding": "data/art/wardrobe/weapons/wands/arcane-wand.json",
+    "holding": "data/art/wardrobe/weapons/wands/iron-spiral-wand.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting curling green venom mist and falling drops around her.",
     "background": "data/art/backgrounds/fantasy/temple/sunlit-cathedral-sanctum.json"
   },

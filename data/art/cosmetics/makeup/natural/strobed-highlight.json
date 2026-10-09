@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/strobed-highlight",
+  "kind": "makeup",
+  "name": "Strobed Highlight",
+  "description": "a luminous finish - strobed highlighter on the cheekbones and bridge of the nose, a soft {{EYESHADOW}} wash on the lids, defined lashes and a satin {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

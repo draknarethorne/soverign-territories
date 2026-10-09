@@ -1,0 +1,15 @@
+{
+  "id": "wardrobe/weapons/wands/iron-spiral-wand",
+  "kind": "holding",
+  "name": "Iron Spiral Wand",
+  "description": "a twisted dark iron wand spiralling to a point, held in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "iron"
+  ]
+}

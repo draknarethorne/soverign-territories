@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/editorial/coloured-liner-pop",
+  "kind": "makeup",
+  "name": "Coloured Liner Pop",
+  "description": "a graphic colour pop - a thin {{EYESHADOW}} liner drawn along the lashes and flicked out, defined lashes, tidy brows and a nude lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "editorial"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

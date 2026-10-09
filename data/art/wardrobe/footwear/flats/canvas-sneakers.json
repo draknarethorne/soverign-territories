@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/footwear/flats/canvas-sneakers",
+  "kind": "legs_feet",
+  "name": "Canvas Sneakers",
+  "description": "clean {{PRIMARY}} canvas sneakers with white rubber toe caps and soles and flat white laces",
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "footwear",
+    "flats",
+    "unisex"
+  ]
+}

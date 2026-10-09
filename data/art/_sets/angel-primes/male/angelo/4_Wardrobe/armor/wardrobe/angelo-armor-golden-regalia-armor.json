@@ -9,7 +9,7 @@
   "name": "Golden Regalia Armor",
   "aesthetic": "a clean studio presentation of golden regalia armor",
   "components": {
-    "wearing": "data/art/wardrobe/armor/ceremonial/golden-regalia-armor.json",
+    "wearing": "data/art/wardrobe/armor/ceremonial/high-priestess-regalia.json",
     "arms": "bare arms",
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-chain-with-pendant.json",
     "back": "the back of the armor fully visible",

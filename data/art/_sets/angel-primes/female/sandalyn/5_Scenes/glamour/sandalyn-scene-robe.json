@@ -12,9 +12,9 @@
     "wearing": "data/art/wardrobe/clothing/robes/hooded-wizard-robe.json",
     "headwear": "data/art/wardrobe/headwear/crowns/flower-crown.json",
     "jewelry": "data/art/wardrobe/jewelry/bracelets/matching-bracelets.json",
-    "legs_feet": "data/art/wardrobe/footwear/sandals/strappy-flat-sandals.json",
+    "legs_feet": "data/art/wardrobe/footwear/sandals/huarache-sandals.json",
     "back": "data/art/heroes/angel-primes/female/sandalyn/wings/sandalyn-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "holding": "data/art/wardrobe/weapons/staves/gnarled-oak-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting stone shards, dust and glowing crystals around her.",
     "background": "data/art/backgrounds/fantasy/temple/marble-cathedral-sunbeams.json"
   },

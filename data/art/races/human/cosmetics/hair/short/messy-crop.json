@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/messy-crop",
+  "kind": "hair",
+  "name": "Messy Crop (male)",
+  "a_pose_style": "a short loose crop with a fringe falling forward",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is a short, loose crop with a fringe falling forward.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

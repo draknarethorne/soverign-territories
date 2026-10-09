@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/necklaces/bone-skull-pendant.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/platform-heels.json",
     "back": "data/art/heroes/angel-primes/female/angelica/wings/angelica-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "holding": "data/art/wardrobe/weapons/staves/shepherds-crook-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting soft white light, drifting pale feathers and motes around her.",
     "background": "data/art/backgrounds/fantasy/swamp/mangrove-bayou-twilight.json"
   },

@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/retro/fifties-winged-red",
+  "kind": "makeup",
+  "name": "1950s Winged Red",
+  "description": "a 1950s look - winged {{LASH}} liner, full lashes, arched brows, a rosy cheek and a red lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "retro"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

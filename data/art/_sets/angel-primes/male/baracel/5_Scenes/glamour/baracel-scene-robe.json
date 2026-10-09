@@ -13,7 +13,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/baracel/jewelry/baracel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/moccasins.json",
     "back": "data/art/heroes/angel-primes/male/baracel/wings/baracel-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "holding": "data/art/wardrobe/weapons/staves/gnarled-oak-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting stone shards, dust and glowing crystals around her.",
     "background": "data/art/backgrounds/fantasy/temple/marble-cathedral-sunbeams.json"
   },

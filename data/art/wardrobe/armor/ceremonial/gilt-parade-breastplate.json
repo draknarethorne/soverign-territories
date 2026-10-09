@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/ceremonial/gilt-parade-breastplate",
+  "kind": "wearing",
+  "name": "Gilt Parade Breastplate",
+  "description": "a {{METAL}} parade breastplate embossed with a sunburst, white gloves, a {{PRIMARY}} cape and {{METAL}} braid at the shoulders",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "parade",
+    "unisex"
+  ]
+}

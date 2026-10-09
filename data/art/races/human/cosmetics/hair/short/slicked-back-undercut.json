@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/slicked-back-undercut",
+  "kind": "hair",
+  "name": "Slicked-Back Undercut (male)",
+  "a_pose_style": "the top slicked straight back with a shaved undercut at the sides",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is slicked straight back on top over a shaved undercut at the sides.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

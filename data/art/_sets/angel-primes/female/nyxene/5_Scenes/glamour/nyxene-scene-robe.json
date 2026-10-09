@@ -14,7 +14,7 @@
     "jewelry": "data/art/wardrobe/jewelry/earrings/chandelier-earrings.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/matching-open-toed-heels.json",
     "back": "data/art/heroes/angel-primes/female/nyxene/wings/nyxene-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
+    "holding": "data/art/wardrobe/weapons/staves/shepherds-crook-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting drifting shadow, smoke and pale starlight around her.",
     "background": "data/art/backgrounds/fantasy/library/forbidden-archive-chained.json"
   },

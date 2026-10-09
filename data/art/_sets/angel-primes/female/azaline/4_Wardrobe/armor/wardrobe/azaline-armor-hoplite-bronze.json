@@ -9,7 +9,7 @@
   "name": "Hoplite Bronze Armor",
   "aesthetic": "a clean studio presentation of hoplite bronze armor",
   "components": {
-    "wearing": "data/art/wardrobe/armor/bronze/hoplite-bronze.json",
+    "wearing": "data/art/wardrobe/armor/bronze/amazon-bronze-set.json",
     "arms": "bare arms",
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "back": "the back of the armor fully visible",

@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/ceremonial/honor-guard-dress-armor",
+  "kind": "wearing",
+  "name": "Honor Guard Dress Armor",
+  "description": "a dress cuirass of burnished steel over a {{PRIMARY}} dress coat with {{METAL}} buttons, plated shoulders and a ceremonial sash",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "ceremonial",
+    "guard",
+    "dress",
+    "unisex"
+  ]
+}

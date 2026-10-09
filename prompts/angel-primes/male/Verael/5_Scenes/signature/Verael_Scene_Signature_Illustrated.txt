@@ -15,7 +15,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Fit the outfit closely to the body in the incoming image, following his contour at the shoulders, chest, waist and legs unless this prompt says otherwise: the garment shows his broad shoulders, defined chest and trim waist through the cut of the fabric, as a well-tailored fitted garment on his body would, never hanging loose or hiding his build.
 
-Wearing layered Forest Green hide and fur: a fur mantle over one shoulder, a leather chest wrap with bone toggles, a hide kilt and rough leather wrist wraps, the arms bare.
+Wearing a stitched hide top and wrap skirt dyed Forest Green with painted brown patterns, bone and feather charms and wrapped ankles.
 
 Headwear: an ornate antique bronze crown with high arches, filigree and emerald stones, a velvet Forest Green lining, twining leaves and a budding vine rising at the centre of the brow, set with a emerald gem; pristine, luminous and unmarked.
 

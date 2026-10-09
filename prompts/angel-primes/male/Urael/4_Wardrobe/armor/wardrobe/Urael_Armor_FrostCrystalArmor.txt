@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing a cuirass of translucent ice crystal in Crimson and white, jagged crystal pauldrons, a layered crystal skirt and blackened gold filigree catching molten orange light.
+Wearing armor of clear prismatic glass plates edged in blackened gold, scattering rainbow light across the Crimson silk beneath, a layered glass skirt and shard bracers.
 
 Arms: bare arms.
 

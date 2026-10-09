@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/sailboat-deck-open-water",
+  "kind": "background",
+  "name": "Modern: sailboat deck",
+  "description": "the teak deck of a sailboat on open water in bright afternoon sun, white sails overhead, rope rigging and a glittering blue horizon",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

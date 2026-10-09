@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/crystal-topped-staff",
+  "kind": "holding",
+  "name": "Crystal-Topped Staff",
+  "description": "a slim dark-wood staff topped with a clear faceted {{GEM}} crystal in a {{METAL}} claw setting, held upright",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "crystal",
+    "caster"
+  ]
+}

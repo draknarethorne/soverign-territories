@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing a molded bronze muscle cuirass over a Storm Sky Blue linen tunic with leather pteruges at the waist and shoulders, bronze greaves and a crested grey plume.
+Wearing a knee-length hauberk of small overlapping bronze scales over a Storm Sky Blue tunic, a wide leather belt with an grey buckle.
 
 Arms: bare arms.
 

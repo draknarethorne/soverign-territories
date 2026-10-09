@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/bold/berry-lip-stain",
+  "kind": "makeup",
+  "name": "Berry Lip Stain",
+  "description": "a berry stain on the lips blotted soft at the edges, a bare lid, curled lashes and a flush of {{BLUSH}}",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "bold"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

@@ -26,7 +26,9 @@ A candid vacation photograph, bright and relaxed. Light breeze. reclined on the 
 
 Eyes: natural the reference image's own eye colour, unchanged and not recoloured, in clear irises, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
 
-Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a sunlit resort pool deck with a turquoise pool, a white cushioned lounger, palm fronds and a striped towel, bright midday light.
+Makeup: a bronzed glam - a warm bronze lid with a gold inner-corner highlight, sculpted and bronzed cheeks, defined lashes and a glossy peach lip.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a beach club cabana with white drapes tied back, striped cushions and a wooden deck, bright midday sun on sand and sea.
 
 ----------------------------------------------------------------
 negative prompt:

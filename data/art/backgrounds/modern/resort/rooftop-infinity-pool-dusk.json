@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/rooftop-infinity-pool-dusk",
+  "kind": "background",
+  "name": "Modern: rooftop infinity pool, dusk",
+  "description": "a rooftop infinity pool at dusk, the water glowing turquoise against a city skyline fading from orange to deep blue, low lounge seating and soft lights",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

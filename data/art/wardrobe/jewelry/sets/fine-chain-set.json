@@ -5,7 +5,6 @@
   "includes": [
     "data/art/wardrobe/jewelry/necklaces/bar-necklace.json",
     "data/art/wardrobe/jewelry/earrings/threader-chain-earrings.json",
-    "data/art/wardrobe/jewelry/belly-rings/hoop-belly-ring.json",
     "data/art/wardrobe/jewelry/anklets/chain-anklet.json"
   ],
   "compatibleStages": [
@@ -19,5 +18,5 @@
     "chain",
     "minimal"
   ],
-  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows; the set itself carries no text."
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows. No belly ring here, so it suits gowns and dresses as well as armor; add a belly-ring piece to a bikini or armor card on its own."
 }

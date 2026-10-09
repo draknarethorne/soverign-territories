@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/dramatic/gem-accent-eye",
+  "kind": "makeup",
+  "name": "Gem-Accent Eye",
+  "description": "an editorial eye - small {{GEM}} crystals set along the outer lid and brow bone over soft {{EYESHADOW}} shadow, defined lashes and a satin {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "dramatic"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

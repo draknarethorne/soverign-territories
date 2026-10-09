@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/soft-cat-eye",
+  "kind": "makeup",
+  "name": "Soft Cat Eye",
+  "description": "a soft cat eye - smudged {{LASH}} liner flicked slightly at the outer corner, {{EYESHADOW}} shadow, defined lashes, a rosy {{BLUSH}} blush and a satin {{LIP}} lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

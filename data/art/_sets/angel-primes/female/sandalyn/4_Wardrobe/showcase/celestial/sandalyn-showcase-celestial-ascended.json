@@ -9,7 +9,7 @@
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/commanding-cast.json",
     "wearing": "data/art/wardrobe/armor/celestial/angelic-plate-armor.json",
-    "holding": "data/art/wardrobe/weapons/staves/quarterstaff.json",
+    "holding": "data/art/wardrobe/weapons/staves/gnarled-oak-staff.json",
     "effects": "data/art/wardrobe/effects/shared/celestial-prismatic-ascended.json",
     "background": "data/art/backgrounds/studio/prismatic-glass.json"
   },

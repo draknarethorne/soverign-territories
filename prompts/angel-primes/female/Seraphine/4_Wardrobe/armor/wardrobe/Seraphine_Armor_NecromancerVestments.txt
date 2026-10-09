@@ -18,7 +18,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
 
-Wearing layered Radiant Pearl White robes cut high at the legs, a collar of vertebrae, bone shoulder plates, a rose gold belt with hanging skulls and a long tattered sash.
+Wearing a bikini-cut set of bone: rib-bone cups joined by a vertebrae strap, a hip girdle of small bone plates and a skirt of hanging bone shards, gold leather lacing.
 
 Arms: bare arms.
 

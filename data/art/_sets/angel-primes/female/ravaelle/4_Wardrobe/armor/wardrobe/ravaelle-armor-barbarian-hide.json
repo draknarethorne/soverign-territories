@@ -9,7 +9,7 @@
   "name": "Barbarian Hide Armor",
   "aesthetic": "a clean studio presentation of barbarian hide armor",
   "components": {
-    "wearing": "data/art/wardrobe/armor/hide/barbarian-hide.json",
+    "wearing": "data/art/wardrobe/armor/hide/berserker-furs.json",
     "arms": "bare arms",
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
     "back": "the back of the armor fully visible",

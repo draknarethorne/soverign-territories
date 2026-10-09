@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/sun-kissed-bronze",
+  "kind": "makeup",
+  "name": "Sun-Kissed Bronze",
+  "description": "a sun-kissed finish - bronzer warming the cheeks and temples, a light shimmer on the lids, brushed-up brows and a glossy {{LIP}}-tinted lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

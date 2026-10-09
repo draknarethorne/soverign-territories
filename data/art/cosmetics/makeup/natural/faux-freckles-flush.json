@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/faux-freckles-flush",
+  "kind": "makeup",
+  "name": "Faux Freckles",
+  "description": "a fresh finish - a scatter of soft faux freckles across the nose and cheeks, a warm {{BLUSH}} flush across the nose bridge, bare lids and a tinted lip balm",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

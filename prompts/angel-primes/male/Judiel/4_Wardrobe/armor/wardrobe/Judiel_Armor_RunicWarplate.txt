@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing Storm Indigo-toned plate carved with glowing electric white runes, heavy pauldrons, a studded belt and a fur-lined mantle, steel rivets.
+Wearing a brigandine of Storm Indigo cloth with steel plates riveted inside, the plates engraved with runes, laced at the side.
 
 Arms: bare arms.
 

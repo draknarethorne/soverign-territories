@@ -11,7 +11,7 @@
     "pose": "She is caught mid-turn in a spinning cast, one leg lifted behind her, both arms sweeping upward in a spiral gesture that draws a column of swirling frost, snowflakes and ice crystals around her, her head turned back to the camera with a bright, serene gaze. No weapon or staff - casting with her bare hands only.",
     "wearing": "data/art/heroes/angel-primes/female/azaline/clothing/azaline-signature-gown.json",
     "jewelry": "data/art/heroes/angel-primes/female/azaline/jewelry/azaline-signature-jewelry.json",
-    "legs_feet": "data/art/wardrobe/footwear/sandals/strappy-flat-sandals.json",
+    "legs_feet": "data/art/wardrobe/footwear/sandals/huarache-sandals.json",
     "back": "data/art/heroes/angel-primes/female/azaline/wings/azaline-wings.json",
     "effects": "A shimmering column of swirling frost, snowflakes and ice crystals, visible as streaming ribbons and {{MAGIC}} light, spirals around her.",
     "background": "data/art/backgrounds/fantasy/canyon/slot-canyon-light-shaft.json"

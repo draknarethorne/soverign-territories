@@ -6,12 +6,13 @@
   "name": "Editorial: Seated Elegance",
   "components": {
     "wearing": "data/art/wardrobe/clothing/dresses/slip-dress.json",
-    "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/pearl-set.json",
     "legs_feet": "data/art/wardrobe/footwear/heels/ankle-strap-sandals.json",
     "pose": "data/art/motion/standing/seated-elegant.json",
     "background": "data/art/backgrounds/studio/window-light-studio.json",
     "effects": "data/art/wardrobe/effects/editorial/clean-fashion-light.json",
-    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json"
+    "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
+    "makeup": "data/art/cosmetics/makeup/eyes/glossy-lid-wet-look.json"
   },
   "template": "data/art/_templates/heroes/showcase-human.txt",
   "denoise": "~0.5-0.7",

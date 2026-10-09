@@ -18,7 +18,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
 
-Wearing a cuirass of translucent ice crystal in Radiant Pearl White and white, jagged crystal pauldrons, a layered crystal skirt and rose gold filigree catching warm golden-white light.
+Wearing a coat of small overlapping panes of thick tinted glass on a leather backing, each scale catching the light in gold.
 
 Arms: bare arms.
 

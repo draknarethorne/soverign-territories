@@ -11,7 +11,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/zadriel/jewelry/zadriel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
     "pose": "data/art/motion/walking/strut-runway.json",
-    "wearing": "data/art/wardrobe/armor/hide/barbarian-hide.json",
+    "wearing": "data/art/wardrobe/armor/hide/berserker-furs.json",
     "back": "data/art/heroes/angel-primes/male/zadriel/wings/zadriel-wings.json",
     "effects": "Gusts of flowing water and drifting spray stream along the floor either side of him, rising around him.",
     "background": "data/art/backgrounds/studio/mirror-floor-glow.json"

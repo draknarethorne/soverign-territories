@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/buzz-cut",
+  "kind": "hair",
+  "name": "Buzz Cut (male)",
+  "a_pose_style": "a close even buzz cut all over",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is cut into a close, even buzz all over.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

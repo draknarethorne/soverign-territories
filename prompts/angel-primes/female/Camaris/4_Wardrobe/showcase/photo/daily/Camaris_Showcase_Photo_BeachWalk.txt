@@ -24,7 +24,9 @@ A candid high-fashion editorial shot, relaxed casual stroll, soft natural moveme
 
 Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
 
-Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a sunny sandy beach at midday, turquoise water rolling onto the shore in soft foam, a clear blue sky and a few distant palms, bright natural light.
+Makeup: a heart-shaped lip - the cupid's bow sharply defined and the lip colour kept soft at the edges, in berry, with a clean lid and fresh skin.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a quiet sandy beach at sunset, gentle waves washing over wet sand that mirrors a glowing orange and pink sky, warm low light.
 
 ----------------------------------------------------------------
 negative prompt:

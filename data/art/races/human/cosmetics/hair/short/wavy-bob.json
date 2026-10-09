@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/wavy-bob",
+  "kind": "hair",
+  "name": "Wavy Bob (female)",
+  "a_pose_style": "a soft wavy bob that ends at the jaw",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is a soft, wavy bob ending at the jaw.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "female"
+  ]
+}

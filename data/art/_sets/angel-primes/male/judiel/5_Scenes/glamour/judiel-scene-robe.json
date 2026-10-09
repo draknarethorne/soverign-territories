@@ -13,7 +13,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/judiel/jewelry/judiel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/slippers.json",
     "back": "data/art/heroes/angel-primes/male/judiel/wings/judiel-wings.json",
-    "holding": "data/art/wardrobe/weapons/wands/arcane-wand.json",
+    "holding": "data/art/wardrobe/weapons/wands/crystal-point-wand.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting crackling arcs of lightning and sparks around her.",
     "background": "data/art/backgrounds/fantasy/library/arcane-library-tower.json"
   },

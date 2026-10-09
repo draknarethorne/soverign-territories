@@ -13,7 +13,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/auriel/jewelry/auriel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/flats/slippers.json",
     "back": "data/art/heroes/angel-primes/male/auriel/wings/auriel-wings.json",
-    "holding": "data/art/wardrobe/weapons/staves/ornate-staff.json",
+    "holding": "data/art/wardrobe/weapons/staves/iron-banded-war-staff.json",
     "effects": "The hem of the robe and her scarves lift gently in a passing breeze, faint {{MAGIC}} light and drifting golden light and drifting motes around her.",
     "background": "data/art/backgrounds/fantasy/temple/forest-shrine-stone-lanterns.json"
   },

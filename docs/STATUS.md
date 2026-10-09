@@ -298,18 +298,20 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
 `tools/art/library_audit.py` (`bin\library-audit.cmd`) measures where the library is thin, over-used or built from shortcuts, and is meant to be re-run as the library grows. **Over-use is the signal, not unused pieces** (pieces are written ahead of their scenes):
 a piece doing most of a folder's work for many heroes means the look repeats, unless it is on purpose (a studio default, ten sisters in one base robe), which is recorded with its reason in `data/art/_settings/library-audit.json`. What it found, in the order to work through it:
 
-| Order | Gap | Evidence | Plan |
+| Order | Gap | Result | Still open |
 | --- | --- | --- | --- |
-| 1 | Robes (done) | 1 robe piece served 22 cards; all 11 female angels wore `silk-robe` | 15 robes added, each angel's robe scene re-pointed by element (11 different robes for the women and 11 for the men; three are shared across the pairs) |
-| 2 | Over-used, not yet allowlisted | modern backgrounds (one beach, garden and pool for 21 heroes), `footwear/flats` and `sandals`, `hair/short`, `jewelry/sets` (90% one set), `staves`, `wands`, the armor families (bronze, hide, runic, bone, ceremonial, crystal), `effects/shared` | each needs more variants; if any is on purpose, add it to the allowlist. Pieces nothing uses yet (8 helms, 7 cloaks, 6 bracers) are information only: they pair with the new hooded robes when scenes call for them |
-| 3 | Modern backgrounds | `coast` 2, `rural` 2, `resort` 1, each used by 21 heroes: the same beach, garden and pool for every angel | 6 to 10 more modern settings (city rooftop, cafe, gallery, garden terrace, marina ...) in realistic wording |
-| 4 | Staves and wands | `staves` 2 (20 cards), `wands` 1 (8 cards) | elemental staves and wands (crystal, driftwood, bone, iron, glass) so casting scenes stop sharing one prop |
-| 5 | Jewelry (started) and headwear | the jewelry was shortcuts: bundles (necklace, earrings and rings in one sentence), `matching-...` stand-ins, no belly rings, a hard-coded gold or silver | **started:** a set piece (`includes`) composes real pieces; 31 atomic rings, earrings, necklaces, bracelets, belly rings and anklets and four sets are added. Next: move cards from the old bundles to the new pieces and sets (changes their prompts), grow each type, then circlets, hats and hoods (3 each) |
-| 6 | Makeup and cosmetics | 3 makeup pieces; one lip and nail colour per identity | more looks, and per-outfit lip and nail colour (the Drakness curated prompts vary them by outfit) |
-| 7 | Armor families | bone, bronze, crystal, ceremonial 3 each; runic, padded 2 | grow with the bound heroes and units that need them |
-| 8 | Races | seven non-human races are one `race.json` each; dark-elf has one hair piece; `hair/short` has 1 (16 cards) | flesh out when the `{{RACE}}` slot is wired for bound heroes |
+| 1 | Robes | **Done.** 15 robes; each angel's robe scene matched to element | more robe families when a theme needs them |
+| 2 | Over-used pieces | **Done for the angels.** Modern backgrounds (32, was 14), shared scene effects (18), flats and sandals (10 each), staves (8), wands (7) and the six armor families (+3 each) were filled and spread across the angel cards by element or rotation (238 cards); the audit is clean except for the allowlisted sharing | the Drakn Sisters still share their scenes on purpose (recorded in the allowlist); pieces nothing uses yet (8 helms, 7 cloaks, 6 bracers) are information only |
+| 3 | Jewelry | **Done for the angels' occasion showcases.** 31 atomic pieces and nine sets; editorial, glamour and city-street showcases wear a set in each angel's own metal and gem (121 cards); the sets carry no belly ring so they suit gowns | move the remaining cards off the old bundles (`library_audit.py` lists them under SHORTCUTS); belly rings go on bikini and armor cards one by one; grow headwear (circlets, hats, hoods are 3 each) |
+| 4 | Makeup and highlights | **Done to start.** 50 makeup looks (was 3) and 20 highlights (was 14); the female angels' 200 occasion showcases each wear a look, spread so no family repeats one | per-outfit lip and nail colour is not supported (one value per identity); only showcase and scene templates render makeup; more looks as trends move |
+| 5 | Hair | 10 short styles added (6 male, 4 female) | the male angels' default hair is still the textured crop (allowlisted until their photos are chosen); add hair study cards for the new styles |
+| 6 | Races | not started: seven non-human races are one `race.json` each | flesh out when the `{{RACE}}` slot is wired for bound heroes |
 
-Step 1 is built. The rest are a plan, not started: say which to take next (2 is the cheapest and 3 the most visible).
+**Beyond the library (needs your thinking, not built):**
+- **Scene types.** The angels have glamour, signature, story, theme, battle, spell-calling, daily-photo, romantic, editorial and celestial scenes. Missing kinds worth deciding on: travel and adventure, seasonal portraits at home, sports and action, workspace and craft, night city, festival and ceremony.
+- **Realms.** Only four (fantasy, fantasy-cinematic, modern, studio). Candidates: gothic, pastoral, noir city, historic, coastal and desert-modern, each with its own backgrounds, effects and wording.
+- **Themes.** 26 packs; the audit does not cover them. Their makeup, jewelry and robes could reuse the new library pieces (extend instead of re-describe).
+- **Moving over.** Sisters' pieces and the older bundles can be rebuilt on the atomic pieces whenever you want; that changes their prompts, so it is a choice.
 
 ## Next work (in order)
 

@@ -7,12 +7,13 @@
   "components": {
     "wearing": "data/art/wardrobe/swimwear/one-piece/one-piece-swimsuit.json",
     "pose": "data/art/motion/photo/poolside-lounge.json",
-    "background": "data/art/backgrounds/modern/resort/poolside-lounge.json",
+    "background": "data/art/backgrounds/modern/resort/beach-club-cabana-midday.json",
     "framing": "data/art/studio/shots/full-length.json",
     "realm": "data/art/realms/modern.json",
     "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
-    "footwear": "bare feet"
+    "footwear": "bare feet",
+    "makeup": "data/art/cosmetics/makeup/glam/bronzed-goddess-glam.json"
   },
   "template": "data/art/_templates/heroes/showcase-photo-human.txt",
   "denoise": "~0.6-0.8",

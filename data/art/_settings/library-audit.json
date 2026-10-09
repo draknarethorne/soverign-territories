@@ -1,4 +1,7 @@
 {
+  "ignoreGroups": {
+    "drakn-sisters": "the ten sisters share their daily-photo, editorial, celestial and lineup scenes on purpose, for unified pictures (remove this if that stops being true)"
+  },
   "intentional": {
     "wardrobe/jewelry/studio": "the neutral studio default (a plain necklace and earrings) every studio card starts from",
     "wardrobe/footwear/barefoot": "bare feet are the studio default for every Alpha and body step",
@@ -14,6 +17,9 @@
     "motion/dynamic": "every hero gets the same Bench motions by design",
     "motion/romantic": "every hero gets the same Bench motions by design",
     "backgrounds/studio": "the studio backdrops are a shared test set",
+    "backgrounds/modern/coast/beach-sunset-shoreline": "the romantic beach-sunset showcase is that beach by design",
+    "wardrobe/effects/shared/celestial-prismatic-ascended": "the celestial ascended showcase has its own effect by design",
+    "races/human/cosmetics/hair/short/textured-crop": "the default short hair of the male heroes until their photos are chosen; revisit then (each hero's art.palette.hairStyleComponent)",
     "wardrobe/swimwear/bikini": "the sisters' default A-pose underlayer (a hero's defaultUnderlayer) and a standard Bench layer card for every hero",
     "wardrobe/swimwear/trunks": "the standard swim layer for the male heroes",
     "wardrobe/swimwear/one-piece": "every hero gets the standard swimwear layer cards by design",

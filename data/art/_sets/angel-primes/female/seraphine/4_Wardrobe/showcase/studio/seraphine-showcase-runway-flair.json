@@ -11,7 +11,7 @@
     "jewelry": "data/art/heroes/angel-primes/female/seraphine/jewelry/seraphine-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/walking/catwalk-confident.json",
-    "wearing": "data/art/wardrobe/armor/bone/necromancer-vestments.json",
+    "wearing": "data/art/wardrobe/armor/bone/bone-plate-cuirass.json",
     "back": "data/art/heroes/angel-primes/female/seraphine/wings/seraphine-wings.json",
     "effects": "Gusts of golden light and drifting motes stream along the floor either side of her, rising around her.",
     "background": "data/art/backgrounds/studio/dawn-rim-grey.json"

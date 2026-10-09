@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/shaggy-layered-crop",
+  "kind": "hair",
+  "name": "Shaggy Layered Crop (female)",
+  "a_pose_style": "a short shaggy crop of choppy layers with side-swept bangs",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is a short, shaggy crop of choppy layers with side-swept bangs.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "female"
+  ]
+}

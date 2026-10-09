@@ -10,7 +10,7 @@
   "components": {
     "pose": "She stands close to her bonded companion, one hand raised and gently resting against it, her other hand relaxed at her side, her face turned toward the camera with wonder and quiet certainty; the companion turns toward her and both are fully in frame.",
     "wearing": "data/art/wardrobe/clothing/gowns/corset-bodice-gown.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/silver-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/statement-gem-set.json",
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "back": "data/art/heroes/angel-primes/female/camaris/wings/camaris-wings.json",
     "effects": "A thread of {{MAGIC}} light runs from her hand to her companion where they touch, the bond glowing, motes of dancing flame, embers and sparks rising between them.",

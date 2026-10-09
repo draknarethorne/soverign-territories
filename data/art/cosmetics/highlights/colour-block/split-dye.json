@@ -1,0 +1,14 @@
+{
+  "id": "cosmetics/highlights/colour-block/split-dye",
+  "kind": "highlights",
+  "name": "Split Dye",
+  "description": "a split-dye - one half of the hair in its base colour and the other half in {{HIGHLIGHT_COLOR}}, divided along the centre part",
+  "compatibleStages": [
+    "pose",
+    "head"
+  ],
+  "tags": [
+    "highlights",
+    "colour-block"
+  ]
+}

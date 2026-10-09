@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/eyes/underlined-colour-eye",
+  "kind": "makeup",
+  "name": "Underlined Eye",
+  "description": "an underlined eye - a thin {{EYESHADOW}} liner along the lower lash line, a clean bare upper lid, curled lashes and a soft balmy lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "eyes"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

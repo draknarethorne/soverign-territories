@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/glam/gothic-dark-eye",
+  "kind": "makeup",
+  "name": "Dark Eye",
+  "description": "a dark, moody eye - charcoal and {{EYESHADOW}} shadow smudged heavily around the eye, black liner, matte pale skin and a deep berry lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "glam"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

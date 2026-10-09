@@ -1,0 +1,16 @@
+{
+  "id": "hair/short/textured-quiff",
+  "kind": "hair",
+  "name": "Textured Quiff (male)",
+  "a_pose_style": "a textured quiff swept up and back at the front with tapered sides",
+  "breeze": "A very slight lift from a light breeze below.",
+  "hair_change": "Hair is swept up and back into a textured quiff, tapered at the sides.",
+  "extras": [],
+  "compatibleStages": [
+    "pose",
+    "hair"
+  ],
+  "tags": [
+    "male"
+  ]
+}

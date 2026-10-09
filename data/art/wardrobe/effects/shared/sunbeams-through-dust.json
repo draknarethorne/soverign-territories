@@ -1,0 +1,11 @@
+{
+  "id": "wardrobe/effects/shared/sunbeams-through-dust",
+  "kind": "effects",
+  "name": "Sunbeams through dust",
+  "description": "Shafts of warm light fall at an angle through fine drifting dust, with a faint {{MAGIC}} glow in the brightest beams.",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "notes": "A shared scene effect; edit it here and every scene that uses it follows."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/hide/studded-hide-jerkin",
+  "kind": "wearing",
+  "name": "Studded Hide Jerkin",
+  "description": "a jerkin of dark hide studded with small {{METAL}} rivets, belted at the waist with a heavy leather strap",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "jerkin",
+    "studded",
+    "unisex"
+  ]
+}

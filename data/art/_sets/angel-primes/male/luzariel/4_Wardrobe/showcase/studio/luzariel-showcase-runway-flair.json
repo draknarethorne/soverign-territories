@@ -11,7 +11,7 @@
     "jewelry": "data/art/heroes/angel-primes/male/luzariel/jewelry/luzariel-signature-jewelry.json",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json",
     "pose": "data/art/motion/walking/strut-runway.json",
-    "wearing": "data/art/wardrobe/armor/bone/necromancer-vestments.json",
+    "wearing": "data/art/wardrobe/armor/bone/bone-armor.json",
     "back": "data/art/heroes/angel-primes/male/luzariel/wings/luzariel-wings.json",
     "effects": "Gusts of drifting shadow, smoke and pale starlight stream along the floor either side of him, rising around him.",
     "background": "data/art/backgrounds/studio/cream-beauty-light.json"

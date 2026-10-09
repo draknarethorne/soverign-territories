@@ -10,7 +10,7 @@
   "components": {
     "pose": "Fast, graceful ascent: she rises upright through the centre of a great column of living vines, leaves and petals with her wings half open and her body turning gently, arms out and lifted, head lifted and gaze to the camera, joyful and free; full figure from head to toe visible.",
     "wearing": "data/art/wardrobe/clothing/dresses/halter-dress.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/bohemian-layered-set.json",
     "legs_feet": "data/art/wardrobe/footwear/studio/barefoot-fine-anklets.json",
     "back": "data/art/heroes/angel-primes/female/haniya/wings/haniya-wings.json",
     "effects": "A great spiral of living vines, leaves and petals rises in a swirling column around her, streaks of {{MAGIC}} light tracing the air, clouds swept back.",

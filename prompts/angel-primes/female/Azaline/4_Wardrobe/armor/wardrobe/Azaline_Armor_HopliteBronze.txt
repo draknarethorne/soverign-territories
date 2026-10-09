@@ -18,7 +18,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the breastplate or bodice is moulded over the bust, lifting and supporting it into a full, firm, rounded form with a crisp, clearly defined cleavage line at the centre, never a flat, boxy or concealing plate; the waist is cinched and defined and the hips follow their natural curve.
 
-Wearing a molded bronze muscle cuirass over a Glacial Cyan linen tunic with leather pteruges at the waist and shoulders, bronze greaves and a crested white plume.
+Wearing polished bronze breastplate and tasset skirt in a warrior-queen style, Glacial Cyan leather straps, an white sash, bronze bracers and a short red cape.
 
 Arms: bare arms.
 

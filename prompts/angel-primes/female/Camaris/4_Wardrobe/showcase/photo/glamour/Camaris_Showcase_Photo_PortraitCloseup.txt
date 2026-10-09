@@ -20,13 +20,15 @@ Shot: close-up beauty portrait, head and shoulders filling the frame, shallow de
 
 Wearing a Flame Red gown with a structured corset bodice laced in burnished copper cord up the front, bare shoulders, and a long full skirt in layered silk to the floor.
 
-Jewelry: a simple burnished copper necklace and small matching earrings.
+Jewelry: a single strand of small white pearls with a burnished copper clasp; pearl drop earrings on short burnished copper posts, each pearl a soft white; a slim polished burnished copper band on the ring finger.
 
 A candid beauty portrait, soft natural light. Light breeze. shoulders relaxed and angled slightly away from the lens. head turned a few degrees toward the camera, chin level. directly into the lens, warm and engaged. a soft, natural smile with a hint of warmth in the eyes. one hand lightly touching the collarbone or the hair near the face.
 
 Eyes: natural natural eye colour from the reference image, clarified and gently enhanced with crisp definition - do not recolour, exactly as in the incoming image, calm and clear with crisp catchlights, no glow.
 
-Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: a lush garden in golden-hour light, flowers and leaves glowing as soft bokeh, warm backlight in her hair.
+Makeup: an editorial look - bleached, nearly invisible brows, a clean pale lid, matte skin and a bold berry lip.
+
+Setting: a real, contemporary location photographed on site - natural, believable lighting and modern surroundings, as a candid lifestyle photograph. Location: the wooden porch of a white farmhouse in soft morning light, a rocking chair, potted flowers and a green lawn beyond.
 
 ----------------------------------------------------------------
 negative prompt:

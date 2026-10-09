@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/marble-hotel-lobby-evening",
+  "kind": "background",
+  "name": "Modern: hotel lobby, evening",
+  "description": "a grand hotel lobby of cream marble with a sweeping staircase, brass fixtures and warm chandelier light, the floor softly reflective",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

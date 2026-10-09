@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/staves/shepherds-crook-staff",
+  "kind": "holding",
+  "name": "Shepherd's Crook",
+  "description": "a long wooden shepherd's crook with a curled top and a worn leather grip, held at her side",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "stave",
+    "crook",
+    "pastoral"
+  ]
+}

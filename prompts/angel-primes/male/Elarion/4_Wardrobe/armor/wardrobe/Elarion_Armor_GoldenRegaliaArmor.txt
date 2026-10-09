@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing parade armor of steel with Storm Sky Blue enamel panels, a high collar, a jewelled chest plate set with blue topaz stones and long ceremonial tassets.
+Wearing a steel parade breastplate embossed with a sunburst, white gloves, a Storm Sky Blue cape and steel braid at the shoulders.
 
 Arms: bare arms.
 

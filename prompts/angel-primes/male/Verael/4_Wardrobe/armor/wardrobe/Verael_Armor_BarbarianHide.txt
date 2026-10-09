@@ -17,7 +17,7 @@ Skin: natural skin tone from the reference image, evenly toned and lightly enhan
 
 Shape the armor to the body in the incoming image, as if made to measure and unless this prompt says otherwise: the cuirass is moulded over his chest and shoulders so the strong, defined shape of his torso reads through it, the waist is defined and the fit follows his athletic build, never a shapeless, boxy plate.
 
-Wearing layered Forest Green hide and fur: a fur mantle over one shoulder, a leather chest wrap with bone toggles, a hide kilt and rough leather wrist wraps, the arms bare.
+Wearing a jerkin of dark hide studded with small antique bronze rivets, belted at the waist with a heavy leather strap.
 
 Arms: bare arms.
 

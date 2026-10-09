@@ -10,7 +10,7 @@
   "components": {
     "pose": "data/art/motion/romantic/blowing-kiss-full-body.json",
     "wearing": "data/art/wardrobe/clothing/dresses/a-line-dress.json",
-    "jewelry": "data/art/wardrobe/jewelry/sets/metal-gem-set.json",
+    "jewelry": "data/art/wardrobe/jewelry/sets/skull-set.json",
     "legs_feet": "data/art/wardrobe/footwear/sandals/gladiator-sandals.json",
     "back": "data/art/heroes/angel-primes/female/sammara/wings/sammara-wings.json",
     "effects": "A gentle drift of curling green venom mist and falling drops lifts her hair and hem, faint {{MAGIC}} light glinting within it - understated, nothing busy.",

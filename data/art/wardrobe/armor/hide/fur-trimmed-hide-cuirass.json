@@ -1,0 +1,17 @@
+{
+  "id": "wardrobe/armor/hide/fur-trimmed-hide-cuirass",
+  "kind": "wearing",
+  "name": "Fur-Trimmed Hide Cuirass",
+  "description": "a cuirass of boiled hide trimmed with thick fur at the shoulders and hem, a {{METAL}} clasp at the chest",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "hide",
+    "cuirass",
+    "winter",
+    "unisex"
+  ]
+}

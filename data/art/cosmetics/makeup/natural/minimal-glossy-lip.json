@@ -1,0 +1,20 @@
+{
+  "id": "cosmetics/makeup/natural/minimal-glossy-lip",
+  "kind": "makeup",
+  "name": "Minimal Glossy Lip",
+  "description": "a minimal finish - a skin-like base, softly brushed brows, curled lashes and a glossy clear-pink lip",
+  "compatibleStages": [
+    "pose",
+    "head",
+    "hair",
+    "motion",
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "makeup",
+    "natural"
+  ],
+  "notes": "A whole-face look in palette tokens; select with components.makeup (it replaces the default studio face-styling line)."
+}

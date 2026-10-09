@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/resort/villa-balcony-ocean-view",
+  "kind": "background",
+  "name": "Modern: villa balcony",
+  "description": "a villa balcony with a white stone balustrade and sheer curtains stirring in the breeze, the ocean wide and blue beyond, warm late-morning light",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "resort"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

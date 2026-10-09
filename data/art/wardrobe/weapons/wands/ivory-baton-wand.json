@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/weapons/wands/ivory-baton-wand",
+  "kind": "holding",
+  "name": "Ivory Baton Wand",
+  "description": "a slender ivory-handled baton with a {{METAL}} tip, held pointed in one hand",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "weapon",
+    "wand",
+    "ivory",
+    "ceremonial"
+  ]
+}

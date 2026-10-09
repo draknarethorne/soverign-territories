@@ -1,0 +1,16 @@
+{
+  "id": "backgrounds/modern/coast/harbor-fishing-boats-dawn",
+  "kind": "background",
+  "name": "Modern: harbor, dawn",
+  "description": "a small working harbor at dawn, wooden fishing boats moored at a stone quay, coiled rope and nets, pale pink light on calm water",
+  "compatibleStages": [
+    "scene",
+    "showcase"
+  ],
+  "tags": [
+    "modern",
+    "real-world",
+    "coast"
+  ],
+  "notes": "Real-world location for realistic scenes; pair with components.realm = realms/modern.json."
+}

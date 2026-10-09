@@ -1,0 +1,16 @@
+{
+  "id": "wardrobe/armor/bronze/bronze-light-breastplate",
+  "kind": "wearing",
+  "name": "Light Bronze Breastplate",
+  "description": "a light bronze breastplate moulded to the torso over a {{PRIMARY}} tunic, bronze bracers and a short pleated skirt",
+  "compatibleStages": [
+    "armor",
+    "scene"
+  ],
+  "tags": [
+    "armor",
+    "bronze",
+    "breastplate",
+    "unisex"
+  ]
+}

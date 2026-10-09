@@ -1,0 +1,22 @@
+{
+  "id": "wardrobe/jewelry/sets/bohemian-layered-set",
+  "kind": "jewelry",
+  "name": "Bohemian Layered Set",
+  "includes": [
+    "data/art/wardrobe/jewelry/necklaces/layered-chains.json",
+    "data/art/wardrobe/jewelry/earrings/hoop-earrings.json",
+    "data/art/wardrobe/jewelry/rings/twisted-wire-ring.json",
+    "data/art/wardrobe/jewelry/anklets/beaded-anklet.json"
+  ],
+  "compatibleStages": [
+    "armor",
+    "clothing",
+    "scene"
+  ],
+  "tags": [
+    "jewelry",
+    "set",
+    "boho"
+  ],
+  "notes": "A set of real pieces (includes): edit a piece and every set that includes it follows."
+}

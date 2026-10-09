@@ -9,7 +9,7 @@
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot-anklets.json",
     "pose": "data/art/motion/standing/over-the-shoulder-glance.json",
     "wearing": "data/art/wardrobe/armor/celestial/angelic-plate-armor.json",
-    "effects": "data/art/wardrobe/effects/shared/celestial-starlight-rising.json",
+    "effects": "data/art/wardrobe/effects/shared/rippling-ring-of-light.json",
     "background": "data/art/backgrounds/studio/starfield-indigo.json"
   },
   "template": "data/art/_templates/heroes/showcase-human.txt",
