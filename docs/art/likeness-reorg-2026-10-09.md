@@ -55,7 +55,7 @@ Drakness is the anchor, as in the story. A sister is flagged "vastly unlike" whe
 What to know:
 
 - **Draknoxa** lost most of her folder: the 24 photos that did not match her chosen photo or her renders were another woman. Her real set is 4 clear photos and 12 in `review`. If you want more of her, look at `Models\Draknoxa\review`.
-- **Drakneta** is the biggest decision. Her photos are blonde and fair and score lowest against Drakness. The renders you liked for her look like a different woman than her photos (0.25), so her chosen photo may not be the one behind those renders. Nothing moved. For a family resemblance, the closest faces to Drakness that are not another sister are `Artists\Pierre\Mara Locke` (0.16) and `Artists\Fantasy\Nia Nash` (0.13); neither is close, and the model is less reliable on illustrations.
+- **Drakneta** is your favourite look (the hook and the subtle divergence as the lightning sister), so she is **kept as she is**: her photo is in `likeness.keepPhoto` and no tool will change it. For the record, her photos score lowest against Drakness (-0.41), and the renders you liked for her look like a different woman than her photos (0.25). That is the divergence you like, not a defect. Her angel Remiah was paired against her as she is.
 - **Drakniya** is in the bottom 10%; treat like Drakneta if you want a tighter family.
 - The renders the sisters made look like their own photos at 0.55 to 0.73, so the Qwen workflow keeps the face reasonably well; for Drakneta and Draknira (0.25, 0.42) it drifts.
 
@@ -90,11 +90,19 @@ Each angel is paired to the sister of her element (from the codex). The target i
 - **Artists:** each artist folder keeps the photos that matched no one; the people are inside (e.g. Pierre: Mara Locke 98, Elise Frost 14, Gia West 9, Vera Lane 4, Xena Orr 6 now retired, Jules Thorn 3, Maren Cole 3; Maridos: Odette Hart 38, Freya Marsh 10; Fantasy: 10 people of 3 to 9).
 - 917 photos in galleries in total.
 
+## Ready to regenerate the 1_Prime images (checked the same evening)
+
+`bin\likeness.cmd photos` picked the 1_Prime photo for every angel: each already holds her best photo, so nothing changed. The sisters keep the photos you chose (a better-scoring photo in three folders was a different look, so it was only reported). Drakness, Angelica and Drakneta are locked.
+
+For all 11 women angels (Angel Primes) and all 10 sisters (Drakn Sisters) it was checked that: the photo named in `workspaces.json` exists in that workspace's input folder at 944x1104; the `Alpha_1_Prime` workflow in the workspace loads exactly that photo; and the repo copy does too. All 21 passed. The 11 men have placeholder photos, so there is nothing to render for them yet.
+
+Open in ComfyUI: Angel Primes `female\<Name>\1_Alpha\1_Prime\<Name>_Qwen_Alpha_1_Prime`, or Drakn Sisters `<Sister>\1_Alpha\1_Prime\<Sister>_Qwen_Alpha_1_Prime`. Reload the workflow list first.
+
 ## Where to look next (in this order)
 
 1. **Review the pairs** in `pairs_final.png`: are the new angel faces what you want next to their sisters? Anything you dislike, send back with `likeness retire NAME` (or move photos by hand) and run `bin\likeness.cmd pairs --sister <Sister> --apply` to pick again.
 2. **Bring candidates for Seraphine, Azaline and Camaris**, and better ones for Ravaelle and Gavrielle (below the band). Drop new photos into `Prospects\Various\gallery`, then `bin\likeness.cmd sort --singles --apply`, then `pairs`.
-3. **Decide Drakneta** (and Drakniya): keep, or choose a different woman. If you change her photo, `bin\likeness.cmd pairs --sister Drakneta` re-checks her angel.
+3. **Drakniya** is in the bottom 10% against Drakness; keep her unless you want a tighter family (Drakneta is kept on purpose).
 4. **Open the `review` folders** (Drakness 14, Draknoxa 12, Drakneta 8, Draknava 6) and move the good ones back to `gallery`.
 5. **Draknoxa:** decide if 4 clear photos are enough.
 6. **Run a few renders** in ComfyUI for the 7 angels whose photo changed (Ravaelle, Haniya, Gavrielle, Sandalyn, Remiah, Sammara, Nyxene): their Alpha 1 Prime workflows load the new photo already.

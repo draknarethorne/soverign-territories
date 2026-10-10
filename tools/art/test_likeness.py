@@ -257,6 +257,42 @@ class LikenessTests(unittest.TestCase):
         review = list((self.lib / "Angels/azaline/review").iterdir())
         self.assertEqual(len(review), 3, "and her earlier photos are set aside for review, not lost")
         self.assertEqual(self.names("Prospects", "Lena Marsh"), [])
+
+    def test_photos_picks_the_best_angel_photo_keeps_favourites_and_only_reports_for_sisters(self):
+        self.add("Angels", "Angelica", "ann", 4)            # favourite: never changes
+        self.add("Angels", "Azaline", "aa", 4)
+        self.add("Models", "Draknara", "dee", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        az = self.lib / "Angels/Azaline/gallery"
+        for f in az.iterdir():
+            f.unlink()
+        for name, text in (("azaline_image_1.jpg", "aa|11|2"), ("azaline_image_2.jpg", "aa|12"), ("azaline_image_3.jpg", "aa|13")):
+            (az / name).write_text(text)
+        dn = self.lib / "Models/Draknara/gallery"
+        for f in dn.iterdir():
+            f.unlink()
+        for name, text in (("draknara_image_1.jpg", "dee|21|2"), ("draknara_image_2.jpg", "dee|22")):
+            (dn / name).write_text(text)
+        for folder, stems in (("Angels/Azaline", ("azaline_image_1", "azaline_image_2", "azaline_image_3")), ("Models/Draknara", ("draknara_image_1", "draknara_image_2"))):
+            g = self.lib / folder / "gallery_94x110"
+            g.mkdir(parents=True, exist_ok=True)
+            for s in stems:
+                (g / f"{s}_94x110.png").write_bytes(b"x")
+        cfg = dict(CFG, photos={"Angelica": "angelica_image_1_94x110.png", "Azaline": "azaline_image_1_94x110.png", "Draknara": "draknara_image_1_94x110.png"}, likeness={"keepPhoto": ["Angelica"]})
+        calls = []
+        with mock.patch.object(cw, "load_cfg", lambda: cfg), mock.patch.object(cw, "repoint_photos", lambda c, r, d, root=None: calls.append(r) or {"repo": 1}):
+            out = self.run_tool("photos")
+            self.assertIn("kept: your favourite", out)
+            self.assertIn("the sister's photo is your choice", out)
+            self.assertIn("1 photo(s) would change", out)
+            self.assertEqual(calls, [], "a preview changes nothing")
+            self.run_tool("photos", apply=True)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(list(calls[0]), ["Azaline"], "only the angel changes; the sister and the favourite stay")
+        self.assertIn(calls[0]["Azaline"][1].name, ("azaline_image_2_94x110.png", "azaline_image_3_94x110.png"), "a single clear face replaces the picture with two faces")
+
+    def test_a_folder_with_a_different_person_in_it_names_the_odd_one(self):
         self.add("Angels", "Angelica", "ann", 5)
         (self.lib / "Angels/Angelica/gallery/angelica_image_999.jpg").write_text("bob|999")
         self.add("Models", "Draknara", "dee", 4)

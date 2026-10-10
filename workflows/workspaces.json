@@ -152,5 +152,8 @@
   "stageFolders": {"scene": "scenes"},
   "textGroups": {"sovereign-territories": ["key-art", "plate", "title", "logo", "icon"], "sovereign-dawn": ["card"]},
   "skipGroups": ["elder-dragons", "drakn-bound"],
-  "likeness": {"anchors": {"Angelica": ["7508202904299473073", "7513772657979194544", "7513772789697085962"]}}
+  "likeness": {
+    "anchors": {"Angelica": ["7508202904299473073", "7513772657979194544", "7513772789697085962"]},
+    "keepPhoto": ["Drakness", "Angelica", "Drakneta"]
+  }
 }

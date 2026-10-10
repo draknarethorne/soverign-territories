@@ -982,6 +982,88 @@ def retire_empty(work, keys, keep=()):
     return done
 
 
+def prime_score(p, c, size):
+    """How good this photo is as the input of a 1_Prime (the photo becomes an A-pose figure): her face (score against her core), one clear face, some of the body in view,
+    portrait, and enough pixels. Returns (score, notes)."""
+    w, h = size
+    face_h = (p.box[3] if p.box else 0.4)
+    ident = float(p.vec @ c)
+    clarity = min(p.px, 300) / 300 * 0.15
+    body = (1 - min(1.0, face_h / 0.45)) * 0.12            # a head-and-shoulders crop gives the model less to work with than a half or full figure
+    shape = -0.12 if w > h else -abs(w / h - 0.78) * 0.15
+    res = min(1.0, (w * h) / (1000 * 1300)) * 0.08
+    multi = -0.30 if p.faces > 1 else 0.0
+    return ident + clarity + body + shape + res + multi, f"face {ident:.2f}, {p.px}px, {w}x{h}" + (", 2+ faces" if p.faces > 1 else "")
+
+
+def cmd_photos(args):
+    """Pick the 1_Prime photo for every angel and sister: the best-scoring photo of the person in her folder. Favourites (likeness.keepPhoto) never change; others switch only when clearly better."""
+    from PIL import Image
+    cfg, st, work, cache, space = build(args)
+    rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
+    keep = {h.lower() for h in st.get("keepPhoto", [])}
+    chosen = cfg.get("photos", {})
+    wanted = {n.lower() for n in (args.names or [])}
+    rows, renames = [], {}
+    for key in space.keys:
+        group, hero = key.split("/")[0], key.split("/")[-1]
+        if group not in ("Angels", "Models") or (args.group and group.lower() != args.group.lower()) or (wanted and hero.lower() not in wanted):
+            continue
+        name = next((h for h in chosen if h.lower() == hero.lower()), None)
+        if not name:
+            continue
+        ident = identity(space, cfg, st, rend, key)
+        ps, scores, core, c = folder_core(space, key, ident)
+        sizes = {}
+        for p in ps:
+            try:
+                with Image.open(p.path) as im:
+                    sizes[id(p)] = im.size
+            except Exception:  # noqa: BLE001
+                sizes[id(p)] = (1000, 1300)
+        ranked = sorted(((prime_score(p, c, sizes[id(p)]), p) for p in ps), key=lambda t: -t[0][0])
+        cur_key = cw.photo_key(chosen[name])
+        cur = next(((s, p) for s, p in ranked if cw.photo_key(p.name) == cur_key), None)
+        best_s, best = ranked[0]
+        if hero.lower() in keep:
+            rows.append((name, chosen[name], "kept: your favourite", cur[0][1] if cur else "", "", ""))
+            continue
+        why = ""
+        if cur and (best_s[0] - cur[0][0]) < args.margin:
+            rows.append((name, chosen[name], "kept (already one of the best)", cur[0][1], best.name, f"{best_s[0] - cur[0][0]:+.2f}"))
+            continue
+        if cur is None:
+            why = "her chosen photo is not in her folder"
+        if group == "Models" and not args.sisters:
+            alt = f"; the best other photo in her folder scores {best_s[0] - cur[0][0]:+.2f} but is a different look: {best.name}" if cur and best_s[0] - cur[0][0] >= args.margin else ""
+            rows.append((name, chosen[name], "kept: the sister's photo is your choice" + alt, cur[0][1] if cur else "", "", ""))
+            continue
+        scaled = best.path.parent.parent / f"gallery_{cfg['standardSize'][0]}x{cfg['standardSize'][1]}" / f"{best.path.stem}_{cfg['standardSize'][0]}x{cfg['standardSize'][1]}.png"
+        rows.append((name, chosen[name], f"-> {best.name}", best_s[1], best.name, ("%+.2f" % (best_s[0] - cur[0][0])) if cur else why))
+        if scaled.exists() and scaled.name != chosen[name]:
+            renames[name] = (chosen[name], scaled)
+    print(f"{'hero':10} {'now':46} {'decision':52} detail")
+    for name, now, dec, detail, best, gain in rows:
+        print(f"{name:10} {now[:46]:46} {dec[:52]:52} {detail}  {gain}")
+    if args.sheet:
+        sheet = []
+        for name, (old, new) in renames.items():
+            k = next((k for k in space.keys if k.split("/")[-1].lower() == name.lower()), None)
+            now_p = next((p for p in space.by_key.get(k, []) if cw.photo_key(p.name) == cw.photo_key(old)), None)
+            new_p = next((p for p in space.by_key.get(k, []) if cw.photo_key(p.name) == cw.photo_key(new.name)), None)
+            sheet.append((f"{name}: now / new", [x for x in (now_p, new_p) if x]))
+        if sheet:
+            make_sheet(sheet, args.sheet)
+    if not renames:
+        print("\nnothing to change")
+        return
+    if not args.apply:
+        print(f"\n{len(renames)} photo(s) would change; preview only, add --apply to set them in workspaces.json and the workflows")
+        return
+    touched = cw.repoint_photos(cfg, renames, False)
+    print(f"\n{len(renames)} photo(s) set; workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
+
+
 def cmd_pairs(args):
     """Pair every angel with the sister of her element from ALL the faces in the library (angels, prospects, grouped artists), similar to the sister but not the same, and not like anyone else."""
     cfg, st, work, cache, space = build(args)
@@ -1213,6 +1295,12 @@ def main(argv=None, embedder=None):
     s.add_argument("--trials", type=int, default=1500)
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
+    s = add("photos", cmd_photos, apply=True, sheet=True)
+    s.add_argument("names", nargs="*", help="heroes (default: every angel and sister)")
+    s.add_argument("--group", help="Angels or Models")
+    s.add_argument("--margin", type=float, default=0.12, help="a hero's chosen photo only changes when the best one scores this much higher (default 0.12)")
+    s.add_argument("--sisters", action="store_true", help="also change the sisters' photos (by default they are only reported: a sister's photo is your choice)")
+    s.add_argument("--no-renders", action="store_true")
     add("undo", cmd_undo, apply=True)
     args = ap.parse_args(argv)
     args.embedder = embedder
