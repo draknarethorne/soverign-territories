@@ -123,7 +123,7 @@ Open in ComfyUI: Angel Primes `female\<Name>\1_Alpha\1_Prime\<Name>_Qwen_Alpha_1
 
 ## Follow-up, Oct 10
 
-- **Review photos:** `likeness review --apply` moved 19 of the 71 photos in `review` folders: Draknoxa's 12 other-woman photos to Ravaelle (it is the same face as her new one), 3 to Angelica, 1 to `Artists\Maridos\Freya Marsh`, and 1 each to Draknara, Drakneta and Draknora; 52 stay in `review` (Drakness 14, Drakneta 7, Draknava 5, Drakniya 3, and a few more).
+- **Review photos:** `likeness review --apply` moved 19 of the 71 photos in `review` folders. Draknoxa's 12 other-woman photos went to Ravaelle (the same face as her new one), 3 to Angelica, 1 to `Artists\Maridos\Freya Marsh`, and 1 each to Draknara, Drakneta and Draknora. 52 stay in `review` (Drakness 14, Drakneta 7, Draknava 5, Drakniya 3, and a few more).
 - **Is "Sabine Vale" a better Seraphine? No.** Sabine Vale is the invented name the simulation gave to 8 of Drakness's 14 `review` photos, one tanned brunette (agreement 0.68); she is not a folder. Against Seraphine's sister **Drakniss** she scores -0.12, below the band (Seraphine today: 0.03), because she is the opposite of Drakniss's fair blonde look. She looks like **Drakness** (0.29) and **Draknoxa** (0.27), so she would suit the Nyxene slot (Drakness's pair) about as well as Tove North (0.28), and is only 0.16 from Nyxene's current face.
 - **Seraphine still needs a candidate:** the closest existing people to Drakniss are Angelica (0.22; fixed, so not eligible), `Pierre\Maren Cole` (0.19, 3 photos of art) and Prospects Ivy Drake and Elria Monroe (0.11). Bring photos of a fair, sun-kissed blonde and run `sort --singles`, then `pairs --sister Drakniss`.
 
