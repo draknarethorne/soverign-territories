@@ -292,6 +292,26 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(list(calls[0]), ["Azaline"], "only the angel changes; the sister and the favourite stay")
         self.assertIn(calls[0]["Azaline"][1].name, ("azaline_image_2_94x110.png", "azaline_image_3_94x110.png"), "a single clear face replaces the picture with two faces")
 
+    def test_review_sends_a_stranger_to_the_person_she_looks_like_and_returns_the_ones_that_are_her(self):
+        self.add("Models", "Draknara", "dee", 4)
+        self.add("Angels", "Angelica", "ann", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        rv = self.lib / "Models/Draknara/review"
+        rv.mkdir(parents=True)
+        (rv / "draknara_image_901.jpg").write_text("dee|901")       # her
+        (rv / "draknara_image_902.jpg").write_text("ann|902")       # Angelica
+        (rv / "draknara_image_903.jpg").write_text("nobody|903")    # no one
+        out = self.run_tool("review")
+        self.assertIn("1 back", out)
+        self.assertIn("1 send", out)
+        self.assertIn("1 stays in review", out)
+        self.assertEqual(len(list(rv.iterdir())), 3, "a preview moves nothing")
+        self.run_tool("review", apply=True)
+        self.assertEqual([p.name for p in rv.iterdir()], ["draknara_image_903.jpg"])
+        self.assertIn("draknara_image_901.jpg", self.names("Models", "Draknara"))
+        self.assertTrue(any("902" in n for n in self.names("Angels", "Angelica")))
+
     def test_a_folder_with_a_different_person_in_it_names_the_odd_one(self):
         self.add("Angels", "Angelica", "ann", 5)
         (self.lib / "Angels/Angelica/gallery/angelica_image_999.jpg").write_text("bob|999")

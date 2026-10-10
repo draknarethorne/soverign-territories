@@ -996,6 +996,63 @@ def prime_score(p, c, size):
     return ident + clarity + body + shape + res + multi, f"face {ident:.2f}, {p.px}px, {w}x{h}" + (", 2+ faces" if p.faces > 1 else "")
 
 
+def cmd_review(args):
+    """The photos set aside in review folders: each one against her own folder and against everyone else, with a suggested action. A photo that is probably her goes back to her gallery (--back),
+    one that clearly looks like someone else goes to that person (--send); the rest stay in review. Preview unless --apply."""
+    cfg, st, work, cache, space = build(args)
+    embed = args.embedder or Embedder()
+    wanted = {n.lower() for n in (args.names or [])}
+    moves, rows, sheet = [], [], []
+    for group, name, folder in cw.photo_folders(cfg, work):
+        key = f"{group}/{name}"
+        if key not in space.by_key or (wanted and name.split("/")[-1].lower() not in wanted):
+            continue
+        files = originals.images(folder / "review")
+        if not files:
+            continue
+        c = space.centroid(key)
+        for f in files:
+            sha = cache.sha(f)
+            if sha not in cache.emb:
+                cache.emb[sha] = embed(f) or {"faces": -1}
+            ph = Photo(f, group, name, sha, cache.emb[sha])
+            if not ph.usable(st["minFace"]):
+                rows.append((key, f.name, None, None, None, "no usable face: stays in review"))
+                continue
+            ph.vec = nz(ph.raw - space.mean)
+            own = float(ph.vec @ c)
+            rank = [r for r in space.ranking(ph.vec) if r[1] != key]
+            other = rank[0] if rank else (0.0, "")
+            second = rank[1][0] if len(rank) > 1 else -1.0
+            if own >= args.back and own >= other[0]:
+                action = f"back to {key.split('/', 1)[1]}"
+                moves.append(Move(ph, key, f"review: probably {key.split('/', 1)[1]} ({own:.2f})", own))
+            elif other[0] >= st["assign"] and other[0] - max(second, own) >= st["margin"]:
+                action = f"send to {other[1]}"
+                moves.append(Move(ph, other[1], f"review: looks like {other[1]} ({other[0]:.2f}; her own folder {own:.2f})", other[0]))
+            else:
+                action = "stays in review"
+            rows.append((key, f.name, own, other[1], other[0], action))
+            sheet.append(ph)
+    cache.save()
+    print(f"{'folder':26} {'photo':44} {'her':>5}  {'looks most like':32} {'score':>5}  action")
+    for key, fn, own, o, os_, act in rows:
+        print(f"{key:26} {fn[:44]:44} {('%.2f' % own) if own is not None else '-':>5}  {(o or '-'):32} {('%.2f' % os_) if os_ is not None else '-':>5}  {act}")
+    by = collections.Counter(r[5].split(" to ")[0] if " to " in r[5] else r[5] for r in rows)
+    print(f"\n{len(rows)} photo(s) in review folders: " + ", ".join(f"{v} {k}" for k, v in by.most_common()))
+    if args.sheet and sheet:
+        make_sheet([(f"{p.key.split('/', 1)[1]}", [p]) for p in sheet[:40]], args.sheet)
+    if not moves:
+        return
+    print_plan(moves, space, work)
+    if args.apply:
+        n = execute(moves, work, True, cache)
+        print(f"{n} photo(s) moved")
+        after_moves(args, n > 0)
+    else:
+        print("preview only; add --apply to move them")
+
+
 def cmd_photos(args):
     """Pick the 1_Prime photo for every angel and sister: the best-scoring photo of the person in her folder. Favourites (likeness.keepPhoto) never change; others switch only when clearly better."""
     from PIL import Image
@@ -1295,6 +1352,9 @@ def main(argv=None, embedder=None):
     s.add_argument("--trials", type=int, default=1500)
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
+    s = add("review", cmd_review, apply=True, sheet=True)
+    s.add_argument("names", nargs="*", help="folders whose review photos to look at (default: all)")
+    s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")
     s = add("photos", cmd_photos, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="heroes (default: every angel and sister)")
     s.add_argument("--group", help="Angels or Models")
