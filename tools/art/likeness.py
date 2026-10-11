@@ -325,7 +325,7 @@ def plan_sort(space, st, cfg, taken, singles=False):
 
 def record_history(done, work):
     """done: [(Move, source folder)] that really moved. Each destination person folder gets one dated line per source (the pool, Various, keeps no file);
-    a new folder takes the name its source had, else the invented one it was given."""
+    a new folder takes the name its source had when the whole source moved in, else the invented one it was given."""
     groups = collections.OrderedDict()
     for m, src in done:
         groups.setdefault((m.to, m.bucket, str(src)), []).append(m)
@@ -334,7 +334,8 @@ def record_history(done, work):
             continue
         dst = pathlib.Path(work) / to
         src = pathlib.Path(src)
-        inherited = None if src.name.lower() == "various" else people.name_of(src)
+        whole = not any(originals.images(src / sub) for sub in ("gallery", "review"))  # only a folder that moved out entirely passes her name on; a few photos split off a sister are someone else
+        inherited = None if src.name.lower() == "various" or not whole else people.name_of(src)
         where = src.relative_to(work).as_posix() if src.is_relative_to(work) else src.name
         if inherited and inherited.lower() != src.name.lower():
             where += f" ({inherited})"

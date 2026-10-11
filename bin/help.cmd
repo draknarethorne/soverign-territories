@@ -30,8 +30,8 @@ echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved
 echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
-echo    originals.cmd [--dry-run] [--only NAME]   the photo library: name originals after their folder, scale to 944x1104, move copies of removed originals to the _org archive, re-point chosen photos  ^(docs\art\original-photos.md^)
-echo    likeness.cmd folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| merge ^| retire ^| undo   faces: one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Prospects\Various ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
+echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots]   the photo library: name originals after their folder, scale to 944x1104, make face headshots, move copies of removed originals to the _org archive, re-point chosen photos  ^(docs\art\original-photos.md^)
+echo    likeness.cmd folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| review --out ^| loosen ^| lookalikes ^| names ^| merge ^| retire ^| undo   faces: one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, look-alike guard, names ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA

@@ -1,6 +1,6 @@
 # Likeness: which faces match, and sorting photos by person
 
-`bin\likeness.cmd` compares the faces in the original-photo library ([original-photos.md](original-photos.md)). It answers three questions: which of your angels, sisters and prospects look alike, which photos belong to whom, and which photos in `Prospects\Various` are the same person. It can also move photos for you, after a preview.
+`bin\likeness.cmd` compares the faces in the original-photo library ([original-photos.md](original-photos.md)). It answers three questions: which of your angels, sisters and prospects look alike, which photos belong to whom, and which photos in `Various` are the same person. It can also move photos for you, after a preview.
 
 ## How it works
 
@@ -16,11 +16,19 @@ Scores are cosine similarity after **subtracting the library's average face**. W
 
 `likeness calibrate` shows how reliable this is on your library. Today: the right folder is the best match for 91% of photos, and the automatic moves (below) are about 99% right (435 confident and right, 5 confident and wrong, leave-one-out).
 
-Folders are of two kinds. A **person folder** is one person: Angels, Models, a named Prospect, and each person grouped inside an Artist's folder (`Artists/Pierre/Mara Locke`). **Mixed** folders (the artist folders themselves, `Artists/*`, and `Prospects/Various`) hold many people: they never describe a person, are never read (except the pool) and never move on their own. `Prospects/Various` is the **pool** that `sort` empties.
+Folders are of two kinds. A **person folder** is one person: Angels, Sisters (formerly Models), a named Prospect, and each person grouped inside an Artist's folder (`Artists/Pierre/Mara Locke`). **Mixed** folders (the artist folders themselves, `Artists/*`, and `Various`) hold many people: they never describe a person, are never read (except the pool) and never move on their own.
+
+`Various` (top level, next to Prospects) is the **pool** that `sort` empties; drop new photos into `Various\gallery`, run `originals`, then `likeness sort --singles`.
+
+## Names and history
+
+Every person folder has a `z_<name>.txt` in its `gallery` (the `z_` keeps it at the end of the list; the image tools ignore it). The first line is `name: First Last`; after it come dated lines that the tools write when the folder is created, merged, paired, retired or marked reserved (`2026-10-10 reserved: looks like Sisters/Draknoxa (0.56); keep off cards below the top tier`). The name is her real name when you know it, otherwise the invented one the tool gave her.
+
+The file travels with the folder, so a prospect who becomes an angel (or the reverse) keeps her history, and `pairs --apply` logs "was Anya Sloane" in the angel's file. `likeness names` shows every folder's name and writes the missing files (preview unless `--apply`); a folder is never named after the pool or another angel, and photos split off a sister do not take her name. Edit the first line by hand any time.
 
 Settings live under `likeness` in `workflows/workspaces.json`: `mixed`, `pool`, `assign`, `margin`, `cluster`, `minCluster`, `odd`, `alike`, `minFace`, `pairLow`, `pairHigh`, `pairs` (angel to sister), `keepPhoto` (heroes whose photo never changes: Drakness, Angelica, Drakneta) and `anchors` (`{"Angelica": ["part of a photo name", ...]}`: photos that are certainly her).
 
-The first big run and its results are written up in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
+The big runs and their results are written up in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md) and [likeness-reorg-2026-10-10.md](likeness-reorg-2026-10-10.md).
 
 ## Commands
 
@@ -32,15 +40,18 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness compare Angelica azaline` | how alike two folders are, in words and as a percentile of all pairs, plus the closest photo pairs |
 | `likeness folder Drakness` | is this folder **one person**? How many photos agree, are borderline or look like someone else; the ones to check with where each would go; for one person, who else looks like her. `--apply` moves only the "someone else" photos; `--all` lists every score |
 | `likeness like path\to\photo.jpg` | which folders a new photo looks like, best first |
-| `likeness clean [NAMES] [--group Models]` | the folder check for many folders at once, anchored on the chosen photo and the ComfyUI renders: a clear stranger goes to a matching person or the pool, a doubtful photo to the folder's `review` folder; the chosen photo never moves. A sister's folder only loses photos below `--sister-out` (0.05); `--keep` (0.25) is the score that keeps a photo |
+| `likeness clean [NAMES] [--group Sisters]` | the folder check for many folders at once, anchored on the chosen photo and the ComfyUI renders: a clear stranger goes to a matching person or the pool, a doubtful photo to the folder's `review` folder; the chosen photo never moves. A sister's folder only loses photos below `--sister-out` (0.05); `--keep` (0.25) is the score that keeps a photo |
 | `likeness group [ARTISTS]` | splits each artist's folder by face into person folders (`Artists/Pierre/Mara Locke`, names invented, 3 or more photos each); photos that match no one stay with the artist |
-| `likeness sort [--singles]` | empties `Prospects/Various`: a photo that matches a person confidently moves to her; 3 or more of one new person go to a new `Prospects/<invented name>` folder (rename it any time: the photos follow); with `--singles` a photo that matches nobody gets a folder of its own, so the pool ends empty. A chosen photo is never moved. `--plan FILE` writes the moves as JSON |
+| `likeness sort [--singles]` | empties `Various`: a photo that matches a person confidently moves to her; 3 or more of one new person go to a new `Prospects/<invented name>` folder (rename it any time: the photos follow); with `--singles` a photo that matches nobody gets a folder of its own, so the pool ends empty (photos with no usable face stay). A chosen photo is never moved. `--plan FILE` writes the moves as JSON |
 | `likeness sisters` | do the sisters read as one family around the anchor (`--anchor-sister`, Drakness)? Each sister against Drakness in photos and in renders, her place among everyone in the library, the nearest other sister, and who could replace a sister that is far out; `--md FILE` writes the table |
 | `likeness pairs [--sister NAME]` | pairs each angel with the sister of her element from ALL the faces (angels, prospects, artist people); details below the table. `--apply` moves the new face into her `gallery` (old photos to `review`) and sets her photo in `workspaces.json` and the workflows. Re-run with `--sister` after changing a sister |
-| `likeness review [NAMES]` | the photos set aside in `review` folders, each against her own folder and everyone else: one that is probably her (0.20 or more, `--back`) goes back to her gallery, one that clearly looks like someone else goes to that person, the rest stay. Preview unless `--apply`; nothing scatters into new folders |
+| `likeness review [NAMES] [--out]` | the photos set aside in `review` folders, each against her own folder and everyone else: one that is probably her (0.20 or more, `--back`) goes back to her gallery, one that clearly looks like someone else goes to that person, the rest stay. With `--out`, a photo that is clearly not her and matches nobody becomes a new prospect (photos that look alike share one; its history says where it came from). Preview unless `--apply` |
+| `likeness loosen` | what looser settings would do, measured and not applied: at 0.05, 0.10 and 0.15 below today's assign score, how many Various and review photos would move, which would go where, and which folders may be one person (same person is about 0.55 and up). Read-only |
+| `likeness lookalikes [--min 0.30]` | the guard for low-tier cards: every prospect or artist person scoring at least 0.30 against a sister or angel, most alike first. `--apply` writes a `reserved:` line into her `z_` file. Keep reserved people off cards below the top tier |
+| `likeness names` | every folder's name and history file; `--apply` writes the missing ones (from the move log, or the invented name) |
 | `likeness photos [NAMES]` | picks the 1_Prime photo for every angel: her best-scoring photo (her face, one clear face, some body in view, portrait, enough pixels). `likeness.keepPhoto` heroes (Drakness, Angelica, Drakneta) never change, and a chosen photo only changes when the best scores 0.12 higher. A sister's photo is only reported; `--sisters` changes them too. `--apply` sets it in `workspaces.json` and the workflows |
-| `likeness merge Mia "Eva Emily"` | every photo of one folder into another (one person under two names) |
-| `likeness retire azaline` | every photo of a folder back to `Prospects/Various`, so she can be cast again |
+| `likeness merge Mia "Eva Emily"` | every photo of one folder into another (one person under two names); the emptied folder is moved to `_retired` and the history says what happened |
+| `likeness retire azaline` | every photo of a folder back to `Various`, so she can be cast again |
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
 

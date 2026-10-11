@@ -12,7 +12,7 @@
 | Angelica | angelica_image~ | Q c8 | Q c1 | - | - | - | 9 |
 | Azaline | azaline_image_~ | Q c3 | - | - | - | - | 3 |
 | Camaris | camaris_image_~ | Q c5 | - | - | - | - | 5 |
-| Gavrielle | gavrielle_imag~ | Q c2 | Q c1 | - | - | - | 3 |
+| Gavrielle | gavrielle_shot~ | Q c2 | Q c1 | - | - | - | 3 |
 | Haniya | haniya_image_7~ | Q c1 | - | - | - | - | 1 |
 | Nyxene | nyxene_image_7~ | Q c4 | - | - | - | - | 4 |
 | Ravaelle | ravaelle_image~ | Q c3 | - | - | - | - | 3 |

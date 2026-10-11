@@ -10,14 +10,17 @@ Under the work folder (`paths.workRoot` in `workflows/workspaces.json`, today `B
 Angels\Angelica\gallery                  your originals for Angelica (jpg, png, webp, bmp)
 Angels\Angelica\gallery_944x1104         made by the tool: every original on a cream 944x1104 canvas, as PNG
 Angels\Angelica\gallery_944x1104_org     archive: the previous scaled copies, and any copy whose original you removed
-Models\Draknara\...  Prospects\Various\...  Artists\Fantasy\...   the same layout in the other roots
+Angels\Angelica\headshot_944x1104        made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
+Angels\Angelica\review                   photos the likeness tool is not sure about (yours to look at)
+Angels\Angelica\z_angelica.txt           the person's name and history (written by the likeness tool; see likeness.md)
+Sisters\Draknara\...  Prospects\Anya Sloane\...  Artists\Pierre\Mara Locke\...  Various\...   the same layout in the other roots
 ```
 
-The roots are Angels, Models (the sisters), Prospects (candidates not yet assigned; `Various` is the holding pen) and Artists; `paths.photoRoots` in `workspaces.json` changes the list.
+The roots are Angels, Sisters (the old name, Models, is still read), Prospects (people who are not yet an angel or sister), Artists (an artist's photos, grouped into people) and `Various`, the pool of photos not sorted yet, at the top level next to them. `paths.photoRoots` in `workspaces.json` changes the list.
 
 ## The routine
 
-1. Drop originals into a hero's `gallery`, or move them there from `Prospects\Various\gallery` (or from another hero's folder).
+1. Drop originals into a hero's `gallery`, or into `Various\gallery` and let `likeness sort --singles` file them (or move them from another hero's folder).
 2. Delete the ones that did not work out (in `gallery`; the tool tidies the rest).
 3. Run `bin\originals.cmd` (`bin\originals.cmd --dry-run` previews first; `--only Angelica` does one folder).
 4. Choose the photo for a hero: `bin\inputs.cmd set Angelica --photo angelica_image_<id>_944x1104.png`, then `bin\inputs.cmd reset --hero Angelica`.
@@ -28,8 +31,15 @@ The roots are Angels, Models (the sisters), Prospects (candidates not yet assign
 | --- | --- |
 | Rename | Every original is named after the **folder it is in**, so you can shuffle freely between angels, sisters, prospects and artists. The id in the name is kept; only the prefix changes (details below the table). If the new name is taken the file is left alone with a warning. |
 | Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on cream, saved as `<name>_944x1104.png`. A copy already newer than its original is skipped (`--force` redoes all). |
-| Prune | A scaled copy that no original in that folder makes any more is **moved to `gallery_944x1104_org`**, never deleted. This is how deleting or moving an original cleans up after itself. Other files in the scaled folder are left alone. |
+| Headshots | Each original with a clear face also gets `headshot_944x1104\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
+| Prune | A scaled copy that no original in that folder makes any more is **moved to `gallery_944x1104_org`**, never deleted (a headshot goes to `headshot_944x1104_org`). This is how deleting or moving an original cleans up after itself. Other files in the scaled folder are left alone. |
 | Re-point | With the work done, a chosen photo (`photos` in `workspaces.json`) that was renamed is found again by its id: `workspaces.json`, the generated workflows that load it (repo and workspaces; a changed workspace file is backed up first) and the workspace input folders are updated. The same step is available alone as `bin\inputs.cmd photos` (preview with `--dry-run`). |
+
+### Headshots
+
+A headshot is the face of an original, found with the likeness tool's face detector (the same cache, so a photo is only looked at once), cropped to about 2.5 face heights around it in the standard 944x1104 shape and scaled up; it is never letterboxed. A photo with no face, a face under 60 px, or a crop too small to scale up without turning to mush gets none (the run reports how many were skipped). The whole library is about 0.9 GB.
+
+To try one as a Prime input: `bin\inputs.cmd set Seraphine --photo seraphine_image_<id>_head_944x1104.png`, then `bin\inputs.cmd reset --hero Seraphine`. `inputs photos` leaves a chosen headshot alone; it never swaps it back for the full photo.
 
 ### How names are decided
 
@@ -53,6 +63,6 @@ A chosen photo whose original is in another hero's folder, or is gone, is report
 ## Notes
 
 - It needs Pillow (`pip install pillow`); WebP is read too.
-- `rename_originals.py` and `rename_inputs.py` (a rename map for the old facebook/Screenshot names, Models only) are superseded by this; nothing calls them.
+- `rename_originals.py` and `rename_inputs.py` (a rename map for the old facebook/Screenshot names, sisters only) are superseded by this; nothing calls them.
 - A scaled image becomes a workflow input only when you choose it (`inputs set`) or run `inputs photos`; `sync-inputs.cmd` and `inputs reset` also find images in the library.
 - The old `scale_rename_prune_images.ps1` in the work folder now only forwards to `bin\originals.cmd`.

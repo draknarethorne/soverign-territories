@@ -349,6 +349,7 @@ class LikenessTests(unittest.TestCase):
             self.add("Prospects", f"Person {i}", who, 3)
         rv = self.lib / "Sisters/Draknara/review"
         rv.mkdir(parents=True)
+        L.people.write(self.lib / "Sisters/Draknara", "Lia Lujan", [])
         for i in (901, 902, 903):
             (rv / f"draknara_image_{i}.jpg").write_text(f"nobody|{i}")
         self.assertIn("3 stays in review", self.run_tool("review"), "without --out they stay")
@@ -358,6 +359,7 @@ class LikenessTests(unittest.TestCase):
         made = [p for p in (self.lib / "Prospects").iterdir() if p.name not in {f"Person {i}" for i in range(5)}]
         self.assertEqual(len(made), 1, "photos that look alike share one new prospect")
         self.assertTrue(any("from Draknara review" in ln for ln in L.people.read(made[0])[1]))
+        self.assertEqual(L.people.read(made[0])[0], made[0].name, "photos split off a sister are not her: the new prospect does not take her name")
 
     def test_lookalikes_reserves_a_prospect_who_looks_like_a_top_tier_person(self):
         self.add("Sisters", "Draknara", "dee", 4)
