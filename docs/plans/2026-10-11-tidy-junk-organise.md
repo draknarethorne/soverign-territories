@@ -49,11 +49,11 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 ### Phase 4: the Prime input and the templates (Oct 11, from your headshot-first thoughts)
 
 - [x] 4.1 `_templates/heroes` split by stage folder (1_Alpha ... Bench) with a README and `template_path`; 5,373 prompts byte-identical.
-- [x] 4.2 `originals` writes `frame_944x1104` for partial-body photos (the face at figure size at the top of the canvas); `inputs set --photo` takes it.
-- [x] 4.2b Frames picked (Oct 11) for the 11 heroes whose chosen photo is clearly partial (face 17% of the height or more): Azaline, Camaris, Haniya, Nyxene, Ravaelle, Remiah, Sandalyn (Angel Primes) and Draknara, Draknava, Drakniss, Draknoxa (Drakn Sisters). Set in `workspaces.json` and the workflows; images copied to the input folders.
-  - Controls on their old photo: your favourites Angelica, Drakness and Drakneta; the nearly full-length Draknisa, Draknora, Gavrielle and Seraphine; the full-length Draknira, Drakniya and Sammara.
-  - To go back for one hero: `inputs set HERO --photo <same name without _frame>`, then `inputs reset --hero HERO`.
-- [ ] 4.3 Your test: frame against full photo for a partial-body original, Qwen and FireRed (see the opinion in `tmp`; nothing is decided).
+- [x] 4.2 `originals` writes `frame_944x1104` for partial-body photos (the face at figure size at the top of the canvas).
+- [x] 4.2b (corrected Oct 11) Flows, not a replacement: the normal photo of every hero is back, and `flows.frame.photos` in `workspaces.json` holds the frame image of the 18 heroes whose chosen photo has a frame. `make --create` built a `_Frame` Prime workflow beside each Qwen and FireRed Prime (72 in all) and they are deployed. Guide: [../art/prime-flows.md](../art/prime-flows.md).
+- [x] 4.2c FireRed identity lock: `engines.firered.primeFace` puts `1_Alpha/firered-prime-face-lock.txt` in front of the FireRed Prime prompt (normal and frame); Qwen is untouched.
+- [x] 4.2d `bin\compare-primes.cmd`: newest render of each variant per hero, a picture and a face score against the photo each flow started from, with the average per variant.
+- [ ] 4.3 Your test: run the four Prime workflows for several heroes, then `bin\compare-primes.cmd` (nothing is decided; drop what does not work).
 - [ ] 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
 
 ## Result so far

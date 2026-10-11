@@ -29,6 +29,7 @@ if errorlevel 1 (
   exit /b 1
 )
 %PY% tools\art\test_people.py
+%PY% tools\art\test_prime_compare.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

@@ -14,6 +14,7 @@ import pathlib
 import shutil
 import sys
 import tempfile
+import types
 import unittest
 from unittest import mock
 
@@ -111,6 +112,66 @@ class World:
 
     def folders(self, ws):
         return sorted(p.relative_to(self.dir(ws)).as_posix() for p in self.dir(ws).rglob("*") if p.is_dir())
+
+
+class FlowTests(unittest.TestCase):
+    """A flow is a second way to run the Prime: the same prompt, another incoming image, its own workflows beside the normal ones."""
+
+    def world(self):
+        tmp = pathlib.Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        d = tmp / "set-a" / "Alice" / "1_Alpha" / "1_Prime"
+        d.mkdir(parents=True)
+        (d / "Alice_Alpha_1_Prime.txt").write_text("=== x ===\n\nprompt:\n\nhello\n\n----------\nnegative prompt:\n\nbad\n")
+        b = tmp / "set-a" / "Alice" / "1_Alpha" / "2_Bare"
+        b.mkdir(parents=True)
+        (b / "Alice_Alpha_2_Bare.txt").write_text("=== x ===\n\nprompt:\n\nbare\n\n----------\nnegative prompt:\n\nbad\n")
+        p = mock.patch.object(cw, "PROMPTS", tmp)
+        p.start()
+        self.addCleanup(p.stop)
+        return tmp
+
+    def test_flow_workflows_sit_beside_the_normal_ones_and_only_for_heroes_with_a_flow_image(self):
+        self.world()
+        self.assertEqual(cw.flow_suffix("frame"), "Frame")
+        self.assertEqual(cw.flow_suffix("tight-crop"), "TightCrop")
+        cfg = {"photos": {"Alice": "alice_image_1_944x1104.png"}}
+        self.assertEqual([i["name"] for i in cw.prompt_index(cfg)], ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_2_Bare"], "no flows, no variants")
+        cfg["flows"] = {"frame": {"photos": {"Alice": "alice_image_1_frame_944x1104.png"}}, "other": {"photos": {}}}
+        names = {i["name"]: i for i in cw.prompt_index(cfg)}
+        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Frame", "Alice_Qwen_Alpha_2_Bare"], "only the Prime has flows")
+        v = names["Alice_Qwen_Alpha_1_Prime_Frame"]
+        self.assertEqual((v["flow"], v["path"], v["prefix"].rsplit("/", 1)[-1]), ("frame", names["Alice_Qwen_Alpha_1_Prime"]["path"], "Alice_Qwen_Alpha_1_Prime_Frame"), "the same prompt, its own output prefix")
+        self.assertNotIn("flow", names["Alice_Qwen_Alpha_1_Prime"])
+        self.assertEqual(cw.flow_index(cfg), {"Alice_Qwen_Alpha_1_Prime_Frame": "frame", "Alice_FireRed_Alpha_1_Prime_Frame": "frame"})
+        self.assertEqual(cw.flow_photo(cfg, "frame", "Alice"), "alice_image_1_frame_944x1104.png")
+        self.assertIsNone(cw.flow_photo(cfg, "frame", "Bob"))
+
+    def test_firered_gets_an_identity_lock_in_front_of_the_prime_and_nothing_else_changes(self):
+        tmp = self.world()
+        face = tmp / "lock.txt"
+        face.write_text("Identity lock: use the face.\n")
+        with mock.patch.object(cw, "ROOT", tmp):
+            cfg = {"engines": {"firered": {"primeFace": "lock.txt"}}}
+            prime = {"engine": "firered", "stage": "alpha", "family": None, "stem": "Alice_Alpha_1_Prime"}
+            self.assertEqual(cw.engine_prompt(cfg, prime, "hello"), "Identity lock: use the face.\n\nhello")
+            self.assertEqual(cw.engine_prompt(cfg, {**prime, "stem": "Alice_Alpha_1_Prime_Frame"}, "hello"), "Identity lock: use the face.\n\nhello", "the flow's Prime too")
+            self.assertEqual(cw.engine_prompt(cfg, {**prime, "engine": "qwen"}, "hello"), "hello", "Qwen is not touched")
+            self.assertEqual(cw.engine_prompt(cfg, {**prime, "stem": "Alice_Alpha_2_Bare"}, "hello"), "hello", "nor is any later stage")
+            self.assertEqual(cw.engine_prompt({"engines": {"firered": {}}}, prime, "hello"), "hello", "off unless configured")
+
+    def test_set_inputs_with_a_flow_writes_the_flow_and_leaves_the_normal_photo(self):
+        cfg = {"photos": {"Alice": "alice_image_1_944x1104.png"}, "inputs": {}}
+        args = types.SimpleNamespace(set="alice", flow="frame", photo="alice_image_1_frame_944x1104.png", dry_run=True, prime=None, bare=None, apose=None, heels=None, scene=None, polish=None)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            cw.set_inputs(cfg, args)
+        self.assertEqual(cfg["flows"]["frame"]["photos"], {"Alice": "alice_image_1_frame_944x1104.png"})
+        self.assertEqual(cfg["photos"]["Alice"], "alice_image_1_944x1104.png", "the normal flow is untouched")
+        self.assertIn("flow frame", out.getvalue())
+        args.photo = None
+        with self.assertRaises(SystemExit):
+            cw.set_inputs(cfg, args)
 
 
 class RoutingTests(unittest.TestCase):

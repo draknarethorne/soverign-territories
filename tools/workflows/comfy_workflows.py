@@ -646,10 +646,19 @@ def split_prompt(text):
 ENGINES = {"qwen": "Qwen", "firered": "FireRed", "minimax": "MiniMax"}
 
 
+_FACE_LOCK = {}
+
+
 def engine_prompt(cfg, item, pos):
-    """The positive prompt an engine should get. FireRed can pull the Environment up beside the fidelity paragraph and tell the
-    model to replace the studio backdrop (envFirst), and adds a magic-effects instruction (fx) on the scenes listed in fxScenes."""
+    """The positive prompt an engine should get. FireRed puts an identity-lock paragraph (engines.firered.primeFace, a template file) in front of the Prime, because it tends to invent a face when the
+    head in the photo is turned; it can pull the Environment up beside the fidelity paragraph and tell the model to replace the studio backdrop (envFirst), and adds a magic-effects instruction (fx)
+    on the scenes listed in fxScenes."""
     fr = cfg.get("engines", {}).get("firered", {})
+    if item.get("engine") == "firered" and fr.get("primeFace") and item.get("stage") == "alpha" and "_Alpha_1_Prime" in item.get("stem", ""):
+        path = ROOT / fr["primeFace"]
+        if path not in _FACE_LOCK:
+            _FACE_LOCK[path] = path.read_text(encoding="utf-8").strip()
+        return _FACE_LOCK[path] + "\n\n" + pos
     m = re.search(r"_Scene_(.+)$", item["stem"])
     if item.get("engine") != "firered" or not m:
         return pos
@@ -665,6 +674,16 @@ def engine_prompt(cfg, item, pos):
     if fr.get("fx") and (fr.get("fxScenes") == "*" or scene in fr.get("fxScenes", [])):
         pos = pos + "\n\n" + fr["fx"]
     return pos
+
+
+def flow_suffix(flow):
+    """'frame' -> 'Frame', 'tight-crop' -> 'TightCrop': the word a flow's workflows carry in their name (Haniya_Qwen_Alpha_1_Prime_Frame)."""
+    return "".join(w.capitalize() for w in re.split(r"[-_ ]+", flow) if w)
+
+
+def flow_photo(cfg, flow, hero):
+    """The image a flow feeds its Prime for a hero (workspaces.json flows.<flow>.photos), or None."""
+    return cfg.get("flows", {}).get(flow, {}).get("photos", {}).get(hero)
 
 
 def prompt_index(cfg, engine="qwen"):
@@ -683,7 +702,17 @@ def prompt_index(cfg, engine="qwen"):
         name = f"{hero}_{ENGINES[engine]}_{stem[len(hero) + 1:]}"
         out.append({"path": p, "group": group, "hero": hero, "stage": stagedir, "family": family, "stem": stem, "name": name,
                     "prefix": "/".join([group] + ([division] if division else []) + [hero] + dirs + [name])})
+    # a flow is a second way to run the Prime: the same prompt, another incoming image (workspaces.json flows). Its workflow sits beside the normal one and carries the flow's name
+    for flow in cfg.get("flows", {}):
+        suffix = flow_suffix(flow)
+        for it in [i for i in out if i["stage"] == "alpha" and not i["family"] and i["stem"].endswith("_Alpha_1_Prime") and flow_photo(cfg, flow, i["hero"])]:
+            out.append({**it, "stem": f"{it['stem']}_{suffix}", "name": f"{it['name']}_{suffix}", "prefix": f"{it['prefix']}_{suffix}", "flow": flow})
     return out
+
+
+def flow_index(cfg):
+    """{workflow name (without .json): flow} for every flow workflow."""
+    return {i["name"]: i["flow"] for engine in ("qwen", "firered") for i in prompt_index(cfg, engine) if i.get("flow")}
 
 
 # ---------- input images ----------
@@ -1490,7 +1519,7 @@ def cmd_make(args):
         if engine == "firered" and not (args.stage or args.cls):
             # the class list limits what --create builds; a FireRed workflow that already exists (an Alpha test card, a Final) is always refreshed
             its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])
-                   or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
+                   or i.get("flow") or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
         its = [i for i in its if engine in cfg.get("stageEngines", {}).get(i["stage"], [engine])]  # e.g. final is FireRed only
         items += its
     if args.group:
@@ -1549,7 +1578,7 @@ def cmd_make(args):
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
-        want = args.input or video or default_input(cfg, it["hero"], it["stage"], it["family"]) \
+        want = args.input or video or (flow_photo(cfg, it["flow"], it["hero"]) if it.get("flow") else None) or default_input(cfg, it["hero"], it["stage"], it["family"]) \
             or (cfg.get("photos", {}).get(it["hero"]) if is_apose else input_for(cfg, it["hero"], it["stage"]))
         if ln and want:
             ln["widgets_values"][0] = want
@@ -1643,11 +1672,12 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
     if pending and not getattr(args, "force", False):
         print("inputs reset STOPPED: the workspaces hold default images that workspaces.json does not (a reset would overwrite your choice):")
         for c in pending:
-            print(f"    {c['hero']:10} {c['role']:6} {c['state']:8} {c['counts']}   (configured: {c['configured'] or '-'})")
+            print(f"    {c['hero']:10} {c['role'] + (' [' + c['flow'] + ']' if c['flow'] else ''):14} {c['state']:8} {c['counts']}   (configured: {c['configured'] or '-'})")
         print("Run  inputs pull  first to keep them (or --force to overwrite them; a changed workflow is backed up first).")
         return
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     idx, repo = input_index(cfg), repo_files(cfg)
+    flows = flow_index(cfg)
     needs = collections.defaultdict(set)
     changed = collections.Counter()
 
@@ -1659,7 +1689,8 @@ def reset_inputs(cfg, args, workspaces=None, include_repo=True):
         if (args.hero and hero.lower() != args.hero.lower()) or (getattr(args, "stage", None) and stage != args.stage) \
                 or (getattr(args, "match", None) and not name_matches(args.match, name)):
             return
-        want = default_input(cfg, hero, stage, family)
+        flow = flows.get(name[:-5] if name.endswith(".json") else name)
+        want = flow_photo(cfg, flow, hero) if flow else default_input(cfg, hero, stage, family)
         wf = read_wf(p)
         ln = node_of(wf, "LoadImage") if isinstance(wf, dict) else None
         if not want or not ln:
@@ -1781,6 +1812,7 @@ def input_choices(cfg, workspaces=None, root=None, hero=None):
     images named for another hero are not a choice. One image that differs from the configured one is "changed" (pull it); several different ones are "mixed" (reported,
     never pulled); otherwise "same". The old <Hero>_Qwen_X_Pose.json counts as the photo workflow."""
     idx, repo, groups = input_index(cfg), repo_files(cfg), hero_groups()
+    flows = flow_index(cfg)
     seen = collections.defaultdict(collections.Counter)
     for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
         if not workspace_ready(cfg, ws, root)[0]:
@@ -1803,28 +1835,31 @@ def input_choices(cfg, workspaces=None, root=None, hero=None):
             img = input_image(wf) if isinstance(wf, dict) else None
             others = [o.lower() + "_" for o in groups if o.lower() != h.lower()]
             if img and not PLACEHOLDER_IMAGE.search(img) and not any(img.lower().startswith(o) for o in others):
-                seen[(h, role)][img] += 1
+                seen[(h, role, flows.get(base))][img] += 1
     out = []
-    for (h, role), counts in sorted(seen.items()):
+    for (h, role, flow), counts in sorted(seen.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2] or "")):
         conf = cfg.get("inputs", {}).get(h)
         conf = conf if isinstance(conf, dict) else {}
-        want = cfg.get("photos", {}).get(h) if role == "photo" else (conf.get(role) or conf.get("apose"))
+        want = flow_photo(cfg, flow, h) if flow else cfg.get("photos", {}).get(h) if role == "photo" else (conf.get(role) or conf.get("apose"))
         state = "same" if set(counts) <= {want} else ("changed" if len(counts) == 1 else "mixed")
-        out.append({"hero": h, "role": role, "configured": want, "counts": dict(counts), "state": state, "chosen": next(iter(counts)) if len(counts) == 1 else None})
+        out.append({"hero": h, "role": role, "flow": flow, "configured": want, "counts": dict(counts), "state": state, "chosen": next(iter(counts)) if len(counts) == 1 else None})
     return out
 
 
 def pull_inputs(cfg, args, workspaces=None):
-    """Write the default images you chose in the workspaces into workspaces.json (photos / inputs), so a later `inputs reset` or a rebuilt workflow keeps them."""
+    """Write the default images you chose in the workspaces into workspaces.json (photos / inputs / flows), so a later `inputs reset` or a rebuilt workflow keeps them."""
     found = input_choices(cfg, workspaces, args.root, getattr(args, "hero", None))
     changed = [c for c in found if c["state"] == "changed"]
     for c in found:
         if c["state"] == "mixed":
-            print(f"  MIXED    {c['hero']} {c['role']}: the workflows load different images {c['counts']}; set the one you want with: inputs set {c['hero']} --{'photo' if c['role'] == 'photo' else c['role']} NAME")
+            where = f" --flow {c['flow']}" if c["flow"] else ""
+            print(f"  MIXED    {c['hero']} {c['role']}{' (flow ' + c['flow'] + ')' if c['flow'] else ''}: the workflows load different images {c['counts']}; set the one you want with: inputs set {c['hero']}{where} --{'photo' if c['role'] == 'photo' else c['role']} NAME")
     for c in changed:
-        print(f"  pull     {c['hero']:10} {c['role']:6} {c['configured'] or '-'} -> {c['chosen']}  ({sum(c['counts'].values())} workflow(s))")
+        print(f"  pull     {c['hero']:10} {c['role'] + (' [' + c['flow'] + ']' if c['flow'] else ''):14} {c['configured'] or '-'} -> {c['chosen']}  ({sum(c['counts'].values())} workflow(s))")
         if not args.dry_run:
-            if c["role"] == "photo":
+            if c["flow"]:
+                cfg["flows"][c["flow"]].setdefault("photos", {})[c["hero"]] = c["chosen"]
+            elif c["role"] == "photo":
                 cfg.setdefault("photos", {})[c["hero"]] = c["chosen"]
             else:
                 conf = cfg.setdefault("inputs", {}).get(c["hero"])
@@ -1852,13 +1887,32 @@ def inputs_status(cfg):
             size = image_size(p) if p else None
             flag = "MISSING" if not p else ("?" if not size else ("ok" if not std or size == std else "WRONG SIZE"))
             print(f"    {role:6} {name:48} {'x'.join(map(str, size)) if size else '-':10} {flag}" + (f"  ({p.parent.name})" if p else ""))
+        for flow, spec in sorted(cfg.get("flows", {}).items()):
+            name = spec.get("photos", {}).get(h)
+            if name:
+                p = find_image(cfg, name)
+                size = image_size(p) if p else None
+                flag = "MISSING" if not p else ("?" if not size else ("ok" if not std or size == std else "WRONG SIZE"))
+                print(f"    {'flow ' + flow:11} {name:43} {'x'.join(map(str, size)) if size else '-':10} {flag}" + (f"  ({p.parent.name})" if p else ""))
 
 
 def set_inputs(cfg, args):
-    """Write --photo / --prime / --bare / --apose for one hero into workspaces.json (then run inputs reset)."""
+    """Write --photo / --prime / --bare / --apose for one hero into workspaces.json (then run inputs reset). With --flow NAME, --photo is the image that flow feeds the hero's Prime instead
+    (the flow is created when it is new; `make --create` then builds its workflows)."""
     hero = next((h for h in cfg.get("photos", {}) if h.lower() == args.set.lower()), None)
     if not hero:
         sys.exit(f"Unknown hero '{args.set}'. Known: {list(cfg.get('photos', {}))}")
+    if getattr(args, "flow", None):
+        if not args.photo:
+            sys.exit("inputs set HERO --flow NAME needs --photo IMAGE (the image that flow feeds the Prime)")
+        cfg.setdefault("flows", {}).setdefault(args.flow, {"label": "", "photos": {}}).setdefault("photos", {})[hero] = args.photo
+        print(f"{hero}: flow {args.flow} photo={args.photo}")
+        if args.dry_run:
+            print("(dry run, nothing written)")
+        else:
+            write_cfg(cfg)
+            print(f"workspaces.json updated; now run: make --create --hero {hero} --match Prime (and deploy), or inputs reset --hero {hero}")
+        return
     if args.photo:
         cfg["photos"][hero] = args.photo
     conf = cfg["inputs"].get(hero)
@@ -1976,6 +2030,10 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
                 print(f"  MISSING  {h}: {name} is not in the library or any input folder (its original was removed?); choose another with: inputs set {h} --photo NAME")
             else:
                 print(f"  NO PHOTO {h}: {name} is a placeholder; put originals in {h}'s library folder, run originals, then: inputs set {h} --photo NAME")
+    for flow, spec in sorted(cfg.get("flows", {}).items()):
+        for h, name in sorted(spec.get("photos", {}).items()):
+            if (not hero or h.lower() == hero.lower()) and not find_image(cfg, name):
+                print(f"  MISSING  {h} flow {flow}: {name} is not in the library or any input folder (its original was removed or renamed?); run originals, then: inputs set {h} --flow {flow} --photo NAME")
     if not renames:
         print("inputs photos: every chosen photo is where workspaces.json says")
         return 0
@@ -2765,6 +2823,7 @@ def main(argv=None):
     s.add_argument("--stage", help="with --reset: only this prompt folder (alpha, poses, armor ...)")
     s.add_argument("--match", help="with --reset: only workflows whose name contains this")
     s.add_argument("--photo", help="with --set: original photo file name")
+    s.add_argument("--flow", help="with --set --photo: the flow (a second way to run the Prime, for example frame) this photo belongs to, instead of the normal flow")
     s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
     s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
     s.add_argument("--heels", help="with --set: Heels golden A-pose file name")

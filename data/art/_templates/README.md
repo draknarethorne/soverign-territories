@@ -20,7 +20,7 @@ The folders carry the numbers of the stage folders in `data/art/_sets/<group>/<h
 
 | Folder | Templates | Art stage |
 | --- | --- | --- |
-| `1_Alpha/` | `pose-female-human`, `pose-male-human` (the Prime: photo to clean head-to-toe A-pose), `bare-human`, `bare-male-human` (the Bare: remove clothing, set the build) | `1_Alpha` (Prime, Bare, Barefoot, Heels); also `3_Layers`, which re-uses the pose templates for the underlayers |
+| `1_Alpha/` | `pose-female-human`, `pose-male-human` (the Prime: photo to clean head-to-toe A-pose), `bare-human`, `bare-male-human` (the Bare: remove clothing, set the build), `firered-prime-face-lock` (not a template: a paragraph put in front of the FireRed Prime prompt, see `docs/art/prime-flows.md`) | `1_Alpha` (Prime, Bare, Barefoot, Heels); also `3_Layers`, which re-uses the pose templates for the underlayers |
 | `2_Studies/` | `hair-human`, `head-human` (close-up), `pose-view-human` (3/4, profile, back views) | `2_Studies` |
 | `4_Wardrobe/` | `clothing-human`, `armor-human`, `showcase-human`, `showcase-photo-human` | `4_Wardrobe` |
 | `5_Scenes/` | `scene-with-outfit`, `scene-with-companion`, `scene-glamour`, `scene-staged`, `scene-combat`, `scene-minimal` (all `-human`) | `5_Scenes` |
