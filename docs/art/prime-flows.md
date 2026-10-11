@@ -32,7 +32,11 @@ To add or change a flow image: `bin\inputs.cmd set HERO --flow frame --photo han
 
 ## FireRed and the face
 
-FireRed sometimes invents a face instead of using the one in the photo, especially when the head is turned. Its Prime prompt therefore starts with an identity lock (`data/art/_templates/heroes/1_Alpha/firered-prime-face-lock.txt`, set by `engines.firered.primeFace`): the face in the reference is the result's face, a turned head is turned to face the camera as the same person, and a partial photo is continued downward to the feet. Qwen's prompt is not touched. Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or `make --engine firered --match Alpha_1_Prime` and deploy for all). Remove `primeFace` from the settings to switch it off.
+FireRed sometimes invents a face instead of using the one in the photo, especially when the head is turned. Its Prime prompt therefore starts with an identity lock (`data/art/_templates/heroes/1_Alpha/firered-prime-face-lock.txt`, set by `engines.firered.primeFace`).
+
+The lock says: the face in the reference is the result's face, a turned head is turned to face the camera as the same person, and a partial photo is continued downward to the feet. Qwen's prompt is not touched.
+
+Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or `make --engine firered --match Alpha_1_Prime` and deploy for all). Remove `primeFace` from the settings to switch it off.
 
 ## Comparing in tandem
 

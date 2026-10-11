@@ -42,7 +42,9 @@ Most originals are head-and-shoulders or waist-up, and an edit model keeps the f
 
 The Prime then draws the body below at the right scale. A full-length original gets none (use its `gallery_944x1104` copy); a screenshot is cut to its picture first, as above. `--no-frames` skips it; about 0.2 GB for the library.
 
-The frame is a second **flow** beside the normal one, not a replacement: each hero keeps her normal photo and Prime workflows, and also gets Prime workflows that start from the frame (`Haniya_Qwen_Alpha_1_Prime_Frame`, and the FireRed pair). How the flows work, where their images are stored and how to compare them: [prime-flows.md](prime-flows.md). To change a hero's frame image: `bin\inputs.cmd set Haniya --flow frame --photo haniya_image_<id>_frame_944x1104.png`. `inputs photos` leaves a chosen frame alone.
+The frame is a second **flow** beside the normal one, not a replacement: each hero keeps her normal photo and Prime workflows, and also gets Prime workflows that start from the frame (`Haniya_Qwen_Alpha_1_Prime_Frame`, and the FireRed pair).
+
+How the flows work, where their images are stored and how to compare them: [prime-flows.md](prime-flows.md). To change a hero's frame image: `bin\inputs.cmd set Haniya --flow frame --photo haniya_image_<id>_frame_944x1104.png`. `inputs photos` leaves a chosen frame alone.
 
 ### Headshots
 
