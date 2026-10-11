@@ -33,8 +33,8 @@ Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Va
 | Angels that moved | Seraphine, Gavrielle and Sandalyn: run the Prime in ComfyUI with the new photo (and try a headshot). Their old photos are in their `review` folders. |
 | Azaline, Camaris | No candidate in the band; they keep their faces. More photos in `Various` may help. |
 | Review folders (about 40) | Drakness 10, Drakneta 4, Draknava 3, Brielle Carter 4, the rest 1 to 3 each. Move what you recognise. |
-| Same person as a sister? | Una Beck against Draknoxa 0.56 and Brielle Carter against Draknara 0.54 are at same-person level: either they are alternate looks of those sisters (merge) or Draknoxa's and Draknara's own sets are thin. Ivy Rowe and Petra Wilde against Angelica (0.49, 0.40) and Amira Vale against sammara (0.46, 21 photos) are the next closest. |
-| Two prospects that may be one | Dara Reyes and Paige Rowe (0.53), Bea Cole and Dara Reyes (0.50). `likeness merge` joins them. |
+| Same person as a sister? | Confirmed by you and merged: Una Beck into Draknoxa (4 photos), Dara Reyes into Paige Rowe (7 photos, now 13 and one person). Brielle Carter is not Draknara (you checked); she stays a prospect, still on the reserved list. Ivy Rowe and Petra Wilde against Angelica (0.49, 0.40) and Amira Vale against sammara (0.46, 21 photos) are the next closest. |
+| Two prospects that may be one | Bea Cole and Paige Rowe (0.49), Esme Marsh and Paige Rowe (0.43), Yvette Reyes and Paige Rowe (0.42): the Paige Rowe family. `likeness merge` joins them. |
 | Reserved list | The 23 folders and what they look like: `_reports\2026-10-10-names-ingest\lookalikes.txt`. |
 | Alternate Primes | Design in the plan (Phase 5). It needs your approval, and which hero gets a Prime B first. |
 
