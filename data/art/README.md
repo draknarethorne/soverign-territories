@@ -343,8 +343,9 @@ decide (STATUS C1): how the gameplay card's `portraitAsset` / `fullArtAsset` fie
 
 ```text
 data/art/
-├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders.
-│   └── heroes/                     Archetype: humanoid. (pose-female-human.txt, pose-male-human.txt,
+├── _templates/                     Stage templates — static scaffolding, {{TOKEN}} placeholders. Layout and rules: _templates/README.md
+│   └── heroes/                     Archetype: humanoid, in stage folders 1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish, Bench
+│                                   (pose-female-human.txt, pose-male-human.txt,
 │                                   pose-view-human.txt (turnaround from the A-pose),
 │                                   head-human.txt (any angle/framing/expression), hair-human.txt,
 │                                   motion-human.txt, armor-human.txt, clothing-human.txt,

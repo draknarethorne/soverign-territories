@@ -15,7 +15,7 @@
     "background": "data/art/backgrounds/fantasy/country/wind/mountain-pass-cloud-sea.json",
     "realm": "data/art/realms/wind-lands.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknava/5_Scenes/realm/Draknava_Scene_Weather.txt",
   "denoise": "~0.5-0.7",
   "notes": "REALM SERIES: Weather in her wind homeland (weather); realistic, from realms/wind-lands and backgrounds/fantasy/country/wind."

@@ -13,6 +13,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -146,7 +147,7 @@ for slug, h in HEROINES.items():
             "kind": "base-set",
             "stage": stage,
             "heroArt": f"data/art/heroes/drakn-sisters/{slug}-thorne.json",
-            "template": f"data/art/_templates/heroes/{tmpl}",
+            "template": template_path(tmpl),
             "output": f"prompts/drakn-sisters/{h['cap']}/{'/'.join(art_layout.dirs_for(outdir, []))}/{h['cap']}_{outname}.txt",
             "denoise": "~1.0" if stage == "pose" else "~0.4-0.6",
             "notes": f"{card['name']} {stage} — generated alongside Drakness as the initial baseline for all 10 female heroes.",

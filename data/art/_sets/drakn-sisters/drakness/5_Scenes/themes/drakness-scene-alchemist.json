@@ -16,7 +16,7 @@
     "holding": "data/art/themes/adventure/alchemist/wardrobe/weapons/throwing/volatile-flask-trio.json",
     "makeup": "data/art/themes/adventure/alchemist/cosmetics/makeup/workshop/soot-smudge-and-glow.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakness/5_Scenes/themes/Drakness_Scene_Alchemist.txt",
   "denoise": "~0.5-0.7",
   "notes": "Alchemist's Guild Necromancer: complete scene from the A-pose, every item a library piece (also pre-stageable through drakness-armor-alchemist)."

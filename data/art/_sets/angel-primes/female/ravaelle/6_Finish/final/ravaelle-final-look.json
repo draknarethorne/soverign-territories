@@ -3,7 +3,7 @@
   "kind": "base-set",
   "stage": "final",
   "heroArt": "data/art/heroes/angel-primes/female/ravaelle.json",
-  "template": "data/art/_templates/heroes/final-human.txt",
+  "template": "data/art/_templates/heroes/6_Finish/final-human.txt",
   "output": "prompts/angel-primes/female/Ravaelle/6_Finish/final/Ravaelle_Final_Look.txt",
   "denoise": "~0.6-0.8",
   "name": "Final look",

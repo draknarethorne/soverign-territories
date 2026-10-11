@@ -11,7 +11,7 @@
     "background": "data/art/backgrounds/modern/interior/home-kitchen-morning.json",
     "realm": "data/art/realms/modern.json"
   },
-  "template": "data/art/_templates/heroes/scene-minimal-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-minimal-human.txt",
   "output": "prompts/angel-primes/female/Angelica/5_Scenes/modern/Angelica_Scene_Modern_Kitchen.txt",
   "denoise": "~0.5-0.7",
   "notes": "NOT canon. Realism experiment: in a home kitchen."

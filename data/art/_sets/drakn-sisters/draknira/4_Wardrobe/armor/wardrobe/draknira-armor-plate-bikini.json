@@ -13,7 +13,7 @@
     "holding": "empty hands relaxed at the sides",
     "legs_feet": "data/art/wardrobe/footwear/barefoot/barefoot.json"
   },
-  "template": "data/art/_templates/heroes/armor-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/armor-human.txt",
   "denoise": "~0.5-0.7",
   "output": "prompts/drakn-sisters/Draknira/4_Wardrobe/armor/wardrobe/Draknira_Armor_PlateBikini.txt",
   "notes": "WARDROBE TEST: same hero, only the armor differs."

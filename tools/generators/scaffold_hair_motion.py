@@ -498,7 +498,7 @@ for family, entries in HAIR.items():
             "stage": "hair",
             "heroArt": HERO_ART,
             "component": f"data/art/races/human/cosmetics/hair/{family}/{slug}.json",
-            "template": "data/art/_templates/heroes/hair-human.txt",
+            "template": "data/art/_templates/heroes/2_Studies/hair-human.txt",
             "output": f"prompts/drakn-sisters/Drakness/2_Studies/hair/{family}/Drakness_Hair_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }
@@ -531,7 +531,7 @@ for family, entries in MOTION.items():
             "stage": "motion",
             "heroArt": HERO_ART,
             "component": f"data/art/motion/{family}/{slug}.json",
-            "template": "data/art/_templates/heroes/motion-human.txt",
+            "template": "data/art/_templates/heroes/Bench/motion-human.txt",
             "output": f"prompts/drakn-sisters/Drakness/Bench/motion/{family}/Drakness_Motion_{label_of(family)}_{label_of(slug)}.txt",
             "denoise": "~0.4-0.6",
         }

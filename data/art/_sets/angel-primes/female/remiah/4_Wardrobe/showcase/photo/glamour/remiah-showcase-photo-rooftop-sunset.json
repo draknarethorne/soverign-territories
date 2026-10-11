@@ -15,7 +15,7 @@
     "jewelry": "data/art/wardrobe/jewelry/sets/feather-set.json",
     "makeup": "data/art/cosmetics/makeup/natural/latte-monochrome.json"
   },
-  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/showcase-photo-human.txt",
   "denoise": "~0.6-0.8",
   "output": "prompts/angel-primes/female/Remiah/4_Wardrobe/showcase/photo/glamour/Remiah_Showcase_Photo_RooftopSunset.txt",
   "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."

@@ -16,7 +16,7 @@
     "eye_effect": "data/art/wardrobe/effects/eyes/iris-kindling.json",
     "background": "data/art/themes/northern/danish/backgrounds/fantasy/harbor/frozen-gabled-harbor.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknira/5_Scenes/themes/Draknira_Scene_Danish.txt",
   "denoise": "~0.5-0.7",
   "notes": "Danish pack showcase: a Snow Queen-inspired winter gown in a frozen gabled harbour. Fantasy-adapted and respectful; first end-to-end culture pack built on the theme layout."

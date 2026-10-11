@@ -162,7 +162,7 @@ CASES = [
     ("{{BASE}} in a piece that extends nothing",
      lambda r: edit(r / "data/art/wardrobe/weapons/swords/greatsword.json", lambda d: d.update({"description": "{{BASE}} with a plain grip"})), "{{BASE}}"),
     ("complete scene card switched to the staged template without being renamed",
-     lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/scene-staged-human.txt"})), "staged scenes must use"),
+     lambda r: edit(r / SCENE, lambda d: d.update({"template": "data/art/_templates/heroes/5_Scenes/scene-staged-human.txt"})), "staged scenes must use"),
     ("staged-looking name on a complete scene",
      lambda r: edit(r / SCENE, lambda d: d.update({"artId": "drakness-scene-staged-signature"})), "staged scenes must use"),
     ("hair highlight style pointing at a missing piece",

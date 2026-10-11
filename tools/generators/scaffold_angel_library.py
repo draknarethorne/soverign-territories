@@ -23,7 +23,8 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
-from scaffold_sister_studio import STUDIO, TPL, camel, norm  # noqa: E402
+from scaffold_sister_studio import STUDIO, camel, norm  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -266,7 +267,7 @@ class Angel:
     # ----- plumbing
 
     def card(self, art_id, stage, folder, stem, template, comps=None, denoise="~0.5-0.7", note=None, **extra):
-        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": self.ident, "template": f"{TPL}/{template}",
+        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": self.ident, "template": template_path(template),
                 "output": self.out(folder, stem), "denoise": denoise, **extra}
         if comps:
             body["components"] = comps
@@ -360,7 +361,7 @@ class Angel:
             folder = "/".join(art_layout.dirs_for("hair", [fam]))
             self.write("hair", f"{self.slug}-hair-{stem}", {
                 "artId": f"{self.slug}-hair-{stem}", "kind": "base-set", "stage": "hair", "heroArt": self.ident, "component": path,
-                "template": f"{TPL}/hair-human.txt", "output": self.out(folder, f"{self.hero}_Hair_{camel(fam)}_{camel(stem)}"), "denoise": "~0.4-0.6"})
+                "template": template_path("hair-human.txt"), "output": self.out(folder, f"{self.hero}_Hair_{camel(fam)}_{camel(stem)}"), "denoise": "~0.4-0.6"})
 
     def layers(self):
         sex = self.sex
@@ -436,7 +437,7 @@ class Angel:
                 folder = "/".join(art_layout.dirs_for("hair", ["themes"]))
                 self.write("hair", f"{self.slug}-hair-{pack}", {
                     "artId": f"{self.slug}-hair-{pack}", "kind": "base-set", "stage": "hair", "heroArt": self.ident, "component": one("hair"),
-                    "template": f"{TPL}/hair-human.txt", "output": self.out(folder, f"{self.hero}_Hair_{camel(pack)}"), "denoise": "~0.4-0.6", "notes": f"{title} theme hairstyle."})
+                    "template": template_path("hair-human.txt"), "output": self.out(folder, f"{self.hero}_Hair_{camel(pack)}"), "denoise": "~0.4-0.6", "notes": f"{title} theme hairstyle."})
 
     def male_showcases(self):
         """Four studio showcases for a male angel from his own signature pieces (the sisters' showcase cards are written for women and cannot be cloned)."""

@@ -14,7 +14,7 @@
     "eye_effect": "data/art/wardrobe/effects/eyes/natural.json",
     "makeup": "data/art/cosmetics/makeup/bold/glossy-nude-lip.json"
   },
-  "template": "data/art/_templates/heroes/showcase-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/showcase-human.txt",
   "denoise": "~0.5-0.7",
   "output": "prompts/angel-primes/female/Remiah/4_Wardrobe/showcase/editorial/Remiah_Showcase_Editorial_PowerStance.txt",
   "notes": "EDITORIAL SHOWCASE: a fashion shot on a studio backdrop with no magic, to test how the A-pose carries into a styled studio photo."

@@ -15,7 +15,7 @@
     "background": "data/art/backgrounds/fantasy/country/light/clearing-storm-sun-breaking.json",
     "realm": "data/art/realms/light-lands.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Drakniss/5_Scenes/realm/Drakniss_Scene_Weather.txt",
   "denoise": "~0.5-0.7",
   "notes": "REALM SERIES: Weather in her light homeland (weather); realistic, from realms/light-lands and backgrounds/fantasy/country/light."

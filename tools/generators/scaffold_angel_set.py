@@ -22,7 +22,8 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import art_layout  # noqa: E402
 import scaffold_angel_library as library  # noqa: E402
-from scaffold_sister_studio import STUDIO, TPL, Writer, camel, norm  # noqa: E402
+from scaffold_sister_studio import STUDIO, Writer, camel, norm  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -53,7 +54,7 @@ def migrate_signature(slug, hero, division):
 def card_factory(ident, out):
     """A base-set card for this hero: card(art_id, stage, folder, stem, template, comps, ...) with the hero's identity and output folder filled in."""
     def card(art_id, stage, folder, stem, template, comps=None, denoise="~0.5-0.7", note=None, **extra):
-        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "template": f"{TPL}/{template}",
+        body = {"artId": art_id, "kind": "base-set", "stage": stage, "heroArt": ident, "template": template_path(template),
                 "output": out(folder, stem), "denoise": denoise, **extra}
         if comps:
             body["components"] = comps

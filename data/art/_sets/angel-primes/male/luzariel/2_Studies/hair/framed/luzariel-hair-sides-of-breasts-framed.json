@@ -4,7 +4,7 @@
   "stage": "hair",
   "heroArt": "data/art/heroes/angel-primes/male/luzariel.json",
   "component": "data/art/races/human/cosmetics/hair/framed/sides-of-breasts-framed.json",
-  "template": "data/art/_templates/heroes/hair-human.txt",
+  "template": "data/art/_templates/heroes/2_Studies/hair-human.txt",
   "output": "prompts/angel-primes/male/Luzariel/2_Studies/hair/framed/Luzariel_Hair_Framed_SidesOfBreastsFramed.txt",
   "denoise": "~0.4-0.6"
 }

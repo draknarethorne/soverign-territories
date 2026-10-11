@@ -19,7 +19,8 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import scaffold_angel_library as library  # noqa: E402
-from scaffold_sister_studio import TPL, Writer, camel, norm  # noqa: E402
+from scaffold_sister_studio import Writer, camel, norm  # noqa: E402
+from template_paths import template_path  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "data/art"
@@ -56,7 +57,7 @@ def build(slug, index):
 
     def card(art, title, comps, note, template="scene-with-outfit-human.txt"):
         comps = {k: v for k, v in comps.items() if v}
-        body = {"artId": f"{slug}-scene-{art}", "kind": "base-set", "stage": "scene", "heroArt": ident, "name": title, "components": comps, "template": f"{TPL}/{template}",
+        body = {"artId": f"{slug}-scene-{art}", "kind": "base-set", "stage": "scene", "heroArt": ident, "name": title, "components": comps, "template": template_path(template),
                 "output": out("scene", f"{hero}_Scene_{camel(art)}"), "denoise": "~0.5-0.7", "notes": note}
         wr.write("scene", f"{slug}-scene-{art}", body)
 

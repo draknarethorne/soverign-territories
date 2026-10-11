@@ -29,8 +29,8 @@ import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 VIEW = "data/art/studio/views"
-POSE_VIEW_TEMPLATE = "data/art/_templates/heroes/pose-view-human.txt"
-HEAD_TEMPLATE = "data/art/_templates/heroes/head-human.txt"
+POSE_VIEW_TEMPLATE = "data/art/_templates/heroes/2_Studies/pose-view-human.txt"
+HEAD_TEMPLATE = "data/art/_templates/heroes/2_Studies/head-human.txt"
 
 # (slug, display name, piece)
 POSE_VIEWS = [

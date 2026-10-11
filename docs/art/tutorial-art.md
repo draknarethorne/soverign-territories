@@ -62,7 +62,7 @@ bikini or lingerie reads best.
 | Celestial (`Alpha_2b_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
 | Pasties, contoured or paint (`Alpha_2b_Pasties`, `_Contoured`, `_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
 
-**The bare looks** (all edit-only prompts in `data/art/_templates/heroes/bare-human.txt`, one short removal instruction plus a result paragraph
+**The bare looks** (all edit-only prompts in `data/art/_templates/heroes/1_Alpha/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
 `Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot;
 the experiments are Alpha 2b and nested beside it: `1_Alpha/2b_Experiments/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
@@ -170,7 +170,7 @@ A card chooses a template and fills its slots. Real example, `draknisa-scene-rob
     "background": "data/art/heroes/drakn-sisters/draknisa/backgrounds/fantasy/sanctum/enchanted-tide-pool-atrium.json",
     "holding": "data/art/heroes/drakn-sisters/draknisa/weapons/tidepearl-staff.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "output": "prompts/drakn-sisters/Draknisa/5_Scenes/glamour/Draknisa_Scene_Robe.txt",
   "denoise": "~0.5-0.7"
 }
@@ -215,7 +215,7 @@ An A-pose card is one line of difference from the base card. This is the whole o
   "kind": "base-set",
   "stage": "pose",
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
-  "template": "data/art/_templates/heroes/pose-female-human.txt",
+  "template": "data/art/_templates/heroes/1_Alpha/pose-female-human.txt",
   "output": "prompts/drakn-sisters/Drakness/poses/Drakness_X_Pose_Lace.txt",
   "denoise": "~1.0",
   "components": { "underlayer": "data/art/wardrobe/swimwear/lingerie/lace-bralette-set.json" }

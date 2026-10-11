@@ -14,7 +14,7 @@
     "legs_feet": "data/art/wardrobe/footwear/heels/stiletto-pumps.json",
     "jewelry": "data/art/wardrobe/jewelry/studio/simple-necklace-and-earrings.json"
   },
-  "template": "data/art/_templates/heroes/showcase-photo-human.txt",
+  "template": "data/art/_templates/heroes/4_Wardrobe/showcase-photo-human.txt",
   "denoise": "~0.6-0.8",
   "output": "prompts/drakn-sisters/Drakness/4_Wardrobe/showcase/photo/glamour/Drakness_Showcase_Photo_GrandStaircase.txt",
   "notes": "REAL-WORLD SHOWCASE: a standard lifestyle photo shot from the A-pose, to see how realistic she stays and what bleeds through."

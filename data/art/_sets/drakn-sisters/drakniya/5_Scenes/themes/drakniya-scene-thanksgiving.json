@@ -16,7 +16,7 @@
     "effects": "data/art/themes/seasonal/thanksgiving/wardrobe/effects/ambient/falling-autumn-leaves.json",
     "background": "data/art/themes/seasonal/thanksgiving/backgrounds/fantasy/feast/harvest-feast-hall.json"
   },
-  "template": "data/art/_templates/heroes/scene-with-outfit-human.txt",
+  "template": "data/art/_templates/heroes/5_Scenes/scene-with-outfit-human.txt",
   "overrides": {
     "palette": {
       "primaryColor": "Burnt Pumpkin Orange",

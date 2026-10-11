@@ -782,7 +782,8 @@ class TemplateRangeTests(unittest.TestCase):
 
     def high(self, name):
         import re
-        m = re.search(r"Denoise ~(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", (self.tpl / name).read_text(encoding="utf-8").split("\nprompt:", 1)[0])
+        path = next(self.tpl.rglob(name))
+        m = re.search(r"Denoise ~(\d(?:\.\d+)?)(?:-(\d(?:\.\d+)?))?", path.read_text(encoding="utf-8").split("\nprompt:", 1)[0])
         return float(m.group(2) or m.group(1))
 
     def test_edits_that_change_a_lot_run_high(self):
@@ -794,7 +795,7 @@ class TemplateRangeTests(unittest.TestCase):
         self.assertLessEqual(self.high("polish-human.txt"), 0.4, "the polish pass stays light")
 
     def test_every_edit_template_with_a_key_block_slot_switches_it_on(self):
-        for p in sorted(self.tpl.glob("*.txt")):
+        for p in sorted(self.tpl.rglob("*.txt")):
             text = p.read_text(encoding="utf-8")
             if "{{KEY_BLOCK}}" in text and self.high(p.name) >= 0.7 and p.name not in ("pose-female-human.txt", "pose-male-human.txt"):
                 self.assertTrue(self.gp.TEMPLATE_KEY_DEFAULTS.get(p.name), f"{p.name} runs at a high denoise but states no Critical details")
