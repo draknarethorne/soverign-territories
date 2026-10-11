@@ -5,7 +5,7 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
 Hair: glossy deep plum-black hair with a faint violet sheen, long and sleek.
@@ -14,7 +14,7 @@ Eyes: deep orchid-violet irises with radiating acid-green striations and a black
 Skin: fair cool-ivory complexion with a faint violet undertone, evenly toned and smooth.
 Legs: long, slender, sinuous legs.
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 

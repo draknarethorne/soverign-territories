@@ -39,7 +39,7 @@
         "washed-out skin",
         "ruddy skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/side-braid.json",
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/pulled-back/side-swept-over-shoulder.json",
       "hairColorNegatives": [
         "black hair",
         "brown hair",

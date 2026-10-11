@@ -5,7 +5,7 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
 Hair: soft champagne-blonde hair with warm honey lights, silky and luminous.
@@ -14,7 +14,7 @@ Eyes: clear light-grey irises with radiating soft-gold striations and a pale cha
 Skin: fair warm-neutral complexion with a soft golden undertone, evenly toned and luminous.
 Legs: legs of medium length in easy proportion, softly toned thighs.
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 

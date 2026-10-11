@@ -5,11 +5,11 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 ?{{KEY_BLOCK}}
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: {{BACKGROUND}}.
 

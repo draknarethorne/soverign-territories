@@ -1221,6 +1221,19 @@ def cmd_photos(args):
     print(f"\n{len(renames)} photo(s) set; workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
 
 
+def artist_origin(work, key):
+    """The artist person an angel folder was made from ('Artists/Pierre/Mara Locke'), or None: her z_ file says '+N from Artists/<artist>/<name>' and she still carries that name."""
+    got = people.read(pathlib.Path(work) / key)
+    if not got:
+        return None
+    name = got[0].lower()
+    for ln in reversed(got[1]):
+        m = re.search(r"\+\d+ from (Artists/[^:(]+?)(?: \(|:|$)", ln)
+        if m and m[1].split("/")[-1].strip().lower() == name:
+            return m[1].strip()
+    return None
+
+
 def cmd_pairs(args):
     """Pair every angel with the sister of her element from ALL the faces in the library (angels, prospects, grouped artists), similar to the sister but not the same, and not like anyone else."""
     cfg, st, work, cache, space = build(args)
@@ -1243,12 +1256,17 @@ def cmd_pairs(args):
             ident_of[key] = (identity_vec(c, ident), c)
             cohesion[key] = float(np.mean(scores)) if len(ps) > 1 else 0.0
         return ident_of[key][0]
+    # an angel who is an artist's person (Pierre's fantasy faces are for the art, not for the Prime photos) is replaced, and her photos go back to the artist
+    artist_of = {k: a for k in angel_dir.values() for a in [artist_origin(work, k)] if a}
     sis_vec = {s: vec_of(k) for s, k in sis_key.items()}
     wanted = {s.lower() for s in (args.sister or [])}
     slots = [a for a, s in pairs.items() if s in sis_vec and (not wanted or s.lower() in wanted)]
     fixed_keys = [angel_dir[a.lower()] for a in FIXED_ANGELS if a.lower() in angel_dir]
     kept = [angel_dir[a.lower()] for a in pairs if a not in slots and a.lower() in angel_dir]
-    cands = [k for k in space.keys if not is_sister(k) and k not in fixed_keys and k not in kept and len(space.by_key[k]) >= args.min_photos]
+    for a in pairs:
+        if a not in slots and angel_dir.get(a.lower()) in artist_of:
+            print(f"  NOTE {a} is an artist's person ({artist_of[angel_dir[a.lower()]]}); add --sister {pairs[a]} to replace her")
+    cands = [k for k in space.keys if not is_sister(k) and k not in fixed_keys and k not in kept and k not in artist_of and side(k) != "Artists" and len(space.by_key[k]) >= args.min_photos]
     weak = [k for k in cands if (vec_of(k) is not None) and cohesion[k] < args.min_cohesion and k not in {angel_dir.get(a.lower()) for a in slots}]
     if weak:
         print(f"left out ({len(weak)}): too few photos that agree on one face (cohesion below {args.min_cohesion}): " + ", ".join(f"{k.split('/', 1)[1]} {cohesion[k]:.2f}" for k in weak[:12]))
@@ -1328,9 +1346,11 @@ def cmd_pairs(args):
         # a replacement only counts when it is inside the band; otherwise the angel already in the folder stays and the slot waits for better candidates
         # (unless she is a near twin of a fixed angel such as Angelica: then even a candidate below the band is better)
         twin = max((float(vec_of(cur) @ fv) for fv in fixed_vec), default=-1.0) if cur and fixed_vec else -1.0
-        if cur and rec != cur and s < low and (cur_s is None or cur_s <= high) and twin < args.twin:
+        if cur and rec != cur and s < low and (cur_s is None or cur_s <= high) and twin < args.twin and cur not in artist_of:
             note = f"no candidate in the band yet (best {rec.split('/', 1)[1]} {s:.2f}); kept. {note}"
             rec, s = cur, cur_s if cur_s is not None else 0.0
+        elif cur in artist_of and rec != cur:
+            note = f"{cur.split('/', 1)[1]} is an artist's person ({artist_of[cur]}): replaced by the best prospect" + ("" if s >= low else f", even though {s:.2f} is below the band") + f". {note}"
         elif cur and rec != cur and twin >= args.twin:
             note = f"{cur.split('/', 1)[1]} is a near twin of a fixed angel ({twin:.2f}); replaced by the best available even though it is below the band. {note}"
         mark = "(keep)" if rec == cur else ""
@@ -1367,7 +1387,9 @@ def cmd_pairs(args):
             moves += [Move(p, to, f"{rec.split('/', 1)[1]} is the new {slot} (paired with {r['sister']}, {r['rec_s']:.2f})") for p in space.by_key[rec]]
     for slot in slots:
         cur = angel_dir.get(slot.lower())
-        if cur and cur not in chosen_for:
+        if cur in artist_of and cur in {r["now"] for r in result if r["rec"] != r["now"]}:
+            moves += [Move(p, artist_of[cur], f"{slot} was an artist's person; her photos go back to the artist", bucket="gallery") for p in space.by_key[cur]]
+        elif cur and cur not in chosen_for:
             moves += [Move(p, cur, f"{slot}'s earlier photos, set aside for the new {slot}", bucket="review") for p in space.by_key[cur]]
     who = {}
     for r in result:

@@ -5,7 +5,7 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
 Hair: deep chestnut-brown hair with soft copper lights, thick and glossy.
@@ -14,7 +14,7 @@ Eyes: warm amber-brown irises with radiating golden-sand striations and a dark b
 Skin: warm medium-brown complexion with a golden undertone, evenly toned and glowing.
 Legs: shapely legs with softly rounded thighs and a steady stance.
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
@@ -26,7 +26,7 @@ Figure: medium-tall, soft hourglass build with a grounded, steady bearing; defin
 
 Wearing: only a Warm Terracotta string bikini, top and bottom both in a lustrous satin-metallic finish with a subtle antique bronze sheen and a hairline antique bronze edge trim: a top of two small triangles, just large enough to cover, joined at the centre front by a thin string that draws them close together, with thin flat string straps behind the neck and across the back; and a matching bottom of a small triangle at the front and a narrow triangle at the back, joined at the hips by thin, smooth, continuous strings that lie flat against the skin, their fastening hidden behind her at the back - thin strings only; midriff, abdomen, and hips bare; classic Warm Terracotta stiletto pumps with a pointed toe and a slim antique bronze heel, bare legs.
 
-Hair: woven into a delicate braided crown encircling the head, the length left flowing beneath it; still air (fully replace the source photo's hairstyle).
+Hair: half gathered back at the crown, the rest left down in soft waves; minimal breeze (fully replace the source photo's hairstyle).
 
 Makeup: soft and natural - bronze-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Terracotta.
 

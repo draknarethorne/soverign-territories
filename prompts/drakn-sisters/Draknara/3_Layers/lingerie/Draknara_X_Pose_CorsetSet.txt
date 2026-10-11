@@ -5,7 +5,7 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
 Hair: medium bronze-brown hair, rich and warm, fine, sun-kissed warm caramel babylights woven softly through the mid-lengths and ends for a natural lived-in shimmer.
@@ -14,7 +14,7 @@ Eyes: rich malachite-hazel irises with radiating terracotta striations and a dar
 Skin: deep sun-weathered terracotta tan complexion, evenly tanned.
 Legs: very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition.
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 

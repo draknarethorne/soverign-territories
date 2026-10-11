@@ -395,6 +395,32 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(len(review), 3, "and her earlier photos are set aside for review, not lost")
         self.assertEqual(self.names("Prospects", "Lena Marsh"), [])
 
+    def test_an_angel_made_from_an_artists_person_is_replaced_by_a_prospect_and_artists_are_never_candidates(self):
+        blend("dn", "dk", 0.0)
+        self.add("Models", "Drakness", "dk", 5)
+        self.add("Models", "Draknira", "dn", 5)
+        blend("art", "dn", 0.45)       # an artist's face that suits her sister best
+        blend("sim", "dn", 0.35)       # a prospect that suits her a little less
+        blend("far", "dk", 0.0)
+        self.add("Angels", "Angelica", "ann", 3)
+        self.add("Angels", "azaline", "art", 4)
+        self.add("Artists", "Fantasy", "collage", 3)
+        L.people.write(self.lib / "Angels/azaline", "Ada Frost", ["2026-10-11 +4 from Artists/Pierre/Ada Frost: Pierre/Ada Frost is the new Azaline"])
+        self.add("Prospects", "Lena Marsh", "sim", 4)
+        self.add("Prospects", "Far Person", "far", 4)
+        g = self.lib / "Artists/Pierre/Other Artist Person/gallery"
+        g.mkdir(parents=True)
+        for i in range(4):
+            (g / f"other_{i}.jpg").write_text(f"art|{800 + i}")
+        self.assertEqual(L.artist_origin(self.lib, "Angels/azaline"), "Artists/Pierre/Ada Frost")
+        out = self.run_tool("pairs", "--sister", "Draknira", "--trials", "100")
+        row = [line for line in out.splitlines() if line.strip().startswith("Azaline")][0]
+        self.assertIn("Prospects/Lena Marsh", row)
+        self.assertIn("artist's person", row)
+        self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
+        self.assertEqual(len(self.names("Artists", "Pierre/Ada Frost")), 4, "her photos went back to the artist")
+        self.assertEqual(len(self.names("Angels", "azaline")), 4, "and a prospect's face is the angel now")
+
     def test_photos_picks_the_best_angel_photo_keeps_favourites_and_only_reports_for_sisters(self):
         self.add("Angels", "Angelica", "ann", 4)            # favourite: never changes
         self.add("Angels", "Azaline", "aa", 4)

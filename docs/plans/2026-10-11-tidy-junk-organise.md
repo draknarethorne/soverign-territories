@@ -9,7 +9,8 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 1. Do we still need the `_org` folders and other backup copies? They make it easy to pick the wrong duplicate.
 2. Screenshots carry text and icons over the picture; remove it, crop it, or discard them to a `_junk` or `_recycle` place you review. Single-photo prospects look like a symptom.
 3. Organise prospects and artists so you can find "a good dark-elf rogue" or "a barbarian princess" for the lower-tier cards, without opening each `z_` file; one person can have several roles, races and elements. Males and creatures will come.
-4. (Added Oct 11) Prospects and artists come from different sources and must never be mixed by the likeness checks; Azaline may become Mara Locke.
+4. (Added Oct 11) Prospects and artists come from different sources and must never be mixed by the likeness checks; artists are for the art, not for the angels' Prime photos.
+5. (Added Oct 11) FireRed needs `head-to-toe` in the A-pose prompt, and Prime hair should not be braided.
 
 ## Decisions
 
@@ -21,7 +22,9 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 | P4 | Where race, role and element live | In the `z_` file as profile lines (`sex`, `type`, `roles`, `elements`, `tier`, `tags`; several values allowed) and in a generated table `people_index.csv` / `.md` at the library root. Folders stay by status (Angels, Sisters, Prospects, Artists). |
 | P5 | Males and creatures | Not built. When they arrive they get the same layout under their own roots (for example `Brothers`, `Creatures`); `sex` and `type` already describe them. |
 | P6 | Prospects and artists | Never mixed: a photo is not moved between them, nor merged (`side` and `apart` in `likeness.py`); new people split from an artist's person stay in the artist's folder. |
-| P7 | Azaline | Now Mara Locke (Pierre's one coherent face, 106 photos): 0.45 against Angelica before, -0.26 now. Her sister Draknira scores 0.11 to 0.16. |
+| P7 | Azaline | Mara Locke (Pierre) did not work out: artist images are too fantasy. Artists are for pulling art, not for Prime photos. `pairs` never picks an artist's person now, and an angel who is one (found from her `z_` history) is replaced and her photos go back to the artist. Oct 11: Azaline is now Eva Emily (0.22 against Draknira) and Remiah is Dara Yates (0.26 against Drakneta). Camaris keeps her photo (no candidate in the band). |
+| P8 | Hair in the Prime | A Prime photo asks for simple hair; braids come in the later hair phase. The three heroes whose Prime hair was a braid now have another style (Haniya: side-swept over the shoulder, Sandalyn: half-up half-down, Verael: textured crop). Ponytails and pulled-back styles stay. |
+| P9 | FireRed full body | The A-pose prompt says `head-to-toe` in its first line and in the "Professional head-to-toe, full-body" line, so FireRed does not return partial-body photos (both pose templates, female and male). |
 
 ## Steps
 

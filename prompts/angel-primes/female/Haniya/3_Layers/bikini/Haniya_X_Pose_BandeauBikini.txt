@@ -5,7 +5,7 @@ Denoise ~1.0.
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, full-length, photorealistic portrait photograph.
+Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
 
 Critical details - these must be clearly visible:
 Hair: warm strawberry-blonde hair with soft golden lights, bouncy and full of life.
@@ -14,7 +14,7 @@ Eyes: bright spring-green irises with radiating golden striations and a soft mos
 Skin: light peachy complexion with a warm blush undertone and a few faint freckles, evenly toned.
 Legs: shorter, slender, light legs in neat proportion.
 
-Professional full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
+Professional head-to-toe, full-body studio beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Background: a basic cream-coloured studio backdrop with even, soft, neutral frontal studio lighting - a flat, clean key light.
 
@@ -26,7 +26,7 @@ Figure: petite, short, compact build with a youthful, springy frame; small, neat
 
 Wearing: only a Spring Emerald strapless bandeau bikini top with a small gold centre knot and matching high-cut bottom; shoulders, midriff and hips bare; bare feet planted flat on the floor, slightly apart with the toes pointing forward, natural relaxed toes.
 
-Hair: gathered into a single loose side braid draped over one shoulder; still air (fully replace the source photo's hairstyle).
+Hair: swept entirely to one side, draped forward over the shoulder in a glamorous sweep; light breeze (fully replace the source photo's hairstyle).
 
 Makeup: soft and natural - gold-toned eyeshadow, a light natural blush, groomed brows, softly defined eyes. Reset any heavy makeup from the source photo. Fingernails and toenails natural or Light Emerald.
 

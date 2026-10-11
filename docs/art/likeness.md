@@ -96,6 +96,8 @@ The sister of each angel comes from the codex (or `likeness.pairs` in `workspace
 
 The pick should look like the sister without being her: 0.15 to 0.40 against her (target 0.28; the library average is 0.0 and 0.30 is already in the top 5%), and not alike any other sister, angel or fixed angel (Angelica).
 
+Candidates are angels and prospects only: an artist's person is never chosen (the artists' faces are for the art, and too fantasy for a Prime photo). An angel whose `z_` file says she came from an artist (`+N from Artists/...`, still under that name) is replaced and her photos go back to the artist.
+
 An angel changes only when the replacement is inside that band, or when she is a near twin of Angelica; otherwise she stays and the slot waits for better candidates. Her old photos go to her `review` folder and the emptied source folder to `_retired`.
 
 ## Choosing between look-alikes

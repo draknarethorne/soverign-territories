@@ -38,7 +38,7 @@
         "fair skin",
         "washed-out skin"
       ],
-      "hairStyleComponent": "data/art/races/human/cosmetics/hair/braided/braided-crown.json",
+      "hairStyleComponent": "data/art/races/human/cosmetics/hair/down/half-up-half-down.json",
       "hairColorNegatives": [
         "blonde hair",
         "black hair",
