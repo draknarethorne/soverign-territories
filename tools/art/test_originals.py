@@ -50,11 +50,38 @@ class OriginalsTests(unittest.TestCase):
         g.mkdir(parents=True, exist_ok=True)
         return g
 
-    def run_tool(self, *args, apply=True):
+    def run_tool(self, *args, apply=True, faces=None):
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
-            originals.main([*(["--apply"] if apply else []), "--root", str(self.lib), "--no-repoint", *args])
+            originals.main([*(["--apply"] if apply else []), "--root", str(self.lib), "--no-repoint", *([] if faces else ["--no-headshots"]), *args], faces=faces)
         return out.getvalue()
+
+    def test_headshots_are_the_face_cropped_at_the_standard_shape_and_pruned_with_the_original(self):
+        g = self.gallery("Angels", "Angelica")
+        Image.new("RGB", (400, 600), (200, 100, 50)).save(g / "angelica_image_1.jpg")
+        Image.new("RGB", (400, 600), (50, 100, 200)).save(g / "angelica_image_2.jpg")
+        Image.new("RGB", (60, 60), (0, 0, 0)).save(g / "angelica_image_3.jpg")
+
+        class Fake:
+            def of(self, path):
+                return {"angelica_image_1.jpg": ([0.35, 0.2, 0.3, 0.2], 120), "angelica_image_2.jpg": ([0.35, 0.2, 0.3, 0.2], 30)}.get(path.name, (None, 0))
+
+            def save(self):
+                pass
+        out = self.run_tool(faces=Fake())
+        self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110"), ["angelica_image_1_head_94x110.png"], "a tiny face and a photo with no face get none")
+        self.assertEqual(cw.image_size(self.lib / "Angels/Angelica/headshot_94x110/angelica_image_1_head_94x110.png"), (94, 110))
+        self.assertIn("2 skipped", out)
+        (g / "angelica_image_1.jpg").unlink()
+        self.run_tool(faces=Fake())
+        self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110"), [])
+        self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110_org"), ["angelica_image_1_head_94x110.png"], "kept, not deleted")
+
+    def test_the_headshot_crop_stays_inside_the_picture_and_keeps_the_shape(self):
+        for box in ([0.0, 0.0, 0.2, 0.1], [0.8, 0.9, 0.2, 0.1], [0.1, 0.1, 0.8, 0.8]):
+            x0, y0, x1, y1 = originals.headshot_box((400, 600), box, (94, 110))
+            self.assertTrue(0 <= x0 < x1 <= 400 and 0 <= y0 < y1 <= 600, (box, (x0, y0, x1, y1)))
+            self.assertAlmostEqual((x1 - x0) / (y1 - y0), 94 / 110, delta=0.02)
 
     def names(self, root, name, sub="gallery_94x110"):
         d = self.lib / root / name / sub

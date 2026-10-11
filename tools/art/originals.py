@@ -136,6 +136,116 @@ def is_fresh(src, dest, size):
     return cw.image_size(dest) == tuple(size)
 
 
+FACE_SPAN = 2.5  # the crop is this many face heights tall: head, hair and shoulders
+MIN_FACE_PX = 60  # a smaller face (in the original's pixels) would only be blown up into a blur
+
+
+def headshot_box(img_size, box, size):
+    """(left, top, right, bottom) in the source: a crop of the standard shape centred on the face (box = x, y, w, h as fractions of the picture), moved or shrunk to stay inside it."""
+    W, H = img_size
+    fw, fh = box[2] * W, box[3] * H
+    cx, cy = (box[0] + box[2] / 2) * W, (box[1] + box[3] / 2) * H - 0.12 * fh  # a little up: the box stops at the brow, the hair is above it
+    ch = fh * FACE_SPAN
+    cw_ = ch * size[0] / size[1]
+    shrink = min(1.0, W / cw_, H / ch)
+    cw_, ch = cw_ * shrink, ch * shrink
+    x0 = min(max(cx - cw_ / 2, 0), W - cw_)
+    y0 = min(max(cy - ch / 2, 0), H - ch)
+    return round(x0), round(y0), round(x0 + cw_), round(y0 + ch)
+
+
+def headshot(src, dest, size, box):
+    """Write the face of src, cropped around it at the standard shape and scaled up, as a PNG. False (nothing written) when the crop is too small to scale up without turning to mush."""
+    from PIL import Image, ImageOps
+    with Image.open(src) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+    crop = headshot_box(im.size, box, size)
+    if crop[3] - crop[1] < size[1] * 0.3:
+        return False
+    if dest is None:
+        return True  # a check only
+    out = im.crop(crop).resize(size, Image.LANCZOS)
+    tmp = dest.with_name(dest.name + ".tmp")
+    try:
+        out.save(tmp, format="PNG")
+        os.replace(tmp, dest)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+    return True
+
+
+class Faces:
+    """Where the main face is in each photo: the likeness tool's cache (by file content), asking its detector only for photos it has not seen."""
+
+    def __init__(self):
+        import likeness
+        self.likeness = likeness
+        self.cache = likeness.Cache(likeness.DATA / "likeness_cache.json")
+        self.embed = None
+
+    def of(self, path):
+        """(box, face size in pixels), or (None, 0) when there is no face."""
+        sha = self.cache.sha(path)
+        data = self.cache.emb.get(sha)
+        if data is None:
+            self.embed = self.embed or self.likeness.Embedder()
+            try:
+                data = self.embed(path) or {"faces": -1}
+            except Exception:  # noqa: BLE001 - one unreadable photo must not stop the rest
+                data = {"faces": -1}
+            self.cache.emb[sha] = data
+        return data.get("box"), data.get("px", 0)
+
+    def save(self):
+        self.cache.save()
+
+
+def make_headshots(sources, folder, size, args, tally, faces):
+    """headshot_<W>x<H>/<name>_<W>x<H>.png for every original with a usable face (not made again while newer than the original); copies whose original is gone, or has no face, are moved to headshot_<W>x<H>_org."""
+    out_dir, archive = folder / f"headshot_{size[0]}x{size[1]}", folder / f"headshot_{size[0]}x{size[1]}_org"
+    wanted, made, skipped = set(), 0, 0
+    for path, final in sources:
+        name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_head_{size[0]}x{size[1]}.png"  # _head_ keeps it apart from the full photo's copy in a ComfyUI input folder
+        box, px = faces.of(path)
+        if not box or px < MIN_FACE_PX:
+            skipped += 1
+            continue
+        wanted.add(name.lower())
+        dest = out_dir / name
+        if not args.force and is_fresh(path, dest, size):
+            continue
+        if not args.apply:
+            if headshot(path, None, size, box):
+                made += 1
+            else:
+                skipped += 1
+                wanted.discard(name.lower())
+            continue
+        out_dir.mkdir(exist_ok=True)
+        try:
+            ok = headshot(path, dest, size, box)
+        except Exception as e:  # noqa: BLE001
+            print(f"  WARNING no headshot for {final}: {e}")
+            ok = False
+        made += ok
+        skipped += not ok
+        if not ok:
+            wanted.discard(name.lower())
+    stale = [p for p in images(out_dir) if p.name.lower() not in wanted]
+    for p in stale:
+        print(f"  {'PRUNED' if args.apply else 'prune  '} headshot {p.name}  (original gone or no usable face; kept in {archive.name})")
+        if args.apply:
+            archive.mkdir(exist_ok=True)
+            if (archive / p.name).exists():
+                p.unlink()
+            else:
+                os.replace(p, archive / p.name)
+    if made or stale or skipped:
+        print(f"  headshots: {made} {'made' if args.apply else 'to make'}, {skipped} skipped (no usable face), {len(stale)} {'pruned' if args.apply else 'to prune'}")
+    tally["headshots"] = tally.get("headshots", 0) + made
+
+
 def process_folder(folder, label, size, args, tally):
     gallery, out_dir = folder / "gallery", folder / f"gallery_{size[0]}x{size[1]}"
     prefix = prefix_of(folder.name)
@@ -215,9 +325,11 @@ def process_folder(folder, label, size, args, tally):
     print(f"  {made} {'made' if args.apply else 'to make'}, {len(stale)} {'pruned' if args.apply else 'to prune'}")
     tally["made"] += made
     tally["pruned"] += len(stale)
+    if getattr(args, "faces", None):
+        make_headshots(sources, folder, size, args, tally, args.faces)
 
 
-def main(argv=None):
+def main(argv=None, faces=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     ap.add_argument("--dry-run", action="store_true", help="preview (the bin launcher adds --apply itself)")
@@ -225,7 +337,9 @@ def main(argv=None):
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
+    ap.add_argument("--no-headshots", action="store_true", help="do not make the headshot_944x1104 copies (the face, cropped and scaled up)")
     args = ap.parse_args(argv)
+    args.faces = None if args.no_headshots else (faces or Faces())
     if args.dry_run:
         args.apply = False
     try:
@@ -246,8 +360,11 @@ def main(argv=None):
         if args.only and not any(fnmatch.fnmatch(folder.name.lower(), pat.lower()) or fnmatch.fnmatch(name.lower(), pat.lower()) for pat in args.only):
             continue
         process_folder(folder, f"{group}/{name}", size, args, tally)
+    if getattr(args, "faces", None):
+        args.faces.save()
     print("==========================================================")
-    print(f"{tally['renamed']} renamed, {tally['made']} {'made' if args.apply else 'to make'}, {tally['pruned']} {'pruned' if args.apply else 'to prune'}, {tally['skipped']} skipped" + ("" if args.apply else " (preview)"))
+    print(f"{tally['renamed']} renamed, {tally['made']} {'made' if args.apply else 'to make'}, {tally['pruned']} {'pruned' if args.apply else 'to prune'}, {tally['skipped']} skipped" + ("" if args.apply else " (preview)")
+          + (f", {tally.get('headshots', 0)} headshot(s) {'made' if args.apply else 'to make'}" if args.faces else ""))
     if args.no_repoint:
         return
     if args.apply:

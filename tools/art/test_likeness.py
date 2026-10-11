@@ -342,6 +342,53 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("draknara_image_901.jpg", self.names("Models", "Draknara"))
         self.assertTrue(any("902" in n for n in self.names("Angels", "Angelica")))
 
+    def test_review_out_makes_a_new_prospect_of_a_photo_that_is_clearly_not_her(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Angels", "Angelica", "ann", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        rv = self.lib / "Sisters/Draknara/review"
+        rv.mkdir(parents=True)
+        for i in (901, 902, 903):
+            (rv / f"draknara_image_{i}.jpg").write_text(f"nobody|{i}")
+        self.assertIn("3 stays in review", self.run_tool("review"), "without --out they stay")
+        self.assertIn("3 new prospect", self.run_tool("review", "--out"))
+        self.run_tool("review", "--out", apply=True)
+        self.assertEqual(list(rv.iterdir()), [])
+        made = [p for p in (self.lib / "Prospects").iterdir() if p.name not in {f"Person {i}" for i in range(5)}]
+        self.assertEqual(len(made), 1, "photos that look alike share one new prospect")
+        self.assertTrue(any("from Draknara review" in ln for ln in L.people.read(made[0])[1]))
+
+    def test_lookalikes_reserves_a_prospect_who_looks_like_a_top_tier_person(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("Prospects", "Twin", "ann", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        out = self.run_tool("lookalikes")
+        self.assertIn("Prospects/Twin", out)
+        self.assertNotIn("Person 0", out)
+        self.run_tool("lookalikes", apply=True)
+        self.assertTrue(L.people.reserved(self.lib / "Prospects/Twin"))
+        self.run_tool("lookalikes", apply=True)
+        self.assertEqual(len(L.people.reserved(self.lib / "Prospects/Twin")), 1, "a second run does not repeat the line")
+
+    def test_loosen_reports_without_moving_anything(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("", "Various", "ann", 2)
+        out = self.run_tool("loosen")
+        self.assertIn("Various photos that get a home", out)
+        self.assertEqual(len(self.names("", "Various")), 2)
+
+    def test_a_merge_retires_the_emptied_folder(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Prospects", "Twin", "dee", 3)
+        self.run_tool("merge", "Twin", "Draknara", apply=True)
+        self.assertFalse((self.lib / "Prospects/Twin").exists())
+        self.assertTrue((self.lib / "_retired/Prospects/Twin").exists())
+        self.assertEqual(len(self.names("Sisters", "Draknara")), 7)
+
     def test_a_folder_with_a_different_person_in_it_names_the_odd_one(self):
         self.add("Angels", "Angelica", "ann", 5)
         (self.lib / "Angels/Angelica/gallery/angelica_image_999.jpg").write_text("bob|999")

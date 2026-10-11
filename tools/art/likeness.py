@@ -653,6 +653,10 @@ def cmd_merge(args, retire=False):
     if args.apply:
         n = execute(moves, work, True, cache)
         print(f"{n} photo(s) moved")
+        if not retire:
+            gone = retire_empty(work, [src], keep={k for k in space.keys if k.startswith("Angels/") or is_sister(k)})
+            if gone:
+                print("emptied folder moved to _retired: " + ", ".join(gone))
         after_moves(args, n > 0)
     else:
         print("preview only; add --apply to move them")
@@ -1035,45 +1039,65 @@ def prime_score(p, c, size):
     return ident + clarity + body + shape + res + multi, f"face {ident:.2f}, {p.px}px, {w}x{h}" + (", 2+ faces" if p.faces > 1 else "")
 
 
-def cmd_review(args):
-    """The photos set aside in review folders: each one against her own folder and against everyone else, with a suggested action. A photo that is probably her goes back to her gallery (--back),
-    one that clearly looks like someone else goes to that person (--send); the rest stay in review. Preview unless --apply."""
-    cfg, st, work, cache, space = build(args)
-    embed = args.embedder or Embedder()
-    wanted = {n.lower() for n in (args.names or [])}
-    moves, rows, sheet = [], [], []
+def load_review(cfg, work, space, cache, embed, st, wanted=()):
+    """[(folder key, file, Photo or None)] for every file in a person folder's review folder; None when the file has no usable face."""
+    out = []
     for group, name, folder in cw.photo_folders(cfg, work):
         key = f"{group}/{name}"
         if key not in space.by_key or (wanted and name.split("/")[-1].lower() not in wanted):
             continue
-        files = originals.images(folder / "review")
-        if not files:
-            continue
-        c = space.centroid(key)
-        for f in files:
+        for f in originals.images(folder / "review"):
             sha = cache.sha(f)
             if sha not in cache.emb:
                 cache.emb[sha] = embed(f) or {"faces": -1}
             ph = Photo(f, group, name, sha, cache.emb[sha])
-            if not ph.usable(st["minFace"]):
-                rows.append((key, f.name, None, None, None, "no usable face: stays in review"))
-                continue
-            ph.vec = nz(ph.raw - space.mean)
-            own = float(ph.vec @ c)
-            rank = [r for r in space.ranking(ph.vec) if r[1] != key]
-            other = rank[0] if rank else (0.0, "")
-            second = rank[1][0] if len(rank) > 1 else -1.0
-            if own >= args.back and own >= other[0]:
-                action = f"back to {key.split('/', 1)[1]}"
-                moves.append(Move(ph, key, f"review: probably {key.split('/', 1)[1]} ({own:.2f})", own))
-            elif other[0] >= st["assign"] and other[0] - max(second, own) >= st["margin"]:
-                action = f"send to {other[1]}"
-                moves.append(Move(ph, other[1], f"review: looks like {other[1]} ({other[0]:.2f}; her own folder {own:.2f})", other[0]))
+            if ph.usable(st["minFace"]):
+                ph.vec = nz(ph.raw - space.mean)
             else:
-                action = "stays in review"
-            rows.append((key, f.name, own, other[1], other[0], action))
-            sheet.append(ph)
+                ph = None
+            out.append((key, f, ph))
     cache.save()
+    return out
+
+
+def cmd_review(args):
+    """The photos set aside in review folders: each one against her own folder and against everyone else, with a suggested action. A photo that is probably her goes back to her gallery (--back),
+    one that clearly looks like someone else goes to that person (--send); the rest stay in review. With --out, a photo that is clearly not her (below the 'odd' score) and matches nobody
+    becomes a new prospect (photos that look alike share one), whose z_ file says where she came from. Preview unless --apply."""
+    cfg, st, work, cache, space = build(args)
+    embed = args.embedder or Embedder()
+    wanted = {n.lower() for n in (args.names or [])}
+    moves, rows, sheet, strays = [], [], [], []
+    for key, f, ph in load_review(cfg, work, space, cache, embed, st, wanted):
+        if ph is None:
+            rows.append((key, f.name, None, None, None, "no usable face: stays in review"))
+            continue
+        c = space.centroid(key)
+        own = float(ph.vec @ c)
+        rank = [r for r in space.ranking(ph.vec) if r[1] != key]
+        other = rank[0] if rank else (0.0, "")
+        second = rank[1][0] if len(rank) > 1 else -1.0
+        if own >= args.back and own >= other[0]:
+            action = f"back to {key.split('/', 1)[1]}"
+            moves.append(Move(ph, key, f"review: probably {key.split('/', 1)[1]} ({own:.2f})", own))
+        elif other[0] >= st["assign"] and other[0] - max(second, own) >= st["margin"]:
+            action = f"send to {other[1]}"
+            moves.append(Move(ph, other[1], f"review: looks like {other[1]} ({other[0]:.2f}; her own folder {own:.2f})", other[0]))
+        elif args.out and own < st["odd"] and other[0] < st["assign"]:
+            action = "new prospect"
+            strays.append((key, ph, own))
+        else:
+            action = "stays in review"
+        rows.append((key, f.name, own, other[1], other[0], action))
+        sheet.append(ph)
+    if strays:
+        taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+        for g in cluster(np.array([p.vec for _, p, _ in strays]), st["cluster"]):
+            members = [strays[i] for i in g]
+            name = invent_name("|".join(sorted(p.sha for _, p, _ in members)), taken | {m.to.split("/", 1)[-1] for m in moves})
+            taken = taken | {name}
+            for key, ph, own in members:
+                moves.append(Move(ph, f"Prospects/{name}", f"from {key.split('/', 1)[1]} review: clearly not her ({own:.2f})", None))
     print(f"{'folder':26} {'photo':44} {'her':>5}  {'looks most like':32} {'score':>5}  action")
     for key, fn, own, o, os_, act in rows:
         print(f"{key:26} {fn[:44]:44} {('%.2f' % own) if own is not None else '-':>5}  {(o or '-'):32} {('%.2f' % os_) if os_ is not None else '-':>5}  {act}")
@@ -1343,6 +1367,75 @@ def cmd_pairs(args):
         print("workflows changed: " + (", ".join(f"{v} in {k}" for k, v in touched.items()) or "none"))
 
 
+def cmd_loosen(args):
+    """What would change if the comparison were looser: counts and examples at lower thresholds, for the photos waiting for a home (Various and the review folders) and for prospects that might be one person. Nothing moves."""
+    cfg, st, work, cache, space = build(args)
+    embed = args.embedder or Embedder()
+    items = [(p.key, p, False) for p in space.photos if matches(p.key, st["pool"]) and p.usable(st["minFace"])]
+    items += [(key, ph, True) for key, f, ph in load_review(cfg, work, space, cache, embed, st) if ph]
+    info = []
+    for key, ph, rev in items:
+        rank = [r for r in space.ranking(ph.vec) if r[1] != key]
+        own = float(ph.vec @ space.centroid(key)) if rev and space.centroid(key) is not None else None
+        top = rank[0] if rank else (-1.0, "")
+        second = max(rank[1][0] if len(rank) > 1 else -1.0, own if own is not None else -1.0)
+        info.append({"rev": rev, "key": key, "ph": ph, "own": own, "top": top, "gap": top[0] - second})
+    steps = [0.0, 0.05, 0.10, 0.15]
+    pool, rev = [i for i in info if not i["rev"]], [i for i in info if i["rev"]]
+    print(f"photos waiting for a home: {len(pool)} in Various, {len(rev)} in review folders (with a face)\n")
+    print(f"{'setting':44}" + "".join(f"{'now' if s == 0 else '-%.2f' % s:>8}" for s in steps))
+    print(f"{'assign (a match must score at least):':44}" + "".join(f"{st['assign'] - s:8.2f}" for s in steps))
+
+    def placed(group, t):
+        return [i for i in group if i["top"][0] >= t and i["gap"] >= st["margin"]]
+
+    print(f"{'Various photos that get a home':44}" + "".join(f"{len(placed(pool, st['assign'] - s)):8}" for s in steps))
+    print(f"{'review photos sent to someone else':44}" + "".join(f"{len(placed(rev, st['assign'] - s)):8}" for s in steps))
+    print(f"{'review photos back to her (--back ' + str(0.20) + ')':44}" + "".join(f"{sum(1 for i in rev if i['own'] is not None and i['own'] >= 0.20 - s and i['own'] >= i['top'][0]):8}" for s in steps))
+    print(f"{'review photos clearly not her (--out, odd):':44}" + "".join(f"{sum(1 for i in rev if i['own'] is not None and i['own'] < st['odd'] - s and i['top'][0] < st['assign'] - s):8}" for s in steps))
+    now = {id(i) for i in placed(info, st["assign"])}
+    extra = [i for i in placed(info, st["assign"] - 0.10) if id(i) not in now]
+    print(f"\nat -0.10 these {len(extra)} more would move (the first 12, best match first):")
+    for i in sorted(extra, key=lambda i: -i["top"][0])[:12]:
+        print(f"  {i['top'][0]:.2f}  {i['key']}/{i['ph'].name[-34:]}  ->  {i['top'][1]}" + (f"   (her own folder {i['own']:.2f})" if i["own"] is not None else ""))
+    dest = collections.Counter(i["top"][1] for i in extra)
+    if dest:
+        print("  where they would go: " + ", ".join(f"{k} {v}" for k, v in dest.most_common(8)))
+    # people who may be one person under two folder names
+    persons = [k for k in space.keys if len(space.by_key[k]) >= 3 and not k.startswith("Angels/") and not is_sister(k)]
+    cents = {k: space.centroid(k) for k in space.keys if len(space.by_key[k]) >= 3}
+    pairs = sorted(((float(cents[a] @ cents[b]), a, b) for a, b in itertools.combinations(sorted(cents), 2) if a in persons or b in persons), reverse=True)
+    print(f"\nfolders that may be one person (centroid score; the same person is about 0.55 and up):")
+    for t in (0.55, 0.45, 0.40, 0.35):
+        print(f"  {t:.2f} and up: {sum(1 for s, _, _ in pairs if s >= t)} pair(s)")
+    for s, a, b in [p for p in pairs if p[0] >= 0.40][:15]:
+        print(f"  {s:.2f}  {a}  ~  {b}")
+
+
+def cmd_lookalikes(args):
+    """Prospects and artist people who look like a sister or an angel (the top tier). Such a person is 'reserved': cards below the top tier should not use her face, or players see two near-identical characters.
+    With --apply each gets a line in her z_ file saying so."""
+    cfg, st, work, cache, space = build(args)
+    thr = args.min if args.min is not None else st["alike"]
+    top = [k for k in space.keys if k.startswith("Angels/") or is_sister(k)]
+    rows = []
+    for k in space.keys:
+        if k in top or len(space.by_key[k]) < 3:
+            continue
+        c = space.centroid(k)
+        best = max(((float(c @ space.centroid(t)), t) for t in top if len(space.by_key[t]) >= 3), default=(-1.0, ""))
+        if best[0] >= thr:
+            rows.append((best[0], k, best[1]))
+    rows.sort(reverse=True)
+    print(f"{len(rows)} prospect/artist folder(s) score {thr:.2f} or more against a sister or an angel:")
+    for s, k, t in rows:
+        print(f"  {s:.2f}  {k:34} looks like {t}  ({len(space.by_key[k])} photos)" + ("   [reserved]" if people.reserved(work / k) else ""))
+        if args.apply and not any(f"looks like {t} (" in ln for ln in people.reserved(work / k)):
+            people.note(work / k, f"reserved: looks like {t} ({s:.2f}); keep off cards below the top tier")
+    if not args.apply and rows:
+        print("preview only; add --apply to write the reserved lines into the z_ files")
+
+
 def cmd_names(args):
     """Who is in each folder: the z_ file of every person folder. A folder without one gets it made from the move log (the name of the person most of its photos came from, else its own name)."""
     cfg, st, work, cache, space = build(args)
@@ -1441,6 +1534,10 @@ def main(argv=None, embedder=None):
     s = add("review", cmd_review, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="folders whose review photos to look at (default: all)")
     s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")
+    s.add_argument("--out", action="store_true", help="a review photo that is clearly not her and matches nobody becomes a new prospect (alike photos share one)")
+    add("loosen", cmd_loosen)
+    s = add("lookalikes", cmd_lookalikes, apply=True)
+    s.add_argument("--min", type=float, help="score against a sister or angel that makes a prospect or artist person 'reserved' (default: settings alike, 0.30)")
     s = add("photos", cmd_photos, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="heroes (default: every angel and sister)")
     s.add_argument("--group", help="Angels or Sisters")

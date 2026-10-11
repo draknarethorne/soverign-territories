@@ -53,6 +53,12 @@ def name_of(folder):
     return got[0] if got else None
 
 
+def reserved(folder):
+    """The 'reserved:' history lines of a folder (it looks like a top-tier angel or sister), newest last."""
+    got = read(folder)
+    return [ln for ln in (got[1] if got else []) if " reserved:" in ln]
+
+
 def write(folder, name, history):
     """Write the z_ file (renamed after the name when the name changed); returns its path."""
     folder = pathlib.Path(folder)

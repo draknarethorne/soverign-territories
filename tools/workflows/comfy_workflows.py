@@ -1734,11 +1734,11 @@ def image_size(path):
 
 
 def find_image(cfg, name):
-    """First existing copy of an image: any input folder, the photo folders, then anywhere under the output roots."""
+    """First existing copy of an image: any input folder, the photo folders, the headshot folders, then anywhere under the output roots."""
     for d in input_dirs(cfg):
         if (d / name).exists():
             return d / name
-    for folder, p in photo_library(cfg):
+    for folder, p in photo_library(cfg) + headshot_library(cfg):
         if p.name == name:
             return p
     for root in output_roots(cfg):
@@ -1915,6 +1915,19 @@ def photo_library(cfg, base=None):
     return out
 
 
+def headshot_library(cfg, base=None):
+    """[(folder name, path)] of every headshot: <folder>/headshot_<W>x<H>/*.png. Kept apart from photo_library: a headshot shares its photo's id, so it must never count as the photo's rename."""
+    w, h = cfg.get("standardSize") or (944, 1104)
+    out = []
+    for root in photo_roots(cfg, base):
+        for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
+            for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
+                g = folder / f"headshot_{w}x{h}"
+                if g.is_dir():
+                    out += [(name, f) for f in sorted(g.glob("*.png"))]
+    return out
+
+
 PHOTO_KEY = re.compile(r"(image_\d+|(?:screenshot|shot)_\d{8}_?\d{6}|pic_[0-9a-f]{8})", re.I)
 
 
@@ -1933,6 +1946,7 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
     in workspaces.json ("photos"), in every generated workflow of that hero that loads it (repo and workspaces; a changed workspace file is backed up first), and its
     scaled image is copied into the input folder of each workspace that needed it. A photo whose original is gone, or sits in another hero's folder, is reported, never guessed."""
     by_name, by_key = collections.defaultdict(list), collections.defaultdict(list)
+    heads = {p.name.lower() for _, p in headshot_library(cfg, work)}
     for folder, p in photo_library(cfg, work):
         by_name[p.name.lower()].append((folder, p))
         k = photo_key(p.name)
@@ -1942,6 +1956,8 @@ def reconcile_photos(cfg, dry_run, root=None, hero=None, work=None):
     for h, name in sorted(cfg.get("photos", {}).items()):
         if hero and h.lower() != hero.lower():
             continue
+        if name.lower() in heads:
+            continue  # a headshot chosen on purpose
         m = photo_key(name)
         mine = [(f, p) for f, p in by_key.get(m, []) if f.lower() == h.lower()] if m else []
         if any(p.name == name for _, p in mine):

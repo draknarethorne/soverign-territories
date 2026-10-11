@@ -675,6 +675,20 @@ class PhotoRepointTests(unittest.TestCase):
         finally:
             w.__exit__()
 
+    def test_a_chosen_headshot_is_found_and_not_swapped_back_for_the_full_photo(self):
+        w = self.world()
+        try:
+            head = "alice_image_123_head_944x1104.png"
+            (w.tmp / "lib" / "Angels" / "Alice" / "headshot_944x1104").mkdir()
+            (w.tmp / "lib" / "Angels" / "Alice" / "headshot_944x1104" / head).write_bytes(b"png")
+            w.cfg["photos"]["Alice"] = head
+            self.assertEqual(cw.find_image(w.cfg, head).name, head)
+            out, _ = w.run("inputs", "photos")
+            self.assertIn("every chosen photo is where", out)
+            self.assertEqual(w.cfg["photos"]["Alice"], head)
+        finally:
+            w.__exit__()
+
     def test_a_photo_renamed_to_the_shot_convention_is_found_by_its_date_and_time(self):
         w = self.world(new_name="alice_shot_20260101120000_944x1104.png")
         try:
