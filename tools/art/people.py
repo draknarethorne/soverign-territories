@@ -10,6 +10,9 @@ named after the person's original name: z_molly_duval.txt. The file's first line
 
 The tools write it (likeness moves, merges and pairings); you may edit it by hand. When the name is unknown the file carries the invented name
 the folder was given, so a prospect who becomes an angel, or an angel who is replaced, is never anonymous. The image tools ignore the file.
+
+Under the name may sit profile lines (sex, type, roles, elements, tier, tags: several values separated by commas) saying what the person could play in a lower-tier card;
+`likeness index`, `profile` and `who` read and write them.
 """
 import datetime
 import pathlib
@@ -74,6 +77,46 @@ def write(folder, name, history):
 
 def today():
     return datetime.date.today().isoformat()
+
+
+# what a person could be used for, in the lower-tier cards: set by you (or `likeness index --import`), one line each in the z_ file, several values separated by commas
+PROFILE_KEYS = ("sex", "type", "roles", "elements", "tier", "tags")
+PROFILE_LINE = re.compile(r"^(" + "|".join(PROFILE_KEYS) + r"):\s*(.*)$", re.I)
+
+
+def profile(folder):
+    """{key: [values]} from the profile lines of the z_ file (type: dark elf; roles: rogue, assassin; elements: Darkness)."""
+    got = read(folder)
+    out = {}
+    for ln in got[1] if got else []:
+        m = PROFILE_LINE.match(ln)
+        if m:
+            out[m[1].lower()] = [v.strip() for v in m[2].split(",") if v.strip()]
+    return out
+
+
+def set_profile(folder, values, when=None):
+    """Set profile keys (a dict of key -> list of values; an empty list clears the key). The lines sit right under the name; a change is logged as a dated line. Returns True when something changed."""
+    got = read(folder)
+    name, hist = got if got else (pathlib.Path(folder).name, [])
+    old = profile(folder)
+    new = dict(old)
+    for k, v in values.items():
+        k = k.lower()
+        if k not in PROFILE_KEYS:
+            raise ValueError(f"unknown profile key {k!r}; use one of {', '.join(PROFILE_KEYS)}")
+        v = [x.strip() for x in v if x.strip()]
+        if v:
+            new[k] = v
+        else:
+            new.pop(k, None)
+    if new == old:
+        return False
+    rest = [ln for ln in hist if not PROFILE_LINE.match(ln)]
+    lines = [f"{k}: {', '.join(new[k])}" for k in PROFILE_KEYS if k in new]
+    changed = ", ".join(f"{k}={', '.join(new.get(k, [])) or '-'}" for k in PROFILE_KEYS if new.get(k) != old.get(k))
+    write(folder, name, lines + rest + [f"{when or today()} profile: {changed}"])
+    return True
 
 
 def note(folder, event, name=None, when=None):

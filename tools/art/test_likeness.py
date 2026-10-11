@@ -180,6 +180,39 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(len(self.names("Prospects", "Lone")), 1)
         self.assertTrue((self.lib / "_retired/Prospects/Solo Mia").exists())
 
+    def test_index_profile_who_and_the_spreadsheet_round_trip(self):
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Prospects", "Mia", "mia", 4)
+        self.add("Prospects", "Zed", "zed", 3)
+        for i, who in enumerate(("w1", "w2", "w3")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.assertIn("EXIT", self.run_tool("profile", "Mia", "--bogus", "x"))
+        self.run_tool("profile", "Mia", "--type", "dark elf", "--roles", "rogue, spy", "--elements", "Darkness")
+        out = self.run_tool("who", "--roles", "spy")
+        self.assertIn("Mia", out)
+        self.assertNotIn("Zed", out)
+        self.assertIn("still to classify", self.run_tool("who"))
+        self.run_tool("index")
+        import csv
+        csv_path = self.lib / "people_index.csv"
+        rows = list(csv.DictReader(open(csv_path, encoding="utf-8-sig")))
+        mia = next(r for r in rows if r["folder"] == "Mia")
+        self.assertEqual((mia["status"], mia["type"], mia["roles"], mia["elements"]), ("Prospects", "dark elf", "rogue; spy", "Darkness"))
+        self.assertEqual(len(rows), 7)
+        zed = next(r for r in rows if r["folder"] == "Zed")
+        zed["roles"], zed["tags"] = "barbarian; princess", "tall"
+        with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0]))
+            w.writeheader()
+            w.writerows(rows)
+        self.assertIn("1 profile(s) would change", self.run_tool("index", "--import", str(csv_path)))
+        self.assertEqual(L.people.profile(self.lib / "Prospects/Zed"), {})
+        self.run_tool("index", "--import", str(csv_path), apply=True)
+        self.assertEqual(L.people.profile(self.lib / "Prospects/Zed"), {"roles": ["barbarian", "princess"], "tags": ["tall"]})
+        self.run_tool("profile", "Zed", "--tags", "-")
+        self.assertNotIn("tags", L.people.profile(self.lib / "Prospects/Zed"))
+
     def test_sort_assigns_confident_matches_and_invents_a_folder_for_a_new_person(self):
         self.standard_library()
         out = self.run_tool("sort")

@@ -1471,12 +1471,14 @@ def cmd_lookalikes(args):
         print("preview only; add --apply to write the reserved lines into the z_ files")
 
 
-def junk_reason(p, st):
-    """Why a photo is no use as the input of a Prime, or None: no face, a face too small to work with, or (a phone screenshot) the app's bars lying over her head."""
+def junk_reason(p, st, multi=True):
+    """Why a photo is no use as the input of a Prime, or None: no face, a face too small to work with, a second person in the picture, or (a phone screenshot) the app's bars lying over her head."""
     if p.raw is None:
         return "no face found" if p.faces == 0 else "cannot be read"
     if p.px < st["minFace"]:
         return f"face too small ({p.px}px)"
+    if multi and p.faces > 1:
+        return f"2+ faces: someone else is in the picture"
     if "_shot_" in p.name and p.box:
         from PIL import Image
         try:
@@ -1508,7 +1510,7 @@ def cmd_junk(args):
     cache.save()
     moves, left, by = [], [], collections.defaultdict(list)
     for key, p, bucket in items:
-        why = junk_reason(p, st)
+        why = junk_reason(p, st, not args.keep_multi)
         if not why:
             continue
         if cw.photo_key(p.name) in protected or any(a in p.name.lower() for a in anchors) or (bucket == "gallery" and (key.startswith("Angels/") or is_sister(key))):
@@ -1579,6 +1581,134 @@ def cmd_singles(args):
         print("emptied folders moved to _retired: " + ", ".join(gone))
     print(f"{n} photo(s) moved")
     after_moves(args, n > 0)
+
+
+INDEX_COLUMNS = ["status", "folder", "name", "photos", "headshots", "review", "best_prime_photo", "looks_like", "looks_like_score", "reserved", *people.PROFILE_KEYS]
+
+
+def library_people(cfg, st, work):
+    """[(key, path)] of every person folder (angel, sister, prospect, an artist's person), not the pool or an artist's own mixed folder."""
+    out = []
+    for group, name, folder in cw.photo_folders(cfg, work):
+        key = f"{group}/{name}"
+        if matches(key, st["mixed"]):
+            continue
+        out.append((key, folder))
+    return out
+
+
+def status_of(key):
+    top = key.split("/")[0]
+    return "Sisters" if top in cw.SISTER_ROOTS else top
+
+
+def cmd_index(args):
+    """The table to pick from: one row per person (angel, sister, prospect, an artist's person) with her name, photo counts, best Prime photo, who she looks like, whether she is reserved, and the profile you set
+    (sex, type, roles, elements, tier, tags). Written to <work>/people_index.csv (opens in a spreadsheet) and .md. Edit the profile columns in the spreadsheet and run `index --import people_index.csv --apply`
+    to write them back into the z_ files; the z_ file keeps the why."""
+    cfg, st, work, cache, space = build(args)
+    if args.imp:
+        return import_profiles(args, cfg, st, work)
+    top = [k for k in space.keys if k.startswith("Angels/") or is_sister(k)]
+    rows = []
+    for key, folder in library_people(cfg, st, work):
+        pf = people.profile(folder)
+        ps = space.by_key.get(key, [])
+        c = space.centroid(key) if ps else None
+        best = best_photo(space, key, folder_core(space, key)[3]) if len(ps) >= 2 else (ps[0] if ps else None)
+        like = max(((float(c @ space.centroid(t)), t) for t in top if t != key and space.by_key.get(t)), default=(None, ""), key=lambda r: r[0]) if c is not None else (None, "")
+        rows.append({
+            "status": status_of(key), "folder": key.split("/", 1)[1], "name": people.name_of(folder) or "",
+            "photos": len(originals.images(folder / "gallery")), "headshots": len(list((folder / f"headshot_{cfg.get('standardSize', [944, 1104])[0]}x{cfg.get('standardSize', [944, 1104])[1]}").glob("*.png"))),
+            "review": len(originals.images(folder / "review")), "best_prime_photo": best.name if best else "",
+            "looks_like": like[1].split("/", 1)[1] if like[1] and like[0] is not None and like[0] >= 0.20 else "", "looks_like_score": f"{like[0]:.2f}" if like[0] is not None and like[0] >= 0.20 else "",
+            "reserved": "yes" if people.reserved(folder) else "",
+            **{k: "; ".join(pf.get(k, [])) for k in people.PROFILE_KEYS},
+        })
+    order = {"Angels": 0, "Sisters": 1, "Prospects": 2, "Artists": 3}
+    rows.sort(key=lambda r: (order.get(r["status"], 9), r["folder"].lower()))
+    import csv
+    csv_path, md_path = work / "people_index.csv", work / "people_index.md"
+    with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
+        w = csv.DictWriter(f, fieldnames=INDEX_COLUMNS)
+        w.writeheader()
+        w.writerows(rows)
+    classified = [r for r in rows if r["type"] or r["roles"] or r["elements"]]
+    lines = ["# People index", "", f"{len(rows)} people; {len(classified)} classified. Edit the profile columns (sex, type, roles, elements, tier, tags) in `people_index.csv` and run `likeness index --import people_index.csv --apply`.", "",
+             "| status | folder | name | photos | head | review | looks like | reserved | sex | type | roles | elements | tier | tags |", "| --- | --- | --- | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    for r in rows:
+        lines.append(f"| {r['status']} | {r['folder']} | {r['name']} | {r['photos']} | {r['headshots']} | {r['review']} | {(r['looks_like'] + ' ' + r['looks_like_score']).strip()} | {r['reserved']} | {r['sex']} | {r['type']} | {r['roles']} | {r['elements']} | {r['tier']} | {r['tags']} |")
+    md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{len(rows)} people ({len(classified)} classified): {csv_path}\n  and {md_path}")
+
+
+def split_values(cell):
+    """'a; b' or 'a, b' -> ['a', 'b']; '-' alone means nothing (clears the key)."""
+    vals = [v.strip() for v in re.split(r"[;,]", cell or "") if v.strip()]
+    return [] if vals == ["-"] else vals
+
+
+def import_profiles(args, cfg, st, work):
+    import csv
+    path = pathlib.Path(args.imp)
+    path = path if path.exists() else work / args.imp
+    by_folder = {(status_of(k) + "/" + k.split("/", 1)[1]).lower(): f for k, f in library_people(cfg, st, work)}
+    changed = unknown = 0
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        for row in csv.DictReader(f):
+            folder = by_folder.get(f"{row.get('status', '')}/{row.get('folder', '')}".lower())
+            if folder is None:
+                unknown += 1
+                print(f"  not a person folder: {row.get('status')}/{row.get('folder')}")
+                continue
+            values = {k: split_values(row.get(k)) for k in people.PROFILE_KEYS if k in row}
+            old = people.profile(folder)
+            if all(values.get(k, []) == old.get(k, []) for k in people.PROFILE_KEYS if k in values):
+                continue
+            changed += 1
+            print(f"  {row['status']}/{row['folder']}: " + "; ".join(f"{k}={', '.join(v) or '-'}" for k, v in values.items() if v != old.get(k, [])))
+            if args.apply:
+                people.set_profile(folder, values)
+    print(f"{changed} profile(s) " + ("written" if args.apply else "would change (preview; add --apply)") + (f", {unknown} unknown row(s)" if unknown else ""))
+
+
+def cmd_profile(args):
+    """Set the profile of one or more people: likeness profile "Rhea Ives" "Mara Lowe" --type "dark elf" --roles rogue,assassin --elements Darkness --sex f (values replace; an empty value clears the key)."""
+    cfg = cw.load_cfg()
+    st = settings(cfg)
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    people_ = library_people(cfg, st, work)
+    values = {k: split_values(getattr(args, k)) for k in people.PROFILE_KEYS if getattr(args, k) is not None}
+    if not values:
+        sys.exit("give at least one of --" + ", --".join(people.PROFILE_KEYS))
+    for n in args.names:
+        hits = [(k, f) for k, f in people_ if n.lower() in (k.lower(), k.split("/", 1)[1].lower(), k.split("/")[-1].lower())]
+        if len(hits) != 1:
+            sys.exit(f"'{n}' matches {len(hits)} people: {[k for k, _ in hits]}")
+        k, folder = hits[0]
+        print(f"{k}: " + ("changed" if people.set_profile(folder, values) else "already so"))
+
+
+def cmd_who(args):
+    """Who could play a part: filter the profile by sex, type, roles, elements, tier or tag (a word matches inside a value; every filter must match). Prospects and artists by default; --all adds angels and sisters.
+    Reserved people (they look like a top-tier angel or sister) are marked: keep them off cards below the top tier."""
+    cfg = cw.load_cfg()
+    st = settings(cfg)
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    want = {k: getattr(args, k).lower() for k in people.PROFILE_KEYS if getattr(args, k)}
+    shown = 0
+    for key, folder in library_people(cfg, st, work):
+        if not args.all and status_of(key) not in ("Prospects", "Artists"):
+            continue
+        pf = people.profile(folder)
+        if any(not any(w in v.lower() for v in pf.get(k, [])) for k, w in want.items()):
+            continue
+        if not want and pf:
+            continue  # with no filter: the people still to classify
+        shown += 1
+        print(f"  {status_of(key):9} {key.split('/', 1)[1]:26} {people.name_of(folder) or '':20} {len(originals.images(folder / 'gallery')):3} photos  "
+              + "  ".join(f"{k}: {', '.join(v)}" for k, v in pf.items()) + ("   [reserved]" if people.reserved(folder) else ""))
+    print(f"{shown} " + ("match" if want else "still to classify"))
 
 
 def cmd_names(args):
@@ -1681,7 +1811,7 @@ def main(argv=None, embedder=None):
     s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")
     s.add_argument("--out", action="store_true", help="a review photo that is clearly not her and matches nobody becomes a new prospect (alike photos share one)")
     add("loosen", cmd_loosen)
-    add("junk", cmd_junk, apply=True, sheet=True)
+    add("junk", cmd_junk, apply=True, sheet=True).add_argument("--keep-multi", action="store_true", help="do not treat a photo with 2 or more faces as junk")
     s = add("singles", cmd_singles, apply=True, sheet=True)
     s.add_argument("--min", type=float, help="score that makes a single photo one of an existing prospect (default: assign less 0.10)")
     s.add_argument("--margin", type=float, default=0.05, help="she must score this much better against that prospect than against the next (default 0.05)")
@@ -1695,6 +1825,16 @@ def main(argv=None, embedder=None):
     s.add_argument("--no-renders", action="store_true")
     add("undo", cmd_undo, apply=True)
     add("names", cmd_names, apply=True)
+    s = add("index", cmd_index, apply=True)
+    s.add_argument("--import", dest="imp", help="read the profile columns of this CSV (as written by index) back into the z_ files")
+    s = add("profile", cmd_profile)
+    s.add_argument("names", nargs="+", help="folders")
+    for k in people.PROFILE_KEYS:
+        s.add_argument(f"--{k}", help=f"{k}: one or more values separated by commas")
+    s = add("who", cmd_who)
+    for k in people.PROFILE_KEYS:
+        s.add_argument(f"--{k}", help=f"only people whose {k} contains this word")
+    s.add_argument("--all", action="store_true", help="also angels and sisters")
     args = ap.parse_args(argv)
     args.embedder = embedder
     for k in ("apply", "sheet", "plan", "all", "outside"):

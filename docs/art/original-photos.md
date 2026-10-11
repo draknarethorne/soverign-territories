@@ -9,10 +9,11 @@ Under the work folder (`paths.workRoot` in `workflows/workspaces.json`, today `B
 ```text
 Angels\Angelica\gallery                  your originals for Angelica (jpg, png, webp, bmp)
 Angels\Angelica\gallery_944x1104         made by the tool: every original on a cream 944x1104 canvas, as PNG
-Angels\Angelica\gallery_944x1104_org     archive: the previous scaled copies, and any copy whose original you removed
 Angels\Angelica\headshot_944x1104        made by the tool: the face of each original, cropped around it and scaled up (see Headshots)
 Angels\Angelica\review                   photos the likeness tool is not sure about (yours to look at)
-Angels\Angelica\z_angelica.txt           the person's name and history (written by the likeness tool; see likeness.md)
+Angels\Angelica\gallery\z_angelica.txt   the person's name, profile and history (written by the likeness tool; see likeness.md)
+_archive\Angels\Angelica\...             old scaled copies and set-aside duplicates (the same path as the folder)
+_junk\Prospects\Rhea Ives\...            photos the likeness tool judged unusable, for you to look at and empty
 Sisters\Draknara\...  Prospects\Anya Sloane\...  Artists\Pierre\Mara Locke\...  Various\...   the same layout in the other roots
 ```
 
@@ -30,9 +31,9 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 | Step | What |
 | --- | --- |
 | Rename | Every original is named after the **folder it is in**, so you can shuffle freely between angels, sisters, prospects and artists. The id in the name is kept; only the prefix changes (details below the table). If the new name is taken the file is left alone with a warning. |
-| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on cream, saved as `<name>_944x1104.png`. A copy already newer than its original is skipped (`--force` redoes all). |
+| Scale | Each original is fitted inside 944x1104 (the shape is kept, EXIF rotation applied), centred on cream, saved as `<name>_944x1104.png`. A phone screenshot of Facebook (tall, with the app's light navigation bar along the bottom) is first cut down to the picture itself, without the bars, caption and icons (`tools/art/screens.py`), unless her head reaches into them. A copy already newer than its original is skipped (`--force` redoes all). |
 | Headshots | Each original with a clear face also gets `headshot_944x1104\<name>_head_944x1104.png` (see Headshots). `--no-headshots` skips this step. |
-| Prune | A scaled copy that no original in that folder makes any more is **moved to `gallery_944x1104_org`**, never deleted (a headshot goes to `headshot_944x1104_org`). This is how deleting or moving an original cleans up after itself. Other files in the scaled folder are left alone. |
+| Prune | A scaled copy that no original in that folder makes any more is **moved to `_archive\<the folder's path>\gallery_944x1104_org`**, never deleted (a headshot goes to the matching `headshot_944x1104_org`), so the person folders stay free of old copies. `originals --archive-old --apply` moves the `_org` folders that were left in the library (with a manifest; `--undo-archive` reverses it). Other files in the scaled folder are left alone. |
 | Re-point | With the work done, a chosen photo (`photos` in `workspaces.json`) that was renamed is found again by its id: `workspaces.json`, the generated workflows that load it (repo and workspaces; a changed workspace file is backed up first) and the workspace input folders are updated. The same step is available alone as `bin\inputs.cmd photos` (preview with `--dry-run`). |
 
 ### Headshots

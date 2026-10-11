@@ -31,12 +31,29 @@ Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Va
 | Where | What to decide |
 | --- | --- |
 | Angels that moved | Seraphine, Gavrielle and Sandalyn: run the Prime in ComfyUI with the new photo (and try a headshot). Their old photos are in their `review` folders. |
-| Azaline, Camaris | No candidate in the band; they keep their faces. More photos in `Various` may help. |
+| Azaline, Camaris | Camaris has no candidate in the band and keeps her face (Azaline became Mara Locke on Oct 11, below). |
 | Review folders (about 40) | Drakness 10, Drakneta 4, Draknava 3, Brielle Carter 4, the rest 1 to 3 each. Move what you recognise. |
 | Same person as a sister? | Confirmed by you and merged: Una Beck into Draknoxa (4 photos), Dara Reyes into Paige Rowe (7 photos, now 13 and one person). Brielle Carter is not Draknara (you checked); she stays a prospect, still on the reserved list. Ivy Rowe and Petra Wilde against Angelica (0.49, 0.40) and Amira Vale against sammara (0.46, 21 photos) are the next closest. |
 | Two prospects that may be one | Bea Cole and Paige Rowe (0.49), Esme Marsh and Paige Rowe (0.43), Yvette Reyes and Paige Rowe (0.42): the Paige Rowe family. `likeness merge` joins them. |
 | Reserved list | The 23 folders and what they look like: `_reports\2026-10-10-names-ingest\lookalikes.txt`. |
 | Alternate Primes | Design in the plan (Phase 5). It needs your approval, and which hero gets a Prime B first. |
+
+## Oct 11: tidy, junk, kept apart, Azaline
+
+Plan: [../plans/2026-10-11-tidy-junk-organise.md](../plans/2026-10-11-tidy-junk-organise.md).
+
+| Area | What happened |
+| --- | --- |
+| Sophie Lloyd and Azaline | Sophie scores -0.19 against Azaline's sister Draknira, so she cannot be that pair. Azaline was a near twin of Angelica (0.45), so she was re-paired with Pierre's Mara Locke (106 photos, one coherent face): now -0.26 against Angelica and 0.11 against Draknira. Her photo is set in `workspaces.json` and the Angel Primes workflows; try a Prime and tell me. |
+| Archive | 44 `_org` folders (1,416 files, 1.6 GB) moved out of the person folders into `_archive` with the same paths; new prunes go there too. |
+| Junk | 89 photos in `_junk`: 29 whose head lay under a phone app's bars, 60 with a second person in the picture (Elise Frost had 12 of 24). Angel and sister galleries are only reported (54 photos). |
+| Screenshots | 91 Facebook screenshots are cut to the picture in every scaled copy and headshot, so the text is gone from them (checked on Rhea Ives). |
+| Prospects and artists | Kept apart in the tool. 8 photos that had crossed into Elise Frost (5 of Vera North, one each of Rachel Pizzilato, Drakness, Draknava) were put back. Vera North was brought back from `_retired`. |
+| Single-photo prospects | 36 had one photo; two were merged into the prospect they look like (0.40 or more). The rest stay; `likeness singles` shows who each looks most like (Gia Park and Paige Locke look like Bea Ellery at 0.37). |
+| Detector | It now looks again, less strictly, when it finds no face; the last two Various photos were found that way and sorted. Various is empty. |
+| Index | `people_index.csv` and `.md` at the library root: 107 people with photos, best Prime photo, who each looks like, reserved, and empty profile columns for you to fill. `likeness who --roles rogue` and `likeness profile` work from the same `z_` lines. |
+
+Open: classify (Darkness and Light first); look in `_junk` for anything you want back (`likeness undo` reverses the last move, or move the file back and run `originals`); the people who look alike (Ivy Rowe and Petra Wilde against Angelica, Amira Vale against Sammara, Bea Cole, Esme Marsh and Yvette Reyes against Paige Rowe).
 
 ## Still not tested by you
 

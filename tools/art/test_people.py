@@ -41,6 +41,21 @@ class PeopleTests(unittest.TestCase):
         self.assertEqual(P.read(self.folder), ("Kylie Voss", ["2026-10-10 was Seraphine", "2026-10-10 now the angel Seraphine"]))
         self.assertEqual([p.name for p in (self.folder / "gallery").glob("z_*")], ["z_kylie_voss.txt"])
 
+    def test_a_profile_sits_under_the_name_is_logged_and_survives_a_rename(self):
+        P.write(self.folder, "Mia Wolfe", ["2026-10-10 +3 from Various"])
+        self.assertTrue(P.set_profile(self.folder, {"type": ["dark elf"], "roles": ["rogue", "assassin"], "elements": ["Darkness"]}, when="2026-10-11"))
+        self.assertFalse(P.set_profile(self.folder, {"type": ["dark elf"]}), "no change, no line")
+        self.assertEqual(P.profile(self.folder), {"type": ["dark elf"], "roles": ["rogue", "assassin"], "elements": ["Darkness"]})
+        text = (self.folder / "gallery" / "z_mia_wolfe.txt").read_text()
+        self.assertEqual(text.splitlines()[:4], ["name: Mia Wolfe", "type: dark elf", "roles: rogue, assassin", "elements: Darkness"])
+        self.assertIn("2026-10-11 profile: type=dark elf, roles=rogue, assassin, elements=Darkness", text)
+        P.adopt(self.folder, "Seraphine", "now the angel", when="2026-10-11")
+        self.assertEqual(P.profile(self.folder)["roles"], ["rogue", "assassin"], "she keeps who she could play")
+        P.set_profile(self.folder, {"roles": []})
+        self.assertNotIn("roles", P.profile(self.folder))
+        with self.assertRaises(ValueError):
+            P.set_profile(self.folder, {"colour": ["red"]})
+
     def test_a_folder_without_a_file_reads_as_none(self):
         self.assertIsNone(P.read(self.folder))
         self.assertIsNone(P.name_of(self.folder))

@@ -49,11 +49,30 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness loosen` | what looser settings would do, measured and not applied: at 0.05, 0.10 and 0.15 below today's assign score, how many Various and review photos would move, which would go where, and which folders may be one person (same person is about 0.55 and up). Read-only |
 | `likeness lookalikes [--min 0.30]` | the guard for low-tier cards: every prospect or artist person scoring at least 0.30 against a sister or angel, most alike first. `--apply` writes a `reserved:` line into her `z_` file. Keep reserved people off cards below the top tier |
 | `likeness names` | every folder's name and history file; `--apply` writes the missing ones (from the move log, or the invented name) |
+| `likeness junk [--keep-multi]` | photos that cannot feed a Prime go to `<work>\_junk\<same path>` (you empty it): no usable face, a face under 60 px, 2 or more faces (prospects and artists only), or a phone screenshot whose head lies under the app's bars. An angel's or sister's own gallery and a chosen photo are only reported. A folder left empty is retired. `likeness undo` puts them back |
+| `likeness singles [--min 0.40]` | the prospects that have one photo, each with the prospect she looks most like; one at or above `--min` (default: assign less 0.10) with a margin of 0.05 over the next is merged into her. Prospects only |
+| `likeness index [--import FILE]` | the table to pick from, `<work>\people_index.csv` (a spreadsheet) and `.md`: one row per person with her photos, headshots, review count, best Prime photo, who she looks like, reserved, and the profile columns. `--import` reads the profile columns of an edited CSV back into the `z_` files (preview unless `--apply`) |
+| `likeness profile NAME... --type "dark elf" --roles rogue,assassin --elements Darkness` | sets the profile of one or more people (`--sex --type --roles --elements --tier --tags`; several values with commas; `-` clears a key) |
+| `likeness who --roles rogue --elements Darkness` | who matches: every filter must match, a word matches inside a value; prospects and artists unless `--all`; with no filter, the people still to classify; reserved people are marked |
 | `likeness photos [NAMES]` | picks the 1_Prime photo for every angel: her best-scoring photo (her face, one clear face, some body in view, portrait, enough pixels). `likeness.keepPhoto` heroes (Drakness, Angelica, Drakneta) never change, and a chosen photo only changes when the best scores 0.12 higher. A sister's photo is only reported; `--sisters` changes them too. `--apply` sets it in `workspaces.json` and the workflows |
 | `likeness merge Mia "Eva Emily"` | every photo of one folder into another (one person under two names); the emptied folder is moved to `_retired` and the history says what happened |
 | `likeness retire azaline` | every photo of a folder back to `Various`, so she can be cast again |
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
+
+## Profile: who could play what
+
+Under the name, a `z_` file can hold profile lines: `sex`, `type` (human, dark elf, high elf, wood elf, orc, succubus, demon, creature ...), `roles` (rogue, barbarian, princess ...), `elements`, `tier` and `tags`. Each can hold several values, separated by commas (`roles: rogue, assassin`). They are yours to set; the tools never guess them.
+
+The `z_` file is the why (add a line saying why by hand if you like); `people_index.csv` is how you look at everyone at once and `who` answers "who makes a good dark-elf rogue". Edit the table in a spreadsheet, then `likeness index --import people_index.csv --apply`.
+
+## Prospects and artists are kept apart
+
+Prospects come from what you pick, artists from an artist's work, so the checks never mix them: a photo is not sent from one side to the other, they are not merged, and a new person split off an artist's person stays in that artist's folder. Angels and sisters can take from either. (Oct 10 the tool had moved 6 photos across; they were put back.)
+
+## The archive and `_junk`
+
+The old scaled copies (`_org`) and set-aside duplicates are in `<work>\_archive\<same path>` and out of the person folders; `originals --archive-old --apply` moved the ones that were there (`--undo-archive` reverses it). Photos that cannot feed a Prime are in `<work>\_junk\<same path>`; nothing is deleted until you do it.
 
 ## How `pairs` chooses
 
