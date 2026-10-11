@@ -50,6 +50,7 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 
 - [x] 4.1 `_templates/heroes` split by stage folder (1_Alpha ... Bench) with a README and `template_path`; 5,373 prompts byte-identical.
 - [x] 4.2 `originals` writes `frame_944x1104` for partial-body photos (the face at figure size at the top of the canvas); `inputs set --photo` takes it.
+- [x] 4.2b Frames picked (Oct 11) for the 11 heroes whose chosen photo is clearly partial (face 17% of the height or more): Azaline, Camaris, Haniya, Nyxene, Ravaelle, Remiah, Sandalyn (Angel Primes) and Draknara, Draknava, Drakniss, Draknoxa (Drakn Sisters). Set in `workspaces.json` and the workflows, images copied to the input folders. Controls on their old photo: your favourites Angelica, Drakness and Drakneta, the nearly full-length Draknisa, Draknora, Gavrielle and Seraphine, and the full-length Draknira, Drakniya and Sammara. To go back for one hero: `inputs set HERO --photo <same name without _frame>` then `inputs reset --hero HERO`.
 - [ ] 4.3 Your test: frame against full photo for a partial-body original, Qwen and FireRed (see the opinion in `tmp`; nothing is decided).
 - [ ] 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
 
