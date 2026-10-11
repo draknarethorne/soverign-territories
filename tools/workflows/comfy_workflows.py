@@ -1916,15 +1916,17 @@ def photo_library(cfg, base=None):
 
 
 def headshot_library(cfg, base=None):
-    """[(folder name, path)] of every headshot: <folder>/headshot_<W>x<H>/*.png. Kept apart from photo_library: a headshot shares its photo's id, so it must never count as the photo's rename."""
+    """[(folder name, path)] of every derived Prime input: <folder>/headshot_<W>x<H>/*.png (the face) and <folder>/frame_<W>x<H>/*.png (a partial-body photo shrunk to figure size). Kept apart from
+    photo_library: they share their photo's id, so they must never count as the photo's rename."""
     w, h = cfg.get("standardSize") or (944, 1104)
     out = []
     for root in photo_roots(cfg, base):
         for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
             for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
-                g = folder / f"headshot_{w}x{h}"
-                if g.is_dir():
-                    out += [(name, f) for f in sorted(g.glob("*.png"))]
+                for kind in ("headshot", "frame"):
+                    g = folder / f"{kind}_{w}x{h}"
+                    if g.is_dir():
+                        out += [(name, f) for f in sorted(g.glob("*.png"))]
     return out
 
 

@@ -46,6 +46,13 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 - [x] 3.1 Profile lines in `people.py`; `likeness index` (CSV and markdown), `index --import`, `profile`, `who`; tests.
 - [ ] 3.2 Classification with you, one element at a time (Darkness and Light first). Fill the profile columns of `people_index.csv` and import them, or use `likeness profile`.
 
+### Phase 4: the Prime input and the templates (Oct 11, from your headshot-first thoughts)
+
+- [x] 4.1 `_templates/heroes` split by stage folder (1_Alpha ... Bench) with a README and `template_path`; 5,373 prompts byte-identical.
+- [x] 4.2 `originals` writes `frame_944x1104` for partial-body photos (the face at figure size at the top of the canvas); `inputs set --photo` takes it.
+- [ ] 4.3 Your test: frame against full photo for a partial-body original, Qwen and FireRed (see the opinion in `tmp`; nothing is decided).
+- [ ] 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
+
 ## Result so far
 
 The person folders hold only what is live. `_archive` and `_junk` hold the rest. 107 person folders, all with a `z_` file. Next for you: open `people_index.csv`, review `_junk`, and start classifying.

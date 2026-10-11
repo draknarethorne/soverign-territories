@@ -36,6 +36,14 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 | Prune | A scaled copy that no original in that folder makes any more is **moved to `_archive\<the folder's path>\gallery_944x1104_org`**, never deleted (a headshot goes to the matching `headshot_944x1104_org`), so the person folders stay free of old copies. `originals --archive-old --apply` moves the `_org` folders that were left in the library (with a manifest; `--undo-archive` reverses it). Other files in the scaled folder are left alone. |
 | Re-point | With the work done, a chosen photo (`photos` in `workspaces.json`) that was renamed is found again by its id: `workspaces.json`, the generated workflows that load it (repo and workspaces; a changed workspace file is backed up first) and the workspace input folders are updated. The same step is available alone as `bin\inputs.cmd photos` (preview with `--dry-run`). |
 
+### Frames (a Prime input for partial-body photos)
+
+Most originals are head-and-shoulders or waist-up, and an edit model keeps the framing of what it is given, so the Prime comes back cropped (FireRed most of all). For every original whose face is taller than 14% of the picture, `originals` also writes `frame_944x1104\<name>_frame_944x1104.png`: the photo shrunk so the face has the size of a standing figure's (about 9% of the height), placed at the top centre of the cream canvas, the rest left empty.
+
+The Prime then draws the body below at the right scale. A full-length original gets none (use its `gallery_944x1104` copy); a screenshot is cut to its picture first, as above. `--no-frames` skips it; about 0.2 GB for the library.
+
+To try one: `bin\inputs.cmd set Haniya --photo haniya_image_<id>_frame_944x1104.png`, then `bin\inputs.cmd reset --hero Haniya`, and compare the Prime with the one from the full photo (Qwen and FireRed). `inputs photos` leaves a chosen frame alone.
+
 ### Headshots
 
 A headshot is the face of an original, found with the likeness tool's face detector (the same cache, so a photo is only looked at once), cropped to about 2.5 face heights around it in the standard 944x1104 shape and scaled up; it is never letterboxed. A photo with no face, a face under 60 px, or a crop too small to scale up without turning to mush gets none (the run reports how many were skipped). The whole library is about 0.9 GB.

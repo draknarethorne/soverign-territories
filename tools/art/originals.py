@@ -331,6 +331,85 @@ def make_headshots(sources, folder, size, args, tally, faces):
     tally["headshots"] = tally.get("headshots", 0) + made
 
 
+FRAME_FACE_MAX = 0.14  # a face (brow to chin) taller than this share of the picture means the photo is not full length
+FRAME_FACE = 0.092  # in the frame the face is this share of the canvas height: a standing figure's head is about an eighth of its height
+FRAME_TOP = 0.07  # and its top edge starts this far from the top of the canvas
+
+
+def frame_photo(src, dest, size, box):
+    """Write src on a cream canvas of the standard size, shrunk so the face has the size of a standing figure's and placed at the top centre, the rest left empty: the Prime then draws the body
+    below at the right scale instead of keeping a head-and-shoulders framing. False (nothing written) for a photo that is already full length, or whose head lies under a phone app's bars."""
+    from PIL import Image, ImageOps
+    with Image.open(src) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+    if screens.is_reel_ui(im):
+        if not screens.head_clear(box):
+            return False
+        x0, y0, x1, y1 = screens.clean_box(im.size)
+        W, H = im.size
+        box = [(box[0] * W - x0) / (x1 - x0), (box[1] * H - y0) / (y1 - y0), box[2] * W / (x1 - x0), box[3] * H / (y1 - y0)]
+        im = im.crop((x0, y0, x1, y1))
+    if box[3] <= FRAME_FACE_MAX:
+        return False
+    if dest is None:
+        return True  # a check only
+    W, H = im.size
+    scale = FRAME_FACE * size[1] / (box[3] * H)
+    small = im.resize((max(1, round(W * scale)), max(1, round(H * scale))), Image.LANCZOS)
+    canvas = Image.new("RGB", size, CREAM)
+    canvas.paste(small, (round(size[0] / 2 - (box[0] + box[2] / 2) * W * scale), round(FRAME_TOP * size[1] - box[1] * H * scale)))
+    tmp = dest.with_name(dest.name + ".tmp")
+    try:
+        canvas.save(tmp, format="PNG")
+        os.replace(tmp, dest)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+    return True
+
+
+def make_frames(sources, folder, size, args, tally, faces):
+    """frame_<W>x<H>/<name>_frame_<W>x<H>.png for every original that is not full length (see frame_photo): the input to try for a Prime when the photo is a head-and-shoulders or waist-up shot.
+    A copy whose original is gone, or that is no longer such a photo, is moved to the _archive copy of frame_<W>x<H>_org."""
+    out_dir, archive = folder / f"frame_{size[0]}x{size[1]}", archive_dir(folder, args.work, f"frame_{size[0]}x{size[1]}_org")
+    wanted, made = set(), 0
+    for path, final in sources:
+        box, px = faces.of(path)
+        if not box or px < MIN_FACE_PX or box[3] <= FRAME_FACE_MAX:
+            continue
+        name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_frame_{size[0]}x{size[1]}.png"
+        dest = out_dir / name
+        if not args.apply:
+            if args.force or not is_fresh(path, dest, size):
+                made += frame_photo(path, None, size, box)
+            wanted.add(name.lower())
+            continue
+        if not args.force and is_fresh(path, dest, size):
+            wanted.add(name.lower())
+            continue
+        out_dir.mkdir(exist_ok=True)
+        try:
+            ok = frame_photo(path, dest, size, box)
+        except Exception as e:  # noqa: BLE001
+            print(f"  WARNING no frame for {final}: {e}")
+            ok = False
+        if ok:
+            wanted.add(name.lower())
+            made += 1
+    stale = [p for p in images(out_dir) if p.name.lower() not in wanted]
+    for p in stale:
+        print(f"  {'PRUNED' if args.apply else 'prune  '} frame {p.name}  (original gone or not a partial photo; kept in _archive)")
+        if args.apply:
+            archive.mkdir(parents=True, exist_ok=True)
+            if (archive / p.name).exists():
+                p.unlink()
+            else:
+                os.replace(p, archive / p.name)
+    if made or stale:
+        print(f"  frames: {made} {'made' if args.apply else 'to make'} (partial-body photos), {len(stale)} {'pruned' if args.apply else 'to prune'}")
+    tally["frames"] = tally.get("frames", 0) + made
+
+
 def process_folder(folder, label, size, args, tally):
     gallery, out_dir = folder / "gallery", folder / f"gallery_{size[0]}x{size[1]}"
     prefix = prefix_of(folder.name)
@@ -412,6 +491,8 @@ def process_folder(folder, label, size, args, tally):
     tally["pruned"] += len(stale)
     if getattr(args, "faces", None):
         make_headshots(sources, folder, size, args, tally, args.faces)
+        if not args.no_frames:
+            make_frames(sources, folder, size, args, tally, args.faces)
 
 
 def main(argv=None, faces=None):
@@ -423,6 +504,7 @@ def main(argv=None, faces=None):
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
     ap.add_argument("--no-headshots", action="store_true", help="do not make the headshot_944x1104 copies (the face, cropped and scaled up)")
+    ap.add_argument("--no-frames", action="store_true", help="do not make the frame_944x1104 copies (a head-and-shoulders photo shrunk to figure size at the top of the canvas, as a Prime input)")
     ap.add_argument("--archive-old", action="store_true", help="move the *_org folders already in the library into <work root>/_archive (mirrored paths, with a manifest)")
     ap.add_argument("--undo-archive", action="store_true", help="put the files of the last --archive-old back")
     args = ap.parse_args(argv)
@@ -455,7 +537,8 @@ def main(argv=None, faces=None):
         args.faces.save()
     print("==========================================================")
     print(f"{tally['renamed']} renamed, {tally['made']} {'made' if args.apply else 'to make'}, {tally['pruned']} {'pruned' if args.apply else 'to prune'}, {tally['skipped']} skipped" + ("" if args.apply else " (preview)")
-          + (f", {tally.get('headshots', 0)} headshot(s) {'made' if args.apply else 'to make'}" if args.faces else ""))
+          + (f", {tally.get('headshots', 0)} headshot(s) {'made' if args.apply else 'to make'}" if args.faces else "")
+          + (f", {tally.get('frames', 0)} frame(s) {'made' if args.apply else 'to make'}" if args.faces and not args.no_frames else ""))
     if args.no_repoint:
         return
     if args.apply:
