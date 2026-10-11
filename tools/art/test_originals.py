@@ -83,8 +83,57 @@ class OriginalsTests(unittest.TestCase):
             self.assertTrue(0 <= x0 < x1 <= 400 and 0 <= y0 < y1 <= 600, (box, (x0, y0, x1, y1)))
             self.assertAlmostEqual((x1 - x0) / (y1 - y0), 94 / 110, delta=0.02)
 
+    def test_archive_old_moves_the_org_folders_into_a_mirrored_archive_and_can_be_undone(self):
+        for sub in ("gallery_94x110_org", "headshot_94x110_org", "gallery_org"):
+            d = self.lib / "Angels" / "Angelica" / sub
+            d.mkdir(parents=True)
+            (d / f"a_{sub}.png").write_bytes(b"x")
+        out = self.run_tool("--archive-old", apply=False)
+        self.assertIn("3 folder(s)", out)
+        self.assertTrue((self.lib / "Angels/Angelica/gallery_org").exists(), "a preview moves nothing")
+        self.run_tool("--archive-old")
+        self.assertFalse(list((self.lib / "Angels/Angelica").glob("*_org")), "nothing is left beside the live folders")
+        self.assertEqual(self.names("Angels", "Angelica", "gallery_94x110_org"), ["a_gallery_94x110_org.png"])
+        self.assertEqual(self.names("Angels", "Angelica", "gallery_org"), ["a_gallery_org.png"])
+        self.run_tool("--undo-archive")
+        self.assertTrue((self.lib / "Angels/Angelica/gallery_94x110_org/a_gallery_94x110_org.png").exists())
+
+    def reel(self, path, size=(400, 900)):
+        """A picture that looks like a phone screenshot of a Facebook reel: a red picture, the black comment bar and the light navigation bar along the bottom."""
+        img = Image.new("RGB", size, (200, 30, 30))
+        w, h = size
+        img.paste((0, 0, 0), (0, int(h * 0.90), w, int(h * 0.96)))
+        img.paste((232, 232, 236), (0, int(h * 0.96), w, h))
+        img.save(path)
+
+    def test_a_reel_screenshot_is_cut_down_to_the_picture_and_a_head_under_the_bars_gets_no_headshot(self):
+        import screens
+        g = self.gallery("Prospects", "Rhea Ives")
+        self.reel(g / "rhea_ives_shot_20261010124258.png")
+        Image.new("RGB", (400, 900), (200, 30, 30)).save(g / "rhea_ives_shot_20261010124300.png")
+        with Image.open(g / "rhea_ives_shot_20261010124258.png") as im:
+            self.assertTrue(screens.is_reel_ui(im))
+            self.assertEqual(screens.clean(im).size, (352, 545))
+        with Image.open(g / "rhea_ives_shot_20261010124300.png") as im:
+            self.assertFalse(screens.is_reel_ui(im), "a tall picture without the app's bars is left alone")
+        self.assertTrue(screens.head_clear([0.3, 0.3, 0.2, 0.1]))
+        self.assertFalse(screens.head_clear([0.3, 0.11, 0.2, 0.1]), "the hairline is under the search bar")
+
+        class Fake:
+            def of(self, path):
+                return ([0.3, 0.3, 0.2, 0.1], 120) if path.name.endswith("58.png") else ([0.3, 0.11, 0.2, 0.1], 120)
+
+            def save(self):
+                pass
+        self.run_tool(faces=Fake())
+        made = self.lib / "Prospects/Rhea Ives/gallery_94x110"
+        with Image.open(made / "rhea_ives_shot_20261010124258_94x110.png") as im:
+            self.assertEqual(im.size, (94, 110))
+            self.assertNotIn((0, 0, 0), {im.getpixel((x, y)) for x in range(0, 94, 6) for y in range(0, 110, 6)}, "no black comment bar in the scaled copy")
+        self.assertEqual(self.names("Prospects", "Rhea Ives", "headshot_94x110"), ["rhea_ives_shot_20261010124258_head_94x110.png", "rhea_ives_shot_20261010124300_head_94x110.png"], "a head clear of the bars gets one; so does a picture that is not a reel")
+
     def names(self, root, name, sub="gallery_94x110"):
-        d = self.lib / root / name / sub
+        d = (self.lib / "_archive" if sub.endswith("_org") else self.lib) / root / name / sub
         return sorted(p.name for p in d.iterdir()) if d.is_dir() else []
 
     def test_names_follow_the_folder(self):

@@ -43,7 +43,9 @@ class Fake:
         self.calls += 1
         parts = pathlib.Path(path).read_text().split("|")
         person, i = parts[0], parts[1]
-        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 200}
+        if person == "noface":
+            return {"faces": 0}
+        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 20 if person.startswith("tiny") else 200}
 
 
 def blend(person, base, w):
@@ -124,6 +126,60 @@ class LikenessTests(unittest.TestCase):
         self.run_tool("scan")
         self.assertEqual(self.fake.calls, first, "a moved or renamed file costs nothing: the cache is keyed by its content")
 
+    def test_prospects_and_artists_are_never_mixed(self):
+        self.standard_library()
+        g = self.lib / "Artists/Pierre/Elise/gallery"
+        g.mkdir(parents=True)
+        for i in range(4):
+            (g / f"elise_image_{900 + i}.jpg").write_text(f"art|{900 + i}")
+        self.add("Prospects", "Various", "art", 2)  # looks just like the artist's person
+        for i, who in enumerate(("w1", "w2", "w3", "w4")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.assertIn("kept apart", self.run_tool("merge", "Mia", "Elise") + self.run_tool("merge", "Elise", "Mia"))
+        out = self.run_tool("sort", "--singles", apply=True)
+        self.assertEqual(len(self.names("Artists", "Pierre/Elise")), 4, "nothing from the pool goes to an artist's person")
+        self.assertTrue(any(f"art|" in p.read_text() for q in (self.lib / "Prospects").glob("*/gallery") if q.parent.name != "Various" for p in q.iterdir() if p.suffix == ".jpg"), "it became a prospect instead")
+        self.assertEqual(L.new_home("Artists/Pierre/Elise", "Zoe Cole"), "Artists/Pierre/Zoe Cole", "a new person split from an artist's person stays with the artist")
+        self.assertEqual(L.new_home("Sisters/Draknara", "Zoe Cole"), "Prospects/Zoe Cole")
+        self.assertTrue(L.apart("Various", "Artists/Pierre/Elise") and not L.apart("Angels/Angelica", "Artists/Pierre/Elise"))
+        self.assertIsNotNone(out)
+
+    def test_junk_sets_aside_photos_that_cannot_feed_a_prime_but_never_an_angels_own_gallery(self):
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("Sisters", "Draknara", "dee", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Prospects", "Person 0", "noface", 1)
+        self.add("Prospects", "Person 1", "tiny1", 1)
+        self.add("Angels", "Angelica", "noface", 1)
+        before = self.names("Prospects", "Person 0")
+        out = self.run_tool("junk")
+        self.assertIn("no face found", out)
+        self.assertIn("face too small", out)
+        self.assertEqual(self.names("Prospects", "Person 0"), before, "a preview moves nothing")
+        self.run_tool("junk", apply=True)
+        self.assertEqual(len(self.names("Prospects", "Person 0")), 3)
+        self.assertEqual(len(list((self.lib / "_junk/Prospects/Person 0/gallery").glob("*.jpg"))), 1)
+        self.assertEqual(len(list((self.lib / "_junk/Prospects/Person 1/gallery").glob("*.jpg"))), 1)
+        self.assertEqual(len(self.names("Angels", "Angelica")), 5, "an angel's own gallery is never touched")
+        self.assertTrue(any("junk:" in ln for ln in L.people.read(self.lib / "Prospects/Person 0")[1]))
+
+    def test_singles_merges_a_one_photo_prospect_into_the_prospect_she_looks_like_but_not_into_an_artist_or_sister(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Prospects", "Mia", "mia", 4)
+        self.add("Prospects", "Solo Mia", "mia", 1)
+        self.add("Prospects", "Solo Dee", "dee", 1)
+        self.add("Prospects", "Lone", "lone", 1)
+        for i, who in enumerate(("w1", "w2", "w3", "w4")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        out = self.run_tool("singles")
+        self.assertIn("Solo Mia", out)
+        self.run_tool("singles", apply=True)
+        self.assertEqual(len(self.names("Prospects", "Mia")), 5)
+        self.assertEqual(len(self.names("Prospects", "Solo Dee")), 1, "she looks like a sister, who is never a target")
+        self.assertEqual(len(self.names("Prospects", "Lone")), 1)
+        self.assertTrue((self.lib / "_retired/Prospects/Solo Mia").exists())
+
     def test_sort_assigns_confident_matches_and_invents_a_folder_for_a_new_person(self):
         self.standard_library()
         out = self.run_tool("sort")
@@ -173,7 +229,7 @@ class LikenessTests(unittest.TestCase):
         dup = self.names("Angels", "Azaline")[0]
         (self.lib / "Angels/Angelica/gallery" / dup).write_bytes((src / dup).read_bytes())
         self.run_tool("merge", "Azaline", "Angelica", apply=True)
-        self.assertTrue((self.lib / "Angels/Azaline/gallery_org" / dup).exists())
+        self.assertTrue((self.lib / "_archive/Angels/Azaline/gallery_org" / dup).exists())
         self.assertEqual(len(self.names("Angels", "Angelica")), 4 + 3)
 
     def test_alike_finds_the_look_alike_pair_and_compare_scores_it(self):
