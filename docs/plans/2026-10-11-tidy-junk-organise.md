@@ -33,7 +33,7 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 
 ### Phase 2: junk and screenshots
 
-- [x] 2.1 `likeness junk`: no usable face, a face under 60 px, 2 or more faces (prospects and artists only), the app's bars over her head. An angel's or sister's own gallery and a chosen photo are only reported. Result: 29 + 60 photos in `_junk`.
+- [x] 2.1 `likeness junk`: no usable face, a face under 60 px, a real second person (second face at least 0.3 of the main one), the app's bars over her head. An angel's or sister's own gallery and a chosen photo are only reported. `_junk` is flat (`_junk\Prospects`, `_junk\Artists`; the person is in the file name). `junk --recheck` sends usable photos back to their folder. Result: 53 photos in `_junk` after the recheck.
 - [x] 2.2 Reel screenshots cut to the picture in the scaled copies and headshots (91 screenshots; 58 of them had the head under the bars before the bars were measured exactly). All scaled copies and headshots rebuilt.
 - [x] 2.3 `likeness singles`: a single-photo prospect that looks like another prospect (0.40 or more) is merged; two were.
 - [x] 2.4 The face detector tries again less strictly when it finds nothing (the last two Various photos were found this way; Various is empty).

@@ -49,7 +49,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness loosen` | what looser settings would do, measured and not applied: at 0.05, 0.10 and 0.15 below today's assign score, how many Various and review photos would move, which would go where, and which folders may be one person (same person is about 0.55 and up). Read-only |
 | `likeness lookalikes [--min 0.30]` | the guard for low-tier cards: every prospect or artist person scoring at least 0.30 against a sister or angel, most alike first. `--apply` writes a `reserved:` line into her `z_` file. Keep reserved people off cards below the top tier |
 | `likeness names` | every folder's name and history file; `--apply` writes the missing ones (from the move log, or the invented name) |
-| `likeness junk [--keep-multi]` | photos that cannot feed a Prime go to `<work>\_junk\<same path>` (you empty it): no usable face, a face under 60 px, 2 or more faces (prospects and artists only), or a phone screenshot whose head lies under the app's bars. An angel's or sister's own gallery and a chosen photo are only reported. A folder left empty is retired. `likeness undo` puts them back |
+| `likeness junk [--keep-multi] [--recheck]` | photos that cannot feed a Prime go to `<work>\_junk\Prospects` or `_junk\Artists` (flat, the person is in the file name; you empty it): no usable face, a face under 60 px, a second person in the picture (prospects and artists only), or a phone screenshot whose head lies under the app's bars. An angel's or sister's own gallery and a chosen photo are only reported. A folder left empty is retired. `--recheck` looks at `_junk` again and sends photos that are usable now back to their folder. `likeness undo` puts the last batch back |
 | `likeness singles [--min 0.40]` | the prospects that have one photo, each with the prospect she looks most like; one at or above `--min` (default: assign less 0.10) with a margin of 0.05 over the next is merged into her. Prospects only |
 | `likeness index [--import FILE]` | the table to pick from, `<work>\people_index.csv` (a spreadsheet) and `.md`: one row per person with her photos, headshots, review count, best Prime photo, who she looks like, reserved, and the profile columns. `--import` reads the profile columns of an edited CSV back into the `z_` files (preview unless `--apply`) |
 | `likeness profile NAME... --type "dark elf" --roles rogue,assassin --elements Darkness` | sets the profile of one or more people (`--sex --type --roles --elements --tier --tags`; several values with commas; `-` clears a key) |
@@ -66,13 +66,29 @@ Under the name, a `z_` file can hold profile lines: `sex`, `type` (human, dark e
 
 The `z_` file is the why (add a line saying why by hand if you like); `people_index.csv` is how you look at everyone at once and `who` answers "who makes a good dark-elf rogue". Edit the table in a spreadsheet, then `likeness index --import people_index.csv --apply`.
 
+## The cache: what happens when you clean up
+
+The cache (`%LOCALAPPDATA%\sovereign-territories\likeness_cache.json`) holds only what the face detector found in a file (the face's box, size, how many faces, and its identity vector), keyed by the file's **content**. It never holds a decision: who a photo belongs to, a folder's average face, a score. Those are worked out again from the files that are in the folders at the time of every run.
+
+- **Delete, move or rename a photo:** nothing to clear. A deleted photo is simply not read any more (its cache entry stays, unused and harmless); a moved or renamed photo keeps its entry, so it costs nothing and is not detected again. The very next run sees the cleaned folder.
+- **Edit a photo (crop it, paint over it):** its content changes, so it is detected again as a new photo.
+- **A rule changed in the tool** (the second-face size, a less strict face search): the affected entries are dropped and read again by themselves.
+- **Clearing the cache by hand** is never needed; it only makes the next run slower (a few minutes). Delete `likeness_cache.json` if you ever want a completely fresh read.
+
+## A photo of two people
+
+The detector finds every face, and the largest is the one that is compared. When a woman and a man are in one photo and his face is the larger, a man's face lands in her folder and nudges her average face, so other men start to look like her (the Elise Frost problem). Two defences:
+
+1. `likeness junk` sets such a photo aside (`_junk`) when a second face is at least 0.3 of the main face's size (`likeness.multiFace`); a small passer-by in the background is not a problem and stays. Run it after every big import (it previews first), then `likeness clean` as before for whole folders.
+2. `likeness junk --recheck` looks at `_junk` again with the current rules and sends the usable photos back to the folder their file name says (or to `Various` when a prospect's folder is gone). Drag a photo from `_junk` into `Various` yourself and it is sorted like any new photo.
+
 ## Prospects and artists are kept apart
 
 Prospects come from what you pick, artists from an artist's work, so the checks never mix them: a photo is not sent from one side to the other, they are not merged, and a new person split off an artist's person stays in that artist's folder. Angels and sisters can take from either. (Oct 10 the tool had moved 6 photos across; they were put back.)
 
 ## The archive and `_junk`
 
-The old scaled copies (`_org`) and set-aside duplicates are in `<work>\_archive\<same path>` and out of the person folders; `originals --archive-old --apply` moved the ones that were there (`--undo-archive` reverses it). Photos that cannot feed a Prime are in `<work>\_junk\<same path>`; nothing is deleted until you do it.
+The old scaled copies (`_org`) and set-aside duplicates are in `<work>\_archive\<same path>` and out of the person folders; `originals --archive-old --apply` moved the ones that were there (`--undo-archive` reverses it). Photos that cannot feed a Prime are in `<work>\_junk\Prospects`, `_junk\Artists` (and `Sisters`, `Angels`), flat, so you can scan them in one view; the person is in the file name. Nothing is deleted until you do it.
 
 ## How `pairs` chooses
 

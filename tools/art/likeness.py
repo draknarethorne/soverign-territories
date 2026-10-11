@@ -63,7 +63,7 @@ MODEL_URLS = {
     "face_recognition_sface_2021dec.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
 }
 SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various"], "pool": ["Various", "Prospects/Various"], "assign": 0.45, "margin": 0.10, "cluster": 0.25,
-            "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60}
+            "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60, "multiFace": 0.3}
 FIRST = ["Alina", "Bea", "Calla", "Dara", "Elise", "Faye", "Gia", "Hana", "Ivy", "Jade", "Kira", "Lena", "Maren", "Nia", "Odette", "Paige", "Quinn", "Rhea",
          "Sabine", "Tessa", "Una", "Vera", "Wren", "Xena", "Yara", "Zoe", "Anya", "Brynn", "Cleo", "Delia", "Esme", "Freya", "Greta", "Hollis", "Iris", "Jules",
          "Keira", "Lia", "Mara", "Neve", "Opal", "Petra", "Rina", "Sia", "Tove", "Uma", "Vienna", "Willa", "Yvette", "Zara"]
@@ -113,9 +113,10 @@ class Embedder:
         if faces is None or len(faces) == 0:
             return {"faces": 0, "t": 0.5}
         face = max(faces, key=lambda f: f[2] * f[3])
+        areas = sorted((float(f[2] * f[3]) for f in faces), reverse=True)
         vec = self.rec.feature(self.rec.alignCrop(small, face))[0]
         vec = vec / np.linalg.norm(vec)
-        return {"faces": int(len(faces)), "v": [round(float(x), 5) for x in vec], "box": [round(float(face[0]) / sw, 4), round(float(face[1]) / sh, 4), round(float(face[2]) / sw, 4), round(float(face[3]) / sh, 4)],
+        return {"faces": int(len(faces)), "f2": round(areas[1] / areas[0], 2) if len(areas) > 1 else 0, "v": [round(float(x), 5) for x in vec], "box": [round(float(face[0]) / sw, 4), round(float(face[1]) / sh, 4), round(float(face[2]) / sw, 4), round(float(face[3]) / sh, 4)],
                 "px": int(min(face[2], face[3]) / scale)}
 
 
@@ -126,8 +127,8 @@ class Cache:
         self.path = pathlib.Path(path)
         data = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
         self.stat, self.emb = data.get("stat", {}), data.get("emb", {})
-        # a 'no face' read made before the second, less strict pass is read again
-        self.emb = {k: v for k, v in self.emb.items() if not (v.get("faces") == 0 and "t" not in v)}
+        # a 'no face' read made before the second, less strict pass, and a multi-face read made before the size of the second face was kept, are read again
+        self.emb = {k: v for k, v in self.emb.items() if not (v.get("faces") == 0 and "t" not in v) and not (v.get("faces", 0) > 1 and "f2" not in v)}
 
     def sha(self, p):
         st = p.stat()
@@ -149,6 +150,7 @@ class Photo:
         self.path, self.group, self.folder, self.sha = path, group, folder, sha
         self.key = group if group == folder else f"{group}/{folder}"  # the Various pool is a root with a gallery of its own
         self.faces = (data or {}).get("faces", -1)
+        self.f2 = (data or {}).get("f2", 0)  # area of the second largest face against the largest: a small one is a passer-by, a big one is a second person
         self.raw = np.array(data["v"], float) if data and data.get("v") else None
         self.box = (data or {}).get("box")
         self.px = (data or {}).get("px", 0)
@@ -1477,8 +1479,8 @@ def junk_reason(p, st, multi=True):
         return "no face found" if p.faces == 0 else "cannot be read"
     if p.px < st["minFace"]:
         return f"face too small ({p.px}px)"
-    if multi and p.faces > 1:
-        return f"2+ faces: someone else is in the picture"
+    if multi and p.faces > 1 and p.f2 >= st.get("multiFace", 0.3):
+        return "2+ faces: someone else is in the picture"
     if "_shot_" in p.name and p.box:
         from PIL import Image
         try:
@@ -1490,11 +1492,52 @@ def junk_reason(p, st, multi=True):
     return None
 
 
+def recheck_junk(args, cfg, st, work, cache, embed):
+    """Look at what is in _junk again with the current rules: a photo that is no longer junk (a passer-by's small face, a face found on the second look) goes back to the person folder its file name says
+    (prospects to Prospects, artists to Artists: they are kept apart), or to the pool, Various, when a prospect's folder is gone. An artist's photo whose folder is gone stays."""
+    prefixes = {}
+    for group, name, folder in cw.photo_folders(cfg, work):
+        key = f"{group}/{name}"
+        if not matches(key, st["mixed"]):
+            prefixes[(status_of(key), originals.prefix_of(name.split("/")[-1]))] = key
+    moves, kept, stuck = [], 0, []
+    for side_dir in sorted(p for p in (work / "_junk").iterdir() if p.is_dir()) if (work / "_junk").is_dir() else []:
+        for f in originals.images(side_dir):
+            sha = cache.sha(f)
+            if sha not in cache.emb:
+                cache.emb[sha] = embed(f) or {"faces": -1}
+            ph = Photo(f, "_junk", side_dir.name, sha, cache.emb[sha])
+            if junk_reason(ph, st, not args.keep_multi):
+                kept += 1
+                continue
+            m = originals.OLD_PREFIX.match(f.name)
+            to = prefixes.get((side_dir.name, m[1].lower() if m else ""))
+            if not to and side_dir.name == "Prospects":
+                to = pool_home(st)
+            if not to:
+                stuck.append(f.name)
+                continue
+            moves.append(Move(ph, to, "was in _junk, usable under the current rules", None))
+    cache.save()
+    print(f"{len(moves)} photo(s) in _junk are usable now and would go back; {kept} are still junk" + (f"; {len(stuck)} stay (their folder is gone)" if stuck else ""))
+    for m in moves:
+        print(f"       {m.photo.name}  ->  {m.to}")
+    if not moves or not args.apply:
+        if moves:
+            print("preview only; add --apply to move them")
+        return
+    n = execute(moves, work, True, cache)
+    print(f"{n} photo(s) moved")
+    after_moves(args, n > 0)
+
+
 def cmd_junk(args):
     """Photos that cannot feed a Prime (no usable face, a face too small, the phone app's bars over her head) go to <work>/_junk/<same path>, to be looked at and emptied by you; nothing is deleted.
     An angel's or sister's own gallery is never touched (listed only), nor is a chosen or anchor photo. A folder that is left empty is retired. Preview unless --apply; `likeness undo` puts them back."""
     cfg, st, work, cache, space = build(args)
     embed = args.embedder or Embedder()
+    if args.recheck:
+        return recheck_junk(args, cfg, st, work, cache, embed)
     protected = chosen_keys(cfg)
     anchors = [a.lower() for v in cfg.get("likeness", {}).get("anchors", {}).values() for a in v]
     items = [(p.key, p, "gallery") for p in space.photos]
@@ -1516,7 +1559,7 @@ def cmd_junk(args):
         if cw.photo_key(p.name) in protected or any(a in p.name.lower() for a in anchors) or (bucket == "gallery" and (key.startswith("Angels/") or is_sister(key))):
             left.append((key, p.name, why))
             continue
-        moves.append(Move(p, f"_junk/{key}", why, None, bucket=bucket))
+        moves.append(Move(p, f"_junk/{status_of(key)}", why, None, bucket=""))
         by[why.split(" (")[0]].append(p)
     for why, ps in sorted(by.items(), key=lambda kv: -len(kv[1])):
         print(f"{len(ps):4}  {why}")
@@ -1811,7 +1854,9 @@ def main(argv=None, embedder=None):
     s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")
     s.add_argument("--out", action="store_true", help="a review photo that is clearly not her and matches nobody becomes a new prospect (alike photos share one)")
     add("loosen", cmd_loosen)
-    add("junk", cmd_junk, apply=True, sheet=True).add_argument("--keep-multi", action="store_true", help="do not treat a photo with 2 or more faces as junk")
+    s = add("junk", cmd_junk, apply=True, sheet=True)
+    s.add_argument("--keep-multi", action="store_true", help="do not treat a photo with a second person (a second face at least `multiFace`, 0.3, of the main face's size) as junk")
+    s.add_argument("--recheck", action="store_true", help="look at what is in _junk again: photos that are usable under the current rules go back to Various to be sorted")
     s = add("singles", cmd_singles, apply=True, sheet=True)
     s.add_argument("--min", type=float, help="score that makes a single photo one of an existing prospect (default: assign less 0.10)")
     s.add_argument("--margin", type=float, default=0.05, help="she must score this much better against that prospect than against the next (default 0.05)")

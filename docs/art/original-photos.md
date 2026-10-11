@@ -13,7 +13,7 @@ Angels\Angelica\headshot_944x1104        made by the tool: the face of each orig
 Angels\Angelica\review                   photos the likeness tool is not sure about (yours to look at)
 Angels\Angelica\gallery\z_angelica.txt   the person's name, profile and history (written by the likeness tool; see likeness.md)
 _archive\Angels\Angelica\...             old scaled copies and set-aside duplicates (the same path as the folder)
-_junk\Prospects\Rhea Ives\...            photos the likeness tool judged unusable, for you to look at and empty
+_junk\Prospects\rhea_ives_...jpg         photos the likeness tool judged unusable, flat per side (Prospects, Artists), the name is in the file name; for you to look at and empty
 Sisters\Draknara\...  Prospects\Anya Sloane\...  Artists\Pierre\Mara Locke\...  Various\...   the same layout in the other roots
 ```
 

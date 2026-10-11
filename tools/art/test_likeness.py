@@ -45,7 +45,7 @@ class Fake:
         person, i = parts[0], parts[1]
         if person == "noface":
             return {"faces": 0}
-        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 20 if person.startswith("tiny") else 200}
+        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "f2": float(parts[3]) if len(parts) > 3 else (0.8 if len(parts) > 2 and int(parts[2]) > 1 else 0), "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 20 if person.startswith("tiny") else 200}
 
 
 def blend(person, base, w):
@@ -159,8 +159,9 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(self.names("Prospects", "Person 0"), before, "a preview moves nothing")
         self.run_tool("junk", apply=True)
         self.assertEqual(len(self.names("Prospects", "Person 0")), 3)
-        self.assertEqual(len(list((self.lib / "_junk/Prospects/Person 0/gallery").glob("*.jpg"))), 1)
-        self.assertEqual(len(list((self.lib / "_junk/Prospects/Person 1/gallery").glob("*.jpg"))), 1)
+        self.assertEqual(len(list((self.lib / "_junk/Prospects").glob("*.jpg"))), 2, "flat: only Prospects, Artists, Sisters at the top, the person is in the file name")
+        self.assertTrue(any(p.name.startswith("person_0_") for p in (self.lib / "_junk/Prospects").glob("*.jpg")))
+        self.assertFalse((self.lib / "_junk/Prospects/Person 0").exists())
         self.assertEqual(len(self.names("Angels", "Angelica")), 5, "an angel's own gallery is never touched")
         self.assertTrue(any("junk:" in ln for ln in L.people.read(self.lib / "Prospects/Person 0")[1]))
 
@@ -212,6 +213,23 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(L.people.profile(self.lib / "Prospects/Zed"), {"roles": ["barbarian", "princess"], "tags": ["tall"]})
         self.run_tool("profile", "Zed", "--tags", "-")
         self.assertNotIn("tags", L.people.profile(self.lib / "Prospects/Zed"))
+
+    def test_junk_recheck_sends_photos_that_are_usable_now_back_to_the_pool(self):
+        self.add("Angels", "Angelica", "ann", 4)
+        for i, who in enumerate(("w1", "w2", "w3", "w4")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        g = self.lib / "Prospects/Person 0/gallery"
+        (g / "person_0_image_901.jpg").write_text("w1|901|2|0.8")  # a real second person
+        (g / "person_0_image_902.jpg").write_text("w1|902|2|0.1")  # a passer-by in the background
+        self.assertEqual(self.run_tool("junk").count("2+ faces"), 2, "only the real second person is junk (listed in the summary and the line)")
+        self.run_tool("junk", apply=True)
+        junk = self.lib / "_junk/Prospects"
+        self.assertEqual([p.name for p in junk.glob("*.jpg")], ["person_0_image_901.jpg"])
+        (junk / "person_0_image_903.jpg").write_text("w1|903|1")  # something that is fine
+        self.assertIn("1 photo(s) in _junk are usable now", self.run_tool("junk", "--recheck"))
+        self.run_tool("junk", "--recheck", apply=True)
+        self.assertEqual([p.name for p in junk.glob("*.jpg")], ["person_0_image_901.jpg"])
+        self.assertTrue(list((self.lib / "Prospects/Person 0/gallery").glob("*903*")), "back in her own folder, found by the name in the file")
 
     def test_sort_assigns_confident_matches_and_invents_a_folder_for_a_new_person(self):
         self.standard_library()
