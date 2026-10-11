@@ -98,7 +98,7 @@ class LikenessTests(unittest.TestCase):
 
     def names(self, root, folder):
         d = self.lib / root / folder / "gallery"
-        return sorted(p.name for p in d.iterdir()) if d.is_dir() else []
+        return sorted(p.name for p in d.iterdir() if not p.name.startswith("z_")) if d.is_dir() else []
 
     def test_cluster_groups_the_same_person(self):
         vecs = np.array([face("a", i) for i in range(4)] + [face("b", 10 + i) for i in range(4)])
@@ -137,7 +137,7 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(len(self.names("Models", "Draknara")), 6)
         new = [p for p in (self.lib / "Prospects").iterdir() if p.name not in ("Mia", "Various")]
         self.assertEqual(len(new), 1)
-        self.assertEqual(len(list((new[0] / "gallery").iterdir())), 4)
+        self.assertEqual(len([p for p in (new[0] / "gallery").iterdir() if not p.name.startswith("z_")]), 4)
 
     def test_a_photo_chosen_in_workspaces_json_is_never_sorted_away(self):
         self.standard_library()
@@ -188,6 +188,36 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("the same person", self.run_tool("compare", "Angelica", "Twin"))
         self.assertIn("different people", self.run_tool("compare", "Angelica", "Draknara"))
 
+    def test_sorting_writes_the_z_file_of_each_destination_and_the_new_prospect_keeps_its_invented_name(self):
+        self.standard_library()
+        self.run_tool("sort", apply=True)
+        name, hist = L.people.read(self.lib / "Models/Draknara")
+        self.assertEqual(name, "Draknara")
+        self.assertTrue(any("+2 from Prospects/Various" in h for h in hist), hist)
+        new = [p for p in (self.lib / "Prospects").iterdir() if p.name not in ("Mia", "Various")][0]
+        self.assertEqual(L.people.read(new)[0], new.name)
+        self.assertIsNone(L.people.read(self.lib / "Prospects/Various"), "the pool keeps no file")
+        out = self.run_tool("names")
+        self.assertIn("Angels/Azaline", out)
+
+    def test_a_top_level_various_is_the_pool_and_sisters_is_a_sisters_root(self):
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("Angels", "Azaline", "ann2", 3)
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Prospects", "Mia", "mia", 4)
+        self.add("", "Various", "dee", 2)
+        self.add("", "Various", "zed", 4)
+        self.add("", "Various", "solo", 1)
+        out = self.run_tool("sort")
+        self.assertIn("-> Sisters/Draknara", out)
+        self.run_tool("sort", apply=True)
+        self.assertEqual(len(self.names("Sisters", "Draknara")), 6)
+        self.assertEqual(len(self.names("", "Various")), 1, "only the unknown face stays")
+        self.assertIn("Angels/Azaline -> Various: 3", self.run_tool("retire", "azaline"))
+        self.run_tool("retire", "azaline", apply=True)
+        self.assertEqual(len(self.names("", "Various")), 4, "a retired folder goes back to the top-level pool")
+        self.assertTrue(L.is_sister("Sisters/Draknara") and L.is_sister("Models/Draknara") and not L.is_sister("Angels/Angelica"))
+
     def test_group_splits_an_artist_folder_by_face_into_named_subfolders(self):
         self.add("Artists", "Pierre", "pa", 4)
         self.add("Artists", "Pierre", "pb", 4)
@@ -201,7 +231,7 @@ class LikenessTests(unittest.TestCase):
         self.run_tool("group", apply=True)
         subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name != "gallery"]
         self.assertEqual(len(subs), 2)
-        self.assertEqual(sorted(len(list((s / "gallery").iterdir())) for s in subs), [4, 4])
+        self.assertEqual(sorted(len([p for p in (s / "gallery").iterdir() if not p.name.startswith("z_")]) for s in subs), [4, 4])
         self.assertEqual(len(self.names("Artists", "Pierre")), 1, "the photo that matches nobody stays with the artist")
         scan = self.run_tool("scan")
         self.assertIn("person folder", scan)

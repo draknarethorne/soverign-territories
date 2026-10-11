@@ -2,7 +2,7 @@
 """Keep the original-photo library in step with what you drop in it (preview unless --apply).
 
 The library is <work root>/<Root>/<Name>/gallery (your originals) and <Name>/gallery_944x1104 (what this makes), for the roots
-Angels, Models, Prospects and Artists (workspaces.json paths.photoRoots). For every <Name> folder that has a gallery:
+Angels, Sisters, Prospects, Artists and Various (workspaces.json paths.photoRoots; the old name Models is still read). For every <Name> folder that has a gallery:
 
   1. RENAME  each original after the FOLDER it is in. Whatever it was called before (another angel, a sister, a prospect, an artist, a facebook
              download, a phone screenshot), its id is kept and only the prefix changes. Rename the folder itself and every name follows.
@@ -222,7 +222,7 @@ def main(argv=None):
     ap.add_argument("--apply", action="store_true", help="really do it (default: preview only)")
     ap.add_argument("--dry-run", action="store_true", help="preview (the bin launcher adds --apply itself)")
     ap.add_argument("--only", action="append", help="a folder name or pattern, e.g. Angelica or 'Drakn*' (repeatable)")
-    ap.add_argument("--root", help="the folder that holds Angels, Models, Prospects and Artists (default: workspaces.json paths.workRoot)")
+    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
     ap.add_argument("--force", action="store_true", help="make every copy again, even ones newer than their original")
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
     args = ap.parse_args(argv)

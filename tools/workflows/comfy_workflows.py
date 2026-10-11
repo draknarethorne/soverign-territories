@@ -108,7 +108,7 @@ def load_cfg():
 
 
 def work_root(cfg):
-    """The working drive folder that holds Models (originals) and Masters; accepts the old misspelled folder until it is renamed."""
+    """The working drive folder that holds Sisters (originals) and Masters; accepts the old misspelled folder until it is renamed."""
     want = pathlib.Path(cfg.get("paths", {}).get("workRoot", "B:/Sovereign Territories"))
     old = pathlib.Path(str(want).replace("Sovereign", "Soverign"))
     return want if want.exists() or not old.exists() else old
@@ -1875,16 +1875,24 @@ def set_inputs(cfg, args):
         print("workspaces.json updated; now run: inputs reset --hero " + hero)
 
 
+PHOTO_ROOTS = ["Angels", "Sisters", "Models", "Prospects", "Artists", "Various"]  # Models is the old name of Sisters; Various is the pool of photos not yet sorted
+SISTER_ROOTS = ("Sisters", "Models")
+
+
 def photo_roots(cfg, base=None):
-    """The folders that hold the original-photo library: <work root>/<name> for each of paths.photoRoots (Angels, Models, Prospects, Artists)."""
+    """The folders that hold the original-photo library: <work root>/<name> for each of paths.photoRoots (default Angels, Sisters, Prospects, Artists, Various; the old Models folder is still read)."""
     base = pathlib.Path(base) if base else work_root(cfg)
-    return [base / n for n in cfg.get("paths", {}).get("photoRoots", ["Angels", "Models", "Prospects", "Artists"]) if (base / n).is_dir()]
+    return [base / n for n in cfg.get("paths", {}).get("photoRoots", PHOTO_ROOTS) if (base / n).is_dir()]
 
 
 def photo_folders(cfg, base=None):
-    """[(group, name, path)] of every library folder that has a gallery: <root>/<Name>, and <root>/<Name>/<Sub> (an artist's folder grouped by the face in it); name is 'Name' or 'Name/Sub'."""
+    """[(group, name, path)] of every library folder that has a gallery: <root>/<Name>, and <root>/<Name>/<Sub> (an artist's folder grouped by the face in it); name is 'Name' or 'Name/Sub'.
+    A root that has a gallery itself (the Various pool) is one folder whose group and name are both the root's."""
     out = []
     for root in photo_roots(cfg, base):
+        if (root / "gallery").is_dir():
+            out.append((root.name, root.name, root))
+            continue
         for d in sorted(p for p in root.iterdir() if p.is_dir()):
             if (d / "gallery").is_dir():
                 out.append((root.name, d.name, d))
@@ -1899,7 +1907,7 @@ def photo_library(cfg, base=None):
     w, h = cfg.get("standardSize") or (944, 1104)
     out = []
     for root in photo_roots(cfg, base):
-        for d in sorted(p for p in root.iterdir() if p.is_dir()):
+        for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
             for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
                 g = folder / f"gallery_{w}x{h}"
                 if g.is_dir():

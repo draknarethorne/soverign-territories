@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Give each ComfyUI workspace its own input folder holding exactly the images its workflows load (preview unless --apply).
 
-Inputs are transient copies: the sources stay where they live (Models originals, Masters, rendered outputs). For each workspace this
+Inputs are transient copies: the sources stay where they live (Sisters originals, Masters, rendered outputs). For each workspace this
   1. lists every image its workflows load (LoadImage nodes, including inside subgraphs),
-  2. finds each one by name in the source folders, in this order: Models (originals), Masters, the old shared input folder, outputs,
+  2. finds each one by name in the source folders, in this order: Sisters (originals; the old name Models is still read), Masters, the old shared input folder, outputs,
   3. copies what is missing into <inputsRoot>/<Workspace>/ (created on --apply) and lists anything it cannot find.
 Nothing is moved or deleted, so the shared folder stays as a fallback until you retire it.
 
@@ -41,7 +41,8 @@ def source_index(cfg):
     """{file name: path}, first folder wins."""
     new_out = cw.output_root(cfg)
     legacy = [pathlib.Path(cfg["sharedInput"]), pathlib.Path(cfg["sharedOutput"])]  # last: old renders must never shadow new ones
-    roots = [cw.work_root(cfg) / "Models", cw.work_root(cfg) / "Masters", *[p for p in cw.photo_roots(cfg) if p.name != "Models"], new_out, *legacy]
+    sisters = [cw.work_root(cfg) / n for n in cw.SISTER_ROOTS]
+    roots = [*sisters, cw.work_root(cfg) / "Masters", *[p for p in cw.photo_roots(cfg) if p.name not in cw.SISTER_ROOTS], new_out, *legacy]
     index = {}
     for root in roots:
         if root.is_dir():
