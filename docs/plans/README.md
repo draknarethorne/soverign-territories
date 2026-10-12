@@ -40,4 +40,6 @@ One file per piece of work we agreed to act on. This is how we work day to day, 
 | --- | --- |
 | [2026-10-09-finals-and-mvp.md](2026-10-09-finals-and-mvp.md) | active |
 | [2026-10-10-names-ingest-headshots.md](2026-10-10-names-ingest-headshots.md) | active |
+| [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md) | active |
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active |
+| [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) | active |

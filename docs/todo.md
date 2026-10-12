@@ -41,7 +41,7 @@
 
 | Hero | Photo | Prime | Bare | Golden pose | Heels | Other finals | Candidates |
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| Female | fantasy_image_~ | Q c33 | F c1 | - | - | - | 34 |
+| Female | 75007327845399~ | Q c33 | F c1 | - | - | - | 34 |
 | Male | alpha_male_pho~ | - | - | n/a | n/a | - | - |
 
 ### Drakn sisters (10)

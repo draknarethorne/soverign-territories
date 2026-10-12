@@ -39,6 +39,8 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 ### Frames (a Prime input for partial-body photos)
 
 Most originals are head-and-shoulders or waist-up, and an edit model keeps the framing of what it is given, so the Prime comes back cropped (FireRed most of all). For every original whose face is taller than 14% of the picture, `originals` also writes `frame_944x1104\<name>_frame_944x1104.png`: the photo shrunk so the face has the size of a standing figure's (about 9% of the height), placed at the top centre of the cream canvas, the rest left empty.
+For a phone screenshot the 14% is measured on the picture inside the app bars, not on the whole screen (a face that is 13% of the screen is about 21% of the picture); until Oct 12 it was measured on the whole screen, which left many reel screenshots without a frame.
+The threshold itself is under review (decision D1 of [../plans/2026-10-12-prime-prompts-frames-and-inputs.md](../plans/2026-10-12-prime-prompts-frames-and-inputs.md)).
 
 The Prime then draws the body below at the right scale. A full-length original gets none (use its `gallery_944x1104` copy); a screenshot is cut to its picture first, as above. `--no-frames` skips it; about 0.2 GB for the library.
 

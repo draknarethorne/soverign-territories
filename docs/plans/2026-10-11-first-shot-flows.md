@@ -2,7 +2,7 @@
 
 Status: active, Oct 11, 2026 (the clean-up is done; the first-shot experiments are built and waiting for your tests)
 
-Source: your messages of Oct 11, copied word for word at the end. Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
+Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, frame gaps, pose-first Prime). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
 
 ## Why we are doing this
 

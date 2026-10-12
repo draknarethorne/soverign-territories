@@ -375,14 +375,15 @@ def make_frames(sources, folder, size, args, tally, faces):
     wanted, made = set(), 0
     for path, final in sources:
         box, px = faces.of(path)
-        if not box or px < MIN_FACE_PX or box[3] <= FRAME_FACE_MAX:
+        if not box or px < MIN_FACE_PX:
             continue
         name = f"{re.sub(r'_[0-9]+x[0-9]+$', '', os.path.splitext(final)[0])}_frame_{size[0]}x{size[1]}.png"
         dest = out_dir / name
+        # frame_photo decides whether the photo is partial: the face box is measured on the whole picture, and a phone screenshot (a Facebook reel) is cropped to its picture first
         if not args.apply:
-            if args.force or not is_fresh(path, dest, size):
-                made += frame_photo(path, None, size, box)
-            wanted.add(name.lower())
+            if frame_photo(path, None, size, box):
+                wanted.add(name.lower())
+                made += bool(args.force or not is_fresh(path, dest, size))
             continue
         if not args.force and is_fresh(path, dest, size):
             wanted.add(name.lower())

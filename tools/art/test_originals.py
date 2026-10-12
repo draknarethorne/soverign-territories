@@ -103,6 +103,21 @@ class OriginalsTests(unittest.TestCase):
         self.assertEqual(self.names("Prospects", "Rhea Ives", "frame_94x110_org"), ["rhea_ives_image_1_frame_94x110.png"], "kept, not deleted")
         self.assertNotIn("frame", self.run_tool("--no-frames", faces=Fake()).replace("--no-frames", ""))
 
+    def test_a_phone_screenshot_is_judged_on_its_picture_not_on_the_whole_screen(self):
+        g = self.gallery("Angels", "Gavrielle")
+        Image.new("RGB", (400, 600), (200, 30, 30)).save(g / "gavrielle_shot_1.jpg")  # a reel screenshot: the face is 0.12 of the screen but 0.24 of the picture inside the app bars
+
+        class Fake:
+            def of(self, path):
+                return [0.35, 0.3, 0.3, 0.12], 120
+
+            def save(self):
+                pass
+        with mock.patch.object(originals.screens, "is_reel_ui", lambda im: True), mock.patch.object(originals.screens, "clean_box", lambda size: (0, 100, 400, 400)), \
+                mock.patch.object(originals.screens, "head_clear", lambda box: True):
+            out = self.run_tool(faces=Fake())
+        self.assertEqual(self.names("Angels", "Gavrielle", "frame_94x110"), ["gavrielle_shot_1_frame_94x110.png"], out)
+
     def test_the_headshot_crop_stays_inside_the_picture_and_keeps_the_shape(self):
         for box in ([0.0, 0.0, 0.2, 0.1], [0.8, 0.9, 0.2, 0.1], [0.1, 0.1, 0.8, 0.8]):
             x0, y0, x1, y1 = originals.headshot_box((400, 600), box, (94, 110))
