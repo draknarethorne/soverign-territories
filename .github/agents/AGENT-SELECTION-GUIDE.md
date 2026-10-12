@@ -4,6 +4,18 @@ Quick reference for choosing the right specialized agent for Sovereign Territori
 
 ---
 
+## Shared working rules (every agent)
+
+All agents follow the **Working style** of [../copilot-instructions.md](../copilot-instructions.md); where an agent file says otherwise, these win:
+
+- **Notes become plans.** The user's scratch notes are `tmp/*.md` (git-ignored). Agreed work goes to `docs/plans/YYYY-MM-DD-<slug>.md` with a `**Status:**` line, tagged steps (`- [ ] **P1 you** ...`) and the user's words at the end; finished plans move to `docs/plans/_archive/`. Nothing stays in `tmp/` at the end of the day.
+- **One queue.** What is open lives in the plans and is shown, by priority and owner, in `docs/todo.md` (run `bin\todo.cmd`). Do not keep a second list in STATUS.md or in an agent's reply.
+- **Commits.** Commit and push at the end of a working day, after the day's hygiene (see `docs/plans/README.md`) and the validators, unless the user asks for a commit sooner; an agent's own auto-commit rule does not override this.
+- **Recap.** A day's reflection goes to `docs/recap/YYYY-MM-DD-HHMM-recap.md` (see `docs/recap/README.md`).
+- **Long work.** Say what and why, preview first, verify each step, write files whole, keep originals, and use read-only helpers in parallel.
+
+---
+
 ## 🎯 Quick Decision Tree
 
 ```

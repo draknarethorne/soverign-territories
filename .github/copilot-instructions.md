@@ -8,7 +8,9 @@ territory maps, AFK economy and backend (Nakama) are later-phase vision, not cur
 
 - [docs/STATUS.md](../docs/STATUS.md) - current state, decisions, open questions, next work. Read before design or data work.
 - [docs/README.md](../docs/README.md) - which document owns which topic.
-- [docs/plans/README.md](../docs/plans/README.md) - how we work: tmp draft -> agreed plan in `docs/plans/` -> one line in STATUS.md. Read the active plans listed in STATUS.md before starting work they cover.
+- [docs/plans/README.md](../docs/plans/README.md) - how we work: tmp draft -> agreed plan in `docs/plans/` -> done plan in `docs/plans/_archive/`. It lists every plan with its status. Read the active plans before starting work they cover.
+- [docs/todo.md](../docs/todo.md) - the user's queue, generated from the open boxes of the active plans: what needs the user, by priority. Check it before suggesting "what next".
+- [docs/recap/README.md](../docs/recap/README.md) - the end-of-day reflection; read the latest recap to pick up where the last day stopped.
 - [data/art/README.md](../data/art/README.md) - the art/prompt pipeline.
 
 Rules live in `docs/mvp/`, `docs/design/` (combat, deck, tutorial) and win over `docs/game-bible.md`, which is vision.
@@ -62,9 +64,19 @@ If a number or rule here disagrees with those docs, the docs win.
   unless the user explicitly asks for archived material. Folders like `data/art/_templates`, `_sets`, `_schema` are active.
 - Do not make major design decisions without user approval, and do not commit code that fails the validators.
 - **Plans:** the user thinks in `tmp/<topic>.md` (git-ignored). When a draft is agreed, move it to `docs/plans/YYYY-MM-DD-<slug>.md`
-  with a `Status:` line, add one line to "Active plans" in `docs/STATUS.md`, ask open decisions one at a time, tick the checkboxes
-  as steps finish, and close it with a `Result` (it stays as history; only a superseded plan goes to `_archive`). `docs/todo.md` is
-  generated from tool status and plan checkboxes, not ticked by hand. Never delete a tmp draft until its text is copied into the plan.
+  with a `**Status:**` line and a row in the table of `docs/plans/README.md` (STATUS.md does not list plans), ask open decisions one at a
+  time, and keep the user's own words at the end of the plan, word for word. Every open step is a checkbox with a tag,
+  `- [ ] **P1 you** T3 ...` (priority P1 to P3; owner `you` = needs the user's hands or decision, `ai`, or `either`): `bin\todo.cmd`
+  turns the tags into `docs/todo.md`, which is never ticked by hand. A finished plan gets `**Status:** done` and a `Result`, and is
+  `git mv`ed into `docs/plans/_archive/` (fix its relative links) with no open boxes left. Never delete a tmp note until its text is in a plan or a doc.
+- **The day's hygiene (before a commit and push at the end of a working day):** `tmp/` is empty (each note became a plan, part of a doc, or
+  was deleted because it is covered; questions about a note go to the user); every plan has a status and tagged boxes; finished plans are
+  archived; `bin\todo.cmd` was run; STATUS.md has the day's decisions; a recap is written in `docs/recap/`; validators, tests and
+  markdownlint pass. The checklist is in `docs/plans/README.md`.
+- **Large days:** split the work into steps and say what you are doing and why; run long jobs so that they can be checked (a log, a count,
+  a preview first) and verify each step before building on it; have helpers (background agents) read, audit or summarise in parallel
+  while you work, and give them a bounded read-only task; never leave half-finished state (write files whole, swap them in, keep originals);
+  when a process seems stuck check whether it is suspended before assuming a bug. Reflect at the end of the day (see the recap).
 - Do not create art assets; describe them for the artist or generate prompts through the pipeline.
 
 ## Commands: run the bin launchers, and make new ones
@@ -76,5 +88,5 @@ If a number or rule here disagrees with those docs, the docs win.
   `sync-inputs.cmd` copies workflow input images; a duplicate `inputs sync` was written and removed on Oct 12).
 - A routine that needs several commands or arguments the user would have to remember becomes a launcher: a thin `.cmd` that calls one Python tool,
   previews with `--dry-run`, has a read-only `--check`, repeats safely, and is listed in `bin\help.cmd` and `bin\menu.cmd`, documented, and tested.
-- Photo library routine: drop new photos into `Various\gallery`, run `bin\library.cmd` (originals, duplicates, likeness, scaled copies, headshots,
-  frames, inputs). `bin\library-check.cmd` says whether anything is waiting; `bin\library-preview.cmd` previews every step.
+- Photo library routine: drop new photos into `Various\gallery`, run `bin\library.cmd` (originals, duplicates, crop, likeness, scaled copies, headshots,
+  frames, inputs); `--retry-junk` sends `_junk` back through it, `likeness pullback` re-sorts prospects. The runbook is `docs/art/original-photos.md`. `bin\library-check.cmd` says whether anything is waiting; `bin\library-preview.cmd` previews every step.
