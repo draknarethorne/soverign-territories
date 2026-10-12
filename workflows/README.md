@@ -205,6 +205,14 @@ python tools/workflows/comfy_workflows.py inputs reset --hero Draknara --dry-run
 
 `--set` only needs the roles you give it (`--photo`, `--apose`, `--bare`); with `--dry-run` it prints and writes nothing. Workflows in `zz_Shots/` are never reset.
 
+`inputs sync` (preview; `--apply` copies) puts every image a deployed generated workflow loads into the input folder of its workspace when it is missing: the frame images, the first-shot experiment photos, a restored photo. It changes no workflow and no setting, so a Prime you chose stays chosen, which `inputs reset` cannot promise (it stops while a choice is unpulled).
+Run it after `make --create` and `deploy` when ComfyUI says an image is missing (`refresh` does it). Placeholder names (`..._00000.png`, "not chosen yet") are skipped, and what it cannot find anywhere is listed as MISSING.
+
+### Seeds
+
+Every generated workflow draws a new seed on each run (`control_after_generate` = randomize), in the Qwen, FireRed, Flux and MiniMax templates alike. Only a final fixes a seed: a workflow in `zz_Final`, or a record replayed by `make` (see below).
+`make` sets randomize on every generated workflow it builds or refreshes, and `deploy` does the same on the workspace copies (the seed value, prompt and input stay; a workflow that has a final record is skipped). Hand-made workflows (`zz_Shots`, `zz_Curated`, `zz_Candidates`, `zz_Final`) are never touched. `tools/workflows/test_comfy_workflows.py` fails if a template ships with a fixed seed.
+
 ### Image size (templates)
 
 Stills keep the standard size (`standardSize` in `workspaces.json`, 944x1104) until the final upscale. Qwen snaps 944x1104 to itself (`FluxKontextImageScale`); FireRed and Flux rescale to a total number of pixels. ComfyUI counts a megapixel as 1024 x 1024, so the old value 1.0 turned 944x1104 into 947x1107; it is now 0.993896, which gives exactly 944x1104.
@@ -264,7 +272,7 @@ python tools/workflows/comfy_workflows.py finals record --apply                 
   `make` then builds or refreshes that stage's workflow with the record's **seed (its control set to fixed), denoise and turbo** and the new prompt, so a regenerated stage keeps the composition you chose.
   Not replayed: the input image (nothing is forced, you pick inputs yourself) and steps and cfg (the template sets them from turbo).
   A record you edited by hand is kept while the render it came from is still the final (`--force` replaces it).
-  `deploy` still only updates prompt text in a workflow a workspace already has, so your seed there survives; a workflow a workspace lacks (or `deploy --mode overwrite`) comes from the repo copy with the record applied.
+  `deploy` otherwise keeps a workspace workflow's seed value (it only sets the control to randomize on a generated workflow that has no record), so a final's seed survives; a workflow a workspace lacks (or `deploy --mode overwrite`) comes from the repo copy with the record applied.
   If ComfyUI still changes the seed after a run, set the seed widget's control to `fixed` once in the UI and tell me.
 - `finals.slots` in `workspaces.json` (optional) sets which stages `finals status` lists as slots to fill (any stage can still be a final, and counts as `+N other`); the default is Prime (`Alpha_1_Prime`, `X_Pose`), Bare (`Alpha_2_Bare_Figure`, `Alpha_2_Bare_Skin`) and golden pose (`Alpha_3_Barefoot`).
 

@@ -545,6 +545,22 @@ def set_size(wf, prompt_text):
     return changed
 
 
+def randomize_seed(wf):
+    """A generated workflow draws a new seed on every run (control_after_generate = randomize); only a final (zz_Final, or a record replayed by `make`) fixes one. Returns True if anything changed."""
+    changed = False
+    for node in subgraph_nodes(wf):
+        if node.get("type") not in ("KSampler", "KSamplerAdvanced", "RandomNoise"):
+            continue
+        wv, named = node.get("widgets_values"), node.get("widgets_values_named")
+        if isinstance(wv, list) and len(wv) > 1 and wv[1] in ("fixed", "increment", "decrement"):
+            wv[1] = "randomize"
+            changed = True
+        if isinstance(named, dict) and named.get("control_after_generate") in ("fixed", "increment", "decrement"):
+            named["control_after_generate"] = "randomize"
+            changed = True
+    return changed
+
+
 def set_turbo(wf, on):
     """FireRed turbo = the Lightning LoRA, 8 steps and CFG 1; off = 40 steps and CFG 4. One boolean drives all three."""
     n = prompt_node(wf)
@@ -1131,16 +1147,21 @@ def cmd_deploy(args):
                 tally["new"] += 1
                 continue
             state = classify(p, inst[name])
+            reseed = not final_record(cfg, name)  # a final's seed stays fixed; every other generated workflow draws a new one per run
             if state == "aligned" and not replace:
-                stale_size = align_size(read_wf(inst[name]), cfg)
-                if not stale_size:
+                probe = read_wf(inst[name])
+                stale_size = align_size(probe, cfg)
+                stale_seed = reseed and randomize_seed(probe)
+                if not (stale_size or stale_seed):
                     tally["aligned"] += 1
                     continue
-                print(f"  size     {ws}/{name}  (total pixels set to the standard size; prompt, seed and input untouched)")
+                print(f"  {'size' if stale_size else 'seed'}     {ws}/{name}  ({'total pixels set to the standard size' if stale_size else 'seed set to randomize'}; prompt, seed value and input untouched)")
                 if not args.dry_run:
                     backup(stamp, ws, name, inst[name])
                     swf = read_wf(inst[name])
                     align_size(swf, cfg)
+                    if reseed:
+                        randomize_seed(swf)
                     write_wf(inst[name], swf)
                 tally["updated"] += 1
                 continue
@@ -1157,6 +1178,8 @@ def cmd_deploy(args):
                     wf = read_wf(inst[name])
                     patch_wf(wf, *get_values(read_wf(p)))
                     align_size(wf, cfg)
+                    if reseed:
+                        randomize_seed(wf)
                     write_wf(inst[name], wf)
             tally["updated"] += 1
         if getattr(args, "tests", False):
@@ -1548,8 +1571,9 @@ def cmd_make(args):
             wf = read_wf(target)
             resized = is_text_item(cfg, it) and set_size(wf, it["path"].read_text(encoding="utf-8"))
             replayed = bool(rec) and apply_final_settings(wf, rec)
+            reseeded = not rec and randomize_seed(wf)
             resized = (not is_text_item(cfg, it) and align_size(wf, cfg)) or resized
-            if patch_wf(wf, pos, neg, it["prefix"]) or resized or replayed:
+            if patch_wf(wf, pos, neg, it["prefix"]) or resized or replayed or reseeded:
                 if not args.dry_run:
                     write_wf(target, wf)
                 tally["updated"] += 1
@@ -1583,6 +1607,8 @@ def cmd_make(args):
             align_size(wf, cfg)
         if rec:
             apply_final_settings(wf, rec)  # a stage you finalised replays its seed, denoise and turbo
+        else:
+            randomize_seed(wf)
         video = set_video(wf, it["path"].read_text(encoding="utf-8"), cfg["engines"]["minimax"]) if it["engine"] == "minimax" else None
         wf["id"] = str(uuid.uuid4())
         ln = node_of(wf, "LoadImage")
@@ -1671,6 +1697,47 @@ def cmd_tidy(args):
             print(f"  {'removed' if args.apply else 'would remove'} empty folder  {ws}: {folder.relative_to(d).as_posix()}")
     if not args.apply:
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
+
+
+def sync_inputs(cfg, args, workspaces=None):
+    """Copy every image that a deployed workflow loads into the input folder of its workspace, when it is not there. Nothing is retargeted: no workflow and no workspaces.json entry changes,
+    so a Prime you chose stays chosen. Covers what `inputs reset` copies only after it has retargeted (flow images such as the frame, the first-shot experiment photos)."""
+    copied = missing = placeholders = 0
+    for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
+        if not workspace_ready(cfg, ws, args.root)[0]:
+            continue
+        d = input_dir(cfg, ws, args.root) if args.root else input_dir(cfg, ws)
+        wanted = collections.defaultdict(int)
+        repo = repo_files(cfg)
+        for name, p in install_files(cfg, ws, args.root).items():
+            if name not in repo or is_hand_made(cfg, ws, p, args.root):
+                continue  # only generated workflows; curated, test and sample ones keep their own images
+            if args.hero and not name.lower().startswith(args.hero.lower() + "_"):
+                continue
+            if getattr(args, "match", None) and not name_matches(args.match, name):
+                continue
+            try:
+                ln = node_of(read_wf(p), "LoadImage")
+            except (ValueError, OSError):
+                continue
+            if ln and ln["widgets_values"] and isinstance(ln["widgets_values"][0], str):
+                wanted[ln["widgets_values"][0]] += 1
+        for img, n in sorted(wanted.items()):
+            if (d / img).exists():
+                continue
+            if img.endswith("_00000.png"):
+                placeholders += 1  # "not chosen yet" (see inputs reset): no such file exists
+                continue
+            src = find_image(cfg, img)
+            if not src:
+                missing += 1
+                print(f"  MISSING  {ws}: {img} ({n} workflow(s)) is not in {d}, any other input folder, the photo library or the output folders")
+            else:
+                copied += 1
+                print(f"  {'would copy' if args.dry_run else 'copied   '} {ws}: {img} -> {d}")
+                if not args.dry_run:
+                    shutil.copy2(src, d / img)
+    print(f"inputs sync: {copied} image(s) {'to copy' if args.dry_run else 'copied'}, {missing} missing, {placeholders} placeholder name(s) skipped (not chosen yet)" + (" (dry run)" if args.dry_run else ""))
 
 
 def reset_inputs(cfg, args, workspaces=None, include_repo=True):
@@ -2176,6 +2243,9 @@ def cmd_inputs(args):
         return
     if args.reset:
         reset_inputs(cfg, args, args.workspace)
+        return
+    if args.sync:
+        sync_inputs(cfg, args, args.workspace)
         return
     if args.photos:
         reconcile_photos(cfg, args.dry_run, args.root, args.hero)
@@ -2753,7 +2823,7 @@ def normalise(args):
             setattr(args, args.action, True)
     if args.cmd not in WRITES:
         return False
-    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set or args.photos)) and not (args.cmd == "denoise" and not args.reset)
+    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set or args.photos or args.sync)) and not (args.cmd == "denoise" and not args.reset)
     explicit = args.dry_run
     args.dry_run = args.dry_run or not args.apply
     return writes and not args.apply and not explicit
@@ -2820,8 +2890,9 @@ def main(argv=None):
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("inputs")
     common(s, True)
-    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set", "photos"],
+    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set", "photos", "sync"],
                    help="status: which images each hero uses; pull: take the defaults you chose in the workspaces into workspaces.json; reset: point every workflow back at its default image; fix: replace placeholder inputs; "
+                        "sync: copy the images the deployed workflows load into their workspace's input folder when missing (changes no workflow and no setting); "
                         "photos: re-point a chosen photo that the originals tool renamed or moved (workspaces.json, workflows, input folders); "
                         "set HERO --photo/--prime/--bare/--apose ...: write a hero's images into workspaces.json. No action lists the configured and inferred A-poses")
     s.add_argument("target", nargs="?", help="with set: the hero")
@@ -2846,7 +2917,7 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
-    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None, photos=False)
+    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None, photos=False, sync=False)
     s = sub.add_parser("setup")
     common(s, True, False)
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")

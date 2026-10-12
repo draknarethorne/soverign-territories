@@ -1351,11 +1351,11 @@
             },
             "widgets_values": [
               1,
-              "fixed"
+              "randomize"
             ],
             "widgets_values_named": {
               "noise_seed": 1,
-              "control_after_generate": "fixed"
+              "control_after_generate": "randomize"
             }
           },
           {

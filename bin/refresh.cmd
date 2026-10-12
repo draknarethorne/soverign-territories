@@ -22,4 +22,6 @@ echo == workflows
 %PY% tools\workflows\comfy_workflows.py make --apply --create --hero %~1 %STAGE% %EXTRA%
 echo == deploy to the home workspace
 %PY% tools\workflows\comfy_workflows.py deploy --apply --hero %~1 %STAGE% %EXTRA%
+echo == copy the images the workflows load into the workspace input folder^(s^)
+%PY% tools\workflows\comfy_workflows.py inputs sync --apply --hero %~1 %EXTRA%
 call "%~dp0_end.cmd" %errorlevel%

@@ -213,6 +213,48 @@ class FirstShotTests(unittest.TestCase):
         self.assertEqual(cw.input_role({"inputs": {"Alice": {}}, "inputRoles": {"alpha/base": "photo", "default": "bare"}}, "Alice", "alpha", ["base", "bare-base"]), "photo")
 
 
+class SeedAndSyncTests(unittest.TestCase):
+    """A generated workflow draws a new seed each run; only finals fix one. `inputs sync` copies missing images and changes nothing else."""
+
+    @staticmethod
+    def wf(control):
+        return {"nodes": [], "definitions": {"subgraphs": [{"nodes": [
+            {"type": "KSampler", "widgets_values": [43, control, 8, 1, "euler", "simple", 1], "widgets_values_named": {"seed": 43, "control_after_generate": control}},
+            {"type": "RandomNoise", "widgets_values": [1, control], "widgets_values_named": {"noise_seed": 1, "control_after_generate": control}},
+            {"type": "CLIPTextEncode", "widgets_values": ["fixed", "fixed"]}]}]}}
+
+    def test_fixed_controls_become_randomize_and_a_random_one_is_left_alone(self):
+        wf = self.wf("fixed")
+        self.assertTrue(cw.randomize_seed(wf))
+        nodes = wf["definitions"]["subgraphs"][0]["nodes"]
+        self.assertEqual([nodes[0]["widgets_values"][1], nodes[1]["widgets_values"][1]], ["randomize", "randomize"])
+        self.assertEqual((nodes[0]["widgets_values_named"]["control_after_generate"], nodes[0]["widgets_values"][0]), ("randomize", 43), "the seed value is kept")
+        self.assertEqual(nodes[2]["widgets_values"], ["fixed", "fixed"], "other nodes are not touched")
+        self.assertFalse(cw.randomize_seed(wf))
+
+    def test_every_template_draws_a_new_seed(self):
+        for p in sorted(cw.ROOT.glob("workflows/_templates/ST*.json")):
+            self.assertFalse(cw.randomize_seed(cw.read_wf(p)), f"{p.name} has a fixed seed control")
+
+    def test_sync_copies_what_a_deployed_workflow_loads_and_skips_placeholders_and_hand_made_ones(self):
+        with World() as w:
+            w.master("Alice_Qwen_Scene_One.json")
+            lib = w.tmp / "lib"
+            lib.mkdir()
+            (lib / "alice_frame.png").write_bytes(b"png")
+            wf = {"nodes": [{"type": "LoadImage", "widgets_values": ["alice_frame.png", "image"]}]}
+            w.put("A-Home", "Alice_Qwen_Scene_One.json", wf)
+            w.put("A-Home", "zz_Curated/Alice_Qwen_Hand.json", {"nodes": [{"type": "LoadImage", "widgets_values": ["other.png", "image"]}]})
+            w.cfg["paths"] = {"inputsRoot": str(w.tmp / "inputs")}
+            (w.tmp / "inputs" / "A-Home").mkdir(parents=True)
+            with mock.patch.object(cw, "find_image", lambda cfg, name: lib / name if name == "alice_frame.png" else None):
+                out, code = w.run("inputs", "sync", "-w", "A-Home")
+            self.assertIsNone(code)
+            self.assertTrue((w.tmp / "inputs" / "A-Home" / "alice_frame.png").exists(), out)
+            self.assertNotIn("other.png", out)
+            self.assertEqual(cw.input_image(cw.read_wf(w.dir("A-Home") / "Alice_Qwen_Scene_One.json")), "alice_frame.png", "no workflow is retargeted")
+
+
 class RoutingTests(unittest.TestCase):
     def test_home_and_accepts(self):
         with World() as w:
