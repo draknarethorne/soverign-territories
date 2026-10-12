@@ -66,3 +66,15 @@ If a number or rule here disagrees with those docs, the docs win.
   as steps finish, and close it with a `Result` (it stays as history; only a superseded plan goes to `_archive`). `docs/todo.md` is
   generated from tool status and plan checkboxes, not ticked by hand. Never delete a tmp draft until its text is copied into the plan.
 - Do not create art assets; describe them for the artist or generate prompts through the pipeline.
+
+## Commands: run the bin launchers, and make new ones
+
+- Run the `bin\*.cmd` launchers (`cmd /c bin\name.cmd ...`) instead of calling `python tools\...` by hand, so that you and the user run the same
+  commands with the same defaults and the launchers stay tested. `bin\help.cmd` lists them. Changing a launcher or the tool behind it: run the
+  launcher itself (its preview first), then the tests.
+- Before writing a script, a new subcommand or a long shell sequence, read `bin\help.cmd` and `bin\`: the thing may exist (for example
+  `sync-inputs.cmd` copies workflow input images; a duplicate `inputs sync` was written and removed on Oct 12).
+- A routine that needs several commands or arguments the user would have to remember becomes a launcher: a thin `.cmd` that calls one Python tool,
+  previews with `--dry-run`, has a read-only `--check`, repeats safely, and is listed in `bin\help.cmd` and `bin\menu.cmd`, documented, and tested.
+- Photo library routine: drop new photos into `Various\gallery`, run `bin\library.cmd` (originals, duplicates, likeness, scaled copies, headshots,
+  frames, inputs). `bin\library-check.cmd` says whether anything is waiting; `bin\library-preview.cmd` previews every step.

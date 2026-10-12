@@ -28,7 +28,7 @@ In `workflows/workspaces.json`:
 - `flows.frame.photos` is the frame flow's image for each hero. `flows` can hold more flows later (each with its own `photos`).
 - Each flow workflow loads its own image. `inputs status` lists both; `inputs reset` and `inputs pull` handle each flow's image separately and never mix them with the normal photo.
 
-To add or change a flow image: `bin\inputs.cmd set HERO --flow frame --photo haniya_image_<id>_frame_944x1104.png`. Then build the workflows that are missing with `bin\refresh.cmd HERO alpha` (Qwen) and `bin\refresh-firered.cmd HERO alpha` (FireRed), which also deploy them and copy the images into the workspaces' input folders (`inputs sync`; a workflow whose image is not in its workspace's input folder fails in ComfyUI).
+To add or change a flow image: `bin\inputs.cmd set HERO --flow frame --photo haniya_image_<id>_frame_944x1104.png`. Then build the workflows that are missing with `bin\refresh.cmd HERO alpha` (Qwen) and `bin\refresh-firered.cmd HERO alpha` (FireRed), which also deploy them and copy the images into the workspaces' input folders (`bin\sync-inputs.cmd`; a workflow whose image is not in its workspace's input folder fails in ComfyUI).
 `originals` makes the frame images; only a photo that is not already full length gets one, so a hero with a full-length photo (Sammara, Draknira, Drakniya) has no frame workflows, and a hero with no real photo yet has none either.
 
 ## FireRed and the face

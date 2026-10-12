@@ -18,7 +18,7 @@ Scores are cosine similarity after **subtracting the library's average face**. W
 
 Folders are of two kinds. A **person folder** is one person: Angels, Sisters (formerly Models), a named Prospect, and each person grouped inside an Artist's folder (`Artists/Pierre/Mara Locke`). **Mixed** folders (the artist folders themselves, `Artists/*`, and `Various`) hold many people: they never describe a person, are never read (except the pool) and never move on their own.
 
-`Various` (top level, next to Prospects) is the **pool** that `sort` empties; drop new photos into `Various\gallery`, run `originals`, then `likeness sort --singles`.
+`Various` (top level, next to Prospects) is the **pool** that `sort` empties; drop new photos into `Various\gallery` and run `bin\library.cmd`, which does `originals`, `duplicates`, `likeness junk`, `review`, `sort --singles` and `singles --min 0.45`, then brings the scaled copies, headshots and frames back in step ([original-photos.md](original-photos.md#the-routine)). The commands below are what it runs, for when you want to look closer at one step.
 
 ## Names and history
 

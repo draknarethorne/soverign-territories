@@ -11,6 +11,13 @@ echo    refresh-firered.cmd HERO [STAGE]  the loop for FireRed (local test workf
 echo    animate.cmd HERO                video prompts, MiniMax workflows, deploy
 echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated, zz_Shots, candidates and finals are captured; a final's image goes to assets\art)
 echo.
+echo  PHOTO LIBRARY: THE ROUTINE (drop new photos in Various\gallery, then)
+echo    library.cmd                     everything: originals, duplicates, likeness ^(junk, review, sort, singles^), scaled copies, headshots, frames, check, inputs, index. Repeats safely
+echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
+echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
+echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in the library ^(any folder, any name^)
+echo    originals.cmd --check           are the scaled copies, headshots and frames in step with every gallery?
+echo.
 echo  WORKSPACES
 echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
 echo    status.cmd [filters]            repo against every workspace
@@ -45,7 +52,7 @@ echo    art-refs.cmd where-used^|move^|regroup   find or safely move an art piec
 echo    extract-literals.cmd [--apply]  find text pasted into several cards and turn it into pieces (preview unless --apply)
 echo    audit.cmd NAME                  one front door for the audits below: identity, negation, library, style, codex, all (the cheap checks validate runs); changes nothing
 echo    style-audit.cmd [--prompts]     rank art wording by how illustrated (vs photographic) it reads; changes nothing
-echo    library-audit.cmd [--scope S]   find thin library folders that many cards lean on, and pieces no card uses; changes nothing
+echo    library-audit.cmd [--scope S]   find thin ART piece folders that many cards lean on, and pieces no card uses ^(not the photo library: that is library.cmd^); changes nothing
 echo    negation-audit.cmd [--review]   find negations (do not, never, no X) in the positive prompts, which a model reads as the thing named; changes nothing
 echo    identity-audit.cmd [--check]    check each angel, sister and bound hero: colours defined and in the Prime prompt, build in the Bare prompt, no bulky wording on female angels
 echo    todo.cmd [--print]              write docs\todo.md: where every top-tier card stands (finals and candidates in the repo) and the open work of the active plans; run pull first

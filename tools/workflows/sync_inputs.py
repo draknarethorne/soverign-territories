@@ -73,8 +73,9 @@ def main():
         dest = inputs_root / ws
         have = {p.name for p in dest.iterdir()} if dest.is_dir() else set()
         todo = sorted(n for n in need if n not in have and n in index)
-        missing = sorted(n for n in need if n not in have and n not in index)
-        print(f"{ws}: loads {len(need)} image(s); {len(need & have)} already in its folder, {len(todo)} to copy, {len(missing)} not found")
+        placeholders = sorted(n for n in need if n not in have and n not in index and n.endswith("_00000.png"))  # "not chosen yet" (see inputs reset): no such file exists
+        missing = sorted(n for n in need if n not in have and n not in index and n not in placeholders)
+        print(f"{ws}: loads {len(need)} image(s); {len(need & have)} already in its folder, {len(todo)} to copy, {len(missing)} not found, {len(placeholders)} placeholder name(s) (not chosen yet)")
         for n in missing:
             print(f"    NOT FOUND  {n}")
             total_missing[n] = total_missing.get(n, 0) + 1

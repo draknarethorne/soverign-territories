@@ -234,7 +234,7 @@ Aligning with the `HERO_*.json` schema structure established by the Transcendent
   * hairColorNegatives: ["golden-yellow hair", "grey hair", "white hair"]
 * **Physique Block:**
   * build: "Tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach"
-  * chest: "Smooth pectoral contours without bulk"
+  * chest: "Smooth, lean pectoral contours"
   * arms: "Broad, flexible shoulders; long, slender arms"
   * waist: "Clean, flat athletic stomach with a natural narrow waist taper; slender hips"
   * legs: "Long, elegant duelist legs"

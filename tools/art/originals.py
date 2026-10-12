@@ -329,6 +329,7 @@ def make_headshots(sources, folder, size, args, tally, faces):
     if made or stale or skipped:
         print(f"  headshots: {made} {'made' if args.apply else 'to make'}, {skipped} skipped (no usable face), {len(stale)} {'pruned' if args.apply else 'to prune'}")
     tally["headshots"] = tally.get("headshots", 0) + made
+    tally["headshots_pruned"] = tally.get("headshots_pruned", 0) + len(stale)
 
 
 FRAME_FACE_MAX = 0.14  # a face (brow to chin) taller than this share of the picture means the photo is not full length
@@ -409,6 +410,7 @@ def make_frames(sources, folder, size, args, tally, faces):
     if made or stale:
         print(f"  frames: {made} {'made' if args.apply else 'to make'} (partial-body photos), {len(stale)} {'pruned' if args.apply else 'to prune'}")
     tally["frames"] = tally.get("frames", 0) + made
+    tally["frames_pruned"] = tally.get("frames_pruned", 0) + len(stale)
 
 
 def process_folder(folder, label, size, args, tally):
@@ -506,11 +508,12 @@ def main(argv=None, faces=None):
     ap.add_argument("--no-repoint", action="store_true", help="do not re-point chosen photos in workspaces.json and the workflows")
     ap.add_argument("--no-headshots", action="store_true", help="do not make the headshot_944x1104 copies (the face, cropped and scaled up)")
     ap.add_argument("--no-frames", action="store_true", help="do not make the frame_944x1104 copies (a head-and-shoulders photo shrunk to figure size at the top of the canvas, as a Prime input)")
+    ap.add_argument("--check", action="store_true", help="preview only, then say IN SYNC or OUT OF SYNC (exit 1): is every gallery's scaled copy, headshot and frame there, and nothing left over? Run it after moving photos about")
     ap.add_argument("--archive-old", action="store_true", help="move the *_org folders already in the library into <work root>/_archive (mirrored paths, with a manifest)")
     ap.add_argument("--undo-archive", action="store_true", help="put the files of the last --archive-old back")
     args = ap.parse_args(argv)
     args.faces = None if args.no_headshots or args.archive_old or args.undo_archive else (faces or Faces())
-    if args.dry_run:
+    if args.dry_run or args.check:
         args.apply = False
     try:
         import PIL  # noqa: F401
@@ -540,6 +543,13 @@ def main(argv=None, faces=None):
     print(f"{tally['renamed']} renamed, {tally['made']} {'made' if args.apply else 'to make'}, {tally['pruned']} {'pruned' if args.apply else 'to prune'}, {tally['skipped']} skipped" + ("" if args.apply else " (preview)")
           + (f", {tally.get('headshots', 0)} headshot(s) {'made' if args.apply else 'to make'}" if args.faces else "")
           + (f", {tally.get('frames', 0)} frame(s) {'made' if args.apply else 'to make'}" if args.faces and not args.no_frames else ""))
+    if args.check:
+        todo = {"renamed": tally["renamed"], "scaled copies to make": tally["made"], "scaled copies to prune": tally["pruned"], "headshots to make": tally.get("headshots", 0),
+                "headshots to prune": tally.get("headshots_pruned", 0), "frames to make": tally.get("frames", 0), "frames to prune": tally.get("frames_pruned", 0)}
+        todo = {k: v for k, v in todo.items() if v}
+        print("IN SYNC: every gallery has its scaled copy, headshots and frames, and nothing is left over." if not todo
+              else "OUT OF SYNC: " + ", ".join(f"{v} {k}" for k, v in todo.items()) + ".  Run bin\\originals.cmd to bring them in step.")
+        return 1 if todo else 0
     if args.no_repoint:
         return
     if args.apply:
@@ -549,4 +559,4 @@ def main(argv=None, faces=None):
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main() or 0)

@@ -21,10 +21,20 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 
 ## The routine
 
+**The short way: `bin\library.cmd`.** Drop new photos into `Various\gallery` (or move photos between folders by hand), run it, and the whole library ends sorted, de-duplicated and in step. It runs, in order: `originals` (names, scaled copies, headshots, frames), `duplicates`, `likeness junk` and `review` and `sort --singles` and `singles --min 0.45`, then `duplicates` and `originals` again, `originals --check` (must say IN SYNC), `sync-inputs` and `likeness index`.
+It repeats safely: run it as often as you like, nothing is deleted, and a log goes to `<work>\_reports\library_sync_<time>.log`. `bin\library-preview.cmd` shows every step without moving anything; `bin\library-check.cmd` is read only and says whether anything is waiting (exit 1 when it is).
+
+**What `duplicates` does** (`bin\duplicates.cmd`, also step 2): the same picture can sit in two folders or twice in one under different ids (a download saved twice, a photo moved between prospects). It finds identical bytes in every `gallery` and `review` folder and keeps one copy.
+The kept copy is a chosen photo first, then a gallery photo over a review photo, then Angels, Sisters, Prospects, Artists, Various, then a name that already carries its folder's prefix. The others move to `_archive\<their folder>\gallery_duplicates` (`originals` then prunes their scaled copies). The same id with different bytes (a resaved copy) is only listed.
+
+By hand, one step at a time:
+
 1. Drop originals into a hero's `gallery`, or into `Various\gallery` and let `likeness sort --singles` file them (or move them from another hero's folder).
 2. Delete the ones that did not work out (in `gallery`; the tool tidies the rest).
-3. Run `bin\originals.cmd` (`bin\originals.cmd --dry-run` previews first; `--only Angelica` does one folder).
+3. Run `bin\originals.cmd` (`bin\originals.cmd --dry-run` previews first; `--only Angelica` does one folder). `bin\originals.cmd --check` only asks: IN SYNC or OUT OF SYNC, exit 1. Run it after every move of files.
 4. Choose the photo for a hero: `bin\inputs.cmd set Angelica --photo angelica_image_<id>_944x1104.png`, then `bin\inputs.cmd reset --hero Angelica`.
+
+Not every photo has a headshot or a frame, by design: a headshot needs a face big enough to enlarge to 944x1104 without mush (a crop of at least 30% of the output height) and not hidden under a phone's app bars; a frame is only made for a photo that is not already full length.
 
 ## What `originals` does
 

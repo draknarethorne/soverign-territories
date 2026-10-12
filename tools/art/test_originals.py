@@ -118,6 +118,21 @@ class OriginalsTests(unittest.TestCase):
             out = self.run_tool(faces=Fake())
         self.assertEqual(self.names("Angels", "Gavrielle", "frame_94x110"), ["gavrielle_shot_1_frame_94x110.png"], out)
 
+    def test_check_says_out_of_sync_until_every_gallery_has_its_copies(self):
+        g = self.gallery("Angels", "Angelica")
+        Image.new("RGB", (400, 600), (200, 100, 50)).save(g / "angelica_image_1.jpg")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = originals.main(["--check", "--root", str(self.lib), "--no-headshots"])
+        self.assertEqual(code, 1, out.getvalue())
+        self.assertIn("OUT OF SYNC: 1 scaled copies to make", out.getvalue())
+        self.assertEqual(self.names("Angels", "Angelica", "gallery_94x110"), [], "a check changes nothing")
+        self.run_tool("--no-headshots")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = originals.main(["--check", "--root", str(self.lib), "--no-headshots"])
+        self.assertEqual((code, "IN SYNC" in out.getvalue()), (0, True), out.getvalue())
+
     def test_the_headshot_crop_stays_inside_the_picture_and_keeps_the_shape(self):
         for box in ([0.0, 0.0, 0.2, 0.1], [0.8, 0.9, 0.2, 0.1], [0.1, 0.1, 0.8, 0.8]):
             x0, y0, x1, y1 = originals.headshot_box((400, 600), box, (94, 110))

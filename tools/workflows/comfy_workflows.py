@@ -1699,47 +1699,6 @@ def cmd_tidy(args):
         print("Preview only: add --apply to move them. Reload the ComfyUI workflow list afterwards.")
 
 
-def sync_inputs(cfg, args, workspaces=None):
-    """Copy every image that a deployed workflow loads into the input folder of its workspace, when it is not there. Nothing is retargeted: no workflow and no workspaces.json entry changes,
-    so a Prime you chose stays chosen. Covers what `inputs reset` copies only after it has retargeted (flow images such as the frame, the first-shot experiment photos)."""
-    copied = missing = placeholders = 0
-    for ws in workspaces if workspaces is not None else list(cfg["workspaces"]):
-        if not workspace_ready(cfg, ws, args.root)[0]:
-            continue
-        d = input_dir(cfg, ws, args.root) if args.root else input_dir(cfg, ws)
-        wanted = collections.defaultdict(int)
-        repo = repo_files(cfg)
-        for name, p in install_files(cfg, ws, args.root).items():
-            if name not in repo or is_hand_made(cfg, ws, p, args.root):
-                continue  # only generated workflows; curated, test and sample ones keep their own images
-            if args.hero and not name.lower().startswith(args.hero.lower() + "_"):
-                continue
-            if getattr(args, "match", None) and not name_matches(args.match, name):
-                continue
-            try:
-                ln = node_of(read_wf(p), "LoadImage")
-            except (ValueError, OSError):
-                continue
-            if ln and ln["widgets_values"] and isinstance(ln["widgets_values"][0], str):
-                wanted[ln["widgets_values"][0]] += 1
-        for img, n in sorted(wanted.items()):
-            if (d / img).exists():
-                continue
-            if img.endswith("_00000.png"):
-                placeholders += 1  # "not chosen yet" (see inputs reset): no such file exists
-                continue
-            src = find_image(cfg, img)
-            if not src:
-                missing += 1
-                print(f"  MISSING  {ws}: {img} ({n} workflow(s)) is not in {d}, any other input folder, the photo library or the output folders")
-            else:
-                copied += 1
-                print(f"  {'would copy' if args.dry_run else 'copied   '} {ws}: {img} -> {d}")
-                if not args.dry_run:
-                    shutil.copy2(src, d / img)
-    print(f"inputs sync: {copied} image(s) {'to copy' if args.dry_run else 'copied'}, {missing} missing, {placeholders} placeholder name(s) skipped (not chosen yet)" + (" (dry run)" if args.dry_run else ""))
-
-
 def reset_inputs(cfg, args, workspaces=None, include_repo=True):
     """Point every generated workflow at its default incoming image (see default_input), in the repo and in the workspaces, and copy any image a
     workspace is missing into its input folder. Curated, test and shot workflows are left alone; a changed file is backed up first."""
@@ -2243,9 +2202,6 @@ def cmd_inputs(args):
         return
     if args.reset:
         reset_inputs(cfg, args, args.workspace)
-        return
-    if args.sync:
-        sync_inputs(cfg, args, args.workspace)
         return
     if args.photos:
         reconcile_photos(cfg, args.dry_run, args.root, args.hero)
@@ -2823,7 +2779,7 @@ def normalise(args):
             setattr(args, args.action, True)
     if args.cmd not in WRITES:
         return False
-    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set or args.photos or args.sync)) and not (args.cmd == "denoise" and not args.reset)
+    writes = not (args.cmd == "inputs" and not (args.pull or args.reset or args.fix or args.set or args.photos)) and not (args.cmd == "denoise" and not args.reset)
     explicit = args.dry_run
     args.dry_run = args.dry_run or not args.apply
     return writes and not args.apply and not explicit
@@ -2890,9 +2846,8 @@ def main(argv=None):
     s.add_argument("-v", "--verbose", action="store_true")
     s = sub.add_parser("inputs")
     common(s, True)
-    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set", "photos", "sync"],
+    s.add_argument("action", nargs="?", choices=["status", "pull", "reset", "fix", "set", "photos"],
                    help="status: which images each hero uses; pull: take the defaults you chose in the workspaces into workspaces.json; reset: point every workflow back at its default image; fix: replace placeholder inputs; "
-                        "sync: copy the images the deployed workflows load into their workspace's input folder when missing (changes no workflow and no setting); "
                         "photos: re-point a chosen photo that the originals tool renamed or moved (workspaces.json, workflows, input folders); "
                         "set HERO --photo/--prime/--bare/--apose ...: write a hero's images into workspaces.json. No action lists the configured and inferred A-poses")
     s.add_argument("target", nargs="?", help="with set: the hero")
@@ -2917,7 +2872,7 @@ def main(argv=None):
     s.add_argument("--hero")
     s.add_argument("--stage", help="prompt folder: poses, head, scene, hair, motion, armor, clothing, showcase, bare")
     s.add_argument("--match", help="substring of the file name")
-    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None, photos=False, sync=False)
+    sub.choices["inputs"].set_defaults(pull=False, reset=False, fix=False, status=False, set=None, photos=False)
     s = sub.add_parser("setup")
     common(s, True, False)
     s.add_argument("--apply", action="store_true", help="really do it (default: preview only)")

@@ -213,8 +213,8 @@ class FirstShotTests(unittest.TestCase):
         self.assertEqual(cw.input_role({"inputs": {"Alice": {}}, "inputRoles": {"alpha/base": "photo", "default": "bare"}}, "Alice", "alpha", ["base", "bare-base"]), "photo")
 
 
-class SeedAndSyncTests(unittest.TestCase):
-    """A generated workflow draws a new seed each run; only finals fix one. `inputs sync` copies missing images and changes nothing else."""
+class SeedTests(unittest.TestCase):
+    """A generated workflow draws a new seed each run; only finals fix one."""
 
     @staticmethod
     def wf(control):
@@ -235,24 +235,6 @@ class SeedAndSyncTests(unittest.TestCase):
     def test_every_template_draws_a_new_seed(self):
         for p in sorted(cw.ROOT.glob("workflows/_templates/ST*.json")):
             self.assertFalse(cw.randomize_seed(cw.read_wf(p)), f"{p.name} has a fixed seed control")
-
-    def test_sync_copies_what_a_deployed_workflow_loads_and_skips_placeholders_and_hand_made_ones(self):
-        with World() as w:
-            w.master("Alice_Qwen_Scene_One.json")
-            lib = w.tmp / "lib"
-            lib.mkdir()
-            (lib / "alice_frame.png").write_bytes(b"png")
-            wf = {"nodes": [{"type": "LoadImage", "widgets_values": ["alice_frame.png", "image"]}]}
-            w.put("A-Home", "Alice_Qwen_Scene_One.json", wf)
-            w.put("A-Home", "zz_Curated/Alice_Qwen_Hand.json", {"nodes": [{"type": "LoadImage", "widgets_values": ["other.png", "image"]}]})
-            w.cfg["paths"] = {"inputsRoot": str(w.tmp / "inputs")}
-            (w.tmp / "inputs" / "A-Home").mkdir(parents=True)
-            with mock.patch.object(cw, "find_image", lambda cfg, name: lib / name if name == "alice_frame.png" else None):
-                out, code = w.run("inputs", "sync", "-w", "A-Home")
-            self.assertIsNone(code)
-            self.assertTrue((w.tmp / "inputs" / "A-Home" / "alice_frame.png").exists(), out)
-            self.assertNotIn("other.png", out)
-            self.assertEqual(cw.input_image(cw.read_wf(w.dir("A-Home") / "Alice_Qwen_Scene_One.json")), "alice_frame.png", "no workflow is retargeted")
 
 
 class RoutingTests(unittest.TestCase):

@@ -1,13 +1,14 @@
-# Plan: Prime prompts (pose first), frame gaps, seeds and inputs
+# Plan: Prime prompts (pose first), frames, library sync, seeds and inputs
 
-Status: active, Oct 12, 2026. A continuation of [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md): that plan still owns the P1/P2/P3 decision (F1, F7) and the clean-up; this one owns what we found while testing it. The two get reconciled when the tests are done (see "Reconciling the plans").
+Status: active, Oct 12, 2026. **This is the working plan for everything we do today**, a continuation of [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md). That plan keeps the P1/P2/P3 decision (F1, F7) and the clean-up it already records; every new item, decision and step from Oct 12 goes here. The two get reconciled when the tests are done (see "Reconciling the plans").
 
-Source: your messages of Oct 12, copied word for word at the end. Related: [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md), [../../workflows/README.md](../../workflows/README.md).
+Source: your messages of Oct 12, copied word for word at the end. Related: [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md), [../art/likeness.md](../art/likeness.md), [../../workflows/README.md](../../workflows/README.md).
 
 ## Why we are doing this
 
-You queued a large batch of Prime tests and found five things at once: some FireRed workflows ran with a fixed seed, some frame images were missing in ComfyUI, the frame folders do not hold a frame for every photo, the cropped Primes come back cropped (FireRed more than Qwen), and the templates are not consistent about calling out the pose.
-The goal is a Prime that is reliable on cropped photos, with every test input where ComfyUI can load it, and a record of why each change was made.
+You queued a large batch of Prime tests and found several things at once: some FireRed workflows ran with a fixed seed, some frame images were missing in ComfyUI, the frame folders did not hold a frame for every photo, the cropped Primes come back cropped (FireRed more than Qwen), and the templates are not consistent about calling out the pose.
+You also moved photos about after the likeness reviews, so the scaled copies, headshots and frames must be brought back in step with the galleries, and new photos need their likeness check.
+The goal is a Prime that is reliable on cropped photos, a library whose derived images always match its galleries, every test input where ComfyUI can load it, and a record of why each change was made.
 
 ## What we found (the deep dive)
 
@@ -15,7 +16,7 @@ The goal is a Prime that is reliable on cropped photos, with every test input wh
 | --- | --- | --- | --- |
 | 1 | The FireRed and MiniMax templates shipped with the seed control set to `fixed` (43 and 1). Every workflow made from them ran with the same seed | the inner KSampler and the named copy in `ST3_FireRed_Final`, `ST0_FireRed_Text`, `ST6_MiniMax_*`; 1,585 FireRed and 102 MiniMax repo workflows and about 1,500 workspace copies were fixed, Qwen was already random | fixed Oct 12 (S1) |
 | 2 | `make` and `deploy` only ever kept the seed of an existing workflow, so a template fix would never have reached the copies | `patch_wf` touches the prompt and the save prefix only | fixed (S1): both now set randomize when no final record exists |
-| 3 | Frame, experiment and restored images were not in the workspaces' input folders: only `inputs reset` copied images, and it refuses to run while you hold an unpulled Prime pick | 18 frame images, 0 to 1 of 16 input folders each | fixed (S2): `inputs sync` |
+| 3 | Frame, experiment and restored images were not in the workspaces' input folders: only `inputs reset` copied images, and it refuses to run while you hold an unpulled Prime pick | 18 frame images, 0 to 1 of 16 input folders each | fixed (S2): `bin\sync-inputs.cmd` |
 | 4 | `Female` (alpha/female), the first test subject, loaded a photo that no longer existed outside `_backup` and `_archive` | the Fantasy artist folder was reorganised on Oct 10; the photo is Sandalyn's review photo | fixed (S3): restored to `Various`, re-pointed |
 | 5 | **Frame generation skipped reel screenshots.** `make_frames` tested the face against the whole phone screen (1080x2340, with the app bars) before cropping to the picture, so a face that is 0.127 of the screen but 0.21 of the picture counted as full length | Gavrielle: 4 gallery screenshots, 2 frames; after the fix 3 (the fourth has her head under the phone UI) | fixed (F1); 44 frames made |
 | 6 | The "partial photo" threshold (`FRAME_FACE_MAX` 0.14, face brow to chin as a share of the picture) may be too high. A standing figure's face is about 0.09, so 0.11 to 0.14 means cropped at the thighs or knees, and no frame | 482 angel and sister photos: 378 above 0.14, 55 from 0.11 to 0.14, 37 from 0.09 to 0.11, 12 below. Chosen: Sammara 0.086 (full length), Draknira 0.124, Drakniya 0.133 | open: D1 |
@@ -25,6 +26,11 @@ The goal is a Prime that is reliable on cropped photos, with every test input wh
 | 10 | FireRed has no negative prompt. Everything the Prime says against shoes, heels, a cropped body or a wrong pose is invisible to it; only positive wording counts. The FireRed lock adds Face, Head and Framing in front, but the A-pose paragraph is still the ninth | `engine_prompt`, `firered-prime-face-lock.txt` | open: D2, D3 |
 | 11 | The male Prime template has no Critical block at all (`pose-male-human.txt`), so the structure differs between male and female heroes | template inventory below | open: D2 |
 | 12 | The experiment templates (P2, P3) carry Framing and Standing A-pose after the fidelity and identity lines, not in the Critical block, and say nothing explicit about the feet beyond the garment piece | `base-bare-human.txt`, `base-neutral-human.txt` | open: D2 |
+| 13 | **The derived images were out of step with the galleries.** Before today's run the library needed 6 renames, 6 scaled copies, 6 headshots and 44 frames, and had 1 orphan (a copy of a photo you moved away). Root cause as you suspected: `originals` was not run after the likeness reviews and the shuffling of files, and the frame code also had the bug in finding 5 | the preview of Oct 12 before `--apply` | fixed (L1); `originals --check` now answers IN SYNC or OUT OF SYNC |
+| 14 | Not every gallery photo has a headshot, by design: of 1,114 galleries 63 have a face too small to enlarge to 944x1104 without mush (a crop under 30% of the output height) and 10 have the head under the phone's app bars. Every other photo has all three copies (scaled, headshot, frame where partial) and there are no orphans | audit of Oct 12 after the run | by design; listed so it is not mistaken for a gap |
+| 15 | One gallery photo had no scaled copy: `Various/gallery/sandalyn_image_7500732784539999043.jpg` was the same picture as `various_image_7500732784539999043.jpg` (Female's photo). The new `duplicates` step found it and 14 more identical pairs under different ids | `bin\duplicates.cmd` (Drakness 2, Drakneta, Draknira, Draknisa 2, Dara Ives, Greta Hart, Mia Wolfe 4, Rachel Pizzilato, Uma Dunn) | fixed (L6): the extra copies are in `_archive\...\gallery_duplicates` |
+| 16 | The new photos are in `Various\gallery` (the pool `likeness sort` empties), not in `Prospects\gallery`, which does not exist. The review folders had been emptied into it: 32 photos | folder listing | handled (L2) |
+| 17 | The prompt sequence differs from template to template (position of the Critical block, of the background, of the pose). See the ordering table below | all 31 hero templates read | open: D6 |
 
 ## Decisions
 
@@ -35,6 +41,8 @@ The goal is a Prime that is reliable on cropped photos, with every test input wh
 | D3 | Once D2 is in, shorten the FireRed lock to the identity lines (Face, Head) and let the template carry Framing, so the two engines get the same pose wording? | Yes, after one test that shows FireRed keeps the full body | open |
 | D4 | Keep, retire or extend the frame flow? | Hold (your call Oct 12): compare at least one angel with and without a frame first. If the Prime with the pose first works on the full photo, retire the whole frame process (images, flows, workflows, `originals` frames, docs) | open until the test |
 | D5 | Should a hero whose chosen photo has no body at all be flagged? | Later, with F7 of the first plan: a face-only vs body-shot tag when the prospects are classified | deferred |
+| D6 | Any template may have a Critical details block. Agree one **canonical paragraph order** for every template that builds or edits a picture, then bring each template to it? Proposal below | Yes, stage by stage with a byte-for-byte check of what did not change, Prime first | open: you said you are fine with the in-depth analysis |
+| D7 | The likeness run of Oct 12 (L2): keep the 19 new prospect folders and the 2 merges, and review the suspects (Zara Lane, Tove Wilde, Delia Ames) before anything is cast? | Keep; nothing is cast from them until you look. `likeness merge` fixes a wrong split | open |
 
 ## Prime v2: the proposed structure (draft, nothing edited yet)
 
@@ -73,26 +81,74 @@ Hair: ...  Bust: ...  Eyes: ...  Skin: ...  Legs: ...
 
 Rule for the review: a stage that builds the body (Prime, P2, P3) states pose, framing and feet explicitly and first; a stage that edits an existing image keeps them from the incoming image.
 
+## Prompt sequence: what the templates do today and a canonical order (D6)
+
+The order of the paragraphs is read from the templates themselves (`{X}` is a data tag, `K` is the Critical block). Models weigh what comes first, and a late paragraph is the first to be dropped.
+
+| Template | Order today |
+| --- | --- |
+| Prime female | task > K > camera > Background > fidelity > **A-pose** > Figure > Skin > Wearing > Hair > makeup > Eyes > Lips > Expression |
+| Prime male | task > camera > Background > fidelity > **A-pose** > Figure > Skin > Wearing > Hair > makeup > Eyes > Expression (no K, no Lips) |
+| P2, P3 | task > K > camera > Background > fidelity > Face > From the reference > Head > Framing > **A-pose** > Figure or Body > Skin > Wearing > Hair > makeup > Eyes > Lips > Expression |
+| Bare, Bare male | task > Result > K > Body > keep line (no shared keep line) |
+| hair study | task > Background > fidelity > K > keep outfit > breeze > hair change > extras |
+| head study | task > Background > Framing > View > keep line > K > Expression > Eyes |
+| pose views | task > Background > keep line > K > **A-pose** > View > keep outfit > Eyes > Expression |
+| clothing, armor | task > Background > keep line > K > Strip > Contour > Wearing > Headwear > Arms > Jewelry > (Back) > Legs & feet > Overall > Eyes |
+| showcase (studio, photo) | task > keep line > K > Strip > Contour > Wearing > pieces > **Pose** > Holding > Effects > Eye effect > Makeup > Backdrop or Realm |
+| scenes (outfit, companion, glamour, combat, minimal) | task > keep line > K > Contour > Wearing > pieces > **Pose** > Holding > Effects > Eye effect > Makeup > Companion > Environment > Realm |
+| scene staged | task > K > Pose > Effects > Eye effect > Companion > Environment > Realm > breeze > Palette > framing |
+| motion bench | task > Background > Editorial > keep line > K > keep outfit > breeze > Body > Head > Gaze > Expression > Eyes > Pose > extras |
+| polish, final | task > keep line > keep pose, outfit, framing |
+
+What stands out: the Critical block is the 2nd, 3rd, 4th, 5th or 6th paragraph depending on the template; Background comes before the Critical block in six of them and last in two; the pose is a late paragraph in the Prime and in every showcase and scene, and appears in no Critical block; the male Prime has no Critical block at all.
+
+Proposed canonical order, in two flavours (nothing is edited until you agree):
+
+| Flavour | Order |
+| --- | --- |
+| Builds the body (Prime, P2, P3, male Prime) | task > **Critical details: Pose, Framing, Feet, then Hair, Bust, Eyes, Skin, Legs** > fidelity and identity > camera and Background > Figure > Skin > Wearing > Hair > makeup > Eyes > Lips > Expression |
+| Edits an existing image (studies, wardrobe, showcase, scenes, motion) | task > **Critical details** > keep line > camera and studio Background > the change itself (view, hair, strip and contour, Wearing and pieces) > Pose > Holding and Effects > eyes and makeup > the scene Environment and Realm last |
+
+Notes: a scene's Environment stays last because it is the content of the scene, but a studio Background is camera set-up and moves behind the Critical block and the keep line. Each template keeps its own optional lines (`?` lines). Once an order is agreed, each family is changed in its own step, regenerated, and the prompts that should not have changed are checked byte for byte (the Oct 11 stage-folder move did this for 5,373 prompts).
+
 ## Steps
 
 ### Done today (Oct 12)
 
 - [x] S1 Seeds: templates fixed (`ST3_FireRed_Final`, `ST0_FireRed_Text`, `ST6_MiniMax_Reel`, `ST6_MiniMax_Match`), `randomize_seed` in `make` and `deploy`, workspace template copies replaced from the masters (backed up), a test that fails on a fixed template. Commit `ff3e274c4`. See E10 of the first plan.
-- [x] S2 `inputs sync` (copies the images deployed workflows load into each workspace's input folder; changes nothing else); `refresh` and `refresh-firered` run it; all 18 frame images are in place. E11.
+- [x] S2 `bin\sync-inputs.cmd` (it already existed; I had written a duplicate `inputs sync` first and removed it, lesson in "How we work" below) copies the images the deployed workflows load into each workspace's input folder; it now counts the `_00000` placeholders apart from the NOT FOUND list; `refresh` and `refresh-firered` run it; all 18 frame images are in place. E11.
 - [x] S3 `Female` photo restored to `Various/gallery` and re-pointed; the chosen Female Prime (00020) kept. E12.
 - [x] F1 Frame generation judged on the picture inside a phone screenshot, not the whole screen (`originals.make_frames`), with a regression test; `originals --apply` made the missing frames and pruned the orphans. Every angel, sister and prospect original is now either framed or has a stated reason (full length, head under the phone UI, no face).
 - [x] F2 Review of the outstanding items of all four earlier plans (below).
+- [x] L1 Library sync: `originals --apply` brought the scaled copies, headshots and frames in step with every gallery (6 renames, scaled copies, headshots, 44 frames, orphans to `_archive`), and a new `originals --check` (also `bin\originals.cmd --check`) says IN SYNC or OUT OF SYNC and exits 1 when anything is left, with a test. Audit afterwards: 1,114 galleries, no orphans, the only gaps are the by-design headshot skips (finding 14) and one duplicate (finding 15).
+- [x] L2 Likeness on the new photos (the pool is `Various\gallery`): `likeness sort --singles` moved 30 of the 32 photos (19 new prospect folders, 1 into Vera North; the plan is saved in `_reports\sort_plan.json`).
+  `likeness singles --min 0.45` merged Zoe Dale into Zara Lane (the stricter 0.45 instead of the default 0.35 so only confident merges happen; 45 single-photo prospects are left for you), then `originals --apply` and `--check` (IN SYNC) and `likeness index`. 4 photos with no usable face stay in `Various`.
+- [x] P0 Analysis of the prompt order of all 31 hero templates (table above) and the canonical order proposal (D6).
+- [x] L5 **`bin\library.cmd`**, the one command for the photo routine (`tools/art/library_sync.py`): originals, duplicates, likeness junk (and `--recheck`), review, sort --singles, singles --min 0.45, then duplicates and originals again, `originals --check`, `sync-inputs`, `likeness index`.
+  It prints a before and after summary and writes a log in `_reports`. `bin\library-preview.cmd` previews every step, `bin\library-check.cmd` is read only (exit 1 when work is waiting).
+  Run end to end through the launchers on Oct 12 (first full run: 15 duplicate pairs archived, 10 photos to `_junk`, Sabine Jasper merged into Tove Wilde at 0.45, 6 review photos stay in review, the result IN SYNC); tests in `test_library_sync.py`; in `bin\help.cmd`, `bin\menu.cmd` (L, C), `docs/art/original-photos.md` and `likeness.md`.
+- [x] L6 **`bin\duplicates.cmd`** (`tools/art/duplicates.py`): identical pictures under different names or in different folders (by bytes, so a moved photo with a new name and the same id is caught too; the same id with different bytes is listed for you). One copy is kept (a chosen photo first, a gallery over review, Angels, Sisters, Prospects, Artists, Various), the rest go to `_archive\<folder>\gallery_duplicates`. First run: 15 pairs found and moved; tests in `test_duplicates.py`.
+- [x] W1 How we work: `.github/copilot-instructions.md` now says to run the `bin\*.cmd` launchers (not raw Python), to read `bin\help.cmd` before writing anything new, and to turn any multi-command routine into a launcher with a preview and a check. A duplicate `inputs sync` that I had written next to the existing `sync-inputs.cmd` was removed for exactly this reason.
 
 ### Open
 
 - [ ] T1 D1: threshold decision, then `originals --apply` and a count of the new frames. Owner: you (decision), me.
-- [ ] T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `inputs sync`, tests, validators.
+- [ ] T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
 - [ ] T3 Your test of one angel (suggest Angelica or Haniya, whose photos are partial) with and without the frame, old prompt against the new, on Qwen and FireRed: is the body full length, are the feet bare and on the floor, does the face hold (`bin\compare-primes.cmd --shots all HERO`). Owner: you.
 - [ ] T4 D3 and D4 from the result: shorten the FireRed lock, and keep or retire the frame process.
 - [ ] T5 The 7 angels whose chosen Prime render is in no input or output folder (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006): re-render or re-pick, then `inputs pull`. Owner: you.
 - [ ] T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
 - [ ] T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
 - [ ] T8 Reconcile this plan with the first-shot plan when T3 is done, then close both.
+- [ ] T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should not change. Owner: me after your approval.
+- [ ] T10 D7: look at the new prospect folders from L2 (suspects: Zara Lane, 3 photos alike Draknoxa at 0.60; Tove Wilde, 3 alike the artist Elise Frost at 0.57; Delia Ames, 2 alike Angelica at 0.45; the 45 single-photo prospects, the closest at 0.35 to 0.42), then `likeness merge` or `retire` as needed, and re-run `originals --check`. Owner: you.
+- [ ] L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me.
+- [ ] L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about 0.98) could list them. Owner: me when you want it.
+
+## The routine when photos move
+
+Drop new photos into `Various\gallery` and run `bin\library.cmd` (details in [../art/original-photos.md](../art/original-photos.md#the-routine)). `bin\library-check.cmd` before a batch of tests says whether the library is in step. Anything done by hand (moving a photo between folders, `likeness merge`, `retire`, `pairs --apply`) is followed by `bin\library.cmd --no-likeness` (names, duplicates, scaled copies, headshots, frames, check).
 
 ## Reconciling the plans
 
@@ -137,3 +193,21 @@ I also noticed in the past is that if we ensure we mention bare feet and that he
 Also that's why in some of the other workflows you see a "Critical" section that calls out the key items at the top in a way that reminds the AI model to generate the image properly.  Let's evaluate all the prompt templates and I think there is opportunity with the Prime ones to adopt some of that as well.
 Moving the pose up to the top because that's one things that's the biggest issue with the cropped versions coming in.  I am still testing the frames to see if that matters - but I suspect that we're just not making the full A Pose properly called out to FireRed and Qwen is more fogiving about that.
 Please do a deep dive review, write up a plan for all the work we are doing today so we don't lose something.  It's a continuation of yesterdays plan - so if you want to adapt that we can do that - but we've got a few new things we're seeing and eventually we do need to reconcile the plans from yesterday and the plans for today.
+
+### On the plan, the headshots, the Critical block and the new photos
+
+Make sure you decide on which plan .md we're working from with all the items for today and update that.  Don't forget anything we've done or what we need to do.  I feel like the same might be true for headshots as was with frames - not being in sync with the generated gallery.
+So - if you found root cause for frames - likely issues with headshots.  We need to ensure that all 3 scaled and padded outputs are in sync with their respective gallery as we move files in and out based on the reviews.  It's likely that's the cause - we didn't run the generation after we did the likeness reviews and shuffling of files.
+Lastly - when it comes to the templates, any of them can have Critical Details section where we put the most important pieces of the prompt and then follow with the remaining pieces.  So - I'm ok if we do a more in depth analysis of prompt sequence ordering for the purpose of the prompts and we get the right order.
+Finally, I have put a bunch more photos into the B:\Sovereign Territories\Prospects\gallery so we can run the likeness checks to see where those need to be put as they were all in review somewhere and might actually match now with an Angel, Sister or Prospect.  So - we can re-run the likeness checks, have the files moved and then re-run the entire generation of the 944x1104 images and get the entire structure in sync.
+Sorry for disturbing you, but lots of stuff happening right now.
+
+### On the repeatable library command and how we work together
+
+I need a repeatable bin .cmd that can run the entire process when I drop in new images to the Various directory and want to do a complete end-to-end likeness process and then re-generate all the scaled and padded images.
+It should also look for duplicates across the directories in case I do have multiple of the same image that happens through the process.  I am guessing that could happen based on moving an image between prospects and the name changed, but the guid is the same.
+Ultimately I plan on iterating on prospects - over and over as time goes on.  So want something that repeats and doesn't require as much intervention, re-running and processing so many commands.
+Maybe we need multiple complex .cmd files that just allow me to run a simple command without a lot of arguments to make things happen.  That way I don't need to remember the arguments.
+There might be some already in bin and ideally your instructions should have you running the .cmd files to always ensure they are working.  So that's yet another optimization in how we work together to ensure that both you and I can do the same thing together.
+Don't forget where you are - but take this all into account after you get through the process.
+

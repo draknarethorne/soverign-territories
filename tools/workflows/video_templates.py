@@ -77,13 +77,20 @@ def connect(wf, src, src_slot, dst, dst_input, kind):
 
 
 def defaults(wf, width, height):
-    """The outer node's defaults: 8 seconds, turbo on, and the canvas the linked size nodes produce (shown if the links are ever cut)."""
+    """The outer node's defaults: 8 seconds, turbo on, and the canvas the linked size nodes produce (shown if the links are ever cut).
+    The seed draws a new value on every run (control_after_generate = randomize); only a final fixes one."""
     o = outer(wf)
     named = o["widgets_values_named"]
     keys = list(named)
     for key, val in (("width", width), ("height", height), ("value_1", SECONDS), ("value", True)):
         named[key] = val
         o["widgets_values"][keys.index(key)] = val
+    for sg in wf["definitions"]["subgraphs"]:
+        for n in sg["nodes"]:
+            if n.get("type") == "RandomNoise":
+                n["widgets_values"][1] = "randomize"
+                if isinstance(n.get("widgets_values_named"), dict):
+                    n["widgets_values_named"]["control_after_generate"] = "randomize"
 
 
 def place(wf, nodes):

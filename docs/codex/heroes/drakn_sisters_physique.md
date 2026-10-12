@@ -198,7 +198,7 @@ Based on the authoritative `HERO_DRAKNARA_THORNE.json` schema, the Transcendent 
   * build: "Lithe yet taut athletic build; slender, long-limbed, functionally fit with subtle warrior muscle tone"
   * torso: "Flat, firm midriff with subtle abdominal tone; faint vertical linea alba and soft oblique contours; tight waist tapering cleanly into the hips"
   * bust: "Full, noticeably enlarged bust with a high, youthful, perky lift - firm and upright, small refined natural detail, lifted and pressed toward the centre line; the inner curves meeting at the centre line in a deep, crisp, clearly defined cleavage, held firm and high; realistic skin texture and natural, anatomically accurate detail"
-  * arms: "Slender, lightly defined arms; faint deltoid contours and toned forearms without bulk"
+  * arms: "Slender, lightly defined arms; faint deltoid contours and lean, toned forearms"
   * hips: "Shapely feminine hips, gently curved"
   * legs: "Very long, lean athletic legs; subtly toned thighs and slender calves with graceful definition"
   * distinguishingMarks: []
@@ -328,7 +328,7 @@ bulk, muscle) and for tone vocabulary (toned, defined, athletic, wiry, firm and 
 | Finding | Detail |
 | --- | --- |
 | No body-builder wording | None of the ten uses strong, muscular, sturdy, solid or powerful. Toned abs, arms and legs are wanted, so the tone vocabulary is kept; the line is a body-builder look, not tone |
-| One to fix later | Draknara's arms say "toned forearms without bulk". The negation names bulk, so it can push the model toward it. A positive wording such as "lean, toned forearms" says the same without naming it (not changed yet) |
+| Done Oct 12 | Draknara's arms said "toned forearms without bulk". The negation named bulk, so it could push the model toward it; they now say "lean, toned forearms" (the identity JSON and this file agree) |
 | Tone vocabulary | Draknara, Drakniss and Drakniya carry the most (subtle abs, toned thighs, deltoid contours) and Draknava and Draknoxa some. It keeps their abs, arms and legs from looking identical, and it fits their presets. Keep it soft ("subtle", "faint", "lightly") so it does not tip into a body-builder |
 | Every build makes sense for its race and class | See the last column; each preset follows the sister's race and role |
 | Little variety in height and legs | All ten have very long legs and a narrow waist. This is the family standard by design; if more variety is wanted, height and leg proportion are the levers, as with the angels |
