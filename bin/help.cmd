@@ -15,6 +15,8 @@ echo  PHOTO LIBRARY: THE ROUTINE (drop new photos in Various\gallery, then)
 echo    library.cmd                     everything: originals, duplicates, likeness ^(junk, review, sort, singles^), scaled copies, headshots, frames, check, inputs, index. Repeats safely
 echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
+echo    people-gallery.cmd              one web page with every person's headshot and photo (angels, sisters, prospects, artists' people): where everything landed
+echo    likeness.cmd crops              one web page with every cropped photo, the uncropped original beside it ^(likeness.cmd crop --undo --apply reverses the last batch^)
 echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in the library ^(any folder, any name^)
 echo    originals.cmd --check           are the scaled copies, headshots and frames in step with every gallery?
 echo.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke tests for todo_report.py: the tables list every top-tier card, the open work comes from the active plans, and the notes section survives a regeneration.
+"""Smoke tests for todo_report.py: the tables list every top-tier card, the open work comes from the active plans as one queue, and the notes section survives a regeneration.
 Run: python tools/art/test_todo_report.py"""
 import pathlib
 import sys
@@ -19,10 +19,24 @@ class TodoReportTests(unittest.TestCase):
         for hero in ("Seraphine", "Luzariel", "Draknara", "Pyraxis"):
             self.assertIn(f"| {hero} |", text)
 
-    def test_open_work_comes_from_the_active_plans(self):
+    def test_open_work_comes_from_the_active_plans_as_one_queue_with_the_user_first(self):
         text = tr.build()
-        self.assertIn("## Open work from the active plans", text)
+        self.assertIn("## Open work, by priority", text)
         self.assertIn("- [ ]", text)
+        self.assertLess(text.index("Your queue"), text.index("For the assistant"))
+        self.assertLess(text.index("## Open work, by priority"), text.index("## Where each card stands"))
+
+    def test_status_is_read_in_bold_and_plain_form(self):
+        self.assertEqual(tr.plan_status("# x\n\n**Status:** active (waiting)\n"), "active")
+        self.assertEqual(tr.plan_status("# x\n\nStatus: Active, Oct 10\n"), "active")
+        self.assertEqual(tr.plan_status("# x\n\n**Status:** done\n"), "done")
+        self.assertEqual(tr.plan_status("# x\n\nno status here\n"), "")
+
+    def test_tags_give_priority_and_owner(self):
+        m = tr.TAG.match("**P1 you** T3 test the thing")
+        self.assertEqual((m.group(1), m.group(2)), ("1", "you"))
+        self.assertIsNone(tr.TAG.match("T3 test the thing"))
+        self.assertEqual(tr.TAG.sub("", "**P3 ai** R2 later"), "R2 later")
 
     def test_the_notes_section_is_kept_when_regenerated(self):
         with tempfile.TemporaryDirectory() as d:

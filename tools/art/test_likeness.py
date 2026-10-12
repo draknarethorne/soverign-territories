@@ -45,7 +45,7 @@ class Fake:
         person, i = parts[0], parts[1]
         if person == "noface":
             return {"faces": 0}
-        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "f2": float(parts[3]) if len(parts) > 3 else (0.8 if len(parts) > 2 and int(parts[2]) > 1 else 0), "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 20 if person.startswith("tiny") else 200}
+        return {"faces": int(parts[2]) if len(parts) > 2 else 1, "s": 0.95, "f2": float(parts[3]) if len(parts) > 3 else (0.8 if len(parts) > 2 and int(parts[2]) > 1 else 0), "v": [float(x) for x in face(person, int(i))], "box": [0.2, 0.2, 0.4, 0.4], "px": 20 if person.startswith("tiny") else 200}
 
 
 def blend(person, base, w):
@@ -165,7 +165,7 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(len(self.names("Angels", "Angelica")), 5, "an angel's own gallery is never touched")
         self.assertTrue(any("junk:" in ln for ln in L.people.read(self.lib / "Prospects/Person 0")[1]))
 
-    def test_singles_merges_a_one_photo_prospect_into_the_prospect_she_looks_like_but_not_into_an_artist_or_sister(self):
+    def test_singles_merges_a_one_photo_prospect_into_the_prospect_she_looks_like_and_into_a_sister_she_is(self):
         self.add("Sisters", "Draknara", "dee", 4)
         self.add("Prospects", "Mia", "mia", 4)
         self.add("Prospects", "Solo Mia", "mia", 1)
@@ -177,7 +177,9 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("Solo Mia", out)
         self.run_tool("singles", apply=True)
         self.assertEqual(len(self.names("Prospects", "Mia")), 5)
-        self.assertEqual(len(self.names("Prospects", "Solo Dee")), 1, "she looks like a sister, who is never a target")
+        self.assertEqual(len(self.names("Sisters", "Draknara")), 5, "she is the same person as a sister, so she joins her (the z_ file remembers who she was)")
+        self.assertFalse((self.lib / "Prospects/Solo Dee").exists() and self.names("Prospects", "Solo Dee"))
+        self.assertTrue(any("Solo Dee" in ln for ln in L.people.read(self.lib / "Sisters/Draknara")[1]))
         self.assertEqual(len(self.names("Prospects", "Lone")), 1)
         self.assertTrue((self.lib / "_retired/Prospects/Solo Mia").exists())
 
@@ -343,6 +345,122 @@ class LikenessTests(unittest.TestCase):
         scan = self.run_tool("scan")
         self.assertIn("person folder", scan)
         self.assertIn("Artists/Pierre/", self.run_tool("alike", "--min", "-1"), "the grouped people are people now")
+
+    def test_crop_box_keeps_the_main_face_and_cuts_away_the_others(self):
+        main = (400, 100, 100, 120)
+        box = L.crop_box((1000, 1000), main, [(50, 100, 100, 120)])
+        self.assertIsNotNone(box)
+        self.assertTrue(box[0] > 150 and box[0] <= 400 - 35, "the cut runs between the faces and keeps her hair")
+        self.assertTrue(box[2] >= 500 and box[1] <= 100 and box[3] >= 100 + 120, "she is whole")
+        self.assertIsNone(L.crop_box((1000, 1000), main, [(430, 120, 100, 120)]), "a face on top of hers cannot be cut away")
+        self.assertEqual(L.crop_box((1000, 1000), main, [(900, 900, 5, 5)]), (0, 0, 1000, 1000), "a passer-by far smaller than she is is left alone")
+
+    def test_a_face_on_an_animal_is_not_a_person(self):
+        rows = [np.array([0, 0, 90, 90, 0.95]), np.array([200, 0, 120, 120, 0.7])]
+        self.assertEqual(len(L.human_rows(rows)), 1, "a certain face makes the doubtful bigger one an animal")
+        self.assertEqual(len(L.human_rows([np.array([0, 0, 90, 90, 0.8]), np.array([200, 0, 60, 60, 0.7])])), 2, "when no face is certain, all count")
+
+    def test_person_box_keeps_the_body_and_cuts_the_background_beside_her(self):
+        self.assertEqual(L.person_box((1000, 1000), (400, 200, 100, 100)), (90, 80, 810, 1000))
+        self.assertIsNone(L.person_box((1000, 1000), (200, 200, 600, 600)), "a close-up has no background to cut")
+        self.assertIsNone(L.person_box((1000, 1000), (400, 700, 100, 100)), "a head low in the picture: no telling where the body is")
+
+    def test_pullback_sends_small_prospect_folders_back_to_the_pool_and_keeps_chosen_ones(self):
+        for i, who in enumerate(("w1", "w2", "w3")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Prospects", "Solo A", "sa", 1)
+        self.add("Prospects", "Pair B", "pb", 2)
+        out = self.run_tool("pullback", "--small", "2", apply=True)
+        self.assertIn("2 prospect folder(s), 3 photo(s)", out)
+        self.assertEqual(len(list((self.lib / "Various/gallery").glob("*.jpg"))), 3)
+        self.assertEqual(len(self.names("Prospects", "Person 0")), 3, "bigger folders stay")
+        self.assertTrue((self.lib / "_retired/Prospects/Solo A").exists())
+
+    def test_group_singles_places_every_good_photo_of_an_artist(self):
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Artists/Pierre", "Elise", "pa", 4)
+        self.add("Artists", "Pierre", "pa", 1)      # her
+        self.add("Artists", "Pierre", "lone", 1)    # nobody there: a folder of her own
+        self.add("Artists", "Pierre", "noface", 1)  # stays
+        self.run_tool("group", "--singles", apply=True)
+        self.assertEqual(len(self.names("Artists/Pierre", "Elise")), 5)
+        self.assertEqual(len(self.names("Artists", "Pierre")), 1, "only the photo with no face is left")
+        subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name not in ("gallery", "Elise")]
+        self.assertEqual(len(subs), 1)
+
+    def test_a_photo_in_the_pool_that_came_from_an_artist_goes_back_to_him_even_when_renamed(self):
+        for i, who in enumerate(("w1", "w2", "w3")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Artists/Pierre", "Elise", "pa", 3)
+        photo = next((self.lib / "Artists/Pierre/Elise/gallery").glob("*.jpg"))
+        pid = L.photo_id(photo.name)
+        g = self.lib / "Prospects/Various/gallery"
+        g.mkdir(parents=True, exist_ok=True)
+        (g / f"various_{pid}.jpg").write_text("pa|777")
+        self.run_tool("sort", apply=True)
+        self.assertTrue((self.lib / "Artists/Pierre/gallery" / f"various_{pid}.jpg").exists() or any(pid in n for n in self.names("Artists", "Pierre")), "it went home to the artist, not to a prospect")
+        self.assertEqual(len(self.names("Prospects", "Various")), 0)
+
+    def test_rematch_joins_a_prospect_who_is_the_same_person_as_a_sister_to_her(self):
+        self.add("Sisters", "Draknara", "dee", 4)
+        self.add("Prospects", "Dee Two", "dee", 3)
+        for i, who in enumerate(("w1", "w2", "w3", "w4")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.run_tool("rematch", apply=True)
+        self.assertEqual(len(self.names("Sisters", "Draknara")), 7)
+        self.assertTrue((self.lib / "_retired/Prospects/Dee Two").exists(), "the folder and its z_ file are kept in _retired")
+        self.assertTrue(any("Dee Two" in ln for ln in L.people.read(self.lib / "Sisters/Draknara")[1]), "the z_ file remembers who she was")
+
+    def test_review_leaves_alone_a_photo_that_crop_held_for_a_clean_up(self):
+        for i, who in enumerate(("w1", "w2", "w3")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Prospects", "Mia", "mia", 4)
+        r = self.lib / "Prospects/Mia/review"
+        r.mkdir()
+        (r / "mia_image_901.jpg").write_text("mia|901")
+        (r / "mia_image_902.jpg").write_text("mia|902")
+        L.cleanup_hold(self.lib, [L.hashlib.sha1(b"mia|901").hexdigest()])
+        self.run_tool("review", apply=True)
+        self.assertEqual(sorted(p.name for p in r.iterdir()), ["mia_image_901.jpg"], "the held photo stays, the other goes back to her")
+
+    def test_artists_puts_photos_back_under_their_artist_and_then_their_person(self):
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)  # enough different people for the library's average face to be meaningful
+        self.add("Artists/Pierre", "Elise", "pa", 5)
+        g = self.lib / "Artists/Pierre/Elise/gallery"
+        (g / "elise_image_901.jpg").write_text("pb|901")      # someone else
+        (g / "elise_image_902.jpg").write_text("pa|902|2")    # her, with a second person
+        (g / "elise_image_903.jpg").write_text("noface|903")
+        self.add("Artists", "Maridos", "pa", 1)               # her face, but it came from Pierre
+        cross = next((self.lib / "Artists/Maridos/gallery").iterdir())
+        bk = self.tmp / "bk/Pierre/gallery"
+        bk.mkdir(parents=True)
+        (bk / "pierre_image_1.jpg").write_text(cross.read_text())
+        out = self.run_tool("artists", "--from", str(self.tmp / "bk"))
+        self.assertIn("preview only", out)
+        self.assertTrue(cross.exists(), "a preview moves nothing")
+        self.run_tool("artists", "--from", str(self.tmp / "bk"), apply=True)
+        self.assertEqual(len(self.names("Artists", "Maridos")), 0, "nothing stays under the wrong artist")
+        elise = self.names("Artists", "Pierre/Elise")
+        self.assertIn(cross.name, elise, "it went to her under the artist it came from")
+        self.assertEqual(len(elise), 6)
+        self.assertEqual(sorted(self.names("Artists", "Pierre")), ["elise_image_901.jpg", "elise_image_902.jpg", "elise_image_903.jpg"], "a stranger, a second person and a faceless photo stay in the artist's own gallery")
+        self.assertFalse(list((self.lib / "Artists/Pierre/gallery").glob("z_*")), "an artist's own gallery is not a person")
+
+    def test_group_joins_a_group_to_the_artists_person_it_looks_like_and_makes_new_people_only_from_agreeing_photos(self):
+        for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
+            self.add("Prospects", f"Person {i}", who, 3)
+        self.add("Artists/Pierre", "Elise", "pa", 5)
+        self.add("Artists", "Pierre", "pa", 2)   # her again, loose in the artist's gallery
+        self.add("Artists", "Pierre", "pb", 3)   # someone new
+        self.add("Artists", "Pierre", "pc", 2)   # a pair: too few for a new person
+        out = self.run_tool("group", apply=True)
+        self.assertIn("Elise: +2 photos", out)
+        self.assertEqual(len(self.names("Artists/Pierre", "Elise")), 7)
+        subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name not in ("gallery", "Elise")]
+        self.assertEqual([len([q for q in (s / "gallery").iterdir() if not q.name.startswith("z_")]) for s in subs], [3])
+        self.assertEqual(len(self.names("Artists", "Pierre")), 2, "the pair stays in the artist's gallery")
 
     def test_clean_sets_borderline_photos_aside_and_sends_strangers_to_the_pool(self):
         self.add("Models", "Drakness", "dk", 6)

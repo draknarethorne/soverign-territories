@@ -387,7 +387,8 @@ def make_frames(sources, folder, size, args, tally, faces):
                 made += bool(args.force or not is_fresh(path, dest, size))
             continue
         if not args.force and is_fresh(path, dest, size):
-            wanted.add(name.lower())
+            if frame_photo(path, None, size, box):  # a fresh frame is only kept while the photo is still a partial one (a crop can make it full length)
+                wanted.add(name.lower())
             continue
         out_dir.mkdir(exist_ok=True)
         try:

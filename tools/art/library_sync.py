@@ -8,13 +8,16 @@
 The steps, in order (each is the normal command; run one alone if you want to look closer):
   1  originals            name every original after its folder, make the scaled copy, headshot and frame
   2  duplicates           the same picture kept twice (any folder, any name) is set aside in _archive, a chosen photo and the higher folder first
-  3  likeness junk        photos that cannot feed a Prime (no usable face, a second person) go to _junk; usable ones in _junk come back to Various
+  3  likeness crop        every photo is cut down to the person: the app's bars, other people, animals and the background beside her go (all the body in the picture stays). The uncropped original is kept in _archive\\...\\gallery_uncropped
+     likeness junk       photos that cannot feed a Prime (no usable face, a second person) go to _junk; usable ones in _junk come back to Various
   4  likeness review      photos set aside in review folders go back to their person when they score 0.20 or more against her
-  5  likeness sort        Various is emptied: a confident match moves to that person, a new person gets a Prospects folder (single photos too)
-  6  likeness singles     a one-photo prospect that matches a prospect confidently (default 0.45) is merged into her
+  5  likeness sort        Various is emptied: a photo of an artist goes back to that artist, a confident match moves to that person (an angel or a sister too), a new person gets a Prospects folder (single photos too)
+     likeness group       the artists' own galleries are emptied the same way: into the artist's people, or a folder of their own (artists are never mixed)
+  6  likeness singles     a one-photo prospect that matches a prospect confidently (default 0.45) is merged into her; likeness rematch merges prospects that are one person, and prospects that are the same person as an angel or a sister join her
   7  duplicates, originals  again, because the moves create new names; then `originals --check` must say IN SYNC
   8  sync-inputs          the images the workflows load are copied into each workspace's input folder
-  9  likeness index       people_index.csv and .md are rewritten
+  9  likeness crosscheck, crops, people gallery, index  look-alikes across artists and between prospects and artists are written to _reports\\crosscheck.md (nothing moves); _reports\\crop_review.html shows every crop before and after; _reports\\people_gallery.html shows every person; people_index.csv and .md are rewritten
+  --retry-junk puts everything in _junk back first (prospects to Various, an artist's photos to that artist), so the crop and the rules look at it again; what is still junk returns to _junk.
 Nothing is deleted: moved files keep their place in _archive, _junk, _retired or a person's review folder, and `likeness undo` reverses the last batch of sorted moves.
 A log of the run is saved in <work>\\_reports\\library_sync_<time>.log.
 """
@@ -41,18 +44,26 @@ def plan(args):
     steps = [("1 originals: names, scaled copies, headshots, frames", [ART + "originals.py", *(["--dry-run"] if args.dry_run else ["--apply"])], True, False),
              ("2 duplicates", [ART + "duplicates.py", *go], False, args.dry_run)]
     if not args.no_likeness:
-        steps += [("3 likeness junk --recheck", [ART + "likeness.py", "junk", "--recheck", *go], False, False),
+        if args.retry_junk:
+            steps.append(("3 likeness junk --reset (everything in _junk back to be looked at again)", [ART + "likeness.py", "junk", "--reset", *go], False, False))
+        steps += [("3 likeness crop (bars, other people, animals, background)", [ART + "likeness.py", "crop", *go], False, False),
+                  ("3 likeness junk --recheck", [ART + "likeness.py", "junk", "--recheck", *go], False, False),
                   ("3 likeness junk", [ART + "likeness.py", "junk", *go], False, False),
                   ("4 likeness review", [ART + "likeness.py", "review", *go], False, False),
                   ("5 likeness sort --singles", [ART + "likeness.py", "sort", "--singles", *go], True, False),
-                  (f"6 likeness singles --min {args.min}", [ART + "likeness.py", "singles", "--min", str(args.min), *go], False, False)]
+                  ("5 likeness group --singles (the artists' own galleries)", [ART + "likeness.py", "group", "--singles", "--min-photos", "2", *go], False, False),
+                  (f"6 likeness singles --min {args.min}", [ART + "likeness.py", "singles", "--min", str(args.min), *go], False, False),
+                  ("6 likeness rematch", [ART + "likeness.py", "rematch", *go], False, False)]
     if not args.dry_run:
         steps += [("7 duplicates again", [ART + "duplicates.py", "--apply"], False, False),
                   ("7 originals again", [ART + "originals.py", "--apply"], True, False),
                   ("7 originals --check", [ART + "originals.py", "--check"], False, False),
                   ("8 sync-inputs", ["tools/workflows/sync_inputs.py", "--apply"], False, False)]
         if not args.no_likeness:
-            steps.append(("9 likeness index", [ART + "likeness.py", "index"], False, False))
+            steps += [("9 likeness crosscheck (look-alikes across the lines kept apart)", [ART + "likeness.py", "crosscheck"], False, False),
+                      ("9 likeness crops (a page of every crop, before and after)", [ART + "likeness.py", "crops"], False, False),
+                      ("9 people gallery (a page of every person)", [ART + "people_gallery.py", "--artists"], False, False),
+                      ("9 likeness index", [ART + "likeness.py", "index"], False, False)]
     return steps
 
 
@@ -107,6 +118,7 @@ def main(argv=None):
     ap.add_argument("--dry-run", action="store_true", help="preview every step and move nothing")
     ap.add_argument("--check", action="store_true", help="read only: is the library in step and is anything waiting? exit 1 when it is not")
     ap.add_argument("--no-likeness", action="store_true", help="only the file housekeeping (names, copies, duplicates, check); skip the likeness sorting")
+    ap.add_argument("--retry-junk", action="store_true", help="first send everything in _junk back (prospects to Various, an artist's photos to that artist) so the cropping and the rules look at it again")
     ap.add_argument("--min", type=float, default=0.45, help="score at which a one-photo prospect is merged into an existing prospect (default 0.45; 0.35 is the looser tool default)")
     args = ap.parse_args(argv)
     cfg = cw.load_cfg()

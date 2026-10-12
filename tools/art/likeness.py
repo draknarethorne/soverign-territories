@@ -25,6 +25,7 @@ Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, ma
   likeness sort                       Various: photos that match an existing person move there, clusters of one new person
                                       go to a new Prospects/<invented name> folder; the rest stay
   likeness merge Mia "Eva Emily"      move every photo of one folder into another (one person under two names)
+  likeness rematch                    prospect folders that are one person under two names are merged (0.48); look-alikes of an angel or sister are listed
   likeness retire azaline             move a folder's photos back to Various so she can be cast again
   likeness names                      who is in each folder (the z_ files); writes the missing ones with --apply
   likeness undo                       put the last batch of moves back
@@ -46,6 +47,7 @@ import random
 import re
 import shutil
 import sys
+import types
 
 import numpy as np
 
@@ -62,8 +64,14 @@ MODEL_URLS = {
     "face_detection_yunet_2023mar.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
     "face_recognition_sface_2021dec.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
 }
-SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various"], "pool": ["Various", "Prospects/Various"], "assign": 0.45, "margin": 0.10, "cluster": 0.25,
-            "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60, "multiFace": 0.3}
+SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various"], "pool": ["Various", "Prospects/Various"], "assign": 0.40, "margin": 0.10, "cluster": 0.25,
+            "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60, "multiFace": 0.3,
+            # singles: a one-photo prospect joins a prospect she scores this much against (margin 0.05). rematch: two prospect folders whose centroids score this much are one person.
+            # rematchCast: a prospect that scores this much against an angel or a sister is only listed (the cast is yours to change). different: pairs of folders never merged or listed, [["Prospects/Brielle Carter", "Sisters/Draknara"]].
+            # Measured on this library (calibrate, leave-one-out): a match at 0.40 with a margin of 0.10 is right 98.0% of the time and finds 75% of the photos, at 0.45 98.6% and 71%, at 0.35 97.2% and 77%.
+            "singles": 0.35, "rematch": 0.48, "rematchCast": 0.50, "different": [],
+            # castMerge: a prospect, a new group or a single photo that scores this much against an angel or a sister IS her (the same person scores about 0.55): it joins her folder, and the z_ file remembers who it was.
+            "castMerge": 0.55}
 FIRST = ["Alina", "Bea", "Calla", "Dara", "Elise", "Faye", "Gia", "Hana", "Ivy", "Jade", "Kira", "Lena", "Maren", "Nia", "Odette", "Paige", "Quinn", "Rhea",
          "Sabine", "Tessa", "Una", "Vera", "Wren", "Xena", "Yara", "Zoe", "Anya", "Brynn", "Cleo", "Delia", "Esme", "Freya", "Greta", "Hollis", "Iris", "Jules",
          "Keira", "Lia", "Mara", "Neve", "Opal", "Petra", "Rina", "Sia", "Tove", "Uma", "Vienna", "Willa", "Yvette", "Zara"]
@@ -112,12 +120,45 @@ class Embedder:
                 break
         if faces is None or len(faces) == 0:
             return {"faces": 0, "t": 0.5}
-        face = max(faces, key=lambda f: f[2] * f[3])
-        areas = sorted((float(f[2] * f[3]) for f in faces), reverse=True)
+        best = max(float(f[-1]) for f in faces)
+        humans = human_rows(faces)
+        face = max(humans, key=lambda f: f[2] * f[3])
+        areas = sorted((float(f[2] * f[3]) for f in humans), reverse=True)
         vec = self.rec.feature(self.rec.alignCrop(small, face))[0]
         vec = vec / np.linalg.norm(vec)
-        return {"faces": int(len(faces)), "f2": round(areas[1] / areas[0], 2) if len(areas) > 1 else 0, "v": [round(float(x), 5) for x in vec], "box": [round(float(face[0]) / sw, 4), round(float(face[1]) / sh, 4), round(float(face[2]) / sw, 4), round(float(face[3]) / sh, 4)],
-                "px": int(min(face[2], face[3]) / scale)}
+        return {"faces": int(len(humans)), "an": int(len(faces) - len(humans)), "s": round(best, 2), "f2": round(areas[1] / areas[0], 2) if len(areas) > 1 else 0, "v": [round(float(x), 5) for x in vec],
+                "box": [round(float(face[0]) / sw, 4), round(float(face[1]) / sh, 4), round(float(face[2]) / sw, 4), round(float(face[3]) / sh, 4)], "px": int(min(face[2], face[3]) / scale)}
+
+    def faces(self, im):
+        """([(x, y, w, h)] of the human faces in a PIL image, the largest first; [(x, y, w, h)] of what the detector took for a face but is not one: animals), in the picture's own pixels."""
+        import cv2
+        if self.det is None:
+            self.load()
+        img = np.asarray(im.convert("RGB"))[:, :, ::-1].copy()
+        h, w = img.shape[:2]
+        scale = 1600 / max(h, w) if max(h, w) > 1600 else 1.0
+        small = cv2.resize(img, (int(w * scale), int(h * scale))) if scale != 1.0 else img
+        self.det.setInputSize((small.shape[1], small.shape[0]))
+        found = None
+        for thr in (0.7, 0.5):
+            self.det.setScoreThreshold(thr)
+            _, found = self.det.detect(small)
+            if found is not None and len(found):
+                break
+        rows = list(found) if found is not None else []
+        humans = human_rows(rows) if rows else []
+        box = lambda rs: sorted((tuple(float(v) / scale for v in r[:4]) for r in rs), key=lambda b: b[2] * b[3], reverse=True)  # noqa: E731
+        return box(humans), box([r for r in rows if not any(r is hr for hr in humans)])
+
+
+# The face detector also finds faces on animals (a bear, a wolf, a horse): those score lower (about 0.55 to 0.82) than a woman's face (0.9 and up).
+# When a face is certain, a face scoring under HUMAN_MIN is not counted as a person; when none is certain, every face is.
+HUMAN_BEST, HUMAN_MIN = 0.9, 0.85
+
+
+def human_rows(rows):
+    best = max(float(r[-1]) for r in rows)
+    return [r for r in rows if float(r[-1]) >= HUMAN_MIN] if best >= HUMAN_BEST else list(rows)
 
 
 class Cache:
@@ -127,8 +168,8 @@ class Cache:
         self.path = pathlib.Path(path)
         data = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
         self.stat, self.emb = data.get("stat", {}), data.get("emb", {})
-        # a 'no face' read made before the second, less strict pass, and a multi-face read made before the size of the second face was kept, are read again
-        self.emb = {k: v for k, v in self.emb.items() if not (v.get("faces") == 0 and "t" not in v) and not (v.get("faces", 0) > 1 and "f2" not in v)}
+        # a 'no face' read made before the second, less strict pass, a multi-face read made before the size of the second face was kept, and a read made before animals were told from people ("s") are read again
+        self.emb = {k: v for k, v in self.emb.items() if not (v.get("faces") == 0 and "t" not in v) and not (v.get("faces", 0) > 1 and "f2" not in v) and not (v.get("v") and "s" not in v)}
 
     def sha(self, p):
         st = p.stat()
@@ -151,6 +192,7 @@ class Photo:
         self.key = group if group == folder else f"{group}/{folder}"  # the Various pool is a root with a gallery of its own
         self.faces = (data or {}).get("faces", -1)
         self.f2 = (data or {}).get("f2", 0)  # area of the second largest face against the largest: a small one is a passer-by, a big one is a second person
+        self.animals = (data or {}).get("an", 0)  # faces the detector found on animals
         self.raw = np.array(data["v"], float) if data and data.get("v") else None
         self.box = (data or {}).get("box")
         self.px = (data or {}).get("px", 0)
@@ -313,8 +355,8 @@ def invent_name(seed, taken):
 # ---------- plans ----------
 
 class Move:
-    def __init__(self, photo, to, reason, score=None, bucket="gallery"):
-        self.photo, self.to, self.reason, self.score, self.bucket = photo, to, reason, score, bucket
+    def __init__(self, photo, to, reason, score=None, bucket="gallery", force=False):
+        self.photo, self.to, self.reason, self.score, self.bucket, self.force = photo, to, reason, score, bucket, force  # force: a photo going home to its artist, which `apart` would otherwise stop
 
     def as_dict(self):
         return {"file": str(self.photo.path), "to": self.to, "bucket": self.bucket, "reason": self.reason, "score": None if self.score is None else round(self.score, 3)}
@@ -343,10 +385,13 @@ def plan_sort(space, st, cfg, taken, singles=False):
         for g in cluster(vecs, st["cluster"]):
             if len(g) >= st["minCluster"] or singles:
                 members = [left[i] for i in g]
+                near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
+                if near and near[0][0] >= st["castMerge"] and (near[0][1].startswith("Angels/") or is_sister(near[0][1])):
+                    moves += [Move(m, near[0][1], f"is {near[0][1]} ({near[0][0]:.2f}; a group of {len(members)})", near[0][0]) for m in members]
+                    continue
                 name = invent_name("|".join(sorted(m.sha for m in members)), taken | {m.to.split("/", 1)[-1] for m in moves})
                 new = f"Prospects/{name}"
                 taken = taken | {name}
-                near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
                 note = f"; alike {near[0][1]} ({near[0][0]:.2f})" if near and near[0][0] >= st["alike"] else ""
                 what = f"one new person ({len(members)} photos{note})" if len(members) >= st["minCluster"] else f"a face that matches nobody{note}"
                 for m in members:
@@ -361,8 +406,8 @@ def record_history(done, work):
     for m, src in done:
         groups.setdefault((m.to, m.bucket, str(src)), []).append(m)
     for (to, bucket, src), ms in groups.items():
-        if to.split("/")[-1].lower() == "various" or to.startswith("_junk"):
-            continue
+        if to.split("/")[-1].lower() == "various" or to.startswith("_junk") or (to.startswith("Artists/") and to.count("/") == 1):
+            continue  # the pool, the junk and an artist's own gallery are not people: no z_ file
         dst = pathlib.Path(work) / to
         src = pathlib.Path(src)
         whole = not any(originals.images(src / sub) for sub in ("gallery", "review"))  # only a folder that moved out entirely passes her name on; a few photos split off a sister are someone else
@@ -381,7 +426,7 @@ def execute(moves, work, apply, cache, log=True):
     made, done = 0, []
     for m in moves:
         src = m.photo.path
-        if apart(m.photo.key, m.to):
+        if apart(m.photo.key, m.to) and not m.force:
             print(f"  kept apart: {src.name} would go from {m.photo.key} to {m.to} (prospects and artists are never mixed); it stays")
             continue
         dest_dir = pathlib.Path(work) / m.to / m.bucket
@@ -641,8 +686,17 @@ def cmd_like(args):
 
 def cmd_sort(args):
     cfg, st, work, cache, space = build(args)
+    if args.assign:
+        st["assign"] = args.assign
     taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
     moves = plan_sort(space, st, cfg, taken, singles=args.singles)
+    origins = note_origins(work)
+    home = [p for p in space.photos if matches(p.key, st["pool"]) and photo_id(p.name) in origins]
+    if home:
+        gone = {id(p) for p in home}
+        moves = [m for m in moves if id(m.photo) not in gone]
+        moves += [Move(p, f"Artists/{origins[photo_id(p.name)]}", f"came from the artist {origins[photo_id(p.name)]}", force=True) for p in home]
+        print(f"{len(home)} photo(s) in the pool came from an artist and go back to that artist's gallery")
     pool = [p for p in space.photos if matches(p.key, st["pool"])]
     print(f"{len(pool)} photo(s) in the pool; {len(moves)} would move (assign >= {st['assign']} with a margin of {st['margin']}, or a new person of {st['minCluster']}+ photos at {st['cluster']}):")
     print_plan(moves, space, work)
@@ -669,6 +723,41 @@ def cmd_sort(args):
 def whole_folder(space, cfg, name):
     key = folder_key(space, name)
     return key, [p for p in space.photos if p.key == key]
+
+
+def cmd_pullback(args):
+    """Send prospect folders back to Various so the next `sort` places their photos again: the named folders, every folder with at most --small photos, or all of them (--all).
+    A folder that holds a photo chosen in workspaces.json is never pulled back. Prospects only; the emptied folders go to _retired, each with its z_ file, and `likeness undo` reverses the move."""
+    cfg, st, work, cache, space = build(args)
+    chosen = chosen_keys(cfg)
+    wanted = {n.lower() for n in (args.names or [])}
+    keys = []
+    for k in space.keys:
+        if not k.startswith("Prospects/"):
+            continue
+        n = len(originals.images(work / k / "gallery"))
+        if args.all or k.split("/")[1].lower() in wanted or (args.small is not None and n <= args.small):
+            keys.append(k)
+    unknown = wanted - {k.split("/")[1].lower() for k in keys}
+    if unknown:
+        print("not a prospect folder: " + ", ".join(sorted(unknown)))
+    held = [k for k in keys if any(cw.photo_key(p.name) in chosen for p in space.by_key[k])]
+    keys = [k for k in keys if k not in held]
+    for k in held:
+        print(f"  kept: {k} holds a chosen photo")
+    moves = [Move(p, pool_home(st), f"pulled back from {k.split('/', 1)[1]} to be sorted again") for k in keys for p in space.by_key[k]]
+    print(f"{len(keys)} prospect folder(s), {len(moves)} photo(s) go back to {pool_home(st)}: " + ", ".join(k.split("/", 1)[1] for k in keys[:20]) + (" ..." if len(keys) > 20 else ""))
+    if not moves:
+        return
+    if not args.apply:
+        print("preview only; add --apply to move them, then run `likeness sort --singles` (or bin\\library.cmd)")
+        return
+    n = execute(moves, work, True, cache)
+    gone = retire_empty(work, keys)
+    if gone:
+        print("emptied folders moved to _retired: " + ", ".join(gone))
+    print(f"{n} photo(s) moved")
+    after_moves(args, n > 0)
 
 
 def cmd_merge(args, retire=False):
@@ -922,30 +1011,91 @@ def cmd_clean(args):
         print("preview only; add --apply to move them")
 
 
+PHOTO_ID = re.compile(r"(image_\d+|shot_\d{14}|pic_[0-9a-f]+)", re.I)
+
+
+def photo_id(name):
+    m = PHOTO_ID.search(name)
+    return m[1].lower() if m else None
+
+
+def note_origins(work, extra=None):
+    """{photo id: artist} kept in <work>/_origins.json: which artist every photo of an artist came from. The id survives a rename, a move into a person's folder and a crop, so a photo that
+    turns up again in Various, or in _junk, can go back to its artist. The first artist recorded for an id wins. extra: more {id: artist} (a backup)."""
+    path = pathlib.Path(work) / "_origins.json"
+    known = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    seen = dict(extra or {})
+    root = pathlib.Path(work) / "Artists"
+    for g in sorted(root.glob("*/gallery")) + sorted(root.glob("*/*/gallery")):
+        artist = g.relative_to(root).parts[0]
+        for f in originals.images(g):
+            if photo_id(f.name):
+                seen.setdefault(photo_id(f.name), artist)
+    new = {k: v for k, v in seen.items() if k not in known}
+    if new:
+        known.update(new)
+        path.write_text(json.dumps(dict(sorted(known.items())), indent=0), encoding="utf-8")
+    return known
+
+
 def cmd_group(args):
     cfg, st, work, cache, space = build(args, with_mixed=True)
+    note_origins(work)
     taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+    minc = args.min_photos or st["minCluster"]
     names = [n.lower() for n in (args.names or [])]
     artists = sorted({p.key for p in space.photos if p.key.startswith("Artists/") and p.key.count("/") == 1})
     moves, sheet = [], []
     for ak in artists:
         if names and ak.split("/")[1].lower() not in names:
             continue
-        ps = [p for p in space.photos if p.key == ak and p.usable(st["minFace"])]
-        if len(ps) < st["minCluster"]:
+        ps = [p for p in space.photos if p.key == ak and p.usable(st["minFace"]) and not p.animals and not (p.faces > 1 and p.f2 >= st["multiFace"])]
+        if len(ps) < (1 if args.singles else 2):
             continue
-        groups = [g for g in cluster(np.array([p.vec for p in ps]), args.cluster or st["cluster"]) if len(g) >= st["minCluster"]]
+        groups = [g for g in cluster(np.array([p.vec for p in ps]), args.cluster or st["cluster"]) if len(g) >= 2]
         grouped = sum(len(g) for g in groups)
-        print(f"{ak}: {len(ps)} usable photos -> {len(groups)} group(s) of {st['minCluster']}+ ({grouped} photos); {len(ps) - grouped} stay where they are")
+        print(f"{ak}: {len(ps)} usable photos -> {len(groups)} group(s) of 2+ ({grouped} photos); a new person needs {minc}+ photos that agree ({args.cohesion})")
+        left = 0
+        handled = set()
         for g in sorted(groups, key=len, reverse=True):
             members = [ps[i] for i in g]
+            near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
+            same = next(((s, k) for s, k in near if k.startswith(ak + "/")), None)
+            if same and same[0] >= args.join:  # the same woman as someone already in this artist's folder
+                print(f"    {same[1]}: +{len(members)} photos ({same[0]:.2f})")
+                moves += [Move(m, same[1], f"looks like {same[1]} ({same[0]:.2f}; a group of {len(members)} in {ak})", same[0]) for m in members]
+                handled.update(id(m) for m in members)
+                continue
+            sims = np.array([m.vec for m in members]) @ np.array([m.vec for m in members]).T
+            coh = float((sims.sum() - len(members)) / (len(members) * (len(members) - 1)))
+            if len(members) < minc or coh < args.cohesion:
+                print(f"    (left in the gallery: {len(members)} photos, agree {coh:.2f}{'; alike ' + near[0][1] + ' (%.2f)' % near[0][0] if near and near[0][0] >= st['alike'] else ''})")
+                left += len(members)
+                continue
             name = invent_name("|".join(sorted(m.sha for m in members)), taken)
             taken = taken | {name}
-            near = space.ranking(nz(np.mean([m.vec for m in members], axis=0)))
             note = f"; alike {near[0][1]} ({near[0][0]:.2f})" if near and near[0][0] >= st["alike"] else ""
-            print(f"    {ak}/{name}: {len(members)} photos{note}")
+            print(f"    {ak}/{name}: {len(members)} photos, agree {coh:.2f}{note}")
             moves += [Move(m, f"{ak}/{name}", f"one person in {ak} ({len(members)} photos{note})") for m in members]
+            handled.update(id(m) for m in members)
             sheet.append((name, members[:10]))
+        if left:
+            print(f"    {left} photo(s) in groups too small or too loose {'are placed one by one' if args.singles else 'stay in the gallery'}")
+        if args.singles:
+            joined = new_single = 0
+            for p in ps:
+                if id(p) in handled or junk_reason(p, st) or cw.photo_key(p.name) in chosen_keys(cfg):
+                    continue
+                rank = [(s, k) for s, k in space.ranking(p.vec) if k.startswith(ak + "/")]
+                if rank and rank[0][0] >= args.single_join and (len(rank) < 2 or rank[0][0] - rank[1][0] >= 0.05):
+                    moves.append(Move(p, rank[0][1], f"a single photo that looks like {rank[0][1].split('/')[-1]} ({rank[0][0]:.2f}; from the gallery of {ak})", rank[0][0]))
+                    joined += 1
+                    continue
+                name = invent_name(p.sha, taken)
+                taken = taken | {name}
+                moves.append(Move(p, f"{ak}/{name}", f"a single photo of one person in {ak}; nobody there looks like her"))
+                new_single += 1
+            print(f"    singles: {joined} joined a person of this artist, {new_single} got a folder of their own")
     if args.sheet and sheet:
         make_sheet(sheet, args.sheet)
     if args.apply and moves:
@@ -954,6 +1104,346 @@ def cmd_group(args):
         after_moves(args, n > 0)
     elif moves:
         print("preview only; add --apply to group them")
+
+
+def plan_artists(space, st, origin, assign, keep, margin, only=None):
+    """Moves that put every artist photo under the artist it came from (origin: {sha: artist}) and then under the person of that artist it looks like.
+    A person is the core of the photos that came from her artist; a photo with a second face, no usable face or no clear match stays in the artist's own gallery.
+    A photo already in a person's folder stays there when it still looks like her (keep) and nobody else does."""
+    ph = [p for p in space.photos if p.key.startswith("Artists/")]
+    home = {p.sha: origin.get(p.sha) or origin.get(photo_id(p.name)) or p.key.split("/")[1] for p in ph}
+    solo = lambda p: p.usable(st["minFace"]) and not p.animals and not (p.faces > 1 and p.f2 >= st["multiFace"])  # noqa: E731
+    people_of = collections.defaultdict(dict)  # artist -> {person folder name: (core photos, centroid)}
+    by_folder = collections.defaultdict(list)
+    for p in ph:
+        if p.key.count("/") == 2:
+            by_folder[p.key].append(p)
+    for key, ps in by_folder.items():
+        counts = collections.Counter(home[p.sha] for p in ps)
+        artist = counts.most_common(1)[0][0]
+        mine = [p for p in ps if home[p.sha] == artist and solo(p)]
+        if len(mine) >= 2:
+            _, core, c = core_scores(np.array([p.vec for p in mine]))
+            people_of[artist][key.split("/")[2]] = ([mine[i] for i in core], c)
+    moves, stay, rows = [], collections.Counter(), collections.defaultdict(collections.Counter)
+    for p in ph:
+        if only is not None and p.sha not in only:
+            continue
+        artist = home[p.sha]
+        dest, why, score = f"Artists/{artist}", "no clear person", None
+        if not p.usable(st["minFace"]):
+            why = "no usable face"
+        elif not solo(p):
+            why = "more than one person"
+        else:
+            rank = []
+            for name, (core, c) in people_of[artist].items():
+                mine = [q for q in core if q is not p]
+                cc = nz(np.mean([q.vec for q in mine], axis=0)) if mine and len(mine) != len(core) else c
+                rank.append((float(p.vec @ cc), name))
+            rank.sort(reverse=True)
+            if rank:
+                best, name = rank[0]
+                gap = best - rank[1][0] if len(rank) > 1 else 1.0
+                here = p.key == f"Artists/{artist}/{name}"
+                if gap >= margin and (best >= assign or (here and best >= keep)):
+                    dest, why, score = f"Artists/{artist}/{name}", f"looks like {name} ({best:.2f}; next {rank[1][0]:.2f})" if len(rank) > 1 else f"looks like {name} ({best:.2f})", best
+        rows[artist][dest.split("/", 2)[2] if dest.count("/") == 2 else "(artist gallery)"] += 1
+        if dest == p.key:
+            stay[artist] += 1
+        else:
+            moves.append(Move(p, dest, f"{why}; from {p.key}", score))
+    return moves, rows, stay
+
+
+def cmd_artists(args):
+    """Reset the artists' folders: every photo goes back under the artist it came from in the backup, then to the person of that artist it looks like."""
+    cfg, st, work, cache, space = build(args, with_mixed=True)
+    src = pathlib.Path(args.origin)
+    if not src.is_dir():
+        sys.exit(f"{src} is not a folder; pass the backup's Artists folder with --from")
+    origin = {}
+    for d, _, files in os.walk(src):
+        for f in files:
+            p = pathlib.Path(d) / f
+            if p.suffix.lower() in originals.IMAGE_EXT:
+                artist = pathlib.Path(d).relative_to(src).parts[0]
+                origin[cache.sha(p)] = artist
+                if photo_id(p.name):
+                    origin[photo_id(p.name)] = artist
+    origin.update(note_origins(work, {k: v for k, v in origin.items() if not len(k) == 40}))
+    only = None
+    if args.junk:
+        back = [(f, origin.get(cache.sha(f)) or origin.get(photo_id(f.name))) for f in originals.images(work / "_junk" / "Artists")]
+        back = [(f, a) for f, a in back if a]
+        print(f"{len(back)} photo(s) in _junk/Artists came from a known artist and {'go back' if args.apply else 'would go back'} to that artist's gallery (run `likeness junk` afterwards to set aside again what the rules still call junk)")
+        if not args.apply:
+            return
+        only = {cache.sha(f) for f, _ in back}
+        for f, artist in back:
+            dest = work / "Artists" / artist / "gallery"
+            dest.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(f), str(dest / f.name))
+        cfg, st, work, cache, space = build(args, with_mixed=True)
+    if args.gallery:
+        only = (only or set()) | {p.sha for p in space.photos if p.key.startswith("Artists/") and p.key.count("/") == 1}
+    moves, rows, stay = plan_artists(space, st, origin, args.assign or st["assign"], args.keep, args.margin, only)
+    for artist in sorted(rows):
+        print(f"{artist}: {stay[artist]} photo(s) stay, {sum(rows[artist].values()) - stay[artist]} move")
+        for name, n in rows[artist].most_common():
+            print(f"    {name}: {n}")
+    print(f"\n{len(moves)} photo(s) to move")
+    if args.apply and (moves or only):
+        n = execute(moves, work, True, cache) if moves else 0
+        print(f"{n} photo(s) moved")
+        after_moves(args, True)
+    elif moves:
+        print("preview only; add --apply to move them")
+
+
+def crop_box(size, main, others, min_ratio=0.1, aspect=(0.45, 1.8)):
+    """The largest rectangle (left, top, right, bottom) of a picture that keeps the main face with its hair and shoulders and cuts away every other face, or None.
+    main and others are (x, y, w, h) in pixels. A cut runs half way between the faces; a face much smaller than the main one (a passer-by) is not cut away."""
+    W, H = size
+    x, y, w, h = main
+    need = (max(0, x - 0.35 * w), max(0, y - 0.6 * h), min(W, x + 1.35 * w), min(H, y + 1.8 * h))
+    blocks = [(ox - 0.1 * ow, oy - 0.1 * oh, ox + 1.1 * ow, oy + 1.1 * oh) for ox, oy, ow, oh in others if ow * oh >= min_ratio * w * h]
+    if len(blocks) > 5:
+        return None
+    options = []
+    for b in blocks:
+        opts = []
+        if b[2] <= need[0]:
+            opts.append(("l", (b[2] + need[0]) / 2))
+        if b[0] >= need[2]:
+            opts.append(("r", (b[0] + need[2]) / 2))
+        if b[3] <= need[1]:
+            opts.append(("t", (b[3] + need[1]) / 2))
+        if b[1] >= need[3]:
+            opts.append(("b", (b[1] + need[3]) / 2))
+        if not opts:
+            return None
+        options.append(opts)
+    best, area = None, 0
+    for combo in itertools.product(*options):
+        r = [0, 0, W, H]
+        for side, at in combo:
+            i = "ltrb".index(side)
+            r[i] = max(r[i], at) if side in "lt" else min(r[i], at)
+        cw_, ch_ = r[2] - r[0], r[3] - r[1]
+        if cw_ <= 0 or ch_ <= 0 or not aspect[0] <= cw_ / ch_ <= aspect[1]:
+            continue
+        if cw_ * ch_ > area:
+            best, area = r, cw_ * ch_
+    return tuple(int(round(v)) for v in best) if best else None
+
+
+def person_box(size, face, keep=0.7):
+    """The part of a picture worth keeping around the main face (x, y, w, h in pixels): the hair above her, as much body as the picture has below, and about three and a half face widths either side
+    (arms, a dress, a wide stance), so the background beside her goes. None when that is most of the picture anyway (keep: the share of the picture above which nothing is cut), and when her head
+    is not in the upper part of the picture (she is lying or sitting low, or the picture is turned): then there is no telling where the body is."""
+    W, H = size
+    x, y, w, h = face
+    if y + h / 2 > 0.4 * H:
+        return None
+    left, right = max(0.0, x + w / 2 - 3.6 * w), min(float(W), x + w / 2 + 3.6 * w)
+    top = max(0.0, y - 1.2 * h)
+    if (right - left) * (H - top) >= keep * W * H:
+        return None
+    return int(left), int(top), int(round(right)), H
+
+
+def cmd_crop(args):
+    """Cut a photo down to the person: the app's bars of a phone screenshot, other people and animals, and the background beside and above her. All of the body that is in the picture stays.
+    The uncropped original is kept in _archive (gallery_uncropped), the cropped one takes its place under the same name. A prospect's photo whose other subject cannot be cut away is set aside in her review folder."""
+    from PIL import Image
+    cfg, st, work, cache, space = build(args, with_mixed=True)
+    embed = args.embedder or Embedder()
+    if args.undo:
+        return undo_crop(work, args.apply)
+    done, stuck = [], []
+    for p in space.photos:
+        if p.box is None or p.px < st["minFace"] or p.key.startswith("_"):
+            continue
+        reel = "_shot_" in p.name
+        multi = p.faces > 1 and p.f2 >= st["multiFace"]
+        try:
+            with Image.open(p.path) as src:
+                im = src.convert("RGB")
+        except OSError:
+            continue
+        W, H = im.size
+        why, region = [], (0, 0, W, H)
+        if reel and screens.is_reel_ui(im):
+            if not screens.head_clear(p.box):
+                stuck.append((p, "the app's bars cover her head"))
+                continue
+            region = screens.clean_box(im.size)
+            why.append("the app's bars")
+        cut = im.crop(region)
+        if multi or p.animals or region != (0, 0, W, H):
+            humans, animals = embed.faces(cut)
+        else:
+            humans, animals = [(p.box[0] * W, p.box[1] * H, p.box[2] * W, p.box[3] * H)], []
+        if not humans:
+            continue
+        main = humans[0]
+        others = [f for f in humans[1:] if f[2] * f[3] >= st["multiFace"] * main[2] * main[3]] + animals
+        if others:
+            box = crop_box(cut.size, main, others)
+            if box is None:
+                stuck.append((p, "another person or an animal overlaps her"))
+                continue
+            if box != (0, 0) + cut.size:
+                main = (main[0] - box[0], main[1] - box[1], main[2], main[3])
+                region = (region[0] + box[0], region[1] + box[1], region[0] + box[2], region[1] + box[3])
+                cut = cut.crop(box)
+                why.append("other people and animals" if animals and len(humans) > 1 else "animals" if animals else "other people")
+        bg = None if args.no_background else person_box(cut.size, main)
+        if bg:
+            region = (region[0] + bg[0], region[1] + bg[1], region[0] + bg[2], region[1] + bg[3])
+            why.append("background")
+        if why:
+            done.append((p, region, " and ".join(why)))
+    for p, region, why in done:
+        print(f"  {p.key}/{p.name}: cut {why}  ->  {region[2] - region[0]}x{region[3] - region[1]}")
+    review = [(p, r) for p, r in stuck if p.key.count("/") == 1 and p.key.split("/")[0] == "Prospects"]
+    back = [(p, r) for p, r in stuck if p.key.count("/") == 2 and p.key.split("/")[0] == "Artists"]  # an artist's person: it goes back to the artist's own gallery
+    for p, r in stuck:
+        where = "  (set aside in her review folder)" if (p, r) in review else "  (back to the artist's gallery)" if (p, r) in back else ""
+        print(f"  left as it is: {p.key}/{p.name}: {r}{where}")
+    print(f"\n{len(done)} photo(s) to crop (the uncropped originals go to _archive); {len(review)} prospect photo(s) to her review folder; {len(back)} artist photo(s) back to the artist's gallery; {len(stuck) - len(review) - len(back)} left as they are")
+    if not args.apply or not (done or review or back):
+        if done or review or back:
+            print("preview only; add --apply to do it")
+        return
+    batch = []
+    log = DATA / "likeness_crops.json"
+    DATA.mkdir(parents=True, exist_ok=True)
+    old_log = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
+    entry = {"id": datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), "crops": batch}
+    for p, region, why in done:
+        with Image.open(p.path) as src:
+            cut = src.convert("RGB").crop(region)
+        keep = originals.archive_dir(p.path.parent.parent, work, "gallery_uncropped")
+        keep.mkdir(parents=True, exist_ok=True)
+        old = keep / p.path.name
+        if old.exists():
+            old = keep / f"{p.path.stem}_{p.sha[:6]}{p.path.suffix}"
+        shutil.copy2(p.path, old)
+        part = p.path.with_name(p.path.name + ".part")  # written whole, then swapped in: an interrupted run never leaves half a picture
+        if p.path.suffix.lower() in (".jpg", ".jpeg"):
+            cut.save(part, "JPEG", quality=95)
+        else:
+            cut.save(part, "PNG" if p.path.suffix.lower() == ".png" else None)
+        os.replace(part, p.path)
+        batch.append({"file": str(p.path), "kept": str(old)})
+        log.write_text(json.dumps(old_log + [entry], indent=1), encoding="utf-8")  # after every photo: a run that is stopped loses no record of a crop
+        if p.key.count("/") >= 1 and p.key != "Prospects/Various" and p.key.split("/")[0] != "Various" and not (p.key.startswith("Artists/") and p.key.count("/") == 1):
+            people.note(work / p.key, f"cropped {p.name}: {why} cut away; the uncropped one is in _archive")
+    print(f"{len(batch)} photo(s) cropped")
+    if review:
+        cleanup_hold(work, [p.sha for p, _ in review])
+        n = execute([Move(p, p.key, f"needs a clean-up: {r}", bucket="review") for p, r in review], work, True, cache)
+        print(f"{n} photo(s) set aside in their person's review folder")
+    if back:
+        n = execute([Move(p, "/".join(p.key.split("/")[:2]), f"could not be cleaned up ({r}); back to the artist's gallery for you to look at", force=True) for p, r in back], work, True, cache)
+        print(f"{n} photo(s) back in their artist's gallery")
+    after_moves(args, True)
+
+
+def undo_crop(work, apply):
+    log = DATA / "likeness_crops.json"
+    data = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
+    if not data:
+        print("no crops to undo")
+        return
+    batch = data[-1]
+    print(f"last batch {batch['id']}: {len(batch['crops'])} photo(s) get their uncropped original back")
+    if not apply:
+        print("preview only; add --apply to put them back")
+        return
+    for c in batch["crops"]:
+        if pathlib.Path(c["kept"]).exists():
+            shutil.copy2(c["kept"], c["file"])
+    log.write_text(json.dumps(data[:-1], indent=1), encoding="utf-8")
+    after_moves(types.SimpleNamespace(no_originals=False, root=None), True)
+
+
+def cmd_crops(args):
+    """A page to look at every crop: the uncropped original next to the cropped photo, by root, from the crop log. `likeness crop --undo` reverses the last batch."""
+    import base64
+    import html
+    import io
+    from PIL import Image, ImageOps
+    cfg = cw.load_cfg()
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    log = DATA / "likeness_crops.json"
+    batches = json.loads(log.read_text(encoding="utf-8")) if log.exists() else []
+    rows = collections.OrderedDict()
+    for b in batches:
+        for c in b["crops"]:
+            f, k = pathlib.Path(c["file"]), pathlib.Path(c["kept"])
+            if f.exists() and k.exists():
+                try:
+                    rel = f.relative_to(work)
+                except ValueError:
+                    continue
+                rows.setdefault(rel.parts[0], {})[str(f)] = (rel.as_posix(), f, k)
+
+    def thumb(path):
+        with Image.open(path) as im:
+            im = ImageOps.fit(ImageOps.exif_transpose(im).convert("RGB"), (150, 200), Image.LANCZOS)
+        buf = io.BytesIO()
+        im.save(buf, "JPEG", quality=75)
+        return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+    out = ["<!doctype html><html><head><meta charset='utf-8'><title>Crops</title><style>body{font-family:Segoe UI,Arial;margin:20px;background:#faf8f3}.p{display:inline-block;margin:6px;padding:6px;background:#fff;border:1px solid #ddd;font-size:11px;width:312px}.p img{width:150px;height:200px;margin-right:4px}</style></head><body><h1>Cropped photos</h1>",
+           "<p>Left: the uncropped original (kept in _archive, gallery_uncropped). Right: what is in the library now. Undo the last batch with <code>likeness crop --undo --apply</code>.</p>"]
+    total = 0
+    for root, items in rows.items():
+        out.append(f"<h2>{html.escape(root)} ({len(items)})</h2>")
+        for rel, f, k in items.values():
+            try:
+                out.append(f"<div class='p'><img src='{thumb(k)}'><img src='{thumb(f)}'><br>{html.escape(rel.split('/', 1)[1])}</div>")
+                total += 1
+            except Exception:  # noqa: BLE001
+                continue
+    out.append("</body></html>")
+    dest = pathlib.Path(args.out) if args.out else work / "_reports" / "crop_review.html"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text("\n".join(out), encoding="utf-8")
+    print(f"{total} cropped photo(s) in {sum(len(v) for v in rows.values())} logged; written to {dest}")
+
+
+def cmd_crosscheck(args):
+    """Who looks like whom across the lines that are kept apart: one artist's people against another artist's, and prospects against artists' people. Nothing is moved."""
+    cfg, st, work, cache, space = build(args)
+    thr = args.min if args.min is not None else st["alike"]
+    cents, pairs = space.pair_matrix()
+
+    def artist(k):
+        parts = k.split("/")
+        return parts[1] if parts[0] == "Artists" and len(parts) == 3 else None
+    rows = []
+    for (a, b), s in pairs.items():
+        if s < thr:
+            continue
+        aa, ab = artist(a), artist(b)
+        if aa and ab and aa != ab:
+            rows.append((s, "artist ~ artist", a, b))
+        elif (aa and b.startswith("Prospects/")) or (ab and a.startswith("Prospects/")):
+            rows.append((s, "prospect ~ artist", a, b))
+    rows.sort(reverse=True)
+    lines = [f"# Likeness across the lines that are kept apart ({datetime.date.today()})", "",
+             f"Pairs of people from different artists, or a prospect and an artist's person, scoring {thr:.2f} or more (0.55 is about the same person; 0.30 to 0.45 very alike). Nothing was moved.", "",
+             "| score | kind | one | other |", "| --- | --- | --- | --- |"]
+    for s, kind, a, b in rows:
+        lines.append(f"| {s:.2f} | {kind} | {a} ({len(space.by_key[a])}) | {b} ({len(space.by_key[b])}) |")
+        print(f"  {s:.2f}  {kind:18} {a}  ~  {b}")
+    out = pathlib.Path(args.out) if args.out else work / "_reports" / "crosscheck.md"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{len(rows)} pair(s); written to {out}")
 
 
 def cmd_sisters(args):
@@ -1076,15 +1566,28 @@ def prime_score(p, c, size):
     return ident + clarity + body + shape + res + multi, f"face {ident:.2f}, {p.px}px, {w}x{h}" + (", 2+ faces" if p.faces > 1 else "")
 
 
+def cleanup_hold(work, add=()):
+    """Content hashes of photos `crop` set aside in a review folder because they need a clean-up it could not do: `review` leaves them there (they look like her, which is why they are there)."""
+    path = pathlib.Path(work) / "_cleanup_hold.json"
+    held = set(json.loads(path.read_text(encoding="utf-8")) if path.exists() else [])
+    if set(add) - held:
+        held |= set(add)
+        path.write_text(json.dumps(sorted(held)), encoding="utf-8")
+    return held
+
+
 def load_review(cfg, work, space, cache, embed, st, wanted=()):
-    """[(folder key, file, Photo or None)] for every file in a person folder's review folder; None when the file has no usable face."""
+    """[(folder key, file, Photo or None)] for every file in a person folder's review folder; None when the file has no usable face. Photos held for a clean-up (see cleanup_hold) are not listed."""
     out = []
+    held = cleanup_hold(work)
     for group, name, folder in cw.photo_folders(cfg, work):
         key = f"{group}/{name}"
         if key not in space.by_key or (wanted and name.split("/")[-1].lower() not in wanted):
             continue
         for f in originals.images(folder / "review"):
             sha = cache.sha(f)
+            if sha in held:
+                continue
             if sha not in cache.emb:
                 cache.emb[sha] = embed(f) or {"faces": -1}
             ph = Photo(f, group, name, sha, cache.emb[sha])
@@ -1514,6 +2017,33 @@ def junk_reason(p, st, multi=True):
     return None
 
 
+def reset_junk(args, cfg, st, work, cache, embed):
+    """Everything in _junk goes back to be looked at again: prospects' photos to the pool (Various), an artist's photos to that artist's gallery (the _origins.json record knows which).
+    Run `likeness crop` and `likeness junk` (or bin\\library.cmd) afterwards: what the rules still call junk goes back to _junk, what they can use is sorted."""
+    origins = note_origins(work)
+    moves, stay = [], []
+    for side_dir in sorted(p for p in (work / "_junk").iterdir() if p.is_dir()) if (work / "_junk").is_dir() else []:
+        for f in originals.images(side_dir):
+            sha = cache.sha(f)
+            ph = Photo(f, "_junk", side_dir.name, sha, cache.emb.get(sha) or {"faces": -1})
+            if side_dir.name == "Artists":
+                artist = origins.get(photo_id(f.name) or "")
+                if artist:
+                    moves.append(Move(ph, f"Artists/{artist}", "back from _junk to be looked at again", force=True))
+                else:
+                    stay.append(f.name)
+            else:
+                moves.append(Move(ph, pool_home(st), "back from _junk to be looked at again"))
+    print(f"{len(moves)} photo(s) in _junk go back" + (f"; {len(stay)} artist photo(s) stay (no record of their artist): {', '.join(stay[:5])}" if stay else ""))
+    if not moves or not args.apply:
+        if moves:
+            print("preview only; add --apply to move them")
+        return
+    n = execute(moves, work, True, cache)
+    print(f"{n} photo(s) moved")
+    after_moves(args, n > 0)
+
+
 def recheck_junk(args, cfg, st, work, cache, embed):
     """Look at what is in _junk again with the current rules: a photo that is no longer junk (a passer-by's small face, a face found on the second look) goes back to the person folder its file name says
     (prospects to Prospects, artists to Artists: they are kept apart), or to the pool, Various, when a prospect's folder is gone. An artist's photo whose folder is gone stays."""
@@ -1558,6 +2088,8 @@ def cmd_junk(args):
     An angel's or sister's own gallery is never touched (listed only), nor is a chosen or anchor photo. A folder that is left empty is retired. Preview unless --apply; `likeness undo` puts them back."""
     cfg, st, work, cache, space = build(args)
     embed = args.embedder or Embedder()
+    if args.reset:
+        return reset_junk(args, cfg, st, work, cache, embed)
     if args.recheck:
         return recheck_junk(args, cfg, st, work, cache, embed)
     protected = chosen_keys(cfg)
@@ -1612,9 +2144,9 @@ def cmd_junk(args):
 
 def cmd_singles(args):
     """A prospect with a single photo is probably someone already in the library whose photo is odd (an angle, a screenshot): this lists, for each, the prospect she looks most like.
-    One that scores at least --min (default: the assign score less 0.10) with a margin over the next goes into that prospect's folder. Prospects only: never an artist's person (they are kept apart), nor an angel or a sister."""
+    One that scores at least --min (default: settings `singles`, 0.35) with a margin over the next goes into that prospect's folder. Prospects only: never an artist's person (they are kept apart), nor an angel or a sister."""
     cfg, st, work, cache, space = build(args)
-    thr = args.min if args.min is not None else st["assign"] - 0.10
+    thr = args.min if args.min is not None else st["singles"]
     protected = chosen_keys(cfg)
     rows, moves = [], []
     for k in space.keys:
@@ -1622,9 +2154,10 @@ def cmd_singles(args):
         if not k.startswith("Prospects/") or len(ps) != 1 or len(originals.images(work / k / "review")):
             continue
         p = ps[0]
-        rank = [r for r in space.ranking(p.vec, source=k) if r[1] != k and r[1].startswith("Prospects/") and len(space.by_key[r[1]]) >= 2]
+        rank = [r for r in space.ranking(p.vec, source=k) if r[1] != k and ((r[1].startswith("Prospects/") and len(space.by_key[r[1]]) >= 2) or r[1].startswith("Angels/") or is_sister(r[1]))]
         top, second = (rank[0] if rank else (-1.0, "")), (rank[1][0] if len(rank) > 1 else -1.0)
-        ok = top[0] >= thr and top[0] - second >= args.margin and cw.photo_key(p.name) not in protected
+        need = st["castMerge"] if top[1].startswith("Angels/") or is_sister(top[1]) else thr  # an angel or a sister is only joined when it is clearly the same woman
+        ok = top[0] >= need and top[0] - second >= args.margin and cw.photo_key(p.name) not in protected
         rows.append((top[0], k, top[1], second, ok, p))
         if ok:
             moves.append(Move(p, top[1], f"a single photo that looks like {top[1].split('/', 1)[1]} ({top[0]:.2f}; next {second:.2f})", top[0]))
@@ -1642,6 +2175,72 @@ def cmd_singles(args):
         return
     n = execute(moves, work, True, cache)
     gone = retire_empty(work, [m.photo.key for m in moves])
+    if gone:
+        print("emptied folders moved to _retired: " + ", ".join(gone))
+    print(f"{n} photo(s) moved")
+    after_moves(args, n > 0)
+
+
+def cmd_rematch(args):
+    """Prospect folders that are one person under two names. Two prospect folders whose centroids score at least --min (default: settings `rematch`, 0.48; at 0.45 a folder of six different-looking women was merged into another) are merged, the smaller into the larger
+    (a folder that was merged is not merged again in the same run). A prospect that scores at least `rematchCast` (0.50) against an angel or a sister is only listed: the cast is yours to change
+    (`likeness merge PROSPECT ANGEL`). Pairs under `different` in workspaces.json are never merged or listed. Artists are kept apart. Run it again after a merge: the centroids moved."""
+    cfg, st, work, cache, space = build(args)
+    thr = args.min if args.min is not None else st["rematch"]
+    different = {frozenset(x.lower() for x in pair) for pair in st.get("different", [])}
+    _cents, pairs = space.pair_matrix()
+    prospects = {k for k in space.keys if k.startswith("Prospects/")}
+    size = {k: len(space.by_key[k]) for k in prospects}
+    chosen = chosen_keys(cfg)
+    held = {k for k in prospects if any(cw.photo_key(p.name) in chosen for p in space.by_key[k])}
+    rows = sorted(((s, a, b) for (a, b), s in pairs.items() if a in prospects and b in prospects and s >= thr and frozenset((a.lower(), b.lower())) not in different), reverse=True)
+    into, plan = {}, []
+
+    def home(k):
+        while k in into:
+            k = into[k]
+        return k
+
+    for s, a, b in rows:
+        ra, rb = home(a), home(b)
+        if ra == rb or ra in held and rb in held:
+            continue
+        src = sorted((ra, rb), key=lambda k: (k in held, size[k], k))[0]
+        dst = rb if src == ra else ra
+        into[src] = dst
+        size[dst] += size[src]
+        plan.append((s, src, dst))
+    cast_keys = [k for k in space.keys if k.startswith("Angels/") or is_sister(k)]
+    for k in sorted(prospects):
+        if k in into:
+            continue
+        best = max(((pairs.get((k, c), pairs.get((c, k), -1.0)), c) for c in cast_keys if frozenset((k.lower(), c.lower())) not in different), default=(-1.0, ""))
+        if best[0] >= st["castMerge"]:
+            into[k] = best[1]
+            plan.append((best[0], k, best[1]))
+    print(f"{len(prospects)} prospect folder(s); {len(plan)} merge(s) at {thr:.2f} or more (the same person scores about 0.55):")
+    for s, src, dst in plan:
+        print(f"  {s:.2f}  {src.split('/', 1)[1]:22} ({len(space.by_key[src])}) -> {dst.split('/', 1)[1]:22} ({len(space.by_key[dst])} before)")
+    cast = sorted(((s, a, b) for (a, b), s in pairs.items() if st["rematchCast"] <= s < st["castMerge"] and ((a in prospects) != (b in prospects)) and frozenset((a.lower(), b.lower())) not in different
+                   and any(k.startswith("Angels/") or is_sister(k) for k in (a, b))), reverse=True)
+    if cast:
+        print(f"\nprospects that look like an angel or a sister at {st['rematchCast']:.2f} to {st['castMerge']:.2f} (not merged: very alike, not the same person; yours to decide with `likeness merge PROSPECT NAME`, or add the pair to `different`):")
+        for s, a, b in cast:
+            print(f"  {s:.2f}  {a}  ~  {b}")
+    moves = []
+    for _s, src, dst in plan:
+        final = home(dst)
+        moves += [Move(p, final, f"folder merged: {src.split('/', 1)[1]} looks like {final.split('/', 1)[1]} ({_s:.2f})", _s) for p in space.photos if p.key == src]
+    if args.sheet and plan:
+        make_sheet([(f"{s.split('/', 1)[1]} -> {d.split('/', 1)[1]}", space.by_key[s][:5] + space.by_key[d][:5]) for _sc, s, d in plan], args.sheet)
+    if not moves:
+        print("\nnothing to merge")
+        return
+    if not args.apply:
+        print("\npreview only; add --apply to merge them")
+        return
+    n = execute(moves, work, True, cache)
+    gone = retire_empty(work, [src for _s, src, _d in plan])
     if gone:
         print("emptied folders moved to _retired: " + ", ".join(gone))
     print(f"{n} photo(s) moved")
@@ -1845,6 +2444,7 @@ def main(argv=None, embedder=None):
     s = add("sort", cmd_sort, apply=True, sheet=True)
     s.add_argument("--plan", help="also write the moves to this JSON file")
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
+    s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
     s = add("clean", cmd_clean, apply=True, sheet=True)
@@ -1857,6 +2457,30 @@ def main(argv=None, embedder=None):
     s = add("group", cmd_group, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="artist folders (default: all)")
     s.add_argument("--cluster", type=float, help="average similarity needed to be one person (default: settings cluster)")
+    s.add_argument("--min-photos", type=int, help="photos a new person needs (default: settings minCluster, 3); a pair can still join a person who is already there")
+    s.add_argument("--cohesion", type=float, default=0.40, help="a new person's photos must score this well against each other on average (default 0.40; one person's own photos score 0.55 and up)")
+    s.add_argument("--singles", action="store_true", help="every other usable photo in the gallery is placed too: with a person of this artist she scores --single-join against, else in a folder of her own; only photos with no usable face, a second person or the app's bars stay")
+    s.add_argument("--single-join", type=float, default=0.35, help="score that makes a single photo one of the artist's people (default 0.35, with a margin of 0.05 over the next)")
+    s.add_argument("--join", type=float, default=0.45, help="a group this alike a person already in the same artist's folder joins her instead of becoming a new person (default 0.45)")
+    s = add("artists", cmd_artists, apply=True)
+    s.add_argument("--from", dest="origin", required=True, help="the Artists folder of a backup, flat per artist: it says which artist each photo came from")
+    s.add_argument("--assign", type=float, help="score that makes a photo one of an artist's people (default: settings assign, 0.40)")
+    s.add_argument("--keep", type=float, default=0.25, help="a photo already in a person's folder stays when it scores at least this against her (default 0.25)")
+    s.add_argument("--margin", type=float, default=0.10, help="she must score this much better than the next person of that artist (default 0.10)")
+    s.add_argument("--junk", action="store_true", help="first bring the photos in _junk/Artists back to the gallery of the artist they came from, to be sorted again")
+    s.add_argument("--gallery", action="store_true", help="only place the photos loose in an artist's own gallery (people already grouped are left as they are)")
+    s = add("crop", cmd_crop, apply=True)
+    s.add_argument("--undo", action="store_true", help="put the last batch's uncropped originals back")
+    s.add_argument("--no-background", action="store_true", help="only cut the app's bars, other people and animals, not the background beside her")
+    s = add("pullback", cmd_pullback, apply=True)
+    s.add_argument("names", nargs="*", help="prospect folders to send back to Various (to be sorted again)")
+    s.add_argument("--small", type=int, help="also every prospect folder with this many photos or fewer")
+    s.add_argument("--all", action="store_true", help="every prospect folder (a full re-sort of the prospects); folders holding a chosen photo are never pulled back")
+    s = add("crops", cmd_crops)
+    s.add_argument("--out", help="write the page here (default: <work>/_reports/crop_review.html)")
+    s = add("crosscheck", cmd_crosscheck)
+    s.add_argument("--min", type=float, help="report pairs at or above this score (default: settings alike, 0.30)")
+    s.add_argument("--out", help="write the report here (default: <work>/_reports/crosscheck.md)")
     s = add("sisters", cmd_sisters, sheet=True)
     s.add_argument("--anchor-sister", default="Drakness")
     s.add_argument("--no-renders", action="store_true")
@@ -1879,9 +2503,12 @@ def main(argv=None, embedder=None):
     s = add("junk", cmd_junk, apply=True, sheet=True)
     s.add_argument("--keep-multi", action="store_true", help="do not treat a photo with a second person (a second face at least `multiFace`, 0.3, of the main face's size) as junk")
     s.add_argument("--recheck", action="store_true", help="look at what is in _junk again: photos that are usable under the current rules go back to Various to be sorted")
+    s.add_argument("--reset", action="store_true", help="send everything in _junk back (prospects' photos to Various, an artist's to that artist's gallery) to be cropped and sorted again; what is still junk returns to _junk")
     s = add("singles", cmd_singles, apply=True, sheet=True)
     s.add_argument("--min", type=float, help="score that makes a single photo one of an existing prospect (default: assign less 0.10)")
     s.add_argument("--margin", type=float, default=0.05, help="she must score this much better against that prospect than against the next (default 0.05)")
+    s = add("rematch", cmd_rematch, apply=True, sheet=True)
+    s.add_argument("--min", type=float, help="score at which two prospect folders are one person (default: settings rematch, 0.48)")
     s = add("lookalikes", cmd_lookalikes, apply=True)
     s.add_argument("--min", type=float, help="score against a sister or angel that makes a prospect or artist person 'reserved' (default: settings alike, 0.30)")
     s = add("photos", cmd_photos, apply=True, sheet=True)
