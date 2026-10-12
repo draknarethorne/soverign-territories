@@ -41,7 +41,7 @@ every studio stage.
 | Copy a workflow so I can hand-edit it | `bin\fork.cmd WORKFLOW Tag` |
 | Keep what I made or changed in ComfyUI | `bin\pull.cmd Drakness` |
 | Sort loose workflows in the workspaces into folders | `python tools\workflows\comfy_workflows.py tidy` (preview), add `--apply` |
-| Add the staged scenes (held back by default) | `python tools\workflows\comfy_workflows.py deploy --group drakn-sisters --class scene --staged` |
+| Add the staged scenes (held back by default) | `python tools\workflows\comfy_workflows.py deploy --group drakn-sisters --class scene --include staged` |
 | Put the ST templates in the templates workspace | `bin\deploy-templates.cmd` |
 | Set a whole workspace up in one go: deploy its sets, tidy, clean leftovers, status (a preview until `--apply`) | `bin\setup-workspace.cmd "Angel Primes"` |
 | Write or extend an angel's card set (and her signature items) | `bin\scaffold-angels.cmd [slug]`, `--coverage` for library use |
@@ -221,7 +221,7 @@ Stills keep the standard size (`standardSize` in `workspaces.json`, 944x1104) un
 
 ### Denoise defaults
 
-New generated workflows start at the high end of the range in their stage template (`Denoise ~0.8-0.9.` in `data/art/_templates/heroes/*.txt`; 1.0 only for the Prime from the original photo), not at 1.0. Since Oct 2026 the edit stages run at 0.8 to 0.95
+New generated workflows start at the high end of the range in their stage template (`Denoise ~0.8-0.9.` in `data/art/_templates/heroes/<stage>/*.txt`; 1.0 only for the Prime from the original photo), not at 1.0. Since Oct 2026 the edit stages run at 0.8 to 0.95
 (0.7 held the pose too tight) and state the likeness in a Critical details block. `make --create` sets it, `comfy_workflows.py denoise` previews the plan and `denoise --reset` applies it to the repo and every workspace (backups first; `zz_Shots` and curated
 workflows are never touched, and a denoise you set by hand in a workspace is listed as `KEPT`, not overwritten, unless you add `--force`).
 The table and the tuning rules are in [docs/art/comfyui-art-pipeline.md](../docs/art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
