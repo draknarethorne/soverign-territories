@@ -27,7 +27,7 @@ He stands on a high ledge with his arms swept wide and his head back, wings spre
 
 Golden light and drifting motes fan out from him in every direction and bright sunrise gold light washes across the ground and the air.
 
-Eyes: fully glowing bright sunrise gold, irises and pupils blazing with luminous bright sunrise gold light and no visible pupil, a faint bright sunrise gold glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing bright sunrise gold, irises blazing as one solid field of luminous bright sunrise gold light, a faint bright sunrise gold glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a sunlit white marble terrace with gold-veined columns, strong low sun streaming between them in clear shafts with a little dust in the air, warm light across the worn stone.
 

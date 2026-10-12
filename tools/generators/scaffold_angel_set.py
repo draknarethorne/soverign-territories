@@ -2,7 +2,7 @@
 """Scaffold an Angel Primes angel's set from data/art/_kits/angel-primes/<slug>.json (re-runnable; existing cards are kept).
 
 Per angel (a kit lists the choices; the identity in data/art/heroes/angel-primes/<slug>.json supplies sex and look). This file writes the core set:
-  1_Alpha      Prime, Bare_Figure (+ Bare_Chest, Barefoot, Heels for the female angels; males have no Barefoot or Heels step)
+  1_Alpha      Prime, Bare_Figure (+ Barefoot, Heels for the female angels; males have no Barefoot or Heels step)
   2_Studies    the head          3_Layers  the kit's A-pose underlayer tests          4_Wardrobe  the kit's clothing and armor on the studio backdrop
   Bench/motion the kit's motions           5_Scenes/signature  one signature scene with wings, element effect and the bonded pet
 and scaffold_angel_library.py then adds the rest of the standard sister set (studies library and hairstyles, covering and celestial experiments, rotating layers, wardrobe,
@@ -65,7 +65,7 @@ def card_factory(ident, out):
 
 
 def alpha_chain(wr, card, slug, hero, female, heels):
-    """1_Alpha, the creation chain every angel has: Prime (A-pose from the photo), Bare (figure; chest too for women), and for women the Footwear step
+    """1_Alpha, the creation chain every angel has: Prime (A-pose from the photo), Bare (the figure), and for women the Footwear step
     (Barefoot and Heels A-poses fed the Bare image). Men stay barefoot in every A-pose, so they have no footwear step."""
     sex = "female" if female else "male"
     wr.write("alpha", f"{slug}-alpha-prime", card(f"{slug}-alpha-prime", "alpha", "alpha", f"{hero}_Alpha_1_Prime", f"pose-{sex}-human.txt", denoise="~1.0",
@@ -76,9 +76,6 @@ def alpha_chain(wr, card, slug, hero, female, heels):
              {"wearing": f"data/art/wardrobe/swimwear/base/edit/{study}.json"}, name="Bare edit: bare skin figure",
              note="Alpha 2 Bare: fed the Prime, sets the individual build and likeness."))
     if female:
-        wr.write("alpha", f"{slug}-alpha-bare-chest", card(f"{slug}-alpha-bare-chest", "alpha", "alpha", f"{hero}_Alpha_2_Bare_Chest", bare_tpl,
-                 {"wearing": "data/art/wardrobe/swimwear/base/edit/bare-chest-study.json"}, name="Bare edit: bare chest figure",
-                 note="Alpha 2 Bare, chest variant."))
         wr.write("alpha", f"{slug}-alpha-barefoot", card(f"{slug}-alpha-barefoot", "alpha", "alpha", f"{hero}_Alpha_3_Barefoot", "pose-female-human.txt",
                  {"footwear": "data/art/wardrobe/footwear/barefoot/barefoot-a-pose.json"}, note="Alpha 3 Barefoot A-pose, fed the Bare image."))
         wr.write("alpha", f"{slug}-alpha-heels", card(f"{slug}-alpha-heels", "alpha", "alpha", f"{hero}_Alpha_3_Heels", "pose-female-human.txt",

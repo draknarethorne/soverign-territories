@@ -12,7 +12,7 @@ Background: {{BACKGROUND}}.
 
 {{VIEW}}
 
-{{KEEP_LINE}} Keep the wardrobe unchanged.
+{{KEEP_LINE}} Keep the wardrobe exactly as in the incoming image.
 
 ?{{KEY_BLOCK}}
 

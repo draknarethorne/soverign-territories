@@ -27,7 +27,7 @@ She stands with one arm raised toward a storm sky and the other hand open at her
 
 Crackling arcs of lightning and sparks crack in forks between her hands and the clouds, white-hot electric light flashing across her armor and the wet ground.
 
-Eyes: fully glowing white-hot electric, irises and pupils blazing with luminous white-hot electric light and no visible pupil, a faint white-hot electric glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing white-hot electric, irises blazing as one solid field of luminous white-hot electric light, a faint white-hot electric glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a high windswept plateau under towering thunderheads at dawn: a smoking crater of fused glassy rock where lightning has struck, bolts forking across a bruised-gold sky, a break of sunlight on the horizon, great eagles riding the storm, wild horses galloping across the plain, static glowing on tall grass.
 

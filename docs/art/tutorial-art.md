@@ -35,6 +35,17 @@ takes an original photo and builds the one clean, full-length A-pose in her meta
 and the pose into proper shape. **Alpha 2 Bare** edits the Prime: it removes the bikini, applies her individual build and re-asserts hair, eyes, skin
 and bust. **Alpha 3 Barefoot and Heels** edit the Bare image back into the bikini on her own figure. Bare, Barefoot and Heels are the three golden
 images that every later stage starts from. You can intercept an Alpha workflow and use your own forceful wording (keep that workflow as a shot).
+
+**Why the steps in between exist.** The swimsuit Prime, Barefoot and Heels (`1_Prime`, `3_Footwear`), `2_Studies` and `3_Layers` are not required to get a Bare image. They are
+**validation**: a way to prove that what Alpha made behaves before it is used for anything expensive. A hero in a swimsuit with footwear is a simple, known thing to check (the
+face, the figure, the bust, the pose). The studies (heads, hair, turnaround views) show that the same image still looks right when it is edited, and the layers put her in a wider
+variety of underlayers before any full wardrobe. Footwear and bare-skin looks were found to bleed into later barefoot shots and wardrobe, which is why each step is checked on its
+own and why an issue in the Prime is caught at `2_Studies` or `3_Layers` and fixed there, instead of being found in a `4_Wardrobe` or `5_Scenes` image after the work is done.
+Skip any of them when you trust the result; they are kept because they make a problem cheap to find. Experiments that did not hold up (the bare-chest study and the covering
+experiments: pasties, contoured, paint) were dropped.
+
+**Trying a simpler first shot.** The swimsuit Prime has to remove what the photo shows, and that is where leaks come from. Two experiments start from the same photo and sit in `1_Alpha/1b_Experiments/`: `neutral-base` (P2, a skin-tone base layer) and `bare-base` (P3, the bare figure with her own build). How to run and compare them is in [prime-flows.md](prime-flows.md#first-shot-experiments-p2-and-p3); the reasons are in [../plans/2026-10-11-first-shot-flows.md](../plans/2026-10-11-first-shot-flows.md).
+
 | Phase | Folder (under `<Hero>/` in the workspace) | Incoming image | Produces |
 | --- | --- | --- | --- |
 | 1. Alpha | `1_Alpha/1_Prime`, `2_Bare`, `2b_Experiments`, `3_Footwear` | the original photo, then the Prime, then the Bare image | the Prime (bikini, standard figure), the Bare image (her individual build and likeness; `Alpha_2_Bare_Figure` is the main step, your hand-made `Alpha_2_Bare_Skin` shot is temporary), then Barefoot and Heels: the three golden images |
@@ -57,16 +68,15 @@ bikini or lingerie reads best.
 
 | Incoming image | Result |
 | --- | --- |
-| Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`, `Alpha_2_Bare_Chest`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
+| Bare (your shot `Alpha_2_Bare_Skin`, or `Alpha_2_Bare_Figure`) | cleanest outfits: nothing underneath bleeds through, and low-cut or sheer pieces are really low cut or sheer |
 | Bikini, lingerie or bodysuit A-pose | that layer shows under the outfit on purpose |
 | Celestial (`Alpha_2b_CelestialCore`, `_CelestialSuit`, `_CelestialPlate`, `_CelestialPlateFitted`) | her celestial form carries into the scene or the next outfit |
-| Pasties, contoured or paint (`Alpha_2b_Pasties`, `_Contoured`, `_Paint`) | minimal coverage; check for bleed, and add the `remove-coverings` strip line on the next card if it shows |
+| Pasties, contoured or paint | dropped (they bled into the wardrobe and swimwear shots); a minimal-coverage incoming image is better made as a layer in `3_Layers` |
 
-**The bare looks** (all edit-only prompts in `data/art/_templates/heroes/1_Alpha/bare-human.txt`, one short removal instruction plus a result paragraph
+**The bare look** (an edit-only prompt in `data/art/_templates/heroes/1_Alpha/bare-human.txt`, one short removal instruction plus a result paragraph
 with each area on its own semicolon-separated clause, and "change nothing else"):
-`Alpha_2_Bare_Figure` and `Alpha_2_Bare_Chest` (figure wording, model-chosen rendering) sit flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot;
-the experiments are Alpha 2b and nested beside it: `1_Alpha/2b_Experiments/coverings/` (`Alpha_2b_Pasties`, `_Contoured` (sheer, nylon-like), `_Paint` and `_PaintColour`,
-small painted areas) and `1_Alpha/2b_Experiments/celestial/`. The celestial core paints only the three small designs; the suit forks it into an open-filigree
+`Alpha_2_Bare_Figure` sits flat in `1_Alpha/2_Bare/` beside your own `Alpha_2_Bare_Skin` shot (the bare-chest study was dropped: it was an experiment);
+the one experiment kept is Alpha 2b, nested beside it in `1_Alpha/2b_Experiments/celestial/`, because it becomes a type of body armor in the wardrobe. The celestial core paints only the three small designs; the suit forks it into an open-filigree
 design over the whole body; the plate versions are the original small plates, and `Alpha_2b_CelestialPlateFitted` shapes them to the body. Your own hand-written bare workflows are kept as shots (see below) and stay your own.
 
 **Switches that apply to the whole chain** (`data/art/_settings/studio.json`, then regenerate):
@@ -75,7 +85,7 @@ design over the whole body; the plate versions are the original small plates, an
 | --- | --- |
 | `aPoseFootwear` | `barefoot` (default): no shoes in any A-pose; each outfit adds its own. `signature`: her heels again. `x-pose-heels` cards keep the heeled pose |
 | `bodyContour` | on by default (`fitted-contour`, `armor-contour` for armor): outfits follow the body in the incoming image, so her form shows through the fit. A card sets `components.body_contour` to `sheer-contour` (real body through thin fabric) or `"off"` |
-| `components.strip` on a card | an optional line that removes what the incoming image wears first (`remove-original`, `replace-original`, `remove-coverings`) |
+| `components.strip` on a card | an optional line that removes what the incoming image wears first (`remove-original`, `replace-original`) |
 
 **Scenes, two ways.** A *complete* scene (`<hero>-scene-<name>`) describes the outfit and everything else, and takes an A-pose as input, so
 you choose how much of the A-pose shows through. A *staged* scene (`-staged-` in the name) takes an already-dressed image from stage 4 and

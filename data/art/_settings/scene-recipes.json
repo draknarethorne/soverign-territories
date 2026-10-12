@@ -324,7 +324,7 @@
         "dungeons",
         "ruins"
       ],
-      "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera without fear; full figure visible.",
+      "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera calmly; full figure visible.",
       "effects": "Cold {mat} seep out of the tomb along the floor and {{MAGIC}} light gathers pale around her fingers."
     },
     {

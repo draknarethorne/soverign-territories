@@ -154,13 +154,15 @@ def family(card, group, root=None):
     if stage == "card":
         return []  # mass card art sits flat in its stage folder
     if stage == "alpha":
-        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 2 Bare (the figure and chest looks flat in bare/; the experiments
-        # 2b nested in bare/celestial and bare/coverings), 3 Barefoot and Heels.
+        # The creation chain of a hero: 1 Prime (from the original photo) at the root, 1b the experiments for the first shot (1b_Experiments/<family>: a different way to
+        # start from the photo, promoted to 1_Prime when it wins), 2 Bare (the figure; the celestial experiment 2b nested in bare/celestial), 3 Barefoot and Heels.
         if art_id.endswith(("-alpha-barefoot", "-alpha-heels")):
             return ["footwear"]
+        if "-alpha-1b-" in art_id:
+            return ["base", art_id.split("-alpha-1b-", 1)[1]]
         if "-alpha-2b-celestial" in art_id:
             return ["bare", "celestial"]
-        return ["bare", "coverings"] if "-alpha-2b-" in art_id else ["bare"] if "-alpha-bare-" in art_id else []
+        return ["bare"] if "-alpha-bare-" in art_id else []
     if stage == "pose":
         if "view" in comps:
             return ["views"]
@@ -187,6 +189,8 @@ def phase_path(stage, family):
     """Folders below the hero for a workflow and its output, from the prompt's stage folder and family folders; None for stages outside the hero chain."""
     fam = list(family)
     if stage == "alpha":
+        if fam[:1] == ["base"] and len(fam) > 1:
+            return ["1_Alpha", "1b_Experiments", fam[1]]
         if fam[:1] == ["bare"]:
             return ["1_Alpha", "2b_Experiments", fam[1]] if len(fam) > 1 else ["1_Alpha", "2_Bare"]
         return ["1_Alpha", "3_Footwear"] if fam[:1] == ["footwear"] else ["1_Alpha", "1_Prime"]
@@ -227,6 +231,8 @@ def parse_dirs(dirs):
         sub, tail = rest[0], rest[1:]
         if sub == "1_Prime":
             return "alpha", []
+        if sub == "1b_Experiments":
+            return "alpha", ["base", *tail]
         if sub == "2_Bare":
             return "alpha", ["bare"]
         if sub == "2b_Experiments":

@@ -27,7 +27,7 @@ She stands with a coin of flame walking across her knuckles and the other hand r
 
 Dancing flame, embers and sparks flicker along her knuckles and drift off, fiery orange-gold light on her cheek.
 
-Eyes: fully glowing fiery orange-gold, irises and pupils blazing with luminous fiery orange-gold light and no visible pupil, a faint fiery orange-gold glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing fiery orange-gold, irises blazing as one solid field of luminous fiery orange-gold light, a faint fiery orange-gold glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a candlelit gaming room with a green baize table, scattered cards and coins, dark panelled walls and a smoky haze.
 

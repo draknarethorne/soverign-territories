@@ -5,7 +5,7 @@ Denoise ~0.7-0.8.
 ----------------------------------------------------------------
 prompt:
 
-Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these unchanged.
+Preserve the subject from the reference image exactly - facial likeness and bone structure, body shape and proportions, hairstyle and hair colour, makeup, outfit, and any held item. Keep all of these exactly as in the reference image.
 
 Critical details - these must be clearly visible:
 Eyes: molten amber irises with radiating crimson striations and a dark charcoal limbal ring.

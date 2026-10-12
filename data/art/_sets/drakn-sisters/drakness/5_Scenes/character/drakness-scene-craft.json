@@ -5,7 +5,7 @@
   "heroArt": "data/art/heroes/drakn-sisters/drakness-thorne.json",
   "name": "Craft",
   "components": {
-    "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera without fear; full figure visible.",
+    "pose": "She stands before an open tomb door with one hand raised as pale light seeps out of the dark within, her other hand steady, looking to the camera calmly; full figure visible.",
     "wearing": "data/art/heroes/drakn-sisters/drakness/clothing/signature-robe.json",
     "headwear": "data/art/heroes/drakn-sisters/drakness/headwear/scene-robe-headwear.json",
     "jewelry": "data/art/heroes/drakn-sisters/drakness/jewelry/scene-robe-jewelry.json",

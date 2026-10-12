@@ -132,7 +132,7 @@ A new workflow is saved in the workspace under its output folder, hero first and
 
 | Phase folder | Holds |
 | --- | --- |
-| `1_Alpha` | `1_Prime`, `2_Bare` (Figure, Chest), `2b_Experiments/celestial` and `/coverings`, `3_Footwear` (Barefoot, Heels): creates her likeness and the three golden images |
+| `1_Alpha` | `1_Prime`, `2_Bare` (Figure), `2b_Experiments/celestial`, `3_Footwear` (Barefoot, Heels): creates her likeness and the three golden images; Prime, Footwear, `2_Studies` and `3_Layers` are optional validation steps (see `docs/art/tutorial-art.md`) |
 | `2_Studies` | `head` (close-ups, views), `hair`, `body` (turnaround views): studies on the goldens |
 | `3_Layers` | the underlayer tests: `base`, `bikini`, `lingerie`, `swimwear`, `athletic`, `one-piece`, `backless` |
 | `4_Wardrobe` | `clothing`, `armor`, `showcase` |

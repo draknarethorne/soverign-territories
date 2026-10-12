@@ -4,7 +4,7 @@ Incoming image: a finished, chosen image of {{HERO}} (a scene, outfit or studio 
 ----------------------------------------------------------------
 prompt:
 
-Refine the incoming image without changing it: natural skin texture with fine pores, crisp eyes with clear catchlights and individual lashes, individual strands of hair, clean fabric weave and metal detail, sharp clean edges.
+Refine the incoming image as it is: natural skin texture with fine pores, crisp eyes with clear catchlights and individual lashes, individual strands of hair, clean fabric weave and metal detail, sharp clean edges.
 
 {{KEEP_LINE}}
 

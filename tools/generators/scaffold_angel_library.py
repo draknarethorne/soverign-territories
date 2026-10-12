@@ -4,7 +4,7 @@
 The sisters are the model: a standard sister has about 160 cards across the pipeline phases and Drakness has the whole library on top. Each angel gets the same structure,
 and the library pieces are ROTATED across the twenty angels (by alignment rank) so that, together, they exercise every family of the library instead of repeating one set.
 
-  1_Alpha      Bare Figure and Chest (scaffold_angel_set), 4 covering and 4 celestial experiments (female)
+  1_Alpha      Bare Figure (scaffold_angel_set), 4 celestial experiments (female)
   2_Studies    body views, head views, close-ups and expressions (scaffold_studio_library), 8 hairstyles from the 46-style library, a hair card per theme
   3_Layers     the skin base variants (female) and a rotating mix of bikini, lingerie, one-piece, backless and athletic underlayers
   4_Wardrobe   clothing (dresses, gowns, sets), armor, themed outfits, and the showcases: celestial, editorial, elemental, studio and 13 photo locations (female)
@@ -341,10 +341,9 @@ class Angel:
     # ----- phases
 
     def alpha_experiments(self):
+        """The celestial armor experiments only; the covering experiments (contoured, paint, pasties) bled into the wardrobe shots and were dropped."""
         if not self.female:
             return
-        for name in ("contoured", "paint", "paint-colour", "pasties"):
-            self.write("alpha", f"{self.slug}-alpha-2b-{name}", self.clone(f"1_Alpha/2b_Experiments/coverings/draknava-alpha-2b-{name}.json"))
         for name in ("core", "plate", "plate-fitted", "suit"):
             self.write("alpha", f"{self.slug}-alpha-2b-celestial-{name}", self.clone(f"1_Alpha/2b_Experiments/celestial/draknava-alpha-2b-celestial-{name}.json"))
 

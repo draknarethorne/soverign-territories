@@ -28,7 +28,7 @@ She stands before a forge-bright glow with a flame held in her open palm and the
 
 Dancing flame, embers and sparks rise off her palm in a tall, steady flame, ember orange light in the heat haze.
 
-Eyes: fully glowing ember orange, irises and pupils blazing with luminous ember orange light and no visible pupil, a faint ember orange glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing ember orange, irises blazing as one solid field of luminous ember orange light, a faint ember orange glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a scorched ancient stone courtyard at dusk, a large real fire burning beyond the wall, warm firelight and drifting smoke across the weathered stone.
 

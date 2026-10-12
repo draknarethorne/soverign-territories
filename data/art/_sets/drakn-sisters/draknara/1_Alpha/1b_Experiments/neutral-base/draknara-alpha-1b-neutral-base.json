@@ -1,0 +1,11 @@
+{
+  "artId": "draknara-alpha-1b-neutral-base",
+  "kind": "base-set",
+  "stage": "alpha",
+  "heroArt": "data/art/heroes/drakn-sisters/draknara-thorne.json",
+  "template": "data/art/_templates/heroes/1_Alpha/experiments/base-neutral-human.txt",
+  "output": "prompts/drakn-sisters/Draknara/1_Alpha/1b_Experiments/neutral-base/Draknara_Alpha_1b_NeutralBase.txt",
+  "denoise": "~1.0",
+  "notes": "Alpha 1b Neutral Base (experiment P2): a skin-tone base layer on the standard figure; Alpha 2 Bare Figure follows.",
+  "figureProfile": "standard"
+}

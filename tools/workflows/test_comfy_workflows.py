@@ -174,6 +174,45 @@ class FlowTests(unittest.TestCase):
             cw.set_inputs(cfg, args)
 
 
+class FirstShotTests(unittest.TestCase):
+    """The first-shot experiments (1_Alpha/1b_Experiments/<family>): P3 bare figure and P2 neutral base layer start from the photo like the Prime, in folders of their own."""
+
+    def test_the_experiment_folders_and_the_family_round_trip(self):
+        lay = cw.art_layout
+        card = {"stage": "alpha", "artId": "angelica-alpha-1b-bare-base", "components": {}}
+        self.assertEqual(lay.family(card, "angel-primes"), ["base", "bare-base"])
+        dirs = lay.dirs_for("alpha", ["base", "bare-base"])
+        self.assertEqual(dirs, ["1_Alpha", "1b_Experiments", "bare-base"])
+        self.assertEqual(lay.parse_dirs(dirs), ("alpha", ["base", "bare-base"]))
+        self.assertEqual(lay.dirs_for("alpha", ["base", "neutral-base"]), ["1_Alpha", "1b_Experiments", "neutral-base"], "P2 and P3 never share a folder")
+        self.assertEqual(lay.parse_dirs(["1_Alpha", "1_Prime"]), ("alpha", []), "the Prime is untouched")
+
+    def test_only_the_first_shots_take_the_photo(self):
+        def item(stem, family=()):
+            return {"stage": "alpha", "family": list(family), "stem": stem}
+        for stem, fam in (("Alice_Alpha_1_Prime", ()), ("Alice_Alpha_1b_BareBase", ("base", "bare-base")), ("Alice_Alpha_1b_NeutralBase", ("base", "neutral-base"))):
+            self.assertTrue(cw.takes_photo(item(stem, fam)), stem)
+        self.assertFalse(cw.takes_photo(item("Alice_Alpha_2_Bare", ("bare",))))
+        self.assertFalse(cw.takes_photo(item("Alice_Alpha_2b_CelestialSuit", ("bare", "celestial"))))
+        self.assertFalse(cw.takes_photo({"stage": "poses", "family": [], "stem": "Alice_X_Pose"}))
+
+    def test_a_flow_gives_the_experiment_bases_their_own_frame_variants(self):
+        tmp = pathlib.Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        for sub, stem in (("1_Prime", "Alice_Alpha_1_Prime"), ("1b_Experiments/bare-base", "Alice_Alpha_1b_BareBase"), ("1b_Experiments/neutral-base", "Alice_Alpha_1b_NeutralBase")):
+            d = tmp / "set-a" / "Alice" / "1_Alpha" / sub
+            d.mkdir(parents=True)
+            (d / f"{stem}.txt").write_text("=== x ===\n\nprompt:\n\nhello\n\n----------\nnegative prompt:\n\nbad\n")
+        cfg = {"photos": {"Alice": "a.png"}, "flows": {"frame": {"photos": {"Alice": "a_frame.png"}}}}
+        with mock.patch.object(cw, "PROMPTS", tmp):
+            names = {i["name"]: i for i in cw.prompt_index(cfg)}
+        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Frame", "Alice_Qwen_Alpha_1b_BareBase", "Alice_Qwen_Alpha_1b_BareBase_Frame",
+                                         "Alice_Qwen_Alpha_1b_NeutralBase", "Alice_Qwen_Alpha_1b_NeutralBase_Frame"])
+        self.assertIn("1_Alpha/1b_Experiments/bare-base/", names["Alice_Qwen_Alpha_1b_BareBase_Frame"]["prefix"], "output folders keep P2 and P3 apart")
+        self.assertIn("1_Alpha/1b_Experiments/neutral-base/", names["Alice_Qwen_Alpha_1b_NeutralBase"]["prefix"])
+        self.assertEqual(cw.input_role({"inputs": {"Alice": {}}, "inputRoles": {"alpha/base": "photo", "default": "bare"}}, "Alice", "alpha", ["base", "bare-base"]), "photo")
+
+
 class RoutingTests(unittest.TestCase):
     def test_home_and_accepts(self):
         with World() as w:

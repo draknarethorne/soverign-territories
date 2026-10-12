@@ -54,7 +54,7 @@
   ],
   "exclude": ["X_*.json"],
   "stageTemplates": "ST?_*.json",
-  "inputRoles": {"alpha/": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
+  "inputRoles": {"alpha/": "photo", "alpha/base": "photo", "alpha/bare": "prime", "alpha/footwear": "bare", "head": "apose", "motion": "apose", "polish": "scene", "final": "polish", "default": "bare"},
   "standardSize": [944, 1104],
   "denoise": {"pick": "high", "golden": 0.9},
   "inputs": {

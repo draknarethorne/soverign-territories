@@ -15,7 +15,7 @@ Maintain strict fidelity to the reference image's facial features, facial bone s
 
 Standing A-pose: upright, feet set apart, arms relaxed slightly away from the sides, open hands, natural subtle variation in limb angle and weight; head level and facing the camera squarely, shoulders square and relaxed (replace the source photo's pose, head tilt and body angle entirely).
 
-Figure: tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach; smooth pectoral contours without bulk; broad, flexible shoulders; long, slender arms; clean, flat athletic stomach with a natural narrow waist taper; slender hips; long, elegant duelist legs.
+Figure: tall, aerodynamic high-elven swordsman; lithe, graceful athletic frame with long reach; smooth, lean pectoral contours; broad, flexible shoulders; long, slender arms; clean, flat athletic stomach with a natural narrow waist taper; slender hips; long, elegant duelist legs.
 
 Skin: fair, cool-toned complexion, evenly toned.
 

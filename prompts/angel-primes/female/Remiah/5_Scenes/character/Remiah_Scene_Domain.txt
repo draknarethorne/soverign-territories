@@ -28,7 +28,7 @@ She stands with one arm raised toward a storm sky and the other hand open at her
 
 Crackling arcs of lightning and sparks crack in forks between her hands and the clouds, electric blue-white light flashing across her armor and the wet ground.
 
-Eyes: fully glowing electric blue-white, irises and pupils blazing with luminous electric blue-white light and no visible pupil, a faint electric blue-white glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing electric blue-white, irises blazing as one solid field of luminous electric blue-white light, a faint electric blue-white glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a bare black basalt headland under a heavy storm front, wet rock, a slate and violet sky with a distant lightning strike and a thin gold line at the horizon.
 

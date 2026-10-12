@@ -281,6 +281,17 @@ SLOT_DEFAULTS = {
     "sheen": {
         "pose": {"female": "data/art/wardrobe/finishes/satin.json"},
     },
+    # The first-shot experiments (1_Alpha/1b_Experiments): what the first image wears. base_layer is the neutral skin-tone layer, bare_base the bare look (the bare-skin study).
+    # A hero can carry her own (art.defaultBaseLayer, art.defaultBareBase); a card's components.<slot> wins over both.
+    "base_layer": {
+        "alpha": {"female": "data/art/wardrobe/swimwear/base/skin-tone-base-layer.json"},
+    },
+    "bare_base": {
+        "alpha": {
+            "female": "data/art/wardrobe/swimwear/base/edit/bare-skin-study.json",
+            "male": "data/art/wardrobe/swimwear/base/edit/bare-skin-study-male.json",
+        },
+    },
 }
 
 
@@ -329,6 +340,9 @@ TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
     "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
     "bare-male-human.txt": ["hair", "eyes", "skin"],
+    # the first-shot experiments (1_Alpha/1b_Experiments): the bare base states her own bust at once, the neutral base is the slender standard figure like the Prime
+    "base-bare-human.txt": ["hair", "ownBust", "eyes", "skin"],
+    "base-neutral-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
 }
 # The edit stages run at a high denoise (_templates/heroes/*.txt, 0.7 to 0.95), where the incoming image no longer pins the likeness, so they state it too: the same
 # hair, eyes, skin and own-bust lines as the Prime and Bare steps. Hair edits do not restate the hair; a staged scene only restates the face.
@@ -670,10 +684,11 @@ def generate(card_path, tokens_only=False):
     sex = None
     if "art" in hero:
         sex = "female" if "bust" in hero["art"]["physique"] else "male"
-        hero_defaults = {"underlayer": "defaultUnderlayer", "footwear": "defaultFootwear", "sheen": "defaultSheen", "realm": "defaultRealm"}
+        hero_defaults = {"underlayer": "defaultUnderlayer", "footwear": "defaultFootwear", "sheen": "defaultSheen", "realm": "defaultRealm",
+                         "base_layer": "defaultBaseLayer", "bare_base": "defaultBareBase"}
         for slot in SLOT_DEFAULTS:
-            # Footwear and sheen tokens live inside the underlayer pieces, so any template with an underlayer needs them.
-            uses_slot = "{{" + slot.upper() + "}}" in template or (slot in ("footwear", "sheen") and "{{UNDERLAYER}}" in template)
+            # Footwear and sheen tokens live inside the underlayer pieces (and the neutral base layer), so any template with one needs them.
+            uses_slot = "{{" + slot.upper() + "}}" in template or (slot in ("footwear", "sheen") and ("{{UNDERLAYER}}" in template or "{{BASE_LAYER}}" in template))
             if uses_slot:
                 default = default_slot(slot, card["stage"], sex)
                 # The realm (how realistic the world looks) can be set for a whole group in _settings/studio.json realmByGroup, and a hero's art.defaultRealm wins over it.
@@ -702,7 +717,7 @@ def generate(card_path, tokens_only=False):
         toks = tokens_for_dragon(hero)
     toks.update(resolve_component_tokens(card))
     toks.update(resolve_components_tokens(card))
-    for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG", "EXPRESSION_NEG"):
+    for neg_token in ("FOOTWEAR_NEG", "UNDERLAYER_NEG", "WEARING_NEG", "EXPRESSION_NEG", "BASE_LAYER_NEG", "BARE_BASE_NEG"):
         if "{{" + neg_token + "}}" in template:
             toks.setdefault(neg_token, "")  # only a piece that carries negatives (barefoot, bareskin) fills it
     # A makeup piece (components.makeup) replaces the default studio face-styling line everywhere,

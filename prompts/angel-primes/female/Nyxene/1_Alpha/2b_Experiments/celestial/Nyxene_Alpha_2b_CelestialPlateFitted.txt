@@ -4,7 +4,7 @@ Incoming image: the Prime A-pose of Nyxene Duskfall. This pass removes clothing,
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
+Edit the incoming image so the subject appears exactly as described in the Result.
 
 Result: she is wearing celestial armor of polished blackened silver: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, each curved to follow the natural contour of the breast and sitting close against the skin, hugging the form, covering the centre of each breast fully, and one matching small ornate plate in the form of a small halo ring with two short feathers curved to follow the contour of the pelvic area, tapering and sitting flush against the skin, covering the whole front of the pelvic area completely; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a black opal gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 

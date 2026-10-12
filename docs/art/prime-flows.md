@@ -48,3 +48,16 @@ Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or `make --
 A render made before a hero's photo changed (a re-paired angel) scores against the new photo and comes out low or negative; run the Prime again first.
 
 When the comparison is clear, drop what does not work: take a flow out of `flows` in the settings (its workflows stay in the repo and the workspaces until you delete them), and switch off the FireRed lock the same way.
+
+## First-shot experiments (P2 and P3)
+
+Besides the swimsuit Prime (P1), two experiments start from the same photo and are kept in `1_Alpha/1b_Experiments/<family>/`, so their renders never mix with the Prime's. The decisions and the reasons are in [../plans/2026-10-11-first-shot-flows.md](../plans/2026-10-11-first-shot-flows.md).
+
+| Path | Workflow | Output folder | What it makes |
+| --- | --- | --- | --- |
+| P2 | `Hero_<Engine>_Alpha_1b_NeutralBase` | `1_Alpha/1b_Experiments/neutral-base` | a skin-tone base layer on the slender standard figure; run `Alpha_2_Bare_Figure` after it |
+| P3 | `Hero_<Engine>_Alpha_1b_BareBase` | `1_Alpha/1b_Experiments/bare-base` | the bare figure with her own build from the art data; it is the Bare image, so the Bare Figure step is not needed |
+
+Each has a Qwen and a FireRed workflow, and a `_Frame` twin of each (22 female heroes, 160 workflows). Their cards are `data/art/_sets/<group>/<hero>/1_Alpha/1b_Experiments/{bare-base,neutral-base}/` (written by `tools/generators/scaffold_first_shots.py`, no components: the base layer and bare piece come from the `base_layer` / `bare_base` slots, or a hero's `art.defaultBaseLayer` / `art.defaultBareBase`).
+
+To carry a result on: choose the image, then `bin\inputs.cmd set HERO --prime IMAGE` for P2, or `bin\inputs.cmd set HERO --bare IMAGE --prime IMAGE` for P3. Compare with `bin\compare-primes.cmd --shots all` (labels `Qwen P2 neutral`, `FireRed P3 bare / frame`, ...; `--shots neutral,bare` for the experiments only). The face score only measures the face; judge the body, the build and any colour cast by eye. When a winner is chosen it is promoted to `1_Prime` and the others are removed.

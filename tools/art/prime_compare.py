@@ -8,6 +8,7 @@ The table at the end gives the average per variant over all heroes, which is the
   python tools/art/prime_compare.py                 every hero that has a render
   python tools/art/prime_compare.py Haniya Draknoxa
   python tools/art/prime_compare.py --all-renders   every render of each variant, not only the newest (to see the spread of a seed)
+  python tools/art/prime_compare.py --shots all     also the first-shot experiments: P2 neutral base and P3 bare figure (1b_Experiments)
 """
 import argparse
 import pathlib
@@ -22,17 +23,21 @@ import comfy_workflows as cw  # noqa: E402
 import likeness  # noqa: E402
 
 ENGINE_NAMES = (("qwen", "Qwen"), ("firered", "FireRed"))
+# the first shots: the Prime (P1, the swimsuit baseline) and the two experiment bases (1b_Experiments): P2 neutral base layer, P3 bare figure
+SHOTS = {"prime": ("Alpha_1_Prime", ""), "neutral": ("Alpha_1b_NeutralBase", "P2 neutral"), "bare": ("Alpha_1b_BareBase", "P3 bare")}
 
 
-def variants(cfg, hero):
-    """[(label, workflow name, flow or None, engine)] of every Prime workflow of a hero."""
+def variants(cfg, hero, shots=("prime",)):
+    """[(label, workflow name, flow or None, engine)] of every first-shot workflow of a hero (default: the Prime only)."""
     out = []
-    for flow in [None] + sorted(cfg.get("flows", {})):
-        if flow and not cw.flow_photo(cfg, flow, hero):
-            continue
-        for key, eng in ENGINE_NAMES:
-            name = f"{hero}_{eng}_Alpha_1_Prime" + (f"_{cw.flow_suffix(flow)}" if flow else "")
-            out.append((f"{eng}" + (f" / {flow}" if flow else ""), name, flow, key))
+    for shot in shots:
+        stem, tag = SHOTS[shot]
+        for flow in [None] + sorted(cfg.get("flows", {})):
+            if flow and not cw.flow_photo(cfg, flow, hero):
+                continue
+            for key, eng in ENGINE_NAMES:
+                name = f"{hero}_{eng}_{stem}" + (f"_{cw.flow_suffix(flow)}" if flow else "")
+                out.append((eng + (f" {tag}" if tag else "") + (f" / {flow}" if flow else ""), name, flow, key))
     return out
 
 
@@ -99,8 +104,13 @@ def main(argv=None, embedder=None, cache=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("heroes", nargs="*", help="heroes (default: every hero with a render)")
     ap.add_argument("--all-renders", action="store_true", help="every render of each variant, not only the newest")
+    ap.add_argument("--shots", default="prime", help="first shots to compare, comma separated or 'all': prime (P1 swimsuit), neutral (P2), bare (P3). Default: prime")
     ap.add_argument("--out", help="the picture to write (default: <work root>/_reports/prime_compare.png)")
     args = ap.parse_args(argv)
+    shots = list(SHOTS) if args.shots == "all" else [s.strip() for s in args.shots.split(",") if s.strip()]
+    bad = [s for s in shots if s not in SHOTS]
+    if bad:
+        sys.exit(f"unknown shot(s) {bad}; known: {list(SHOTS)}")
     cfg = cw.load_cfg()
     scorer = Scorer(embedder, cache)
     heroes = [h for h in sorted(cfg.get("photos", {})) if not args.heroes or h.lower() in {x.lower() for x in args.heroes}]
@@ -110,7 +120,7 @@ def main(argv=None, embedder=None, cache=None):
         base = source_photo(cfg, hero, None)
         if base:
             cells.append(("original", base, None))
-        for label, name, flow, _eng in variants(cfg, hero):
+        for label, name, flow, _eng in variants(cfg, hero, shots):
             src = source_photo(cfg, hero, flow)
             for img in renders(cfg, name, args.all_renders):
                 any_render = True

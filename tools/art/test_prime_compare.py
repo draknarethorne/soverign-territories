@@ -31,6 +31,13 @@ class PrimeCompareTests(unittest.TestCase):
                           ("Qwen / frame", "Alice_Qwen_Alpha_1_Prime_Frame"), ("FireRed / frame", "Alice_FireRed_Alpha_1_Prime_Frame")])
         self.assertEqual(len(pc.variants(CFG, "Bob")), 2, "no frame image, no frame variants")
 
+    def test_the_first_shot_experiments_are_extra_variants_with_their_own_labels(self):
+        got = [(lab, name) for lab, name, _f, _e in pc.variants(CFG, "Alice", ("neutral", "bare"))]
+        self.assertEqual(got[0], ("Qwen P2 neutral", "Alice_Qwen_Alpha_1b_NeutralBase"))
+        self.assertIn(("FireRed P3 bare / frame", "Alice_FireRed_Alpha_1b_BareBase_Frame"), got)
+        self.assertEqual(len(got), 8)
+        self.assertEqual(len(pc.variants(CFG, "Alice", tuple(pc.SHOTS))), 12)
+
     def test_renders_are_found_newest_first_and_a_variant_never_picks_up_another_ones(self):
         out = self.tmp / "out" / "deep"
         out.mkdir(parents=True)

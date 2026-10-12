@@ -119,7 +119,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   [art/comfyui-art-pipeline.md](art/comfyui-art-pipeline.md#denoise-is-the-key-lever).
 - **The Alpha stage (Oct 2026).** The first workflows of a hero are not poses: they create her likeness, so they have their own stage and folder, `alpha/`
   (sorts first). Alpha 1 Prime (original photo to the bikini A-pose, standard figure), Alpha 2 Bare (Prime to bare skin: individual build, hair, eyes, skin and
-  bust re-asserted; the figure and chest looks sit flat in `1_Alpha/2_Bare/`, next to the hand-made `Alpha_2_Bare_Skin` shots; the coverings and celestial experiments are Alpha 2b in `alpha/bare/coverings/` and `alpha/bare/celestial/`) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
+  bust re-asserted; the figure look sits flat in `1_Alpha/2_Bare/`, next to the hand-made `Alpha_2_Bare_Skin` shots; the celestial experiment (kept: it becomes body armor) is Alpha 2b in `alpha/bare/celestial/`; the bare-chest study and the covering experiments were dropped Oct 11) and Alpha 3 Barefoot and Heels (Bare image back into the bikini on her own figure, `alpha/footwear/`).
   `Alpha_2_Bare_Figure` is the intended Bare step; the hand-made `Alpha_2_Bare_Skin` shots are temporary while it is tuned and are not kept long term.
   Bare, Barefoot and Heels are the three golden images, named `<Hero>_Qwen_Alpha_1_Prime|Alpha_2_Bare|Alpha_3_Barefoot|Alpha_3_Heels_00000.png` (the `_00000`
   sorts above the numbered renders); `poses/` now holds only variations fed the Bare image. Input roles: `photo`, `prime`, `bare`, `apose` (the Barefoot image), `heels`
@@ -320,11 +320,26 @@ Five steps (0 to 4), done in this order. Each one ends with a pause: a summary o
 They are removed at the source (243 data files plus the hair-motion scaffold; about 50 rules, each dropping a tail whose positive half was already in the sentence) and all prompts regenerated: **0 command phrases ("do not", "never", "avoid") and 0 flip-risk phrases are left**; the generic review list fell from about 31,000 hits to about 360 (descriptive ones such as "without bulk"), plus 1,428 in allowlisted video prompts.
 Examples: `do not recolour` (5,687), `do not alter undertone` (3,260), `no backlight or rim light` (3,300), `no gap between them ... rather than drooping` (2,540), `not glowing` (1,886), `no pale areas` (1,447), `no footwear` (1,299), `not squinting` and `no squint` (about 2,500), `nothing from the modern world` (929), `no breeze` became `still air`, and "Change nothing else: keep" became "Keep".
 `tools/art/negation_audit.py` (`bin\negation-audit.cmd`) now keeps it that way: `validate.cmd` runs it in check mode, and the rules and allowlist are in `data/art/_settings/negation-audit.json`. The README rule is "Write positives, not negations".
-**Left on purpose:** the video prompts (no negative prompt on the video model), gameplay-card lore (the card owns it), brand text ("no text"), and the 2b covering experiments, which say "only these three coverings" and "no clothing at all" as part of what they test.
+**Left on purpose:** the video prompts (no negative prompt on the video model), gameplay-card lore (the card owns it), brand text ("no text"). (The 2b covering experiments, which said "only these three coverings", were dropped Oct 11.)
 **Also done (Oct 9):** "lightly enhanced" and "gently enhanced" in the angels' skin, hair and eye strings (24 identities) invited change as much as the old negatives did, so they now say "exactly as in the reference image".
 They keep only the detail (evenly toned, healthy shine and dimension, crisp definition).
 The eye string is now "irises in their natural colour ..." so it also reads correctly inside the glow pieces (it used to say "natural natural"). 3,260 angel prompts regenerated and deployed.
 If one photo needs brightening, do it on that angel's own identity, not as a default.
+
+### Positive-wording pass (Oct 11): what is fixed, what is flagged
+
+The audit tool is a fixed word list and is **not exhaustive**, so the templates and the Alpha-path pieces were also read line by line. Fixed (positive text in the positive prompt, negatives left to the negative prompt):
+the Bare templates ("remove all clothing, swimwear, straps ..." became "the subject appears exactly as described in the Result"), `head-human` and `polish-human` ("keep the wardrobe unchanged", "without changing it"), `scene-staged-human` ("unchanged"), the pieces `bare-skin-study(-male)` ("nothing but", "unretouched"), `skin-tone-base-layer` ("shows no straps ..."), the celestial suit and armor pieces ("Not covered", "none is a cup", "unchanged natural skin"), and about 15 one-off pieces and cards ("no headwear", "no visible pupil", "without bulk", "nothing in hand", "no bigger than a hand", "without fear", ...). The audit's REVIEW list is now 0.
+**Flagged for a later pass (not changed, outside the Alpha path):**
+
+| Where | Wording | Why left |
+| --- | --- | --- |
+| 20 drakn-bound cards (`_sets/drakn-bound/*/4_Wardrobe/armor/*-armor-default.json`, `5_Scenes/*-scene-signature.json`) | `"jewelry": "none, unadorned"` | a bulk edit of 20 cards; the heroes are not on the current path. Use a positive piece ("bare neck, wrists and fingers") when they come up |
+| `wardrobe/effects/contour/*` (4 pieces) | "... unless this prompt says otherwise: ..." (2,629 prompts) | a conditional, not a negation, but it asks the model to reason about its own prompt; needs a test render before changing |
+| `_templates/brand/harmonize.txt` | "must not change", "Do not add, remove or merge people" | a command in a positive prompt; brand text is allowlisted, rewrite when the brand set is rerun |
+| Brand and icon prompts | "No text, no lettering" | left on purpose: a text-to-image prompt has no other tool |
+| `Wearing: only a ...` (406 Alpha prompts) | "only" restricts rather than negates | it is how the Prime keeps one garment; review if the swimsuit bleeds |
+| Every template negative prompt | long lists | the Qwen negative prompts are fine; FireRed has none, so test the FireRed output before adding more |
 
 ## Angel Primes: builds, colours, roster docs (Oct 9)
 

@@ -520,6 +520,10 @@ def check_piece_refs(report):
         ds = load(f).get("art", {}).get("defaultSheen")
         if ds and not (ROOT / ds).exists():
             report.error(rel(f), f"defaultSheen {ds} does not exist")
+        for key in ("defaultBaseLayer", "defaultBareBase"):
+            piece = load(f).get("art", {}).get(key)
+            if piece and not (ROOT / piece).exists():
+                report.error(rel(f), f"{key} {piece} does not exist")
         if "hairHighlights" in pal:
             if not (ROOT / pal["hairHighlights"]).exists():
                 report.error(rel(f), f"hairHighlights {pal['hairHighlights']} does not exist")

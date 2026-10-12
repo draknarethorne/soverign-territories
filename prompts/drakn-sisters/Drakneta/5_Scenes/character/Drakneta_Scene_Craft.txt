@@ -27,7 +27,7 @@ She stands inside a drawn ring of chalk glyphs, her hands pressed together and t
 
 Crackling arcs of lightning and sparks turn around the ring and gather between her palms, white-hot electric light tracing the chalk lines.
 
-Eyes: fully glowing white-hot electric, irises and pupils blazing with luminous white-hot electric light and no visible pupil, a faint white-hot electric glow reaching the lashes and upper cheeks (override the incoming eye colour).
+Eyes: fully glowing white-hot electric, irises blazing as one solid field of luminous white-hot electric light, a faint white-hot electric glow reaching the lashes and upper cheeks (override the incoming eye colour).
 
 Environment: a bare stone hall with a large chalk circle of glyphs drawn on the floor, candles at its edges and tall narrow windows letting in grey light.
 

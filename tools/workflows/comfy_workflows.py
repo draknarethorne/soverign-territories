@@ -676,6 +676,14 @@ def engine_prompt(cfg, item, pos):
     return pos
 
 
+PHOTO_STEMS = ("_Alpha_1_Prime", "_Alpha_1b_BareBase", "_Alpha_1b_NeutralBase")  # the first shots: the Prime and its two experiment bases
+
+
+def takes_photo(item):
+    """True for a first shot, the only workflows that load the hero's source photo (Alpha 1 Prime and the 1b_Experiments bases)."""
+    return item["stage"] == "alpha" and item["stem"].endswith(PHOTO_STEMS)
+
+
 def flow_suffix(flow):
     """'frame' -> 'Frame', 'tight-crop' -> 'TightCrop': the word a flow's workflows carry in their name (Haniya_Qwen_Alpha_1_Prime_Frame)."""
     return "".join(w.capitalize() for w in re.split(r"[-_ ]+", flow) if w)
@@ -705,7 +713,7 @@ def prompt_index(cfg, engine="qwen"):
     # a flow is a second way to run the Prime: the same prompt, another incoming image (workspaces.json flows). Its workflow sits beside the normal one and carries the flow's name
     for flow in cfg.get("flows", {}):
         suffix = flow_suffix(flow)
-        for it in [i for i in out if i["stage"] == "alpha" and not i["family"] and i["stem"].endswith("_Alpha_1_Prime") and flow_photo(cfg, flow, i["hero"])]:
+        for it in [i for i in out if takes_photo(i) and flow_photo(cfg, flow, i["hero"])]:
             out.append({**it, "stem": f"{it['stem']}_{suffix}", "name": f"{it['name']}_{suffix}", "prefix": f"{it['prefix']}_{suffix}", "flow": flow})
     return out
 
@@ -1519,7 +1527,7 @@ def cmd_make(args):
         if engine == "firered" and not (args.stage or args.cls):
             # the class list limits what --create builds; a FireRed workflow that already exists (an Alpha test card, a Final) is always refreshed
             its = [i for i in its if class_of(i["stage"]) in cfg["engines"]["firered"].get("classes", ["scene"])
-                   or i.get("flow") or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
+                   or i.get("flow") or i["stem"].endswith(PHOTO_STEMS[1:]) or (engine_roots(cfg)["firered"] / i["group"] / i["hero"] / f"{i['name']}.json").exists()]
         its = [i for i in its if engine in cfg.get("stageEngines", {}).get(i["stage"], [engine])]  # e.g. final is FireRed only
         items += its
     if args.group:
@@ -1554,7 +1562,7 @@ def cmd_make(args):
             if args.verbose:
                 print(f"  missing  {it['group']}/{it['hero']}/{target.name}")
             continue
-        is_apose = it["stage"] == "alpha" and not it["family"]  # Alpha 1 Prime: the only workflow that takes the hero's source photo
+        is_apose = takes_photo(it)  # a first shot: the only workflows that take the hero's source photo
         is_text = is_text_item(cfg, it)
         master = ROOT / (video_template(cfg, it["path"].read_text(encoding="utf-8")) if it["engine"] == "minimax"
                          else cfg["engines"][it["engine"]]["template"] if it["engine"] == "firered"
