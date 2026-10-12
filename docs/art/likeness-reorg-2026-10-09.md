@@ -77,7 +77,8 @@ Each angel is paired to the sister of her element (from the codex). The target i
 | Sammara | Draknoxa | 0.50 | 0.33 | Prospects\Adrianna Cruz (6) | was too alike her sister |
 | Nyxene | Drakness | 0.09 | 0.28 | Prospects\Tove North (6) | close to Drakness on purpose; check she is not too close |
 
-- **Published:** the angel's folder (`Angels\<name>\gallery`) holds all the photos of the new face, and `Angels\<name>\review` holds the photos she had before. The best single photo of the new face (clear, single face, large, portrait) was set as the angel's photo in `workspaces.json`, copied to `ComfyUI-Inputs\Angel Primes`, and written into the repo and Angel Primes `Alpha_1_Prime` workflows. Check: all 11 angel workflows load the photo named in the config, and all 11 files exist in the input folder.
+- **Published:** the angel's folder (`Angels\<name>\gallery`) holds all the photos of the new face, and `Angels\<name>\review` holds the photos she had before. The best single photo of the new face (clear, single face, large, portrait) was set as the angel's photo in `workspaces.json`, copied to `ComfyUI-Inputs\Angel Primes`, and written into the repo and Angel Primes `Alpha_1_Prime` workflows.
+Check: all 11 angel workflows load the photo named in the config, and all 11 files exist in the input folder.
 - **Hand-made workflows** (candidates, finals, curated, shots) were not changed, so your saved candidates still load the photos you used.
 - **Male angels** were not touched: no photos yet, and the pairing is woman-to-sister only.
 - The sheet `pairs_final.png` shows each sister above her angel's photos.
@@ -133,3 +134,34 @@ Open in ComfyUI: Angel Primes `female\<Name>\1_Alpha\1_Prime\<Name>_Qwen_Alpha_1
 - The face model was trained on real photos. It separates the people in this library well (91% right) but is less reliable on illustrated or heavily stylised art, closed eyes and turned heads; two faces in a picture are marked "unsure".
 - "Similar but not the same" is a score band (0.15 to 0.40), not a judgement of looks; change `pairLow`, `pairHigh` or `--target` to move it. A face that looks right to you at 0.10 or 0.35 is allowed.
 - Hair colour, outfit and background are ignored on purpose: the angel prompts set hair and eye colours themselves, so only the face is compared.
+
+## Raw notes: the cache (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+If I remove a file from a directory like `B:\Soverign Territories\Prospects\Rhea Ives`, will it also be removed from any cache that might be storing it?  Basically, if I clean-up any files from a gallery, what impact will that have on the cached versions?  Will they be automatically updated or do I need to manually
+clear the cache to reflect the changes?  And what outcome will that have on matching - like if I find a photo that has a picture of multiple people one male and one female and then I see other pictures of males dropping into the females folder because of the male that was also in her folder.  How do I handle that to
+get things clean.  That's the Elise Frost problem I am noticing.  I havent' checked enough other ones to validate - but I did see it there and it's a possibilty when I pull more art files it's likely to happen.  I need to understand the cache behavior to ensure that my clean-up efforts are effective and that the
+matching remains accurate.
+
+## Raw notes: can the tool tell if faces match (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+I'm wondering if there is a way for you to analyze images and whether or not they are the same likeness in images or are different people - the reason is that I think some are different people and some are same - but I am guessing and in some cases the output from comfyui for two different angels look very close -
+specifically angelica and azaline ... even within angelica I am not sure if they are all same person or different.  I imagine that's complex and not sure if that can be done - or if it's just for me to eyeball if they end up looking same and pick another prospect and move that back into various.  Basically - I want to
+know if the faces match - less about the outfits, figures, etc... will the faces come across the same.  We can focus on angelica and azaline as the test bed - but ideally if we can script things, we'd re-organize some photos based on likeness of the faces somehow.  IF that all makes sense?  That would make things
+easier for how I am trying things out - sometimes I put in images that I know are different to test with - sometimes I think they are all going to render similar because I know they are different.  But it's all eyeballing things, testing and then worrying about one sister or angel looking the same because I
+accidentally used the same person in the original across the workflows.  If it's complex - then I'll just continue to eyeball and shuffle pictures around myself - but automating things would help if somehow that is possible.
+
+## Raw notes: the sisters against Drakness (Oct 9)
+
+Your words, kept as written (only wrapped).
+
+Circle back on all the sisters and see if they are all similar enough to be sisters.  If any look too vastly different, we can consider changing the sister to another one. Since the story is based on Drakness - she's always the same and if we compare them as a group - she's the anchor sister.  That's how the story
+starts and is written up in the initial bible.md - I believe.  So we're trying to build the images that will align to the story, ensuring we have proper sisters and angel pairs.  Exception is Angelica who is also one I have hand chosen for her as well.  Basically Drakness drives almost everything with Angelica my prime
+angel.
+
+I know we may iterate, reorg and such - but I think this is a systematic way to get things re-organized and if I chose poorly on angels, we're fixing that up.  If I chose good on sisters, that's great.  If not, we can revisit any sister and then iterate again on angel pairs.
+
+This process will also help if I just bring in a new batch of Various photos and want to evaluate using them. It'll help with any Prospect as well and Artist that I want to learn from.  Building out a comprehensive library of scaled photos for me to play with.

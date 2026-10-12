@@ -30,7 +30,7 @@ intentionally out of scope here; the workflow `.json` files are the source of tr
 | Location | Purpose |
 | --- | --- |
 | `workflows/<Hero>/` | **The real work.** ComfyUI workflow exports, one per experiment. Named `<Hero>_Qwen_<Category>_<Variant>.json` (e.g. `Drakness_Qwen_Armor_Elegant.json`). |
-| `data/art/_templates/<archetype>/*.txt` | **Canonical prompt templates** (Pose, Head, Hair, Motion, Armor, Clothing, Scene) — `{{TOKEN}}` placeholders filled by `tools/generators/gen_prompt.py`. `heroes/` is the humanoid archetype; `dragons/` is the Elder Dragon archetype (text-to-image). See [`prompt-pattern.md`](prompt-pattern.md) for block order/wording conventions. |
+| `data/art/_templates/<archetype>/**/*.txt` | **Canonical prompt templates** (Pose, Head, Hair, Motion, Armor, Clothing, Scene) — `{{TOKEN}}` placeholders filled by `tools/generators/gen_prompt.py`. `heroes/` is the humanoid archetype (one folder per stage: `1_Alpha`, `2_Studies`, `4_Wardrobe`, `5_Scenes`, `6_Finish`, `Bench`); `dragons/` is the Elder Dragon archetype (text-to-image). See [`prompt-pattern.md`](prompt-pattern.md) for block order/wording conventions. |
 | `data/art/heroes/`, `data/art/races/`, `data/art/wardrobe/`, `data/art/motion/`, `data/art/dragons/`, `data/art/backgrounds/` | **Generator source of truth** — hero/dragon identities, reusable hair/motion/wardrobe pieces, backgrounds. |
 | `data/art/_sets/<group>/<slug>/<phase>/<family>/*.json` | **Assembly cards** — glue a hero/dragon + component(s) + template together. One folder per roster group (`drakn-sisters`, `drakn-bound`, `elder-dragons`, `angel-primes`). |
 | `prompts/<group>/<Hero>/<phase>/<family>/*.txt` | **Generated, production-ready prompts** — copy straight into the matching ComfyUI workflow. Regenerate via `gen_prompt.py`; never hand-edit. |
@@ -127,7 +127,7 @@ quality** before committing a model to a stage.
 
 ### Denoise is the key lever
 
-Denoise is set by automation, so a workflow no longer opens at 1.0 by accident. The range lives in each **stage template** (`data/art/_templates/heroes/*.txt`, printed in
+Denoise is set by automation, so a workflow no longer opens at 1.0 by accident. The range lives in each **stage template** (`data/art/_templates/heroes/<stage>/*.txt`, printed in
 the prompt header as `Denoise ~0.8-0.9.`; the card's own `denoise` field is only a note); the workflow tool starts every generated workflow at the **high end** of that range
 (`denoise.pick` in `workflows/workspaces.json`: `high`, `mid` or `low`), because the stages that follow a golden image should bring real change and not be a blind copy.
 Tune it per render from there.

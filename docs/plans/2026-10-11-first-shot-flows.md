@@ -66,9 +66,9 @@ Each has a FireRed twin (`..._FireRed_...`) and a Frame twin (`..._Frame`). Comp
 - [x] E11 Missing input images (Oct 12): a workflow loads its image from its own workspace's input folder, and only `inputs reset` copied images there, so the Frame images (and the experiment photos) were missing from most of them.
   New `bin\sync-inputs.cmd` (it already existed; I first wrote a duplicate `inputs sync`, removed the same day) copies what deployed workflows load without retargeting anything; `refresh` and `refresh-firered` run it. All 18 frame images are now in their workspaces' input folders.
 - [x] E12 `Female` (alpha/female): its photo had been moved out of the Fantasy artist folder (it is Sandalyn's review photo). Restored as `Various/gallery/various_image_7500732784539999043.jpg` and pointed to it; the Female first-shot workflows load it.
-- [ ] E13 Open: 7 angels' chosen Prime renders (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006) are loaded by workflows in Angel Primes but are in no input or output folder; `inputs status` lists them as `mixed`. Re-render or re-pick them.
-- [ ] E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7.
-- [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial.
+- [ ] **P1 you** E13 Open: 7 angels' chosen Prime renders (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006) are loaded by workflows in Angel Primes but are in no input or output folder; `inputs status` lists them as `mixed`. Re-render or re-pick them.
+- [ ] **P1 you** E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7.
+- [ ] **P1 ai** E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial.
 
 ## Result
 
@@ -126,3 +126,67 @@ You're great at remembering, but I am not so we need this all documented for whe
 
 Again - don't forget what we are doing - but now that you know about all the details of how the art .json, templates and workflows work - make sure that where you put things for P2 and P3 make sense in how things are organized.
 Sometimes stuff is just put out there and later we have to totally restructure things as it doesn't make sense after we are done with the testing/validation of the phases.
+
+## Raw notes: which shot to make first (Oct 11)
+
+Your words, kept as written (only wrapped).
+
+# Which shot first: swimsuit Prime, neutral base, or bare (draft, no decision)
+
+## Today
+
+`photo -> 1_Prime (coloured string bikini, A-pose, denoise 1.0) -> 2_Bare (remove all clothing, individual build, ~0.9) -> Bare_Chest and Bare_Figure -> 3_Barefoot / Heels -> swimsuits and the rest (3_Layers)`.
+
+The swimsuit is made first, taken off, and put back on later.
+
+## The three images everything should hang on
+
+1. **Bare figure**: full length, neutral stance, her build. The body master.
+2. **Bare chest**: a bust close-up with a proper face (eyes, lips, makeup). The face master.
+3. **Swimsuit figure**: the first wardrobe pass.
+
+## Opinion
+
+- A base should be the **least committed** state of the character (studios use a nude or fit-model garment, like a base mesh); every outfit is then an **additive** pass on it. Today's order is subtractive for the swimsuit: it makes a coloured, hero-specific bikini, then asks a high-denoise edit to erase straps and
+strings and re-shape the body, and later puts a swimsuit back. That costs steps and leaves traces (strap lines, colour cast, a second drift of the face).
+- The swimsuit should come **after** the bare figure, as an additive edit. Edit models are much better at "put this on her" than at "remove this and keep everything else".
+- The bare chest is a **close-up**: it should come from the face master (headshot or frame), not be a crop of the full figure, where the face is about 130 px.
+- Risk of going straight to bare: open edit models handle a bare torso unevenly (the repo's `2b_Experiments` on paint, pasties and skin suits suggests this). So test it, with a neutral nude-tone two-piece as the fallback first shot.
+
+## Which original is the first shot
+
+Choose the input by what the original shows, not by one rule:
+
+| Original | Body source | Face source |
+| --- | --- | --- |
+| full or nearly full length | the photo | the photo |
+| partial body | the frame (the body is invented anyway) | the headshot of the same photo |
+| head only | the frame | the headshot |
+
+The best photo of a hero is the one `likeness photos` already ranks: her face, one clear face, some body in view, portrait. The best headshot is the front-facing, even-lit one, which may be a different photo.
+
+## Minimal chain
+
+```text
+original -> BASE (bare or neutral figure, her build)  --+--> Bare chest (bust, face pass from the headshot)
+                                                         +--> Swimsuit (additive)
+                                                         +--> Barefoot / Heels (additive)
+```
+
+One generation from the original, three derived images, each one step from the base.
+
+## Paths to test (same hero, same seed, several heroes)
+
+| Path | First shot | Then | What it tells us |
+| --- | --- | --- | --- |
+| P1 (today) | swimsuit Prime | Bare, then Bare chest | baseline |
+| P2 | neutral nude-tone two-piece | Bare (light edit) or use as the base, swimsuit additive | does a neutral first shot beat a coloured one |
+| P3 | bare figure directly | bust from the headshot, swimsuit additive | can the model do a clean bare base |
+| P4 | P2 or P3, plus a face pass with the headshot as the second image | | does the real photo's face hold up across the chain |
+
+Judge with `compare-primes` (face score against the source) and by eye: straps or lines left, colour cast, the face at the bust, step count, how often a rerun lands.
+
+## What an AI studio would add
+
+For the main heroes (sisters, angels) a studio would not chain edits to keep a face: it would train a small identity LoRA or use a face-embedding adapter from the 20 to 70 photos we already have per hero, and run every image from that, with pose and wardrobe controlled separately. That is the larger investment and
+removes the Prime as a bottleneck; worth planning after the paths above, for the heroes we keep.

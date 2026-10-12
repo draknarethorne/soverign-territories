@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-08 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-12 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -12,8 +12,8 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | --- | --- |
 | Art pipeline | Working. `data/art/` identities + pieces + templates compile to prompts via `tools/generators/gen_prompt.py`. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving). Every sister has Signature, Glamour, Elegant Casting, Staged Enchanted Evening, **The Dawn** (rising in her homeland) and **Robe** scenes, each with its own background. How to add to it: [art/tutorial-art.md](art/tutorial-art.md). |
 | ComfyUI workflows | Automated. `tools/workflows/comfy_workflows.py` builds workflows from prompts and syncs them to the home workspace of each set (Drakn Sisters, Sovereign Dawn Series, Sovereign Territories, Angel Primes; temporary copies in other workspaces on request) (`workflows/workspaces.json`, [../workflows/README.md](../workflows/README.md)); `bin/*.cmd` are the quick launchers. Three engines: Qwen (card-art look, tracked in git), FireRed (photoreal, local test copies with a real-then-magic effects instruction) and MiniMax video (tracked). The `ST0`-`ST6` templates are the only masters. Hand-tuned workflows are kept in `workflows/_curated/` and never regenerated. |
-| Face likeness | `bin\likeness.cmd` compares faces in the photo library (one-person checks, artists grouped into people, the sisters as a family around Drakness, angel-to-sister pairing, sorting the top-level `Various` pool, names and history files, a look-alike guard, merge, retire, undo). Reorganisations done Oct 9 and Oct 10: see [art/likeness-reorg-2026-10-10.md](art/likeness-reorg-2026-10-10.md) for what moved and what to review (Seraphine, Gavrielle and Sandalyn have new faces; Azaline and Camaris still need a candidate). Guide: [art/likeness.md](art/likeness.md). |
-| Original photos | The library under the work folder (Angels, Sisters, Prospects, Artists, and the pool `Various`) is maintained by `bin\originals.cmd`: originals are named after their folder, scaled to 944x1104, given a face `headshot_944x1104` copy, copies of removed originals move to the `_org` folders, and a chosen photo that was renamed is re-pointed (`inputs photos`). Guide: [art/original-photos.md](art/original-photos.md). |
+| Face likeness | `bin\likeness.cmd` compares faces in the photo library (one-person checks, artists grouped into people, the sisters as a family around Drakness, angel-to-sister pairing, sorting the top-level `Various` pool, names and history files, a look-alike guard, merge, retire, undo). Reorganisations done Oct 9 and Oct 10: see [art/likeness-reorg-2026-10-10.md](art/likeness-reorg-2026-10-10.md) for what moved and what to review (Seraphine, Gavrielle and Sandalyn have new faces; Camaris still needs a candidate (Azaline became Eva Emily on Oct 11)). Oct 12: `likeness artists` reset the Artists folders from the Oct 9 backup (every photo under the artist it came from, then its person; the pre-reset copy is `_backup\2026-10-12-before-artists-reset`, people left with no photos are in `_retired\Artists`). Then the new routine: `likeness crop` cuts every photo (Angels, Sisters, Prospects, Artists) of app bars, other people, animals and background, keeping the uncropped one in `_archive\...\gallery_uncropped`; `group --singles` gives every good photo in an artist's gallery a person (never across artists); `rematch` and `singles` join a prospect who is the same woman as an angel or sister to her (0.55); `pullback` re-sorts prospects through `Various`; `junk --reset` sends `_junk` back through it all; `crosscheck` reports look-alikes across the lines kept apart (`_reports\crosscheck.md`). Face data now tells animals from people, so it was read again. Guide: [art/likeness.md](art/likeness.md). |
+| Original photos | The library under the work folder (Angels, Sisters, Prospects, Artists, and the pool `Various`) is maintained by `bin\originals.cmd`: originals are named after their folder, scaled to 944x1104, given a face `headshot_944x1104` copy, copies of removed originals move to `_archive` (the `_org` folders, mirrored paths), and a chosen photo that was renamed is re-pointed (`inputs photos`). One command, `bin\library.cmd`, runs the whole ingest routine (crop, junk, sort, artists, prospects, duplicates, sync); the runbook is in [art/original-photos.md](art/original-photos.md). |
 | Video | First pipeline built: `data/animation` cards (actions as `Motion:`/`Scene:` blocks with transitions) -> `gen_animation.py` -> MiniMax H3 workflow from `ST6_MiniMax_Reel` (9:16, the default) or `ST6_MiniMax_Match`. Three Drakness example clips are deployed; none rendered yet. Guide: [art/tutorial-video.md](art/tutorial-video.md). |
 | Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
@@ -22,15 +22,9 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Starter decks, packs, manifests | **Broken** (see Data debt). |
 | Unity client, backend | Not started. |
 
-## Active plans
+## Plans and the queue
 
-| Plan | Summary |
-| --- | --- |
-| [plans/2026-10-09-finals-and-mvp.md](plans/2026-10-09-finals-and-mvp.md) | Candidates, shots and finals for workflows (`zz_Candidates`, `zz_Final`), source-photo picks, a generated `docs/todo.md`, and scaling the MVP back to Darkness and Light. Decisions are listed in the plan. Built: the `finals` command (any stage can be a final; its image is saved into `assets/art`); the MVP is rescoped to Darkness and Light (decided Oct 9). Next: converge the repo and workspaces (Phase 2b), your photo and Prime/Bare picks, and the rest of Phase 6 (the command-line step-back is built: every changing command previews unless `--apply`, simpler `deploy`, `pull` and `inputs` options, `status` shows finals, `bin\audit.cmd`). |
-| [plans/2026-10-10-names-ingest-headshots.md](plans/2026-10-10-names-ingest-headshots.md) | Names that follow the photos (`z_` files), `Models` renamed to `Sisters`, the new `Various` batch sorted, headshots, look-alike guard, review photos, Seraphine re-paired. Built and run Oct 10. Waiting on you: the design for several Primes per hero (Phase 5, no code yet) and the review folders. |
-| [plans/2026-10-11-tidy-junk-organise.md](plans/2026-10-11-tidy-junk-organise.md) | `_archive` for old copies, `_junk` for unusable photos, reel screenshots cleaned, prospects and artists kept apart, Azaline now Mara Locke, and the people index (profile: sex, type, roles, elements, tier, tags; `likeness index`, `who`, `profile`). Built Oct 11. Waiting on you: classify the prospects and artists, starting with Darkness and Light. |
-| [plans/2026-10-11-first-shot-flows.md](plans/2026-10-11-first-shot-flows.md) | A simpler first shot: P2 (neutral base layer) and P3 (bare figure) beside the swimsuit Prime P1, in `1_Alpha/1b_Experiments`; clean-up of the bare-chest and covering experiments; positive wording in the templates. Built Oct 11. Waiting on you: the P1/P2/P3 tests and the decision. |
-| [plans/2026-10-12-prime-prompts-frames-and-inputs.md](plans/2026-10-12-prime-prompts-frames-and-inputs.md) | Continuation of the first-shot plan: seeds randomized in every generated workflow, `sync-inputs` in the refresh loop, the frame generation fix, library sync (`originals --check`, `library.cmd`), and the proposal to put pose, framing and bare feet at the top of the Prime prompt and one prompt order for every template. Decisions D1 to D7 are open. |
+The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
 
 ## Decisions made
 
@@ -128,7 +122,7 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
   (`workspaces.json` `inputRoles` and `inputs`, `inputs set --prime`). Sisters and Angel Primes (Angelica and Angelo included) use it; dragons and bound heroes keep their X Pose in `poses/` for now. The Barefoot and
   Heels cards still use the photo-oriented `pose-female-human.txt`; an edit-focused template for them is open, as is the same for the other stages.
 - **Individual physique, standard X Pose (Oct 2026).** The 10 sisters and 10 bound heroes each carry their own build (`physique`: `torso` and `arms` are new optional fields; the male
-  schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_.md`); its colours, metals, prompt-assembly sections and
+  schema stays `chest`/`waist` plus `arms`), merged from an external review (`docs/codex/heroes/*_physique.md`, `elder_dragons_details.md`); its colours, metals, prompt-assembly sections and
   invented ids were not adopted. The X Pose from the original photo keeps the standard lithe, slender figure (`figureProfile: standard`, text in `data/art/_settings/phrases.json`); the
   individual build is applied from the Bare stage on (`Body:` line), so it never fights the original photo, clothes or background. The 10 Elder Dragons gain structured morphology
   (`silhouette`, `scaleTexture`, `wingMembrane`, `hornsAndCrest`, `elementalVenting`) in our own palettes. Studio smile: new `studio-soft-smile` (A-pose and head default).
@@ -405,27 +399,9 @@ Also new: two realms (`fantasy-gothic` for the fallen and grieving, `fantasy-pas
 - **More themes.** Valentine, lunar new year, slavic winter, fey court, gaslamp, circus, jungle explorer; the audit does not cover themes yet, and theme makeup, jewelry and robes could extend the new library pieces.
 - **Moving over.** The sisters' pieces and the older bundles can be rebuilt on the atomic pieces whenever you want; that changes their prompts, so it is a choice.
 
-## Next work (in order)
+## Next work
 
-1. **G1 Darkness and Light set (the MVP).** Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no
-   legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then art. Best end-to-end
-   test of the card -> art -> prompt flow, and the beta's content.
-2. **D3 Starter decks and products.** Rebuild around Darkness and Light (plus Neutral cards) using the starter-hero decision above; include
-   lower-level heroes, and decide where bound heroes and dragons enter (O3). Fixes everything under Data debt.
-3. **D2 Rule reconciliation.** Re-check `combat-calculation-spec.md` and `deck-progression-rules.md` against the 8-tier
-   model and the MVP elements (the Light and Darkness duality, Neutral normal).
-4. **G2 Plan the next cycle** (Fire, Grass, Water, Earth) once the Darkness and Light beta has shown what a full element costs.
-5. **Art for the 15 legacy heroes** that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth.
-
-### Art and video track (runs alongside)
-
-- **Library gaps (Oct 2026):** the map of what exists and where the gaps land (backgrounds, props, races, creatures, unit/building/tactic art, theme gear for bounds and dragons) is in [../data/art/README.md](../data/art/README.md#library-map-what-exists-where-the-gaps-are). Do these as the sisters' scenes show what is missing, not as a separate big push.
-- Render and review the first video clips; tune looks, motions and transitions from what the renders show.
-- Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used.
-- Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace, plus lace bodysuit and the backless set: halter one-piece, strapless plunge, chain harness) to choose the A-pose look that blends best. The backless pieces give a clean bare-back reference so gowns and capes do not inherit straps.
-- Title and key-art scene from the text-to-image templates (`ST0_*_Text`), as a card in the pipeline; an item stage for weapons and armor.
-- Use the other `ST` templates (polish, finals) to generate their own prompts.
-- Documentation audit and launcher check, now with [art/tutorial-art.md](art/tutorial-art.md) and [art/tutorial-video.md](art/tutorial-video.md).
+The MVP data track (G1 Darkness and Light set, D3 starter decks, D2 rule reconciliation, G2 the next cycle), steps 3 and 4 of the Oct 8 steps and the art and video track are in [plans/2026-10-12-roadmap-and-mvp-data.md](plans/2026-10-12-roadmap-and-mvp-data.md), and so in [todo.md](todo.md).
 
 ## Data debt
 

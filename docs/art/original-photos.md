@@ -21,8 +21,34 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 
 ## The routine
 
-**The short way: `bin\library.cmd`.** Drop new photos into `Various\gallery` (or move photos between folders by hand), run it, and the whole library ends sorted, de-duplicated and in step. It runs, in order: `originals` (names, scaled copies, headshots, frames), `duplicates`, `likeness junk` and `review` and `sort --singles` and `singles --min 0.45`, then `duplicates` and `originals` again, `originals --check` (must say IN SYNC), `sync-inputs` and `likeness index`.
-It repeats safely: run it as often as you like, nothing is deleted, and a log goes to `<work>\_reports\library_sync_<time>.log`. `bin\library-preview.cmd` shows every step without moving anything; `bin\library-check.cmd` is read only and says whether anything is waiting (exit 1 when it is).
+**Ingest runbook (new photos): three commands.**
+
+1. Drop the new photos into `Various\gallery` (any name; a photo that came from an artist and is dropped again goes back to that artist by its id, see below).
+2. `bin\library-preview.cmd` shows what would happen, step by step, and moves nothing. Optional.
+3. `bin\library.cmd` does it. Read the summary at the end; the log is `<work>\_reports\library_sync_<time>.log`.
+
+Then look at where everything landed: `bin\people-gallery.cmd` (or `<work>\_reports\people_gallery.html`) shows every person, `<work>\_reports\crop_review.html` every cropped photo beside its uncropped original, and `<work>\_reports\crosscheck.md` who looks like whom across the lines that are kept apart; `bin\likeness.cmd names` and `index` list the people. Run it again whenever you like: it repeats safely, nothing is deleted, and a second run on a finished library changes nothing.
+`bin\library.cmd --retry-junk` first sends everything in `_junk` back (prospects' photos to `Various`, an artist's photos to that artist's gallery) so the cropping and the rules look at it again; what is still junk returns to `_junk`.
+`bin\library-check.cmd` is read only and says whether anything is waiting (exit 1 when it is).
+
+**The short way: `bin\library.cmd`** runs, in order:
+
+| Step | What | Where the originals of a change are kept |
+| --- | --- | --- |
+| 1 `originals` | names every original after its folder, makes the scaled copy, headshot and frame | old copies: `_archive\<folder>\gallery_944x1104_org` |
+| 2 `duplicates` | the same picture twice (any folder, any name) | the extra copy: `_archive\<folder>\gallery_duplicates` |
+| 3 `likeness crop` | cuts every photo down to the person: a phone's app bars, other people, animals and the background beside her; all the body in the picture stays | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |
+| 3 `likeness junk` | a photo that cannot feed a Prime (no usable face, a second person that cannot be cut away, bars over her head) goes to `_junk`. A prospect's or hero's photo that only needs clean-up goes to her `review` folder instead | `_junk\<side>`, her `review` |
+| 4 `likeness review` | a review photo that scores 0.20 or more against her goes back to her gallery | |
+| 5 `likeness sort --singles` | `Various` is emptied: a photo that came from an artist goes back to that artist; a confident match moves to that person (an angel or a sister too); the rest become new prospects, single photos too | `likeness undo` |
+| 5 `likeness group --singles` | the artists' own galleries are emptied the same way, never across artists: into one of that artist's people, or a folder of their own. Only photos with no usable face, a second person or the app's bars stay | `likeness undo` |
+| 6 `likeness singles`, `rematch` | one-photo prospects join the prospect they look like; prospects that are one person merge; a prospect that is the same person as an angel or a sister (0.55 and up) joins her, and her `z_` file remembers who she was | `likeness undo`, `_retired` |
+| 7 `duplicates`, `originals` again | the moves create new names; `originals --check` must say IN SYNC | |
+| 8 `sync-inputs`, 9 `crosscheck`, `index` | workflow inputs; the look-alike report; the people index | |
+
+**The rules the routine keeps.** An artist's photos never cross to another artist, even when two people look alike (that is only reported). Prospects and artists never mix (also only reported). Prospects regroup freely among themselves and with Angels and Sisters. The `_origins.json` file in the work folder records which artist every photo came from (by its id, which survives a rename and a crop).
+
+**To start a part over.** `likeness pullback NAME ...` (or `--small 2`, or `--all`) sends prospect folders back to `Various`, and the routine sorts them again; a folder with a chosen photo is never pulled back. A looser second look at the pool: `likeness sort --assign 0.35` (preview first). The artists can be rebuilt from a flat backup of their folders: `likeness artists --from <backup>\Artists`.
 
 **What `duplicates` does** (`bin\duplicates.cmd`, also step 2): the same picture can sit in two folders or twice in one under different ids (a download saved twice, a photo moved between prospects). It finds identical bytes in every `gallery` and `review` folder and keeps one copy.
 The kept copy is a chosen photo first, then a gallery photo over a review photo, then Angels, Sisters, Prospects, Artists, Various, then a name that already carries its folder's prefix. The others move to `_archive\<their folder>\gallery_duplicates` (`originals` then prunes their scaled copies). The same id with different bytes (a resaved copy) is only listed.

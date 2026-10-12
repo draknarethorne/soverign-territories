@@ -1,10 +1,10 @@
 # Plan: names that follow the photos, the new Various batch, headshots, look-alike guard
 
-Status: active, Oct 10, 2026 (Phases 0 to 4 and 6 done; Phase 5 is a design that waits for approval)
+**Status:** done, Oct 10, 2026 (Phases 0 to 4 and 6 built; Phase 5, the variant Primes, was replaced by the Prime flows and is dropped unless you say otherwise: see T11 in the Prime plan)
 
-Source: [../../tmp/likeness_brain_dump.md](../../tmp/likeness_brain_dump.md) (your words are copied word for word at the end).
+Source: your brain-dump, copied word for word at the end of this plan ("Your brain dump, word for word").
 
-Result report: [../art/likeness-reorg-2026-10-10.md](../art/likeness-reorg-2026-10-10.md). How-to: [../art/likeness.md](../art/likeness.md), [../art/original-photos.md](../art/original-photos.md).
+Result report: [../art/likeness-reorg-2026-10-10.md](../../art/likeness-reorg-2026-10-10.md). How-to: [../art/likeness.md](../../art/likeness.md), [../art/original-photos.md](../../art/original-photos.md).
 
 ## Threads, in your order
 
@@ -62,7 +62,7 @@ Result report: [../art/likeness-reorg-2026-10-10.md](../art/likeness-reorg-2026-
 ### Phase 5: alternate Primes (design, no code)
 
 - [x] 5.1 Design written (below).
-- [ ] 5.2 Your approval, then the build (not started).
+- 5.2 Dropped: the Prime flows, P2, P3 and the FireRed lock replaced the variant-Prime idea (see the reconcile table of the Prime plan). Closed with this plan.
 
 ### Phase 6: close
 

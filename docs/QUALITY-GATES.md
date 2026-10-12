@@ -18,6 +18,7 @@ Configured in `.pre-commit-config.yaml`:
 - file hygiene: large files, merge conflicts, YAML/JSON validity, EOF newline
 - markdown linting via `.markdownlint.json`
 - PowerShell analysis via `scripts/Invoke-QualityChecks.ps1`
+- workflow tool tests (`tools/workflows/test_comfy_workflows.py`, on changes under `tools/workflows/`) and generator tests (`tools/generators/test_gen_prompt_extends.py`, on changes under `tools/generators/`)
 
 PowerShell policy in Phase 1:
 
@@ -53,7 +54,7 @@ Warnings are currently non-blocking while we retire that debt in scoped batches.
 
 ### Phase 2 — Governance hardening
 
-- add release checklist and change-management docs
+- keep the release checklist ([RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md)) and change-management ([CHANGE-MANAGEMENT.md](CHANGE-MANAGEMENT.md)) docs current
 - ensure contributor workflow docs remain current
 - add quality dashboards/checkpoint summaries as needed
 

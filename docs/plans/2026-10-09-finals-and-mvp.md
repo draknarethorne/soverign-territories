@@ -67,7 +67,7 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 | D4 | MVP element set | Darkness and Light only; confirm which four elements follow in the release | Decided (Oct 9): Darkness and Light for the MVP; Fire, Grass, Water and Earth are the next cycle |
 | D5 | Grass | Decide its placement now (Fire, Grass, Water, Earth cycle) and defer building it | Decided (Oct 9): Grass is in the next cycle with Fire, Water and Earth; directions and multipliers stay open in the combat spec |
 | D6 | Shots with explicit wording: keep them in git or keep them out? | Your call; today `_shots` is tracked | Decided (Oct 9): the wording is fine in git; **no images are kept for `zz_Shots`**, only for `zz_Final` (including the Bare) |
-| D7 | Step back on the command line (`comfy_workflows.py` options and `bin\*.cmd`)? | Yes: inventory first, then simplify with old names forwarding | Decided (Oct 9): add it to today's plan (Phase 6); draft in `tmp/2026-10-09-cli-review.md` |
+| D7 | Step back on the command line (`comfy_workflows.py` options and `bin\*.cmd`)? | Yes: inventory first, then simplify with old names forwarding | Decided (Oct 9): add it to today's plan (Phase 6); draft in [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) |
 | D8 | Phase 3: where do a final's seed and denoise live? | In the art data, a small generated file per set that you can also edit | Decided (Oct 9): in the art data (`data/art/finals/<set>.json`), generated from the finals, hand-editable; `make` applies it |
 | D9 | Phase 3: does a final's image feed the workflows after it? | Yes, as a default you choose, never forced | Decided (Oct 9), **refined later the same day**: a final can be the default source of an input role, but only when you choose it; any workflow may take any image (or several) instead. See 3.4 |
 | D10 | Phase 4: which cards does the todo table list? | All 52 plus the alpha test heroes | Decided (Oct 9): 22 angels, 10 sisters, 10 bound men, 10 dragons and the two alpha heroes, each with the slots it really has |
@@ -78,12 +78,12 @@ Scenes and key shots come after. Promoting a new final for a slot archives the o
 - [x] Tooling built Oct 9: `bin\originals.cmd` keeps the photo library in step (names follow the folder an original is in, scaled copies are made, copies of removed originals move to `gallery_944x1104_org`) and re-points a chosen photo that was renamed (`inputs photos`). Guide: [docs/art/original-photos.md](../art/original-photos.md). Run on the whole library the same day: 28 originals renamed, 976 copies made at 944x1104, the previous scaled folders kept as `gallery_944x1104_org`,
   11 angels' photos re-pointed.
 - [x] Likeness reorganisation run Oct 9 (report: [docs/art/likeness-reorg-2026-10-09.md](../art/likeness-reorg-2026-10-09.md)). Backup first (`B:\Soverign Territories\_backup`); sister and angel folders cleaned; Artists grouped into 20 people; `Prospects\Various` emptied; sisters checked around Drakness; 7 angels paired to their sisters by face and set in `workspaces.json` and the Angel Primes workflows; 3 angels kept for lack of a candidate.
-- [ ] To review (details and order in the report): the angel pairs (`pairs_final.png`), Drakneta and Drakniya (far from Drakness), Draknoxa (only 4 clear photos; 24 were another woman, now Ravaelle's face), the `review` folders, and candidates for Seraphine, Azaline and Camaris; then a few ComfyUI runs for the 7 angels whose photo changed.
-- [ ] To pick: move or drop originals into each angel's folder, delete the ones that did not work out, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` and `inputs reset --hero HERO`. `inputs photos --dry-run` lists the heroes with no photo yet (12 today: the male angels and `Male`).
-- [ ] For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
-- [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
-- [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
-- [ ] Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare.
+- [ ] **P1 you** To review (details and order in the report): the angel pairs (`pairs_final.png`), Drakneta and Drakniya (far from Drakness), Draknoxa (only 4 clear photos; 24 were another woman, now Ravaelle's face), the `review` folders, and candidates for Seraphine, Azaline and Camaris; then a few ComfyUI runs for the 7 angels whose photo changed.
+- [ ] **P1 you** To pick: move or drop originals into each angel's folder, delete the ones that did not work out, run `bin\originals.cmd`, then `inputs set HERO --photo NAME` and `inputs reset --hero HERO`. `inputs photos --dry-run` lists the heroes with no photo yet (12 today: the male angels and `Male`).
+- [ ] **P1 you** For each top-tier card (22 angels, 10 sisters, 10 bound heroes, 10 dragons) decide the original photo; the batch results may replace some.
+- [ ] **P2 you** Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`.
+- [ ] **P2 you** Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then.
+- [ ] **P3 ai** Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare.
 
 ### Phase 2: candidate and final convention (tool change; built Oct 9 on the provisional D2 and D3)
 
@@ -109,15 +109,15 @@ Run in this order; each step previews first, and everything is recoverable (git 
 - [x] 3. `finals reclassify` again: 0 to move, 0 duplicates.
 - [x] 4. Applied on the live Angel Primes workspace (with your go-ahead, Oct 9): `finals sort -w "Angel Primes" --apply` moved the 72 numbered saves into `zz_Candidates/<female|male>/<Hero>/1_Alpha/...`; a second preview shows 0 to move and `pull` shows them already in the repo. `cleanup` and `tidy` previews are clean for every workspace (nothing to remove or move). Drakn Sisters, Drakness, Sovereign Dawn Series and Sovereign Territories had nothing to file.
 - [x] 5. Decided (Oct 9): keep the Drakn Sisters copy of `Drakness_Qwen_Alpha_2_Bare_Skin` (seed 517397163969845). It is in the repo; the Drakness workspace copy (seed 119517098111188) was backed up to `workflows/.sync/backup/20261009-125558/Drakness/` and replaced.
-- [ ] 5b. `status` for Angel Primes lists 11 heroes as `inputs-changed (mixed)`: in each, one 2_Bare workflow loads a Prime render you picked while the other Prime-fed workflows still load the placeholder `<Hero>_Qwen_Alpha_1_Prime_00000.png` (a name from `workspaces.json` meaning "not chosen yet"; no such file exists). It is information while you explore: nothing is overwritten, and `inputs reset` stops and asks while it is unresolved.
+- [ ] **P1 you** 5b. `status` for Angel Primes lists 11 heroes as `inputs-changed (mixed)`: in each, one 2_Bare workflow loads a Prime render you picked while the other Prime-fed workflows still load the placeholder `<Hero>_Qwen_Alpha_1_Prime_00000.png` (a name from `workspaces.json` meaning "not chosen yet"; no such file exists). It is information while you explore: nothing is overwritten, and `inputs reset` stops and asks while it is unresolved.
   When you settle a hero's Prime, record it with `finals promote NAME --use-as prime --apply` (Phase 3.4) or `inputs set HERO --prime NAME --apply`.
-- [ ] 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
+- [ ] **P3 you** 6. Later rounds: `_curated` and `_test` in the repo are not rearranged (hand-written names); structure them only if a name resolves and you want it.
 
 ### Phase 2c: a final keeps its image (built Oct 9, D3)
 
 - [x] `pull` (or `finals images --apply`) copies the render of every final into `assets/art/<set>/<Hero>/<phase>/<Hero>_<Engine>_<Stage>.png`; a newer final of the same stage replaces it (the old image goes to backup); candidates and shots never get an image (D6). `finals images` also reports the PNG total of `assets/art` for the size watch.
 - [x] A final can be any stage: `promote` and `status` do not limit it to the four slots.
-- [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows.
+- [ ] **P3 either** Run it once the first finals exist, and watch the size; decide Git LFS only if it grows.
 
 ### Phase 3: finals feed the art data
 
@@ -138,7 +138,7 @@ ComfyUI refuses to promote it, so `make` sets the inner sampler's control to fix
 - [x] 3.5 Engines: a Qwen and a FireRed final of a stage each keep their own record, and the engine that feeds the next stage is simply the engine of the final you promote with `--use-as`, so no extra setting is needed: promote the FireRed Prime `--use-as prime` to test the FireRed chain.
 - [x] 3.6 Tests (Oct 9): record round trip, hand edits kept, `make` replay, record lookup, `--use-as` (a plain promote changes no default), todo smoke tests. Still to add if wanted: extra Load Image nodes surviving `inputs reset` (the code only touches the first, and was not changed).
 - [x] 3.7 Docs: workflows README (finals, record, images, `--use-as`), art README (`finals/`), help and launchers. tutorial-art.md is not changed yet.
-- [ ] 3.8 **Deferred (Oct 9, your call):** several input images belong to a next phase of artwork, only if scenes made as they are today do not give a good result.
+- [ ] **P3 you** 3.8 **Deferred (Oct 9, your call):** several input images belong to a next phase of artwork, only if scenes made as they are today do not give a good result.
   It means rendering weapons, backgrounds and wardrobe individually instead of as part of a scene, so nothing here is built until you have been through the current process. What exists: the Qwen and FireRed subgraphs already accept three images (`image`, `image2`, `image3`; Flux has two Load Image nodes) but the generated workflows wire only one Load Image, and the tool only repoints the first.
   Today extra Load Image nodes you add by hand are left alone. If you want them generated, a card could list its inputs by role (background, person, wardrobe, weapon) and `make` would add and wire the nodes; decide after you have tried a few multi-image scenes by hand.
 
@@ -160,20 +160,20 @@ ComfyUI refuses to promote it, so `make` sets the inner sampler's control to fix
 - [x] STATUS: the element decision, O1 (answered), and the "Next work" list now say Darkness and Light first.
 - [x] `sovereign_dawn_codex.md` and `game-bible.md` staged-rollout text, and the `copilot-instructions.md` element line.
 - [x] `combat-calculation-spec.md`: Grass is recorded in the next cycle with Fire, Water and Earth; the MVP only needs the Light and Darkness duality.
-- [ ] `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light.
+- [ ] **P3 ai** `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light.
 - [x] Angels keep going in parallel as the test bed; no full Fire/Grass/Water/Earth deck in the MVP.
 
 ### Phase 6: step back on the command line (D7)
 
-The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the question is whether the options and launchers around them are still all needed. Draft with the numbers and proposals: `tmp/2026-10-09-cli-review.md`.
+The zz_ ideas (candidates, shots, curated, finals, test) all still hold; the question is whether the options and launchers around them are still all needed. Draft with the numbers and proposals: [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md).
 
 - [x] 6.1 Inventory: 12 sub-commands, 123 long options (the same six filters repeated on six commands), 43 launchers.
 - [x] 6.2 Answers (Oct 9): C1 yes, preview by default everywhere with `--apply` (the launchers add `--apply`, so your habits do not change); C2 left to me (I chose the launcher changes below); C3 one `audit` front door (my recommendation: it lists what exists and runs the cheap checks, and the old `*-audit` launchers keep working); C4 yes, `inputs` as actions; C5 yes, `status` shows candidates and finals.
 - [x] 6.3 Built Oct 9, and the old switches removed (you chose to break old habits): every changing command previews unless `--apply` (`--dry-run` always previews); `deploy --include curated,shots,tests,staged,finals` and `--mode patch|new|existing|overwrite` (replace 8 switches); `pull --only shots|templates|finals` (replaces 2); `inputs status|pull|reset|fix|set HERO` (replaces 5 flags); `status` lists candidates and finals;
   `setup` uses the new spellings; `bin\audit.cmd NAME|all`; the launchers add `--apply` and the shots, curated and templates ones use the new options. Tests: `test_cli_surface.py` (9) plus the 47 existing ones, updated to the new spellings (the old switches are rejected, tested).
-- [ ] 6.3b Not done on purpose (needs a separate decision): folding `tidy`, `finals sort` and `finals reclassify` into one `tidy` (`tidy --repo`), folding `list` into `status`, and removing the `--class` flag in favour of `--stage scene|studio`.
+- [ ] **P3 you** 6.3b Not done on purpose (needs a separate decision): folding `tidy`, `finals sort` and `finals reclassify` into one `tidy` (`tidy --repo`), folding `list` into `status`, and removing the `--class` flag in favour of `--stage scene|studio`.
 - [x] 6.4 `bin\help.cmd` and `workflows/README.md` describe the new spellings (a note at the top explains preview-by-default and the replacements).
-- [ ] 6.5 After a few weeks, remove the forwarders you no longer type.
+- [ ] **P3 you** 6.5 After a few weeks, remove the forwarders you no longer type.
 
 ### Phase 7: image and video sizes (added Oct 9, you raised it)
 
@@ -192,9 +192,9 @@ Stills should keep the standard size (`workspaces.json` `standardSize`, 944x1104
 - [x] 7.2 Fix: `tools/workflows/align_templates.py` sets the resize nodes of the repo templates; `make` applies the same policy to every edit workflow it builds or refreshes; `deploy` applies it to the workflows a workspace already holds (prompt, seed and input untouched, a backup first). Run on all five workspaces: 1,593 FireRed workflows refreshed; Qwen workflows needed nothing.
   **Correction (same day):** my first pass used 1.042176, counting a megapixel as 1,000,000; ComfyUI counts 1024 x 1024, which would have made FireRed 967x1130. It is corrected to 0.993896 and re-applied everywhere (the check below now tests the real arithmetic).
   `test_templates.py` fails if a template pulled back from a workspace undoes it (then run `align_templates.py --apply`).
-- [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
-- [ ] 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and brand plates are set by their own prompts.
-- [ ] 7.5 Video size and duration moved to Phase 8 (built; try the two templates).
+- [ ] **P1 you** 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template.
+- 7.4 Note: the FireRed brand workflows in Sovereign Territories came from the same edit template and also moved from 1.0 MP to 0.993896 MP (about 5% fewer pixels than before, since 1 MP is 1,048,576); harmless, and brand plates are set by their own prompts.
+- 7.5 Video size and duration moved to Phase 8 (built; try the two templates).
 
 ### Phase 8: video (added Oct 9, you raised it; the new iv2 template)
 
@@ -205,9 +205,9 @@ Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-
 - [x] 8.3 Decided (you delegated it; the videos are for Facebook reels): two templates instead of one, picked by the card's `format`. `ST6_MiniMax_Reel` (default): 9:16, 640x1152, the still cover-cropped to it. `ST6_MiniMax_Match`: the still's shape, 928x1088 for a 944x1104 still. Both: 8 s, turbo on, the video VAE we have installed (fp16). The iv2's int8 video VAE is not needed.
 - [x] 8.4 Built: `tools/workflows/video_templates.py` (builds both from the legacy template and checks the links), `video_template()` and `set_video` in `comfy_workflows.py` (a wired width or height is left alone), a `Format:` header in the video prompts, the card `size` field retired (the title and key-art clips use `"format": "match"`), `tools/workflows/test_video_templates.py`.
   All 102 video prompts and workflows regenerated and deployed over the existing ones in the four workspaces that hold them (the two stale `X_Pose` Drakness copies in the repo were dropped; the workspaces still have them under `7_Video/poses`).
-- [ ] 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the crop.
-- [ ] 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
-- [ ] 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred.
+- [ ] **P1 you** 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the crop.
+- [ ] **P3 you** 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references.
+- [ ] **P3 you** 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred.
 
 ## The daily pattern (my view)
 

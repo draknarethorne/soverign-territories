@@ -237,9 +237,9 @@ Trainer Decks are **pre-built 20-card decks** given to new players during the tu
 ## Related Schemas
 
 - **[codex-schema.json](../../data/schemas/codex-schema.json)** - Defines individual cards in `cardList`
-- **[starter-deck-schema.json](starter-deck-schema.json)** - Simpler precon decks for post-tutorial unlocks
-- **[pack-schema.json](pack-schema.json)** - Random card packs (contrast with fixed Trainer Decks)
-- **[tutorial-schema.json](tutorial-schema.json)** - Step 6 (Trainer Deck selection)
+- **[starter-deck-schema.json](../../data/schemas/starter-deck-schema.json)** - Simpler precon decks for post-tutorial unlocks
+- **[pack-schema.json](../../data/schemas/pack-schema.json)** - Random card packs (contrast with fixed Trainer Decks)
+- **[tutorial-schema.json](../../data/schemas/tutorial-schema.json)** - Step 6 (Trainer Deck selection)
 
 ---
 

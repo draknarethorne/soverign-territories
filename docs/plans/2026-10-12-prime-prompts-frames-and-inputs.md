@@ -133,18 +133,19 @@ Notes: a scene's Environment stays last because it is the content of the scene, 
 
 ### Open
 
-- [ ] T1 D1: threshold decision, then `originals --apply` and a count of the new frames. Owner: you (decision), me.
-- [ ] T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
-- [ ] T3 Your test of one angel (suggest Angelica or Haniya, whose photos are partial) with and without the frame, old prompt against the new, on Qwen and FireRed: is the body full length, are the feet bare and on the floor, does the face hold (`bin\compare-primes.cmd --shots all HERO`). Owner: you.
-- [ ] T4 D3 and D4 from the result: shorten the FireRed lock, and keep or retire the frame process.
-- [ ] T5 The 7 angels whose chosen Prime render is in no input or output folder (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006): re-render or re-pick, then `inputs pull`. Owner: you.
-- [ ] T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
-- [ ] T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
-- [ ] T8 Reconcile this plan with the first-shot plan when T3 is done, then close both.
-- [ ] T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should not change. Owner: me after your approval.
-- [ ] T10 D7: look at the new prospect folders from L2 (suspects: Zara Lane, 3 photos alike Draknoxa at 0.60; Tove Wilde, 3 alike the artist Elise Frost at 0.57; Delia Ames, 2 alike Angelica at 0.45; the 45 single-photo prospects, the closest at 0.35 to 0.42), then `likeness merge` or `retire` as needed, and re-run `originals --check`. Owner: you.
-- [ ] L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me.
-- [ ] L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about 0.98) could list them. Owner: me when you want it.
+- [ ] **P2 you** T1 D1: threshold decision, then `originals --apply` and a count of the new frames. Owner: you (decision), me.
+- [ ] **P1 you** T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
+- [ ] **P1 you** T3 Your test of one angel (suggest Angelica or Haniya, whose photos are partial) with and without the frame, old prompt against the new, on Qwen and FireRed: is the body full length, are the feet bare and on the floor, does the face hold (`bin\compare-primes.cmd --shots all HERO`). Owner: you.
+- [ ] **P2 you** T4 D3 and D4 from the result: shorten the FireRed lock, and keep or retire the frame process.
+- [ ] **P1 you** T5 The 7 angels whose chosen Prime render is in no input or output folder (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006): re-render or re-pick, then `inputs pull`. Owner: you.
+- [ ] **P1 you** T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
+- [ ] **P3 you** T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
+- [ ] **P2 ai** T8 Reconcile this plan with the first-shot plan when T3 is done, then close both.
+- [ ] **P2 you** T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should not change. Owner: me after your approval.
+- [ ] **P2 you** T10 D7: look at the new prospect folders from L2 (suspects: Zara Lane, 3 photos alike Draknoxa at 0.60; Tove Wilde, 3 alike the artist Elise Frost at 0.57; Delia Ames, 2 alike Angelica at 0.45; the 45 single-photo prospects, the closest at 0.35 to 0.42), then `likeness merge` or `retire` as needed, and re-run `originals --check`. Owner: you.
+- [ ] **P3 either** L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me.
+- [ ] **P3 ai** L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about 0.98) could list them. Owner: me when you want it.
+- [ ] **P3 you** T11 Confirm that the variant Primes of the Oct 10 plan (5.2, a Prime B per hero) are dropped: the Prime flows replaced them. That plan is closed and archived on this assumption.
 
 ## The routine when photos move
 
@@ -210,4 +211,3 @@ Ultimately I plan on iterating on prospects - over and over as time goes on.  So
 Maybe we need multiple complex .cmd files that just allow me to run a simple command without a lot of arguments to make things happen.  That way I don't need to remember the arguments.
 There might be some already in bin and ideally your instructions should have you running the .cmd files to always ensure they are working.  So that's yet another optimization in how we work together to ensure that both you and I can do the same thing together.
 Don't forget where you are - but take this all into account after you get through the process.
-

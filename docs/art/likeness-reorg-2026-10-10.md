@@ -1,6 +1,6 @@
 # Likeness reorganisation, Oct 10, 2026
 
-What the second pass did to your photo library (`B:\Soverign Territories`), why, and where to look next. Plan: [../plans/2026-10-10-names-ingest-headshots.md](../plans/2026-10-10-names-ingest-headshots.md). Tool guide: [likeness.md](likeness.md). The first pass is in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
+What the second pass did to your photo library (`B:\Soverign Territories`), why, and where to look next. Plan: [../plans/2026-10-10-names-ingest-headshots.md](../plans/_archive/2026-10-10-names-ingest-headshots.md). Tool guide: [likeness.md](likeness.md). The first pass is in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md).
 
 Everything was backed up first (`_backup\2026-10-10-before-names-ingest`: the Various photos, every `z_` file, `workspaces.json`, a manifest of 3,546 files). The reports and contact sheets are in `_reports\2026-10-10-names-ingest`. Nothing was deleted: folders emptied by a merge or a re-pair are in `_retired`, and a `likeness undo` reverts the last batch of moves.
 

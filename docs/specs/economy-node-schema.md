@@ -308,10 +308,10 @@ Economy Nodes are **placeable resource generators** on the Realm Map and Territo
 ## Related Schemas
 
 - **[codex-schema.json](../../data/schemas/codex-schema.json)** - Defines Worker/Building cards deployable to nodes
-- **[resource-schema.json](resource-schema.json)** - Defines Food/Lumber/Ore inventory
-- **[map-schema.json](map-schema.json)** - Defines Realm/Territory maps containing nodes
-- **[deployment-schema.json](deployment-schema.json)** - General deployment rules (may overlap)
-- **[tutorial-schema.json](tutorial-schema.json)** - Step 27 (Economy node deployment)
+- **[resource-schema.json](../../data/schemas/resource-schema.json)** - Defines Food/Lumber/Ore inventory
+- **[map-schema.json](../../data/schemas/map-schema.json)** - Defines Realm/Territory maps containing nodes
+- **[deployment-schema.json](../../data/schemas/deployment-schema.json)** - General deployment rules (may overlap)
+- **[tutorial-schema.json](../../data/schemas/tutorial-schema.json)** - Step 27 (Economy node deployment)
 
 ---
 

@@ -44,7 +44,7 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 ### Phase 3: organising for the lower tiers
 
 - [x] 3.1 Profile lines in `people.py`; `likeness index` (CSV and markdown), `index --import`, `profile`, `who`; tests.
-- [ ] 3.2 Classification with you, one element at a time (Darkness and Light first). Fill the profile columns of `people_index.csv` and import them, or use `likeness profile`.
+- [ ] **P1 you** 3.2 Classification with you, one element at a time (Darkness and Light first). Fill the profile columns of `people_index.csv` and import them, or use `likeness profile`.
 
 ### Phase 4: the Prime input and the templates (Oct 11, from your headshot-first thoughts)
 
@@ -53,8 +53,8 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 - [x] 4.2b (corrected Oct 11) Flows, not a replacement: the normal photo of every hero is back, and `flows.frame.photos` in `workspaces.json` holds the frame image of the 18 heroes whose chosen photo has a frame. `make --create` built a `_Frame` Prime workflow beside each Qwen and FireRed Prime (72 in all) and they are deployed. Guide: [../art/prime-flows.md](../art/prime-flows.md).
 - [x] 4.2c FireRed identity lock: `engines.firered.primeFace` puts `1_Alpha/firered-prime-face-lock.txt` in front of the FireRed Prime prompt (normal and frame); Qwen is untouched.
 - [x] 4.2d `bin\compare-primes.cmd`: newest render of each variant per hero, a picture and a face score against the photo each flow started from, with the average per variant.
-- [ ] 4.3 Your test: run the four Prime workflows for several heroes, then `bin\compare-primes.cmd` (nothing is decided; drop what does not work).
-- [ ] 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
+- [ ] **P1 you** 4.3 Your test: run the four Prime workflows for several heroes, then `bin\compare-primes.cmd` (nothing is decided; drop what does not work).
+- [ ] **P3 ai** 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
 
 ## Result so far
 
@@ -110,3 +110,52 @@ I'm also considering whether some images don't look like another person since th
 If something scores really "low" in terms of what the person looks like, maybe those are _recycle type images in some structure and we don't put them into the actual directories and generate scaled or head-shots for them.
 Basically, discarding a "junk" image that I might have grabbed - but won't be useful.
 That allows me a little more freedom just to grab all sorts of images and we filter those out if we see them as they come in (or are already put into directories and we can clean things up if it's not a usable image)
+
+## Raw notes: headshot first (Oct 11)
+
+Your words, kept as written (only wrapped).
+
+# Headshot-first and a pose library: my opinion (draft, no decision)
+
+Source: [dual-input-thoughts.md](dual-input-thoughts.md).
+
+## What actually fails today
+
+1. A partial-body source (head and shoulders, waist up) goes into the Prime at denoise 1.0 and the edit model keeps the source's framing. Qwen re-frames; FireRed mostly does not. So the problem is **scale and framing**, not identity.
+2. In a head-to-toe 944x1104 frame the face is about 130 px tall, so eyes, lips and makeup get little detail, and each later pass (Bare, studies) inherits and slightly drifts the likeness.
+
+These are two different problems, and the document solves the second with a method that makes the first harder (a gray mannequin as a second image).
+
+## What I would take from the document, and what I would not
+
+| Idea | My view |
+| --- | --- |
+| Do the eyes, lips and makeup at close-up scale | Yes. We already have the stage (`head-human`, FireRed, 0.7 to 0.8) and the `headshot_944x1104` images. The gain is in using the **original** headshot as a second reference at the end, so the likeness does not drift through Prime and Bare |
+| Separate identity from build | Yes in principle. The build is already text in the Bare prompt (`FIGURE`, per hero), so we do not need a body library for it |
+| A library of three gray clay mannequins fed as image 2 | Not first. An edit model treats image 2 as content to blend, not as a strict skeleton (that needs ControlNet or OpenPose, which our workflows do not have): expect gray skin, a bald head and the mannequin's pose leaking in. Three bodies also do not cover the heroes' distinct builds, and Bare reshapes the body anyway |
+| 512x768, turbo, FLUX polish | Our standard is 944x1104 and `ST4_Flux_Polish` exists; nothing to add there |
+
+## What I would try, cheapest first
+
+1. **A framed input, no models (hours).** For an original that is not full body (the cache knows the face's height as a fraction of the picture), `originals` makes `prime_944x1104/<name>.png`: the head and shoulders shrunk to the head size of a standing A-pose and placed at the top of a cream 944x1104 canvas, the rest
+empty. The Prime then has to draw the body below at the right scale, which is what Qwen and FireRed are good at, and the framing problem is gone at the source. Full-body originals go in as they are.
+2. **Engines by job.** Qwen for Prime and Bare (framing and body); FireRed for the close-up, polish and the face pass (skin, eyes). This is what you already see.
+3. **A face pass with two images (the real use of dual input).** After the Bare, crop the bare bust, then run one edit with image 1 = that bust and image 2 = the original headshot: keep the body and pose from image 1, take face, eyes, lips and makeup from image 2. Result: the bare-chest image with a proper face,
+anchored on the real photo and not on a copy of a copy. The Qwen and FireRed templates already take three images; the generated workflows wire only one, so this needs a small generator change (a role `ref` for the second image) and a beta template `heroes/beta/face-lock-human.txt`.
+4. **Only if 1 fails, a pose frame, not a body library.** One neutral head-to-toe A-pose plate per sex (a frame guide) as image 2 of the Prime. Build variants stay in the Bare prompt. A pose library earns its place later, for the action cards on the Bench (poses by skeleton), not for the base figure.
+
+## Order
+
+Test 1 (framed input) on three partial-body originals with Qwen and FireRed. Test 3 (face pass) on two heroes. Test 4 only if 1 is not enough.
+
+## What this costs
+
+| Step | Work | Risk |
+| --- | --- | --- |
+| 1 framed input | a function in `originals` plus a test; no workflow change (`inputs set` already takes any image) | low |
+| 3 face pass | wiring a second LoadImage in `comfy_workflows.py`, a role `ref` in `workspaces.json`, a beta template, tests | medium (the model may blend the face badly: that is what the test tells us) |
+| 4 pose frame | one image per sex and a second input on the Prime | medium |
+
+## Templates (done today)
+
+`_templates/heroes` is now split by the stage folders the art sets use (1_Alpha, 2_Studies, 4_Wardrobe, 5_Scenes, 6_Finish, Bench), with a README; a beta or prototype template goes in its own sub-folder (`heroes/beta/`). All 5,373 prompts regenerate byte-identical.
