@@ -329,7 +329,9 @@ If one photo needs brightening, do it on that angel's own identity, not as a def
 ### Positive-wording pass (Oct 11): what is fixed, what is flagged
 
 The audit tool is a fixed word list and is **not exhaustive**, so the templates and the Alpha-path pieces were also read line by line. Fixed (positive text in the positive prompt, negatives left to the negative prompt):
-the Bare templates ("remove all clothing, swimwear, straps ..." became "the subject appears exactly as described in the Result"), `head-human` and `polish-human` ("keep the wardrobe unchanged", "without changing it"), `scene-staged-human` ("unchanged"), the pieces `bare-skin-study(-male)` ("nothing but", "unretouched"), `skin-tone-base-layer` ("shows no straps ..."), the celestial suit and armor pieces ("Not covered", "none is a cup", "unchanged natural skin"), and about 15 one-off pieces and cards ("no headwear", "no visible pupil", "without bulk", "nothing in hand", "no bigger than a hand", "without fear", ...). The audit's REVIEW list is now 0.
+the Bare templates ("remove all clothing, swimwear, straps ..." became "the subject appears exactly as described in the Result"), `head-human` and `polish-human` ("keep the wardrobe unchanged", "without changing it"), `scene-staged-human` ("unchanged"),
+the pieces `bare-skin-study(-male)` ("nothing but", "unretouched"), `skin-tone-base-layer` ("shows no straps ..."), the celestial suit and armor pieces ("Not covered", "none is a cup", "unchanged natural skin"),
+and about 15 one-off pieces and cards ("no headwear", "no visible pupil", "without bulk", "nothing in hand", "no bigger than a hand", "without fear", ...). The audit's REVIEW list is now 0.
 **Flagged for a later pass (not changed, outside the Alpha path):**
 
 | Where | Wording | Why left |
