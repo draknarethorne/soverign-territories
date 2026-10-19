@@ -5,7 +5,11 @@ angel-primes/female/Angelica/0_Edit/0b_Background/Angelica_Qwen_Edit_0b_Backgrou
     0a_xxxx
         Angelical_Qwen_Edit_0a_xxxxx
     0b_Background
-        x Angelical_Qwen_Edit_0b_Background - change background, remove items, bust critical feature, keep body and pose.
+        x Angelical_Qwen_Edit_0b_Background_Bare - change background, remove items, remove clothing, bust critical feature, keep body and pose.
+        x Angelical_Qwen_Edit_0b_Background_Basic - change background, remove items, bust critical feature, keep body and pose.
+        x Angelical_Qwen_Edit_0b_Background_Enhance - change background, expand camera, remove items, bust critical feature, keep body and pose.
+        x Angelical_Qwen_Edit_0b_Background_Plus - change background, remove items, trim clothing, bust critical feature, keep body and pose.
+        x Angelical_Qwen_Edit_0b_Background - change background, remove items, keep body and pose.
     0d_Cleanup
         - Angelical_Qwen_Edit_0c_Cleanup - crop and cleanup, remove items, critical features.
         - Angelical_Qwen_Edit_0c_Cleanup_Basic - crop and cleanup, remove items, no adjustments.
