@@ -5,9 +5,8 @@ Lighting: even, soft, neutral frontal studio lighting - a flat, clean key light.
 Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
 Edit the incoming image: remove all logos, icons, overlays; remove all props, accessories, purses, cups, glasses; food items in hands;
-crop top and bottom borders that are not part of the background, extend/create additional background as needed.
 
-Result: wearing her exact same outfit; 
+Result: wearing her same outfit; 
 hands free of cups and food; body is free of purses, accessories and jewelry; 
 
 Critical details - these must be followed:
