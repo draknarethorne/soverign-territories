@@ -100,7 +100,9 @@ combine commands.
   pull-scope fix is in `tools/workflows/comfy_workflows.py` with a regression test in `tools/workflows/test_cli_surface.py`; other
   routing/tool changes remain in `bin` and workspace configuration. Art tools/tests, plans, runbooks, and other data edits are inventoried
   separately; none were staged or committed.
-- [x] **P1 either** R8 Reconcile each older active/proposed plan against current decisions and work. The Oct 19 audit found no older plan with all work and decisions complete; overlapping and retired tasks were consolidated as recorded above.
+- [x] **P1 either** R8 Reconcile every active/proposed plan against the current decisions and work. The Oct 19 review has now been rechecked against all 11 active plans and the one proposed plan.
+  No active plan is ready to archive: each still has a real user decision, review, ComfyUI test, manual prompt task, game-data task, or explicitly deferred tooling follow-up. The CLI proposal remains proposed pending your decision.
+  The Oct 12 scratch note was incorporated into the tooling-debt plan; completed gallery display requests were verified against the implementation, while image-level exclusion remains open there.
 - [ ] **P2 ai** R9 Design a chest-crop preview using face-anchored head/shoulder/chest bounds; assess sample full, partial and varied-pose images before deciding whether to add it to `originals`, workspace inputs or Prime workflows.
 - [x] **P2 ai** R10 Update the likeness/runbook and Prime-flow documentation after frame retirement is implemented; ensure no active instruction implies frames will be generated.
 - [ ] **P3 you** R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos
@@ -116,6 +118,8 @@ combine commands.
   `IN SYNC`, and `NOTHING WAITING`. The three new junk photos are `various_image_7518022535991337255.jpg`,
   `various_image_7518029125665347092.jpg`, and `various_image_7518041966060682367.jpg`; all were flagged as containing 2+ faces. The full
   identical-copy archive now contains 332 files including history; the three older same-ID imports in `Various\duplicates` remain unchanged.
+- [ ] **P1 you** R13 Identify and pull back only the Sophie Lloyd photos and any other individual originals you have confirmed are misaligned. Keep this a user-selected correction; do not move photos based only on similarity scores.
+- [ ] **P1 ai** R14 After you say the selected originals are ready in the reprocessing pool, preview the routine, take the required verified backup, process that batch, and verify the resulting identities, history, gallery, and derived-image sync. Do not change other Sophie photos or apply the remaining mismatch/Junk suggestions.
 
 ## Raw request (Oct 19)
 

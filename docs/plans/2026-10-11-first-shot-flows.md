@@ -1,6 +1,6 @@
 # Plan: a simpler first shot (bare or neutral base), the Prime flows, and the clean-up
 
-Status: active, Oct 11, 2026 (the clean-up is done; the first-shot experiments are built and waiting for your tests)
+**Status:** active (clean-up done; first-shot experiments built and waiting for your tests; Oct 11, 2026)
 
 Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, initial frame gaps, pose-first Prime; the frame flow was retired Oct 19). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
 

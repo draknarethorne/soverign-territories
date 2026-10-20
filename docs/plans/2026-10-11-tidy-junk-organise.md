@@ -1,6 +1,6 @@
 # Plan: tidy the library, junk and screenshots, organise people for the lower tiers
 
-Status: active, Oct 11, 2026 (Phases 1 to 3.1 done; the classification itself, Phase 3.2, is yours and grows one element at a time)
+**Status:** active (Phases 1 to 3.1 done; classification, Phase 3.2, is yours and grows one element at a time; Oct 11, 2026)
 
 Source: your three notes, copied word for word at the end. Report: [../art/likeness-reorg-2026-10-10.md](../art/likeness-reorg-2026-10-10.md) (the Oct 11 section). How-to: [../art/likeness.md](../art/likeness.md), [../art/original-photos.md](../art/original-photos.md).
 

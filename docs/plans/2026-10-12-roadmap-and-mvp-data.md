@@ -12,7 +12,7 @@ The decisions behind it stay in `STATUS.md` (the MVP is Darkness and Light, the 
 - [ ] **P2 ai** R3 D2 Rule reconciliation. Re-check `combat-calculation-spec.md` and `deck-progression-rules.md` against the 8-tier model and the MVP elements (the Light and Darkness duality, Neutral normal). The docs audit also found the MVP and design docs still carry July 2026 text.
 - [ ] **P3 you** R4 G2 Plan the next cycle (Fire, Grass, Water, Earth) once the Darkness and Light beta has shown what a full element costs.
 - [ ] **P3 either** R5 Art for the 15 legacy heroes that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth.
-- [ ] **P2 you** R6 Answer, or defer on purpose, the open decisions of `STATUS.md` (O2 to O12): vision-card acquisition, Transcendent legality, the Neutral deck rule, the angels' spells, the story link angel to sister, `AP-###`, roster page names, the Draknara wording, video size, the Drakn Bound men to the 1_Alpha chain.
+- [ ] **P2 you** R6 Answer or deliberately defer the remaining `STATUS.md` decisions O2–O11: vision-card acquisition, Transcendent legality, the Neutral deck rule, the angels' spells, the story link angel to sister, `AP-###`, roster page names, Draknara wording, and the Drakn Bound men in the 1_Alpha chain. O12 video format and duration are decided; the render test is tracked once at 8.5 of the finals plan.
 
 ## Steps 3 and 4 of the Oct 8 agreed steps
 
@@ -22,8 +22,9 @@ The decisions behind it stay in `STATUS.md` (the MVP is Darkness and Light, the 
 ## Art and video track (alongside)
 
 - [ ] **P3 either** R9 Library gaps: the map in `data/art/README.md` (backgrounds, props, races, creatures, unit, building and tactic art, theme gear). Do them as the sisters' scenes show what is missing, not as one big push.
-- [ ] **P2 you** R10 Render and review the first video clips; tune looks, motions and transitions from what the renders show (see also 8.5 of the finals plan).
 - [ ] **P2 you** R11 Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used.
 - [ ] **P3 you** R12 Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace, lace bodysuit, the backless set) to choose the A-pose look that blends best.
 - [ ] **P3 either** R13 Title and key-art scene from the text-to-image templates (`ST0_*_Text`) as a card in the pipeline; an item stage for weapons and armor; use the other `ST` templates (polish, finals) to generate their own prompts.
 - [ ] **P2 ai** R14 The documentation audit's other items that are not decisions, and a launcher check, now with the art and video tutorials (the audit is in `docs/audits/2026-10-12-docs-audit.md`).
+
+Video rendering and review is tracked once in [the finals plan](2026-10-09-finals-and-mvp.md), step 8.5.

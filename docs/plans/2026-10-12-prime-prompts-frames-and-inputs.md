@@ -1,6 +1,8 @@
 # Plan: Prime prompts (pose first), frames, library sync, seeds and inputs
 
-Status: active, Oct 12, 2026. This records the Oct 12 Prime, input and library work, continuing [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md). The Prime frame flow and its comparison were retired on Oct 19; the remaining prompt decisions and ComfyUI tests are still open. The two plans' frame-related history is reconciled below.
+**Status:** active (Oct 12, 2026; Prime frame flow retired Oct 19; prompt decisions and ComfyUI tests remain open)
+
+This records the Oct 12 Prime, input and library work, continuing [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md). The Prime frame flow and its comparison were retired on Oct 19; the remaining prompt decisions and ComfyUI tests are still open. The two plans' frame-related history is reconciled below.
 
 Source: your messages of Oct 12, copied word for word at the end. Related: [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md), [../art/likeness.md](../art/likeness.md), [../../workflows/README.md](../../workflows/README.md).
 
@@ -143,7 +145,7 @@ Notes: a scene's Environment stays last because it is the content of the scene, 
 - [ ] **P1 you** T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, `bin\sync-inputs.cmd --apply`, tests, validators.
 - [x] **P1 you** T3 The proposed frame-vs-normal comparison is dropped by the Oct 19 decision to retire frames; the unrelated prompt tests remain in T2/T9 and the active manual-prompt plan.
 - [ ] **P2 you** T4 D3: test and, if warranted, shorten the FireRed lock.
-- [ ] **P1 you** T5 The 7 angels whose chosen Prime render is in no input or output folder (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006): re-render or re-pick, then `inputs pull`. Owner: you.
+- [ ] **P1 you** T5 Recheck current Angel Primes inputs after the selected-photo changes and resolve only the Prime renders still missing from an input or output folder. The seven names and render IDs recorded here are an Oct 12 snapshot; the four explicitly chosen replacements are Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene. Re-render or re-pick only if the current status confirms it is needed, then pull the input.
 - [ ] **P1 you** T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you.
 - [ ] **P3 you** T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether `refresh` should also run `originals`.
 - [x] **P2 ai** T8 Reconcile the frame-related decisions with the first-shot plan after T3 was dropped. Completed Oct 19; both plans remain active for their unrelated, unfinished Prime tests and user decisions.

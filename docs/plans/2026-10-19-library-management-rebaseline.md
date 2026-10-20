@@ -13,7 +13,7 @@ likeness rules are documented in [likeness.md](../art/likeness.md) and
 | Place or group | Meaning |
 | --- | --- |
 | Sisters | User-selected identities; the system never changes them automatically. |
-| Angels | Current card identities. An Angel with fewer than five usable photos is eligible for an automated replacement when a qualified candidate exists. |
+| Angels | Current card identities. Qualified alternatives are report-only in the current phase; automated pairing/swapping is deferred to the future Demon phase. |
 | Prospects | Active, unassigned people with at least five usable photos. This count is the minimum for an Angel replacement candidate, not proof of pose or outfit variety. |
 | Potentials | Active root alongside Prospects; holds unassigned people with one to four usable photos. Keep matching them against new photos; promote them to Prospects when they reach five. |
 | Junk | Photos needing cleanup, such as icons, text, or crop fixes. Keep them available to clean and send through classification again. |
@@ -49,10 +49,10 @@ direction-specific likeness band are decided.
 | L1 | What separates Prospects from Potentials? | Five usable photos: Prospects have 5+; Potentials have 1–4 and can grow into Prospects. |
 | L2 | What should happen to repairable or uncertain photos? | Repairable icons, text, and crop issues stay in Junk for cleanup and reprocessing; uncertain good photos stay active. |
 | L3 | What belongs in Retired? | Photos judged never useful, not promising photos awaiting a match. Preserve the existing use for empty folders after regrouping. |
-| L4 | Should low-photo Angels be reconsidered automatically? | Yes. An Angel below five usable photos should be replaced only by an eligible, cohesive candidate whose likeness is inside the preferred band. Rank candidates with the shared likeness-fit plus bounded 10/15/20-photo variety score; otherwise keep the Angel and report that no candidate qualified. Report swaps for review; do not require manual pairing each time. |
+| L4 | Should low-photo Angels be reconsidered automatically? | For the current Angel roster, show qualified alternatives as report-only recommendations; the user's choices are manual, and Angel slot names stay fixed. Defer automatic pairing/swapping to the future Demon phase, after counterpart mapping and any direction-specific likeness band are agreed. Reuse the shared fit-plus-variety score only after that review. |
 | L5 | Can automatic matching change Sisters? | No. Sisters remain fixed unless the user chooses to change them. |
 | L6 | What should happen as the library and cast expand? | Re-evaluate the active library, pair eligible candidates automatically, and provide results for the user to review. |
-| L7 | How should the first migration and later runs differ? | Preview and review the current-library migration before applying it with a verified backup. Once the rules are established, automatically classify and swap only when the agreed safeguards pass, then report the actions for review. |
+| L7 | How should the first migration and later runs differ? | The initial migration was previewed and backed up; only the agreed category moves were applied. Identity, Junk, and replacement suggestions stayed report-only. Future automatic classification or swaps require a separate review, especially for the later Demon phase. |
 
 ## Steps
 
@@ -60,20 +60,23 @@ direction-specific likeness band are decided.
 - [ ] **P1 either** L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is validated.
 - [x] **P1 ai** L2 Design a read-only full-library re-evaluation report with proposed photo/group destinations, best matches, score margins, current/projected counts, and explicit uncertain/review outcomes.
 - [x] **P1 ai** L3 Design the migration from current low-count Prospects into Potentials and the rule that promotes a Potential at five usable photos, preserving identity, history, images, and workflow references.
-- [ ] **P1 ai** L4 Define automatic Angel replacement behavior for Angels below five usable photos: require a 5+ candidate and a qualified pairing; keep the current Angel if none qualifies, preserve outgoing photos/history, and report each swap for review.
+- [x] **P1 ai** L4 Define the current report-only Angel recommendation policy and defer automatic pairing/swapping to the later Demon phase. The shared eligibility and fit-plus-variety score are documented; no current Angel identity is changed automatically.
 - [ ] **P2 ai** L5 Specify how confidently unusable photos are retired while Junk remains a repair-and-resubmit path; preserve source files and provide a recovery trail.
 - [x] **P2 ai** L6 Update likeness tooling, gallery, candidate reports, runbook, and tests consistently after the rules and preview are approved.
-- [ ] **P1 either** L7 Back up and review the initial migration preview, then apply it; make later automatic classification and qualifying Angel swaps reportable and recoverable. Verify counts, chosen-photo references, workflow inputs, and reports.
+- [x] **P1 either** L7 Back up and review the initial migration preview, then apply only the agreed category moves. The verified backup preceded 135 Prospects-to-Potentials moves; checks and regenerated reports confirmed the resulting library. Identity/Junk suggestions stayed review-only, and all four Angel choices were explicit user selections.
 - [ ] **P2 either** L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes.
 
-## Progress (2026-10-19)
+## Progress (Oct 19–20)
 
 The category migration path now moves whole Prospects/Potentials folders only
 after full-batch collision checks. A fresh verified backup was made before the
 current migration. The reviewed report proposed 135 Prospects-to-Potentials
 moves and no reverse moves; only those category moves were applied. Identity
-reassignments and Junk candidates remain review-only. Both manual Angel
-selections (Aria Muse for Gavrielle and Ruby Eden for Camaris) are applied.
+reassignments and Junk candidates remain review-only. The explicit Angel
+choices are Aria Muse → Gavrielle, Ruby Eden → Camaris, Amethyst Montgomery →
+Ravaelle, and Sabine Vale → Nyxene. Angel slot names remain fixed; outgoing
+identities returned to the appropriate active category. The generated reports,
+gallery, and Angel Prime workflows were refreshed and verified.
 
 ## Raw request
 

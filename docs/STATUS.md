@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-19 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-20 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -45,25 +45,31 @@ cross-links remain active: Angel cards are ordered by pairing fit, while Prospec
 breaks ties). See the [tooling-debt plan](plans/2026-10-12-tooling-debt.md) for gallery behavior and the [Oct 19 library
 plan](plans/2026-10-19-library-rebaseline-and-frame-retirement.md) for batch details. The sync-input step still reports missing/placeholder
 workspace assets and a selected Female photo now in Fantasy; these were not changed. The chest crop is deferred pending a visual sample
-review. Preserve the extensive dirty worktree; do not stage or commit it wholesale.
+review. This work was subsequently separated into topic commits, pushed to
+`art/curation-and-workspaces`, and the branch is clean and in sync with its remote.
 
 Oct 19 library-management decisions: Prospects have 5+ usable photos; Potentials
 are a separate active root for 1–4, and remain matchable as later downloads
 arrive. Junk remains the repair-and-resubmit path. Retired is for photos judged
-unusable, not good unmatched photos. Sisters stay fixed. Angels below five
-usable photos should be automatically replaced when a qualified 5+ candidate
-exists; otherwise keep them and report no qualified candidate. Start with a
-read-only preview and recoverable changes. See [the library-management
-rebaseline](plans/2026-10-19-library-management-rebaseline.md) for the open
-design and implementation work.
+unusable, not good unmatched photos. Sisters stay fixed. Current Angel
+alternatives are report-only; the four Angel choices were made manually and
+slot names remain fixed. Automatic pairing/swapping is deferred until the
+future Demon phase and its counterpart rules are agreed. See the
+[library-management rebaseline](plans/2026-10-19-library-management-rebaseline.md).
 
-Oct 19 follow-up: Aria Muse is now Gavrielle and Ruby Eden is now Camaris; the
-Angel slot names remain fixed. The verified backup precedes these promotions.
-The rebaseline now supports applying only threshold-driven Prospect/Potential
-folder moves after a backup. Identity mismatches and Junk matches remain
-review-only; Sophie Lloyd and other user-identified photos will be corrected
-manually. Regenerate the Angel Primes workflows and pull its saved `zz_Shots`
-before preserving the current pipeline state in Git.
+Oct 20 closeout: the explicit choices are Aria Muse → Gavrielle, Ruby Eden →
+Camaris, Amethyst Montgomery → Ravaelle, and Sabine Vale → Nyxene; Angel slot
+names remain fixed. The verified backup preceded the 135 Prospects-to-Potentials
+moves. Identity mismatches and Junk matches remain review-only. People Gallery
+and Angel Prime workflows were regenerated, saved Angel Primes shots were
+preserved, and the accumulated work was committed in four topic groups and
+pushed to `origin/art/curation-and-workspaces` (tip `691169850`).
+
+The plan audit found 11 active plans and one proposed plan; no completed plan
+is ready to archive. The current recap is [Oct 20](recap/2026-10-20-0150-recap.md).
+The immediate user task is to finish the manual `0_Edit`/`1_Alpha` prompt set;
+do not update shared templates or regenerate their outputs until the user's
+batch is ready and reviewed.
 
 ## Decisions made
 
