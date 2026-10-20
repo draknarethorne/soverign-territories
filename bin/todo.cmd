@@ -4,4 +4,3 @@ rem todo            write docs\todo.md: where every top-tier card stands (finals
 rem todo --print    show it instead of writing
 %PY% tools\art\todo_report.py %*
 call "%~dp0_end.cmd" %errorlevel%
-

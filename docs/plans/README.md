@@ -71,9 +71,12 @@ Before we commit and push at the end of a working day, we do these, so nothing i
 | [2026-10-09-cli-simplification.md](2026-10-09-cli-simplification.md) | proposed | The command-line inventory and the proposal to fold overlapping commands (D7, 6.3b); waiting for your decision |
 | [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) | active | `_archive`, `_junk`, reel screenshots cleaned, prospects and artists apart, the people index and its classification (yours) |
 | [2026-10-11-first-shot-flows.md](2026-10-11-first-shot-flows.md) | active | P2 and P3 beside the swimsuit Prime P1, the experiments cleaned up; waiting for your tests |
-| [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) | active | Seeds, sync-inputs, the frame flow, the Prime v2 prompt and canonical order, library fixes; decisions D1 to D7 |
+| [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) | active | Seeds, sync-inputs, Prime v2 prompt and canonical order, library fixes; the frame flow was retired Oct 19 |
 | [2026-10-12-artists-reset-and-auto-crop.md](2026-10-12-artists-reset-and-auto-crop.md) | active | Artists rebuilt, auto-crop, one ingest routine, prospects regrouped; waiting for your review |
 | [2026-10-12-prompt-template-standards.md](2026-10-12-prompt-template-standards.md) | active | A written standard for every prompt template, then an audit of the templates against it |
 | [2026-10-12-roadmap-and-mvp-data.md](2026-10-12-roadmap-and-mvp-data.md) | active | The MVP data track (Darkness and Light set, starter decks, rules), the Oct 8 steps 3 and 4, the art and video track |
 | [2026-10-12-tooling-debt.md](2026-10-12-tooling-debt.md) | active | What the day showed about our tools: a status command, splitting likeness.py, one place for thresholds, a day-close check, atomic writes |
+| [2026-10-15-likeness-and-edit-prompts.md](2026-10-15-likeness-and-edit-prompts.md) | active | Current likeness/report state and the working manual prompt review-to-template path |
+| [2026-10-19-library-rebaseline-and-frame-retirement.md](2026-10-19-library-rebaseline-and-frame-retirement.md) | active | Rebaseline active work, retire failed frame flow, pull Angel Primes shots, and process the current library batch |
+| [2026-10-19-library-management-rebaseline.md](2026-10-19-library-management-rebaseline.md) | active | Full-library preview, Prospects and Potentials, recoverable Junk, bad-photo retirement, and automatic low-photo Angel replacement |
 | [_archive/2026-10-10-names-ingest-headshots.md](_archive/2026-10-10-names-ingest-headshots.md) | done | Names that follow the photos (`z_` files), `Sisters`, the new `Various` batch, headshots, the look-alike guard |

@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (38)
+### Your queue: needs your hands or a decision (37)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -15,29 +15,27 @@
 - [ ] 5b. `status` for Angel Primes lists 11 heroes as `inputs-changed (mixed)`: in each, one 2_Bare workflow loads a Prime render you picked while the other Prime-fed workflows still load the placeholder ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 7.3 Yours: render one FireRed Bare or scene from a 944x1104 input and confirm the output is 944x1104. Flux is not used by `make`, so only check it if you use it by hand. If a size is still off, tell me which template. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 8.5 Yours: open one clip from each template in ComfyUI (I could not open them here), run it, and check it is not squeezed and the reel crop frames the hero. Tell me what to change: the megapixels, the length, turbo off, or the ... ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] E13 Open: 7 angels' chosen Prime renders (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006) are loaded by workflows in Angel Primes but are in no input or output folder; ... ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
 - [ ] E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
 - [ ] 3.2 Classification with you, one element at a time (Darkness and Light first). Fill the profile columns of `people_index.csv` and import them, or use `likeness profile`. ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
-- [ ] 4.3 Your test: run the four Prime workflows for several heroes, then `bin\compare-primes.cmd` (nothing is decided; drop what does not work). ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
 - [ ] T2 D2: your approval of the Prime v2 structure and the feet wording, then edit the four templates, add `FEET` to `gen_prompt.py` (with the footwear piece as its source), regenerate, `make --engine both`, deploy, ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
-- [ ] T3 Your test of one angel (suggest Angelica or Haniya, whose photos are partial) with and without the frame, old prompt against the new, on Qwen and FireRed: is the body full length, are the feet bare and on the floor, does ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] T5 The 7 angels whose chosen Prime render is in no input or output folder (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006): re-render or re-pick, then `inputs pull`. ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] T6 The male angels and `Male` still have placeholder photos; put originals in their library folders, run `originals`, `inputs set`. Owner: you. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
+- [ ] T0 Finish the current Angelica comparisons; save candidate prompt refinements and outputs in `zz_Shots`. Track workflow, engine, input image, seed/settings where available, and results for Prime, Bare Figure vs Bare, BareBase ... ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] Finish and refine the manual edit-prompt set in `prompts/_edit/female`; tell the assistant when the batch is ready for review. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 
 **P2 (normal)**
 
 - [ ] Set it in the workspace and run `inputs pull -w "<workspace>"` so it is written into `workspaces.json`. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] Settle the identity JSON first, then re-run Prime and Bare in batches and pick; keep saving candidates until then. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] A1 Look at the cropped photos (Angels, Sisters, Prospects, Artists): the crop is geometric (the face box widened to the sides, all body below), not a person detector, so wings, a wide stance or a low head can be cut. `likeness ... ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
-- [ ] T1 D1: threshold decision, then `originals --apply` and a count of the new frames. Owner: you (decision), me. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
-- [ ] T4 D3 and D4 from the result: shorten the FireRed lock, and keep or retire the frame process. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
+- [ ] T4 D3: test and, if warranted, shorten the FireRed lock. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] T9 D6: your approval of the canonical order, then change the templates family by family (Prime first with D2, then the male Prime, P2/P3, studies, wardrobe, scenes, motion), regenerating and checking byte for byte what should ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
-- [ ] T10 D7: look at the new prospect folders from L2 (suspects: Zara Lane, 3 photos alike Draknoxa at 0.60; Tove Wilde, 3 alike the artist Elise Frost at 0.57; Delia Ames, 2 alike Angelica at 0.45; the 45 single-photo prospects, ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] S3 Read the audit and mark the templates to bring in line (all, or family by family). ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] S7 Approve each tested prompt/data batch before it is described as approved or rolled out to other heroes/templates; do not commit prompt-standard changes as approved before this gate. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R6 Answer, or defer on purpose, the open decisions of `STATUS.md` (O2 to O12): vision-card acquisition, Transcendent legality, the Neutral deck rule, the angels' spells, the story link angel to sister, `AP-###`, roster page ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R10 Render and review the first video clips; tune looks, motions and transitions from what the renders show (see also 8.5 of the finals plan). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R11 Compare Qwen and FireRed on scenes; decide how the two (or a FireRed render plus a Qwen polish pass) are used. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
+- [ ] D10 Review the organized library gallery and Angel-to-Prospect rankings; confirm whether the candidate ordering and preview-only promotion command are useful for choosing Angel replacements. After reviewing the refreshed ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 
 **P3 (later, or ideas)**
 
@@ -47,44 +45,55 @@
 - [ ] 6.5 After a few weeks, remove the forwarders you no longer type. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 8.6 Later, with the multi-image phase (3.8): test the r2v (reference to video) with a background, a Bare_Skin image and armor as separate references. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] 8.7 Later (backlog): game animation and animated cards. A different approach from the reels: PNG sequences that Unity plays, not MiniMax clips. Listed in STATUS Deferred. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] A2 The 28 photos back in `_junk` (mostly screenshots whose head lies under the app's bars): salvage or discard. ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] A3 Read `_reports\crosscheck.md` (look-alikes between artists, and between prospects and artists): only reported, nothing moved. Say if a pair should be handled. ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] T7 Close the loose ends the audit found: the two old Drakness `X_Pose` MiniMax videos are install-only (pull them as curated or delete); the Sovereign Dawn sample workflows load images that do not exist; decide whether ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] T11 Confirm that the variant Primes of the Oct 10 plan (5.2, a Prime B per hero) are dropped: the Prime flows replaced them. That plan is closed and archived on this assumption. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] R4 G2 Plan the next cycle (Fire, Grass, Water, Earth) once the Darkness and Light beta has shown what a full element costs. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R12 Underlayer tests for Drakness (string, push-up, balconette, bralette, sports, armor, lace, lace bodysuit, the backless set) to choose the A-pose look that blends best. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
+- [ ] Archive `prompts/_edit` only after the manual prompt work is finished and any accepted content has been incorporated or deliberately retained elsewhere. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos flagged for 2+ faces), the 3 older same-ID imports in `Various\duplicates`, the 24 preserved replacement ... ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
-### Either of us (8)
+### Either of us (19)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] R1 G1 Darkness and Light set (the MVP). Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
+- [ ] L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is ... ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
+- [ ] L7 Back up and review the initial migration preview, then apply it; make later automatic classification and qualifying Angel swaps reportable and recoverable. Verify counts, chosen-photo references, workflow inputs, and reports. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
 
 **P2 (normal)**
 
+- [ ] S4 Work in small batches: change one section or family, regenerate only affected outputs, and verify unrelated outputs did not change. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] S5 After T0, compare selected `female_anatomy.txt` terms with the relevant JSON inputs and generated prompts for bust, pelvic, body, makeup and skin. Report mappings and possible simplifications; do not edit data. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R2 D3 Starter decks and products. Rebuild `data/decks`, `data/products` and `data/manifests` around Darkness and Light (plus Neutral cards) using the starter-hero decision; include lower-level heroes and decide where bound ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
+- [ ] D9 Calibrate a report-only prospect-readiness ranking from face quality, usable-photo quantity and distinct framing; validate a pose-diversity signal and compare rankings against human review before using the score to ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] After prompt review and approval, implement only the agreed template/data changes, regenerate the affected prompts and workflows, and verify that unrelated outputs remain unchanged. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] Continue the approved likeness/report follow-up after the user reviews the current gallery; do not automatically promote a Prospect or globally assign candidates from the independent rankings. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
 
 **P3 (later, or ideas)**
 
 - [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
+- [ ] S6 Decide from that audit whether to create a curated `docs/art/` vocabulary reference. If useful, write only the reviewed reusable terms and explain how they map to JSON fields; keep the external source non-canonical. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R5 Art for the 15 legacy heroes that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R9 Library gaps: the map in `data/art/README.md` (backgrounds, props, races, creatures, unit, building and tactic art, theme gear). Do them as the sisters' scenes show what is missing, not as one big push. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R13 Title and key-art scene from the text-to-image templates (`ST0_*_Text`) as a card in the pipeline; an item stage for weapons and armor; use the other `ST` templates (polish, finals) to generate their own prompts. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D8 Background processes were suspended by Windows after about a minute (every thread "Suspended"; resuming them with `NtResumeProcess` finished the job). Find out why (power or efficiency mode, a security tool) and, if it ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D11 Design a safe, archive-first way to deactivate a Prospect or Artist folder identified as a false face match from the gallery. Keep the HTML static unless a trusted local action flow is approved; never delete the source files. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 
-### For the assistant, when you say go (22)
+### For the assistant, when you say go (25)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
+- [ ] L4 Define automatic Angel replacement behavior for Angels below five usable photos: require a 5+ candidate and a qualified pairing; keep the current Angel if none qualifies, preserve outgoing photos/history, and report each ... ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
 
 **P2 (normal)**
 
-- [ ] T8 Reconcile this plan with the first-shot plan when T3 is done, then close both. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] S1 After S0: write `docs/art/prompt-template-standards.md` from the topics above and the lessons in the Prime plan; link it from `prompt-pattern.md` and `docs/README.md`. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
-- [ ] S2 Audit every template in `data/art/_templates` and `workflows/_templates` against the standard: a table of what differs, per template and family. Report first, no edits. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
-- [ ] S4 Bring the chosen templates in line, family by family, checking by bytes that the ones that should not change did not; regenerate, `make --engine both`, validators. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] S8 After batch approval: complete the chosen template work, checking by bytes that unaffected outputs did not change; regenerate, run `make --engine both`, and validators. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R3 D2 Rule reconciliation. Re-check `combat-calculation-spec.md` and `deck-progression-rules.md` against the 8-tier model and the MVP elements (the Light and Darkness duality, Neutral normal). The docs audit also found the MVP ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R7 Step 3, after 3a: signature items for Angelica and Angelo (element and alignment, wings, pet, signature weapon, armor, gown, circlet, jewelry, elemental drift, the cards that use them), the same as the other twenty angels. ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R8 Step 4: one canonical companion piece per Elder Dragon from its identity file, and each sister's piece extends it with only the scene placement (today the sisters' dragon companions are copied text). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
@@ -93,17 +102,21 @@
 - [ ] D2 Split `tools/art/likeness.py` (2,500 lines, 30 subcommands, one file) into modules: the face reader and cache, the plans (sort, group, artists, crop), the commands. Behaviour unchanged, the 38 tests are the net. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D3 One place for the thresholds. `assign`, `margin`, `cluster`, `minCluster`, `singles`, `rematch`, `rematchCast`, `castMerge`, `odd`, `alike`, `multiFace`, and the per-command options (`--join`, `--cohesion`, `--single-join`, ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (tmp empty, every plan has a status and tagged boxes, `todo.md` is current, lint, tests, validators), so it is a command and not a memory. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] Once requested, compare the selected manual prompts and vocabulary against the existing JSON inputs, prompt templates, and generated prompts. Report what should map to new templates and what existing templates may be affected ... ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] L5 Specify how confidently unusable photos are retired while Junk remains a repair-and-resubmit path; preserve source files and provide a recovery trail. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
+- [ ] R9 Design a chest-crop preview using face-anchored head/shoulder/chest bounds; assess sample full, partial and varied-pose images before deciding whether to add it to `originals`, workspace inputs or Prime workflows. ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
 **P3 (later, or ideas)**
 
 - [ ] Optional (only if wanted): a contact-sheet helper that lists the source photos in use per hero, so the choice is easy to compare. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
 - [ ] `docs/mvp/` and `deck-progression-rules.md` were checked: they only say "10 elements, cosmetic in the MVP", so nothing else needed changing. Re-check when the starter decks are rebuilt around Darkness and Light. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
-- [ ] 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails. ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
-- [ ] A4 Teach `crop` the other reel layouts (a paused video with a play button, a caption at the bottom) so those screenshots are cut too. ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
+- [ ] 4.4 If the active Prime tests show a specific need, consider a face pass with two images (bare bust plus original headshot), a beta template and a generator change. Do not add a pose-frame input. ([2026-10-11](plans/2026-10-11-tidy-junk-organise.md))
+- [ ] A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses ... ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] L7 Later: `duplicates` compares bytes, so the same picture saved at another size or quality is not caught (it would show as two look-alike photos in one folder). A face-embedding check inside one folder (a score above about ... ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
-- [ ] S5 Add a recurring check: when a template is added, run the audit against the standard (a validator rule or a line in the checklist of `docs/art/tutorial-art.md`). ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] S2 After T0 and S1: audit every template in `data/art/_templates` and `workflows/_templates` against the agreed standard. Include Bare eye/makeup inheritance and a source-to-output review of all 44 hero skin-tone descriptions. ... ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
+- [ ] S9 Add a recurring check: when a template is added, run the audit against the standard (a validator rule or a line in the checklist of `docs/art/tutorial-art.md`). ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] D5 A person detector for `crop` instead of the face box widened to the sides (wings, a wide stance and a low head are guesses today), and the other reel layouts (a paused video with a play button, a caption at the bottom). See ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D6 Write every file the tools change whole and swap it in (a temporary name, then a rename), and log each change as it is made, as `crop` now does: the scaled copies, headshots, frames, `workspaces.json` writes, the move log. ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
+- [ ] D6 Write every file the tools change whole and swap it in (a temporary name, then a rename), and log each change as it is made, as `crop` now does: scaled copies, headshots, `workspaces.json` writes and the move log. A killed ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D7 One line-ending rule in `.gitattributes`: the repo mixes CRLF and LF files, which turns a one-line edit into a whole-file diff and git warns on every command. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 
 ### Completed plans (1, in [plans/_archive](plans/_archive))
@@ -118,8 +131,8 @@
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
 | Angelica | angelica_image~ | Q c8 | Q c1 | - | - | - | 9 |
 | Azaline | azaline_image_~ | Q c3 | - | - | - | - | 3 |
-| Camaris | camaris_image_~ | Q c5 | - | - | - | - | 5 |
-| Gavrielle | gavrielle_shot~ | Q c2 | Q c1 | - | - | - | 3 |
+| Camaris | camaris_shot_2~ | Q c5 | - | - | - | - | 5 |
+| Gavrielle | gavrielle_imag~ | Q c2 | Q c1 | - | - | - | 3 |
 | Haniya | haniya_image_7~ | Q c1 | - | - | - | - | 1 |
 | Nyxene | nyxene_image_7~ | Q c4 | - | - | - | - | 4 |
 | Ravaelle | ravaelle_image~ | Q c3 | - | - | - | - | 3 |

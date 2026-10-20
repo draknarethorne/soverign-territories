@@ -234,4 +234,3 @@ Remove-Item checkpoints\ltx-2.3-22b-dev-fp8.safetensors, diffusion_models\z_imag
 ```
 
 `-WhatIf` only prints what would be removed; take it off to delete.
-
