@@ -57,6 +57,7 @@
       "required": ["id", "timestamp", "actor", "type", "photoIds"],
       "properties": {
         "id": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
+        "batchId": {"type": "string", "pattern": "^batch_[0-9a-f]{32}$"},
         "timestamp": {"type": "string", "format": "date-time"},
         "actor": {"type": "string", "enum": ["user", "tool", "assistant"]},
         "type": {
@@ -83,10 +84,32 @@
           "items": {"$ref": "#/definitions/photoId"}
         },
         "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "source": {"type": "string", "minLength": 1},
         "destination": {"type": "string", "minLength": 1},
         "reason": {"type": "string", "minLength": 1},
-        "undoes": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"}
+        "undoes": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
+        "beforeState": {"$ref": "#/definitions/actionState"},
+        "afterState": {"$ref": "#/definitions/actionState"}
+      }
+    },
+    "actionState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["person", "photo"],
+      "properties": {
+        "person": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/person"}
+          ]
+        },
+        "photo": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/definitions/photo"}
+          ]
+        }
       }
     },
     "photoId": {

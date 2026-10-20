@@ -84,7 +84,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (50)
+### For the assistant, when you say go (47)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -92,8 +92,6 @@
 - [ ] A1 Capture current settings, command behavior, reports and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] A4 Define the stable person/photo ID model, schema, score/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] C3 Keep source files and catalogue read-only (allow only an ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] D2 Add backup-verified apply and undo for metadata-only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] D3 Verify category rules, protected anchors, one-time anchor ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] E1 Plan user-staged Review photos, incoming `Various` photos, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] E2 Cluster rejected, reviewed and incoming candidates together; ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] E3 Iterate candidate matching to a deterministic fixed point. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
@@ -119,7 +117,6 @@
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
-- [ ] D4 Keep existing commands as compatibility entry points while ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G3 Test cancel, stale-manifest rejection, backup, apply, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))

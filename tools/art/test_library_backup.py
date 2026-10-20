@@ -60,6 +60,21 @@ class LibraryBackupTests(unittest.TestCase):
         with self.assertRaisesRegex(OSError, "checksum mismatch"):
             verify_backup(destination)
 
+    def test_extra_repository_source_is_copied_and_verified(self):
+        catalogue = self.tmp / "repo" / "likeness-library.json"
+        catalogue.write_text('{"schemaVersion": 1}\n', encoding="utf-8")
+        destination = create_backup(
+            self.work,
+            self.inputs,
+            self.repo,
+            stamp="extra-source",
+            apply=True,
+            extra_sources=[("likeness-catalogue", catalogue)],
+        )
+        snapshot_copy = destination / "likeness-catalogue" / catalogue.name
+        self.assertEqual(snapshot_copy.read_bytes(), catalogue.read_bytes())
+        self.assertTrue(verify_backup(destination))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -22,7 +22,7 @@ class LikenessActionTests(unittest.TestCase):
         self.photo.write_bytes(b"photo bytes")
         self.photo_id = "photo:image_123456"
         self.photo_hash = metadata.content_sha256(self.photo)
-        self.catalog = {"people": {}, "photos": {}, "actions": []}
+        self.catalog = {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []}
         self.manifest = {
             "manifestVersion": 1,
             "generatedAt": "2026-10-20T12:00:00Z",
@@ -62,6 +62,15 @@ class LikenessActionTests(unittest.TestCase):
         self.assertEqual(self.photo.read_bytes(), before)
         self.assertFalse((self.gallery.parent / "review").exists())
 
+    def test_selected_workflow_photo_cannot_be_moved(self):
+        errors, _plans = actions.validate_manifest(
+            self.manifest,
+            self.root,
+            self.catalog,
+            chosen_ids={self.photo_id},
+        )
+        self.assertTrue(any("selected by an active workspace workflow" in error for error in errors))
+
     def test_stale_missing_and_ambiguous_photos_are_rejected(self):
         self.photo.write_bytes(b"changed photo")
         errors, _plans = self.inspect()
@@ -89,6 +98,20 @@ class LikenessActionTests(unittest.TestCase):
         other_folder["actions"][0]["personFolder"] = "Potentials/Sophie"
         errors, _plans = self.inspect(other_folder)
         self.assertTrue(any("not Potentials/Sophie/gallery" in error for error in errors))
+
+    def test_manifest_rejects_folder_paths_that_escape_the_library(self):
+        escaped = copy.deepcopy(self.manifest)
+        escaped["actions"][0]["personFolder"] = "Prospects/..\\..\\outside"
+        errors, plans = self.inspect(escaped)
+        self.assertTrue(errors)
+        self.assertEqual(plans, [])
+        with self.assertRaisesRegex(ValueError, "invalid likeness action manifest"):
+            with tempfile.TemporaryDirectory() as tmp:
+                path = pathlib.Path(tmp) / "unsafe.json"
+                path.write_text(json.dumps(escaped), encoding="utf-8")
+                actions.load_manifest(path)
+        with self.assertRaisesRegex(ValueError, "unsafe action history path"):
+            actions._safe_relative_path(self.root, "../outside/photo.jpg")
 
     def test_pool_folder_cannot_be_treated_as_a_person(self):
         pool = self.root / "Prospects" / "Various" / "gallery"
@@ -193,6 +216,258 @@ class LikenessActionTests(unittest.TestCase):
             self.assertIn("sent-to-review:", output.getvalue())
             self.assertIn("preview only; no files or catalogue data were changed", output.getvalue())
             self.assertEqual(self.photo.read_bytes(), before)
+
+    def test_cli_apply_requires_explicit_flag(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "actions.json"
+            path.write_text(json.dumps(self.manifest), encoding="utf-8")
+            batch_id = "batch_" + "1" * 32
+            output = io.StringIO()
+            with (
+                mock.patch.object(actions.likeness.cw, "load_cfg", return_value={}),
+                mock.patch.object(actions.likeness.cw, "work_root", return_value=str(self.root)),
+                mock.patch.object(actions.likeness, "pool_home", return_value="Prospects/Various"),
+                mock.patch.object(actions.metadata, "load_catalog", return_value=self.catalog),
+                mock.patch.object(actions, "apply_actions", return_value=(batch_id, self.root / "_backup")) as apply,
+                contextlib.redirect_stdout(output),
+            ):
+                result = actions.main(["apply", str(path)])
+                self.assertEqual(result, 0)
+                apply.assert_not_called()
+                self.assertIn("preview only; add --apply", output.getvalue())
+
+                output.seek(0)
+                output.truncate()
+                result = actions.main(["apply", str(path), "--apply"])
+                self.assertEqual(result, 0)
+                apply.assert_called_once()
+                self.assertIn(f"applied batch {batch_id}", output.getvalue())
+
+    def test_cli_undo_requires_explicit_flag(self):
+        batch_id = "batch_" + "1" * 32
+        undo_batch = "batch_" + "2" * 32
+        with (
+            mock.patch.object(actions.likeness.cw, "load_cfg", return_value={}),
+            mock.patch.object(actions.likeness.cw, "work_root", return_value=str(self.root)),
+            mock.patch.object(actions.likeness, "pool_home", return_value="Prospects/Various"),
+            mock.patch.object(actions.metadata, "load_catalog", return_value=self.catalog),
+            mock.patch.object(actions, "plan_undo", return_value=([], batch_id, [])),
+            mock.patch.object(
+                actions, "undo_actions",
+                return_value=(undo_batch, self.root / "_backup", batch_id),
+            ) as undo,
+        ):
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                result = actions.main(["undo", batch_id])
+            self.assertEqual(result, 0)
+            undo.assert_not_called()
+            self.assertIn("preview only; add --apply", output.getvalue())
+
+            output.seek(0)
+            output.truncate()
+            with contextlib.redirect_stdout(output):
+                result = actions.main(["undo", batch_id, "--apply"])
+            self.assertEqual(result, 0)
+            undo.assert_called_once()
+            self.assertIn(f"undid {batch_id}", output.getvalue())
+
+    def test_apply_and_undo_move_photo_with_auditable_metadata_and_verified_backups(self):
+        backups = []
+
+        def save_catalog(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        def backup(root, _cfg, batch):
+            path = root / "_backup" / batch
+            backups.append(path)
+            return path
+
+        batch_id, backup_path = actions.apply_actions(
+            self.manifest, self.root, self.catalog, {}, "Prospects/Various",
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        review_path = self.gallery.parent / "review" / self.photo.name
+        self.assertFalse(self.photo.exists())
+        self.assertEqual(review_path.read_bytes(), b"photo bytes")
+        self.assertEqual(backup_path, backups[0])
+        self.assertEqual(self.catalog["actions"][0]["batchId"], batch_id)
+        self.assertEqual(self.catalog["actions"][0]["source"], "Prospects/Sophie/gallery/sophie_image_123456.jpg")
+        self.assertEqual(self.catalog["actions"][0]["destination"], "Prospects/Sophie/review/sophie_image_123456.jpg")
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+
+        undo_batch, undo_backup, undone_batch = actions.undo_actions(
+            self.catalog, self.root, {}, "Prospects/Various", batch_id=batch_id,
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        self.assertEqual(undone_batch, batch_id)
+        self.assertEqual(undo_backup, backups[1])
+        self.assertTrue(undo_batch.startswith("batch_"))
+        self.assertTrue(self.photo.is_file())
+        self.assertFalse(review_path.exists())
+        self.assertEqual(self.catalog["people"][self.catalog["actions"][0]["personId"]]["identityAnchors"], [])
+        self.assertEqual(self.catalog["photos"][self.photo_id]["protected"], False)
+        self.assertEqual(self.catalog["actions"][-1]["type"], "action-undone")
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+        errors, batch, plans = actions.plan_undo(self.catalog, self.root)
+        self.assertTrue(errors)
+        self.assertIsNone(batch)
+        self.assertEqual(plans, [])
+
+    def test_explicit_review_removes_anchor_once_and_undo_restores_anchor_and_protection(self):
+        person_id = "person_" + "1" * 32
+        self.catalog["people"][person_id] = {
+            "id": person_id,
+            "displayName": "Sophie",
+            "folder": "Prospects/Sophie",
+            "folderHistory": [],
+            "identityAnchors": [self.photo_id],
+        }
+        self.catalog["photos"][self.photo_id] = {
+            "contentSha256": self.photo_hash,
+            "protected": True,
+        }
+
+        def save_catalog(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        def backup(root, _cfg, batch):
+            return root / "_backup" / batch
+
+        batch_id, _backup_path = actions.apply_actions(
+            self.manifest, self.root, self.catalog, {}, "Prospects/Various",
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        self.assertEqual(self.catalog["people"][person_id]["identityAnchors"], [])
+        self.assertTrue(self.catalog["photos"][self.photo_id]["protected"])
+
+        actions.undo_actions(
+            self.catalog, self.root, {}, "Prospects/Various", batch_id=batch_id,
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        self.assertEqual(self.catalog["people"][person_id]["identityAnchors"], [self.photo_id])
+        self.assertTrue(self.catalog["photos"][self.photo_id]["protected"])
+
+    def test_metadata_only_protection_action_can_be_applied_and_undone(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"][0] = self.action("photo-protected")
+
+        def save_catalog(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        def backup(root, _cfg, batch):
+            return root / "_backup" / batch
+
+        batch_id, _backup_path = actions.apply_actions(
+            manifest, self.root, self.catalog, {}, "Prospects/Various",
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        self.assertTrue(self.photo.is_file())
+        self.assertTrue(self.catalog["photos"][self.photo_id]["protected"])
+
+        actions.undo_actions(
+            self.catalog, self.root, {}, "Prospects/Various", batch_id=batch_id,
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        self.assertTrue(self.photo.is_file())
+        self.assertFalse(self.catalog["photos"][self.photo_id]["protected"])
+
+    def test_apply_rolls_back_moved_photos_when_catalogue_save_fails(self):
+        def backup(root, _cfg, _batch):
+            return root / "_backup" / "verified"
+
+        def fail_save(_updated):
+            raise OSError("simulated catalogue failure")
+
+        with self.assertRaisesRegex(OSError, "simulated catalogue failure"):
+            actions.apply_actions(
+                self.manifest, self.root, self.catalog, {}, "Prospects/Various",
+                backup_fn=backup, save_fn=fail_save,
+            )
+        self.assertTrue(self.photo.is_file())
+        self.assertFalse((self.gallery.parent / "review" / self.photo.name).exists())
+        self.assertFalse((self.gallery.parent / "review").exists())
+        self.assertEqual(
+            self.catalog,
+            {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+        )
+
+    def test_apply_rolls_back_earlier_moves_when_a_later_move_fails(self):
+        second_photo = self.gallery / "sophie_image_654321.jpg"
+        second_photo.write_bytes(b"second photo")
+        second_id = "photo:image_654321"
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"].append(
+            self.action(
+                "sent-to-review",
+                photo_id=second_id,
+                photo_hash=metadata.content_sha256(second_photo),
+            )
+        )
+        original_move = actions.shutil.move
+        call_count = 0
+
+        def fail_second_move(source, destination):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 2:
+                raise OSError("simulated move failure")
+            return original_move(source, destination)
+
+        with mock.patch.object(actions.shutil, "move", side_effect=fail_second_move):
+            with self.assertRaisesRegex(OSError, "simulated move failure"):
+                actions.apply_actions(
+                    manifest, self.root, self.catalog, {}, "Prospects/Various",
+                    backup_fn=lambda root, _cfg, batch: root / "_backup" / batch,
+                )
+
+        self.assertTrue(self.photo.is_file())
+        self.assertTrue(second_photo.is_file())
+        self.assertFalse((self.gallery.parent / "review").exists())
+        self.assertEqual(self.catalog["actions"], [])
+
+    def test_apply_revalidates_photo_after_creating_backup(self):
+        def backup(_root, _cfg, _batch):
+            self.photo.write_bytes(b"changed during backup")
+            return self.root / "_backup" / "verified"
+
+        with self.assertRaisesRegex(ValueError, "library changed after backup"):
+            actions.apply_actions(
+                self.manifest, self.root, self.catalog, {}, "Prospects/Various",
+                backup_fn=backup, save_fn=lambda _updated: self.fail("catalogue should not be saved"),
+            )
+        self.assertEqual(self.photo.read_bytes(), b"changed during backup")
+        self.assertEqual(self.catalog["actions"], [])
+
+    def test_undo_rolls_back_file_move_when_catalogue_save_fails(self):
+        def save_catalog(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        def backup(root, _cfg, batch):
+            return root / "_backup" / batch
+
+        batch_id, _backup_path = actions.apply_actions(
+            self.manifest, self.root, self.catalog, {}, "Prospects/Various",
+            backup_fn=backup, save_fn=save_catalog,
+        )
+        review_path = self.gallery.parent / "review" / self.photo.name
+        applied_catalog = copy.deepcopy(self.catalog)
+
+        def fail_save(_updated):
+            raise OSError("simulated undo catalogue failure")
+
+        with self.assertRaisesRegex(OSError, "simulated undo catalogue failure"):
+            actions.undo_actions(
+                self.catalog, self.root, {}, "Prospects/Various", batch_id=batch_id,
+                backup_fn=backup, save_fn=fail_save,
+            )
+        self.assertTrue(review_path.is_file())
+        self.assertFalse(self.photo.exists())
+        self.assertEqual(self.catalog, applied_catalog)
 
 
 if __name__ == "__main__":

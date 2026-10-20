@@ -99,6 +99,8 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
 | `bin\people-gallery-review.cmd [--out DIR] [--keep SCORE]` | separate local maintenance page for every Gallery and Review photo, ordered against trusted/provisional cores, with metadata states, filters and cached lazy-loaded thumbnails; only stages a versioned JSON action manifest |
 | `bin\likeness-actions.cmd validate FILE.json` / `preview FILE.json` | validate IDs, hashes, source folders, catalogue references and action conflicts; preview destinations without moving photos or editing metadata |
+| `bin\likeness-actions.cmd apply FILE.json --apply` | revalidate, create and verify a backup of the photo library, configured inputs, workspace configuration and likeness catalogue, then apply staged moves and metadata decisions with an audit record |
+| `bin\likeness-actions.cmd undo [BATCH_ID] --apply` | preview by default; with `--apply`, back up and undo only the newest active action batch if its files and metadata still match the recorded post-action state |
 
 ## Profile: who could play what
 
@@ -138,14 +140,19 @@ controls stage identity-anchor, protection, send-to-Review, reject-to-Various
 and Review-approval decisions. Downloading the versioned manifest is the only
 action the page takes; it never edits catalogue data or moves photos. Run
 `bin\likeness-actions.cmd validate <file>` or `preview <file>` to check the
-download against current IDs, hashes, folders and metadata. The CLI is
-preview-only; file moves and metadata application are not implemented. The
-manifest contract is
+download against current IDs, hashes, folders and metadata. Both commands are
+read-only. Use `apply <file> --apply` only after reviewing the preview; it
+verifies a full backup, rechecks the manifest and selected workflow photos,
+then moves files and atomically writes the versioned catalogue with an audit
+trail. `undo [BATCH_ID]` previews a reversal; add `--apply` to back up and
+reverse only the newest active batch, and only when the original photos and
+catalogue state have not changed. After applying or undoing, run
+`bin\library.cmd` to refresh derived gallery files and reports. The manifest
+contract is
 [`likeness-action-manifest.schema.json`](../../data/art/_schema/likeness-action-manifest.schema.json).
 Photos without a unique stable ID, in ambiguous catalogue folders, or under
-folder roots not supported by the catalogue schema cannot be staged. Applying
-applying a manifest is not implemented; do not move files based on the
-download.
+folder roots not supported by the catalogue schema cannot be staged. The
+browser only downloads a manifest; it never writes to the library.
 The complete ranked comparisons at `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`
 show similarity, usable photo count, likeness cost, photo bonus and adjusted cost. Rebaseline uses the same
 score and saved-render evidence as `likeness pairs`; its global assignment can differ from independent

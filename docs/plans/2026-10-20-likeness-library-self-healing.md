@@ -322,14 +322,20 @@ JSON or moving files.
 
 - [x] **P1 ai** D1 Add manifest validate and preview commands with explicit
   rejection of stale hashes, missing/ambiguous IDs, invalid moves and
-  conflicting actions. `bin\likeness-actions.cmd` is read-only; application
-  and undo remain in D2.
-- [ ] **P1 ai** D2 Add backup-verified apply and undo for metadata-only
+  conflicting actions. Validation and preview remain read-only.
+- [x] **P1 ai** D2 Add backup-verified apply and undo for metadata-only
   decisions and user-staged photo moves; record an auditable action history.
-- [ ] **P1 ai** D3 Verify category rules, protected anchors, one-time anchor
+- [x] **P1 ai** D3 Verify category rules, protected anchors, one-time anchor
   removal on explicit Review/Reject, and path containment before file writes.
-- [ ] **P2 ai** D4 Keep existing commands as compatibility entry points while
-  the new workflow is tested.
+- [x] **P2 ai** D4 Keep existing commands as compatibility entry points while
+  the new workflow is tested; no existing command entry points were replaced.
+
+`bin\likeness-actions.cmd apply FILE.json --apply` backs up the active photo
+library, configured inputs, workspace configuration and catalogue, revalidates
+the manifest, then applies file and metadata changes. `undo [BATCH_ID]`
+previews by default; with `--apply`, it backs up and reverses only the newest
+active action batch when recorded files and metadata still match. Application
+is not run against the real photo library during implementation.
 
 **Exit:** stale or conflicting manifests fail explicitly; valid operations are
 recoverable, logged and idempotent where appropriate.

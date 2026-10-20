@@ -64,7 +64,7 @@
     },
     "personFolder": {
       "type": "string",
-      "pattern": "^(Angels|Sisters|Prospects|Potentials)/[^/]+(/[^/]+)?$"
+      "pattern": "^(Angels|Sisters|Prospects|Potentials)/[^/\\\\:]+(/[^/\\\\:]+)?$"
     }
   }
 }

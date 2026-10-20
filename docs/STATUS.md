@@ -99,8 +99,17 @@ lazy thumbnails. It can stage identity-anchor, protection, Review,
 Reject-to-Various and Review-approval actions to a versioned JSON download.
 `bin\likeness-actions.cmd validate|preview` checks manifest schema, photo IDs,
 content hashes, current folders, catalogue ownership and action conflicts.
-The CLI remains preview-only; no file moves or metadata application exist yet.
-Folders outside the catalogue's supported roots are view-only.
+`apply FILE.json --apply` now creates and verifies a backup of active library
+files, configured inputs, workspace configuration and the catalogue before
+revalidating and applying staged moves or metadata decisions. Every operation
+is recorded with before/after metadata snapshots, and `undo [BATCH_ID]`
+previews a reversal by default; explicit `--apply` backs up and reverses only
+the newest unchanged batch. Tests cover file and metadata-only actions,
+rollback on catalogue-save failure, stale state, selected workflow photos,
+protected anchors, path containment and backup inclusion. No action was
+applied to the real photo library; the tracked likeness catalogue remains
+empty, and matching thresholds are unchanged. Folders outside the catalogue's
+supported roots are view-only.
 The user's next requested increment is Prospect/Potential name recovery and
 renaming. Initial code trace: promotion keeps a recorded `z_` name when one
 exists, but falls back to the fixed Angel slot name if it is missing; the

@@ -68,7 +68,7 @@ def _directories(source, exclude_library_storage=False):
     return out
 
 
-def sources(work_root, inputs_root=None, config_path=None):
+def sources(work_root, inputs_root=None, config_path=None, extra_sources=()):
     work = pathlib.Path(work_root).resolve()
     result = [("work-root", work, True)]
     if inputs_root:
@@ -77,18 +77,23 @@ def sources(work_root, inputs_root=None, config_path=None):
             result.append(("comfy-inputs", inputs, False))
     if config_path:
         result.append(("repository-config", pathlib.Path(config_path).resolve(), False))
+    for label, source in extra_sources:
+        if any(existing == label for existing, _path, _exclude in result):
+            raise ValueError(f"duplicate backup source label: {label}")
+        result.append((label, pathlib.Path(source).resolve(), False))
     return result
 
 
-def preview(work_root, inputs_root=None, config_path=None):
+def preview(work_root, inputs_root=None, config_path=None, extra_sources=()):
     entries, total = [], 0
-    for label, source, exclude_library_storage in sources(work_root, inputs_root, config_path):
+    source_list = sources(work_root, inputs_root, config_path, extra_sources)
+    for label, source, exclude_library_storage in source_list:
         for path, relative in _files(source, exclude_library_storage):
             size = path.stat().st_size
             entries.append((label, path, relative, size))
             total += size
     print(f"snapshot preview: {len(entries)} file(s), {total:,} bytes")
-    for label, source, _ in sources(work_root, inputs_root, config_path):
+    for label, source, _ in source_list:
         print(f"  {label}: {source}")
     print("  excluded from work-root: _backup, _archive")
     print("  destination: <work-root>\\_backup\\library-<timestamp>")
@@ -132,10 +137,10 @@ def verify_backup(snapshot):
     return True
 
 
-def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, apply=True):
+def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, apply=True, extra_sources=()):
     """Preview or create a complete snapshot; publish its manifest only after all copies verify."""
     work = pathlib.Path(work_root).resolve()
-    entries, total = preview(work, inputs_root, config_path)
+    entries, total = preview(work, inputs_root, config_path, extra_sources)
     if not apply:
         return None
 
@@ -154,8 +159,9 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
 
     manifest_files = []
     try:
-        root_map = {label: source for label, source, _ in sources(work, inputs_root, config_path)}
-        for label, source, exclude_library_storage in sources(work, inputs_root, config_path):
+        source_list = sources(work, inputs_root, config_path, extra_sources)
+        root_map = {label: source for label, source, _ in source_list}
+        for label, source, exclude_library_storage in source_list:
             if source.is_dir():
                 for relative in _directories(source, exclude_library_storage):
                     (destination / label / relative).mkdir(parents=True, exist_ok=True)
@@ -187,7 +193,7 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
                 "sha256": digest.hexdigest(),
             })
 
-        for label, source, exclude_library_storage in sources(work, inputs_root, config_path):
+        for label, source, exclude_library_storage in source_list:
             current = {
                 (relative.as_posix(), path.stat().st_size)
                 for path, relative in _files(source, exclude_library_storage)
@@ -208,7 +214,7 @@ def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, app
             "bytes": sum(entry["size"] for entry in manifest_files),
             "sources": [
                 {"name": label, "path": str(source), "exclude_library_storage": exclude}
-                for label, source, exclude in sources(work, inputs_root, config_path)
+                for label, source, exclude in source_list
             ],
             "entries": manifest_files,
         }

@@ -92,6 +92,19 @@ def validation_errors(data):
         if person_id is not None and person_id not in people:
             errors.append(f"actions/{index}: person {person_id} has no person record")
 
+    actions_by_id = {action["id"]: action for action in data["actions"]}
+    undone_ids = set()
+    for index, action in enumerate(data["actions"]):
+        if action["type"] != "action-undone":
+            continue
+        target = action.get("undoes")
+        if target not in actions_by_id or actions_by_id[target]["type"] == "action-undone":
+            errors.append(f"actions/{index}: undoes must reference an existing applied action")
+        elif target in undone_ids:
+            errors.append(f"actions/{index}: action {target} has already been undone")
+        else:
+            undone_ids.add(target)
+
     return errors
 
 
