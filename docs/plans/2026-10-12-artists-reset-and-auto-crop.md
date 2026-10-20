@@ -1,6 +1,6 @@
 # 2026-10-12: Artists reset, auto-crop, one ingest routine
 
-**Status:** active (built and run; waiting for you to look at the result)
+**Status:** active (built and run; crop review received; follow-ups open)
 
 What you asked for today (your notes are at the end, word for word) and what was done. The commands are in [../art/likeness.md](../art/likeness.md), the runbook in
 [../art/original-photos.md](../art/original-photos.md).
@@ -12,6 +12,7 @@ What you asked for today (your notes are at the end, word for word) and what was
 | Artists never cross, but tell me about look-alikes | Kept apart by the tool; `likeness crosscheck` writes `_reports\crosscheck.md` (artist ~ artist and prospect ~ artist) |
 | Are prospects compared with Angels and Sisters? | Yes for `sort`; `rematch` and `singles` only listed them. Now a prospect, a new group or a single photo that is the same woman as an angel or sister (0.55) joins her, and her `z_` file remembers who it was (Zara Lane joined Draknoxa) |
 | Crop away text, other people, animals and background, keep the originals | `likeness crop` for every root, including Angels and Sisters; originals in `_archive\...\gallery_uncropped`; `--undo` |
+| Crop review (Oct 12) | Strong results for Angels, Sisters, Prospects and people in normal outfits; artist wings were cut, and some reel overlays remain at the bottom and right edges |
 | Photos of a person that need clean-up go to her `review`, not `_junk` | A prospect's photo that cannot be cleaned up goes to her `review` folder, and `review` leaves it there (`_cleanup_hold.json`) |
 | Photos with an animal that skews the likeness: back to the artist's gallery | An artist's person photo that cannot be cleaned up goes back to `Artists\<A>\gallery`; the grouping skips photos with animals |
 | Put `_junk` back and see where it lands | `likeness junk --reset` (and `library.cmd --retry-junk`); the 37 prospect and 27 artist photos went through again, 28 are junk again (bars over her head) |
@@ -21,10 +22,10 @@ What you asked for today (your notes are at the end, word for word) and what was
 
 ## Open
 
-- [ ] **P2 you** A1 Look at the cropped photos (Angels, Sisters, Prospects, Artists): the crop is geometric (the face box widened to the sides, all body below), not a person detector, so wings, a wide stance or a low head can be cut. `likeness crop --undo` reverses a batch; the uncropped originals are in `_archive\<folder>\gallery_uncropped`.
-- [ ] **P3 you** A2 The 28 photos back in `_junk` (mostly screenshots whose head lies under the app's bars): salvage or discard.
+- [x] A1 Reviewed the cropped photos: excellent for Angels, Sisters, Prospects and normal outfits; artist wings were cut and some reel overlays remain.
+A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-10-19-library-rebaseline-and-frame-retirement.md); use the current post-run inventory rather than the Oct 12 count.
 - [ ] **P3 you** A3 Read `_reports\crosscheck.md` (look-alikes between artists, and between prospects and artists): only reported, nothing moved. Say if a pair should be handled.
-- [ ] **P3 ai** A4 Teach `crop` the other reel layouts (a paused video with a play button, a caption at the bottom) so those screenshots are cut too.
+- [ ] **P3 ai** A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses are preserved; keep manual or AI blending optional.
 
 ## Result
 
@@ -74,3 +75,14 @@ We should also cleanup the tmp directory for .md files that have proper docs/pla
 
 Finally, at some point we need an audit of the docs *.md files to see where we have conflicts or stale documentation.  We've made a lot of changes over the past several days and I'm sure things are out of sync now.  You can fix the obvious issues, but give me a report on what major issues we have as some of that might
 just be ideation/future documentation we'll get to in later phases or some might need immediately actions.
+
+## Raw notes: crop review follow-up (Oct 12)
+
+Your words, kept as written.
+
+I would give the cropping a A+ on the Angels, Sisters and Prospects, but for Artists - where some had angel wings and devil wings it cropped
+those quite a bit.  So, for real people in normal outfits, the cropping did get rid of text and much of the extras.  I noticed that some
+photos that have the "text" about the reels on the hairline that it also left text on the bottom and right side for things in the shots -
+many of the screenshots might have overlay items that ideally are cropped and if I need to manually clean-up the top lines with AI or
+something I can do that - if there were another library to blend those away that would also be awesome.  So mostly the cropping is awesome,
+but still has a few things to improve on.

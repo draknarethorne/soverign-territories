@@ -23,12 +23,32 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\art\test_duplicates.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% tools\art\test_library_backup.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% tools\art\test_library_sync.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_likeness.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
 %PY% tools\art\test_people.py
+%PY% tools\art\test_people_gallery.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_prime_compare.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1

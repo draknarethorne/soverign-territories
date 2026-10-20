@@ -8,7 +8,7 @@ Two kinds are looked for in every gallery and review folder:
                  <work>\\_archive\\<their folder>\\gallery_duplicates (never deleted; the scaled copies, headshots and frames of a moved copy are pruned by `originals`).
                  The copy kept is the first of: a chosen photo (workspaces.json photos and flows), a gallery photo over a review photo, Angels, Sisters, Prospects, Artists, Various,
                  a name that already carries its folder's prefix, the shorter name.
-  SAME ID        the same photo id (image_<id>, shot_<date>, pic_<hex>) in two files whose bytes differ (a resaved or resized copy). Listed only: you pick which to keep.
+  SAME ID        the same photo id (image_<id>, shot_<date>, pic_<hex>) in two files whose bytes differ (a resaved or resized copy). During ingest, the uniquely newest incoming file by modification time stays in Various/gallery; older incoming copies go to Various/duplicates. A timestamp tie is left for you to resolve.
 
   python tools/art/duplicates.py            report
   python tools/art/duplicates.py --apply    move the extra copies of identical pictures to _archive
@@ -51,6 +51,16 @@ def scan(folders):
     for group, _name, folder in folders:
         for bucket in ("gallery", "review"):
             out += [(p, group, folder, bucket) for p in originals.images(folder / bucket)]
+    return out
+
+
+def scan_junk(work):
+    """Same-ID evidence in _junk for incoming replacements; junk is not a duplicate-keeper source."""
+    out = []
+    root = pathlib.Path(work) / "_junk"
+    if root.is_dir():
+        for side in sorted(p for p in root.iterdir() if p.is_dir()):
+            out.extend((p, f"_junk/{side.name}", side, "junk") for p in originals.images(side))
     return out
 
 
@@ -111,13 +121,85 @@ def resolve(groups, work, chosen, apply):
     return moved
 
 
-def run(cfg, work, folders, apply):
+def prefer_incoming(ids, work, apply):
+    """Keep the newest incoming same-ID photo; set older incoming copies aside."""
+    remaining, replaced = [], []
+    for key, entries in ids:
+        incoming = [e for e in entries if e[1].lower() == "various" and e[3] == "gallery"]
+        existing = [e for e in entries if e not in incoming]
+
+        if len(incoming) > 1:
+            newest_time = max(e[0].stat().st_mtime_ns for e in incoming)
+            newest = [e for e in incoming if e[0].stat().st_mtime_ns == newest_time]
+            if len(newest) != 1:
+                print(
+                    f"  same id {key}: incoming files tie for newest modification time; "
+                    "ambiguous, nothing moved"
+                )
+                remaining.append((key, entries))
+                continue
+
+            fresh = newest[0]
+            duplicates_dir = fresh[2] / "duplicates"
+            for older in incoming:
+                if older is fresh:
+                    continue
+                dest = duplicates_dir / older[0].name
+                index = 1
+                while dest.exists():
+                    dest = duplicates_dir / f"{older[0].stem}_duplicate_{index}{older[0].suffix}"
+                    index += 1
+                if apply:
+                    duplicates_dir.mkdir(parents=True, exist_ok=True)
+                    older[0].replace(dest)
+                print(
+                    f"  {'MOVED' if apply else 'would move'} older incoming "
+                    f"{older[0].relative_to(work).as_posix()} to "
+                    f"{dest.relative_to(work).as_posix()}; newest modification time stays in gallery"
+                )
+            incoming = [fresh]
+
+        if not existing:
+            continue
+        if len(incoming) != 1:
+            remaining.append((key, entries))
+            continue
+        fresh = incoming[0]
+        for old in existing:
+            dest_dir = originals.archive_dir(old[2], work, "gallery_replaced")
+            dest = dest_dir / old[0].name
+            if apply:
+                dest_dir.mkdir(parents=True, exist_ok=True)
+                index = 1
+                while dest.exists():
+                    dest = dest_dir / f"{old[0].stem}_{index}{old[0].suffix}"
+                    index += 1
+                old[0].replace(dest)
+            print(
+                f"  {'REPLACED' if apply else 'would replace'}  "
+                f"{old[0].relative_to(work).as_posix()} with incoming "
+                f"{fresh[0].relative_to(work).as_posix()}; old copy to "
+                f"{dest.relative_to(work).as_posix()}"
+            )
+        replaced.append(key)
+    return remaining, replaced
+
+
+def run(cfg, work, folders, apply, prefer_incoming_copies=False):
     """Scan, report and (with apply) resolve. Returns (identical groups found, same-id lists)."""
     files = scan(folders)
+    ids = same_ids(files + scan_junk(work) if prefer_incoming_copies else files)
+    replaced = []
+    if prefer_incoming_copies:
+        ids, replaced = prefer_incoming(ids, work, apply)
+        if apply:
+            files = scan(folders)
+            ids = same_ids(files + scan_junk(work))
     identical = same_pictures(files)
-    ids = same_ids(files)
     print(f"duplicates: {len(files)} original(s) read; {len(identical)} picture(s) kept twice, {len(ids)} id(s) shared by different files")
     resolve(identical, work, chosen_stems(cfg), apply)
+    if replaced:
+        print(f"{len(replaced)} same-ID photo(s) replaced by incoming copies")
     for key, entries in ids:
         print(f"  same id {key}, different files (yours to pick): " + ", ".join(e[0].relative_to(work).as_posix() for e in entries))
     return identical, ids
@@ -126,11 +208,12 @@ def run(cfg, work, folders, apply):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="move the extra copies of identical pictures to _archive (default: report only)")
+    ap.add_argument("--prefer-incoming", action="store_true", help="replace an existing same-ID version with one different incoming copy from Various, archiving the old file")
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
     args = ap.parse_args(argv)
     cfg = cw.load_cfg()
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
-    identical, ids = run(cfg, work, cw.photo_folders(cfg, args.root), args.apply)
+    identical, ids = run(cfg, work, cw.photo_folders(cfg, args.root), args.apply, args.prefer_incoming)
     if identical and not args.apply:
         print("preview only; add --apply to move the extra copies")
     return 1 if (identical and not args.apply) else 0

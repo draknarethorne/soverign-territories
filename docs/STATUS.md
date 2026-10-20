@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-12 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-19 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -11,9 +11,9 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 | Area | State |
 | --- | --- |
 | Art pipeline | Working. `data/art/` identities + pieces + templates compile to prompts via `tools/generators/gen_prompt.py`. Core wardrobe plus six theme packs (Greek, Roman, Egyptian, Norse, Celtic, Thanksgiving). Every sister has Signature, Glamour, Elegant Casting, Staged Enchanted Evening, **The Dawn** (rising in her homeland) and **Robe** scenes, each with its own background. How to add to it: [art/tutorial-art.md](art/tutorial-art.md). |
-| ComfyUI workflows | Automated. `tools/workflows/comfy_workflows.py` builds workflows from prompts and syncs them to the home workspace of each set (Drakn Sisters, Sovereign Dawn Series, Sovereign Territories, Angel Primes; temporary copies in other workspaces on request) (`workflows/workspaces.json`, [../workflows/README.md](../workflows/README.md)); `bin/*.cmd` are the quick launchers. Three engines: Qwen (card-art look, tracked in git), FireRed (photoreal, local test copies with a real-then-magic effects instruction) and MiniMax video (tracked). The `ST0`-`ST6` templates are the only masters. Hand-tuned workflows are kept in `workflows/_curated/` and never regenerated. |
-| Face likeness | `bin\likeness.cmd` compares faces in the photo library (one-person checks, artists grouped into people, the sisters as a family around Drakness, angel-to-sister pairing, sorting the top-level `Various` pool, names and history files, a look-alike guard, merge, retire, undo). Reorganisations done Oct 9 and Oct 10: see [art/likeness-reorg-2026-10-10.md](art/likeness-reorg-2026-10-10.md) for what moved and what to review (Seraphine, Gavrielle and Sandalyn have new faces; Camaris still needs a candidate (Azaline became Eva Emily on Oct 11)). Oct 12: `likeness artists` reset the Artists folders from the Oct 9 backup (every photo under the artist it came from, then its person; the pre-reset copy is `_backup\2026-10-12-before-artists-reset`, people left with no photos are in `_retired\Artists`). Then the new routine: `likeness crop` cuts every photo (Angels, Sisters, Prospects, Artists) of app bars, other people, animals and background, keeping the uncropped one in `_archive\...\gallery_uncropped`; `group --singles` gives every good photo in an artist's gallery a person (never across artists); `rematch` and `singles` join a prospect who is the same woman as an angel or sister to her (0.55); `pullback` re-sorts prospects through `Various`; `junk --reset` sends `_junk` back through it all; `crosscheck` reports look-alikes across the lines kept apart (`_reports\crosscheck.md`). Face data now tells animals from people, so it was read again. Guide: [art/likeness.md](art/likeness.md). |
-| Original photos | The library under the work folder (Angels, Sisters, Prospects, Artists, and the pool `Various`) is maintained by `bin\originals.cmd`: originals are named after their folder, scaled to 944x1104, given a face `headshot_944x1104` copy, copies of removed originals move to `_archive` (the `_org` folders, mirrored paths), and a chosen photo that was renamed is re-pointed (`inputs photos`). One command, `bin\library.cmd`, runs the whole ingest routine (crop, junk, sort, artists, prospects, duplicates, sync); the runbook is in [art/original-photos.md](art/original-photos.md). |
+| ComfyUI workflows | Automated prompt/workflow generation and home-workspace sync. Qwen and MiniMax are tracked; FireRed tests are local. `ST0`–`ST6` are the masters; curated workflows are never regenerated. See [the workflow model](../workflows/README.md). |
+| Face likeness | Local face checks, sorting, review, and recoverable moves run through `bin\likeness.cmd`. Current rules: [likeness guide](art/likeness.md); historical moves: [Oct 10 reorganization](art/likeness-reorg-2026-10-10.md). |
+| Original photos | `bin\originals.cmd` and `bin\library.cmd` manage naming, scaling, headshots, archives, and selected-photo references. See the [photo-library runbook](art/original-photos.md). |
 | Video | First pipeline built: `data/animation` cards (actions as `Motion:`/`Scene:` blocks with transitions) -> `gen_animation.py` -> MiniMax H3 workflow from `ST6_MiniMax_Reel` (9:16, the default) or `ST6_MiniMax_Match`. Three Drakness example clips are deployed; none rendered yet. Guide: [art/tutorial-video.md](art/tutorial-video.md). |
 | Sister variants | Every sister has a **Signature Shiny** (`<slug>-scene-signature-shiny`: the Signature card with a prismatic `overrides.palette` and a glitter-sheen effects line), a **Battle** scene (war gear piece plus homeland battlefield), a **Bond** scene (first meeting with her Elder Dragon) and a **Dawn Rising** video card. First new culture pack: `themes/danish` (Snow Queen inspired) with `draknira-scene-danish`. Prompts and workflows built; none rendered yet. |
 | Vision roster | 30 cards (10 Drakn sisters, 10 bound heroes, 10 Elder Dragons) plus 10 pets, all with art identities; prompts generated. |
@@ -25,6 +25,45 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 ## Plans and the queue
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
+
+Oct 14 photo-library follow-up: the people gallery now shows prospect-to-sister face matches and observable photo-readiness evidence; the standard library routine archives Prospect folders with no gallery or review originals under `_retired`. Pose diversity is not scored; a calibrated readiness ranking remains open in [plans/2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md).
+
+Oct 14 report update: `_reports` is organized into `library`, `runs`, `comparisons` and `analysis`; the gallery now shows each paired Angel's Sister, canonical hair color and top three eligible Prospect alternatives, with all eligible candidates ranked in `comparisons/pairings/angel-prospect-candidates.md`. Promotion remains a previewable CLI operation, not a browser action.
+
+Oct 15 working state: the photo-library run is in sync and the organized likeness reports are ready for review. Manual edit-prompt drafts are being developed under `prompts/_edit/female`; these are working references, not generated prompt outputs or approved template changes. See [plans/2026-10-15-likeness-and-edit-prompts.md](plans/2026-10-15-likeness-and-edit-prompts.md) for completed work and next steps.
+
+Oct 19 working state: the verified pre-run snapshot is `B:\Sovereign Territories\_backup\library-20261019-125822`; the retry snapshot is
+`library-20261019-140638` (7,107 files / 3,868,753,524 bytes). Prime frame generation/configuration is removed and 972 library images, 9
+input copies, and the corresponding workflows are archived, not deleted. Six updated Angelica shots were pulled before publishing. The
+787-photo ingest is complete; 38 new Prospect folders were created, 24 replaced originals were preserved, 3 older same-ID imports remain in
+`Various\duplicates`, and 3 problem photos are in `_junk`. The later 916-photo ingest used verified snapshot `library-20261019-171329`
+(8,287 files / 4,088,450,098 bytes): 70 exact copies were archived, 39 Prospect folders were created, and 3 incoming multi-face photos went
+to `_junk`. The final library check reports an empty pool, 0 active duplicate pairs, 0 ID conflicts, `IN SYNC`, and `NOTHING WAITING`;
+`_archive\Various\gallery_duplicates` now has 332 files including earlier history, and `_junk` contains 6 photos total. The reports were
+regenerated for 265 people; Camaris's current top candidates are Helena Stratton, Sabine Vale, and Uma Dunn. The Sister-first gallery
+cross-links remain active: Angel cards are ordered by pairing fit, while Prospect cards are ordered by descending gallery photo count (name
+breaks ties). See the [tooling-debt plan](plans/2026-10-12-tooling-debt.md) for gallery behavior and the [Oct 19 library
+plan](plans/2026-10-19-library-rebaseline-and-frame-retirement.md) for batch details. The sync-input step still reports missing/placeholder
+workspace assets and a selected Female photo now in Fantasy; these were not changed. The chest crop is deferred pending a visual sample
+review. Preserve the extensive dirty worktree; do not stage or commit it wholesale.
+
+Oct 19 library-management decisions: Prospects have 5+ usable photos; Potentials
+are a separate active root for 1–4, and remain matchable as later downloads
+arrive. Junk remains the repair-and-resubmit path. Retired is for photos judged
+unusable, not good unmatched photos. Sisters stay fixed. Angels below five
+usable photos should be automatically replaced when a qualified 5+ candidate
+exists; otherwise keep them and report no qualified candidate. Start with a
+read-only preview and recoverable changes. See [the library-management
+rebaseline](plans/2026-10-19-library-management-rebaseline.md) for the open
+design and implementation work.
+
+Oct 19 follow-up: Aria Muse is now Gavrielle and Ruby Eden is now Camaris; the
+Angel slot names remain fixed. The verified backup precedes these promotions.
+The rebaseline now supports applying only threshold-driven Prospect/Potential
+folder moves after a backup. Identity mismatches and Junk matches remain
+review-only; Sophie Lloyd and other user-identified photos will be corrected
+manually. Regenerate the Angel Primes workflows and pull its saved `zz_Shots`
+before preserving the current pipeline state in Git.
 
 ## Decisions made
 
@@ -41,6 +80,12 @@ The plans, their status and what each is are listed in [plans/README.md](plans/R
   40-point budget. Bound heroes and dragons (Mythic) and sisters (Transcendent) are earned from packs, campaign
   rewards, or story beats; sisters are apex showcase cards. The budget does not change.
 - Player-facing title is **Sovereign**, not "Player".
+- **Angel pairing uses a shared two-stage Prospect score (Oct 19, 2026).** Candidates need at least five
+  usable photos and 0.45 cohesion; the ranking combines likeness fit with a bounded photo-variety bonus
+  (+0.02 at 10 photos, +0.04 at 15, +0.06 at 20+). The preferred likeness band remains 0.15–0.40.
+  The pairing command, rebaseline preview, People Gallery, and full candidate report use the same score
+  and saved-render evidence. Photo count is a proxy for available material, not pose variety. The score
+  is generic for future faction pairings; Demon counterpart direction and bands remain undecided.
 - **Art and video are data-driven (Oct 2026).** Pieces, cards and animation cards generate prompts; prompts generate workflows. Prompts
   are never hand-edited. Work is **studio** (cream backdrop: poses, heads, hair, armor) or **scene** (realm, background, effects; video
   counts as scene); everything goes to the one workspace per group (see the pipeline phases below).

@@ -12,13 +12,14 @@ echo    animate.cmd HERO                video prompts, MiniMax workflows, deploy
 echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI (new = curated; edits to curated, zz_Shots, candidates and finals are captured; a final's image goes to assets\art)
 echo.
 echo  PHOTO LIBRARY: THE ROUTINE (drop new photos in Various\gallery, then)
-echo    library.cmd                     everything: originals, duplicates, likeness ^(junk, review, sort, singles^), scaled copies, headshots, frames, check, inputs, index. Repeats safely
+echo    library.cmd                     everything; automatically makes a full pre-run snapshot and prefers one updated incoming same-ID photo
 echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
-echo    people-gallery.cmd              one web page with every person's headshot and photo (angels, sisters, prospects, artists' people): where everything landed
+echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
+echo    people-gallery.cmd              one web page with prospect sister matches, Angel pairings, hair colors and ranked candidates: _reports\library; full rankings in comparisons\pairings
 echo    likeness.cmd crops              one web page with every cropped photo, the uncropped original beside it ^(likeness.cmd crop --undo --apply reverses the last batch^)
 echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in the library ^(any folder, any name^)
-echo    originals.cmd --check           are the scaled copies, headshots and frames in step with every gallery?
+echo    originals.cmd --check           are the scaled copies and headshots in step with every gallery?
 echo.
 echo  WORKSPACES
 echo    setup-workspace.cmd "WS" [--apply]   the whole job for one workspace: deploy its sets, tidy, cleanup, status (preview unless --apply)
@@ -39,9 +40,10 @@ echo    pull-shots.cmd HERO / deploy-shots.cmd HERO   keep / copy what you saved
 echo    finals.cmd ACTION "WS"          candidates and finals: status, sort ^(files them where their name says; never deletes^), promote, pull, deploy, reclassify ^(repo cleanup^)
 echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to and from Sovereign Territories
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
-echo    compare-primes.cmd [HERO ...]   Prime renders side by side, Qwen and FireRed, normal and frame flow, with a face score against the photo each started from  ^(docs\art\prime-flows.md^)
+echo    compare-primes.cmd [HERO ...]   Prime renders side by side, Qwen and FireRed, normal and configured alternate flows, with a face score against the photo each started from  ^(docs\art\prime-flows.md^)
 echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots] [--archive-old]   the photo library: name originals after their folder, scale to 944x1104 ^(reel screenshots cut to the picture^), make face headshots, move old copies to _archive, re-point chosen photos  ^(docs\art\original-photos.md^)
-echo    likeness.cmd folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| undo   faces: one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
+echo    likeness.cmd folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   faces: one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
+echo    likeness.cmd rebaseline              preview classifications, likely moves, junk and low-photo Angel pairings; --apply-categories moves only Prospect/Potential folders after backup
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA

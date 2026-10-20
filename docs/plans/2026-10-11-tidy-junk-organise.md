@@ -49,16 +49,16 @@ Source: your three notes, copied word for word at the end. Report: [../art/liken
 ### Phase 4: the Prime input and the templates (Oct 11, from your headshot-first thoughts)
 
 - [x] 4.1 `_templates/heroes` split by stage folder (1_Alpha ... Bench) with a README and `template_path`; 5,373 prompts byte-identical.
-- [x] 4.2 `originals` writes `frame_944x1104` for partial-body photos (the face at figure size at the top of the canvas).
-- [x] 4.2b (corrected Oct 11) Flows, not a replacement: the normal photo of every hero is back, and `flows.frame.photos` in `workspaces.json` holds the frame image of the 18 heroes whose chosen photo has a frame. `make --create` built a `_Frame` Prime workflow beside each Qwen and FireRed Prime (72 in all) and they are deployed. Guide: [../art/prime-flows.md](../art/prime-flows.md).
-- [x] 4.2c FireRed identity lock: `engines.firered.primeFace` puts `1_Alpha/firered-prime-face-lock.txt` in front of the FireRed Prime prompt (normal and frame); Qwen is untouched.
+- [x] 4.2 `originals` originally wrote `frame_944x1104` for partial-body photos. This generation was retired on Oct 19; see [the library rebaseline plan](2026-10-19-library-rebaseline-and-frame-retirement.md).
+- [x] 4.2b (corrected Oct 11) The frame experiment used a separate `flows.frame` input and `_Frame` Prime workflows beside the normal workflows. That flow and its generated assets were retired and archived on Oct 19; the normal photo flow remains.
+- [x] 4.2c FireRed identity lock: `engines.firered.primeFace` puts `1_Alpha/firered-prime-face-lock.txt` in front of the FireRed Prime prompt; Qwen is untouched.
 - [x] 4.2d `bin\compare-primes.cmd`: newest render of each variant per hero, a picture and a face score against the photo each flow started from, with the average per variant.
-- [ ] **P1 you** 4.3 Your test: run the four Prime workflows for several heroes, then `bin\compare-primes.cmd` (nothing is decided; drop what does not work).
-- [ ] **P3 ai** 4.4 If it helps: the face pass with two images (bare bust plus the original headshot), a beta template and a generator change; a pose frame only if 4.3 fails.
+The remaining active Prime-path comparison is consolidated into E6 of [the first-shot plan](2026-10-11-first-shot-flows.md): test P1/P2/P3 with Qwen and FireRed as appropriate; do not test frame variants.
+- [ ] **P3 ai** 4.4 If the active Prime tests show a specific need, consider a face pass with two images (bare bust plus original headshot), a beta template and a generator change. Do not add a pose-frame input.
 
 ## Result so far
 
-The person folders hold only what is live. `_archive` and `_junk` hold the rest. 107 person folders, all with a `z_` file. Next for you: open `people_index.csv`, review `_junk`, and start classifying.
+The person folders hold only what is live. `_archive` and `_junk` hold the rest. 107 person folders, all with a `z_` file. Next for you: open `people_index.csv` and start classifying; review the current `_junk` inventory through R11 in [the Oct 19 library plan](2026-10-19-library-rebaseline-and-frame-retirement.md).
 
 ## Your notes, word for word
 
@@ -137,24 +137,30 @@ These are two different problems, and the document solves the second with a meth
 
 ## What I would try, cheapest first
 
-1. **A framed input, no models (hours).** For an original that is not full body (the cache knows the face's height as a fraction of the picture), `originals` makes `prime_944x1104/<name>.png`: the head and shoulders shrunk to the head size of a standing A-pose and placed at the top of a cream 944x1104 canvas, the rest
-empty. The Prime then has to draw the body below at the right scale, which is what Qwen and FireRed are good at, and the framing problem is gone at the source. Full-body originals go in as they are.
+**Oct 19 update:** The frame-input experiment was retired; do not implement or test
+options 1 or 4. The separate chest-crop review is tracked as R9 in the Oct 19
+plan. The dual-image face pass remains only a possible follow-up to E6.
+
+1. **Retired (Oct 19): framed input.** `originals` no longer creates partial-body
+   frame images; the former Prime frame flow and its derived files are archived.
+   See [the library rebaseline plan](2026-10-19-library-rebaseline-and-frame-retirement.md).
 2. **Engines by job.** Qwen for Prime and Bare (framing and body); FireRed for the close-up, polish and the face pass (skin, eyes). This is what you already see.
 3. **A face pass with two images (the real use of dual input).** After the Bare, crop the bare bust, then run one edit with image 1 = that bust and image 2 = the original headshot: keep the body and pose from image 1, take face, eyes, lips and makeup from image 2. Result: the bare-chest image with a proper face,
 anchored on the real photo and not on a copy of a copy. The Qwen and FireRed templates already take three images; the generated workflows wire only one, so this needs a small generator change (a role `ref` for the second image) and a beta template `heroes/beta/face-lock-human.txt`.
-4. **Only if 1 fails, a pose frame, not a body library.** One neutral head-to-toe A-pose plate per sex (a frame guide) as image 2 of the Prime. Build variants stay in the Bare prompt. A pose library earns its place later, for the action cards on the Bench (poses by skeleton), not for the base figure.
+4. **Not pursued:** a neutral A-pose plate as a second Prime input. Any future
+   pose-guide input would need a separate design decision.
 
 ## Order
 
-Test 1 (framed input) on three partial-body originals with Qwen and FireRed. Test 3 (face pass) on two heroes. Test 4 only if 1 is not enough.
+The framed-input comparison was dropped on Oct 19. If the active P1/P2/P3
+tests in E6 show a specific face-identity problem, consider test 3 (the
+dual-image face pass) on two heroes.
 
 ## What this costs
 
 | Step | Work | Risk |
 | --- | --- | --- |
-| 1 framed input | a function in `originals` plus a test; no workflow change (`inputs set` already takes any image) | low |
 | 3 face pass | wiring a second LoadImage in `comfy_workflows.py`, a role `ref` in `workspaces.json`, a beta template, tests | medium (the model may blend the face badly: that is what the test tells us) |
-| 4 pose frame | one image per sex and a second input on the Prime | medium |
 
 ## Templates (done today)
 

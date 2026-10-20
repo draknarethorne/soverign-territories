@@ -16,15 +16,32 @@ Scores are cosine similarity after **subtracting the library's average face**. W
 
 `likeness calibrate` shows how reliable this is on your library. Today: the right folder is the best match for 91% of photos, and the automatic moves (below) are about 99% right (435 confident and right, 5 confident and wrong, leave-one-out).
 
-Folders are of two kinds. A **person folder** is one person: Angels, Sisters (formerly Models), a named Prospect, and each person grouped inside an Artist's folder (`Artists/Pierre/Mara Locke`). **Mixed** folders (the artist folders themselves, `Artists/*`, and `Various`) hold many people: they never describe a person, are never read (except the pool) and never move on their own.
+Folders are of two kinds. A **person folder** is one person: Angels, Sisters (formerly Models), a Prospect, a Potential, and each person
+grouped inside an Artist's folder (`Artists/Pierre/Mara Locke`). Prospects have at least five usable photos; Potentials have one to four and
+stay active for future matching. Only Prospects qualify as Angel replacement candidates. **Mixed** folders (the artist folders themselves,
+`Artists/*`, and `Various`) hold many people: they never describe a person, are never read (except the pool) and never move on their own.
 
-`Various` (top level, next to Prospects) is the **pool** that `sort` empties; drop new photos into `Various\gallery` and run `bin\library.cmd`, which does `originals`, `duplicates`, `likeness crop`, `junk`, `review`, `sort --singles`, `group --singles`, `singles`, `rematch`, then brings the scaled copies, headshots and frames back in step ([original-photos.md](original-photos.md#the-routine)). The commands below are what it runs, for when you want to look closer at one step.
+`Various` (top level, next to Prospects and Potentials) is the **pool** that `sort` empties; drop new photos into `Various\gallery` and run
+`bin\library.cmd`, which does `originals`, `duplicates`, `likeness crop`, `junk`, `review`, `sort --singles`, `group --singles`, `singles`,
+`rematch`, then brings the scaled copies and headshots back in step ([original-photos.md](original-photos.md#the-routine)). `likeness
+rebaseline` is a read-only whole-library preview; it does not move files.
+After reviewing the category table and creating a verified library backup,
+`likeness rebaseline --apply-categories` moves only complete Prospect/Potential
+folders across the five-usable-gallery-photo boundary. It refuses the entire
+batch if any destination collides or a source/root is missing, then regenerates
+the preview and pairing reports. It does not apply identity reassignment, Junk,
+Retired, or Angel-pairing suggestions.
 
 ## Names and history
 
 Every person folder has a `z_<name>.txt` in its `gallery` (the `z_` keeps it at the end of the list; the image tools ignore it). The first line is `name: First Last`; after it come dated lines that the tools write when the folder is created, merged, paired, retired or marked reserved (`2026-10-10 reserved: looks like Sisters/Draknoxa (0.56); keep off cards below the top tier`). The name is her real name when you know it, otherwise the invented one the tool gave her.
 
-The file travels with the folder, so a prospect who becomes an angel (or the reverse) keeps her history, and `pairs --apply` logs "was Anya Sloane" in the angel's file. `likeness names` shows every folder's name and writes the missing files (preview unless `--apply`); a folder is never named after the pool or another angel, and photos split off a sister do not take her name. Edit the first line by hand any time.
+The file travels with the folder, so a prospect who becomes an angel (or the reverse) keeps her history, and
+`pairs --apply` logs "was Anya Sloane" in the angel's file. `likeness names` shows every folder's name and writes
+the missing files (preview unless `--apply`); a folder is never named after the pool or another angel, and photos
+split off a sister do not take her name. Use `likeness rename "Old Prospect" "New Name"` to preview renaming a
+prospect folder and its recorded name; add `--apply` to create a full snapshot, preserve the history, update
+configured prospect exclusions, and repoint renamed photo inputs.
 
 Settings live under `likeness` in `workflows/workspaces.json`: `mixed`, `pool`, `assign`, `margin`, `cluster`, `minCluster`, `odd`, `alike`, `minFace`, `pairLow`, `pairHigh`, `pairs` (angel to sister), `keepPhoto` (heroes whose photo never changes: Drakness, Angelica, Drakneta) and `anchors` (`{"Angelica": ["part of a photo name", ...]}`: photos that are certainly her).
 
@@ -36,6 +53,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 
 | Command | What it does |
 | --- | --- |
+| `likeness rebaseline [--apply-categories]` | whole-library preview of category changes, confident out-of-folder photos, current Junk-rule matches, unreadable files, Prospect/Potential pairs, and replacement pairings for Angels below five usable photos; applying categories moves only complete Prospect/Potential folders across the five-photo threshold, after a verified backup |
 | `likeness alike` | every pair of people at or above 0.30, most alike first, flagged when it is two angels, an angel with her own sister (intended) or an angel who resembles a different sister; then **look-alike families** |
 | `likeness compare Angelica azaline` | how alike two folders are, in words and as a percentile of all pairs, plus the closest photo pairs |
 | `likeness folder Drakness` | is this folder **one person**? How many photos agree, are borderline or look like someone else; the ones to check with where each would go; for one person, who else looks like her. `--apply` moves only the "someone else" photos; `--all` lists every score |
@@ -44,24 +62,28 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness artists --from BACKUP\Artists` | resets the artists' folders from a flat backup: every photo back under the artist it came from, then to that artist's person it looks like; the rest stay in the artist's `gallery`. `--junk`, `--gallery`, `--assign`, `--keep`, `--margin`; see [The artists](#the-artists-the-pool-and-cropping) |
 | `likeness group [ARTISTS] [--singles]` | empties an artist's own gallery into that artist's people (`--join`, `--min-photos`, `--cohesion`, `--single-join`); with `--singles` every good photo gets a person, new ones included. Never across artists |
 | `likeness crop [--no-background] [--undo]` | cuts every photo down to the person: the app's bars, other people, animals and the background beside her. The uncropped original is kept in `_archive\<folder>\gallery_uncropped` |
-| `likeness crosscheck` | who looks like whom across the lines kept apart (artist against artist, prospect against an artist's person) to `<work>\_reports\crosscheck.md`; nothing moves |
+| `likeness crosscheck` | who looks like whom across the lines kept apart (artist against artist, prospect against an artist's person) to `<work>\_reports\library\crosscheck.md`; nothing moves |
 | `likeness pullback NAME ... [--small 2] [--all]` | sends prospect folders back to `Various` so `sort` places their photos again; a folder with a chosen photo stays; `likeness undo` reverses it |
-| `likeness sort [--singles] [--assign 0.35]` | empties `Various`: a photo of an artist goes home, a confident match moves to that person (angels and sisters too), a new group becomes a prospect, or joins an angel or sister it is the same woman as (0.55). `--singles`: a lone photo gets a folder. `--assign` loosens one run. `--plan FILE` writes the moves |
+| `likeness sort [--singles] [--assign 0.35]` | empties `Various`: a photo of an artist goes home, a confident match moves to that person (angels and sisters too), a new group becomes a Prospect at five or more photos or a Potential below five, or joins an angel or sister it is the same woman as (0.55) |
 | `likeness junk [--keep-multi] [--recheck] [--reset]` | sets aside in `<work>\_junk\Prospects` or `_junk\Artists` what cannot feed a Prime (no usable face, a face under 60 px, a second person that `crop` could not cut away, bars over her head). `--recheck`: usable ones go back. `--reset`: everything goes back through the crop and the rules. `likeness undo` reverses the last batch |
-| `likeness rematch [--min 0.48]` | merges prospect folders that are one person; a prospect that is the same woman as an angel or sister (`castMerge` 0.55) joins her, and her `z_` file records who she was. Between 0.50 and 0.55 it only lists them |
-| `likeness singles [--min 0.40]` | a one-photo prospect joins the prospect she looks most like (margin 0.05), or the angel or sister she is the same woman as (0.55) |
+| `likeness rematch [--min 0.48]` | compares Prospect and Potential folders and previews likely same-person merges; cast matches are reported for review |
+| `likeness singles [--min 0.40]` | a one-photo Prospect or Potential joins the person she matches with the required margin |
+| `likeness retire-empty` | preview empty Prospect and Potential folders with no gallery or review originals; `--apply` moves those folders intact to `_retired` |
 | `likeness sisters` | do the sisters read as one family around the anchor (`--anchor-sister`, Drakness)? Each sister against Drakness in photos and in renders, her place among everyone in the library, the nearest other sister, and who could replace a sister that is far out; `--md FILE` writes the table |
-| `likeness pairs [--sister NAME]` | pairs each angel with the sister of her element from ALL the faces (angels, prospects, artist people); details below the table. `--apply` moves the new face into her `gallery` (old photos to `review`) and sets her photo in `workspaces.json` and the workflows. Re-run with `--sister` after changing a sister |
+| `likeness pairs [--sister NAME]` | pairs Angels with configured counterparts using the shared score. Candidates need 5 usable photos and 0.45 cohesion; ranking uses the 0.15–0.40 likeness band and a bounded variety proxy (+0.02/+0.04/+0.06 at 10/15/20 photos). Global assignment avoids duplicates and penalizes clashes. `--apply` updates photos and workflow inputs; re-run with `--sister` after changing a sister. |
 | `likeness review [NAMES] [--out]` | the photos set aside in `review` folders, each against her own folder and everyone else: one that is probably her (0.20 or more, `--back`) goes back to her gallery, one that clearly looks like someone else goes to that person, the rest stay. With `--out`, a photo that is clearly not her and matches nobody becomes a new prospect (photos that look alike share one; its history says where it came from). Preview unless `--apply` |
 | `likeness loosen` | what looser settings would do, measured and not applied: at 0.05, 0.10 and 0.15 below today's assign score, how many Various and review photos would move, which would go where, and which folders may be one person (same person is about 0.55 and up). Read-only |
 | `likeness lookalikes [--min 0.30]` | the guard for low-tier cards: every prospect or artist person scoring at least 0.30 against a sister or angel, most alike first. `--apply` writes a `reserved:` line into her `z_` file. Keep reserved people off cards below the top tier |
 | `likeness names` | every folder's name and history file; `--apply` writes the missing ones (from the move log, or the invented name) |
+| `likeness rename "Old Prospect" "New Name"` | renames a prospect folder and its recorded name; previews by default, and `--apply` first creates a full snapshot, preserves history, updates configured exclusions, and repoints photo inputs |
 | `likeness index [--import FILE]` | the table to pick from, `<work>\people_index.csv` (a spreadsheet) and `.md`: one row per person with her photos, headshots, review count, best Prime photo, who she looks like, reserved, and the profile columns. `--import` reads the profile columns of an edited CSV back into the `z_` files (preview unless `--apply`) |
 | `likeness profile NAME... --type "dark elf" --roles rogue,assassin --elements Darkness` | sets the profile of one or more people (`--sex --type --roles --elements --tier --tags`; several values with commas; `-` clears a key) |
 | `likeness who --roles rogue --elements Darkness` | who matches: every filter must match, a word matches inside a value; prospects and artists unless `--all`; with no filter, the people still to classify; reserved people are marked |
 | `likeness photos [NAMES]` | picks the 1_Prime photo for every angel: her best-scoring photo (her face, one clear face, some body in view, portrait, enough pixels). `likeness.keepPhoto` heroes (Drakness, Angelica, Drakneta) never change, and a chosen photo only changes when the best scores 0.12 higher. A sister's photo is only reported; `--sisters` changes them too. `--apply` sets it in `workspaces.json` and the workflows |
 | `likeness merge Mia "Eva Emily"` | every photo of one folder into another (one person under two names); the emptied folder is moved to `_retired` and the history says what happened |
 | `likeness retire azaline` | every photo of a folder back to `Various`, so she can be cast again |
+| `likeness archive-list tmp\archive-people.md` | preview a Markdown checklist of `Prospects/Name` or `Artists/Artist/Person` folders to archive whole under `_retired`; `--apply` moves each folder with its photos, derived files and `z_` history and checks it off. Refuses people whose photos are selected by an active workflow, and removes archived photos from the likeness cache |
+| `likeness promote "Dara Ives" Nyxene` | preview a Prospect-to-Angel swap; `--apply` returns the current Angel to `Prospects/<z_ name>`, promotes the Prospect, preserves and appends both histories, selects a suitable source photo, regenerates scaled/headshot/frame files, updates `workspaces.json` and generated workflow inputs, and copies needed images into ComfyUI workspace input folders. Run `bin\refresh.cmd Nyxene` afterward to regenerate prompts/workflows and deploy the latest set |
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
 
@@ -93,7 +115,14 @@ When a woman and a man are in one photo and his face is the larger, a man's face
 
 Prospects come from what you pick, artists from an artist's work, so the checks never mix them: a photo is not sent from one side to the other, they are not merged, and a new person split off an artist's person stays in that artist's folder.
 Artists are also kept apart from each other: a photo stays with the artist it came from (`_origins.json` records it by photo id), and the people of one artist are never merged with another's, even when they look alike.
-`likeness crosscheck` lists those look-alikes, and prospects that look like an artist's person, in `<work>\_reports\crosscheck.md` so you can decide.
+`likeness crosscheck` lists those look-alikes, and prospects that look like an artist's person, in `<work>\_reports\library\crosscheck.md` so you can decide.
+The people gallery at `<work>\_reports\library\people_gallery.html` shows each Angel's paired Sister,
+canonical hair color and top eligible Prospect alternatives by the shared likeness-plus-photo-variety score.
+The complete ranked comparisons at `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`
+show similarity, usable photo count, likeness cost, photo bonus and adjusted cost. Rebaseline uses the same
+score and saved-render evidence as `likeness pairs`; its global assignment can differ from independent
+per-Angel ranks because it prevents duplicate assignments and penalizes clashes. Photo count is a proxy for
+available material, not a measurement of distinct poses or outfits.
 
 Prospects regroup freely among themselves, and angels and sisters can take from prospects: a prospect who is the same woman as an angel or sister (0.55 and up) is one person with her, and the `z_` file of the angel or sister remembers who the prospect was, so she can be given back when you swap the cast.
 (Oct 10 the tool had moved 6 photos across; they were put back.)
@@ -127,6 +156,15 @@ An angel changes only when the replacement is inside that band, or when she is a
 2. Pick the one you like best of each family. For the others: `likeness retire NAME --apply` returns their photos to the pool; `sort` can then give them to someone they match or to a new prospect.
 3. A retired angel with a chosen photo loses it (`inputs photos` reports it); pick another with `inputs set`, or run `pairs --sister NAME` to pick one from the library.
 4. Check the other direction too: a prospect that matches a sister (the `alike` list) should not become an angel.
+
+To deactivate a Prospect or an artist's person without returning her photos to the active pool, write unchecked Markdown items in `tmp\archive-people.md`:
+
+```md
+- [ ] Prospects/Name
+- [ ] Artists/Artist/Person
+```
+
+Run `bin\likeness.cmd archive-list tmp\archive-people.md` to preview, then add `--apply` to move the complete person folders into `_retired` and mark the items done. The likeness cache entries for their photos are removed. Archived people can be restored by moving their folder back; the tool will calculate fresh likeness data when next scanned.
 
 ## Notes and limits
 

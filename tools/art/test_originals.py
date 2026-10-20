@@ -77,7 +77,7 @@ class OriginalsTests(unittest.TestCase):
         self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110"), [])
         self.assertEqual(self.names("Angels", "Angelica", "headshot_94x110_org"), ["angelica_image_1_head_94x110.png"], "kept, not deleted")
 
-    def test_a_partial_body_photo_gets_a_frame_with_a_figure_sized_face_at_the_top_and_a_full_length_one_gets_none(self):
+    def test_partial_body_photos_do_not_create_retired_frame_inputs(self):
         g = self.gallery("Prospects", "Rhea Ives")
         Image.new("RGB", (400, 600), (200, 30, 30)).save(g / "rhea_ives_image_1.jpg")   # head and shoulders: face 0.3 of the height
         Image.new("RGB", (400, 600), (30, 30, 200)).save(g / "rhea_ives_image_2.jpg")   # full length: face 0.08 of the height
@@ -89,34 +89,8 @@ class OriginalsTests(unittest.TestCase):
             def save(self):
                 pass
         out = self.run_tool(faces=Fake())
-        self.assertEqual(self.names("Prospects", "Rhea Ives", "frame_94x110"), ["rhea_ives_image_1_frame_94x110.png"])
-        self.assertIn("1 frame(s) made", out)
-        with Image.open(self.lib / "Prospects/Rhea Ives/frame_94x110/rhea_ives_image_1_frame_94x110.png") as im:
-            self.assertEqual(im.size, (94, 110))
-            self.assertTrue(all(abs(a - b) <= 6 for a, b in zip(im.getpixel((47, 12)), (200, 30, 30))), "the photo is at the top, face-sized")
-            self.assertEqual(im.getpixel((47, 108)), originals.CREAM, "and the rest of the canvas is empty for the Prime to draw the body")
-        self.assertEqual(originals.frame_photo(g / "rhea_ives_image_2.jpg", None, (94, 110), [0.45, 0.05, 0.1, 0.08]), False)
-        self.assertIn("rhea_ives_image_1_frame_94x110.png", [p.name for _, p in cw.headshot_library(CFG, self.lib)], "a Prime input can be chosen from the frames")
-        (g / "rhea_ives_image_1.jpg").unlink()
-        self.run_tool(faces=Fake())
-        self.assertEqual(self.names("Prospects", "Rhea Ives", "frame_94x110"), [])
-        self.assertEqual(self.names("Prospects", "Rhea Ives", "frame_94x110_org"), ["rhea_ives_image_1_frame_94x110.png"], "kept, not deleted")
-        self.assertNotIn("frame", self.run_tool("--no-frames", faces=Fake()).replace("--no-frames", ""))
-
-    def test_a_phone_screenshot_is_judged_on_its_picture_not_on_the_whole_screen(self):
-        g = self.gallery("Angels", "Gavrielle")
-        Image.new("RGB", (400, 600), (200, 30, 30)).save(g / "gavrielle_shot_1.jpg")  # a reel screenshot: the face is 0.12 of the screen but 0.24 of the picture inside the app bars
-
-        class Fake:
-            def of(self, path):
-                return [0.35, 0.3, 0.3, 0.12], 120
-
-            def save(self):
-                pass
-        with mock.patch.object(originals.screens, "is_reel_ui", lambda im: True), mock.patch.object(originals.screens, "clean_box", lambda size: (0, 100, 400, 400)), \
-                mock.patch.object(originals.screens, "head_clear", lambda box: True):
-            out = self.run_tool(faces=Fake())
-        self.assertEqual(self.names("Angels", "Gavrielle", "frame_94x110"), ["gavrielle_shot_1_frame_94x110.png"], out)
+        self.assertFalse((self.lib / "Prospects/Rhea Ives/frame_94x110").exists())
+        self.assertNotIn("frame", out.lower())
 
     def test_check_says_out_of_sync_until_every_gallery_has_its_copies(self):
         g = self.gallery("Angels", "Angelica")

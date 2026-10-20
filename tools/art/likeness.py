@@ -16,6 +16,8 @@ Artists/* and Various hold many people and are "mixed": they are never used to d
 Each person folder keeps a z_ file with her name and history (see people.py; `likeness names` lists them).
 Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, margin, cluster, minCluster, odd, alike, minFace).
 
+  likeness rebaseline                 preview whole-library category changes, likely mismatches and Junk candidates
+  likeness rebaseline --apply-categories  move only threshold-driven Prospect/Potential folders (back up first)
   likeness scan                       read every photo once (cached); lists photos with no usable face
   likeness calibrate                  how reliable the scores are on YOUR library (the thresholds in effect)
   likeness alike                      pairs of people who look alike (angel against angel, angel against sister ...), most alike first
@@ -26,7 +28,9 @@ Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, ma
                                       go to a new Prospects/<invented name> folder; the rest stay
   likeness merge Mia "Eva Emily"      move every photo of one folder into another (one person under two names)
   likeness rematch                    prospect folders that are one person under two names are merged (0.48); look-alikes of an angel or sister are listed
+  likeness retire-empty               archive empty Prospect folders (preview unless --apply)
   likeness retire azaline             move a folder's photos back to Various so she can be cast again
+  likeness archive-list tmp\\archive-people.md [--apply] archive listed prospects or artist people under _retired
   likeness names                      who is in each folder (the z_ files); writes the missing ones with --apply
   likeness undo                       put the last batch of moves back
 
@@ -36,9 +40,11 @@ command to save a picture of the faces involved. Photos chosen in workspaces.jso
 """
 import argparse
 import collections
+import contextlib
 import datetime
 import fnmatch
 import hashlib
+import io
 import itertools
 import json
 import os
@@ -58,13 +64,14 @@ import comfy_workflows as cw  # noqa: E402
 import originals  # noqa: E402
 import screens  # noqa: E402
 import people  # noqa: E402
+import library_backup  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
 MODEL_URLS = {
     "face_detection_yunet_2023mar.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
     "face_recognition_sface_2021dec.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
 }
-SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various"], "pool": ["Various", "Prospects/Various"], "assign": 0.40, "margin": 0.10, "cluster": 0.25,
+SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"], "pool": ["Various", "Prospects/Various", "Potentials/Various"], "assign": 0.40, "margin": 0.10, "cluster": 0.25,
             "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60, "multiFace": 0.3,
             # singles: a one-photo prospect joins a prospect she scores this much against (margin 0.05). rematch: two prospect folders whose centroids score this much are one person.
             # rematchCast: a prospect that scores this much against an angel or a sister is only listed (the cast is yours to change). different: pairs of folders never merged or listed, [["Prospects/Brielle Carter", "Sisters/Draknara"]].
@@ -78,6 +85,26 @@ FIRST = ["Alina", "Bea", "Calla", "Dara", "Elise", "Faye", "Gia", "Hana", "Ivy",
 LAST = ["Ashby", "Brandt", "Calder", "Dale", "Ellery", "Fenn", "Gray", "Hale", "Ingram", "Jasper", "Keene", "Locke", "Marsh", "Nash", "Orr", "Pryce", "Quill",
         "Rowe", "Sloane", "Thorn", "Vale", "Wilde", "Yates", "Zane", "Ames", "Blythe", "Crane", "Drake", "Eden", "Frost", "Glenn", "Hart", "Ives", "Joyce",
         "Knox", "Lane", "Moss", "North", "Ogden", "Park", "Reyes", "Stone", "Tate", "Voss", "West", "Ford", "Beck", "Cole", "Dunn", "Lowe"]
+FIRST.extend("""
+Adelaide Ainsley Althea Amara Amelie Anika Annika Arden Ariadne Astrid Aurelia Avalon Beatrix Belle Bianca Blair Briony Cadence Celine Celeste Cerys Colette
+Cordelia Dahlia Daphne Delphine Dorian Eira Elara Elodie Eloise Ember Emmeline Estelle Evangeline Fallon Farrah Fiona Florence Francesca Gwendolyn Helena Imogen Ingrid
+Isadora Isolde Juno Kaia Kalista Lark Laurel Leona Lilith Linnea Lorelei Lucia Lyra Maeve Magnolia Marcella Margot Marlowe Melody Mira Mirabel Nadia Nelle Noelle
+Nova Octavia Olympia Oriana Paloma Pearl Phoebe Rhiannon Romilly Rosalind Rowan Ruby Selene Serena Simone Solene Stella Sylvie Thalia Thea Valentina Vesper Viola Vivienne
+Waverly Winona Xanthe Yvonne Zinnia Acacia Adara Afton Alondra Amethyst Anais Anouk April Aria Arwen Ashlyn Aviva Azalea Belen Bellamy Benedetta Briar Brisa
+Calliope Camellia Carina Carmen Catarina Cecily Chandra Chiara Cressida Dahl Damaris Danica Davina Eleanora Elspeth Elva Enid Esmeralda Etta Fia Fiorella
+Gaia Georgina Giselle Harlow Hestia Ilaria Iliana Ione Isabeau Jacinta Jessamine Jolie Kaori Katerina
+""".split())
+LAST.extend("""
+Abbott Abernathy Adler Alden Alcott Albright Aldridge Amesbury Anders Anderton Archer Armitage Atwood Avery Baird Baldwin Banks Barrow Baxter Beaumont Bellamy
+Bellrose Bellerose Berkley Bishop Blackwell Blanchard Bloom Bradford Branson Brantley Brawley Briarbridge Brighton Brookfield Brooks Caldwell Callahan Calloway
+Camden Carlisle Carmichael Carrington Carver Chadwick Chambers Chandler Channing Chase Cheshire Cline Colebrook Collier Corbett Corbin Corwin Covington Crawford
+Cross Dalton Davenant Davenport Devereux Dorsey Drayton Easton Ellington Elwood Everhart Fairchild Farley Finley Fitzgerald Fletcher Fontaine Forsythe Foster
+Foxworth Garland Garrison Gentry Gilbert Godfrey Goodwin Granger Greer Hadley Hargrove Harrington Hartwell Hawthorne Hayward Hensley Holliday Holloway
+Hollisworth Inglewood Irving Iverson Jameson Kendall Kingsley Kirkland Knight Langley Langston Larkspur Leighton Lennox Lockwood Lowell Madison Mallory
+Manning Marlowe Merritt Middleton Montgomery Monroe Montrose Morrison Newberry Norwood Oakley Oakes Olander Pemberton Penrose Prescott Preston Radcliffe
+Ramsey Rathbone Redmond Remington Renshaw Ridley Rivers Rockwell Rosenthal Rothwell Rutherford Sinclair Somerset Sterling Stratton Sutton Templeton Thorne
+York
+""".split())
 
 
 # ---------- faces ----------
@@ -220,9 +247,9 @@ def pool_home(st):
 
 
 def side(key):
-    """Where a folder's photos come from: 'Artists' (an artist's work), 'Prospects' (what you pick yourself, and the Various pool), or None (angels and sisters, who may take from either)."""
+    """Where a folder's photos come from: Artists, unassigned people, or the pool; angels and sisters may take from either."""
     top = key.split("/")[0].lower()
-    return "Artists" if top == "artists" else "Prospects" if top in ("prospects", "various") else None
+    return "Artists" if top == "artists" else "Prospects" if top in ("prospects", "potentials", "various") else None
 
 
 def apart(a, b):
@@ -231,10 +258,14 @@ def apart(a, b):
     return bool(sa and sb and sa != sb)
 
 
-def new_home(key, name):
-    """Where a new person split off folder `key` goes: next to her in an artist's folder, otherwise Prospects."""
+def new_home(key, name, photo_count=1):
+    """Where a new person split off folder `key` goes; unassigned groups under five become Potentials."""
     parts = key.split("/")
-    return "/".join(parts[:2] + [name]) if side(key) == "Artists" and len(parts) >= 3 else f"Prospects/{name}"
+    return "/".join(parts[:2] + [name]) if side(key) == "Artists" and len(parts) >= 3 else unassigned_home(name, photo_count)
+
+
+def unassigned_home(name, photo_count):
+    return f"{'Prospects' if photo_count >= 5 else 'Potentials'}/{name}"
 
 
 def matches(key, patterns):
@@ -369,7 +400,7 @@ def chosen_keys(cfg):
 def plan_sort(space, st, cfg, taken, singles=False):
     """Moves for the pool photos: to the person folder they match confidently, or into a new folder when several look like one new person.
     With singles, a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool is left holding only photos with no usable face."""
-    pool = [p for p in space.photos if matches(p.key, st["pool"]) and p.usable(st["minFace"])]
+    pool = [p for p in space.photos if matches(p.key, st["pool"]) and p.usable(st["minFace"]) and not junk_reason(p, st)]
     protected = chosen_keys(cfg)
     moves, left = [], []
     for p in pool:
@@ -390,7 +421,7 @@ def plan_sort(space, st, cfg, taken, singles=False):
                     moves += [Move(m, near[0][1], f"is {near[0][1]} ({near[0][0]:.2f}; a group of {len(members)})", near[0][0]) for m in members]
                     continue
                 name = invent_name("|".join(sorted(m.sha for m in members)), taken | {m.to.split("/", 1)[-1] for m in moves})
-                new = f"Prospects/{name}"
+                new = unassigned_home(name, len(members))
                 taken = taken | {name}
                 note = f"; alike {near[0][1]} ({near[0][0]:.2f})" if near and near[0][0] >= st["alike"] else ""
                 what = f"one new person ({len(members)} photos{note})" if len(members) >= st["minCluster"] else f"a face that matches nobody{note}"
@@ -726,14 +757,13 @@ def whole_folder(space, cfg, name):
 
 
 def cmd_pullback(args):
-    """Send prospect folders back to Various so the next `sort` places their photos again: the named folders, every folder with at most --small photos, or all of them (--all).
-    A folder that holds a photo chosen in workspaces.json is never pulled back. Prospects only; the emptied folders go to _retired, each with its z_ file, and `likeness undo` reverses the move."""
+    """Send Prospect and Potential folders back to Various so the next `sort` places their photos again."""
     cfg, st, work, cache, space = build(args)
     chosen = chosen_keys(cfg)
     wanted = {n.lower() for n in (args.names or [])}
     keys = []
     for k in space.keys:
-        if not k.startswith("Prospects/"):
+        if not k.startswith(("Prospects/", "Potentials/")):
             continue
         n = len(originals.images(work / k / "gallery"))
         if args.all or k.split("/")[1].lower() in wanted or (args.small is not None and n <= args.small):
@@ -786,6 +816,223 @@ def cmd_merge(args, retire=False):
         after_moves(args, n > 0)
     else:
         print("preview only; add --apply to move them")
+
+
+def cmd_archive_list(args):
+    """Archive listed Prospect or Artist people as whole folders, preserving photos, derived files and z_ history."""
+    cfg = cw.load_cfg()
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    list_path = pathlib.Path(args.list)
+    if not list_path.is_file():
+        sys.exit(f"archive list not found: {list_path}")
+    lines = list_path.read_text(encoding="utf-8-sig").splitlines()
+    entries, seen = [], set()
+    for line_number, line in enumerate(lines):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        match = re.fullmatch(r"\s*-\s+\[([ xX])\]\s+(.+?)\s*", line)
+        if not match:
+            sys.exit(f"{list_path}:{line_number + 1}: expected a Markdown checkbox such as '- [ ] Prospects/Name'")
+        if match[1].lower() == "x":
+            continue
+        relative = pathlib.Path(match[2].strip().strip("`"))
+        parts = relative.parts
+        is_prospect = len(parts) == 2 and parts[0].casefold() in ("prospects", "potentials") and parts[1].casefold() != "various"
+        is_artist_person = len(parts) == 3 and parts[0].casefold() == "artists"
+        if relative.is_absolute() or ".." in parts or not (is_prospect or is_artist_person):
+            sys.exit(f"{list_path}:{line_number + 1}: use Prospects/Name, Potentials/Name or Artists/Artist/Person")
+        key = "/".join(parts).casefold()
+        if key in seen:
+            sys.exit(f"{list_path}:{line_number + 1}: duplicate folder {relative.as_posix()}")
+        seen.add(key)
+        source = (work / relative).resolve()
+        if not source.is_relative_to(work.resolve()):
+            sys.exit(f"{list_path}:{line_number + 1}: folder is outside the photo library")
+        if not source.is_dir():
+            sys.exit(f"{list_path}:{line_number + 1}: active person folder not found: {relative.as_posix()}")
+        destination = work / "_retired" / relative
+        if destination.exists():
+            sys.exit(f"{list_path}:{line_number + 1}: archive destination already exists: {destination}")
+        entries.append({"line": line_number, "relative": relative, "source": source, "destination": destination})
+
+    if not entries:
+        print("no unchecked people to archive")
+        return
+
+    selected = collections.defaultdict(list)
+
+    def register_selection(ref, name):
+        key = cw.photo_key(name)
+        if key:
+            selected[("key", key)].append(ref)
+        selected[("name", pathlib.Path(name).name.casefold())].append(ref)
+
+    for hero, name in cfg.get("photos", {}).items():
+        register_selection(hero, name)
+    for flow, spec in cfg.get("flows", {}).items():
+        for hero, name in spec.get("photos", {}).items():
+            register_selection(f"{flow}/{hero}", name)
+
+    for entry in entries:
+        photos = [p for bucket in ("gallery", "review") for p in originals.images(entry["source"] / bucket)]
+        refs = set()
+        for photo in photos:
+            key = cw.photo_key(photo.name)
+            if key:
+                refs.update(selected.get(("key", key), []))
+            refs.update(selected.get(("name", photo.name.casefold()), []))
+        if refs:
+            sys.exit(f"{entry['relative'].as_posix()} has a photo selected by active workflows ({', '.join(sorted(refs))}); change those inputs first")
+        entry["photos"] = len(photos)
+
+    print(f"{len(entries)} person folder(s) to archive:")
+    for entry in entries:
+        print(f"  {entry['relative'].as_posix()} -> _retired/{entry['relative'].as_posix()} ({entry['photos']} photo(s))")
+    if not args.apply:
+        print("preview only; add --apply to move the folders and mark the list entries complete")
+        return
+
+    temp_list = list_path.with_name(list_path.name + ".tmp")
+    if temp_list.exists():
+        sys.exit(f"cannot archive: checklist temporary file already exists: {temp_list}")
+    updated = list(lines)
+    for entry in entries:
+        updated[entry["line"]] = re.sub(r"^(\s*-\s*)\[\s*\]", r"\1[x]", updated[entry["line"]], count=1)
+    try:
+        temp_list.write_text("\n".join(updated) + "\n", encoding="utf-8")
+    except OSError as exc:
+        sys.exit(f"cannot stage checklist update: {exc}")
+
+    cache = Cache(args.cache or DATA / "likeness_cache.json")
+    retired_hashes = set()
+    source_paths = [entry["source"] for entry in entries]
+    for entry in entries:
+        for bucket in ("gallery", "review"):
+            for photo in originals.images(entry["source"] / bucket):
+                retired_hashes.add(hashlib.sha1(photo.read_bytes()).hexdigest())
+
+    moved = []
+    try:
+        for entry in entries:
+            entry["destination"].parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(entry["source"]), str(entry["destination"]))
+            moved.append(entry)
+        for cached_path in list(cache.stat):
+            path = pathlib.Path(cached_path)
+            if any(path == source or path.is_relative_to(source) for source in source_paths):
+                cache.stat.pop(cached_path, None)
+        for sha in retired_hashes:
+            cache.emb.pop(sha, None)
+        cache.save()
+        temp_list.replace(list_path)
+    except OSError as exc:
+        rollback_errors = []
+        for entry in reversed(moved):
+            try:
+                if entry["destination"].exists():
+                    entry["source"].parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(entry["destination"]), str(entry["source"]))
+            except OSError as rollback_error:
+                rollback_errors.append(f"{entry['relative'].as_posix()}: {rollback_error}")
+        if temp_list.exists():
+            temp_list.unlink()
+        if rollback_errors:
+            sys.exit(f"archive stopped ({exc}); rollback also failed: {'; '.join(rollback_errors)}")
+        sys.exit(f"archive stopped and moved folders were restored: {exc}")
+
+    print(f"{len(entries)} person folder(s) archived; checklist updated: {list_path}")
+
+
+def cmd_promote(args):
+    """Swap a Prospect into an Angel folder and return the existing person to Prospects or Potentials by usable count."""
+    cfg, st, work, cache, space = build(args)
+    prospect = folder_key(space, args.prospect)
+    if not prospect.startswith("Prospects/") or prospect == "Prospects/Various":
+        sys.exit("promotion source must be a named Prospects folder")
+    hero = next((name for name in cfg.get("photos", {}) if name.casefold() == args.hero.casefold()), None)
+    if not hero:
+        sys.exit(f"unknown hero '{args.hero}'; known: {', '.join(cfg.get('photos', {}))}")
+    source = work / prospect
+    current = work / "Angels" / hero
+    if not current.is_dir():
+        sys.exit(f"current Angel folder not found: {current}")
+    if source.resolve() == current.resolve():
+        sys.exit("the Prospect and Angel folders are the same")
+    current_name = people.name_of(current) or current.name
+    current_key = f"Angels/{hero}"
+    returned_root = "Prospects" if candidate_photo_count(space, current_key, st) >= 5 else "Potentials"
+    returned = work / returned_root / current_name
+    if returned.resolve() == source.resolve():
+        sys.exit(f"cannot swap folders: the current Angel and source Prospect would share {returned}")
+    if returned.exists():
+        sys.exit(f"cannot return the current Angel: Prospect folder already exists: {returned}")
+    centroid = space.centroid(prospect)
+    chosen = best_photo(space, prospect, centroid) if centroid is not None else None
+    if chosen is None:
+        sys.exit(f"no usable source photo found in {prospect}")
+    old_photo = cfg["photos"][hero]
+    old_flow_photos = {
+        flow: spec["photos"][hero]
+        for flow, spec in cfg.get("flows", {}).items()
+        if hero in spec.get("photos", {})
+    }
+    print(f"{prospect} -> Angels/{hero} ({len(originals.images(source / 'gallery'))} gallery photo(s))")
+    print(f"Angels/{hero} -> {returned_root}/{current_name} ({len(originals.images(current / 'gallery'))} gallery photo(s))")
+    print(f"  selected source photo: {chosen.name}")
+    if old_flow_photos:
+        print(f"  flow-specific inputs to refresh: {', '.join(old_flow_photos)}")
+    if not args.apply:
+        print("preview only; add --apply to swap folders, update photo selections, refresh inputs and regenerate derived copies")
+        return
+
+    sha = chosen.sha
+    moved_current = False
+    try:
+        returned.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(current), str(returned))
+        moved_current = True
+        shutil.move(str(source), str(current))
+    except OSError as exc:
+        if moved_current:
+            try:
+                shutil.move(str(returned), str(current))
+            except OSError as rollback_error:
+                sys.exit(f"promotion stopped ({exc}); current Angel rollback failed: {rollback_error}")
+        sys.exit(f"promotion stopped; folder moves were rolled back: {exc}")
+
+    people.note(current, f"now the Angel {hero}; promoted from Prospects")
+    people.note(returned, f"returned to {returned_root}; replaced as {hero} by {people.name_of(current) or prospect.split('/')[-1]}")
+    for cached_path in list(cache.stat):
+        path = pathlib.Path(cached_path)
+        if path == source or path.is_relative_to(source) or path == current or path.is_relative_to(current) or path == returned or path.is_relative_to(returned):
+            cache.stat.pop(cached_path, None)
+    cache.save()
+
+    print("\nrunning originals (rename, scale, prune, re-point) ...")
+    originals.main(["--apply", "--root", str(work), "--only", hero, "--only", current_name])
+    chosen_path = next((p for p in originals.images(current / "gallery") if hashlib.sha1(p.read_bytes()).hexdigest() == sha), None)
+    if chosen_path is None:
+        sys.exit(f"promotion folders updated, but selected photo {chosen.name} was not found after originals; choose a photo with inputs set {hero}")
+    width, height = cfg.get("standardSize") or (944, 1104)
+    scaled = current / f"gallery_{width}x{height}" / f"{chosen_path.stem}_{width}x{height}.png"
+    if not scaled.is_file():
+        sys.exit(f"promotion folders updated, but selected scaled photo is missing: {scaled}")
+
+    cfg = cw.load_cfg()
+    cw.repoint_photos(cfg, {hero: (old_photo, scaled)}, False)
+    refreshed_cfg = cw.load_cfg()
+    for flow, previous in old_flow_photos.items():
+        if cw.photo_key(previous) != cw.photo_key(old_photo):
+            continue
+        frame = current / f"frame_{width}x{height}" / f"{chosen_path.stem}_frame_{width}x{height}.png"
+        if not frame.is_file():
+            print(f"  WARNING flow {flow}: new frame image is missing ({frame}); its previous photo setting was retained")
+            continue
+        refreshed_cfg.setdefault("flows", {}).setdefault(flow, {}).setdefault("photos", {})[hero] = frame.name
+    cw.write_cfg(refreshed_cfg)
+    reset_args = types.SimpleNamespace(root=None, hero=hero, stage=None, match=None, dry_run=False, force=True)
+    cw.reset_inputs(refreshed_cfg, reset_args)
+    print(f"promotion complete: run bin\\refresh.cmd {hero} to regenerate and deploy workflows to the home workspace")
 
 
 def cmd_undo(args):
@@ -1409,7 +1656,7 @@ def cmd_crops(args):
             except Exception:  # noqa: BLE001
                 continue
     out.append("</body></html>")
-    dest = pathlib.Path(args.out) if args.out else work / "_reports" / "crop_review.html"
+    dest = pathlib.Path(args.out) if args.out else work / "_reports" / "library" / "crop_review.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(out), encoding="utf-8")
     print(f"{total} cropped photo(s) in {sum(len(v) for v in rows.values())} logged; written to {dest}")
@@ -1431,7 +1678,7 @@ def cmd_crosscheck(args):
         aa, ab = artist(a), artist(b)
         if aa and ab and aa != ab:
             rows.append((s, "artist ~ artist", a, b))
-        elif (aa and b.startswith("Prospects/")) or (ab and a.startswith("Prospects/")):
+        elif (aa and b.startswith(("Prospects/", "Potentials/"))) or (ab and a.startswith(("Prospects/", "Potentials/"))):
             rows.append((s, "prospect ~ artist", a, b))
     rows.sort(reverse=True)
     lines = [f"# Likeness across the lines that are kept apart ({datetime.date.today()})", "",
@@ -1440,7 +1687,7 @@ def cmd_crosscheck(args):
     for s, kind, a, b in rows:
         lines.append(f"| {s:.2f} | {kind} | {a} ({len(space.by_key[a])}) | {b} ({len(space.by_key[b])}) |")
         print(f"  {s:.2f}  {kind:18} {a}  ~  {b}")
-    out = pathlib.Path(args.out) if args.out else work / "_reports" / "crosscheck.md"
+    out = pathlib.Path(args.out) if args.out else work / "_reports" / "library" / "crosscheck.md"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"{len(rows)} pair(s); written to {out}")
@@ -1552,6 +1799,38 @@ def retire_empty(work, keys, keep=()):
     return done
 
 
+def cmd_retire_empty(args):
+    """Archive empty Prospect and Potential folders with no original photos in gallery or review."""
+    cfg = cw.load_cfg()
+    st = settings(cfg)
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    pool = {p.lower() for p in st["pool"]}
+    keys = []
+    for root_name in ("Prospects", "Potentials"):
+        root = work / root_name
+        folders = sorted(root.iterdir(), key=lambda folder: folder.name.casefold()) if root.is_dir() else []
+        keys.extend(f"{root_name}/{folder.name}" for folder in folders
+                    if folder.is_dir() and f"{root_name}/{folder.name}".lower() not in pool)
+    candidates = []
+    for key in keys:
+        folder = work / key
+        nested = any(child.is_dir() and (child / "gallery").is_dir() for child in folder.iterdir())
+        if not nested and not any(originals.images(folder / sub) for sub in ("gallery", "review")):
+            candidates.append(key)
+    if not candidates:
+        print("no empty Prospect or Potential folders")
+        return 0
+    print(("would archive" if not args.apply else "archiving") + " empty Prospect/Potential folders (no gallery or review photos):")
+    for key in candidates:
+        print(f"  {key} -> _retired/{key}")
+    if args.apply:
+        done = retire_empty(work, candidates)
+        print(f"{len(done)} empty prospect folder(s) archived; nothing was deleted")
+    else:
+        print(f"{len(candidates)} folder(s); preview only (add --apply to archive)")
+    return 0
+
+
 def prime_score(p, c, size):
     """How good this photo is as the input of a 1_Prime (the photo becomes an A-pose figure): her face (score against her core), one clear face, some of the body in view,
     portrait, and enough pixels. Returns (score, notes)."""
@@ -1637,7 +1916,7 @@ def cmd_review(args):
             name = invent_name("|".join(sorted(p.sha for _, p, _ in members)), taken | {m.to.split("/", 1)[-1] for m in moves})
             taken = taken | {name}
             for key, ph, own in members:
-                moves.append(Move(ph, new_home(key, name), f"from {key.split('/', 1)[1]} review: clearly not her ({own:.2f})", None))
+                moves.append(Move(ph, new_home(key, name, len(members)), f"from {key.split('/', 1)[1]} review: clearly not her ({own:.2f})", None))
     print(f"{'folder':26} {'photo':44} {'her':>5}  {'looks most like':32} {'score':>5}  action")
     for key, fn, own, o, os_, act in rows:
         print(f"{key:26} {fn[:44]:44} {('%.2f' % own) if own is not None else '-':>5}  {(o or '-'):32} {('%.2f' % os_) if os_ is not None else '-':>5}  {act}")
@@ -1743,7 +2022,10 @@ def cmd_pairs(args):
     rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
     pairs = dict(PAIRS)
     pairs.update(st.get("pairs", {}))
-    low, high, target = st.get("pairLow", 0.15), st.get("pairHigh", 0.40), args.target
+    low, high = st.get("pairLow", 0.15), st.get("pairHigh", 0.40)
+    target = args.target if args.target is not None else st.get("pairTarget", 0.28)
+    min_photos = args.min_photos if args.min_photos is not None else st.get("pairMinPhotos", 5)
+    min_cohesion = args.min_cohesion if args.min_cohesion is not None else st.get("pairMinCohesion", 0.45)
     sis_key = {s: k for k in space.keys if is_sister(k) for s in [k.split("/")[-1]] if s in set(pairs.values())}
     angel_dir = {}
     for k in space.keys:
@@ -1764,15 +2046,17 @@ def cmd_pairs(args):
     sis_vec = {s: vec_of(k) for s, k in sis_key.items()}
     wanted = {s.lower() for s in (args.sister or [])}
     slots = [a for a, s in pairs.items() if s in sis_vec and (not wanted or s.lower() in wanted)]
+    if args.low_photo_only:
+        slots = [a for a in slots if not angel_dir.get(a.lower()) or candidate_photo_count(space, angel_dir[a.lower()], st) < min_photos]
     fixed_keys = [angel_dir[a.lower()] for a in FIXED_ANGELS if a.lower() in angel_dir]
     kept = [angel_dir[a.lower()] for a in pairs if a not in slots and a.lower() in angel_dir]
     for a in pairs:
         if a not in slots and angel_dir.get(a.lower()) in artist_of:
             print(f"  NOTE {a} is an artist's person ({artist_of[angel_dir[a.lower()]]}); add --sister {pairs[a]} to replace her")
-    cands = [k for k in space.keys if not is_sister(k) and k not in fixed_keys and k not in kept and k not in artist_of and side(k) != "Artists" and len(space.by_key[k]) >= args.min_photos]
-    weak = [k for k in cands if (vec_of(k) is not None) and cohesion[k] < args.min_cohesion and k not in {angel_dir.get(a.lower()) for a in slots}]
+    cands = [k for k in space.keys if not is_sister(k) and k not in fixed_keys and k not in kept and k not in artist_of and side(k) != "Artists" and candidate_photo_count(space, k, st) >= min_photos]
+    weak = [k for k in cands if (vec_of(k) is not None) and cohesion[k] < min_cohesion and k not in {angel_dir.get(a.lower()) for a in slots}]
     if weak:
-        print(f"left out ({len(weak)}): too few photos that agree on one face (cohesion below {args.min_cohesion}): " + ", ".join(f"{k.split('/', 1)[1]} {cohesion[k]:.2f}" for k in weak[:12]))
+        print(f"left out ({len(weak)}): too few photos that agree on one face (cohesion below {min_cohesion}): " + ", ".join(f"{k.split('/', 1)[1]} {cohesion[k]:.2f}" for k in weak[:12]))
     cands = [k for k in cands if k not in weak]
     if not slots or not cands:
         sys.exit("nothing to pair: need sisters with photos and candidate people with enough photos")
@@ -1784,18 +2068,21 @@ def cmd_pairs(args):
     sim_cc = cv @ cv.T
     fixed_vec = [vec_of(k) for k in fixed_keys + kept]
     sim_cf = cv @ np.array(fixed_vec).T if fixed_vec else np.zeros((len(cands), 0))
-    n_photos = np.array([len(space.by_key[k]) for k in cands])
+    n_photos = np.array([candidate_photo_count(space, k, st) for k in cands])
 
-    def pair_cost(ci, slot):
+    def pair_score(ci, slot):
         sname = pairs[slot]
         s = sim_cs[ci, sv_names.index(sname)]
-        cost = abs(s - target) + 2 * max(0.0, low - s) + 2 * max(0.0, s - high)
+        score = pairing_candidate_score(float(s), int(n_photos[ci]), target, low, high)
+        cost = score["cost"]
         others = [sim_cs[ci, j] for j, nme in enumerate(sv_names) if nme != sname]
         cost += 2.0 * max(0.0, max(others) - 0.28) if others else 0.0
-        cost += 0.02 * max(0, 6 - n_photos[ci])
         if cands[ci] == angel_dir.get(slot.lower()):
             cost -= args.keep_bonus
-        return cost
+        return cost, score
+
+    def pair_cost(ci, slot):
+        return pair_score(ci, slot)[0]
 
     def clash(ci, cj):
         return 4.0 * max(0.0, sim_cc[ci, cj] - 0.22)
@@ -1832,7 +2119,8 @@ def cmd_pairs(args):
                 if t < best_total - 1e-9:
                     best_assign, best_total, improved = trial_assign, t, True
     print(f"pairing {len(slots)} angel(s) with their sisters from {len(cands)} people (target {target:.2f} against the sister; {low} to {high} is the band); {len(fixed_keys)} fixed ({', '.join(FIXED_ANGELS)}), {len(kept)} kept as they are")
-    print(f"  {'angel':10} {'sister':10}  {'now':32} {'to sister':>9}   {'recommended':34} {'to sister':>9}  clashes with / note")
+    print("  ranking: likeness fit, then a bounded photo-variety bonus (+0.02 at 10, +0.04 at 15, +0.06 at 20 usable photos)")
+    print(f"  {'angel':10} {'sister':10}  {'now':32} {'now fit':>8}   {'recommended':28} {'similarity':>10} {'photos':>6} {'fit cost':>9} {'bonus':>7} {'adjusted':>9} {'global':>9}  clashes with / note")
     result, md = [], []
     for slot in slots:
         sname = pairs[slot]
@@ -1849,17 +2137,26 @@ def cmd_pairs(args):
         # a replacement only counts when it is inside the band; otherwise the angel already in the folder stays and the slot waits for better candidates
         # (unless she is a near twin of a fixed angel such as Angelica: then even a candidate below the band is better)
         twin = max((float(vec_of(cur) @ fv) for fv in fixed_vec), default=-1.0) if cur and fixed_vec else -1.0
-        if cur and rec != cur and s < low and (cur_s is None or cur_s <= high) and twin < args.twin and cur not in artist_of:
+        if cur and rec != cur and not low <= s <= high and twin < args.twin and cur not in artist_of:
             note = f"no candidate in the band yet (best {rec.split('/', 1)[1]} {s:.2f}); kept. {note}"
             rec, s = cur, cur_s if cur_s is not None else 0.0
         elif cur in artist_of and rec != cur:
             note = f"{cur.split('/', 1)[1]} is an artist's person ({artist_of[cur]}): replaced by the best prospect" + ("" if s >= low else f", even though {s:.2f} is below the band") + f". {note}"
         elif cur and rec != cur and twin >= args.twin:
             note = f"{cur.split('/', 1)[1]} is a near twin of a fixed angel ({twin:.2f}); replaced by the best available even though it is below the band. {note}"
+        score_parts = pairing_candidate_score(s, candidate_photo_count(space, rec, st), target, low, high)
+        recommended_photos = candidate_photo_count(space, rec, st)
+        global_cost = pair_cost(ci, slot) + fixed_clash(ci) + sum(
+            clash(ci, other_ci) for other_slot, other_ci in best_assign.items() if other_slot != slot
+        )
+        global_adjustment = global_cost - score_parts["cost"] if rec == cands[ci] else 0.0
         mark = "(keep)" if rec == cur else ""
-        print(f"  {slot:10} {sname:10}  {cur or '(no folder)':32} {('%.2f' % cur_s) if cur_s is not None else '-':>9}   {rec + ' ' + mark:34} {s:9.2f}  {note}")
-        result.append({"slot": slot, "sister": sname, "now": cur, "now_s": cur_s, "rec": rec, "rec_s": s, "alts": alt_names, "note": note})
-        md.append((slot, sname, cur or "-", cur_s, rec, s, ", ".join(c.split("/", 1)[1] for c in alt_names), note))
+        print(f"  {slot:10} {sname:10}  {cur or '(no folder)':32} {('%.2f' % cur_s) if cur_s is not None else '-':>8}   {rec + ' ' + mark:28} {s:10.2f} {recommended_photos:6} {score_parts['likeness_cost']:9.3f} {score_parts['photo_bonus']:7.2f} {score_parts['cost']:9.3f} {global_adjustment:9.3f}  {note}")
+        result.append({"slot": slot, "sister": sname, "now": cur, "now_s": cur_s, "rec": rec, "rec_s": s, "alts": alt_names, "note": note,
+                       "photos": recommended_photos, "global_adjustment": global_adjustment, **score_parts})
+        md.append((slot, sname, cur or "-", cur_s, rec, s, recommended_photos, score_parts["likeness_cost"],
+                   score_parts["photo_bonus"], score_parts["cost"], global_adjustment,
+                   ", ".join(c.split("/", 1)[1] for c in alt_names), note))
     if args.sheet:
         rows = []
         for r in result:
@@ -1867,9 +2164,14 @@ def cmd_pairs(args):
             rows.append((f"-> {r['slot']}: {r['rec'].split('/', 1)[1]}", space.by_key[r["rec"]][:6]))
         make_sheet(rows, args.sheet)
     if args.md:
-        lines = ["| Angel | Sister | Folder now | Now vs sister | Recommended | Vs sister | Alternatives | Note |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
-        for slot, sname, cur, cs, rec, s, alts, note in md:
-            lines.append(f"| {slot} | {sname} | {cur} | {('%.2f' % cs) if cs is not None else '-'} | {rec} | {s:.2f} | {alts} | {note} |")
+        lines = [
+            "# Angel pairing preview", "",
+            "Scoring is shared with the People Gallery, its full candidate report, and the library rebaseline. Candidates need the configured minimum usable-photo count (default 5) and cohesion (default 0.45). The ranking combines likeness fit with a bounded variety bonus: +0.02 at 10 photos, +0.04 at 15, and +0.06 at 20+. Replacements must remain in the preferred likeness band unless replacing an Angel who is an artist's person or a near-twin of a fixed Angel.",
+            "The displayed adjusted cost is the per-candidate likeness cost minus the photo bonus. Global adjustment adds counterpart/fixed-cast similarity penalties, conflicts with other selected replacements, and any keep bonus. The global assignment avoids duplicate people, so it may differ from independent candidate-report ordering. Saved ComfyUI renders are included unless `--no-renders` is specified.", "",
+            "| Angel | Sister | Folder now | Now vs sister | Recommended | Similarity | Usable photos | Likeness cost | Photo bonus | Adjusted cost | Global adjustment | Alternatives | Note |",
+                 "| --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |"]
+        for slot, sname, cur, cs, rec, s, photos, likeness_cost, photo_bonus, adjusted_cost, global_adjustment, alts, note in md:
+            lines.append(f"| {slot} | {sname} | {cur} | {('%.2f' % cs) if cs is not None else '-'} | {rec} | {s:.2f} | {photos} | {likeness_cost:.3f} | {photo_bonus:.2f} | {adjusted_cost:.3f} | {global_adjustment:.3f} | {alts} | {note} |")
         pathlib.Path(args.md).write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(f"table written: {args.md}")
     if not args.apply:
@@ -2017,6 +2319,238 @@ def junk_reason(p, st, multi=True):
     return None
 
 
+def candidate_photo_count(space, key, st):
+    count = 0
+    for photo in space.by_key.get(key, []):
+        if hasattr(photo, "usable"):
+            if not photo.usable(st["minFace"]):
+                continue
+            if junk_reason(photo, st):
+                continue
+        count += 1
+    return count
+
+
+def pairing_candidate_score(similarity, photo_count, target, low, high):
+    """Return likeness fit, a bounded photo-variety bonus, and their combined ranking cost."""
+    likeness_cost = abs(similarity - target) + 2 * max(0.0, low - similarity) + 2 * max(0.0, similarity - high)
+    photo_bonus = 0.06 if photo_count >= 20 else 0.04 if photo_count >= 15 else 0.02 if photo_count >= 10 else 0.0
+    return {
+        "likeness_cost": likeness_cost,
+        "photo_bonus": photo_bonus,
+        "cost": likeness_cost - photo_bonus,
+    }
+
+
+def cmd_rebaseline(args):
+    """Read-only whole-library review: propose category changes, confident reassignment, Junk and Retired candidates, and low-photo Angel pairings."""
+    cfg, st, work, cache, space = build(args)
+    embed = args.embedder or Embedder()
+    chosen = chosen_keys(cfg)
+    anchors = [a.lower() for values in cfg.get("likeness", {}).get("anchors", {}).values() for a in values]
+    items = [(p, p.key, "gallery") for p in space.photos]
+    for group, name, folder in cw.photo_folders(cfg, work):
+        key = f"{group}/{name}"
+        if matches(key, st["mixed"]) and not matches(key, st["pool"]):
+            continue
+        for path in originals.images(folder / "review"):
+            sha = cache.sha(path)
+            if sha not in cache.emb:
+                cache.emb[sha] = embed(path) or {"faces": -1}
+            items.append((Photo(path, group, name, sha, cache.emb[sha]), key, "review"))
+    cache.save()
+
+    centroids = {key: space.centroid(key) for key in space.keys}
+    junk_rows, retirement_rows, category_rows, reassignment_rows = [], [], [], []
+    counts = collections.Counter()
+    for photo, key, bucket in items:
+        reason = junk_reason(photo, st)
+        if reason:
+            protected = cw.photo_key(photo.name) in chosen or any(anchor in photo.name.lower() for anchor in anchors)
+            row = (key, bucket, photo.name, reason, protected)
+            if reason == "cannot be read":
+                retirement_rows.append(row)
+            else:
+                junk_rows.append(row)
+            continue
+        counts[key] += 1
+        if not photo.usable(st["minFace"]) or photo.vec is None:
+            continue
+        top = key.split("/", 1)[0]
+        if top in ("Prospects", "Potentials"):
+            other = sorted(((float(photo.vec @ centroid), candidate) for candidate, centroid in centroids.items()
+                            if candidate != key and centroid is not None and not apart(key, candidate)), reverse=True)
+            own_centroid = space.centroid(key, skip=photo)
+            own_score = float(photo.vec @ own_centroid) if own_centroid is not None else None
+            if other and other[0][0] >= st["assign"] and (
+                    own_score is None or other[0][0] - own_score >= st["margin"]):
+                protected = cw.photo_key(photo.name) in chosen
+                reassignment_rows.append((other[0][0], key, bucket, photo.name, other[0][1], own_score, protected))
+
+    for key in space.keys:
+        root = key.split("/", 1)[0]
+        if root not in ("Prospects", "Potentials"):
+            continue
+        gallery_count = sum(1 for photo, source, bucket in items if source == key and bucket == "gallery" and not junk_reason(photo, st))
+        target = "Prospects" if gallery_count >= 5 else "Potentials"
+        counts.setdefault(key, gallery_count)
+        destination = f"{target}/{key.split('/', 1)[1]}"
+        if root != target:
+            collision = (work / destination).exists()
+            category_rows.append((key, destination, gallery_count, collision))
+
+    if args.apply_categories:
+        moved = apply_category_changes(work, category_rows)
+        print(f"Applied {moved} Prospect/Potential folder change(s)")
+        args.apply_categories = False
+        return cmd_rebaseline(args)
+
+    taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+    pool_moves = plan_sort(space, st, cfg, taken, singles=True)
+    different = {frozenset(x.casefold() for x in pair) for pair in st.get("different", [])}
+    _centroids, pairs = space.pair_matrix()
+    candidate_pairs = sorted(
+        ((score, a, b) for (a, b), score in pairs.items()
+         if a.startswith(("Prospects/", "Potentials/")) and b.startswith(("Prospects/", "Potentials/"))
+         and score >= st["rematch"] and frozenset((a.casefold(), b.casefold())) not in different),
+        reverse=True,
+    )
+    angels = []
+    for key in space.keys:
+        if not key.startswith("Angels/"):
+            continue
+        usable = candidate_photo_count(space, key, st)
+        if usable < 5:
+            angels.append((key, usable))
+
+    pair_report = work / "_reports" / "library" / "rebaseline-angel-pairings.md"
+    pair_output = io.StringIO()
+    pair_args = types.SimpleNamespace(
+        root=str(work), cache=args.cache, embedder=embed, no_renders=args.no_renders, sister=None, target=0.28,
+        keep_bonus=0.06, min_photos=5, min_cohesion=0.45, twin=0.45, trials=1500,
+        sheet=None, md=str(pair_report), apply=False, low_photo_only=True, no_originals=True,
+    )
+    with contextlib.redirect_stdout(pair_output):
+        try:
+            cmd_pairs(pair_args)
+        except SystemExit as exc:
+            pair_output.write(str(exc))
+
+    report = pathlib.Path(args.out) if args.out else work / "_reports" / "library" / "rebaseline.md"
+    report.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "# Whole-library rebaseline preview", "",
+        f"Read-only preview of {len(items)} gallery and review photos in {len(space.keys)} person folders. "
+        "No photos or folders were moved. Face embeddings may be added to the local cache.", "",
+        "## Proposed category changes", "",
+        "The boundary uses usable gallery photos that do not currently trigger the Junk rules. "
+        "Potentials have 1–4; Prospects have 5 or more.", "",
+        "| Current folder | Proposed folder | Usable gallery photos | Result |",
+        "| --- | --- | ---: | --- |",
+    ]
+    for src, dst, count, collision in category_rows:
+        lines.append(f"| `{src}` | `{dst}` | {count} | {'blocked: destination exists' if collision else 'proposed'} |")
+    if not category_rows:
+        lines.append("| No Prospect/Potential folder crosses the threshold | - | - | - |")
+    lines += ["", "## Confidently mismatched Prospect/Potential photos", "",
+              f"Proposed only when the best other folder scores at least {st['assign']:.2f} "
+              f"and beats the photo's own-folder score by {st['margin']:.2f}.", "",
+              "| Score | Current folder | Photo | Best other folder | Own-folder score |",
+              "| ---: | --- | --- | --- | ---: |"]
+    for score, key, bucket, name, dest, own, protected in sorted(reassignment_rows, reverse=True):
+        note = " (selected; do not move automatically)" if protected else ""
+        lines.append(f"| {score:.3f} | `{key}/{bucket}` | `{name}`{note} | `{dest}` | {own:.3f} |" if own is not None
+                     else f"| {score:.3f} | `{key}/{bucket}` | `{name}`{note} | `{dest}` | no peer photos |")
+    if not reassignment_rows:
+        lines.append("| No confident out-of-folder matches | - | - | - | - |")
+    lines += ["", "## Photos matching Junk rules", "",
+              "These are cleanup/reprocess candidates, not identity-based retirements. Selected source/anchor photos are protected.", "",
+              "| Current folder | Bucket | Photo | Rule | Handling |",
+              "| --- | --- | --- | --- | --- |"]
+    for key, bucket, name, reason, protected in sorted(junk_rows):
+        handling = "keep selected source/anchor" if protected else f"send to `_junk/{status_of(key)}` for cleanup"
+        lines.append(f"| `{key}` | {bucket} | `{name}` | {reason} | {handling} |")
+    if not junk_rows:
+        lines.append("| No photos match current Junk rules | - | - | - | - |")
+    lines += ["", "## Unreadable files", "",
+              "Unreadable files are the only automatic Retired candidates in this preview; they cannot be face-matched. "
+              "They are proposed for archive under `_retired/photos`, never deleted. Confirm they are genuinely unreadable before applying.", "",
+              "| Current folder | Bucket | Photo | Handling |",
+              "| --- | --- | --- | --- |"]
+    for key, bucket, name, _reason, protected in sorted(retirement_rows):
+        handling = "keep selected source/anchor" if protected else "archive under `_retired/photos`"
+        lines.append(f"| `{key}` | {bucket} | `{name}` | {handling} |")
+    if not retirement_rows:
+        lines.append("| No unreadable files | - | - | - |")
+    lines += ["", "## Existing Various pool", "",
+              f"{len([p for p in space.photos if matches(p.key, st['pool'])])} pool photo(s); "
+              f"{len(pool_moves)} currently have a confident destination or form a group. No files were moved.", "",
+              "| Photo | Proposed destination | Reason |", "| --- | --- | --- |"]
+    for move in pool_moves:
+        lines.append(f"| `{move.photo.name}` | `{move.to}` | {move.reason} |")
+    if not pool_moves:
+        lines.append("| No pool moves proposed | - | - |")
+    lines += ["", "## Prospect/Potential folder pairs", "",
+              f"{len(candidate_pairs)} pair(s) at or above the current rematch threshold ({st['rematch']:.2f}); suggestions only.", "",
+              "| Similarity | Folder A | Folder B |", "| ---: | --- | --- |"]
+    for score, a, b in candidate_pairs:
+        lines.append(f"| {score:.3f} | `{a}` | `{b}` |")
+    if not candidate_pairs:
+        lines.append("| No candidate pairs | - | - |")
+    lines += ["", "## Low-photo Angels", "",
+              "The paired report considers only Angels below five usable photos and candidates with at least five; "
+              "Sisters remain fixed. This is a preview, not an automatic swap.", ""]
+    lines.extend(f"- `{key}`: {count} usable photo(s)" for key, count in angels)
+    if not angels:
+        lines.append("- No Angel is below five usable photos.")
+    lines += ["", f"See [{pair_report.name}]({pair_report.name}) for the low-photo Angel pairing preview.",
+              "", "## Limits", "",
+              "Face likeness cannot reliably determine closed eyes or whether an angle is aesthetically unusable. "
+              "Those photos are not auto-retired by this report. Existing objective Junk rules route no-face, too-small, "
+              "multi-face, and obstructed-head photos to Junk for your cleanup. No identity match is treated as proof "
+              "that a photo is bad.", ""]
+    report.write_text("\n".join(lines), encoding="utf-8")
+    print(f"whole-library preview: {len(items)} photos; {len(category_rows)} category change(s), "
+          f"{len(reassignment_rows)} confident reassignment(s), {len(junk_rows)} Junk candidate(s), "
+          f"{len(retirement_rows)} unreadable Retired candidate(s), {len(candidate_pairs)} likely folder pair(s), "
+          f"{len(angels)} low-photo Angel(s)")
+    print(f"report: {report}")
+    print(f"Angel pairing preview: {pair_report}")
+
+
+def apply_category_changes(work, category_rows):
+    """Move whole Prospect/Potential folders after validating the entire batch."""
+    moves = []
+    for source_key, destination_key, _count, collision in category_rows:
+        source_parts = pathlib.PurePosixPath(source_key).parts
+        destination_parts = pathlib.PurePosixPath(destination_key).parts
+        if (len(source_parts) != 2 or len(destination_parts) != 2
+                or source_parts[0] not in ("Prospects", "Potentials")
+                or destination_parts[0] not in ("Prospects", "Potentials")
+                or source_parts[0] == destination_parts[0]
+                or source_parts[1] != destination_parts[1]):
+            raise ValueError(f"invalid Prospect/Potential category move: {source_key} -> {destination_key}")
+        source, destination = work.joinpath(*source_parts), work.joinpath(*destination_parts)
+        if collision or destination.exists():
+            raise FileExistsError(f"category destination already exists: {destination}")
+        if not source.is_dir():
+            raise FileNotFoundError(f"category source folder is missing: {source}")
+        if not destination.parent.is_dir():
+            raise FileNotFoundError(f"category root is missing: {destination.parent}")
+        moves.append((source, destination))
+
+    completed = []
+    try:
+        for source, destination in moves:
+            source.rename(destination)
+            completed.append((source, destination))
+    except OSError as error:
+        for source, destination in reversed(completed):
+            destination.rename(source)
+        raise OSError(f"category migration stopped and prior folder moves were rolled back: {error}") from error
+    return len(completed)
+
+
 def reset_junk(args, cfg, st, work, cache, embed):
     """Everything in _junk goes back to be looked at again: prospects' photos to the pool (Various), an artist's photos to that artist's gallery (the _origins.json record knows which).
     Run `likeness crop` and `likeness junk` (or bin\\library.cmd) afterwards: what the rules still call junk goes back to _junk, what they can use is sorted."""
@@ -2151,10 +2685,10 @@ def cmd_singles(args):
     rows, moves = [], []
     for k in space.keys:
         ps = space.by_key[k]
-        if not k.startswith("Prospects/") or len(ps) != 1 or len(originals.images(work / k / "review")):
+        if not k.startswith(("Prospects/", "Potentials/")) or len(ps) != 1 or len(originals.images(work / k / "review")):
             continue
         p = ps[0]
-        rank = [r for r in space.ranking(p.vec, source=k) if r[1] != k and ((r[1].startswith("Prospects/") and len(space.by_key[r[1]]) >= 2) or r[1].startswith("Angels/") or is_sister(r[1]))]
+        rank = [r for r in space.ranking(p.vec, source=k) if r[1] != k and ((r[1].startswith(("Prospects/", "Potentials/")) and len(space.by_key[r[1]]) >= 2) or r[1].startswith("Angels/") or is_sister(r[1]))]
         top, second = (rank[0] if rank else (-1.0, "")), (rank[1][0] if len(rank) > 1 else -1.0)
         need = st["castMerge"] if top[1].startswith("Angels/") or is_sister(top[1]) else thr  # an angel or a sister is only joined when it is clearly the same woman
         ok = top[0] >= need and top[0] - second >= args.margin and cw.photo_key(p.name) not in protected
@@ -2189,7 +2723,7 @@ def cmd_rematch(args):
     thr = args.min if args.min is not None else st["rematch"]
     different = {frozenset(x.lower() for x in pair) for pair in st.get("different", [])}
     _cents, pairs = space.pair_matrix()
-    prospects = {k for k in space.keys if k.startswith("Prospects/")}
+    prospects = {k for k in space.keys if k.startswith(("Prospects/", "Potentials/"))}
     size = {k: len(space.by_key[k]) for k in prospects}
     chosen = chosen_keys(cfg)
     held = {k for k in prospects if any(cw.photo_key(p.name) in chosen for p in space.by_key[k])}
@@ -2289,7 +2823,7 @@ def cmd_index(args):
             "reserved": "yes" if people.reserved(folder) else "",
             **{k: "; ".join(pf.get(k, [])) for k in people.PROFILE_KEYS},
         })
-    order = {"Angels": 0, "Sisters": 1, "Prospects": 2, "Artists": 3}
+    order = {"Angels": 0, "Sisters": 1, "Prospects": 2, "Potentials": 3, "Artists": 4}
     rows.sort(key=lambda r: (order.get(r["status"], 9), r["folder"].lower()))
     import csv
     csv_path, md_path = work / "people_index.csv", work / "people_index.md"
@@ -2415,9 +2949,77 @@ def cmd_names(args):
     print(f"\n{len(rows)} person folder(s); {made} without a z_ file" + ("; written" if args.apply and made else ("; add --apply to write them" if made else "")))
 
 
+def cmd_rename(args):
+    """Rename a Prospect or Potential folder and its recorded name, preserving history and updating photo names."""
+    cfg = cw.load_cfg()
+    work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    requested = args.prospect.strip()
+    requested_root = next((root for root in ("Prospects", "Potentials")
+                           if requested.casefold().startswith(f"{root.casefold()}/")), None)
+    if requested_root:
+        requested = requested[len(requested_root) + 1:]
+    new_name = args.new_name.strip()
+    invalid = '<>:"/\\|?*'
+    if (not requested or not new_name or new_name != args.new_name
+            or any(ch in invalid or ord(ch) < 32 for ch in new_name)
+            or new_name.endswith((".", " "))):
+        sys.exit("use a non-empty folder name without Windows path or filename characters")
+    roots = [work / requested_root] if requested_root else [work / "Prospects", work / "Potentials"]
+    matches = [p for root in roots if root.is_dir() for p in root.iterdir()
+               if p.is_dir() and p.name.casefold() == requested.casefold()]
+    if len(matches) != 1 or matches[0].name.casefold() == "various":
+        sys.exit(f"not one Prospect or Potential person folder: {args.prospect}")
+    folder = matches[0]
+    root_name = folder.parent.name
+    destination = folder.with_name(new_name)
+    if destination != folder and destination.exists():
+        sys.exit(f"Prospect folder already exists: {destination.name}")
+    if destination == folder:
+        print(f"Prospect already has this folder name: {new_name}")
+        return
+    old_recorded_name = people.name_of(folder) or folder.name
+    print(f"{root_name}/{folder.name} -> {root_name}/{new_name}")
+    print(f"  recorded name: {old_recorded_name} -> {new_name}")
+    if not args.apply:
+        print("preview only; add --apply to create a full backup and rename the folder")
+        return
+
+    backup = library_backup.create_backup(
+        work,
+        cfg.get("paths", {}).get("inputsRoot"),
+        ROOT / "workflows" / "workspaces.json",
+        apply=True,
+    )
+    print(f"full pre-rename snapshot: {backup}")
+    old_record = people.find(folder)
+    old_record_bytes = old_record.read_bytes() if old_record else None
+    folder.rename(destination)
+    try:
+        people.adopt(destination, new_name, f"renamed prospect from {old_recorded_name}")
+        old_key, new_key = f"{root_name}/{folder.name}", f"{root_name}/{new_name}"
+        different = cfg.get("likeness", {}).get("different", [])
+        changed = False
+        for pair in different:
+            for index, value in enumerate(pair):
+                if value.casefold() == old_key.casefold():
+                    pair[index] = new_key
+                    changed = True
+        if changed:
+            cw.write_cfg(cfg)
+    except Exception:
+        destination.rename(folder)
+        for record in (folder / "gallery").glob("z_*.txt"):
+            if not old_record or record.name != old_record.name:
+                record.unlink()
+        if old_record_bytes is not None:
+            (folder / "gallery" / old_record.name).write_bytes(old_record_bytes)
+        raise
+    after_moves(args, True)
+
+
 def main(argv=None, embedder=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Artists and Various (default: workspaces.json paths.workRoot)")
+    ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Potentials, Artists and Various (default: workspaces.json paths.workRoot)")
     ap.add_argument("--cache", help=argparse.SUPPRESS)
     ap.add_argument("--no-originals", action="store_true", help="after moving, do not run the originals tool")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -2447,6 +3049,11 @@ def main(argv=None, embedder=None):
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
+    add("retire-empty", cmd_retire_empty, apply=True)
+    s = add("archive-list", cmd_archive_list, apply=True)
+    s.add_argument("list", help="Markdown checklist of Prospects/Name or Artists/Artist/Person folders to archive")
+    add("promote", cmd_promote, "prospect", "hero", apply=True)
+    add("rename", cmd_rename, "prospect", "new_name", apply=True)
     s = add("clean", cmd_clean, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="folders to clean (default: every person folder; with --group, that kind)")
     s.add_argument("--group", help="Angels, Sisters or Prospects")
@@ -2477,24 +3084,29 @@ def main(argv=None, embedder=None):
     s.add_argument("--small", type=int, help="also every prospect folder with this many photos or fewer")
     s.add_argument("--all", action="store_true", help="every prospect folder (a full re-sort of the prospects); folders holding a chosen photo are never pulled back")
     s = add("crops", cmd_crops)
-    s.add_argument("--out", help="write the page here (default: <work>/_reports/crop_review.html)")
+    s.add_argument("--out", help="write the page here (default: <work>/_reports/library/crop_review.html)")
     s = add("crosscheck", cmd_crosscheck)
     s.add_argument("--min", type=float, help="report pairs at or above this score (default: settings alike, 0.30)")
-    s.add_argument("--out", help="write the report here (default: <work>/_reports/crosscheck.md)")
+    s.add_argument("--out", help="write the report here (default: <work>/_reports/library/crosscheck.md)")
     s = add("sisters", cmd_sisters, sheet=True)
     s.add_argument("--anchor-sister", default="Drakness")
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
     s = add("pairs", cmd_pairs, apply=True, sheet=True)
     s.add_argument("--sister", action="append", help="only (re-)pair the angel of this sister (repeatable); the other angels stay as they are")
-    s.add_argument("--target", type=float, default=0.28, help="how alike an angel should be to her sister (similar, not the same)")
+    s.add_argument("--target", type=float, help="how alike a candidate should be to her configured counterpart (default: settings pairTarget or 0.28)")
     s.add_argument("--keep-bonus", type=float, default=0.06, help="how much better a replacement must be than the angel already in the folder")
-    s.add_argument("--min-photos", type=int, default=4, help="a person needs this many photos to be considered")
-    s.add_argument("--min-cohesion", type=float, default=0.45, help="and their photos must agree on one face this well (average score against the person's own core)")
+    s.add_argument("--min-photos", type=int, help="a candidate needs this many usable photos to be considered (default: settings pairMinPhotos or 5)")
+    s.add_argument("--min-cohesion", type=float, help="candidate photos must agree on one face this well (default: settings pairMinCohesion or 0.45)")
     s.add_argument("--twin", type=float, default=0.45, help="an angel this alike a fixed angel (Angelica) is replaced even when no candidate is in the band")
+    s.add_argument("--low-photo-only", action="store_true", help="only re-pair Angels with fewer than --min-photos; keep other Angel slots fixed")
     s.add_argument("--trials", type=int, default=1500)
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
+    s = add("rebaseline", cmd_rebaseline)
+    s.add_argument("--out", help="write the read-only whole-library report here (default: <work>\\_reports\\library\\rebaseline.md)")
+    s.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders when scoring Angel pairings")
+    s.add_argument("--apply-categories", action="store_true", help="move only threshold-driven Prospect/Potential folders; create and verify a library backup first")
     s = add("review", cmd_review, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="folders whose review photos to look at (default: all)")
     s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")

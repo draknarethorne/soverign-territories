@@ -112,15 +112,15 @@
     "Auriel": "auriel_photo_944x1104.png",
     "Azaline": "azaline_image_7514005968487944619_944x1104.png",
     "Baracel": "baracel_photo_944x1104.png",
-    "Camaris": "camaris_image_7513774554037884840_944x1104.png",
+    "Camaris": "camaris_shot_20261010123821_944x1104.png",
     "Elarion": "elarion_photo_944x1104.png",
-    "Gavrielle": "gavrielle_shot_20261010124344_944x1104.png",
+    "Gavrielle": "gavrielle_image_7513254401620072363_944x1104.png",
     "Haniya": "haniya_image_7513256343652997237_944x1104.png",
     "Judiel": "judiel_photo_944x1104.png",
     "Luzariel": "luzariel_photo_944x1104.png",
     "Metrael": "metrael_photo_944x1104.png",
-    "Nyxene": "nyxene_image_7508204687927147119_944x1104.png",
-    "Ravaelle": "ravaelle_image_7500595335146864460_944x1104.png",
+    "Nyxene": "nyxene_shot_20260830115242_944x1104.png",
+    "Ravaelle": "ravaelle_image_7517979438907187169_944x1104.png",
     "Remiah": "remiah_image_7508205730736421572_944x1104.png",
     "Sammara": "sammara_image_7513253381016426167_944x1104.png",
     "Sandalyn": "sandalyn_image_7514747235370542282_944x1104.png",
@@ -156,34 +156,9 @@
   "likeness": {
     "anchors": {"Angelica": ["7508202904299473073", "7513772657979194544", "7513772789697085962"]},
     "keepPhoto": ["Drakness", "Angelica", "Drakneta"],
-    "assign": 0.40,
+    "assign": 0.4,
     "singles": 0.35,
     "rematch": 0.48,
     "different": [["Prospects/Brielle Carter", "Sisters/Draknara"]]
-  },
-  "flows": {
-    "frame": {
-      "label": "frame: a partial-body photo shrunk to figure size at the top of the canvas, the body left for the Prime to draw",
-      "photos": {
-        "Angelica": "angelica_image_7513773530805044436_frame_944x1104.png",
-        "Azaline": "azaline_image_7514005968487944619_frame_944x1104.png",
-        "Camaris": "camaris_image_7513774554037884840_frame_944x1104.png",
-        "Draknara": "draknara_image_7500298757710195803_frame_944x1104.png",
-        "Draknava": "draknava_image_7500636973931726255_frame_944x1104.png",
-        "Drakness": "drakness_image_7500527121164427158_frame_944x1104.png",
-        "Drakneta": "drakneta_shot_20260918101800_frame_944x1104.png",
-        "Draknisa": "draknisa_image_7513261185390187957_frame_944x1104.png",
-        "Drakniss": "drakniss_image_7500602358276154864_frame_944x1104.png",
-        "Draknora": "draknora_image_7500597765309011836_frame_944x1104.png",
-        "Draknoxa": "draknoxa_image_7508203131793908784_frame_944x1104.png",
-        "Gavrielle": "gavrielle_shot_20261010124344_frame_944x1104.png",
-        "Haniya": "haniya_image_7513256343652997237_frame_944x1104.png",
-        "Nyxene": "nyxene_image_7508204687927147119_frame_944x1104.png",
-        "Ravaelle": "ravaelle_image_7500595335146864460_frame_944x1104.png",
-        "Remiah": "remiah_image_7508205730736421572_frame_944x1104.png",
-        "Sandalyn": "sandalyn_image_7514747235370542282_frame_944x1104.png",
-        "Seraphine": "seraphine_image_7514743851345209096_frame_944x1104.png"
-      }
-    }
   }
 }

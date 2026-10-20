@@ -85,7 +85,7 @@ class LikenessTests(unittest.TestCase):
         self.add("Prospects", "Mia", "mia", 4)
         self.add("Prospects", "Various", "ann", 1)     # looks like Angelica
         self.add("Prospects", "Various", "dee", 2)     # looks like Draknara
-        self.add("Prospects", "Various", "zed", 4)     # a new person, four photos
+        self.add("Prospects", "Various", "zed", 5)     # a new person, five photos
         self.add("Prospects", "Various", "solo", 1)    # nobody
         self.add("Artists", "Fantasy", "collage", 3)   # mixed: never read
 
@@ -101,6 +101,46 @@ class LikenessTests(unittest.TestCase):
     def names(self, root, folder):
         d = self.lib / root / folder / "gallery"
         return sorted(p.name for p in d.iterdir() if not p.name.startswith("z_")) if d.is_dir() else []
+
+    def test_category_migration_moves_whole_folders_and_preserves_history(self):
+        source = self.lib / "Prospects/Afton/gallery"
+        source.mkdir(parents=True)
+        (source / "z_afton.txt").write_text("name: Afton\n")
+        (source / "afton_image_1.jpg").write_text("afton|1")
+        (self.lib / "Potentials").mkdir()
+
+        moved = L.apply_category_changes(
+            self.lib, [("Prospects/Afton", "Potentials/Afton", 1, False)]
+        )
+
+        self.assertEqual(moved, 1)
+        self.assertFalse((self.lib / "Prospects/Afton").exists())
+        self.assertEqual(
+            (self.lib / "Potentials/Afton/gallery/z_afton.txt").read_text(),
+            "name: Afton\n",
+        )
+        self.assertEqual(
+            (self.lib / "Potentials/Afton/gallery/afton_image_1.jpg").read_text(),
+            "afton|1",
+        )
+
+    def test_category_migration_checks_every_destination_before_moving(self):
+        for root, name in (("Prospects", "Afton"), ("Prospects", "Amara")):
+            (self.lib / root / name / "gallery").mkdir(parents=True)
+        (self.lib / "Potentials/Amara").mkdir(parents=True)
+
+        with self.assertRaises(FileExistsError):
+            L.apply_category_changes(
+                self.lib,
+                [
+                    ("Prospects/Afton", "Potentials/Afton", 1, False),
+                    ("Prospects/Amara", "Potentials/Amara", 1, False),
+                ],
+            )
+
+        self.assertTrue((self.lib / "Prospects/Afton").is_dir())
+        self.assertTrue((self.lib / "Prospects/Amara").is_dir())
+        self.assertFalse((self.lib / "Potentials/Afton").exists())
 
     def test_cluster_groups_the_same_person(self):
         vecs = np.array([face("a", i) for i in range(4)] + [face("b", 10 + i) for i in range(4)])
@@ -118,7 +158,7 @@ class LikenessTests(unittest.TestCase):
         self.standard_library()
         self.run_tool("scan")
         first = self.fake.calls
-        self.assertEqual(first, 4 + 3 + 4 + 4 + 8, "Artists is not read; the pool and the person folders are")
+        self.assertEqual(first, 4 + 3 + 4 + 4 + 9, "Artists is not read; the pool and the person folders are")
         self.run_tool("scan")
         self.assertEqual(self.fake.calls, first, "unchanged files are not read again")
         moved = self.names("Angels", "Angelica")[0]
@@ -138,9 +178,14 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("kept apart", self.run_tool("merge", "Mia", "Elise") + self.run_tool("merge", "Elise", "Mia"))
         out = self.run_tool("sort", "--singles", apply=True)
         self.assertEqual(len(self.names("Artists", "Pierre/Elise")), 4, "nothing from the pool goes to an artist's person")
-        self.assertTrue(any(f"art|" in p.read_text() for q in (self.lib / "Prospects").glob("*/gallery") if q.parent.name != "Various" for p in q.iterdir() if p.suffix == ".jpg"), "it became a prospect instead")
+        self.assertTrue(any(f"art|" in p.read_text()
+                            for root in ("Prospects", "Potentials")
+                            for q in (self.lib / root).glob("*/gallery")
+                            if q.parent.name != "Various"
+                            for p in q.iterdir()
+                            if p.suffix == ".jpg"), "it became a prospect instead")
         self.assertEqual(L.new_home("Artists/Pierre/Elise", "Zoe Cole"), "Artists/Pierre/Zoe Cole", "a new person split from an artist's person stays with the artist")
-        self.assertEqual(L.new_home("Sisters/Draknara", "Zoe Cole"), "Prospects/Zoe Cole")
+        self.assertEqual(L.new_home("Sisters/Draknara", "Zoe Cole"), "Potentials/Zoe Cole")
         self.assertTrue(L.apart("Various", "Artists/Pierre/Elise") and not L.apart("Angels/Angelica", "Artists/Pierre/Elise"))
         self.assertIsNotNone(out)
 
@@ -239,14 +284,14 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("-> Angels/Angelica", out)
         self.assertIn("-> Models/Draknara", out)
         self.assertIn("(NEW folder)", out)
-        self.assertEqual(len(self.names("Prospects", "Various")), 8, "a preview moves nothing")
+        self.assertEqual(len(self.names("Prospects", "Various")), 9, "a preview moves nothing")
         self.run_tool("sort", apply=True)
         self.assertEqual(len(self.names("Prospects", "Various")), 1, "only the unknown face stays")
         self.assertEqual(len(self.names("Angels", "Angelica")), 5)
         self.assertEqual(len(self.names("Models", "Draknara")), 6)
         new = [p for p in (self.lib / "Prospects").iterdir() if p.name not in ("Mia", "Various")]
         self.assertEqual(len(new), 1)
-        self.assertEqual(len([p for p in (new[0] / "gallery").iterdir() if not p.name.startswith("z_")]), 4)
+        self.assertEqual(len([p for p in (new[0] / "gallery").iterdir() if not p.name.startswith("z_")]), 5)
 
     def test_a_photo_chosen_in_workspaces_json_is_never_sorted_away(self):
         self.standard_library()
@@ -264,10 +309,10 @@ class LikenessTests(unittest.TestCase):
         self.assertEqual(self.names("Angels", "Azaline"), before, "preview only")
         self.run_tool("retire", "azaline", apply=True)
         self.assertEqual(self.names("Angels", "Azaline"), [])
-        self.assertEqual(len(self.names("Prospects", "Various")), 11)
+        self.assertEqual(len(self.names("Prospects", "Various")), 12)
         self.run_tool("undo", apply=True)
         self.assertEqual(self.names("Angels", "Azaline"), before)
-        self.assertEqual(len(self.names("Prospects", "Various")), 8)
+        self.assertEqual(len(self.names("Prospects", "Various")), 9)
         self.assertIn("EXIT", self.run_tool("undo", apply=True), "nothing left to undo")
 
     def test_merge_moves_everything_into_the_other_folder(self):
@@ -498,9 +543,9 @@ class LikenessTests(unittest.TestCase):
         blend("twin", "dn", 0.95)      # the same as her sister
         blend("far", "dk", 0.0)        # unrelated
         self.add("Angels", "azaline", "far", 3)
-        self.add("Prospects", "Lena Marsh", "sim", 4)
-        self.add("Prospects", "Twin Person", "twin", 4)
-        self.add("Prospects", "Far Person", "far", 4)
+        self.add("Prospects", "Lena Marsh", "sim", 5)
+        self.add("Prospects", "Twin Person", "twin", 5)
+        self.add("Prospects", "Far Person", "far", 5)
         self.add("Angels", "Angelica", "ann", 3)
         out = self.run_tool("pairs", "--sister", "Draknira", "--trials", "100")
         row = [line for line in out.splitlines() if line.strip().startswith("Azaline")][0]
@@ -508,10 +553,23 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("preview only", out)
         self.assertTrue((self.lib / "Prospects/Lena Marsh/gallery").exists() and len(self.names("Angels", "azaline")) == 3, "a preview moves nothing")
         self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
-        self.assertEqual(len(self.names("Angels", "azaline")), 4, "her new face's photos are in her gallery")
+        self.assertEqual(len(self.names("Angels", "azaline")), 5, "her new face's photos are in her gallery")
         review = list((self.lib / "Angels/azaline/review").iterdir())
         self.assertEqual(len(review), 3, "and her earlier photos are set aside for review, not lost")
         self.assertEqual(self.names("Prospects", "Lena Marsh"), [])
+
+    def test_pair_candidate_score_uses_bounded_photo_variety_tiers(self):
+        score_9 = L.pairing_candidate_score(0.28, 9, 0.28, 0.15, 0.40)
+        score_10 = L.pairing_candidate_score(0.28, 10, 0.28, 0.15, 0.40)
+        score_15 = L.pairing_candidate_score(0.28, 15, 0.28, 0.15, 0.40)
+        score_20 = L.pairing_candidate_score(0.28, 20, 0.28, 0.15, 0.40)
+        self.assertEqual([score["photo_bonus"] for score in (score_9, score_10, score_15, score_20)],
+                         [0.0, 0.02, 0.04, 0.06])
+        self.assertEqual([score["cost"] for score in (score_9, score_10, score_15, score_20)],
+                         [0.0, -0.02, -0.04, -0.06])
+        balanced = L.pairing_candidate_score(0.22, 20, 0.28, 0.15, 0.40)
+        self.assertAlmostEqual(balanced["cost"], score_9["cost"],
+                               msg="20 photos can offset a modest 0.06 likeness-fit difference")
 
     def test_an_angel_made_from_an_artists_person_is_replaced_by_a_prospect_and_artists_are_never_candidates(self):
         blend("dn", "dk", 0.0)
@@ -524,8 +582,8 @@ class LikenessTests(unittest.TestCase):
         self.add("Angels", "azaline", "art", 4)
         self.add("Artists", "Fantasy", "collage", 3)
         L.people.write(self.lib / "Angels/azaline", "Ada Frost", ["2026-10-11 +4 from Artists/Pierre/Ada Frost: Pierre/Ada Frost is the new Azaline"])
-        self.add("Prospects", "Lena Marsh", "sim", 4)
-        self.add("Prospects", "Far Person", "far", 4)
+        self.add("Prospects", "Lena Marsh", "sim", 5)
+        self.add("Prospects", "Far Person", "far", 5)
         g = self.lib / "Artists/Pierre/Other Artist Person/gallery"
         g.mkdir(parents=True)
         for i in range(4):
@@ -537,7 +595,7 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("artist's person", row)
         self.run_tool("pairs", "--sister", "Draknira", "--trials", "100", apply=True)
         self.assertEqual(len(self.names("Artists", "Pierre/Ada Frost")), 4, "her photos went back to the artist")
-        self.assertEqual(len(self.names("Angels", "azaline")), 4, "and a prospect's face is the angel now")
+        self.assertEqual(len(self.names("Angels", "azaline")), 5, "and a prospect's face is the angel now")
 
     def test_photos_picks_the_best_angel_photo_keeps_favourites_and_only_reports_for_sisters(self):
         self.add("Angels", "Angelica", "ann", 4)            # favourite: never changes
@@ -607,7 +665,7 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("3 new prospect", self.run_tool("review", "--out"))
         self.run_tool("review", "--out", apply=True)
         self.assertEqual(list(rv.iterdir()), [])
-        made = [p for p in (self.lib / "Prospects").iterdir() if p.name not in {f"Person {i}" for i in range(5)}]
+        made = list((self.lib / "Potentials").iterdir())
         self.assertEqual(len(made), 1, "photos that look alike share one new prospect")
         self.assertTrue(any("from Draknara review" in ln for ln in L.people.read(made[0])[1]))
         self.assertEqual(L.people.read(made[0])[0], made[0].name, "photos split off a sister are not her: the new prospect does not take her name")

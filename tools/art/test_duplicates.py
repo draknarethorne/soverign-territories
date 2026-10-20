@@ -2,6 +2,7 @@
 """duplicates: the same picture kept twice is found, one copy is kept (a chosen photo first), the others go to _archive. Run: python tools/art/test_duplicates.py"""
 import contextlib
 import io
+import os
 import pathlib
 import shutil
 import sys
@@ -35,6 +36,11 @@ class DuplicatesTests(unittest.TestCase):
     def run_it(self, chosen=(), apply=True):
         with contextlib.redirect_stdout(io.StringIO()) as out:
             groups, ids = duplicates.run({"photos": {f"h{i}": n for i, n in enumerate(chosen)}}, self.work, self.folders(), apply)
+        return groups, ids, out.getvalue()
+
+    def run_prefer_incoming(self, apply=True):
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            groups, ids = duplicates.run({}, self.work, self.folders(), apply, prefer_incoming_copies=True)
         return groups, ids, out.getvalue()
 
     def test_identical_bytes_under_two_ids_keep_one_and_archive_the_other(self):
@@ -82,6 +88,84 @@ class DuplicatesTests(unittest.TestCase):
         b = self.photo("Prospects", "Mia Wolfe", "mia_wolfe_image_22222.jpg", b"same")
         self.run_it(apply=False)
         self.assertTrue(a.exists() and b.exists())
+
+    def test_a_changed_incoming_same_id_replaces_and_archives_the_existing_copy(self):
+        old = self.photo("Prospects", "Mia Wolfe", "mia_wolfe_shot_20261014123456.jpg", b"old version")
+        incoming = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed version")
+        _, ids, out = self.run_prefer_incoming()
+        archive = self.work / "_archive/Prospects/Mia Wolfe/gallery_replaced/mia_wolfe_shot_20261014123456.jpg"
+        self.assertTrue(incoming.exists())
+        self.assertFalse(old.exists())
+        self.assertEqual(archive.read_bytes(), b"old version")
+        self.assertEqual(ids, [])
+        self.assertIn("REPLACED", out)
+
+    def test_updated_incoming_copy_replaces_matching_junk_version(self):
+        junk = self.work / "_junk/Prospects"
+        junk.mkdir(parents=True)
+        old = junk / "mia_wolfe_shot_20261014123456.jpg"
+        old.write_bytes(b"old junk version")
+        incoming = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed version")
+        _, ids, _ = self.run_prefer_incoming()
+        archive = self.work / "_archive/_junk/Prospects/gallery_replaced/mia_wolfe_shot_20261014123456.jpg"
+        self.assertTrue(incoming.exists())
+        self.assertFalse(old.exists())
+        self.assertEqual(archive.read_bytes(), b"old junk version")
+        self.assertEqual(ids, [])
+
+    def test_incoming_same_id_replacement_preview_keeps_both_files(self):
+        old = self.photo("Prospects", "Mia Wolfe", "mia_wolfe_shot_20261014123456.jpg", b"old version")
+        incoming = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed version")
+        _, ids, out = self.run_prefer_incoming(apply=False)
+        self.assertTrue(old.exists() and incoming.exists())
+        self.assertEqual(ids, [])
+        self.assertIn("would replace", out)
+
+    def test_tied_newest_incoming_copies_and_existing_version_are_left_for_manual_review(self):
+        old = self.photo("Prospects", "Mia Wolfe", "mia_wolfe_shot_20261014123456.jpg", b"old version")
+        first = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"fixed one")
+        second = self.photo("Various", "Various", "various_shot_20261014123456_copy.jpg", b"fixed two")
+        os.utime(first, ns=(1_000_000_000, 1_000_000_000))
+        os.utime(second, ns=(1_000_000_000, 1_000_000_000))
+        _, ids, out = self.run_prefer_incoming()
+        self.assertTrue(old.exists() and first.exists() and second.exists())
+        self.assertEqual(len(ids), 1)
+        self.assertIn("ambiguous", out)
+        self.assertFalse((self.work / "Various/Various/duplicates").exists())
+
+    def test_newest_incoming_copy_stays_in_gallery_and_older_copy_goes_to_duplicates(self):
+        old = self.photo("Prospects", "Mia Wolfe", "mia_wolfe_shot_20261014123456.jpg", b"existing")
+        older = self.photo("Various", "Various", "Screenshot_20261014_123456_Facebook.jpg", b"older")
+        newest = self.photo("Various", "Various", "various_shot_20261014123456.jpg", b"newest")
+        os.utime(older, ns=(1_000_000_000, 1_000_000_000))
+        os.utime(newest, ns=(2_000_000_000, 2_000_000_000))
+
+        _, ids, out = self.run_prefer_incoming()
+
+        stashed = self.work / "Various/Various/duplicates/Screenshot_20261014_123456_Facebook.jpg"
+        archived = self.work / "_archive/Prospects/Mia Wolfe/gallery_replaced/mia_wolfe_shot_20261014123456.jpg"
+        self.assertTrue(newest.exists())
+        self.assertFalse(older.exists())
+        self.assertEqual(stashed.read_bytes(), b"older")
+        self.assertEqual(archived.read_bytes(), b"existing")
+        self.assertEqual(ids, [])
+        self.assertIn("newest modification time stays in gallery", out)
+
+    def test_older_incoming_copy_does_not_overwrite_existing_duplicates_review(self):
+        older = self.photo("Various", "Various", "older_shot_20261014123456.jpg", b"older")
+        newest = self.photo("Various", "Various", "newest_shot_20261014123456.jpg", b"newest")
+        duplicates = self.work / "Various/Various/duplicates"
+        duplicates.mkdir(parents=True)
+        existing = duplicates / older.name
+        existing.write_bytes(b"previously set aside")
+        os.utime(older, ns=(1_000_000_000, 1_000_000_000))
+        os.utime(newest, ns=(2_000_000_000, 2_000_000_000))
+
+        self.run_prefer_incoming()
+
+        self.assertEqual(existing.read_bytes(), b"previously set aside")
+        self.assertEqual((duplicates / "older_shot_20261014123456_duplicate_1.jpg").read_bytes(), b"older")
+        self.assertTrue(newest.exists())
 
 
 if __name__ == "__main__":
