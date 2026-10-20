@@ -112,6 +112,36 @@ class LikenessMetadataTests(unittest.TestCase):
         }
         metadata.validate_catalog(self.valid)
 
+    def test_person_folder_change_preserves_person_id_and_records_history(self):
+        person_id = "person_0123456789abcdef0123456789abcdef"
+        self.valid["people"][person_id] = {
+            "id": person_id,
+            "displayName": "Sophie Lloyd",
+            "folder": "Prospects/Sophie New",
+            "folderHistory": ["Prospects/Sophie Lloyd"],
+            "identityAnchors": [],
+        }
+        metadata.validate_catalog(self.valid)
+        self.assertIn(person_id, self.valid["people"])
+
+    def test_people_cannot_claim_the_same_folder_or_identity_anchor(self):
+        photo_id = "photo:image_123456"
+        self.valid["photos"][photo_id] = {"contentSha256": "a" * 64, "protected": False}
+        for person_id, display_name in (
+            ("person_0123456789abcdef0123456789abcdef", "Sophie Lloyd"),
+            ("person_abcdef0123456789abcdef0123456789", "Another Person"),
+        ):
+            self.valid["people"][person_id] = {
+                "id": person_id,
+                "displayName": display_name,
+                "folder": "Prospects/Sophie Lloyd",
+                "folderHistory": [],
+                "identityAnchors": [photo_id],
+            }
+        errors = metadata.validation_errors(self.valid)
+        self.assertTrue(any("folder Prospects/Sophie Lloyd is already assigned" in error for error in errors))
+        self.assertTrue(any(f"identity anchor {photo_id} is also assigned" in error for error in errors))
+
     def test_anchor_must_resolve_to_registered_photo(self):
         person_id = "person_0123456789abcdef0123456789abcdef"
         self.valid["people"][person_id] = {

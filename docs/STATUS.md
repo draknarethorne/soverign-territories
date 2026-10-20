@@ -88,6 +88,10 @@ atomic read/write helpers. A read-only `likeness audit-core` command reports
 trusted/provisional cores, score order and Prospect outlier candidates; it
 does not move images and may update only the existing embedding cache. The
 catalogue remains empty, so current matching behavior is unchanged.
+The audit tests now cover stale crop hashes, duplicate source IDs, moved
+catalogue folders, protected-only photos, small cores, and conflicting folder
+or anchor ownership. Restore/backup identity continuity remains open; no
+production thresholds or library photos have changed.
 
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial

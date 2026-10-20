@@ -292,9 +292,11 @@ work begins. Do not leave a broken or half-migrated state between increments.
   ordering, outlier suggestions and human-readable reasons with
   `likeness audit-core`. The command never moves images; it can update the
   existing embedding cache.
-- [ ] **P1 ai** B4 Add tests for changed folders, duplicate/ambiguous IDs,
-  cropped files, anchors, protected-only photos, small folders, stale metadata
-  and conflicting destinations.
+- [x] **P1 ai** B4 Test changed-folder mappings, duplicate/ambiguous IDs,
+  stable IDs with changed crop hashes, trusted anchors, protected-only photos,
+  small folders and stale metadata. Reject duplicate active-folder and
+  identity-anchor ownership; report renamed-folder mismatches without applying
+  their identity decisions. Restore/backup continuity remains open under A4.
 - [ ] **P2 either** B5 Establish user-confirmed examples and report
   action-specific precision and recall without changing production thresholds.
 

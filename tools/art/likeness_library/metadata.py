@@ -60,12 +60,25 @@ def validation_errors(data):
 
     people = data["people"]
     photos = data["photos"]
+    folder_owners = {}
+    anchor_owners = {}
     for person_id, person in people.items():
         if person["id"] != person_id:
             errors.append(f"people/{person_id}: record id does not match its catalogue key")
+        folder = person["folder"]
+        if folder in folder_owners:
+            errors.append(f"people/{person_id}: folder {folder} is already assigned to {folder_owners[folder]}")
+        else:
+            folder_owners[folder] = person_id
         for photo_id in person["identityAnchors"]:
             if photo_id not in photos:
                 errors.append(f"people/{person_id}: identity anchor {photo_id} has no photo record")
+            if photo_id in anchor_owners:
+                errors.append(
+                    f"people/{person_id}: identity anchor {photo_id} is also assigned to {anchor_owners[photo_id]}"
+                )
+            else:
+                anchor_owners[photo_id] = person_id
 
     action_ids = set()
     for index, action in enumerate(data["actions"]):
