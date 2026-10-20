@@ -16,7 +16,9 @@ photo-library metadata, not generated art direction. Its schema records
 stable person/photo references, trusted identity anchors, user-protected
 photos and auditable actions; ComfyUI source-photo selection remains in
 `workflows/workspaces.json`. Its code and focused tests live under
-`tools/art/likeness_library/`; `bin\validate.cmd` includes those tests.
+`tools/art/likeness_library/`; `load_catalog` validates reads and
+`save_catalog` validates and atomically writes only the catalogue.
+`bin\validate.cmd` includes the focused tests.
 
 ---
 

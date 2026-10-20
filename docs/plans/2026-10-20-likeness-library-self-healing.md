@@ -283,9 +283,11 @@ work begins. Do not leave a broken or half-migrated state between increments.
   `data/art/likeness-library.json` catalogue. Register the catalogue with the
   data validator and cover schema, format and referential checks with focused
   tests.
-- [ ] **P1 ai** B2 Add library metadata read/write helpers with atomic writes,
+- [x] **P1 ai** B2 Add library metadata read/write helpers with atomic writes,
   explicit errors, and no edits to `workspaces.json` or `z_` history for
-  identity/protection choices.
+  identity/protection choices. The writer targets only the catalogue; tests
+  cover round-trip, validation failure, failed replacement and untouched
+  workspace/history files.
 - [ ] **P1 ai** B3 Generate a read-only trusted/provisional core, photo score
   ordering, outlier suggestions and human-readable reasons.
 - [ ] **P1 ai** B4 Add tests for changed folders, duplicate/ambiguous IDs,

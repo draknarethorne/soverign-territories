@@ -5,6 +5,7 @@ import pathlib
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT))
@@ -24,6 +25,58 @@ class LikenessMetadataTests(unittest.TestCase):
         catalogue = metadata.load_catalog()
         self.assertEqual(catalogue["schemaVersion"], 1)
         self.assertEqual(catalogue["people"], {})
+
+    def test_save_catalog_round_trips_atomically(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "catalogue.json"
+            with mock.patch.object(metadata, "CATALOG_PATH", path):
+                saved_path = metadata.save_catalog(self.valid)
+            self.assertEqual(path, saved_path)
+            self.assertEqual(self.valid, metadata.load_catalog(path))
+            self.assertEqual([path], list(path.parent.iterdir()))
+
+    def test_save_catalog_rejects_invalid_data_before_touching_destination(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "catalogue.json"
+            path.write_text("existing bytes", encoding="utf-8")
+            broken = copy.deepcopy(self.valid)
+            del broken["photos"]
+            with mock.patch.object(metadata, "CATALOG_PATH", path):
+                with self.assertRaisesRegex(ValueError, "required property"):
+                    metadata.save_catalog(broken)
+            self.assertEqual(path.read_text(encoding="utf-8"), "existing bytes")
+            self.assertEqual([path], list(path.parent.iterdir()))
+
+    def test_save_catalog_leaves_workspaces_and_history_untouched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            path = root / "catalogue.json"
+            workspaces = root / "workspaces.json"
+            history = root / "z_sophie.txt"
+            workspaces.write_text('{"photos": {}}', encoding="utf-8")
+            history.write_text("name: Sophie Lloyd\n", encoding="utf-8")
+            with mock.patch.object(metadata, "CATALOG_PATH", path):
+                metadata.save_catalog(self.valid)
+            self.assertEqual(workspaces.read_text(encoding="utf-8"), '{"photos": {}}')
+            self.assertEqual(history.read_text(encoding="utf-8"), "name: Sophie Lloyd\n")
+
+    def test_save_catalog_preserves_destination_when_replace_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "catalogue.json"
+            with mock.patch.object(metadata, "CATALOG_PATH", path):
+                metadata.save_catalog(self.valid)
+            original_bytes = path.read_bytes()
+            changed = copy.deepcopy(self.valid)
+            changed["photos"]["photo:image_123456"] = {
+                "contentSha256": "a" * 64,
+                "protected": False,
+            }
+            with mock.patch.object(metadata, "CATALOG_PATH", path):
+                with mock.patch.object(metadata.os, "replace", side_effect=OSError("replace failed")):
+                    with self.assertRaisesRegex(OSError, "replace failed"):
+                        metadata.save_catalog(changed)
+            self.assertEqual(path.read_bytes(), original_bytes)
+            self.assertEqual([path], list(path.parent.iterdir()))
 
     def test_person_ids_are_opaque_and_unique(self):
         first = metadata.new_person_id()

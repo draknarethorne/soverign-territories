@@ -2,9 +2,11 @@
 """Load and validate the git-tracked likeness decisions catalogue."""
 import hashlib
 import json
+import os
 import pathlib
 import re
 import sys
+import tempfile
 import uuid
 from datetime import datetime
 
@@ -99,6 +101,33 @@ def load_catalog(path=CATALOG_PATH):
     data = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
     validate_catalog(data)
     return data
+
+
+def save_catalog(data):
+    """Validate and atomically save the tracked catalogue; filesystem errors propagate."""
+    validate_catalog(data)
+    destination = CATALOG_PATH
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="\n",
+            prefix=f".{destination.name}.",
+            suffix=".tmp",
+            dir=destination.parent,
+            delete=False,
+        ) as output:
+            temporary_path = pathlib.Path(output.name)
+            json.dump(data, output, ensure_ascii=False, indent=2, sort_keys=True)
+            output.write("\n")
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary_path, destination)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+    return destination
 
 
 if __name__ == "__main__":

@@ -52,7 +52,8 @@ validated by [`likeness-library.schema.json`](../../data/art/_schema/likeness-li
 Person IDs are opaque and stable across folder renames or promotions. Photo IDs
 use the normalized source ID in originals-managed names, independent of the
 folder prefix; the current SHA-256 is a stale-file check, not the identity key.
-This initial catalogue is empty and does not change current matching behavior.
+The metadata helpers validate reads and atomically write the catalogue. This
+initial catalogue is empty and does not change current matching behavior.
 
 The big runs and their results are written up in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md) and [likeness-reorg-2026-10-10.md](likeness-reorg-2026-10-10.md).
 

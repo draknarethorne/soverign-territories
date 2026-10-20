@@ -83,6 +83,10 @@ tested, documented, committed increments; no matching thresholds change before
 action-specific validation. Broader art-authoring and ComfyUI execution UIs are
 future scope.
 
+The catalogue foundation now has strict schema/reference validation plus
+atomic read/write helpers. It remains empty and does not change current
+matching behavior; saving it cannot target `workspaces.json` or `z_` history.
+
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial
 inventory found 32 top-level art Python modules, 29 internal imports and 19
