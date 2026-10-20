@@ -309,10 +309,11 @@ action-specific measurements on user-labelled examples.
   `people_gallery_review.html` with Gallery and Review photos, score ordering,
   filters and identity/protection states. Keep the existing overview concise;
   the dedicated launcher writes content-cached thumbnails beside the report.
-- [ ] **P1 ai** C2 Add staged anchor/protect, Review, Reject-to-Various and
+- [x] **P1 ai** C2 Add staged anchor/protect, Review, Reject-to-Various and
   Review-approval actions; export a versioned JSON manifest by download.
-- [ ] **P1 ai** C3 Keep the page local and read-only with respect to the
-  filesystem; use bounded/lazy thumbnails and benchmark 100+ photo folders.
+- [ ] **P1 ai** C3 Keep source files and catalogue read-only (allow only an
+  explicit manifest download); use bounded/lazy thumbnails and benchmark
+  100+ photo folders.
 
 **Exit:** user can inspect a large person and stage actions without hand-editing
 JSON or moving files.
@@ -404,6 +405,31 @@ file movement in the browser or silently changing existing CLI semantics.
 archive history and artist separation behave as before unless explicitly
 changed and covered by tests.
 
+### Phase I — recover and manage person names
+
+- [ ] **P1 ai** I1 Trace and reproduce name continuity through promotion,
+  return, merges and Sister/Angel swaps. Test the cases where a `z_` file is
+  missing, preserved, or reconstructed; determine whether existing history or
+  backups can recover the original name without guessing.
+- [ ] **P1 ai** I2 Add regression coverage for name preservation across every
+  supported identity move. Keep the Angel/Sister slot folder name distinct
+  from the person's recorded Prospect/Potential identity.
+- [ ] **P2 ai** I3 Add staged GUI renaming for Prospects and Potentials.
+  Preserve the previous name in `z_` history and stable catalogue identity;
+  do not rename fixed Angel/Sister slots. Reject case-insensitive name
+  collisions unless the user explicitly selects a second person for a
+  two-person name swap.
+- [ ] **P2 ai** I4 Add preview, backup and apply support for staged name
+  changes. Update the catalogue's current folder and history, retain both
+  `z_` histories, and refresh `people_index.csv` and `.md` after relevant
+  rename, promotion, return or swap operations.
+- [ ] **P2 ai** I5 Verify collisions across Prospects and Potentials, including
+  case-only variants, and test rollback when either side of a name swap fails.
+
+**Exit:** a user can recover or change a Prospect/Potential's recorded name
+without losing history, colliding with another person, changing fixed cast-slot
+names, or leaving the gallery and people index inconsistent.
+
 ## Safety and acceptance criteria
 
 - No automatic deletion. Every source remains recoverable from its original
@@ -466,6 +492,7 @@ changed and covered by tests.
 | D6 | Add photo- and person-level retirement to the GUI after Review/Reject works. Photo retirement archives one unusable image recoverably and excludes it from matching. Person retirement uses the existing CLI behavior and returns that person's photos to `Various` for reprocessing. Keep both distinct from Review, Reject-to-Various and whole-folder archival. |
 | D7 | Implement and commit validated increments. Keep larger art-authoring and ComfyUI execution UI as future scope, while preserving integration paths. |
 | D8 | Keep the photo archive in a separate `_retired/photos/` subtree; preview the path, preserve content and history, and support restore. Treat `archive-list` as a separately named whole-folder archive operation. |
+| D13 | Keep a person's recorded identity name separate from fixed Angel/Sister slot folders. Prospect/Potential name changes must preserve `z_` history, reject collisions by default, and permit a two-person swap only when both identities are explicitly selected. |
 
 ## Raw user feedback
 

@@ -97,7 +97,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness promote "Dara Ives" Nyxene` | preview a Prospect-to-Angel swap; `--apply` returns the current Angel to `Prospects/<z_ name>`, promotes the Prospect, preserves and appends both histories, selects a suitable source photo, regenerates scaled/headshot/frame files, updates `workspaces.json` and generated workflow inputs, and copies needed images into ComfyUI workspace input folders. Run `bin\refresh.cmd Nyxene` afterward to regenerate prompts/workflows and deploy the latest set |
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
-| `bin\people-gallery-review.cmd [--out DIR] [--keep SCORE]` | separate local maintenance page for every Gallery and Review photo, ordered against trusted/provisional cores, with metadata states, filters and cached lazy-loaded thumbnails; report only |
+| `bin\people-gallery-review.cmd [--out DIR] [--keep SCORE]` | separate local maintenance page for every Gallery and Review photo, ordered against trusted/provisional cores, with metadata states, filters and cached lazy-loaded thumbnails; only stages a versioned JSON action manifest |
 
 ## Profile: who could play what
 
@@ -132,7 +132,15 @@ The people gallery at `<work>\_reports\library\people_gallery.html` shows each A
 canonical hair color and top eligible Prospect alternatives by the shared likeness-plus-photo-variety score.
 For score-ordered, high-volume inspection of every active Gallery and Review
 photo, run `bin\people-gallery-review.cmd`; it writes a separate local
-`people_gallery_review.html` with cached thumbnails and read-only filters.
+`people_gallery_review.html` with cached thumbnails and filters. Per-photo
+controls stage identity-anchor, protection, send-to-Review, reject-to-Various
+and Review-approval decisions. Downloading the versioned manifest is the only
+action the page takes; it never edits catalogue data or moves photos. The
+manifest contract is
+[`likeness-action-manifest.schema.json`](../../data/art/_schema/likeness-action-manifest.schema.json).
+Photos without a unique stable ID, in ambiguous catalogue folders, or in
+Artist galleries cannot be staged. Applying a manifest is not implemented;
+do not move files based on the download until a validating CLI is available.
 The complete ranked comparisons at `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`
 show similarity, usable photo count, likeness cost, photo bonus and adjusted cost. Rebaseline uses the same
 score and saved-render evidence as `likeness pairs`; its global assignment can differ from independent

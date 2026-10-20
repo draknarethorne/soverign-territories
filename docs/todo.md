@@ -84,15 +84,14 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (47)
+### For the assistant, when you say go (51)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
 - [ ] A1 Capture current settings, command behavior, reports and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] A4 Define the stable person/photo ID model, schema, score/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] C2 Add staged anchor/protect, Review, Reject-to-Various and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] C3 Keep the page local and read-only with respect to the ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C3 Keep source files and catalogue read-only (allow only an ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] D1 Add manifest validate and preview commands with explicit ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] D2 Add backup-verified apply and undo for metadata-only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] D3 Verify category rules, protected anchors, one-time anchor ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
@@ -102,6 +101,8 @@
 - [ ] E4 Add an empty-pool mode for Review-only and self-healing runs. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] F1 Add report-only Prospect outlier detection against ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] F3 Keep routine Angel/Sister gallery processing report-only. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] I1 Trace and reproduce name continuity through promotion, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] I2 Add regression coverage for name preservation across every ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P2 (normal)**
 
@@ -128,6 +129,9 @@
 - [ ] H3 Inventory all effective thresholds and options in one ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H4 Simplify the user-facing workflow and CLI options only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H5 Update the likeness guide, original-photo runbook, gallery ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] I3 Add staged GUI renaming for Prospects and Potentials. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] I4 Add preview, backup and apply support for staged name ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] I5 Verify collisions across Prospects and Potentials, including ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P3 (later, or ideas)**
 

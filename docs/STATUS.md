@@ -95,7 +95,18 @@ production thresholds or library photos have changed.
 The separate `people_gallery_review.html` view is available through
 `bin\people-gallery-review.cmd`; it is local and read-only, includes Gallery
 and Review photos, and provides score sorting, filters and content-cached
-lazy thumbnails.
+lazy thumbnails. It can stage identity-anchor, protection, Review,
+Reject-to-Various and Review-approval actions to a versioned JSON download.
+No action CLI exists yet, and Artist photos remain view-only.
+The user's next requested increment is Prospect/Potential name recovery and
+renaming. Initial code trace: promotion keeps a recorded `z_` name when one
+exists, but falls back to the fixed Angel slot name if it is missing; the
+rename CLI is limited to Prospect/Potential folders and has no explicit
+two-person name-swap flow. `people_index.csv` and `.md` are written by the
+explicit `likeness index` command, not refreshed by rename or promotion. No
+promotion regression test was found in the relevant art test modules. These
+are investigation leads, not a confirmed cause for the reported name loss;
+Phase I will reproduce and test before making behavior changes.
 
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial

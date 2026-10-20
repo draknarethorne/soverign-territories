@@ -3,16 +3,56 @@
 import pathlib
 import tempfile
 import unittest
+import json
 from types import SimpleNamespace
 from unittest import mock
 
 import numpy as np
+from jsonschema import Draft7Validator
 
 from tools.art import likeness
 from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_actions_are_location_aware_and_manifest_schema_is_versioned(self):
+        gallery = review_gallery.action_options("Gallery", "photo:image_123")
+        self.assertEqual(
+            [action for action, _label in gallery],
+            ["anchor-added", "photo-protected", "sent-to-review", "rejected-to-various"],
+        )
+        review = review_gallery.action_options("Review", "photo:image_123", protected=True)
+        self.assertEqual(
+            [action for action, _label in review],
+            ["photo-unprotected", "rejected-to-various", "review-approved"],
+        )
+        self.assertEqual(
+            review_gallery.action_options("Gallery", "photo:image_123", stageable=False),
+            [],
+        )
+        schema_path = review_gallery.ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        validator = Draft7Validator(schema)
+        manifest = {
+            "manifestVersion": 1,
+            "generatedAt": "2026-10-20T12:00:00Z",
+            "source": "people-gallery-review",
+            "actions": [{
+                "type": "sent-to-review",
+                "photoId": "photo:image_123",
+                "contentSha256": "a" * 64,
+                "sourceBucket": "Gallery",
+                "personFolder": "Prospects/Sophie",
+                "personId": "person_" + "b" * 32,
+            }],
+        }
+        self.assertEqual(list(validator.iter_errors(manifest)), [])
+        manifest["actions"][0]["sourceBucket"] = "Review"
+        self.assertTrue(list(validator.iter_errors(manifest)))
+        manifest["actions"][0]["sourceBucket"] = "Gallery"
+        manifest["actions"][0]["contentSha256"] = "stale"
+        self.assertTrue(list(validator.iter_errors(manifest)))
+
     def test_collection_scores_review_against_gallery_without_including_it(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = pathlib.Path(tmp) / "Prospects" / "Sophie"
@@ -75,6 +115,12 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(review_item["state"], "Review")
             self.assertLess(review_item["score"], 0)
             self.assertIn("never enters its core", review_item["reason"])
+            self.assertEqual(review_item["photoId"], "photo:image_444444")
+            self.assertTrue(review_item["stageable"])
+            self.assertEqual(
+                [action for action, _label in review_item["stageOptions"]],
+                ["photo-protected", "rejected-to-various", "review-approved"],
+            )
             self.assertEqual(cache.saved, 1)
 
     def test_render_is_local_lazy_filtered_and_bounded(self):
@@ -98,6 +144,9 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn("pageSize=100", page)
         self.assertIn('image.loading="lazy"', page)
         self.assertIn('id="bucket"', page)
+        self.assertIn('id="download"', page)
+        self.assertIn("manifestVersion:1", page)
+        self.assertIn("contentSha256:record.contentSha256", page)
         self.assertIn("file:///C:/library/photo_0.jpg", page)
         self.assertNotIn("https://", page)
         self.assertNotIn("data:image", page)
