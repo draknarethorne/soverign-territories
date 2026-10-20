@@ -42,8 +42,10 @@ For high-volume maintenance, run `bin\people-gallery-review.cmd` to build
 Review photo, core-similarity ordering, identity/protection state, filters and
 content-cached lazy-loaded thumbnails. Per-photo controls stage anchor,
 protection, Review, Reject-to-Various or Review-approval actions; use the
-downloaded manifest only as a record for now. The page does not edit the
-catalogue or move photos, and Artist photos are view-only.
+downloaded manifest with `bin\likeness-actions.cmd validate FILE.json` or
+`preview FILE.json` to check it against the current library. These commands
+never apply actions: the page and CLI do not edit the catalogue or move
+photos; folders outside the catalogue's supported roots are view-only.
 The Angel card prints a preview command for the top candidate; browser pages cannot safely launch filesystem
 promotion commands, so run it in a terminal and review it before adding `--apply`. The Prime-start photo score describes
 photo suitability, not identity confidence. Prospect cards also show the closest face-embedding matches among

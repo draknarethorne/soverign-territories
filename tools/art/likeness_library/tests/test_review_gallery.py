@@ -30,6 +30,9 @@ class ReviewGalleryTests(unittest.TestCase):
             review_gallery.action_options("Gallery", "photo:image_123", stageable=False),
             [],
         )
+        self.assertTrue(review_gallery.action_folder_supported("Prospects/Sophie"))
+        self.assertFalse(review_gallery.action_folder_supported("Artists/Example/Person"))
+        self.assertFalse(review_gallery.action_folder_supported("Models/Legacy"))
         schema_path = review_gallery.ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
         validator = Draft7Validator(schema)

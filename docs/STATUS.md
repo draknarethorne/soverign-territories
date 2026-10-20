@@ -97,7 +97,10 @@ The separate `people_gallery_review.html` view is available through
 and Review photos, and provides score sorting, filters and content-cached
 lazy thumbnails. It can stage identity-anchor, protection, Review,
 Reject-to-Various and Review-approval actions to a versioned JSON download.
-No action CLI exists yet, and Artist photos remain view-only.
+`bin\likeness-actions.cmd validate|preview` checks manifest schema, photo IDs,
+content hashes, current folders, catalogue ownership and action conflicts.
+The CLI remains preview-only; no file moves or metadata application exist yet.
+Folders outside the catalogue's supported roots are view-only.
 The user's next requested increment is Prospect/Potential name recovery and
 renaming. Initial code trace: promotion keeps a recorded `z_` name when one
 exists, but falls back to the fixed Angel slot name if it is missing; the
@@ -107,6 +110,12 @@ explicit `likeness index` command, not refreshed by rename or promotion. No
 promotion regression test was found in the relevant art test modules. These
 are investigation leads, not a confirmed cause for the reported name loss;
 Phase I will reproduce and test before making behavior changes.
+The user also reports that some original Angel/Sister `z_` files were created
+empty, without a `name:` header; Draknora is one example. The current reader
+falls back to the `z_` filename slug, but `likeness names` treats any readable
+`z_` file as already present. Phase I will verify whether those legacy files
+retain enough identity evidence and ensure promotion/return does not replace
+that name with the fixed cast-slot name.
 
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial

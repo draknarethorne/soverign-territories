@@ -98,6 +98,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
 | `bin\people-gallery-review.cmd [--out DIR] [--keep SCORE]` | separate local maintenance page for every Gallery and Review photo, ordered against trusted/provisional cores, with metadata states, filters and cached lazy-loaded thumbnails; only stages a versioned JSON action manifest |
+| `bin\likeness-actions.cmd validate FILE.json` / `preview FILE.json` | validate IDs, hashes, source folders, catalogue references and action conflicts; preview destinations without moving photos or editing metadata |
 
 ## Profile: who could play what
 
@@ -135,12 +136,16 @@ photo, run `bin\people-gallery-review.cmd`; it writes a separate local
 `people_gallery_review.html` with cached thumbnails and filters. Per-photo
 controls stage identity-anchor, protection, send-to-Review, reject-to-Various
 and Review-approval decisions. Downloading the versioned manifest is the only
-action the page takes; it never edits catalogue data or moves photos. The
+action the page takes; it never edits catalogue data or moves photos. Run
+`bin\likeness-actions.cmd validate <file>` or `preview <file>` to check the
+download against current IDs, hashes, folders and metadata. The CLI is
+preview-only; file moves and metadata application are not implemented. The
 manifest contract is
 [`likeness-action-manifest.schema.json`](../../data/art/_schema/likeness-action-manifest.schema.json).
-Photos without a unique stable ID, in ambiguous catalogue folders, or in
-Artist galleries cannot be staged. Applying a manifest is not implemented;
-do not move files based on the download until a validating CLI is available.
+Photos without a unique stable ID, in ambiguous catalogue folders, or under
+folder roots not supported by the catalogue schema cannot be staged. Applying
+applying a manifest is not implemented; do not move files based on the
+download.
 The complete ranked comparisons at `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`
 show similarity, usable photo count, likeness cost, photo bonus and adjusted cost. Rebaseline uses the same
 score and saved-render evidence as `likeness pairs`; its global assignment can differ from independent

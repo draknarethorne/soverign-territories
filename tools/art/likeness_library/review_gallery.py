@@ -21,6 +21,7 @@ from likeness_library.audit import audit_person  # noqa: E402
 
 PAGE_SIZE = 100
 SECTIONS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists")
+ACTION_ROOTS = {"Angels", "Sisters", "Prospects", "Potentials"}
 
 CSS = """
 body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#222}
@@ -187,6 +188,11 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
     return options
 
 
+def action_folder_supported(folder):
+    """Whether a folder can be represented by the current identity catalogue schema."""
+    return folder.split("/", 1)[0] in ACTION_ROOTS
+
+
 def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False, embed=None, keep=0.25):
     """Build scored image records; Review candidates never enter an identity core."""
     groups = set(SECTIONS if include_artists else SECTIONS[:-1])
@@ -317,19 +323,19 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "personId": person_id,
                 "stageable": bool(
                     photo_id and photo_id not in ambiguous_ids and not conflict
-                    and not key.startswith("Artists/")
+                    and action_folder_supported(key)
                 ),
                 "stageOptions": action_options(
                     "Gallery", photo_id, anchor=photo_id in anchors and photo_id not in stale_ids,
                     protected=photo_id in protected_ids,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict
-                        and not key.startswith("Artists/")
+                        and action_folder_supported(key)
                     ),
                 ),
                 "stageReason": (
-                    "Actions are disabled for artist galleries because the identity catalogue does not yet model them"
-                    if key.startswith("Artists/") else
+                    "Actions are disabled for this folder because the identity catalogue schema does not support its root"
+                    if not action_folder_supported(key) else
                     "Actions require a unique stable photo ID and an unambiguous person folder"
                     if not photo_id or photo_id in ambiguous_ids or conflict else ""
                 ),
@@ -370,18 +376,18 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "personId": person_id,
                 "stageable": bool(
                     photo_id and photo_id not in ambiguous_ids and not conflict
-                    and not key.startswith("Artists/")
+                    and action_folder_supported(key)
                 ),
                 "stageOptions": action_options(
                     "Review", photo_id, protected=photo_id in protected_ids,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict
-                        and not key.startswith("Artists/")
+                        and action_folder_supported(key)
                     ),
                 ),
                 "stageReason": (
-                    "Actions are disabled for artist galleries because the identity catalogue does not yet model them"
-                    if key.startswith("Artists/") else
+                    "Actions are disabled for this folder because the identity catalogue schema does not support its root"
+                    if not action_folder_supported(key) else
                     "Actions require a unique stable photo ID and an unambiguous person folder"
                     if not photo_id or photo_id in ambiguous_ids or conflict else ""
                 ),

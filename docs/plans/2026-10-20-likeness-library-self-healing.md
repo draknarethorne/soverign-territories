@@ -320,9 +320,10 @@ JSON or moving files.
 
 ### Phase D — safe action CLI
 
-- [ ] **P1 ai** D1 Add manifest validate and preview commands with explicit
+- [x] **P1 ai** D1 Add manifest validate and preview commands with explicit
   rejection of stale hashes, missing/ambiguous IDs, invalid moves and
-  conflicting actions.
+  conflicting actions. `bin\likeness-actions.cmd` is read-only; application
+  and undo remain in D2.
 - [ ] **P1 ai** D2 Add backup-verified apply and undo for metadata-only
   decisions and user-staged photo moves; record an auditable action history.
 - [ ] **P1 ai** D3 Verify category rules, protected anchors, one-time anchor
@@ -408,12 +409,14 @@ changed and covered by tests.
 ### Phase I — recover and manage person names
 
 - [ ] **P1 ai** I1 Trace and reproduce name continuity through promotion,
-  return, merges and Sister/Angel swaps. Test the cases where a `z_` file is
-  missing, preserved, or reconstructed; determine whether existing history or
-  backups can recover the original name without guessing.
+  return, merges and Sister/Angel swaps. Include the original cast folders
+  whose `z_` files are empty or have no `name:` header; test names recovered
+  from the filename, missing files, and names reconstructed from history.
+  Determine what evidence can recover the original name without guessing.
 - [ ] **P1 ai** I2 Add regression coverage for name preservation across every
-  supported identity move. Keep the Angel/Sister slot folder name distinct
-  from the person's recorded Prospect/Potential identity.
+  supported identity move, including empty/legacy `z_` files and Draknora's
+  reported case. Keep the Angel/Sister slot folder name distinct from the
+  person's recorded Prospect/Potential identity.
 - [ ] **P2 ai** I3 Add staged GUI renaming for Prospects and Potentials.
   Preserve the previous name in `z_` history and stable catalogue identity;
   do not rename fixed Angel/Sister slots. Reject case-insensitive name

@@ -18,6 +18,11 @@ photos and auditable actions; ComfyUI source-photo selection remains in
 `workflows/workspaces.json`. Its code and focused tests live under
 `tools/art/likeness_library/`; `load_catalog` validates reads and
 `save_catalog` validates and atomically writes only the catalogue.
+The review gallery exports staged actions using
+[`_schema/likeness-action-manifest.schema.json`](_schema/likeness-action-manifest.schema.json);
+`bin\likeness-actions.cmd validate|preview` checks those downloads against
+current photo IDs, hashes, folders and catalogue ownership without applying
+file or metadata changes.
 Validation prevents two people from claiming the same current folder or
 identity anchor. `likeness audit-core` reports moved-folder and stale-hash
 mismatches, and ignores duplicate source IDs for identity decisions.
