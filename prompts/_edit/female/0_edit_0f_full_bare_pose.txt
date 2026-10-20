@@ -4,13 +4,16 @@ Background: keep background from original image.
 Lighting: even, soft, neutral frontal studio lighting - a flat, clean key light.
 Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Camera: expanded wide environmental film still, camera pull-back revealing the complete figure, including feet and surrounding scene, seamless out-painting.
+Camera: expanded wide environmental film still, camera pull-back revealing the complete figure,
+exact same pose, extending legs to show feet.
 
-Edit the incoming image: remove all logos, icons, overlays; remove all props, accessories, purses, cups, glasses; food items in hands;
-remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject;
+Edit the incoming image: remove all logos, icons, overlays;
+remove all props, accessories, purses, cups, glasses; food items in hands;
+remove all clothing, jackets, towels, swimwear, straps, strings, jewelry and shoes from the subject;
 crop top and bottom borders that are not part of the background, extend/create additional background as needed.
 
-Result:  fullness of her bust, wearing nothing but bare skin from head to toe, with natural, realistic, detailed anatomy; nipples aroused, detailed and visible; vulva present and visible; rendered naturally as a real body would look; completely bare natural skin free from water drops, keeping her skin tone, including the shoulders, arms, hands, stomach, hips, thighs, legs and feet; 
+Result:  fullness of her bust, wearing nothing but bare skin from head to toe, with natural, realistic, detailed anatomy; nipples aroused, detailed and visible; vulva present and visible; rendered naturally as a real body would look; completely bare natural skin free from water drops, keeping her skin tone, including the shoulders, arms, hands, stomach, hips, thighs, legs and feet;
+hands free of cups and food; body is free of purses, accessories and jewelry;
 
 Critical details - these must be followed:
 Hair: soft champagne-blonde hair with warm honey lights, silky and luminous;
@@ -21,6 +24,7 @@ Body: haute couture physique, extremely lean frame, sharp collarbones, angular s
 Pelvic: completely bare pubic region, totally hairless intimate area, smooth labia, flawless smooth skin, immaculate finish, front and back hair removal, detailed anatomy, realistic skin texture;
 
 Likeness: maintain strict fidelity to the reference image's facial features, facial bone structure;
-Wearing: only bare skin; arms, hands, chest, thighs, knees and legs are bare of clothing; open toed high heeled shoes with a single strap.  
+Wearing: only bare skin; arms, hands, chest, thighs, knees and legs are bare of clothing; open toed high heeled shoes with a single strap.
+Eyes: both eyes matched, symmetrical, wide open and looking straight at the camera, crisp catchlights; natural lush lashes.
 
 Keep the face, expression, makeup, entire body, chest, and body position.

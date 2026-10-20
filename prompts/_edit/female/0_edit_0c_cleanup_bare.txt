@@ -1,21 +1,22 @@
-Pose: exact same pose and body position; exact same body angle; same head, neck, chest, arm, and leg positions;    
+Pose: exact same pose and body position; exact same body angle; same head, neck, chest, arm, and leg positions;
 
 Background: keep background from original image.
 Lighting: even, soft, neutral frontal studio lighting - a flat, clean key light.
 Professional beauty photography, 85mm lens, razor-sharp focus, soft depth of field, photorealistic with lifelike skin texture and natural pores.
 
-Edit the incoming image: remove all logos, icons, overlays; remove all props, accessories, purses, cups, glasses; food items in hands;
-remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject;
+Edit the incoming image: remove all logos, icons, overlays;
+remove all props, accessories, purses, cups, glasses; food items in hands;
+remove all clothing, jackets, towels, swimwear, straps, strings, jewelry and shoes from the subject;
 crop top and bottom borders that are not part of the background, extend/create additional background as needed.
 
-Result:  fullness of her bust, wearing nothing but bare skin from head to toe, with natural, realistic, detailed anatomy; nipples aroused, detailed and visible; vulva present and visible; rendered naturally as a real body would look; completely bare natural skin free from water drops, keeping her skin tone, including the shoulders, arms, hands, stomach, hips, thighs, legs and feet; 
+Result:  fullness of her bust, wearing nothing but bare skin from head to toe, with natural, realistic, detailed anatomy; nipples aroused, detailed and visible; vulva present and visible; rendered naturally as a real body would look; completely bare natural skin free from water drops, keeping her skin tone, including the shoulders, arms, hands, stomach, hips, thighs, legs and feet;
+hands free of cups and food; body is free of purses, accessories and jewelry;
 
 Critical details - these must be followed:
 Bust: large voluptuous breasts, heavy natural volume, hard nipples, aroused, deep cleavage, soft curve, prominent silhouette, full and heavy profile, detailed anatomy;
 Body: haute couture physique, extremely lean frame, sharp collarbones, angular shoulders, very long slender limbs, runway model proportions, editorial styling, detailed anatomy;
 
 Likeness: maintain strict fidelity to the reference image's facial features, facial bone structure.
-
-Wearing: only bare skin; arms, hands, chest, thighs, knees, legs and feet are bare of clothing.  
+Wearing: only bare skin; arms, hands, chest, thighs, knees, legs and feet are bare of clothing.
 
 Keep the face, expression, makeup, entire body, chest, and body position.

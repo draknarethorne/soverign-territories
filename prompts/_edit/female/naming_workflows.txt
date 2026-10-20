@@ -43,5 +43,3 @@ angel-primes/female/Angelica/1_Alpha/1b_Experiments/bare-base/Angelica_Qwen_Alph
     1b_Experiments
         bare-base
             Angelica_Qwen_Alpha_1b_BareBase
-
-
