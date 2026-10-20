@@ -305,9 +305,10 @@ action-specific measurements on user-labelled examples.
 
 ### Phase C — focused review gallery
 
-- [ ] **P1 ai** C1 Produce a separate high-volume
+- [x] **P1 ai** C1 Produce a separate high-volume
   `people_gallery_review.html` with Gallery and Review photos, score ordering,
-  filters and identity/protection states. Keep the existing overview concise.
+  filters and identity/protection states. Keep the existing overview concise;
+  the dedicated launcher writes content-cached thumbnails beside the report.
 - [ ] **P1 ai** C2 Add staged anchor/protect, Review, Reject-to-Various and
   Review-approval actions; export a versioned JSON manifest by download.
 - [ ] **P1 ai** C3 Keep the page local and read-only with respect to the

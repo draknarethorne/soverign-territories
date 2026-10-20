@@ -52,10 +52,12 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
         core_indices = [eligible[i] for i in provisional_core]
 
     scores = [None] * len(vectors)
+    core_vector = None
     if core_indices:
         core_set = set(core_indices)
         total = vectors[core_indices].sum(0)
         reference = nz(total)
+        core_vector = reference
         for i, vector in enumerate(vectors):
             if i in core_set:
                 if len(core_indices) == 1:
@@ -72,5 +74,6 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
         "protected_indices": protected_indices,
         "blocked_indices": sorted(blocked_indices),
         "scores": scores,
+        "core_vector": core_vector,
         "sufficient": len(core_indices) >= minimum_core,
     }

@@ -84,14 +84,13 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (48)
+### For the assistant, when you say go (47)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
 - [ ] A1 Capture current settings, command behavior, reports and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] A4 Define the stable person/photo ID model, schema, score/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] C1 Produce a separate high-volume ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] C2 Add staged anchor/protect, Review, Reject-to-Various and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] C3 Keep the page local and read-only with respect to the ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] D1 Add manifest validate and preview commands with explicit ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))

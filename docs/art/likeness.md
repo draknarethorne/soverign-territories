@@ -97,6 +97,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness promote "Dara Ives" Nyxene` | preview a Prospect-to-Angel swap; `--apply` returns the current Angel to `Prospects/<z_ name>`, promotes the Prospect, preserves and appends both histories, selects a suitable source photo, regenerates scaled/headshot/frame files, updates `workspaces.json` and generated workflow inputs, and copies needed images into ComfyUI workspace input folders. Run `bin\refresh.cmd Nyxene` afterward to regenerate prompts/workflows and deploy the latest set |
 | `likeness undo` | puts the last batch of moves back (found again by content, even after the originals tool renamed them) |
 | `likeness scan` / `calibrate` | read the library (and list photos with no usable face) / how reliable the scores are |
+| `bin\people-gallery-review.cmd [--out DIR] [--keep SCORE]` | separate local maintenance page for every Gallery and Review photo, ordered against trusted/provisional cores, with metadata states, filters and cached lazy-loaded thumbnails; report only |
 
 ## Profile: who could play what
 
@@ -129,6 +130,9 @@ Artists are also kept apart from each other: a photo stays with the artist it ca
 `likeness crosscheck` lists those look-alikes, and prospects that look like an artist's person, in `<work>\_reports\library\crosscheck.md` so you can decide.
 The people gallery at `<work>\_reports\library\people_gallery.html` shows each Angel's paired Sister,
 canonical hair color and top eligible Prospect alternatives by the shared likeness-plus-photo-variety score.
+For score-ordered, high-volume inspection of every active Gallery and Review
+photo, run `bin\people-gallery-review.cmd`; it writes a separate local
+`people_gallery_review.html` with cached thumbnails and read-only filters.
 The complete ranked comparisons at `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`
 show similarity, usable photo count, likeness cost, photo bonus and adjusted cost. Rebaseline uses the same
 score and saved-render evidence as `likeness pairs`; its global assignment can differ from independent

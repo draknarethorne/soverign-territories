@@ -14,6 +14,7 @@ echo   8  Validate
 echo   9  Refresh FireRed for a hero
 echo   A  Animate a hero (video prompts, workflows, deploy)
 echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild all scaled images
+echo   R  Photo review gallery (read-only Gallery and Review audit)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
 echo   S  Style audit (which art wording leans illustrated)
@@ -25,6 +26,7 @@ if /i "%CH%"=="Q" exit /b 0
 if /i "%CH%"=="H" call "%~dp0help.cmd" & pause & goto menu
 if /i "%CH%"=="S" call "%~dp0style-audit.cmd" & pause & goto menu
 if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
+if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
 if "%CH%"=="2" goto group

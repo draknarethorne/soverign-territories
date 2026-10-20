@@ -37,6 +37,10 @@ current canonical hair color and three eligible Prospect alternatives ranked by 
 rankings for every paired Angel are in `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`.
 Chosen Angels and Sisters that came through Prospect processing also show their recorded Prospect identity beside
 the chosen-photo status.
+For high-volume maintenance, run `bin\people-gallery-review.cmd` to build
+`people_gallery_review.html` beside it. That page includes every Gallery and
+Review photo, core-similarity ordering, identity/protection state, filters and
+content-cached lazy-loaded thumbnails; it is read-only.
 The Angel card prints a preview command for the top candidate; browser pages cannot safely launch filesystem
 promotion commands, so run it in a terminal and review it before adding `--apply`. The Prime-start photo score describes
 photo suitability, not identity confidence. Prospect cards also show the closest face-embedding matches among

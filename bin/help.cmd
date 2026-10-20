@@ -17,6 +17,7 @@ echo    library-preview.cmd             the same, every step as a preview ^(noth
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
 echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
 echo    people-gallery.cmd              one web page with prospect sister matches, Angel pairings, hair colors and ranked candidates: _reports\library; full rankings in comparisons\pairings
+echo    people-gallery-review.cmd [--out DIR] [--keep SCORE]  local, read-only Gallery + Review audit, sorted by core similarity; cached thumbnails and filters
 echo    likeness.cmd crops              one web page with every cropped photo, the uncropped original beside it ^(likeness.cmd crop --undo --apply reverses the last batch^)
 echo    duplicates.cmd [--apply]        the same picture kept twice anywhere in the library ^(any folder, any name^)
 echo    originals.cmd --check           are the scaled copies and headshots in step with every gallery?

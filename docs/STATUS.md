@@ -92,6 +92,10 @@ The audit tests now cover stale crop hashes, duplicate source IDs, moved
 catalogue folders, protected-only photos, small cores, and conflicting folder
 or anchor ownership. Restore/backup identity continuity remains open; no
 production thresholds or library photos have changed.
+The separate `people_gallery_review.html` view is available through
+`bin\people-gallery-review.cmd`; it is local and read-only, includes Gallery
+and Review photos, and provides score sorting, filters and content-cached
+lazy thumbnails.
 
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial
