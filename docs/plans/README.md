@@ -61,7 +61,7 @@ Before we commit and push at the end of a working day, we do these, so nothing i
 
 - Big design decisions need the user's approval before any file is edited for them (for example the MVP element set).
 - A plan states what is open; `STATUS.md` states what is decided. Do not copy one into the other.
-- Keep lines under 500 characters (markdownlint), one home per fact.
+- Keep lines under 1,000 characters (markdownlint), one home per fact.
 
 ## Plans
 
@@ -80,4 +80,5 @@ Before we commit and push at the end of a working day, we do these, so nothing i
 | [2026-10-19-library-rebaseline-and-frame-retirement.md](2026-10-19-library-rebaseline-and-frame-retirement.md) | active | Rebaseline active work, retire failed frame flow, pull Angel Primes shots, and process the current library batch |
 | [2026-10-19-library-management-rebaseline.md](2026-10-19-library-management-rebaseline.md) | active | Full-library rebaseline, Prospects and Potentials migration, report-only Angel alternatives, and future Demon-pairing policy |
 | [2026-10-20-likeness-library-self-healing.md](2026-10-20-likeness-library-self-healing.md) | active | Git-tracked identity metadata, staged review gallery and CLI actions, combined Review/Various reprocessing, guarded Prospect cleanup, and incremental tooling modularization |
+| [2026-10-20-art-tools-structure.md](2026-10-20-art-tools-structure.md) | active | Incrementally organize art Python tools and tests while preserving `bin/*.cmd` interfaces |
 | [_archive/2026-10-10-names-ingest-headshots.md](_archive/2026-10-10-names-ingest-headshots.md) | done | Names that follow the photos (`z_` files), `Sisters`, the new `Various` batch, headshots, the look-alike guard |

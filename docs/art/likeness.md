@@ -45,6 +45,15 @@ configured prospect exclusions, and repoint renamed photo inputs.
 
 Settings live under `likeness` in `workflows/workspaces.json`: `mixed`, `pool`, `assign`, `margin`, `cluster`, `minCluster`, `odd`, `alike`, `minFace`, `pairLow`, `pairHigh`, `pairs` (angel to sister), `keepPhoto` (heroes whose photo never changes: Drakness, Angelica, Drakneta) and `anchors` (`{"Angelica": ["part of a photo name", ...]}`: photos that are certainly her).
 
+The approved identity-metadata work is tracked in
+[`2026-10-20-likeness-library-self-healing.md`](../plans/2026-10-20-likeness-library-self-healing.md).
+Its versioned catalogue is [`data/art/likeness-library.json`](../../data/art/likeness-library.json),
+validated by [`likeness-library.schema.json`](../../data/art/_schema/likeness-library.schema.json).
+Person IDs are opaque and stable across folder renames or promotions. Photo IDs
+use the normalized source ID in originals-managed names, independent of the
+folder prefix; the current SHA-256 is a stale-file check, not the identity key.
+This initial catalogue is empty and does not change current matching behavior.
+
 The big runs and their results are written up in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md) and [likeness-reorg-2026-10-10.md](likeness-reorg-2026-10-10.md).
 
 ## Commands

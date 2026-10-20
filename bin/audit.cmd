@@ -15,7 +15,7 @@ if /i "%NAME%"=="identity" %PY% tools\art\identity_audit.py%REST% & goto done
 if /i "%NAME%"=="negation" %PY% tools\art\negation_audit.py%REST% & goto done
 if /i "%NAME%"=="library"  %PY% tools\art\library_audit.py%REST% & goto done
 if /i "%NAME%"=="style"    %PY% tools\art\style_audit.py%REST% & goto done
-if /i "%NAME%"=="codex"    %PY% tools\art\codex_drift.py%REST% & goto done
+if /i "%NAME%"=="codex"    %PY% tools\art\audits\codex_drift.py%REST% & goto done
 if /i "%NAME%"=="all" goto all
 echo Unknown audit '%NAME%'.
 :usage
@@ -33,6 +33,6 @@ exit /b 1
 if errorlevel 1 goto done
 %PY% tools\art\negation_audit.py --no-sources --check
 if errorlevel 1 goto done
-%PY% tools\art\codex_drift.py --check
+%PY% tools\art\audits\codex_drift.py --check
 :done
 call "%HERE%_end.cmd" %errorlevel%

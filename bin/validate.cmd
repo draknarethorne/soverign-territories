@@ -43,6 +43,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\art\likeness_library\tests\test_metadata.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_people.py
 %PY% tools\art\test_people_gallery.py
 if errorlevel 1 (
@@ -104,12 +109,12 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\art\test_codex_drift.py
+%PY% tools\art\audits\tests\test_codex_drift.py
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% tools\art\codex_drift.py --check
+%PY% tools\art\audits\codex_drift.py --check
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

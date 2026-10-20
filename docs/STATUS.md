@@ -65,9 +65,9 @@ and Angel Prime workflows were regenerated, saved Angel Primes shots were
 preserved, and the accumulated work was committed in four topic groups and
 pushed to `origin/art/curation-and-workspaces` (tip `691169850`).
 
-The plan audit found 11 active plans and one proposed plan; after the
-user-approved likeness plan was added, 12 active plans and one proposed plan
-remain. No other plan was ready to archive. The current recap is
+The plan audit found 11 active plans and one proposed plan; the approved
+likeness-workflow and art-tools-structure plans bring the current count to 13
+active plans and one proposed plan. No other plan was ready to archive. The current recap is
 [Oct 20](recap/2026-10-20-0150-recap.md).
 The immediate user task is to finish the manual `0_Edit`/`1_Alpha` prompt set;
 do not update shared templates or regenerate their outputs until the user's
@@ -82,6 +82,18 @@ remain protected from automatic gallery moves. Implementation proceeds in
 tested, documented, committed increments; no matching thresholds change before
 action-specific validation. Broader art-authoring and ComfyUI execution UIs are
 future scope.
+
+Oct 20 tooling structure: the new likeness metadata module and tests are in
+`tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial
+inventory found 32 top-level art Python modules, 29 internal imports and 19
+launchers. The independent codex roster audit and its tests are now grouped
+under `tools/art/audits/`; both focused test suites are wired into the standard
+validation launcher and pre-commit. The connected likeness/library/gallery
+cluster will be reorganized one tested subsystem at a time rather than moved wholesale.
+Retirement is explicitly granular: retiring one unusable photo archives it
+under `_retired/photos/`; retiring a person uses the existing operation to
+return all photos to `Various`; `archive-list` remains a distinct whole-folder
+archive. Markdownlint's maximum line length is now 1,000 characters.
 
 ## Decisions made
 
@@ -415,7 +427,7 @@ and about 15 one-off pieces and cards ("no headwear", "no visible pupil", "witho
 - **Angelica and Angelo keep their look.** Her Prime still wears the iridescent pastel colour-blocked bikini (rose, sky blue, mint, lilac) and nothing in the colour work touched it. His trunks said "iridescent" too; they now say "softly pearlescent" so the sheen is lighter on a male (tune `angelic-pastel-trunks.json` if they look odd when rendered; no male Prime has been rendered yet). Their identity notes were rewritten (they said the colours followed the photo).
 - **Roster pages now match the data (Oct 9).** The pages in `docs/codex/heroes` had drifted from the JSON:
   the sisters' and bound men's palette and build text, the dragons' morphology, the pet column (the card's `companion` is the Elder Dragon's name), the dragon race, and the "prompt assembly" sections (the real prompt comes from the templates, bare feet are the A-pose default, the men wear a swim brief). All were brought into line, with the reason for each build written down (`drakn_sisters_physique.md` section 5, `drakn_bound_physique.md` section 5).
-  `python tools/art/codex_drift.py` (`bin\codex-drift.cmd`, run by `validate.cmd`) now compares the roster tables, the sister, bound, dragon and angel pages with the cards and identities, so a change in the JSON that is not carried into the page fails the check.
+  `bin\codex-drift.cmd` (run by `validate.cmd`) now compares the roster tables, the sister, bound, dragon and angel pages with the cards and identities, so a change in the JSON that is not carried into the page fails the check.
 - **FireRed refresh fixed.** `comfy_workflows.py make --engine firered` only refreshed the scene class, so the FireRed Alpha cards (1_Prime, Bare, Barefoot, Heels, 2b) and Finals stayed stale after every prompt change. It now refreshes every FireRed workflow that already exists (the class list only limits `--create`). 436 stale FireRed workflows were updated and 351 missing ones created under `workflows/.test/firered` (a local test engine, kept out of git).
 - **Open decisions** are listed under O5 to O11 in the table above.
 

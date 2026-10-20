@@ -11,6 +11,13 @@ productions get added. **New here? Start with the how-to:** [`docs/art/tutorial-
 Referenced from [`docs/art/comfyui-art-pipeline.md`](../../docs/art/comfyui-art-pipeline.md) and
 [`docs/art/prompt-pattern.md`](../../docs/art/prompt-pattern.md).
 
+The git-tracked [`likeness-library.json`](likeness-library.json) is operational
+photo-library metadata, not generated art direction. Its schema records
+stable person/photo references, trusted identity anchors, user-protected
+photos and auditable actions; ComfyUI source-photo selection remains in
+`workflows/workspaces.json`. Its code and focused tests live under
+`tools/art/likeness_library/`; `bin\validate.cmd` includes those tests.
+
 ---
 
 ## The two layers (this is the core idea — everything else is detail)

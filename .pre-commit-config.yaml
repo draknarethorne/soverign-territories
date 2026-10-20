@@ -70,3 +70,20 @@ repos:
         pass_filenames: false
         files: ^tools/generators/
         stages: [pre-commit, pre-push]
+
+      - id: likeness-metadata-tests
+        name: Likeness metadata tests
+        entry: python tools/art/likeness_library/tests/test_metadata.py
+        language: python
+        additional_dependencies: [jsonschema]
+        pass_filenames: false
+        files: ^(tools/art/likeness_library/|data/art/_schema/likeness-library\.schema\.json|data/art/likeness-library\.json)$
+        stages: [pre-commit, pre-push]
+
+      - id: codex-audit-tests
+        name: Codex roster audit tests
+        entry: python tools/art/audits/tests/test_codex_drift.py
+        language: python
+        pass_filenames: false
+        files: ^(tools/art/audits/|docs/codex/heroes/|data/cards/sovereign-dawn/|data/art/(heroes|dragons)/)
+        stages: [pre-commit, pre-push]

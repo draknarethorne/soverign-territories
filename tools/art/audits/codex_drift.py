@@ -1,7 +1,7 @@
 """Do the roster documents in docs/codex/heroes still match the data? The JSON wins, so a difference means the document needs updating.
 
-    python tools/art/codex_drift.py            the report
-    python tools/art/codex_drift.py --check    exit 1 on any drift (validate.cmd runs this)
+    python tools/art/audits/codex_drift.py            the report
+    python tools/art/audits/codex_drift.py --check    exit 1 on any drift (validate.cmd runs this)
 
 Checked:
   sovereign_dawn_codex.md        every SD-001..SD-030 row against its card (name, rarity, element, archetype, class, creature type, race, sex, companion)
@@ -17,7 +17,7 @@ import pathlib
 import re
 import sys
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[3]
 DOCS = ROOT / "docs/codex/heroes"
 ART = ROOT / "data/art"
 

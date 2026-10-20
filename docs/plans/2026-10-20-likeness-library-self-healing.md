@@ -25,9 +25,11 @@ without the preview, backup, and per-phase safety gates below.
 | Prospects | Build a guarded, self-healing audit. First flag likely outliers; automatic movement, if validated, goes to Review rather than directly to another identity. |
 | Potentials | Keep them matchable. Do not apply Prospect-strength cleanup to one-to-four-photo folders without a separately validated rule. |
 | Review and incoming photos | Reconcile both in the same maintenance run. A bounded follow-up audit may use new clusters to resolve remaining same-run candidates, so they do not require a second user-triggered run. |
+| Retirement | Distinguish retiring one unusable photo from retiring an entire person. Photo retirement is a recoverable archive that does not re-enter matching; person retirement uses the existing command to return that person's photos to `Various` for normal reprocessing. Whole-folder archival remains a separately labeled operation. |
 | User interface | Keep the current People Gallery as a concise overview. Add a focused local review/maintenance gallery for large folders, photo scores, Review images and staged actions. The browser stages actions; a CLI validates and applies them. |
 | Metadata | Use machine-readable JSON tied to stable photo identity, not filename grades. Preserve an audit trail and keep user decisions distinct from inferred scores. |
 | Tooling structure | Improve the workflow incrementally. Split likeness responsibilities into testable modules and simplify user-facing commands over time; do not combine this with a risky all-at-once rewrite. |
+| Python package layout | Move related, low-risk modules and tests into domain packages as work proceeds; keep `bin/*.cmd` stable and audit direct references before moves. Broader `tools/art/` organization has its own [incremental plan](2026-10-20-art-tools-structure.md). |
 
 ## Proposed metadata model
 
@@ -65,6 +67,14 @@ this plan does not migrate or replace it.
   new incoming material. Do not give its former folder priority, while still
   allowing a normal whole-library match to find that folder if the evidence
   independently supports it.
+- **Photo retirement:** a user decision that a photo is unusable. Archive it
+  recoverably under a photo-specific `_retired` subtree, remove it from active
+  identity evidence and exclude it from matching. It is not Review,
+  Reject-to-Various, or deletion.
+- **Person retirement:** use the existing `likeness retire` operation to send
+  the person's photos to `Various` for normal reprocessing. Label the
+  destination in the preview. Keep `archive-list` whole-folder archival
+  distinct; it must not be presented as the same action.
 - **Observed match and score:** a generated suggestion, never user-authored
   identity truth.
 - **Action history:** what was proposed, approved, applied, reversed, by which
@@ -82,6 +92,14 @@ The current tools recognize several source IDs and cache face data by content;
 neither fact alone proves that every transformation can be joined safely.
 Reject ambiguous IDs and stale manifests rather than guessing. Record hashes
 and aliases as needed, and test restoration and duplicate cases.
+
+The initial helper generates opaque UUID-based person IDs and photo IDs from
+`comfy_workflows.photo_key()` on originals-managed filenames. `originals.py`
+preserves the embedded source ID when folder prefixes change, and the crop
+command replaces a photo under the same name while archiving its uncropped
+bytes. Thus a crop retains the filename-derived ID but changes the content
+hash; metadata refresh and restore behavior still need explicit tests. Duplicate
+and backup-restore continuity are not yet proven, so A4 remains open.
 
 ## Matching and self-healing policy
 
@@ -204,8 +222,9 @@ and apply. The supported actions should be explicit and separate, such as:
 - approve a Review photo back to its person;
 - request reprocessing through the combined Review/Various planner;
 - accept or reject a proposed match or cluster.
-- later, retire a Potential or Prospect through the existing recoverable CLI
-  operation; keep this out of the first Review/Reject delivery.
+- later, retire one unusable photo to the photo archive, or retire a Potential
+  or Prospect through the existing CLI operation that returns its photos to
+  `Various`. Keep retirement out of the first Review/Reject delivery.
 
 The manifest should use stable photo IDs, expected content hashes, current
 source locations, destination intent, actor/reason and schema version. The CLI
@@ -259,9 +278,11 @@ work begins. Do not leave a broken or half-migrated state between increments.
 
 ### Phase B — metadata and read-only audit
 
-- [ ] **P1 ai** B1 Add and validate
+- [x] **P1 ai** B1 Add and validate
   `data/art/_schema/likeness-library.schema.json` and the versioned
-  `data/art/likeness-library.json` catalogue.
+  `data/art/likeness-library.json` catalogue. Register the catalogue with the
+  data validator and cover schema, format and referential checks with focused
+  tests.
 - [ ] **P1 ai** B2 Add library metadata read/write helpers with atomic writes,
   explicit errors, and no edits to `workspaces.json` or `z_` history for
   identity/protection choices.
@@ -337,18 +358,19 @@ same-run clusters can resolve candidates without order-dependent cascades.
 **Exit:** action-specific safety targets pass; rollback and “why moved” records
 are verified on real, backed-up batches before enabling routine use.
 
-### Phase G — add person retirement to the review interface
+### Phase G — add photo and person retirement to the review interface
 
-- [ ] **P2 ai** G1 After Review/Reject workflows are working, expose the
-  existing recoverable Prospect/Potential retirement operation in the review
-  gallery through an explicit manifest action.
-- [ ] **P2 ai** G2 Show the destination and consequences in preview; do not
-  conflate person retirement with rejecting one photo.
-- [ ] **P2 ai** G3 Test cancel, stale-manifest rejection, backup, apply and
-  undo against temporary libraries.
+- [ ] **P2 ai** G1 After Review/Reject workflows are working, expose
+  photo-level retirement of unusable images and whole-person retirement of
+  Potentials/Prospects through explicit, distinct manifest actions.
+- [ ] **P2 ai** G2 Show each operation's destination and consequences in
+  preview. Keep photo retirement, person retirement, Review, Reject-to-Various
+  and whole-folder archival distinct.
+- [ ] **P2 ai** G3 Test cancel, stale-manifest rejection, backup, apply,
+  restore and undo for both retirement scopes against temporary libraries.
 
-**Exit:** the gallery can stage person retirement without implementing file
-movement in the browser or changing the existing CLI semantics.
+**Exit:** the gallery can stage both retirement scopes without implementing
+file movement in the browser or silently changing existing CLI semantics.
 
 ### Phase H — integrate, modularize and document
 
@@ -407,9 +429,9 @@ changed and covered by tests.
   combined reprocessing workflow. Its requirement for a recoverable,
   previewable individual-photo exclusion is retained in Phases C–E.
 - D11's archive-first handling of a false whole-person folder remains open in
-  the tooling-debt plan. The later UI retirement action in Phase G uses the
-  existing recoverable `likeness retire` behavior; it is not whole-folder
-  archival or deletion.
+  the tooling-debt plan. Phase G keeps person retirement's existing
+  `likeness retire` behavior separate from `archive-list` archival and
+  photo-level retirement; none of these operations deletes files.
 - The manual edit-prompt plan remains independent and active.
 - The Oct 19 library plan's manual Sophie pullback/reprocessing steps are
   superseded by this plan's review workflow; its unrelated Junk, gallery,
@@ -417,6 +439,10 @@ changed and covered by tests.
   ready to archive.
 - Keep the proposed CLI-consolidation plan separate. Preserve current command
   entry points until any new workflow is tested and migration is verified.
+- Organize Python files under `tools/art/` incrementally under the
+  [art-tools structure plan](2026-10-20-art-tools-structure.md). The metadata
+  foundation is in `tools/art/likeness_library/`; the directory name avoids
+  shadowing the existing `likeness.py` module.
 - The separate review gallery and local manifest are the chosen initial
   interface. Broader art-authoring and ComfyUI batch execution remain future
   UI work, outside this plan.
@@ -430,8 +456,9 @@ changed and covered by tests.
 | D3 | Sending an image to Review or Reject-to-Various removes it from its former person's active identity evidence. Review compares it against all people, including its former person. Reject follows the regular incoming pool path without a special preference for the former folder. |
 | D4 | Permit a bounded, deterministic same-run follow-up using provisional clusters to resolve eligible candidates. Do not mutate existing identity cores mid-run, reassign candidates repeatedly, or loop without a convergence condition. |
 | D5 | Keep current person-local Review folders and aggregate them in a separate, efficient review gallery. Do not move the physical Review tree unless later evidence requires it. |
-| D6 | Build GUI retirement after Review/Reject works; use the existing recoverable CLI operation and keep it distinct from retiring an individual photo. |
+| D6 | Add photo- and person-level retirement to the GUI after Review/Reject works. Photo retirement archives one unusable image recoverably and excludes it from matching. Person retirement uses the existing CLI behavior and returns that person's photos to `Various` for reprocessing. Keep both distinct from Review, Reject-to-Various and whole-folder archival. |
 | D7 | Implement and commit validated increments. Keep larger art-authoring and ComfyUI execution UI as future scope, while preserving integration paths. |
+| D8 | Keep the photo archive in a separate `_retired/photos/` subtree; preview the path, preserve content and history, and support restore. Treat `archive-list` as a separately named whole-folder archive operation. |
 
 ## Raw user feedback
 
@@ -466,3 +493,5 @@ Right now - it's all based on doing work in VS Code to manage the .json and I ha
 That said - I agree with the plan as per my comments above.  You can move it to an official plan, archive and update other existing ones and let's get started on the foundational pieces and implement them automatically.
 I give you full permission to keep going, make decisions and only stop if you are truly blocked and you must get an answer from me.  OR require me to use the GUI - when you get there.
 We'll need all documentation, tests and commits as you go so it's not one huge piece of work.  As you build, test and document pieces - we can commit as long as things are working and you move onto the next chunk of work.  That way it won't be as huge of deal in the end.  Make sense?  If so, then get rolling!
+
+When it comes to Retire - I want to be able to Retire either an individual picture for a person or the entire person - so that can be in the plan and a decision as well.  I'm reading our docs and watching you work, so that's the iterative feedback loop we've got going.  Keep on working as I love what you are doing so far and the speed at which you're working.

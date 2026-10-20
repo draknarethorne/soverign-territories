@@ -1,7 +1,11 @@
+import pathlib
+import sys
 import unittest
 from unittest import mock
 
-import codex_drift as cd
+ROOT = pathlib.Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT))
+from tools.art.audits import codex_drift as cd  # noqa: E402
 
 
 def altered(name, old, new):

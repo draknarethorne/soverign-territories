@@ -26,6 +26,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools" / "
 import art_layout  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools/art"))
+import likeness_library.metadata as likeness_metadata  # noqa: E402
+
 SCHEMAS = ROOT / "data/schemas"
 ART_SCHEMAS = ROOT / "data/art/_schema"
 
@@ -69,6 +72,8 @@ def art_piece_files():
     out = []
     for p in rglob("data/art/**/*.json"):
         parts = p.relative_to(ROOT / "data/art").parts
+        if parts == ("likeness-library.json",):
+            continue  # operational identity metadata, validated with its own schema below
         if parts[0] in ("_schema", "_sets", "_kits", "_settings"):
             continue
         if parts[0] == "heroes" and (len(parts) == 3 or (len(parts) == 4 and parts[2] in art_layout.divisions(parts[1]))):
@@ -106,6 +111,7 @@ REGISTRY = [
     ("art themes", lambda: rglob("data/art/themes/**/theme.json"), ART_SCHEMAS / "theme.schema.json"),
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
     ("art finals records", lambda: rglob("data/art/finals/*.json"), ART_SCHEMAS / "finals-record.schema.json"),
+    ("likeness library metadata", lambda: [ROOT / "data/art/likeness-library.json"], ART_SCHEMAS / "likeness-library.schema.json"),
 ]
 
 # Known, tracked debt: files with no schema that actually fits them yet.
@@ -156,6 +162,21 @@ def check_instances(report, counts):
             for err in sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path)):
                 loc = "/".join(str(x) for x in err.absolute_path) or "<root>"
                 report.error(rel(f), f"[{schema_path.name}] {loc}: {err.message[:160]}")
+
+
+def check_likeness_library_references(report):
+    """Validate references between stable person, photo, and action records."""
+    path = ROOT / "data/art/likeness-library.json"
+    try:
+        data = load(path)
+    except (OSError, ValueError):
+        return  # The JSON/schema error is reported by check_instances.
+    schema_path = ART_SCHEMAS / "likeness-library.schema.json"
+    schema = load(schema_path)
+    if not Draft7Validator(schema).is_valid(data):
+        return  # The schema error is reported by check_instances.
+    for error in likeness_metadata.validation_errors(data):
+        report.error(rel(path), error)
 
 
 def check_card_art_links(report):
@@ -628,6 +649,7 @@ def main():
     counts = {}
     check_schemas_valid(report)
     check_instances(report, counts)
+    check_likeness_library_references(report)
     cards, identity_of = check_card_art_links(report)
     check_art_cards(report)
     check_variants(report, cards)
