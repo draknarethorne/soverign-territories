@@ -84,8 +84,10 @@ action-specific validation. Broader art-authoring and ComfyUI execution UIs are
 future scope.
 
 The catalogue foundation now has strict schema/reference validation plus
-atomic read/write helpers. It remains empty and does not change current
-matching behavior; saving it cannot target `workspaces.json` or `z_` history.
+atomic read/write helpers. A read-only `likeness audit-core` command reports
+trusted/provisional cores, score order and Prospect outlier candidates; it
+does not move images and may update only the existing embedding cache. The
+catalogue remains empty, so current matching behavior is unchanged.
 
 Oct 20 tooling structure: the new likeness metadata module and tests are in
 `tools/art/likeness_library/`, wired into `bin\validate.cmd`. The initial

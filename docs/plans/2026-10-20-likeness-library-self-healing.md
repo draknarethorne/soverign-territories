@@ -288,8 +288,10 @@ work begins. Do not leave a broken or half-migrated state between increments.
   identity/protection choices. The writer targets only the catalogue; tests
   cover round-trip, validation failure, failed replacement and untouched
   workspace/history files.
-- [ ] **P1 ai** B3 Generate a read-only trusted/provisional core, photo score
-  ordering, outlier suggestions and human-readable reasons.
+- [x] **P1 ai** B3 Generate a read-only trusted/provisional core, photo score
+  ordering, outlier suggestions and human-readable reasons with
+  `likeness audit-core`. The command never moves images; it can update the
+  existing embedding cache.
 - [ ] **P1 ai** B4 Add tests for changed folders, duplicate/ambiguous IDs,
   cropped files, anchors, protected-only photos, small folders, stale metadata
   and conflicting destinations.

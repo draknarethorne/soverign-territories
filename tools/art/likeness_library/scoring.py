@@ -1,0 +1,22 @@
+"""Shared vector scoring for the likeness library."""
+import numpy as np
+
+
+def nz(a):
+    n = np.linalg.norm(a, axis=-1, keepdims=True)
+    return a / np.where(n == 0, 1, n)
+
+
+def core_scores(vecs, seed=None, first=0.2, thr=0.3, rounds=3):
+    """Score each vector against a refined core, leaving it out of its own score."""
+    vecs = np.asarray(vecs)
+    c = nz(seed) if seed is not None else nz(vecs.mean(0))
+    core = list(range(len(vecs)))
+    for r in range(rounds):
+        sc = vecs @ c
+        core = [i for i, s in enumerate(sc) if s >= (first if seed is not None and r == 0 else thr)] or core
+        c = nz(vecs[core].mean(0))
+    total = vecs[core].sum(0)
+    inside = set(core)
+    scores = [float(v @ nz(total - v if i in inside and len(core) > 1 else total)) for i, v in enumerate(vecs)]
+    return scores, core, c

@@ -72,10 +72,10 @@ repos:
         stages: [pre-commit, pre-push]
 
       - id: likeness-metadata-tests
-        name: Likeness metadata tests
-        entry: python tools/art/likeness_library/tests/test_metadata.py
+        name: Likeness library tests
+        entry: python -m unittest discover -s tools/art/likeness_library/tests -p test_*.py
         language: python
-        additional_dependencies: [jsonschema]
+        additional_dependencies: [jsonschema, numpy]
         pass_filenames: false
         files: ^(tools/art/likeness_library/|data/art/_schema/likeness-library\.schema\.json|data/art/likeness-library\.json)$
         stages: [pre-commit, pre-push]

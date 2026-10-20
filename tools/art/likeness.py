@@ -20,6 +20,7 @@ Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, ma
   likeness rebaseline --apply-categories  move only threshold-driven Prospect/Potential folders (back up first)
   likeness scan                       read every photo once (cached); lists photos with no usable face
   likeness calibrate                  how reliable the scores are on YOUR library (the thresholds in effect)
+  likeness audit-core [NAMES]         read-only core and low-score report, with tracked anchors/protection applied
   likeness alike                      pairs of people who look alike (angel against angel, angel against sister ...), most alike first
   likeness compare Angelica azaline   how alike two folders are, and the photos that match best
   likeness folder Drakness            the photos that look like a different person from the rest of the folder
@@ -65,6 +66,9 @@ import originals  # noqa: E402
 import screens  # noqa: E402
 import people  # noqa: E402
 import library_backup  # noqa: E402
+from likeness_library import metadata  # noqa: E402
+from likeness_library.audit import audit_person  # noqa: E402
+from likeness_library.scoring import core_scores, nz  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
 MODEL_URLS = {
@@ -307,11 +311,6 @@ def read_library(cfg, work, cache, embed, st, progress=True, with_mixed=False):
 
 
 # ---------- the space ----------
-
-def nz(a):
-    n = np.linalg.norm(a, axis=-1, keepdims=True)
-    return a / np.where(n == 0, 1, n)
-
 
 class Space:
     """Centred identity vectors for the person folders: centroids per folder, scores of a photo against them."""
@@ -563,6 +562,136 @@ def cmd_scan(args):
     for p in bad:
         why = "no face found" if p.faces == 0 else "unreadable" if p.faces < 0 else f"face too small ({p.px}px)"
         print(f"  not usable: {p.key}/{p.name}  ({why})")
+
+
+def cmd_audit_core(args):
+    cfg, st, work, cache, space = build(args)
+    catalog = metadata.load_catalog()
+    id_counts = collections.Counter(
+        photo_id for photo_id in (metadata.photo_id_from_name(p.name) for p in space.photos) if photo_id
+    )
+    people_by_folder = collections.defaultdict(list)
+    for person_id, person in catalog["people"].items():
+        people_by_folder[person["folder"]].append((person_id, person))
+    ambiguous_ids = {photo_id for photo_id, count in id_counts.items() if count > 1}
+    protected_ids, stale_ids = set(), set()
+    for photo in space.photos:
+        photo_id = metadata.photo_id_from_name(photo.name)
+        if not photo_id or photo_id not in catalog["photos"] or photo_id in ambiguous_ids:
+            continue
+        photo_record = catalog["photos"][photo_id]
+        if metadata.content_sha256(photo.path) != photo_record["contentSha256"]:
+            stale_ids.add(photo_id)
+        elif photo_record["protected"]:
+            protected_ids.add(photo_id)
+
+    names = {name.lower() for name in (args.names or [])}
+    person_keys = sorted({photo.key for photo in space.photos if not matches(photo.key, st["mixed"])})
+    keys = [
+        key for key in person_keys
+        if (not names or key.split("/")[-1].lower() in names)
+        and (not args.group or key.split("/", 1)[0].lower() == args.group.lower())
+    ]
+    print(
+        f"Read-only identity-core audit: {len(keys)} folder(s); "
+        f"current low-score threshold {st['odd']:.2f}, keep threshold {args.keep:.2f}"
+    )
+    print("No images are moved. The embedding cache may be updated during the scan.")
+    if not names and not args.group:
+        active_folders = set(person_keys)
+        for person in catalog["people"].values():
+            if person["folder"] not in active_folders:
+                print(
+                    f"Catalogue folder not found: {person['displayName']} -> {person['folder']}; "
+                    "identity decisions are not applied"
+                )
+    for key in keys:
+        folder_photos = [p for p in space.photos if p.key == key]
+        usable = [p for p in folder_photos if p.usable(st["minFace"])]
+        records = people_by_folder.get(key, [])
+        folder_conflict = len(records) > 1
+        person = records[0][1] if len(records) == 1 else None
+        anchor_ids = set(person["identityAnchors"]) if person else set()
+        usable_ids = {metadata.photo_id_from_name(photo.name) for photo in usable}
+        effective_anchors = (anchor_ids & usable_ids) - stale_ids - ambiguous_ids
+
+        if folder_conflict:
+            print(f"\n{key}: catalogue conflict ({len(records)} people records); anchor decisions ignored")
+        else:
+            mode = "trusted anchors" if effective_anchors else "provisional"
+            print(f"\n{key}: {len(folder_photos)} photo(s), {len(usable)} usable; {mode} core")
+        if not records:
+            print("  no catalogue person record; this is a provisional audit")
+
+        photo_ids = [metadata.photo_id_from_name(photo.name) for photo in usable]
+        result = audit_person(
+            np.array([photo.vec for photo in usable]),
+            photo_ids,
+            anchor_ids=anchor_ids if not folder_conflict else (),
+            protected_ids=protected_ids,
+            stale_ids=stale_ids,
+            ambiguous_ids=ambiguous_ids,
+        )
+        present_ids = {metadata.photo_id_from_name(photo.name) for photo in folder_photos}
+        missing_anchors = sorted(anchor_ids - present_ids)
+        if missing_anchors:
+            print(f"  catalogue anchors not found in this folder: {', '.join(missing_anchors)}")
+        unusable_anchors = sorted((anchor_ids & present_ids) - set(photo_ids))
+        if unusable_anchors:
+            print(f"  catalogue anchors not usable for scoring: {', '.join(unusable_anchors)}")
+        if result["mode"] == "none":
+            print("  no eligible core; add usable photos or resolve stale/ambiguous metadata")
+        else:
+            kind = "trusted" if result["mode"] == "trusted" else "provisional"
+            core_names = [usable[i].name for i in result["core_indices"]]
+            print(
+                f"  {kind} core: {len(core_names)} photo(s)"
+                + ("" if result["sufficient"] else " (below the 3-photo audit minimum)")
+            )
+            if core_names:
+                print("  core members: " + ", ".join(core_names))
+
+        core_indices = set(result["core_indices"])
+        score_by_photo = {id(photo): result["scores"][i] for i, photo in enumerate(usable)}
+        index_by_photo = {id(photo): i for i, photo in enumerate(usable)}
+
+        def photo_row(photo):
+            photo_id = metadata.photo_id_from_name(photo.name)
+            score = score_by_photo.get(id(photo))
+            index = index_by_photo.get(id(photo))
+            if photo_id in stale_ids:
+                reason = "stale metadata; anchor/protection ignored"
+            elif photo_id in ambiguous_ids:
+                reason = "duplicate stable photo ID; excluded from core and catalogue decisions"
+            elif photo_id in anchor_ids and index is None:
+                reason = "anchor file not usable for scoring"
+            elif index is not None and index in result["anchor_indices"]:
+                reason = "trusted identity anchor"
+            elif photo_id in protected_ids:
+                reason = "protected-only; excluded from core"
+            elif not photo.usable(st["minFace"]):
+                reason = "not usable for face scoring"
+            elif score is None:
+                reason = "no independent core score"
+            elif not result["sufficient"]:
+                reason = "small core; score only, no outlier suggestion"
+            elif key.startswith("Prospects/") and score < st["odd"]:
+                reason = "possible Prospect outlier; report only"
+            elif key.startswith("Prospects/") and score < args.keep:
+                reason = "borderline Prospect; inspect only"
+            elif score < st["odd"]:
+                reason = "low score; inspect only, no automatic move"
+            elif index in core_indices:
+                reason = "provisional core member"
+            else:
+                reason = "consistent with core"
+            return score, photo.name, reason
+
+        ordered = sorted((photo_row(photo) for photo in folder_photos),
+                         key=lambda row: (row[0] is None, row[0] if row[0] is not None else 0, row[1].casefold()))
+        for rank, (score, name, reason) in enumerate(ordered, 1):
+            score_text = "--" if score is None else f"{score:.2f}"
+            print(f"  {rank:3}. {score_text:>5}  {name}  [{reason}]")
 
 
 def cmd_calibrate(args):
@@ -1073,22 +1202,6 @@ PAIRS = {"Seraphine": "Drakniss", "Ravaelle": "Draknisa", "Haniya": "Drakniya", 
          "Remiah": "Drakneta", "Azaline": "Draknira", "Camaris": "Draknora", "Sammara": "Draknoxa", "Nyxene": "Drakness"}
 FIXED_ANGELS = ["Angelica"]
 SAME_LOOK = 0.35  # a render and a photo of the same person score at least this
-
-
-def core_scores(vecs, seed=None, first=0.2, thr=0.3, rounds=3):
-    """(scores, core indices, core centroid): each row of vecs scored against the centroid of the rows that belong together (a photo is left out of its own centroid).
-    The core starts from seed (a chosen photo, say) or the folder's average and is refined a few times, so a few photos of other people cannot drag it away."""
-    vecs = np.asarray(vecs)
-    c = nz(seed) if seed is not None else nz(vecs.mean(0))
-    core = list(range(len(vecs)))
-    for r in range(rounds):
-        sc = vecs @ c
-        core = [i for i, s in enumerate(sc) if s >= (first if seed is not None and r == 0 else thr)] or core
-        c = nz(vecs[core].mean(0))
-    total = vecs[core].sum(0)
-    inside = set(core)
-    scores = [float(v @ nz(total - v if i in inside and len(core) > 1 else total)) for i, v in enumerate(vecs)]
-    return scores, core, c
 
 
 class Renders:
@@ -3036,6 +3149,10 @@ def main(argv=None, embedder=None):
         return s
 
     add("scan", cmd_scan)
+    s = add("audit-core", cmd_audit_core)
+    s.add_argument("names", nargs="*", help="folders to audit (default: all person folders)")
+    s.add_argument("--group", help="only folders under this group, such as Prospects or Angels")
+    s.add_argument("--keep", type=float, default=0.25, help="score below which a Prospect is marked borderline (default: 0.25)")
     add("calibrate", cmd_calibrate)
     add("alike", cmd_alike, sheet=True).add_argument("--min", type=float, help="show pairs at or above this score (default: settings alike)")
     add("compare", cmd_compare, "a", "b", sheet=True)
