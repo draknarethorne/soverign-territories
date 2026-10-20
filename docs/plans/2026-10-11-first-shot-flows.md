@@ -2,7 +2,7 @@
 
 Status: active, Oct 11, 2026 (the clean-up is done; the first-shot experiments are built and waiting for your tests)
 
-Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, frame gaps, pose-first Prime). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
+Source: your messages of Oct 11, copied word for word at the end. Continued on Oct 12 in [2026-10-12-prime-prompts-frames-and-inputs.md](2026-10-12-prime-prompts-frames-and-inputs.md) (seeds, inputs, initial frame gaps, pose-first Prime; the frame flow was retired Oct 19). Earlier steps of the same thread: [2026-10-11-tidy-junk-organise.md](2026-10-11-tidy-junk-organise.md) (Phase 4), [../art/prime-flows.md](../art/prime-flows.md), [../art/original-photos.md](../art/original-photos.md).
 
 ## Why we are doing this
 
@@ -27,14 +27,14 @@ The reasoning is also written in [../art/tutorial-art.md](../art/tutorial-art.md
 | F1 | Which shot first? | Test three paths on the same heroes: P1 the swimsuit Prime (today, the baseline), P2 a neutral skin-tone base layer, P3 the bare figure directly. You think P3 is likely best because the bare body is what clothing contours to. |
 | F2 | Where does the build come from? | The art data (`physique` in the hero `.json`), never the original. P2 uses the slender standard figure like the Prime, then Bare imposes her own build; P3 states her own build at once. |
 | F3 | Where do P2 and P3 live? | Beside `1_Prime`, in `1_Alpha/1b_Experiments/<family>/`, the same convention as `2b_Experiments/celestial`: card (`_sets`), prompt, workflow and output all use that folder. A winner is promoted to `1_Prime` (`git mv`), the others are removed. Templates: `_templates/heroes/1_Alpha/experiments/`. |
-| F4 | Engines | Both Qwen and FireRed get every experiment workflow, and each also has a Frame variant (the frame flow). FireRed gets the identity lock in front of the prompt. |
+| F4 | Engines | Both Qwen and FireRed get every experiment workflow. The initially built Frame variants were retired by decision on Oct 19; FireRed keeps the identity lock in front of the prompt. |
 | F5 | The face from a second image (P4) | Not built: it needs a second image wired into the workflows and the model may blend badly. Decide after P2 and P3. |
 | F6 | The bare-chest study and the covering experiments (pasties, contoured, paint) | Dropped (they bled into the wardrobe and swimwear shots). The celestial experiments stay: they become body armor in the wardrobe. |
-| F7 | Heroes without a full-body original | Decide after testing: use the frame (head and shoulders shrunk to figure size), re-pick a prospect with a full-body photo, or settle on the path that works with what exists. This means prospects should be marked by whether they have a body shot or only faces (not built yet). |
+| F7 | Heroes without a full-body original | Do not use frames (decision Oct 19). Use the chosen photo as-is or re-pick a full-body source based on the prompt results. A chest crop is only a possible future experiment; it is not implemented. |
 
 ## How a path is run
 
-All three paths take the same incoming image (the hero's photo, or its frame in the Frame flow).
+All three paths take the same selected source photo for the hero.
 
 | Path | First workflow | Then |
 | --- | --- | --- |
@@ -42,7 +42,7 @@ All three paths take the same incoming image (the hero's photo, or its frame in 
 | P2 | `Hero_Qwen_Alpha_1b_NeutralBase` (skin-tone base layer, slender standard figure) | choose the image, `inputs set HERO --prime IMAGE`, then `Alpha_2_Bare_Figure` as usual |
 | P3 | `Hero_Qwen_Alpha_1b_BareBase` (bare figure, her own build) | choose the image, `inputs set HERO --bare IMAGE --prime IMAGE`: it is the Bare figure, so Footwear, Layers and the rest read it. The Bare Figure step is not needed |
 
-Each has a FireRed twin (`..._FireRed_...`) and a Frame twin (`..._Frame`). Compare the results with `bin\compare-primes.cmd` (face score against the photo) and by eye: the body is full length, the build matches the art data, no strap lines or colour cast, how often a rerun lands.
+Each had a FireRed twin (`..._FireRed_...`) at initial build. The Frame twins were archived when the flow was retired on Oct 19. Compare active results with `bin\compare-primes.cmd` (face score against the photo) and by eye: the body is full length, the build matches the art data, no strap lines or colour cast, how often a rerun lands.
 
 ## Steps
 
@@ -56,7 +56,7 @@ Each has a FireRed twin (`..._FireRed_...`) and a Frame twin (`..._Frame`). Comp
 - [x] E1 Layout: `1_Alpha/1b_Experiments/<family>` in `art_layout.py` (families `bare-base`, `neutral-base`), role `alpha/base` = photo (`workspaces.json`).
 - [x] E2 Templates `base-bare-human.txt` and `base-neutral-human.txt` in `_templates/heroes/1_Alpha/experiments/`, with their Critical-details defaults.
 - [x] E3 `tools/generators/scaffold_first_shots.py`: a card of each kind next to every female hero's Prime card (44 cards).
-- [x] E4 Prompts, then 160 workflows (Qwen and FireRed, normal and Frame) built (`comfy_workflows.takes_photo`) and deployed to Angel Primes and Drakn Sisters. `prime_compare --shots` covers them.
+- [x] E4 Prompts, then 160 workflows (Qwen and FireRed, normal and Frame) built (`comfy_workflows.takes_photo`) and deployed to Angel Primes and Drakn Sisters. `prime_compare --shots` covers them. The Frame variants were archived on Oct 19; only normal and P2/P3 experiment paths remain active.
 - [x] E5 Tests (`FirstShotTests`, `prime_compare`, validator mutation tests); the template README and the guide.
 - [x] E8 Template wording audit: the positive prompts of the Bare, Head and Polish templates and the pieces `bare-skin-study(-male)` and `skin-tone-base-layer` now state what is shown, not what is missing. The rest is listed in `docs/STATUS.md`.
 - [x] E9 The leftover 3_Layers covering cards (`*-x-pose-bareskin*`: adhesive covers, contoured, paint, paint-colour; 84 cards, 84 prompts, 84 workflows, 88 workspace copies moved to backup) and their four pieces were the same experiments as C1 and are removed.
@@ -64,9 +64,9 @@ Each has a FireRed twin (`..._FireRed_...`) and a Frame twin (`..._Frame`). Comp
   Templates fixed (inner KSampler/RandomNoise value and the named copy); `make` and `deploy` now set randomize on every generated workflow without a final record (1,585 FireRed + 102 MiniMax repo workflows, 1,500+ workspace copies).
   The ST templates in the workspaces were replaced from the repo masters (backed up); a test fails if a template ships fixed. Finals, shots, curated and candidates are untouched.
 - [x] E11 Missing input images (Oct 12): a workflow loads its image from its own workspace's input folder, and only `inputs reset` copied images there, so the Frame images (and the experiment photos) were missing from most of them.
-  New `bin\sync-inputs.cmd` (it already existed; I first wrote a duplicate `inputs sync`, removed the same day) copies what deployed workflows load without retargeting anything; `refresh` and `refresh-firered` run it. All 18 frame images are now in their workspaces' input folders.
+  `bin\sync-inputs.cmd` copies what deployed workflows load without retargeting anything; `refresh` and `refresh-firered` run it. The Prime Frame images and variants were archived on Oct 19; sync-inputs continues to serve active workflows.
 - [x] E12 `Female` (alpha/female): its photo had been moved out of the Fantasy artist folder (it is Sandalyn's review photo). Restored as `Various/gallery/various_image_7500732784539999043.jpg` and pointed to it; the Female first-shot workflows load it.
-- [ ] **P1 you** E13 Open: 7 angels' chosen Prime renders (Camaris 00007, Gavrielle 00007, Nyxene 00019, Ravaelle 00005, Remiah 00005, Sammara 00009, Sandalyn 00006) are loaded by workflows in Angel Primes but are in no input or output folder; `inputs status` lists them as `mixed`. Re-render or re-pick them.
+E13's seven possibly missing chosen Prime renders are consolidated into T5 of the Oct 12 Prime plan; verify the current input state there rather than relying on this historical list.
 - [ ] **P1 you** E6 Your tests (alpha/female, Angelica, Drakness first; then the other sisters and angels). Decision F1 and F7.
 - [ ] **P1 ai** E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial.
 

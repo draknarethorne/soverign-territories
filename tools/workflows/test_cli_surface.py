@@ -83,6 +83,15 @@ class SimplerOptionsTests(unittest.TestCase):
         cw.normalise(a)
         self.assertFalse(a.shots or a.templates or a.only_finals)
 
+    def test_pull_only_shots_does_not_pull_candidates_or_finals(self):
+        with World() as w, mock.patch.object(cw, "finals_pull") as pull_finals:
+            w.put("A-Home", "zz_Shots/Alice/1_Alpha/Alice_Qwen_Alpha_1_Prime.json", {"nodes": [], "id": "shot"})
+            w.put("A-Home", "zz_Candidates/set-a/Alice/Alice_Qwen_Alpha_1_Prime_00004_.json", {"nodes": [], "id": "candidate"})
+            out, _ = w.run("pull", "-w", "A-Home", "--only", "shots", "--dry-run")
+            pull_finals.assert_not_called()
+            self.assertIn("zz_Shots/Alice/1_Alpha/Alice_Qwen_Alpha_1_Prime.json", out)
+            self.assertNotIn("zz_Candidates", out)
+
 
 class StatusShowsFinalsTests(unittest.TestCase):
     def test_status_lists_candidates_and_finals_by_default(self):

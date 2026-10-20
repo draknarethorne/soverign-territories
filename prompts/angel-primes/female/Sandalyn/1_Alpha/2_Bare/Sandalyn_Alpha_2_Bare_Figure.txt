@@ -4,9 +4,9 @@ Incoming image: the Prime A-pose of Sandalyn Stonehaven. This pass removes cloth
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image so the subject appears exactly as described in the Result.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
-Result: she is wearing natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm medium-brown complexion with a golden undertone, evenly toned and glowing), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
+Result: she is wearing nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm medium-brown complexion with a golden undertone, evenly toned and glowing), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible
 
 Critical details - these must be clearly visible:
 Hair: deep chestnut-brown hair with soft copper lights, thick and glossy.

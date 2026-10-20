@@ -4,7 +4,7 @@ Incoming image: a real/AI source photo of the subject (the full photo, a frame, 
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
+Remove the source outfit and build the full figure from the reference image in the bare-skin result described below.
 
 Critical details - these must be clearly visible:
 Hair: honey-blonde hair with rich chestnut-brown lowlights, hand-painted soft moss-gold balayage sweeps framing the lengths, softly blended from the mid-lengths down, with deeper lowlights beneath for natural dimension.
@@ -30,7 +30,7 @@ Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides,
 
 Body: shape the figure to this individual build, whatever the reference shows: lithe, wiry athletic build; low-fat runner physique with wood-elven agility; tight, lithe midriff with faint oblique fluting and subtle vertical definition; slender waist tapering cleanly into the hips; slender, lightly defined arms; subtle deltoid contours and lithe forearms; shapely feminine hips, gently curved, with an athletic pelvis; very long, lean athletic legs; subtly toned quadriceps and elongated calves.
 
-Wearing: natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm sun-kissed golden-olive tan complexion, evenly tanned), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible.
+Wearing: nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (warm sun-kissed golden-olive tan complexion, evenly tanned), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible.
 
 Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
 

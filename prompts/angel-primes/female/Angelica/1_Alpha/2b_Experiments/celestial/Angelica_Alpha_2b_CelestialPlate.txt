@@ -1,12 +1,13 @@
-=== Angelica Prime · Alpha 2 Bare: Bare edit: celestial plate armor (group: Alpha, edit step on the Prime A-pose) — Edit (img2img) ===
-Incoming image: the Prime A-pose of Angelica Prime. This pass removes clothing, applies her individual build and sets her likeness (hair, eyes, skin, bust) for every later stage. Feed the result to Barefoot, Heels and the armor and showcase stages. Denoise ~0.8-0.9.
+=== Angelica Prime · Alpha 2b Celestial Experiment: Bare edit: celestial plate armor (group: Alpha, edit from the Prime A-pose) — Edit (img2img) ===
+Incoming image: the Prime A-pose of Angelica Prime. Replace its source outfit with the celestial design specified in Result below while preserving the subject's likeness, skin tone, body and pose.
+Denoise ~0.5-0.7.
 
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image so the subject appears exactly as described in the Result.
+Replace the source outfit completely with the celestial design described in Result below. Apply the design directly to the body, matching its specified placement and coverage; keep every area described as bare skin visibly natural skin.
 
-Result: she is wearing celestial armor of polished gold: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small halo ring with two short feathers covering the front of the hips; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a gold gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
+Result: celestial armor of polished gold: two small ornate filigree plates, each in the form of a curved feather sweeping outward at the tip, covering the centre of each breast in the area of a small bikini cup, and one matching small ornate plate in the form of a small halo ring with two short feathers covering the front of the hips; every plate is engraved with fine barbs of filigree and tiny drifting stars and set with a gold gem; each plate hangs against the skin held by magic alone, weightless and unconnected to any other; the rest of the torso, the sides of the hips, the back, shoulders and arms are bare skin
 
 Critical details - these must be clearly visible:
 Hair: soft champagne-blonde hair with warm honey lights, silky and luminous.

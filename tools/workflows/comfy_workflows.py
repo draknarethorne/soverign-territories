@@ -701,7 +701,7 @@ def takes_photo(item):
 
 
 def flow_suffix(flow):
-    """'frame' -> 'Frame', 'tight-crop' -> 'TightCrop': the word a flow's workflows carry in their name (Haniya_Qwen_Alpha_1_Prime_Frame)."""
+    """Convert a configured flow key to the suffix used in its workflow names."""
     return "".join(w.capitalize() for w in re.split(r"[-_ ]+", flow) if w)
 
 
@@ -1437,11 +1437,13 @@ def cmd_pull(args):
                 pull_shots(cfg, ws, args, stamp, seen)
             scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
             print(f"{ws}: pulling is turned off for this workspace (old hand-made workflows); only its zz_Shots were captured; use --include-legacy for the rest")
-            finals_pull(cfg, ws, args)
+            if not args.shots:
+                finals_pull(cfg, ws, args)
             continue
         if not args.only_finals:
             pull_shots(cfg, ws, args, stamp, seen)
-        finals_pull(cfg, ws, args)  # candidates and finals (and numbered saves loose in the list), arranged like the main tree
+        if not args.shots:
+            finals_pull(cfg, ws, args)  # candidates and finals (and numbered saves loose in the list), arranged like the main tree
         scanned |= {h for h, g in groups.items() if holds(cfg, ws, g, h, None)}
         if args.shots or args.only_finals:
             continue
@@ -1963,7 +1965,7 @@ def set_inputs(cfg, args):
         print("workspaces.json updated; now run: inputs reset --hero " + hero)
 
 
-PHOTO_ROOTS = ["Angels", "Sisters", "Models", "Prospects", "Artists", "Various"]  # Models is the old name of Sisters; Various is the pool of photos not yet sorted
+PHOTO_ROOTS = ["Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"]  # Models is the old name of Sisters; Various is the pool of photos not yet sorted
 SISTER_ROOTS = ("Sisters", "Models")
 
 
@@ -2004,17 +2006,15 @@ def photo_library(cfg, base=None):
 
 
 def headshot_library(cfg, base=None):
-    """[(folder name, path)] of every derived Prime input: <folder>/headshot_<W>x<H>/*.png (the face) and <folder>/frame_<W>x<H>/*.png (a partial-body photo shrunk to figure size). Kept apart from
-    photo_library: they share their photo's id, so they must never count as the photo's rename."""
+    """[(folder name, path)] of each derived headshot input, separate from the scaled originals."""
     w, h = cfg.get("standardSize") or (944, 1104)
     out = []
     for root in photo_roots(cfg, base):
         for d in ([root] if (root / "gallery").is_dir() else sorted(p for p in root.iterdir() if p.is_dir())):
             for name, folder in [(d.name, d)] + [(f"{d.name}/{s.name}", s) for s in sorted(p for p in d.iterdir() if p.is_dir())]:
-                for kind in ("headshot", "frame"):
-                    g = folder / f"{kind}_{w}x{h}"
-                    if g.is_dir():
-                        out += [(name, f) for f in sorted(g.glob("*.png"))]
+                g = folder / f"headshot_{w}x{h}"
+                if g.is_dir():
+                    out += [(name, f) for f in sorted(g.glob("*.png"))]
     return out
 
 
@@ -2857,7 +2857,7 @@ def main(argv=None):
     s.add_argument("--stage", help="with --reset: only this prompt folder (alpha, poses, armor ...)")
     s.add_argument("--match", help="with --reset: only workflows whose name contains this")
     s.add_argument("--photo", help="with --set: original photo file name")
-    s.add_argument("--flow", help="with --set --photo: the flow (a second way to run the Prime, for example frame) this photo belongs to, instead of the normal flow")
+    s.add_argument("--flow", help="with --set --photo: the configured alternate flow this photo belongs to")
     s.add_argument("--prime", help="with --set: Alpha 1 Prime image (the bikini A-pose made from the photo)")
     s.add_argument("--apose", help="with --set: Barefoot golden A-pose file name (head and motion read it)")
     s.add_argument("--heels", help="with --set: Heels golden A-pose file name")

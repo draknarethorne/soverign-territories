@@ -205,7 +205,7 @@ python tools/workflows/comfy_workflows.py inputs reset --hero Draknara --dry-run
 
 `--set` only needs the roles you give it (`--photo`, `--apose`, `--bare`); with `--dry-run` it prints and writes nothing. Workflows in `zz_Shots/` are never reset.
 
-`bin\sync-inputs.cmd` (preview; `--apply` copies) puts every image a deployed workflow loads into the input folder of its workspace when it is missing: the frame images, the first-shot experiment photos, a restored photo. It changes no workflow and no setting, so a Prime you chose stays chosen, which `inputs reset` cannot promise (it stops while a choice is unpulled).
+`bin\sync-inputs.cmd` (preview; `--apply` copies) puts every image a deployed workflow loads into the input folder of its workspace when it is missing: the selected Prime photos, first-shot experiment photos, or a restored photo. It changes no workflow and no setting, so a Prime you chose stays chosen, which `inputs reset` cannot promise (it stops while a choice is unpulled).
 Run it after `make --create` and `deploy` when ComfyUI says an image is missing (`refresh` and `refresh-firered` do it). Placeholder names (`..._00000.png`, "not chosen yet") are counted, and what it cannot find anywhere is listed as NOT FOUND.
 
 ### Seeds

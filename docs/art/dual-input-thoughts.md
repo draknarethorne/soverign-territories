@@ -1,6 +1,6 @@
-# Dual-input thoughts (an external spec, kept as reference)
+# Dual-input thoughts (external reference, not approved design)
 
-An outside write-up of a two-image input for the Prime (a bare bust plus a reference), kept as written. The plan that uses it: [../plans/2026-10-11-tidy-junk-organise.md](../plans/2026-10-11-tidy-junk-organise.md) 4.4. Several of its ideas (grey mannequins, 512x768) were not adopted; the frame flow in [prime-flows.md](prime-flows.md) took the useful part.
+An outside write-up of a two-image input for the Prime (a bare bust plus a reference), kept as written. Its frame-flow assumptions were retired with the Prime frame experiment on Oct 19; no frame-derived input is active. The optional dual-image face-pass idea is tracked in [the Oct 11 plan](../plans/2026-10-11-tidy-junk-organise.md). The mannequin and 512x768 proposals were not adopted.
 
 ## Executive Summary
 Generating full-body character plates directly from raw photo inputs forces diffusion models to distribute their latent pixel budget across the entire figure. At standard generation resolutions (512x768), the face and eyes occupy less than 100x100 pixels, leading to plastic skin, flat cartoon irises, and blurred facial

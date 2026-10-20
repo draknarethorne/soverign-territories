@@ -339,6 +339,7 @@ KEY_LABELS = {"hair": "Hair", "bust": "Bust", "ownBust": "Bust", "eyes": "Eyes",
 TEMPLATE_KEY_DEFAULTS = {
     "pose-female-human.txt": ["hair", "bust", "eyes", "skin", "legs"],
     "bare-human.txt": ["hair", "ownBust", "eyes", "skin"],  # the Bare step re-asserts the likeness; the rest of the build is the Body line
+    "celestial-experiment-human.txt": ["hair", "ownBust", "eyes", "skin"],
     "bare-male-human.txt": ["hair", "eyes", "skin"],
     # the first-shot experiments (1_Alpha/1b_Experiments): the bare base states her own bust at once, the neutral base is the slender standard figure like the Prime
     "base-bare-human.txt": ["hair", "ownBust", "eyes", "skin"],

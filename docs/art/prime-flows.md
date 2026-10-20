@@ -1,64 +1,55 @@
-# Prime flows: running the Prime more than one way, and comparing the results
+# Prime inputs and comparisons
 
-The Prime (`Alpha 1 Prime`) turns an original photo into a clean head-to-toe A-pose. How well it does depends on the photo and on the engine, so a hero can have more than one **flow**, side by side. The normal flow is never replaced.
+The Prime (`Alpha 1 Prime`) turns a hero's chosen source photo into a clean,
+head-to-toe A-pose. The currently configured input is the hero's original,
+scaled to 944x1104 and stored in `workspaces.json` under `photos`.
 
-## The flows
+## Current Prime path
 
-| Flow | Incoming image | When it helps |
+| Workflow | Engine | Input |
 | --- | --- | --- |
-| normal | the hero's chosen photo (`photos` in `workflows/workspaces.json`, scaled to 944x1104) | a full-length or nearly full-length photo |
-| frame | `frame_944x1104\<photo>_frame_944x1104.png`: the same photo shrunk so the face has the size of a standing figure's, at the top of the canvas, the rest empty (made by `bin\originals.cmd`, see [original-photos.md](original-photos.md)) | a head-and-shoulders or waist-up photo, where the model keeps the crop |
+| `Hero_Qwen_Alpha_1_Prime` | Qwen | the hero's chosen scaled photo |
+| `Hero_FireRed_Alpha_1_Prime` | FireRed | the hero's chosen scaled photo, with the identity lock below |
 
-Each flow runs through each engine, so a hero has four Prime workflows, all saved to the same output folder (a different file name prefix):
+The normal Prime path is used for full-length and partial-body source photos.
+The prompt asks the model to continue a partial image into a full figure; if a
+source is not suitable, choose another photo. No partial-body frame is made or
+configured. A `chest_944x1104` crop is only a future experiment and is not
+implemented.
 
-| Workflow | Engine | Flow |
-| --- | --- | --- |
-| `Haniya_Qwen_Alpha_1_Prime` | Qwen | normal |
-| `Haniya_FireRed_Alpha_1_Prime` | FireRed | normal |
-| `Haniya_Qwen_Alpha_1_Prime_Frame` | Qwen | frame |
-| `Haniya_FireRed_Alpha_1_Prime_Frame` | FireRed | frame |
+FireRed sometimes invents a face instead of using the one in the photo,
+especially when the head is turned. Its Prime prompt therefore starts with an
+identity lock (`data/art/_templates/heroes/1_Alpha/firered-prime-face-lock.txt`,
+set by `engines.firered.primeFace`).
 
-They carry the same prompt text. The only differences are the incoming image and, for FireRed, the identity lock below. Every later stage (Bare and on) keeps working from the Prime image you choose, as before; a flow only changes how that Prime is made.
+Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or
+`make --engine firered --match Alpha_1_Prime` and deploy for all). Remove
+`primeFace` from the settings to switch it off.
 
-## What is stored where
+## Comparing Prime renders
 
-In `workflows/workspaces.json`:
+1. Run the same hero through Qwen and FireRed. Use the same seed if comparing
+   engine behavior; ComfyUI keeps the seed in each workflow.
+2. Run `bin\compare-primes.cmd` (or
+   `bin\compare-primes.cmd Haniya Draknoxa`). It finds the newest render of
+   each configured Prime workflow and writes
+   `<work root>\_reports\comparisons\primes\prime_compare.png`.
+3. The score is the likeness tool's face score between each render and the
+   photo that workflow started from. At the end it prints the average per
+   variant over all heroes.
+4. The score only measures the face. Look at the picture for full-body
+   framing, hair, clothing and pose.
 
-- `photos` is the normal flow's photo for each hero (unchanged).
-- `flows.frame.photos` is the frame flow's image for each hero. `flows` can hold more flows later (each with its own `photos`).
-- Each flow workflow loads its own image. `inputs status` lists both; `inputs reset` and `inputs pull` handle each flow's image separately and never mix them with the normal photo.
+Use `--all-renders` to show every render of each variant. To include the
+first-shot experiments, use `bin\compare-primes.cmd --shots all`; P2 is the
+neutral base layer and P3 is the bare figure. See
+[first-shot-flows](../plans/2026-10-11-first-shot-flows.md) for their setup.
 
-To add or change a flow image: `bin\inputs.cmd set HERO --flow frame --photo haniya_image_<id>_frame_944x1104.png`. Then build the workflows that are missing with `bin\refresh.cmd HERO alpha` (Qwen) and `bin\refresh-firered.cmd HERO alpha` (FireRed), which also deploy them and copy the images into the workspaces' input folders (`bin\sync-inputs.cmd`; a workflow whose image is not in its workspace's input folder fails in ComfyUI).
-`originals` makes the frame images; only a photo that is not already full length gets one, so a hero with a full-length photo (Sammara, Draknira, Drakniya) has no frame workflows, and a hero with no real photo yet has none either.
+## Retired frame flow
 
-## FireRed and the face
-
-FireRed sometimes invents a face instead of using the one in the photo, especially when the head is turned. Its Prime prompt therefore starts with an identity lock (`data/art/_templates/heroes/1_Alpha/firered-prime-face-lock.txt`, set by `engines.firered.primeFace`).
-
-The lock says: the face in the reference is the result's face, a turned head is turned to face the camera as the same person, and a partial photo is continued downward to the feet. Qwen's prompt is not touched.
-
-Edit the file to tune it, then `bin\refresh-firered.cmd HERO alpha` (or `make --engine firered --match Alpha_1_Prime` and deploy for all). Remove `primeFace` from the settings to switch it off.
-
-## Comparing in tandem
-
-1. Pick a subject, set the same seed in the four workflows (ComfyUI keeps the seed in the workflow), and run each. Use several heroes: some with a full-length photo, some with a head-and-shoulders photo, some with a turned head.
-2. Run `bin\compare-primes.cmd` (or `bin\compare-primes.cmd Haniya Draknoxa`). It finds the newest render of each of the four workflows in the ComfyUI output folders and writes `<work root>\_reports\prime_compare.png`: the original, then each variant, with a score.
-3. The score is the likeness tool's face score between the render and the photo that flow started from. 0.55 and up is the same person, 0.30 to 0.45 a close look-alike, below 0.15 someone else. At the end it prints the average per variant over all heroes, which is the number to compare. `--all-renders` shows every render of each variant (to see how much a seed varies).
-4. The score only measures the face. Look at the picture for the rest: whether the body is full length, the hair, the clothing, the pose.
-
-A render made before a hero's photo changed (a re-paired angel) scores against the new photo and comes out low or negative; run the Prime again first.
-
-When the comparison is clear, drop what does not work: take a flow out of `flows` in the settings (its workflows stay in the repo and the workspaces until you delete them), and switch off the FireRed lock the same way.
-
-## First-shot experiments (P2 and P3)
-
-Besides the swimsuit Prime (P1), two experiments start from the same photo and are kept in `1_Alpha/1b_Experiments/<family>/`, so their renders never mix with the Prime's. The decisions and the reasons are in [../plans/2026-10-11-first-shot-flows.md](../plans/2026-10-11-first-shot-flows.md).
-
-| Path | Workflow | Output folder | What it makes |
-| --- | --- | --- | --- |
-| P2 | `Hero_<Engine>_Alpha_1b_NeutralBase` | `1_Alpha/1b_Experiments/neutral-base` | a skin-tone base layer on the slender standard figure; run `Alpha_2_Bare_Figure` after it |
-| P3 | `Hero_<Engine>_Alpha_1b_BareBase` | `1_Alpha/1b_Experiments/bare-base` | the bare figure with her own build from the art data; it is the Bare image, so the Bare Figure step is not needed |
-
-Each has a Qwen and a FireRed workflow, and a `_Frame` twin of each (22 female heroes, 160 workflows). Their cards are `data/art/_sets/<group>/<hero>/1_Alpha/1b_Experiments/{bare-base,neutral-base}/` (written by `tools/generators/scaffold_first_shots.py`, no components: the base layer and bare piece come from the `base_layer` / `bare_base` slots, or a hero's `art.defaultBaseLayer` / `art.defaultBareBase`).
-
-To carry a result on: choose the image, then `bin\inputs.cmd set HERO --prime IMAGE` for P2, or `bin\inputs.cmd set HERO --bare IMAGE --prime IMAGE` for P3. Compare with `bin\compare-primes.cmd --shots all` (labels `Qwen P2 neutral`, `FireRed P3 bare / frame`, ...; `--shots neutral,bare` for the experiments only). The face score only measures the face; judge the body, the build and any colour cast by eye. When a winner is chosen it is promoted to `1_Prime` and the others are removed.
+The partial-body frame flow was retired on Oct 19 after testing. Its
+`frame_944x1104` image generation, Prime input configuration, and generated
+workflow variants have been removed from active processing. Existing images
+and workflow copies were archived, not deleted. The history and execution
+record are in
+[the Oct 19 library plan](../plans/2026-10-19-library-rebaseline-and-frame-retirement.md).

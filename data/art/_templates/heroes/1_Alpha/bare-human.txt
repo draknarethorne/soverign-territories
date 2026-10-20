@@ -4,7 +4,7 @@ Incoming image: the Prime A-pose of {{HERO}}. This pass removes clothing, applie
 ----------------------------------------------------------------
 prompt:
 
-Edit the incoming image so the subject appears exactly as described in the Result.
+Edit the incoming image: remove all clothing, swimwear, straps, strings, jewelry and shoes from the subject.
 
 Result: she is wearing {{WEARING}}
 

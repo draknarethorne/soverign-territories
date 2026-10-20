@@ -133,19 +133,19 @@ class FlowTests(unittest.TestCase):
 
     def test_flow_workflows_sit_beside_the_normal_ones_and_only_for_heroes_with_a_flow_image(self):
         self.world()
-        self.assertEqual(cw.flow_suffix("frame"), "Frame")
+        self.assertEqual(cw.flow_suffix("alternate"), "Alternate")
         self.assertEqual(cw.flow_suffix("tight-crop"), "TightCrop")
         cfg = {"photos": {"Alice": "alice_image_1_944x1104.png"}}
         self.assertEqual([i["name"] for i in cw.prompt_index(cfg)], ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_2_Bare"], "no flows, no variants")
-        cfg["flows"] = {"frame": {"photos": {"Alice": "alice_image_1_frame_944x1104.png"}}, "other": {"photos": {}}}
+        cfg["flows"] = {"alternate": {"photos": {"Alice": "alice_image_1_alt_944x1104.png"}}, "other": {"photos": {}}}
         names = {i["name"]: i for i in cw.prompt_index(cfg)}
-        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Frame", "Alice_Qwen_Alpha_2_Bare"], "only the Prime has flows")
-        v = names["Alice_Qwen_Alpha_1_Prime_Frame"]
-        self.assertEqual((v["flow"], v["path"], v["prefix"].rsplit("/", 1)[-1]), ("frame", names["Alice_Qwen_Alpha_1_Prime"]["path"], "Alice_Qwen_Alpha_1_Prime_Frame"), "the same prompt, its own output prefix")
+        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Alternate", "Alice_Qwen_Alpha_2_Bare"], "only the Prime has flows")
+        v = names["Alice_Qwen_Alpha_1_Prime_Alternate"]
+        self.assertEqual((v["flow"], v["path"], v["prefix"].rsplit("/", 1)[-1]), ("alternate", names["Alice_Qwen_Alpha_1_Prime"]["path"], "Alice_Qwen_Alpha_1_Prime_Alternate"), "the same prompt, its own output prefix")
         self.assertNotIn("flow", names["Alice_Qwen_Alpha_1_Prime"])
-        self.assertEqual(cw.flow_index(cfg), {"Alice_Qwen_Alpha_1_Prime_Frame": "frame", "Alice_FireRed_Alpha_1_Prime_Frame": "frame"})
-        self.assertEqual(cw.flow_photo(cfg, "frame", "Alice"), "alice_image_1_frame_944x1104.png")
-        self.assertIsNone(cw.flow_photo(cfg, "frame", "Bob"))
+        self.assertEqual(cw.flow_index(cfg), {"Alice_Qwen_Alpha_1_Prime_Alternate": "alternate", "Alice_FireRed_Alpha_1_Prime_Alternate": "alternate"})
+        self.assertEqual(cw.flow_photo(cfg, "alternate", "Alice"), "alice_image_1_alt_944x1104.png")
+        self.assertIsNone(cw.flow_photo(cfg, "alternate", "Bob"))
 
     def test_firered_gets_an_identity_lock_in_front_of_the_prime_and_nothing_else_changes(self):
         tmp = self.world()
@@ -155,20 +155,20 @@ class FlowTests(unittest.TestCase):
             cfg = {"engines": {"firered": {"primeFace": "lock.txt"}}}
             prime = {"engine": "firered", "stage": "alpha", "family": None, "stem": "Alice_Alpha_1_Prime"}
             self.assertEqual(cw.engine_prompt(cfg, prime, "hello"), "Identity lock: use the face.\n\nhello")
-            self.assertEqual(cw.engine_prompt(cfg, {**prime, "stem": "Alice_Alpha_1_Prime_Frame"}, "hello"), "Identity lock: use the face.\n\nhello", "the flow's Prime too")
+            self.assertEqual(cw.engine_prompt(cfg, {**prime, "stem": "Alice_Alpha_1_Prime_Alternate"}, "hello"), "Identity lock: use the face.\n\nhello", "the flow's Prime too")
             self.assertEqual(cw.engine_prompt(cfg, {**prime, "engine": "qwen"}, "hello"), "hello", "Qwen is not touched")
             self.assertEqual(cw.engine_prompt(cfg, {**prime, "stem": "Alice_Alpha_2_Bare"}, "hello"), "hello", "nor is any later stage")
             self.assertEqual(cw.engine_prompt({"engines": {"firered": {}}}, prime, "hello"), "hello", "off unless configured")
 
-    def test_set_inputs_with_a_flow_writes_the_flow_and_leaves_the_normal_photo(self):
+    def test_set_inputs_with_an_alternate_flow_keeps_the_normal_photo(self):
         cfg = {"photos": {"Alice": "alice_image_1_944x1104.png"}, "inputs": {}}
-        args = types.SimpleNamespace(set="alice", flow="frame", photo="alice_image_1_frame_944x1104.png", dry_run=True, prime=None, bare=None, apose=None, heels=None, scene=None, polish=None)
+        args = types.SimpleNamespace(set="alice", flow="alternate", photo="alice_image_1_alt_944x1104.png", dry_run=True, prime=None, bare=None, apose=None, heels=None, scene=None, polish=None)
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             cw.set_inputs(cfg, args)
-        self.assertEqual(cfg["flows"]["frame"]["photos"], {"Alice": "alice_image_1_frame_944x1104.png"})
+        self.assertEqual(cfg["flows"]["alternate"]["photos"], {"Alice": "alice_image_1_alt_944x1104.png"})
         self.assertEqual(cfg["photos"]["Alice"], "alice_image_1_944x1104.png", "the normal flow is untouched")
-        self.assertIn("flow frame", out.getvalue())
+        self.assertIn("flow alternate", out.getvalue())
         args.photo = None
         with self.assertRaises(SystemExit):
             cw.set_inputs(cfg, args)
@@ -196,19 +196,19 @@ class FirstShotTests(unittest.TestCase):
         self.assertFalse(cw.takes_photo(item("Alice_Alpha_2b_CelestialSuit", ("bare", "celestial"))))
         self.assertFalse(cw.takes_photo({"stage": "poses", "family": [], "stem": "Alice_X_Pose"}))
 
-    def test_a_flow_gives_the_experiment_bases_their_own_frame_variants(self):
+    def test_an_alternate_flow_gives_the_experiment_bases_own_variants(self):
         tmp = pathlib.Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp, True)
         for sub, stem in (("1_Prime", "Alice_Alpha_1_Prime"), ("1b_Experiments/bare-base", "Alice_Alpha_1b_BareBase"), ("1b_Experiments/neutral-base", "Alice_Alpha_1b_NeutralBase")):
             d = tmp / "set-a" / "Alice" / "1_Alpha" / sub
             d.mkdir(parents=True)
             (d / f"{stem}.txt").write_text("=== x ===\n\nprompt:\n\nhello\n\n----------\nnegative prompt:\n\nbad\n")
-        cfg = {"photos": {"Alice": "a.png"}, "flows": {"frame": {"photos": {"Alice": "a_frame.png"}}}}
+        cfg = {"photos": {"Alice": "a.png"}, "flows": {"alternate": {"photos": {"Alice": "a_alt.png"}}}}
         with mock.patch.object(cw, "PROMPTS", tmp):
             names = {i["name"]: i for i in cw.prompt_index(cfg)}
-        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Frame", "Alice_Qwen_Alpha_1b_BareBase", "Alice_Qwen_Alpha_1b_BareBase_Frame",
-                                         "Alice_Qwen_Alpha_1b_NeutralBase", "Alice_Qwen_Alpha_1b_NeutralBase_Frame"])
-        self.assertIn("1_Alpha/1b_Experiments/bare-base/", names["Alice_Qwen_Alpha_1b_BareBase_Frame"]["prefix"], "output folders keep P2 and P3 apart")
+        self.assertEqual(sorted(names), ["Alice_Qwen_Alpha_1_Prime", "Alice_Qwen_Alpha_1_Prime_Alternate", "Alice_Qwen_Alpha_1b_BareBase", "Alice_Qwen_Alpha_1b_BareBase_Alternate",
+                                         "Alice_Qwen_Alpha_1b_NeutralBase", "Alice_Qwen_Alpha_1b_NeutralBase_Alternate"])
+        self.assertIn("1_Alpha/1b_Experiments/bare-base/", names["Alice_Qwen_Alpha_1b_BareBase_Alternate"]["prefix"], "output folders keep P2 and P3 apart")
         self.assertIn("1_Alpha/1b_Experiments/neutral-base/", names["Alice_Qwen_Alpha_1b_NeutralBase"]["prefix"])
         self.assertEqual(cw.input_role({"inputs": {"Alice": {}}, "inputRoles": {"alpha/base": "photo", "default": "bare"}}, "Alice", "alpha", ["base", "bare-base"]), "photo")
 

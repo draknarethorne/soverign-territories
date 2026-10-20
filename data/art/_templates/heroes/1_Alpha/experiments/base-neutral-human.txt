@@ -4,7 +4,7 @@ Incoming image: a real/AI source photo of the subject (the full photo, a frame, 
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
+Remove the source outfit and build the full figure from the reference image in the seamless skin-tone base layer described below.
 
 ?{{KEY_BLOCK}}
 
@@ -28,7 +28,7 @@ Figure: {{FIGURE}}.
 
 ?Skin: {{SKIN_LINE}}.
 
-Wearing: {{BASE_LAYER}}.
+Wearing nothing but the seamless skin-tone base layer: {{BASE_LAYER}}.
 
 Hair: {{HAIR_ESTABLISH}} (fully replace the source photo's hairstyle).
 

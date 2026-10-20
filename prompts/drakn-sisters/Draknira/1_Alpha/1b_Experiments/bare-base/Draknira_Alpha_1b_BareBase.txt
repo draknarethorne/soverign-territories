@@ -4,7 +4,7 @@ Incoming image: a real/AI source photo of the subject (the full photo, a frame, 
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
+Remove the source outfit and build the full figure from the reference image in the bare-skin result described below.
 
 Critical details - these must be clearly visible:
 Hair: icy platinum-ash blonde hair, sleek and sultry with a subtle silver-frost sheen, a noticeable frosted cool smoky ash-grey shading through the roots and the last third of the lengths, like frost spreading across the hair, clearly distinct from the lighter base colour and catching the light.
@@ -30,7 +30,7 @@ Standing A-pose: upright, feet apart, arms relaxed slightly away from the sides,
 
 Body: shape the figure to this individual build, whatever the reference shows: ethereal, crystalline high-elven build; ultra-slender, with delicate bone structure; completely flat stomach; tight, elegant waist tapering cleanly into the hips; very slender, delicate arms; paper-fine wrists and long, slender fingers; shapely feminine hips, gently curved, narrow and elegant; extremely long, smooth, slender legs.
 
-Wearing: natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible.
+Wearing: nothing but natural bare skin from head to toe, in the manner of a classical fine-art figure study, with natural, realistic, unretouched anatomy, rendered naturally as a real body would look; completely bare natural skin, keeping her natural skin tone (cool fair porcelain complexion, evenly toned, smooth and blemish-free), including the shoulders, arms, back, stomach, hips, thighs, legs and bare feet; the natural shape, fullness and cleavage of the bust stay clearly visible.
 
 Hair: hair fully let down and loose, parted in the exact centre, the front sections swept slightly back and away from the face so the eyes, brows and temples are fully clear, the rest falling forward over the front of both shoulders to rest on the shoulders and upper arms beside the breasts, full length and ends visible, keeping the subject's own natural texture; chest and décolletage open; a very slight lift from a light breeze below (fully replace the source photo's hairstyle).
 

@@ -4,7 +4,7 @@ Incoming image: a real/AI source photo of the subject (the full photo, a frame, 
 ----------------------------------------------------------------
 prompt:
 
-Modify the subject from the reference image into a clean, head-to-toe, full-length, photorealistic portrait photograph.
+Remove the source outfit and build the full figure from the reference image in the bare-skin result described below.
 
 ?{{KEY_BLOCK}}
 
