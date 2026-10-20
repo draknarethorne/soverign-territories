@@ -55,6 +55,13 @@ folder prefix; the current SHA-256 is a stale-file check, not the identity key.
 The metadata helpers validate reads and atomically write the catalogue. This
 initial catalogue is empty and does not change current matching behavior.
 
+The dedicated review page groups people in responsive, adjustable-size grids.
+Choose a category before a person; the person list follows that category.
+Chest-up and head crops are cached beside the report using the master image
+stem, crop kind and content key in their filenames, and each opens the full
+source image. Potential photos show their closest other-folder evidence as a
+suggestion only; a score never merges identities.
+
 The big runs and their results are written up in [likeness-reorg-2026-10-09.md](likeness-reorg-2026-10-09.md) and [likeness-reorg-2026-10-10.md](likeness-reorg-2026-10-10.md).
 
 ## Commands
@@ -76,6 +83,7 @@ Anything that moves files previews until you add `--apply`. Add `--sheet FILE.pn
 | `likeness crosscheck` | who looks like whom across the lines kept apart (artist against artist, prospect against an artist's person) to `<work>\_reports\library\crosscheck.md`; nothing moves |
 | `likeness pullback NAME ... [--small 2] [--all]` | sends prospect folders back to `Various` so `sort` places their photos again; a folder with a chosen photo stays; `likeness undo` reverses it |
 | `likeness sort [--singles] [--assign 0.35]` | empties `Various`: a photo of an artist goes home, a confident match moves to that person (angels and sisters too), a new group becomes a Prospect at five or more photos or a Potential below five, or joins an angel or sister it is the same woman as (0.55) |
+| `likeness reconcile [--out FILE.json]` | read-only combined preview of usable Review and Various photos against one frozen set of identity cores; clusters candidates together and lets a new provisional cluster attract remaining candidates in the same run. Protected, duplicate-ID, ambiguous and unresolved photos stay held. It does not include Prospect outliers yet, move photos or change catalogue metadata; the embedding cache may update |
 | `likeness junk [--keep-multi] [--recheck] [--reset]` | sets aside in `<work>\_junk\Prospects` or `_junk\Artists` what cannot feed a Prime (no usable face, a face under 60 px, a second person that `crop` could not cut away, bars over her head). `--recheck`: usable ones go back. `--reset`: everything goes back through the crop and the rules. `likeness undo` reverses the last batch |
 | `likeness rematch [--min 0.48]` | compares Prospect and Potential folders and previews likely same-person merges; cast matches are reported for review |
 | `likeness singles [--min 0.40]` | a one-photo Prospect or Potential joins the person she matches with the required margin |

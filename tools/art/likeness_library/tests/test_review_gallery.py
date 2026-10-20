@@ -10,6 +10,7 @@ from unittest import mock
 
 import numpy as np
 from jsonschema import Draft7Validator
+from PIL import Image
 
 from tools.art import likeness
 from tools.art.likeness_library import review_gallery
@@ -230,6 +231,12 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('id="bucket"', page)
         self.assertIn('id="mode"', page)
         self.assertIn('id="person"', page)
+        self.assertIn('id="group"', page)
+        self.assertIn('id="card-size"', page)
+        self.assertIn('id="framing"', page)
+        self.assertIn("function fillPeople()", page)
+        self.assertIn("image.dataset.head=r.thumbnailHead", page)
+        self.assertIn("photo-grid", page)
         self.assertIn('id="score-ceiling"', page)
         self.assertIn("function groupCards(items)", page)
         self.assertIn("function primaryFor(folder)", page)
@@ -269,8 +276,8 @@ class ReviewGalleryTests(unittest.TestCase):
     def test_thumbnail_cache_reuses_derivative_by_content(self):
         with tempfile.TemporaryDirectory() as tmp:
             source = pathlib.Path(tmp) / "photo.jpg"
-            source.write_bytes(b"photo")
-            photo = SimpleNamespace(sha="abc123", path=source)
+            Image.new("RGB", (80, 100), "white").save(source)
+            photo = SimpleNamespace(sha="abc123", path=source, box=None)
             item = {
                 "folder": "Prospects/Sophie",
                 "group": "Prospects",
@@ -284,15 +291,13 @@ class ReviewGalleryTests(unittest.TestCase):
                 "_photo": photo,
             }
             out = pathlib.Path(tmp) / "report"
-            with mock.patch.object(review_gallery.people_gallery, "thumb_bytes", return_value=b"thumbnail") as thumb:
-                first, _ = review_gallery.write_thumbnails([item], out)
-                second, _ = review_gallery.write_thumbnails([item], out)
-            self.assertEqual(thumb.call_count, 1)
+            first, _ = review_gallery.write_thumbnails([item], out)
+            second, _ = review_gallery.write_thumbnails([item], out)
             self.assertEqual(first[0]["thumbnail"], second[0]["thumbnail"])
-            self.assertEqual(
-                (out / first[0]["thumbnail"]).read_bytes(),
-                b"thumbnail",
-            )
+            self.assertEqual(first[0]["thumbnailHead"], second[0]["thumbnailHead"])
+            self.assertIn("photo_chest_abc123.jpg", first[0]["thumbnail"])
+            self.assertIn("photo_head_abc123.jpg", first[0]["thumbnailHead"])
+            self.assertEqual(len(list((out / "people_gallery_review_files").glob("*.jpg"))), 2)
 
 
 if __name__ == "__main__":

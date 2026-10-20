@@ -27,6 +27,10 @@ without the preview, backup, and per-phase safety gates below.
 | Review and incoming photos | Reconcile both in the same maintenance run. A bounded follow-up audit may use new clusters to resolve remaining same-run candidates, so they do not require a second user-triggered run. |
 | Retirement | Distinguish retiring one unusable photo from retiring an entire person. Photo retirement is a recoverable archive that does not re-enter matching; person retirement uses the existing command to return that person's photos to `Various` for normal reprocessing. Whole-folder archival remains a separately labeled operation. |
 | User interface | Keep the current People Gallery as a concise overview. Add a focused local review/maintenance gallery for large folders, photo scores, Review images and staged actions. The browser stages actions; a CLI validates and applies them. |
+| Review gallery layout | Organize the review view category-first, then person; use a responsive left-to-right image grid with adjustable thumbnail size, face/chest-up framing, and click-through to the full image. Keep scores/actions and the primary identity/workflow reference visible. |
+| Identity naming | Let the user stage Prospect/Potential renames in the review UI. Reject collisions unless the user explicitly selects both people for a two-person name swap; preserve both stable identities and `z_` histories. Never rename fixed Angel/Sister slot folders. |
+| Potential match context | Show Potentials' closest eligible same-side people and score evidence so the user can decide whether to stage a merge or return the person/photos to normal reprocessing. Never merge from score alone. |
+| Report lifecycle | Keep dated report output available for inspection; after the user approves the workflow, support replacing one stable review-report directory. Link a person from the concise overview to their filtered review view when both local reports are available. |
 | Metadata | Use machine-readable JSON tied to stable photo identity, not filename grades. Preserve an audit trail and keep user decisions distinct from inferred scores. |
 | Tooling structure | Improve the workflow incrementally. Split likeness responsibilities into testable modules and simplify user-facing commands over time; do not combine this with a risky all-at-once rewrite. |
 | Python package layout | Move related, low-risk modules and tests into domain packages as work proceeds; keep `bin/*.cmd` stable and audit direct references before moves. Broader `tools/art/` organization has its own [incremental plan](2026-10-20-art-tools-structure.md). |
@@ -222,6 +226,8 @@ and apply. The supported actions should be explicit and separate, such as:
 - approve a Review photo back to its person;
 - request reprocessing through the combined Review/Various planner;
 - accept or reject a proposed match or cluster.
+- stage a Prospect/Potential name change, or explicitly pair two people for a
+  collision-resolving name swap.
 - later, retire one unusable photo to the photo archive, or retire a Potential
   or Prospect through the existing CLI operation that returns its photos to
   `Various`. Keep retirement out of the first Review/Reject delivery.
@@ -350,6 +356,24 @@ action-specific measurements on user-labelled examples.
   a visible reference photo when filters hide it. Distinguish the workflow
   selection and user-confirmed identity anchor from a provisional scored
   reference; preserve the flat all-photos view.
+- [x] **P1 ai** C5 Make category selection drive the person list, replace
+  vertical person columns with a responsive adjustable-size grid, show a
+  face/chest-up local thumbnail while linking to the full image, and retain
+  reference/photo decision information in filtered views.
+- [ ] **P1 ai** C6 Add Potentials' closest-person evidence and staged rename
+  and explicit two-person name-swap controls; preserve name history and stable
+  identity IDs, reject unselected collisions, and keep fixed cast slots.
+- [ ] **P2 ai** C7 Keep dated report output available, then support replacing
+  a stable output directory and linking the concise overview to a filtered
+  person review page.
+
+**Oct 20 gallery update:** C5 is implemented. The category filter now
+constrains the person selector, person sections fill the available width with
+responsive left-to-right grids, and small/medium/large tile sizes are
+selectable. Each source photo has cached head and chest-up derivatives named
+from its master stem and content key; both link to the full image. Potential
+gallery records now show closest-other-folder score evidence. C6's rename and
+explicit swap controls remain open.
 
 The Oct 20 real-library run indexed 2,668 active Gallery/Review photos into
 the dated report at `B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`.
@@ -370,7 +394,9 @@ workflow-selected images; the identity catalogue is still empty, so no
 user-confirmed anchors are present in this real-library report.
 
 **Exit:** user can inspect a large person and stage actions without hand-editing
-JSON or moving files.
+JSON or moving files. C5-C7 are iterative refinements requested after the
+first real-library report; they're tracked separately from the completed C1-C4
+baseline.
 
 ### Phase D — safe action CLI
 
@@ -398,15 +424,27 @@ recoverable, logged and idempotent where appropriate.
 
 - [ ] **P1 ai** E1 Plan user-staged Review photos, incoming `Various` photos,
   and validated Prospect outliers together against one frozen library snapshot.
-- [ ] **P1 ai** E2 Cluster rejected, reviewed and incoming candidates together;
+- [x] **P1 ai** E2 Cluster rejected, reviewed and incoming candidates together;
   allow new provisional clusters to become destinations in the same run.
-- [ ] **P1 ai** E3 Iterate candidate matching to a deterministic fixed point.
+- [x] **P1 ai** E3 Iterate candidate matching to a deterministic fixed point.
   Each candidate is assigned at most once; ambiguous or unstable candidates
   stay staged. Do not mutate established identity cores mid-run.
-- [ ] **P1 ai** E4 Add an empty-pool mode for Review-only and self-healing runs.
+- [x] **P1 ai** E4 Add an empty-pool mode for Review-only and self-healing runs.
 - [ ] **P1 either** E5 Compare preview and applied results with user decisions
   before enabling any automatic action beyond sending validated Prospect
   outliers to Review.
+
+**Oct 20 implementation:** `likeness reconcile [--out FILE.json]` now builds
+one read-only snapshot of current person cores, usable Review photos, and
+usable `Various` pool photos. It applies stable average-linkage clustering to
+the combined candidate set, allows an eligible new cluster to attract a
+remaining candidate without changing that cluster's frozen vector, and
+reports ambiguous, protected, duplicate-ID and unassigned candidates as held.
+An empty pool is supported. The command does not move files, change catalogue
+metadata or apply any matching decision; it can update the embedding cache.
+Prospect outliers are deliberately not fed into this planner yet: Phase F1
+must first provide report-only outlier evidence, and E1 will then be completed
+with that candidate source. No real-library reconciliation or apply has run.
 
 **Exit:** validated routing behavior; ambiguous cases stay in Review/pool and
 same-run clusters can resolve candidates without order-dependent cascades.

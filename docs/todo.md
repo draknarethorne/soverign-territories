@@ -84,15 +84,13 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (44)
+### For the assistant, when you say go (43)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
+- [ ] C6 Add Potentials' closest-person evidence and staged rename ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] E1 Plan user-staged Review photos, incoming `Various` photos, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] E2 Cluster rejected, reviewed and incoming candidates together; ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] E3 Iterate candidate matching to a deterministic fixed point. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] E4 Add an empty-pool mode for Review-only and self-healing runs. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] F1 Add report-only Prospect outlier detection against ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] F3 Keep routine Angel/Sister gallery processing report-only. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] I1 Trace and reproduce name continuity through promotion, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
@@ -114,6 +112,7 @@
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] C7 Keep dated report output available, then support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G3 Test cancel, stale-manifest rejection, backup, apply, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))

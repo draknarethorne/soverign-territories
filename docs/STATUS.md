@@ -107,6 +107,11 @@ and flat all-photo views are available; the low-score cutoff is adjustable.
 Each group retains a visible comparison photo when filters hide it, while
 workflow-selected photos, confirmed identity anchors and provisional
 score-ranked references have distinct labels. The report remains read-only.
+The next gallery update adds category-driven person selection, responsive
+small/medium/large tiles, and selectable head or chest-up crops named from each
+master image stem and content key; the crop opens the full source. Potentials
+now show closest-other-folder score evidence as a suggestion only. Staged
+person renaming and explicit name swaps remain in progress.
 The Oct 20 library report for review is
 `B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`:
 2,668 photos, 2,668 cached thumbnails; initial build 88.3 s and cached
@@ -131,8 +136,17 @@ protected anchors, path containment and backup inclusion. No action was
 applied to the real photo library; the tracked likeness catalogue remains
 empty, and matching thresholds are unchanged. Folders outside the catalogue's
 supported roots are view-only.
-The user's next requested increment is Prospect/Potential name recovery and
-renaming. Initial code trace: promotion keeps a recorded `z_` name when one
+Oct 20 reconciliation increment: `likeness reconcile [--out FILE.json]`
+provides a read-only combined preview of usable Review and Various candidates
+against frozen trusted/provisional identity cores. It clusters both sources
+together, supports Review-only runs, and can resolve remaining candidates
+against fixed provisional clusters. Protected and duplicate-ID photos, plus
+ambiguous or unresolved matches, remain held. The report does not include
+Prospect outliers yet; those wait for Phase F1's report-only evidence. Focused
+planner/CLI tests pass. No real-library reconciliation or photo move was run.
+Phases E2-E4 are complete; E1 and E5 remain open.
+The later Phase I covers Prospect/Potential name recovery and renaming.
+Initial code trace: promotion keeps a recorded `z_` name when one
 exists, but falls back to the fixed Angel slot name if it is missing; the
 rename CLI is limited to Prospect/Potential folders and has no explicit
 two-person name-swap flow. `people_index.csv` and `.md` are written by the

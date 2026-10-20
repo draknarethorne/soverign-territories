@@ -4,9 +4,11 @@ import argparse
 import collections
 import datetime
 import html
+import io
 import json
 import os
 import pathlib
+import re
 import sys
 import tempfile
 import types
@@ -15,7 +17,6 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-import people_gallery  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library.audit import audit_person  # noqa: E402
 
@@ -28,20 +29,21 @@ body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#2
 h1{margin:0 0 4px}.note{color:#555;max-width:1100px}.warnings{color:#8a3b16}
 .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
 .controls input,.controls select,.controls button{font:inherit;padding:7px}
-.count{color:#555}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
+.count{color:#555}#grid{display:block;--card-min:260px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));gap:12px}
 article{background:white;border:1px solid #ded8ce;border-radius:6px;padding:8px;min-width:0}
 article.primary{border:2px solid #8b6d32}
-article img{display:block;width:100%;aspect-ratio:188/220;object-fit:cover;background:#eee}
+article img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee}
 article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 0}
 .badge{display:inline-block;border-radius:3px;background:#eee;padding:2px 5px;margin:0 4px 4px 0;font-size:.82em}
 .detail{color:#555;font-size:.88em;margin:4px 0;overflow-wrap:anywhere}
 #more{display:block;margin:18px auto;padding:8px 18px;font:inherit}
 .stage{display:block;margin-top:8px;font-size:.9em}.stage select{display:block;width:100%;font:inherit;padding:5px}
 .actions{display:flex;gap:10px;align-items:center;margin:14px 0}.actions button{font:inherit;padding:8px}
-.person-group{margin:20px 0;padding:14px;background:#f0ede6;border-radius:8px}
-.person-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.person-group{margin:20px 0;padding:14px;background:#f0ede6;border-radius:8px;width:100%;box-sizing:border-box}
+.person-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
 .person-head h2{font-size:1.15em;margin:4px 0;min-width:190px}
-.reference{max-width:220px}.reference img{aspect-ratio:1;object-fit:cover}
+.reference{max-width:190px}.reference img{aspect-ratio:4/5;object-fit:cover}
 .reference .detail{font-size:.82em}
 """
 
@@ -51,6 +53,8 @@ const group=document.getElementById("group"), bucket=document.getElementById("bu
 const state=document.getElementById("state"), sort=document.getElementById("sort");
 const mode=document.getElementById("mode"), person=document.getElementById("person");
 const scoreCeiling=document.getElementById("score-ceiling");
+const cardSize=document.getElementById("card-size");
+const framing=document.getElementById("framing");
 const query=document.getElementById("query"), grid=document.getElementById("grid");
 const count=document.getElementById("count"), more=document.getElementById("more");
 const stagedCount=document.getElementById("staged-count"), download=document.getElementById("download");
@@ -63,7 +67,13 @@ function fill(select, values, label) {
 fill(group,records.map(r=>r.group),"groups");
 fill(bucket,records.map(r=>r.bucket),"locations");
 fill(state,records.map(r=>r.state),"states");
-fill(person,records.map(r=>r.folder),"people");
+function fillPeople() {
+  const previous=person.value;
+  const folders=records.filter(r=>!group.value||r.group===group.value).map(r=>r.folder);
+  fill(person,folders,"people");
+  if(folders.includes(previous))person.value=previous;
+}
+fillPeople();
 function compare(a,b) {
   if(a.score===null&&b.score!==null)return 1;
   if(b.score===null&&a.score!==null)return -1;
@@ -76,7 +86,9 @@ function card(r, readOnly=false) {
   if(readOnly)article.className="reference";
   else if(r.primaryReference)article.className="primary";
   const link=document.createElement("a"); link.href=r.href; link.target="_blank"; link.rel="noopener noreferrer";
-  const image=document.createElement("img"); image.src=r.thumbnail; image.alt=r.name;
+  const image=document.createElement("img");
+  image.src=framing.value==="head"?r.thumbnailHead:r.thumbnail;
+  image.dataset.chest=r.thumbnail; image.dataset.head=r.thumbnailHead; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
   const name=document.createElement("div"); name.className="name"; name.textContent=readOnly?r.name:r.folder;
@@ -147,7 +159,7 @@ function groupCards(items) {
       header.append(note);
     }
     section.append(header);
-    const photoGrid=document.createElement("div"); photoGrid.className="grid";
+    const photoGrid=document.createElement("div"); photoGrid.className="photo-grid";
     photoGrid.append(...photos.map(item=>card(item)));
     section.append(photoGrid); nodes.push(section);
   }
@@ -173,14 +185,28 @@ function render() {
 }
 function draw() {
   const page=visible.slice(0,shown);
-  grid.replaceChildren(...(mode.value==="all"?page.map(item=>card(item)):groupCards(page)));
+  if(mode.value==="all") {
+    const photoGrid=document.createElement("div"); photoGrid.className="photo-grid";
+    photoGrid.append(...page.map(item=>card(item)));
+    grid.replaceChildren(photoGrid);
+  } else {
+    grid.replaceChildren(...groupCards(page));
+  }
   const people=new Set(visible.map(item=>item.folder)).size;
   count.textContent="Showing "+Math.min(shown,visible.length)+" of "+visible.length+
     " photos"+(mode.value==="all"?"":" across "+people+" people");
   more.hidden=shown>=visible.length;
   more.textContent="Show next "+pageSize;
 }
-for(const control of [group,bucket,state,sort,person,scoreCeiling])control.addEventListener("change",render);
+for(const control of [bucket,state,sort,person,scoreCeiling])control.addEventListener("change",render);
+group.addEventListener("change",()=>{fillPeople();render()});
+cardSize.addEventListener("change",()=>{
+  grid.style.setProperty("--card-min",cardSize.value);
+});
+framing.addEventListener("change",()=>{
+  for(const image of grid.querySelectorAll("img[data-chest]"))
+    image.src=framing.value==="head"?image.dataset.head:image.dataset.chest;
+});
 mode.addEventListener("change",()=>{
   sort.value=mode.value==="all"?"low":"high";
   render();
@@ -205,6 +231,7 @@ download.addEventListener("click",()=>{
   link.click(); URL.revokeObjectURL(url);
 });
 updateStagedCount();
+grid.style.setProperty("--card-min",cardSize.value);
 render();
 """
 
@@ -438,7 +465,11 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 state, reason = "Low similarity", "Inspect only; no automatic move"
             else:
                 state, reason = "Consistent", "Similarity is measured against the current person core"
-            match = best_other(photo) if score is not None and score < keep else ""
+            match = best_other(photo) if (
+                score is not None and (
+                    score < keep or likeness.status_of(key) == "Potentials"
+                )
+            ) else ""
             items.append({
                 "folder": key,
                 "group": likeness.status_of(key),
@@ -549,34 +580,70 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
 
 
 def write_thumbnails(items, out):
-    """Write/reuse content-keyed local thumbnails beside the HTML report."""
+    """Write/reuse named, content-keyed head and chest-up derivatives."""
+    from PIL import Image, ImageOps
+
     thumb_dir = out / "people_gallery_review_files"
     thumb_dir.mkdir(parents=True, exist_ok=True)
     public_items = []
+
+    def thumbnail_bytes(photo, framing):
+        size = (320, 400)
+        with Image.open(photo.path) as source:
+            image = ImageOps.exif_transpose(source).convert("RGB")
+        box = photo.box
+        if not box:
+            crop = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+        elif framing == "head":
+            crop_box = originals.headshot_box(image.size, box, size)
+            crop = image.crop(crop_box).resize(size, Image.Resampling.LANCZOS)
+        else:
+            width, height = image.size
+            face_x, face_y, face_w, face_h = box
+            crop_h = face_h * height * 4.4
+            crop_w = crop_h * size[0] / size[1]
+            scale = min(1.0, width / crop_w, height / crop_h)
+            crop_w *= scale
+            crop_h *= scale
+            center_x = (face_x + face_w / 2) * width
+            center_y = (face_y + face_h * 1.55) * height
+            left = min(max(0, center_x - crop_w / 2), width - crop_w)
+            top = min(max(0, center_y - crop_h / 2), height - crop_h)
+            crop = image.crop((left, top, left + crop_w, top + crop_h))
+            crop = ImageOps.fit(crop, size, Image.Resampling.LANCZOS)
+        output = io.BytesIO()
+        crop.save(output, "JPEG", quality=84)
+        return output.getvalue()
+
     for item in items:
         photo = item["_photo"]
-        target = thumb_dir / f"{photo.sha}.jpg"
-        if not target.exists():
-            data = people_gallery.thumb_bytes(photo.path)
-            temporary = None
-            try:
-                with tempfile.NamedTemporaryFile(
-                    mode="wb",
-                    prefix=f".{photo.sha}.",
-                    suffix=".tmp",
-                    dir=thumb_dir,
-                    delete=False,
-                ) as output:
-                    temporary = pathlib.Path(output.name)
-                    output.write(data)
-                    output.flush()
-                    os.fsync(output.fileno())
-                os.replace(temporary, target)
-            finally:
-                if temporary is not None and temporary.exists():
-                    temporary.unlink()
+        stem = re.sub(r"[^A-Za-z0-9_.-]+", "_", photo.path.stem).strip("._") or "photo"
+        targets = {}
+        for framing in ("chest", "head"):
+            target = thumb_dir / f"{stem}_{framing}_{photo.sha[:12]}.jpg"
+            if not target.exists():
+                data = thumbnail_bytes(photo, framing)
+                temporary = None
+                try:
+                    with tempfile.NamedTemporaryFile(
+                        mode="wb",
+                        prefix=f".{stem}_{framing}_",
+                        suffix=".tmp",
+                        dir=thumb_dir,
+                        delete=False,
+                    ) as output:
+                        temporary = pathlib.Path(output.name)
+                        output.write(data)
+                        output.flush()
+                        os.fsync(output.fileno())
+                    os.replace(temporary, target)
+                finally:
+                    if temporary is not None and temporary.exists():
+                        temporary.unlink()
+            targets[framing] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
         public = {key: value for key, value in item.items() if key != "_photo"}
-        public["thumbnail"] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
+        public["thumbnail"] = targets["chest"]
+        public["thumbnailHead"] = targets["head"]
         public["href"] = photo.path.resolve().as_uri()
         public_items.append(public)
     return public_items, thumb_dir
@@ -598,8 +665,10 @@ def render_html(items, stamp, warnings=()):
 <div class="controls">
 <label>Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
 <label>View <select id="mode"><option value="people">People</option><option value="review">Review queue</option><option value="low">Low scores</option><option value="all">All photos (flat)</option></select></label>
+<label>Category <select id="group"></select></label>
 <label>Person <select id="person"></select></label>
-<label>Group <select id="group"></select></label>
+<label>Thumbnail <select id="framing"><option value="chest">Chest-up</option><option value="head">Head</option></select></label>
+<label>Tile size <select id="card-size"><option value="170px">Small</option><option value="260px" selected>Medium</option><option value="340px">Large</option></select></label>
 <label>Location <select id="bucket"></select></label>
 <label>State <select id="state"></select></label>
 <label>Order <select id="sort"><option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="name">Name</option></select></label>
@@ -607,7 +676,7 @@ def render_html(items, stamp, warnings=()):
 <span class="count" id="count"></span>
 </div>
 <div class="actions"><button id="download" type="button" disabled>Download staged actions</button><span id="staged-count">0 actions staged</span></div>
-<div class="grid" id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
+<div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
 <script id="review-data" type="application/json">{payload}</script>
 <script>{SCRIPT}</script>
 </body></html>

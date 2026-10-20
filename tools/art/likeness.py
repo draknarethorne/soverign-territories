@@ -27,6 +27,7 @@ Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, ma
   likeness like path\\to\\photo.jpg      which folders a new photo looks like
   likeness sort                       Various: photos that match an existing person move there, clusters of one new person
                                       go to a new Prospects/<invented name> folder; the rest stay
+  likeness reconcile                 preview Review + Various together against one frozen identity snapshot
   likeness merge Mia "Eva Emily"      move every photo of one folder into another (one person under two names)
   likeness rematch                    prospect folders that are one person under two names are merged (0.48); look-alikes of an angel or sister are listed
   likeness retire-empty               archive empty Prospect folders (preview unless --apply)
@@ -68,6 +69,7 @@ import people  # noqa: E402
 import library_backup  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library.audit import audit_person  # noqa: E402
+from likeness_library.reconciliation import frozen_identity_cores, plan_reconciliation  # noqa: E402
 from likeness_library.scoring import core_scores, nz  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
@@ -878,6 +880,99 @@ def cmd_sort(args):
         after_moves(args, n > 0)
     else:
         print("preview only; add --apply to move them")
+
+
+def cmd_reconcile(args):
+    """Preview Review and pool routing together without changing library files."""
+    cfg, st, work, cache, space = build(args)
+    embed = args.embedder or Embedder()
+    review_rows = load_review(cfg, work, space, cache, embed, st, include_empty=True)
+    catalog = metadata.load_catalog()
+    cores, locked_ids, diagnostics = frozen_identity_cores(
+        space,
+        catalog,
+        photo_id_fn=metadata.photo_id_from_name,
+        content_sha256_fn=metadata.content_sha256,
+        additional_photos=[photo for _, _, photo in review_rows if photo is not None],
+    )
+
+    candidates = []
+    no_face = 0
+    for photo in space.photos:
+        if not matches(photo.key, st["pool"]) or not photo.usable(st["minFace"]) or junk_reason(photo, st):
+            continue
+        photo_id = metadata.photo_id_from_name(photo.name)
+        candidates.append({
+            "photoId": photo_id,
+            "sourceFolder": photo.key,
+            "sourceBucket": "Pool",
+            "side": "Artists" if photo.key.startswith("Artists/") else "Prospects",
+            "protected": bool(photo_id and photo_id in locked_ids),
+            "vector": photo.vec,
+        })
+    for folder, path, photo in review_rows:
+        if photo is None:
+            no_face += 1
+            continue
+        photo_id = metadata.photo_id_from_name(path.name)
+        candidates.append({
+            "photoId": photo_id,
+            "sourceFolder": folder,
+            "sourceBucket": "Review",
+            "side": "Artists" if folder.startswith("Artists/") else "Prospects",
+            "protected": bool(photo_id and photo_id in locked_ids),
+            "vector": photo.vec,
+        })
+
+    taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
+    report = plan_reconciliation(
+        candidates,
+        cores,
+        assign=st["assign"],
+        margin=st["margin"],
+        cluster=st["cluster"],
+        minimum_cluster=st["minCluster"],
+        cast_merge=st["castMerge"],
+        names_taken=taken,
+        name_factory=invent_name,
+    )
+    report.update({
+        "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "source": "likeness-reconcile",
+        "sourceRoot": str(work.resolve()),
+        "scope": "Review and Various candidates; no Prospect outliers are moved or included",
+        "noUsableReviewPhotos": no_face,
+        "coreDiagnostics": diagnostics,
+    })
+    print(
+        f"Read-only reconciliation: {report['candidateCount']} candidate(s), "
+        f"{report['coreFolders']} frozen identity core(s), "
+        f"{report['assignedCount']} suggested destination(s), "
+        f"{report['heldCount']} held, {len(report['clusters'])} candidate cluster(s)."
+    )
+    print("No images or catalogue data are changed; the embedding cache may be updated.")
+    for row in report["assignments"]:
+        score = f"{row['score']:.2f}" if row["score"] is not None else "cluster"
+        print(
+            f"  {row['photoId']}  {row['sourceBucket']} {row['sourceFolder']} "
+            f"-> {row['destination']} ({score}; {row['reason']})"
+        )
+    for row in report["held"]:
+        print(
+            f"  HOLD {row.get('photoId') or '<no stable ID>'}  "
+            f"{row.get('sourceBucket') or 'unknown'} {row.get('sourceFolder') or ''}: "
+            f"{row['reason']}"
+        )
+    for diagnostic in diagnostics:
+        print(f"  CORE WARNING {diagnostic}")
+    if args.out:
+        output = pathlib.Path(args.out)
+        try:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        except OSError as exc:
+            raise SystemExit(f"cannot write reconciliation report {output}: {exc}") from exc
+        print(f"report written: {output}")
 
 
 def whole_folder(space, cfg, name):
@@ -1968,13 +2063,15 @@ def cleanup_hold(work, add=()):
     return held
 
 
-def load_review(cfg, work, space, cache, embed, st, wanted=()):
+def load_review(cfg, work, space, cache, embed, st, wanted=(), include_empty=False):
     """[(folder key, file, Photo or None)] for every file in a person folder's review folder; None when the file has no usable face. Photos held for a clean-up (see cleanup_hold) are not listed."""
     out = []
     held = cleanup_hold(work)
     for group, name, folder in cw.photo_folders(cfg, work):
         key = f"{group}/{name}"
-        if key not in space.by_key or (wanted and name.split("/")[-1].lower() not in wanted):
+        if (key not in space.by_key and not include_empty) or (
+            wanted and name.split("/")[-1].lower() not in wanted
+        ):
             continue
         for f in originals.images(folder / "review"):
             sha = cache.sha(f)
@@ -3164,6 +3261,8 @@ def main(argv=None, embedder=None):
     s.add_argument("--plan", help="also write the moves to this JSON file")
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
+    s = add("reconcile", cmd_reconcile)
+    s.add_argument("--out", help="write the read-only combined routing report as JSON")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
     add("retire-empty", cmd_retire_empty, apply=True)
