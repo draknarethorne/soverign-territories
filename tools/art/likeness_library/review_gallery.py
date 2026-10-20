@@ -30,6 +30,7 @@ h1{margin:0 0 4px}.note{color:#555;max-width:1100px}.warnings{color:#8a3b16}
 .controls input,.controls select,.controls button{font:inherit;padding:7px}
 .count{color:#555}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
 article{background:white;border:1px solid #ded8ce;border-radius:6px;padding:8px;min-width:0}
+article.primary{border:2px solid #8b6d32}
 article img{display:block;width:100%;aspect-ratio:188/220;object-fit:cover;background:#eee}
 article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 0}
 .badge{display:inline-block;border-radius:3px;background:#eee;padding:2px 5px;margin:0 4px 4px 0;font-size:.82em}
@@ -37,12 +38,19 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 #more{display:block;margin:18px auto;padding:8px 18px;font:inherit}
 .stage{display:block;margin-top:8px;font-size:.9em}.stage select{display:block;width:100%;font:inherit;padding:5px}
 .actions{display:flex;gap:10px;align-items:center;margin:14px 0}.actions button{font:inherit;padding:8px}
+.person-group{margin:20px 0;padding:14px;background:#f0ede6;border-radius:8px}
+.person-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+.person-head h2{font-size:1.15em;margin:4px 0;min-width:190px}
+.reference{max-width:220px}.reference img{aspect-ratio:1;object-fit:cover}
+.reference .detail{font-size:.82em}
 """
 
 SCRIPT = """
 const records=JSON.parse(document.getElementById("review-data").textContent);
 const group=document.getElementById("group"), bucket=document.getElementById("bucket");
 const state=document.getElementById("state"), sort=document.getElementById("sort");
+const mode=document.getElementById("mode"), person=document.getElementById("person");
+const scoreCeiling=document.getElementById("score-ceiling");
 const query=document.getElementById("query"), grid=document.getElementById("grid");
 const count=document.getElementById("count"), more=document.getElementById("more");
 const stagedCount=document.getElementById("staged-count"), download=document.getElementById("download");
@@ -55,23 +63,34 @@ function fill(select, values, label) {
 fill(group,records.map(r=>r.group),"groups");
 fill(bucket,records.map(r=>r.bucket),"locations");
 fill(state,records.map(r=>r.state),"states");
+fill(person,records.map(r=>r.folder),"people");
 function compare(a,b) {
   if(a.score===null&&b.score!==null)return 1;
   if(b.score===null&&a.score!==null)return -1;
-  if(sort.value==="name")return (a.folder+" "+a.name).localeCompare(b.folder+" "+b.name);
+  if(sort.value==="name")return a.name.localeCompare(b.name);
   if(a.score===null)return 0;
   return sort.value==="high" ? b.score-a.score : a.score-b.score;
 }
-function card(r) {
+function card(r, readOnly=false) {
   const article=document.createElement("article");
+  if(readOnly)article.className="reference";
+  else if(r.primaryReference)article.className="primary";
   const link=document.createElement("a"); link.href=r.href; link.target="_blank"; link.rel="noopener noreferrer";
   const image=document.createElement("img"); image.src=r.thumbnail; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
-  const name=document.createElement("div"); name.className="name"; name.textContent=r.folder;
+  const name=document.createElement("div"); name.className="name"; name.textContent=readOnly?r.name:r.folder;
   article.append(name);
-  for(const text of [r.group,r.bucket,r.state]) {
+  const badges=readOnly?[r.referenceLabel]:[r.group,r.bucket,r.state,r.primaryReference?r.referenceLabel:""];
+  for(const text of badges.filter(Boolean)) {
     const badge=document.createElement("span"); badge.className="badge"; badge.textContent=text; article.append(badge);
+  }
+  if(readOnly) {
+    const detail=document.createElement("div"); detail.className="detail";
+    detail.textContent="Identity anchor: "+(r.identityAnchor?"yes":"no")+
+      " · workflow-selected: "+(r.workflowSelected?"yes":"no");
+    article.append(detail);
+    return article;
   }
   const details=[
     "Photo: "+r.name,
@@ -101,23 +120,71 @@ function updateStagedCount(){
   stagedCount.textContent=staged.size+" action(s) staged";
   download.disabled=staged.size===0;
 }
+function matchesMode(r) {
+  if(mode.value==="review")return r.bucket==="Review";
+  if(mode.value==="low")return r.bucket==="Gallery"&&r.score!==null&&r.score<Number(scoreCeiling.value);
+  return true;
+}
+function primaryFor(folder) {
+  return records.find(r=>r.folder===folder&&r.primaryReference)||null;
+}
+function groupCards(items) {
+  const grouped=new Map();
+  for(const item of items) {
+    if(!grouped.has(item.folder))grouped.set(item.folder,[]);
+    grouped.get(item.folder).push(item);
+  }
+  const nodes=[];
+  for(const [folder,photos] of grouped) {
+    const section=document.createElement("section"); section.className="person-group";
+    const header=document.createElement("div"); header.className="person-head";
+    const title=document.createElement("h2"); title.textContent=folder+" · "+photos.length+" shown"; header.append(title);
+    const reference=primaryFor(folder);
+    if(reference) {
+      if(!photos.some(item=>item.photoId===reference.photoId))header.append(card(reference,true));
+    } else {
+      const note=document.createElement("span"); note.className="detail"; note.textContent="No scored Gallery reference is available for this person.";
+      header.append(note);
+    }
+    section.append(header);
+    const photoGrid=document.createElement("div"); photoGrid.className="grid";
+    photoGrid.append(...photos.map(item=>card(item)));
+    section.append(photoGrid); nodes.push(section);
+  }
+  return nodes;
+}
 function render() {
   const q=query.value.trim().toLocaleLowerCase();
   visible=records.filter(r=>
+    matchesMode(r) &&
     (!group.value||r.group===group.value) &&
     (!bucket.value||r.bucket===bucket.value) &&
     (!state.value||r.state===state.value) &&
+    (!person.value||r.folder===person.value) &&
     (!q||(r.folder+" "+r.name+" "+r.reason).toLocaleLowerCase().includes(q))
-  ).sort(compare);
+  ).sort((a,b)=>{
+    if(mode.value!=="all") {
+      const folderOrder=a.folder.localeCompare(b.folder);
+      if(folderOrder)return folderOrder;
+    }
+    return compare(a,b);
+  });
   shown=pageSize; draw();
 }
 function draw() {
-  grid.replaceChildren(...visible.slice(0,shown).map(card));
-  count.textContent="Showing "+Math.min(shown,visible.length)+" of "+visible.length+" photos";
+  const page=visible.slice(0,shown);
+  grid.replaceChildren(...(mode.value==="all"?page.map(item=>card(item)):groupCards(page)));
+  const people=new Set(visible.map(item=>item.folder)).size;
+  count.textContent="Showing "+Math.min(shown,visible.length)+" of "+visible.length+
+    " photos"+(mode.value==="all"?"":" across "+people+" people");
   more.hidden=shown>=visible.length;
   more.textContent="Show next "+pageSize;
 }
-for(const control of [group,bucket,state,sort])control.addEventListener("change",render);
+for(const control of [group,bucket,state,sort,person,scoreCeiling])control.addEventListener("change",render);
+mode.addEventListener("change",()=>{
+  sort.value=mode.value==="all"?"low":"high";
+  render();
+});
 query.addEventListener("input",render);
 more.addEventListener("click",()=>{shown+=pageSize;draw()});
 download.addEventListener("click",()=>{
@@ -193,6 +260,50 @@ def action_folder_supported(folder):
     return folder.split("/", 1)[0] in ACTION_ROOTS
 
 
+def assign_primary_references(items):
+    """Mark one workflow, trusted, core-ranked or provisional reference per person."""
+    by_folder = collections.defaultdict(list)
+    for item in items:
+        by_folder[item["folder"]].append(item)
+    for folder_items in by_folder.values():
+        gallery_items = [item for item in folder_items if item["bucket"] == "Gallery"]
+        workflows = [item for item in folder_items if item["workflowSelected"]]
+        anchors = [item for item in gallery_items if item["identityAnchor"]]
+        core = [item for item in gallery_items if item["state"] == "Core member"]
+        if workflows:
+            reference = min(workflows, key=lambda item: item["name"].casefold())
+            label = "Workflow-selected photo"
+        elif anchors:
+            reference = min(
+                anchors,
+                key=lambda item: (
+                    -(item["score"] if item["score"] is not None else float("-inf")),
+                    item["name"].casefold(),
+                ),
+            )
+            label = "User-confirmed identity anchor"
+        elif core:
+            reference = min(
+                core,
+                key=lambda item: (
+                    -(item["score"] if item["score"] is not None else float("-inf")),
+                    item["name"].casefold(),
+                ),
+            )
+            label = "Score-ranked provisional core member"
+        else:
+            scored = [item for item in gallery_items if item["score"] is not None]
+            reference = min(
+                scored,
+                key=lambda item: (-item["score"], item["name"].casefold()),
+                default=None,
+            )
+            label = "Score-ranked reference · provisional, not confirmed"
+        if reference:
+            reference["primaryReference"] = True
+            reference["referenceLabel"] = label
+
+
 def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False, embed=None, keep=0.25):
     """Build scored image records; Review candidates never enter an identity core."""
     groups = set(SECTIONS if include_artists else SECTIONS[:-1])
@@ -200,6 +311,13 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
     ]
+    selected_names = list(cfg.get("photos", {}).values())
+    for flow in cfg.get("flows", {}).values():
+        selected_names.extend(flow.get("photos", {}).values())
+    selected_ids = {
+        photo_id for name in selected_names if isinstance(name, str)
+        if (photo_id := metadata.photo_id_from_name(name))
+    }
     active_by_path = {_local_photo_path(photo.path): photo for photo in space.photos}
     gallery_by_key, review_by_key = {}, {}
     added_embeddings = False
@@ -226,6 +344,14 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
 
     all_photos = list(space.photos)
     all_photos.extend(photo for records in review_by_key.values() for photo, _ in records)
+    content_hashes = {}
+
+    def manifest_hash(photo):
+        key = _local_photo_path(photo.path)
+        if key not in content_hashes:
+            content_hashes[key] = metadata.content_sha256(photo.path)
+        return content_hashes[key]
+
     id_counts = collections.Counter(
         photo_id for photo_id in (metadata.photo_id_from_name(p.name) for p in all_photos) if photo_id
     )
@@ -319,8 +445,14 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "bucket": "Gallery",
                 "name": photo.name,
                 "photoId": photo_id,
-                "contentSha256": photo.sha,
+                "contentSha256": manifest_hash(photo),
                 "personId": person_id,
+                "workflowSelected": photo_id in selected_ids,
+                "identityAnchor": bool(
+                    photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                ),
+                "primaryReference": False,
+                "referenceLabel": "",
                 "stageable": bool(
                     photo_id and photo_id not in ambiguous_ids and not conflict
                     and action_folder_supported(key)
@@ -372,8 +504,14 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "bucket": "Review",
                 "name": photo.name,
                 "photoId": photo_id,
-                "contentSha256": photo.sha,
+                "contentSha256": manifest_hash(photo),
                 "personId": person_id,
+                "workflowSelected": photo_id in selected_ids,
+                "identityAnchor": bool(
+                    photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
+                ),
+                "primaryReference": False,
+                "referenceLabel": "",
                 "stageable": bool(
                     photo_id and photo_id not in ambiguous_ids and not conflict
                     and action_folder_supported(key)
@@ -398,6 +536,8 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "best_other": best_other(photo),
                 "_photo": photo,
             })
+
+    assign_primary_references(items)
 
     items.sort(key=lambda item: (
         item["score"] is None,
@@ -453,14 +593,17 @@ def render_html(items, stamp, warnings=()):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>People gallery review</title><style>{CSS}</style></head><body>
 <h1>People gallery review</h1>
-<p class="note">Generated {stamp} with {len(items)} indexed photos. This local page only stages decisions into a versioned JSON download; it never changes source photos or catalogue data. Photos are sorted by similarity to the active person core (lowest first). Similarity is evidence, not certainty; outlier labels are suggestions only. Review photos are compared with their source core but excluded from it.</p>
+<p class="note">Generated {stamp} with {len(items)} indexed photos. This local page only stages decisions into a versioned JSON download; it never changes source photos or catalogue data. Grouped mode orders photos within each person by similarity and keeps a reference visible while filters are active. A workflow-selected photo and user-confirmed identity anchor are labeled separately from a provisional score-ranked reference. Similarity is evidence, not certainty; outlier labels are suggestions only. Review photos are compared with their source core but excluded from it.</p>
 {warning_html}
 <div class="controls">
 <label>Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
+<label>View <select id="mode"><option value="people">People</option><option value="review">Review queue</option><option value="low">Low scores</option><option value="all">All photos (flat)</option></select></label>
+<label>Person <select id="person"></select></label>
 <label>Group <select id="group"></select></label>
 <label>Location <select id="bucket"></select></label>
 <label>State <select id="state"></select></label>
-<label>Order <select id="sort"><option value="low">Lowest score first</option><option value="high">Highest score first</option><option value="name">Name</option></select></label>
+<label>Order <select id="sort"><option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="name">Name</option></select></label>
+<label>Low-score cutoff <input id="score-ceiling" type="number" min="-1" max="1" step="0.01" value="0.25"></label>
 <span class="count" id="count"></span>
 </div>
 <div class="actions"><button id="download" type="button" disabled>Download staged actions</button><span id="staged-count">0 actions staged</span></div>

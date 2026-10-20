@@ -133,9 +133,15 @@ Artists are also kept apart from each other: a photo stays with the artist it ca
 `likeness crosscheck` lists those look-alikes, and prospects that look like an artist's person, in `<work>\_reports\library\crosscheck.md` so you can decide.
 The people gallery at `<work>\_reports\library\people_gallery.html` shows each Angel's paired Sister,
 canonical hair color and top eligible Prospect alternatives by the shared likeness-plus-photo-variety score.
-For score-ordered, high-volume inspection of every active Gallery and Review
-photo, run `bin\people-gallery-review.cmd`; it writes a separate local
-`people_gallery_review.html` with cached thumbnails and filters. Per-photo
+For high-volume inspection of every active Gallery and Review photo, run
+`bin\people-gallery-review.cmd`; it writes a separate local
+`people_gallery_review.html` with cached thumbnails and filters. It opens in a
+person-grouped view, with each person's photos ordered from highest to lowest
+similarity. The Review queue, adjustable low-score view, person filter and
+flat all-photo view support different review tasks. A person group's workflow
+photo, identity anchor or provisional score-ranked reference remains visible
+when the filters hide it, and those reference types are labeled distinctly.
+Per-photo
 controls stage identity-anchor, protection, send-to-Review, reject-to-Various
 and Review-approval decisions. Downloading the versioned manifest is the only
 action the page takes; it never edits catalogue data or moves photos. Run

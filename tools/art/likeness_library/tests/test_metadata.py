@@ -91,6 +91,21 @@ class LikenessMetadataTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertIsNone(metadata.photo_id_from_name("not-an-original.png"))
 
+    def test_photo_id_and_content_hash_survive_folder_and_prefix_rename(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original = pathlib.Path(tmp) / "Prospects" / "Sophie" / "gallery" / "sophie_image_123456.jpg"
+            original.parent.mkdir(parents=True)
+            original.write_bytes(b"same original bytes")
+            photo_id = metadata.photo_id_from_name(original.name)
+            content_hash = metadata.content_sha256(original)
+
+            renamed = pathlib.Path(tmp) / "Potentials" / "Sydney Sky" / "gallery" / "sydney_sky_image_123456.jpg"
+            renamed.parent.mkdir(parents=True)
+            original.rename(renamed)
+
+            self.assertEqual(metadata.photo_id_from_name(renamed.name), photo_id)
+            self.assertEqual(metadata.content_sha256(renamed), content_hash)
+
     def test_content_hash_is_a_separate_stale_file_guard(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = pathlib.Path(tmp) / "image.jpg"

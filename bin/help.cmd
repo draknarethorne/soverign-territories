@@ -17,7 +17,7 @@ echo    library-preview.cmd             the same, every step as a preview ^(noth
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
 echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
 echo    people-gallery.cmd              one web page with prospect sister matches, Angel pairings, hair colors and ranked candidates: _reports\library; full rankings in comparisons\pairings
-echo    people-gallery-review.cmd [--out DIR] [--keep SCORE]  local, read-only Gallery + Review audit, sorted by core similarity; cached thumbnails and filters
+echo    people-gallery-review.cmd [--out DIR] [--keep SCORE]  local, read-only Gallery + Review audit; grouped people, Review and low-score views, flat view, cached thumbnails
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions

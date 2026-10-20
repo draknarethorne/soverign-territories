@@ -262,7 +262,7 @@ work begins. Do not leave a broken or half-migrated state between increments.
 
 ### Phase A — baseline and design contract
 
-- [ ] **P1 ai** A1 Capture current settings, command behavior, reports and
+- [x] **P1 ai** A1 Capture current settings, command behavior, reports and
   focused test results; inventory every command that moves, merges, protects
   or reclassifies images.
 - [x] **P1 you** A2 Approve one git-tracked global JSON catalogue, separate
@@ -270,11 +270,42 @@ work begins. Do not leave a broken or half-migrated state between increments.
 - [x] **P1 you** A3 Confirm Review removes the photo from its active identity;
   Reject sends it through the normal `Various` path without source-folder
   priority.
-- [ ] **P1 ai** A4 Define the stable person/photo ID model, schema, score/action
+- [x] **P1 ai** A4 Define the stable person/photo ID model, schema, score/action
   semantics, failure behavior, audit guarantees and safety targets. Prove
   identity continuity through move, rename, crop, duplicate and restore cases.
 
 **Exit:** the accepted decisions above and verified stable-ID/schema design.
+
+### Phase A baseline record
+
+The command inventory is maintained in the [likeness guide](../art/likeness.md)
+and [bin help](../../bin/help.cmd). Image-changing surfaces were traced through
+`bin\library.cmd` (`library_sync.py`), `bin\likeness.cmd` (`likeness.py`),
+`bin\originals.cmd` (`originals.py`), and the staged review-action CLI.
+Relevant operations include ingest/sort, review, singles/rematch, pullback,
+crop/junk, artist grouping, merge/retire/archive, cast promotion/swap, and
+Prospect/Potential rename. Their preview/apply behavior and recovery paths are
+documented beside each command. Reports, caches, and UI outputs are kept apart
+from source-photo and catalogue writes.
+
+At the Oct 20 baseline, the active likeness catalogue is empty. Effective
+settings combine defaults in `tools/art/likeness.py` with
+`workflows/workspaces.json`: assign `0.40`, margin `0.10`, cluster `0.25`,
+minimum new cluster `3`, outlier `0.15`, similar-person report `0.30`, minimum
+face size `60`, secondary-face ratio `0.30`, singles `0.35`, Prospect rematch
+`0.48`, cast report `0.50`, and cast merge `0.55`. The configured Angelica
+anchors, keep-photo heroes, and one `different` pair remain as recorded in the
+workspace config. No thresholds changed in this plan.
+
+Stable photo IDs come from the embedded source key in the original filename,
+independent of folder and name prefix; tests cover move/rename, scaled suffix,
+crop (same ID, changed SHA-256), ambiguous duplicate IDs, and a verified
+backup-copy/restore. A staged action manifest separately uses a full SHA-256,
+so edits invalidate old manifests without changing the source identity.
+Ambiguous active copies and stale hashes are rejected, not guessed. A4 is
+complete for originals-managed IDs and the current backup/crop flows; future
+transformations that discard source IDs must remain explicitly unsupported
+until they have an alias or restore mapping.
 
 ### Phase B — metadata and read-only audit
 
@@ -311,9 +342,32 @@ action-specific measurements on user-labelled examples.
   the dedicated launcher writes content-cached thumbnails beside the report.
 - [x] **P1 ai** C2 Add staged anchor/protect, Review, Reject-to-Various and
   Review-approval actions; export a versioned JSON manifest by download.
-- [ ] **P1 ai** C3 Keep source files and catalogue read-only (allow only an
+- [x] **P1 ai** C3 Keep source files and catalogue read-only (allow only an
   explicit manifest download); use bounded/lazy thumbnails and benchmark
   100+ photo folders.
+- [x] **P1 ai** C4 Organize review work by person, with within-person score
+  ordering, Review-only and low-score views, an adjustable score cutoff, and
+  a visible reference photo when filters hide it. Distinguish the workflow
+  selection and user-confirmed identity anchor from a provisional scored
+  reference; preserve the flat all-photos view.
+
+The Oct 20 real-library run indexed 2,668 active Gallery/Review photos into
+the dated report at `B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`.
+The library has four Gallery folders with at least 100 photos (maximum 322).
+The initial report and thumbnail-cache build took 88.3 seconds; a cached
+regeneration took 7.6 seconds and produced a 2.25 MB standalone HTML page with
+2,668 content-cached thumbnails. The browser renders at most 100 cards at a
+time and lazily loads images. A real-library validate/preview of a staged
+Prospect Review move passed, and the source SHA-256 remained unchanged. That
+example was not applied. It exposed and fixed a previous bug: the review page
+had placed the embedding cache's SHA-1 into the manifest's SHA-256 field;
+regression tests now require real 64-character SHA-256 values.
+The grouped-gallery refresh at
+`B:\Sovereign Territories\_reports\likeness-review-20261020-grouped\people_gallery_review.html`
+contains all 2,668 photos and cached thumbnails across 261 folders. It
+identifies 146 folders with a usable primary reference and labels 21
+workflow-selected images; the identity catalogue is still empty, so no
+user-confirmed anchors are present in this real-library report.
 
 **Exit:** user can inspect a large person and stage actions without hand-editing
 JSON or moving files.

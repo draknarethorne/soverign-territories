@@ -90,13 +90,34 @@ does not move images and may update only the existing embedding cache. The
 catalogue remains empty, so current matching behavior is unchanged.
 The audit tests now cover stale crop hashes, duplicate source IDs, moved
 catalogue folders, protected-only photos, small cores, and conflicting folder
-or anchor ownership. Restore/backup identity continuity remains open; no
-production thresholds or library photos have changed.
+or anchor ownership. Stable source IDs are verified through move/name-prefix
+changes, scaled suffixes, crop-with-new-content, duplicate rejection and a
+verified backup-copy/restore. Identity continuity is closed for these
+originals-managed operations; transformations that discard source IDs remain
+unsupported until explicitly mapped. No production thresholds or library
+photos have changed.
 The separate `people_gallery_review.html` view is available through
 `bin\people-gallery-review.cmd`; it is local and read-only, includes Gallery
 and Review photos, and provides score sorting, filters and content-cached
 lazy thumbnails. It can stage identity-anchor, protection, Review,
 Reject-to-Various and Review-approval actions to a versioned JSON download.
+The view now defaults to person-grouped inspection, sorting each person's
+photos from highest to lowest similarity. Review-only, low-score, per-person
+and flat all-photo views are available; the low-score cutoff is adjustable.
+Each group retains a visible comparison photo when filters hide it, while
+workflow-selected photos, confirmed identity anchors and provisional
+score-ranked references have distinct labels. The report remains read-only.
+The Oct 20 library report for review is
+`B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`:
+2,668 photos, 2,668 cached thumbnails; initial build 88.3 s and cached
+regeneration 7.6 s. The grouped refresh is
+`B:\Sovereign Territories\_reports\likeness-review-20261020-grouped\people_gallery_review.html`:
+2,668 photos and thumbnails across 261 folders; 146 folders have a usable
+primary reference and 21 images are selected by a workflow. The identity
+catalogue remains empty, so no stored identity anchors are expected yet.
+A real-library staged Review preview passed and confirmed
+the source hash was unchanged; it was not applied. That run also caught and
+fixed the SHA-1/SHA-256 manifest mismatch in the gallery export.
 `bin\likeness-actions.cmd validate|preview` checks manifest schema, photo IDs,
 content hashes, current folders, catalogue ownership and action conflicts.
 `apply FILE.json --apply` now creates and verifies a backup of active library

@@ -7,6 +7,7 @@ import tempfile
 import unittest
 
 from library_backup import create_backup, verify_backup
+from likeness_library import metadata
 
 
 class LibraryBackupTests(unittest.TestCase):
@@ -73,6 +74,23 @@ class LibraryBackupTests(unittest.TestCase):
         )
         snapshot_copy = destination / "likeness-catalogue" / catalogue.name
         self.assertEqual(snapshot_copy.read_bytes(), catalogue.read_bytes())
+        self.assertTrue(verify_backup(destination))
+
+    def test_restored_photo_retains_its_stable_id_and_content_hash(self):
+        photo = self.work / "Prospects" / "Sophie" / "gallery" / "sophie_image_123456.jpg"
+        photo.parent.mkdir(parents=True)
+        photo.write_bytes(b"photo bytes")
+        photo_id = metadata.photo_id_from_name(photo.name)
+        content_hash = metadata.content_sha256(photo)
+
+        destination = create_backup(self.work, self.inputs, self.repo, stamp="restore-id", apply=True)
+        saved_photo = destination / "work-root" / "Prospects" / "Sophie" / "gallery" / photo.name
+        restored = self.work / "Prospects" / "Sydney Sky" / "gallery" / "sydney_sky_image_123456.jpg"
+        restored.parent.mkdir(parents=True)
+        shutil.copy2(saved_photo, restored)
+
+        self.assertEqual(metadata.photo_id_from_name(restored.name), photo_id)
+        self.assertEqual(metadata.content_sha256(restored), content_hash)
         self.assertTrue(verify_backup(destination))
 
 
