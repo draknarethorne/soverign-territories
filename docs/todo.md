@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (35)
+### Your queue: needs your hands or a decision (34)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -21,7 +21,6 @@
 - [ ] T0 Finish the current Angelica comparisons; save candidate prompt refinements and outputs in `zz_Shots`. Track workflow, engine, input image, seed/settings where available, and results for Prime, Bare Figure vs Bare, BareBase ... ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] Finish and refine the manual edit-prompt set in `prompts/_edit/female`; tell the assistant when the batch is ready for review. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
-- [ ] R13 Identify and pull back only the Sophie Lloyd photos and any other individual originals you have confirmed are misaligned. Keep this a user-selected correction; do not move photos based only on similarity scores. ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
 **P2 (normal)**
 
@@ -51,12 +50,14 @@
 - [ ] Archive `prompts/_edit` only after the manual prompt work is finished and any accepted content has been incorporated or deliberately retained elsewhere. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
-### Either of us (19)
+### Either of us (23)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] R1 G1 Darkness and Light set (the MVP). Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is ... ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
+- [ ] E5 Compare preview and applied results with user decisions ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] F2 After action-specific validation, allow only eligible ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P2 (normal)**
 
@@ -64,10 +65,11 @@
 - [ ] S5 After T0, compare selected `female_anatomy.txt` terms with the relevant JSON inputs and generated prompts for bust, pelvic, body, makeup and skin. Report mappings and possible simplifications; do not edit data. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R2 D3 Starter decks and products. Rebuild `data/decks`, `data/products` and `data/manifests` around Darkness and Light (plus Neutral cards) using the starter-hero decision; include lower-level heroes and decide where bound ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D9 Calibrate a report-only prospect-readiness ranking from face quality, usable-photo quantity and distinct framing; validate a pose-diversity signal and compare rankings against human review before using the score to ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D12 Design a recoverable, user-directed way to exclude an individual misidentified photo from an active Prospect or Artist folder and return it to the reprocessing pool. Prefer a previewable CLI operation and preserve the ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] After prompt review and approval, implement only the agreed template/data changes, regenerate the affected prompts and workflows, and verify that unrelated outputs remain unchanged. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] Continue the approved likeness/report follow-up after the user reviews the current gallery; do not automatically promote a Prospect or globally assign candidates from the independent rankings. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
+- [ ] B5 Establish user-confirmed examples and report ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] F4 Define and verify action-specific precision/recall ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P3 (later, or ideas)**
 
@@ -80,13 +82,31 @@
 - [ ] D8 Background processes were suspended by Windows after about a minute (every thread "Suspended"; resuming them with `NtResumeProcess` finished the job). Find out why (power or efficiency mode, a security tool) and, if it ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D11 Design a safe, archive-first way to deactivate an entire Prospect or Artist folder identified as a false face match. Keep the HTML static unless a trusted local action flow is approved; never delete source files. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (25)
+### For the assistant, when you say go (49)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
-- [ ] R14 After you say the selected originals are ready in the reprocessing pool, preview the routine, take the required verified backup, process that batch, and verify the resulting identities, history, gallery, and derived-image ... ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
+- [ ] A1 Capture current settings, command behavior, reports and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] A4 Define the stable person/photo ID model, schema, score/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] B1 Add and validate ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] B2 Add library metadata read/write helpers with atomic writes, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] B3 Generate a read-only trusted/provisional core, photo score ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] B4 Add tests for changed folders, duplicate/ambiguous IDs, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C1 Produce a separate high-volume ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C2 Add staged anchor/protect, Review, Reject-to-Various and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C3 Keep the page local and read-only with respect to the ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] D1 Add manifest validate and preview commands with explicit ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] D2 Add backup-verified apply and undo for metadata-only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] D3 Verify category rules, protected anchors, one-time anchor ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] E1 Plan user-staged Review photos, incoming `Various` photos, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] E2 Cluster rejected, reviewed and incoming candidates together; ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] E3 Iterate candidate matching to a deterministic fixed point. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] E4 Add an empty-pool mode for Review-only and self-healing runs. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] F1 Add report-only Prospect outlier detection against ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] F3 Keep routine Angel/Sister gallery processing report-only. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P2 (normal)**
 
@@ -97,12 +117,19 @@
 - [ ] R8 Step 4: one canonical companion piece per Elder Dragon from its identity file, and each sister's piece extends it with only the scene placement (today the sisters' dragon companions are copied text). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] R14 The documentation audit's other items that are not decisions, and a launcher check, now with the art and video tutorials (the audit is in `docs/audits/2026-10-12-docs-audit.md`). ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] D1 `likeness status`: for every root and every artist, what is left loose and why (no usable face, a second person, an animal, bars over her head, held for clean-up), plus the pool, the review folders and `_junk`. The question ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D2 Split `tools/art/likeness.py` (2,500 lines, 30 subcommands, one file) into modules: the face reader and cache, the plans (sort, group, artists, crop), the commands. Behaviour unchanged, the 38 tests are the net. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
-- [ ] D3 One place for the thresholds. `assign`, `margin`, `cluster`, `minCluster`, `singles`, `rematch`, `rematchCast`, `castMerge`, `odd`, `alike`, `multiFace`, and the per-command options (`--join`, `--cohesion`, `--single-join`, ... ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] D4 `bin\day-close.cmd`: the day's hygiene as one read-only check (tmp empty, every plan has a status and tagged boxes, `todo.md` is current, lint, tests, validators), so it is a command and not a memory. ([2026-10-12](plans/2026-10-12-tooling-debt.md))
 - [ ] Once requested, compare the selected manual prompts and vocabulary against the existing JSON inputs, prompt templates, and generated prompts. Report what should map to new templates and what existing templates may be affected ... ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] L5 Specify how confidently unusable photos are retired while Junk remains a repair-and-resubmit path; preserve source files and provide a recovery trail. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
 - [ ] R9 Design a chest-crop preview using face-anchored head/shoulder/chest bounds; assess sample full, partial and varied-pose images before deciding whether to add it to `originals`, workspace inputs or Prime workflows. ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
+- [ ] D4 Keep existing commands as compatibility entry points while ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] G1 After Review/Reject workflows are working, expose the ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] G2 Show the destination and consequences in preview; do not ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] G3 Test cancel, stale-manifest rejection, backup, apply and ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] H1 Integrate the planner into `bin\library.cmd`, retaining ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] H2 Extract metadata, core/scoring, planning and report/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] H3 Inventory all effective thresholds and options in one ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] H4 Simplify the user-facing workflow and CLI options only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] H5 Update the likeness guide, original-photo runbook, gallery ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
 **P3 (later, or ideas)**
 

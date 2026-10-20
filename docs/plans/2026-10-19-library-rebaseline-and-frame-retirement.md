@@ -118,8 +118,8 @@ combine commands.
   `IN SYNC`, and `NOTHING WAITING`. The three new junk photos are `various_image_7518022535991337255.jpg`,
   `various_image_7518029125665347092.jpg`, and `various_image_7518041966060682367.jpg`; all were flagged as containing 2+ faces. The full
   identical-copy archive now contains 332 files including history; the three older same-ID imports in `Various\duplicates` remain unchanged.
-- [ ] **P1 you** R13 Identify and pull back only the Sophie Lloyd photos and any other individual originals you have confirmed are misaligned. Keep this a user-selected correction; do not move photos based only on similarity scores.
-- [ ] **P1 ai** R14 After you say the selected originals are ready in the reprocessing pool, preview the routine, take the required verified backup, process that batch, and verify the resulting identities, history, gallery, and derived-image sync. Do not change other Sophie photos or apply the remaining mismatch/Junk suggestions.
+- [x] **P1 you** R13 Superseded by the user-approved staged Review/Reject workflow in the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md); Sophie photo choices remain user-directed.
+- [x] **P1 ai** R14 Superseded by the combined, previewed and backup-verified processing phases in the [self-healing likeness plan](2026-10-20-likeness-library-self-healing.md). Do not make interim Sophie moves outside that workflow.
 
 ## Raw request (Oct 19)
 

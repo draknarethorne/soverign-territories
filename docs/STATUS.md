@@ -65,11 +65,23 @@ and Angel Prime workflows were regenerated, saved Angel Primes shots were
 preserved, and the accumulated work was committed in four topic groups and
 pushed to `origin/art/curation-and-workspaces` (tip `691169850`).
 
-The plan audit found 11 active plans and one proposed plan; no completed plan
-is ready to archive. The current recap is [Oct 20](recap/2026-10-20-0150-recap.md).
+The plan audit found 11 active plans and one proposed plan; after the
+user-approved likeness plan was added, 12 active plans and one proposed plan
+remain. No other plan was ready to archive. The current recap is
+[Oct 20](recap/2026-10-20-0150-recap.md).
 The immediate user task is to finish the manual `0_Edit`/`1_Alpha` prompt set;
 do not update shared templates or regenerate their outputs until the user's
 batch is ready and reviewed.
+
+Oct 20 likeness direction: a new active plan covers a git-tracked identity
+metadata catalogue, separate from ComfyUI photo selection; a focused review
+gallery that exports validated CLI manifests; explicit Review versus
+Reject-to-Various behavior; combined Review/Various matching with same-run
+candidate clusters; and guarded Prospect self-healing. Angels and Sisters
+remain protected from automatic gallery moves. Implementation proceeds in
+tested, documented, committed increments; no matching thresholds change before
+action-specific validation. Broader art-authoring and ComfyUI execution UIs are
+future scope.
 
 ## Decisions made
 
