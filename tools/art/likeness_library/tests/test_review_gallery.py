@@ -13,6 +13,7 @@ from jsonschema import Draft7Validator
 from PIL import Image
 
 from tools.art import likeness
+from tools.art.likeness_library.cross_reference import score_band
 from tools.art.likeness_library import review_gallery
 
 
@@ -77,6 +78,12 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertEqual(
             review_gallery.action_options("Gallery", "photo:image_123", stageable=False),
             [],
+        )
+        self.assertIn(
+            ("workflow-photo-selected", "Select as workflow photo"),
+            review_gallery.action_options(
+                "Gallery", "photo:image_123", workflow_photo=True
+            ),
         )
         self.assertTrue(review_gallery.action_folder_supported("Prospects/Sophie"))
         self.assertFalse(review_gallery.action_folder_supported("Artists/Example/Person"))
@@ -188,6 +195,12 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertLess(review_item["score"], 0)
             self.assertIn("never enters its core", review_item["reason"])
             self.assertEqual(review_item["photoId"], "photo:image_444444")
+            self.assertEqual(review_item["personId"], "person_test")
+            self.assertEqual(review_item["scoreContext"]["facePixels"], 100)
+            self.assertEqual(review_item["scoreContext"]["coreSize"], 3)
+            self.assertFalse(review_item["scoreContext"]["coreMember"])
+            self.assertTrue(any("Review photos are excluded from the core" in detail
+                                for detail in review_item["scoreDetails"]))
             self.assertEqual(
                 review_item["contentSha256"],
                 hashlib.sha256(review_path.read_bytes()).hexdigest(),
@@ -226,6 +239,10 @@ class ReviewGalleryTests(unittest.TestCase):
             for index in range(205)
         ]
         page = review_gallery.render_html(items, "now")
+        self.assertIn('class="page-header"', page)
+        self.assertIn('class="header-side"', page)
+        self.assertIn('class="score-legend"', page)
+        self.assertIn("205 photos", page)
         self.assertIn("pageSize=100", page)
         self.assertIn('image.loading="lazy"', page)
         self.assertIn('id="bucket"', page)
@@ -235,6 +252,12 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('id="card-size"', page)
         self.assertIn('id="framing"', page)
         self.assertIn("function fillPeople()", page)
+        self.assertIn('new URLSearchParams(location.search).get("person")', page)
+        self.assertIn('option value="identity">Core identity first', page)
+        self.assertIn('option value="high">Highest identity score', page)
+        self.assertIn('fill(group,categoryOrder.filter', page)
+        self.assertIn('new Map(categoryOrder.map', page)
+        self.assertIn("const folderOrder=new Map()", page)
         self.assertIn("image.dataset.head=r.thumbnailHead", page)
         self.assertIn("photo-grid", page)
         self.assertIn('id="score-ceiling"', page)
@@ -254,6 +277,69 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertNotIn("https://", page)
         self.assertNotIn("data:image", page)
         self.assertIn("205", page)
+
+    def test_render_shows_deduplicated_person_classification_and_full_rankings(self):
+        item = {
+            "folder": "Models/Freya",
+            "group": "Models",
+            "bucket": "Gallery",
+            "name": "freya.jpg",
+            "photoId": "photo:image_123",
+            "personId": "person_123",
+            "score": 0.8,
+            "scoreContext": {
+                "coreSize": 4,
+                "coreMode": "provisional",
+                "coreMember": True,
+                "facePixels": 120,
+                "faceCount": 1,
+            },
+            "scoreDetails": [
+                "Face gate: 60px minimum; this image has a 120px face and 1 detected face(s).",
+                "Score method: leave this photo out when it is a core member.",
+            ],
+            "state": "Core member",
+            "comparison": "provisional core",
+            "reason": "consistent",
+            "best_other": "",
+            "identityMatches": [
+                {"key": "Angels/Camaris", "category": "Angels", "name": "Camaris", "score": 0.51},
+            ],
+            "thumbnail": "people_gallery_review_files/freya.jpg",
+            "href": "file:///C:/library/freya.jpg",
+        }
+
+        page = review_gallery.render_html([item], "now")
+
+        self.assertIn('id="people-data"', page)
+        self.assertIn('"Models/Freya"', page)
+        self.assertIn("category-models", page)
+        self.assertIn("Full library likeness rankings", page)
+        self.assertIn("score-yellow", page)
+        self.assertIn("Closest by category:", page)
+        self.assertIn('link.href="people_gallery_review.html?"+query.toString()', page)
+        self.assertIn('["Sisters", "Angels", "Models", "Prospects", "Potentials", "Artists"]', page)
+        self.assertIn('r.photoId.replace(/^photo:/,"").replace(/^image_/,"")', page)
+        self.assertIn('r.personId||"not assigned"', page)
+        self.assertIn("Core size: \"+r.scoreContext.coreSize+\" photos", page)
+        self.assertIn('r.folder.split("/").slice(1).join("/")', page)
+        self.assertIn('r.bucket==="Gallery"?"Gallery photo":"Review photo"', page)
+        self.assertIn('faceLink.title="Open face crop"', page)
+        self.assertIn('summary.textContent="Scoring & action details"', page)
+        self.assertIn('list.className="detail-list"', page)
+        self.assertNotIn('r.scoreContext.coreMember?" · in core"', page)
+        self.assertIn("Scoring & action details", page)
+
+    def test_review_category_hierarchy_is_shared_by_sections_and_rankings(self):
+        self.assertEqual(
+            review_gallery.SECTIONS,
+            ("Sisters", "Angels", "Models", "Prospects", "Potentials", "Artists"),
+        )
+        self.assertEqual(review_gallery.GROUP_ORDER, review_gallery.SECTIONS)
+        self.assertEqual(score_band(0.55), "green")
+        self.assertEqual(score_band(0.30), "yellow")
+        self.assertEqual(score_band(0.15), "orange")
+        self.assertEqual(score_band(0.149), "red")
 
     def test_render_escapes_untrusted_photo_and_warning_text(self):
         item = {
@@ -277,7 +363,7 @@ class ReviewGalleryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             source = pathlib.Path(tmp) / "photo.jpg"
             Image.new("RGB", (80, 100), "white").save(source)
-            photo = SimpleNamespace(sha="abc123", path=source, box=None)
+            photo = SimpleNamespace(sha="abc123", path=source, box=(0.3, 0.2, 0.25, 0.25))
             item = {
                 "folder": "Prospects/Sophie",
                 "group": "Prospects",
@@ -295,9 +381,13 @@ class ReviewGalleryTests(unittest.TestCase):
             second, _ = review_gallery.write_thumbnails([item], out)
             self.assertEqual(first[0]["thumbnail"], second[0]["thumbnail"])
             self.assertEqual(first[0]["thumbnailHead"], second[0]["thumbnailHead"])
+            self.assertEqual(first[0]["thumbnailFace"], second[0]["thumbnailFace"])
             self.assertIn("photo_chest_abc123.jpg", first[0]["thumbnail"])
             self.assertIn("photo_head_abc123.jpg", first[0]["thumbnailHead"])
-            self.assertEqual(len(list((out / "people_gallery_review_files").glob("*.jpg"))), 2)
+            self.assertIn("photo_face_abc123.jpg", first[0]["thumbnailFace"])
+            self.assertEqual(len(list((out / "people_gallery_review_files").glob("*.jpg"))), 3)
+            with Image.open(out / first[0]["thumbnailFace"]) as face:
+                self.assertEqual(face.size, (320, 320))
 
 
 if __name__ == "__main__":

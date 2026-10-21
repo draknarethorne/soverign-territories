@@ -65,6 +65,7 @@ def plan(args):
         if not args.no_likeness:
             steps += [("9 likeness crosscheck (look-alikes across the lines kept apart)", [ART + "likeness.py", "crosscheck"], False, False),
                       ("9 likeness crops (a page of every crop, before and after)", [ART + "likeness.py", "crops"], False, False),
+                      ("9 people gallery review (full Gallery and Review photos)", [ART + "likeness_library/review_gallery.py", "--artists"], False, False),
                       ("9 people gallery (a page of every person)", [ART + "people_gallery.py", "--artists"], False, False),
                       ("9 likeness index", [ART + "likeness.py", "index"], False, False)]
     return steps

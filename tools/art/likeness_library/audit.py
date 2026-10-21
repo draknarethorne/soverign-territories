@@ -4,6 +4,35 @@ import numpy as np
 from .scoring import core_scores, nz
 
 
+def identity_order_key(is_anchor, is_core, score, name):
+    """Order trusted identity anchors, core members, then remaining photos."""
+    priority = 0 if is_anchor else 1 if is_core else 2 if score is not None else 3
+    return (
+        priority,
+        -(score if score is not None else 0.0),
+        name.casefold(),
+    )
+
+
+def catalog_photo_flags(records, catalog):
+    """Return protected, stale and ambiguous IDs from (photo_id, sha256) records."""
+    counts = {}
+    for photo_id, _content_sha256 in records:
+        if photo_id:
+            counts[photo_id] = counts.get(photo_id, 0) + 1
+    ambiguous = {photo_id for photo_id, count in counts.items() if count > 1}
+    protected, stale = set(), set()
+    for photo_id, content_sha256 in records:
+        if not photo_id or photo_id not in catalog["photos"] or photo_id in ambiguous:
+            continue
+        record = catalog["photos"][photo_id]
+        if content_sha256 is not None and content_sha256 != record["contentSha256"]:
+            stale.add(photo_id)
+        elif record["protected"]:
+            protected.add(photo_id)
+    return protected, stale, ambiguous
+
+
 def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_ids=(), ambiguous_ids=(),
                  minimum_core=3, seed_floor=0.2):
     """Score one folder, keeping trusted anchors distinct from provisional core members."""

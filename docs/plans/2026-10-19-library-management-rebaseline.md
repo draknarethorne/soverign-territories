@@ -14,8 +14,9 @@ likeness rules are documented in [likeness.md](../art/likeness.md) and
 | --- | --- |
 | Sisters | User-selected identities; the system never changes them automatically. |
 | Angels | Current card identities. Qualified alternatives are report-only in the current phase; automated pairing/swapping is deferred to the future Demon phase. |
-| Prospects | Active, unassigned people with at least five usable photos. This count is the minimum for an Angel replacement candidate, not proof of pose or outfit variety. |
-| Potentials | Active root alongside Prospects; holds unassigned people with one to four usable photos. Keep matching them against new photos; promote them to Prospects when they reach five. |
+| Prospects | Current active rule: unassigned people with at least five usable photos. The Oct 21 rebaseline plan is evaluating a new Model destination for sufficiently large cast-lookalike identities; until that classifier is validated and applied, this current rule remains in force. |
+| Potentials | Current active root alongside Prospects; holds unassigned people with one to four usable photos. Keep matching them against new photos; under the current rule promote them to Prospects at five. The Oct 21 rebaseline plan will test whether five-photo groups should instead become Models when they meet the calibrated cast-lookalike rule. |
+| Models | The Oct 21 rebaseline plan proposes restoring an active category for distinct people with at least five usable photos and calibrated Angel/Sister resemblance. This is not yet a production category rule; distinguish it from legacy Model folders and paths. |
 | Junk | Photos needing cleanup, such as icons, text, or crop fixes. Keep them available to clean and send through classification again. |
 | Retired | Photos judged unusable for future matching or card art. Do not retire a good photo merely because its identity is uncertain. Empty person folders may still be archived here after regrouping. |
 
@@ -46,7 +47,7 @@ direction-specific likeness band are decided.
 
 | ID | Question | Answer |
 | --- | --- | --- |
-| L1 | What separates Prospects from Potentials? | Five usable photos: Prospects have 5+; Potentials have 1–4 and can grow into Prospects. |
+| L1 | What separates Prospects from Potentials under the current applied policy? | Five usable photos: Prospects have 5+; Potentials have 1–4 and can grow into Prospects. The proposed Model tier and revised boundary are transferred to the Oct 21 rebaseline plan and do not change the live library until validated and applied. |
 | L2 | What should happen to repairable or uncertain photos? | Repairable icons, text, and crop issues stay in Junk for cleanup and reprocessing; uncertain good photos stay active. |
 | L3 | What belongs in Retired? | Photos judged never useful, not promising photos awaiting a match. Preserve the existing use for empty folders after regrouping. |
 | L4 | Should low-photo Angels be reconsidered automatically? | For the current Angel roster, show qualified alternatives as report-only recommendations; the user's choices are manual, and Angel slot names stay fixed. Defer automatic pairing/swapping to the future Demon phase, after counterpart mapping and any direction-specific likeness band are agreed. Reuse the shared fit-plus-variety score only after that review. |

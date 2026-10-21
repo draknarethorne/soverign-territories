@@ -18,25 +18,41 @@ sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
 from likeness_library import metadata  # noqa: E402
-from likeness_library.audit import audit_person  # noqa: E402
+from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
+from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
+from likeness_library.thumbnails import crop_thumbnail, face_thumbnail  # noqa: E402
 
 PAGE_SIZE = 100
-SECTIONS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists")
+SECTIONS = CATEGORY_ORDER
+GROUP_ORDER = CATEGORY_ORDER
 ACTION_ROOTS = {"Angels", "Sisters", "Prospects", "Potentials"}
 
 CSS = """
 body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#222}
 h1{margin:0 0 4px}.note{color:#555;max-width:1100px}.warnings{color:#8a3b16}
-.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:16px 18px;background:#fff;border:1px solid #ded8ce;border-radius:10px}.page-header p{margin:5px 0 0}.header-side{text-align:right}.header-label{font-size:.75em;color:#666;text-transform:uppercase;letter-spacing:.06em}.score-legend{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:5px}
+.controls{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
 .controls input,.controls select,.controls button{font:inherit;padding:7px}
 .count{color:#555}#grid{display:block;--card-min:260px}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));gap:12px}
 article{background:white;border:1px solid #ded8ce;border-radius:6px;padding:8px;min-width:0}
-article.primary{border:2px solid #8b6d32}
+article.primary{border:3px solid #8b6d32}
 article img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee}
 article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 0}
-.badge{display:inline-block;border-radius:3px;background:#eee;padding:2px 5px;margin:0 4px 4px 0;font-size:.82em}
+.badge{display:inline-block;border-radius:4px;background:#eee;padding:2px 6px;margin:0 4px 4px 0;font-size:.82em;font-weight:600}
+.category-sisters{background:#e8e0f2;color:#493365}.category-angels{background:#e4efff;color:#244f85}
+.category-models{background:#e4f2e5;color:#285b31}.category-prospects{background:#fff0d9;color:#704a12}
+.category-potentials{background:#eee;color:#555}.score-green{background:#d9efdc;color:#205b2a}
+.score-yellow{background:#fff1bd;color:#6b5200}.score-orange{background:#ffe0c2;color:#7a3f00}
+.score-red{background:#f5d6d6;color:#7b2222}.score-badge{display:inline-block;border-radius:4px;padding:2px 6px;font-size:.82em;font-weight:600}
+.relationship-list{margin:4px 0 12px;padding-left:24px}.relationship-list li{margin:4px 0}
+.badge-gallery{background:#e4efff;color:#244f85}.badge-review,.badge-possible-outlier,.badge-borderline{background:#fff0d9;color:#704a12}
+.badge-core-member,.badge-identity-anchor,.badge-consistent,.badge-gallery-photo{background:#d9efdc;color:#205b2a}
+.badge-low-similarity,.badge-unscored{background:#f5d6d6;color:#7b2222}.badge-protected-only{background:#eee;color:#555}
 .detail{color:#555;font-size:.88em;margin:4px 0;overflow-wrap:anywhere}
+.detail-list{margin:4px 0;padding-left:22px}.detail-list li{margin:5px 0}
+.detail-list .score-badge{margin-left:4px}.face-link{display:inline-block;text-decoration:none}.face-link:hover{text-decoration:underline}
+.badge-review-photo{background:#fff0d9;color:#704a12}
 #more{display:block;margin:18px auto;padding:8px 18px;font:inherit}
 .stage{display:block;margin-top:8px;font-size:.9em}.stage select{display:block;width:100%;font:inherit;padding:5px}
 .actions{display:flex;gap:10px;align-items:center;margin:14px 0}.actions button{font:inherit;padding:8px}
@@ -45,10 +61,14 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .person-head h2{font-size:1.15em;margin:4px 0;min-width:190px}
 .reference{max-width:190px}.reference img{aspect-ratio:4/5;object-fit:cover}
 .reference .detail{font-size:.82em}
+.identity-rankings{font-size:.88em;margin:0 0 12px;overflow-wrap:anywhere}
+.identity-rankings summary{cursor:pointer;color:#28527a}
+@media(max-width:760px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}.controls{justify-content:flex-start}}
 """
 
 SCRIPT = """
 const records=JSON.parse(document.getElementById("review-data").textContent);
+const peopleData=JSON.parse(document.getElementById("people-data").textContent);
 const group=document.getElementById("group"), bucket=document.getElementById("bucket");
 const state=document.getElementById("state"), sort=document.getElementById("sort");
 const mode=document.getElementById("mode"), person=document.getElementById("person");
@@ -60,26 +80,68 @@ const count=document.getElementById("count"), more=document.getElementById("more
 const stagedCount=document.getElementById("staged-count"), download=document.getElementById("download");
 const pageSize=100; let visible=[], shown=pageSize;
 const staged=new Map();
-function fill(select, values, label) {
+function fill(select, values, label, sortValues=true) {
   select.replaceChildren(new Option("All "+label,""));
-  [...new Set(values)].sort((a,b)=>a.localeCompare(b)).forEach(v=>select.add(new Option(v,v)));
+  const unique=[...new Set(values)];
+  if(sortValues)unique.sort((a,b)=>a.localeCompare(b));
+  unique.forEach(v=>select.add(new Option(v,v)));
 }
-fill(group,records.map(r=>r.group),"groups");
+const categoryOrder=JSON.parse(document.getElementById("category-order").textContent);
+fill(group,categoryOrder.filter(value=>records.some(r=>r.group===value)),"groups",false);
 fill(bucket,records.map(r=>r.bucket),"locations");
 fill(state,records.map(r=>r.state),"states");
 function fillPeople() {
   const previous=person.value;
   const folders=records.filter(r=>!group.value||r.group===group.value).map(r=>r.folder);
-  fill(person,folders,"people");
+  fill(person,folders,"people",false);
   if(folders.includes(previous))person.value=previous;
 }
 fillPeople();
+const folderOrder=new Map();
+for(const record of records)if(!folderOrder.has(record.folder))folderOrder.set(record.folder,folderOrder.size);
+const groupOrder=new Map(categoryOrder.map((value,index)=>[value,index]));
+const requestedPerson=new URLSearchParams(location.search).get("person");
+const requestedSort=new URLSearchParams(location.search).get("sort");
+const requestedBucket=new URLSearchParams(location.search).get("bucket");
+if(["identity","high","low","name"].includes(requestedSort))sort.value=requestedSort;
+if(["Gallery","Review"].includes(requestedBucket))bucket.value=requestedBucket;
+if(requestedPerson) {
+  const target=records.find(r=>r.folder===requestedPerson);
+  if(target) {
+    group.value=target.group;
+    fillPeople();
+    person.value=target.folder;
+  }
+}
 function compare(a,b) {
+  if(sort.value==="identity") {
+    return a.identityOrder-b.identityOrder ||
+      (b.score??-Infinity)-(a.score??-Infinity) ||
+      a.name.localeCompare(b.name);
+  }
   if(a.score===null&&b.score!==null)return 1;
   if(b.score===null&&a.score!==null)return -1;
   if(sort.value==="name")return a.name.localeCompare(b.name);
   if(a.score===null)return 0;
   return sort.value==="high" ? b.score-a.score : a.score-b.score;
+}
+function scoreBadge(score, label="Likeness score") {
+  if(score===null||score===undefined)return null;
+  const band=score>=0.55?"green":score>=0.30?"yellow":score>=0.15?"orange":"red";
+  const badge=document.createElement("span"); badge.className="score-badge score-"+band;
+  badge.textContent=score.toFixed(2); badge.title=label; return badge;
+}
+function categoryBadge(text) {
+  const badge=document.createElement("span");
+  badge.className="badge category-"+String(text||"").toLowerCase();
+  badge.textContent=text; return badge;
+}
+function personReviewLink(key, label) {
+  const link=document.createElement("a");
+  const query=new URLSearchParams({person:key,bucket:"Gallery",sort:"identity"});
+  link.href="people_gallery_review.html?"+query.toString();
+  link.target="_blank"; link.rel="noopener noreferrer"; link.textContent=label;
+  return link;
 }
 function card(r, readOnly=false) {
   const article=document.createElement("article");
@@ -91,11 +153,27 @@ function card(r, readOnly=false) {
   image.dataset.chest=r.thumbnail; image.dataset.head=r.thumbnailHead; image.alt=r.name;
   image.title=r.name; image.loading="lazy"; image.decoding="async";
   link.append(image); article.append(link);
-  const name=document.createElement("div"); name.className="name"; name.textContent=readOnly?r.name:r.folder;
+  const name=document.createElement("div"); name.className="name";
+  name.textContent=readOnly?r.name:r.folder.split("/").slice(1).join("/");
   article.append(name);
-  const badges=readOnly?[r.referenceLabel]:[r.group,r.bucket,r.state,r.primaryReference?r.referenceLabel:""];
+  if(!readOnly) {
+    const id=document.createElement("div"); id.className="detail photo-id";
+    const photoId=r.photoId?r.photoId.replace(/^photo:/,"").replace(/^image_/,""):"unavailable";
+    id.textContent="Photo ID: "+photoId+
+      " · Identity ID: "+(r.personId||"not assigned");
+    id.title="Photo ID comes from the filename; Identity ID belongs to the person";
+    article.append(id);
+  }
+  const badges=readOnly?[r.referenceLabel]:[
+    r.bucket==="Gallery"?"Gallery photo":"Review photo",
+    r.state,
+    r.primaryReference?r.referenceLabel:""
+  ];
+  if(!readOnly)article.append(categoryBadge(r.group));
   for(const text of badges.filter(Boolean)) {
-    const badge=document.createElement("span"); badge.className="badge"; badge.textContent=text; article.append(badge);
+    const badge=document.createElement("span");
+    badge.className="badge badge-"+String(text).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    badge.textContent=text; article.append(badge);
   }
   if(readOnly) {
     const detail=document.createElement("div"); detail.className="detail";
@@ -104,17 +182,80 @@ function card(r, readOnly=false) {
     article.append(detail);
     return article;
   }
-  const details=[
-    "Photo: "+r.name,
-    "Core similarity: "+(r.score===null?"not scored":r.score.toFixed(2)),
-    "Compared with: "+r.comparison,
-    r.best_other ? "Closest other folder: "+r.best_other : "",
-    r.reason,
-    r.stageReason
-  ];
-  for(const text of details.filter(Boolean)) {
-    const detail=document.createElement("div"); detail.className="detail"; detail.textContent=text; article.append(detail);
+  const score=document.createElement("div"); score.className="detail";
+  score.append(document.createTextNode("Core similarity: "));
+  const scoreMark=scoreBadge(r.score,"Similarity to this person's core");
+  if(scoreMark)score.append(scoreMark); else score.append(document.createTextNode("not scored"));
+  article.append(score);
+  if(r.scoreContext) {
+    const context=document.createElement("div"); context.className="detail score-context";
+    const coreType=r.scoreContext.coreMode==="trusted"?"trusted anchors":
+      r.scoreContext.coreMode==="provisional"?"provisional":"no usable core";
+    context.append(document.createTextNode("Core size: "+r.scoreContext.coreSize+" photos "));
+    const coreBadge=document.createElement("span");
+    coreBadge.className="score-badge score-"+
+      (r.scoreContext.coreMode==="trusted"?"green":
+        r.scoreContext.coreMode==="provisional"?"yellow":"red");
+    coreBadge.textContent=coreType;
+    context.append(coreBadge);
+    article.append(context);
+    const face=document.createElement("div"); face.className="detail";
+    face.append(document.createTextNode("Face: "));
+    const facePixels=r.scoreContext.facePixels||0;
+    const gate=r.scoreContext.minFace||0;
+    const faceCount=Number.isFinite(r.scoreContext.faceCount)?r.scoreContext.faceCount:-1;
+    const faceLabel=(facePixels>=gate?"score-green":"score-red")+" score-badge";
+    const faceCountClass=faceCount===1?"score-green":faceCount>1?"score-yellow":"score-red";
+    const faceValue=document.createElement("span"); faceValue.className=faceLabel;
+    faceValue.textContent=facePixels+" px";
+    faceValue.title="Face-size minimum: "+gate+" px";
+    const countValue=document.createElement("span"); countValue.className=faceCountClass+" score-badge";
+    countValue.textContent=faceCount<0?"unreadable":String(faceCount);
+    countValue.title="Detected face count";
+    if(r.thumbnailFace) {
+      const faceLink=document.createElement("a"); faceLink.className="face-link";
+      faceLink.href=r.thumbnailFace; faceLink.target="_blank";
+      faceLink.rel="noopener noreferrer"; faceLink.title="Open face crop";
+      faceLink.append(faceValue,document.createTextNode(" / "),countValue);
+      face.append(faceLink);
+    } else {
+      face.append(faceValue,document.createTextNode(" / "),countValue);
+    }
+    article.append(face);
   }
+  if(r.best_other) {
+    const closest=document.createElement("div"); closest.className="detail";
+    const parsed=r.best_other.match(/^(.*) \\((-?\\d+(?:\\.\\d+)?)\\)$/);
+    if(parsed) {
+      const key=parsed[1], category=key.split("/",1)[0], name=key.slice(category.length+1);
+      closest.append(document.createTextNode("Closest other: "));
+      closest.append(personReviewLink(key,category+": "+name));
+      const mark=scoreBadge(Number(parsed[2])); if(mark)closest.append(document.createTextNode(" "),mark);
+    } else closest.textContent="Closest other: "+r.best_other;
+    article.append(closest);
+  }
+  const rationale=document.createElement("details"); rationale.className="detail";
+  const summary=document.createElement("summary"); summary.textContent="Scoring & action details"; rationale.append(summary);
+  const detailTexts=[
+    ...(r.scoreDetails||[]),
+    r.state==="Core member"?"":r.reason,
+    r.stageReason
+  ].filter(Boolean);
+  if(detailTexts.length) {
+    const list=document.createElement("ul"); list.className="detail-list";
+    for(const text of detailTexts) {
+      const line=document.createElement("li"); line.textContent=text;
+      if(text.startsWith("Face gate:")) {
+        line.className=(r.scoreContext?.usable?"score-green":"score-red");
+      } else if(text.startsWith("Reference core:")) {
+        line.className="score-"+(r.scoreContext?.coreMode==="trusted"?"green":
+          r.scoreContext?.coreMode==="provisional"?"yellow":"red");
+      }
+      list.append(line);
+    }
+    rationale.append(list);
+  }
+  if(detailTexts.length)article.append(rationale);
   const stageLabel=document.createElement("label"); stageLabel.className="stage"; stageLabel.textContent="Stage action";
   const action=document.createElement("select"); action.setAttribute("aria-label","Stage action for "+r.name);
   action.add(new Option("No staged action",""));
@@ -151,6 +292,8 @@ function groupCards(items) {
     const section=document.createElement("section"); section.className="person-group";
     const header=document.createElement("div"); header.className="person-head";
     const title=document.createElement("h2"); title.textContent=folder+" · "+photos.length+" shown"; header.append(title);
+    const info=peopleData[folder]||{};
+    header.append(categoryBadge(info.group||folder.split("/")[0]));
     const reference=primaryFor(folder);
     if(reference) {
       if(!photos.some(item=>item.photoId===reference.photoId))header.append(card(reference,true));
@@ -159,6 +302,35 @@ function groupCards(items) {
       header.append(note);
     }
     section.append(header);
+    const rankings=info.identityMatches||[];
+    if(rankings.length) {
+      const details=document.createElement("details"); details.className="identity-rankings";
+      const summary=document.createElement("summary");
+      summary.textContent="Full library likeness rankings ("+rankings.length+")";
+      details.append(summary);
+      const list=document.createElement("ol"); list.className="relationship-list";
+      for(const match of rankings) {
+        const entry=document.createElement("li");
+        entry.append(personReviewLink(match.key,match.category+": "+match.name));
+        const mark=scoreBadge(match.score); if(mark)entry.append(document.createTextNode(" "),mark);
+        list.append(entry);
+      }
+      details.append(list); section.append(details);
+      const closestByCategory=new Map();
+      for(const match of rankings)if(!closestByCategory.has(match.category))closestByCategory.set(match.category,match);
+      const closest=document.createElement("div"); closest.className="detail";
+      closest.textContent="Closest by category: ";
+      for(const match of closestByCategory.values()) {
+        closest.append(personReviewLink(match.key,match.category+": "+match.name));
+        const mark=scoreBadge(match.score); if(mark)closest.append(document.createTextNode(" "),mark);
+        closest.append(document.createElement("br"));
+      }
+      section.insertBefore(closest,details);
+    } else {
+      const note=document.createElement("div"); note.className="identity-rankings detail";
+      note.textContent="No other scored identity is available for cross-reference.";
+      section.append(note);
+    }
     const photoGrid=document.createElement("div"); photoGrid.className="photo-grid";
     photoGrid.append(...photos.map(item=>card(item)));
     section.append(photoGrid); nodes.push(section);
@@ -175,10 +347,10 @@ function render() {
     (!person.value||r.folder===person.value) &&
     (!q||(r.folder+" "+r.name+" "+r.reason).toLocaleLowerCase().includes(q))
   ).sort((a,b)=>{
-    if(mode.value!=="all") {
-      const folderOrder=a.folder.localeCompare(b.folder);
-      if(folderOrder)return folderOrder;
-    }
+    const groupDiff=(groupOrder.get(a.group)??99)-(groupOrder.get(b.group)??99);
+    if(groupDiff)return groupDiff;
+    const folderDiff=(folderOrder.get(a.folder)??999999)-(folderOrder.get(b.folder)??999999);
+    if(folderDiff)return folderDiff;
     return compare(a,b);
   });
   shown=pageSize; draw();
@@ -257,7 +429,8 @@ def _local_photo_path(path):
     return str(path.resolve()).casefold()
 
 
-def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable=True):
+def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable=True,
+                   workflow_photo=False):
     """Return actions valid for this photo's current location and metadata."""
     if not stageable or not photo_id:
         return []
@@ -266,6 +439,8 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
          "Remove protection" if protected else "Protect photo"),
     ]
     if bucket == "Gallery":
+        if workflow_photo:
+            options.insert(0, ("workflow-photo-selected", "Select as workflow photo"))
         options.insert(0, (
             "anchor-removed" if anchor else "anchor-added",
             "Remove identity anchor" if anchor else "Add identity anchor",
@@ -285,6 +460,39 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
 def action_folder_supported(folder):
     """Whether a folder can be represented by the current identity catalogue schema."""
     return folder.split("/", 1)[0] in ACTION_ROOTS
+
+
+def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficient,
+                  min_face, group, keep, odd):
+    """Describe the evidence and thresholds behind a displayed photo score."""
+    face_count = "unreadable" if photo.faces < 0 else str(photo.faces)
+    details = [
+        f"Face gate: {min_face}px minimum; this image "
+        f"{'meets' if photo.usable(min_face) else 'does not meet'} the gate.",
+        f"Reference core: {'enough' if sufficient else 'fewer than three'} Gallery photos for outlier suggestions.",
+        "Similarity is the centered face-vector cosine score.",
+        (
+            "Score method: leave this photo out when it is a core member; otherwise compare it with the full active core."
+            if bucket == "Gallery" else
+            "Score method: compare with the active Gallery core; Review photos are excluded from the core."
+        ),
+    ]
+    if bucket == "Gallery" and group == "Prospects":
+        details.append(
+            f"Prospect flags: below {odd:.2f} is a possible outlier; below {keep:.2f} is borderline."
+        )
+    elif bucket == "Gallery":
+        details.append(f"Low-similarity flag: below {odd:.2f}.")
+    return {
+        "coreSize": core_size,
+        "coreMode": core_mode,
+        "coreMember": core_member,
+        "facePixels": photo.px,
+        "faceCount": photo.faces,
+        "minFace": min_face,
+        "usable": photo.usable(min_face),
+        "details": details,
+    }
 
 
 def assign_primary_references(items):
@@ -334,11 +542,17 @@ def assign_primary_references(items):
 def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False, embed=None, keep=0.25):
     """Build scored image records; Review candidates never enter an identity core."""
     groups = set(SECTIONS if include_artists else SECTIONS[:-1])
+    group_order = {group: index for index, group in enumerate(GROUP_ORDER)}
     folders = [
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
     ]
     selected_names = list(cfg.get("photos", {}).values())
+    base_selected_by_hero = {
+        hero.casefold(): metadata.photo_id_from_name(name)
+        for hero, name in cfg.get("photos", {}).items()
+        if isinstance(name, str)
+    }
     for flow in cfg.get("flows", {}).values():
         selected_names.extend(flow.get("photos", {}).values())
     selected_ids = {
@@ -369,6 +583,17 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
     if added_embeddings:
         cache.save()
 
+    folders.sort(key=lambda entry: (
+        group_order[likeness.status_of(entry[0])],
+        -len(gallery_by_key[entry[0]]) if likeness.status_of(entry[0]) not in ("Sisters", "Angels") else 0,
+        entry[0].casefold(),
+    ))
+    identity_rankings = rank_identity_centroids(
+        space,
+        [key for key, _folder in folders],
+        categories={key: likeness.status_of(key) for key, _folder in folders},
+    )
+    person_order = {key: index for index, (key, _folder) in enumerate(folders)}
     all_photos = list(space.photos)
     all_photos.extend(photo for records in review_by_key.values() for photo, _ in records)
     content_hashes = {}
@@ -379,20 +604,14 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
             content_hashes[key] = metadata.content_sha256(photo.path)
         return content_hashes[key]
 
-    id_counts = collections.Counter(
-        photo_id for photo_id in (metadata.photo_id_from_name(p.name) for p in all_photos) if photo_id
-    )
-    ambiguous_ids = {photo_id for photo_id, count in id_counts.items() if count > 1}
-    protected_ids, stale_ids = set(), set()
-    for photo in all_photos:
-        photo_id = metadata.photo_id_from_name(photo.name)
-        if not photo_id or photo_id not in catalog["photos"] or photo_id in ambiguous_ids:
-            continue
-        record = catalog["photos"][photo_id]
-        if metadata.content_sha256(photo.path) != record["contentSha256"]:
-            stale_ids.add(photo_id)
-        elif record["protected"]:
-            protected_ids.add(photo_id)
+    photo_records = [
+        (
+            metadata.photo_id_from_name(photo.name),
+            metadata.content_sha256(photo.path) if metadata.photo_id_from_name(photo.name) in catalog["photos"] else None,
+        )
+        for photo in all_photos
+    ]
+    protected_ids, stale_ids, ambiguous_ids = catalog_photo_flags(photo_records, catalog)
 
     people_by_folder = collections.defaultdict(list)
     for person_id, person in catalog["people"].items():
@@ -439,6 +658,12 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
 
         for photo in gallery:
             photo_id = metadata.photo_id_from_name(photo.name)
+            hero = key.split("/", 1)[1]
+            workflow_photo_available = (
+                likeness.status_of(key) in ("Angels", "Sisters")
+                and hero.casefold() in base_selected_by_hero
+                and base_selected_by_hero[hero.casefold()] != photo_id
+            )
             index = indices.get(id(photo))
             score = scores.get(id(photo))
             if conflict:
@@ -470,9 +695,24 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                     score < keep or likeness.status_of(key) == "Potentials"
                 )
             ) else ""
+            context = score_context(
+                photo,
+                bucket="Gallery",
+                core_size=len(core),
+                core_mode=result["mode"],
+                core_member=index in core if index is not None else False,
+                sufficient=result["sufficient"],
+                min_face=st["minFace"],
+                group=likeness.status_of(key),
+                keep=keep,
+                odd=st["odd"],
+            )
             items.append({
                 "folder": key,
                 "group": likeness.status_of(key),
+                "identityMatches": identity_rankings.get(key, []),
+                "groupOrder": group_order[likeness.status_of(key)],
+                "personOrder": person_order[key],
                 "bucket": "Gallery",
                 "name": photo.name,
                 "photoId": photo_id,
@@ -482,6 +722,12 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
                 ),
+                "identityOrder": identity_order_key(
+                    photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids,
+                    result["sufficient"] and index in core,
+                    score,
+                    photo.name,
+                )[0],
                 "primaryReference": False,
                 "referenceLabel": "",
                 "stageable": bool(
@@ -491,6 +737,7 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "stageOptions": action_options(
                     "Gallery", photo_id, anchor=photo_id in anchors and photo_id not in stale_ids,
                     protected=photo_id in protected_ids,
+                    workflow_photo=workflow_photo_available,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict
                         and action_folder_supported(key)
@@ -503,6 +750,8 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                     if not photo_id or photo_id in ambiguous_ids or conflict else ""
                 ),
                 "score": score,
+                "scoreContext": context,
+                "scoreDetails": context["details"],
                 "state": state,
                 "comparison": comparison,
                 "reason": reason,
@@ -529,9 +778,24 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 reason += "; protection remains recorded, but this photo is not in the active core"
             if score is None and not cleanup_held:
                 reason += "; no usable score"
+            context = score_context(
+                photo,
+                bucket="Review",
+                core_size=len(core),
+                core_mode=result["mode"],
+                core_member=False,
+                sufficient=result["sufficient"],
+                min_face=st["minFace"],
+                group=likeness.status_of(key),
+                keep=keep,
+                odd=st["odd"],
+            )
             items.append({
                 "folder": key,
                 "group": likeness.status_of(key),
+                "identityMatches": identity_rankings.get(key, []),
+                "groupOrder": group_order[likeness.status_of(key)],
+                "personOrder": person_order[key],
                 "bucket": "Review",
                 "name": photo.name,
                 "photoId": photo_id,
@@ -541,6 +805,7 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
                 ),
+                "identityOrder": identity_order_key(False, False, score, photo.name)[0],
                 "primaryReference": False,
                 "referenceLabel": "",
                 "stageable": bool(
@@ -561,6 +826,8 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                     if not photo_id or photo_id in ambiguous_ids or conflict else ""
                 ),
                 "score": score,
+                "scoreContext": context,
+                "scoreDetails": context["details"],
                 "state": state,
                 "comparison": comparison,
                 "reason": reason,
@@ -571,17 +838,21 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
     assign_primary_references(items)
 
     items.sort(key=lambda item: (
-        item["score"] is None,
-        item["score"] if item["score"] is not None else 0,
-        item["folder"].casefold(),
-        item["name"].casefold(),
+        item["groupOrder"],
+        item["personOrder"],
+        *identity_order_key(
+            item["identityOrder"] == 0,
+            item["identityOrder"] == 1,
+            item["score"],
+            item["name"],
+        ),
     ))
     return items, warnings
 
 
 def write_thumbnails(items, out):
     """Write/reuse named, content-keyed head and chest-up derivatives."""
-    from PIL import Image, ImageOps
+    from PIL import Image
 
     thumb_dir = out / "people_gallery_review_files"
     thumb_dir.mkdir(parents=True, exist_ok=True)
@@ -590,27 +861,7 @@ def write_thumbnails(items, out):
     def thumbnail_bytes(photo, framing):
         size = (320, 400)
         with Image.open(photo.path) as source:
-            image = ImageOps.exif_transpose(source).convert("RGB")
-        box = photo.box
-        if not box:
-            crop = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
-        elif framing == "head":
-            crop_box = originals.headshot_box(image.size, box, size)
-            crop = image.crop(crop_box).resize(size, Image.Resampling.LANCZOS)
-        else:
-            width, height = image.size
-            face_x, face_y, face_w, face_h = box
-            crop_h = face_h * height * 4.4
-            crop_w = crop_h * size[0] / size[1]
-            scale = min(1.0, width / crop_w, height / crop_h)
-            crop_w *= scale
-            crop_h *= scale
-            center_x = (face_x + face_w / 2) * width
-            center_y = (face_y + face_h * 1.55) * height
-            left = min(max(0, center_x - crop_w / 2), width - crop_w)
-            top = min(max(0, center_y - crop_h / 2), height - crop_h)
-            crop = image.crop((left, top, left + crop_w, top + crop_h))
-            crop = ImageOps.fit(crop, size, Image.Resampling.LANCZOS)
+            crop = crop_thumbnail(source, photo.box, framing, size)
         output = io.BytesIO()
         crop.save(output, "JPEG", quality=84)
         return output.getvalue()
@@ -641,9 +892,35 @@ def write_thumbnails(items, out):
                     if temporary is not None and temporary.exists():
                         temporary.unlink()
             targets[framing] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
+        face_target = None
+        if photo.box:
+            target = thumb_dir / f"{stem}_face_{photo.sha[:12]}.jpg"
+            if not target.exists():
+                with Image.open(photo.path) as source:
+                    crop = face_thumbnail(source, photo.box)
+                temporary = None
+                try:
+                    with tempfile.NamedTemporaryFile(
+                        mode="wb",
+                        prefix=f".{stem}_face_",
+                        suffix=".tmp",
+                        dir=thumb_dir,
+                        delete=False,
+                    ) as output:
+                        temporary = pathlib.Path(output.name)
+                        crop.save(output, "JPEG", quality=84)
+                        output.flush()
+                        os.fsync(output.fileno())
+                    os.replace(temporary, target)
+                finally:
+                    if temporary is not None and temporary.exists():
+                        temporary.unlink()
+            targets["face"] = (pathlib.Path(thumb_dir.name) / target.name).as_posix()
         public = {key: value for key, value in item.items() if key != "_photo"}
         public["thumbnail"] = targets["chest"]
         public["thumbnailHead"] = targets["head"]
+        if "face" in targets:
+            public["thumbnailFace"] = targets["face"]
         public["href"] = photo.path.resolve().as_uri()
         public_items.append(public)
     return public_items, thumb_dir
@@ -651,7 +928,21 @@ def write_thumbnails(items, out):
 
 def render_html(items, stamp, warnings=()):
     """Render a local page with client-side filters and bounded card rendering."""
-    payload = json.dumps(items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    people_count = len({item["folder"] for item in items})
+    people_label = "person" if people_count == 1 else "people"
+    photos_label = "photo" if len(items) == 1 else "photos"
+    people_data = {}
+    for item in items:
+        people_data.setdefault(item["folder"], {
+            "group": item.get("group"),
+            "identityMatches": item.get("identityMatches", []),
+        })
+    public_items = [
+        {key: value for key, value in item.items() if key != "identityMatches"}
+        for item in items
+    ]
+    payload = json.dumps(public_items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    people_payload = json.dumps(people_data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     warning_html = ""
     if warnings:
         entries = "".join(f"<li>{html.escape(message)}</li>" for message in warnings)
@@ -659,8 +950,11 @@ def render_html(items, stamp, warnings=()):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>People gallery review</title><style>{CSS}</style></head><body>
-<h1>People gallery review</h1>
-<p class="note">Generated {stamp} with {len(items)} indexed photos. This local page only stages decisions into a versioned JSON download; it never changes source photos or catalogue data. Grouped mode orders photos within each person by similarity and keeps a reference visible while filters are active. A workflow-selected photo and user-confirmed identity anchor are labeled separately from a provisional score-ranked reference. Similarity is evidence, not certainty; outlier labels are suggestions only. Review photos are compared with their source core but excluded from it.</p>
+<header class="page-header"><div><h1>People gallery review</h1>
+<p class="note">Generated {stamp} · {people_count} {people_label} · {len(items)} {photos_label}</p>
+<p class="note">Stage actions here, then download the manifest to review and apply separately.</p></div>
+<div class="header-side"><div class="header-label">Likeness</div>
+<div class="score-legend"><span class="score-badge score-green">≥0.55</span><span class="score-badge score-yellow">≥0.30</span><span class="score-badge score-orange">≥0.15</span><span class="score-badge score-red">&lt;0.15</span></div></div></header>
 {warning_html}
 <div class="controls">
 <label>Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
@@ -671,13 +965,15 @@ def render_html(items, stamp, warnings=()):
 <label>Tile size <select id="card-size"><option value="170px">Small</option><option value="260px" selected>Medium</option><option value="340px">Large</option></select></label>
 <label>Location <select id="bucket"></select></label>
 <label>State <select id="state"></select></label>
-<label>Order <select id="sort"><option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="name">Name</option></select></label>
+<label>Order <select id="sort"><option value="identity">Core identity first</option><option value="high">Highest identity score</option><option value="low">Lowest identity score</option><option value="name">Name</option></select></label>
 <label>Low-score cutoff <input id="score-ceiling" type="number" min="-1" max="1" step="0.01" value="0.25"></label>
 <span class="count" id="count"></span>
 </div>
 <div class="actions"><button id="download" type="button" disabled>Download staged actions</button><span id="staged-count">0 actions staged</span></div>
 <div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
 <script id="review-data" type="application/json">{payload}</script>
+<script id="people-data" type="application/json">{people_payload}</script>
+<script id="category-order" type="application/json">{json.dumps(GROUP_ORDER)}</script>
 <script>{SCRIPT}</script>
 </body></html>
 """
@@ -689,9 +985,15 @@ def main(argv=None):
     parser.add_argument("--keep", type=float, default=0.25, help="Prospect borderline score (default: 0.25)")
     parser.add_argument("--out", help="report directory (default: <work>\\_reports\\library)")
     parser.add_argument("--root", help="photo library folder (default: workspaces.json paths.workRoot)")
+    parser.add_argument("--cache", help="embedding cache file (default: the user-local likeness cache)")
+    parser.add_argument(
+        "--no-renders",
+        action="store_true",
+        help="accepted by the shared gallery launcher; this page does not load ComfyUI renders",
+    )
     args = parser.parse_args(argv)
     cfg, st, work, cache, space = likeness.build(
-        types.SimpleNamespace(root=args.root, cache=None, embedder=None)
+        types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None)
     )
     catalog = metadata.load_catalog()
     items, warnings = collect_items(

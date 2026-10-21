@@ -30,7 +30,8 @@
             "photo-unprotected",
             "sent-to-review",
             "rejected-to-various",
-            "review-approved"
+            "review-approved",
+            "workflow-photo-selected"
           ]
         },
         "photoId": {"$ref": "#/definitions/photoId"},
@@ -55,6 +56,13 @@
             "required": ["type"]
           },
           "then": {"properties": {"sourceBucket": {"const": "Review"}}}
+        },
+        {
+          "if": {
+            "properties": {"type": {"const": "workflow-photo-selected"}},
+            "required": ["type"]
+          },
+          "then": {"properties": {"sourceBucket": {"const": "Gallery"}}}
         }
       ]
     },

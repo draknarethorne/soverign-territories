@@ -74,7 +74,8 @@
             "match-rejected",
             "photo-retired",
             "person-retired",
-            "action-undone"
+            "action-undone",
+            "workflow-photo-selected"
           ]
         },
         "photoIds": {
@@ -90,8 +91,30 @@
         "reason": {"type": "string", "minLength": 1},
         "undoes": {"type": "string", "pattern": "^action_[0-9a-f]{32}$"},
         "beforeState": {"$ref": "#/definitions/actionState"},
-        "afterState": {"$ref": "#/definitions/actionState"}
-      }
+        "afterState": {"$ref": "#/definitions/actionState"},
+        "workflowHero": {"type": "string", "minLength": 1},
+        "workflowPhotoBefore": {"type": "string", "minLength": 1},
+        "workflowPhotoAfter": {"type": "string", "minLength": 1},
+        "workflowSourceBefore": {"type": "string", "minLength": 1},
+        "workflowSourceAfter": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"type": {"const": "workflow-photo-selected"}},
+            "required": ["type"]
+          },
+          "then": {
+            "required": [
+              "workflowHero",
+              "workflowPhotoBefore",
+              "workflowPhotoAfter",
+              "workflowSourceBefore",
+              "workflowSourceAfter"
+            ]
+          }
+        }
+      ]
     },
     "actionState": {
       "type": "object",

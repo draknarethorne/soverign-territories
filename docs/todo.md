@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (34)
+### Your queue: needs your hands or a decision (38)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -21,6 +21,10 @@
 - [ ] T0 Finish the current Angelica comparisons; save candidate prompt refinements and outputs in `zz_Shots`. Track workflow, engine, input image, seed/settings where available, and results for Prime, Bare Figure vs Bare, BareBase ... ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] Finish and refine the manual edit-prompt set in `prompts/_edit/female`; tell the assistant when the batch is ready for review. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
+- [ ] 3.8 Review the sandbox gallery and actual placements. Label ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.4 Review the sandbox family groups and assigned names in ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.2 Review the complete visual preview and manifest, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.5 Inspect the refreshed gallery and selected ComfyUI ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 
 **P2 (normal)**
 
@@ -50,14 +54,21 @@
 - [ ] Archive `prompts/_edit` only after the manual prompt work is finished and any accepted content has been incorporated or deliberately retained elsewhere. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
-### Either of us (23)
+### Either of us (29)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] R1 G1 Darkness and Light set (the MVP). Only 4 Darkness and 4 Light cards exist (sister, bound hero, dragon, pet each) and no legacy heroes; Fire has 53, Water 46. Define heroes, units and tactics for both in the codex, then ... ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
 - [ ] L1 Define measurable usable-photo and auto-retirement criteria. Distinguish objectively unusable files from repairable or uncertain photos; leave subjective eye-closure and angle judgments for review unless a detector is ... ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
-- [ ] E5 Compare preview and applied results with user decisions ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] F2 After action-specific validation, allow only eligible ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] 0.5 Review the remaining P1 likeness decisions in ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.4 Specify how threshold-assigned family groups and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.6 Approve a collision-safe naming/migration table for ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.5 Inspect actual sandbox folders and the gallery for ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.2 Calibrate and document the looks-like threshold and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.7 Compare previews against user-labelled decisions and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.8 Accept or reject the sandbox-calibrated threshold ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1g Evaluate the controls and score presentation against ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 7.5 Resume ordinary photo ingest only after the user ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 
 **P2 (normal)**
 
@@ -68,8 +79,7 @@
 - [ ] After prompt review and approval, implement only the agreed template/data changes, regenerate the affected prompts and workflows, and verify that unrelated outputs remain unchanged. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] Continue the approved likeness/report follow-up after the user reviews the current gallery; do not automatically promote a Prospect or globally assign candidates from the independent rankings. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] L8 Validate the routine on future additions, including a later Demon set; review automatic pair/swap results and refine only from measured outcomes. ([2026-10-19](plans/2026-10-19-library-management-rebaseline.md))
-- [ ] B5 Establish user-confirmed examples and report ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] F4 Define and verify action-specific precision/recall ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] 1.7 Review the sunset matrix and approve any user-visible ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 
 **P3 (later, or ideas)**
 
@@ -84,17 +94,49 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (43)
+### For the assistant, when you say go (77)
 
 **P1 (blocks other work, or cheap and valuable)**
 
 - [ ] E7 After the decision: promote the winner to `1_Prime`, remove the losers, update the scaffolds, the templates README and the tutorial. ([2026-10-11](plans/2026-10-11-first-shot-flows.md))
-- [ ] C6 Add Potentials' closest-person evidence and staged rename ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] E1 Plan user-staged Review photos, incoming `Various` photos, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] F1 Add report-only Prospect outlier detection against ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] F3 Keep routine Angel/Sister gallery processing report-only. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] I1 Trace and reproduce name continuity through promotion, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] I2 Add regression coverage for name preservation across every ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] 0.3a Verify how to create an isolated sandbox copy of the ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 0.3c Define a sandbox-only reset allowlist for generated ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 0.4 Build a bounded, labelled acceptance set from known ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 1.1 Trace all entry points and call paths for pool ingest, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 1.2 Inventory active and historical source roots, including ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 1.3 Map matching, clustering, category assignment, and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 1.4 Produce a sunset/deprecation matrix for overlapping or ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 1.5 Add regression tests for every confirmed source boundary, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.3 Inventory case-insensitive surname reuse and folder-name ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.5 Specify the smallest stable-ID-based catalogue ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.8 Define a versioned JSON rebase-config schema for named, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.1 Preserve the corrected cast-only Prospect/Potential ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.2 Build the people viewer from actual sandbox output ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.3 Add rebase mode/config selection for repeatable sandbox ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.4 Ensure Artist, legacy Model paths, archived, retired, duplicate, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.6 Compare scenarios by per-photo destination, family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.7 Once the sandbox boundary and reset allowlist are verified, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.9 Support repeated clean runs with different configs and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.1 Write the routing contract for confident same-person ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.1a Specify category precedence for a frozen run: resolve ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.3 Add group-to-group and person-to-cluster comparison ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.3a Implement the config-driven category evaluator for ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.3b Prove a sandbox-only JSON edit can change supported ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.4 Integrate selective Review routing into the primary ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.5 Use a frozen pre-run snapshot for scoring and deterministic ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.6 Add focused tests for ties, margins, small groups, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1 Add family/lookalike grouping to the local people gallery ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1a Add gallery controls to include/exclude classifications ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1b If supported in the POC viewer, allow enabling/disabling ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1i Add person-wide Protection for Models/Prospects separately ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.2 Add a read-only preview for threshold-assigned family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.3 Reuse the existing staged person-action manifest and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.1 Freeze the accepted sandbox-tested rules, source scope, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.3 Verify a fresh external-library backup and restore ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.4 Re-run the accepted workflow against the normal library ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 7.1 Run labelled future-batch tests through the actual ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 7.2 Ensure generated reports explain destination and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 7.4 Update the likeness guide, affected runbooks, active plan ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 
 **P2 (normal)**
 
@@ -112,7 +154,7 @@
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
-- [ ] C7 Keep dated report output available, then support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C7 Keep dated report output available and support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G3 Test cancel, stale-manifest rejection, backup, apply, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
@@ -121,9 +163,11 @@
 - [ ] H3 Inventory all effective thresholds and options in one ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H4 Simplify the user-facing workflow and CLI options only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H5 Update the likeness guide, original-photo runbook, gallery ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] I3 Add staged GUI renaming for Prospects and Potentials. ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] I4 Add preview, backup and apply support for staged name ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] I5 Verify collisions across Prospects and Potentials, including ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] 1.6 Refactor only the confirmed complex matching seams into ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 2.7 Update the schema, validator, name/history helpers, and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.5 Refresh the people index, gallery, and documented ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.6 Show intended card-use guidance by category in the ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 7.3 Remove or retire only features approved by the sunset ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 
 **P3 (later, or ideas)**
 
@@ -150,7 +194,7 @@
 | --- | --- | --- | --- | --- | --- | ---: | ---: |
 | Angelica | angelica_image~ | Q c8 | Q c1 | - | - | - | 9 |
 | Azaline | azaline_image_~ | Q c3 | - | - | - | - | 3 |
-| Camaris | camaris_shot_2~ | Q c5 | - | - | - | - | 5 |
+| Camaris | camaris_image_~ | Q c5 | - | - | - | - | 5 |
 | Gavrielle | gavrielle_imag~ | Q c2 | Q c1 | - | - | - | 3 |
 | Haniya | haniya_image_7~ | Q c1 | - | - | - | - | 1 |
 | Nyxene | nyxene_shot_20~ | Q c4 | - | - | - | - | 4 |

@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-20 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-21 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -66,8 +66,9 @@ preserved, and the accumulated work was committed in four topic groups and
 pushed to `origin/art/curation-and-workspaces` (tip `691169850`).
 
 The plan audit found 11 active plans and one proposed plan; the approved
-likeness-workflow and art-tools-structure plans bring the current count to 13
-active plans and one proposed plan. No other plan was ready to archive. The current recap is
+likeness-workflow, art-tools-structure, and rebaseline/family-naming plans
+bring the current count to 14 active plans and one proposed plan. No other
+plan was ready to archive. The current recap is
 [Oct 20](recap/2026-10-20-0150-recap.md).
 The immediate user task is to finish the manual `0_Edit`/`1_Alpha` prompt set;
 do not update shared templates or regenerate their outputs until the user's
@@ -77,11 +78,105 @@ Oct 20 likeness direction: a new active plan covers a git-tracked identity
 metadata catalogue, separate from ComfyUI photo selection; a focused review
 gallery that exports validated CLI manifests; explicit Review versus
 Reject-to-Various behavior; combined Review/Various matching with same-run
-candidate clusters; and guarded Prospect self-healing. Angels and Sisters
-remain protected from automatic gallery moves. Implementation proceeds in
-tested, documented, committed increments; no matching thresholds change before
-action-specific validation. Broader art-authoring and ComfyUI execution UIs are
-future scope.
+candidate clusters; and guarded Prospect self-healing. Its metadata, stable
+ID, gallery, manifest, backup, and undo foundations remain active there.
+Angels and Sisters remain protected from automatic gallery moves. The Oct 21
+rebaseline plan now owns rebaseline, family naming, matcher simplification,
+and validated routing. Implementation proceeds in tested, documented
+increments; no production thresholds change before action-specific validation.
+Broader art-authoring and ComfyUI execution UIs are future scope.
+
+Oct 21 likeness decision: Option A is approved—keep the existing category
+folders and represent families/lookalikes as virtual groups in the people
+gallery. Use shared surnames for identities automatically associated by an
+approved looks-like threshold, with distinct first names; names are
+human-facing only and never matching evidence. Real end-to-end moves and
+family-name assignment may be tested on an isolated copy such as
+`B:\Sovereign Territories Sandbox\`, inspected in the viewer, and rerun there
+as needed. The normal library remains a separate, reviewed and backed-up run.
+Before implementation, the new
+[rebaseline and family-naming plan](plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
+coordinates current-plan prerequisites, source-scope and code-simplification
+audits (including Artists and legacy Model folders), name/history review,
+visual no-move scenarios, real sandbox iterations, validated routing, and a
+guarded rebaseline. No production thresholds, names, folders, or photos
+changed with this decision.
+
+Oct 21 likeness POC direction: add a rebaseline flag and validated,
+data-driven JSON config so the complete selected library can be reprocessed
+into real category directories in an isolated sandbox. Each run starts from
+the same immutable snapshot and rebuilds identity references from Angels and
+Sisters only by default; an option includes eligible low-own-core-score cast
+photos as candidates. Reset only generated sandbox outputs and run-scoped
+identity state, then inspect actual Models/Prospects/Potentials directories
+and the gallery; config/threshold changes can be rerun without per-photo
+approval. The proposed Model tier is 5+ usable photos and cast resemblance in
+the calibrated below-merge band (initially 0.40 to below 0.55); other 5+ groups
+are Prospects, and one-to-four remain Potentials with visible likeness scores.
+Classification is tied to stable identity and directory placement; gallery
+toggles affect presentation only. Production roots remain prohibited to the
+sandbox reset path, and the normal-library rebaseline remains a separate
+reviewed, backed-up operation. Existing production category rules have not
+changed.
+
+Oct 21 sandbox prerequisite: the full-name audit covered 265 active identities
+in Angels, Sisters, Prospects, Potentials, and Artist-person folders. Four
+incomplete `z_` records were completed: Angelica Vale (user-approved),
+Potential Camaris Bloom, Mia Wolfe, and Draknora's recorded identity Jade
+Santos. A second audit verified all 265 have exactly one full-name record
+whose filename matches the name; no person folders or photos were moved.
+Vale is now used by seven active identities; surname reuse alone does not
+establish a family link. The sandbox now exists at
+`B:\Sovereign Territories Sandbox\`. Its `Source` snapshot and `Working` copy
+each contain 8,845 files / 5,570,978,132 bytes; `source-manifest.json` records
+each file's relative path, size, and SHA-256. All included file hashes match
+across the production source, snapshot, and working copy. `_backup`,
+`_archive`, and `_reports` were excluded; `_junk` and `_retired` are retained
+only as inert reference data, not matching inputs or reset targets. The
+remaining gate is to prove processing/reset commands are confined to the
+sandbox before running a rebase. A temporary-storage benchmark excluded C:
+because it is the OS drive: B: (Samsung T7 USB SSD, exFAT) led durable
+sequential writes at 296.3 MiB/s versus A: (ADATA SP900 SATA SSD, NTFS) at
+155.4 MiB/s and D: (Toshiba USB drive, NTFS) at 65.8 MiB/s. Creating/writing
+512 small files took 0.20 seconds on both A: and B:, and 4.14 seconds on D:.
+Benchmark files and the C: scratch copy were removed; B: is the current
+choice for sandbox temp outputs and reports.
+
+Oct 21 gallery refinement: both People Gallery pages now share the
+Sisters → Angels → Models → Prospects → Potentials hierarchy, concise copy,
+line-separated relationships, consistent category/score badges, and Review
+links with a separate in-gallery jump. The overview is for relationships and
+a nine-photo scan; Review remains the complete photo/action workspace. Score
+colors are display cues only. Both pages were regenerated in
+`B:\Sovereign Territories Sandbox\Working\_reports\library` from the
+sandbox-local cache with ComfyUI renders disabled: 265 overview cards, 2,667
+Review photos across 261 identities, and 6,055 cached thumbnails. Their
+embedded scripts and category order were validated. Person-wide protection
+for Models/Prospects remains a separate planned identity action from existing
+photo protection. No rebase or production move is authorized.
+
+Oct 21 gallery scoring refinement: Review now displays the filename-derived
+Photo ID separately from the stable person Identity ID, alongside core mode
+and size, membership, face size/count, centered-similarity method, and applicable
+thresholds. The People Gallery uses colored adjusted-fit badges and
+score-direction jump triangles, and links a chosen source photo even when it
+falls outside the nine thumbnails. These are presentation and navigation
+changes only; fit colors do not alter matching or routing. Both pages were
+regenerated in the B: sandbox with its local cache and renders disabled:
+265 overview cards, 2,667 Review photos, 6,055 cached thumbnails. Person-wide
+protection remains open; no rebase or production move was run.
+
+Oct 21 gallery follow-up: the People Gallery now shows the workflow photo's
+likeness badge, links it directly, and highlights it with a thick score-colored
+border when visible in the nine-photo grid. Review uses separate category,
+location, and state badges; its identity heading omits the category prefix,
+face details link to cached face crops, and expanded scoring evidence is
+bullet-form with color cues. Review can stage workflow-photo selection for a
+Gallery photo in a configured Angel/Sister; applying uses the existing
+workflow-repoint helper, verified backup, audit record, stale checks, and
+undo. Flow-specific overrides are untouched, and apply/undo refuse an isolated
+sandbox root. Only the pages and documentation were refreshed; no production
+workflow selection, rebase, or photo move was applied.
 
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports
@@ -107,11 +202,56 @@ and flat all-photo views are available; the low-score cutoff is adjustable.
 Each group retains a visible comparison photo when filters hide it, while
 workflow-selected photos, confirmed identity anchors and provisional
 score-ranked references have distinct labels. The report remains read-only.
-The next gallery update adds category-driven person selection, responsive
-small/medium/large tiles, and selectable head or chest-up crops named from each
-master image stem and content key; the crop opens the full source. Potentials
-now show closest-other-folder score evidence as a suggestion only. Staged
-person renaming and explicit name swaps remain in progress.
+The review page has category-driven person selection, responsive
+small/medium/large tiles, selectable head or chest-up crops named from each
+master image stem and content key, and closest-other-folder evidence for
+Potentials. The overview and full review now share identity sort modes:
+Core identity first (anchors, then core members, then other scored photos)
+and Highest identity score. The overview's first nine match the filtered
+Gallery view in the review page; both use the same cached head/chest crops,
+and its framing and sorting controls do not require a second thumbnail set.
+Person links open the matching Gallery view in a new tab. Both pages use the
+same category/person order, and `bin\people-gallery.cmd` refreshes them
+together. Prime-start suitability remains separate from identity ranking.
+Staged person renaming and explicit name swaps remain in progress.
+The paired report was regenerated in place at
+`B:\Sovereign Territories\_reports\likeness-review-20261020-final-grid`:
+265 overview cards, all 2,667 full-review photos, and 5,334 cached head/chest
+thumbnails. The overview links all 265 names to the correct person-filtered
+review URL; all 853 displayed photos use the exact same head/chest cache
+paths as the review data. Its HTML is 0.9 MB, with no missing referenced
+crops. All 261 overview cards with photos were verified against their
+person-filtered Gallery review order; four empty cards correctly have no
+thumbnails. Both embedded scripts pass `node --check`. The older dated report
+remains intact.
+The read-only `likeness folder "Harlow Chase" --all` audit reports 100 usable
+photos (97 agreeing, two borderline, one below 0.15). Its two-face photo
+scored 0.00; one other image scores 0.39 against Harlow and 0.46 against
+Camaris. Camaris's identity history records prior Prospect merges at 0.55,
+0.49 and 0.49. These are good manual-review targets, not conclusive evidence
+of incorrect identities; the identity catalogue has no confirmed anchors yet.
+No thresholds or real-library photos were changed.
+
+Oct 20 prospect-sprawl priority: the first read-only, per-photo Prospect/
+Potential cast audit is complete; keep new ingest paused until its evidence
+and uncertain-cast routing are reviewed. The report is
+`B:\Sovereign Territories\_reports\library\rebaseline-20261020-cast-audit.md`;
+its companion `prospect-cast-audit.csv` has 1,146 usable gallery photos.
+`Angels/angelica` ranks first for 67 photos (12 scores at least 0.40, four at
+least 0.45, two at least 0.50, none at least 0.55). It ranks first for all
+four photos in Potentials/Fia Hadley and Potentials/Amara Berkley, three of
+five in Prospects/Petra Wilde, and ten of fourteen in Prospects/Jacinta Alden. These
+are provisional folder-centroid comparisons, not identity confirmation; a
+photo's current peer-folder score is often higher. The whole-library preview
+also flags Potentials/Lia Joyce (35 usable photos) for the five-photo category
+boundary and Potentials/Wren Thorn (one usable photo) for former-cast history.
+No photo or category changes were applied; thresholds are unchanged.
+The report also contains 26 threshold-based reassignment suggestions and
+three Junk candidates, all unapplied. The next work is visual review and
+designing source-grouped staged Review routing; cross-Prospect/Potential
+reassignment remains a later pass. The existing `likeness reconcile` input is
+Review plus Various and still does not audit ordinary Prospect/Potential
+Gallery photos.
 The Oct 20 library report for review is
 `B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`:
 2,668 photos, 2,668 cached thumbnails; initial build 88.3 s and cached

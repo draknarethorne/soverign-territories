@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """The likeness tool, tested with made-up face vectors (no models, no real photos). Run: python tools/art/test_likeness.py"""
 import contextlib
+import csv
 import io
 import pathlib
 import shutil
@@ -153,6 +154,48 @@ class LikenessTests(unittest.TestCase):
         first = L.invent_name("y", set())
         self.assertNotEqual(L.invent_name("y", {first}).lower(), first.lower())
         self.assertNotEqual(L.invent_name("y", {first.upper()}).lower(), first.lower(), "a name that differs only in case is taken")
+
+    def test_rebaseline_writes_cast_photo_audit_and_flags_potential_exceptions_without_moving(self):
+        self.add("Angels", "Angelica", "ann", 4)
+        self.add("Prospects", "Petra Cole", "ann", 3)
+        self.add("Potentials", "Former Sister", "ann", 5)
+        potential_history = self.lib / "Potentials/Former Sister/gallery/z_former_sister.txt"
+        potential_history.write_text(
+            "name: Former Sister\n2026-10-01 was the Sister Draknara\n",
+            encoding="utf-8",
+        )
+        (self.lib / "Potentials/Former Sister/gallery/no_face_image_999.jpg").write_text("noface|999")
+        report = self.tmp / "reports" / "rebaseline.md"
+        photo_paths = [
+            self.lib / "Prospects/Petra Cole/gallery" / name
+            for name in self.names("Prospects", "Petra Cole")
+        ]
+
+        output = self.run_tool("rebaseline", "--out", str(report))
+
+        audit_path = report.with_name("prospect-cast-audit.csv")
+        self.assertTrue(audit_path.is_file())
+        self.assertIn("Prospect/Potential Gallery photos audited", output)
+        self.assertIn("Photo-by-photo scores", report.read_text(encoding="utf-8"))
+        with audit_path.open(encoding="utf-8-sig", newline="") as stream:
+            rows = list(csv.DictReader(stream))
+        petra_rows = [row for row in rows if row["source_folder"] == "Prospects/Petra Cole"]
+        former_rows = [row for row in rows if row["source_folder"] == "Potentials/Former Sister"]
+        self.assertEqual(len(petra_rows), 3)
+        self.assertTrue(all(row["best_cast_folder"] == "Angels/Angelica" for row in petra_rows))
+        self.assertTrue(all(row["suggested_review_only"] == "Angels/Angelica/review" for row in petra_rows))
+        self.assertEqual(len(former_rows), 6)
+        self.assertTrue(all("5+ usable photos" in row["potential_status_flags"] for row in former_rows))
+        self.assertTrue(
+            all("history mentions prior cast identity" in row["potential_status_flags"] for row in former_rows),
+            [(row["history"], row["potential_status_flags"]) for row in former_rows],
+        )
+        no_face = next(row for row in former_rows if row["photo"].startswith("no_face"))
+        self.assertEqual(no_face["usable"], "False")
+        self.assertEqual(no_face["best_cast_folder"], "")
+        self.assertTrue(all(path.is_file() for path in photo_paths))
+        self.assertTrue((self.lib / "Prospects/Petra Cole").is_dir())
+        self.assertTrue((self.lib / "Potentials/Former Sister").is_dir())
 
     def test_the_mixed_folders_are_never_read_and_the_cache_spares_a_second_run(self):
         self.standard_library()

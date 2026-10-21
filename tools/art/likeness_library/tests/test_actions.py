@@ -198,6 +198,100 @@ class LikenessActionTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(plans[0]["destination"], self.root / "Various" / "gallery" / self.photo.name)
 
+    def test_workflow_photo_selection_is_staged_applied_and_undoable(self):
+        folder = self.root / "Angels" / "Sophie"
+        gallery = folder / "gallery"
+        scaled = folder / "gallery_944x1104"
+        gallery.mkdir(parents=True)
+        scaled.mkdir()
+        old_photo = gallery / "sophie_image_111111.jpg"
+        new_photo = gallery / "sophie_image_222222.jpg"
+        old_photo.write_bytes(b"old photo")
+        new_photo.write_bytes(b"new photo")
+        old_scaled = scaled / "sophie_image_111111_944x1104.png"
+        new_scaled = scaled / "sophie_image_222222_944x1104.png"
+        old_scaled.write_bytes(b"old scaled")
+        new_scaled.write_bytes(b"new scaled")
+        cfg = {
+            "standardSize": [944, 1104],
+            "paths": {"workRoot": str(self.root)},
+            "photos": {"Sophie": old_scaled.name},
+            "flows": {},
+        }
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"] = [{
+            "type": "workflow-photo-selected",
+            "photoId": "photo:image_222222",
+            "contentSha256": metadata.content_sha256(new_photo),
+            "sourceBucket": "Gallery",
+            "personFolder": "Angels/Sophie",
+        }]
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = pathlib.Path(tmp) / "workflow.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            self.assertEqual(actions.load_manifest(manifest_path), manifest)
+
+        errors, plans = actions.validate_manifest(
+            manifest, self.root, self.catalog, cfg=cfg
+        )
+        self.assertEqual(errors, [])
+        self.assertEqual(plans[0]["workflow"]["workflowPhotoBefore"], old_scaled.name)
+        self.assertEqual(plans[0]["workflow"]["workflowPhotoAfter"], new_scaled.name)
+        sandbox_cfg = copy.deepcopy(cfg)
+        sandbox_cfg["paths"]["workRoot"] = str(self.root / "source-snapshot")
+        with self.assertRaisesRegex(ValueError, "isolated sandbox"):
+            actions.apply_actions(
+                manifest, self.root, self.catalog, sandbox_cfg, "Prospects/Various"
+            )
+
+        backups = []
+
+        def backup(root, _cfg, batch):
+            result = root / "_backup" / batch
+            backups.append(result)
+            return result
+
+        def save_catalog(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        def repoint(config, selections, _dry_run):
+            for hero, (old_name, new_path) in selections.items():
+                self.assertEqual(config["photos"][hero], old_name)
+                config["photos"][hero] = pathlib.Path(new_path).name
+
+        with mock.patch.object(actions.cw, "repoint_photos", side_effect=repoint):
+            batch_id, _ = actions.apply_actions(
+                manifest, self.root, self.catalog, cfg, "Prospects/Various",
+                backup_fn=backup, save_fn=save_catalog,
+            )
+            self.assertEqual(cfg["photos"]["Sophie"], new_scaled.name)
+            self.assertEqual(self.catalog["actions"][0]["type"], "workflow-photo-selected")
+            self.assertEqual(metadata.validation_errors(self.catalog), [])
+
+            errors, undo_batch, undo_plans = actions.plan_undo(
+                self.catalog, self.root, batch_id, actions.selected_photo_ids(cfg), cfg
+            )
+            self.assertEqual(errors, [])
+            self.assertEqual(undo_batch, batch_id)
+            self.assertTrue(undo_plans[0]["workflow"])
+
+            actions.undo_actions(
+                self.catalog, self.root, cfg, "Prospects/Various",
+                batch_id=batch_id, backup_fn=backup, save_fn=save_catalog,
+            )
+        self.assertEqual(cfg["photos"]["Sophie"], old_scaled.name)
+        self.assertEqual(self.catalog["actions"][-1]["type"], "action-undone")
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+        self.assertEqual(len(backups), 2)
+
+    def test_workflow_photo_apply_rejects_an_isolated_sandbox_root(self):
+        with self.assertRaisesRegex(ValueError, "isolated sandbox"):
+            actions._require_configured_work_root(
+                self.root,
+                {"paths": {"workRoot": str(self.root / "configured-library")}},
+            )
+
     def test_cli_preview_loads_config_and_reports_without_mutating(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = pathlib.Path(tmp) / "actions.json"

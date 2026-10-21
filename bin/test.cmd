@@ -1,7 +1,17 @@
 @echo off
 call "%~dp0_env.cmd"
-rem The fast code tests: workflow tool (homes, accepts, zz_ guards) and the generator (piece extends).
+rem Fast code tests for workflow tools, prompt generation and photo-library galleries.
 %PY% tools\workflows\test_comfy_workflows.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% tools\art\test_people_gallery.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
+%PY% -m unittest tools.art.likeness_library.tests.test_review_gallery
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

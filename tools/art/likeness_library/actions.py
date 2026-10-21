@@ -20,12 +20,15 @@ import library_backup  # noqa: E402
 import people  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 
+cw = likeness.cw
+
 MANIFEST_SCHEMA = ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
 PHOTO_ROOTS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists", "Models", "Various")
 IGNORED_PARTS = {"_archive", "_junk", "_retired"}
 MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved"}
 ANCHOR_ACTIONS = {"anchor-added", "anchor-removed"}
 PROTECTION_ACTIONS = {"photo-protected", "photo-unprotected"}
+WORKFLOW_ACTIONS = {"workflow-photo-selected"}
 
 
 def load_manifest(path):
@@ -96,6 +99,8 @@ def _category_for_action(action_type):
         return "anchor"
     if action_type in PROTECTION_ACTIONS:
         return "protection"
+    if action_type in WORKFLOW_ACTIONS:
+        return "workflow"
     return None
 
 
@@ -109,6 +114,56 @@ def _destination(action, root, pool_folder):
     return None
 
 
+def _workflow_photo_plan(action, source, root, cfg):
+    """Resolve a staged workflow-photo choice and its restorable current selection."""
+    if cfg is None:
+        raise ValueError("workflow-photo selection requires workspace configuration")
+    folder = pathlib.Path(root) / pathlib.Path(*pathlib.PurePosixPath(action["personFolder"]).parts)
+    group, hero = action["personFolder"].split("/", 1)
+    if group not in ("Angels", "Sisters"):
+        raise ValueError("workflow-photo selection is supported only for Angels and Sisters")
+    configured = cfg.get("photos", {})
+    hero_key = next((name for name in configured if name.casefold() == hero.casefold()), None)
+    if hero_key is None:
+        raise ValueError(f"no base workflow photo is configured for {hero}")
+    current_name = configured[hero_key]
+    target_id = metadata.photo_id_from_name(source.name)
+    if metadata.photo_id_from_name(current_name) == target_id:
+        raise ValueError(f"{target_id} is already the configured workflow photo for {hero}")
+    width, height = cfg.get("standardSize") or (944, 1104)
+
+    def scaled_path(original):
+        return (
+            original.parent.parent / f"gallery_{width}x{height}"
+            / f"{original.stem}_{width}x{height}.png"
+        )
+
+    current_id = metadata.photo_id_from_name(current_name)
+    old_matches = [
+        photo for photo in originals.images(folder / "gallery")
+        if metadata.photo_id_from_name(photo.name) == current_id
+    ]
+    if len(old_matches) != 1:
+        raise ValueError(
+            f"configured workflow photo for {hero} must match exactly one Gallery original to support undo"
+        )
+    old_scaled = scaled_path(old_matches[0])
+    new_scaled = scaled_path(source)
+    if not old_scaled.is_file():
+        raise ValueError(f"current scaled workflow photo is missing: {old_scaled}")
+    if not new_scaled.is_file():
+        raise ValueError(f"scaled version of the staged photo is missing: {new_scaled}")
+    return {
+        "workflowHero": hero_key,
+        "workflowPhotoBefore": current_name,
+        "workflowPhotoAfter": new_scaled.name,
+        "workflowSourceBefore": _relative_file(root, old_scaled),
+        "workflowSourceAfter": _relative_file(root, new_scaled),
+        "workflowBeforePath": old_scaled,
+        "workflowAfterPath": new_scaled,
+    }
+
+
 def selected_photo_ids(cfg):
     """Return source IDs currently selected by a base or flow-specific workspace."""
     names = list(cfg.get("photos", {}).values())
@@ -117,7 +172,16 @@ def selected_photo_ids(cfg):
     return {photo_id for name in names if (photo_id := metadata.photo_id_from_name(name))}
 
 
-def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", chosen_ids=()):
+def _require_configured_work_root(root, cfg):
+    configured_root = pathlib.Path(cw.work_root(cfg)).resolve()
+    if pathlib.Path(root).resolve() != configured_root:
+        raise ValueError(
+            "workflow-photo actions can only be applied against the configured library root; "
+            "do not apply them with an isolated sandbox --root"
+        )
+
+
+def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", chosen_ids=(), cfg=None):
     """Return structural/current-library errors and safe preview records; perform no writes."""
     root = pathlib.Path(root).resolve()
     schema = json.loads(MANIFEST_SCHEMA.read_text(encoding="utf-8"))
@@ -136,6 +200,7 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
     anchor_owners = _catalog_anchor_owners(catalog)
     pool_key = pathlib.PurePosixPath(pool_folder).as_posix().casefold()
     occupied = {}
+    workflow_targets = {}
     plans = []
     for index, action in enumerate(document["actions"]):
         label = f"actions/{index}"
@@ -150,6 +215,9 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
         folder_key = relative_folder.as_posix().casefold()
         if folder_key == pool_key:
             errors.append(f"{label}: the unassigned pool is not a person identity folder")
+        if action["type"] in WORKFLOW_ACTIONS and action["sourceBucket"] != "Gallery":
+            errors.append(f"{label}: workflow photo must be selected from Gallery")
+            continue
         if folder_key in duplicate_folders:
             errors.append(f"{label}: multiple catalogue people claim {action['personFolder']}")
         person_record = people_by_folder.get(folder_key)
@@ -202,6 +270,15 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             errors.append(f"{label}: a photo cannot change identity anchor state and move in the same manifest")
         if category == "anchor" and "move" in photo_actions:
             errors.append(f"{label}: a photo cannot move and change identity anchor state in the same manifest")
+        if category == "workflow" and "move" in photo_actions:
+            errors.append(f"{label}: a workflow photo cannot move in the same manifest")
+        if category == "move" and "workflow" in photo_actions:
+            errors.append(f"{label}: a workflow photo cannot move in the same manifest")
+        if category == "workflow":
+            previous = workflow_targets.get(folder_key)
+            if previous is not None:
+                errors.append(f"{label}: conflicts with actions/{previous} (one workflow photo per person)")
+            workflow_targets[folder_key] = index
         photo_actions[category] = index
 
         if person_record:
@@ -224,6 +301,13 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
         elif action["type"] == "photo-unprotected" and not protected:
             errors.append(f"{label}: {photo_id} is not currently protected")
 
+        workflow = None
+        if action["type"] in WORKFLOW_ACTIONS:
+            try:
+                workflow = _workflow_photo_plan(action, source, root, cfg)
+            except (OSError, ValueError) as exc:
+                errors.append(f"{label}: {exc}")
+                continue
         destination = _destination(action, root, pool_folder)
         if destination is not None:
             try:
@@ -244,12 +328,20 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             "source": source,
             "destination": target,
             "personId": person_id,
+            "workflow": workflow,
         })
     return errors, plans
 
 
 def print_preview(plans):
     for plan in plans:
+        if plan.get("workflow"):
+            workflow = plan["workflow"]
+            print(
+                f"  select workflow photo for {workflow['workflowHero']}: "
+                f"{workflow['workflowPhotoBefore']} -> {workflow['workflowPhotoAfter']}"
+            )
+            continue
         if plan["destination"] is None:
             print(f"  {plan['type']}: {plan['photoId']} (catalogue decision only)")
         else:
@@ -353,6 +445,77 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
     catalog["actions"].append(record)
 
 
+def _apply_workflow_action(catalog, plan, root, batch_id):
+    action = plan["action"]
+    photo_id = action["photoId"]
+    person_id, _person = _person_record(catalog, action["personFolder"])
+    before_state = _catalog_state(catalog, person_id, photo_id)
+    old_photo = catalog["photos"].get(photo_id)
+    protected = bool(
+        old_photo
+        and old_photo["protected"]
+        and old_photo["contentSha256"] == action["contentSha256"]
+    )
+    catalog["photos"][photo_id] = {
+        "contentSha256": action["contentSha256"],
+        "protected": protected,
+    }
+    after_state = _catalog_state(catalog, person_id, photo_id)
+    source_relative = _relative_file(root, plan["source"])
+    workflow = plan["workflow"]
+    record = {
+        "id": "action_" + uuid.uuid4().hex,
+        "batchId": batch_id,
+        "timestamp": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+        "actor": "user",
+        "type": action["type"],
+        "photoIds": [photo_id],
+        "contentSha256": action["contentSha256"],
+        "source": source_relative,
+        "destination": source_relative,
+        "reason": "workflow photo selected from the local likeness review gallery",
+        "beforeState": before_state,
+        "afterState": after_state,
+        **{
+            key: workflow[key]
+            for key in (
+                "workflowHero",
+                "workflowPhotoBefore",
+                "workflowPhotoAfter",
+                "workflowSourceBefore",
+                "workflowSourceAfter",
+            )
+        },
+    }
+    if person_id:
+        record["personId"] = person_id
+    catalog["actions"].append(record)
+
+
+def _repoint_workflow_photos(plans, cfg):
+    selections = {
+        plan["workflow"]["workflowHero"]: (
+            plan["workflow"]["workflowPhotoBefore"],
+            plan["workflow"]["workflowAfterPath"],
+        )
+        for plan in plans if plan.get("workflow")
+    }
+    if selections:
+        cw.repoint_photos(cfg, selections, False)
+
+
+def _restore_workflow_photos(plans, cfg):
+    selections = {
+        plan["workflow"]["workflowHero"]: (
+            plan["workflow"]["workflowPhotoAfter"],
+            plan["workflow"]["workflowBeforePath"],
+        )
+        for plan in plans if plan.get("workflow")
+    }
+    if selections:
+        cw.repoint_photos(cfg, selections, False)
+
+
 def _create_action_backup(root, cfg, batch_id):
     return library_backup.create_backup(
         root,
@@ -432,19 +595,24 @@ def _move_files(plans, root):
 def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, save_fn=None):
     """Back up, revalidate, apply staged actions transactionally, and save an audit history."""
     root = pathlib.Path(root).resolve()
+    if any(action["type"] in WORKFLOW_ACTIONS for action in document["actions"]):
+        _require_configured_work_root(root, cfg)
     chosen_ids = selected_photo_ids(cfg)
-    errors, plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids)
+    errors, plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
         raise ValueError("cannot apply invalid manifest:\n  " + "\n  ".join(errors))
     batch_id = "batch_" + uuid.uuid4().hex
     updated = copy.deepcopy(catalog)
     for plan in plans:
-        _apply_catalog_action(updated, plan, root, batch_id)
+        if plan.get("workflow"):
+            _apply_workflow_action(updated, plan, root, batch_id)
+        else:
+            _apply_catalog_action(updated, plan, root, batch_id)
     metadata.validate_catalog(updated)
 
     backup_fn = backup_fn or _create_action_backup
     backup = backup_fn(root, cfg, batch_id)
-    errors, checked_plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids)
+    errors, checked_plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
         raise ValueError("library changed after backup; no actions applied:\n  " + "\n  ".join(errors))
     if any(
@@ -454,18 +622,28 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
             before["destination"] is not None
             and _key(before["destination"]) != _key(after["destination"])
         )
+        or before.get("workflow") != after.get("workflow")
         for before, after in zip(plans, checked_plans)
     ):
         raise ValueError("action destinations changed after backup; no actions applied")
 
     completed, created_directories = _move_files(checked_plans, root)
+    workflow_attempted = any(plan.get("workflow") for plan in checked_plans)
     try:
+        _repoint_workflow_photos(checked_plans, cfg)
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
+        workflow_failures = []
+        if workflow_attempted:
+            try:
+                _restore_workflow_photos(checked_plans, cfg)
+            except (OSError, ValueError) as restore_exc:
+                workflow_failures.append(f"workflow rollback failed: {restore_exc}")
         failures = _rollback_moves(completed, created_directories)
+        failures.extend(workflow_failures)
         if failures:
             raise OSError(
-                f"catalogue save failed ({exc}); rollback also failed: {'; '.join(failures)}; "
+                f"action apply failed ({exc}); rollback also failed: {'; '.join(failures)}; "
                 f"verified backup: {backup}"
             ) from exc
         raise
@@ -488,7 +666,7 @@ def _safe_relative_path(root, relative):
     return resolved
 
 
-def plan_undo(catalog, root, batch_id=None, chosen_ids=()):
+def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
     """Plan undo of the newest non-undone action batch and detect later state changes."""
     action_records = catalog["actions"]
     undone = {
@@ -527,6 +705,29 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=()):
             return [f"catalogue state changed after action {action['id']}"], None, []
         source = _safe_relative_path(root, action["source"])
         destination = _safe_relative_path(root, action["destination"])
+        workflow = None
+        if action["type"] in WORKFLOW_ACTIONS:
+            if cfg is None:
+                return ["workflow-photo undo requires workspace configuration"], None, []
+            configured = cfg.get("photos", {})
+            hero_key = action.get("workflowHero")
+            current_name = next(
+                (name for hero, name in configured.items() if hero.casefold() == hero_key.casefold()),
+                None,
+            ) if isinstance(hero_key, str) else None
+            if current_name != action.get("workflowPhotoAfter"):
+                return [f"workflow photo for {hero_key} changed after action {action['id']}"], None, []
+            old_path = _safe_relative_path(root, action.get("workflowSourceBefore", ""))
+            new_path = _safe_relative_path(root, action.get("workflowSourceAfter", ""))
+            if not old_path.is_file() or not new_path.is_file():
+                return [f"workflow photo files needed to undo {action['id']} are missing"], None, []
+            workflow = {
+                "workflowHero": hero_key,
+                "workflowPhotoBefore": current_name,
+                "workflowPhotoAfter": action["workflowPhotoBefore"],
+                "workflowBeforePath": new_path,
+                "workflowAfterPath": old_path,
+            }
         if action["source"] != action["destination"]:
             if not destination.is_file() or source.exists():
                 return [f"cannot safely undo move {destination} -> {source}"], None, []
@@ -542,27 +743,37 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=()):
                 return [f"photo changed after action {action['id']}: {source}"], None, []
 
         before = action["beforeState"]
-        if before["person"] is None:
-            after_person = action["afterState"]["person"]
-            simulated["people"][person_id] = {
-                "id": person_id,
-                "displayName": after_person["displayName"],
-                "folder": after_person["folder"],
-                "folderHistory": [],
-                "identityAnchors": [],
-            }
+        if action["type"] in WORKFLOW_ACTIONS:
+            if before["photo"] is None:
+                simulated["photos"][photo_id] = {
+                    "contentSha256": action["contentSha256"],
+                    "protected": False,
+                }
+            else:
+                simulated["photos"][photo_id] = copy.deepcopy(before["photo"])
         else:
-            simulated["people"][person_id] = copy.deepcopy(before["person"])
-        if before["photo"] is None:
-            simulated["photos"][photo_id] = {
-                "contentSha256": action["contentSha256"],
-                "protected": False,
-            }
-        else:
-            simulated["photos"][photo_id] = copy.deepcopy(before["photo"])
+            if before["person"] is None:
+                after_person = action["afterState"]["person"]
+                simulated["people"][person_id] = {
+                    "id": person_id,
+                    "displayName": after_person["displayName"],
+                    "folder": after_person["folder"],
+                    "folderHistory": [],
+                    "identityAnchors": [],
+                }
+            else:
+                simulated["people"][person_id] = copy.deepcopy(before["person"])
+            if before["photo"] is None:
+                simulated["photos"][photo_id] = {
+                    "contentSha256": action["contentSha256"],
+                    "protected": False,
+                }
+            else:
+                simulated["photos"][photo_id] = copy.deepcopy(before["photo"])
         reverse_plans.append({
             "actionRecord": action,
             "beforeState": before,
+            **({"workflow": workflow} if workflow else {}),
         })
     try:
         metadata.validate_catalog(simulated)
@@ -575,13 +786,20 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     """Back up and transactionally undo the newest action batch."""
     root = pathlib.Path(root).resolve()
     chosen_ids = selected_photo_ids(cfg)
-    errors, selected_batch, reverse_plans = plan_undo(catalog, root, batch_id, chosen_ids)
+    errors, selected_batch, reverse_plans = plan_undo(catalog, root, batch_id, chosen_ids, cfg)
     if errors:
         raise ValueError("cannot undo action batch:\n  " + "\n  ".join(errors))
+    if any(
+        item.get("actionRecord", {}).get("type") in WORKFLOW_ACTIONS
+        for item in reverse_plans
+    ):
+        _require_configured_work_root(root, cfg)
     undo_batch_id = "batch_" + uuid.uuid4().hex
     backup_fn = backup_fn or _create_action_backup
     backup = backup_fn(root, cfg, undo_batch_id)
-    errors, checked_batch, checked_plans = plan_undo(catalog, root, selected_batch, chosen_ids)
+    errors, checked_batch, checked_plans = plan_undo(
+        catalog, root, selected_batch, chosen_ids, cfg
+    )
     if errors or checked_batch != selected_batch:
         detail = "\n  ".join(errors) if errors else "latest action batch changed"
         raise ValueError(f"action state changed after backup; no undo applied:\n  {detail}")
@@ -593,42 +811,62 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
         action = item["actionRecord"]
         before = item["beforeState"]
         person_id, photo_id = action.get("personId"), action["photoIds"][0]
-        if before["person"] is None:
-            after_person = action["afterState"]["person"]
-            updated["people"][person_id] = {
-                "id": person_id,
-                "displayName": after_person["displayName"],
-                "folder": after_person["folder"],
-                "folderHistory": [],
-                "identityAnchors": [],
-            }
+        if action["type"] in WORKFLOW_ACTIONS:
+            if before["photo"] is None:
+                updated["photos"][photo_id] = {
+                    "contentSha256": action["contentSha256"],
+                    "protected": False,
+                }
+            else:
+                updated["photos"][photo_id] = copy.deepcopy(before["photo"])
         else:
-            updated["people"][person_id] = copy.deepcopy(before["person"])
-        if before["photo"] is None:
-            updated["photos"][photo_id] = {
-                "contentSha256": action["contentSha256"],
-                "protected": False,
-            }
-        else:
-            updated["photos"][photo_id] = copy.deepcopy(before["photo"])
-        updated["actions"].append({
+            if before["person"] is None:
+                after_person = action["afterState"]["person"]
+                updated["people"][person_id] = {
+                    "id": person_id,
+                    "displayName": after_person["displayName"],
+                    "folder": after_person["folder"],
+                    "folderHistory": [],
+                    "identityAnchors": [],
+                }
+            else:
+                updated["people"][person_id] = copy.deepcopy(before["person"])
+            if before["photo"] is None:
+                updated["photos"][photo_id] = {
+                    "contentSha256": action["contentSha256"],
+                    "protected": False,
+                }
+            else:
+                updated["photos"][photo_id] = copy.deepcopy(before["photo"])
+        undone_record = {
             "id": "action_" + uuid.uuid4().hex,
             "timestamp": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
             "actor": "user",
             "type": "action-undone",
             "photoIds": action["photoIds"],
-            "personId": person_id,
             "reason": f"undid action batch {selected_batch}",
             "undoes": action["id"],
-        })
+        }
+        if person_id:
+            undone_record["personId"] = person_id
+        updated["actions"].append(undone_record)
     metadata.validate_catalog(updated)
 
     file_plans = [item for item in checked_plans if "source" in item]
     completed, created_directories = _move_files(file_plans, root)
+    workflow_attempted = any(item.get("workflow") for item in checked_plans)
     try:
+        _repoint_workflow_photos(checked_plans, cfg)
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
+        workflow_failures = []
+        if workflow_attempted:
+            try:
+                _restore_workflow_photos(checked_plans, cfg)
+            except (OSError, ValueError) as restore_exc:
+                workflow_failures.append(f"workflow rollback failed: {restore_exc}")
         failures = _rollback_moves(completed, created_directories)
+        failures.extend(workflow_failures)
         if failures:
             raise OSError(
                 f"undo catalogue save failed ({exc}); rollback also failed: {'; '.join(failures)}; "
@@ -661,7 +899,9 @@ def main(argv=None):
         pool_folder = likeness.pool_home(likeness.settings(cfg))
         if args.command == "undo":
             chosen_ids = selected_photo_ids(cfg)
-            errors, batch_id, undo_plans = plan_undo(catalog, root, args.batch_id, chosen_ids)
+            errors, batch_id, undo_plans = plan_undo(
+                catalog, root, args.batch_id, chosen_ids, cfg
+            )
             if errors:
                 print("invalid undo:")
                 for error in errors:
@@ -671,6 +911,12 @@ def main(argv=None):
             for plan in undo_plans:
                 if "source" in plan:
                     print(f"  move back: {plan['source']} -> {plan['destination']}")
+                if plan.get("workflow"):
+                    workflow = plan["workflow"]
+                    print(
+                        f"  restore workflow photo for {workflow['workflowHero']}: "
+                        f"{workflow['workflowPhotoBefore']} -> {workflow['workflowPhotoAfter']}"
+                    )
             if args.apply:
                 undo_batch, backup, undone = undo_actions(
                     catalog, root, cfg, pool_folder, batch_id=batch_id
@@ -682,7 +928,7 @@ def main(argv=None):
 
         manifest = load_manifest(args.manifest)
         errors, plans = validate_manifest(
-            manifest, root, catalog, pool_folder, selected_photo_ids(cfg)
+            manifest, root, catalog, pool_folder, selected_photo_ids(cfg), cfg
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)

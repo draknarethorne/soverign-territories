@@ -29,16 +29,22 @@ The roots are Angels, Sisters (the old name, Models, is still read), Prospects (
 
 The preview runs each step independently against the current folders; it does not simulate the earlier steps' proposed moves. A file may therefore appear in more than one step's preview even though the real run moves it in sequence. Treat preview counts as current-state counts and use the completed run log for final results.
 
-Then look at where everything landed: `bin\people-gallery.cmd` (or `<work>\_reports\library\people_gallery.html`) shows up
-to nine photos per person; Sisters and Angels are alphabetical, while Prospects and Potentials are ordered by usable
-gallery-photo count, largest first. Click a photo to open it, the photo count to
-open the person's local gallery folder, or the name to read their `z_` history. Angel cards show their paired Sister,
+Then look at where everything landed: `bin\people-gallery.cmd` builds both
+`<work>\_reports\library\people_gallery.html` and
+`people_gallery_review.html` with the shared thumbnail cache beside them. The overview and filtered review use the same
+identity sort modes and first-nine order, plus shared Chest-up and Head
+thumbnail files. Prime-start suitability remains a photo-quality score,
+not identity confidence. Sisters and Angels
+are alphabetical, while Prospects and Potentials are ordered by usable
+gallery-photo count, largest first. Click a thumbnail to open its source, or
+the person name to open the complete review gallery filtered to that person.
+The separate history link opens the person's `z_` file. Angel cards show their paired Sister,
 current canonical hair color and three eligible Prospect alternatives ranked by pairing fit. The full all-candidate
 rankings for every paired Angel are in `<work>\_reports\comparisons\pairings\angel-prospect-candidates.md`.
 Chosen Angels and Sisters that came through Prospect processing also show their recorded Prospect identity beside
 the chosen-photo status.
-For high-volume maintenance, run `bin\people-gallery-review.cmd` to build
-`people_gallery_review.html` beside it. That page includes every Gallery and
+For high-volume maintenance, run `bin\people-gallery-review.cmd` when only
+the review page needs refreshing. That page includes every Gallery and
 Review photo, core-similarity ordering, identity/protection state, filters and
 content-cached lazy-loaded thumbnails. Per-photo controls stage anchor,
 protection, Review, Reject-to-Various or Review-approval actions; use the

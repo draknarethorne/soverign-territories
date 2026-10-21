@@ -16,7 +16,7 @@ Artists/* and Various hold many people and are "mixed": they are never used to d
 Each person folder keeps a z_ file with her name and history (see people.py; `likeness names` lists them).
 Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, margin, cluster, minCluster, odd, alike, minFace).
 
-  likeness rebaseline                 preview whole-library category changes, likely mismatches and Junk candidates
+  likeness rebaseline                 read-only rebaseline plus photo-by-photo Prospect/Potential-to-cast CSV audit
   likeness rebaseline --apply-categories  move only threshold-driven Prospect/Potential folders (back up first)
   likeness scan                       read every photo once (cached); lists photos with no usable face
   likeness calibrate                  how reliable the scores are on YOUR library (the thresholds in effect)
@@ -43,6 +43,7 @@ command to save a picture of the faces involved. Photos chosen in workspaces.jso
 import argparse
 import collections
 import contextlib
+import csv
 import datetime
 import fnmatch
 import hashlib
@@ -2541,6 +2542,77 @@ def candidate_photo_count(space, key, st):
     return count
 
 
+def cast_audit_records(space, st, work, items):
+    """Rank each Prospect/Potential gallery photo against current Angel/Sister folder centroids."""
+    cast_keys = [
+        key for key in space.keys
+        if key.startswith("Angels/") or is_sister(key)
+    ]
+    cast_centroids = {
+        key: space.centroid(key)
+        for key in cast_keys
+    }
+    gallery_counts = collections.Counter(
+        key for photo, key, bucket in items
+        if bucket == "gallery"
+        and key.startswith(("Prospects/", "Potentials/"))
+        and photo.usable(st["minFace"])
+        and not junk_reason(photo, st)
+    )
+    records = []
+    for photo, key, bucket in items:
+        if bucket != "gallery" or not key.startswith(("Prospects/", "Potentials/")):
+            continue
+        own_centroid = space.centroid(key, skip=photo) if photo.usable(st["minFace"]) else None
+        own_score = float(photo.vec @ own_centroid) if photo.vec is not None and own_centroid is not None else None
+        rankings = sorted(
+            (
+                (float(photo.vec @ centroid), candidate)
+                for candidate, centroid in cast_centroids.items()
+                if photo.usable(st["minFace"]) and photo.vec is not None and centroid is not None
+            ),
+            reverse=True,
+        )
+        history_record = people.read(work / key)
+        history = history_record[1] if history_record else []
+        former_cast = any(
+            re.search(r"\b(?:Angel|Sister|Model)\b", event, re.IGNORECASE)
+            for event in history
+        )
+        usable_count = gallery_counts[key]
+        potential_flags = []
+        if key.startswith("Potentials/") and usable_count >= 5:
+            potential_flags.append("5+ usable photos; review category")
+        if key.startswith("Potentials/") and former_cast:
+            potential_flags.append("history mentions prior cast identity; review category")
+        junk = junk_reason(photo, st)
+        best = rankings[0] if rankings else (None, "")
+        second = rankings[1] if len(rankings) > 1 else (None, "")
+        records.append({
+            "source_folder": key,
+            "source_status": key.split("/", 1)[0],
+            "photo": photo.name,
+            "photo_uri": photo.path.resolve().as_uri(),
+            "usable": photo.usable(st["minFace"]),
+            "face_count": photo.faces,
+            "face_pixels": photo.px,
+            "quality_note": junk or "",
+            "source_core_score": own_score,
+            "source_core_type": "leave-one-out folder centroid" if own_score is not None else "no peer core",
+            "best_cast_folder": best[1],
+            "best_cast_score": best[0],
+            "second_cast_folder": second[1],
+            "second_cast_score": second[0],
+            "cast_lead": best[0] - second[0] if best[0] is not None and second[0] is not None else None,
+            "all_cast_scores": "; ".join(f"{score:.4f} {candidate}" for score, candidate in rankings),
+            "suggested_review_only": f"{best[1]}/review" if best[1] else "",
+            "usable_gallery_photo_count": usable_count,
+            "potential_status_flags": "; ".join(potential_flags),
+            "history": " | ".join(history),
+        })
+    return records
+
+
 def pairing_candidate_score(similarity, photo_count, target, low, high):
     """Return likeness fit, a bounded photo-variety bonus, and their combined ranking cost."""
     likeness_cost = abs(similarity - target) + 2 * max(0.0, low - similarity) + 2 * max(0.0, similarity - high)
@@ -2597,11 +2669,12 @@ def cmd_rebaseline(args):
                 protected = cw.photo_key(photo.name) in chosen
                 reassignment_rows.append((other[0][0], key, bucket, photo.name, other[0][1], own_score, protected))
 
+    cast_audit = cast_audit_records(space, st, work, items)
     for key in space.keys:
         root = key.split("/", 1)[0]
         if root not in ("Prospects", "Potentials"):
             continue
-        gallery_count = sum(1 for photo, source, bucket in items if source == key and bucket == "gallery" and not junk_reason(photo, st))
+        gallery_count = candidate_photo_count(space, key, st)
         target = "Prospects" if gallery_count >= 5 else "Potentials"
         counts.setdefault(key, gallery_count)
         destination = f"{target}/{key.split('/', 1)[1]}"
@@ -2673,7 +2746,28 @@ def cmd_rebaseline(args):
                      else f"| {score:.3f} | `{key}/{bucket}` | `{name}`{note} | `{dest}` | no peer photos |")
     if not reassignment_rows:
         lines.append("| No confident out-of-folder matches | - | - | - | - |")
-    lines += ["", "## Photos matching Junk rules", "",
+    cast_csv = report.with_name("prospect-cast-audit.csv")
+    cast_csv.parent.mkdir(parents=True, exist_ok=True)
+    cast_fields = [
+        "source_folder", "source_status", "photo", "photo_uri", "usable", "face_count", "face_pixels",
+        "quality_note", "source_core_score", "source_core_type", "best_cast_folder", "best_cast_score",
+        "second_cast_folder", "second_cast_score", "cast_lead", "all_cast_scores", "suggested_review_only",
+        "usable_gallery_photo_count", "potential_status_flags", "history",
+    ]
+    with cast_csv.open("w", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=cast_fields)
+        writer.writeheader()
+        writer.writerows(cast_audit)
+
+    lines += ["", "## Prospect/Potential photos compared with Angels and Sisters", "",
+              f"Photo-by-photo scores for {len(cast_audit)} existing Gallery photos are in "
+              f"[{cast_csv.name}]({cast_csv.name}). The report ranks each photo against every current "
+              "Angel/Sister folder centroid and its own leave-one-out folder centroid. These are "
+              "provisional folder comparisons, not verified identity cores or move instructions. "
+              "The suggested Review column is a candidate destination only; nothing is moved.", "",
+              "Potential status flags use usable-photo counts and recorded history. They identify folders "
+              "for review and do not reclassify them.", "",
+              "## Photos matching Junk rules", "",
               "These are cleanup/reprocess candidates, not identity-based retirements. Selected source/anchor photos are protected.", "",
               "| Current folder | Bucket | Photo | Rule | Handling |",
               "| --- | --- | --- | --- | --- |"]
@@ -2720,11 +2814,13 @@ def cmd_rebaseline(args):
               "multi-face, and obstructed-head photos to Junk for your cleanup. No identity match is treated as proof "
               "that a photo is bad.", ""]
     report.write_text("\n".join(lines), encoding="utf-8")
-    print(f"whole-library preview: {len(items)} photos; {len(category_rows)} category change(s), "
+    print(f"whole-library preview: {len(items)} photos; {len(cast_audit)} Prospect/Potential Gallery photos audited; "
+          f"{len(category_rows)} category change(s), "
           f"{len(reassignment_rows)} confident reassignment(s), {len(junk_rows)} Junk candidate(s), "
           f"{len(retirement_rows)} unreadable Retired candidate(s), {len(candidate_pairs)} likely folder pair(s), "
           f"{len(angels)} low-photo Angel(s)")
     print(f"report: {report}")
+    print(f"Prospect/Potential cast audit: {cast_csv}")
     print(f"Angel pairing preview: {pair_report}")
 
 
@@ -3320,7 +3416,7 @@ def main(argv=None, embedder=None):
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
     s = add("rebaseline", cmd_rebaseline)
-    s.add_argument("--out", help="write the read-only whole-library report here (default: <work>\\_reports\\library\\rebaseline.md)")
+    s.add_argument("--out", help="write the read-only whole-library report here (default: <work>\\_reports\\library\\rebaseline.md); writes prospect-cast-audit.csv beside it")
     s.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders when scoring Angel pairings")
     s.add_argument("--apply-categories", action="store_true", help="move only threshold-driven Prospect/Potential folders; create and verify a library backup first")
     s = add("review", cmd_review, apply=True, sheet=True)

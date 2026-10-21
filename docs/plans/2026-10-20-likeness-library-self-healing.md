@@ -25,9 +25,11 @@ without the preview, backup, and per-phase safety gates below.
 | Prospects | Build a guarded, self-healing audit. First flag likely outliers; automatic movement, if validated, goes to Review rather than directly to another identity. |
 | Potentials | Keep them matchable. Do not apply Prospect-strength cleanup to one-to-four-photo folders without a separately validated rule. |
 | Review and incoming photos | Reconcile both in the same maintenance run. A bounded follow-up audit may use new clusters to resolve remaining same-run candidates, so they do not require a second user-triggered run. |
+| Prospect-sprawl remediation priority (Oct 20) | Before the next photo ingest, audit every usable photo in Prospects and Potentials individually against the current Angel/Sister identities and its current folder. First priority is surfacing likely Angel/Sister photos as candidates for the matching cast member's Review, never silently adding them to an Angel/Sister Gallery. Keep scores and destinations as evidence/suggestions; do not move anything or change thresholds during the audit. Inventory Potentials that exceed the usable-photo boundary and check recorded history for former cast identities; do not reclassify them from raw photo counts alone. Prospect-to-Prospect/Potential identity cleanup follows the cast audit as a separate pass. |
 | Retirement | Distinguish retiring one unusable photo from retiring an entire person. Photo retirement is a recoverable archive that does not re-enter matching; person retirement uses the existing command to return that person's photos to `Various` for normal reprocessing. Whole-folder archival remains a separately labeled operation. |
-| User interface | Keep the current People Gallery as a concise overview. Add a focused local review/maintenance gallery for large folders, photo scores, Review images and staged actions. The browser stages actions; a CLI validates and applies them. |
+| User interface | Keep the current People Gallery as a concise overview. Add a focused local review/maintenance gallery for large folders, photo scores, Review images and staged actions. The browser is strictly a staging/export surface: it never renames folders, edits `z_` files, or writes catalogue data. Photo and person changes are exported in the versioned JSON manifest; a CLI validates, previews, backs up, applies and can undo them. Person changes use a separate `personActions` array so they cannot be confused with photo actions. |
 | Review gallery layout | Organize the review view category-first, then person; use a responsive left-to-right image grid with adjustable thumbnail size, face/chest-up framing, and click-through to the full image. Keep scores/actions and the primary identity/workflow reference visible. |
+| Gallery consistency | Keep the overview and full review in the same category/person order and use the same selectable sort modes: Core identity first (anchors, then core members, then other scored photos) and Highest identity score. The overview's visible nine must match the filtered Gallery view in the review page. Both pages share the same cached Chest-up/Head crops; person links open the matching Gallery view in a new tab. Prime-start suitability remains a separate photo-quality signal, not identity confidence. |
 | Identity naming | Let the user stage Prospect/Potential renames in the review UI. Reject collisions unless the user explicitly selects both people for a two-person name swap; preserve both stable identities and `z_` histories. Never rename fixed Angel/Sister slot folders. |
 | Potential match context | Show Potentials' closest eligible same-side people and score evidence so the user can decide whether to stage a merge or return the person/photos to normal reprocessing. Never merge from score alone. |
 | Report lifecycle | Keep dated report output available for inspection; after the user approves the workflow, support replacing one stable review-report directory. Link a person from the concise overview to their filtered review view when both local reports are available. |
@@ -334,8 +336,10 @@ until they have an alias or restore mapping.
   small folders and stale metadata. Reject duplicate active-folder and
   identity-anchor ownership; report renamed-folder mismatches without applying
   their identity decisions. Restore/backup continuity remains open under A4.
-- [ ] **P2 either** B5 Establish user-confirmed examples and report
-  action-specific precision and recall without changing production thresholds.
+- [x] **P2 either** B5 Transfer action-specific precision/recall validation
+  to Phase 4 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md);
+  production thresholds remain unchanged until its evidence gate passes.
 
 **Exit:** repeatable output; no writes except explicitly generated reports/cache;
 action-specific measurements on user-labelled examples.
@@ -360,12 +364,14 @@ action-specific measurements on user-labelled examples.
   vertical person columns with a responsive adjustable-size grid, show a
   face/chest-up local thumbnail while linking to the full image, and retain
   reference/photo decision information in filtered views.
-- [ ] **P1 ai** C6 Add Potentials' closest-person evidence and staged rename
-  and explicit two-person name-swap controls; preserve name history and stable
-  identity IDs, reject unselected collisions, and keep fixed cast slots.
-- [ ] **P2 ai** C7 Keep dated report output available, then support replacing
-  a stable output directory and linking the concise overview to a filtered
-  person review page.
+- [x] **P1 ai** C6 Transfer Prospect/Potential rename, name-swap, collision,
+  and history work to Phases 2 and 5 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+  Existing Potentials' closest-person evidence remains implemented.
+- [ ] **P2 ai** C7 Keep dated report output available and support replacing
+  a stable output directory. The overview/review link and order consistency
+  are implemented; verify stable-directory replacement without losing the
+  dated reports.
 
 **Oct 20 gallery update:** C5 is implemented. The category filter now
 constrains the person selector, person sections fill the available width with
@@ -374,6 +380,16 @@ selectable. Each source photo has cached head and chest-up derivatives named
 from its master stem and content key; both link to the full image. Potential
 gallery records now show closest-other-folder score evidence. C6's rename and
 explicit swap controls remain open.
+
+**Oct 20 overview consistency update:** `bin\people-gallery.cmd` builds
+both reports in one output directory. The overview and full review share
+identity sort modes, and a person's initial nine photos match when opening
+the filtered Gallery in the review page. Both pages use the same cached
+Chest-up/Head derivatives; the overview sort and framing controls update
+without generating a separate thumbnail set. Person links open in a new tab,
+and the history file remains a separate link. Both reports follow the same
+category/person ordering. The library routine refreshes the review report
+before the overview. Stable-directory replacement remains open under C7.
 
 The Oct 20 real-library run indexed 2,668 active Gallery/Review photos into
 the dated report at `B:\Sovereign Territories\_reports\likeness-review-20261020-1339\people_gallery_review.html`.
@@ -422,17 +438,18 @@ recoverable, logged and idempotent where appropriate.
 
 ### Phase E — combined Review and pool reconciliation
 
-- [ ] **P1 ai** E1 Plan user-staged Review photos, incoming `Various` photos,
-  and validated Prospect outliers together against one frozen library snapshot.
+- [x] **P1 ai** E1 Transfer combined Review, incoming `Various`, and validated
+  Prospect/Potential candidate planning against a frozen snapshot to Phase 4
+  of the [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
 - [x] **P1 ai** E2 Cluster rejected, reviewed and incoming candidates together;
   allow new provisional clusters to become destinations in the same run.
 - [x] **P1 ai** E3 Iterate candidate matching to a deterministic fixed point.
   Each candidate is assigned at most once; ambiguous or unstable candidates
   stay staged. Do not mutate established identity cores mid-run.
 - [x] **P1 ai** E4 Add an empty-pool mode for Review-only and self-healing runs.
-- [ ] **P1 either** E5 Compare preview and applied results with user decisions
-  before enabling any automatic action beyond sending validated Prospect
-  outliers to Review.
+- [x] **P1 either** E5 Transfer comparison of preview/applied results and
+  action-specific approval gates to Phases 3, 4, and 6 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
 
 **Oct 20 implementation:** `likeness reconcile [--out FILE.json]` now builds
 one read-only snapshot of current person cores, usable Review photos, and
@@ -451,16 +468,61 @@ same-run clusters can resolve candidates without order-dependent cascades.
 
 ### Phase F — guarded Prospect self-healing
 
-- [ ] **P1 ai** F1 Add report-only Prospect outlier detection against
-  trusted/provisional cores, with scores and destination evidence.
-- [ ] **P1 either** F2 After action-specific validation, allow only eligible
-  ordinary Prospect outliers to enter Review; preserve protected images and a
-  minimum viable identity core.
-- [ ] **P1 ai** F3 Keep routine Angel/Sister gallery processing report-only.
-  Add only a deliberately explicit, previewed action for cast photos selected
-  by the user.
-- [ ] **P2 either** F4 Define and verify action-specific precision/recall
-  gates before enabling each automatic Prospect operation.
+- [x] **P1 ai** F1a Before the next ingest, produce a report-only,
+  per-photo audit of all usable Prospect and Potential Gallery photos against
+  current Angel/Sister folders and their source-person folder. Include each
+  photo's all-cast ranking, score/margin evidence, leave-one-out source-folder
+  score (or no-peer status), and the person-local Review destination a user may
+  choose. Label folder-centroid matches as provisional evidence; do not move
+  photos or modify scores/thresholds. Separately list Potentials that exceed
+  the usable-photo boundary and histories indicating a former Angel/Sister
+  identity.
+- [x] **P1 either** F1b Transfer visual review of the cast audit and safe
+  cross-person Review routing to Phases 3 and 4 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P1 either** F1c Transfer labelled comparison of incoming-photo and
+  uncertain-cast routing policies to Phases 3 and 4 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P1 ai** F1d Transfer frozen-core Prospect/Potential cross-person
+  comparisons to Phase 4 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P1 either** F2 Transfer validated Prospect-to-Review routing and
+  minimum-core protections to Phases 4 and 7 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P1 ai** F3 Transfer explicit, previewed cast-photo handling to Phases
+  3 and 6 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P2 either** F4 Transfer action-specific precision/recall gates to
+  Phase 4 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+
+**Oct 20 diagnostic evidence:** a read-only `likeness folder "Harlow Chase"
+--all` audit found 100 usable photos: 97 agreed with the folder core, two
+scored 0.15–0.25, and one scored below 0.15. The two-face photo
+`harlow_chase_shot_20261010124403.jpg` scored 0.00 and was suggested for
+holding in Various; another photo scored 0.39 against Harlow's core and 0.46
+against Camaris. Camaris's `z_` history records Prospect merges at 0.55, 0.49
+and 0.49. These are concrete review leads, not proof of a wrong identity:
+the catalogue has no confirmed anchors yet. Keep all thresholds and library
+files unchanged until these images and the merges are visually reviewed and
+the identity cores are anchored.
+
+**Oct 20 cast-audit report-only run:** `bin\likeness.cmd rebaseline --out
+"B:\Sovereign Territories\_reports\library\rebaseline-20261020-cast-audit.md"`
+generated `prospect-cast-audit.csv` with 1,146 usable Prospect/Potential
+Gallery photos. `Angels/angelica` ranked first for 67 photos; 12 scored at
+least 0.40, four at least 0.45, two at least 0.50, and none at least 0.55.
+Angelica ranked first for all four photos in Potentials/Fia Hadley and
+Potentials/Amara Berkley, three of five in Prospects/Petra Wilde, and ten of
+fourteen in Prospects/Jacinta Alden. These are folder-centroid rankings, not
+identity confirmation; current peer-centroid scores are often stronger.
+The whole-library preview separately flagged Potentials/Lia Joyce (35 usable
+photos) across the category boundary and a former-cast history note for
+Potentials/Wren Thorn (one usable photo). Neither category nor photo changes
+were applied. The report lists 26 threshold-based out-of-folder suggestions
+and three Junk-rule candidates; those also remain suggestions. No photos or
+folders moved, and matching thresholds are unchanged. F1a is complete; F1b
+still requires visual review before any staged cross-person Review action.
 
 **Exit:** action-specific safety targets pass; rollback and “why moved” records
 are verified on real, backed-up batches before enabling routine use.
@@ -506,30 +568,43 @@ changed and covered by tests.
 
 ### Phase I — recover and manage person names
 
-- [ ] **P1 ai** I1 Trace and reproduce name continuity through promotion,
-  return, merges and Sister/Angel swaps. Include the original cast folders
-  whose `z_` files are empty or have no `name:` header; test names recovered
-  from the filename, missing files, and names reconstructed from history.
-  Determine what evidence can recover the original name without guessing.
-- [ ] **P1 ai** I2 Add regression coverage for name preservation across every
-  supported identity move, including empty/legacy `z_` files and Draknora's
-  reported case. Keep the Angel/Sister slot folder name distinct from the
-  person's recorded Prospect/Potential identity.
-- [ ] **P2 ai** I3 Add staged GUI renaming for Prospects and Potentials.
-  Preserve the previous name in `z_` history and stable catalogue identity;
-  do not rename fixed Angel/Sister slots. Reject case-insensitive name
-  collisions unless the user explicitly selects a second person for a
-  two-person name swap.
-- [ ] **P2 ai** I4 Add preview, backup and apply support for staged name
-  changes. Update the catalogue's current folder and history, retain both
-  `z_` histories, and refresh `people_index.csv` and `.md` after relevant
-  rename, promotion, return or swap operations.
-- [ ] **P2 ai** I5 Verify collisions across Prospects and Potentials, including
-  case-only variants, and test rollback when either side of a name swap fails.
+- [x] **P1 ai** I1 Transfer recovery and continuity audit for recorded
+  identity names, including empty/legacy cast `z_` files, promotion, return,
+  merge and slot swaps, to Phases 2 and 5 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P1 ai** I2 Transfer name-history regression coverage, including
+  Draknora's reported case and the distinction between recorded identity and
+  fixed character-slot names, to Phase 2 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P2 ai** I3 Transfer staged Prospect/Potential rename controls and
+  collision-safe family naming to Phase 5 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P2 ai** I4 Transfer preview/apply/undo, catalogue history, and people
+  index refresh behavior for supported name changes to Phases 2 and 5 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+- [x] **P2 ai** I5 Transfer case-insensitive collision and rollback tests for
+  name changes and swaps to Phases 2 and 5 of the
+  [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
 
-**Exit:** a user can recover or change a Prospect/Potential's recorded name
-without losing history, colliding with another person, changing fixed cast-slot
-names, or leaving the gallery and people index inconsistent.
+**Exit:** all name-continuity and family-naming work is tracked in the
+rebaseline plan; this plan retains the stable-ID and manifest foundations.
+
+### Phase J — organize large galleries into reviewable clusters
+
+- [x] **P2 either** J1 Present options for organizing large galleries and
+  review groups, including explicit membership, source/import provenance, and
+  inferred similarity clusters. On Oct 21, the user chose Option A: keep
+  existing category folders and add virtual family/lookalike groups, with a
+  shared-surname naming convention for explicitly related identities.
+- [x] **P2 ai** J2 Transfer implementation of the approved family metadata,
+  gallery grouping, and safe naming workflow to
+  [the rebaseline and family-naming plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
+  Preserve the flat view; do not physically move photos or create a Families,
+  Twins, or Lookalikes directory as part of Option A.
+
+**Exit:** large galleries can be browsed by core and clearly separated groups
+without changing person identity, moving files, or losing the existing flat
+view.
 
 ## Safety and acceptance criteria
 
@@ -580,6 +655,12 @@ names, or leaving the gallery and people index inconsistent.
 - The separate review gallery and local manifest are the chosen initial
   interface. Broader art-authoring and ComfyUI batch execution remain future
   UI work, outside this plan.
+- The Option A family organization and shared-surname convention are now
+  approved; the new [rebaseline and family-naming plan](2026-10-21-likeness-rebaseline-and-family-naming.md)
+  coordinates source-scope audit, matcher simplification, visual scenarios,
+  family metadata, and guarded library rebaseline. Existing metadata,
+  manifest, backup, apply, and undo work remains the foundation; open
+  implementation tasks must be reconciled there rather than assumed complete.
 
 ## Approved design decisions
 
@@ -594,6 +675,8 @@ names, or leaving the gallery and people index inconsistent.
 | D7 | Implement and commit validated increments. Keep larger art-authoring and ComfyUI execution UI as future scope, while preserving integration paths. |
 | D8 | Keep the photo archive in a separate `_retired/photos/` subtree; preview the path, preserve content and history, and support restore. Treat `archive-list` as a separately named whole-folder archive operation. |
 | D13 | Keep a person's recorded identity name separate from fixed Angel/Sister slot folders. Prospect/Potential name changes must preserve `z_` history, reject collisions by default, and permit a two-person swap only when both identities are explicitly selected. |
+| D14 | Keep the existing category roots and use virtual, stable-identity family/lookalike groups; no physical family/twin root is added in this iteration. |
+| D15 | Use shared surnames only for explicitly associated identities, keep first names distinct, and never use names or family links as matching evidence. Audit `z_` first/last names and surname collisions before any rename. |
 
 ## Raw user feedback
 
@@ -630,3 +713,33 @@ I give you full permission to keep going, make decisions and only stop if you ar
 We'll need all documentation, tests and commits as you go so it's not one huge piece of work.  As you build, test and document pieces - we can commit as long as things are working and you move onto the next chunk of work.  That way it won't be as huge of deal in the end.  Make sense?  If so, then get rolling!
 
 When it comes to Retire - I want to be able to Retire either an individual picture for a person or the entire person - so that can be in the plan and a decision as well.  I'm reading our docs and watching you work, so that's the iterative feedback loop we've got going.  Keep on working as I love what you are doing so far and the speed at which you're working.
+
+## Raw user direction: Prospect/Potential sprawl (Oct 20)
+
+I am fine with the photo-by-photo audit of Prospects and Potentials - also I noticed that some
+potentials do have more than 5 photos and one is actually supposed to be in Prospects as she was a
+Sister at one time - but that said, I do think that if we have an incoming photo (in the future) or
+we do the photo-by-photo comparison, it would be better to put them into a Review of an existing
+Angel or Sister.  At least that would pull out some of the Sister or Angel pictures that are
+sprinkled into the Prospects and have created a new identity.  That's probably the first iteration
+or priority.  After that, then being able to try do the same from Prospect to Prospect and Potential
+would be a next way to try to fix some of the clusters.  What I am worried about is that since we
+have established identities for Prospects AND they may be mis-matches themselves it's difficult to
+fix them - unless you think that the photo-by-photo processing would work to address that as well.
+But I think this is the time to address the Prospect sprawl - before I ever pull in more images.
+
+Jacinta is also Angelica
+
+IF we processed them 1 at a time without Petra existing at all ...
+
+## Raw user feedback: review and large-gallery clusters (Oct 20)
+
+As we do this, the one thing that might be useful in the Review is to have sub-directories of clusters of like photos within each person's review folder or even within the main gallery itself. This would allow us to better organize and visually separate different sets of similar images, making it easier to identify duplicates, mis-matches, or potential new identities.  Basically, just thinking of a way from keeping them from becoming yet another prospect, but also clustering them within an identity for easier management and review.  Not exactly sure what I am really thinking - so need some deep through on this, but at least getting them into Review and out of Prospects and cluttering up others.  What I am trying to avoid is an accidental flooding of a review folder with other unrelated images, which could make the review process more confusing and less efficient.
+
+So, like in the case of Angelica - there were 3 images that created Petra, there's 4 in Fia Hadley (that are Angelica) and 3 in Amara Berkley (that are Angelica).  Briony StoneHaving sub-directories or clusters within the review folder would help keep these grouped together and make it easier to see the connections between them, rather than having them scattered and potentially mistaken for separate identities.
+
+This approach could also help when we have multiple potential identities for a single person, as it would allow us to visually separate and compare the different clusters of images.  It would make the review process more structured and less prone to errors, as we could focus on one cluster at a time and make more informed decisions about merging, retiring, or reassigning images.
+
+Thoughts????
+
+Later on - maybe the Gallery does also need the clusters for groups as well - that would also help with galleries that are 100+ where we keep the core in the main Gallery and the other clusters underneath - I can still pick from them, but I'm thinking bigger picture as we have some very large galleries with now as well.  I know that breaks the gallery .html so it's not an immediate - but it's something that needs thought for large galleries.
