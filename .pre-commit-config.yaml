@@ -75,7 +75,7 @@ repos:
         name: Likeness library tests
         entry: python -m unittest discover -s tools/art/likeness_library/tests -p test_*.py
         language: python
-        additional_dependencies: [jsonschema, numpy]
+        additional_dependencies: [jsonschema, numpy, pillow]
         pass_filenames: false
         files: ^(tools/art/likeness_library/|data/art/_schema/likeness-library\.schema\.json|data/art/likeness-library\.json)$
         stages: [pre-commit, pre-push]

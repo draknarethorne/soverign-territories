@@ -687,8 +687,10 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
         elif r["status"] == "Sisters":
             paired_angel = r.get("paired_angel")
             if paired_angel:
-                angel_link = relationship_link("Angels", paired_angel["folder"], review_href)
                 angel_score = identity_match_score(r, "Angels", paired_angel["folder"])
+                angel_link = relationship_link(
+                    "Angels", paired_angel["folder"], review_href, angel_score
+                )
                 angel_score_badge = (
                     " " + score_badge(angel_score, "Current Angel likeness score")
                     if angel_score is not None else ""
@@ -734,7 +736,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 for part in caption(r)
             )
         category_class = slug(r["status"])
-        out.append(f'<figure class="card" id="{card_id}"><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b><a class="gallery-jump" href="#{card_id}" aria-label="Stay at {html.escape(r["folder"], quote=True)}" title="Stay in People gallery">↳</a></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{flag}{history_link}{count}</div>'
+        out.append(f'<figure class="card" id="{card_id}"><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{flag}{history_link}{count}</div>'
                    f'{summary_html}{identity_html}'
                    f'<div class="meta">{caption_html}</div>{readiness_html}{matches_html}{pairing_html}</figcaption></figure>')
     if current:

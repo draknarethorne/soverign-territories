@@ -178,6 +178,18 @@ undo. Flow-specific overrides are untouched, and apply/undo refuse an isolated
 sandbox root. Only the pages and documentation were refreshed; no production
 workflow selection, rebase, or photo move was applied.
 
+Oct 21 rebase diagnostic decision: each sandbox rebase should rerun
+library-wide calibration, eligible per-folder consistency checks across
+Sisters, Angels, Models, Prospects, and Potentials, and the existing
+identity-core audit. Record separate evidence and elapsed times; publish CSV
+detail plus a readable Markdown report linked from the run manifest. Both
+gallery pages should consume the saved evidence: library-wide quality in the
+overview, concise per-person results on both the overview card and Review
+heading, and separately labelled per-photo detail in Review. Measure added
+runtime before deciding whether any diagnostic needs an opt-out. Diagnostics
+do not independently cause moves or establish identity. This is planned
+sandbox behavior, not yet implemented; production remains untouched.
+
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports
 trusted/provisional cores, score order and Prospect outlier candidates; it

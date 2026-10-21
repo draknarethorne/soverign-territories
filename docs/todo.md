@@ -94,7 +94,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (77)
+### For the assistant, when you say go (79)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -117,6 +117,7 @@
 - [ ] 3.6 Compare scenarios by per-photo destination, family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 3.7 Once the sandbox boundary and reset allowlist are verified, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 3.9 Support repeated clean runs with different configs and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 3.10 Run the complete diagnostic suite after each sandbox ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.1 Write the routing contract for confident same-person ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.1a Specify category precedence for a frozen run: resolve ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.3 Add group-to-group and person-to-cluster comparison ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
@@ -129,6 +130,7 @@
 - [ ] 5.1a Add gallery controls to include/exclude classifications ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1b If supported in the POC viewer, allow enabling/disabling ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1i Add person-wide Protection for Models/Prospects separately ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 5.1k Show rebase diagnostic results consistently in both ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.2 Add a read-only preview for threshold-assigned family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.3 Reuse the existing staged person-action manifest and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.1 Freeze the accepted sandbox-tested rules, source scope, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))

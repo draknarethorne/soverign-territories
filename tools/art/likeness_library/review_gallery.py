@@ -31,9 +31,12 @@ CSS = """
 body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#222}
 h1{margin:0 0 4px}.note{color:#555;max-width:1100px}.warnings{color:#8a3b16}
 .page-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:16px 18px;background:#fff;border:1px solid #ded8ce;border-radius:10px}.page-header p{margin:5px 0 0}.header-side{text-align:right}.header-label{font-size:.75em;color:#666;text-transform:uppercase;letter-spacing:.06em}.score-legend{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:5px}
-.controls{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:end;margin:16px 0}
+.filter-controls{display:grid;gap:8px;min-width:0}.search-control{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:min(100%,520px)}
+.search-control input{width:100%;box-sizing:border-box}.filter-options{display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap}
+.sort-controls{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .controls input,.controls select,.controls button{font:inherit;padding:7px}
-.count{color:#555}#grid{display:block;--card-min:260px}
+.count{color:#555;white-space:nowrap}#grid{display:block;--card-min:260px}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));gap:12px}
 article{background:white;border:1px solid #ded8ce;border-radius:6px;padding:8px;min-width:0}
 article.primary{border:3px solid #8b6d32}
@@ -63,7 +66,8 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .reference .detail{font-size:.82em}
 .identity-rankings{font-size:.88em;margin:0 0 12px;overflow-wrap:anywhere}
 .identity-rankings summary{cursor:pointer;color:#28527a}
-@media(max-width:760px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}.controls{justify-content:flex-start}}
+@media(max-width:1050px){.controls{grid-template-columns:minmax(0,1fr)}.sort-controls{justify-content:flex-start}}
+@media(max-width:760px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}
 """
 
 SCRIPT = """
@@ -957,7 +961,9 @@ def render_html(items, stamp, warnings=()):
 <div class="score-legend"><span class="score-badge score-green">≥0.55</span><span class="score-badge score-yellow">≥0.30</span><span class="score-badge score-orange">≥0.15</span><span class="score-badge score-red">&lt;0.15</span></div></div></header>
 {warning_html}
 <div class="controls">
-<label>Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
+<div class="filter-controls">
+<label class="search-control">Search <input id="query" type="search" placeholder="folder, filename, reason"></label>
+<div class="filter-options">
 <label>View <select id="mode"><option value="people">People</option><option value="review">Review queue</option><option value="low">Low scores</option><option value="all">All photos (flat)</option></select></label>
 <label>Category <select id="group"></select></label>
 <label>Person <select id="person"></select></label>
@@ -965,9 +971,13 @@ def render_html(items, stamp, warnings=()):
 <label>Tile size <select id="card-size"><option value="170px">Small</option><option value="260px" selected>Medium</option><option value="340px">Large</option></select></label>
 <label>Location <select id="bucket"></select></label>
 <label>State <select id="state"></select></label>
+</div>
+</div>
+<div class="sort-controls">
+<span class="count" id="count"></span>
 <label>Order <select id="sort"><option value="identity">Core identity first</option><option value="high">Highest identity score</option><option value="low">Lowest identity score</option><option value="name">Name</option></select></label>
 <label>Low-score cutoff <input id="score-ceiling" type="number" min="-1" max="1" step="0.01" value="0.25"></label>
-<span class="count" id="count"></span>
+</div>
 </div>
 <div class="actions"><button id="download" type="button" disabled>Download staged actions</button><span id="staged-count">0 actions staged</span></div>
 <div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>

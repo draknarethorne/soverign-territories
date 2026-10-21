@@ -221,7 +221,7 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertIn('id="thumbnail-framing"', output)
         self.assertIn("data-head=", output)
         self.assertIn("Prime-start score 0.800", output)
-        self.assertIn("Stay in People gallery", output)
+        self.assertNotIn('aria-label="Stay at Sydney Sky"', output)
         self.assertIn("people_gallery_review.html?person=Prospects%2FSydney+Sky", output)
 
         shared_thumbnails = self.root / "people_gallery_review_files"
@@ -307,9 +307,10 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertIn('person=Sisters%2FDraknora', output)
         self.assertIn('href="#person-angels-camaris"', output)
         self.assertIn('href="#person-prospects-best_fit"', output)
-        self.assertIn('href="#person-sisters-draknora"', output)
+        self.assertNotIn('aria-label="Stay at Draknora"', output)
         self.assertIn("Current Angel:", output)
         self.assertNotIn("Current Angel pairing:", output)
+        self.assertIn('title="Jump to this person · likeness 0.41">▶</a>', output)
         self.assertIn('title="Current Angel likeness score">0.41</span>', output)
         self.assertIn("Top Prospect alternatives:", output)
         self.assertIn('<div class="pairing-subsection">Top Prospect alternatives:<br><div>1.', output)

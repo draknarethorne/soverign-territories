@@ -130,13 +130,25 @@ for inspection. This is related evidence, but it is **not** the exact
 can differ.
 
 Neither gallery currently presents the full library-wide `calibrate` report
-or a single aggregate `folder` verdict. A useful future addition would be a
-compact per-person folder-consistency summary in Review, with an expandable
-photo-level explanation and the thresholds used. A library-wide calibration
-summary could be a separate diagnostic panel/report, since it measures
-overall threshold performance rather than one person's photos. Keep these
-diagnostics clearly separate from move actions and from resemblance-based
-identity/family labels.
+or a single aggregate `folder` verdict. The rebase workflow is intended to run
+these diagnostics against each completed sandbox result, measure their
+runtime, and publish per-photo/per-identity CSV evidence plus a human-readable
+Markdown report linked from that run's manifest. Include eligible active
+identities across Sisters, Angels, Models, Prospects, and Potentials, while
+recording exclusions and thresholds. Compare diagnostic time with rebase time
+before deciding whether any stage needs an on-demand option.
+
+The galleries should consume saved run evidence rather than rerunning
+diagnostics on page load. The People Gallery should summarize library-wide
+calibration and quality; each identity card and Review heading should repeat
+the key per-person consistency/quality summary; Review should expose
+separately labelled per-photo evidence and thresholds in its detail view.
+Different diagnostics can score the same photo differently, so preserve each
+measure under its own name and do not combine them into an unexplained score.
+These results are diagnostic evidence, not automatic move instructions or
+proof of identity/family relationships. This is an agreed rebase/gallery
+requirement; implementation and timing measurements remain open in the active
+rebaseline plan.
 
 ## People Gallery and Review Gallery
 

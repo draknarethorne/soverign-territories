@@ -177,6 +177,18 @@ Each rebase run must:
    compared after each result is inspected. Classification is recorded
    against stable person identity and reflected in the corresponding
    category directory; family membership remains a separate relationship.
+8. Run the complete agreed diagnostic suite against each completed sandbox
+   result, including library-wide calibration, eligible per-folder consistency,
+   and the existing identity-core audit. Record scope, thresholds, exclusions,
+   per-photo/per-identity evidence, and elapsed time. Publish machine-readable
+   CSVs and a human-readable Markdown report linked from the run manifest.
+   Keep diagnostic scores separate from assignment scores; diagnostics do not
+   independently trigger moves unless a separately approved rule says so.
+9. Feed the saved diagnostic evidence into both gallery views: library-level
+   quality/calibration in the overview, key per-person results on both the
+   overview card and Review heading, and separately labelled per-photo
+   evidence in Review. Do not combine distinct diagnostics into an unexplained
+   single score.
 
 The likeness entry point should expose an explicit mode/flag plus a required
 sandbox root and config, for example a future `rebaseline --sandbox-root ...
@@ -415,12 +427,25 @@ validated before any production rename.
   counts, assigned identity IDs, score evidence, and output manifest so
   actual destination folders can be compared without hand-identifying them.
   Re-running must not require a new user-authored photo assignment list.
+- [ ] **P1 ai** 3.10 Run the complete diagnostic suite after each sandbox
+  rebase: library-wide `calibrate`, per-folder `folder` consistency for
+  eligible identities in Sisters, Angels, Models, Prospects, and Potentials,
+  and the existing identity-core audit. Preserve each diagnostic's own score,
+  thresholds, eligible/excluded counts, and conclusions; diagnostics inform
+  inspection but do not silently change assignments. Measure each stage's
+  elapsed time on the same snapshot, recording cache state and cold/warm runs
+  where practical. Compare overhead with rebase time before deciding whether
+  any diagnostic needs an opt-out or separate on-demand mode. Write per-photo
+  and per-identity CSV evidence plus a readable Markdown run report linked
+  from the run manifest.
 
 **Exit:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
 configs/source modes; reset and isolation tests pass. The user can judge
 actual placement by scanning the directories/gallery rather than predicting
-destinations from a report or routing photos by hand.
+destinations from a report or routing photos by hand. Each run also completes
+the diagnostic suite, records measured runtime and evidence, and publishes
+machine-readable and human-readable results.
 
 ### Phase 4 — improve matcher, cluster evidence, and routing
 
@@ -550,6 +575,14 @@ before treating this interval as a production rule.
   so it survives renames/category moves, and use staged preview, backup,
   stale-state checks, and undo. Do not imply the current photo action protects
   a person.
+- [ ] **P1 ai** 5.1k Show rebase diagnostic results consistently in both
+  gallery pages. Put library-wide calibration and run-quality summaries in
+  the People Gallery; repeat concise per-person consistency/quality indicators
+  in both the overview card and Review heading. In Review, expose separately
+  labelled per-photo evidence and thresholds in the detail view. Keep
+  different measures distinct and do not imply that similarity proves
+  identity. Consume the run's saved CSV/Markdown evidence rather than
+  recomputing diagnostics when a page opens.
 - [ ] **P1 ai** 5.2 Add a read-only preview for threshold-assigned family
   names. Display current `z_` name, proposed first/last name, reason, family
   members, collisions, and any source-history mismatch. Do not rename from
@@ -774,3 +807,22 @@ the option I mentioned I wanted for that as well) and see the actual results
 of what happens.  Not simulation or reports - but real results. Combine all
 this into the plan and then give me a recap of what I need to address first
 after we get the plans finalized and actionable.
+
+## Raw user direction: complete rebase diagnostics and gallery evidence (Oct 21)
+
+I do think that since we need to work on the rebase that we should
+incorporate those into the process - at least we can check the timings on
+them and ensure they don't cause too much delay - but those items would be
+great diagnostics and if we need to put the outcome into both .md and .csv
+files for the GUI and human reading - we should do that. Ideally a rebase is
+an entire re-run of all the various diagnostics so that the GUI can show all
+the data and tell me all the quality and ratings. We can make some of the
+per-image ratings for different diagnostics separate if we run two separate
+analysis on photos with scoring - surfacing everything all together at a
+entire repository on the gallery or the per person at the top and the per
+image where there are images. Any key per person items can appear on both
+the gallery and the review (top) so I don't have to flip back and forth from
+review to gallery to see useful information that should really carry into
+the header of the gallery. IF there are photos we need to adjust in a
+per-person view or if they are all good. That's all useful information
+summarized on the gallery and in much more details on the person review page.
