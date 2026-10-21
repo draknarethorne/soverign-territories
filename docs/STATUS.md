@@ -187,8 +187,27 @@ gallery pages should consume the saved evidence: library-wide quality in the
 overview, concise per-person results on both the overview card and Review
 heading, and separately labelled per-photo detail in Review. Measure added
 runtime before deciding whether any diagnostic needs an opt-out. Diagnostics
-do not independently cause moves or establish identity. This is planned
-sandbox behavior, not yet implemented; production remains untouched.
+do not independently cause moves or establish identity.
+
+Oct 21 diagnostics/reset groundwork: `likeness diagnostics` now writes a
+Markdown report plus four CSVs from one library load. A warm-cache pre-rebase
+baseline in
+`B:\Sovereign Territories Sandbox\Working\_reports\diagnostics\sandbox-baseline-20261021-161618`
+covered 2,543 calibration comparisons and 89 of 194 active folders in 15.22
+seconds (0.73 load/cache, 14.49 scoring). It does not yet include the
+identity-core audit or attach results to a classifier run. The new
+`likeness sandbox-reset` preview verified all 8,845 Source files (5.57 GB)
+against the manifest and listed only Models, Prospects, and Potentials for
+restoration; the reset was not applied. Unit tests cover preview/apply
+boundaries and tampered manifests. The old `rebaseline --apply-categories`
+path remains unsafe and unused; classifier isolation, per-run identity state,
+and diagnostics integration remain open. No sandbox category reset or
+classification, production change, or photo move was performed.
+
+Oct 21 People Gallery follow-up: `Person:` now uses each recorded person name
+for all Angels and Sisters, not only identities with Prospect-promotion
+history. The renderer is shared, so the label applies to every matching card
+in both generated libraries.
 
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports

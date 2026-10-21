@@ -201,17 +201,11 @@ def person_anchor(status, name):
     return f"person-{slug(status)}-{slug(name)}"
 
 
-def prior_prospect_name(folder, status):
-    """Return the recorded identity name when this Angel or Sister came from Prospect processing."""
+def person_name(folder, status):
+    """Return the recorded person name for Angel and Sister cards."""
     if status not in ("Angels", "Sisters"):
         return None
-    history = people.read(folder)
-    if not history:
-        return None
-    name, events = history
-    if any("promoted from Prospects" in event or "from Prospects/" in event for event in events):
-        return name
-    return None
+    return people.name_of(folder)
 
 
 def add_pairing_navigation(rows):
@@ -321,7 +315,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
         row = {"status": status, "folder": key.split("/", 1)[1], "key": key, "photos": len(all_originals), "review": len(originals.images(folder / "review")),
                "chosen": False, "score": None, "source": "", "tags": people.profile(folder),
                "gallery_path": folder / "gallery", "source_path": None, "z_path": people.find(folder),
-               "prospect_name": prior_prospect_name(folder, status)}
+               "person_name": person_name(folder, status)}
         min_face = st.get("minFace", likeness.SETTINGS["minFace"])
         photos = [p for p in getattr(space, "photos", []) if p.key == key]
         row["usable"] = sum(p.usable(min_face) for p in photos)
@@ -552,7 +546,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
     out = ["<!doctype html>", '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>People gallery</title>', f"<style>{CSS}</style></head><body>",
            '<header class="page-header"><div><h1>People gallery</h1>'
            f'<p class="meta">Generated {html.escape(stamp)} · {len(rows)} {people_label} · {photo_count} {photos_label}</p>'
-           f'<p class="page-note">Name opens Review; ↳ stays here · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · Up to nine photos per person</p></div>'
+           f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · Up to nine photos per person</p></div>'
            '<div class="header-side"><div class="header-label">Likeness</div>'
            '<div class="score-legend"><span class="score-badge score-green">≥0.55</span><span class="score-badge score-yellow">≥0.30</span><span class="score-badge score-orange">≥0.15</span><span class="score-badge score-red">&lt;0.15</span></div></div></header>',
            '<div class="gallery-controls"><label>Details <select id="detail-level"><option value="summary">Summary</option><option value="full">Full details</option></select></label> '
@@ -658,17 +652,31 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             if best_match:
                 angel = best_match["angel"]
                 candidate = best_match["candidate"]
-                fit_link = relationship_link("Angels", angel["folder"], review_href)
+                angel_score = candidate.get("score")
+                fit_link = relationship_link(
+                    "Angels", angel["folder"], review_href, angel_score
+                )
+                angel_score_badge = (
+                    " " + score_badge(angel_score, "Best Angel likeness score")
+                    if angel_score is not None else ""
+                )
                 pairing_html = (
-                    f'<div class="pairing">Best Angel fit: {fit_link}'
+                    f'<div class="pairing">Best Angel: {fit_link}{angel_score_badge} '
                     f'<span class="score-badge">#{best_match["rank"]}</span> '
                     f'Fit {fit_badge(candidate["cost"])}</div>'
                 )
         elif r["status"] == "Angels":
             parts = []
             if r.get("paired_sister"):
-                sister_link = relationship_link("Sisters", r["paired_sister"], review_href)
-                parts.append(f"Paired Sister: {sister_link}")
+                sister_score = identity_match_score(r, "Sisters", r["paired_sister"])
+                sister_link = relationship_link(
+                    "Sisters", r["paired_sister"], review_href, sister_score
+                )
+                sister_score_badge = (
+                    " " + score_badge(sister_score, "Paired Sister likeness score")
+                    if sister_score is not None else ""
+                )
+                parts.append(f"Paired Sister: {sister_link}{sister_score_badge}")
             candidates = r.get("candidate_prospects", [])
             if candidates:
                 alts = "".join(
@@ -711,8 +719,8 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 parts.append(f'<a href="{html.escape(pairing_report_href, quote=True)}">Full Angel–Prospect rankings</a>')
                 pairing_html = f'<div class="pairing">{"<br>".join(parts)}</div>'
         identity_html = (
-            f'<div class="identity">Person: {html.escape(r["prospect_name"])}</div>'
-            if r.get("prospect_name") else ""
+            f'<div class="identity">Person: {html.escape(r["person_name"])}</div>'
+            if r.get("person_name") else ""
         )
         caption_html = " · ".join(html.escape(part) for part in caption(r))
         if r.get("chosen") and r.get("source_path"):
@@ -832,7 +840,7 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
             )
         else:
             matches_text = ""
-        identity_label = f"<br>Person: {r['prospect_name']}" if r.get("prospect_name") else ""
+        identity_label = f"<br>Person: {r['person_name']}" if r.get("person_name") else ""
         caption_parts = caption(r)
         if r.get("chosen") and r.get("source_path"):
             visible_names = {photo["name"] for photo in r.get("gallery_photos", [])[:9]}
@@ -850,6 +858,7 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
         pairing_text = ""
         candidates = r.get("candidate_prospects", [])
         if r["status"] == "Angels" and r.get("paired_sister"):
+            sister_score = identity_match_score(r, "Sisters", r["paired_sister"])
             ranked = "<br>".join(
                 f'{index}. {candidate["name"]} (adjusted {candidate["cost"]:.3f}, '
                 f'{"likeness %.2f, " % candidate["score"] if candidate.get("score") is not None else ""}'
@@ -857,7 +866,9 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
                 f'{candidate["photos"]} photos)'
                 for index, candidate in enumerate(candidates, 1)
             )
-            pairing_text = f"<br>Paired with {r['paired_sister']}"
+            pairing_text = f"<br>Paired Sister: {r['paired_sister']}"
+            if sister_score is not None:
+                pairing_text += f" ({sister_score:.2f})"
             if ranked:
                 pairing_text += f"<br>Top Prospect alternatives:<br>{ranked}"
             pairing_text += f" ([full rankings]({pairing_report_href}))"
@@ -880,8 +891,9 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
             match = r["best_angel_match"]
             candidate = match["candidate"]
             pairing_text = (
-                f'<br>Best Angel pairing: {match["angel"]["folder"]} '
-                f'(adjusted {candidate["cost"]:.3f}, {candidate["photos"]} photos; '
+                f'<br>Best Angel: {match["angel"]["folder"]} '
+                f'({candidate["score"]:.2f} likeness, adjusted {candidate["cost"]:.3f}, '
+                f'{candidate["photos"]} photos; '
                 f'[full rankings]({pairing_report_href}))'
             )
         cells.append(" ".join(parts) + f"<br>**{name}**<br>{tag_line}{identity_label}{summary_text}<br>" + caption_text + matches_text + pairing_text)

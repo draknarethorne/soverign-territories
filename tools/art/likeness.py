@@ -20,6 +20,8 @@ Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, ma
   likeness rebaseline --apply-categories  move only threshold-driven Prospect/Potential folders (back up first)
   likeness scan                       read every photo once (cached); lists photos with no usable face
   likeness calibrate                  how reliable the scores are on YOUR library (the thresholds in effect)
+  likeness diagnostics                one-pass calibration and active-person folder reports (CSV + Markdown)
+  likeness sandbox-reset              preview a reset of generated sandbox categories from its verified Source snapshot
   likeness audit-core [NAMES]         read-only core and low-score report, with tracked anchors/protection applied
   likeness alike                      pairs of people who look alike (angel against angel, angel against sister ...), most alike first
   likeness compare Angelica azaline   how alike two folders are, and the photos that match best
@@ -56,6 +58,7 @@ import random
 import re
 import shutil
 import sys
+import time
 import types
 
 import numpy as np
@@ -70,6 +73,13 @@ import people  # noqa: E402
 import library_backup  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library.audit import audit_person  # noqa: E402
+from likeness_library.diagnostics import collect_diagnostics, write_report  # noqa: E402
+from likeness_library.sandbox import (  # noqa: E402
+    is_sandbox_working_path,
+    require_sandbox_cache,
+    require_sandbox_output,
+    reset_generated_categories,
+)
 from likeness_library.reconciliation import frozen_identity_cores, plan_reconciliation  # noqa: E402
 from likeness_library.scoring import core_scores, nz  # noqa: E402
 
@@ -733,6 +743,64 @@ def cmd_calibrate(args):
     for a, b in itertools.combinations(ks, 2):
         diff += [float(x.vec @ y.vec) for x in space.by_key[a][:4] for y in space.by_key[b][:4]]
     print(f"photo against photo: same folder median {np.median(same):.2f} (p10 {np.percentile(same, 10):.2f}); different folders median {np.median(diff):.2f} (p90 {np.percentile(diff, 90):.2f}, p99 {np.percentile(diff, 99):.2f}); cluster >= {st['cluster']}")
+
+
+def cmd_diagnostics(args):
+    started = time.perf_counter()
+    sandbox_root = bool(args.root and is_sandbox_working_path(args.root))
+    if sandbox_root:
+        require_sandbox_cache(args.root, args.cache)
+        if args.out:
+            require_sandbox_output(args.root, args.out)
+    cfg, st, work, cache, space = build(args)
+    loaded = time.perf_counter()
+    calibration, calibration_photos, folders, photos = collect_diagnostics(space, st)
+    scored = time.perf_counter()
+
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    output_dir = pathlib.Path(args.out) if args.out else work / "_reports" / "diagnostics" / f"diagnostics-{stamp}"
+    if sandbox_root:
+        require_sandbox_output(args.root, output_dir)
+    timings = {
+        "load_seconds": loaded - started,
+        "score_seconds": scored - loaded,
+        "total_seconds": scored - started,
+    }
+    paths = write_report(
+        output_dir, calibration, calibration_photos, folders, photos, timings
+    )
+    eligible = sum(row["eligible"] for row in folders)
+    print(
+        f"diagnostics: {calibration['eligible_photo_count']} calibrated photos, "
+        f"{eligible}/{len(folders)} active folders evaluated, "
+        f"{len(photos)} per-photo folder scores"
+    )
+    print(
+        f"elapsed: load/cache {timings['load_seconds']:.2f}s; "
+        f"diagnostic scoring {timings['score_seconds']:.2f}s; "
+        f"total {timings['total_seconds']:.2f}s"
+    )
+    print(f"report: {paths['markdown']}")
+    print(f"calibration CSV: {paths['calibration_csv']}")
+    print(f"calibration photo CSV: {paths['calibration_photo_csv']}")
+    print(f"folder summary CSV: {paths['folder_csv']}")
+    print(f"folder photo CSV: {paths['photo_csv']}")
+
+
+def cmd_sandbox_reset(args):
+    if not args.root:
+        raise ValueError("sandbox-reset requires an explicit --root pointing to the sandbox Working directory")
+    result = reset_generated_categories(args.root, apply=args.apply)
+    action = "reset applied" if result["applied"] else "reset preview"
+    print(
+        f"{action}: verified {result['snapshot_file_count']} source files "
+        f"({result['snapshot_bytes']:,} bytes)"
+    )
+    print(f"source verification: {result['verification_seconds']:.2f}s")
+    print(f"Working: {pathlib.Path(args.root).resolve()}")
+    for category, count in result["categories"].items():
+        print(f"  {category}: restore {count} source file(s)")
+    print("  other Working paths, the Source snapshot, and production are unchanged")
 
 
 def cmd_alike(args):
@@ -3326,7 +3394,7 @@ def cmd_rename(args):
 def main(argv=None, embedder=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--root", help="the folder that holds Angels, Sisters, Prospects, Potentials, Artists and Various (default: workspaces.json paths.workRoot)")
-    ap.add_argument("--cache", help=argparse.SUPPRESS)
+    ap.add_argument("--cache", help="embedding cache file; sandbox analysis must keep it inside Working")
     ap.add_argument("--no-originals", action="store_true", help="after moving, do not run the originals tool")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -3347,6 +3415,10 @@ def main(argv=None, embedder=None):
     s.add_argument("--group", help="only folders under this group, such as Prospects or Angels")
     s.add_argument("--keep", type=float, default=0.25, help="score below which a Prospect is marked borderline (default: 0.25)")
     add("calibrate", cmd_calibrate)
+    s = add("diagnostics", cmd_diagnostics)
+    s.add_argument("--out", help="new output directory for Markdown and CSV evidence (default: <work>\\_reports\\diagnostics\\diagnostics-<UTC timestamp>)")
+    s = add("sandbox-reset", cmd_sandbox_reset)
+    s.add_argument("--apply", action="store_true", help="restore only Models, Prospects, and Potentials from the verified Source snapshot")
     add("alike", cmd_alike, sheet=True).add_argument("--min", type=float, help="show pairs at or above this score (default: settings alike)")
     add("compare", cmd_compare, "a", "b", sheet=True)
     s = add("folder", cmd_folder, "name", apply=True, sheet=True)

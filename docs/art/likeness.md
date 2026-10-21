@@ -22,6 +22,8 @@ The photo-library ingest routine is documented in
 | Goal | Command |
 | --- | --- |
 | Inspect overall scoring reliability | `bin\likeness.cmd calibrate` |
+| Save calibration and all eligible folder checks together | `bin\likeness.cmd --root "<library>" --cache "<cache>" diagnostics --out "<new-report-folder>"` |
+| Preview restoring sandbox category roots | `bin\likeness.cmd --root "<sandbox>\Working" sandbox-reset` |
 | Check one person's folder consistency | `bin\likeness.cmd folder "Drakness"` |
 | Audit active-core scores and metadata decisions | `bin\likeness.cmd audit-core` |
 | Build both review pages | `bin\people-gallery.cmd --root "<library>" --out "<reports>" --cache "<cache>"` |
@@ -150,6 +152,56 @@ proof of identity/family relationships. This is an agreed rebase/gallery
 requirement; implementation and timing measurements remain open in the active
 rebaseline plan.
 
+### `likeness diagnostics`: one-pass report bundle
+
+`bin\likeness.cmd --root "<library>" --cache "<cache>" diagnostics --out
+"<new-report-folder>"` calculates calibration and per-folder evidence from
+one in-memory library scan. The output directory must not already exist. The
+command is read-only apart from validating/populating the specified embedding
+cache and writing the requested report files.
+When `--root` is the named sandbox `Working` directory, both `--cache` and
+`--out` are required to resolve inside that directory; the command refuses
+global-cache defaults and outside report paths.
+
+The bundle contains:
+
+- `diagnostics.md`: human-readable calibration, eligible-folder counts,
+  timings, and the lowest-scoring photos to inspect;
+- `calibration.csv` and `calibration-photos.csv`: library-wide metrics and
+  individual leave-one-out comparisons;
+- `folder-consistency.csv` and `folder-consistency-photos.csv`: person-level
+  verdicts and per-photo scores for eligible Sisters, Angels, Models,
+  Prospects, and Potentials folders. Folders with fewer than three usable
+  photos are listed as not evaluated. Artists are outside this active-category
+  folder report.
+
+Calibration includes folders with at least two usable photos; the folder
+verdict uses at least three, matching `likeness folder`. The two evidence sets
+are kept separate, even where both contain a photo's leave-one-out score.
+Similarity never proves identity and these reports do not move photos.
+The new rebase runner will consume this bundle and link its artifacts from
+each run manifest; until then, run `diagnostics` explicitly to measure current
+library cost and review the evidence.
+
+### `likeness sandbox-reset`: restore the sandbox baseline categories
+
+`bin\likeness.cmd --root "B:\Sovereign Territories Sandbox\Working"
+sandbox-reset` verifies every file in the sibling immutable `Source` snapshot
+against `source-manifest.json`, then previews the exact allowlisted category
+restore. Add `--apply` to replace only `Working\Models`, `Working\Prospects`,
+and `Working\Potentials` with their snapshot versions. If a category is absent
+from `Source`, its generated `Working` directory is removed. The command
+refuses roots outside the named sandbox layout, production/source overlap,
+manifest path traversal, source drift, and unsafe category paths. It does not
+change `Source`, Artists, Sisters, Angels, cache files, reports, workspace
+configuration, or any path outside `Working`. It verifies the full snapshot
+before every preview or apply, so expect time proportional to the source
+library size.
+
+This is a guarded baseline reset, not the classifier or the complete rebase.
+The sandbox runner still needs to define and reset its run-scoped identity
+state, write per-run manifests, route candidates, and link diagnostics.
+
 ## People Gallery and Review Gallery
 
 Run `bin\people-gallery.cmd` to create the overview and full Review page in
@@ -166,9 +218,10 @@ alternatives, and full rankings on demand. The score legend is display-only.
 
 The category tags follow the library hierarchy: Sisters, Angels, Models,
 Prospects, Potentials, then Artists. The card tags identify category,
-workflow selection, photo count, and history. `Person:` records an inherited
-identity name when present. A linked Workflow photo shows its likeness score;
-`(not shown)` means it is outside the nine visible thumbnails.
+workflow selection, photo count, and history. Angel and Sister cards show
+their recorded `Person:` name when available. A linked Workflow photo shows
+its likeness score; `(not shown)` means it is outside the nine visible
+thumbnails.
 
 Prime-start suitability is a photo-quality measure, separate from identity
 likeness. Head and Chest-up framing use cached thumbnails. The page is intended

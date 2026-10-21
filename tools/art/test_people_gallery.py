@@ -134,11 +134,11 @@ class PeopleGalleryTests(unittest.TestCase):
             [f"photo_{index:02}.jpg" for index in range(11, 2, -1)],
         )
 
-    def test_prior_prospect_identity_is_shown_only_for_promoted_people(self):
+    def test_person_name_is_shown_for_angels_and_sisters(self):
         angel = self.root / "Angels" / "Nyxene"
         sister = self.root / "Sisters" / "Draknoxa"
-        ordinary = self.root / "Angels" / "Angelica"
-        for folder in (angel, sister, ordinary):
+        prospect = self.root / "Prospects" / "Una Beck"
+        for folder in (angel, sister):
             (folder / "gallery").mkdir(parents=True)
         (angel / "gallery" / "z_sabine_vale.txt").write_text(
             "name: Sabine Vale\n2026-10-20 now the Angel Nyxene; promoted from Prospects\n",
@@ -148,13 +148,13 @@ class PeopleGalleryTests(unittest.TestCase):
             "name: Sydney Sky\n2026-10-10 +4 from Prospects/Una Beck: merged from Prospects/Una Beck\n",
             encoding="utf-8",
         )
-        (ordinary / "gallery" / "z_angelica.txt").write_text("name: Angelica\n", encoding="utf-8")
+        (prospect / "gallery").mkdir(parents=True)
 
-        self.assertEqual(gallery.prior_prospect_name(angel, "Angels"), "Sabine Vale")
-        self.assertEqual(gallery.prior_prospect_name(sister, "Sisters"), "Sydney Sky")
-        self.assertIsNone(gallery.prior_prospect_name(ordinary, "Angels"))
+        self.assertEqual(gallery.person_name(angel, "Angels"), "Sabine Vale")
+        self.assertEqual(gallery.person_name(sister, "Sisters"), "Sydney Sky")
+        self.assertIsNone(gallery.person_name(prospect, "Prospects"))
 
-    def test_html_and_markdown_show_prospect_identity_after_chosen_label(self):
+    def test_html_and_markdown_show_person_name_after_chosen_label(self):
         folder = self.root / "Angels" / "Nyxene"
         gallery_dir = folder / "gallery"
         gallery_dir.mkdir(parents=True)
@@ -162,7 +162,7 @@ class PeopleGalleryTests(unittest.TestCase):
         source_path.write_bytes(b"chosen photo")
         row = {
             "status": "Angels", "folder": "Nyxene", "photos": 1, "review": 0,
-            "chosen": True, "prospect_name": "Sabine Vale", "score": 0.8,
+            "chosen": True, "person_name": "Sabine Vale", "score": 0.8,
             "source": "nyxene.jpg", "tags": {}, "gallery_path": folder / "gallery",
             "source_path": source_path, "source_identity_score": 0.4,
             "z_path": None, "gallery_photos": [],
@@ -286,6 +286,9 @@ class PeopleGalleryTests(unittest.TestCase):
             "status": "Angels", "folder": "Camaris", "photos": 0, "review": 0, "chosen": False, "score": None,
             "source": "", "tags": {}, "gallery_path": angel_path, "z_path": None, "gallery_photos": [],
             "paired_sister": "Draknora", "hair_color": "", "candidate_prospects": [prospect],
+            "identity_rankings": [
+                {"category": "Sisters", "name": "Draknora", "score": 0.30},
+            ],
             "candidate_rankings": [dict(prospect, cohesion=0.6)],
         }
         candidate = {
@@ -312,6 +315,12 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertNotIn("Current Angel pairing:", output)
         self.assertIn('title="Jump to this person · likeness 0.41">▶</a>', output)
         self.assertIn('title="Current Angel likeness score">0.41</span>', output)
+        self.assertIn('title="Jump to this person · likeness 0.30">▶</a>', output)
+        self.assertIn('title="Paired Sister likeness score">0.30</span>', output)
+        self.assertIn('Best Angel: <a href="people_gallery_review.html?person=Angels%2FCamaris&amp;bucket=Gallery&amp;sort=identity"', output)
+        self.assertIn('title="Jump to this person · likeness 0.28">▼</a>', output)
+        self.assertIn('title="Best Angel likeness score">0.28</span>', output)
+        self.assertNotIn("Best Angel fit:", output)
         self.assertIn("Top Prospect alternatives:", output)
         self.assertIn('<div class="pairing-subsection">Top Prospect alternatives:<br><div>1.', output)
         self.assertIn("Fit ", output)
@@ -322,7 +331,7 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertIn("10 photos", output)
         self.assertIn("score-yellow", output)
         self.assertIn(">▼</a>", output)
-        self.assertIn("Best Angel fit:", output)
+        self.assertIn("Best Angel:", output)
 
         markdown = gallery.render_md(
             [sister, angel, candidate], "now", {"Sisters": 1, "Angels": 1, "Prospects": 1},
@@ -510,6 +519,7 @@ class PeopleGalleryTests(unittest.TestCase):
             "z_path": None,
             "gallery_photos": [],
             "paired_sister": "Draknava",
+            "identity_rankings": [{"category": "Sisters", "name": "Draknava", "score": 0.30}],
             "candidate_prospects": [{"name": "Esme Marsh", "score": 0.25, "cost": 0.03, "likeness_cost": 0.05, "photo_bonus": 0.02, "photos": 10}],
             "candidate_rankings": [{"name": "Esme Marsh", "score": 0.25, "photos": 10, "cohesion": 0.6, "likeness_cost": 0.05, "photo_bonus": 0.02, "cost": 0.03}],
         }
@@ -518,6 +528,8 @@ class PeopleGalleryTests(unittest.TestCase):
 
         self.assertIn("Paired Sister:", output)
         self.assertIn('person=Sisters%2FDraknava', output)
+        self.assertIn('title="Jump to this person · likeness 0.30">▶</a>', output)
+        self.assertIn('title="Paired Sister likeness score">0.30</span>', output)
         self.assertIn('person=Prospects%2FEsme+Marsh', output)
         self.assertIn('Fit <span class="score-badge score-green"', output)
         self.assertIn(">0.030</span>", output)
@@ -556,6 +568,7 @@ class PeopleGalleryTests(unittest.TestCase):
             "z_path": None,
             "gallery_photos": [],
             "paired_sister": "Draknava",
+            "identity_rankings": [{"category": "Sisters", "name": "Draknava", "score": 0.30}],
             "candidate_prospects": [{
                 "name": "Mara Carrington", "cost": -0.029, "likeness_cost": 0.031,
                 "photo_bonus": 0.06, "photos": 20,
@@ -564,7 +577,7 @@ class PeopleGalleryTests(unittest.TestCase):
 
         output = gallery.render_md([angel], "now", {"Angels": 1}, self.root / "files", "people_gallery.html")
 
-        self.assertIn("Paired with Draknava", output)
+        self.assertIn("Paired Sister: Draknava (0.30)", output)
         self.assertIn("Mara Carrington (adjusted -0.029, fit 0.031, +0.06, 20 photos)", output)
         self.assertIn("[full rankings](../comparisons/pairings/angel-prospect-candidates.md)", output)
 

@@ -272,7 +272,13 @@ placements.
   reads repository workspace configuration and the default cache is global.
   Do not use `--apply-categories`: despite its help text, that path currently
   does not create/verify a backup. Add enforced path guards and regression
-  tests before any mutating sandbox command.
+  tests before any mutating sandbox command. A dedicated `sandbox-reset`
+  command now refuses non-sandbox roots, verifies all Source files against the
+  manifest, and has a category-only reset preview plus an explicit `--apply`
+  path. It does not make the existing rebaseline command safe; isolation for
+  classifier and workspace/config writes is still open. The new batch
+  diagnostics command also requires its sandbox cache and report output to
+  stay inside Working.
 - [x] **P1 ai** 0.3b Create an immutable source snapshot and inventory for
   sandbox inputs only after the full-name audit is clean. Completed Oct 21:
   `B:\Sovereign Territories Sandbox\Source` and `...\Working` each contain
@@ -286,6 +292,11 @@ placements.
   category outputs. Test that reset affects only Models, Prospects,
   Potentials, and per-run identity state, while refusing production paths,
   workspace inputs, Artists, archives, and the source snapshot.
+  `likeness sandbox-reset` now restores only Models, Prospects, and Potentials
+  from the verified Source snapshot, with temporary staging under
+  `Working\_sandbox-state`. It preserves Angels, Sisters, Artists, reports,
+  and the embedding cache. Run-scoped identity-state cleanup remains
+  undefined, so this gate stays open.
 - [ ] **P1 ai** 0.4 Build a bounded, labelled acceptance set from known
   same-person, lookalike, unrelated, former-cast, and poor-quality examples.
   Include the visually reviewed Drakness/Drakniss examples as labelled cases,
@@ -438,6 +449,12 @@ validated before any production rename.
   any diagnostic needs an opt-out or separate on-demand mode. Write per-photo
   and per-identity CSV evidence plus a readable Markdown run report linked
   from the run manifest.
+  A pre-rebase warm-cache baseline was generated on Oct 21 at
+  `Working\_reports\diagnostics\sandbox-baseline-20261021-161618`: 2,543
+  calibration comparisons and 89/194 active folders evaluated. The combined
+  calibration/folder pass took 15.22 seconds (0.73 load/cache, 14.49 scoring).
+  This bundle does not include the identity-core audit and is not yet attached
+  to a classified rebase run.
 
 **Exit:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
