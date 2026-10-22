@@ -34,7 +34,7 @@ class LikenessAuditTests(unittest.TestCase):
         args = SimpleNamespace(names=[], group=None, keep=0.25)
         settings = {"odd": 0.15, "mixed": [], "minFace": 60}
         output = io.StringIO()
-        with mock.patch.object(likeness, "build", return_value=(None, settings, None, None, space)):
+        with mock.patch.object(likeness, "build", return_value=({}, settings, ROOT, None, space)):
             with mock.patch.object(likeness.metadata, "load_catalog", return_value=catalog):
                 with contextlib.redirect_stdout(output):
                     likeness.cmd_audit_core(args)

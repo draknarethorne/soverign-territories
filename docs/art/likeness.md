@@ -32,8 +32,10 @@ The photo-library ingest routine is documented in
 Commands that can move files preview by default. Review the output first and
 add `--apply` only when you intend to make the described change. `--sheet
 FILE.png` writes a labeled contact sheet for commands that support visual
-inspection. After a photo move, run the normal library routine to update
-derived images and selected-photo references.
+inspection. After an approved photo move, run the normal library routine to update
+derived images and selected-photo references. While the policy is draft,
+production intake is paused before housekeeping; use previews and the isolated
+sandbox instead.
 
 ## Scoring and folder structure
 
@@ -46,8 +48,11 @@ Vectors are cached by image content, so moving or renaming a photo does not
 require another face detection.
 
 Displayed likeness is cosine similarity after subtracting the library's
-average face. It is a ranking signal within this library, not a universal
-identity probability.
+average face. A clean run saves its centering mean in its cache, and subsequent
+galleries and reconciliation reuse it: moving a photo does not silently change
+its scoring space. Ordinary caches without a saved mean retain their existing
+population-based behavior. Similarity is a ranking signal within this library,
+not a universal identity probability.
 
 | Score | Gallery color | Interpretation |
 | --- | --- | --- |
@@ -88,20 +93,27 @@ proof of identity.
 The draft core/action values are category-specific: Prospects and Potentials
 use 0.15 as the minimum core similarity and 0.30 as the Review-suggestion
 boundary; Models use 0.30 for both; Angels and Sisters use 0.30 for core
-membership and 0.15 for red-band Review suggestions. Same-person clustering
-starts at 0.55 with a 0.10 margin and two independent photos. Automatic
-lookalike association is disabled. Prospects/Potentials are configured for
-organic merge/split and photo routing, while Models/Angels/Sisters disable
-those automatic actions. The policy remains `draft`: these settings are
-reviewable, but the draft does not authorize those actions. The sandbox
-override used so far is limited to category-folder moves; no photo routing,
-Review/Junk move, or merge/split has been applied.
+membership and 0.15 for red-band Review suggestions. Candidate grouping uses a
+separate 0.25 average-linkage threshold and retains pairs and singletons.
+Robust provisional cores exclude red outliers. Photo-to-core attachment and
+group-to-core attachment use distinct tier thresholds; an action-support
+minimum does not erase a small candidate group.
+
+Automatic lookalike association is disabled. Lower-tier routing, merge and
+split permissions are configured independently of cast Gallery protection.
+The shared planner now proposes usable incoming/Review destinations even
+under a draft policy; write authorization is checked separately. Operational
+whole-identity merge/split and existing-identity category transitions are still
+unfinished. Configuration flags are not proof that those paths are wired.
+The sandbox clean installer can add cast Review photos, never cast Gallery
+members. Production requires an approved policy and separate acceptance.
 
 `Various` is the incoming pool beside Prospects and Potentials. The standard
 library routine, `bin\library.cmd`, runs the photo-preparation, likeness,
 sorting, and derived-image steps in order; see
 [the routine](original-photos.md#the-routine). `likeness sort` routes the pool
-according to current settings.
+is retained as a manual compatibility command, not the routine's primary
+decision path.
 
 ## Diagnostics: calibrate and folder
 
@@ -301,7 +313,7 @@ file-moving commands preview unless marked `--apply`.
 | --- | --- |
 | `calibrate` | Library-wide leave-one-out threshold and ranking reliability. |
 | `folder NAME [--all] [--outside] [--sheet FILE.png] [--apply]` | Per-person leave-one-out consistency, flagged photos, and outside matches; `--apply` moves only flagged outliers. |
-| `audit-core [NAMES] [--group ROOT]` | Read-only score ordering against trusted anchors or a provisional core; explains stale/ambiguous catalogue handling. |
+| `audit-core [NAMES] [--group ROOT] [--policy FILE]` | Read-only score ordering against trusted anchors or a provisional core; explains stale/ambiguous catalogue handling. Use the saved run policy and cache to reproduce a sandbox audit. |
 | `compare NAME_A NAME_B [--sheet FILE.png]` | Pair similarity and closest individual photo pairs. |
 | `alike [--min SCORE] [--sheet FILE.png]` | Similar person-folder pairs and lookalike families. |
 | `like PATH` | Rank library folders against a new photo. |
@@ -321,7 +333,8 @@ for review, not an identity claim or photo-move instruction.
 | Command | Purpose |
 | --- | --- |
 | `sort [--singles] [--assign SCORE] [--plan FILE] [--sheet FILE.png]` | Route `Various` photos to known people or new Prospects/Potentials under current rules. |
-| `reconcile [--out FILE.json]` | Read-only combined routing preview for usable Review and Various photos, using one frozen core set and same-run candidate clusters; held candidates include their best identity match and score. Does not apply moves or catalogue changes. |
+| `reconcile [--out FILE.json] [--policy FILE] [--apply]` | Shared incoming/Review proposal; preview by default. Apply requires an approved policy, verified backup, revalidation and a move/catalogue journal. Sandbox draft experiments require `--sandbox-apply-draft`. |
+| `reconcile --undo JOURNAL.json [--apply]` | Preview or reverse a verified reconciliation journal. Changed photos or later catalogue decisions block automatic undo; retain the full backup. |
 | `review [NAMES] [--out]` | Resolve photos in person Review folders: return likely matches, route clear other-person matches, or leave uncertain photos held. |
 | `singles [--min SCORE]` | Preview joining one-photo Prospect/Potential folders to a matching person with the required margin. |
 | `rematch [--min SCORE]` | Find likely same-person Prospect/Potential folder merges; cast matches remain for review. |
@@ -331,10 +344,14 @@ for review, not an identity claim or photo-move instruction.
 | `retire-empty` | Preview empty Prospect/Potential folders for intact retirement under `_retired`. |
 | `undo` | Preview reversal of the most recent move batch. |
 
-`sort` and `reconcile` use the identity references available to the current
-pipeline; the sandbox rebaseline plan separately defines the future clean-slate
-classification and reset behavior. Check [STATUS.md](../STATUS.md) before
-running rebaseline work against a real library.
+The routine now calls `reconcile`, not the old `review`/`sort`/`singles`/`rematch`
+chain. Those commands remain manual compatibility tools; artist-scoped
+`group` remains separate because artist provenance must not enter the general
+identity pool. The shared minimum now preserves genuine small identities in
+these grouping tools too. An ambiguous photo already in Review stays there
+unless a specific destination qualifies; a hold is not a rejection to Various.
+Check [STATUS.md](../STATUS.md) before running rebaseline work against a real
+library.
 
 ### Artists and image cleanup
 
@@ -394,37 +411,37 @@ source IDs; SHA-256 detects stale content and is not an identity key.
 
 ## Configuration
 
-Likeness settings live in the `likeness` object in
-[`workspaces.json`](../../workflows/workspaces.json). They include the mixed
-and pool roots; assignment and margin thresholds; `odd`, `alike`, and
-same-person clustering thresholds; minimum face size; fixed Angel/Sister
-counterparts; protected workflow photos; and trusted photo anchors. Pairing
-settings also control candidate eligibility, target likeness, and variety.
-Thresholds affect different commands differently, so use `calibrate` and
-inspect relevant examples before proposing a production change. The shared
-likeness policy is defined by
+Behavioral defaults and tier thresholds are owned by
 [`likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json)
 and validated by its
-[schema](../../data/art/_schema/likeness-engine-policy.schema.json). Run
+[schema](../../data/art/_schema/likeness-engine-policy.schema.json).
+The runtime settings resolver rejects conflicting legacy workspace values;
+the former assignment/singles/rematch overrides and explicit `different` pair
+have been migrated into policy. Workspace
+[`workspaces.json`](../../workflows/workspaces.json) retains trusted anchors,
+selected workflow photos and pairing/workflow configuration. Explicit anchors
+are resolved consistently in clean planning, ordinary reconciliation, audits
+and both galleries; choosing a workflow photo does not create an anchor. Run
 `bin\likeness.cmd policy` to validate and inspect every configured value.
 
 The current policy is explicitly **draft**: the familiar gallery bands remain
 green >=0.55, yellow >=0.30, orange >=0.15, red <0.15. A score >=0.30 is a
 visual lookalike/family-group suggestion, not same-person proof or automatic
-association. Same-person candidate clustering uses a separate draft >=0.55
-threshold. Draft policy `2026-10-21.2` also tests a 0.40 small-group cast
+association. Candidate grouping uses the separate draft 0.25 threshold.
+Draft policy `2026-10-21.3` retains a 0.40 small-group cast
 review boundary: groups with one to four usable photos and a best Angel/Sister
 score of at least 0.40 are held for review of that cast match before they can
 be classified as Potentials. Groups with five or more usable photos in the
 0.40–<0.55 band remain eligible for Model classification. The review candidate
 is a suggested destination only; category rebaseline does not move individual
-photos into Review. The candidate must lead the next Angel/Sister match by at
-least the existing 0.10 margin; otherwise the report holds the group as an
+photos into Review. The clean installer can perform the proposed Review
+placements. The candidate must satisfy the configured Review permission and
+margin; otherwise the report holds the group as an
 ambiguous cast match without choosing one identity. Groups below 0.40 still
 follow the Potential rule, while scores at or above 0.30 can remain flagged
 for visual review. This threshold is an experiment, not a final identity
-rule. Photo routes, merges, and splits remain review-only until the policy is
-approved. See the
+rule. Draft status blocks production writes, not qualified proposal evidence.
+See the
 [active rebaseline plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
 for the full configuration and remaining acceptance gates.
 
@@ -432,8 +449,10 @@ for the full configuration and remaining acceptance gates.
 
 The stable entry point remains `tools/art/likeness.py`; new rebuild logic is
 in `tools/art/likeness_library/clean_rebase.py`, not added to the CLI monolith.
-Shared core construction and routing live in `reconciliation.py`, configurable
-decisions in `policy.py`, and embedding/cache/vector primitives in `engine.py`.
+Shared core construction and input validation live in `reconciliation.py`,
+proposal/group planning in `planner.py`, verified ordinary execution in
+`maintenance.py`, configurable decisions in `policy.py`, and
+embedding/cache/vector primitives in `engine.py`.
 `sandbox.py` owns snapshot/isolation validation. These modules are shared
 library code; a second engine under `tools/art/likeness/` is not introduced.
 
@@ -456,8 +475,10 @@ must be inside the isolated Working tree, outside category roots. The command:
    pool, using the policy's candidate clustering threshold. Old names may be
    retained after matching, but never influence a match or cluster.
 5. Saves the effective policy/settings, exact initial reference list, centering
-   mean, and every source/destination/hash/score/reason in `run.json` and
-   `photos.csv`, with a readable `report.md`.
+   mean, implementation hashes, and every source/destination/hash/score/reason
+   in `run.json` and `photos.csv`, with a readable `report.md`. `policy.json`
+   and `catalog.json` preserve the exact run-local configuration and stable
+   person IDs.
 
 Repeat the same launcher/paths with `--apply` after inspecting the preview.
 Only sandbox Working can be installed: a complete backup is verified, every
@@ -465,8 +486,11 @@ output image is staged and hash-checked, previous generated category trees
 are retained under the run's `previous` directory, and installation failure
 rolls the categories and cast Review additions back. Cast Gallery files are
 never replaced. Suggested cast matches enter Review, not the cast core;
-ambiguous/unusable candidates remain held outside cores. Protection keeps
-selected source photos in their existing locations.
+ambiguous/unusable candidates remain in `Various\review`, not artificial
+Review-only Potential identities. Both galleries expose that hold location.
+Protection keeps selected source photos in their existing locations. The
+isolated `.likeness-library.json` is installed and restored with the run;
+gallery actions against Working save there, never to production metadata.
 
 Repeat with `--check` to verify the saved source decisions and installed image
 hashes without changing files. Applying an already applied run is refused.
@@ -474,27 +498,31 @@ An unapplied preview can be recomputed with `--replan`: this reuses only that
 run's freshly generated measurements, rebuilds cast references and all
 candidate memberships, and preserves the initial preview. It does not import
 old Prospect/Potential cores. The saved policy can be changed for this explicit
-replan; ordinary apply/check still require an exact policy match.
+replan; apply requires the saved policy and implementation to match. Read-only
+check and undo use the saved run even after the current policy has changed.
 Use `--undo` to restore the retained categories and withdraw only that run's
 unchanged cast Review additions; rebuilt outputs are retained under
 `withdrawn`, not deleted. Undo a previous installed run before applying the
 next experiment's cast Review additions. A new experiment needs a new run
 directory; it never seeds from a previous run's generated identity folders.
 Regenerate the galleries and derivatives
-against Working after installation. A clean rebase is not a production
-operation, and the old category-only sandbox results are not evidence of a
-completed clean rebase.
+against Working after installation. This launcher is sandbox-only; the
+separately approved clean-full production adapter remains unfinished.
 
-The first installed clean run is
+The first installed clean run was
 `Working\_sandbox-state\clean-rebase-20261021-2210`. It accounts for 1,155
 candidate photos, with 52 cast Review additions and no cast Gallery additions.
-At the current 0.55 clustering threshold it produced 27 Prospect and 698
+At its then-configured 0.55 clustering threshold it produced 27 Prospect and 698
 Potential folders, no Models, and substantial Review fragmentation. Treat it
 as a calibration baseline, not production approval. Its report links the
 post-run diagnostics, identity-core audit, and read-only ordinary
 reconciliation preview. Do not run the originals-renaming pipeline before
 checking the saved manifest: changing image basenames invalidates its recorded
 destination paths. Gallery regeneration itself does not rename originals.
+
+That fragmentation run has been undone and replaced by the unified-policy
+trial. Current measured results and remaining gates are recorded in
+[STATUS.md](../STATUS.md), not inferred from the historical folder counts above.
 
 ## Pairing score details
 

@@ -1,7 +1,21 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-10-21.2",
+  "version": "draft-2026-10-21.3",
   "status": "draft",
+  "runtimeSettings": {
+    "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
+    "pool": ["Various", "Prospects/Various", "Potentials/Various"],
+    "minCluster": 1,
+    "odd": 0.15,
+    "alike": 0.3,
+    "minFace": 60,
+    "multiFace": 0.3,
+    "singles": 0.35,
+    "rematch": 0.48,
+    "rematchCast": 0.5,
+    "different": [["Prospects/Brielle Carter", "Sisters/Draknara"]],
+    "castMerge": 0.55
+  },
   "categoryOrder": [
     "Sisters",
     "Angels",
@@ -47,12 +61,12 @@
   "smallGroupCastReviewMinimum": 0.4,
   "photoRouting": {
     "reviewMinimum": 0.3,
-    "automaticRouteMinimum": 0.55,
+    "automaticRouteMinimum": 0.4,
     "minimumMargin": 0.1,
     "minimumOwnCoreLead": 0.1
   },
   "identityActions": {
-    "identityClusterMinimumSimilarity": 0.55,
+    "identityClusterMinimumSimilarity": 0.25,
     "matchReviewMinimum": 0.3,
     "autoMergeMinimum": 0.55,
     "autoMergeMinimumMargin": 0.1,
@@ -68,6 +82,10 @@
   },
   "categoryPolicies": {
     "Sisters": {
+      "photoRouteMinimum": 0.55,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.65,
       "identityProtectedByDefault": true,
       "automaticMergeEnabled": false,
       "automaticSplitEnabled": false,
@@ -78,6 +96,10 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Angels": {
+      "photoRouteMinimum": 0.55,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.65,
       "identityProtectedByDefault": true,
       "automaticMergeEnabled": false,
       "automaticSplitEnabled": false,
@@ -88,16 +110,24 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Models": {
+      "photoRouteMinimum": 0.5,
+      "photoRouteMargin": 0.15,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.55,
       "identityProtectedByDefault": false,
-      "automaticMergeEnabled": false,
-      "automaticSplitEnabled": false,
-      "automaticPhotoRoutingEnabled": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
       "identityCoreMinimumSimilarity": 0.3,
       "reviewSuggestionBelowSimilarity": 0.3,
       "splitCandidateBelowSimilarity": 0.15,
       "minimumUsablePhotosForOutlierActions": 5
     },
     "Prospects": {
+      "photoRouteMinimum": 0.4,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.48,
       "identityProtectedByDefault": false,
       "automaticMergeEnabled": true,
       "automaticSplitEnabled": true,
@@ -108,6 +138,10 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Potentials": {
+      "photoRouteMinimum": 0.4,
+      "photoRouteMargin": 0.1,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.48,
       "identityProtectedByDefault": false,
       "automaticMergeEnabled": true,
       "automaticSplitEnabled": true,
@@ -118,6 +152,10 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Artists": {
+      "photoRouteMinimum": 0.5,
+      "photoRouteMargin": 0.15,
+      "reviewAdmissionEnabled": true,
+      "mergeMinimum": 0.55,
       "identityProtectedByDefault": false,
       "automaticMergeEnabled": false,
       "automaticSplitEnabled": false,

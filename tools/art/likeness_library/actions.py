@@ -523,7 +523,7 @@ def _create_action_backup(root, cfg, batch_id):
         ROOT / "workflows" / "workspaces.json",
         stamp=f"likeness-actions-{batch_id}",
         apply=True,
-        extra_sources=[("likeness-catalogue", metadata.CATALOG_PATH)],
+        extra_sources=[("likeness-catalogue", metadata.path_for_root(root))],
     )
 
 
@@ -895,7 +895,14 @@ def main(argv=None):
         cfg = likeness.cw.load_cfg()
         root = pathlib.Path(args.root) if args.root else pathlib.Path(likeness.cw.work_root(cfg))
         root = root.resolve()
-        catalog = metadata.load_catalog()
+        if (
+            getattr(args, "apply", False) and likeness.is_sandbox_working_path(root)
+            and not (root / ".likeness-library.json").is_file()
+        ):
+            raise ValueError("sandbox catalogue is not initialized; install a clean rebase before applying actions")
+        catalog_path = metadata.path_for_root(root)
+        catalog = metadata.load_catalog(catalog_path)
+        save_catalog = lambda data: metadata.save_catalog(data, catalog_path)
         pool_folder = likeness.pool_home(likeness.settings(cfg))
         if args.command == "undo":
             chosen_ids = selected_photo_ids(cfg)
@@ -919,7 +926,7 @@ def main(argv=None):
                     )
             if args.apply:
                 undo_batch, backup, undone = undo_actions(
-                    catalog, root, cfg, pool_folder, batch_id=batch_id
+                    catalog, root, cfg, pool_folder, batch_id=batch_id, save_fn=save_catalog,
                 )
                 print(f"undid {undone}; undo record {undo_batch}; verified backup: {backup}")
             else:
@@ -947,7 +954,7 @@ def main(argv=None):
         elif args.apply:
             try:
                 batch_id, backup = apply_actions(
-                    manifest, root, catalog, cfg, pool_folder
+                    manifest, root, catalog, cfg, pool_folder, save_fn=save_catalog,
                 )
             except (OSError, ValueError) as exc:
                 print(f"apply failed: {exc}", file=sys.stderr)

@@ -39,7 +39,9 @@ import originals  # noqa: E402
 import people  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
-from likeness_library.metadata import content_sha256, load_catalog, photo_id_from_name  # noqa: E402
+from likeness_library.metadata import (  # noqa: E402
+    content_sha256, load_catalog, path_for_root, photo_id_from_name, with_configured_anchors,
+)
 from likeness_library.policy import (  # noqa: E402
     default_policy,
     load_policy,
@@ -273,7 +275,10 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
         (category, "Artists' people" if category == "Artists" else category)
         for category in policy["categoryOrder"]
     ]
-    catalog = catalog if catalog is not None else load_catalog()
+    catalog = with_configured_anchors(
+        catalog if catalog is not None else load_catalog(path_for_root(work)),
+        cfg, getattr(space, "photos", []),
+    )
     size = tuple(cfg.get("standardSize") or (944, 1104))
     chosen = likeness.chosen_keys(cfg)
     people_rows = []
@@ -337,7 +342,9 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
                "chosen": False, "score": None, "source": "", "tags": people.profile(folder),
                "gallery_path": folder / "gallery", "source_path": None, "z_path": people.find(folder),
                "person_name": person_name(folder, status),
-               "identity_protected": bool(person and person.get("protected"))}
+               "identity_protected": bool(
+                   (person and person.get("protected")) or category_policy.get("identityProtectedByDefault")
+               )}
         min_face = st.get("minFace", likeness.SETTINGS["minFace"])
         photos = [p for p in getattr(space, "photos", []) if p.key == key]
         row["usable"] = sum(p.usable(min_face) for p in photos)
@@ -577,7 +584,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
     out = ["<!doctype html>", '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>People gallery</title>', f"<style>{CSS}</style></head><body>",
            '<header class="page-header"><div><h1>People gallery</h1>'
            f'<p class="meta">Generated {html.escape(stamp)} · {len(rows)} {people_label} · {photo_count} {photos_label}</p>'
-           f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · Up to nine photos per person</p></div>'
+           f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · <a href="{html.escape(review_href, quote=True)}?person=Various&amp;bucket=Review">Unresolved holds in Review</a> · Up to nine photos per person</p></div>'
            '<div class="header-side"><div class="header-label">Likeness</div>'
            f'<div class="score-legend">{render_score_legend(policy)}</div></div></header>',
            policy_panel,
@@ -1008,7 +1015,9 @@ def main(argv=None, space=None):
         if category != "Artists" or args.artists
     ]
     if space is None:
-        cfg, st, work, cache, space = likeness.build(types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None))
+        cfg, st, work, cache, space = likeness.build(types.SimpleNamespace(
+            root=args.root, cache=args.cache, embedder=None, policy=args.policy,
+        ))
         rend = None if args.no_renders else likeness.Renders(cfg, cache, likeness.Embedder(), st, space)
     else:
         cfg, st, work = space.cfg, space.st, space.work

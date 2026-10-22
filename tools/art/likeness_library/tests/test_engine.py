@@ -27,9 +27,11 @@ class LikenessEngineTests(unittest.TestCase):
             first_hash = cache.sha(photo)
             self.assertEqual(cache.sha(photo), first_hash)
             cache.emb[first_hash] = {"faces": 1, "v": [1.0, 0.0], "s": 0.95}
+            cache.centering_mean = [.2, .3]
             cache.save()
 
             loaded = Cache(cache_path)
+            self.assertEqual(loaded.centering_mean, [.2, .3])
             self.assertEqual(
                 loaded.emb[first_hash],
                 {"faces": 1, "v": [1.0, 0.0], "s": 0.95},
@@ -89,6 +91,19 @@ class LikenessEngineTests(unittest.TestCase):
 
         rows = [[0, 0, 1, 1, 0.95], [0, 0, 1, 1, 0.80]]
         self.assertEqual(human_rows(rows), [rows[0]])
+
+    def test_saved_centering_mean_keeps_vectors_stable_when_folders_change(self):
+        photo = Photo(pathlib.Path("photo.jpg"), "Prospects", "One", "a", {
+            "faces": 1, "v": [1., 0.], "px": 100,
+        })
+        st = settings({})
+        Space([photo], st, mean=[.2, .3])
+        vector = photo.vec.copy()
+        photo.group, photo.folder, photo.key = "Various", "Various", "Various"
+        Space([photo], st, mean=[.2, .3])
+        np.testing.assert_allclose(photo.vec, vector)
+        with self.assertRaisesRegex(ValueError, "embedding dimensions"):
+            Space([photo], st, mean=[0., 0., 0.])
 
 
 if __name__ == "__main__":

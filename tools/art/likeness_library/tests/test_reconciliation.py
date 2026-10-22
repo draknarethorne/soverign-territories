@@ -155,7 +155,8 @@ class ReconciliationTests(unittest.TestCase):
         )
 
         self.assertEqual(result["assignments"], [])
-        self.assertEqual(result["held"][0]["reason"], "protected identity cannot receive automatic moves")
+        self.assertEqual(result["held"][0]["reviewDestination"], "Prospects/Protected/review")
+        self.assertIn("protected Gallery", result["held"][0]["reason"])
 
     def test_small_incoming_cast_like_cluster_is_held_for_the_best_cast_review(self):
         from tools.art.likeness_library.policy import load_policy
@@ -203,7 +204,7 @@ class ReconciliationTests(unittest.TestCase):
             all(row["bestMatch"] == "Angels/angelica" for row in result["held"])
         )
 
-    def test_draft_policy_hold_reports_best_identity_and_score(self):
+    def test_draft_proposal_reports_qualified_destination_without_authorizing_apply(self):
         from tools.art.likeness_library.policy import load_policy
 
         result = plan_reconciliation(
@@ -221,9 +222,48 @@ class ReconciliationTests(unittest.TestCase):
             name_factory=stable_name,
         )
 
-        self.assertEqual(result["assignments"], [])
-        self.assertEqual(result["held"][0]["bestMatch"], "Potentials/Amara Madison")
-        self.assertEqual(result["held"][0]["bestScore"], 1.0)
+        self.assertTrue(result["authorizationRequired"])
+        self.assertEqual(result["held"], [])
+        self.assertEqual(result["assignments"][0]["destination"], "Potentials/Amara Madison")
+        self.assertEqual(result["assignments"][0]["score"], 1.0)
+
+    def test_policy_preserves_a_perfect_pair_without_cast_assignment_gate(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        result = plan_reconciliation(
+            [candidate("p1", [0, 1]), candidate("p2", [0, 1])],
+            {"Angels/A": {"vector": np.array([1., 0.]), "side": "Prospects"}},
+            minimum_cluster=3, cluster=.55, policy=load_policy(), name_factory=stable_name,
+        )
+        self.assertEqual(result["assignedCount"], 2)
+        self.assertEqual(len(result["clusters"]), 1)
+        self.assertEqual(result["clusters"][0]["photoIds"], ["p1", "p2"])
+
+    def test_cast_protection_does_not_change_unrelated_grouping(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        rows = [candidate("p1", [0, 1]), candidate("p2", [0, 1])]
+        policy = load_policy()
+        first = plan_reconciliation(rows, {}, policy=policy, name_factory=stable_name)
+        second = plan_reconciliation(
+            rows, {"Angels/A": {"vector": np.array([1., 0.]), "side": "Prospects", "identityProtected": True}},
+            policy=policy, name_factory=stable_name,
+        )
+        self.assertEqual(first["clusters"][0]["photoIds"], second["clusters"][0]["photoIds"])
+
+    def test_provisional_followup_reclassifies_final_five_photo_membership(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        policy = load_policy()
+        policy["identityActions"]["identityClusterMinimumSimilarity"] = .8
+        rows = [
+            candidate(str(index), [np.cos(np.deg2rad(angle)), np.sin(np.deg2rad(angle))])
+            for index, angle in enumerate((-10, 0, 10, 15, 60))
+        ]
+        result = plan_reconciliation(rows, {}, policy=policy, name_factory=stable_name)
+        self.assertEqual(len(result["clusters"]), 1)
+        self.assertEqual(len(result["clusters"][0]["photoIds"]), 5)
+        self.assertTrue(result["clusters"][0]["destination"].startswith("Prospects/"))
 
     def test_remaining_candidate_can_join_fixed_provisional_cluster(self):
         angles = [-10, 0, 10, 60]

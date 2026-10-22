@@ -1,13 +1,14 @@
 # 2026-10-21: likeness rebaseline, family naming, and matcher simplification
 
-**Status:** active (Option A, shared-surname naming, and sandbox rebase POC approved Oct 21, 2026)
+**Status:** active (Oct 22 sandbox trial installed; whole-identity maintenance, family naming and production clean rebase unfinished)
 
 ## Executive summary
 
 The current sorter has contributed to Prospect/Potential sprawl. This work
-will add an explicit rebaseline mode to likeness processing so the complete
-selected library can be reprocessed into real category folders in an isolated
-sandbox, not just simulated. Each run starts from a verified, unchanging
+will deliver one configurable engine for clean rebuilding and ongoing
+self-healing. The sandbox is the real test bed, followed by a required,
+separately approved clean-full production rebase of the selected scope.
+Each clean run starts from a verified, unchanging
 source snapshot and clean category outputs. The matching reference set
 contains only Angels/Sisters by default; an option can add eligible
 low-scoring Angel/Sister photos as candidates without turning them into
@@ -17,11 +18,14 @@ The chosen organization is **Option A**: keep category folders and add
 virtual family/lookalike groups to the people gallery. The proposed active
 categories are Angels, Sisters, Models, Prospects, and Potentials. Models
 are distinct people with at least five usable photos and a calibrated
-cast-likeness score in the below-cast-merge band (initially 0.40-0.54 when
+cast-likeness score in a separate classification band (initially 0.40-0.54 when
 displayed to two decimals). Prospects have at least five usable photos
 without qualifying cast resemblance. Potentials remain the one-to-four-photo
-holding category regardless of resemblance, with scores visible in the
-gallery.
+category for coherent small identities, after same-person matching and
+cast-Review decisions. A photo count never overrides unresolved identity
+evidence. Valid pairs retain their grouping; a genuine unmatched singleton
+can become a Potential, while an unresolved match is a hold, not automatically
+a new person.
 
 Use shared surnames for identities in the same looks-like family, with
 distinct first names and preferably a shared initial when a unique name is
@@ -29,8 +33,9 @@ available. For example, a Prospect related to Cleo Gray could be Clara Gray;
 a Model resembling Angelica could use Angelica's family surname. Similarity
 thresholds may automatically group distinct people and assign family names.
 The results must be reviewable in the gallery and names never act as matching
-signals. A Model or Prospect remains a separate identity unless the user
-explicitly approves a same-person merge.
+signals. Family association never authorizes an identity merge. A separate
+same-person decision may permit a merge under the category's validated action
+policy; lower-tier automation does not require per-identity manual approval.
 
 The user wants an explicit likeness-processing flag and data-driven category
 configuration, so classifications and thresholds can be toggled and compared
@@ -39,7 +44,7 @@ same verified source snapshot, rebuild real Models/Prospects/Potentials
 folders, and expose actual results in Explorer and the viewer. Category rules
 should be declarative so another tier can be added by configuration using
 validated rule types; configuration must not execute arbitrary code. This
-remains a sandbox experiment, not a production category change. Existing
+is tested in the sandbox before the approved production run. Existing
 legacy `Models` folders/paths must be distinguished from the new active
 Models category.
 
@@ -54,7 +59,9 @@ Sandbox and production use the same engine and default policy; sandbox-only
 overrides are explicit and recorded, not a separate implementation.
 
 Protection is an action policy, not a likeness override. Protecting an
-identity prevents automatic moves in or out. Protecting an individual photo
+identity prevents automatic Gallery-membership changes in or out. Attaching
+an incoming candidate to that identity's Review is not Gallery membership
+and must have its own permission. Protecting an individual photo
 prevents automatic removal or Review routing, but does not force it into the
 identity core: a protected low-score image can remain available for workflow
 use while being excluded from core construction. Identity and photo protection
@@ -64,13 +71,15 @@ Testing is not restricted to simulation. A real copy of the selected library
 may be reprocessed in an isolated sandbox (for example
 `B:\Sovereign Territories Sandbox\`), including actual file moves and name
 assignments on that copy. Inspect the resulting gallery and run undo/restore
-checks there. The normal library is a separate final run after the sandbox
-results and exact source scope are accepted.
+checks there. The normal library requires a separate clean-full rebuild after the sandbox
+results and exact source scope are accepted; category reclassification alone
+does not satisfy that deliverable.
 
 The initial sandbox now exists at `B:\Sovereign Territories Sandbox\`: `Source`
 is the preserved baseline, `Working` is the writable test copy, and
 `source-manifest.json` inventories every included file by relative path, size,
-and SHA-256. The source, snapshot, and working copy have matching content.
+and SHA-256. The initial snapshot and working copy were content-matched at creation;
+Working now contains experimental outputs and is not identical to Source.
 An Oct 21 read-only baseline scored the 2,667 Gallery/Review photos in 261
 folders using a sandbox-local cache. It proposed one existing category move
 (`Potentials/Lia Joyce` to `Prospects`, 35 usable photos), 26 confident
@@ -99,7 +108,7 @@ reports was removed after publication to B:.
 | 3. Build the sandbox rebase loop | Add a likeness-processing flag and data-driven config to rebuild real sandbox directories from the immutable source snapshot, with cast-only references by default and an optional low-scoring cast-photo candidate pool. | Repeated runs reset only generated sandbox categories, compare modes/configurations, and expose actual results in Explorer and the gallery. |
 | 4. Refactor and improve routing | Simplify matching, add distinct-person lookalike scoring and config-driven category/family assignment, and build the shared incremental self-healing engine with protection-aware merge/split and selective Review routing. | Tests prove source exclusions, deterministic category transitions, and safe same-person versus lookalike handling across rebase and ordinary intake. |
 | 5. Build the people-gallery review surface | Preserve useful statistics, add cross-category likeness references and full-library rankings, and provide summary/full details in the overview and identity context in the review gallery. | The user can evaluate actual sandbox categories and rankings from the nine-photo cards without relying on separate reports. |
-| 6. Rebaseline the normal library | Re-run the accepted workflow against production after reviewing sandbox results, with verified backup and recoverable actions. | The user approves the exact source scope and production batch; rollback is verified. |
+| 6. Clean-full production rebase | Rebuild selected production memberships with the accepted shared engine and cast-only initial references, not a category-only reshuffle. | The user approves the exact source scope and production batch; backup, provenance, and rollback are verified. |
 | 7. Prevent recurrence | Validate future imports, document supported paths, and remove only proven-dead features. | Labelled acceptance cases pass and no unrelated workflow regresses. |
 
 **What remains before processing:** reconcile the source-scope and command
@@ -127,40 +136,195 @@ backup.
 | D8 | Sandbox copies may run the real workflow, including repeatable category resets, moves, and automatic family-name assignment, after verifying isolation from production. The user may iterate on sandbox configs and thresholds without approving each photo assignment. Normal-library changes require an inspectable result, explicit approval, recoverable backup, and focused tests. |
 | D9 | Add a likeness rebaseline mode/flag and versioned JSON configuration for classification rules, thresholds, source scopes, and supported grouping options. Validate the config against a schema; do not use executable expressions or arbitrary plugins for the initial POC. |
 | D10 | Sandbox iterations may reset only generated Model/Prospect/Potential output directories from the immutable source snapshot. Never delete the source snapshot, production library, Artists, archives, or unrelated sandbox content as part of reset. |
-| D11 | Use separate run-scoped matching state: only configured cast roots seed identity references by default; generated sandbox categories never become references on the next clean rebase. Content-addressed face embeddings may be reused only if validated, but identity centroids and assignments are rebuilt from the selected source/reference scope. |
+| D11 | Use separate run-scoped matching state: only configured cast roots seed identity references by default; generated categories never become references on the next clean rebase. New clean experiments start an empty run-local embedding cache. An explicit replan may reuse that run's validated measurements; identity references and assignments are always rebuilt. |
 | D12 | Keep classification stored with stable person identity and reflected in category directory placement. Gallery controls may filter/show/hide family groups or classifications for browsing. An explicit sandbox-config control may enable/disable a class for the next rebase, but must export a validated config and cannot change existing assignments until that sandbox rebase runs. |
 | D13 | Use one likeness engine for clean rebase and ongoing incremental processing. Sandbox and production share scoring, decision semantics, and default policy; differences are limited to explicitly configured and versioned sandbox overrides recorded with each run. A full rebase is a recovery/calibration tool, not the normal intake loop after the initial baseline. |
 | D14 | Configure category hierarchy/order and category-specific thresholds and action permissions declaratively. Unprotected Potentials and Prospects may merge/split organically with lower configurable thresholds; Models use an intermediate policy with more Review; Angels and Sisters remain conservative and are not automatically stripped of low-scoring photos. Adding a category such as Demons must not require a separate matcher implementation. |
-| D15 | Identity Protection blocks automatic moves into or out of that identity. Photo Protection blocks automatic removal and Review routing for that photo but does not force it into the trusted/provisional identity core. A protected low-score photo may remain workflow-usable while excluded from core construction. Display identity and photo protection distinctly in the galleries. |
+| D15 | Identity Protection blocks automatic changes to Gallery membership, including merge/split and category moves. Incoming candidates may be proposed for separately permitted identity-associated Review without joining the protected core. Photo Protection blocks automatic removal and Review routing of that protected photo but does not force core membership. Workflow-selected photos are automatically photo-protected. Display identity and photo protection distinctly. |
 | D16 | After the first sandbox rebase, test incremental organic growth by adding the user's separate batch of 200+ images to the sandbox and running the ordinary likeness process without resetting/rebasing. Also preview the normal likeness process immediately after the rebase and report any proposed changes; do not silently apply them. |
+| D17 | The sandbox is a test environment, not the product boundary. A clean-full production rebase of the approved scope is required after acceptance; sandbox-only installation and category-only reclassification are insufficient. |
+| D18 | Separate evidence, candidate grouping, identity matching, category assignment, and action authorization. Cast protection and cast-match thresholds must not become candidate-clustering thresholds. A minimum evidence count for an action must not discard valid pair/singleton evidence. |
+| D19 | This plan owns the unified engine contract below. The Oct 20 plan owns metadata, staged user actions, review UI, and recovery foundations; its earlier audit-only limits do not override the later tier-aware automation scope. |
 
-## Draft shared-policy values (review gate; not approved)
+## Unified processing contract (Oct 21 reconciliation)
+
+This section replaces conflicting earlier design prescriptions in the two
+likeness plans. It specifies the target behavior, not a claim that the current
+code implements it. Raw user direction remains unchanged at the end.
+
+### One engine; deliberate boundary differences
+
+| Mode | Starting identity references | Candidates | Apply boundary |
+| --- | --- | --- | --- |
+| Clean sandbox rebase | Source Angels/Sisters only by default; no old non-cast memberships | Flattened selected source photos, plus optional explicitly scoped low-core cast candidates | Verified isolation, immutable snapshot, scoped staging, manifest and rollback; real experimental placements are permitted without per-photo approval |
+| Clean production rebase | Same cast-only initialization and accepted algorithm | Approved production source inventory, flattened independently of existing non-cast folders | Fresh verified backup, exact-batch approval, stale-state checks, recoverable installation and verification |
+| Incremental maintenance | Frozen established eligible identity cores | Incoming, Review, and policy-eligible affected-identity outliers | Same decision semantics; sandbox experiment authorization or accepted production policy, with preview/audit/backup/undo |
+
+Paths, candidate selection and authorization differ at the boundary. Scoring,
+clustering, matching, core rules and category decisions do not fork by mode.
+Artist isolation is an explicit source/target constraint, not another matcher;
+legacy Model inputs require the audited mapping already required by D7.
+
+### Ordered decision flow
+
+1. **Resolve configuration and inventory.** Validate one effective policy and
+   source scope before writes. Record algorithm/version, overrides, exclusions,
+   stable IDs, hashes, anchors, protection, and workflow-selected photos.
+2. **Measure and freeze evidence.** Use one recorded scoring/centering context
+   for the run. Build robust reference cores without Review or excluded
+   outliers. A suspected outlier cannot define the core judging itself.
+3. **Evaluate existing matches and form candidate groups.** Compare photos
+   and groups against eligible references, using separately defined metrics.
+   A blocked cast Gallery action does not discard candidate evidence:
+   consider cast Review or continue grouping where appropriate. Retain
+   coherent pairs and singleton candidates; do not require three photos
+   merely to preserve a group.
+4. **Resolve against existing and provisional references.** Freeze new
+   provisional reference vectors, compare remaining candidates with both
+   reference sets, and perform bounded deterministic follow-up. Do not grow
+   established cores mid-run, create order-dependent chains, or assign a
+   photo repeatedly. Keep ambiguity distinct from a genuine no-match.
+5. **Plan tier-aware maintenance.** Evaluate affected identities for coherent
+   merges, splits and outliers using both source and destination evidence,
+   margins, core safeguards and protection. A low score alone is not a move.
+   Preserve multiple appearance-group evidence without treating every
+   expression group as a distinct person or merging lookalikes by one score.
+6. **Classify planned identities.** Resolve plausible same-person/cast cases
+   before classifying a distinct person as a Model. Count final eligible
+   planned members, not only the seed cluster. Apply category rules after
+   follow-up; Review photos never count as active core/Gallery members.
+7. **Name and produce one complete action plan.** Preserve source/name history
+   and stable identity continuity. Family links and names are outputs, never
+   matching inputs. Record proposed action, destination/state, supporting
+   evidence, applicable rule and authorization separately.
+8. **Authorize, stage, apply and verify.** A preview computes the same proposed
+   decisions as apply. Draft status prevents unapproved production execution;
+   it must not erase proposals or disable the authorized sandbox experiment.
+   Verify conservation, conflicts, hashes, protection, history and rollback.
+   Publish diagnostics and galleries from actual results.
+
+### States and protection
+
+- **Gallery member:** belongs to an identity; core eligibility is a separate
+  decision. Review and hold candidates never strengthen its active core.
+- **Identity-associated Review:** a plausible destination exists, but the
+  candidate is not an accepted Gallery member. Cast Review admission has a
+  separate permission from protected Gallery attachment.
+- **Unresolved hold:** the evidence does not select a reliable destination or
+  establish a distinct new identity. Preserve group IDs, alternatives and
+  provenance. Do not give every held photo a new person name or manufacture
+  Review-only identities. Choose and test an explicit recoverable physical
+  representation before implementing the installer; the GUI must expose it.
+- **New identity:** a coherent distinct-person candidate group, including a
+  valid pair or genuinely unmatched singleton. Small size alone does not
+  mean unresolved, unusable, or unsuitable for future matching.
+- **Protection:** identity protection blocks automatic Gallery changes and
+  whole-identity actions; photo/workflow protection blocks automatic movement
+  of that photo. Neither makes a low-scoring image mandatory core evidence.
+  Anchors, protection and workflow choice remain separate metadata.
+
+### Tier behavior, not a global caution switch
+
+| Tier | Membership and maintenance policy | Core policy |
+| --- | --- | --- |
+| Unprotected Potentials/Prospects | Allow configured automatic attachment, coherent merge/split and category growth; use selective Review for ambiguity, not blanket manual approval | Orange can contribute; red is excluded, with the singleton exception. Minimum evidence for destructive outlier actions is independent of forming an identity |
+| Models | Intermediate action thresholds/permissions, stronger supporting evidence and more Review than lower tiers | Green/yellow core starting hypothesis; uncertain resemblance cannot establish a distinct Model by itself |
+| Angels/Sisters | No routine automatic Gallery stripping or candidate Gallery admission initially; plausible incoming candidates may enter separately permitted Review | User anchors/core control; retained low-score photos need not define identity |
+| Explicitly protected identity/photo | Apply the relevant protection regardless of tier | Retention and core membership remain separate |
+
+Configure thresholds and permissions by action and category, including both
+ends of a merge. A display color is a visual cue, not authorization or a
+universal identity threshold. Adding a category using supported predicates
+must not require hardcoded cast/non-cast branches throughout the planner.
+
+### Configuration ownership and threshold separation
+
+The versioned policy owns behavioral parameters: grouping method/threshold,
+small-group handling, photo-to-core matching, group-to-core matching,
+identity-to-identity merge/split evidence, tier rules, margins, Review
+admission, core construction and classification. Workspace configuration
+continues to own paths and workflow selections; the catalogue owns identity,
+anchor and protection decisions. Compatibility settings/anchor patterns must
+be explicitly migrated or resolved with provenance, not silently override the
+policy. Conflicting values fail before writes. Algorithm constants may stay
+in code; tunable identity/action behavior may not hide in code defaults.
+
+Every effective value must have a defined comparison metric, scope, units,
+owner and override provenance. Separate pairwise average-linkage similarity,
+photo-to-core similarity, group-to-core similarity, and identity merge
+evidence. Equal numeric values do not make those rules interchangeable.
+Group size for classification, core viability, independent merge evidence
+and permission to move are separate parameters.
+
+The migration must replace the primary routine's separate legacy Review,
+sort, singles and rematch decisions with the shared planner before claiming
+unification. Preserve launcher compatibility; retain a legacy path only for
+a documented distinct operation with explicit scope and regression coverage.
+Helpers in a common package alone do not constitute a shared engine.
+
+## Current code versus target; reason for the drift
+
+The Oct 21 investigation found four coupled failures: the cast-level 0.55
+value was independently introduced as a conservative clustering floor
+without action-specific validation; the inherited minimum-three gate
+discarded pairs; draft execution policy suppressed matching proposals; and
+the rebase adapter converted many held photos into new Potential identities.
+At that investigation point the ordinary library launcher still executed
+legacy decisions, and the merge/split policy evaluator had only test callers. Plans accumulated
+historical additions without revising older constraints or completion claims.
+These are implementation/design and plan-maintenance failures, not unclear
+user goals or a validated reason to keep two engines.
+
+The earlier fragmentation run had 698 Potential folders: 659 single-photo folders
+and 502 Review-only folders. Its 1,144 eligible candidate vectors yield the
+following **clustering-only** counterfactuals in the saved scoring context:
+
+| Average-linkage threshold | Groups | Singletons | Pairs |
+| --- | ---: | ---: | ---: |
+| 0.55 | 671 | 508 | 93 |
+| 0.40 | 383 | 217 | 80 |
+| 0.30 | 217 | 58 | 69 |
+| 0.25 | 159 | 25 | 48 |
+
+These counts do not prove identity accuracy. Fewer folders is not acceptance.
+A runtime reproduction also showed a perfect two-photo pair becoming two
+held candidates under the minimum-three gate. Correct group preservation,
+proposal/authorization separation, hold representation and routine wiring
+before installing another threshold experiment.
+
+## Calibration starting points (not production approval)
 
 The first versioned policy is
 [`data/art/likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json),
 validated against
 [`likeness-engine-policy.schema.json`](../../data/art/_schema/likeness-engine-policy.schema.json).
-Its status is `draft`; these values are exposed by `likeness policy` and the
-generated gallery policy disclosure for inspection, not permission to run a
-rebase or automatic actions.
+Its current status is `draft`, version `draft-2026-10-21.3`. The installed
+Oct 22 experiment uses 0.25 average-linkage grouping with minimum size one;
+it does not reuse the 0.55 cast gate for candidate formation. Runtime settings
+now resolve from the policy, and conflicting workspace overrides fail.
+The following records calibration questions, not production approval.
 
 | Policy area | Draft value | Meaning |
 | --- | --- | --- |
 | Display bands | Green >=0.55; yellow >=0.30; orange >=0.15; red <0.15 | Preserve the existing gallery color boundaries. |
 | Lookalike suggestions | >=0.30; automatic association off | Show distinct identities for visual review/family consideration; never treat this score as same-person evidence. |
-| Same-identity clustering | >=0.55 | Separate candidate grouping threshold; intentionally above the visual lookalike cue. |
-| Category assignment | 1-4 usable photos: Potentials; 5+ and cast likeness <0.40: Prospects; 5+ and 0.40-<0.55: Models; >=0.55: Review | A high cast score is held for same-person review, not auto-classified as a lookalike. |
-| Photo route | Review cue >=0.30; proposed auto-route >=0.55, with >=0.10 top-score margin and >=0.10 lead over the photo's own core | Every route remains review-only while the policy is draft. |
-| Merge candidate | >=0.55, >=0.10 margin, at least 2 independent photos | Proposed evidence floor; automatic merge remains disabled by draft status. |
+| Candidate grouping | Compare 0.25 average linkage, the older baseline, against 0.30/0.40 and recorded 0.55 | Trial values only. Preserve pairs; do not transplant a cast assignment gate. Validate contamination and expression coverage, not folder count alone. |
+| Category assignment | Distinct 1-4-photo identities: Potentials; 5+ and cast likeness <0.40: Prospects; 5+ and 0.40-<0.55: Model hypothesis | Apply after same-person resolution and planned-member follow-up. Count alone or crossing 0.55 does not prove identity. |
+| Lower-tier photo attachment | Compare the historical 0.40 score / 0.10 margin baseline with labelled alternatives | Separate photo-to-core calibration from grouping; preserve proposed routes when execution is not authorized. Own-core lead applies to a candidate leaving an existing identity, not an unmatched singleton. |
+| Cast Review admission | Test 0.30 evidence cue, 0.40 stronger candidate, 0.10 destination margin | Calibrate individual/group evidence separately. Ambiguous matches retain alternatives; blocked Gallery admission does not imply no-match. |
+| Cast Gallery admission | Automatic admission disabled initially | Protection is an action permission, not a 0.55 grouping floor. User-staged approval remains available. |
+| Identity merge | Historical 0.48 rematch and earlier 0.55 proposal are comparison points, not accepted cutoffs | Calibrate by tier using both identities, margin and independent support. Define independence; multiple near-duplicate shots alone are not independent evidence. |
 | Split candidate | Own-core <=0.15, alternative >=0.30, margin >=0.10, at least 2 independent photos | Proposed outlier evidence; automatic split remains disabled by draft status. |
-| Category protections | Sisters/Angels protected by category; explicit identity and photo protection also supported | Protected identities cannot be moved into or out of; a protected photo may stay workflow-usable while excluded from the core. |
+| Model action thresholds | Intermediate between lower-tier and cast permissions; exact values require labelled trials | Do not invent a second global threshold or let the Model classification band authorize a merge. |
+| Category protections | Sisters/Angels protected by category; explicit identity/photo and automatic workflow-photo protection | Block Gallery-membership changes, not evidence generation or separately permitted incoming Review. |
 
 The earlier sandbox calibration is evidence only: existing-folder labels are
 assumed ground truth, and the saved report conflicts with an older inline
 accuracy comment. In particular, the proposed 0.55/0.10 route is not accepted
 as an automatic-action threshold until representative gallery examples and
-action-specific error targets are reviewed. No rebase/reset/apply was run;
-the verified Working backup remains
+action-specific error targets are reviewed. A clean sandbox run has since
+been installed, but remains unaccepted (see Phase 3); production is unchanged.
+The verified pre-run Working backup is
 `B:\Sovereign Territories Sandbox\Working\_backup\library-20261021-172221`
 (17,582 files; 5,827,811,555 bytes).
 
@@ -178,12 +342,12 @@ the verified Working backup remains
 | Family surname | The shared human-facing surname used only for identities deliberately associated in a family/lookalike group. |
 | Suggested association | A score-based candidate shown before the selected threshold is met; it is not yet a family group or a match assignment. |
 | Threshold-assigned family | A reversible, score-derived lookalike group with shared-surname naming; it is not a biological claim or a same-person match. |
-| Rebaseline | A clean rerun of classification against a fixed source snapshot, producing actual sandbox directory assignments and a recoverable run record. |
+| Clean rebase | Rebuild selected non-cast memberships from a fixed source inventory and cast-only initial references, in sandbox or approved production. Category-only reclassification is not a clean rebase. |
 | Source scope | The exact set of roots, folders, files, and photo statuses eligible to score or route in one run. |
 | Rebase configuration | Versioned declarative JSON that defines supported source pools, identity-reference roots, category rules, score thresholds, family grouping, and display behavior. |
 | Sandbox source snapshot | Immutable, verified copy of the selected original library inputs from which each sandbox iteration is rebuilt. Generated category outputs are not sources for later clean runs. |
 | Incremental self-healing | Ordinary intake that scores new photos against existing identities and updates only affected identities/categories without resetting the library to a source snapshot. |
-| Identity Protection | Stable identity-level policy that blocks automatic moves into or out of the protected identity while leaving its likeness evidence inspectable. |
+| Identity Protection | Stable policy blocking automatic Gallery-membership changes and identity merge/split/category actions; incoming Review admission is separately controlled. |
 | Photo Protection | Per-photo policy that blocks automatic removal and Review routing but may exclude the photo from trusted/provisional identity-core construction. |
 
 ## Sandbox rebase operating model
@@ -210,9 +374,10 @@ Each rebase run must:
    broad roots or touches snapshots, logs, reports, and unrelated files.
 4. Rebuild the run's identity references from Angels/Sisters only by default.
    Never seed from the previous run's Models/Prospects/Potentials. Rebuild
-   identity centroids/reference indexes from this cast-only set. Content-
-   addressed face embeddings may be reused when their source hashes validate;
-   they are not identity references.
+   identity centroids/reference indexes from this cast-only set. Start a new
+   run-local embedding cache for a new clean experiment. An explicit replan
+   may reuse that run's hash-validated measurements; it still rebuilds
+   references/memberships and records reuse. Embeddings are not identities.
 5. Select the candidate pool by explicit mode: all selected source
    Prospect/Potential photos, optionally plus cast Gallery photos below a
    configured own-core score. Cast anchors and protected photos remain
@@ -514,8 +679,9 @@ validated before any production rename.
   folder scores in 15.73 seconds. These results are post-category-move
   evidence, not a complete post-routing diagnostic bundle. The existing
   identity-core audit was run for all 261 folders and saved as
-  `identity-core-audit.txt`, linked from `diagnostics.md`; no full rebase-run
-  manifest exists yet, and the galleries do not consume this evidence.
+  `identity-core-audit.txt`, linked from `diagnostics.md`. At that historical
+  stage no full rebase-run manifest existed. The later clean run below has
+  one; automatic diagnostic integration and gallery consumption remain open.
 
 **First actual clean rebuild, Oct 21:** installed and verified
 `Working\_sandbox-state\clean-rebase-20261021-2210`. The empty-cache run used
@@ -526,8 +692,9 @@ cast scores, exact policy/settings, and reasons. Previous category trees are
 retained and installation/undo are regression-tested. Fia's four photos and
 three of Amara's four photos physically entered Angelica Review, never her
 Gallery/core. This global run produced 27 Prospect and 698 Potential folders,
-no Models, and 564 candidate Review placements: fragmentation remains an
-explicit calibration issue, not an accepted result. The earlier isolated
+no Models, and 564 candidate Review placements: fragmentation reflects the
+structural defects identified above as well as unvalidated calibration; this
+is not an accepted result. The earlier isolated
 Jacinta/Freya examples do not predict this global result.
 
 The regenerated overview/Review pages contain 817 identities and 2,667 photos.
@@ -539,6 +706,86 @@ clean rebuild, not just the prior category-only operation. The checkboxes
 remain open where family naming, alternate source modes, integrated diagnostic
 consumption, organic incremental actions, and user acceptance are still needed.
 
+### Installed unified sandbox trial, Oct 22
+
+The fragmentation run above was verified and undone before installing
+`Working\_sandbox-state\unified-rebase-20261022-01`. This is the current
+inspectable trial, not acceptance of all plan deliverables. Its embedding
+cache started empty, initial references were only the 21 Angel/Sister cores,
+and all 1,155 non-cast candidates were flattened before scoring. A replan
+reused only this run's fresh measurements. Old folder names were used after
+scoring for display/name continuity, not as matching memberships.
+
+| Actual destination | Identities created | Candidate photos |
+| --- | ---: | ---: |
+| Models Gallery | 16 | 155 |
+| Prospects Gallery | 35 | 737 |
+| Potentials Gallery | 89 | 187 |
+| Angels Review | Existing cast | 31 |
+| Sisters Review | Existing cast | 24 |
+| Various Review holds | Not identities | 21 |
+| Total | 140 lower-tier identities | 1,155 |
+
+The 89 Potentials comprise 24 singletons, 43 pairs, 11 triples and 11 groups
+of four. This repairs fragmentation mechanically; it does not establish
+identity accuracy. All four Fia Hadley photos and all four Amara Berkley
+photos now physically reside in Angelica Review, outside her Gallery/core.
+Sophie's 39 source photos were distributed among nine destinations; inspect
+the source/destination rows rather than assuming any resulting folder is a
+confirmed person. The generated overview has 232 people, including 71 Artist
+people; Review contains 2,667 unique photo records and 21 unresolved holds.
+
+Run-local `run.json`, `photos.csv`, `report.md`, `policy.json`, `catalog.json`
+and the saved centering mean preserve the scoring context and provenance.
+Working now has an isolated `.likeness-library.json` with stable generated
+identity IDs and migrated explicit configured anchors. Galleries and staged
+actions use that local catalogue, not the production catalogue. Rebuild
+install/undo tests cover restoring exact previous catalogue bytes, removing
+a newly created catalogue, Various holds, and refusing undo after edits.
+
+The shared candidate planner now serves both clean rebuilding and ordinary
+incoming/Review reconciliation. Normal `library.cmd` no longer runs the old
+Review/sort/singles/rematch decision chain. Artist-scoped grouping remains a
+distinct provenance-constrained operation. Production apply refuses a draft
+policy before housekeeping; draft previews still expose qualified proposals.
+Reconciliation apply has verified backup, permission/hash revalidation,
+journalled reversible moves and explicit rollback errors. Undo rechecks the
+catalogue after backup before changing any files.
+
+The saved **preview only** in `post-rebase-reconciliation.json` has 76
+candidates, 228 frozen cores, five assignments, 71 held photos, one new
+candidate cluster and six physical moves. No such move was applied.
+Ambiguous photos already in an identity's Review remain there unless a
+specific destination qualifies: zero existing Review-to-Various moves.
+The six remaining proposals mean incremental convergence is not proven.
+
+Implementation progress against 4.15-4.20 is partial: shared resolution,
+small-group preservation, provisional four-to-five reclassification,
+proposal/authorization separation, holds and real incoming execution are
+implemented and tested. **Established** identity category transitions,
+whole-identity merges/splits, affected-core follow-up, full labelled
+calibration and the separate 200+ incremental batch are not implemented or
+accepted. Legacy no-policy reconciliation code and the large CLI still need
+the planned modularization. Family naming/virtual groups, explicit GUI
+closest-destination actions, secondary-model investigation and the separately
+approved production clean-full adapter/rebuild remain open.
+
+The full validation launcher passed; after the latest transaction changes
+all 127 likeness-library tests passed and the installed run's `--check`
+passed. Generated HTML has machine-checked evidence, but visual/browser
+acceptance remains unverified: the integrated browser refused the external
+B: location as outside its trusted folders. Do not bypass that restriction.
+
+Current-run diagnostics are now saved under this run's `diagnostics` folder:
+2,515 leave-one-out comparisons, 94/161 eligible active-folder checks and
+2,235 per-photo folder scores. Load/cache took 0.67 seconds, scoring 12.57,
+total 13.23. The separate `identity-core-audit.txt` covers 228 folders using
+the saved policy and centering context. Calibration ranks the current folder
+first for 2,301/2,515 comparisons (91.5%) and flags 44 confident alternative
+matches at 0.40/0.10. These assume current folder labels are truth; they are
+not labelled identity accuracy or a reason to move protected cast. Automatic
+diagnostic attachment to the manifest and gallery consumption remain open.
+
 **Exit:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
 configs/source modes; reset and isolation tests pass. The user can judge
@@ -549,11 +796,10 @@ machine-readable and human-readable results.
 
 ### Phase 4 — improve matcher, cluster evidence, and routing
 
-- [ ] **P1 ai** 4.1 Write the routing contract for confident same-person
-  assignments, cast-associated distinct Models, non-cast Prospects,
-  Potentials, family/lookalike links, Review, and unresolved holds. Review is
-  a destination/state, not identity-scoring evidence. A Model must not be
-  created from an unresolved same-person candidate.
+- [x] **P1 ai** 4.1 Reconcile the two plans into the unified processing
+  contract above, separating grouping, matching, classification, protection,
+  core evidence and authorization. Completed Oct 21 as documentation only;
+  implementation and behavioral acceptance remain open below.
 - [ ] **P1 ai** 4.1a Specify category precedence for a frozen run: resolve
   confident same-person matches first; hold unresolved identity cases that
   plausibly match cast for Review rather than declaring a new Model; then
@@ -562,7 +808,7 @@ machine-readable and human-readable results.
   resemblance is in the configured Model band, otherwise as Prospects.
   Record ambiguous multi-cast results for deliberate handling. A high
   resemblance score alone never proves same-person identity.
-  Draft experiment `2026-10-21.2`: a 1–4-photo candidate group scoring at
+  Historical experiment `2026-10-21.2`: a 1–4-photo candidate group scoring at
   least 0.40 to cast is held for cast Review before Potential classification;
   its proposed Review destination requires a 0.10 lead over the next cast
   identity. A closer result remains an ambiguous cast hold. In a
@@ -617,6 +863,10 @@ machine-readable and human-readable results.
   guards, reset, run manifests, and sandbox overrides at the boundary; do not
   fork matching or merge/split behavior for sandbox. Record the shared default
   config and any explicit sandbox override per run.
+  This includes replacing the primary `library_sync.py` Review/sort/singles/
+  rematch sequence, not just adding a read-only `reconcile` command. Each
+  retained legacy operation needs a documented distinct purpose or a tested
+  compatibility adapter; no ordinary launcher may silently bypass policy.
 - [ ] **P1 ai** 4.10 Add declarative per-category hierarchy/order, thresholds,
   match margins, merge/split/routing permissions, Review policy, core policy,
   and protection behavior. New categories such as Demons must be addable via
@@ -628,10 +878,12 @@ machine-readable and human-readable results.
   provenance, and produce a preview/action manifest before any production
   apply. The clean rebase remains a separate baseline/recovery command.
 - [ ] **P1 ai** 4.12 Implement the agreed protection contract. Identity
-  protection blocks automatic moves into/out of that identity. Photo
+  protection blocks automatic Gallery-membership and identity changes;
+  incoming identity-associated Review has separate admission permission. Photo
   protection suppresses automatic removal and Review routing but keeps the
-  photo's score visible and excludes it from trusted/provisional core
-  construction. Add tests for low-score protected photos, protected identity
+  photo's score visible; protection does not force core inclusion. Workflow
+  selection confers photo protection automatically. Add tests for low-score
+  protected photos, independently selected anchors, protected identity
   destinations, workflow availability, and explicit gallery badges.
 - [ ] **P1 ai** 4.13 Immediately after the sandbox rebase, run the normal
   likeness process in preview mode against that result. Save the proposed
@@ -642,6 +894,41 @@ machine-readable and human-readable results.
   add the separate 200+ image batch to the sandbox and run ordinary likeness
   intake without reset/rebase. Review organic merges, splits, category
   transitions, Review routing, protected cases, and directory-level results.
+- [ ] **P1 ai** 4.15 Replace competing settings with one schema-validated
+  effective-policy resolver. Inventory every consumed value and caller,
+  distinguish comparison metrics, move behavioral defaults out of `engine.py`,
+  and provide explicit migration for workspace overrides. Report provenance,
+  reject conflicts before writes, and test that both modes resolve the same
+  rules when given the same scope/evidence. Complete before threshold trials.
+- [ ] **P1 ai** 4.16 Preserve singleton/pair/group evidence through planning.
+  Separate group formation, action-support minimums, core viability and
+  category photo counts. Define deterministic ties and robust provisional
+  cores, preserve appearance subgroups, and reclassify from final planned
+  memberships. Regress the perfect pair and four-to-five-photo transition.
+- [ ] **P1 ai** 4.17 Separate proposed decisions from authorization. A
+  draft/preview must expose the same qualified destinations and reasons as
+  an authorized apply; approval controls writes, not similarity evidence.
+  Test explicit sandbox experiment authorization, production refusal, and
+  selective cast Review without cast Gallery/core admission.
+- [ ] **P1 ai** 4.18 Define, document and implement recoverable unresolved
+  holds in the manifest, filesystem adapter and both galleries. Preserve
+  group IDs/alternatives; do not name every held photo as a new identity or
+  split a held group. Genuine unmatched singletons/pairs remain eligible
+  identities. Test no loss, no duplicate placement, retry and undo.
+- [ ] **P1 ai** 4.19 Build action-labelled regression cases before another
+  installation: Fia's confirmed sequence, Amara, Jacinta/Freya diagnostics,
+  Sophie's mixed membership, perfect pairs, unrelated lookalikes, poor faces,
+  same-shoot near-duplicates, anchors/protection and workflow selections.
+  Do not use current folders as unquestioned truth. Compare the grouping
+  trial values and tier-specific attachment/merge/split rules; report false
+  merges, missed matches, hold/Review volume and fragmentation separately.
+- [ ] **P1 ai** 4.20 After 4.15-4.19 and shared routine integration in
+  4.9-4.12, verify the full launcher path before replacing the sandbox result.
+  Compare planner evidence across modes with controlled references, test
+  bounded follow-up and final-core consistency, then preview normal intake
+  immediately after a clean run. Zero changes from a disabled action path
+  do not establish idempotence. Test the 200+ batch through ordinary intake
+  after the user stages it; do not substitute a second clean rebase.
 
 **Exit:** source-to-destination behavior is explainable, repeatable, and
 meets user-approved action-specific validation before any automatic routing
@@ -752,10 +1039,11 @@ identities together, switch between summary and full rankings, inspect
 per-identity review details, tell suggestions from confirmed links, and
 approve reversible names without changing matching or workflow identity.
 
-### Phase 6 — guarded library rebaseline
+### Phase 6 — required clean-full production rebase
 
-- [ ] **P1 ai** 6.1 Freeze the accepted sandbox-tested rules, source scope,
-  and family naming output. Build the normal-library manifest while
+- [ ] **P1 ai** 6.1 After accepted sandbox clean and incremental tests,
+  freeze the rules, source scope and family naming output. Build the
+  production clean-rebase manifest from current production inputs while
   preserving original source path, import group, identity history, and
   before/after evidence.
 - [ ] **P1 you** 6.2 Review the complete visual preview and manifest,
@@ -765,17 +1053,21 @@ approve reversible names without changing matching or workflow identity.
 - [ ] **P1 ai** 6.3 Verify a fresh external-library backup and restore
   procedure before applying; verify every manifest hash and current source
   location immediately before moves.
-- [ ] **P1 ai** 6.4 Re-run the accepted workflow against the normal library
-  using the approved manifest and recoverable CLI. Log each change and verify
+- [ ] **P1 ai** 6.4 Perform the clean-full production rebuild of the approved
+  scope using the same engine, cast-only initial references, flattened
+  candidates and approved manifest through a recoverable production adapter.
+  Do not apply sandbox paths to production or substitute category-only moves.
+  Log each change and verify
   resulting folder counts, identity history, catalogue references, Review
   routing, and undo.
 - [ ] **P1 you** 6.5 Inspect the refreshed gallery and selected ComfyUI
   references; report any false assignment or missing history before the next
   batch is considered.
 
-**Exit:** the selected library scope is reconciled with a verified backup,
-auditable action history, and a tested rollback; no unapproved photo moves
-are applied.
+**Exit:** the approved production scope has actually been clean-rebuilt and
+verified, with preserved choices/history, refreshed galleries, auditable
+action history and tested rollback. The ordinary shared intake path is ready
+for subsequent batches; no unapproved photo moves are applied.
 
 ### Phase 7 — prevent recurrence and close obsolete paths
 
@@ -815,7 +1107,10 @@ categories while building or testing the new Model destination.
   galleries, manifests, backup, apply, and undo. Its open tasks are not
   presumed complete. Its rebaseline-related E1/E5, F1b-F4, C6, and Phase I
   name work now point here; C7 stable report-directory replacement remains
-  open pending the Phase 0 review.
+  open pending the Phase 0 review. Its H1/H3 planner integration and behavioral
+  configuration work are also transferred here to 4.9/4.15; H2/H4/H5 retain
+  incremental extraction, compatibility and documentation support. E2-E4
+  describe a read-only prototype, not completed end-to-end self-healing.
 - The prior report-only cast audit and corrected source-labelled forecast
   remain evidence. Their counts are not a new policy or movement approval.
 - Finish only existing likeness items that are genuine prerequisites. The
@@ -846,6 +1141,19 @@ categories while building or testing the new Model destination.
   slots or workflow keys.
 - Review is an explicit routing destination and is excluded from trusted
   identity cores. Review is selective, not a catch-all for all uncertainty.
+- Preserve valid pairs and singleton evidence; do not use an action-support
+  minimum to break them apart. Unresolved holds do not manufacture identities.
+- Assert that grouping and cast thresholds can change independently. A
+  protected cast destination must not change unrelated candidate formation.
+- Validate photo attachment, pair formation, group classification, whole-person
+  merge/split and family association separately; passing one is not evidence
+  that the others are safe. Same-shoot support is not automatically independent.
+- Compare preview and apply decisions under the same evidence/configuration.
+  Every denied execution still has its qualified proposal and denial reason.
+- A Model band, display color or family association never authorizes membership.
+- Require full-path tests through the ordinary launcher and actual sandbox
+  incremental growth before accepting production execution; isolated policy
+  unit tests and draft-gated zero-move reports are insufficient.
 - All bulk photo/name changes require an inspectable manifest, verified
   backup, explicit user approval, stale-state checks, audit log, and undo
   when applied to the normal library. Sandbox runs instead require verified
@@ -859,42 +1167,36 @@ categories while building or testing the new Model destination.
 
 | ID | Question | Owner |
 | --- | --- | --- |
-| Q1 | Should the Model band be the unrounded interval 0.40 to below 0.55 (displayed as 0.40-0.54), and what cluster score/margin defines it? | either |
+| Q1 | Does the trial Model group-to-cast band [0.40, 0.55) distinguish labelled distinct lookalikes from unresolved same-person cases? Calibrate this separately from candidate clustering and action permissions. | either |
 | Q2 | What action-specific precision/recall and maximum Review-volume targets are acceptable for same-person assignment and Review routing? | you |
 | Q3 | Which existing Model paths are historical inputs versus reusable active Model people, and how should each be migrated? | either |
 | Q4 | Should Potentials receive automatic family names before reaching five usable photos, or only show likeness/family candidates until classified? | you |
 | Q5 | Which missing/incomplete `z_` first/last names can be recovered from source history, and which need a new user-provided name? | you |
 
-## Immediate prerequisite recap
+## Immediate execution order after reconciliation
 
-Before implementing the classifier or running a real sandbox rebase:
+1. Preserve the installed unaccepted run as evidence and retain its rollback.
+   Do not rerun placements merely to lower its folder count.
+2. Implement 4.15-4.18: one effective policy, preserved small groups,
+   proposal/authorization separation, explicit holds and selective cast Review.
+   Develop the labelled regressions in 4.19 alongside those changes.
+3. Wire and test 4.9-4.12 through the actual normal launcher, including
+   operational merge/split planning, protection and affected-identity handling.
+   Extract touched responsibilities into modules; do not build a third engine.
+4. Complete 4.20 and the remaining Phase 3 evidence work: compare controlled
+   threshold trials, then install inspectable clean sandbox results, publish
+   diagnostics and galleries, and test ordinary post-run maintenance.
+5. Test the staged 200+ batch without resetting. Compare actual placements,
+   missed matches, contamination, holds, category transitions and recovery.
+   Keep family naming and GUI work connected to these results, not as a
+   substitute for correct membership.
+6. Obtain acceptance of the tested scope/configuration, then complete the
+   required clean-full production run in Phase 6. Resume ordinary intake
+   through the validated shared path.
 
-1. Trace current likeness/library launchers, path configuration, cache
-   behavior, and all write destinations. Identify Artists and legacy Model
-   roots so the new active Models destination cannot accidentally ingest them.
-2. Verify the sandbox path is isolated from the production photo library,
-   ComfyUI workspaces, and repository. Create and hash an immutable source
-   snapshot; keep candidate staging, generated destinations, logs, and reports
-   separate.
-3. Define and test the sandbox reset allowlist. Prove repeated runs restore
-   only generated Model/Prospect/Potential outputs and run-scoped identity
-   state from the snapshot; never reset the source snapshot or production.
-4. Reconcile the transferred checklist items in the self-healing plan and
-   preserve its completed catalogue, gallery, manifest, backup, and undo
-   foundations. Keep the independent chest-crop, prompt, and game work moving.
-5. Record the effective current scoring settings and label representative
-   same-person, cast-lookalike, unrelated-Prospect, low-photo, and poor-image
-   examples. Audit `z_` name/history gaps and surname collisions without
-   changing names yet.
-6. Implement the first declarative config and rebaseline flag, then run both
-   candidate-source modes from the same snapshot. Inspect the actual category
-   folders and viewer; tune the config and repeat. Do not wait for a polished
-   reporting system before the first isolated end-to-end run.
-
-The exact score band, Potential family-name behavior, and disposition of
-legacy Model paths remain open to data from these sandbox runs. They do not
-block building the isolation/snapshot harness and a first version of the
-config-driven runner.
+Open numerical calibration and naming decisions remain explicit review gates,
+not excuses for duplicate engines or for suppressing sandbox experimentation.
+The documentation reconciliation is complete; the implementation is not.
 
 ## Raw user direction (Oct 21)
 
@@ -1008,3 +1310,26 @@ interested to preview that and see what happens as well.  Yeah - the logo
 idea was separate and not meant to clutter this discussion, I was just
 taking notes as it does impact the likeness process if we engage the
 "cleanup" (not just cropping) logic.
+
+## Raw direction retained from the superseded working draft
+
+The draft's discussion options are superseded by the approved direction in
+this plan. These original user paragraphs are retained unchanged apart from
+line wrapping.
+
+It might also make sense to re-review all the other docs/plans for anything that was defined that is or isn't completed and factor that into our overall plans - because this could change the course of what we were doing or it might require we expedite things we deferred or finish off existing plans while working this through.
+
+In my ideal world - if we do the automatic rebase, it would automatically pull all the Prospects and Potentials back - and possibly even low scoring Angel or Sister pictures directly into the large pool for the rebase (because some of the lower ones I put by hand in the Angels and Sisters would either go back to the Angel or Sister or would end up in a Family) - that's maybe an additional parameter to preview to determine just how much that would do.
+I think we already identified a few images in Drakness that would end up in Drakniss if we did that.  So there's already evidence - and I did visually confirm that was probably valid to do from the previous report we ran.
+
+I think now we're finally getting down to brass-tax here on what's been bugging me and why I wanted the gallery and reviews to start with - I could see we had clustering issues when I was trying to sort things out and it wasn't so obvious until we got this far into the work.
+But all of this is beneficial for the long term health and growth of the image library.
+Even if we kept and keep going in circles around the core problem of our matching is causing sprawl in the current library and it NEED to be fixed and more with automation and placement automatically with some need for review - just not so much that I am having to do now!
+
+## Raw user clarification: production and unified engine (Oct 21)
+
+One more thing to clarify - the sandbox is just the test bed, but a clean-full rebase also needs to happen in production when we're done.  Please re-read the C:\Soverign-Territories\soverign-territories\docs\plans\2026-10-21-likeness-rebaseline-and-family-naming.md for the problem statement and the issues we're trying to solve.
+
+I think the policy is misguided in an attempt to use the .55 rule to trying to protect the Angels and Sisters from direct assignment and dropping them should have allowed them to cluster and/or go into review for that angel.  I did not ever think it was applied to formation of new clusters where the did not match.  It feels like we have 2 engines right now vs. a more unified system.  Wow - the work earlier today was supposed to reconcile all of this - but the clustering at 0.55 I think is conflated with other rules and now we're in a bad state due to this work and someone being ultra conservative about the sprawl that was happening.  So we need to come up with a proper approach and figure out what makes the most sense using rationale numbers and ensure that our tiered system is working and that we don't have conflicting rules engines or at least if they differ - it's a very clear reason.
+
+If you can reconcile and update the plans with proper approach that seems to unify things across the engines and doesn't conflate rules with each other that would be great.  I can't undrestand how we ended up in this spot.

@@ -25,8 +25,8 @@ class LibrarySyncTests(unittest.TestCase):
         steps = ls.plan(args())
         flat = [" ".join(argv) for _t, argv, *_r in steps]
         self.assertTrue(flat[0].endswith("originals.py --apply"))
-        self.assertIn("tools/art/likeness.py sort --singles --apply", flat)
-        self.assertIn("tools/art/likeness.py singles --min 0.45 --apply", flat)
+        self.assertIn("tools/art/likeness.py reconcile --apply", flat)
+        self.assertFalse(any(" review " in step or " sort " in step or " singles " in step or " rematch " in step for step in flat))
         self.assertIn("tools/art/likeness.py retire-empty --apply", flat)
         self.assertIn("tools/art/duplicates.py --prefer-incoming --apply", flat)
         self.assertIn("tools/art/duplicates.py --apply", flat)
@@ -49,14 +49,14 @@ class LibrarySyncTests(unittest.TestCase):
         self.assertFalse(any("likeness.py" in f for f in flat))
         self.assertTrue(any("duplicates.py" in f for f in flat) and any("originals.py --check" in f for f in flat))
 
-    def test_the_merge_threshold_is_passed_on(self):
-        flat = [" ".join(argv) for _t, argv, *_r in ls.plan(args(min=0.4))]
-        self.assertIn("tools/art/likeness.py singles --min 0.4 --apply", flat)
+    def test_legacy_threshold_override_is_explicitly_rejected(self):
+        with self.assertRaises(SystemExit):
+            ls.main(["--min", "0.4"])
 
     def test_sorting_is_required_and_the_loose_ends_are_not(self):
         req = {t: r for t, _a, r, _i in ls.plan(args())}
         duplicate_step = next(t for t in req if t.startswith("2 duplicates"))
-        self.assertTrue(req["1 originals: names, scaled copies and headshots"] and req["5 likeness sort --singles"])
+        self.assertTrue(req["1 originals: names, scaled copies and headshots"] and req["4 unified likeness reconciliation"])
         self.assertFalse(req[duplicate_step] or req["9 likeness index"])
 
     def test_the_check_only_reads(self):
@@ -81,6 +81,7 @@ class LibrarySyncTests(unittest.TestCase):
         with mock.patch.object(ls.cw, "load_cfg", return_value=cfg), \
                 mock.patch.object(ls.cw, "work_root", return_value=work), \
                 mock.patch.object(ls, "snapshot", return_value=snapshot), \
+                mock.patch.object(ls, "load_policy", return_value={"status": "approved"}), \
                 mock.patch.object(ls.library_backup, "create_backup", side_effect=backup), \
                 mock.patch.object(ls, "run_step", side_effect=step):
             self.assertEqual(ls.main([]), 0)
@@ -92,10 +93,24 @@ class LibrarySyncTests(unittest.TestCase):
         self.addCleanup(shutil.rmtree, work, True)
         with mock.patch.object(ls.cw, "load_cfg", return_value={"paths": {}}), \
                 mock.patch.object(ls.cw, "work_root", return_value=work), \
+                mock.patch.object(ls, "load_policy", return_value={"status": "approved"}), \
                 mock.patch.object(ls.library_backup, "create_backup", side_effect=OSError("disk full")), \
                 mock.patch.object(ls, "run_step") as run_step:
             self.assertEqual(ls.main([]), 1)
         run_step.assert_not_called()
+
+    def test_draft_policy_stops_before_backup_and_housekeeping(self):
+        with tempfile.TemporaryDirectory() as directory:
+            work = pathlib.Path(directory)
+            with mock.patch.object(ls.cw, "load_cfg", return_value={"paths": {}}), \
+                    mock.patch.object(ls.cw, "work_root", return_value=work), \
+                    mock.patch.object(ls, "load_policy", return_value={"status": "draft"}), \
+                    mock.patch.object(ls.library_backup, "create_backup") as backup, \
+                    mock.patch.object(ls, "run_step") as step:
+                self.assertEqual(ls.main([]), 1)
+            backup.assert_not_called()
+            step.assert_not_called()
+            self.assertFalse((work / "_reports").exists())
 
     def test_lines_that_say_nothing_to_do_are_left_off_the_screen(self):
         for line in ("-" * 40, "  0 to make, 0 to prune", "  headshots: 0 to make, 2 skipped (no usable face), 0 to prune", "  NO PHOTO Metrael: placeholder"):

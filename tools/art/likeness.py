@@ -14,7 +14,8 @@ The library is <work root>/<Root>/<Name>/gallery. A folder of one person (Angels
 Artists/* and Various hold many people and are "mixed": they are never used to describe a person, and Various is the pool that `sort` empties
 (Various sits beside Angels; a Prospects/Various is still read). Sisters was called Models until Oct 10; both names work.
 Each person folder keeps a z_ file with her name and history (see people.py; `likeness names` lists them).
-Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, margin, cluster, minCluster, odd, alike, minFace).
+Thresholds and grouping defaults come from data/art/likeness-engine-policy.json.
+Workspace likeness settings retain explicit anchors and workflow metadata.
 
   likeness rebaseline                 read-only category, routing, and cast-similarity preview
   likeness rebaseline --apply-categories  apply approved category changes in sandbox Working only
@@ -81,7 +82,7 @@ from likeness_library.sandbox import (  # noqa: E402
     reset_generated_categories,
 )
 from likeness_library.reconciliation import frozen_identity_cores, plan_reconciliation  # noqa: E402
-from likeness_library.policy import classify_category, load_policy  # noqa: E402
+from likeness_library.policy import classify_category, effective_settings, load_policy  # noqa: E402
 from likeness_library.engine import (
     Cache,
     Photo,
@@ -314,13 +315,13 @@ def make_sheet(rows, out, size=(112, 140)):
 
 def build(args, with_mixed=False):
     cfg = cw.load_cfg()
-    st = settings(cfg)
+    st = effective_settings(cfg, load_policy(getattr(args, "policy", None)))
     work = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
     st["poolHome"] = next((k for k in st["pool"] if (work / k / "gallery").is_dir()), st["pool"][0])
     cache = Cache(args.cache or DATA / "likeness_cache.json")
     embed = args.embedder or Embedder()
     photos = read_library(cfg, work, cache, embed, st, with_mixed=with_mixed)
-    return cfg, st, work, cache, Space(photos, st)
+    return cfg, st, work, cache, Space(photos, st, mean=cache.centering_mean)
 
 
 def folder_key(space, name):
@@ -344,7 +345,10 @@ def cmd_scan(args):
 
 def cmd_audit_core(args):
     cfg, st, work, cache, space = build(args)
-    catalog = metadata.load_catalog()
+    catalog = metadata.with_configured_anchors(
+        metadata.load_catalog(metadata.path_for_root(work)), cfg, space.photos,
+    )
+    policy = load_policy(getattr(args, "policy", None))
     id_counts = collections.Counter(
         photo_id for photo_id in (metadata.photo_id_from_name(p.name) for p in space.photos) if photo_id
     )
@@ -409,6 +413,9 @@ def cmd_audit_core(args):
             protected_ids=protected_ids,
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
+            core_minimum=policy["categoryPolicies"][status_of(key)]["identityCoreMinimumSimilarity"],
+            seed_floor=policy["categoryPolicies"][status_of(key)]["identityCoreMinimumSimilarity"],
+            minimum_core=policy["categoryPolicies"][status_of(key)]["minimumUsablePhotosForOutlierActions"],
         )
         present_ids = {metadata.photo_id_from_name(photo.name) for photo in folder_photos}
         missing_anchors = sorted(anchor_ids - present_ids)
@@ -732,17 +739,30 @@ def cmd_sort(args):
 
 
 def cmd_reconcile(args):
-    """Preview Review and pool routing together without changing library files."""
+    """Plan Review and pool routing together, with one explicit apply boundary."""
+    from likeness_library import maintenance
+
+    apply = getattr(args, "apply", False)
     sandbox_root = bool(args.root and is_sandbox_working_path(args.root))
+    policy = load_policy(args.policy)
+    cfg = cw.load_cfg()
+    root = pathlib.Path(args.root) if args.root else cw.work_root(cfg)
+    if getattr(args, "undo", None):
+        rows = maintenance.undo_moves(root, args.undo, cfg, apply=apply)
+        print(f"reconciliation undo: {len(rows)} move(s); {'applied' if apply else 'preview only'}")
+        return
+    if apply:
+        maintenance.require_authorization(root, policy, args.sandbox_apply_draft)
     if sandbox_root:
         require_sandbox_cache(args.root, args.cache)
         if args.out:
             require_sandbox_output(args.root, args.out)
     cfg, st, work, cache, space = build(args)
-    policy = load_policy(args.policy)
     embed = args.embedder or Embedder()
     review_rows = load_review(cfg, work, space, cache, embed, st, include_empty=True)
-    catalog = metadata.load_catalog()
+    catalog = metadata.with_configured_anchors(
+        metadata.load_catalog(metadata.path_for_root(work)), cfg, space.photos,
+    )
     cores, locked_ids, diagnostics = frozen_identity_cores(
         space,
         catalog,
@@ -787,7 +807,7 @@ def cmd_reconcile(args):
             "side": "Artists" if folder.startswith("Artists/") else "Prospects",
             "protected": bool(photo_id and (photo_id in locked_ids or photo_id in selected_ids)),
             "workflowSelected": bool(photo_id and photo_id in selected_ids),
-            "identityProtected": bool(cores.get(folder, {}).get("identityProtected")),
+            "identityProtected": False,
             "vector": photo.vec,
         })
 
@@ -814,13 +834,17 @@ def cmd_reconcile(args):
         "policyVersion": policy["version"],
         "policyStatus": policy["status"],
     })
+    measured_photos = space.photos + [photo for _, _, photo in review_rows if photo is not None]
+    report["moves"] = maintenance.proposed_moves(report, measured_photos, work)
     print(
-        f"Read-only reconciliation: {report['candidateCount']} candidate(s), "
+        f"Reconciliation {'apply' if apply else 'preview'}: {report['candidateCount']} candidate(s), "
         f"{report['coreFolders']} frozen identity core(s), "
         f"{report['assignedCount']} suggested destination(s), "
         f"{report['heldCount']} held, {len(report['clusters'])} candidate cluster(s)."
     )
-    print("No images or catalogue data are changed; the embedding cache may be updated.")
+    print(f"{len(report['moves'])} file move(s) proposed. Preview never changes images or catalogue data.")
+    if not apply:
+        print("No images or catalogue data are changed; the embedding cache may be updated.")
     print(f"likeness policy: {policy['version']} ({policy['status']})")
     for row in report["assignments"]:
         score = f"{row['score']:.2f}" if row["score"] is not None else "cluster"
@@ -850,6 +874,11 @@ def cmd_reconcile(args):
         except OSError as exc:
             raise SystemExit(f"cannot write reconciliation report {output}: {exc}") from exc
         print(f"report written: {output}")
+    if apply:
+        journal = maintenance.apply_moves(
+            work, report["moves"], policy, cfg, sandbox_override=args.sandbox_apply_draft,
+        )
+        print(f"reconciliation applied: {journal}" if journal else "reconciliation: no moves required")
 
 
 def whole_folder(space, cfg, name):
@@ -1825,7 +1854,7 @@ def load_review(cfg, work, space, cache, embed, st, wanted=(), include_empty=Fal
     out = []
     held = cleanup_hold(work)
     for group, name, folder in cw.photo_folders(cfg, work):
-        key = f"{group}/{name}"
+        key = group if group == name else f"{group}/{name}"
         if (key not in space.by_key and not include_empty) or (
             wanted and name.split("/")[-1].lower() not in wanted
         ):
@@ -3032,7 +3061,7 @@ def library_people(cfg, st, work):
     """[(key, path)] of every person folder (angel, sister, prospect, an artist's person), not the pool or an artist's own mixed folder."""
     out = []
     for group, name, folder in cw.photo_folders(cfg, work):
-        key = f"{group}/{name}"
+        key = group if group == name else f"{group}/{name}"
         if matches(key, st["mixed"]):
             continue
         out.append((key, folder))
@@ -3282,6 +3311,7 @@ def main(argv=None, embedder=None):
     add("scan", cmd_scan)
     s = add("audit-core", cmd_audit_core)
     s.add_argument("names", nargs="*", help="folders to audit (default: all person folders)")
+    s.add_argument("--policy", help="versioned likeness policy JSON (default: shared policy)")
     s.add_argument("--group", help="only folders under this group, such as Prospects or Angels")
     s.add_argument("--keep", type=float, default=0.25, help="score below which a Prospect is marked borderline (default: 0.25)")
     add("calibrate", cmd_calibrate)
@@ -3302,9 +3332,11 @@ def main(argv=None, embedder=None):
     s.add_argument("--plan", help="also write the moves to this JSON file")
     s.add_argument("--singles", action="store_true", help="a photo that matches nobody and has no look-alike in the pool gets a new folder of its own, so the pool ends up holding only photos with no usable face")
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
-    s = add("reconcile", cmd_reconcile)
-    s.add_argument("--out", help="write the read-only combined routing report as JSON")
+    s = add("reconcile", cmd_reconcile, apply=True)
+    s.add_argument("--out", help="write the shared reconciliation proposal as JSON")
     s.add_argument("--policy", help="versioned likeness policy JSON")
+    s.add_argument("--sandbox-apply-draft", action="store_true", help="allow draft-policy apply only in sandbox Working")
+    s.add_argument("--undo", help="preview or undo a reconciliation journal; use --apply to restore")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
     add("retire-empty", cmd_retire_empty, apply=True)
@@ -3322,7 +3354,7 @@ def main(argv=None, embedder=None):
     s = add("group", cmd_group, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="artist folders (default: all)")
     s.add_argument("--cluster", type=float, help="average similarity needed to be one person (default: settings cluster)")
-    s.add_argument("--min-photos", type=int, help="photos a new person needs (default: settings minCluster, 3); a pair can still join a person who is already there")
+    s.add_argument("--min-photos", type=int, help="photos a new artist-scoped person needs (default: policy minCluster); pairs and singletons remain eligible")
     s.add_argument("--cohesion", type=float, default=0.40, help="a new person's photos must score this well against each other on average (default 0.40; one person's own photos score 0.55 and up)")
     s.add_argument("--singles", action="store_true", help="every other usable photo in the gallery is placed too: with a person of this artist she scores --single-join against, else in a folder of her own; only photos with no usable face, a second person or the app's bars stay")
     s.add_argument("--single-join", type=float, default=0.35, help="score that makes a single photo one of the artist's people (default 0.35, with a margin of 0.05 over the next)")

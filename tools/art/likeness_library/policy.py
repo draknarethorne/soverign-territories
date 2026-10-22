@@ -27,6 +27,7 @@ def validate_policy(policy):
         "schemaVersion",
         "version",
         "status",
+        "runtimeSettings",
         "categoryOrder",
         "scoreBands",
         "categoryAssignmentRules",
@@ -49,6 +50,29 @@ def validate_policy(policy):
         raise ValueError("likeness policy version must be a non-empty string")
     if policy["status"] not in POLICY_STATUSES:
         raise ValueError("likeness policy status must be draft or approved")
+    runtime = policy["runtimeSettings"]
+    if set(runtime) != {
+        "mixed", "pool", "minCluster", "odd", "alike", "minFace", "multiFace",
+        "singles", "rematch", "rematchCast", "different", "castMerge",
+    }:
+        raise ValueError("runtimeSettings keys are incomplete or unsupported")
+    for key in ("mixed", "pool"):
+        if not isinstance(runtime[key], list) or not runtime[key] or any(
+            not isinstance(value, str) or not value for value in runtime[key]
+        ):
+            raise ValueError(f"runtimeSettings/{key} must be a non-empty path list")
+    for key in ("odd", "alike", "multiFace", "singles", "rematch", "rematchCast", "castMerge"):
+        _number(runtime[key], f"runtimeSettings/{key}")
+    if runtime["minCluster"] != 1 or isinstance(runtime["minCluster"], bool):
+        raise ValueError("runtimeSettings/minCluster must be 1 to preserve small groups")
+    if isinstance(runtime["minFace"], bool) or not isinstance(runtime["minFace"], int) or runtime["minFace"] < 1:
+        raise ValueError("runtimeSettings/minFace must be a positive integer")
+    if not isinstance(runtime["different"], list) or any(
+        not isinstance(pair, list) or len(pair) != 2
+        or any(not isinstance(value, str) or not value for value in pair)
+        for pair in runtime["different"]
+    ):
+        raise ValueError("runtimeSettings/different must contain folder pairs")
 
     categories = policy["categoryOrder"]
     if (
@@ -71,6 +95,7 @@ def validate_policy(policy):
             "reviewSuggestionBelowSimilarity",
             "splitCandidateBelowSimilarity",
             "minimumUsablePhotosForOutlierActions",
+            "photoRouteMinimum", "photoRouteMargin", "reviewAdmissionEnabled", "mergeMinimum",
         }
         if set(rules) != required_category_keys:
             raise ValueError(f"categoryPolicies/{category} keys are incomplete or unsupported")
@@ -79,9 +104,13 @@ def validate_policy(policy):
             "automaticMergeEnabled",
             "automaticSplitEnabled",
             "automaticPhotoRoutingEnabled",
+            "reviewAdmissionEnabled",
         ):
             if not isinstance(rules[key], bool):
                 raise ValueError(f"categoryPolicies/{category}/{key} must be boolean")
+        _number(rules["photoRouteMinimum"], f"{category} photo route minimum")
+        _number(rules["photoRouteMargin"], f"{category} photo route margin", 0, 2)
+        _number(rules["mergeMinimum"], f"{category} merge minimum")
         core_min = _number(
             rules["identityCoreMinimumSimilarity"],
             f"{category} identity core minimum",
@@ -244,6 +273,26 @@ def default_policy():
     return load_policy()
 
 
+def effective_settings(cfg, policy=None):
+    """Resolve compatibility names from one policy; reject behavioral overrides."""
+    config = policy or default_policy()
+    settings = json.loads(json.dumps(config["runtimeSettings"]))
+    settings.update({
+        "assign": config["photoRouting"]["automaticRouteMinimum"],
+        "margin": config["photoRouting"]["minimumMargin"],
+        "cluster": config["identityActions"]["identityClusterMinimumSimilarity"],
+    })
+    overrides = cfg.get("likeness", {})
+    for name, value in overrides.items():
+        if name in settings and value != settings[name]:
+            raise ValueError(
+                f"likeness/{name} conflicts with policy; migrate the value into "
+                "likeness-engine-policy.json or an explicit run policy"
+            )
+    settings.update(overrides)
+    return settings
+
+
 def score_band(score, policy=None):
     """Return the configured display-only similarity color."""
     if score is None:
@@ -295,10 +344,16 @@ def classify_category(
         cast_margin = _number(cast_margin, "cast match margin", 0.0, 2.0)
 
     def review_result(reason):
-        minimum_margin = config["photoRouting"]["minimumMargin"]
+        category_rules = config["categoryPolicies"].get(
+            best_cast_folder.split("/", 1)[0] if best_cast_folder else "", {},
+        )
+        minimum_margin = max(
+            config["photoRouting"]["minimumMargin"], category_rules.get("photoRouteMargin", 0.),
+        )
         destination = (
             f"{best_cast_folder}/review"
             if best_cast_folder
+            and category_rules.get("reviewAdmissionEnabled", False)
             and cast_margin is not None
             and cast_margin >= minimum_margin
             else None
@@ -573,6 +628,7 @@ def evaluate_photo_route(
     photo_protected=False,
     workflow_selected=False,
     policy=None,
+    propose=False,
 ):
     """Decide whether a candidate photo may be routed into an identity."""
     config = policy or default_policy()
@@ -589,12 +645,15 @@ def evaluate_photo_route(
     if score < routing["reviewMinimum"]:
         return {"decision": "no-match", "reason": "below visual review threshold"}
     if (
-        config["status"] == "approved"
+        (config["status"] == "approved" or propose)
         and category_rules["automaticPhotoRoutingEnabled"]
-        and score >= routing["automaticRouteMinimum"]
-        and margin >= routing["minimumMargin"]
+        and score >= category_rules["photoRouteMinimum"]
+        and margin >= category_rules["photoRouteMargin"]
     ):
-        return {"decision": "auto-route", "reason": "approved policy thresholds satisfied"}
+        return {
+            "decision": "auto-route", "reason": "category photo-match thresholds satisfied",
+            "authorizationRequired": config["status"] != "approved",
+        }
     return {
         "decision": "review",
         "reason": (

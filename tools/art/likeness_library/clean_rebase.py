@@ -5,12 +5,13 @@ import datetime
 import json
 import pathlib
 import shutil
+import uuid
 
 import numpy as np
 
 from . import metadata
 from .engine import Cache, Photo, Space
-from .policy import load_policy
+from .policy import effective_settings, load_policy
 from .reconciliation import frozen_identity_cores, plan_reconciliation
 from .sandbox import (
     RESET_CATEGORIES,
@@ -34,15 +35,20 @@ def _verify_routes(plan, source):
         destination = pathlib.PurePosixPath(row["destination"])
         for path in (relative, destination):
             if (
-                path.is_absolute() or len(path.parts) != 4
+                path.is_absolute() or len(path.parts) not in (3, 4)
                 or any(p in ("..", ".") for p in path.parts)
                 or ":" in str(path) or "\\" in str(path)
-                or path.parts[2] not in ("gallery", "review")
+                or (
+                    path.parts[0] == "Various" and (len(path.parts) != 3 or path.parts[1] != "review")
+                )
+                or (
+                    path.parts[0] != "Various" and (len(path.parts) != 4 or path.parts[2] not in ("gallery", "review"))
+                )
             ):
                 raise ValueError(f"unsafe rebase path: {path}")
         if relative.parts[0] not in RESET_CATEGORIES:
             raise ValueError(f"candidate outside generated categories: {relative}")
-        if destination.parts[0] not in (*RESET_CATEGORIES, "Angels", "Sisters"):
+        if destination.parts[0] not in (*RESET_CATEGORIES, "Angels", "Sisters", "Various"):
             raise ValueError(f"invalid rebase destination: {destination}")
         if destination.parts[0] in ("Angels", "Sisters") and destination.parts[2] != "review":
             raise ValueError("cast candidates may only enter Review, never the cast core")
@@ -62,7 +68,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     if cache_path.exists() and not reuse_measurements:
         raise ValueError("clean rebase requires a new run directory and empty embedding cache")
     cfg = api.cw.load_cfg()
-    settings = api.settings(cfg)
+    settings = effective_settings(cfg, policy)
     cache = Cache(cache_path)
     embed = embedder or api.Embedder()
     photos, records = [], {}
@@ -92,6 +98,8 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     if not usable:
         raise ValueError("clean rebase has no usable input faces")
     mean = np.mean(usable, axis=0)
+    cache.centering_mean = mean.tolist()
+    cache.save()
     for photo in photos:
         if photo.raw is not None:
             photo.vec = api.nz(photo.raw - mean)
@@ -102,22 +110,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         if photo.usable(settings["minFace"]):
             space.by_key[photo.key].append(photo)
     space.keys = sorted(space.by_key)
-    catalog = json.loads(json.dumps(metadata.load_catalog()))
-    for key, rows in space.by_key.items():
-        anchor_patterns = next(
-            (patterns for name, patterns in cfg.get("likeness", {}).get("anchors", {}).items()
-             if name.casefold() == key.split("/", 1)[1].casefold()),
-            [],
-        )
-        anchors = [
-            metadata.photo_id_from_name(photo.name) for photo in rows
-            if any(pattern.casefold() in photo.name.casefold() for pattern in anchor_patterns)
-        ]
-        anchors = [photo_id for photo_id in anchors if photo_id]
-        if anchors and not any(p["folder"] == key for p in catalog["people"].values()):
-            catalog["people"][f"run-anchor:{key}"] = {
-                "folder": key, "identityAnchors": anchors, "protected": True,
-            }
+    catalog = metadata.with_configured_anchors(metadata.load_catalog(), cfg, cast_photos)
     cores, _, diagnostics = frozen_identity_cores(
         space, catalog, photo_id_fn=metadata.photo_id_from_name,
         content_sha256_fn=metadata.content_sha256, policy=policy,
@@ -150,7 +143,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         if not photo_id:
             unusable.append({
                 **base,
-                "destination": f"{photo.key}/review/{photo.name}",
+                "destination": f"Various/review/{photo.name}",
                 "reason": "missing stable photo ID; held in Review, excluded from clustering",
             })
             continue
@@ -161,7 +154,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         if not photo.usable(settings["minFace"]) or quality_reason:
             unusable.append({
                 **base,
-                "destination": f"{photo.key}/review/{photo.name}",
+                "destination": f"Various/review/{photo.name}",
                 "reason": (
                     f"quality hold: {quality_reason}; excluded from matching"
                     if quality_reason else
@@ -199,7 +192,6 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         category = group["destination"].split("/", 1)[0]
         cluster_names[group["destination"]] = f"{category}/{name}"
     routed = list(preserved) + list(unusable)
-    held_names = {}
     for row in result["assignments"]:
         base = by_id[row["photoId"]]
         destination = cluster_names.get(row["destination"], row["destination"])
@@ -210,19 +202,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         base = by_id[row["photoId"]]
         destination = row.get("reviewDestination")
         if not destination:
-            no_match = (
-                row.get("bestScore") is None
-                or row["bestScore"] < policy["photoRouting"]["reviewMinimum"]
-            )
-            bucket = "gallery" if no_match else "review"
-            group_id = row.get("clusterId", row["photoId"])
-            if group_id not in held_names:
-                name = base["oldFolder"].split("/", 1)[1]
-                if name.casefold() in taken:
-                    name = api.invent_name(group_id, taken)
-                taken.add(name.casefold())
-                held_names[group_id] = name
-            destination = f"Potentials/{held_names[group_id]}/{bucket}"
+            destination = "Various/review"
         routed.append({
             **base, **row, "destination": f"{destination}/{pathlib.PurePosixPath(base['source']).name}",
         })
@@ -243,6 +223,25 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         row["initialCastMargin"] = ranked[0][0] - ranked[1][0] if len(ranked) > 1 else None
     if len(routed) != len(records):
         raise AssertionError("clean rebase did not account for every source candidate")
+    people_by_folder = {person["folder"]: person for person in catalog["people"].values()}
+    folders = set(cores) | {
+        "/".join(pathlib.PurePosixPath(row["destination"]).parts[:2])
+        for row in routed if not row["destination"].startswith("Various/")
+    }
+    for folder in sorted(folders):
+        if folder in people_by_folder:
+            continue
+        person_id = "person_" + uuid.uuid5(
+            uuid.NAMESPACE_URL, f"likeness:{layout['source_root']}:{folder.casefold()}",
+        ).hex
+        category = folder.split("/", 1)[0]
+        catalog["people"][person_id] = {
+            "id": person_id, "folder": folder, "displayName": folder.split("/")[-1],
+            "folderHistory": [], "identityAnchors": [],
+            "protected": policy["categoryPolicies"][category]["identityProtectedByDefault"],
+        }
+    metadata.validate_catalog(catalog)
+    _write_json(run / "catalog.json", catalog)
     plan = {
         "schemaVersion": 1, "mode": "clean-cast-seeded-rebuild",
         "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -253,6 +252,11 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         "cacheMeasurementsReusedForReplan": reuse_measurements,
         "centeringMean": mean.tolist(), "candidateCount": len(records),
         "coreDiagnostics": diagnostics, "photos": sorted(routed, key=lambda r: r["source"]),
+        "catalogSHA256": metadata.content_sha256(run / "catalog.json"),
+        "implementationHashes": {
+            name: metadata.content_sha256(pathlib.Path(__file__).with_name(name))
+            for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py", "audit.py", "engine.py")
+        },
         "status": "preview",
     }
     _verify_routes(plan, source)
@@ -277,6 +281,15 @@ def install_plan(layout, run, plan):
     staged, previous = run / "staged", run / "previous"
     if staged.exists() or previous.exists():
         raise ValueError("staging already exists; inspect the previous attempt before applying")
+    local_catalog = working / ".likeness-library.json"
+    previous_catalog = local_catalog.read_bytes() if local_catalog.exists() else None
+    if "catalogSHA256" in plan:
+        if metadata.content_sha256(run / "catalog.json") != plan["catalogSHA256"]:
+            raise ValueError("prepared sandbox catalogue changed since preview")
+        metadata.load_catalog(run / "catalog.json")
+        plan["previousLocalCatalog"] = previous_catalog is not None
+        if previous_catalog is not None:
+            (run / "previous-catalog.json").write_bytes(previous_catalog)
     for category in RESET_CATEGORIES:
         path = working / category
         if _is_reparse_point(path):
@@ -288,12 +301,12 @@ def install_plan(layout, run, plan):
     for row in plan["photos"]:
         src = source.joinpath(*pathlib.PurePosixPath(row["source"]).parts)
         dest = staged.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
-        if row["destination"].startswith(("Angels/", "Sisters/")):
+        if pathlib.PurePosixPath(row["destination"]).parts[0] not in RESET_CATEGORIES:
             target = working.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
             if target.exists():
-                raise ValueError(f"cast Review target already exists: {target}")
+                raise ValueError(f"external Review target already exists: {target}")
             if target.parent.resolve() != target.parent:
-                raise ValueError(f"unsafe cast Review path: {target}")
+                raise ValueError(f"unsafe external Review path: {target}")
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dest)
         if metadata.content_sha256(dest) != row["sha256"]:
@@ -330,7 +343,7 @@ def install_plan(layout, run, plan):
                 (staged / category).rename(target)
                 installed.append(category)
         for row in plan["photos"]:
-            if not row["destination"].startswith(("Angels/", "Sisters/")):
+            if pathlib.PurePosixPath(row["destination"]).parts[0] in RESET_CATEGORIES:
                 continue
             path = pathlib.PurePosixPath(row["destination"])
             src, dest = staged.joinpath(*path.parts), working.joinpath(*path.parts)
@@ -341,11 +354,16 @@ def install_plan(layout, run, plan):
             target = working.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
             if metadata.content_sha256(target) != row["sha256"]:
                 raise OSError(f"installed candidate checksum mismatch: {target}")
+        if "catalogSHA256" in plan:
+            metadata.save_catalog(metadata.load_catalog(run / "catalog.json"), local_catalog)
+            plan["installedCatalogSHA256"] = metadata.content_sha256(local_catalog)
         plan["status"] = "applied"
         plan["previousCategories"] = str(previous)
         plan["previousCategoryNames"] = moved
         _write_json(run / "run.json", plan)
     except Exception:
+        if "catalogSHA256" in plan:
+            _restore_catalog(local_catalog, previous_catalog)
         for dest, src in reversed(cast_added):
             dest.rename(src)
         for category in reversed(installed):
@@ -355,11 +373,29 @@ def install_plan(layout, run, plan):
         raise
 
 
+def _restore_catalog(path, data):
+    if data is None:
+        if path.exists():
+            path.unlink()
+    else:
+        temporary = path.with_suffix(".tmp")
+        temporary.write_bytes(data)
+        temporary.replace(path)
+
+
 def undo_plan(layout, run, plan):
     """Restore saved categories and withdraw only this run's verified cast additions."""
     if plan["status"] != "applied":
         raise ValueError("only an applied clean rebase can be undone")
     working = layout["working_root"]
+    local_catalog = working / ".likeness-library.json"
+    installed_catalog = None
+    if "installedCatalogSHA256" in plan:
+        if metadata.content_sha256(local_catalog) != plan["installedCatalogSHA256"]:
+            raise ValueError("sandbox catalogue changed; review decisions before undoing this rebuild")
+        installed_catalog = local_catalog.read_bytes()
+        if plan["previousLocalCatalog"] and not (run / "previous-catalog.json").is_file():
+            raise ValueError("previous sandbox catalogue is missing")
     previous, withdrawn = run / "previous", run / "withdrawn"
     if _is_reparse_point(previous) or not previous.is_dir():
         raise ValueError("verified prior categories are missing or unsafe")
@@ -370,7 +406,7 @@ def undo_plan(layout, run, plan):
         raise ValueError("withdrawn outputs already exist; inspect the prior undo")
     cast_rows = [
         row for row in plan["photos"]
-        if row["destination"].startswith(("Angels/", "Sisters/"))
+        if pathlib.PurePosixPath(row["destination"]).parts[0] not in RESET_CATEGORIES
     ]
     for row in cast_rows:
         path = working.joinpath(*pathlib.PurePosixPath(row["destination"]).parts)
@@ -396,9 +432,16 @@ def undo_plan(layout, run, plan):
             if (previous / category).exists():
                 (previous / category).rename(working / category)
                 restored.append(category)
+        if "installedCatalogSHA256" in plan:
+            _restore_catalog(
+                local_catalog,
+                (run / "previous-catalog.json").read_bytes() if plan["previousLocalCatalog"] else None,
+            )
         plan["status"] = "undone"
         _write_json(run / "run.json", plan)
     except Exception:
+        if installed_catalog is not None:
+            _restore_catalog(local_catalog, installed_catalog)
         for category in reversed(restored):
             (working / category).rename(previous / category)
         for category in reversed(moved):
@@ -424,7 +467,9 @@ def command(args, api):
     plan_path = run / "run.json"
     if plan_path.exists():
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-        if (plan["policy"] != policy and not args.replan) or plan["workingRoot"] != str(layout["working_root"]):
+        if (
+            plan["policy"] != policy and not (args.replan or args.undo or args.check)
+        ) or plan["workingRoot"] != str(layout["working_root"]):
             raise ValueError("saved plan policy/root differs; use a new run directory")
         if plan["sourceManifestSHA256"] != metadata.content_sha256(layout["sandbox_root"] / "source-manifest.json"):
             raise ValueError("source manifest changed since preview")
@@ -450,6 +495,11 @@ def command(args, api):
         _write_json(plan_path, plan)
     _verify_routes(plan, layout["source_root"])
     if args.apply:
+        if any(
+            metadata.content_sha256(pathlib.Path(__file__).with_name(name)) != digest
+            for name, digest in plan.get("implementationHashes", {}).items()
+        ):
+            raise ValueError("engine changed since preview; replan before applying")
         install_plan(layout, run, plan)
     if args.undo:
         undo_plan(layout, run, plan)
@@ -459,6 +509,7 @@ def command(args, api):
             if metadata.content_sha256(path) != row["sha256"]:
                 raise ValueError(f"installed output changed: {path}")
     if not args.check:
+        _write_json(run / "policy.json", plan["policy"])
         with (run / "photos.csv").open("w", encoding="utf-8-sig", newline="") as stream:
             fields = (
                 "source", "destination", "photoId", "sha256", "bestMatch", "bestScore",

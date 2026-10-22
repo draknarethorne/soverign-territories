@@ -129,10 +129,50 @@ def load_catalog(path=CATALOG_PATH):
     return data
 
 
-def save_catalog(data):
+def path_for_root(root):
+    """Use an isolated library's catalogue when it has one."""
+    local = pathlib.Path(root) / ".likeness-library.json"
+    return local if local.is_file() else CATALOG_PATH
+
+
+def with_configured_anchors(catalog, cfg, photos):
+    """Migrate legacy explicit anchor choices into a run-local catalogue view."""
+    result = json.loads(json.dumps(catalog))
+    folders = {}
+    for photo in photos:
+        folders.setdefault(photo.key, []).append(photo)
+    owned = {person["folder"] for person in result["people"].values()}
+    for folder, rows in folders.items():
+        if folder in owned:
+            continue
+        patterns = next((
+            values for name, values in cfg.get("likeness", {}).get("anchors", {}).items()
+            if name.casefold() == folder.split("/")[-1].casefold()
+        ), ())
+        anchors = [
+            photo for photo in rows
+            if any(pattern.casefold() in photo.name.casefold() for pattern in patterns)
+            and photo_id_from_name(photo.name)
+        ]
+        if not anchors:
+            continue
+        person_id = "person_" + uuid.uuid5(uuid.NAMESPACE_URL, "likeness:" + folder.casefold()).hex
+        result["people"][person_id] = {
+            "id": person_id, "folder": folder, "displayName": folder.split("/")[-1],
+            "folderHistory": [], "identityAnchors": [photo_id_from_name(photo.name) for photo in anchors],
+            "protected": False,
+        }
+        for photo in anchors:
+            result["photos"].setdefault(photo_id_from_name(photo.name), {
+                "contentSha256": content_sha256(photo.path), "protected": False,
+            })
+    return result
+
+
+def save_catalog(data, path=None):
     """Validate and atomically save the tracked catalogue; filesystem errors propagate."""
     validate_catalog(data)
-    destination = CATALOG_PATH
+    destination = pathlib.Path(path) if path is not None else CATALOG_PATH
     temporary_path = None
     try:
         with tempfile.NamedTemporaryFile(

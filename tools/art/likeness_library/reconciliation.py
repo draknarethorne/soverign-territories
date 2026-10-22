@@ -180,8 +180,8 @@ def plan_reconciliation(
     Core records map folder names to vector and side fields. Results are suggestions
     only; this function never changes the library or catalogue.
     """
-    if minimum_cluster < 2:
-        raise ValueError("minimum_cluster must be at least 2")
+    if minimum_cluster < (1 if policy is not None else 2):
+        raise ValueError("minimum_cluster is below the supported minimum")
     if not 0 <= assign <= 1 or not 0 <= margin <= 2 or not -1 <= cluster <= 1:
         raise ValueError("invalid reconciliation threshold")
     if not -1 <= cast_merge <= 1:
@@ -263,6 +263,30 @@ def plan_reconciliation(
             raise ValueError(f"{photo_id}: vector dimensions do not match the frozen identity cores")
         candidate["vector"] = nz(vector)
         prepared.append(candidate)
+
+    if policy is not None:
+        from .planner import plan_candidates
+
+        result = plan_candidates(prepared, cores, policy, name_factory, names_taken, _average_linkage)
+        result["held"].extend(held)
+        result["assignments"].sort(key=lambda row: row["photoId"])
+        result["held"].sort(key=lambda row: (row.get("photoId") or "", row.get("sourceFolder") or ""))
+        result["clusters"].sort(key=lambda row: row["clusterId"])
+        ids = [
+            row["photoId"] for row in result["assignments"] + result["held"]
+            if row["photoId"] and row["photoId"] not in ambiguous_ids
+        ]
+        if len(ids) != len(set(ids)):
+            raise AssertionError("a candidate was planned more than once")
+        if len(result["assignments"]) + len(result["held"]) != len(candidates):
+            raise AssertionError("reconciliation did not account for every candidate")
+        result.update({
+            "candidateCount": len(candidates), "assignedCount": len(result["assignments"]),
+            "heldCount": len(result["held"]), "coreFolders": len(cores),
+            "authorizationRequired": policy["status"] != "approved",
+            "policyVersion": policy["version"],
+        })
+        return result
 
     assignments = []
     unresolved = []

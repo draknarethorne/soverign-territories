@@ -329,7 +329,8 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("(NEW folder)", out)
         self.assertEqual(len(self.names("Prospects", "Various")), 9, "a preview moves nothing")
         self.run_tool("sort", apply=True)
-        self.assertEqual(len(self.names("Prospects", "Various")), 1, "only the unknown face stays")
+        self.assertEqual(len(self.names("Prospects", "Various")), 0, "the policy preserves a genuine unmatched singleton as a Potential")
+        self.assertEqual(sum(len(self.names("Potentials", folder.name)) for folder in (self.lib / "Potentials").iterdir()), 1)
         self.assertEqual(len(self.names("Angels", "Angelica")), 5)
         self.assertEqual(len(self.names("Models", "Draknara")), 6)
         new = [p for p in (self.lib / "Prospects").iterdir() if p.name not in ("Mia", "Various")]
@@ -409,10 +410,10 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("-> Sisters/Draknara", out)
         self.run_tool("sort", apply=True)
         self.assertEqual(len(self.names("Sisters", "Draknara")), 6)
-        self.assertEqual(len(self.names("", "Various")), 1, "only the unknown face stays")
+        self.assertEqual(len(self.names("", "Various")), 0, "the policy no longer discards singleton evidence")
         self.assertIn("Angels/Azaline -> Various: 3", self.run_tool("retire", "azaline"))
         self.run_tool("retire", "azaline", apply=True)
-        self.assertEqual(len(self.names("", "Various")), 4, "a retired folder goes back to the top-level pool")
+        self.assertEqual(len(self.names("", "Various")), 3, "a retired folder goes back to the top-level pool")
         self.assertTrue(L.is_sister("Sisters/Draknara") and not L.is_sister("Models/Draknara") and not L.is_sister("Angels/Angelica"))
 
     def test_group_splits_an_artist_folder_by_face_into_named_subfolders(self):
@@ -542,13 +543,13 @@ class LikenessTests(unittest.TestCase):
         self.add("Artists/Pierre", "Elise", "pa", 5)
         self.add("Artists", "Pierre", "pa", 2)   # her again, loose in the artist's gallery
         self.add("Artists", "Pierre", "pb", 3)   # someone new
-        self.add("Artists", "Pierre", "pc", 2)   # a pair: too few for a new person
+        self.add("Artists", "Pierre", "pc", 2)
         out = self.run_tool("group", apply=True)
         self.assertIn("Elise: +2 photos", out)
         self.assertEqual(len(self.names("Artists/Pierre", "Elise")), 7)
         subs = [p for p in (self.lib / "Artists/Pierre").iterdir() if p.is_dir() and p.name not in ("gallery", "Elise")]
-        self.assertEqual([len([q for q in (s / "gallery").iterdir() if not q.name.startswith("z_")]) for s in subs], [3])
-        self.assertEqual(len(self.names("Artists", "Pierre")), 2, "the pair stays in the artist's gallery")
+        self.assertEqual(sorted(len([q for q in (s / "gallery").iterdir() if not q.name.startswith("z_")]) for s in subs), [2, 3])
+        self.assertEqual(len(self.names("Artists", "Pierre")), 0, "a coherent pair remains an eligible identity under the shared policy")
 
     def test_clean_sets_borderline_photos_aside_and_sends_strangers_to_the_pool(self):
         self.add("Models", "Drakness", "dk", 6)

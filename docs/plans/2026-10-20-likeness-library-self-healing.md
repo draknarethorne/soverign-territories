@@ -1,6 +1,6 @@
 # 2026-10-20: self-healing likeness library and review workflow
 
-**Status:** active (approved Oct 20, 2026; incremental implementation)
+**Status:** active (foundation work retained; engine scope reconciled with the Oct 21 plan)
 
 ## Purpose
 
@@ -11,8 +11,16 @@ and ComfyUI input choice, allow incoming and reviewed photos to be reconciled
 together, and gradually make Prospect folders more internally consistent.
 
 The user approved the direction and implementation on Oct 20, 2026. This plan
-does not authorize changing matching thresholds or applying photo moves
-without the preview, backup, and per-phase safety gates below.
+owns catalogue/stable-ID, staged-action, review-interface and recovery
+foundations. The later
+[unified processing contract](2026-10-21-likeness-rebaseline-and-family-naming.md#unified-processing-contract-oct-21-reconciliation)
+owns matching, clustering, tier-aware automation, configuration, and clean
+sandbox/production rebuilding. It supersedes the earlier audit-only and
+blanket lower-tier restrictions here. Production changes still require its
+acceptance/backup gates; authorized sandbox experiments make real placements
+without per-photo approval. The Oct 22 implementation now shares candidate
+planning and incoming/Review execution; whole-identity maintenance and the
+remaining GUI acceptance work are still open.
 
 ## Decisions and constraints from the discussion
 
@@ -22,10 +30,10 @@ without the preview, backup, and per-phase safety gates below.
 | Identity references | Store trusted identity-photo references separately from the ComfyUI photo in one git-tracked JSON file. |
 | Keep versus identify | A photo may be protected because the user likes it without contributing to the identity core. A trusted identity photo may be an anchor without being a preferred art or workflow photo. |
 | Angels and Sisters | Protect their galleries from automatic outlier movement. A user can explicitly send an individual photo to Review; any cast-wide force/rebaseline behavior requires a deliberate opt-in and preview. |
-| Prospects | Build a guarded, self-healing audit. First flag likely outliers; automatic movement, if validated, goes to Review rather than directly to another identity. |
-| Potentials | Keep them matchable. Do not apply Prospect-strength cleanup to one-to-four-photo folders without a separately validated rule. |
+| Prospects | Use the Oct 21 tier-aware action policy: eligible unprotected identities may attach, merge/split and reclassify automatically under validated rules. Selective Review is for uncertainty, not a mandatory intermediate for every lower-tier action. |
+| Potentials | Preserve valid pairs and unmatched singletons, keep them matchable, and allow configured organic growth. Group formation is separate from minimum evidence for destructive cleanup. The older minimum-three clustering gate is not a goal. |
 | Review and incoming photos | Reconcile both in the same maintenance run. A bounded follow-up audit may use new clusters to resolve remaining same-run candidates, so they do not require a second user-triggered run. |
-| Prospect-sprawl remediation priority (Oct 20) | Before the next photo ingest, audit every usable photo in Prospects and Potentials individually against the current Angel/Sister identities and its current folder. First priority is surfacing likely Angel/Sister photos as candidates for the matching cast member's Review, never silently adding them to an Angel/Sister Gallery. Keep scores and destinations as evidence/suggestions; do not move anything or change thresholds during the audit. Inventory Potentials that exceed the usable-photo boundary and check recorded history for former cast identities; do not reclassify them from raw photo counts alone. Prospect-to-Prospect/Potential identity cleanup follows the cast audit as a separate pass. |
+| Historical cast-audit priority (Oct 20) | The report-only cast audit was a diagnostic milestone, not the final engine or a permanent prohibition on automation. Later engine work belongs to the Oct 21 plan; its selective cast Review never silently admits candidates to cast Gallery/core. Preserve former-identity history and do not classify from raw counts alone. |
 | Retirement | Distinguish retiring one unusable photo from retiring an entire person. Photo retirement is a recoverable archive that does not re-enter matching; person retirement uses the existing command to return that person's photos to `Various` for normal reprocessing. Whole-folder archival remains a separately labeled operation. |
 | User interface | Keep the current People Gallery as a concise overview. Add a focused local review/maintenance gallery for large folders, photo scores, Review images and staged actions. The browser is strictly a staging/export surface: it never renames folders, edits `z_` files, or writes catalogue data. Photo and person changes are exported in the versioned JSON manifest; a CLI validates, previews, backs up, applies and can undo them. Person changes use a separate `personActions` array so they cannot be confused with photo actions. |
 | Review gallery layout | Organize the review view category-first, then person; use a responsive left-to-right image grid with adjustable thumbnail size, face/chest-up framing, and click-through to the full image. Keep scores/actions and the primary identity/workflow reference visible. |
@@ -60,7 +68,8 @@ this plan does not migrate or replace it.
 
 ### Distinct concepts to represent
 
-- **ComfyUI photo:** the workflow input selected in `workspaces.json`.
+- **ComfyUI photo:** the workflow input selected in `workspaces.json`;
+  automatically photo-protected, but not automatically an identity anchor.
 - **Identity anchor:** a user-confirmed face reference that contributes to a
   person's trusted identity core.
 - **Protected photo:** do not automatically move or reclassify this photo.
@@ -104,12 +113,13 @@ The initial helper generates opaque UUID-based person IDs and photo IDs from
 preserves the embedded source ID when folder prefixes change, and the crop
 command replaces a photo under the same name while archiving its uncropped
 bytes. Thus a crop retains the filename-derived ID but changes the content
-hash; metadata refresh and restore behavior still need explicit tests. Duplicate
-and backup-restore continuity are not yet proven, so A4 remains open.
+hash; metadata refresh and restore behavior still need explicit tests. Duplicate and backup-restore continuity were subsequently verified for
+originals-managed IDs in A4; unsupported transformations still require
+explicit mappings rather than guessed continuity.
 
 ## Matching and self-healing policy
 
-### Keep current thresholds until action-specific validation
+### Action-specific validation, not a universal safety threshold
 
 Treat the current scores as calibrated starting points, not universal weights.
 Measure false assignments and missed matches separately for:
@@ -143,57 +153,29 @@ whole-folder merge.
 
 ### Scope by category
 
-- **Prospects:** run an outlier audit. Initially report-only; after validation,
-  permit eligible ordinary outliers to move to that person's Review folder.
-  Do not auto-reassign directly from one Prospect to another in the cleanup
-  action.
-- **Potentials:** keep all available photos for future matching. Flag concerns
-  for review; do not apply Prospect outlier rules until the photo count and
-  thresholds have been validated for this category.
-- **Angels and Sisters:** never move ordinary photos automatically as part of
-  routine maintenance. User-staged actions may move selected photos into
-  Review. Trusted anchors and protected photos remain immovable by ordinary
-  runs. Any force operation must name its scope, preview all proposed changes,
-  and require explicit confirmation.
-- **Various and Review:** compare against all active person folders and against
-  candidate groups formed from both sources in the same planned batch.
-  Ambiguous photos remain staged; they are not silently turned into a new
-  identity.
+The later
+[tier behavior and protection contract](2026-10-21-likeness-rebaseline-and-family-naming.md#tier-behavior-not-a-global-caution-switch)
+is authoritative. Earlier report-only Prospect cleanup and cautious Potential
+handling were delivery stages, not permanent limits on lower-tier automation.
+Cast Gallery protection does not forbid separately permitted incoming cast
+Review or impose a clustering threshold on unrelated candidates. A protected
+photo must not move automatically, but may stay outside the core.
 
 ### One reconciliation plan for Review and incoming photos
 
-The current routine processes Review before sorting the pool, so a group made
-from that run's incoming photos cannot serve as a destination until a later
-run. The new planner should take one read-only snapshot of person galleries,
-Review, and `Various`, then:
+The current primary routine still processes Review, sort, singles and rematch
+separately; the read-only reconciliation prototype is not integrated as its
+replacement. The
+[ordered decision flow](2026-10-21-likeness-rebaseline-and-family-naming.md#ordered-decision-flow)
+now specifies one planner for rebase and incremental maintenance. This plan
+supplies its metadata, review actions and recoverable execution foundation;
+it does not define a second matching sequence.
 
-1. Establish each person’s protected/trusted core without including Review
-   photos in the gallery centroid.
-2. Score ordinary Prospect photos for potential outliers.
-3. Add user-sent-to-Review photos and eligible incoming pool photos to the
-   same candidate set.
-4. Compare candidates against all current person cores and cluster candidates
-   with one another.
-5. Treat new clusters as provisional destinations in this same run.
-6. Apply approved Prospect outliers to Review in the planned state, then add
-   those and user-staged Review/Various photos to the candidate graph.
-7. Form provisional clusters; compare unresolved candidates with both existing
-   people and new clusters, including same-run clusters formed from Sophie-like
-   user-rejected photos.
-8. Repeat only the candidate-matching step against the frozen identity cores
-   until no additional unambiguous destinations emerge. Each photo can be
-   assigned once per run; assignments cannot feed back into or change an
-   existing identity core during that run. Ambiguous or unstable cases remain
-   in Review or the pool.
-9. Produce one complete plan, checking conflicts, minimum cores, category
-   boundaries, protected IDs, and stale file hashes before any disk change.
-10. Apply approved actions and regenerate galleries, reports and input sync;
-    save a recoverable action record.
-
-This is a bounded fixed-point calculation over a finite candidate set, not a
-loop that repeatedly changes files and rescans until it happens to look right.
-All scores use the frozen pre-run person cores; new clusters can attract
-candidate photos but cannot mutate existing person identities mid-run.
+Keep established and provisional reference vectors frozen during bounded
+same-run matching. Retain small-group evidence, keep unresolved holds distinct
+from new identities, and separate proposed destinations from write
+authorization. The later plan owns category transitions, merge/split planning,
+effective configuration, source modes and full-path behavioral tests.
 
 ## Review interface and action manifest
 
@@ -297,7 +279,8 @@ documented beside each command. Reports, caches, and UI outputs are kept apart
 from source-photo and catalogue writes.
 
 At the Oct 20 baseline, the active likeness catalogue is empty. Effective
-settings combine defaults in `tools/art/likeness.py` with
+settings combined defaults then in `tools/art/likeness.py` (subsequently
+extracted to `likeness_library/engine.py`) with
 `workflows/workspaces.json`: assign `0.40`, margin `0.10`, cluster `0.25`,
 minimum new cluster `3`, outlier `0.15`, similar-person report `0.30`, minimum
 face size `60`, secondary-face ratio `0.30`, singles `0.35`, Prospect rematch
@@ -335,7 +318,7 @@ until they have an alias or restore mapping.
   stable IDs with changed crop hashes, trusted anchors, protected-only photos,
   small folders and stale metadata. Reject duplicate active-folder and
   identity-anchor ownership; report renamed-folder mismatches without applying
-  their identity decisions. Restore/backup continuity remains open under A4.
+  their identity decisions. Restore/backup continuity is recorded under A4.
 - [x] **P2 either** B5 Transfer action-specific precision/recall validation
   to Phase 4 of the
   [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md);
@@ -372,6 +355,13 @@ action-specific measurements on user-labelled examples.
   a stable output directory. The overview/review link and order consistency
   are implemented; verify stable-directory replacement without losing the
   dated reports.
+- [ ] **P2 ai** C8 Add an explicit user-staged move to the closest identity,
+  including destination choice, hash/protection validation, preview, backup
+  and undo. Showing closest-other evidence is not this action.
+- [ ] **P2 ai** C9 Investigate a local secondary face model on labelled difficult
+  expressions, including `7515826497811991332` (Arwen Ames / Rhiannon Frost).
+  Compare models and disagreement evidence before selecting any new scoring
+  algorithm; do not replace SFace or add score-patching exceptions silently.
 
 **Oct 20 gallery update:** C5 is implemented. The category filter now
 constrains the person selector, person sections fill the available width with
@@ -438,15 +428,28 @@ recoverable, logged and idempotent where appropriate.
 
 ### Phase E — combined Review and pool reconciliation
 
+**Oct 22 progress:** clean rebuilding and ordinary incoming/Review processing
+now call the shared policy planner. Production draft apply is blocked before
+housekeeping; sandbox apply has an isolated catalogue, verified backup,
+transaction journal and undo. Review holds do not become named identities
+and existing ambiguous cast Review stays staged. The installed trial and
+nonzero follow-up preview are recorded in the
+[Oct 21 plan](2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22).
+Earlier prototype completion below does not close operational merge/split,
+existing category transitions or convergence acceptance.
+
 - [x] **P1 ai** E1 Transfer combined Review, incoming `Various`, and validated
   Prospect/Potential candidate planning against a frozen snapshot to Phase 4
   of the [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
-- [x] **P1 ai** E2 Cluster rejected, reviewed and incoming candidates together;
-  allow new provisional clusters to become destinations in the same run.
-- [x] **P1 ai** E3 Iterate candidate matching to a deterministic fixed point.
-  Each candidate is assigned at most once; ambiguous or unstable candidates
-  stay staged. Do not mutate established identity cores mid-run.
-- [x] **P1 ai** E4 Add an empty-pool mode for Review-only and self-healing runs.
+- [x] **P1 ai** E2 Implement a read-only combined-candidate prototype with
+  provisional destinations. This is a prototype milestone only; pair
+  preservation, proposal/authorization separation and applied integration
+  remain open in Oct 21 tasks 4.9 and 4.15-4.20.
+- [x] **P1 ai** E3 Implement bounded frozen-reference follow-up in that
+  prototype. This does not establish integrated convergence: the draft gate
+  suppresses attachments and requires correction/testing under 4.17/4.20.
+- [x] **P1 ai** E4 Support empty-pool read-only reconciliation. Operational
+  maintenance still requires the shared planner integration in 4.9-4.12.
 - [x] **P1 either** E5 Transfer comparison of preview/applied results and
   action-specific approval gates to Phases 3, 4, and 6 of the
   [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
@@ -459,9 +462,11 @@ remaining candidate without changing that cluster's frozen vector, and
 reports ambiguous, protected, duplicate-ID and unassigned candidates as held.
 An empty pool is supported. The command does not move files, change catalogue
 metadata or apply any matching decision; it can update the embedding cache.
-Prospect outliers are deliberately not fed into this planner yet: Phase F1
-must first provide report-only outlier evidence, and E1 will then be completed
-with that candidate source. No real-library reconciliation or apply has run.
+Prospect outliers are not yet fed into this planner. The report-only evidence
+exists under F1a; operational candidate selection and shared apply integration
+remain open in the Oct 21 plan. E1 is a completed transfer, not a completed
+implementation. A later sandbox clean run and preview exist there; production
+unified reconciliation/apply has not been delivered.
 
 **Exit:** validated routing behavior; ambiguous cases stay in Review/pool and
 same-run clusters can resolve candidates without order-dependent cascades.
@@ -503,9 +508,9 @@ scored 0.15–0.25, and one scored below 0.15. The two-face photo
 holding in Various; another photo scored 0.39 against Harlow's core and 0.46
 against Camaris. Camaris's `z_` history records Prospect merges at 0.55, 0.49
 and 0.49. These are concrete review leads, not proof of a wrong identity:
-the catalogue has no confirmed anchors yet. Keep all thresholds and library
-files unchanged until these images and the merges are visually reviewed and
-the identity cores are anchored.
+the catalogue has no confirmed anchors yet. This historical audit did not
+authorize production changes; later isolated sandbox experimentation follows
+the Oct 21 contract and does not require anchoring every provisional identity.
 
 **Oct 20 cast-audit report-only run:** `bin\likeness.cmd rebaseline --out
 "B:\Sovereign Territories\_reports\library\rebaseline-20261020-cast-audit.md"`
@@ -521,8 +526,9 @@ photos) across the category boundary and a former-cast history note for
 Potentials/Wren Thorn (one usable photo). Neither category nor photo changes
 were applied. The report lists 26 threshold-based out-of-folder suggestions
 and three Junk-rule candidates; those also remain suggestions. No photos or
-folders moved, and matching thresholds are unchanged. F1a is complete; F1b
-still requires visual review before any staged cross-person Review action.
+folders moved, and matching thresholds were unchanged by that audit. F1a is
+complete; F1b is a transfer, with remaining visual acceptance and operational
+routing tracked in the Oct 21 plan.
 
 **Exit:** action-specific safety targets pass; rollback and “why moved” records
 are verified on real, backed-up batches before enabling routine use.
@@ -543,15 +549,16 @@ file movement in the browser or silently changing existing CLI semantics.
 
 ### Phase H — integrate, modularize and document
 
-- [ ] **P2 ai** H1 Integrate the planner into `bin\library.cmd`, retaining
-  preview and verified-backup behavior; support empty-pool maintenance.
+- [x] **P1 ai** H1 Transfer primary-routine planner integration and
+  empty-pool maintenance to Oct 21 tasks 4.9-4.12/4.20. The transfer is
+  complete; the ordinary routine still uses legacy decisions.
 - [ ] **P2 ai** H2 Extract metadata, core/scoring, planning and report/action
   responsibilities from `likeness.py` in small, behavior-preserving,
   test-covered changes. Do not do an all-at-once rewrite.
-- [ ] **P2 ai** H3 Inventory all effective thresholds and options in one
-  documented table; add a command that prints current effective values and
-  action-specific calibration. Do not change production values without
-  measured results and a documented decision.
+- [x] **P1 ai** H3 Transfer effective behavioral-policy ownership, migration,
+  provenance and calibration to Oct 21 tasks 4.15/4.19. The current split
+  between code defaults, workspace settings and policy JSON is not accepted
+  as completed externalization.
 - [ ] **P2 ai** H4 Simplify the user-facing workflow and CLI options only
   after the replacement is proven; keep current command entry points working
   until migration is verified.
@@ -614,26 +621,27 @@ view.
   independent fields and visibly explained.
 - Routine processing never moves protected photos or Angel/Sister gallery
   photos without an explicit user-staged action.
-- Prospect cleanup cannot remove trusted anchors or take the folder below its
-  minimum core; ambiguous outliers go to Review, not another person.
+- Cleanup cannot remove trusted anchors or violate the applicable minimum
+  core. Ambiguous outliers go to Review/hold; qualified lower-tier actions
+  follow the later tier-aware contract, not a blanket no-reassignment rule.
 - Review and pool candidates are considered together against existing people
   and same-run provisional clusters; bounded iteration is deterministic and
   cannot oscillate or reassign a candidate more than once.
 - The user can audit exactly why a photo was held, returned, moved to Review,
   or matched elsewhere.
 - A preview and verified backup precede every batch with file changes.
-- Existing thresholds remain unchanged until action-specific validation
-  demonstrates acceptable precision and recall.
+- Production thresholds remain unchanged until action-specific validation
+  and approval. Explicit sandbox overrides may vary thresholds for real
+  trials; record them without creating a second matching engine.
 - Large-gallery UI performance and the action-manifest workflow have focused
   tests, including stale hashes, missing files, duplicate IDs and undo.
 
 ## Existing plan reconciliation
 
-- D2 and D3 of the tooling-debt plan are transferred to Phase H: modularize
-  likeness responsibilities incrementally, document the settings in one place,
-  provide an effective-settings view, and calibrate action thresholds from
-  evidence. The settings work must not change production thresholds without
-  measured results and a documented decision.
+- D2 and D3 of the tooling-debt plan were transferred to Phase H. Incremental
+  modularization remains here; H1/H3 integration and policy-resolution work
+  now transfer onward to the Oct 21 plan, with no duplicate open tasks.
+  Production settings still require measured results and approval.
 - D12 is superseded by this plan's metadata, review-gallery, manifest and
   combined reprocessing workflow. Its requirement for a recoverable,
   previewable individual-photo exclusion is retained in Phases C–E.
@@ -743,3 +751,116 @@ This approach could also help when we have multiple potential identities for a s
 Thoughts????
 
 Later on - maybe the Gallery does also need the clusters for groups as well - that would also help with galleries that are 100+ where we keep the core in the main Gallery and the other clusters underneath - I can still pick from them, but I'm thinking bigger picture as we have some very large galleries with now as well.  I know that breaks the gallery .html so it's not an immediate - but it's something that needs thought for large galleries.
+
+## Raw scratch follow-up: review layering
+
+Preserved from the latest scratch revision; Phase J owns organization work.
+Words are unchanged; long paragraphs are wrapped for Markdown.
+
+As we do this, the one thing that might be useful in the Review is to have sub-directories of clusters of like photos within each person's review folder or even within the main gallery itself. This would allow us to better organize and visually separate different sets of similar images, making it easier to identify duplicates, mis-matches, or potential new identities.  Basically, just thinking of a way from keeping them from becoming yet another prospect, but also clustering them within an identity for easier management and review.  Not exactly sure what I am really thinking - so need some deep through on this, but at least getting them into Review and out of Prospects and cluttering up others.  What I am trying to avoid is an accidental flooding of a review folder with other unrelated images, which could make the review process more confusing and less efficient.
+
+So, like in the case of Angelica - there were 3 images that created Petra, there's 4 in Fia Hadley (that are Angelica) and 3 in Amara Berkley (that are Angelica) and Briony Stone as well is Angelica, Aradine Baldwin, Cressida Fontaine, Cecily Radcliffe, Daphne Lane, Uma Zane.  Having sub-directories or clusters within the review folder would help keep these grouped together and make it easier to see the connections between them, rather than having them scattered and potentially mistaken for separate identities.
+
+This approach could also help when we have multiple potential identities for a single person, as it would allow us to visually separate and compare the different clusters of images.  It would make the review process more structured and less prone to errors, as we could focus on one cluster at a time and make more informed decisions about merging, retiring, or reassigning images.
+
+Thoughts????
+
+I killed the windows search indexer as it was chewing up CPU.  Also Well - it's not just a .html thing -- when I pull images into Comfy UI inputs - I need to scroll through 100+ images to find some of the other ones to test with for generating poses and such.  While I know I will focus on having a single "likeness" for the Angel - I do use other poses for various testing.  It's not a high priority now - but as I get back into the work within ComfyUI - having directory structure will help if we can have some sort of proper naming - instead of cluster 1, cluster 2, etc... Again, that's down the road - but long term having to pick from 100+ images and not knowing which ones are core within ComfyUI to choose a new photo is more of an issue.  and I won't know which ones to use until I pull them in and test with them.  Anyway - not critical to cleaning up the Prospects - but certainly we already have examples of Angels with large number of images we'll need to work on that with.
+
+## Raw scratch follow-up: tiered maintenance and production reuse
+
+The Oct 21 plan owns these engine requirements; this preserves the source
+discussion, not a second action policy.
+
+As I look at the items for the auto-merge threshold for an identity to identity, I think we also need a tiered system for how Potentials might auto merge together.
+When you hit a stopping point I'd like to discuss that auto-merge logic around the 0.55 threhold and how it applies and what the auto-merge for potential to potential is.
+I don't want to make changes - just want to discuss how I think we have to ensure we have some threshold for Sisters, Angels, Models, Prospects and Potentials at differing layers to cluster the Potentials a bit more effectively.
+But maybe the rebase will take that into account - but longer term as a Potential grows with a few images - prior to being auto-promoted to a Prospect, we could merge at a different ratio (potentially).
+Same with Prospect to Prospect merges.  With Sisters, Angels and Models I would want the threshold to be higher as we go up the hierarchy and I can do the reviews without having to "manually" combine the Potentials that I would basically combine when I see that they align to another Potential and not have to rely on a complete rebase but the normal cycle of compares of likeness can hand that when I bring in new images.
+We can discuss what I am thinking to ensure it doesn't impact the rebase or if it does - then we need to assess.  So, it's just a discussion point when we are ready.
+Maybe the rebase handles it, but I do want the ongoing process to handle it as well so I don't have to manually drive combines that the likeness between Potentials or maybe prospects as well - if they grow to 0.40 or higher as we add images.  It's just a discussion point.
+
+Secondly, I see a specific sandbox.py that handles work - just want to make sure we're not building something for rebase that ONLY works in the sandbox and if we want to run this in the production image directory afterwards it will run without a rewrite of a bunch of code.
+I understand we're cautious about the sandbox and how it's rebuilding everything ... but I want to ensure that we aren't sandboxing the sandbox code and building a silo that won't work in production right after I agree that we've tweaked the threshold and functionality - like the auto_merge logic.
+Basically the entire rebase, ongoing self healing, merging - pulling out the lower scoring images from an identity as we find better ones so we don't clutter ANY identity with low scoring images.
+With Prospects and Potentials - much more freedom to move images in/out of the identity and as we go up the hierarchy we are more restrictive.
+For instance - not auto pulling out low scoring images in a Sister or Angel - but we do identify them and call them out specifically.  With Models it'll be a middle ground of how we'd want that to happen.
+And it's all probably just configuring thresholds at each level in the hierarch and setting things to Protect at the Identity or even Image level from the auto-merge or auto-move functionality.
+Basically the system will organically grow and shuffle images around as we build more and get better scores and drop out lower scores, which then might merge "up" the hierarchy when we get rid of the lower scores.
+A 2 photo Potential could grow into a Prospect with several new photos that match 1 of the 2 photos and then the 1 photo becomes a much lower score - so we'd want to kick it out automatically into it's own Potential.
+Over time - that one Potential could match another Prospect and jump up to that one - which might be different than the original Potential it was paired with.
+I feel like that's the way the bottom layer would be handling things.  Given they are just Potentials - it's fine to be more free about clustering them to see how they move up the hierarchy or splitting them from a Prospect, Model or another Potential automatically due to the low score 0.15 or lower.
+We have a scale for the green, yellow, orange, red that I think we can apply through the hierarchy and auto-merge/moving without re-running the rebase.
+Once we get the library "stable" with the rebase I don't expect to run that again - other than if I see it get's messed up for some reason and we fall back to it.  Hope that all makes sense.
+
+Both topics to discuss....
+
+## Raw scratch follow-up: mismatched images and identity cores
+
+So here's my dillema - I can see photos in Petra Cole where I know the first 3 in that group are actually Angelica - as I took those screen shots directly and since they weren't posed they didn't match Angelica - but there are others already in Angelica - where I know the Angels are more protected, but there are some with a score of 0.19 and I would have thought that these would really have matched her.
+So what is the best path forward to addressing situations like that?  I could manually move them into her directory or how do I handle that effectively as the GUI doesn't really allow me to move them to an angel and the CLI is a bit awkward when handling this type of reorganization?
+I could try to just move them back to Various and see what happens?  this is happening more often than not.  Would it make sense for me to add some of those photos into Angelica's core and see if it pulls them in?  or do I risk pulling to many others into Angelica that aren't her?
+That's where I need some thought and advice.  If you needed to run commands to look at those 3 for Petra Cole and figure out what you think is that feasable?
+Somehow I feel like if we had a bug in how the matching worked a while ago - it may not have handled things properly.  Maybe a report tells us if those images are "close" to Angelica or not...
+
+Basically - as I am scanning and looking at the images, I am noticing that there are some mismatches and inconsistencies in how the images are being categorized.
+It seems like the matching algorithm may not be functioning as expected, leading to some images being incorrectly associated with the wrong person.
+What I don't know is how to effectively address these mismatches without causing further confusion or misclassification.
+It's clear that some images are being misidentified, and I want to ensure that the correct images are associated with the right individuals.
+If the GUI doesn't allow for easy reorganization and the CLI is cumbersome, I need to find a more efficient way to manage these mismatches.
+We could add functionality to the GUI to allow me to move images between directories more easily, or perhaps implement a feature that allows for better verification of matches before they are finalized.
+Additionally, it might be helpful to have a reporting tool that can analyze the images and provide insights into their similarity scores, helping to identify potential mismatches more effectively.
+At least if someone is a Sister or Angel I'd want to know how similar the images are to the core images of that individual, so I can make a more informed decision about whether to reclassify them or not.
+Overall, I think we need to improve the tools and processes for managing these mismatches to ensure that the images are accurately categorized and associated with the correct individuals.
+
+Eventually, I'd want to ensure that we can deal with prospect across prospect mismatches as well - that's what I think happened since it found a cluster of 3 images that were very similar to each other but not to the core images of Angelica, leading to them being misclassified.
+So I think we need to have a way to handle these types of situations more effectively, whether it's through better tools, improved algorithms, or more robust verification processes.
+Ultimately, the goal is to ensure that the images are accurately categorized and associated with the correct individuals, minimizing the risk of misclassification and ensuring that the data is reliable and trustworthy.
+Then it added more images to Petra Cole once she was created that are not Angelica, but they are similar to the other images in Petra Cole's directory.
+So I think we need to have a way to handle these types of situations more effectively, whether it's through better tools, improved algorithms, or more robust verification processes.
+Ultimately, the goal is to ensure that the images are accurately categorized and associated with the correct individuals, minimizing the risk of misclassification and ensuring that the data is reliable and trustworthy.
+
+To be honest, I'm confused why they didn't match to Angelica in the first place, since I know they are her.
+I think it may have been a bug in the matching algorithm that caused them to be misclassified.
+So I think we need to have a way to handle these types of situations more effectively, whether it's through better tools, improved algorithms, or more robust verification processes.
+Ultimately, the goal is to ensure that the images are accurately categorized and associated with the correct individuals, minimizing the risk of misclassification and ensuring that the data is reliable and trustworthy.
+
+Those 3 are just one example of where I see images I know are Angels or Sisters that are showing up as a Prospect when they all come in as a very like set of images that aren't a very solid match for core images of an existing individual.
+I guess it's a bit confusing on what I need to do without just going in and manually just moving images around by hand.
+
+I guess it goes back to what is the core identity of someone like Angelica and do I need to ensure that other items are added to the core and re-run things to get them to match up.
+The reason I provided the comment that I do not like Camaris is that it's not as consistent of a person of all the images, so when I asked to swap prompte Ruby Eden to Camaris - I did not look at the entire gallery and only based it off the grid of 9 in the gallery last night, it's only today when I look at the entire gallery that I see that Camaris is not a good match for Ruby Eden, so I need to go back and fix that.
+I think the same thing is happening with Angelica and Petra Cole, where the core images of Angelica are not a good match for the images that were added to Petra Cole's directory, leading to misclassification.
+So I think we need to have a way to handle these types of situations more effectively, whether it's through better tools, improved algorithms, or more robust verification processes.
+Ultimately, the goal is to ensure that the images are accurately categorized and associated with the correct individuals, minimizing the risk of misclassification and ensuring that the data is reliable and trustworthy.
+
+I know we made some adjustments to the matching algorithm over time, so is there something that would go photo by photo of a single prospect and match it against other Angels, Sister and Prospects and only pull it back into the same Prospect it started from if there isn't another valid match?
+I thought that was something we were considering in older plans and maybe that was what I wanted with the re-baseline work without pulling every single prospect back to Various to see where they land ... basically, I don't trust ALL of the prospects, while some do seem good - others aren't.
+I could just move them all into Potentials and we could do the logic that way for Potentials.  I guess I'm just confused on which way to go now.
+
+## Raw scratch follow-up: cast-associated appearance groups
+
+That's where in the future, the sub-directories for that cluster under Angelica would make more sense instead of a new Prospect.  At least then we'd know that it was very much like here.
+But maybe that would bite us in the long run with other angels or sisters.  So the question I have is - what is the match threshold to get into a Prospect vs. Angel/Sister - that was added to prevent "unwanted" items from showing up in a "protected" type identity - but it's having the counter effect of bloating out the Prospects with many new identities that are so similar to Angelica that they suck other photos that are of Angelica.
+Lastly, it's time consuming for me to try to see which photos are referenced from the .csv in the simulation vs. having a simulated result in an actual gallery along with what goes where.
+What's interesting is that when I see the items that are a .40 and above for a "looks like Angelica" for the new cluster - they are actually Angelica.
+I understand the .55 to auto merge them into Angelica, but this is where I think we could take a step back and try to understand a better way to address those clusters that do look alike an angel or sister that fall below .55 and are above .40 - the whole point of wanting them under and Angel or a Sister is to help bring home that association is very high - versus the Prospects that don't look like any angel or a sister.
+I checked the same for Rosalind Davenport and she looks like Haniya at .46 and it's just bad images of Haniya - so they are actually her as well.
+I checked yvonne caldwell and she is .43 for Serephine with some coming direct to Serephine - that's also all Serephine, just a large group of ones that were not as good.
+If it's not serephine, it's her twin sister.  Basically - what I am observing is the .55 threshold is good for automatic inclusion - but we need that nexy layer to figure out how to keep them with their "look-a-like" in a way that they aren't automatically clustered - but new photos that match them would result in going into that cluster.
+The other thing I can think of is to create somewhere other than Prospects to put them into and use the same angel/sister name for those?
+Like Twins/Angelica xxxxx  Twins/Seraphine xxxx with last names so if there are more than one twin of Angelica or more than one of any Angel or Sister we accomodate that and fold it in like we split off Potentials from Prospects ... but we have different logic for what goes into Twins as they are so close to matching Angels or Sisters
+ - Angel Twins/Angelica Dawn, Sister Twins/Drakniss Jasper ... in doing this - we keep a physical separation from the actual sisters and we can then use some of the same Angel/Sister logic for pulling in new photos to guard against "clutter" in that Twin of what happens in Prospects.
+
+## Raw user feedback: catalogue IDs, closest action and secondary scoring
+
+Preserved from the scratch note; C8/C9 own the outstanding requests. The clean
+sandbox catalogue now supplies IDs, but the manual closest-destination action
+and secondary-model investigation are not implemented.
+
+```text
+Even for angels and sisters I see "Identity ID: not catalogued" which is not useful - so maybe we don't need that since I don't use the internal identity - I just thought maybe it would be useful, but if not assigned to anyone, it's pointless.
+
+
+Lastly - on the details page, I think a staged action should be able to actually move the image to closest if I choose to do that as well.   I also feel like our scoring may need to be double checked and I'll get back to you on that as I have 7515826497811991332 in Arwen Ames, but the Closest Other is Rhiannon Frost ... her eyes are more closed in that picture, so what I am wondering is if there are other models we can use as a secondary face check on top of what we're doing in certain cases.  It seems like the face recognition we have might not be perfect.  We've put patches in place to try to handle the existing scoring and some of the routines
+```

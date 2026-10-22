@@ -123,7 +123,7 @@ class LikenessPolicyTests(unittest.TestCase):
         self.assertFalse(self.policy["lookalikeGroups"]["automaticAssociationEnabled"])
         self.assertEqual(
             self.policy["identityActions"]["identityClusterMinimumSimilarity"],
-            0.55,
+            0.25,
         )
         result = evaluate_identity_action(
             "merge",

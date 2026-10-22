@@ -76,6 +76,16 @@ time with its launcher and all known references updated together.
 
 ## Initial package map
 
+**Oct 22 extraction progress:** shared candidate planning is in
+`likeness_library/planner.py`, policy resolution in `policy.py`, and verified
+incoming move/apply/undo transactions in `maintenance.py`; clean-rebuild
+filesystem boundaries remain in `clean_rebase.py`. Both primary processing
+paths call this shared planning stack. This advances E2/E2a, but does not
+complete the CLI extraction: legacy mutation commands, the no-policy
+reconciliation fallback, image operations and library orchestration still
+need bounded migrations. Package naming is unchanged to avoid shadowing
+`likeness.py`.
+
 - `likeness_library/`: identity metadata and reusable likeness-library
   behavior: cached face embeddings, photo records, identity-space scoring,
   audits, review reports and manifest handling. The name avoids shadowing

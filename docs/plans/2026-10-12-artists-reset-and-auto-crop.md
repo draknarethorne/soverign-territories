@@ -26,6 +26,10 @@ What you asked for today (your notes are at the end, word for word) and what was
 A2's `_junk` review is consolidated into R11 of [the Oct 19 library plan](2026-10-19-library-rebaseline-and-frame-retirement.md); use the current post-run inventory rather than the Oct 12 count.
 - [ ] **P3 you** A3 Read `_reports\crosscheck.md` (look-alikes between artists, and between prospects and artists): only reported, nothing moved. Say if a pair should be handled.
 - [ ] **P3 ai** A4 Inspect remaining reel overlays (bottom/right edges and captions near the hairline) and other layouts (paused video play button, caption at the bottom). Adjust only reliably identified UI regions so wings and broad poses are preserved; keep manual or AI blending optional.
+- [ ] **P3 either** A5 Discuss optional local logo/text detection and cleanup
+  separately from likeness matching. Compare reversible masking/blending
+  against cropping, preserve originals, and agree scope before implementing
+  or changing generated gallery images.
 
 ## Result
 
@@ -86,3 +90,11 @@ photos that have the "text" about the reels on the hairline that it also left te
 many of the screenshots might have overlay items that ideally are cropped and if I need to manually clean-up the top lines with AI or
 something I can do that - if there were another library to blend those away that would also be awesome.  So mostly the cropping is awesome,
 but still has a few things to improve on.
+
+## Raw notes: optional logo cleanup (Oct 21)
+
+I know we have the auto-crop capability build into the framework, but I'm also wondering if there is any ability we could use to also detect and auto-cleanup logos that appear on images as we generate the gallery911x1104 files?
+I do have my ComfyUI workflows instructed to do that and it works and I have also done it by hand before sending files into the Various gallery so I can keep from cropping the hair on some images or feet on others.
+It would be great if the framework could handle this automatically, either by detecting logos and removing them or by providing a way to mask them out during the gallery generation process.
+It might actually save time in the ComfyUI execution of we are able to handle logo cleanup directly within the framework, reducing the need for manual intervention and ensuring a cleaner final gallery output.
+Even if it were partially successful in handling logos like on image file:///B:/Sovereign%20Territories%20Sandbox/Working/Angels/angelica/gallery/angelica_image_7513773334796667927.jpg  and many others for Angelica and a few other Angels - where I somehow lost those updates in my processing.

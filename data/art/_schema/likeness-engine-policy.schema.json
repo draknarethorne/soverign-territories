@@ -8,6 +8,7 @@
     "schemaVersion",
     "version",
     "status",
+    "runtimeSettings",
     "categoryOrder",
     "scoreBands",
     "categoryAssignmentRules",
@@ -21,6 +22,28 @@
     "protection"
   ],
   "properties": {
+    "runtimeSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mixed", "pool", "minCluster", "odd", "alike", "minFace", "multiFace", "singles", "rematch", "rematchCast", "different", "castMerge"],
+      "properties": {
+        "mixed": {"$ref": "#/definitions/pathPatterns"},
+        "pool": {"$ref": "#/definitions/pathPatterns"},
+        "minCluster": {"const": 1},
+        "odd": {"$ref": "#/definitions/score"},
+        "alike": {"$ref": "#/definitions/score"},
+        "minFace": {"type": "integer", "minimum": 1},
+        "multiFace": {"$ref": "#/definitions/score"},
+        "singles": {"$ref": "#/definitions/score"},
+        "rematch": {"$ref": "#/definitions/score"},
+        "rematchCast": {"$ref": "#/definitions/score"},
+        "different": {
+          "type": "array",
+          "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string", "minLength": 1}}
+        },
+        "castMerge": {"$ref": "#/definitions/score"}
+      }
+    },
     "schemaVersion": {
       "const": 1
     },
@@ -223,6 +246,10 @@
     }
   },
   "definitions": {
+    "pathPatterns": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
     "score": {
       "type": "number",
       "minimum": -1,
@@ -244,6 +271,10 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "photoRouteMinimum",
+        "photoRouteMargin",
+        "reviewAdmissionEnabled",
+        "mergeMinimum",
         "identityProtectedByDefault",
         "automaticMergeEnabled",
         "automaticSplitEnabled",
@@ -254,6 +285,10 @@
         "minimumUsablePhotosForOutlierActions"
       ],
       "properties": {
+        "photoRouteMinimum": {"$ref": "#/definitions/score"},
+        "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
+        "reviewAdmissionEnabled": {"type": "boolean"},
+        "mergeMinimum": {"$ref": "#/definitions/score"},
         "identityProtectedByDefault": {
           "type": "boolean"
         },

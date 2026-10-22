@@ -600,7 +600,8 @@ def collect_items(
 ):
     """Build scored image records; Review candidates never enter an identity core."""
     policy = policy or default_policy()
-    category_order = tuple(policy["categoryOrder"])
+    catalog = metadata.with_configured_anchors(catalog, cfg, space.photos)
+    category_order = (*policy["categoryOrder"], "Various")
     groups = set(
         category_order
         if include_artists
@@ -611,6 +612,10 @@ def collect_items(
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
     ]
+    if (pathlib.Path(work) / "Various" / "review").is_dir() and originals.images(
+        pathlib.Path(work) / "Various" / "review"
+    ):
+        folders.append(("Various", pathlib.Path(work) / "Various"))
     selected_names = list(cfg.get("photos", {}).values())
     base_selected_by_hero = {
         hero.casefold(): metadata.photo_id_from_name(name)
@@ -631,7 +636,7 @@ def collect_items(
 
     for key, folder in folders:
         gallery = []
-        for path in originals.images(folder / "gallery"):
+        for path in originals.images(folder / "gallery") if key != "Various" else ():
             photo = active_by_path.get(_local_photo_path(path))
             if photo is None:
                 photo, added = _load_photo(path, key, cache, embed, st, space)
@@ -717,7 +722,10 @@ def collect_items(
         records = people_by_folder.get(key, [])
         conflict = len(records) > 1
         person = records[0][1] if len(records) == 1 else None
-        identity_protected = bool(person and person.get("protected"))
+        identity_protected = bool(
+            (person and person.get("protected"))
+            or policy["categoryPolicies"].get(likeness.status_of(key), {}).get("identityProtectedByDefault")
+        )
         person_id = records[0][0] if len(records) == 1 else None
         anchors = set(person["identityAnchors"]) if person else set()
         category_policy = policy["categoryPolicies"].get(likeness.status_of(key), {})
@@ -872,7 +880,11 @@ def collect_items(
             if cleanup_held:
                 state, reason = "Review · cleanup held", "Held for manual crop clean-up"
             else:
-                state, reason = "Review", "Candidate is outside the active gallery and never enters its core"
+                state, reason = (
+                    ("Hold", "Unresolved candidate; not a named identity or active core")
+                    if key == "Various" else
+                    ("Review", "Candidate is outside the active gallery and never enters its core")
+                )
             if photo_id in stale_ids:
                 reason += "; stored metadata is stale"
             elif photo_id in ambiguous_ids:
@@ -1036,7 +1048,7 @@ def write_thumbnails(items, out):
 def render_html(items, stamp, warnings=(), policy=None):
     """Render a local page with client-side filters and bounded card rendering."""
     policy = policy or default_policy()
-    people_count = len({item["folder"] for item in items})
+    people_count = len({item["folder"] for item in items if item.get("group") != "Various"})
     people_label = "person" if people_count == 1 else "people"
     photos_label = "photo" if len(items) == 1 else "photos"
     people_data = {}
@@ -1091,7 +1103,7 @@ def render_html(items, stamp, warnings=(), policy=None):
 <div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
 <script id="review-data" type="application/json">{payload}</script>
 <script id="people-data" type="application/json">{people_payload}</script>
-<script id="category-order" type="application/json">{json.dumps(policy["categoryOrder"])}</script>
+<script id="category-order" type="application/json">{json.dumps([*policy["categoryOrder"], "Various"])}</script>
 <script>{SCRIPT}</script>
 </body></html>
 """
@@ -1113,9 +1125,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     policy = load_policy(args.policy)
     cfg, st, work, cache, space = likeness.build(
-        types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None)
+        types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None, policy=args.policy)
     )
-    catalog = metadata.load_catalog()
+    catalog = metadata.load_catalog(metadata.path_for_root(work))
     items, warnings = collect_items(
         cfg, st, work, cache, space, catalog,
         include_artists=args.artists, keep=args.keep, policy=policy

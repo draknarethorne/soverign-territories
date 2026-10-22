@@ -19,6 +19,38 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_pool_root_is_not_a_person_and_holds_are_rendered_once(self):
+        st = likeness.settings({})
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            with mock.patch.object(
+                likeness.cw, "photo_folders",
+                return_value=[("Various", "Various", root / "Various")],
+            ):
+                self.assertEqual(likeness.library_people({}, st, root), [])
+            review = root / "Various" / "review"
+            review.mkdir(parents=True)
+            (review / "person_image_123456.jpg").write_bytes(b"photo")
+            cache = likeness.Cache(root / "cache.json")
+            space = likeness.Space([], st, mean=[0., 0.])
+            with mock.patch.object(likeness, "library_people", return_value=[]), \
+                    mock.patch.object(likeness, "cleanup_hold", return_value=set()):
+                items, _ = review_gallery.collect_items(
+                    {}, st, root, cache, space,
+                    {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+                    embed=lambda _: {"v": [1., 0.], "px": 100, "faces": 1, "s": .95},
+                )
+            self.assertEqual(len(items), 1)
+            self.assertEqual(items[0]["folder"], "Various")
+            self.assertEqual(items[0]["state"], "Hold")
+            self.assertFalse(items[0]["stageable"])
+            self.assertFalse(items[0]["scoreContext"]["coreMember"])
+            page = review_gallery.render_html(
+                [{key: value for key, value in item.items() if not key.startswith("_")} for item in items],
+                "now",
+            )
+            self.assertIn('"Various"', page)
+
     def test_closest_other_uses_each_photo_vector_and_skips_other_sides(self):
         photo = SimpleNamespace(
             usable=lambda min_face: min_face == 60,

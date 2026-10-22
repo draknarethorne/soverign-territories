@@ -155,10 +155,6 @@
   "skipGroups": ["elder-dragons", "drakn-bound"],
   "likeness": {
     "anchors": {"Angelica": ["7508202904299473073", "7513772657979194544", "7513772789697085962"]},
-    "keepPhoto": ["Drakness", "Angelica", "Drakneta"],
-    "assign": 0.4,
-    "singles": 0.35,
-    "rematch": 0.48,
-    "different": [["Prospects/Brielle Carter", "Sisters/Draknara"]]
+    "keepPhoto": ["Drakness", "Angelica", "Drakneta"]
   }
 }

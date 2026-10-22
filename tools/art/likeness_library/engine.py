@@ -12,6 +12,7 @@ import numpy as np
 import comfy_workflows as cw
 import originals
 from likeness_library.scoring import nz
+from likeness_library.policy import effective_settings
 
 
 MODEL_URLS = {
@@ -19,26 +20,7 @@ MODEL_URLS = {
     "face_recognition_sface_2021dec.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
 }
 HUMAN_BEST, HUMAN_MIN = 0.9, 0.85
-SETTINGS = {
-    "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
-    "pool": ["Various", "Prospects/Various", "Potentials/Various"],
-    "assign": 0.40,
-    "margin": 0.10,
-    "cluster": 0.25,
-    "minCluster": 3,
-    "odd": 0.15,
-    "alike": 0.30,
-    "minFace": 60,
-    "multiFace": 0.3,
-    # A single photo joins a person at 0.35; prospect-folder rematch is 0.48.
-    "singles": 0.35,
-    "rematch": 0.48,
-    # Cast matches are listed for review; they do not imply a cast identity change.
-    "rematchCast": 0.50,
-    "different": [],
-    # A confident cast match is handled by the explicit merge command.
-    "castMerge": 0.55,
-}
+SETTINGS = effective_settings({})
 
 
 class Embedder:
@@ -154,6 +136,7 @@ class Cache:
         self.path = pathlib.Path(path)
         data = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
         self.stat, self.emb = data.get("stat", {}), data.get("emb", {})
+        self.centering_mean = data.get("centeringMean")
         self.emb = {
             key: value
             for key, value in self.emb.items()
@@ -174,7 +157,9 @@ class Cache:
 
     def save(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps({"stat": self.stat, "emb": self.emb}), encoding="utf-8")
+        self.path.write_text(json.dumps({
+            "stat": self.stat, "emb": self.emb, "centeringMean": self.centering_mean,
+        }), encoding="utf-8")
 
 
 class Photo:
@@ -195,9 +180,7 @@ class Photo:
 
 
 def settings(cfg):
-    result = dict(SETTINGS)
-    result.update(cfg.get("likeness", {}))
-    return result
+    return effective_settings(cfg)
 
 
 def is_sister(key):
@@ -281,7 +264,7 @@ def read_library(cfg, work, cache, embed, configuration, progress=True, with_mix
 class Space:
     """Centered identity vectors, folder centroids, and photo-to-folder rankings."""
 
-    def __init__(self, photos, configuration):
+    def __init__(self, photos, configuration, *, mean=None):
         self.st = configuration
         self.photos = photos
         self.pool_keys = set()
@@ -292,7 +275,14 @@ class Space:
             and not matches(photo.key, configuration["mixed"])
         ]
         self.person = person
-        self.mean = np.mean([photo.raw for photo in person], axis=0) if person else np.zeros(128)
+        self.mean = (
+            np.asarray(mean, dtype=float) if mean is not None else
+            np.mean([photo.raw for photo in person], axis=0) if person else np.zeros(128)
+        )
+        if self.mean.ndim != 1 or not np.all(np.isfinite(self.mean)):
+            raise ValueError("identity centering mean must be a finite vector")
+        if any(photo.raw is not None and photo.raw.shape != self.mean.shape for photo in photos):
+            raise ValueError("saved centering mean does not match photo embedding dimensions")
         for photo in photos:
             if photo.raw is not None:
                 photo.vec = nz(photo.raw - self.mean)

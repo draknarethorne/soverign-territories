@@ -33,5 +33,6 @@ The recap is part of the day's hygiene in [../plans/README.md](../plans/README.m
 
 | Day | File |
 | --- | --- |
+| 2026-10-22 | [2026-10-22-0038-recap.md](2026-10-22-0038-recap.md) |
 | 2026-10-20 | [2026-10-20-0150-recap.md](2026-10-20-0150-recap.md) |
 | 2026-10-12 | [2026-10-12-1722-recap.md](2026-10-12-1722-recap.md) |

@@ -9,7 +9,7 @@ from unittest import mock
 import numpy as np
 
 from tools.art import likeness
-from tools.art.likeness_library import clean_rebase
+from tools.art.likeness_library import clean_rebase, metadata
 from tools.art.likeness_library.policy import load_policy
 from tools.art.likeness_library.reconciliation import _average_linkage
 
@@ -82,6 +82,57 @@ class CleanRebaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source changed"):
             clean_rebase._verify_routes(plan, self.source)
         self.assertFalse((self.run / "previous").exists())
+
+    def prepare_catalogue(self):
+        catalog_path = self.run / "catalog.json"
+        metadata.save_catalog(
+            {"schemaVersion": 1, "people": {}, "photos": {}, "actions": []},
+            catalog_path,
+        )
+        plan = self.plan()
+        plan["catalogSHA256"] = metadata.content_sha256(catalog_path)
+        return plan
+
+    def test_catalogue_and_various_hold_install_undo_preserve_previous_bytes(self):
+        local = self.working / ".likeness-library.json"
+        previous = b'{"schemaVersion":1,"people":{},"photos":{},"actions":[]}\n'
+        local.write_bytes(previous)
+        plan = self.prepare_catalogue()
+        plan["photos"][0]["destination"] = f"Various/review/{self.source_photo.name}"
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        destination = self.working / plan["photos"][0]["destination"]
+        self.assertEqual(destination.read_bytes(), b"photo bytes")
+        self.assertEqual(metadata.load_catalog(local), metadata.load_catalog(self.run / "catalog.json"))
+        self.assertEqual((self.run / "previous-catalog.json").read_bytes(), previous)
+        clean_rebase.undo_plan(self.layout, self.run, plan)
+        self.assertEqual(local.read_bytes(), previous)
+        self.assertFalse(destination.exists())
+        self.assertEqual(self.source_photo.read_bytes(), b"photo bytes")
+
+    def test_undo_removes_created_local_catalogue(self):
+        plan = self.prepare_catalogue()
+        local = self.working / ".likeness-library.json"
+        self.assertFalse(local.exists())
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        self.assertTrue(local.is_file())
+        clean_rebase.undo_plan(self.layout, self.run, plan)
+        self.assertFalse(local.exists())
+
+    def test_changed_local_catalogue_prevents_rebuild_undo(self):
+        plan = self.prepare_catalogue()
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        local = self.working / ".likeness-library.json"
+        local.write_bytes(local.read_bytes() + b"\n")
+        with self.assertRaisesRegex(ValueError, "catalogue changed"):
+            clean_rebase.undo_plan(self.layout, self.run, plan)
+        self.assertEqual(plan["status"], "applied")
+        self.assertTrue((self.working / plan["photos"][0]["destination"]).is_file())
 
     def test_creation_uses_empty_cache_and_only_cast_references(self):
         cast_folder = self.source / "Angels" / "Angelica"

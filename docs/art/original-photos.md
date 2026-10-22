@@ -88,23 +88,34 @@ A failed copy is marked `INCOMPLETE.txt` and is not a usable snapshot.
 
 **The short way: `bin\library.cmd`** runs, in order:
 
+While the shared likeness policy is draft, a likeness-enabled real run refuses
+before backup, renaming, cropping or other housekeeping. Preview and check
+remain available. Do not approve production merely to bypass this gate:
+sandbox acceptance and the separate clean-full production rebuild are still
+required. Threshold changes belong in the versioned policy, not `--min`.
+
 | Step | What | Where the originals of a change are kept |
 | --- | --- | --- |
 | 1 `originals` | names every original after its folder, makes the scaled copy and headshot | old scaled copies: `_archive\<folder>\gallery_944x1104_org`; old headshots: `_archive\<folder>\headshot_944x1104_org` |
 | 2 `duplicates` | the same picture twice (any folder, any name) | the extra copy: `_archive\<folder>\gallery_duplicates` |
 | 3 `likeness crop` | cuts every photo down to the person: a phone's app bars, other people, animals and the background beside her; all the body in the picture stays | the uncropped photo: `_archive\<folder>\gallery_uncropped` (`likeness crop --undo` puts the last batch back) |
 | 3 `likeness junk` | a photo that cannot feed a Prime (no usable face, a second person that cannot be cut away, bars over her head) goes to `_junk`. A prospect's or hero's photo that only needs clean-up goes to her `review` folder instead | `_junk\<side>`, her `review` |
-| 4 `likeness review` | a review photo that scores 0.20 or more against her goes back to her gallery | |
-| 5 `likeness sort --singles` | `Various` is emptied: a photo that came from an artist goes back to that artist; a confident match moves to that person (an angel or a sister too); the rest become new prospects, single photos too | `likeness undo` |
+| 4 `likeness reconcile` | shared incoming/Review proposal with frozen cores, tier permissions, preserved small groups and explicit holds; approved apply revalidates after a verified backup | `_reports\runs\reconcile_*.json`, full snapshot; `likeness reconcile --undo JOURNAL --apply` |
 | 5 `likeness group --singles` | the artists' own galleries are emptied the same way, never across artists: into one of that artist's people, or a folder of their own. Only photos with no usable face, a second person or the app's bars stay | `likeness undo` |
-| 6 `likeness singles`, `rematch` | one-photo prospects join the prospect they look like; prospects that are one person merge; a prospect that is the same person as an angel or a sister (0.55 and up) joins her, and her `z_` file remembers who she was | `likeness undo`, `_retired` |
 | 6 `likeness retire-empty` | prospect folders with no original photos in either `gallery` or `review` are moved intact to `_retired`; folders with review photos and the `Various` pool are left alone | `_retired` |
 | 7 `duplicates`, `originals` again | the moves create new names; `originals --check` must say IN SYNC | |
 | 8 `sync-inputs`, 9 `crosscheck`, `index` | workflow inputs; the look-alike report; the people index | |
 
 **Prime partial-body frame flow retired (Oct 19).** See [Retired frame images](#retired-prime-partial-body-frames) for what changed and where the preserved files went. The proposed `chest_944x1104` crop is not implemented; it remains a separate visual-review task.
 
-**The rules the routine keeps.** An artist's photos never cross to another artist, even when two people look alike (that is only reported). Prospects and artists never mix (also only reported). Prospects regroup freely among themselves and with Angels and Sisters. The `_origins.json` file in the work folder records which artist every photo came from (by its id, which survives a rename and a crop).
+The former `review`/`sort`/`singles`/`rematch` decision chain is no longer run
+automatically. Whole-identity merge/split maintenance and category transitions
+are still unfinished, not delivered by the new photo-routing step. A journal
+undo requires its recorded photos and catalogue to remain unchanged; after
+subsequent renaming or user decisions, use the verified snapshot/reviewed
+recovery path rather than forcing stale destinations.
+
+**The rules the routine keeps.** An artist's photos never cross to another artist, even when two people look alike (that is only reported). Prospects and artists never mix (also only reported). Cast Gallery protection and incoming Review admission are separate; similarity never grants automatic cast Gallery membership. The `_origins.json` file in the work folder records which artist every photo came from (by its id, which survives a rename and a crop).
 
 **To start a part over.** `likeness pullback NAME ...` (or `--small 2`, or `--all`) sends prospect folders back to `Various`, and the routine sorts them again; a folder with a chosen photo is never pulled back. A looser second look at the pool: `likeness sort --assign 0.35` (preview first). The artists can be rebuilt from a flat backup of their folders: `likeness artists --from <backup>\Artists`.
 

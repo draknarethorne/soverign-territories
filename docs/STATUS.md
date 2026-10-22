@@ -1,6 +1,6 @@
 # Project Status
 
-**Updated:** 2026-10-21 · This is the one working document: where the project is, what has
+**Updated:** 2026-10-22 · This is the one working document: where the project is, what has
 been decided, what is open, and what is next. Rules live in the canonical docs listed in
 [README.md](README.md); this file only tracks state and decisions.
 
@@ -25,6 +25,31 @@ Design and art are ahead of gameplay data. The repo has no Unity project yet.
 ## Plans and the queue
 
 The plans, their status and what each is are listed in [plans/README.md](plans/README.md); what is open, by priority and owner (what needs you first), is [todo.md](todo.md), generated from them. This document holds only what is decided and what is still a question.
+
+**Oct 22 current likeness state:** a new true clean sandbox trial is installed
+and check-verified; the previous fragmentation run was undone first. Candidate
+formation, tier matching, category classification and write authorization are
+separate policy decisions. Both clean rebuilding and ordinary incoming/Review
+processing now use the shared planner. Runtime defaults no longer live in
+`engine.py`; conflicting workspace overrides fail. Draft production apply is
+blocked before housekeeping, while preview still shows qualified evidence.
+Only sandbox outputs changed; production and the immutable Source remain
+untouched. The generated galleries use stable sandbox identity IDs, explicit
+holds and the saved clean-run centering context.
+
+The [installed-trial results and limits](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22)
+are the current evidence, superseding the older run counts below. Fia and
+Amara are now Angelica Review candidates, not trusted core additions. The
+ordinary post-run preview is not empty and was not applied. Whole-identity
+merge/split, existing-identity category transitions, family naming,
+incremental-batch acceptance and full CLI modularization remain unfinished.
+The separate production clean-full rebuild is still required after acceptance
+and approval; there is no production adapter yet. Gallery visual acceptance
+also remains open because the integrated browser refused the external B:
+location. Review the actual local HTML without treating aggregate counts as
+identity correctness.
+The latest working-day reflection is the
+[Oct 22 overnight recap](recap/2026-10-22-0038-recap.md).
 
 Oct 14 photo-library follow-up: the people gallery now shows prospect-to-sister face matches and observable photo-readiness evidence; the standard library routine archives Prospect folders with no gallery or review originals under `_retired`. Pose diversity is not scored; a calibrated readiness ranking remains open in [plans/2026-10-12-tooling-debt.md](plans/2026-10-12-tooling-debt.md).
 
@@ -388,8 +413,10 @@ trees remain under the run's `previous` directory; undo is available.
 Actual output: 35 candidates entered Angel Review, 17 entered Sister Review,
 317 entered Prospects, and 786 entered Potentials. There are 27 Prospect and
 698 Potential folders, with no Models under these exact draft values.
-This conservative 0.55 clustering baseline is heavily fragmented and is
-**not accepted production behavior**. Of the 1,155 photos, 591 are in Gallery
+This 0.55 clustering baseline is heavily fragmented and is
+**not accepted production behavior**; structural planning/integration defects
+also contribute, so lowering one threshold is not a complete fix.
+Of the 1,155 photos, 591 are in Gallery
 and 564 are in Review. Fia Hadley's four photos are all physically in
 Angelica Review, excluded from her core; their cluster's cast score was
 0.4294 in this global clean-run scoring space. Three of Amara Berkley's four
@@ -411,6 +438,21 @@ folder scores); the full identity-core audit is saved beside them. Review
 scores use their current library/core context and must not be substituted
 for the recorded assignment-time scores. Production and immutable Source
 were not changed.
+
+Oct 21 scope reconciliation: the
+[Oct 21 plan's unified contract](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#unified-processing-contract-oct-21-reconciliation)
+now owns engine behavior across clean rebuilding and incremental intake.
+Grouping, photo/group matching, classification, core evidence and action
+authorization are separate decisions; cast protection is not a clustering
+floor. The Oct 20 plan retains metadata, staged actions, UI and recovery
+foundations, with integration/configuration work transferred rather than
+duplicated. A clean-full production rebuild is a required, separately approved
+deliverable after sandbox clean and incremental acceptance. The documented
+repair order addresses configuration ownership, lost pair evidence, suppressed
+proposals, artificial Review-only identities and legacy routine wiring before
+another installed threshold trial. Values remain calibration candidates, not
+production approval. This reconciliation changed documentation only; it did
+not fix the engine, alter policy JSON or move any photos.
 
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports

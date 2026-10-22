@@ -55,7 +55,7 @@
 - [ ] Archive `prompts/_edit` only after the manual prompt work is finished and any accepted content has been incorporated or deliberately retained elsewhere. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] R11 Review the post-run photo outcomes: `_junk` now contains 6 photos (3 from the earlier batch and 3 new incoming photos ([2026-10-19](plans/2026-10-19-library-rebaseline-and-frame-retirement.md))
 
-### Either of us (29)
+### Either of us (30)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -85,6 +85,7 @@
 **P3 (later, or ideas)**
 
 - [ ] Run it once the first finals exist, and watch the size; decide Git LFS only if it grows. ([2026-10-09](plans/2026-10-09-finals-and-mvp.md))
+- [ ] A5 Discuss optional local logo/text detection and cleanup ([2026-10-12](plans/2026-10-12-artists-reset-and-auto-crop.md))
 - [ ] L4 Decide whether `likeness pairs --apply` and `merge` should also finish by running `originals` (today only `library.cmd` ties the steps together). Owner: you (decision), me. ([2026-10-12](plans/2026-10-12-prime-prompts-frames-and-inputs.md))
 - [ ] S6 Decide from that audit whether to create a curated `docs/art/` vocabulary reference. If useful, write only the reviewed reusable terms and explain how they map to JSON fields; keep the external source non-canonical. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] R5 Art for the 15 legacy heroes that lack art identities, plus full sets for Darkness and Light first, then Grass, Fire, Water and Earth. ([2026-10-12](plans/2026-10-12-roadmap-and-mvp-data.md))
@@ -95,7 +96,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (90)
+### For the assistant, when you say go (95)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -119,7 +120,6 @@
 - [ ] 3.7 Once the sandbox boundary and reset allowlist are verified, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 3.9 Support repeated clean runs with different configs and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 3.10 Run the complete diagnostic suite after each sandbox ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
-- [ ] 4.1 Write the routing contract for confident same-person ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.1a Specify category precedence for a frozen run: resolve ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.3 Add group-to-group and person-to-cluster comparison ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.3a Implement the config-driven category evaluator for ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
@@ -132,6 +132,12 @@
 - [ ] 4.11 Implement incremental, idempotent self-healing on newly ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.12 Implement the agreed protection contract. Identity ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.13 Immediately after the sandbox rebase, run the normal ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.15 Replace competing settings with one schema-validated ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.16 Preserve singleton/pair/group evidence through planning. ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.17 Separate proposed decisions from authorization. A ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.18 Define, document and implement recoverable unresolved ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.19 Build action-labelled regression cases before another ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.20 After 4.15-4.19 and shared routine integration in ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1 Add family/lookalike grouping to the local people gallery ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1a Add gallery controls to include/exclude classifications ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1b If supported in the POC viewer, allow enabling/disabling ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
@@ -139,9 +145,9 @@
 - [ ] 5.1k Show rebase diagnostic results consistently in both ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.2 Add a read-only preview for threshold-assigned family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.3 Reuse the existing staged person-action manifest and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
-- [ ] 6.1 Freeze the accepted sandbox-tested rules, source scope, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.1 After accepted sandbox clean and incremental tests, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.3 Verify a fresh external-library backup and restore ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
-- [ ] 6.4 Re-run the accepted workflow against the normal library ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 6.4 Perform the clean-full production rebuild of the approved ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.1 Run labelled future-batch tests through the actual ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.2 Ensure generated reports explain destination and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.4 Update the likeness guide, affected runbooks, active plan ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
@@ -169,12 +175,12 @@
 - [ ] E2d Reassess command ownership and remove compatibility names ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] E3 Reassess package naming after the CLI is no longer an ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] C7 Keep dated report output available and support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C8 Add an explicit user-staged move to the closest identity, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
+- [ ] C9 Investigate a local secondary face model on labelled difficult ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G3 Test cancel, stale-manifest rejection, backup, apply, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] H1 Integrate the planner into `bin\library.cmd`, retaining ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H2 Extract metadata, core/scoring, planning and report/action ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] H3 Inventory all effective thresholds and options in one ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H4 Simplify the user-facing workflow and CLI options only ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] H5 Update the likeness guide, original-photo runbook, gallery ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] 1.6 Refactor only the confirmed complex matching seams into ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))

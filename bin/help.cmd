@@ -13,6 +13,7 @@ echo    pull.cmd HERO [STAGE]           keep what you made or edited in ComfyUI 
 echo.
 echo  PHOTO LIBRARY: THE ROUTINE (drop new photos in Various\gallery, then)
 echo    library.cmd                     everything; automatically makes a full pre-run snapshot and prefers one updated incoming same-ID photo
+echo                                    draft likeness policy refuses before housekeeping; use library-preview.cmd until approved
 echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
 echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
@@ -52,6 +53,7 @@ echo    likeness.cmd diagnostics --out DIR [--policy FILE]  one-pass calibration
 echo    likeness.cmd sandbox-reset       preview restoring only Models, Prospects, Potentials from the verified sandbox Source snapshot; --apply to restore ^(requires --root ...\Working^)
 echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
 echo    likeness.cmd policy                 show the validated draft shared likeness thresholds; rebaseline remains gated pending review
+echo    likeness.cmd reconcile [--out FILE.json] [--apply]  shared incoming + Review planner; verified backup and journal; production requires approved policy
 echo    likeness.cmd rebaseline              read-only category, routing, and cast-similarity preview; sandbox category moves require --apply-categories and a verified Working backup
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
