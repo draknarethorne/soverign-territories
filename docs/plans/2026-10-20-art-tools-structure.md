@@ -101,6 +101,11 @@ Overview ranking and workflow-photo display selection now live in
 `overview_photos.py`; `people_gallery.py` re-exports the existing ranking
 helper and renders the selected thumbnails. Workflow pinning is display-only,
 not identity evidence or a change to the ranking rules.
+Content-bound rejected-identity decisions now live in `rejections.py`, shared
+by candidate preparation, group/individual matching, staged action validation,
+maintenance and merge guards. Unsupported legacy mutations and clean-rebuild
+ID migration fail explicitly rather than discarding decisions. This bounded
+module does not complete the remaining legacy-command extraction.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

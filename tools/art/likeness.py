@@ -72,7 +72,7 @@ import originals  # noqa: E402
 import screens  # noqa: E402
 import people  # noqa: E402
 import library_backup  # noqa: E402
-from likeness_library import metadata  # noqa: E402
+from likeness_library import metadata, rejections  # noqa: E402
 from likeness_library.audit import audit_person  # noqa: E402
 from likeness_library.diagnostics import collect_diagnostics, write_report  # noqa: E402
 from likeness_library.sandbox import (  # noqa: E402
@@ -231,6 +231,7 @@ def record_history(done, work):
 def execute(moves, work, apply, cache, log=True):
     """Move the files into <to>/<bucket> (gallery, or review for photos to look at; a duplicate of what is already there goes to the source folder's gallery_org in _archive, a different file with the same name is kept under a new one).
     Each destination person folder records the move in its z_ file."""
+    rejections.require_legacy_moves(work, moves)
     batch = {"id": datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), "moves": []}
     made, done = 0, []
     for m in moves:
@@ -267,6 +268,8 @@ def execute(moves, work, apply, cache, log=True):
 
 
 def print_plan(moves, space, work=None):
+    if work is not None:
+        rejections.require_legacy_moves(work, moves)
     by = collections.defaultdict(list)
     for m in moves:
         by[(m.to, m.bucket)].append(m)

@@ -50,7 +50,12 @@
       "required": ["contentSha256", "protected"],
       "properties": {
         "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "protected": {"type": "boolean"}
+        "protected": {"type": "boolean"},
+        "rejectedPersonIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
+        }
       }
     },
     "action": {

@@ -59,7 +59,13 @@ Individual photo retirement is now staged separately from rejection: a
 verified, undoable original-file archive under `_retired/photos`, excluded
 from matching. Protected/anchored/workflow-selected originals are refused.
 The regenerated sandbox page exposes eligible Gallery and Review choices;
-whole-person retirement and permanent rejected-identity exclusions remain open.
+whole-person retirement remains open. Permanent rejected-identity exclusions
+now have a separate staged action, content-bound stable IDs, merged-successor
+guards and shared individual/group routing exclusions. Ordinary Reject to
+Various remains a nonpersistent pool operation. Stale bytes are held; legacy
+moves refuse exclusions they cannot honor, and clean rebuilding refuses
+non-cast exclusions until stable-ID migration is supported. Synthetic browser
+export/cancel passes; no real rejection was applied.
 The overview now keeps an otherwise hidden workflow photo in slot nine with
 a dashed score-colored border; sorting recalculates the display pin.
 The reported Uma Merritt 0.53 Various hold is traced in the

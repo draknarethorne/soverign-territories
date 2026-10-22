@@ -5,6 +5,7 @@ import numpy as np
 
 from .audit import audit_person
 from .policy import classify_category, evaluate_photo_route
+from .rejections import excluded_folders
 
 
 def _group_id(rows):
@@ -43,7 +44,9 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
     unresolved = []
 
     def classify(group):
-        ranked = _rank(group["vector"], cast, group["side"])
+        ranked = _rank(
+            group["vector"], cast, group["side"], excluded_folders(group["rows"], cast),
+        )
         return classify_category(
             len(group["rows"]), ranked[0][0] if ranked else None, policy,
             best_cast_folder=ranked[0][1] if ranked else None,
@@ -59,6 +62,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
                 "sourceBucket": row["sourceBucket"], "clusterId": group_id,
                 "bestMatch": ranked[0][1] if ranked else None,
                 "bestScore": round(ranked[0][0], 4) if ranked else None,
+                "excludedIdentityIds": row.get("rejectedPersonIds", []),
                 "reason": reason, **extra,
             }
             for row in rows
@@ -67,7 +71,9 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
     for row in candidates:
         ranked = _rank(
             row["vector"], cores, row["side"],
-            excluded=(row["sourceFolder"],) if row.get("detachedOutlier") else (),
+            excluded=excluded_folders([row], cores) | (
+                {row["sourceFolder"]} if row.get("detachedOutlier") else set()
+            ),
         )
         if row["side"] == "Artists":
             held.extend(evidence(
@@ -142,7 +148,9 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         )
         target = ranked[0][1] if ranked else None
         rules = categories[groups[target]["category"]] if target is not None else None
-        existing = _rank(group["vector"], cores, group["side"])
+        existing = _rank(
+            group["vector"], cores, group["side"], excluded_folders(group["rows"], cores),
+        )
         competitors = ([ranked[1][0]] if len(ranked) > 1 else []) + (
             [existing[0][0]] if existing else []
         )
@@ -169,7 +177,7 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
             continue
         rows = group["rows"] + group.get("attached", [])
         vector = group["vector"]
-        cast_ranked = _rank(vector, cast, group["side"])
+        cast_ranked = _rank(vector, cast, group["side"], excluded_folders(rows, cast))
         score = cast_ranked[0][0] if cast_ranked else None
         classification = classify({**group, "rows": rows})
         if classification["category"] in (None, "Review"):

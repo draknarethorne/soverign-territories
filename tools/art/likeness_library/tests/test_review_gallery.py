@@ -326,7 +326,7 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertTrue(review_item["stageable"])
             self.assertEqual(
                 [action for action, _label in review_item["stageOptions"]],
-                ["photo-protected", "rejected-to-various", "review-approved", "match-accepted", "photo-retired"],
+                ["photo-protected", "rejected-to-various", "review-approved", "match-rejected", "match-accepted", "photo-retired"],
             )
             self.assertEqual(cache.saved, 1)
 

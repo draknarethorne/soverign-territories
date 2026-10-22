@@ -18,14 +18,14 @@ import likeness  # noqa: E402
 import originals  # noqa: E402
 import library_backup  # noqa: E402
 import people  # noqa: E402
-from likeness_library import metadata, person_actions  # noqa: E402
+from likeness_library import metadata, person_actions, rejections  # noqa: E402
 
 cw = likeness.cw
 
 MANIFEST_SCHEMA = ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
 PHOTO_ROOTS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists", "Models", "Various")
 IGNORED_PARTS = {"_archive", "_junk", "_retired"}
-MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved", "match-accepted", "photo-retired"}
+MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "match-rejected", "review-approved", "match-accepted", "photo-retired"}
 ANCHOR_ACTIONS = {"anchor-added", "anchor-removed"}
 PROTECTION_ACTIONS = {"photo-protected", "photo-unprotected"}
 WORKFLOW_ACTIONS = {"workflow-photo-selected"}
@@ -113,7 +113,7 @@ def _destination(action, root, pool_folder):
         return root / action["personFolder"] / "review"
     if action["type"] == "review-approved":
         return root / action["personFolder"] / "gallery"
-    if action["type"] == "rejected-to-various":
+    if action["type"] in ("rejected-to-various", "match-rejected"):
         return root / pool_folder / "gallery"
     return None
 
@@ -298,11 +298,38 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
         else:
             person_id, anchored = action.get("personId"), False
         stored_photo = catalog["photos"].get(photo_id)
+        if (
+            stored_photo and stored_photo.get("rejectedPersonIds")
+            and stored_photo["contentSha256"] != actual_hash
+        ):
+            errors.append(f"{label}: rejected-identity metadata is stale; review changed photo bytes")
+            continue
         protected = bool(
             stored_photo
             and stored_photo["protected"]
             and stored_photo["contentSha256"] == actual_hash
         )
+        if action["type"] == "match-rejected":
+            if not person_record or person_record[1].get("mergedInto"):
+                errors.append(f"{label}: persistent rejection requires an active registered identity")
+                continue
+            if photo_id in anchor_owners or protected:
+                errors.append(f"{label}: remove photo protection or anchor before persistent rejection")
+                continue
+            if stored_photo and stored_photo["contentSha256"] != actual_hash:
+                errors.append(f"{label}: photo metadata is stale; resolve changed photo bytes first")
+                continue
+        if action["type"] in ("match-accepted", "review-approved"):
+            target_id = (
+                action["destinationPersonId"] if action["type"] == "match-accepted"
+                else person_id
+            )
+            if target_id:
+                try:
+                    rejections.require_destination(catalog, photo_id, actual_hash, target_id)
+                except ValueError as exc:
+                    errors.append(f"{label}: {exc}")
+                    continue
         if action["type"] == "photo-retired":
             if protected or photo_id in anchor_owners:
                 errors.append(f"{label}: remove photo protection or identity anchor before retirement")
@@ -451,7 +478,8 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         and old_photo["protected"]
         and old_photo["contentSha256"] == actual_hash
     )
-    photo = {"contentSha256": actual_hash, "protected": protected}
+    photo = copy.deepcopy(old_photo) if old_photo else {}
+    photo.update({"contentSha256": actual_hash, "protected": protected})
 
     action_type = action["type"]
     if action_type == "anchor-added":
@@ -462,10 +490,12 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         photo["protected"] = True
     elif action_type == "photo-unprotected":
         photo["protected"] = False
-    elif action_type in ("sent-to-review", "rejected-to-various"):
+    elif action_type in ("sent-to-review", "rejected-to-various", "match-rejected"):
         person["identityAnchors"] = [
             anchor for anchor in person["identityAnchors"] if anchor != photo_id
         ]
+    if action_type == "match-rejected":
+        photo["rejectedPersonIds"] = sorted(set(photo.get("rejectedPersonIds", [])) | {person_id})
     catalog["photos"][photo_id] = photo
     after_state = _catalog_state(catalog, person_id, photo_id)
     source_relative = _relative_file(root, source)
@@ -503,10 +533,10 @@ def _apply_workflow_action(catalog, plan, root, batch_id):
         and old_photo["protected"]
         and old_photo["contentSha256"] == action["contentSha256"]
     )
-    catalog["photos"][photo_id] = {
-        "contentSha256": action["contentSha256"],
-        "protected": protected,
-    }
+    catalog["photos"][photo_id] = copy.deepcopy(old_photo) if old_photo else {}
+    catalog["photos"][photo_id].update({
+        "contentSha256": action["contentSha256"], "protected": protected,
+    })
     after_state = _catalog_state(catalog, person_id, photo_id)
     source_relative = _relative_file(root, plan["source"])
     workflow = plan["workflow"]

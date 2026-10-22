@@ -85,6 +85,10 @@ def validation_errors(data):
                 anchor_owners[photo_id] = person_id
 
     action_ids = set()
+    for photo_id, photo in photos.items():
+        for person_id in photo.get("rejectedPersonIds", []):
+            if person_id not in people:
+                errors.append(f"photos/{photo_id}: rejected identity {person_id} has no person record")
     for index, action in enumerate(data["actions"]):
         if action["id"] in action_ids:
             errors.append(f"actions/{index}: duplicate action id {action['id']}")

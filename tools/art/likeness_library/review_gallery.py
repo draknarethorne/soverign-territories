@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import metadata  # noqa: E402
+from likeness_library import metadata, rejections  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.policy import (
@@ -187,7 +187,9 @@ function card(r, readOnly=false) {
     article.append(id);
     const identityId=document.createElement("div"); identityId.className="detail identity-id";
     identityId.textContent="Identity ID: "+(r.personId||(r.folder==="Various"?"unassigned (Various hold)":"not catalogued"));
-    identityId.title="Various is an unassigned holding area, not a person identity";
+    identityId.title=r.personId?"Stable identity key from the likeness catalogue":
+      r.folder==="Various"?"Various is an unassigned holding area, not a person identity":
+      "This folder has no registered catalogue identity";
     article.append(identityId);
   }
   const badges=readOnly?[r.referenceLabel]:[
@@ -265,6 +267,8 @@ function card(r, readOnly=false) {
   const summary=document.createElement("summary"); summary.textContent="Scoring & action details"; rationale.append(summary);
   const detailTexts=[
     ...(r.scoreDetails||[]),
+    r.rejectedIdentityIds?.length?"Recorded identity exclusions: "+r.rejectedIdentityIds.join(", "):"",
+    r.rejectionMetadataStale?"Identity exclusions need review: photo bytes changed; automatic routing is held.":"",
     r.state==="Core member"?"":r.reason,
     r.stageReason
   ].filter(Boolean);
@@ -526,7 +530,7 @@ def _local_photo_path(path):
 
 
 def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable=True,
-                   workflow_photo=False, workflow_selected=False):
+                   workflow_photo=False, workflow_selected=False, registered=False):
     """Return actions valid for this photo's current location and metadata."""
     if not stageable or not photo_id:
         return []
@@ -551,6 +555,8 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
             ("review-approved", "Approve back to Gallery"),
         ])
     if not protected and not anchor and not workflow_selected:
+        if registered:
+            options.append(("match-rejected", "Reject identity permanently; return to Various"))
         options.append(("match-accepted", "Move to another identity's Review (closest preselected)"))
         options.append(("photo-retired", "Retire photo to _retired/photos (recoverable; excluded from matching)"))
     return options
@@ -737,6 +743,13 @@ def collect_items(
             content_hashes[key] = metadata.content_sha256(photo.path)
         return content_hashes[key]
 
+    def rejection_context(photo, photo_id):
+        state = rejections.candidate_state(catalog, photo_id, manifest_hash(photo))
+        return {
+            "rejectedIdentityIds": catalog["photos"].get(photo_id, {}).get("rejectedPersonIds", []),
+            "rejectionMetadataStale": state.get("rejectionMetadataStale", False),
+        }
+
     photo_records = [
         (
             metadata.photo_id_from_name(photo.name),
@@ -898,6 +911,7 @@ def collect_items(
                 "name": photo.name,
                 "photoId": photo_id,
                 "contentSha256": manifest_hash(photo),
+                **rejection_context(photo, photo_id),
                 "personId": person_id,
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
@@ -920,6 +934,7 @@ def collect_items(
                 "stageOptions": action_options(
                     "Gallery", photo_id, anchor=photo_id in anchors and photo_id not in stale_ids,
                     protected=photo_id in protected_ids,
+                    registered=bool(person_id),
                     workflow_photo=workflow_photo_available,
                     workflow_selected=photo_id in selected_ids,
                     stageable=(
@@ -989,6 +1004,7 @@ def collect_items(
                 "name": photo.name,
                 "photoId": photo_id,
                 "contentSha256": manifest_hash(photo),
+                **rejection_context(photo, photo_id),
                 "personId": person_id,
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
@@ -1005,6 +1021,7 @@ def collect_items(
                 ),
                 "stageOptions": action_options(
                     "Review", photo_id, protected=photo_id in protected_ids,
+                    registered=bool(person_id),
                     workflow_selected=photo_id in selected_ids,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict

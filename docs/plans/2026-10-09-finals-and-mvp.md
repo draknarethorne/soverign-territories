@@ -1,7 +1,7 @@
 # 2026-10-09 plan: finals, candidates, source photos and the MVP scope
 
 **Status:** active (agreed Oct 9; decisions D1 to D10 are answered in the table below; see "Today at a glance" for what is built and what is left).
-Plans live in `docs/plans/YYYY-MM-DD-<slug>.md`: a tmp draft becomes a plan once we agree to act on it, `docs/STATUS.md` carries one line per active plan, and finished plans stay here marked `done`.
+Plans follow the current [planning and feedback process](README.md): file/chat feedback becomes an agreed plan, this index lists plans, and finished plans are archived.
 The raw brain-dump this came from is kept word for word at the end.
 
 ## Today at a glance (Oct 9, updated as we go)
@@ -211,18 +211,10 @@ Full analysis: [docs/art/minimax-h3-video-templates.md](../art/minimax-h3-video-
 
 ## The daily pattern (my view)
 
-I think this is the right pattern, with one adjustment: keep the three kinds of document separate so each stays clean.
-
-| Kind | Where | Rule |
-| --- | --- | --- |
-| Scratch thinking | `tmp/<topic>.md` (git-ignored) | Brain-dumps and drafts; free-form; nothing depends on them |
-| A plan we agreed to act on | `docs/plans/YYYY-MM-DD-<slug>.md` (tracked) | Starts as a tmp draft; gets a `Status:` line (proposed, active, done, dropped), the steps as checkboxes, the decisions and a short `Result` when done |
-| Current state | `docs/STATUS.md` | Decisions and open questions only, with one line per active plan; no step-by-step detail |
-| Your checklist | `docs/todo.md` | Generated from tool status and the active plans' open boxes, plus a section that is yours |
-
-- Finished plans stay in `docs/plans/` (they are history, not superseded), marked `done`; only a plan replaced by a newer one moves to `docs/_archive`, following the existing archive rule.
-- When a plan is agreed, I move it from `tmp/` to `docs/plans/`, add the pointer line to STATUS, and from then on tick its boxes as we finish steps.
-- `docs/README.md` gets a row for `docs/plans/`, so the folder has one clear owner.
+The [plans README](README.md) owns the current intake, lifecycle and hygiene
+rules. It supersedes this plan's original tmp-only draft, STATUS-listing and
+finished-plan retention proposal. Raw feedback is now kept safely in
+`feedback/` until verified incorporation; direct chat feedback is captured too.
 
 ## Raw thoughts (kept word for word)
 

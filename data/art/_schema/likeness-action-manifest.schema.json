@@ -41,6 +41,7 @@
             "photo-unprotected",
             "sent-to-review",
             "rejected-to-various",
+            "match-rejected",
             "review-approved",
             "photo-retired",
             "match-accepted",
@@ -56,6 +57,13 @@
         "destinationPersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {"type": {"const": "match-rejected"}},
+            "required": ["type"]
+          },
+          "then": {"required": ["personId"]}
+        },
         {
           "if": {
             "properties": {"type": {"const": "match-accepted"}},

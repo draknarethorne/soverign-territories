@@ -341,6 +341,33 @@ class IdentityMaintenanceTests(unittest.TestCase):
         )
         self.assertEqual(actions, [])
 
+    def test_persistent_review_rejection_blocks_merge_proposal_and_forged_apply(self):
+        _, space, cores, target, target_id = self.merge_fixture()
+        planned, _ = identities.merge_actions(
+            space, cores, self.catalog, set(), set(), self.policy, self.root, [],
+        )
+        self.assertEqual(len(planned), 1)
+        review = self.photo(888888, bucket="review")
+        photo_id = metadata.photo_id_from_name(review.name)
+        self.catalog["photos"][photo_id] = {
+            "contentSha256": metadata.content_sha256(review.path), "protected": False,
+            "rejectedPersonIds": [target_id],
+        }
+        metadata.save_catalog(self.catalog, self.root / ".likeness-library.json")
+        proposed, evidence = identities.merge_actions(
+            space, cores, self.catalog, set(), set(), self.policy, self.root, [],
+        )
+        self.assertEqual(proposed, [])
+        self.assertIn("explicitly rejected", evidence[0]["reason"])
+        moves = identities.relocate_files(self.root, [], planned)
+        with self.assertRaisesRegex(ValueError, "explicitly rejected"):
+            maintenance.apply_moves(
+                self.root, moves, self.policy, {}, identity_actions=planned,
+                backup_fn=lambda *_: self.fail("merge must stop before backup"),
+            )
+        self.assertTrue(review.path.is_file())
+        self.assertEqual(self.catalog["people"][target_id]["folder"], target)
+
     def test_merge_revalidates_target_after_backup(self):
         _, space, cores, target, _ = self.merge_fixture()
         actions, _ = identities.merge_actions(

@@ -3,7 +3,7 @@ import copy
 import pathlib
 from types import SimpleNamespace
 
-from . import metadata
+from . import metadata, rejections
 from .policy import (
     classify_category, evaluate_identity_action, evaluate_photo_consistency, evaluate_photo_route,
 )
@@ -56,6 +56,16 @@ def merge_actions(space, cores, catalog, locked_ids, selected_ids, policy, root,
                 continue
             score = float(cores[left]["vector"] @ cores[right]["vector"])
             if score < policy["identityActions"]["matchReviewMinimum"]:
+                continue
+            conflict = (
+                rejections.folder_conflict(root, left, catalog, eligible[right])
+                or rejections.folder_conflict(root, right, catalog, eligible[left])
+            )
+            if conflict:
+                evidence.append({
+                    "sourceFolder": left, "destinationFolder": right, "score": score,
+                    "decision": "hold", "reason": conflict,
+                })
                 continue
             decisions = []
             support_counts = []

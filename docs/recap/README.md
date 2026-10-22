@@ -22,7 +22,7 @@ The plans say what is open ([../todo.md](../todo.md) is the queue); the recap sa
 
 ## How it is made
 
-1. Re-read the day: the plans touched, `git log` and `git diff --stat`, the notes in `tmp/`, what the tools reported.
+1. Re-read the day: the plans touched, `git log` and `git diff --stat`, raw notes in `feedback/`, relevant chat feedback, any legacy tmp notes, and what the tools reported. Follow the [feedback preservation rules](../plans/README.md#how-a-plan-moves); never clear notes as housekeeping.
 2. Write it plainly: what helped and what did not, including the assistant's own mistakes. No cheerleading.
 3. Turn every "could be improved" that deserves work into a tagged box in a plan (`docs/plans/`), so it reaches [../todo.md](../todo.md).
 4. Keep the top 3 short and actionable; they come from the queue, not from new ideas.

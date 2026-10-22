@@ -6,6 +6,7 @@ import numpy as np
 
 from .audit import audit_person
 from .scoring import nz
+from . import rejections
 
 
 def frozen_identity_cores(
@@ -38,8 +39,8 @@ def frozen_identity_cores(
             protected_ids.add(photo_id)
 
     records_by_folder = {}
-    for person in catalog.get("people", {}).values():
-        records_by_folder.setdefault(person["folder"], []).append(person)
+    for person_id, person in catalog.get("people", {}).items():
+        records_by_folder.setdefault(person["folder"], []).append((person_id, person))
 
     cores, diagnostics, effective_anchor_ids = {}, [], set()
     for folder in sorted(space.by_key):
@@ -51,7 +52,7 @@ def frozen_identity_cores(
         usable = [photo for photo in photos if photo.usable(space.st["minFace"])]
         if not usable:
             continue
-        person = records[0] if records else None
+        person_id, person = records[0] if records else (None, None)
         if person and person.get("mergedInto"):
             diagnostics.append(f"{folder}: merged identity history is not an active reference; skipped")
             continue
@@ -84,6 +85,7 @@ def frozen_identity_cores(
             "vector": core_vector,
             "side": "Artists" if folder.startswith("Artists/") else "Prospects",
             "category": folder.split("/", 1)[0],
+            "personIds": sorted(rejections.identity_ids(catalog, person_id)) if person else [],
             "identityProtected": bool(person and person.get("protected")),
             "mode": result["mode"],
             "corePhotoIds": [
@@ -233,6 +235,14 @@ def plan_reconciliation(
                 })
             continue
         candidate = dict(rows[0])
+        if candidate.get("rejectionMetadataStale"):
+            held.append({
+                "photoId": photo_id, "sourceFolder": candidate.get("sourceFolder"),
+                "sourceBucket": candidate.get("sourceBucket"),
+                "reason": "rejected-identity metadata is stale; review changed photo bytes",
+                "preserveStaged": True,
+            })
+            continue
         if candidate.get("identityProtected"):
             held.append({
                 "photoId": photo_id,
@@ -299,6 +309,8 @@ def plan_reconciliation(
         return result
 
     from .legacy_reconciliation import plan_legacy
+    if any(row.get("rejectedPersonIds") for row in prepared):
+        raise ValueError("persistent identity rejections require the policy-driven planner")
     return plan_legacy(
         prepared,
         cores,

@@ -3,7 +3,7 @@ import datetime
 import json
 import pathlib
 
-from . import identity_maintenance, maintenance
+from . import identity_maintenance, maintenance, rejections
 
 
 def _save_report(output, report):
@@ -61,6 +61,7 @@ def run(args, api):
             "workflowSelected": bool(photo_id and photo_id in selected_ids),
             "identityProtected": bool(cores.get(photo.key, {}).get("identityProtected")),
             "vector": photo.vec,
+            **rejections.photo_state(catalog, photo),
         })
     for folder, path, photo in review_rows:
         if photo is None:
@@ -73,11 +74,19 @@ def run(args, api):
             "protected": bool(photo_id and (photo_id in locked_ids or photo_id in selected_ids)),
             "workflowSelected": bool(photo_id and photo_id in selected_ids),
             "identityProtected": False, "vector": photo.vec,
+            **rejections.photo_state(catalog, photo),
         })
     outliers, outlier_evidence = identity_maintenance.split_candidates(
         space, cores, locked_ids, selected_ids, policy,
     )
     candidates.extend(outliers)
+    photos_by_id = {
+        api.metadata.photo_id_from_name(photo.name): photo
+        for photo in space.photos
+    }
+    for candidate in outliers:
+        photo = photos_by_id[candidate["photoId"]]
+        candidate.update(rejections.photo_state(catalog, photo))
     taken = {name.split('/')[-1] for _, name, _ in api.cw.photo_folders(cfg, work)}
     report = api.plan_reconciliation(
         candidates, cores, assign=st["assign"], margin=st["margin"],

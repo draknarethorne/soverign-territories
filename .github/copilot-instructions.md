@@ -63,14 +63,14 @@ If a number or rule here disagrees with those docs, the docs win.
 - **Ignore every `_archive` folder** when reading documentation, data, or prompts, and do not cite or link to it,
   unless the user explicitly asks for archived material. Folders like `data/art/_templates`, `_sets`, `_schema` are active.
 - Do not make major design decisions without user approval, and do not commit code that fails the validators.
-- **Plans:** the user thinks in `tmp/<topic>.md` (git-ignored). When a draft is agreed, move it to `docs/plans/YYYY-MM-DD-<slug>.md`
+- **Plans:** accept raw notes in `feedback/<topic>.md` (git-ignored) or directly in chat. When agreed, incorporate them into the owning existing plan or `docs/plans/YYYY-MM-DD-<slug>.md`
   with a `**Status:**` line and a row in the table of `docs/plans/README.md` (STATUS.md does not list plans), ask open decisions one at a
   time, and keep the user's own words at the end of the plan, word for word. Every open step is a checkbox with a tag,
   `- [ ] **P1 you** T3 ...` (priority P1 to P3; owner `you` = needs the user's hands or decision, `ai`, or `either`): `bin\todo.cmd`
   turns the tags into `docs/todo.md`, which is never ticked by hand. A finished plan gets `**Status:** done` and a `Result`, and is
-  `git mv`ed into `docs/plans/_archive/` (fix its relative links) with no open boxes left. Never delete a tmp note until its text is in a plan or a doc.
-- **The day's hygiene (before a commit and push at the end of a working day):** `tmp/` is empty (each note became a plan, part of a doc, or
-  was deleted because it is covered; questions about a note go to the user); every plan has a status and tagged boxes; finished plans are
+  `git mv`ed into `docs/plans/_archive/` (fix its relative links) with no open boxes left. Preserve raw feedback word for word at the end of its primary plan, including relevant chat messages, and record coverage of every request. Re-read a source immediately before removing that specific file, only after preservation and coverage are verified. Never bulk-clear `feedback/`; legacy raw notes in `tmp/` have the same protection.
+- **The day's hygiene (before a commit and push at the end of a working day):** feedback files, chat requests and legacy tmp notes are accounted for
+  in owning plans; unresolved/unincorporated notes stay safely in place (neither directory must be empty); every plan has a status and tagged boxes; finished plans are
   archived; `bin\todo.cmd` was run; STATUS.md has the day's decisions; a recap is written in `docs/recap/`; validators, tests and
   markdownlint pass. The checklist is in `docs/plans/README.md`.
 - **Large days:** split the work into steps and say what you are doing and why; run long jobs so that they can be checked (a log, a count,

@@ -377,6 +377,25 @@ must have their restrictions resolved first. The audit retains the chosen
 destination ID; undo refuses a replaced or relocated destination identity.
 Unassigned Various holds and Artist sources do not offer this action.
 
+**Reject identity permanently; return to Various** is distinct from the
+ordinary **Reject to Various** pool operation. For a registered identity,
+the permanent action records that identity's stable ID against the current
+photo bytes. Normal intake must exclude it, including its merged successor,
+from automatic Gallery or Review destinations; grouping must not bypass the
+decision. Other identities remain eligible. Ordinary pool rejection retains
+its existing reprocessing semantics and does not create an exclusion.
+The permanent decision is auditable and reversible through action undo.
+Stale photo bytes must be held rather than silently discarding an exclusion.
+Metadata/protection changes cannot silently rebind that decision to new bytes.
+Clean rebuilding must refuse to regenerate non-cast identities with saved
+rejections until their stable-ID migration is supported; cast exclusions can
+be honored against retained cast IDs. This does not approve a new rebuild.
+Installing a saved rebuild preview rechecks the source catalogue hash;
+pre-exclusion previews are refused when persistent decisions now exist.
+Legacy likeness move commands refuse photos with persistent exclusions
+instead of bypassing them; use the shared policy-driven `reconcile` or staged
+action path. The action does not silently reinterpret older pool rejections.
+
 **Retire photo** is a separate, recoverable archive action for an unusable
 Gallery or Review original. Its preview shows the exact destination:
 `_retired/photos/<category>/<identity>/<gallery-or-review>/<original-name>`.

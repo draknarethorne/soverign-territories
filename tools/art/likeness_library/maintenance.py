@@ -4,7 +4,7 @@ import json
 import pathlib
 import uuid
 
-from . import metadata
+from . import metadata, rejections
 from .identity_maintenance import category_destination_available, relocated_path
 from .sandbox import is_sandbox_working_path
 
@@ -144,6 +144,18 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
     for row in moves:
         if row.get("photoId") in protected_ids:
             raise ValueError(f"protected or workflow-selected photo cannot move: {row['photoId']}")
+        if row.get("photoId") and rejections.candidate_state(
+            catalog, row["photoId"], row["sha256"],
+        ).get("rejectionMetadataStale"):
+            raise ValueError(f"{row['photoId']}: rejected-identity metadata is stale; review changed photo bytes")
+        destination = pathlib.PurePosixPath(row["destination"]).parts
+        if len(destination) >= 4 and destination[-2] in ("gallery", "review"):
+            folder = "/".join(destination[:-2])
+            target = next((person for person in catalog["people"].values() if person["folder"] == folder), None)
+            if target and row.get("photoId"):
+                rejections.require_destination(
+                    catalog, row["photoId"], row["sha256"], target["id"],
+                )
         if row.get("kind") == "identity-file":
             continue
         source = pathlib.PurePosixPath(row["source"]).parts
@@ -199,6 +211,12 @@ def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
                 or not policy["categoryPolicies"][destination_person["folder"].split("/")[0]]["automaticMergeEnabled"]
             ):
                 raise ValueError("merge requires two current, unprotected identities with merge permission")
+            conflict = (
+                rejections.folder_conflict(root, person["folder"], catalog, destination_person["id"])
+                or rejections.folder_conflict(root, destination_person["folder"], catalog, person["id"])
+            )
+            if conflict:
+                raise ValueError(conflict)
             for current_person in (person, destination_person):
                 rules = policy["categoryPolicies"][current_person["folder"].split("/")[0]]
                 if action["score"] < rules["mergeMinimum"]:
@@ -263,10 +281,11 @@ def _updated_catalog(catalog, moves, policy, identity_actions=()):
                 }
                 people[folder] = person
                 updated["people"][person_id] = person
-        updated["photos"][row["photoId"]] = {
+        photo_record = updated["photos"].setdefault(row["photoId"], {})
+        photo_record.update({
             "contentSha256": row["sha256"],
-            "protected": updated["photos"].get(row["photoId"], {}).get("protected", False),
-        }
+            "protected": photo_record.get("protected", False),
+        })
     metadata.validate_catalog(updated)
     return updated
 

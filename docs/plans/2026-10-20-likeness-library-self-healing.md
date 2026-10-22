@@ -555,6 +555,16 @@ are verified on real, backed-up batches before enabling routine use.
 
 ### Phase G — add photo and person retirement to the review interface
 
+- [x] **P1 ai** G0a Add distinct permanent photo-to-identity rejection:
+  `match-rejected` preserves the current identity's stable ID against the
+  photo's SHA-256, returns the original to Various through existing backed-up
+  actions, and is reversible by undo. Individual and group matching exclude
+  that identity and its merged successor. Explicit approval/reassignment and
+  whole-identity merges cannot bypass the decision. Changed bytes are held;
+  legacy move paths refuse unsupported exclusions, and clean rebuilding
+  refuses non-cast exclusions pending stable-ID migration. Ordinary pool
+  rejection remains nonpersistent. Synthetic browser export and cancel pass;
+  no actual library rejection was applied.
 - [x] **P1 ai** G0 Deliver the photo-level slice: `photo-retired` manifests,
   exact recoverable `_retired/photos/<person>/<bucket>` destination preview,
   current ID/hash validation, photo-protection/anchor/workflow guards,

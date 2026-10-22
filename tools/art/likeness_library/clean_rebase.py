@@ -9,7 +9,7 @@ import uuid
 
 import numpy as np
 
-from . import metadata
+from . import metadata, rejections
 from .engine import Cache, Photo, Space
 from .policy import effective_settings, load_policy
 from .reconciliation import frozen_identity_cores, plan_reconciliation
@@ -68,6 +68,22 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
     if cache_path.exists() and not reuse_measurements:
         raise ValueError("clean rebase requires a new run directory and empty embedding cache")
     cfg = api.cw.load_cfg()
+    catalog_path = metadata.path_for_root(layout["working_root"])
+    source_catalog_hash = metadata.content_sha256(catalog_path)
+    catalog = metadata.load_catalog(catalog_path)
+    rejected = {
+        person_id for photo in catalog["photos"].values()
+        for person_id in photo.get("rejectedPersonIds", [])
+    }
+    if any(
+        catalog["people"][person_id]["folder"].split("/")[0] not in ("Angels", "Sisters")
+        or catalog["people"][person_id].get("mergedInto")
+        for person_id in rejected
+    ):
+        raise ValueError(
+            "clean rebuild cannot regenerate identities with persistent non-cast rejections; "
+            "stable-ID migration is required before rebuilding"
+        )
     settings = effective_settings(cfg, policy)
     cache = Cache(cache_path)
     embed = embedder or api.Embedder()
@@ -110,7 +126,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         if photo.usable(settings["minFace"]):
             space.by_key[photo.key].append(photo)
     space.keys = sorted(space.by_key)
-    catalog = metadata.with_configured_anchors(metadata.load_catalog(), cfg, cast_photos)
+    catalog = metadata.with_configured_anchors(catalog, cfg, cast_photos)
     cores, _, diagnostics = frozen_identity_cores(
         space, catalog, photo_id_fn=metadata.photo_id_from_name,
         content_sha256_fn=metadata.content_sha256, policy=policy,
@@ -165,6 +181,7 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         candidates.append({
             "photoId": photo_id, "sourceFolder": "Various", "sourceBucket": "Pool",
             "side": "Prospects", "vector": photo.vec,
+            **rejections.photo_state(catalog, photo),
         })
     print(f"clean rebase: {len(cores)} cast-only cores; {len(candidates)} flattened candidates", flush=True)
     result = plan_reconciliation(
@@ -241,6 +258,8 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
             "protected": policy["categoryPolicies"][category]["identityProtectedByDefault"],
         }
     metadata.validate_catalog(catalog)
+    if metadata.content_sha256(metadata.path_for_root(layout["working_root"])) != source_catalog_hash:
+        raise ValueError("source catalogue changed while preparing clean rebuild; regenerate preview")
     _write_json(run / "catalog.json", catalog)
     plan = {
         "schemaVersion": 1, "mode": "clean-cast-seeded-rebuild",
@@ -253,9 +272,10 @@ def create_plan(layout, run, policy, api, embedder=None, *, reuse_measurements=F
         "centeringMean": mean.tolist(), "candidateCount": len(records),
         "coreDiagnostics": diagnostics, "photos": sorted(routed, key=lambda r: r["source"]),
         "catalogSHA256": metadata.content_sha256(run / "catalog.json"),
+        "sourceCatalogSHA256": source_catalog_hash,
         "implementationHashes": {
             name: metadata.content_sha256(pathlib.Path(__file__).with_name(name))
-            for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py", "audit.py", "engine.py")
+            for name in ("clean_rebase.py", "planner.py", "policy.py", "reconciliation.py", "audit.py", "engine.py", "rejections.py")
         },
         "status": "preview",
     }
@@ -268,6 +288,15 @@ def install_plan(layout, run, plan):
     import library_backup
 
     working, source = layout["working_root"], layout["source_root"]
+    current_catalog_path = metadata.path_for_root(working)
+    if "sourceCatalogSHA256" in plan:
+        if metadata.content_sha256(current_catalog_path) != plan["sourceCatalogSHA256"]:
+            raise ValueError("source catalogue changed since clean rebuild preview; regenerate preview")
+    elif any(
+        photo.get("rejectedPersonIds")
+        for photo in metadata.load_catalog(current_catalog_path)["photos"].values()
+    ):
+        raise ValueError("clean rebuild preview predates persistent rejections; regenerate preview")
     _verify_routes(plan, source)
     if plan["status"] != "preview":
         raise ValueError("this clean rebase plan has already been applied")
