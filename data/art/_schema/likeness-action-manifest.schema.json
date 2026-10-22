@@ -12,10 +12,21 @@
     "actions": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/definitions/action"}
+      "items": {"oneOf": [{"$ref": "#/definitions/action"}, {"$ref": "#/definitions/personAction"}]}
     }
   },
   "definitions": {
+    "personAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "personId", "personFolder", "expectedProtected"],
+      "properties": {
+        "type": {"enum": ["person-protected", "person-unprotected"]},
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "personFolder": {"type": "string", "pattern": "^(Models|Prospects)/[^/\\\\:]+$"},
+        "expectedProtected": {"type": "boolean"}
+      }
+    },
     "action": {
       "type": "object",
       "additionalProperties": false,

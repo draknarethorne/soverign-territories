@@ -19,6 +19,41 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_person_protection_export_is_separate_from_photo_decisions(self):
+        person_id = "person_" + "a" * 32
+        person = {"id": person_id, "protected": False}
+        decision = review_gallery.person_protection_action("Models/Example", person_id, person)
+        self.assertEqual(decision, {
+            "type": "person-protected", "personId": person_id,
+            "personFolder": "Models/Example", "expectedProtected": False,
+        })
+        schema = json.loads(
+            (review_gallery.ROOT / "data" / "art" / "_schema" / "likeness-action-manifest.schema.json")
+            .read_text(encoding="utf-8")
+        )
+        document = {
+            "manifestVersion": 1, "generatedAt": "2026-10-22T09:30:00-05:00",
+            "source": "people-gallery-review", "actions": [decision],
+        }
+        self.assertEqual(list(Draft7Validator(schema).iter_errors(document)), [])
+        person["protected"] = True
+        self.assertEqual(
+            review_gallery.person_protection_action("Prospects/Example", person_id, person)["type"],
+            "person-unprotected",
+        )
+        for folder in ("Angels/Example", "Sisters/Example", "Potentials/Example", "Various"):
+            self.assertIsNone(review_gallery.person_protection_action(folder, person_id, person))
+        self.assertIsNone(review_gallery.person_protection_action("Models/Example", None, None))
+        person["mergedInto"] = "person_" + "b" * 32
+        self.assertIsNone(review_gallery.person_protection_action("Models/Example", person_id, person))
+        page = review_gallery.render_html([{
+            "folder": "Models/Example", "group": "Models", "personProtectionAction": decision,
+        }], "now")
+        people_data = json.loads(page.split('<script id="people-data" type="application/json">')[1].split("</script>")[0])
+        self.assertEqual(people_data["Models/Example"]["personProtectionAction"], decision)
+        self.assertIn("actions.push(...stagedPeople.values())", page)
+        self.assertIn("Identity protection (not photo protection)", page)
+
     def test_pool_root_is_not_a_person_and_holds_are_rendered_once(self):
         st = likeness.settings({})
         with tempfile.TemporaryDirectory() as directory:

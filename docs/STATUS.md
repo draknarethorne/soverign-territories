@@ -45,6 +45,10 @@ whole-identity merges, red-outlier splits, ID-preserving category transitions
 and manual Review reassignment now have tested transaction paths. Apply
 performs one read-only affected-core check without cascading moves. The
 current `.4` draft's diversity heuristic is not calibrated acceptance.
+Registered Models/Prospects now have a separate staged identity-protection
+control with stable-ID/state validation, verified-backup apply and undo.
+It does not change scores or borrow a photo ID. Synthetic browser export,
+cancel/conflict checks and actual sandbox payload checks pass.
 Family naming, incremental-batch acceptance, global convergence and full CLI
 modularization remain unfinished.
 The separate production clean-full rebuild is still required after acceptance

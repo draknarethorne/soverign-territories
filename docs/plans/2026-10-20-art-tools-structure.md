@@ -89,6 +89,9 @@ fallback is isolated in `legacy_reconciliation.py`, with unreachable policy
 branches removed; normal rebase and routine callers do not use that adapter.
 Package naming is unchanged to avoid shadowing
 `likeness.py`. No competing `tools/art/likeness/` package was created.
+Person-wide staged protection validation/state/history now lives in
+`person_actions.py`, sharing the existing action CLI's backup, transaction
+and undo boundary rather than duplicating filesystem execution.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

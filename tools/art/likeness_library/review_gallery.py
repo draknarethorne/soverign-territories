@@ -94,6 +94,7 @@ const count=document.getElementById("count"), more=document.getElementById("more
 const stagedCount=document.getElementById("staged-count"), download=document.getElementById("download");
 const pageSize=100; let visible=[], shown=pageSize;
 const staged=new Map();
+const stagedPeople=new Map();
 function fill(select, values, label, sortValues=true) {
   select.replaceChildren(new Option("All "+label,""));
   const unique=[...new Set(values)];
@@ -300,6 +301,14 @@ function card(r, readOnly=false) {
   }
   destination.hidden=action.value!=="match-accepted";
   const saveStage=()=>{
+    if(action.value&&(stagedPeople.has(r.personId)||stagedPeople.has(
+      records.find(item=>item.folder===destination.value)?.personId
+    )&&action.value==="match-accepted")) {
+      alert("Stage identity protection separately from photo actions for that identity.");
+      action.value=staged.get(r.photoId)?.type||"";
+      destination.hidden=action.value!=="match-accepted";
+      return;
+    }
     if(action.value)staged.set(r.photoId,{
       type:action.value,
       ...(action.value==="match-accepted"?{
@@ -318,8 +327,9 @@ function card(r, readOnly=false) {
   return article;
 }
 function updateStagedCount(){
-  stagedCount.textContent=staged.size+" action(s) staged";
-  download.disabled=staged.size===0;
+  const total=staged.size+stagedPeople.size;
+  stagedCount.textContent=total+" action(s) staged";
+  download.disabled=total===0;
 }
 function matchesMode(r) {
   if(mode.value==="review")return r.bucket==="Review";
@@ -346,8 +356,35 @@ function groupCards(items) {
       const protectedBadge=document.createElement("span");
       protectedBadge.className="badge badge-protected-identity";
       protectedBadge.textContent="Protected identity";
-      protectedBadge.title="Automatic moves into or out of this identity are blocked";
+      protectedBadge.title="Automatic Gallery membership and category changes are blocked; Review admission is separate";
       header.append(protectedBadge);
+    }
+    if(info.personProtectionAction) {
+      const decision=info.personProtectionAction;
+      const label=document.createElement("label"); label.className="stage";
+      label.append(document.createTextNode("Identity protection (not photo protection)"));
+      const select=document.createElement("select");
+      select.add(new Option("No identity change",""));
+      select.add(new Option(
+        decision.type==="person-protected"?"Protect identity from automatic changes":"Remove identity protection",
+        decision.type
+      ));
+      select.value=stagedPeople.has(decision.personId)?decision.type:"";
+      select.addEventListener("change",()=>{
+        const conflict=[...staged.entries()].some(([id,choice])=>{
+          const item=records.find(record=>record.photoId===id);
+          return item?.folder===folder||choice.destinationFolder===folder;
+        });
+        if(select.value&&conflict) {
+          alert("Stage identity protection separately from photo actions for that identity.");
+          select.value=stagedPeople.has(decision.personId)?decision.type:"";
+          return;
+        }
+        if(select.value)stagedPeople.set(decision.personId,decision);
+        else stagedPeople.delete(decision.personId);
+        updateStagedCount();
+      });
+      label.append(select); header.append(label);
     }
     const reference=primaryFor(folder);
     if(reference) {
@@ -448,6 +485,7 @@ download.addEventListener("click",()=>{
       personFolder:record.folder, ...(record.personId?{personId:record.personId}:{})
     };
   });
+  actions.push(...stagedPeople.values());
   const manifest={
     manifestVersion:1, generatedAt:new Date().toISOString(),
     source:"people-gallery-review", actions
@@ -858,6 +896,7 @@ def collect_items(
                 "contentSha256": manifest_hash(photo),
                 "personId": person_id,
                 "identityProtected": identity_protected,
+                "personProtectionAction": person_protection_action(key, person_id, person),
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
@@ -948,6 +987,7 @@ def collect_items(
                 "contentSha256": manifest_hash(photo),
                 "personId": person_id,
                 "identityProtected": identity_protected,
+                "personProtectionAction": person_protection_action(key, person_id, person),
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
@@ -1074,6 +1114,20 @@ def write_thumbnails(items, out):
     return public_items, thumb_dir
 
 
+def person_protection_action(folder, person_id, person):
+    """Only registered, active Models/Prospects have an identity toggle."""
+    if (
+        folder.split("/", 1)[0] not in {"Models", "Prospects"}
+        or not person_id or not person or person.get("mergedInto")
+    ):
+        return None
+    protected = bool(person.get("protected", False))
+    return {
+        "type": "person-unprotected" if protected else "person-protected",
+        "personId": person_id, "personFolder": folder, "expectedProtected": protected,
+    }
+
+
 def render_html(items, stamp, warnings=(), policy=None):
     """Render a local page with client-side filters and bounded card rendering."""
     policy = policy or default_policy()
@@ -1086,6 +1140,7 @@ def render_html(items, stamp, warnings=(), policy=None):
             "group": item.get("group"),
             "identityMatches": item.get("identityMatches", []),
             "identityProtected": item.get("identityProtected", False),
+            "personProtectionAction": item.get("personProtectionAction"),
         })
     public_items = [
         {key: value for key, value in item.items() if key != "identityMatches"}

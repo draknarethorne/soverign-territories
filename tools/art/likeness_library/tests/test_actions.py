@@ -7,6 +7,7 @@ import json
 import pathlib
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest import mock
 
 from tools.art.likeness_library import actions, metadata
@@ -637,6 +638,224 @@ class LikenessActionTests(unittest.TestCase):
         self.assertTrue(review_path.is_file())
         self.assertFalse(self.photo.exists())
         self.assertEqual(self.catalog, applied_catalog)
+
+
+class PersonProtectionTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = pathlib.Path(self.temp.name)
+        self.person_id = "person_" + "7" * 32
+        self.folder = self.root / "Models" / "Example"
+        self.folder.mkdir(parents=True)
+        self.note = self.folder / "z_example.txt"
+        self.note.write_bytes(b"Example Name\n")
+        self.catalog = {
+            "schemaVersion": 1, "photos": {}, "actions": [],
+            "people": {self.person_id: {
+                "id": self.person_id, "folder": "Models/Example", "displayName": "Example Name",
+                "folderHistory": ["Prospects/Example"], "identityAnchors": [],
+            }},
+        }
+        self.path = self.root / ".likeness-library.json"
+        metadata.save_catalog(self.catalog, self.path)
+        self.manifest = {
+            "manifestVersion": 1, "generatedAt": "2026-10-22T09:30:00-05:00",
+            "source": "people-gallery-review", "actions": [{
+                "type": "person-protected", "personId": self.person_id,
+                "personFolder": "Models/Example", "expectedProtected": False,
+            }],
+        }
+
+    def save(self, catalog):
+        metadata.save_catalog(catalog, self.path)
+        self.catalog.clear()
+        self.catalog.update(copy.deepcopy(catalog))
+
+    def apply(self, backup=None):
+        return actions.apply_actions(
+            self.manifest, self.root, self.catalog, {}, "Various",
+            backup_fn=backup or (lambda *_: "verified"), save_fn=self.save,
+        )
+
+    def test_preview_is_photo_independent_and_read_only(self):
+        before = self.path.read_bytes()
+        errors, plans = actions.validate_manifest(self.manifest, self.root, self.catalog)
+        self.assertEqual(errors, [])
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            actions.print_preview(plans)
+        self.assertIn(self.person_id, output.getvalue())
+        self.assertIn("identity permission only", output.getvalue())
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(self.note.read_bytes(), b"Example Name\n")
+        manifest_path = self.root / "actions.json"
+        manifest_path.write_text(json.dumps(self.manifest), encoding="utf-8")
+        self.assertEqual(actions.load_manifest(manifest_path), self.manifest)
+
+    def test_protect_unprotect_and_undo_preserve_identity_and_no_photo_records(self):
+        original = copy.deepcopy(self.catalog["people"][self.person_id])
+        first, _ = self.apply()
+        self.assertTrue(self.catalog["people"][self.person_id]["protected"])
+        self.assertEqual(self.catalog["photos"], {})
+        self.assertEqual(self.catalog["actions"][-1]["photoIds"], [])
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+        self.manifest["actions"][0].update(type="person-unprotected", expectedProtected=True)
+        second, _ = self.apply()
+        self.assertFalse(self.catalog["people"][self.person_id]["protected"])
+        actions.undo_actions(
+            self.catalog, self.root, {}, "Various", batch_id=second,
+            backup_fn=lambda *_: "verified", save_fn=self.save,
+        )
+        self.assertTrue(self.catalog["people"][self.person_id]["protected"])
+        actions.undo_actions(
+            self.catalog, self.root, {}, "Various", batch_id=first,
+            backup_fn=lambda *_: "verified", save_fn=self.save,
+        )
+        self.assertEqual(self.catalog["people"][self.person_id], original)
+        self.assertEqual(self.catalog["photos"], {})
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+        self.assertEqual(self.note.read_bytes(), b"Example Name\n")
+
+    def test_stale_or_replaced_identity_and_noop_are_rejected(self):
+        for field, value in (
+            ("expectedProtected", True), ("personId", "person_" + "6" * 32),
+            ("personFolder", "Models/Missing"), ("type", "person-unprotected"),
+        ):
+            with self.subTest(field=field):
+                document = copy.deepcopy(self.manifest)
+                document["actions"][0][field] = value
+                errors, _ = actions.validate_manifest(document, self.root, self.catalog)
+                self.assertTrue(errors)
+
+    def test_cast_potential_and_photo_shaped_identity_actions_are_rejected(self):
+        for folder in ("Angels/Example", "Sisters/Example", "Potentials/Example", "Models/../Example"):
+            document = copy.deepcopy(self.manifest)
+            document["actions"][0]["personFolder"] = folder
+            errors, _ = actions.validate_manifest(document, self.root, self.catalog)
+            self.assertTrue(errors, folder)
+        document = copy.deepcopy(self.manifest)
+        document["actions"][0]["photoId"] = "photo:image_123456"
+        self.assertTrue(actions.validate_manifest(document, self.root, self.catalog)[0])
+
+    def test_duplicate_and_mixed_source_or_destination_actions_conflict(self):
+        duplicate = copy.deepcopy(self.manifest)
+        duplicate["actions"].append(copy.deepcopy(duplicate["actions"][0]))
+        self.assertTrue(actions.validate_manifest(duplicate, self.root, self.catalog)[0])
+        for source, destination in (("Models/Example", None), ("Prospects/Other", "Models/Example")):
+            document = copy.deepcopy(self.manifest)
+            photo_action = {
+                "type": "sent-to-review" if destination is None else "match-accepted",
+                "photoId": "photo:image_123456", "contentSha256": "a" * 64,
+                "sourceBucket": "Gallery", "personFolder": source,
+            }
+            if destination:
+                photo_action.update(destinationFolder=destination, destinationPersonId=self.person_id)
+            document["actions"].append(photo_action)
+            errors, plans = actions.validate_manifest(document, self.root, self.catalog)
+            self.assertTrue(any("separately" in error for error in errors))
+            self.assertEqual(plans, [])
+
+    def test_merged_or_duplicate_folder_ownership_is_rejected(self):
+        changed = copy.deepcopy(self.catalog)
+        changed["people"][self.person_id]["mergedInto"] = "person_" + "6" * 32
+        self.assertTrue(actions.validate_manifest(self.manifest, self.root, changed)[0])
+        changed = copy.deepcopy(self.catalog)
+        changed["people"]["person_" + "6" * 32] = copy.deepcopy(changed["people"][self.person_id])
+        self.assertTrue(actions.validate_manifest(self.manifest, self.root, changed)[0])
+
+    def test_catalogue_edit_during_apply_backup_is_not_overwritten(self):
+        def backup(*_):
+            changed = copy.deepcopy(self.catalog)
+            changed["people"][self.person_id]["displayName"] = "Concurrent edit"
+            metadata.save_catalog(changed, self.path)
+            return "verified"
+
+        with self.assertRaisesRegex(ValueError, "catalogue changed"):
+            self.apply(backup)
+        self.assertEqual(metadata.load_catalog(self.path)["people"][self.person_id]["displayName"], "Concurrent edit")
+        self.assertEqual(self.catalog["actions"], [])
+
+    def test_catalogue_edit_during_undo_backup_is_not_overwritten(self):
+        batch, _ = self.apply()
+
+        def backup(*_):
+            changed = copy.deepcopy(self.catalog)
+            changed["people"][self.person_id]["displayName"] = "Concurrent edit"
+            metadata.save_catalog(changed, self.path)
+            return "verified"
+
+        with self.assertRaisesRegex(ValueError, "catalogue changed"):
+            actions.undo_actions(
+                self.catalog, self.root, {}, "Various", batch_id=batch,
+                backup_fn=backup, save_fn=self.save,
+            )
+        self.assertTrue(metadata.load_catalog(self.path)["people"][self.person_id]["protected"])
+        self.assertEqual(metadata.load_catalog(self.path)["people"][self.person_id]["displayName"], "Concurrent edit")
+
+    def test_undo_refuses_later_person_change(self):
+        batch, _ = self.apply()
+        self.catalog["people"][self.person_id]["folder"] = "Prospects/Example"
+        errors, _, plans = actions.plan_undo(self.catalog, self.root, batch)
+        self.assertTrue(any("person state changed" in error for error in errors))
+        self.assertEqual(plans, [])
+
+    def test_save_failure_does_not_change_person_or_history_files(self):
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(OSError, "save failed"):
+            actions.apply_actions(
+                self.manifest, self.root, self.catalog, {}, "Various",
+                backup_fn=lambda *_: "verified", save_fn=mock.Mock(side_effect=OSError("save failed")),
+            )
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(self.catalog["actions"], [])
+        self.assertEqual(self.note.read_bytes(), b"Example Name\n")
+
+    def test_engine_respects_identity_toggle_without_changing_scores(self):
+        import numpy as np
+        from tools.art.likeness_library import identity_maintenance, reconciliation
+        from tools.art.likeness_library.policy import evaluate_photo_route, load_policy
+
+        policy = load_policy()
+        gallery = self.folder / "gallery"
+        gallery.mkdir()
+        photos = []
+        for index in range(5):
+            path = gallery / f"example_image_{100000 + index}.jpg"
+            path.write_bytes(str(index).encode())
+            photos.append(SimpleNamespace(
+                path=path, name=path.name, key="Models/Example", vec=np.array([1., 0.]),
+                usable=lambda _: True,
+            ))
+        space = SimpleNamespace(
+            photos=photos, by_key={"Models/Example": photos}, st=policy["runtimeSettings"],
+        )
+
+        def cores():
+            return reconciliation.frozen_identity_cores(
+                space, self.catalog, photo_id_fn=metadata.photo_id_from_name,
+                content_sha256_fn=metadata.content_sha256, policy=policy,
+            )[0]
+
+        before = cores()
+        self.apply()
+        protected = cores()
+        np.testing.assert_array_equal(before["Models/Example"]["vector"], protected["Models/Example"]["vector"])
+        self.assertEqual(before["Models/Example"]["photoScores"], protected["Models/Example"]["photoScores"])
+        self.assertTrue(protected["Models/Example"]["identityProtected"])
+        transitions, _ = identity_maintenance.category_transitions(
+            space, protected, {"moves": []}, self.catalog, set(), set(), policy, self.root,
+        )
+        self.assertEqual(transitions, [])
+        route = evaluate_photo_route(
+            "Models", score=.9, margin=.5, identity_protected=True, policy=policy, propose=True,
+        )
+        self.assertNotEqual(route["decision"], "auto-route")
+        self.manifest["actions"][0].update(type="person-unprotected", expectedProtected=True)
+        self.apply()
+        transitions, _ = identity_maintenance.category_transitions(
+            space, cores(), {"moves": []}, self.catalog, set(), set(), policy, self.root,
+        )
+        self.assertEqual(transitions[0]["destinationFolder"], "Prospects/Example")
 
 
 if __name__ == "__main__":

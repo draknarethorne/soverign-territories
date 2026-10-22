@@ -18,7 +18,7 @@ import likeness  # noqa: E402
 import originals  # noqa: E402
 import library_backup  # noqa: E402
 import people  # noqa: E402
-from likeness_library import metadata  # noqa: E402
+from likeness_library import metadata, person_actions  # noqa: E402
 
 cw = likeness.cw
 
@@ -197,14 +197,21 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
     if not root.is_dir():
         return [f"photo-library root does not exist: {root}"], []
 
-    photo_index = _index_photos(root)
+    person_errors, person_plans = person_actions.validate_actions(document, root, catalog)
+    if person_errors:
+        return person_errors, []
+    photo_index = _index_photos(root) if any(
+        action["type"] not in person_actions.PROTECTION_ACTIONS for action in document["actions"]
+    ) else {}
     people_by_folder, duplicate_folders = _catalog_people_by_folder(catalog)
     anchor_owners = _catalog_anchor_owners(catalog)
     pool_key = pathlib.PurePosixPath(pool_folder).as_posix().casefold()
     occupied = {}
     workflow_targets = {}
-    plans = []
+    plans = list(person_plans)
     for index, action in enumerate(document["actions"]):
+        if action["type"] in person_actions.PROTECTION_ACTIONS:
+            continue
         label = f"actions/{index}"
         photo_id = action["photoId"]
         relative_folder = pathlib.PurePosixPath(action["personFolder"])
@@ -358,6 +365,9 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
 
 def print_preview(plans):
     for plan in plans:
+        if plan["type"] in person_actions.PROTECTION_ACTIONS:
+            print(f"  {plan['type']}: {plan['personId']} ({plan['action']['personFolder']}; identity permission only)")
+            continue
         if plan.get("workflow"):
             workflow = plan["workflow"]
             print(
@@ -552,6 +562,22 @@ def _create_action_backup(root, cfg, batch_id):
     )
 
 
+def _catalog_guard(root, catalog):
+    paths = {metadata.path_for_root(root), pathlib.Path(root) / ".likeness-library.json"}
+    return copy.deepcopy(catalog), {
+        path: path.read_bytes() if path.exists() else None for path in paths
+    }
+
+
+def _revalidate_catalog(guard, catalog):
+    before, files = guard
+    if before != catalog or any(
+        (path.read_bytes() if path.exists() else None) != content
+        for path, content in files.items()
+    ):
+        raise ValueError("catalogue changed during backup; no actions applied")
+
+
 def _rollback_moves(completed, created_directories):
     failures = []
     for source, destination in reversed(completed):
@@ -629,14 +655,18 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
     batch_id = "batch_" + uuid.uuid4().hex
     updated = copy.deepcopy(catalog)
     for plan in plans:
-        if plan.get("workflow"):
+        if plan["type"] in person_actions.PROTECTION_ACTIONS:
+            person_actions.apply_action(updated, plan, batch_id)
+        elif plan.get("workflow"):
             _apply_workflow_action(updated, plan, root, batch_id)
         else:
             _apply_catalog_action(updated, plan, root, batch_id)
     metadata.validate_catalog(updated)
 
+    catalog_guard = _catalog_guard(root, catalog)
     backup_fn = backup_fn or _create_action_backup
     backup = backup_fn(root, cfg, batch_id)
+    _revalidate_catalog(catalog_guard, catalog)
     errors, checked_plans = validate_manifest(document, root, catalog, pool_folder, chosen_ids, cfg)
     if errors:
         raise ValueError("library changed after backup; no actions applied:\n  " + "\n  ".join(errors))
@@ -721,6 +751,13 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
     for action in reversed(batch_actions):
         if "beforeState" not in action or "afterState" not in action:
             return [f"action {action['id']} has no undo snapshot"], None, []
+        if action["type"] in person_actions.PROTECTION_ACTIONS:
+            try:
+                person_actions.restore_action(simulated, action, root)
+            except ValueError as exc:
+                return [str(exc)], None, []
+            reverse_plans.append({"actionRecord": action, "beforeState": action["beforeState"]})
+            continue
         person_id = action.get("personId")
         photo_id = action["photoIds"][0]
         if action["source"] != action["destination"] and photo_id in chosen_ids:
@@ -825,8 +862,10 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     ):
         _require_configured_work_root(root, cfg)
     undo_batch_id = "batch_" + uuid.uuid4().hex
+    catalog_guard = _catalog_guard(root, catalog)
     backup_fn = backup_fn or _create_action_backup
     backup = backup_fn(root, cfg, undo_batch_id)
+    _revalidate_catalog(catalog_guard, catalog)
     errors, checked_batch, checked_plans = plan_undo(
         catalog, root, selected_batch, chosen_ids, cfg
     )
@@ -840,8 +879,11 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
             continue
         action = item["actionRecord"]
         before = item["beforeState"]
-        person_id, photo_id = action.get("personId"), action["photoIds"][0]
-        if action["type"] in WORKFLOW_ACTIONS:
+        person_id = action.get("personId")
+        photo_id = action["photoIds"][0] if action["photoIds"] else None
+        if action["type"] in person_actions.PROTECTION_ACTIONS:
+            person_actions.restore_action(updated, action, root)
+        elif action["type"] in WORKFLOW_ACTIONS:
             if before["photo"] is None:
                 updated["photos"][photo_id] = {
                     "contentSha256": action["contentSha256"],

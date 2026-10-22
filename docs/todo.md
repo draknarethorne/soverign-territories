@@ -96,7 +96,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (94)
+### For the assistant, when you say go (93)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -141,7 +141,6 @@
 - [ ] 5.1 Add family/lookalike grouping to the local people gallery ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1a Add gallery controls to include/exclude classifications ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1b If supported in the POC viewer, allow enabling/disabling ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
-- [ ] 5.1i Add person-wide Protection for Models/Prospects separately ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1k Show rebase diagnostic results consistently in both ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.2 Add a read-only preview for threshold-assigned family ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.3 Reuse the existing staged person-action manifest and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))

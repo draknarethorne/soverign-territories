@@ -76,13 +76,14 @@
             "match-rejected",
             "photo-retired",
             "person-retired",
+            "person-protected",
+            "person-unprotected",
             "action-undone",
             "workflow-photo-selected"
           ]
         },
         "photoIds": {
           "type": "array",
-          "minItems": 1,
           "uniqueItems": true,
           "items": {"$ref": "#/definitions/photoId"}
         },
@@ -102,6 +103,23 @@
         "workflowSourceAfter": {"type": "string", "minLength": 1}
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {"type": {"enum": ["person-protected", "person-unprotected"]}},
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["personId", "beforeState", "afterState"],
+            "properties": {"photoIds": {"maxItems": 0}}
+          },
+          "else": {
+            "if": {
+              "properties": {"type": {"const": "action-undone"}},
+              "required": ["type"]
+            },
+            "else": {"properties": {"photoIds": {"minItems": 1}}}
+          }
+        },
         {
           "if": {
             "properties": {"type": {"const": "workflow-photo-selected"}},

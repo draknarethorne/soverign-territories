@@ -1032,7 +1032,7 @@ before treating this interval as a production rule.
   repoint helper with verified backup and audit history; support stale-state
   validation and undo, leave flow-specific overrides separate, and refuse
   application against an isolated sandbox root.
-- [ ] **P1 ai** 5.1i Add person-wide Protection for Models/Prospects separately
+- [x] **P1 ai** 5.1i Add person-wide Protection for Models/Prospects separately
   from photo Protection. Follow the cast protection contract: protect the
   identity from automatic category/routing moves while leaving it visible to
   scoring and cross-references; per-photo protection continues to exclude only
@@ -1040,6 +1040,21 @@ before treating this interval as a production rule.
   so it survives renames/category moves, and use staged preview, backup,
   stale-state checks, and undo. Do not imply the current photo action protects
   a person.
+  Implementation contract: separate `person-protected` / `person-unprotected`
+  actions carry the stable person ID, current folder and expected protection
+  state, without borrowing a photo ID or hash. Initially expose these controls
+  for registered Models/Prospects only. Cast protection cannot be disabled.
+  Reject duplicate identity decisions and mixed photo/person decisions for the
+  same identity in one batch; apply and undo preserve the full person snapshot
+  and revalidate catalogue changes across backup. This changes automation
+  permission, not identity scores, core membership or workflow selection.
+  Implemented Oct 22 morning with schema, backend, manifest export, preview,
+  verified-backup apply/undo and full person-state history. Synthetic browser
+  checks cover export, cancel and conflicts in both staging orders; engine
+  tests confirm category changes are blocked without changing core scores.
+  Actual sandbox reports expose controls for all 16 Models and 35 Prospects,
+  never cast, Potentials or mixed sources; active catalogue and saved policy
+  remain byte-identical after regeneration.
 - [ ] **P1 ai** 5.1k Show rebase diagnostic results consistently in both
   gallery pages. Put library-wide calibration and run-quality summaries in
   the People Gallery; repeat concise per-person consistency/quality indicators

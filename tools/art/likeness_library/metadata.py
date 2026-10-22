@@ -106,6 +106,8 @@ def validation_errors(data):
             errors.append(f"actions/{index}: undoes must reference an existing applied action")
         elif target in undone_ids:
             errors.append(f"actions/{index}: action {target} has already been undone")
+        elif action["photoIds"] != actions_by_id[target]["photoIds"]:
+            errors.append(f"actions/{index}: undo photo IDs do not match the applied action")
         else:
             undone_ids.add(target)
 

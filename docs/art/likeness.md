@@ -340,8 +340,21 @@ undoing against an isolated sandbox root is refused; sandbox experiments must
 not update production workflow inputs.
 
 Photo-level and catalogue identity protection are respected by automatic
-planning and apply. The browser does not yet offer a person-wide protection
-toggle. Protection does not turn a low-score photo into trusted core evidence.
+planning and apply. In People view, registered Models/Prospects have a separate
+**Identity protection (not photo protection)** control in their Review heading.
+It stages `person-protected` or `person-unprotected` with the stable person ID,
+current folder and expected protection state; no photo ID or hash is borrowed.
+It prevents automatic Gallery-membership and category changes, not scoring,
+workflow use or separately permitted incoming Review. Cast protection cannot
+be removed with this control. Photo protection and core membership remain
+separate decisions.
+
+Stage a person's protection change separately from photo actions involving
+that identity, including moves into its Review. Conflicting batches, stale
+ownership/protection and merged identities are rejected. Apply and undo check
+catalogue changes across backup, preserve the complete identity record and
+record a person-only audit entry without creating a photo record. Undo refuses
+later person-state changes rather than overwriting them.
 
 ## Command reference
 

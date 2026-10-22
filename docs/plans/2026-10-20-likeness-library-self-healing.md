@@ -19,8 +19,11 @@ sandbox/production rebuilding. It supersedes the earlier audit-only and
 blanket lower-tier restrictions here. Production changes still require its
 acceptance/backup gates; authorized sandbox experiments make real placements
 without per-photo approval. The Oct 22 implementation now shares candidate
-planning and incoming/Review execution; whole-identity maintenance and the
-remaining GUI acceptance work are still open.
+planning and incoming/Review execution. Whole-identity maintenance now has
+tested apply/undo paths and synthetic no-reset stability cases; labelled
+real-batch acceptance remains open. The Oct 22 morning continuation also
+implements staged person-wide protection for Models/Prospects under Oct 21
+task 5.1i, separately from photo protection.
 
 ## Decisions and constraints from the discussion
 
@@ -448,8 +451,10 @@ transaction journal and undo. Review holds do not become named identities
 and existing ambiguous cast Review stays staged. The installed trial and
 nonzero follow-up preview are recorded in the
 [Oct 21 plan](2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22).
-Earlier prototype completion below does not close operational merge/split,
-existing category transitions or convergence acceptance.
+Earlier prototype completion below does not by itself close operational
+acceptance. The later continuation implements merge/split and existing
+category transitions; three synthetic full command paths reach no-change
+second previews. Real-batch and global convergence acceptance remain open.
 
 - [x] **P1 ai** E1 Transfer combined Review, incoming `Various`, and validated
   Prospect/Potential candidate planning against a frozen snapshot to Phase 4
@@ -457,17 +462,19 @@ existing category transitions or convergence acceptance.
 - [x] **P1 ai** E2 Implement a read-only combined-candidate prototype with
   provisional destinations. This is a prototype milestone only; pair
   preservation, proposal/authorization separation and applied integration
-  remain open in Oct 21 tasks 4.9 and 4.15-4.20.
+  were subsequently implemented under Oct 21 tasks 4.9 and 4.15-4.20; those
+  tasks retain broader evidence and acceptance gates.
 - [x] **P1 ai** E3 Implement bounded frozen-reference follow-up in that
-  prototype. This does not establish integrated convergence: the draft gate
-  suppresses attachments and requires correction/testing under 4.17/4.20.
+  prototype. The prototype's draft gate was subsequently repaired under
+  4.17/4.20. This historical milestone is not real-batch convergence acceptance.
 - [x] **P1 ai** E4 Support empty-pool read-only reconciliation. Operational
-  maintenance still requires the shared planner integration in 4.9-4.12.
+  maintenance now uses the shared integration in 4.9-4.12; acceptance remains
+  tracked there rather than inferred from this prototype checkbox.
 - [x] **P1 either** E5 Transfer comparison of preview/applied results and
   action-specific approval gates to Phases 3, 4, and 6 of the
   [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
 
-**Oct 20 implementation:** `likeness reconcile [--out FILE.json]` now builds
+**Historical Oct 20 prototype:** `likeness reconcile [--out FILE.json]` built
 one read-only snapshot of current person cores, usable Review photos, and
 usable `Various` pool photos. It applies stable average-linkage clustering to
 the combined candidate set, allows an eligible new cluster to attract a
@@ -564,7 +571,8 @@ file movement in the browser or silently changing existing CLI semantics.
 
 - [x] **P1 ai** H1 Transfer primary-routine planner integration and
   empty-pool maintenance to Oct 21 tasks 4.9-4.12/4.20. The transfer is
-  complete; the ordinary routine still uses legacy decisions.
+  complete; the ordinary routine now calls shared reconciliation. Legacy
+  commands remain compatibility surfaces pending their separate sunset audit.
 - [ ] **P2 ai** H2 Extract metadata, core/scoring, planning and report/action
   responsibilities from `likeness.py` in small, behavior-preserving,
   test-covered changes. Do not do an all-at-once rewrite.
