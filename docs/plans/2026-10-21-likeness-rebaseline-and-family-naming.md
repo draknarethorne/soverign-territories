@@ -43,6 +43,23 @@ remains a sandbox experiment, not a production category change. Existing
 legacy `Models` folders/paths must be distinguished from the new active
 Models category.
 
+The rebase is the initial foundation, not the intended routine. The same
+configurable likeness engine must support ordinary incremental intake and
+self-healing after the sandbox baseline: merge/split and route more freely
+among unprotected Potentials and Prospects, use an intermediate action policy
+for Models, and keep Angels/Sisters conservative. Category-specific thresholds
+and action permissions must be data-driven so a new category (for example
+Demons) can be placed in the hierarchy without a sandbox-only classifier.
+Sandbox and production use the same engine and default policy; sandbox-only
+overrides are explicit and recorded, not a separate implementation.
+
+Protection is an action policy, not a likeness override. Protecting an
+identity prevents automatic moves in or out. Protecting an individual photo
+prevents automatic removal or Review routing, but does not force it into the
+identity core: a protected low-score image can remain available for workflow
+use while being excluded from core construction. Identity and photo protection
+must be visible in both gallery surfaces.
+
 Testing is not restricted to simulation. A real copy of the selected library
 may be reprocessed in an isolated sandbox (for example
 `B:\Sovereign Territories Sandbox\`), including actual file moves and name
@@ -80,7 +97,7 @@ reports was removed after publication to B:.
 | 1. Simplify before extending | Trace every matching/sorting path, including Artist and legacy Model sources; identify duplicate or obsolete behavior with evidence. | Root/exclusion behavior and safe sunset candidates are documented and tested. |
 | 2. Define categories and family names | Audit `z_` identity names, collisions, family-link semantics, category destinations, and rename/history behavior. | Model/Prospect/Potential boundaries and naming are explicit, reversible, and previewable. |
 | 3. Build the sandbox rebase loop | Add a likeness-processing flag and data-driven config to rebuild real sandbox directories from the immutable source snapshot, with cast-only references by default and an optional low-scoring cast-photo candidate pool. | Repeated runs reset only generated sandbox categories, compare modes/configurations, and expose actual results in Explorer and the gallery. |
-| 4. Refactor and improve routing | Simplify matching, add distinct-person lookalike scoring and config-driven category/family assignment, and integrate selective Review routing. | Tests prove source exclusions, deterministic category transitions, and safe same-person versus lookalike handling. |
+| 4. Refactor and improve routing | Simplify matching, add distinct-person lookalike scoring and config-driven category/family assignment, and build the shared incremental self-healing engine with protection-aware merge/split and selective Review routing. | Tests prove source exclusions, deterministic category transitions, and safe same-person versus lookalike handling across rebase and ordinary intake. |
 | 5. Build the people-gallery review surface | Preserve useful statistics, add cross-category likeness references and full-library rankings, and provide summary/full details in the overview and identity context in the review gallery. | The user can evaluate actual sandbox categories and rankings from the nine-photo cards without relying on separate reports. |
 | 6. Rebaseline the normal library | Re-run the accepted workflow against production after reviewing sandbox results, with verified backup and recoverable actions. | The user approves the exact source scope and production batch; rollback is verified. |
 | 7. Prevent recurrence | Validate future imports, document supported paths, and remove only proven-dead features. | Labelled acceptance cases pass and no unrelated workflow regresses. |
@@ -112,6 +129,40 @@ backup.
 | D10 | Sandbox iterations may reset only generated Model/Prospect/Potential output directories from the immutable source snapshot. Never delete the source snapshot, production library, Artists, archives, or unrelated sandbox content as part of reset. |
 | D11 | Use separate run-scoped matching state: only configured cast roots seed identity references by default; generated sandbox categories never become references on the next clean rebase. Content-addressed face embeddings may be reused only if validated, but identity centroids and assignments are rebuilt from the selected source/reference scope. |
 | D12 | Keep classification stored with stable person identity and reflected in category directory placement. Gallery controls may filter/show/hide family groups or classifications for browsing. An explicit sandbox-config control may enable/disable a class for the next rebase, but must export a validated config and cannot change existing assignments until that sandbox rebase runs. |
+| D13 | Use one likeness engine for clean rebase and ongoing incremental processing. Sandbox and production share scoring, decision semantics, and default policy; differences are limited to explicitly configured and versioned sandbox overrides recorded with each run. A full rebase is a recovery/calibration tool, not the normal intake loop after the initial baseline. |
+| D14 | Configure category hierarchy/order and category-specific thresholds and action permissions declaratively. Unprotected Potentials and Prospects may merge/split organically with lower configurable thresholds; Models use an intermediate policy with more Review; Angels and Sisters remain conservative and are not automatically stripped of low-scoring photos. Adding a category such as Demons must not require a separate matcher implementation. |
+| D15 | Identity Protection blocks automatic moves into or out of that identity. Photo Protection blocks automatic removal and Review routing for that photo but does not force it into the trusted/provisional identity core. A protected low-score photo may remain workflow-usable while excluded from core construction. Display identity and photo protection distinctly in the galleries. |
+| D16 | After the first sandbox rebase, test incremental organic growth by adding the user's separate batch of 200+ images to the sandbox and running the ordinary likeness process without resetting/rebasing. Also preview the normal likeness process immediately after the rebase and report any proposed changes; do not silently apply them. |
+
+## Draft shared-policy values (review gate; not approved)
+
+The first versioned policy is
+[`data/art/likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json),
+validated against
+[`likeness-engine-policy.schema.json`](../../data/art/_schema/likeness-engine-policy.schema.json).
+Its status is `draft`; these values are exposed by `likeness policy` and the
+generated gallery policy disclosure for inspection, not permission to run a
+rebase or automatic actions.
+
+| Policy area | Draft value | Meaning |
+| --- | --- | --- |
+| Display bands | Green >=0.55; yellow >=0.30; orange >=0.15; red <0.15 | Preserve the existing gallery color boundaries. |
+| Lookalike suggestions | >=0.30; automatic association off | Show distinct identities for visual review/family consideration; never treat this score as same-person evidence. |
+| Same-identity clustering | >=0.55 | Separate candidate grouping threshold; intentionally above the visual lookalike cue. |
+| Category assignment | 1-4 usable photos: Potentials; 5+ and cast likeness <0.40: Prospects; 5+ and 0.40-<0.55: Models; >=0.55: Review | A high cast score is held for same-person review, not auto-classified as a lookalike. |
+| Photo route | Review cue >=0.30; proposed auto-route >=0.55, with >=0.10 top-score margin and >=0.10 lead over the photo's own core | Every route remains review-only while the policy is draft. |
+| Merge candidate | >=0.55, >=0.10 margin, at least 2 independent photos | Proposed evidence floor; automatic merge remains disabled by draft status. |
+| Split candidate | Own-core <=0.15, alternative >=0.30, margin >=0.10, at least 2 independent photos | Proposed outlier evidence; automatic split remains disabled by draft status. |
+| Category protections | Sisters/Angels protected by category; explicit identity and photo protection also supported | Protected identities cannot be moved into or out of; a protected photo may stay workflow-usable while excluded from the core. |
+
+The earlier sandbox calibration is evidence only: existing-folder labels are
+assumed ground truth, and the saved report conflicts with an older inline
+accuracy comment. In particular, the proposed 0.55/0.10 route is not accepted
+as an automatic-action threshold until representative gallery examples and
+action-specific error targets are reviewed. No rebase/reset/apply was run;
+the verified Working backup remains
+`B:\Sovereign Territories Sandbox\Working\_backup\library-20261021-172221`
+(17,582 files; 5,827,811,555 bytes).
 
 ## Vocabulary
 
@@ -131,6 +182,9 @@ backup.
 | Source scope | The exact set of roots, folders, files, and photo statuses eligible to score or route in one run. |
 | Rebase configuration | Versioned declarative JSON that defines supported source pools, identity-reference roots, category rules, score thresholds, family grouping, and display behavior. |
 | Sandbox source snapshot | Immutable, verified copy of the selected original library inputs from which each sandbox iteration is rebuilt. Generated category outputs are not sources for later clean runs. |
+| Incremental self-healing | Ordinary intake that scores new photos against existing identities and updates only affected identities/categories without resetting the library to a source snapshot. |
+| Identity Protection | Stable identity-level policy that blocks automatic moves into or out of the protected identity while leaving its likeness evidence inspectable. |
+| Photo Protection | Per-photo policy that blocks automatic removal and Review routing but may exclude the photo from trusted/provisional identity-core construction. |
 
 ## Sandbox rebase operating model
 
@@ -453,8 +507,15 @@ validated before any production rename.
   `Working\_reports\diagnostics\sandbox-baseline-20261021-161618`: 2,543
   calibration comparisons and 89/194 active folders evaluated. The combined
   calibration/folder pass took 15.22 seconds (0.73 load/cache, 14.49 scoring).
-  This bundle does not include the identity-core audit and is not yet attached
-  to a classified rebase run.
+  That pre-rebase bundle did not include the identity-core audit. After the
+  sandbox category-only pass on Oct 21, diagnostics were rerun in
+  `Working\_reports\diagnostics\diagnostics-20261021T233723319309Z`: 2,543
+  calibration photos, 89/194 eligible folder checks, and 2,265 per-photo
+  folder scores in 15.73 seconds. These results are post-category-move
+  evidence, not a complete post-routing diagnostic bundle. The existing
+  identity-core audit was run for all 261 folders and saved as
+  `identity-core-audit.txt`, linked from `diagnostics.md`; no full rebase-run
+  manifest exists yet, and the galleries do not consume this evidence.
 
 **Exit:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
@@ -517,6 +578,36 @@ machine-readable and human-readable results.
 - [ ] **P1 either** 4.8 Accept or reject the sandbox-calibrated threshold
   based on viewer results and measured errors. A rejected calibration
   returns to Phase 3/4 for another sandbox iteration, not a production run.
+- [ ] **P1 ai** 4.9 Refactor the rebase classifier and ordinary likeness
+  intake to call the same engine and category-policy evaluator. Keep path
+  guards, reset, run manifests, and sandbox overrides at the boundary; do not
+  fork matching or merge/split behavior for sandbox. Record the shared default
+  config and any explicit sandbox override per run.
+- [ ] **P1 ai** 4.10 Add declarative per-category hierarchy/order, thresholds,
+  match margins, merge/split/routing permissions, Review policy, core policy,
+  and protection behavior. New categories such as Demons must be addable via
+  validated config when they use supported rule types. Algorithms remain
+  shared code; fail invalid or unsupported policy before moves.
+- [ ] **P1 ai** 4.11 Implement incremental, idempotent self-healing on newly
+  ingested photos and affected identities: evaluate both directions of a
+  candidate merge/split, avoid chain cascades and oscillation, retain
+  provenance, and produce a preview/action manifest before any production
+  apply. The clean rebase remains a separate baseline/recovery command.
+- [ ] **P1 ai** 4.12 Implement the agreed protection contract. Identity
+  protection blocks automatic moves into/out of that identity. Photo
+  protection suppresses automatic removal and Review routing but keeps the
+  photo's score visible and excludes it from trusted/provisional core
+  construction. Add tests for low-score protected photos, protected identity
+  destinations, workflow availability, and explicit gallery badges.
+- [ ] **P1 ai** 4.13 Immediately after the sandbox rebase, run the normal
+  likeness process in preview mode against that result. Save the proposed
+  changes and compare them with the rebase manifest; do not apply them
+  automatically. Use the differences to verify the shared policy and
+  incremental idempotence.
+- [ ] **P1 you** 4.14 After the initial sandbox rebase and preview comparison,
+  add the separate 200+ image batch to the sandbox and run ordinary likeness
+  intake without reset/rebase. Review organic merges, splits, category
+  transitions, Review routing, protected cases, and directory-level results.
 
 **Exit:** source-to-destination behavior is explainable, repeatable, and
 meets user-approved action-specific validation before any automatic routing
@@ -843,3 +934,43 @@ review to gallery to see useful information that should really carry into
 the header of the gallery. IF there are photos we need to adjust in a
 per-person view or if they are all good. That's all useful information
 summarized on the gallery and in much more details on the person review page.
+
+## Raw user direction: incremental likeness and protection policy (Oct 21)
+
+Yes - that action boundary is right.  It allows for organic growth
+merging/splitting at the bottom with lower threshold (which we can configure)
+and not require manual intervention because until the are prompted to an
+Angel or a Sister those files are not in use by a workflow, so it's less
+important to "worry" about how they grow/split.  Once they reach the point of
+a Model and they look like a Sister or an Angel, we'd want more caution, but
+still an intermediate threshold for auto merge/split and use Review more
+often.  All layers of identity can also be protected as a way to prevent
+something moving in/out at the lower threshold, basically it moves that
+identity to the same level of protection as an angel and we'd want to ensure
+we shot the protected "tag" in the GUI for both identity and images - so
+it's clear.  Basically all the meta-data about an identity or their images
+can be used in the auto-merge.  So if there is a low scoring image for a
+Sister and I protect it specifically, it should not go to Review in the
+likeness process, but I can prevent it from being part of the core identity.
+Basically, that would be a pose, laugh or some other thing driving the score
+lower - but I would use it in a workflow due to body, side of face or even
+the laugh expression.  I understand there is risk at the lower levels - but
+I don't care as much about them until I promote or protect them.  As long as
+the configuration is able to drive the different values at a category level
+that will allow me to add new categories like Demons and set them in the
+hierarchy either at same level as Angels or even if I decide on another
+category I can configure it's values.  That's the likeness engine I am
+looking for.  A full rebase should eventually become a last resort, but right
+now that's where we are starting from and it's the foundation for building
+out the layers in a first run.  The reason I want to do this is I have
+another batch of 200+ images to bring into the Sandbox after we rebase and
+then I want to see how the organic growth works there.  Not a full rebase.
+It should match at different levels in the hierarchy and will test out these
+changes in the sandbox.  It's possible the Sandbox may have slightly
+different rules - but honestly, I feel like they should be 99% aligned on how
+they evaluate things.  One additional test will be to run the normal likeness
+process directly after the rebase to see if that logic changes anything.  I'm
+interested to preview that and see what happens as well.  Yeah - the logo
+idea was separate and not meant to clutter this discussion, I was just
+taking notes as it does impact the likeness process if we engage the
+"cleanup" (not just cropping) logic.

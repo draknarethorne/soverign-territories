@@ -88,6 +88,36 @@ class LikenessAuditTests(unittest.TestCase):
         result = audit_person(np.array([[1.0, 0.0], [0.99, 0.01]]), ["a", "b"])
         self.assertFalse(result["sufficient"])
 
+    def test_category_core_threshold_uses_leave_one_out_scores_and_keeps_singletons(self):
+        vectors = np.array([[1.0, 0.0], [0.2, np.sqrt(0.96)]])
+        lower = audit_person(
+            vectors,
+            ["a", "b"],
+            minimum_core=1,
+            core_minimum=0.15,
+            seed_floor=0.15,
+        )
+        self.assertEqual(set(lower["core_indices"]), {0, 1})
+        self.assertAlmostEqual(lower["scores"][0], 0.20, places=2)
+        self.assertAlmostEqual(lower["scores"][1], 0.20, places=2)
+
+        upper = audit_person(
+            vectors,
+            ["a", "b"],
+            minimum_core=1,
+            core_minimum=0.30,
+            seed_floor=0.30,
+        )
+        self.assertEqual(len(upper["core_indices"]), 1)
+
+        single = audit_person(
+            np.array([[0.0, 1.0]]),
+            ["single"],
+            core_minimum=0.30,
+        )
+        self.assertEqual(single["core_indices"], [0])
+        self.assertIsNone(single["scores"][0])
+
     def test_input_must_have_one_id_per_vector(self):
         with self.assertRaisesRegex(ValueError, "one entry per vector"):
             audit_person(np.array([[1.0, 0.0]]), [])

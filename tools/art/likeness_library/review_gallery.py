@@ -20,12 +20,19 @@ import originals  # noqa: E402
 from likeness_library import metadata  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
+from likeness_library.policy import (
+    default_policy,
+    evaluate_photo_consistency,
+    load_policy,
+    render_policy_panel,
+    render_score_legend,
+)  # noqa: E402
 from likeness_library.thumbnails import crop_thumbnail, face_thumbnail  # noqa: E402
 
 PAGE_SIZE = 100
 SECTIONS = CATEGORY_ORDER
 GROUP_ORDER = CATEGORY_ORDER
-ACTION_ROOTS = {"Angels", "Sisters", "Prospects", "Potentials"}
+ACTION_ROOTS = {"Angels", "Sisters", "Models", "Prospects", "Potentials"}
 
 CSS = """
 body{font:15px Segoe UI,Arial,sans-serif;margin:20px;background:#faf8f3;color:#222}
@@ -51,7 +58,7 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .relationship-list{margin:4px 0 12px;padding-left:24px}.relationship-list li{margin:4px 0}
 .badge-gallery{background:#e4efff;color:#244f85}.badge-review,.badge-possible-outlier,.badge-borderline{background:#fff0d9;color:#704a12}
 .badge-core-member,.badge-identity-anchor,.badge-consistent,.badge-gallery-photo{background:#d9efdc;color:#205b2a}
-.badge-low-similarity,.badge-unscored{background:#f5d6d6;color:#7b2222}.badge-protected-only{background:#eee;color:#555}
+.badge-low-similarity,.badge-unscored{background:#f5d6d6;color:#7b2222}.badge-protected-only,.badge-protected-identity{background:#eee;color:#555}
 .detail{color:#555;font-size:.88em;margin:4px 0;overflow-wrap:anywhere}
 .detail-list{margin:4px 0;padding-left:22px}.detail-list li{margin:5px 0}
 .detail-list .score-badge{margin-left:4px}.face-link{display:inline-block;text-decoration:none}.face-link:hover{text-decoration:underline}
@@ -66,6 +73,9 @@ article a{color:#28527a}.name{font-weight:600;overflow-wrap:anywhere;margin:7px 
 .reference .detail{font-size:.82em}
 .identity-rankings{font-size:.88em;margin:0 0 12px;overflow-wrap:anywhere}
 .identity-rankings summary{cursor:pointer;color:#28527a}
+.policy-panel{margin:10px 0;padding:8px 10px;background:#fff;border:1px solid #ded8ce;border-radius:6px;font-size:.84em}
+.policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}
+.policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}
 @media(max-width:1050px){.controls{grid-template-columns:minmax(0,1fr)}.sort-controls{justify-content:flex-start}}
 @media(max-width:760px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}
 """
@@ -129,9 +139,17 @@ function compare(a,b) {
   if(a.score===null)return 0;
   return sort.value==="high" ? b.score-a.score : a.score-b.score;
 }
+const likenessPolicy=JSON.parse(document.getElementById("likeness-policy-data").textContent);
+function scoreBand(score) {
+  const bands=likenessPolicy.scoreBands;
+  if(score>=bands.green.minimum)return "green";
+  if(score>=bands.yellow.minimum)return "yellow";
+  if(score>=bands.orange.minimum)return "orange";
+  return "red";
+}
 function scoreBadge(score, label="Likeness score") {
   if(score===null||score===undefined)return null;
-  const band=score>=0.55?"green":score>=0.30?"yellow":score>=0.15?"orange":"red";
+  const band=scoreBand(score);
   const badge=document.createElement("span"); badge.className="score-badge score-"+band;
   badge.textContent=score.toFixed(2); badge.title=label; return badge;
 }
@@ -170,6 +188,7 @@ function card(r, readOnly=false) {
   }
   const badges=readOnly?[r.referenceLabel]:[
     r.bucket==="Gallery"?"Gallery photo":"Review photo",
+    r.workflowSelected?"Workflow-selected · protected":"",
     r.state,
     r.primaryReference?r.referenceLabel:""
   ];
@@ -298,6 +317,13 @@ function groupCards(items) {
     const title=document.createElement("h2"); title.textContent=folder+" · "+photos.length+" shown"; header.append(title);
     const info=peopleData[folder]||{};
     header.append(categoryBadge(info.group||folder.split("/")[0]));
+    if(info.identityProtected) {
+      const protectedBadge=document.createElement("span");
+      protectedBadge.className="badge badge-protected-identity";
+      protectedBadge.textContent="Protected identity";
+      protectedBadge.title="Automatic moves into or out of this identity are blocked";
+      header.append(protectedBadge);
+    }
     const reference=primaryFor(folder);
     if(reference) {
       if(!photos.some(item=>item.photoId===reference.photoId))header.append(card(reference,true));
@@ -467,13 +493,17 @@ def action_folder_supported(folder):
 
 
 def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficient,
-                  min_face, group, keep, odd):
+                  min_face, group, keep, odd, category_policy=None):
     """Describe the evidence and thresholds behind a displayed photo score."""
     face_count = "unreadable" if photo.faces < 0 else str(photo.faces)
     details = [
         f"Face gate: {min_face}px minimum; this image "
         f"{'meets' if photo.usable(min_face) else 'does not meet'} the gate.",
-        f"Reference core: {'enough' if sufficient else 'fewer than three'} Gallery photos for outlier suggestions.",
+        (
+            f"Reference core: {'meets' if sufficient else 'below'} the "
+            f"{category_policy['minimumUsablePhotosForOutlierActions'] if category_policy else 3}-photo "
+            "minimum for this category's outlier actions."
+        ),
         "Similarity is the centered face-vector cosine score.",
         (
             "Score method: leave this photo out when it is a core member; otherwise compare it with the full active core."
@@ -481,12 +511,18 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
             "Score method: compare with the active Gallery core; Review photos are excluded from the core."
         ),
     ]
-    if bucket == "Gallery" and group == "Prospects":
+    if bucket == "Gallery" and category_policy:
         details.append(
-            f"Prospect flags: below {odd:.2f} is a possible outlier; below {keep:.2f} is borderline."
+            f"Identity core includes scores at or above "
+            f"{category_policy['identityCoreMinimumSimilarity']:.2f}; "
+            "a single usable photo remains the provisional core."
         )
-    elif bucket == "Gallery":
-        details.append(f"Low-similarity flag: below {odd:.2f}.")
+        details.append(
+            f"Review suggestion: below "
+            f"{category_policy['reviewSuggestionBelowSimilarity']:.2f}; "
+            f"split candidate below {category_policy['splitCandidateBelowSimilarity']:.2f} "
+            f"after {category_policy['minimumUsablePhotosForOutlierActions']} usable photos."
+        )
     return {
         "coreSize": core_size,
         "coreMode": core_mode,
@@ -543,10 +579,19 @@ def assign_primary_references(items):
             reference["referenceLabel"] = label
 
 
-def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False, embed=None, keep=0.25):
+def collect_items(
+    cfg, st, work, cache, space, catalog, *,
+    include_artists=False, embed=None, keep=0.25, policy=None,
+):
     """Build scored image records; Review candidates never enter an identity core."""
-    groups = set(SECTIONS if include_artists else SECTIONS[:-1])
-    group_order = {group: index for index, group in enumerate(GROUP_ORDER)}
+    policy = policy or default_policy()
+    category_order = tuple(policy["categoryOrder"])
+    groups = set(
+        category_order
+        if include_artists
+        else (category for category in category_order if category != "Artists")
+    )
+    group_order = {group: index for index, group in enumerate(category_order)}
     folders = [
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
@@ -592,11 +637,6 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
         -len(gallery_by_key[entry[0]]) if likeness.status_of(entry[0]) not in ("Sisters", "Angels") else 0,
         entry[0].casefold(),
     ))
-    identity_rankings = rank_identity_centroids(
-        space,
-        [key for key, _folder in folders],
-        categories={key: likeness.status_of(key) for key, _folder in folders},
-    )
     person_order = {key: index for index, (key, _folder) in enumerate(folders)}
     all_photos = list(space.photos)
     all_photos.extend(photo for records in review_by_key.values() for photo, _ in records)
@@ -621,6 +661,36 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
     for person_id, person in catalog["people"].items():
         people_by_folder[person["folder"]].append((person_id, person))
 
+    policy_centroids = {}
+    for key, _folder in folders:
+        records = people_by_folder.get(key, [])
+        person = records[0][1] if len(records) == 1 else None
+        usable = [
+            photo for photo in gallery_by_key[key]
+            if photo.usable(st["minFace"])
+        ]
+        category_policy = policy["categoryPolicies"].get(likeness.status_of(key), {})
+        audit = audit_person(
+            [photo.vec for photo in usable],
+            [metadata.photo_id_from_name(photo.name) for photo in usable],
+            anchor_ids=person["identityAnchors"] if person else (),
+            protected_ids=protected_ids,
+            stale_ids=stale_ids,
+            ambiguous_ids=ambiguous_ids,
+            minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
+            core_minimum=category_policy.get("identityCoreMinimumSimilarity", 0.3),
+            seed_floor=category_policy.get("identityCoreMinimumSimilarity", 0.3),
+        )
+        if audit["core_vector"] is not None:
+            policy_centroids[key] = audit["core_vector"]
+    identity_rankings = rank_identity_centroids(
+        space,
+        [key for key, _folder in folders],
+        categories={key: likeness.status_of(key) for key, _folder in folders},
+        centroids=policy_centroids,
+        category_order=category_order,
+    )
+
     items, warnings = [], []
     active_keys = {key for key, _ in folders}
     for person in catalog["people"].values():
@@ -632,8 +702,10 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
         records = people_by_folder.get(key, [])
         conflict = len(records) > 1
         person = records[0][1] if len(records) == 1 else None
+        identity_protected = bool(person and person.get("protected"))
         person_id = records[0][0] if len(records) == 1 else None
         anchors = set(person["identityAnchors"]) if person else set()
+        category_policy = policy["categoryPolicies"].get(likeness.status_of(key), {})
         usable = [photo for photo in gallery if photo.usable(st["minFace"])]
         photo_ids = [metadata.photo_id_from_name(photo.name) for photo in usable]
         result = audit_person(
@@ -643,6 +715,9 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
             protected_ids=protected_ids,
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
+            minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
+            core_minimum=category_policy.get("identityCoreMinimumSimilarity", 0.3),
+            seed_floor=category_policy.get("identityCoreMinimumSimilarity", 0.3),
         )
         if conflict:
             warnings.append(f"Conflicting catalogue records for {key}; identity anchors were ignored")
@@ -656,8 +731,15 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
         def best_other(photo):
             if not photo.usable(st["minFace"]):
                 return ""
-            ranking = space.ranking(photo.vec, own=key, skip=photo if photo in space.photos else None, source=key)
-            other = next(((score, name) for score, name in ranking if name != key), None)
+            ranking = sorted(
+                (
+                    (float(photo.vec @ vector), candidate)
+                    for candidate, vector in policy_centroids.items()
+                    if candidate != key and not likeness.apart(key, candidate)
+                ),
+                key=lambda row: (-row[0], row[1].casefold()),
+            )
+            other = ranking[0] if ranking else None
             return f"{other[1]} ({other[0]:.2f})" if other else ""
 
         for photo in gallery:
@@ -670,6 +752,15 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
             )
             index = indices.get(id(photo))
             score = scores.get(id(photo))
+            consistency = evaluate_photo_consistency(
+                likeness.status_of(key),
+                score=score,
+                usable_photo_count=max(1, len(usable)),
+                identity_protected=identity_protected,
+                photo_protected=photo_id in protected_ids,
+                workflow_selected=photo_id in selected_ids,
+                policy=policy,
+            )
             if conflict:
                 state, reason = "Catalogue conflict", "Folder is claimed by more than one person record"
             elif photo_id in stale_ids:
@@ -682,16 +773,27 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 state, reason = "Protected only", "Kept in the gallery but excluded from the identity core"
             elif not photo.usable(st["minFace"]):
                 state, reason = "Unscored", "No usable face vector"
+            elif consistency["decision"] == "split-review":
+                state, reason = "Split candidate", consistency["reason"]
+            elif consistency["decision"] == "review":
+                state, reason = "Review suggested", consistency["reason"]
+            elif (
+                index is not None
+                and index not in core
+                and score is not None
+                and score < category_policy.get("identityCoreMinimumSimilarity", 0.3)
+            ):
+                state = "Excluded from core"
+                reason = (
+                    "Below this category's identity-core threshold; "
+                    "the photo remains in Gallery unless a separate action is approved"
+                )
             elif not result["sufficient"]:
-                state, reason = "Small core", "Score only; too few core photos for an outlier suggestion"
-            elif key.startswith("Prospects/") and score < st["odd"]:
-                state, reason = "Possible outlier", "Low similarity to the current core; report only"
-            elif key.startswith("Prospects/") and score < keep:
-                state, reason = "Borderline", "Review suggested; no move is proposed"
+                state, reason = "Small core", "Too few usable photos for this category's outlier actions"
+            elif photo_id in selected_ids:
+                state, reason = "Workflow-protected", "Selected for a workflow; automatic Review routing is blocked"
             elif index in core:
                 state, reason = "Core member", "Included in the trusted-seeded or provisional core"
-            elif score is not None and score < st["odd"]:
-                state, reason = "Low similarity", "Inspect only; no automatic move"
             else:
                 state, reason = "Consistent", "Similarity is measured against the current person core"
             match = best_other(photo) if (
@@ -710,6 +812,7 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 group=likeness.status_of(key),
                 keep=keep,
                 odd=st["odd"],
+                category_policy=category_policy,
             )
             items.append({
                 "folder": key,
@@ -722,13 +825,14 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "photoId": photo_id,
                 "contentSha256": manifest_hash(photo),
                 "personId": person_id,
+                "identityProtected": identity_protected,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
                 ),
                 "identityOrder": identity_order_key(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids,
-                    result["sufficient"] and index in core,
+                    index in core,
                     score,
                     photo.name,
                 )[0],
@@ -793,6 +897,7 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 group=likeness.status_of(key),
                 keep=keep,
                 odd=st["odd"],
+                category_policy=category_policy,
             )
             items.append({
                 "folder": key,
@@ -805,6 +910,7 @@ def collect_items(cfg, st, work, cache, space, catalog, *, include_artists=False
                 "photoId": photo_id,
                 "contentSha256": manifest_hash(photo),
                 "personId": person_id,
+                "identityProtected": identity_protected,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
@@ -930,8 +1036,9 @@ def write_thumbnails(items, out):
     return public_items, thumb_dir
 
 
-def render_html(items, stamp, warnings=()):
+def render_html(items, stamp, warnings=(), policy=None):
     """Render a local page with client-side filters and bounded card rendering."""
+    policy = policy or default_policy()
     people_count = len({item["folder"] for item in items})
     people_label = "person" if people_count == 1 else "people"
     photos_label = "photo" if len(items) == 1 else "photos"
@@ -940,6 +1047,7 @@ def render_html(items, stamp, warnings=()):
         people_data.setdefault(item["folder"], {
             "group": item.get("group"),
             "identityMatches": item.get("identityMatches", []),
+            "identityProtected": item.get("identityProtected", False),
         })
     public_items = [
         {key: value for key, value in item.items() if key != "identityMatches"}
@@ -947,6 +1055,7 @@ def render_html(items, stamp, warnings=()):
     ]
     payload = json.dumps(public_items, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     people_payload = json.dumps(people_data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    policy_payload = json.dumps(policy, ensure_ascii=True).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
     warning_html = ""
     if warnings:
         entries = "".join(f"<li>{html.escape(message)}</li>" for message in warnings)
@@ -958,7 +1067,9 @@ def render_html(items, stamp, warnings=()):
 <p class="note">Generated {stamp} · {people_count} {people_label} · {len(items)} {photos_label}</p>
 <p class="note">Stage actions here, then download the manifest to review and apply separately.</p></div>
 <div class="header-side"><div class="header-label">Likeness</div>
-<div class="score-legend"><span class="score-badge score-green">≥0.55</span><span class="score-badge score-yellow">≥0.30</span><span class="score-badge score-orange">≥0.15</span><span class="score-badge score-red">&lt;0.15</span></div></div></header>
+<div class="score-legend">{render_score_legend(policy)}</div></div></header>
+{render_policy_panel(policy)}
+<script type="application/json" id="likeness-policy-data">{policy_payload}</script>
 {warning_html}
 <div class="controls">
 <div class="filter-controls">
@@ -983,7 +1094,7 @@ def render_html(items, stamp, warnings=()):
 <div id="grid"></div><button id="more" type="button">Show next {PAGE_SIZE}</button>
 <script id="review-data" type="application/json">{payload}</script>
 <script id="people-data" type="application/json">{people_payload}</script>
-<script id="category-order" type="application/json">{json.dumps(GROUP_ORDER)}</script>
+<script id="category-order" type="application/json">{json.dumps(policy["categoryOrder"])}</script>
 <script>{SCRIPT}</script>
 </body></html>
 """
@@ -996,25 +1107,33 @@ def main(argv=None):
     parser.add_argument("--out", help="report directory (default: <work>\\_reports\\library)")
     parser.add_argument("--root", help="photo library folder (default: workspaces.json paths.workRoot)")
     parser.add_argument("--cache", help="embedding cache file (default: the user-local likeness cache)")
+    parser.add_argument("--policy", help="versioned likeness policy JSON")
     parser.add_argument(
         "--no-renders",
         action="store_true",
         help="accepted by the shared gallery launcher; this page does not load ComfyUI renders",
     )
     args = parser.parse_args(argv)
+    policy = load_policy(args.policy)
     cfg, st, work, cache, space = likeness.build(
         types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None)
     )
     catalog = metadata.load_catalog()
     items, warnings = collect_items(
-        cfg, st, work, cache, space, catalog, include_artists=args.artists, keep=args.keep
+        cfg, st, work, cache, space, catalog,
+        include_artists=args.artists, keep=args.keep, policy=policy
     )
     out = pathlib.Path(args.out) if args.out else pathlib.Path(work) / "_reports" / "library"
     out.mkdir(parents=True, exist_ok=True)
     public_items, thumb_dir = write_thumbnails(items, out)
     report = out / "people_gallery_review.html"
     report.write_text(
-        render_html(public_items, datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), warnings),
+        render_html(
+            public_items,
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            warnings,
+            policy=policy,
+        ),
         encoding="utf-8",
     )
     print(f"people gallery review: {len(public_items)} photo(s)")

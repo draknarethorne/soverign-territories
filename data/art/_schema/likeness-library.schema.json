@@ -39,7 +39,8 @@
           "type": "array",
           "uniqueItems": true,
           "items": {"$ref": "#/definitions/photoId"}
-        }
+        },
+        "protected": {"type": "boolean"}
       }
     },
     "photo": {
@@ -141,7 +142,7 @@
     },
     "personFolder": {
       "type": "string",
-      "pattern": "^(Angels|Sisters|Prospects|Potentials)/[^/]+(/[^/]+)?$"
+      "pattern": "^(Angels|Sisters|Models|Prospects|Potentials)/[^/]+(/[^/]+)?$"
     }
   }
 }

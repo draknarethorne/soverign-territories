@@ -13,8 +13,9 @@ def _percentile(values, percentile):
     return float(np.percentile(values, percentile)) if values else None
 
 
-def collect_diagnostics(space, settings):
+def collect_diagnostics(space, settings, active_roots=None):
     """Calculate calibration and eligible active-person folder evidence in one pass."""
+    active_roots = set(active_roots or ACTIVE_ROOTS)
     photo_rows = []
     calibration_photo_rows = []
     folder_rows = []
@@ -26,7 +27,7 @@ def collect_diagnostics(space, settings):
     for key in space.keys:
         photos = space.by_key[key]
         root = key.split("/", 1)[0]
-        eligible = root in ACTIVE_ROOTS and len(photos) >= 3
+        eligible = root in active_roots and len(photos) >= 3
         scores = []
         states = {"agree": 0, "borderline": 0, "outlier": 0}
 
@@ -90,7 +91,7 @@ def collect_diagnostics(space, settings):
                     "margin_threshold": settings["margin"],
                 })
 
-        if root not in ACTIVE_ROOTS:
+        if root not in active_roots:
             continue
         total = len(photos)
         agree_rate = states["agree"] / total if eligible and total else None

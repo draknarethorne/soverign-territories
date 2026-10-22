@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "version": "draft-2026-10-21.1",
+  "status": "draft",
+  "categoryOrder": [
+    "Sisters",
+    "Angels",
+    "Models",
+    "Prospects",
+    "Potentials",
+    "Artists"
+  ],
+  "scoreBands": {
+    "green": {
+      "minimum": 0.55
+    },
+    "yellow": {
+      "minimum": 0.3
+    },
+    "orange": {
+      "minimum": 0.15
+    },
+    "red": {
+      "maximumExclusive": 0.15
+    }
+  },
+  "categoryAssignmentRules": [
+    {
+      "category": "Potentials",
+      "minimumUsablePhotos": 1,
+      "maximumUsablePhotos": 4
+    },
+    {
+      "category": "Models",
+      "minimumUsablePhotos": 5,
+      "minimumCastSimilarity": 0.4,
+      "maximumCastSimilarityExclusive": 0.55
+    },
+    {
+      "category": "Prospects",
+      "minimumUsablePhotos": 5,
+      "maximumCastSimilarityExclusive": 0.4
+    }
+  ],
+  "highCastSimilarityMinimum": 0.55,
+  "castReviewMinimum": 0.3,
+  "photoRouting": {
+    "reviewMinimum": 0.3,
+    "automaticRouteMinimum": 0.55,
+    "minimumMargin": 0.1,
+    "minimumOwnCoreLead": 0.1
+  },
+  "identityActions": {
+    "identityClusterMinimumSimilarity": 0.55,
+    "matchReviewMinimum": 0.3,
+    "autoMergeMinimum": 0.55,
+    "autoMergeMinimumMargin": 0.1,
+    "autoMergeMinimumIndependentPhotos": 2,
+    "splitReviewMaximum": 0.15,
+    "splitMinimumAlternativeSimilarity": 0.3,
+    "splitMinimumMargin": 0.1,
+    "splitMinimumIndependentPhotos": 2
+  },
+  "lookalikeGroups": {
+    "suggestionMinimumSimilarity": 0.3,
+    "automaticAssociationEnabled": false
+  },
+  "categoryPolicies": {
+    "Sisters": {
+      "identityProtectedByDefault": true,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Angels": {
+      "identityProtectedByDefault": true,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Models": {
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.3,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 5
+    },
+    "Prospects": {
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Potentials": {
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": true,
+      "automaticSplitEnabled": true,
+      "automaticPhotoRoutingEnabled": true,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.3,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    },
+    "Artists": {
+      "identityProtectedByDefault": false,
+      "automaticMergeEnabled": false,
+      "automaticSplitEnabled": false,
+      "automaticPhotoRoutingEnabled": false,
+      "identityCoreMinimumSimilarity": 0.15,
+      "reviewSuggestionBelowSimilarity": 0.15,
+      "splitCandidateBelowSimilarity": 0.15,
+      "minimumUsablePhotosForOutlierActions": 4
+    }
+  },
+  "protection": {
+    "identityBlocksAutomaticMoves": true,
+    "photoBlocksAutomaticRemoval": true,
+    "photoBlocksReviewRouting": true,
+    "protectedPhotoMayBeExcludedFromCore": true
+  }
+}

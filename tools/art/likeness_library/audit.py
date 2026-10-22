@@ -33,8 +33,30 @@ def catalog_photo_flags(records, catalog):
     return protected, stale, ambiguous
 
 
+def _filter_core_by_leave_one_out(vectors, core_indices, anchor_indices, minimum):
+    """Remove weak provisional members without dropping every member at once."""
+    core = list(core_indices)
+    anchors = set(anchor_indices)
+    while len(core) > 1:
+        total = vectors[core].sum(0)
+        scores = {
+            index: float(vectors[index] @ nz(total - vectors[index]))
+            for index in core
+        }
+        retained = [
+            index for index in core
+            if index in anchors or scores[index] >= minimum
+        ]
+        if retained == core:
+            break
+        if not retained:
+            retained = [min(core, key=lambda index: (-scores[index], index))]
+        core = retained
+    return core
+
+
 def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_ids=(), ambiguous_ids=(),
-                 minimum_core=3, seed_floor=0.2):
+                 minimum_core=3, seed_floor=0.2, core_minimum=0.3):
     """Score one folder, keeping trusted anchors distinct from provisional core members."""
     vectors = np.asarray(vectors, dtype=float)
     if vectors.size == 0:
@@ -43,8 +65,19 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
         raise ValueError("vectors must be a two-dimensional array")
     if len(photo_ids) != len(vectors):
         raise ValueError("photo_ids must have one entry per vector")
-    if minimum_core < 1:
-        raise ValueError("minimum_core must be positive")
+    if isinstance(minimum_core, bool) or not isinstance(minimum_core, int) or minimum_core < 1:
+        raise ValueError("minimum_core must be a positive integer")
+    for value, label in (
+        (seed_floor, "seed_floor"),
+        (core_minimum, "core_minimum"),
+    ):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not np.isfinite(value)
+            or not -1 <= value <= 1
+        ):
+            raise ValueError(f"{label} must be between -1 and 1")
     vectors = nz(vectors)
 
     anchors = set(anchor_ids) - set(stale_ids) - set(ambiguous_ids)
@@ -73,13 +106,30 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
         ]
         core_indices = list(anchor_indices)
         if candidate_indices:
-            _, candidate_core, _ = core_scores(vectors[candidate_indices], seed=seed)
+            _, candidate_core, _ = core_scores(
+                vectors[candidate_indices],
+                seed=seed,
+                first=seed_floor,
+                thr=core_minimum,
+                fallback_best=True,
+            )
             core_indices.extend(candidate_indices[i] for i in candidate_core)
     elif eligible:
         mode = "provisional"
-        _, provisional_core, _ = core_scores(vectors[eligible])
+        _, provisional_core, _ = core_scores(
+            vectors[eligible],
+            first=seed_floor,
+            thr=core_minimum,
+            fallback_best=True,
+        )
         core_indices = [eligible[i] for i in provisional_core]
 
+    core_indices = _filter_core_by_leave_one_out(
+        vectors,
+        core_indices,
+        anchor_indices,
+        core_minimum,
+    )
     scores = [None] * len(vectors)
     core_vector = None
     if core_indices:
@@ -104,5 +154,5 @@ def audit_person(vectors, photo_ids, *, anchor_ids=(), protected_ids=(), stale_i
         "blocked_indices": sorted(blocked_indices),
         "scores": scores,
         "core_vector": core_vector,
-        "sufficient": len(core_indices) >= minimum_core,
+        "sufficient": len(eligible) >= minimum_core,
     }

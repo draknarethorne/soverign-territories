@@ -209,6 +209,70 @@ for all Angels and Sisters, not only identities with Prospect-promotion
 history. The renderer is shared, so the label applies to every matching card
 in both generated libraries.
 
+Oct 21 likeness engine decision: the approved action boundary applies to one
+shared engine for both clean rebase and ordinary incremental intake. Unprotected
+Potentials/Prospects can merge and split organically under lower configurable
+thresholds; Models use an intermediate policy with more Review; Angels/Sisters
+remain conservative. Category order, thresholds, action permissions, and
+supported category definitions are declarative so future categories such as
+Demons can use the same engine. Sandbox and production share the engine and
+default policy; any sandbox override is explicit and recorded.
+
+Identity Protection blocks automatic moves into or out of the identity.
+Photo Protection blocks automatic removal and Review routing, while the
+protected photo can still be excluded from identity-core construction and
+remain available for workflow use. Explicit identity protection is now shown
+in both gallery surfaces; photo-level protection remains separately tagged.
+
+Oct 21 draft likeness policy: the versioned policy and schema now define the
+shared score bands, categories, routing/action thresholds, lookalike cue, and
+protection semantics. The draft preserves green >=0.55, yellow >=0.30, orange
+>=0.15, red <0.15; >=0.30 is a visual lookalike cue only, while same-identity
+clustering uses a separate draft >=0.55 threshold. Draft status blocks
+automatic routing/merge/split and keeps rebaseline apply gated pending user
+review. The verified current Working backup is
+`B:\Sovereign Territories Sandbox\Working\_backup\library-20261021-172221`
+(17,582 files / 5,827,811,555 bytes). Policy tests, focused reconciliation
+and gallery tests, the schema check, and `bin\validate.cmd --quick` pass.
+Both Models-aware sandbox gallery pages have now been regenerated and checked.
+The old
+`rebaseline --apply-categories` path now requires an approved policy and a
+verified Working backup, but this is not a full clean-rebuild engine.
+
+After reviewing the draft values in the gallery, the agreed validation is to preview
+the ordinary likeness process immediately, then add the separate 200+ photo
+batch and test incremental growth without another full rebase. No thresholds
+or production policy values have been selected.
+The separately saved logo-detection/cleanup idea remains outside this
+likeness-engine scope; no cleanup implementation or crop change was made.
+
+Oct 21 sandbox category-only rebaseline: the immutable source snapshot and
+Working backup were reverified before reset. A clean reset restored Models,
+Prospects, and Potentials; the explicit draft override then applied only
+category-folder moves in sandbox Working: 13 Prospects to Models and
+Potentials/Lia Joyce to Prospects. The report covers 2,667 photos across 261
+folders; it still lists five photo-routing and three Junk candidates, and 208
+lookalike pairs, as suggestions only. No photo routing, Review/Junk move,
+identity merge/split, or production operation was applied. The post-move
+calibration/folder diagnostics took 15.73 seconds (2,543 calibration photos,
+89/194 eligible folder checks, 2,265 per-photo folder scores); the identity
+core audit covered 261 folders and is saved alongside the diagnostic bundle.
+The overview shows 265 people (10 Sisters, 11 Angels, 13 Models, 23 Prospects,
+137 Potentials, 71 Artists); Review has 2,667 photos across 261 folders and
+8,722 cached thumbnails. Both pages were generated from the sandbox-local
+cache with renders disabled. See
+`B:\Sovereign Territories Sandbox\Working\_reports\library\rebaseline.md` and
+`B:\Sovereign Territories Sandbox\Working\_reports\diagnostics\diagnostics-20261021T233723319309Z\diagnostics.md`.
+This is an isolated category-classification baseline, not the complete
+photo-routing rebase. The read-only reconciliation preview found seven
+existing Review candidates and held all seven under the draft policy; no pool
+photos were present. A one-photo smoke preview used a temporary copy of an
+existing Potential photo: against 261 frozen cores it ranked
+`Potentials/Amara Madison` first at 0.9483, but held it for visual review
+because policy status is still draft. The probe copy was removed; its report
+remains under `Working\_reports\reconciliation`. These previews changed no
+photo destinations or production files.
+
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports
 trusted/provisional cores, score order and Prospect outlier candidates; it

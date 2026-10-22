@@ -1,29 +1,27 @@
 """Rank person-folder centroid similarities for gallery cross-references."""
 
-CATEGORY_ORDER = ("Sisters", "Angels", "Models", "Prospects", "Potentials", "Artists")
-CATEGORY_PRIORITY = {category: index for index, category in enumerate(CATEGORY_ORDER)}
+from .policy import default_policy, score_band
 
 
-def score_band(score):
-    """Return the shared, display-only similarity band for a numeric score."""
-    if score >= 0.55:
-        return "green"
-    if score >= 0.30:
-        return "yellow"
-    if score >= 0.15:
-        return "orange"
-    return "red"
+CATEGORY_ORDER = tuple(default_policy()["categoryOrder"])
 
 
-def rank_identity_centroids(space, keys, categories=None):
+def rank_identity_centroids(space, keys, categories=None, centroids=None, category_order=None):
     """Rank by library hierarchy, then similarity within each category."""
     centroid = getattr(space, "centroid", None)
     keys = list(dict.fromkeys(keys))
     categories = categories or {}
-    if not callable(centroid):
+    category_priority = {
+        category: index
+        for index, category in enumerate(category_order or CATEGORY_ORDER)
+    }
+    if centroids is None and not callable(centroid):
         return {key: [] for key in keys}
 
-    vectors = {key: centroid(key) for key in keys}
+    vectors = {
+        key: centroids.get(key) if centroids is not None else centroid(key)
+        for key in keys
+    }
     rankings = {}
     for key in keys:
         vector = vectors[key]
@@ -41,7 +39,7 @@ def rank_identity_centroids(space, keys, categories=None):
         rankings[key] = sorted(
             matches,
             key=lambda match: (
-                CATEGORY_PRIORITY.get(match["category"], len(CATEGORY_ORDER)),
+                category_priority.get(match["category"], len(category_priority)),
                 -match["score"],
                 match["key"].casefold(),
             ),

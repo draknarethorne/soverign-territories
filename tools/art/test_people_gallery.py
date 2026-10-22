@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for the local photo-library people gallery."""
 import pathlib
+import copy
 import sys
 import tempfile
 import types
@@ -12,6 +13,7 @@ import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import people_gallery as gallery  # noqa: E402
+from likeness_library.policy import validate_policy  # noqa: E402
 
 
 class PeopleGalleryTests(unittest.TestCase):
@@ -22,6 +24,10 @@ class PeopleGalleryTests(unittest.TestCase):
     def tearDown(self):
         import shutil
         shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_models_are_a_distinct_active_category_not_a_sister_alias(self):
+        self.assertEqual(gallery.likeness.status_of("Models/Freya"), "Models")
+        self.assertFalse(gallery.likeness.is_sister("Models/Freya"))
 
     def test_identity_rankings_follow_library_hierarchy_then_similarity(self):
         vectors = {
@@ -70,6 +76,29 @@ class PeopleGalleryTests(unittest.TestCase):
             [(match["category"], match["name"]) for match in ranked],
             [("Sisters", "Higher"), ("Sisters", "Lower"), ("Angels", "Pair")],
         )
+
+    def test_custom_policy_category_is_rendered_and_controls_ranking_order(self):
+        policy = copy.deepcopy(gallery.default_policy())
+        policy["categoryOrder"].insert(3, "Demons")
+        policy["categoryPolicies"]["Demons"] = copy.deepcopy(
+            policy["categoryPolicies"]["Prospects"]
+        )
+        validate_policy(policy)
+
+        page = gallery.render_html([], "now", {"Demons": 1}, policy=policy)
+        self.assertIn('href="#demons">Demons (1)', page)
+
+        rankings = gallery.rank_identity_centroids(
+            None,
+            ["Prospects/A", "Demons/B"],
+            categories={"Prospects/A": "Prospects", "Demons/B": "Demons"},
+            centroids={
+                "Prospects/A": np.array([0.99, 0.1]),
+                "Demons/B": np.array([1.0, 0.0]),
+            },
+            category_order=policy["categoryOrder"],
+        )
+        self.assertEqual(rankings["Prospects/A"][0]["category"], "Demons")
 
     def add_person(self, status, name, count):
         folder = self.root / status / name
@@ -421,6 +450,7 @@ class PeopleGalleryTests(unittest.TestCase):
             "chosen": False,
             "score": 0.76,
             "source": photo.name,
+            "identity_protected": True,
             "tags": {"type": ["human"], "roles": ["artist", "mage"], "elements": ["Light"]},
             "gallery_path": photo.parent,
             "z_path": history,
@@ -433,6 +463,7 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertNotIn("Open folder", output)
         self.assertIn("1 photo", output)
         self.assertIn('class="category-badge photo-count">1 photo</span>', output)
+        self.assertIn('class="category-badge protected-badge">Protected identity</span>', output)
         self.assertIn('href="' + history.resolve().as_uri() + '"', output)
         self.assertIn("Prime-start photo score 0.76", output)
         self.assertIn('class="score-badge score-green">≥0.55</span>', output)

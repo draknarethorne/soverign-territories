@@ -1966,7 +1966,7 @@ def set_inputs(cfg, args):
 
 
 PHOTO_ROOTS = ["Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various"]  # Models is the old name of Sisters; Various is the pool of photos not yet sorted
-SISTER_ROOTS = ("Sisters", "Models")
+SISTER_ROOTS = ("Sisters",)
 
 
 def photo_roots(cfg, base=None):

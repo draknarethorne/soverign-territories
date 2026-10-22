@@ -20,6 +20,7 @@ from tools.art.likeness_library.reconciliation import (  # noqa: E402
     plan_reconciliation,
 )
 from tools.art import likeness  # noqa: E402
+from tools.art.likeness import apply_category_changes  # noqa: E402
 
 
 def candidate(photo_id, vector, *, folder="Various", bucket="Pool", side="Prospects", **values):
@@ -39,6 +40,46 @@ def stable_name(seed, taken):
 
 
 class ReconciliationTests(unittest.TestCase):
+    def test_category_moves_create_missing_configured_destination_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "Prospects" / "Sophie"
+            source.mkdir(parents=True)
+            photo = source / "gallery" / "sophie.jpg"
+            photo.parent.mkdir()
+            photo.write_bytes(b"photo")
+
+            moved = apply_category_changes(
+                root,
+                [("Prospects/Sophie", "Models/Sophie", 1, False)],
+                {"Prospects", "Models"},
+            )
+
+            self.assertEqual(moved, 1)
+            self.assertFalse(source.exists())
+            self.assertEqual(
+                (root / "Models" / "Sophie" / "gallery" / "sophie.jpg").read_bytes(),
+                b"photo",
+            )
+
+    def test_workflow_selected_photos_are_collected_across_all_flows(self):
+        config = {
+            "photos": {"Sophie": "sophie_image_500001.jpg"},
+            "flows": {
+                "alpha": {"photos": {"Sophie": "sophie_image_500002.jpg"}},
+            },
+        }
+
+        selected = likeness.chosen_keys(config)
+
+        self.assertEqual(
+            selected,
+            {
+                likeness.cw.photo_key("sophie_image_500001.jpg"),
+                likeness.cw.photo_key("sophie_image_500002.jpg"),
+            },
+        )
+
     def test_review_and_pool_candidates_form_one_order_independent_cluster(self):
         rows = [
             candidate("photo:image_100001", [1, 0], folder="Various"),
@@ -73,6 +114,51 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(assigned["photo:image_200001"], "Prospects/A")
         self.assertEqual(assigned["photo:image_200003"], "Artists/One/Person")
         self.assertIn("photo:image_200002", {row["photoId"] for row in result["held"]})
+
+    def test_policy_protects_target_identity_from_photo_routing(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        cores = {
+            "Prospects/Protected": {
+                "vector": np.array([1.0, 0.0]),
+                "side": "Prospects",
+                "category": "Prospects",
+                "identityProtected": True,
+            }
+        }
+        result = plan_reconciliation(
+            [candidate("photo:image_200004", [1.0, 0.0])],
+            cores,
+            minimum_cluster=3,
+            cluster=0.55,
+            policy=load_policy(),
+            name_factory=stable_name,
+        )
+
+        self.assertEqual(result["assignments"], [])
+        self.assertEqual(result["held"][0]["reason"], "protected identity cannot receive automatic moves")
+
+    def test_draft_policy_hold_reports_best_identity_and_score(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        result = plan_reconciliation(
+            [candidate("photo:image_200005", [1.0, 0.0])],
+            {
+                "Potentials/Amara Madison": {
+                    "vector": np.array([1.0, 0.0]),
+                    "side": "Prospects",
+                    "category": "Potentials",
+                }
+            },
+            minimum_cluster=3,
+            cluster=0.55,
+            policy=load_policy(),
+            name_factory=stable_name,
+        )
+
+        self.assertEqual(result["assignments"], [])
+        self.assertEqual(result["held"][0]["bestMatch"], "Potentials/Amara Madison")
+        self.assertEqual(result["held"][0]["bestScore"], 1.0)
 
     def test_remaining_candidate_can_join_fixed_provisional_cluster(self):
         angles = [-10, 0, 10, 60]
@@ -220,12 +306,18 @@ class ReconciliationTests(unittest.TestCase):
                 "minCluster": 3,
                 "castMerge": 0.55,
             }
-            args = SimpleNamespace(root=None, embedder=None, out=str(report_path))
+            args = SimpleNamespace(root=None, embedder=None, out=str(report_path), policy=None)
             output = io.StringIO()
             with mock.patch.object(
                 likeness,
                 "build",
-                return_value=(None, settings, root, None, SimpleNamespace(photos=[photo], by_key={}, st=settings)),
+                return_value=(
+                    {"photos": {"Sophie": photo_path.name}, "flows": {}},
+                    settings,
+                    root,
+                    None,
+                    SimpleNamespace(photos=[photo], by_key={}, st=settings),
+                ),
             ), mock.patch.object(likeness, "load_review", return_value=[]), mock.patch.object(
                 likeness.metadata, "load_catalog", return_value={"people": {}, "photos": {}}
             ), mock.patch.object(likeness.cw, "photo_folders", return_value=[]), mock.patch.object(
@@ -236,6 +328,7 @@ class ReconciliationTests(unittest.TestCase):
             report = json.loads(report_path.read_text(encoding="utf-8"))
             self.assertEqual(report["candidateCount"], 1)
             self.assertEqual(report["heldCount"], 1)
+            self.assertEqual(report["held"][0]["reason"], "workflow-selected photo; remains staged")
             self.assertEqual(report["source"], "likeness-reconcile")
             self.assertIn("No images or catalogue data are changed", output.getvalue())
             self.assertEqual(photo_path.read_bytes(), b"unchanged source")

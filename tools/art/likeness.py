@@ -16,11 +16,12 @@ Artists/* and Various hold many people and are "mixed": they are never used to d
 Each person folder keeps a z_ file with her name and history (see people.py; `likeness names` lists them).
 Configure under "likeness" in workflows/workspaces.json (mixed, pool, assign, margin, cluster, minCluster, odd, alike, minFace).
 
-  likeness rebaseline                 read-only rebaseline plus photo-by-photo Prospect/Potential-to-cast CSV audit
-  likeness rebaseline --apply-categories  move only threshold-driven Prospect/Potential folders (back up first)
+  likeness rebaseline                 read-only category, routing, and cast-similarity preview
+  likeness rebaseline --apply-categories  apply approved category changes in sandbox Working only
   likeness scan                       read every photo once (cached); lists photos with no usable face
   likeness calibrate                  how reliable the scores are on YOUR library (the thresholds in effect)
   likeness diagnostics                one-pass calibration and active-person folder reports (CSV + Markdown)
+  likeness policy                     validate and show the shared, versioned likeness policy
   likeness sandbox-reset              preview a reset of generated sandbox categories from its verified Source snapshot
   likeness audit-core [NAMES]         read-only core and low-score report, with tracked anchors/protection applied
   likeness alike                      pairs of people who look alike (angel against angel, angel against sister ...), most alike first
@@ -81,6 +82,7 @@ from likeness_library.sandbox import (  # noqa: E402
     reset_generated_categories,
 )
 from likeness_library.reconciliation import frozen_identity_cores, plan_reconciliation  # noqa: E402
+from likeness_library.policy import classify_category, load_policy  # noqa: E402
 from likeness_library.scoring import core_scores, nz  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
@@ -254,7 +256,7 @@ def settings(cfg):
 
 
 def is_sister(key):
-    """A folder in the sisters root (Sisters, or its old name Models)."""
+    """A folder in the active Sisters root."""
     return key.split("/")[0] in cw.SISTER_ROOTS
 
 
@@ -266,7 +268,9 @@ def pool_home(st):
 def side(key):
     """Where a folder's photos come from: Artists, unassigned people, or the pool; angels and sisters may take from either."""
     top = key.split("/")[0].lower()
-    return "Artists" if top == "artists" else "Prospects" if top in ("prospects", "potentials", "various") else None
+    return "Artists" if top == "artists" else "Prospects" if top in (
+        "models", "prospects", "potentials", "various"
+    ) else None
 
 
 def apart(a, b):
@@ -406,7 +410,10 @@ class Move:
 
 
 def chosen_keys(cfg):
-    return {cw.photo_key(n) for n in cfg.get("photos", {}).values() if cw.photo_key(n)}
+    selected = list(cfg.get("photos", {}).values())
+    for flow in cfg.get("flows", {}).values():
+        selected.extend(flow.get("photos", {}).values())
+    return {photo_key for name in selected if (photo_key := cw.photo_key(name))}
 
 
 def plan_sort(space, st, cfg, taken, singles=False):
@@ -754,7 +761,13 @@ def cmd_diagnostics(args):
             require_sandbox_output(args.root, args.out)
     cfg, st, work, cache, space = build(args)
     loaded = time.perf_counter()
-    calibration, calibration_photos, folders, photos = collect_diagnostics(space, st)
+    policy = load_policy(args.policy)
+    active_categories = [
+        category for category in policy["categoryOrder"] if category != "Artists"
+    ]
+    calibration, calibration_photos, folders, photos = collect_diagnostics(
+        space, st, active_roots=active_categories
+    )
     scored = time.perf_counter()
 
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -790,6 +803,9 @@ def cmd_diagnostics(args):
 def cmd_sandbox_reset(args):
     if not args.root:
         raise ValueError("sandbox-reset requires an explicit --root pointing to the sandbox Working directory")
+    if args.apply:
+        backup = library_backup.latest_work_root_backup(args.root)
+        library_backup.verify_backup(backup)
     result = reset_generated_categories(args.root, apply=args.apply)
     action = "reset applied" if result["applied"] else "reset preview"
     print(
@@ -801,6 +817,12 @@ def cmd_sandbox_reset(args):
     for category, count in result["categories"].items():
         print(f"  {category}: restore {count} source file(s)")
     print("  other Working paths, the Source snapshot, and production are unchanged")
+
+
+def cmd_policy(args):
+    policy = load_policy(args.policy)
+    print(f"likeness policy: {policy['version']} ({policy['status']})")
+    print(json.dumps(policy, indent=2, ensure_ascii=True))
 
 
 def cmd_alike(args):
@@ -953,7 +975,13 @@ def cmd_sort(args):
 
 def cmd_reconcile(args):
     """Preview Review and pool routing together without changing library files."""
+    sandbox_root = bool(args.root and is_sandbox_working_path(args.root))
+    if sandbox_root:
+        require_sandbox_cache(args.root, args.cache)
+        if args.out:
+            require_sandbox_output(args.root, args.out)
     cfg, st, work, cache, space = build(args)
+    policy = load_policy(args.policy)
     embed = args.embedder or Embedder()
     review_rows = load_review(cfg, work, space, cache, embed, st, include_empty=True)
     catalog = metadata.load_catalog()
@@ -963,8 +991,16 @@ def cmd_reconcile(args):
         photo_id_fn=metadata.photo_id_from_name,
         content_sha256_fn=metadata.content_sha256,
         additional_photos=[photo for _, _, photo in review_rows if photo is not None],
+        policy=policy,
     )
 
+    selected_names = list(cfg.get("photos", {}).values())
+    for flow in cfg.get("flows", {}).values():
+        selected_names.extend(flow.get("photos", {}).values())
+    selected_ids = {
+        photo_id for name in selected_names if isinstance(name, str)
+        if (photo_id := metadata.photo_id_from_name(name))
+    }
     candidates = []
     no_face = 0
     for photo in space.photos:
@@ -976,7 +1012,9 @@ def cmd_reconcile(args):
             "sourceFolder": photo.key,
             "sourceBucket": "Pool",
             "side": "Artists" if photo.key.startswith("Artists/") else "Prospects",
-            "protected": bool(photo_id and photo_id in locked_ids),
+            "protected": bool(photo_id and (photo_id in locked_ids or photo_id in selected_ids)),
+            "workflowSelected": bool(photo_id and photo_id in selected_ids),
+            "identityProtected": bool(cores.get(photo.key, {}).get("identityProtected")),
             "vector": photo.vec,
         })
     for folder, path, photo in review_rows:
@@ -989,7 +1027,9 @@ def cmd_reconcile(args):
             "sourceFolder": folder,
             "sourceBucket": "Review",
             "side": "Artists" if folder.startswith("Artists/") else "Prospects",
-            "protected": bool(photo_id and photo_id in locked_ids),
+            "protected": bool(photo_id and (photo_id in locked_ids or photo_id in selected_ids)),
+            "workflowSelected": bool(photo_id and photo_id in selected_ids),
+            "identityProtected": bool(cores.get(folder, {}).get("identityProtected")),
             "vector": photo.vec,
         })
 
@@ -999,11 +1039,12 @@ def cmd_reconcile(args):
         cores,
         assign=st["assign"],
         margin=st["margin"],
-        cluster=st["cluster"],
+        cluster=policy["identityActions"]["identityClusterMinimumSimilarity"],
         minimum_cluster=st["minCluster"],
-        cast_merge=st["castMerge"],
+        cast_merge=policy["identityActions"]["autoMergeMinimum"],
         names_taken=taken,
         name_factory=invent_name,
+        policy=policy,
     )
     report.update({
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -1012,6 +1053,8 @@ def cmd_reconcile(args):
         "scope": "Review and Various candidates; no Prospect outliers are moved or included",
         "noUsableReviewPhotos": no_face,
         "coreDiagnostics": diagnostics,
+        "policyVersion": policy["version"],
+        "policyStatus": policy["status"],
     })
     print(
         f"Read-only reconciliation: {report['candidateCount']} candidate(s), "
@@ -1020,6 +1063,7 @@ def cmd_reconcile(args):
         f"{report['heldCount']} held, {len(report['clusters'])} candidate cluster(s)."
     )
     print("No images or catalogue data are changed; the embedding cache may be updated.")
+    print(f"likeness policy: {policy['version']} ({policy['status']})")
     for row in report["assignments"]:
         score = f"{row['score']:.2f}" if row["score"] is not None else "cluster"
         print(
@@ -1027,10 +1071,16 @@ def cmd_reconcile(args):
             f"-> {row['destination']} ({score}; {row['reason']})"
         )
     for row in report["held"]:
+        best_match = row.get("bestMatch")
+        best_score = row.get("bestScore")
+        best_text = (
+            f"; best match {best_match} ({best_score:.2f})"
+            if best_match and best_score is not None else ""
+        )
         print(
             f"  HOLD {row.get('photoId') or '<no stable ID>'}  "
             f"{row.get('sourceBucket') or 'unknown'} {row.get('sourceFolder') or ''}: "
-            f"{row['reason']}"
+            f"{row['reason']}{best_text}"
         )
     for diagnostic in diagnostics:
         print(f"  CORE WARNING {diagnostic}")
@@ -2610,29 +2660,30 @@ def candidate_photo_count(space, key, st):
     return count
 
 
-def cast_audit_records(space, st, work, items):
-    """Rank each Prospect/Potential gallery photo against current Angel/Sister folder centroids."""
+def cast_audit_records(space, st, work, items, policy_cores, categories=None):
+    """Rank generated-category gallery photos against current Angel/Sister centroids."""
+    categories = set(categories or {"Prospects", "Potentials"})
     cast_keys = [
         key for key in space.keys
         if key.startswith("Angels/") or is_sister(key)
     ]
     cast_centroids = {
-        key: space.centroid(key)
+        key: policy_cores[key]["vector"]
         for key in cast_keys
+        if key in policy_cores
     }
     gallery_counts = collections.Counter(
         key for photo, key, bucket in items
         if bucket == "gallery"
-        and key.startswith(("Prospects/", "Potentials/"))
+        and key.split("/", 1)[0] in categories
         and photo.usable(st["minFace"])
         and not junk_reason(photo, st)
     )
     records = []
     for photo, key, bucket in items:
-        if bucket != "gallery" or not key.startswith(("Prospects/", "Potentials/")):
+        if bucket != "gallery" or key.split("/", 1)[0] not in categories:
             continue
-        own_centroid = space.centroid(key, skip=photo) if photo.usable(st["minFace"]) else None
-        own_score = float(photo.vec @ own_centroid) if photo.vec is not None and own_centroid is not None else None
+        own_score = policy_cores.get(key, {}).get("photoScores", {}).get(photo.name)
         rankings = sorted(
             (
                 (float(photo.vec @ centroid), candidate)
@@ -2694,9 +2745,24 @@ def pairing_candidate_score(similarity, photo_count, target, low, high):
 
 def cmd_rebaseline(args):
     """Read-only whole-library review: propose category changes, confident reassignment, Junk and Retired candidates, and low-photo Angel pairings."""
+    sandbox_root = bool(args.root and is_sandbox_working_path(args.root))
+    if sandbox_root:
+        require_sandbox_cache(args.root, args.cache)
+    policy = load_policy(args.policy)
     cfg, st, work, cache, space = build(args)
+    sandbox_draft_apply = bool(getattr(args, "sandbox_apply_draft", False))
+    if sandbox_draft_apply and not is_sandbox_working_path(work):
+        raise ValueError("--sandbox-apply-draft is restricted to sandbox Working")
     embed = args.embedder or Embedder()
     chosen = chosen_keys(cfg)
+    catalog = metadata.load_catalog()
+    person_by_folder = {
+        person["folder"]: person for person in catalog.get("people", {}).values()
+    }
+    protected_photo_ids = {
+        photo_id for photo_id, record in catalog.get("photos", {}).items()
+        if record.get("protected")
+    }
     anchors = [a.lower() for values in cfg.get("likeness", {}).get("anchors", {}).values() for a in values]
     items = [(p, p.key, "gallery") for p in space.photos]
     for group, name, folder in cw.photo_folders(cfg, work):
@@ -2710,7 +2776,20 @@ def cmd_rebaseline(args):
             items.append((Photo(path, group, name, sha, cache.emb[sha]), key, "review"))
     cache.save()
 
-    centroids = {key: space.centroid(key) for key in space.keys}
+    policy_cores, _locked_ids, core_diagnostics = frozen_identity_cores(
+        space,
+        catalog,
+        photo_id_fn=metadata.photo_id_from_name,
+        content_sha256_fn=metadata.content_sha256,
+        policy=policy,
+    )
+    centroids = {
+        key: core["vector"]
+        for key, core in policy_cores.items()
+    }
+    assignment_categories = {
+        rule["category"] for rule in policy["categoryAssignmentRules"]
+    }
     junk_rows, retirement_rows, category_rows, reassignment_rows = [], [], [], []
     counts = collections.Counter()
     for photo, key, bucket in items:
@@ -2727,43 +2806,114 @@ def cmd_rebaseline(args):
         if not photo.usable(st["minFace"]) or photo.vec is None:
             continue
         top = key.split("/", 1)[0]
-        if top in ("Prospects", "Potentials"):
+        if top in assignment_categories:
             other = sorted(((float(photo.vec @ centroid), candidate) for candidate, centroid in centroids.items()
                             if candidate != key and centroid is not None and not apart(key, candidate)), reverse=True)
-            own_centroid = space.centroid(key, skip=photo)
-            own_score = float(photo.vec @ own_centroid) if own_centroid is not None else None
-            if other and other[0][0] >= st["assign"] and (
-                    own_score is None or other[0][0] - own_score >= st["margin"]):
-                protected = cw.photo_key(photo.name) in chosen
+            own_score = policy_cores.get(key, {}).get("photoScores", {}).get(photo.name)
+            if own_score is None and key in centroids:
+                own_score = float(photo.vec @ centroids[key])
+            route = policy["photoRouting"]
+            if other and other[0][0] >= route["automaticRouteMinimum"] and (
+                    own_score is None or other[0][0] - own_score >= route["minimumOwnCoreLead"]):
+                photo_id = metadata.photo_id_from_name(photo.name)
+                source_root = key.split("/", 1)[0]
+                destination_root = other[0][1].split("/", 1)[0]
+                protected = (
+                    cw.photo_key(photo.name) in chosen
+                    or photo_id in protected_photo_ids
+                    or bool(person_by_folder.get(key, {}).get("protected"))
+                    or bool(person_by_folder.get(other[0][1], {}).get("protected"))
+                    or policy["categoryPolicies"].get(source_root, {}).get("identityProtectedByDefault", False)
+                    or policy["categoryPolicies"].get(destination_root, {}).get("identityProtectedByDefault", False)
+                )
                 reassignment_rows.append((other[0][0], key, bucket, photo.name, other[0][1], own_score, protected))
 
-    cast_audit = cast_audit_records(space, st, work, items)
+    cast_audit = cast_audit_records(
+        space, st, work, items, policy_cores, assignment_categories
+    )
+    cast_centroids = {
+        key: vector for key, vector in centroids.items()
+        if key.startswith(("Angels/", "Sisters/")) and vector is not None
+    }
+    classification_rows = []
+    assignment_categories = {
+        rule["category"] for rule in policy["categoryAssignmentRules"]
+    }
     for key in space.keys:
         root = key.split("/", 1)[0]
-        if root not in ("Prospects", "Potentials"):
+        if root not in assignment_categories:
             continue
         gallery_count = candidate_photo_count(space, key, st)
-        target = "Prospects" if gallery_count >= 5 else "Potentials"
+        vector = centroids.get(key)
+        cast_scores = [
+            (float(vector @ cast_vector), cast_key)
+            for cast_key, cast_vector in cast_centroids.items()
+        ] if vector is not None else []
+        best_cast_score = max(cast_scores, default=(None, None))[0]
+        person = person_by_folder.get(key)
+        identity_protected = (
+            bool(person and person.get("protected"))
+            or policy["categoryPolicies"].get(root, {}).get("identityProtectedByDefault", False)
+        )
+        if identity_protected:
+            classification = {
+                "category": root,
+                "reviewRequired": True,
+                "reason": "identity protected; automatic category moves are blocked",
+                "castSimilarity": best_cast_score,
+            }
+        else:
+            classification = classify_category(gallery_count, best_cast_score, policy)
+        target = classification["category"] if (
+            classification["category"] is not None
+            and classification["category"] != "Review"
+        ) else root
         counts.setdefault(key, gallery_count)
         destination = f"{target}/{key.split('/', 1)[1]}"
         if root != target:
             collision = (work / destination).exists()
             category_rows.append((key, destination, gallery_count, collision))
+        classification_rows.append({
+            "source": key,
+            "count": gallery_count,
+            "cast": best_cast_score,
+            "target": target,
+            "review": classification["reviewRequired"],
+            "reason": classification["reason"],
+        })
 
     if args.apply_categories:
-        moved = apply_category_changes(work, category_rows)
-        print(f"Applied {moved} Prospect/Potential folder change(s)")
+        if policy["status"] != "approved" and not sandbox_draft_apply:
+            raise ValueError("category changes are blocked until the likeness policy is approved")
+        if not is_sandbox_working_path(work):
+            raise ValueError("rebaseline category changes are restricted to the sandbox Working directory")
+        backup = library_backup.latest_work_root_backup(work)
+        library_backup.verify_backup(backup)
+        movable_categories = {
+            category for category, rules in policy["categoryPolicies"].items()
+            if not rules["identityProtectedByDefault"] and category not in {"Artists"}
+        }
+        moved = apply_category_changes(work, category_rows, movable_categories)
+        print(f"Applied {moved} configured category folder change(s)")
+        args.applied_category_moves = moved
+        args.applied_category_rows = category_rows
         args.apply_categories = False
         return cmd_rebaseline(args)
 
     taken = {name.split("/")[-1] for _, name, _ in cw.photo_folders(cfg, work)}
     pool_moves = plan_sort(space, st, cfg, taken, singles=True)
     different = {frozenset(x.casefold() for x in pair) for pair in st.get("different", [])}
-    _centroids, pairs = space.pair_matrix()
+    pairs = {
+        (left, right): float(centroids[left] @ centroids[right])
+        for left, right in itertools.combinations(sorted(centroids), 2)
+    }
+    lookalike_threshold = policy["lookalikeGroups"]["suggestionMinimumSimilarity"]
     candidate_pairs = sorted(
         ((score, a, b) for (a, b), score in pairs.items()
-         if a.startswith(("Prospects/", "Potentials/")) and b.startswith(("Prospects/", "Potentials/"))
-         and score >= st["rematch"] and frozenset((a.casefold(), b.casefold())) not in different),
+         if a.split("/", 1)[0] in assignment_categories
+         and b.split("/", 1)[0] in assignment_categories
+         and score >= lookalike_threshold
+         and frozenset((a.casefold(), b.casefold())) not in different),
         reverse=True,
     )
     angels = []
@@ -2788,28 +2938,66 @@ def cmd_rebaseline(args):
             pair_output.write(str(exc))
 
     report = pathlib.Path(args.out) if args.out else work / "_reports" / "library" / "rebaseline.md"
+    if sandbox_root:
+        require_sandbox_output(args.root, report)
     report.parent.mkdir(parents=True, exist_ok=True)
+    applied_category_moves = getattr(args, "applied_category_moves", 0)
+    reported_category_rows = getattr(args, "applied_category_rows", category_rows)
+    run_scope = (
+        f"Applied {applied_category_moves} configured category-folder move(s). "
+        "Photo routing, Review, Junk, and lookalike entries below remain suggestions; "
+        "no photos were moved."
+        if applied_category_moves else
+        "Read-only preview; no photos or folders were moved."
+    )
     lines = [
-        "# Whole-library rebaseline preview", "",
-        f"Read-only preview of {len(items)} gallery and review photos in {len(space.keys)} person folders. "
-        "No photos or folders were moved. Face embeddings may be added to the local cache.", "",
+        "# Whole-library rebaseline report", "",
+        f"{run_scope} This report covers {len(items)} gallery and review photos "
+        f"in {len(space.keys)} person folders. Face embeddings may be added to the local cache.", "",
+        f"Policy: `{policy['version']}` ({policy['status']}). "
+        + (
+            "An explicit sandbox-only draft override was used for the category move; "
+            if sandbox_draft_apply else
+            "Draft policies are preview-only; "
+        )
+        + "the score colors are similarity bands, not identity proof.", "",
+        "## Configured identity classification", "",
+        "| Current folder | Usable photos | Best Angel/Sister score | Proposed category | Review | Reason |",
+        "| --- | ---: | ---: | --- | --- | --- |",
+    ]
+    for row in classification_rows:
+        cast = f"{row['cast']:.3f}" if row["cast"] is not None else "n/a"
+        lines.append(
+            f"| `{row['source']}` | {row['count']} | {cast} | `{row['target']}` | "
+            f"{'yes' if row['review'] else 'no'} | {row['reason']} |"
+        )
+    if not classification_rows:
+        lines.append("| No Model/Prospect/Potential identities | - | - | - | - | - |")
+    lines += [
+        "",
         "## Proposed category changes", "",
-        "The boundary uses usable gallery photos that do not currently trigger the Junk rules. "
-        "Potentials have 1–4; Prospects have 5 or more.", "",
+        "The configured rule uses usable gallery photos that do not currently trigger the Junk rules. "
+        "High cast similarity is held for Review; the configured category-assignment rules are shown in the gallery policy panel.", "",
         "| Current folder | Proposed folder | Usable gallery photos | Result |",
         "| --- | --- | ---: | --- |",
     ]
-    for src, dst, count, collision in category_rows:
-        lines.append(f"| `{src}` | `{dst}` | {count} | {'blocked: destination exists' if collision else 'proposed'} |")
+    for src, dst, count, collision in reported_category_rows:
+        result = (
+            "blocked: destination exists"
+            if collision else "applied"
+            if applied_category_moves else "proposed"
+        )
+        lines.append(f"| `{src}` | `{dst}` | {count} | {result} |")
     if not category_rows:
         lines.append("| No Prospect/Potential folder crosses the threshold | - | - | - |")
-    lines += ["", "## Confidently mismatched Prospect/Potential photos", "",
-              f"Proposed only when the best other folder scores at least {st['assign']:.2f} "
-              f"and beats the photo's own-folder score by {st['margin']:.2f}.", "",
+    lines += ["", "## Confidently mismatched Model/Prospect/Potential photos", "",
+              f"Review candidates require the best other folder to score at least "
+              f"{policy['photoRouting']['automaticRouteMinimum']:.2f} and beat the photo's own-folder "
+              f"score by {policy['photoRouting']['minimumMargin']:.2f}. They are never applied from this report.", "",
               "| Score | Current folder | Photo | Best other folder | Own-folder score |",
               "| ---: | --- | --- | --- | ---: |"]
     for score, key, bucket, name, dest, own, protected in sorted(reassignment_rows, reverse=True):
-        note = " (selected; do not move automatically)" if protected else ""
+        note = " (protected; do not move automatically)" if protected else " (draft; review only)"
         lines.append(f"| {score:.3f} | `{key}/{bucket}` | `{name}`{note} | `{dest}` | {own:.3f} |" if own is not None
                      else f"| {score:.3f} | `{key}/{bucket}` | `{name}`{note} | `{dest}` | no peer photos |")
     if not reassignment_rows:
@@ -2862,8 +3050,9 @@ def cmd_rebaseline(args):
         lines.append(f"| `{move.photo.name}` | `{move.to}` | {move.reason} |")
     if not pool_moves:
         lines.append("| No pool moves proposed | - | - |")
-    lines += ["", "## Prospect/Potential folder pairs", "",
-              f"{len(candidate_pairs)} pair(s) at or above the current rematch threshold ({st['rematch']:.2f}); suggestions only.", "",
+    lines += ["", "## Visual lookalike candidates", "",
+              f"{len(candidate_pairs)} distinct-identity pair(s) at or above {lookalike_threshold:.2f}. "
+              "These are visual-review and possible family-group candidates, not same-person merge instructions.", "",
               "| Similarity | Folder A | Folder B |", "| ---: | --- | --- |"]
     for score, a, b in candidate_pairs:
         lines.append(f"| {score:.3f} | `{a}` | `{b}` |")
@@ -2882,9 +3071,9 @@ def cmd_rebaseline(args):
               "multi-face, and obstructed-head photos to Junk for your cleanup. No identity match is treated as proof "
               "that a photo is bad.", ""]
     report.write_text("\n".join(lines), encoding="utf-8")
-    print(f"whole-library preview: {len(items)} photos; {len(cast_audit)} Prospect/Potential Gallery photos audited; "
-          f"{len(category_rows)} category change(s), "
-          f"{len(reassignment_rows)} confident reassignment(s), {len(junk_rows)} Junk candidate(s), "
+    print(f"whole-library report: {len(items)} photos; {len(cast_audit)} configured-category Gallery photos audited; "
+          f"{len(reported_category_rows)} category change(s), "
+          f"{len(reassignment_rows)} high-confidence routing candidate(s), {len(junk_rows)} Junk candidate(s), "
           f"{len(retirement_rows)} unreadable Retired candidate(s), {len(candidate_pairs)} likely folder pair(s), "
           f"{len(angels)} low-photo Angel(s)")
     print(f"report: {report}")
@@ -2892,35 +3081,50 @@ def cmd_rebaseline(args):
     print(f"Angel pairing preview: {pair_report}")
 
 
-def apply_category_changes(work, category_rows):
-    """Move whole Prospect/Potential folders after validating the entire batch."""
+def apply_category_changes(work, category_rows, allowed_categories=None):
+    """Move whole generated-category folders after validating the entire batch."""
+    allowed_categories = set(allowed_categories or {"Models", "Prospects", "Potentials"})
+    work = pathlib.Path(work).resolve()
     moves = []
+    destination_roots = set()
     for source_key, destination_key, _count, collision in category_rows:
         source_parts = pathlib.PurePosixPath(source_key).parts
         destination_parts = pathlib.PurePosixPath(destination_key).parts
         if (len(source_parts) != 2 or len(destination_parts) != 2
-                or source_parts[0] not in ("Prospects", "Potentials")
-                or destination_parts[0] not in ("Prospects", "Potentials")
+                or source_parts[0] not in allowed_categories
+                or destination_parts[0] not in allowed_categories
                 or source_parts[0] == destination_parts[0]
                 or source_parts[1] != destination_parts[1]):
-            raise ValueError(f"invalid Prospect/Potential category move: {source_key} -> {destination_key}")
+            raise ValueError(f"invalid generated-category move: {source_key} -> {destination_key}")
         source, destination = work.joinpath(*source_parts), work.joinpath(*destination_parts)
         if collision or destination.exists():
             raise FileExistsError(f"category destination already exists: {destination}")
         if not source.is_dir():
             raise FileNotFoundError(f"category source folder is missing: {source}")
-        if not destination.parent.is_dir():
-            raise FileNotFoundError(f"category root is missing: {destination.parent}")
+        root = destination.parent
+        if root.is_symlink() or (root.exists() and not root.is_dir()):
+            raise ValueError(f"unsafe category root: {root}")
+        if work not in root.resolve(strict=False).parents:
+            raise ValueError(f"category root escapes the library root: {root}")
+        destination_roots.add(root)
         moves.append((source, destination))
 
+    created_roots = []
     completed = []
     try:
+        for root in sorted(destination_roots):
+            if not root.exists():
+                root.mkdir()
+                created_roots.append(root)
         for source, destination in moves:
             source.rename(destination)
             completed.append((source, destination))
     except OSError as error:
         for source, destination in reversed(completed):
             destination.rename(source)
+        for root in reversed(created_roots):
+            if root.exists() and not any(root.iterdir()):
+                root.rmdir()
         raise OSError(f"category migration stopped and prior folder moves were rolled back: {error}") from error
     return len(completed)
 
@@ -3417,8 +3621,11 @@ def main(argv=None, embedder=None):
     add("calibrate", cmd_calibrate)
     s = add("diagnostics", cmd_diagnostics)
     s.add_argument("--out", help="new output directory for Markdown and CSV evidence (default: <work>\\_reports\\diagnostics\\diagnostics-<UTC timestamp>)")
+    s.add_argument("--policy", help="versioned likeness policy JSON (default: shared policy)")
     s = add("sandbox-reset", cmd_sandbox_reset)
     s.add_argument("--apply", action="store_true", help="restore only Models, Prospects, and Potentials from the verified Source snapshot")
+    s = add("policy", cmd_policy)
+    s.add_argument("--policy", help="versioned policy JSON (default: data\\art\\likeness-engine-policy.json)")
     add("alike", cmd_alike, sheet=True).add_argument("--min", type=float, help="show pairs at or above this score (default: settings alike)")
     add("compare", cmd_compare, "a", "b", sheet=True)
     s = add("folder", cmd_folder, "name", apply=True, sheet=True)
@@ -3431,6 +3638,7 @@ def main(argv=None, embedder=None):
     s.add_argument("--assign", type=float, help="score that makes a match for this run (default: settings assign, 0.40); a lower one is a looser second look, best used after `pullback`")
     s = add("reconcile", cmd_reconcile)
     s.add_argument("--out", help="write the read-only combined routing report as JSON")
+    s.add_argument("--policy", help="versioned likeness policy JSON")
     add("merge", cmd_merge, "a", "b", apply=True, sheet=True)
     add("retire", lambda a: cmd_merge(a, retire=True), "name", apply=True, sheet=True)
     add("retire-empty", cmd_retire_empty, apply=True)
@@ -3490,7 +3698,13 @@ def main(argv=None, embedder=None):
     s = add("rebaseline", cmd_rebaseline)
     s.add_argument("--out", help="write the read-only whole-library report here (default: <work>\\_reports\\library\\rebaseline.md); writes prospect-cast-audit.csv beside it")
     s.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders when scoring Angel pairings")
-    s.add_argument("--apply-categories", action="store_true", help="move only threshold-driven Prospect/Potential folders; create and verify a library backup first")
+    s.add_argument("--apply-categories", action="store_true", help="apply approved category changes in sandbox Working after verifying a backup")
+    s.add_argument("--policy", help="versioned likeness policy JSON")
+    s.add_argument(
+        "--sandbox-apply-draft",
+        action="store_true",
+        help="allow this category-only move with a draft policy in sandbox Working after verifying a backup",
+    )
     s = add("review", cmd_review, apply=True, sheet=True)
     s.add_argument("names", nargs="*", help="folders whose review photos to look at (default: all)")
     s.add_argument("--back", type=float, default=0.20, help="a review photo scoring at least this against her own folder goes back to her gallery (default 0.20)")

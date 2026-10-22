@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (38)
+### Your queue: needs your hands or a decision (39)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -22,6 +22,7 @@
 - [ ] S0 Approve or change the Prime v2 structure and the canonical order (D2 and D6 of the Prime plan, T2 and T9 there). This unblocks everything below. ([2026-10-12](plans/2026-10-12-prompt-template-standards.md))
 - [ ] Finish and refine the manual edit-prompt set in `prompts/_edit/female`; tell the assistant when the batch is ready for review. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] 3.8 Review the sandbox gallery and actual placements. Label ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.14 After the initial sandbox rebase and preview comparison, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.4 Review the sandbox family groups and assigned names in ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.2 Review the complete visual preview and manifest, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.5 Inspect the refreshed gallery and selected ComfyUI ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
@@ -94,7 +95,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (79)
+### For the assistant, when you say go (84)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -126,6 +127,11 @@
 - [ ] 4.4 Integrate selective Review routing into the primary ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.5 Use a frozen pre-run snapshot for scoring and deterministic ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 4.6 Add focused tests for ties, margins, small groups, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.9 Refactor the rebase classifier and ordinary likeness ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.10 Add declarative per-category hierarchy/order, thresholds, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.11 Implement incremental, idempotent self-healing on newly ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.12 Implement the agreed protection contract. Identity ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] 4.13 Immediately after the sandbox rebase, run the normal ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1 Add family/lookalike grouping to the local people gallery ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1a Add gallery controls to include/exclude classifications ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.1b If supported in the POC viewer, allow enabling/disabling ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))

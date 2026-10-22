@@ -40,6 +40,12 @@ import people  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.metadata import content_sha256, load_catalog, photo_id_from_name  # noqa: E402
+from likeness_library.policy import (  # noqa: E402
+    default_policy,
+    load_policy,
+    render_policy_panel,
+    render_score_legend,
+)
 from likeness_library.thumbnails import crop_thumbnail  # noqa: E402
 
 THUMB = (176, 220)  # match the review gallery's 4:5 portrait framing
@@ -208,7 +214,7 @@ def person_name(folder, status):
     return people.name_of(folder)
 
 
-def add_pairing_navigation(rows):
+def add_pairing_navigation(rows, sections=None):
     """Link each Sister to her paired Angel and share ranked Prospect fits across the gallery."""
     sisters = {row["folder"].casefold(): row for row in rows if row["status"] == "Sisters"}
     angels = [row for row in rows if row["status"] == "Angels"]
@@ -241,7 +247,10 @@ def add_pairing_navigation(rows):
                 key=lambda match: (match["candidate"]["cost"], match["rank"], match["angel"]["folder"].casefold()),
             )
 
-    order = {section: index for index, (section, _title) in enumerate(SECTIONS)}
+    order = {
+        section: index
+        for index, (section, _title) in enumerate(sections or SECTIONS)
+    }
 
     def sort_key(row):
         section = row["status"]
@@ -256,13 +265,19 @@ def add_pairing_navigation(rows):
     rows.sort(key=sort_key)
 
 
-def collect(cfg, st, work, space, groups, rend=None, catalog=None):
+def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
     """Build one row per person, with at most nine original-photo thumbnails."""
     st = st or likeness.SETTINGS
+    policy = policy or default_policy()
+    sections = [
+        (category, "Artists' people" if category == "Artists" else category)
+        for category in policy["categoryOrder"]
+    ]
     catalog = catalog if catalog is not None else load_catalog()
     size = tuple(cfg.get("standardSize") or (944, 1104))
     chosen = likeness.chosen_keys(cfg)
     people_rows = []
+    policy_centroids = {}
     folders = [
         (key, folder) for key, folder in likeness.library_people(cfg, st, work)
         if likeness.status_of(key) in groups
@@ -291,6 +306,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
         conflict = len(person_records) > 1
         person = person_records[0][1] if len(person_records) == 1 else None
         anchors = set(person["identityAnchors"]) if person and not conflict else set()
+        category_policy = policy["categoryPolicies"].get(status, {})
         audit = audit_person(
             [photo.vec for photo in usable],
             ids,
@@ -298,7 +314,12 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
             protected_ids=protected_ids,
             stale_ids=stale_ids,
             ambiguous_ids=ambiguous_ids,
+            minimum_core=category_policy.get("minimumUsablePhotosForOutlierActions", 3),
+            core_minimum=category_policy.get("identityCoreMinimumSimilarity", 0.3),
+            seed_floor=category_policy.get("identityCoreMinimumSimilarity", 0.3),
         )
+        if audit["core_vector"] is not None:
+            policy_centroids[key] = audit["core_vector"]
         identity_by_name = {}
         for index, photo in enumerate(usable):
             photo_id = ids[index]
@@ -306,7 +327,7 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
                 photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
             )
             score = audit["scores"][index]
-            is_core = audit["sufficient"] and index in audit["core_indices"]
+            is_core = index in audit["core_indices"]
             identity_by_name[photo.name] = {
                 "score": score,
                 "anchor": is_anchor,
@@ -315,7 +336,8 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
         row = {"status": status, "folder": key.split("/", 1)[1], "key": key, "photos": len(all_originals), "review": len(originals.images(folder / "review")),
                "chosen": False, "score": None, "source": "", "tags": people.profile(folder),
                "gallery_path": folder / "gallery", "source_path": None, "z_path": people.find(folder),
-               "person_name": person_name(folder, status)}
+               "person_name": person_name(folder, status),
+               "identity_protected": bool(person and person.get("protected"))}
         min_face = st.get("minFace", likeness.SETTINGS["minFace"])
         photos = [p for p in getattr(space, "photos", []) if p.key == key]
         row["usable"] = sum(p.usable(min_face) for p in photos)
@@ -430,11 +452,13 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None):
         row["gallery_photos_identity"] = ordered
         row["gallery_photos_score"] = score_ordered
         people_rows.append(row)
-    add_pairing_navigation(people_rows)
+    add_pairing_navigation(people_rows, sections)
     rankings = rank_identity_centroids(
         space,
         [row["key"] for row in people_rows],
         categories={row["key"]: row["status"] for row in people_rows},
+        centroids=policy_centroids,
+        category_order=policy["categoryOrder"],
     )
     for row in people_rows:
         row["identity_rankings"] = rankings[row["key"]]
@@ -494,7 +518,7 @@ nav a{margin-right:16px}.grid{display:grid;grid-template-columns:repeat(auto-fil
 .photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#eee}
 .photos a.workflow-photo{outline:4px solid #8b6d32;outline-offset:-4px;border-radius:3px;background:transparent;color:inherit}.photos a.workflow-photo.score-green{outline-color:#2e7d32}.photos a.workflow-photo.score-yellow{outline-color:#b38b00}.photos a.workflow-photo.score-orange{outline-color:#c46b16}.photos a.workflow-photo.score-red{outline-color:#a52d2d}
 .card b{font-size:1.05em}.meta{color:#666;font-size:.85em;margin-top:4px}.chosen{background:#2e7d32;color:#fff;border-radius:3px;padding:0 5px;font-size:.8em}.category-badge,.score-badge{display:inline-block;border-radius:4px;padding:2px 6px;font-size:.78em;font-weight:600}.category-sisters{background:#e8e0f2;color:#493365}.category-angels{background:#e4efff;color:#244f85}.category-models{background:#e4f2e5;color:#285b31}.category-prospects{background:#fff0d9;color:#704a12}.category-potentials{background:#eee;color:#555}.score-green{background:#d9efdc;color:#205b2a}.score-yellow{background:#fff1bd;color:#6b5200}.score-orange{background:#ffe0c2;color:#7a3f00}.score-red{background:#f5d6d6;color:#7b2222}.status{color:#888;font-size:.8em}.identity{font-size:.82em;color:#34495e;margin-top:4px}
-.summary{color:#555;font-size:.9em;margin-top:3px}.readiness{color:#555;font-size:.82em;margin-top:5px}.matches,.pairing{font-size:.82em;margin-top:5px}.relationship-row{margin:3px 0}.gallery-jump{margin-left:5px;text-decoration:none;font-weight:700}.pairing-subsection{margin-top:9px;padding-top:7px;border-top:1px solid #e7e0d4}.fit-detail{margin-left:4px}.noimg{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;background:#eee;color:#999;font-size:.8em}.gallery-controls{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:12px 0}.history,.photo-count{font-size:.78em;margin-left:4px;background:#eee;color:#555;border-radius:4px;padding:2px 6px}.person-title{display:flex;align-items:center;gap:5px}.identity-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}.source-photo{margin-left:5px}.full-details{font-size:.82em;margin-top:5px}.full-details ol{margin:4px 0;padding-left:24px}body[data-detail-level="summary"] .full-details{display:none}@media(max-width:700px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}"""
+.summary{color:#555;font-size:.9em;margin-top:3px}.readiness{color:#555;font-size:.82em;margin-top:5px}.matches,.pairing{font-size:.82em;margin-top:5px}.relationship-row{margin:3px 0}.gallery-jump{margin-left:5px;text-decoration:none;font-weight:700}.pairing-subsection{margin-top:9px;padding-top:7px;border-top:1px solid #e7e0d4}.fit-detail{margin-left:4px}.noimg{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;background:#eee;color:#999;font-size:.8em}.gallery-controls{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:12px 0}.history,.photo-count{font-size:.78em;margin-left:4px;background:#eee;color:#555;border-radius:4px;padding:2px 6px}.person-title{display:flex;align-items:center;gap:5px}.identity-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}.source-photo{margin-left:5px}.full-details{font-size:.82em;margin-top:5px}.full-details ol{margin:4px 0;padding-left:24px}.policy-panel{margin:10px 0;padding:8px 10px;background:#fff;border:1px solid #e0d8c8;border-radius:6px;font-size:.84em}.policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}.policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}body[data-detail-level="summary"] .full-details{display:none}@media(max-width:700px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}"""
 
 
 def score_badge(score, title="Likeness score"):
@@ -525,8 +549,9 @@ def relationship_link(category, name, review_href, score=None):
     if score is None:
         icon, icon_class, icon_title = "↗", "", "Jump to this person in the overview"
     else:
-        icon = "▲" if score >= 0.55 else "▶" if score >= 0.30 else "▼"
-        icon_class = f" score-{score_band(score)}"
+        band = score_band(score)
+        icon = "▲" if band == "green" else "▶" if band == "yellow" else "▼"
+        icon_class = f" score-{band}"
         icon_title = f"Jump to this person · likeness {score:.2f}"
     return (
         f'<a href="{html.escape(review_url, quote=True)}" target="_blank" rel="noopener noreferrer">'
@@ -539,7 +564,13 @@ def relationship_link(category, name, review_href, score=None):
 
 def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairings/angel-prospect-candidates.md",
                 review_href="people_gallery_review.html", thumbnail_dir=None,
-                identity_report_href="identity-rankings.md"):
+                identity_report_href="identity-rankings.md", policy=None):
+    policy = policy or default_policy()
+    sections = [
+        (category, "Artists' people" if category == "Artists" else category)
+        for category in policy["categoryOrder"]
+    ]
+    policy_panel = render_policy_panel(policy)
     photo_count = sum(row.get("photos", 0) for row in rows)
     people_label = "person" if len(rows) == 1 else "people"
     photos_label = "photo" if photo_count == 1 else "photos"
@@ -548,18 +579,19 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
            f'<p class="meta">Generated {html.escape(stamp)} · {len(rows)} {people_label} · {photo_count} {photos_label}</p>'
            f'           <p class="page-note">Names open Review; score markers jump within Gallery · <a href="{html.escape(identity_report_href, quote=True)}">Full library rankings</a> · Up to nine photos per person</p></div>'
            '<div class="header-side"><div class="header-label">Likeness</div>'
-           '<div class="score-legend"><span class="score-badge score-green">≥0.55</span><span class="score-badge score-yellow">≥0.30</span><span class="score-badge score-orange">≥0.15</span><span class="score-badge score-red">&lt;0.15</span></div></div></header>',
+           f'<div class="score-legend">{render_score_legend(policy)}</div></div></header>',
+           policy_panel,
            '<div class="gallery-controls"><label>Details <select id="detail-level"><option value="summary">Summary</option><option value="full">Full details</option></select></label> '
            '<label>Photo order <select id="gallery-sort"><option value="identity">Core identity first</option><option value="high">Highest identity score</option></select></label> '
            '<label>Thumbnail <select id="thumbnail-framing"><option value="chest">Chest-up</option><option value="head">Head</option></select></label></div>',
-           "<nav>" + " ".join(f'<a href="#{slug(s)}">{html.escape(t)} ({counts.get(s, 0)})</a>' for s, t in SECTIONS if counts.get(s)) + "</nav>"]
+           "<nav>" + " ".join(f'<a href="#{slug(s)}">{html.escape(t)} ({counts.get(s, 0)})</a>' for s, t in sections if counts.get(s)) + "</nav>"]
     current = None
     for r in rows:
         if r["status"] != current:
             if current:
                 out.append("</div>")
             current = r["status"]
-            title = dict(SECTIONS)[current]
+            title = dict(sections)[current]
             out.append(f'<h2 id="{slug(current)}">{html.escape(title)} ({counts[current]})</h2><div class="grid">')
         imgs = []
         for photo in r["gallery_photos"]:
@@ -744,7 +776,11 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 for part in caption(r)
             )
         category_class = slug(r["status"])
-        out.append(f'<figure class="card" id="{card_id}"><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{flag}{history_link}{count}</div>'
+        protected_badge = (
+            '<span class="category-badge protected-badge">Protected identity</span>'
+            if r.get("identity_protected") else ""
+        )
+        out.append(f'<figure class="card" id="{card_id}"><div class="photos">{"".join(imgs)}</div><figcaption><div class="person-title"><b>{name}</b></div><div class="identity-tags"><span class="category-badge category-{category_class}">{html.escape(r["status"])}</span>{protected_badge}{flag}{history_link}{count}</div>'
                    f'{summary_html}{identity_html}'
                    f'<div class="meta">{caption_html}</div>{readiness_html}{matches_html}{pairing_html}</figcaption></figure>')
     if current:
@@ -785,7 +821,7 @@ document.getElementById("thumbnail-framing").addEventListener("change",event=>{
 def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
               pairing_report_href="../comparisons/pairings/angel-prospect-candidates.md",
               review_href="people_gallery_review.html",
-              identity_report_href="identity-rankings.md"):
+              identity_report_href="identity-rankings.md", sections=None):
     """A Markdown table of three people per row; thumbnails sit in <report>_files next to it."""
     files_dir.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -812,7 +848,7 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
         if r["status"] != current:
             flush()
             current = r["status"]
-            lines += [f"## {dict(SECTIONS)[current]} ({counts[current]})", ""]
+            lines += [f"## {dict(sections or SECTIONS)[current]} ({counts[current]})", ""]
         parts = []
         for index, photo in enumerate(r["gallery_photos"], 1):
             thumbnail = photo.get("thumbnail")
@@ -962,9 +998,15 @@ def main(argv=None, space=None):
     ap.add_argument("--out", help="folder for the report (default: <work>\\_reports\\library)")
     ap.add_argument("--root", help="the photo library folder (default: workspaces.json paths.workRoot)")
     ap.add_argument("--cache", help="embedding cache file (default: the user-local likeness cache)")
+    ap.add_argument("--policy", help="versioned likeness policy JSON")
     ap.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders, matching `likeness pairs --no-renders`")
     args = ap.parse_args(argv)
-    groups = ["Angels", "Sisters", "Models", "Prospects", "Potentials"] + (["Artists"] if args.artists else [])
+    policy = load_policy(args.policy)
+    groups = [
+        category
+        for category in policy["categoryOrder"]
+        if category != "Artists" or args.artists
+    ]
     if space is None:
         cfg, st, work, cache, space = likeness.build(types.SimpleNamespace(root=args.root, cache=args.cache, embedder=None))
         rend = None if args.no_renders else likeness.Renders(cfg, cache, likeness.Embedder(), st, space)
@@ -974,7 +1016,7 @@ def main(argv=None, space=None):
     reports = work / "_reports"
     out = pathlib.Path(args.out) if args.out else reports / "library"
     out.mkdir(parents=True, exist_ok=True)
-    rows = collect(cfg, st, work, space, groups, rend=rend)
+    rows = collect(cfg, st, work, space, groups, rend=rend, policy=policy)
     counts = {}
     for r in rows:
         counts[r["status"]] = counts.get(r["status"], 0) + 1
@@ -989,13 +1031,17 @@ def main(argv=None, space=None):
     (out / "people_gallery.html").write_text(
         render_html(
             rows, stamp, counts, report_href.as_posix(), thumbnail_dir=out,
-            identity_report_href=identity_report.name,
+            identity_report_href=identity_report.name, policy=policy,
         ),
         encoding="utf-8",
     )
     (out / "people_gallery.md").write_text(render_md(rows, stamp, counts, out / "people_gallery_review_files", "people_gallery.html",
                                                      pairing_report_href=report_href.as_posix(),
-                                                     identity_report_href=identity_report.name), encoding="utf-8")
+                                                     identity_report_href=identity_report.name,
+                                                     sections=[
+                                                         (category, "Artists' people" if category == "Artists" else category)
+                                                         for category in policy["categoryOrder"]
+                                                     ]), encoding="utf-8")
     size_mb = (out / "people_gallery.html").stat().st_size / 1e6
     print(f"people gallery: {len(rows)} people ({', '.join(f'{v} {k}' for k, v in counts.items())}); chosen photos {sum(r['chosen'] for r in rows)}, best guesses {sum(1 for r in rows if not r['chosen'] and r['score'] is not None)}")
     print(f"  {out / 'people_gallery.html'}  ({size_mb:.1f} MB, thumbnails in people_gallery_review_files)\n  {out / 'people_gallery.md'}  (uses the shared people_gallery_review_files cache)")

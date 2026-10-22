@@ -137,6 +137,38 @@ def verify_backup(snapshot):
     return True
 
 
+def latest_work_root_backup(work_root):
+    """Return the newest complete snapshot that includes this exact work root."""
+    work = pathlib.Path(work_root).expanduser().resolve()
+    backup_root = work / "_backup"
+    if not backup_root.is_dir():
+        raise OSError(f"no backup directory exists for work root: {work}")
+    candidates = sorted(
+        (path for path in backup_root.iterdir() if path.is_dir() and path.name.startswith("library-")),
+        key=lambda path: path.name,
+        reverse=True,
+    )
+    for candidate in candidates:
+        manifest_path = candidate / "manifest.json"
+        if not manifest_path.is_file():
+            continue
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if manifest.get("status") != "complete":
+            continue
+        sources_list = manifest.get("sources", [])
+        if any(
+            entry.get("name") == "work-root"
+            and pathlib.Path(entry.get("path", "")).expanduser().resolve() == work
+            for entry in sources_list
+            if isinstance(entry, dict)
+        ):
+            return candidate
+    raise OSError(f"no complete backup exists for work root: {work}")
+
+
 def create_backup(work_root, inputs_root=None, config_path=None, stamp=None, apply=True, extra_sources=()):
     """Preview or create a complete snapshot; publish its manifest only after all copies verify."""
     work = pathlib.Path(work_root).resolve()

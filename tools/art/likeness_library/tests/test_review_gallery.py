@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for the local, read-only likeness review gallery."""
 import pathlib
+import copy
 import tempfile
 import unittest
 import json
@@ -18,6 +19,18 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_render_uses_supplied_category_policy(self):
+        policy = copy.deepcopy(review_gallery.default_policy())
+        policy["categoryOrder"].insert(3, "Demons")
+        policy["categoryPolicies"]["Demons"] = copy.deepcopy(
+            policy["categoryPolicies"]["Prospects"]
+        )
+
+        page = review_gallery.render_html([], "now", policy=policy)
+
+        self.assertIn('"Demons"', page)
+        self.assertIn('id="category-order"', page)
+
     def test_primary_reference_prefers_workflow_anchor_core_then_best_scored(self):
         def item(folder, name, *, score, bucket="Gallery", selected=False, anchor=False, state="Consistent"):
             return {
@@ -87,7 +100,7 @@ class ReviewGalleryTests(unittest.TestCase):
         )
         self.assertTrue(review_gallery.action_folder_supported("Prospects/Sophie"))
         self.assertFalse(review_gallery.action_folder_supported("Artists/Example/Person"))
-        self.assertFalse(review_gallery.action_folder_supported("Models/Legacy"))
+        self.assertTrue(review_gallery.action_folder_supported("Models/Legacy"))
         schema_path = review_gallery.ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
         validator = Draft7Validator(schema)
@@ -294,6 +307,7 @@ class ReviewGalleryTests(unittest.TestCase):
             "name": "freya.jpg",
             "photoId": "photo:image_123",
             "personId": "person_123",
+            "identityProtected": True,
             "score": 0.8,
             "scoreContext": {
                 "coreSize": 4,
@@ -323,6 +337,8 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('"Models/Freya"', page)
         self.assertIn("category-models", page)
         self.assertIn("Full library likeness rankings", page)
+        self.assertIn('"identityProtected": true', page)
+        self.assertIn('badge-protected-identity', page)
         self.assertIn("score-yellow", page)
         self.assertIn("Closest by category:", page)
         self.assertIn('link.href="people_gallery_review.html?"+query.toString()', page)

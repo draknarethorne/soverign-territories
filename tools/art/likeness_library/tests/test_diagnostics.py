@@ -106,6 +106,19 @@ class DiagnosticsTests(unittest.TestCase):
                     {"load_seconds": 1.0, "score_seconds": 0.5, "total_seconds": 1.5},
                 )
 
+    def test_configured_active_categories_include_added_tiers(self):
+        space = Space({
+            "Demons/One": [[1, 0], [1, 0], [1, 0]],
+            "Artists/Hidden/Person": [[1, 0], [1, 0], [1, 0]],
+        })
+
+        _calibration, _calibration_photos, folders, photos = collect_diagnostics(
+            space, self.settings, active_roots=("Demons",)
+        )
+
+        self.assertEqual([row["category"] for row in folders], ["Demons"])
+        self.assertEqual(len(photos), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

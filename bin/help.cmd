@@ -16,8 +16,8 @@ echo    library.cmd                     everything; automatically makes a full p
 echo    library-preview.cmd             the same, every step as a preview ^(nothing moves^)
 echo    library-check.cmd               read only: is it in step, any duplicates, any photo waiting? Exit 1 when work is waiting
 echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
-echo    people-gallery.cmd [--root DIR] [--cache FILE] [--out DIR] [--no-renders]  overview + review pages; nine photos, cross-references, rankings and shared crops
-echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
+echo    people-gallery.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--no-renders]  overview + review pages; nine photos, cross-references, rankings and shared crops
+echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions
@@ -47,10 +47,11 @@ echo    deploy-templates.cmd / pull-templates.cmd     the ST stage templates, to
 echo    inputs.cmd [status ^| pull -w WS ^| reset --hero H ^| photos ^| set HERO --photo F ...]  which images each hero's workflows read; pull keeps the default images you chose in ComfyUI in workspaces.json (do it before reset); photos re-points a chosen photo that was renamed
 echo    compare-primes.cmd [HERO ...]   Prime renders side by side, Qwen and FireRed, normal and configured alternate flows, with a face score against the photo each started from  ^(docs\art\prime-flows.md^)
 echo    originals.cmd [--dry-run] [--only NAME] [--no-headshots] [--archive-old]   the photo library: name originals after their folder, scale to 944x1104 ^(reel screenshots cut to the picture^), make face headshots, move old copies to _archive, re-point chosen photos  ^(docs\art\original-photos.md^)
-echo    likeness.cmd diagnostics --out DIR  one-pass calibration + active-person folder checks; writes CSVs and a Markdown report ^(read only; explicit --root and --cache for sandbox^)
+echo    likeness.cmd diagnostics --out DIR [--policy FILE]  one-pass calibration + active-person folder checks; writes CSVs and a Markdown report ^(read only; explicit --root and --cache for sandbox^)
 echo    likeness.cmd sandbox-reset       preview restoring only Models, Prospects, Potentials from the verified sandbox Source snapshot; --apply to restore ^(requires --root ...\Working^)
 echo    likeness.cmd audit-core ^| calibrate ^| folder ^| clean ^| group ^| sisters ^| pairs ^| alike ^| compare ^| like ^| sort --singles ^| reconcile ^| singles ^| junk ^| review --out ^| loosen ^| lookalikes ^| names ^| index ^| profile ^| who ^| merge ^| retire ^| retire-empty ^| archive-list ^| promote ^| rename ^| undo   faces: read-only core/outlier audit, combined Review + Various preview, one-person checks, artists into people, sisters as a family, angel-to-sister pairing, empty Various, unusable photos to _junk, look-alike guard, names, who-could-play-what table ^(previews; --apply moves; --sheet F.png^)  ^(docs\art\likeness.md^)
-echo    likeness.cmd rebaseline              read-only preview plus per-photo Prospect/Potential vs Angel/Sister rankings; --apply-categories moves only threshold-driven folders after backup
+echo    likeness.cmd policy                 show the validated draft shared likeness thresholds; rebaseline remains gated pending review
+echo    likeness.cmd rebaseline              read-only category, routing, and cast-similarity preview; sandbox category moves require --apply-categories and a verified Working backup
 echo    denoise.cmd [--reset]; sync-inputs.cmd; organize-outputs.cmd
 echo.
 echo  ART DATA

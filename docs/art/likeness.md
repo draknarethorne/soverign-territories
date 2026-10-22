@@ -70,10 +70,32 @@ person identities.
 
 Prospects normally have at least five usable Gallery photos; Potentials have
 one to four and remain active for future matching. Only eligible Prospects are
-Angel replacement candidates. The active Model category and family/lookalike
-classification are part of the approved sandbox rebaseline work. Legacy
-`Models` paths are not automatically the new active Model category; see the
+Angel replacement candidates. The sandbox policy treats `Models` as a
+distinct active category; historical Model paths still need an explicit
+migration rule. See the
 [active plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md).
+
+### Draft sandbox likeness policy
+
+The versioned source is
+[`likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json).
+It keeps the gallery bands above and currently classifies one-to-four usable
+photos as Potentials, five-or-more with cast similarity below 0.40 as
+Prospects, and five-or-more with cast similarity from 0.40 to below 0.55 as
+Models. Similarity of 0.55 or higher remains a cast-review threshold, not
+proof of identity.
+
+The draft core/action values are category-specific: Prospects and Potentials
+use 0.15 as the minimum core similarity and 0.30 as the Review-suggestion
+boundary; Models use 0.30 for both; Angels and Sisters use 0.30 for core
+membership and 0.15 for red-band Review suggestions. Same-person clustering
+starts at 0.55 with a 0.10 margin and two independent photos. Automatic
+lookalike association is disabled. Prospects/Potentials are configured for
+organic merge/split and photo routing, while Models/Angels/Sisters disable
+those automatic actions. The policy remains `draft`: these settings are
+reviewable, but the draft does not authorize those actions. The sandbox
+override used so far is limited to category-folder moves; no photo routing,
+Review/Junk move, or merge/split has been applied.
 
 `Various` is the incoming pool beside Prospects and Potentials. The standard
 library routine, `bin\library.cmd`, runs the photo-preparation, likeness,
@@ -294,7 +316,7 @@ for review, not an identity claim or photo-move instruction.
 | Command | Purpose |
 | --- | --- |
 | `sort [--singles] [--assign SCORE] [--plan FILE] [--sheet FILE.png]` | Route `Various` photos to known people or new Prospects/Potentials under current rules. |
-| `reconcile [--out FILE.json]` | Read-only combined routing preview for usable Review and Various photos, using one frozen core set and same-run candidate clusters; does not apply moves or catalogue changes. |
+| `reconcile [--out FILE.json]` | Read-only combined routing preview for usable Review and Various photos, using one frozen core set and same-run candidate clusters; held candidates include their best identity match and score. Does not apply moves or catalogue changes. |
 | `review [NAMES] [--out]` | Resolve photos in person Review folders: return likely matches, route clear other-person matches, or leave uncertain photos held. |
 | `singles [--min SCORE]` | Preview joining one-photo Prospect/Potential folders to a matching person with the required margin. |
 | `rematch [--min SCORE]` | Find likely same-person Prospect/Potential folder merges; cast matches remain for review. |
@@ -374,9 +396,21 @@ same-person clustering thresholds; minimum face size; fixed Angel/Sister
 counterparts; protected workflow photos; and trusted photo anchors. Pairing
 settings also control candidate eligibility, target likeness, and variety.
 Thresholds affect different commands differently, so use `calibrate` and
-inspect relevant examples before proposing a production change. The approved
-rebaseline plan will add a validated, data-driven sandbox configuration; do
-not treat that planned configuration as active production behavior.
+inspect relevant examples before proposing a production change. The shared
+likeness policy is defined by
+[`likeness-engine-policy.json`](../../data/art/likeness-engine-policy.json)
+and validated by its
+[schema](../../data/art/_schema/likeness-engine-policy.schema.json). Run
+`bin\likeness.cmd policy` to validate and inspect every configured value.
+
+The current policy is explicitly **draft**: the familiar gallery bands remain
+green >=0.55, yellow >=0.30, orange >=0.15, red <0.15. A score >=0.30 is a
+visual lookalike/family-group suggestion, not same-person proof or automatic
+association. Same-person candidate clustering uses a separate draft >=0.55
+threshold. Photo routes, merges, and splits remain review-only until the
+policy is approved; the sandbox rebase has not been run. See the
+[active rebaseline plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
+for the full configuration and remaining acceptance gates.
 
 ## Pairing score details
 

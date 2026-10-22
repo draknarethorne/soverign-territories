@@ -2,6 +2,8 @@
 import hashlib
 import json
 import pathlib
+import os
+import stat
 import tempfile
 import unittest
 
@@ -65,6 +67,10 @@ class SandboxResetTests(unittest.TestCase):
     def test_reset_restores_only_allowlisted_category_roots(self):
         self._working_file("Models/Generated/model.jpg", b"generated model")
         self._working_file("Prospects/Generated/gallery/old.jpg", b"generated prospect")
+        readonly = self._working_file(
+            "Prospects/Generated/gallery/readonly.jpg", b"readonly generated prospect"
+        )
+        os.chmod(readonly, stat.S_IREAD)
         self._working_file("Potentials/Generated/gallery/old.jpg", b"generated potential")
         self._working_file("Angels/Keep/gallery/keep.jpg", b"working angel")
         self._working_file("_reports/keep.md", b"report")

@@ -74,6 +74,8 @@ def art_piece_files():
         parts = p.relative_to(ROOT / "data/art").parts
         if parts == ("likeness-library.json",):
             continue  # operational identity metadata, validated with its own schema below
+        if parts == ("likeness-engine-policy.json",):
+            continue  # shared likeness engine policy, validated with its own schema below
         if parts[0] in ("_schema", "_sets", "_kits", "_settings"):
             continue
         if parts[0] == "heroes" and (len(parts) == 3 or (len(parts) == 4 and parts[2] in art_layout.divisions(parts[1]))):
@@ -112,6 +114,7 @@ REGISTRY = [
     ("art assembly cards", lambda: rglob("data/art/_sets/**/*.json"), ART_SCHEMAS / "art-card.schema.json"),
     ("art finals records", lambda: rglob("data/art/finals/*.json"), ART_SCHEMAS / "finals-record.schema.json"),
     ("likeness library metadata", lambda: [ROOT / "data/art/likeness-library.json"], ART_SCHEMAS / "likeness-library.schema.json"),
+    ("likeness engine policy", lambda: [ROOT / "data/art/likeness-engine-policy.json"], ART_SCHEMAS / "likeness-engine-policy.schema.json"),
 ]
 
 # Known, tracked debt: files with no schema that actually fits them yet.

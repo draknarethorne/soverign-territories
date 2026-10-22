@@ -55,6 +55,17 @@ def _is_reparse_point(path):
     return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400))
 
 
+def _remove_tree(path):
+    def clear_readonly(function, target, error_info):
+        error = error_info[1]
+        if not isinstance(error, PermissionError):
+            raise error
+        os.chmod(target, stat.S_IREAD | stat.S_IWRITE)
+        function(target)
+
+    shutil.rmtree(path, onerror=clear_readonly)
+
+
 def _safe_source_path(relative):
     if not isinstance(relative, str) or "\\" in relative or ":" in relative:
         raise ValueError(f"invalid source-manifest path: {relative!r}")
@@ -299,7 +310,7 @@ def reset_generated_categories(working_root, apply=False):
                     old.rename(destination)
             raise
     except Exception:
-        shutil.rmtree(stage)
+        _remove_tree(stage)
         raise
-    shutil.rmtree(stage)
+    _remove_tree(stage)
     return summary

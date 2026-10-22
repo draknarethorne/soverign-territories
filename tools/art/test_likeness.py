@@ -175,7 +175,7 @@ class LikenessTests(unittest.TestCase):
 
         audit_path = report.with_name("prospect-cast-audit.csv")
         self.assertTrue(audit_path.is_file())
-        self.assertIn("Prospect/Potential Gallery photos audited", output)
+        self.assertIn("configured-category Gallery photos audited", output)
         self.assertIn("Photo-by-photo scores", report.read_text(encoding="utf-8"))
         with audit_path.open(encoding="utf-8-sig", newline="") as stream:
             rows = list(csv.DictReader(stream))
@@ -413,7 +413,7 @@ class LikenessTests(unittest.TestCase):
         self.assertIn("Angels/Azaline -> Various: 3", self.run_tool("retire", "azaline"))
         self.run_tool("retire", "azaline", apply=True)
         self.assertEqual(len(self.names("", "Various")), 4, "a retired folder goes back to the top-level pool")
-        self.assertTrue(L.is_sister("Sisters/Draknara") and L.is_sister("Models/Draknara") and not L.is_sister("Angels/Angelica"))
+        self.assertTrue(L.is_sister("Sisters/Draknara") and not L.is_sister("Models/Draknara") and not L.is_sister("Angels/Angelica"))
 
     def test_group_splits_an_artist_folder_by_face_into_named_subfolders(self):
         self.add("Artists", "Pierre", "pa", 4)
@@ -578,8 +578,8 @@ class LikenessTests(unittest.TestCase):
 
     def test_sisters_flags_one_who_is_nothing_like_the_anchor_and_pairs_picks_a_similar_not_same_face(self):
         blend("dn", "dk", 0.0)
-        self.add("Models", "Drakness", "dk", 5)
-        self.add("Models", "Draknira", "dn", 5)
+        self.add("Sisters", "Drakness", "dk", 5)
+        self.add("Sisters", "Draknira", "dn", 5)
         out = self.run_tool("sisters")
         self.assertIn("VASTLY UNLIKE", out, "Draknira is nothing like the anchor in this made-up family")
         blend("sim", "dn", 0.45)       # similar to her sister
@@ -616,8 +616,8 @@ class LikenessTests(unittest.TestCase):
 
     def test_an_angel_made_from_an_artists_person_is_replaced_by_a_prospect_and_artists_are_never_candidates(self):
         blend("dn", "dk", 0.0)
-        self.add("Models", "Drakness", "dk", 5)
-        self.add("Models", "Draknira", "dn", 5)
+        self.add("Sisters", "Drakness", "dk", 5)
+        self.add("Sisters", "Draknira", "dn", 5)
         blend("art", "dn", 0.45)       # an artist's face that suits her sister best
         blend("sim", "dn", 0.35)       # a prospect that suits her a little less
         blend("far", "dk", 0.0)
@@ -643,7 +643,7 @@ class LikenessTests(unittest.TestCase):
     def test_photos_picks_the_best_angel_photo_keeps_favourites_and_only_reports_for_sisters(self):
         self.add("Angels", "Angelica", "ann", 4)            # favourite: never changes
         self.add("Angels", "Azaline", "aa", 4)
-        self.add("Models", "Draknara", "dee", 4)
+        self.add("Sisters", "Draknara", "dee", 4)
         for i, who in enumerate(("w1", "w2", "w3", "w4", "w5")):
             self.add("Prospects", f"Person {i}", who, 3)
         az = self.lib / "Angels/Azaline/gallery"
@@ -651,12 +651,12 @@ class LikenessTests(unittest.TestCase):
             f.unlink()
         for name, text in (("azaline_image_1.jpg", "aa|11|2"), ("azaline_image_2.jpg", "aa|12"), ("azaline_image_3.jpg", "aa|13")):
             (az / name).write_text(text)
-        dn = self.lib / "Models/Draknara/gallery"
+        dn = self.lib / "Sisters/Draknara/gallery"
         for f in dn.iterdir():
             f.unlink()
         for name, text in (("draknara_image_1.jpg", "dee|21|2"), ("draknara_image_2.jpg", "dee|22")):
             (dn / name).write_text(text)
-        for folder, stems in (("Angels/Azaline", ("azaline_image_1", "azaline_image_2", "azaline_image_3")), ("Models/Draknara", ("draknara_image_1", "draknara_image_2"))):
+        for folder, stems in (("Angels/Azaline", ("azaline_image_1", "azaline_image_2", "azaline_image_3")), ("Sisters/Draknara", ("draknara_image_1", "draknara_image_2"))):
             g = self.lib / folder / "gallery_94x110"
             g.mkdir(parents=True, exist_ok=True)
             for s in stems:
