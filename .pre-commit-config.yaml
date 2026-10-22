@@ -77,7 +77,7 @@ repos:
         language: python
         additional_dependencies: [jsonschema, numpy, pillow]
         pass_filenames: false
-        files: ^(tools/art/likeness_library/|data/art/_schema/likeness-library\.schema\.json|data/art/likeness-library\.json)$
+        files: ^(tools/art/likeness_library/|data/art/_schema/likeness-(library|engine-policy)\.schema\.json$|data/art/likeness-(library|engine-policy)\.json$)
         stages: [pre-commit, pre-push]
 
       - id: codex-audit-tests

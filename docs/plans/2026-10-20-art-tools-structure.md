@@ -85,6 +85,9 @@ complete the CLI extraction: legacy mutation commands, the no-policy
 reconciliation fallback, image operations and library orchestration still
 need bounded migrations. Package naming is unchanged to avoid shadowing
 `likeness.py`.
+The likeness test hook now matches package descendants and both the catalogue
+and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
+skipped Python files; an explicit verbose hook run executes all 127 tests.
 
 - `likeness_library/`: identity metadata and reusable likeness-library
   behavior: cached face embeddings, photo records, identity-space scoring,
