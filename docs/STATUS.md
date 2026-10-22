@@ -286,6 +286,132 @@ CLI module. The
 [art-tools structure plan](plans/2026-10-20-art-tools-structure.md) tracks the
 next extraction slices and the package-name decision.
 
+Oct 21 sandbox score investigation: the saved leave-one-out diagnostics
+contain 2,265 per-photo folder scores. These are retrospective comparisons
+against identities present in the post-category sandbox, not assignment-time
+evidence from the earlier pool-clustering run. In `Prospects/Sophie Lloyd`, 8
+of 39 photos now score higher against another existing identity than against
+Sophie's leave-one-out core; four meet the current 0.40 assignment plus 0.10
+margin test. The alternatives include `Potentials/Belle Channing` and
+`Prospects/Opal Vale`, identities that were not references in a clean
+Prospect/Potential rebuild. They are not evidence that the original run
+assigned those photos incorrectly. A 0.29 own-core score versus 0.35 to Lucia
+Reyes likewise describes the current state only. Draft policy has not applied
+photo routing.
+
+In the post-category snapshot, `Potentials/Fia Hadley` has four usable photos,
+and its current best cast score is 0.461 against
+`Angels/angelica`; all four photos' cast-audit best match is Angelica
+(0.315–0.464). This says how the current folder scores; it does not explain
+how the earlier run formed the folder. `Amara Berkley` likewise has four
+photos and a best current cast score of 0.456. The detailed post-state evidence
+is in `Working\_reports\library\prospect-cast-audit.csv` and
+`Working\_reports\diagnostics\diagnostics-20261021T233723319309Z\`.
+
+The review page now calculates and displays the closest eligible other
+identity for every usable Gallery and Review photo, using each photo's
+centered vector against the policy core centroids; it is separate from the
+current-folder core score and does not imply a route. `Identity ID: not
+catalogued` is expected while `data/art/likeness-library.json` has empty
+people/photos/actions maps. “Provisional” means the core is calculated from
+that folder's usable photos without a trusted catalogue anchor; it is not
+identity verification. These are the next evidence views to inspect before
+changing thresholds or applying any photo moves.
+
+The sandbox Review Gallery was regenerated from its local cache: all 2,552
+scored records have a closest-other match and none are missing one. Fia's four
+photos now visibly show Angelica at 0.32–0.46; Sophie's
+`sophie_lloyd_image_7517978830184149119.jpg` shows own-core 0.29 versus
+`Prospects/Lucia Reyes` at 0.35, labeled Review suggested while remaining in
+Gallery. No photo files or category folders were moved.
+
+Correction: the immutable Oct 21 `Source` snapshot already contains
+`Potentials/Fia Hadley`; the sandbox operation described above was
+category-only and did not create that cluster or route its photos. It is not
+the pre-cluster state from the earlier run. To test the user's hypothesis
+without using Fia as a reference identity, the four source photos were
+counterfactually treated as incoming Pool candidates against Angel/Sister
+cores only. Their within-group pairwise scores are 0.602–0.795; the four-photo
+cluster centroid scores 0.461 to `Angels/angelica`, with the next Angel/Sister
+core (`Sisters/Draknara`) at 0.159. Thus the hypothesis is consistent with
+the numbers: a 0.55 cast-match gate would miss this group, and the old
+1–4-photo fallback could classify it as a Potential. The available artifacts
+do not record the exact earlier assignment-time candidate set or thresholds,
+so this is a counterfactual, not proof of the historical route.
+
+The shared reconciliation was then run as a read-only counterfactual with
+Fia absent from identity cores and all four photos treated as Pool input. The
+draft 0.40 small-group cast-review experiment held all four for
+`Angels/angelica/review`; no assignment or file move was applied. The same
+test on source groups yielded a 7-photo Jacinta cluster as a Model at 0.484
+to Angelica, a 5-photo Jacinta cluster as a Prospect at 0.392, and Freya's
+6-photo cluster as a Model at 0.535. Sophie split into 14-, 16-, and 8-photo
+Prospect clusters with best cast scores 0.157–0.236, plus one held single.
+These reruns exclude the current Prospect/Potential cores; cluster names are
+synthetic and outputs are suggestions, not applied assignments. They show
+that Jacinta/Freya's groups can qualify as distinct Models while Fia's
+four-photo cluster is held for Angelica review. The original run's exact
+reason still requires its original run manifest/log, which is not present in
+the current sandbox evidence.
+
+Oct 21 hierarchy-rule experiment: the previous classifier applied the 1–4
+usable-photo Potential rule before the 5+ Model rule. Draft policy
+`2026-10-21.2` now tests a separate `smallGroupCastReviewMinimum` of 0.40,
+matching the existing lower edge of the Model band. A 1–4-photo group at or
+above 0.40 becomes a Review hold candidate before Potential classification;
+the best cast folder is recorded as a proposed `<identity>/review`
+destination. Five-or-more-photo groups at 0.40–<0.55 can still classify as
+Models, and groups below 0.40 keep the current Potential rule (with the
+existing >=0.30 visual-review flag). This is deliberately a draft experiment,
+not a claim that score proves same-person identity. A second cast match within
+the configured 0.10 margin makes the candidate ambiguous instead of selecting
+one Review destination. The read-only post-state preview identifies 19 small
+groups with one proposed cast Review destination and 5 ambiguous groups; it
+does not change folders or files. The shared evaluator also changed
+reconciliation so blocked Angel/Sister candidates remain available to form a
+candidate cluster instead of being prematurely held one photo at a time.
+The Fia/Jacinta/Freya/Sophie counterfactuals above exercise the incoming-pool
+path; all proposed placements remain unapplied.
+
+Oct 21 correction completed: a **true clean sandbox rebuild** is now installed
+and hash-checked in Working. Run
+`_sandbox-state\clean-rebase-20261021-2210` started an empty embedding cache,
+used only 21 Angel/Sister identity cores, and flattened all 1,155 source
+Model/Prospect/Potential photos before matching. Old memberships were not
+references, including for held photos; old names were retained only after
+grouping. An initial preview was corrected and replanned from its own fresh
+measurements, not an older identity cache. The saved `run.json`, `photos.csv`,
+and `report.md` record the exact inputs, settings, destinations, hashes,
+initial per-photo cast matches, and decision reasons. Previous category
+trees remain under the run's `previous` directory; undo is available.
+
+Actual output: 35 candidates entered Angel Review, 17 entered Sister Review,
+317 entered Prospects, and 786 entered Potentials. There are 27 Prospect and
+698 Potential folders, with no Models under these exact draft values.
+This conservative 0.55 clustering baseline is heavily fragmented and is
+**not accepted production behavior**. Of the 1,155 photos, 591 are in Gallery
+and 564 are in Review. Fia Hadley's four photos are all physically in
+Angelica Review, excluded from her core; their cluster's cast score was
+0.4294 in this global clean-run scoring space. Three of Amara Berkley's four
+photos also entered Angelica Review; one remained a separate Potential.
+Sophie's 39 source photos no longer remain one identity: 9 are in the
+retained-name Sophie Prospect, 2 joined Neve Granger, 4 formed another
+Potential, and the remaining photos were held or separated individually.
+These are actual global-run outcomes, not the earlier isolated counterfactuals.
+
+Both sandbox galleries were regenerated: 817 displayed identities and 2,667
+photos. All 1,947 photos with an own-core score have a closest-other match;
+Review-only identities can have no own core. The ordinary reconciliation
+preview immediately afterward examined 564 Review candidates and proposed
+zero assignments under the draft policy; nothing further was applied. This
+is not proof of incremental convergence, because draft status blocks automatic
+routing. Post-rebase calibration/folder diagnostics took 13.03 seconds
+(1,894 calibrated photos, 86/243 eligible folders evaluated, 1,700 per-photo
+folder scores); the full identity-core audit is saved beside them. Review
+scores use their current library/core context and must not be substituted
+for the recorded assignment-time scores. Production and immutable Source
+were not changed.
+
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports
 trusted/provisional cores, score order and Prospect outlier candidates; it

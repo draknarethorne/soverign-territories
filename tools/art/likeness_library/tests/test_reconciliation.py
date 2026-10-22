@@ -40,6 +40,25 @@ def stable_name(seed, taken):
 
 
 class ReconciliationTests(unittest.TestCase):
+    def test_individually_yellow_cast_matches_can_build_a_model_cluster(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        result = plan_reconciliation(
+            [
+                candidate(f"photo:image_{900000 + index}", [.45, np.sqrt(1 - .45**2)])
+                for index in range(6)
+            ],
+            {
+                "Angels/Angelica": {
+                    "vector": np.array([1., 0.]), "side": "Prospects", "category": "Angels",
+                },
+            },
+            cluster=.55, policy=load_policy(), name_factory=stable_name,
+        )
+        self.assertEqual(result["assignedCount"], 6)
+        self.assertEqual(result["held"], [])
+        self.assertTrue(result["clusters"][0]["destination"].startswith("Models/"))
+
     def test_category_moves_create_missing_configured_destination_root(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
@@ -137,6 +156,52 @@ class ReconciliationTests(unittest.TestCase):
 
         self.assertEqual(result["assignments"], [])
         self.assertEqual(result["held"][0]["reason"], "protected identity cannot receive automatic moves")
+
+    def test_small_incoming_cast_like_cluster_is_held_for_the_best_cast_review(self):
+        from tools.art.likeness_library.policy import load_policy
+
+        vectors = []
+        for score in (0.315, 0.464, 0.411, 0.455):
+            vectors.append([score, np.sqrt(1 - score**2)])
+        cores = {
+            "Angels/angelica": {
+                "vector": np.array([1.0, 0.0]),
+                "side": "Prospects",
+                "category": "Angels",
+                "identityProtected": True,
+            },
+            "Sisters/Draknara": {
+                "vector": np.array([-1.0, 0.0]),
+                "side": "Prospects",
+                "category": "Sisters",
+                "identityProtected": True,
+            },
+        }
+        rows = [
+            candidate(f"photo:image_{210001 + index}", vector)
+            for index, vector in enumerate(vectors)
+        ]
+
+        result = plan_reconciliation(
+            rows,
+            cores,
+            assign=0.40,
+            margin=0.10,
+            cluster=0.25,
+            minimum_cluster=3,
+            policy=load_policy(),
+            name_factory=stable_name,
+        )
+
+        self.assertEqual(result["assignments"], [])
+        self.assertEqual(result["heldCount"], 4)
+        self.assertEqual(
+            {row["reviewDestination"] for row in result["held"]},
+            {"Angels/angelica/review"},
+        )
+        self.assertTrue(
+            all(row["bestMatch"] == "Angels/angelica" for row in result["held"])
+        )
 
     def test_draft_policy_hold_reports_best_identity_and_score(self):
         from tools.art.likeness_library.policy import load_policy

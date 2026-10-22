@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-10-21.1",
+  "version": "draft-2026-10-21.2",
   "status": "draft",
   "categoryOrder": [
     "Sisters",
@@ -44,6 +44,7 @@
   ],
   "highCastSimilarityMinimum": 0.55,
   "castReviewMinimum": 0.3,
+  "smallGroupCastReviewMinimum": 0.4,
   "photoRouting": {
     "reviewMinimum": 0.3,
     "automaticRouteMinimum": 0.55,

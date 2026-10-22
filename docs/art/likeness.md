@@ -258,11 +258,16 @@ The person's workflow photo, identity anchor, or provisional reference stays
 visible even if filters hide it.
 
 The person heading displays the name separately from category and photo
-location. Each photo can show its filename-derived Photo ID and stable
-catalogue Identity ID; these are distinct identifiers. The page also exposes
-face size/count, active-core size and type, core membership, centered-cosine
-method, and applicable thresholds. Clicking the face metric opens its cached
-face crop.
+location. Each usable photo shows both its leave-one-out similarity to its
+current identity core and its closest other eligible identity with that
+photo's score. A closest-other match is diagnostic evidence, not proof that
+the photo belongs to that identity or a move instruction. Each photo can show
+its filename-derived Photo ID and stable catalogue Identity ID; an identity
+without a catalogue record is labeled "not catalogued." A provisional core
+is calculated from the folder's own photos when there are no trusted identity
+anchors; it is not a confirmed identity. The page also exposes face
+size/count, core size and type, core membership, centered-cosine method, and
+applicable thresholds. Clicking the face metric opens its cached face crop.
 
 Photo-level Protect, identity-anchor, Review, Reject-to-Various,
 Review-approval, and eligible workflow-photo choices are **staged** in the
@@ -407,10 +412,89 @@ The current policy is explicitly **draft**: the familiar gallery bands remain
 green >=0.55, yellow >=0.30, orange >=0.15, red <0.15. A score >=0.30 is a
 visual lookalike/family-group suggestion, not same-person proof or automatic
 association. Same-person candidate clustering uses a separate draft >=0.55
-threshold. Photo routes, merges, and splits remain review-only until the
-policy is approved; the sandbox rebase has not been run. See the
+threshold. Draft policy `2026-10-21.2` also tests a 0.40 small-group cast
+review boundary: groups with one to four usable photos and a best Angel/Sister
+score of at least 0.40 are held for review of that cast match before they can
+be classified as Potentials. Groups with five or more usable photos in the
+0.40–<0.55 band remain eligible for Model classification. The review candidate
+is a suggested destination only; category rebaseline does not move individual
+photos into Review. The candidate must lead the next Angel/Sister match by at
+least the existing 0.10 margin; otherwise the report holds the group as an
+ambiguous cast match without choosing one identity. Groups below 0.40 still
+follow the Potential rule, while scores at or above 0.30 can remain flagged
+for visual review. This threshold is an experiment, not a final identity
+rule. Photo routes, merges, and splits remain review-only until the policy is
+approved. See the
 [active rebaseline plan](../plans/2026-10-21-likeness-rebaseline-and-family-naming.md)
 for the full configuration and remaining acceptance gates.
+
+### Clean sandbox rebuild versus category reclassification
+
+The stable entry point remains `tools/art/likeness.py`; new rebuild logic is
+in `tools/art/likeness_library/clean_rebase.py`, not added to the CLI monolith.
+Shared core construction and routing live in `reconciliation.py`, configurable
+decisions in `policy.py`, and embedding/cache/vector primitives in `engine.py`.
+`sandbox.py` owns snapshot/isolation validation. These modules are shared
+library code; a second engine under `tools/art/likeness/` is not introduced.
+
+`likeness rebaseline` inspects/reclassifies existing identity folders. It does
+**not** flatten or rebuild their memberships. It must not be described as a
+clean rebase.
+
+Use `bin\sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" --dry-run` for the
+clean-start operation. Both paths must be absolute and the new run directory
+must be inside the isolated Working tree, outside category roots. The command:
+
+1. Verifies the immutable Source inventory and starts an empty face-embedding
+   cache in the new run directory. No old identity cache is loaded.
+2. Treats Source Model/Prospect/Potential Gallery and Review photos as one
+   unassigned pool. Artist, junk and retired trees are not candidates.
+3. Builds initial identity references from Source Angels/Sisters Gallery
+   only, honoring catalogue anchors and configured cast anchors. Old
+   Prospect/Potential memberships are not reference identities.
+4. Runs the shared reconciliation and draft category policy on the flattened
+   pool, using the policy's candidate clustering threshold. Old names may be
+   retained after matching, but never influence a match or cluster.
+5. Saves the effective policy/settings, exact initial reference list, centering
+   mean, and every source/destination/hash/score/reason in `run.json` and
+   `photos.csv`, with a readable `report.md`.
+
+Repeat the same launcher/paths with `--apply` after inspecting the preview.
+Only sandbox Working can be installed: a complete backup is verified, every
+output image is staged and hash-checked, previous generated category trees
+are retained under the run's `previous` directory, and installation failure
+rolls the categories and cast Review additions back. Cast Gallery files are
+never replaced. Suggested cast matches enter Review, not the cast core;
+ambiguous/unusable candidates remain held outside cores. Protection keeps
+selected source photos in their existing locations.
+
+Repeat with `--check` to verify the saved source decisions and installed image
+hashes without changing files. Applying an already applied run is refused.
+An unapplied preview can be recomputed with `--replan`: this reuses only that
+run's freshly generated measurements, rebuilds cast references and all
+candidate memberships, and preserves the initial preview. It does not import
+old Prospect/Potential cores. The saved policy can be changed for this explicit
+replan; ordinary apply/check still require an exact policy match.
+Use `--undo` to restore the retained categories and withdraw only that run's
+unchanged cast Review additions; rebuilt outputs are retained under
+`withdrawn`, not deleted. Undo a previous installed run before applying the
+next experiment's cast Review additions. A new experiment needs a new run
+directory; it never seeds from a previous run's generated identity folders.
+Regenerate the galleries and derivatives
+against Working after installation. A clean rebase is not a production
+operation, and the old category-only sandbox results are not evidence of a
+completed clean rebase.
+
+The first installed clean run is
+`Working\_sandbox-state\clean-rebase-20261021-2210`. It accounts for 1,155
+candidate photos, with 52 cast Review additions and no cast Gallery additions.
+At the current 0.55 clustering threshold it produced 27 Prospect and 698
+Potential folders, no Models, and substantial Review fragmentation. Treat it
+as a calibration baseline, not production approval. Its report links the
+post-run diagnostics, identity-core audit, and read-only ordinary
+reconciliation preview. Do not run the originals-renaming pipeline before
+checking the saved manifest: changing image basenames invalidates its recorded
+destination paths. Gallery regeneration itself does not rename originals.
 
 ## Pairing score details
 

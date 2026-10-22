@@ -13,6 +13,7 @@
     "categoryAssignmentRules",
     "highCastSimilarityMinimum",
     "castReviewMinimum",
+    "smallGroupCastReviewMinimum",
     "photoRouting",
     "identityActions",
     "lookalikeGroups",
@@ -87,6 +88,9 @@
       "$ref": "#/definitions/score"
     },
     "castReviewMinimum": {
+      "$ref": "#/definitions/score"
+    },
+    "smallGroupCastReviewMinimum": {
       "$ref": "#/definitions/score"
     },
     "photoRouting": {

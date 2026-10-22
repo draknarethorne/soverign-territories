@@ -1,5 +1,6 @@
 """Deterministic, read-only routing plan for incoming and reviewed likeness candidates."""
 import hashlib
+import heapq
 
 import numpy as np
 
@@ -119,21 +120,40 @@ def _average_linkage(candidates, threshold):
         return []
     vectors = np.asarray([candidate["vector"] for candidate in ordered])
     similarities = vectors @ vectors.T
-    groups = [[index] for index in range(len(ordered))]
-    while len(groups) > 1:
-        best_score = float("-inf")
-        best_pair = None
-        for left in range(len(groups)):
-            for right in range(left + 1, len(groups)):
-                score = float(np.mean(similarities[np.ix_(groups[left], groups[right])]))
-                if score > best_score:
-                    best_score, best_pair = score, (left, right)
-        if best_score < threshold:
-            break
-        left, right = best_pair
-        groups[left] = sorted(groups[left] + groups[right])
-        del groups[right]
-    return [[ordered[index] for index in group] for group in groups]
+    groups = {index: [index] for index in range(len(ordered))}
+    versions = {index: 0 for index in groups}
+    scores = {
+        (left, right): float(similarities[left, right])
+        for left in groups for right in groups if left < right
+    }
+    queue = [
+        (-score, left, right, 0, 0)
+        for (left, right), score in scores.items() if score >= threshold
+    ]
+    heapq.heapify(queue)
+    while queue:
+        negative_score, left, right, left_version, right_version = heapq.heappop(queue)
+        if (
+            left not in groups or right not in groups
+            or versions[left] != left_version or versions[right] != right_version
+        ):
+            continue
+        left_count, right_count = len(groups[left]), len(groups[right])
+        groups[left] = sorted(groups[left] + groups.pop(right))
+        versions[left] += 1
+        for other in groups:
+            if other == left:
+                continue
+            first = tuple(sorted((left, other)))
+            second = tuple(sorted((right, other)))
+            score = (
+                scores[first] * left_count + scores[second] * right_count
+            ) / (left_count + right_count)
+            scores[first] = score
+            if score >= threshold:
+                a, b = first
+                heapq.heappush(queue, (-score, a, b, versions[a], versions[b]))
+    return [[ordered[index] for index in groups[key]] for key in sorted(groups)]
 
 
 def _cluster_id(candidates):
@@ -274,9 +294,7 @@ def plan_reconciliation(
                     "reason": decision["reason"],
                 })
             elif (
-                decision["decision"] == "blocked"
-                and category in {"Angels", "Sisters"}
-                and classify_category(5, score, policy)["category"] == "Models"
+                category in {"Angels", "Sisters"}
                 and candidate.get("sourceBucket") == "Pool"
             ):
                 unresolved.append(candidate)
@@ -328,7 +346,17 @@ def plan_reconciliation(
                     if row[1].startswith(("Angels/", "Sisters/"))
                 ]
                 cast_score = cast_rows[0][0] if cast_rows else None
-                proposed = classify_category(len(group), cast_score, policy)
+                proposed = classify_category(
+                    len(group),
+                    cast_score,
+                    policy,
+                    best_cast_folder=cast_rows[0][1] if cast_rows else None,
+                    second_cast_folder=cast_rows[1][1] if len(cast_rows) > 1 else None,
+                    cast_margin=(
+                        cast_rows[0][0] - cast_rows[1][0]
+                        if len(cast_rows) > 1 else None
+                    ),
+                )
                 if proposed["category"] == "Review":
                     for candidate in group:
                         held.append({
@@ -337,6 +365,10 @@ def plan_reconciliation(
                             "sourceBucket": candidate["sourceBucket"],
                             "reason": proposed["reason"],
                             "bestScore": round(cast_score, 4) if cast_score is not None else None,
+                            "bestMatch": cast_rows[0][1] if cast_rows else None,
+                            "reviewDestination": proposed["reviewDestination"],
+                            "reviewAlternatives": proposed["reviewAlternatives"],
+                            "clusterId": _cluster_id(group),
                         })
                     continue
                 non_cast_ranked = [
@@ -542,12 +574,29 @@ def plan_reconciliation(
                     if decision["decision"] == "auto-route":
                         match = review_match
                     else:
+                        cast_review = None
+                        if category in {"Angels", "Sisters"}:
+                            cast_ranked = [
+                                row for row in ranked
+                                if row[1].startswith(("Angels/", "Sisters/"))
+                            ]
+                            cast_review = classify_category(
+                                1, score, policy, best_cast_folder=folder,
+                                second_cast_folder=cast_ranked[1][1] if len(cast_ranked) > 1 else None,
+                                cast_margin=(
+                                    score - cast_ranked[1][0] if len(cast_ranked) > 1 else None
+                                ),
+                            )
                         held.append({
                             "photoId": candidate["photoId"],
                             "sourceFolder": candidate["sourceFolder"],
                             "sourceBucket": candidate["sourceBucket"],
                             "reason": decision["reason"],
+                            "bestMatch": folder,
                             "bestScore": round(score, 4),
+                            "reviewDestination": (
+                                cast_review.get("reviewDestination") if cast_review else None
+                            ),
                         })
                         continue
             if match:

@@ -2483,11 +2483,19 @@ def cmd_rebaseline(args):
             continue
         gallery_count = candidate_photo_count(space, key, st)
         vector = centroids.get(key)
-        cast_scores = [
+        cast_scores = sorted([
             (float(vector @ cast_vector), cast_key)
             for cast_key, cast_vector in cast_centroids.items()
-        ] if vector is not None else []
-        best_cast_score = max(cast_scores, default=(None, None))[0]
+        ], reverse=True) if vector is not None else []
+        best_cast_score, best_cast_folder = max(cast_scores, default=(None, None))
+        second_cast_score, second_cast_folder = (
+            cast_scores[1] if len(cast_scores) > 1 else (None, None)
+        )
+        cast_margin = (
+            best_cast_score - second_cast_score
+            if best_cast_score is not None and second_cast_score is not None
+            else None
+        )
         person = person_by_folder.get(key)
         identity_protected = (
             bool(person and person.get("protected"))
@@ -2499,9 +2507,18 @@ def cmd_rebaseline(args):
                 "reviewRequired": True,
                 "reason": "identity protected; automatic category moves are blocked",
                 "castSimilarity": best_cast_score,
+                "reviewDestination": None,
+                "reviewAlternatives": [],
             }
         else:
-            classification = classify_category(gallery_count, best_cast_score, policy)
+            classification = classify_category(
+                gallery_count,
+                best_cast_score,
+                policy,
+                best_cast_folder=best_cast_folder,
+                second_cast_folder=second_cast_folder,
+                cast_margin=cast_margin,
+            )
         target = classification["category"] if (
             classification["category"] is not None
             and classification["category"] != "Review"
@@ -2517,6 +2534,8 @@ def cmd_rebaseline(args):
             "cast": best_cast_score,
             "target": target,
             "review": classification["reviewRequired"],
+            "reviewDestination": classification["reviewDestination"],
+            "reviewAlternatives": classification["reviewAlternatives"],
             "reason": classification["reason"],
         })
 
@@ -2600,14 +2619,23 @@ def cmd_rebaseline(args):
         )
         + "the score colors are similarity bands, not identity proof.", "",
         "## Configured identity classification", "",
-        "| Current folder | Usable photos | Best Angel/Sister score | Proposed category | Review | Reason |",
+        "| Current folder | Usable photos | Best Angel/Sister score | Proposed category | Review candidate | Reason |",
         "| --- | ---: | ---: | --- | --- | --- |",
     ]
     for row in classification_rows:
         cast = f"{row['cast']:.3f}" if row["cast"] is not None else "n/a"
+        if row["reviewDestination"]:
+            review_candidate = f"`{row['reviewDestination']}`"
+        elif len(row["reviewAlternatives"]) > 1:
+            review_candidate = "ambiguous: " + " / ".join(
+                f"`{folder}`" for folder in row["reviewAlternatives"]
+            )
+        else:
+            review_candidate = "yes" if row["review"] else "no"
         lines.append(
             f"| `{row['source']}` | {row['count']} | {cast} | `{row['target']}` | "
-            f"{'yes' if row['review'] else 'no'} | {row['reason']} |"
+            f"{review_candidate} | "
+            f"{row['reason']} |"
         )
     if not classification_rows:
         lines.append("| No Model/Prospect/Potential identities | - | - | - | - | - |")
@@ -3333,6 +3361,17 @@ def main(argv=None, embedder=None):
     s.add_argument("--trials", type=int, default=1500)
     s.add_argument("--no-renders", action="store_true")
     s.add_argument("--md", help="also write the table as markdown to this file")
+    def clean_rebase_command(args):
+        from likeness_library.clean_rebase import command
+        command(args, sys.modules[__name__])
+
+    s = add("clean-rebase", clean_rebase_command, apply=True)
+    s.add_argument("--run-dir", required=True, help="new sandbox Working-local directory for the fresh cache, plan, and rollback copies")
+    s.add_argument("--policy", help="versioned likeness policy JSON")
+    s.add_argument("--check", action="store_true", help="verify the saved plan and installed outputs without changing photos")
+    s.add_argument("--dry-run", action="store_true", help="build the complete preview without installing outputs")
+    s.add_argument("--undo", action="store_true", help="restore the retained pre-run categories and withdraw this run's cast Review additions")
+    s.add_argument("--replan", action="store_true", help="rebuild an unapplied preview from its own fresh measurements, with no old candidate identities")
     s = add("rebaseline", cmd_rebaseline)
     s.add_argument("--out", help="write the read-only whole-library report here (default: <work>\\_reports\\library\\rebaseline.md); writes prospect-cast-audit.csv beside it")
     s.add_argument("--no-renders", action="store_true", help="ignore saved ComfyUI face renders when scoring Angel pairings")

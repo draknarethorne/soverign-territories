@@ -1,6 +1,7 @@
 """Focused tests for cached face data and identity-space operations."""
 
 import pathlib
+import os
 import sys
 import tempfile
 import unittest
@@ -33,7 +34,12 @@ class LikenessEngineTests(unittest.TestCase):
                 loaded.emb[first_hash],
                 {"faces": 1, "v": [1.0, 0.0], "s": 0.95},
             )
+            previous_stat = photo.stat()
             photo.write_bytes(b"other")
+            os.utime(
+                photo,
+                ns=(previous_stat.st_atime_ns, previous_stat.st_mtime_ns + 1_000_000_000),
+            )
             self.assertNotEqual(loaded.sha(photo), first_hash)
 
     def test_space_centers_vectors_and_excludes_source_side(self):

@@ -95,7 +95,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (84)
+### For the assistant, when you say go (90)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -162,6 +162,12 @@
 - [ ] C2 Add or preserve compatibility entry points only where ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D1 Keep a reviewed inventory of modules deferred for coupling, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] D2 Verify the documented `bin/*.cmd` commands and relevant ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E2 Continue extracting command responsibilities from ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E2a Separate file mutation planning, history, apply, and undo ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E2b Separate photo inspection and image operations (clean, ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E2c Separate people, artist, cast, and profile workflows; ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E2d Reassess command ownership and remove compatibility names ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
+- [ ] E3 Reassess package naming after the CLI is no longer an ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] C7 Keep dated report output available and support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))

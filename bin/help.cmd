@@ -18,6 +18,7 @@ echo    library-check.cmd               read only: is it in step, any duplicates
 echo    library-backup.cmd [--apply ^| --verify SNAPSHOT]  preview, create, or verify a dated library/input/config snapshot
 echo    people-gallery.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--no-renders]  overview + review pages; nine photos, cross-references, rankings and shared crops
 echo    people-gallery-review.cmd [--root DIR] [--cache FILE] [--out DIR] [--policy FILE] [--keep SCORE]  local Gallery + Review audit; filters, rankings and staged actions
+echo    sandbox-rebase.cmd "SANDBOX\Working" "RUN-DIR" [--dry-run ^| --replan ^| --apply ^| --check ^| --undo]  clean cast-only rebuild; fresh cache, flattened candidates, verified backup and rollback copies
 echo    likeness-actions.cmd validate FILE.json  check staged actions against current photo IDs, hashes, folders and catalogue
 echo    likeness-actions.cmd preview FILE.json   show intended destinations; never moves photos or edits metadata
 echo    likeness-actions.cmd apply FILE.json --apply  verified backup, then apply staged moves and metadata decisions

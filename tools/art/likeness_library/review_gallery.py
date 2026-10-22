@@ -182,8 +182,8 @@ function card(r, readOnly=false) {
     const id=document.createElement("div"); id.className="detail photo-id";
     const photoId=r.photoId?r.photoId.replace(/^photo:/,"").replace(/^image_/,""):"unavailable";
     id.textContent="Photo ID: "+photoId+
-      " · Identity ID: "+(r.personId||"not assigned");
-    id.title="Photo ID comes from the filename; Identity ID belongs to the person";
+      " · Identity ID: "+(r.personId||"not catalogued");
+    id.title="Photo ID comes from the filename; Identity ID is assigned when the folder has a likeness-catalogue record";
     article.append(id);
   }
   const badges=readOnly?[r.referenceLabel]:[
@@ -213,7 +213,7 @@ function card(r, readOnly=false) {
   if(r.scoreContext) {
     const context=document.createElement("div"); context.className="detail score-context";
     const coreType=r.scoreContext.coreMode==="trusted"?"trusted anchors":
-      r.scoreContext.coreMode==="provisional"?"provisional":"no usable core";
+      r.scoreContext.coreMode==="provisional"?"provisional · no trusted anchors":"no usable core";
     context.append(document.createTextNode("Core size: "+r.scoreContext.coreSize+" photos "));
     const coreBadge=document.createElement("span");
     coreBadge.className="score-badge score-"+
@@ -535,6 +535,21 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
     }
 
 
+def closest_other(photo, folder, identity_centroids, min_face):
+    """Return this usable photo's nearest eligible identity other than its current folder."""
+    if not photo.usable(min_face):
+        return ""
+    ranking = sorted(
+        (
+            (float(photo.vec @ vector), candidate)
+            for candidate, vector in identity_centroids.items()
+            if candidate != folder and not likeness.apart(folder, candidate)
+        ),
+        key=lambda row: (-row[0], row[1].casefold()),
+    )
+    return f"{ranking[0][1]} ({ranking[0][0]:.2f})" if ranking else ""
+
+
 def assign_primary_references(items):
     """Mark one workflow, trusted, core-ranked or provisional reference per person."""
     by_folder = collections.defaultdict(list)
@@ -728,20 +743,6 @@ def collect_items(
         if result["mode"] == "none":
             comparison = "no usable identity core"
 
-        def best_other(photo):
-            if not photo.usable(st["minFace"]):
-                return ""
-            ranking = sorted(
-                (
-                    (float(photo.vec @ vector), candidate)
-                    for candidate, vector in policy_centroids.items()
-                    if candidate != key and not likeness.apart(key, candidate)
-                ),
-                key=lambda row: (-row[0], row[1].casefold()),
-            )
-            other = ranking[0] if ranking else None
-            return f"{other[1]} ({other[0]:.2f})" if other else ""
-
         for photo in gallery:
             photo_id = metadata.photo_id_from_name(photo.name)
             hero = key.split("/", 1)[1]
@@ -796,11 +797,7 @@ def collect_items(
                 state, reason = "Core member", "Included in the trusted-seeded or provisional core"
             else:
                 state, reason = "Consistent", "Similarity is measured against the current person core"
-            match = best_other(photo) if (
-                score is not None and (
-                    score < keep or likeness.status_of(key) == "Potentials"
-                )
-            ) else ""
+            match = closest_other(photo, key, policy_centroids, st["minFace"])
             context = score_context(
                 photo,
                 bucket="Gallery",
@@ -941,7 +938,7 @@ def collect_items(
                 "state": state,
                 "comparison": comparison,
                 "reason": reason,
-                "best_other": best_other(photo),
+                "best_other": closest_other(photo, key, policy_centroids, st["minFace"]),
                 "_photo": photo,
             })
 

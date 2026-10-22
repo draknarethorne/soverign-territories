@@ -517,6 +517,28 @@ validated before any production rename.
   `identity-core-audit.txt`, linked from `diagnostics.md`; no full rebase-run
   manifest exists yet, and the galleries do not consume this evidence.
 
+**First actual clean rebuild, Oct 21:** installed and verified
+`Working\_sandbox-state\clean-rebase-20261021-2210`. The empty-cache run used
+21 cast-only identity cores and 1,155 flattened candidate photos; the corrected
+preview was replanned from those fresh measurements before installation.
+Its manifest and CSV retain every source/hash/destination, initial per-photo
+cast scores, exact policy/settings, and reasons. Previous category trees are
+retained and installation/undo are regression-tested. Fia's four photos and
+three of Amara's four photos physically entered Angelica Review, never her
+Gallery/core. This global run produced 27 Prospect and 698 Potential folders,
+no Models, and 564 candidate Review placements: fragmentation remains an
+explicit calibration issue, not an accepted result. The earlier isolated
+Jacinta/Freya examples do not predict this global result.
+
+The regenerated overview/Review pages contain 817 identities and 2,667 photos.
+The post-run ordinary reconciliation preview held all 564 candidates and
+assigned none under the draft policy; no incremental moves were applied.
+Calibration/folder diagnostics took 13.03 seconds, and the full identity-core
+audit is saved in the run directory. These artifacts now exist for the actual
+clean rebuild, not just the prior category-only operation. The checkboxes
+remain open where family naming, alternate source modes, integrated diagnostic
+consumption, organic incremental actions, and user acceptance are still needed.
+
 **Exit:** two or more full sandbox runs from the same source snapshot produce
 real, inspectable category directories and viewer results under different
 configs/source modes; reset and isolation tests pass. The user can judge
@@ -540,6 +562,18 @@ machine-readable and human-readable results.
   resemblance is in the configured Model band, otherwise as Prospects.
   Record ambiguous multi-cast results for deliberate handling. A high
   resemblance score alone never proves same-person identity.
+  Draft experiment `2026-10-21.2`: a 1–4-photo candidate group scoring at
+  least 0.40 to cast is held for cast Review before Potential classification;
+  its proposed Review destination requires a 0.10 lead over the next cast
+  identity. A closer result remains an ambiguous cast hold. In a
+  counterfactual using Fia's four source photos as Pool candidates and
+  excluding Fia and all Prospect/Potential cores, their group score is 0.461
+  to Angelica versus 0.159 to the next cast core, so the draft flow proposes
+  Angelica Review. This is a test hypothesis, not an approved threshold or
+  historical explanation: the immutable Oct 21 Source snapshot already
+  contains Fia's Potential folder, and the earlier assignment-time run record
+  is unavailable. Do not claim the post-state leave-one-out scores explain
+  the original assignment.
 - [ ] **P1 either** 4.2 Calibrate and document the looks-like threshold and
   action-specific match/margin policies against labelled and sandbox results.
   Family assignment may be automatic in the sandbox; keep production routing

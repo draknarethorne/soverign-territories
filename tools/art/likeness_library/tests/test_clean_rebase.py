@@ -1,0 +1,197 @@
+"""Clean rebase must flatten old groups, isolate references, and stage reversibly."""
+import hashlib
+import pathlib
+import tempfile
+import unittest
+from types import SimpleNamespace
+from unittest import mock
+
+import numpy as np
+
+from tools.art import likeness
+from tools.art.likeness_library import clean_rebase
+from tools.art.likeness_library.policy import load_policy
+from tools.art.likeness_library.reconciliation import _average_linkage
+
+
+class CleanRebaseTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.base = pathlib.Path(self.temporary.name)
+        self.source = self.base / "Source"
+        self.working = self.base / "Working"
+        self.run = self.working / "_sandbox-state" / "clean"
+        self.run.mkdir(parents=True)
+        self.relative = "Potentials/Fia/gallery/fia_image_123456.jpg"
+        self.source_photo = self.source / pathlib.Path(self.relative)
+        self.source_photo.parent.mkdir(parents=True)
+        self.source_photo.write_bytes(b"photo bytes")
+        self.digest = hashlib.sha256(b"photo bytes").hexdigest()
+        self.layout = {
+            "source_root": self.source, "working_root": self.working,
+            "sandbox_root": self.base,
+            "manifest_files": {self.relative: (11, self.digest)},
+        }
+        (self.base / "source-manifest.json").write_text("{}", encoding="utf-8")
+
+    def plan(self):
+        return {
+            "status": "preview",
+            "photos": [{
+                "source": self.relative,
+                "destination": "Angels/Angelica/review/fia_image_123456.jpg",
+                "sha256": self.digest,
+            }],
+        }
+
+    def test_install_preserves_cast_core_and_old_categories_and_checks_every_copy(self):
+        old = self.working / "Potentials" / "Old" / "gallery"
+        old.mkdir(parents=True)
+        (old / "old.jpg").write_bytes(b"old")
+        cast = self.working / "Angels" / "Angelica" / "gallery"
+        cast.mkdir(parents=True)
+        (cast / "anchor.jpg").write_bytes(b"anchor")
+        with mock.patch("library_backup.latest_work_root_backup", return_value=self.base), \
+                mock.patch("library_backup.verify_backup"):
+            plan = self.plan()
+            clean_rebase.install_plan(self.layout, self.run, plan)
+        self.assertEqual(plan["status"], "applied")
+        self.assertEqual((cast / "anchor.jpg").read_bytes(), b"anchor")
+        self.assertEqual(
+            (cast.parent / "review" / self.source_photo.name).read_bytes(), b"photo bytes"
+        )
+        self.assertEqual(
+            (self.run / "previous" / "Potentials" / "Old" / "gallery" / "old.jpg").read_bytes(),
+            b"old",
+        )
+        self.assertEqual(self.source_photo.read_bytes(), b"photo bytes")
+        clean_rebase.undo_plan(self.layout, self.run, plan)
+        self.assertEqual(plan["status"], "undone")
+        self.assertEqual((old / "old.jpg").read_bytes(), b"old")
+        self.assertFalse((cast.parent / "review" / self.source_photo.name).exists())
+        self.assertEqual((cast / "anchor.jpg").read_bytes(), b"anchor")
+
+    def test_rejects_cast_gallery_destination_and_changed_source_before_install(self):
+        plan = self.plan()
+        plan["photos"][0]["destination"] = "Angels/Angelica/gallery/new.jpg"
+        with self.assertRaisesRegex(ValueError, "never the cast core"):
+            clean_rebase._verify_routes(plan, self.source)
+        plan = self.plan()
+        self.source_photo.write_bytes(b"changed")
+        with self.assertRaisesRegex(ValueError, "source changed"):
+            clean_rebase._verify_routes(plan, self.source)
+        self.assertFalse((self.run / "previous").exists())
+
+    def test_creation_uses_empty_cache_and_only_cast_references(self):
+        cast_folder = self.source / "Angels" / "Angelica"
+        (cast_folder / "gallery").mkdir(parents=True)
+        (cast_folder / "gallery" / "angelica_image_654321.jpg").write_bytes(b"cast")
+        api = SimpleNamespace(
+            cw=SimpleNamespace(
+                load_cfg=lambda: {},
+                photo_folders=lambda cfg, root: [
+                    ("Potentials", "Fia", self.source_photo.parent.parent),
+                    ("Angels", "Angelica", cast_folder),
+                ],
+                photo_key=likeness.cw.photo_key,
+            ),
+            settings=likeness.settings, originals=likeness.originals,
+            nz=likeness.nz, chosen_keys=lambda cfg: set(),
+            invent_name=lambda seed, taken: "New Person",
+        )
+
+        def fake_cores(space, catalog, **kwargs):
+            self.assertEqual(set(space.by_key), {"Angels/Angelica"})
+            self.assertTrue(all(photo.group == "Angels" for photo in space.photos))
+            return {"Angels/Angelica": {"vector": np.array([1., 0.])}}, set(), []
+
+        def fake_plan(candidates, cores, **kwargs):
+            self.assertEqual(len(candidates), 1)
+            self.assertEqual(candidates[0]["sourceFolder"], "Various")
+            self.assertEqual(candidates[0]["sourceBucket"], "Pool")
+            self.assertEqual(set(cores), {"Angels/Angelica"})
+            return {
+                "assignments": [], "clusters": [],
+                "held": [{
+                    "photoId": candidates[0]["photoId"],
+                    "reviewDestination": "Angels/Angelica/review",
+                    "reason": "cast review",
+                }],
+            }
+
+        with mock.patch.object(clean_rebase, "frozen_identity_cores", side_effect=fake_cores), \
+                mock.patch.object(clean_rebase, "plan_reconciliation", side_effect=fake_plan):
+            result = clean_rebase.create_plan(
+                self.layout, self.run, load_policy(), api,
+                embedder=lambda path: {
+                    "v": [1., 0.] if "fia" in path.name else [0., 1.],
+                    "faces": 1, "s": .95, "px": 100,
+                },
+            )
+            with mock.patch.object(api, "Embedder", create=True, return_value=mock.Mock(
+                side_effect=AssertionError("replan must reuse its own measurements"),
+            )):
+                replanned = clean_rebase.create_plan(
+                    self.layout, self.run, load_policy(), api, reuse_measurements=True,
+                )
+            self.assertTrue(replanned["cacheMeasurementsReusedForReplan"])
+        self.assertTrue(result["embeddingCacheStartedEmpty"])
+        self.assertEqual(result["referenceFolders"], ["Angels/Angelica"])
+        self.assertEqual(result["candidateCount"], 1)
+        with self.assertRaisesRegex(ValueError, "empty embedding cache"):
+            clean_rebase.create_plan(self.layout, self.run, load_policy(), api)
+
+    def test_unmatched_photos_do_not_recreate_their_old_shared_membership(self):
+        other = self.source_photo.with_name("fia_image_987654.jpg")
+        other.write_bytes(b"other photo")
+        self.layout["manifest_files"][other.relative_to(self.source).as_posix()] = (
+            len(b"other photo"), hashlib.sha256(b"other photo").hexdigest(),
+        )
+        api = SimpleNamespace(
+            cw=SimpleNamespace(
+                load_cfg=lambda: {},
+                photo_folders=lambda cfg, root: [
+                    ("Potentials", "Fia", self.source_photo.parent.parent),
+                ],
+                photo_key=likeness.cw.photo_key,
+            ),
+            settings=likeness.settings, originals=likeness.originals,
+            nz=likeness.nz, chosen_keys=lambda cfg: set(),
+            invent_name=lambda seed, taken: f"New-{seed[-6:]}",
+        )
+        with mock.patch.object(clean_rebase, "frozen_identity_cores", return_value=(
+            {"Angels/Angelica": {"vector": np.array([0., 1.]), "side": "Prospects"}},
+            set(), [],
+        )):
+            result = clean_rebase.create_plan(
+                self.layout, self.run, load_policy(), api,
+                embedder=lambda path: {
+                    "v": [1., 0.] if path == self.source_photo else [-1., 0.],
+                    "faces": 1, "s": .95, "px": 100,
+                },
+            )
+        folders = {"/".join(row["destination"].split("/")[:2]) for row in result["photos"]}
+        self.assertEqual(len(folders), 2)
+
+    def test_heap_clustering_matches_brute_force_average_linkage(self):
+        rng = np.random.default_rng(41)
+        vectors = rng.normal(size=(30, 8))
+        vectors /= np.linalg.norm(vectors, axis=1, keepdims=True)
+        rows = [{"photoId": f"{i:03}", "vector": vector} for i, vector in enumerate(vectors)]
+        scores = vectors @ vectors.T
+        groups = [[i] for i in range(len(rows))]
+        while len(groups) > 1:
+            best = None
+            for i in range(len(groups)):
+                for j in range(i + 1, len(groups)):
+                    score = float(np.mean(scores[np.ix_(groups[i], groups[j])]))
+                    if best is None or score > best[0]:
+                        best = (score, i, j)
+            score, i, j = best
+            if score < .25:
+                break
+            groups[i] = sorted(groups[i] + groups.pop(j))
+        expected = [[rows[i]["photoId"] for i in group] for group in groups]
+        actual = [[row["photoId"] for row in group] for group in _average_linkage(rows, .25)]
+        self.assertEqual(actual, expected)

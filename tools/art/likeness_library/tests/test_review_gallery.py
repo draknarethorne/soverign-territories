@@ -19,6 +19,27 @@ from tools.art.likeness_library import review_gallery
 
 
 class ReviewGalleryTests(unittest.TestCase):
+    def test_closest_other_uses_each_photo_vector_and_skips_other_sides(self):
+        photo = SimpleNamespace(
+            usable=lambda min_face: min_face == 60,
+            vec=np.array([1.0, 0.0]),
+        )
+        centroids = {
+            "Prospects/Sophie": np.array([1.0, 0.0]),
+            "Angels/Angelica": np.array([0.8, 0.6]),
+            "Prospects/Ruby": np.array([0.6, 0.8]),
+            "Artists/Studio/Person": np.array([1.0, 0.0]),
+        }
+
+        self.assertEqual(
+            review_gallery.closest_other(photo, "Prospects/Sophie", centroids, 60),
+            "Angels/Angelica (0.80)",
+        )
+        self.assertEqual(
+            review_gallery.closest_other(photo, "Prospects/Sophie", centroids, 80),
+            "",
+        )
+
     def test_render_uses_supplied_category_policy(self):
         policy = copy.deepcopy(review_gallery.default_policy())
         policy["categoryOrder"].insert(3, "Demons")
@@ -192,6 +213,10 @@ class ReviewGalleryTests(unittest.TestCase):
             ), mock.patch.object(
                 likeness, "cleanup_hold", return_value=set()
             ), mock.patch.object(
+                review_gallery,
+                "closest_other",
+                return_value="Angels/Camaris (0.46)",
+            ), mock.patch.object(
                 review_gallery.originals,
                 "images",
                 side_effect=lambda path: gallery_paths if path == gallery_dir else [review_path],
@@ -212,6 +237,8 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertEqual(review_item["scoreContext"]["facePixels"], 100)
             self.assertEqual(review_item["scoreContext"]["coreSize"], 3)
             self.assertFalse(review_item["scoreContext"]["coreMember"])
+            self.assertEqual(review_item["best_other"], "Angels/Camaris (0.46)")
+            self.assertEqual(gallery_item["best_other"], "Angels/Camaris (0.46)")
             self.assertTrue(any("Review photos are excluded from the core" in detail
                                 for detail in review_item["scoreDetails"]))
             self.assertEqual(
@@ -233,6 +260,27 @@ class ReviewGalleryTests(unittest.TestCase):
                 ["photo-protected", "rejected-to-various", "review-approved"],
             )
             self.assertEqual(cache.saved, 1)
+
+    def test_closest_other_uses_each_photo_vector_and_excludes_ineligible_sources(self):
+        photo = SimpleNamespace(
+            usable=lambda min_face: min_face == 60,
+            vec=np.array([1.0, 0.0]),
+        )
+        centroids = {
+            "Prospects/Sophie": np.array([1.0, 0.0]),
+            "Angels/Angelica": np.array([0.8, 0.6]),
+            "Prospects/Ruby": np.array([0.6, 0.8]),
+            "Artists/Studio/Person": np.array([1.0, 0.0]),
+        }
+
+        self.assertEqual(
+            review_gallery.closest_other(photo, "Prospects/Sophie", centroids, 60),
+            "Angels/Angelica (0.80)",
+        )
+        self.assertEqual(
+            review_gallery.closest_other(photo, "Prospects/Sophie", centroids, 80),
+            "",
+        )
 
     def test_render_is_local_lazy_filtered_and_bounded(self):
         items = [
@@ -344,8 +392,9 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('link.href="people_gallery_review.html?"+query.toString()', page)
         self.assertIn('["Sisters", "Angels", "Models", "Prospects", "Potentials", "Artists"]', page)
         self.assertIn('r.photoId.replace(/^photo:/,"").replace(/^image_/,"")', page)
-        self.assertIn('r.personId||"not assigned"', page)
+        self.assertIn('r.personId||"not catalogued"', page)
         self.assertIn("Core size: \"+r.scoreContext.coreSize+\" photos", page)
+        self.assertIn('provisional · no trusted anchors', page)
         self.assertIn('r.folder.split("/").slice(1).join("/")', page)
         self.assertIn('r.bucket==="Gallery"?"Gallery photo":"Review photo"', page)
         self.assertIn('faceLink.title="Open face crop"', page)

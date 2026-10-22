@@ -41,14 +41,79 @@ class LikenessPolicyTests(unittest.TestCase):
         self.assertEqual(score_band(0.15, self.policy), "orange")
         self.assertEqual(score_band(0.1499, self.policy), "red")
 
-    def test_classification_preserves_potential_and_model_boundaries(self):
-        self.assertEqual(classify_category(4, 0.50, self.policy)["category"], "Potentials")
+    def test_small_cast_like_groups_are_held_before_potential_classification(self):
+        held = classify_category(
+            4,
+            0.46,
+            self.policy,
+            best_cast_folder="Angels/Angelica",
+            second_cast_folder="Sisters/Draknara",
+            cast_margin=0.30,
+        )
+        self.assertEqual(held["category"], "Review")
+        self.assertEqual(held["reviewDestination"], "Angels/Angelica/review")
+        self.assertEqual(
+            held["reviewAlternatives"],
+            ["Angels/Angelica", "Sisters/Draknara"],
+        )
+        self.assertIn("before assigning it as a Potential", held["reason"])
+
+        ambiguous = classify_category(
+            3,
+            0.431,
+            self.policy,
+            best_cast_folder="Angels/angelica",
+            second_cast_folder="Angels/sammara",
+            cast_margin=0.029,
+        )
+        self.assertEqual(ambiguous["category"], "Review")
+        self.assertIsNone(ambiguous["reviewDestination"])
+        self.assertEqual(
+            ambiguous["reviewAlternatives"],
+            ["Angels/angelica", "Angels/sammara"],
+        )
+        self.assertIn("ambiguous cast review", ambiguous["reason"])
+
+        below_hold = classify_category(4, 0.39, self.policy)
+        self.assertEqual(below_hold["category"], "Potentials")
+        self.assertTrue(below_hold["reviewRequired"])
+
+        no_cast_match = classify_category(4, None, self.policy)
+        self.assertEqual(no_cast_match["category"], "Potentials")
+
+    def test_classification_preserves_model_and_prospect_boundaries_for_larger_groups(self):
         self.assertEqual(classify_category(5, 0.39, self.policy)["category"], "Prospects")
         self.assertEqual(classify_category(5, 0.40, self.policy)["category"], "Models")
         self.assertEqual(classify_category(5, 0.5499, self.policy)["category"], "Models")
-        high_cast = classify_category(5, 0.55, self.policy)
+        high_cast = classify_category(
+            5,
+            0.55,
+            self.policy,
+            best_cast_folder="Angels/Angelica",
+            second_cast_folder="Angels/sammara",
+            cast_margin=0.20,
+        )
         self.assertEqual(high_cast["category"], "Review")
         self.assertTrue(high_cast["reviewRequired"])
+        self.assertEqual(high_cast["reviewDestination"], "Angels/Angelica/review")
+
+    def test_small_group_cast_review_threshold_must_fit_between_cues(self):
+        invalid = copy.deepcopy(self.policy)
+        invalid["smallGroupCastReviewMinimum"] = 0.29
+        with self.assertRaisesRegex(ValueError, "small-group cast review minimum"):
+            validate_policy(invalid)
+        invalid = copy.deepcopy(self.policy)
+        invalid["smallGroupCastReviewMinimum"] = 0.55
+        with self.assertRaisesRegex(ValueError, "small-group cast review minimum"):
+            validate_policy(invalid)
+
+    def test_protected_configured_destination_keeps_complete_review_result_shape(self):
+        policy = copy.deepcopy(self.policy)
+        policy["categoryPolicies"]["Models"]["identityProtectedByDefault"] = True
+        result = classify_category(5, .45, policy)
+        self.assertEqual(result["category"], "Review")
+        self.assertIsNone(result["reviewDestination"])
+        self.assertEqual(result["reviewAlternatives"], [])
 
     def test_potential_similarity_at_yellow_prompts_visual_review(self):
         self.assertEqual(

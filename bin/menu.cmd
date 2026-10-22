@@ -17,6 +17,7 @@ echo   L  Photo library: sort new photos in Various, remove duplicates, rebuild 
 echo   R  Photo review gallery (read-only Gallery and Review audit)
 echo   C  Photo library check (read only: anything waiting?)
 echo   B  Back up the photo library and ComfyUI inputs
+echo   X  Clean sandbox rebase (preview or verify; apply separately after reviewing the plan)
 echo   S  Style audit (which art wording leans illustrated)
 echo   H  Help (all scripts)
 echo   Q  Quit
@@ -29,6 +30,7 @@ if /i "%CH%"=="L" call "%~dp0library.cmd" & pause & goto menu
 if /i "%CH%"=="R" call "%~dp0people-gallery-review.cmd" & pause & goto menu
 if /i "%CH%"=="C" call "%~dp0library-check.cmd" & pause & goto menu
 if /i "%CH%"=="B" goto backup
+if /i "%CH%"=="X" goto sandboxrebase
 if "%CH%"=="2" goto group
 if "%CH%"=="3" goto setup
 if "%CH%"=="4" goto publish
@@ -53,6 +55,20 @@ if "%STG%"=="" (
   call "%~dp0%SCRIPT%" "%HERO%" "" %FLAG%
 ) else (
   call "%~dp0%SCRIPT%" "%HERO%" "%STG%" %FLAG%
+)
+pause
+goto menu
+:sandboxrebase
+set "ROOT="
+set "RUN="
+set /p "ROOT=Sandbox Working absolute path: "
+set /p "RUN=New run directory inside Working (or existing run to verify): "
+set "VERIFY="
+set /p "VERIFY=Verify existing run only? (y/n): "
+if /i "%VERIFY%"=="y" (
+  call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --check
+) else (
+  call "%~dp0sandbox-rebase.cmd" "%ROOT%" "%RUN%" --dry-run
 )
 pause
 goto menu

@@ -32,6 +32,7 @@ def validate_policy(policy):
         "categoryAssignmentRules",
         "highCastSimilarityMinimum",
         "castReviewMinimum",
+        "smallGroupCastReviewMinimum",
         "photoRouting",
         "identityActions",
         "lookalikeGroups",
@@ -114,6 +115,15 @@ def validate_policy(policy):
     high_cast = _number(policy["highCastSimilarityMinimum"], "high cast review minimum")
     if high_cast < cast_review:
         raise ValueError("high cast review minimum must be at or above cast review minimum")
+    small_group_cast_review = _number(
+        policy["smallGroupCastReviewMinimum"],
+        "small-group cast review minimum",
+    )
+    if not cast_review <= small_group_cast_review < high_cast:
+        raise ValueError(
+            "small-group cast review minimum must be at or above cast review minimum "
+            "and below the high cast review minimum"
+        )
     assignment_rules = policy["categoryAssignmentRules"]
     if not isinstance(assignment_rules, list) or not assignment_rules:
         raise ValueError("categoryAssignmentRules must be a non-empty list")
@@ -264,8 +274,16 @@ def render_score_legend(policy=None):
     )
 
 
-def classify_category(usable_photo_count, cast_similarity=None, policy=None):
-    """Classify a distinct identity without treating lookalike scores as identity proof."""
+def classify_category(
+    usable_photo_count,
+    cast_similarity=None,
+    policy=None,
+    *,
+    best_cast_folder=None,
+    second_cast_folder=None,
+    cast_margin=None,
+):
+    """Classify a candidate group, holding small cast-like groups for review."""
     config = policy or default_policy()
     if isinstance(usable_photo_count, bool) or not isinstance(usable_photo_count, int):
         raise ValueError("usable photo count must be an integer")
@@ -273,20 +291,67 @@ def classify_category(usable_photo_count, cast_similarity=None, policy=None):
         raise ValueError("usable photo count cannot be negative")
     if cast_similarity is not None:
         cast_similarity = _number(cast_similarity, "cast similarity")
+    if cast_margin is not None:
+        cast_margin = _number(cast_margin, "cast match margin", 0.0, 2.0)
+
+    def review_result(reason):
+        minimum_margin = config["photoRouting"]["minimumMargin"]
+        destination = (
+            f"{best_cast_folder}/review"
+            if best_cast_folder
+            and cast_margin is not None
+            and cast_margin >= minimum_margin
+            else None
+        )
+        alternatives = [
+            folder for folder in (best_cast_folder, second_cast_folder) if folder
+        ]
+        return {
+            "category": "Review",
+            "reviewRequired": True,
+            "reason": reason,
+            "castSimilarity": cast_similarity,
+            "reviewDestination": destination,
+            "reviewAlternatives": alternatives,
+        }
+
     if usable_photo_count == 0:
         return {
             "category": None,
             "reviewRequired": True,
             "reason": "no usable photos",
             "castSimilarity": cast_similarity,
+            "reviewDestination": None,
+            "reviewAlternatives": [],
         }
     if cast_similarity is not None and cast_similarity >= config["highCastSimilarityMinimum"]:
-        return {
-            "category": "Review",
-            "reviewRequired": True,
-            "reason": "high cast similarity may indicate a same-person match; do not auto-classify",
-            "castSimilarity": cast_similarity,
-        }
+        reason = (
+            "high cast similarity may indicate a same-person match; do not auto-classify"
+        )
+        if (
+            second_cast_folder
+            and cast_margin is not None
+            and cast_margin < config["photoRouting"]["minimumMargin"]
+        ):
+            reason = "high similarity to multiple cast identities; hold for ambiguous cast review"
+        return review_result(reason)
+    if (
+        usable_photo_count <= 4
+        and cast_similarity is not None
+        and cast_similarity >= config["smallGroupCastReviewMinimum"]
+    ):
+        if (
+            second_cast_folder
+            and cast_margin is not None
+            and cast_margin < config["photoRouting"]["minimumMargin"]
+        ):
+            reason = "small group has close matches to multiple cast identities; hold for ambiguous cast review"
+        else:
+            reason = (
+                "small group falls in the configured Model resemblance band; "
+                "review cast match before assigning it as a Potential"
+            )
+        return review_result(reason)
     for rule in config["categoryAssignmentRules"]:
         if usable_photo_count < rule["minimumUsablePhotos"]:
             continue
@@ -317,6 +382,8 @@ def classify_category(usable_photo_count, cast_similarity=None, policy=None):
                 "reviewRequired": True,
                 "reason": "configured destination category is identity-protected",
                 "castSimilarity": cast_similarity,
+                "reviewDestination": None,
+                "reviewAlternatives": [],
             }
         return {
             "category": rule["category"],
@@ -327,13 +394,10 @@ def classify_category(usable_photo_count, cast_similarity=None, policy=None):
                 else f"matches configured {rule['category']} assignment rule"
             ),
             "castSimilarity": cast_similarity,
+            "reviewDestination": None,
+            "reviewAlternatives": [],
         }
-    return {
-        "category": "Review",
-        "reviewRequired": True,
-        "reason": "no configured category-assignment rule matched",
-        "castSimilarity": cast_similarity,
-    }
+    return review_result("no configured category-assignment rule matched")
 
 
 def evaluate_photo_consistency(
