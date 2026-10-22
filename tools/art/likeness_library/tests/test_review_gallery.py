@@ -121,6 +121,48 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('"Demons"', page)
         self.assertIn('id="category-order"', page)
 
+    def test_three_photo_matches_are_score_ranked_bounded_and_deterministic(self):
+        photo = SimpleNamespace(usable=lambda minimum: minimum == 60, vec=np.array([1., 0.]))
+        vectors = {
+            "Prospects/Self": np.array([1., 0.]),
+            "Models/Beth": np.array([.8, .6]),
+            "Angels/Alice": np.array([.8, .6]),
+            "Potentials/Cara": np.array([.7, np.sqrt(.51)]),
+            "Sisters/Dana": np.array([.6, .8]),
+            "Artists/Studio/Other": np.array([1., 0.]),
+        }
+        matches = review_gallery.closest_matches(photo, "Prospects/Self", vectors, 60)
+        self.assertEqual([row["folder"] for row in matches], [
+            "Angels/Alice", "Models/Beth", "Potentials/Cara",
+        ])
+        self.assertEqual(matches[0], {
+            "folder": "Angels/Alice", "category": "Angels", "name": "Alice", "score": .8,
+        })
+        self.assertEqual(review_gallery.closest_matches(photo, "Prospects/Self", vectors, 80), [])
+        page = review_gallery.render_html([{
+            "folder": "Prospects/Self", "group": "Prospects", "bucket": "Review",
+            "closestMatches": matches,
+        }], "now")
+        data = json.loads(page.split('<script id="review-data" type="application/json">')[1].split("</script>")[0])
+        self.assertEqual(data[0]["closestMatches"], matches)
+        self.assertIn("similarity evidence, not routing decisions", page)
+
+    def test_review_explains_approval_protection_and_policy_core_eligibility(self):
+        policy = review_gallery.default_policy()["categoryPolicies"]["Angels"]
+        context = review_gallery.score_context(
+            SimpleNamespace(usable=lambda _: True, px=100, faces=1),
+            bucket="Review", core_size=4, core_mode="trusted", core_member=False,
+            sufficient=True, min_face=60, group="Angels", keep=.3, odd=.15,
+            category_policy=policy,
+        )
+        details = "\n".join(context["details"])
+        self.assertIn("changes location only", details)
+        self.assertIn("Protect photo does not approve a Review photo", details)
+        self.assertIn("unless it is also a valid anchor", details)
+        self.assertIn(f"{policy['identityCoreMinimumSimilarity']:.2f} similarity threshold", details)
+        self.assertIn("not the displayed Review score alone", details)
+        self.assertFalse(context["coreMember"])
+
     def test_primary_reference_prefers_workflow_anchor_core_then_best_scored(self):
         def item(folder, name, *, score, bucket="Gallery", selected=False, anchor=False, state="Consistent"):
             return {

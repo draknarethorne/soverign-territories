@@ -252,7 +252,18 @@ function card(r, readOnly=false) {
     }
     article.append(face);
   }
-  if(r.best_other) {
+  if(r.closestMatches?.length) {
+    const closest=document.createElement("div"); closest.className="detail closest-matches";
+    closest.append(document.createTextNode("Closest other identities (similarity evidence, not routing decisions):"));
+    const list=document.createElement("ol");
+    for(const match of r.closestMatches) {
+      const line=document.createElement("li");
+      line.append(personReviewLink(match.folder,match.category+": "+match.name));
+      const mark=scoreBadge(match.score); if(mark)line.append(document.createTextNode(" "),mark);
+      list.append(line);
+    }
+    closest.append(list); article.append(closest);
+  } else if(r.best_other) {
     const closest=document.createElement("div"); closest.className="detail";
     const parsed=r.best_other.match(/^(.*) \\((-?\\d+(?:\\.\\d+)?)\\)$/);
     if(parsed) {
@@ -598,6 +609,22 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
             f"split candidate below {category_policy['splitCandidateBelowSimilarity']:.2f} "
             f"after {category_policy['minimumUsablePhotosForOutlierActions']} usable photos."
         )
+    if category_policy:
+        details.append(
+            f"Core eligibility uses this category's configured "
+            f"{category_policy['identityCoreMinimumSimilarity']:.2f} similarity threshold "
+            "with iterative core/leave-one-out checks, not the displayed Review score alone. "
+            "Usable, unambiguous Gallery photos are candidates; valid anchors seed the core. "
+            "A remaining single eligible photo is provisional, not a confirmed identity."
+        )
+    details.extend([
+        "Approve back to Gallery changes location only; it does not add photo protection or an identity anchor. "
+        "Core eligibility is recomputed when the report or matcher next runs.",
+        "Protect photo does not approve a Review photo or make it an anchor. "
+        "Review is never core; a protected Gallery photo is excluded from core unless it is also a valid anchor.",
+        "Identity protection blocks automatic Gallery membership/category changes; "
+        "it does not change similarity scores or confirm a photo's identity.",
+    ])
     return {
         "coreSize": core_size,
         "coreMode": core_mode,
@@ -610,10 +637,10 @@ def score_context(photo, *, bucket, core_size, core_mode, core_member, sufficien
     }
 
 
-def closest_other(photo, folder, identity_centroids, min_face):
-    """Return this usable photo's nearest eligible identity other than its current folder."""
+def closest_matches(photo, folder, identity_centroids, min_face):
+    """Return the top three same-side photo-to-core similarities, not routing decisions."""
     if not photo.usable(min_face):
-        return ""
+        return []
     ranking = sorted(
         (
             (float(photo.vec @ vector), candidate)
@@ -622,7 +649,19 @@ def closest_other(photo, folder, identity_centroids, min_face):
         ),
         key=lambda row: (-row[0], row[1].casefold()),
     )
-    return f"{ranking[0][1]} ({ranking[0][0]:.2f})" if ranking else ""
+    return [
+        {
+            "folder": candidate, "category": candidate.split("/", 1)[0],
+            "name": candidate.split("/", 1)[1], "score": score,
+        }
+        for score, candidate in ranking[:3]
+    ]
+
+
+def closest_other(photo, folder, identity_centroids, min_face):
+    """Preserve the existing single-match label and public helper contract."""
+    matches = closest_matches(photo, folder, identity_centroids, min_face)
+    return f"{matches[0]['folder']} ({matches[0]['score']:.2f})" if matches else ""
 
 
 def assign_primary_references(items):
@@ -955,6 +994,7 @@ def collect_items(
                 "comparison": comparison,
                 "reason": reason,
                 "best_other": match,
+                "closestMatches": closest_matches(photo, key, policy_centroids, st["minFace"]),
                 "_photo": photo,
             })
 
@@ -1041,6 +1081,7 @@ def collect_items(
                 "comparison": comparison,
                 "reason": reason,
                 "best_other": closest_other(photo, key, policy_centroids, st["minFace"]),
+                "closestMatches": closest_matches(photo, key, policy_centroids, st["minFace"]),
                 "_photo": photo,
             })
 

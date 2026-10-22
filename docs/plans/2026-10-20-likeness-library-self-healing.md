@@ -332,6 +332,13 @@ action-specific measurements on user-labelled examples.
 
 ### Phase C — focused review gallery
 
+- [x] **P1 ai** C0a Address the photo-evidence slice of Oct 22 acceptance
+  feedback: show three closest same-side photo-to-core comparisons with
+  scores/category/name, preserve the existing single-match consumer contract,
+  and explain approval versus photo protection versus anchors/core eligibility.
+  These are diagnostic comparisons, not automatic-routing authorization.
+  No thresholds or real placements change. The other acceptance-feedback
+  requests remain open in their owning phases; raw feedback is retained.
 - [x] **P1 ai** C1 Produce a separate high-volume
   `people_gallery_review.html` with Gallery and Review photos, score ordering,
   filters and identity/protection states. Keep the existing overview concise;

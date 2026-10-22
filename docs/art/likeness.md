@@ -318,8 +318,8 @@ The category tags follow the library hierarchy: Sisters, Angels, Models,
 Prospects, Potentials, then Artists. The card tags identify category,
 workflow selection, photo count, and history. Angel and Sister cards show
 their recorded `Person:` name when available. A linked Workflow photo shows
-its likeness score; `(not shown)` means it is outside the nine visible
-thumbnails.
+its likeness score; an otherwise hidden workflow original is pinned last
+with a dashed border, as described below.
 
 Prime-start suitability is a photo-quality measure, separate from identity
 likeness. Head and Chest-up framing use cached thumbnails. The page is intended
@@ -335,8 +335,9 @@ visible even if filters hide it.
 
 The person heading displays the name separately from category and photo
 location. Each usable photo shows both its leave-one-out similarity to its
-current identity core and its closest other eligible identity with that
-photo's score. A closest-other match is diagnostic evidence, not proof that
+current identity core and its three closest other same-side identity cores,
+ranked by that photo's own unrounded similarity (category/name breaks ties).
+Unusable photos have no alternatives. A closest-other match is diagnostic evidence, not proof that
 the photo belongs to that identity or a move instruction. Each photo can show
 its filename-derived Photo ID and stable catalogue Identity ID; an identity
 without a catalogue record is labeled "not catalogued." A provisional core
@@ -346,6 +347,19 @@ size/count, core size and type, core membership, centered-cosine method, and
 applicable thresholds. Clicking the face metric opens its cached face crop.
 Photo ID and Identity ID appear on separate lines. Various holds explicitly
 show an unassigned identity, because the holding area is not a person.
+The single-match label remains available for existing report consumers and
+move-target preselection; displayed alternatives do not override exclusions,
+protection or action-policy checks.
+
+The scoring/action details explicitly distinguish approval, protection and
+identity-core evidence. **Approve back to Gallery** moves the original; it
+does not add photo protection or an anchor. **Protect photo** does not approve
+a Review photo, and Review never contributes to core. A protected Gallery
+photo is excluded from core unless it is also a valid anchor. Eligible Gallery
+photos are reevaluated using the category's configured core threshold and
+iterative leave-one-out checks; the old displayed Review score alone does not
+guarantee membership after approval. Identity protection is a separate
+automatic-change gate, not a scoring override.
 
 The overview always includes the chosen workflow photo when its Gallery
 original is available. If it falls outside the current top nine, the grid
