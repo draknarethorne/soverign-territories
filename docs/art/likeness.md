@@ -454,6 +454,44 @@ catalogue changes across backup, preserve the complete identity record and
 record a person-only audit entry without creating a photo record. Undo refuses
 later person-state changes rather than overwriting them.
 
+### Testing exported actions safely
+
+The Review page downloads JSON; it never launches a shell. Use
+`bin\likeness-actions.cmd`, not the matching/sorting commands, to execute it.
+For the installed sandbox, run from the repository terminal:
+
+```powershell
+cmd /c bin\likeness-actions.cmd validate "C:\Users\scott\Downloads\YOUR-ACTIONS.json" --root "B:\Sovereign Territories Sandbox\Working"
+cmd /c bin\likeness-actions.cmd preview "C:\Users\scott\Downloads\YOUR-ACTIONS.json" --root "B:\Sovereign Territories Sandbox\Working"
+cmd /c bin\likeness-actions.cmd apply "C:\Users\scott\Downloads\YOUR-ACTIONS.json" --root "B:\Sovereign Territories Sandbox\Working" --apply
+```
+
+Replace the manifest filename with the actual download. Always supply `--root`:
+omitting it selects the configured library. Inspect the preview's exact
+destinations, especially the configured Various pool. Start with one action,
+then test an independent multi-photo/multi-identity batch. Invalid or conflicting
+entries reject the batch before execution; apply backs up and revalidates.
+The printed batch ID identifies the undo:
+
+```powershell
+cmd /c bin\likeness-actions.cmd undo BATCH_ID --root "B:\Sovereign Territories Sandbox\Working"
+cmd /c bin\likeness-actions.cmd undo BATCH_ID --root "B:\Sovereign Territories Sandbox\Working" --apply
+```
+
+Undo the newest active batch before testing another isolated action. Regenerate
+the gallery after apply/undo before staging further decisions: HTML is a
+snapshot, and old locations, hashes or protection state can be stale.
+Keep workflow-photo selection out of sandbox batches; it is deliberately
+restricted to the configured library. Identity protection must be staged
+separately from that identity's photo actions. Whole-person rename, merge,
+retirement and rejection are not implemented Review controls.
+
+Automated tests round-trip every non-workflow photo action through saved JSON,
+validation, temporary-file apply and undo. Separate tests cover identity
+protection/unprotection, workflow selection and sandbox refusal, conflict
+handling and rollback. Backup callbacks in these unit tests are controlled
+fixtures; they do not replace real-library backup or user acceptance testing.
+
 ## Command reference
 
 The launcher is `bin\likeness.cmd`; the command name below follows it. All

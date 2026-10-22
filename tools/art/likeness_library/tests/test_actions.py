@@ -63,6 +63,94 @@ class LikenessActionTests(unittest.TestCase):
         self.assertEqual(self.photo.read_bytes(), before)
         self.assertFalse((self.gallery.parent / "review").exists())
 
+    def test_every_nonworkflow_photo_option_round_trips_through_json_apply_and_undo(self):
+        action_types = {
+            "anchor-added", "anchor-removed", "photo-protected", "photo-unprotected",
+            "sent-to-review", "rejected-to-various", "match-rejected",
+            "review-approved", "photo-retired", "match-accepted",
+        }
+        schema = json.loads(actions.MANIFEST_SCHEMA.read_text(encoding="utf-8"))
+        self.assertEqual(
+            action_types | {"workflow-photo-selected"},
+            set(schema["definitions"]["action"]["properties"]["type"]["enum"]),
+        )
+        for action_type in sorted(action_types):
+            with self.subTest(action=action_type), tempfile.TemporaryDirectory() as directory:
+                root = pathlib.Path(directory)
+                person_id, target_id = "person_" + "a" * 32, "person_" + "b" * 32
+                bucket = "Review" if action_type == "review-approved" else "Gallery"
+                source = root / "Prospects" / "Example" / bucket.lower() / "example_image_123456.jpg"
+                source.parent.mkdir(parents=True)
+                source.write_bytes(b"round-trip original")
+                target = root / "Prospects" / "Other"
+                target.mkdir(parents=True)
+                digest = metadata.content_sha256(source)
+                catalog = {
+                    "schemaVersion": 1, "actions": [],
+                    "photos": {self.photo_id: {
+                        "contentSha256": digest, "protected": action_type == "photo-unprotected",
+                    }},
+                    "people": {
+                        key: {
+                            "id": key, "folder": folder, "displayName": folder.split("/")[-1],
+                            "folderHistory": [],
+                            "identityAnchors": [self.photo_id] if (
+                                key == person_id and action_type == "anchor-removed"
+                            ) else [],
+                        }
+                        for key, folder in ((person_id, "Prospects/Example"), (target_id, "Prospects/Other"))
+                    },
+                }
+                initial = copy.deepcopy(catalog)
+                decision = {
+                    "type": action_type, "photoId": self.photo_id, "contentSha256": digest,
+                    "sourceBucket": bucket, "personFolder": "Prospects/Example", "personId": person_id,
+                }
+                if action_type == "match-accepted":
+                    decision.update(destinationFolder="Prospects/Other", destinationPersonId=target_id)
+                document = {**self.manifest, "actions": [decision]}
+                manifest_path = root / "downloaded-actions.json"
+                manifest_path.write_text(json.dumps(document), encoding="utf-8")
+                loaded = actions.load_manifest(manifest_path)
+                errors, plans = actions.validate_manifest(loaded, root, catalog, "Various")
+                self.assertEqual(errors, [])
+                self.assertEqual(catalog, initial)
+                self.assertTrue(source.is_file())
+                backups = []
+
+                def save(updated):
+                    catalog.clear()
+                    catalog.update(copy.deepcopy(updated))
+
+                def backup(*args):
+                    backups.append(args)
+                    return "verified-test-backup"
+
+                batch, _ = actions.apply_actions(
+                    loaded, root, catalog, {}, "Various", backup_fn=backup, save_fn=save,
+                )
+                self.assertEqual(catalog["actions"][-1]["type"], action_type)
+                if plans[0]["destination"] is not None:
+                    self.assertFalse(source.exists())
+                    self.assertEqual(plans[0]["destination"].read_bytes(), b"round-trip original")
+                if action_type == "anchor-added":
+                    self.assertIn(self.photo_id, catalog["people"][person_id]["identityAnchors"])
+                if action_type == "anchor-removed":
+                    self.assertEqual(catalog["people"][person_id]["identityAnchors"], [])
+                if action_type in ("photo-protected", "photo-unprotected"):
+                    self.assertEqual(catalog["photos"][self.photo_id]["protected"], action_type == "photo-protected")
+                if action_type == "match-rejected":
+                    self.assertEqual(catalog["photos"][self.photo_id]["rejectedPersonIds"], [person_id])
+                actions.undo_actions(
+                    catalog, root, {}, "Various", batch_id=batch, backup_fn=backup, save_fn=save,
+                )
+                self.assertEqual(len(backups), 2)
+                self.assertEqual(source.read_bytes(), b"round-trip original")
+                self.assertEqual(catalog["people"], initial["people"])
+                self.assertEqual(catalog["photos"], initial["photos"])
+                if plans[0]["destination"] is not None:
+                    self.assertFalse(plans[0]["destination"].exists())
+
     def test_selected_workflow_photo_cannot_be_moved(self):
         errors, _plans = actions.validate_manifest(
             self.manifest,

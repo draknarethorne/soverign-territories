@@ -332,6 +332,15 @@ action-specific measurements on user-labelled examples.
 
 ### Phase C — focused review gallery
 
+- [x] **P1 ai** C0b Verify available-action execution readiness: supported
+  launcher help works; an exhaustive schema-enumerated regression round-trips
+  all ten non-workflow photo actions through saved JSON, validation,
+  temporary-file apply and undo with byte/metadata restoration. Existing
+  identity protection and workflow apply/undo tests remain passing, including
+  refusal to change shared workflow selection from an isolated sandbox.
+  The likeness guide now gives exact sandbox validate/preview/apply/undo
+  commands, batch/stale-page cautions and unfinished-control boundaries.
+  This verifies implementation wiring, not actual-library visual acceptance.
 - [x] **P1 ai** C0a Address the photo-evidence slice of Oct 22 acceptance
   feedback: show three closest same-side photo-to-core comparisons with
   scores/category/name, preserve the existing single-match consumer contract,
