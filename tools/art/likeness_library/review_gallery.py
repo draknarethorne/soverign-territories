@@ -549,6 +549,7 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
         ])
     if not protected and not anchor and not workflow_selected:
         options.append(("match-accepted", "Move to another identity's Review (closest preselected)"))
+        options.append(("photo-retired", "Retire photo to _retired/photos (recoverable; excluded from matching)"))
     return options
 
 

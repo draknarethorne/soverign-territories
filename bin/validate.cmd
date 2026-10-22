@@ -58,7 +58,7 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
-%PY% -m unittest tools.art.likeness_library.tests.test_clean_rebase tools.art.likeness_library.tests.test_policy tools.art.likeness_library.tests.test_reconciliation tools.art.likeness_library.tests.test_review_gallery tools.art.likeness_library.tests.test_maintenance tools.art.likeness_library.tests.test_identity_maintenance tools.art.likeness_library.tests.test_actions
+%PY% -m unittest tools.art.likeness_library.tests.test_clean_rebase tools.art.likeness_library.tests.test_policy tools.art.likeness_library.tests.test_reconciliation tools.art.likeness_library.tests.test_review_gallery tools.art.likeness_library.tests.test_maintenance tools.art.likeness_library.tests.test_identity_maintenance tools.art.likeness_library.tests.test_actions tools.art.likeness_library.tests.test_family_preview tools.art.likeness_library.tests.test_photo_retirement
 if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1

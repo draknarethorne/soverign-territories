@@ -346,7 +346,7 @@ size/count, core size and type, core membership, centered-cosine method, and
 applicable thresholds. Clicking the face metric opens its cached face crop.
 
 Photo-level Protect, identity-anchor, Review, Reject-to-Various,
-Review-approval, and eligible workflow-photo choices are **staged** in the
+Review-approval, photo retirement, and eligible workflow-photo choices are **staged** in the
 browser. The page downloads a versioned JSON manifest; it never moves photos
 or edits the catalogue. Review/validate the downloaded manifest with
 `bin\likeness-actions.cmd validate FILE.json` or `preview FILE.json`. Both are
@@ -364,6 +364,27 @@ cast Gallery/core. Protected photos, anchors and workflow-selected photos
 must have their restrictions resolved first. The audit retains the chosen
 destination ID; undo refuses a replaced or relocated destination identity.
 Unassigned Various holds and Artist sources do not offer this action.
+
+**Retire photo** is a separate, recoverable archive action for an unusable
+Gallery or Review original. Its preview shows the exact destination:
+`_retired/photos/<category>/<identity>/<gallery-or-review>/<original-name>`.
+It preserves the bytes, records the source/hash/person ID and catalogue
+snapshots in the audit, and excludes the original from active matching.
+It neither deletes the image nor returns it to Various. Whole-person
+retirement and whole-folder archival remain different operations; neither
+is implied by this photo action.
+
+Remove a photo's protection or anchor in a separately applied batch before
+retiring it; workflow-selected originals cannot be retired. Protection and
+retirement cannot be combined for one photo in the same manifest. Identity
+protection blocks **automatic** changes, not this explicit user decision on
+an otherwise movable photo. Existing archive files are never overwritten.
+Undo uses the normal verified-backup transaction and restores the exact
+original path only if its archived bytes and catalogue state still match
+and no replacement occupies that path. As with other actions, audit-required
+unprotected photo metadata remains after undo even when it was first
+registered by the action. Derived images/reports are refreshed separately;
+the retirement transaction moves only the original.
 
 Staging a workflow-photo change updates the configured base photo and
 repoints generated workflows when applied. Workflow-specific overrides remain

@@ -55,6 +55,11 @@ A new read-only `family-preview` command now exposes direct reference scores,
 surname reuse and collision-aware naming proposals from the saved sandbox
 scenario; see the [family/name preview evidence](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#phase-2--complete-identity-names-and-define-family-metadata).
 Suggestions do not establish family membership or authorize renames.
+Individual photo retirement is now staged separately from rejection: a
+verified, undoable original-file archive under `_retired/photos`, excluded
+from matching. Protected/anchored/workflow-selected originals are refused.
+The regenerated sandbox page exposes eligible Gallery and Review choices;
+whole-person retirement and permanent rejected-identity exclusions remain open.
 The separate production clean-full rebuild is still required after acceptance
 and approval; there is no production adapter yet. Gallery visual acceptance
 also remains open because the integrated browser refused the external B:

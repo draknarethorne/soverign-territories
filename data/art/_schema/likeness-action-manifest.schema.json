@@ -42,6 +42,7 @@
             "sent-to-review",
             "rejected-to-various",
             "review-approved",
+            "photo-retired",
             "match-accepted",
             "workflow-photo-selected"
           ]

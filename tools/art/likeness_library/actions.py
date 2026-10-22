@@ -25,7 +25,7 @@ cw = likeness.cw
 MANIFEST_SCHEMA = ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
 PHOTO_ROOTS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists", "Models", "Various")
 IGNORED_PARTS = {"_archive", "_junk", "_retired"}
-MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved", "match-accepted"}
+MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved", "match-accepted", "photo-retired"}
 ANCHOR_ACTIONS = {"anchor-added", "anchor-removed"}
 PROTECTION_ACTIONS = {"photo-protected", "photo-unprotected"}
 WORKFLOW_ACTIONS = {"workflow-photo-selected"}
@@ -105,6 +105,8 @@ def _category_for_action(action_type):
 
 
 def _destination(action, root, pool_folder):
+    if action["type"] == "photo-retired":
+        return root / "_retired" / "photos" / action["personFolder"] / action["sourceBucket"].lower()
     if action["type"] == "match-accepted":
         return root / action["destinationFolder"] / "review"
     if action["type"] == "sent-to-review":
@@ -301,6 +303,16 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             and stored_photo["protected"]
             and stored_photo["contentSha256"] == actual_hash
         )
+        if action["type"] == "photo-retired":
+            if protected or photo_id in anchor_owners:
+                errors.append(f"{label}: remove photo protection or identity anchor before retirement")
+                continue
+            if any(
+                other["photoId"] == photo_id and other["type"] in PROTECTION_ACTIONS
+                for other in document["actions"] if "photoId" in other
+            ):
+                errors.append(f"{label}: photo protection and retirement require separate manifests")
+                continue
         if action["type"] == "match-accepted":
             destination_folder = pathlib.PurePosixPath(action["destinationFolder"])
             if any(part in (".", "..") for part in destination_folder.parts):

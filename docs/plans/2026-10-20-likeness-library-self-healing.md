@@ -555,6 +555,17 @@ are verified on real, backed-up batches before enabling routine use.
 
 ### Phase G — add photo and person retirement to the review interface
 
+- [x] **P1 ai** G0 Deliver the photo-level slice: `photo-retired` manifests,
+  exact recoverable `_retired/photos/<person>/<bucket>` destination preview,
+  current ID/hash validation, photo-protection/anchor/workflow guards,
+  verified-backup apply and undo, archive collision/stale-state refusal and
+  rollback tests. Gallery and Review controls share the existing transaction
+  path. Nine focused tests pass. The regenerated sandbox Review page exposes
+  2,321 Gallery and 55 Review retirement choices, with zero photo-protection,
+  anchor, workflow-selection or nonstageable violations. Catalogue/policy
+  hashes are unchanged. Identity protection is an automatic-change gate,
+  not a ban on explicit user retirement. G1-G3 remain open for the whole-person
+  scope; Various/Artist sources are not stageable photo identities yet.
 - [ ] **P2 ai** G1 After Review/Reject workflows are working, expose
   photo-level retirement of unusable images and whole-person retirement of
   Potentials/Prospects through explicit, distinct manifest actions.
