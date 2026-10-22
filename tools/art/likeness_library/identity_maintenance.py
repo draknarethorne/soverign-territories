@@ -375,6 +375,7 @@ def relocate_files(root, photo_moves, transitions):
 def check_applied_membership(root, measured_photos, moves, identity_actions, settings,
                              selected_ids, policy):
     """One read-only final-core check; never cascade moves from newly changed cores."""
+    from .engine import matches
     from .reconciliation import frozen_identity_cores
 
     root = pathlib.Path(root).resolve()
@@ -397,7 +398,8 @@ def check_applied_membership(root, measured_photos, moves, identity_actions, set
         photo.key = photo.path.parent.parent.relative_to(root).as_posix()
         if photo.path.parent.name == "gallery":
             gallery.append(photo)
-            by_key.setdefault(photo.key, []).append(photo)
+            if photo.usable(settings["minFace"]) and not matches(photo.key, settings["mixed"]):
+                by_key.setdefault(photo.key, []).append(photo)
         else:
             review.append(photo)
     space = SimpleNamespace(photos=gallery, by_key=by_key, st=settings)

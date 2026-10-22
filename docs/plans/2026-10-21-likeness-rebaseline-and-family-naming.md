@@ -779,8 +779,15 @@ Neither preview was applied.
 
 After an approved apply, one read-only affected-core check records remaining
 maintenance candidates without cascading further moves. Synthetic tests cover
-both a stable final membership and residual work that must not be called
-convergence. Full labelled calibration, global convergence and the separate
+residual work that must not be called convergence. Three full command-path
+tests now apply real temporary-file moves, rebuild cores from final disk
+membership without a reset, and require an empty second preview: four-to-five
+promotion, unmatched-outlier splitting with source demotion, and reciprocal
+merging. Only face measurements and external backup are stubbed; matching,
+core construction, action planning, file moves and catalogue updates run.
+The post-apply check also excludes staged mixed-pool photos using the same
+source filter as the ordinary engine. Full labelled calibration, global
+convergence and the separate
 200+ incremental batch remain unaccepted. The old no-policy API adapter is
 now isolated in `legacy_reconciliation.py`; command orchestration is extracted
 to `reconcile_command.py` and established actions to `identity_maintenance.py`.
@@ -795,7 +802,7 @@ comparison and separately approved production clean-full adapter/rebuild
 remain open.
 
 The full validation launcher passed; after the latest transaction changes
-all 145 likeness-library tests passed and the installed run's `--check`
+all 148 likeness-library tests passed and the installed run's `--check`
 passed. Generated HTML has machine-checked evidence, but visual/browser
 acceptance remains unverified: the integrated browser refused the external
 B: location as outside its trusted folders. Do not bypass that restriction.
@@ -903,8 +910,9 @@ machine-readable and human-readable results.
   apply. The clean rebase remains a separate baseline/recovery command.
   Reciprocal disjoint merges, supported red-outlier splits, final-membership
   category transitions and one bounded read-only final-core check are now
-  transaction-tested. This box stays open for measured idempotence and the
-  staged real batch; no recursive established-core cascade is authorized.
+  transaction-tested. Three measured synthetic command scenarios now reach
+  a no-change second pass without reset. This box stays open for labelled
+  real-batch idempotence; no recursive established-core cascade is authorized.
 - [ ] **P1 ai** 4.12 Implement the agreed protection contract. Identity
   protection blocks automatic Gallery-membership and identity changes;
   incoming identity-associated Review has separate admission permission. Photo

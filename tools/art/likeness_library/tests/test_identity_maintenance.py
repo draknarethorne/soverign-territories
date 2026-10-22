@@ -48,7 +48,7 @@ class IdentityMaintenanceTests(unittest.TestCase):
     def fixture(self, count=4):
         photos = [self.photo(100000 + i) for i in range(count)]
         space = SimpleNamespace(
-            photos=list(photos), by_key={self.folder: photos}, st={"minFace": 60},
+            photos=list(photos), by_key={self.folder: photos}, st=self.policy["runtimeSettings"],
         )
         cores = {self.folder: {
             "category": "Potentials", "side": "Prospects", "identityProtected": False,
@@ -265,14 +265,17 @@ class IdentityMaintenanceTests(unittest.TestCase):
         maintenance.apply_moves(
             self.root, [move], self.policy, {}, backup_fn=lambda *_: "verified",
         )
+        staged = self.photo(200001, "Various")
         check = identities.check_applied_membership(
-            self.root, photos + [incoming], [move], [], space.st, set(), self.policy,
+            self.root, photos + [incoming, staged], [move], [], space.st,
+            {metadata.photo_id_from_name(staged.name)}, self.policy,
         )
         self.assertEqual(check["status"], "further-maintenance-candidates")
         self.assertIn(metadata.photo_id_from_name(photos[-1].name), check["outlierPhotoIds"])
         self.assertFalse(check["automaticFollowupApplied"])
         self.assertTrue(photos[-1].path.is_file())
         self.assertFalse(incoming.path.exists())
+        self.assertTrue(staged.path.is_file())
 
     def merge_fixture(self):
         photos, space, cores = self.fixture(2)
@@ -419,6 +422,113 @@ class IdentityMaintenanceTests(unittest.TestCase):
         maintenance.undo_moves(self.root, journal, {}, apply=True, backup_fn=lambda *_: "verified")
         self.assertTrue(incoming.path.is_file())
         self.assertEqual(metadata.load_catalog(self.root / ".likeness-library.json"), self.catalog)
+
+    def test_complete_outlier_split_and_demotion_is_stable_without_a_rebase(self):
+        self.folder = "Prospects/Test Person"
+        self.catalog["people"][self.person_id]["folder"] = self.folder
+        metadata.save_catalog(self.catalog, self.root / ".likeness-library.json")
+        photos, _, _ = self.fixture(5)
+        for index, photo in enumerate(photos[:4]):
+            y = -.3 if index % 2 else .3
+            photo.vec = np.array([(1. - y * y) ** .5, y])
+        photos[-1].vec = np.array([-1., 0.])
+        first = self.run_two_measured_passes(photos)
+        self.assertEqual(first["assignedCount"], 1)
+        self.assertEqual(first["identityActions"][0]["destinationFolder"], "Potentials/Test Person")
+        catalog_path = self.root / ".likeness-library.json"
+        updated = metadata.load_catalog(catalog_path)
+        self.assertEqual(updated["people"][self.person_id]["folder"], "Potentials/Test Person")
+        self.assertEqual(len(updated["people"]), 2)
+        self.assertTrue((self.root / "Potentials/Detached Person/gallery" / photos[-1].name).is_file())
+        maintenance.undo_moves(
+            self.root, first["journal"], {}, apply=True, backup_fn=lambda *_: "verified",
+        )
+        self.assertTrue(all(photo.path.is_file() for photo in photos))
+        self.assertEqual(metadata.load_catalog(catalog_path), self.catalog)
+
+    def test_complete_four_to_five_promotion_is_stable_without_a_rebase(self):
+        photos, _, _ = self.fixture(4)
+        incoming = self.photo(200000, "Various")
+        first = self.run_two_measured_passes(photos + [incoming])
+        self.assertEqual(first["assignedCount"], 1)
+        self.assertEqual(first["identityActions"][0]["destinationFolder"], "Prospects/Test Person")
+
+    def test_complete_reciprocal_merge_is_stable_without_a_rebase(self):
+        self.folder = "Prospects/Test Person"
+        self.catalog["people"][self.person_id]["folder"] = self.folder
+        photos, _, _ = self.fixture(5)
+        target, target_id = "Prospects/Other", "person_" + "2" * 32
+        others = [self.photo(300000 + index, target) for index in range(5)]
+        for rows in (photos, others):
+            for index, photo in enumerate(rows):
+                y = -.3 if index % 2 else .3
+                photo.vec = np.array([(1. - y * y) ** .5, y])
+        self.catalog["people"][target_id] = {
+            "id": target_id, "folder": target, "displayName": "Other",
+            "folderHistory": [], "identityAnchors": [], "protected": False,
+        }
+        catalog_path = self.root / ".likeness-library.json"
+        metadata.save_catalog(self.catalog, catalog_path)
+        first = self.run_two_measured_passes(photos + others)
+        self.assertEqual(first["assignedCount"], 0)
+        self.assertEqual(len(first["identityActions"]), 1)
+        self.assertEqual(first["identityActions"][0]["type"], "identity-merge")
+        updated = metadata.load_catalog(catalog_path)
+        self.assertEqual(updated["people"][self.person_id]["mergedInto"], target_id)
+        self.assertEqual(len(list((self.root / target / "gallery").glob("*.jpg"))), 10)
+        maintenance.undo_moves(
+            self.root, first["journal"], {}, apply=True, backup_fn=lambda *_: "verified",
+        )
+        self.assertTrue(all(photo.path.is_file() for photo in photos + others))
+        self.assertEqual(metadata.load_catalog(catalog_path), self.catalog)
+
+    def run_two_measured_passes(self, photos):
+        originals = {photo.name: photo for photo in photos}
+        settings = {**self.policy["runtimeSettings"], "assign": .4, "margin": .1}
+
+        def build(_args):
+            measured, by_key = [], {}
+            for path in self.root.rglob("*.jpg"):
+                photo = copy.copy(originals[path.name])
+                photo.path = path
+                photo.key = path.parent.parent.relative_to(self.root).as_posix()
+                measured.append(photo)
+                if not likeness.matches(photo.key, settings["mixed"]):
+                    by_key.setdefault(photo.key, []).append(photo)
+            space = SimpleNamespace(photos=measured, by_key=by_key, st=settings)
+            return {}, settings, self.root, None, space
+
+        policy_path = self.root / "policy.json"
+        policy_path.write_text(json.dumps(self.policy), encoding="utf-8")
+        args = SimpleNamespace(
+            root=str(self.root), cache=None, policy=str(policy_path), apply=True,
+            sandbox_apply_draft=False, undo=None, embedder=mock.Mock(),
+            out=str(self.root / "preview.json"),
+        )
+        with (
+            mock.patch.object(likeness.cw, "load_cfg", return_value={}),
+            mock.patch.object(likeness, "build", side_effect=build),
+            mock.patch.object(likeness, "load_review", return_value=[]),
+            mock.patch.object(likeness, "junk_reason", return_value=None),
+            mock.patch.object(likeness, "invent_name", return_value="Detached Person"),
+            mock.patch.object(likeness.cw, "photo_folders", return_value=[]),
+            mock.patch("likeness_library.maintenance._backup", return_value="verified"),
+            contextlib.redirect_stdout(io.StringIO()),
+        ):
+            likeness.cmd_reconcile(args)
+            first = json.loads(pathlib.Path(args.out).read_text(encoding="utf-8"))
+            self.assertTrue(first["moves"])
+            self.assertEqual(first["postApplyCheck"]["status"], "no-further-maintenance-candidates")
+            catalog_path = self.root / ".likeness-library.json"
+            after = catalog_path.read_bytes()
+            args.apply = False
+            likeness.cmd_reconcile(args)
+            second = json.loads(pathlib.Path(args.out).read_text(encoding="utf-8"))
+            self.assertEqual(second["candidateCount"], 0)
+            self.assertEqual(second["moves"], [])
+            self.assertEqual(second["identityActions"], [])
+            self.assertEqual(catalog_path.read_bytes(), after)
+        return first
 
 
 if __name__ == "__main__":
