@@ -284,12 +284,37 @@ function card(r, readOnly=false) {
   action.add(new Option("No staged action",""));
   for(const [value,label] of r.stageOptions||[])action.add(new Option(label,value));
   action.disabled=!r.stageable;
-  action.value=staged.get(r.photoId)||"";
-  action.addEventListener("change",()=>{
-    if(action.value)staged.set(r.photoId,action.value); else staged.delete(r.photoId);
+  action.value=staged.get(r.photoId)?.type||"";
+  const destination=document.createElement("select");
+  destination.setAttribute("aria-label","Destination identity for "+r.name);
+  const folders=[...new Set(records.filter(item=>
+    /^(Sisters|Angels|Models|Prospects|Potentials)\\//.test(item.folder)&&item.folder!==r.folder&&item.personId
+  ).map(item=>item.folder))].sort();
+  for(const folder of folders)destination.add(new Option(folder,folder));
+  const closest=r.best_other?.match(/^(.*) \\((-?\\d+(?:\\.\\d+)?)\\)$/)?.[1];
+  destination.value=staged.get(r.photoId)?.destinationFolder||
+    (folders.includes(closest)?closest:folders[0])||"";
+  if(!folders.length) {
+    const option=[...action.options].find(item=>item.value==="match-accepted");
+    if(option)option.remove();
+  }
+  destination.hidden=action.value!=="match-accepted";
+  const saveStage=()=>{
+    if(action.value)staged.set(r.photoId,{
+      type:action.value,
+      ...(action.value==="match-accepted"?{
+        destinationFolder:destination.value,
+        destinationPersonId:records.find(item=>item.folder===destination.value)?.personId
+      }:{})
+    }); else staged.delete(r.photoId);
     updateStagedCount();
+  };
+  action.addEventListener("change",()=>{
+    destination.hidden=action.value!=="match-accepted";
+    saveStage();
   });
-  stageLabel.append(action); article.append(stageLabel);
+  destination.addEventListener("change",saveStage);
+  stageLabel.append(action,destination); article.append(stageLabel);
   return article;
 }
 function updateStagedCount(){
@@ -416,10 +441,10 @@ mode.addEventListener("change",()=>{
 query.addEventListener("input",render);
 more.addEventListener("click",()=>{shown+=pageSize;draw()});
 download.addEventListener("click",()=>{
-  const actions=[...staged.entries()].map(([photoId,type])=>{
+  const actions=[...staged.entries()].map(([photoId,decision])=>{
     const record=records.find(item=>item.photoId===photoId);
     return {
-      type, photoId, contentSha256:record.contentSha256, sourceBucket:record.bucket,
+      ...decision, photoId, contentSha256:record.contentSha256, sourceBucket:record.bucket,
       personFolder:record.folder, ...(record.personId?{personId:record.personId}:{})
     };
   });
@@ -460,7 +485,7 @@ def _local_photo_path(path):
 
 
 def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable=True,
-                   workflow_photo=False):
+                   workflow_photo=False, workflow_selected=False):
     """Return actions valid for this photo's current location and metadata."""
     if not stageable or not photo_id:
         return []
@@ -484,6 +509,8 @@ def action_options(bucket, photo_id, *, anchor=False, protected=False, stageable
             ("rejected-to-various", "Reject to Various"),
             ("review-approved", "Approve back to Gallery"),
         ])
+    if not protected and not anchor and not workflow_selected:
+        options.append(("match-accepted", "Move to another identity's Review (closest preselected)"))
     return options
 
 
@@ -851,6 +878,7 @@ def collect_items(
                     "Gallery", photo_id, anchor=photo_id in anchors and photo_id not in stale_ids,
                     protected=photo_id in protected_ids,
                     workflow_photo=workflow_photo_available,
+                    workflow_selected=photo_id in selected_ids,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict
                         and action_folder_supported(key)
@@ -933,6 +961,7 @@ def collect_items(
                 ),
                 "stageOptions": action_options(
                     "Review", photo_id, protected=photo_id in protected_ids,
+                    workflow_selected=photo_id in selected_ids,
                     stageable=(
                         photo_id not in ambiguous_ids and not conflict
                         and action_folder_supported(key)

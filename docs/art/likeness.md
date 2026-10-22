@@ -103,10 +103,42 @@ Automatic lookalike association is disabled. Lower-tier routing, merge and
 split permissions are configured independently of cast Gallery protection.
 The shared planner now proposes usable incoming/Review destinations even
 under a draft policy; write authorization is checked separately. Operational
-whole-identity merge/split and existing-identity category transitions are still
-unfinished. Configuration flags are not proof that those paths are wired.
+whole-identity merges, red-outlier splits and existing-identity category
+transitions now have executable, reversible transaction paths. Their labelled
+calibration and real incremental-batch acceptance remain open.
 The sandbox clean installer can add cast Review photos, never cast Gallery
 members. Production requires an approved policy and separate acceptance.
+
+### Established-identity maintenance
+
+`likeness reconcile` plans incoming/Review routing and qualified Gallery
+outliers together, then proposes disjoint reciprocal identity merges and
+category transitions from final planned usable membership. A folder cannot
+participate in a merge chain in the same pass. Category transitions preserve
+the identity ID; merges retain the source ID with `mergedInto` pointing to the
+survivor. Name histories, Review photos and derivatives travel with the
+identity rather than being discarded. Empty directory shells are left intact
+and can be reused by a later category transition.
+
+The current `.4` draft adds a configurable `.95` near-duplicate similarity
+ceiling for independent action support. This is a diversity heuristic, not
+labelled proof of identity or independence. A single unmatched red outlier
+may form a Potential only when its category explicitly permits it, the
+source is large enough, and its retained core has enough diverse support.
+The category split threshold and global outlier limit both apply. Alternative
+identity reassignment still has its own match, margin and support requirements.
+`smallGroupMaximumUsablePhotos` externalizes the cast-review size gate;
+its current value is four, separate from clustering and action support.
+Saved older policies retain the old four-photo gate, and missing new action
+controls do not enable these new automatic actions.
+
+Approved apply validates complete source/merge-target inventories again after
+backup and journals every moved file and catalogue change. It then performs
+one read-only affected-identity check using final membership in the same
+saved scoring space. Its `check-reconcile_*.json` receipt explicitly reports
+further maintenance candidates; it never cascades additional moves or claims
+convergence merely because the first transaction succeeded. Undo uses the
+original `reconcile_*.json` journal, not the check receipt.
 
 `Various` is the incoming pool beside Prospects and Potentials. The standard
 library routine, `bin\library.cmd`, runs the photo-preparation, likeness,
@@ -292,15 +324,24 @@ audit. `undo [BATCH_ID] --apply` restores the newest active batch only when
 the recorded source files and metadata still match. Refresh derived outputs
 after a successful apply/undo with `bin\library.cmd`.
 
+The explicit **Move to another identity's Review** action preselects the
+closest eligible identity and permits another existing destination. It
+exports the destination's stable ID and folder, validates both against the
+current catalogue, and always sends the photo to Review, never directly into
+cast Gallery/core. Protected photos, anchors and workflow-selected photos
+must have their restrictions resolved first. The audit retains the chosen
+destination ID; undo refuses a replaced or relocated destination identity.
+Unassigned Various holds and Artist sources do not offer this action.
+
 Staging a workflow-photo change updates the configured base photo and
 repoints generated workflows when applied. Workflow-specific overrides remain
 separate. The action does not promote or move the selected photo. Applying or
 undoing against an isolated sandbox root is refused; sandbox experiments must
 not update production workflow inputs.
 
-Photo-level protection is implemented. Person-wide Protection for Models and
-Prospects remains a separate, unimplemented design question because its
-effects on classification, routing, and scoring need agreement.
+Photo-level and catalogue identity protection are respected by automatic
+planning and apply. The browser does not yet offer a person-wide protection
+toggle. Protection does not turn a low-score photo into trusted core evidence.
 
 ## Command reference
 

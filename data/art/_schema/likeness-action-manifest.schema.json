@@ -31,6 +31,7 @@
             "sent-to-review",
             "rejected-to-various",
             "review-approved",
+            "match-accepted",
             "workflow-photo-selected"
           ]
         },
@@ -38,9 +39,21 @@
         "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "sourceBucket": {"enum": ["Gallery", "Review"]},
         "personFolder": {"$ref": "#/definitions/personFolder"},
-        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "destinationFolder": {"$ref": "#/definitions/personFolder"},
+        "destinationPersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {"type": {"const": "match-accepted"}},
+            "required": ["type"]
+          },
+          "then": {"required": ["destinationFolder", "destinationPersonId"]},
+          "else": {
+            "not": {"anyOf": [{"required": ["destinationFolder"]}, {"required": ["destinationPersonId"]}]}
+          }
+        },
         {
           "if": {
             "properties": {
@@ -72,7 +85,7 @@
     },
     "personFolder": {
       "type": "string",
-      "pattern": "^(Angels|Sisters|Prospects|Potentials)/[^/\\\\:]+(/[^/\\\\:]+)?$"
+      "pattern": "^(Angels|Sisters|Models|Prospects|Potentials)/[^/\\\\:]+(/[^/\\\\:]+)?$"
     }
   }
 }

@@ -163,9 +163,9 @@ photo must not move automatically, but may stay outside the core.
 
 ### One reconciliation plan for Review and incoming photos
 
-The current primary routine still processes Review, sort, singles and rematch
-separately; the read-only reconciliation prototype is not integrated as its
-replacement. The
+The primary routine now calls shared reconciliation instead of its former
+Review/sort/singles/rematch decision chain. Its established maintenance paths
+are implemented, but labelled real-batch acceptance is still outstanding. The
 [ordered decision flow](2026-10-21-likeness-rebaseline-and-family-naming.md#ordered-decision-flow)
 now specifies one planner for rebase and incremental maintenance. This plan
 supplies its metadata, review actions and recoverable execution foundation;
@@ -355,13 +355,26 @@ action-specific measurements on user-labelled examples.
   a stable output directory. The overview/review link and order consistency
   are implemented; verify stable-directory replacement without losing the
   dated reports.
-- [ ] **P2 ai** C8 Add an explicit user-staged move to the closest identity,
+- [x] **P2 ai** C8 Add an explicit user-staged move to the closest identity,
   including destination choice, hash/protection validation, preview, backup
-  and undo. Showing closest-other evidence is not this action.
+  and undo. Implemented as `match-accepted`, always to destination Review.
+  Manifest and audit retain its stable destination ID; stale target ownership
+  blocks apply/undo. Generated scripts compile and protected/anchor/workflow
+  selections offer no reassignment. Local visual acceptance remains separate.
 - [ ] **P2 ai** C9 Investigate a local secondary face model on labelled difficult
   expressions, including `7515826497811991332` (Arwen Ames / Rhiannon Frost).
   Compare models and disagreement evidence before selecting any new scoring
   algorithm; do not replace SFace or add score-patching exceptions silently.
+  Preliminary source review: [InsightFace](https://github.com/deepinsight/insightface#license)
+  distinguishes MIT code from non-commercial-research pretrained weights;
+  do not auto-download a package as if the code licence covered the weights.
+  [AdaFace](https://github.com/mk-minchul/AdaFace#pretrained-models) provides
+  local quality-adaptive models and MIT code, but no model-use clearance was
+  established here for the selected checkpoint/training dataset. Its BGR
+  112x112 aligned input also differs from InsightFace's documented RGB input.
+  No new model was installed, selected or tested on library images. A labelled
+  expression/pose/quality comparison and checkpoint licence review remain
+  necessary; never average raw cosine scores from different model spaces.
 
 **Oct 20 gallery update:** C5 is implemented. The category filter now
 constrains the person selector, person sections fill the available width with

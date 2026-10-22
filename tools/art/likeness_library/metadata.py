@@ -63,6 +63,10 @@ def validation_errors(data):
     folder_owners = {}
     anchor_owners = {}
     for person_id, person in people.items():
+        if "mergedInto" in person:
+            target = people.get(person["mergedInto"])
+            if target is None or target["id"] == person_id or "mergedInto" in target:
+                errors.append(f"people/{person_id}: mergedInto must reference a distinct active identity")
         if person["id"] != person_id:
             errors.append(f"people/{person_id}: record id does not match its catalogue key")
         folder = person["folder"]

@@ -81,10 +81,14 @@ time with its launcher and all known references updated together.
 incoming move/apply/undo transactions in `maintenance.py`; clean-rebuild
 filesystem boundaries remain in `clean_rebase.py`. Both primary processing
 paths call this shared planning stack. This advances E2/E2a, but does not
-complete the CLI extraction: legacy mutation commands, the no-policy
-reconciliation fallback, image operations and library orchestration still
-need bounded migrations. Package naming is unchanged to avoid shadowing
-`likeness.py`.
+complete the CLI extraction: legacy mutation commands, image operations and
+library orchestration still need bounded migrations. Reconciliation command
+orchestration now lives in `reconcile_command.py`; established action planning
+and final-core checking live in `identity_maintenance.py`. The no-policy API
+fallback is isolated in `legacy_reconciliation.py`, with unreachable policy
+branches removed; normal rebase and routine callers do not use that adapter.
+Package naming is unchanged to avoid shadowing
+`likeness.py`. No competing `tools/art/likeness/` package was created.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

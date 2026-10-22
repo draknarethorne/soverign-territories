@@ -134,7 +134,7 @@ class ReviewGalleryTests(unittest.TestCase):
         gallery = review_gallery.action_options("Gallery", "photo:image_123")
         self.assertEqual(
             [action for action, _label in gallery],
-            ["anchor-added", "photo-protected", "sent-to-review", "rejected-to-various"],
+            ["anchor-added", "photo-protected", "sent-to-review", "rejected-to-various", "match-accepted"],
         )
         review = review_gallery.action_options("Review", "photo:image_123", protected=True)
         self.assertEqual(
@@ -289,7 +289,7 @@ class ReviewGalleryTests(unittest.TestCase):
             self.assertTrue(review_item["stageable"])
             self.assertEqual(
                 [action for action, _label in review_item["stageOptions"]],
-                ["photo-protected", "rejected-to-various", "review-approved"],
+                ["photo-protected", "rejected-to-various", "review-approved", "match-accepted"],
             )
             self.assertEqual(cache.saved, 1)
 

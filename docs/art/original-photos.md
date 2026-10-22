@@ -109,8 +109,12 @@ required. Threshold changes belong in the versioned policy, not `--min`.
 **Prime partial-body frame flow retired (Oct 19).** See [Retired frame images](#retired-prime-partial-body-frames) for what changed and where the preserved files went. The proposed `chest_944x1104` crop is not implemented; it remains a separate visual-review task.
 
 The former `review`/`sort`/`singles`/`rematch` decision chain is no longer run
-automatically. Whole-identity merge/split maintenance and category transitions
-are still unfinished, not delivered by the new photo-routing step. A journal
+automatically. Reconciliation now also proposes reciprocal whole-identity
+merges, qualified red-outlier splits and ID-preserving category transitions;
+see [established-identity maintenance](likeness.md#established-identity-maintenance)
+for policy controls, recovery and the bounded read-only final-core check.
+Those paths have synthetic apply/undo tests, not completed real-batch
+acceptance or demonstrated global convergence. A journal
 undo requires its recorded photos and catalogue to remain unchanged; after
 subsequent renaming or user decisions, use the verified snapshot/reviewed
 recovery path rather than forcing stale destinations.

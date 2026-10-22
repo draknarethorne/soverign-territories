@@ -96,7 +96,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (95)
+### For the assistant, when you say go (94)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -175,7 +175,6 @@
 - [ ] E2d Reassess command ownership and remove compatibility names ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] E3 Reassess package naming after the CLI is no longer an ([2026-10-20](plans/2026-10-20-art-tools-structure.md))
 - [ ] C7 Keep dated report output available and support replacing ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
-- [ ] C8 Add an explicit user-staged move to the closest identity, ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] C9 Investigate a local secondary face model on labelled difficult ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G1 After Review/Reject workflows are working, expose ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 - [ ] G2 Show each operation's destination and consequences in ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))

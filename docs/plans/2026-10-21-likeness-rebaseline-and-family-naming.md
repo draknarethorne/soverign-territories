@@ -1,6 +1,6 @@
 # 2026-10-21: likeness rebaseline, family naming, and matcher simplification
 
-**Status:** active (Oct 22 sandbox trial installed; whole-identity maintenance, family naming and production clean rebase unfinished)
+**Status:** active (Oct 22 sandbox trial installed; established maintenance implemented; calibration, family naming and production clean rebase unfinished)
 
 ## Executive summary
 
@@ -762,16 +762,40 @@ The six remaining proposals mean incremental convergence is not proven.
 Implementation progress against 4.15-4.20 is partial: shared resolution,
 small-group preservation, provisional four-to-five reclassification,
 proposal/authorization separation, holds and real incoming execution are
-implemented and tested. **Established** identity category transitions,
-whole-identity merges/splits, affected-core follow-up, full labelled
-calibration and the separate 200+ incremental batch are not implemented or
-accepted. Legacy no-policy reconciliation code and the large CLI still need
-the planned modularization. Family naming/virtual groups, explicit GUI
-closest-destination actions, secondary-model investigation and the separately
-approved production clean-full adapter/rebuild remain open.
+implemented and tested. The subsequent continuation adds reciprocal disjoint
+whole-identity merges, red-outlier reassignment, optional unmatched-outlier
+splits and existing-identity category transitions. IDs, merge ancestry, name
+histories, Review photos and derivatives are preserved through apply/undo;
+complete source and merge-target inventories are checked again after backup.
+Empty directory shells no longer prevent a later reverse category transition.
+
+The current `.4` draft adds an independent-support diversity ceiling and
+explicit unmatched-outlier permissions. They are uncalibrated draft settings,
+not identity labels. The cast-review size gate is now configurable separately
+from clustering and action support. The installed trial retains its saved
+`.3` policy; the separate `maintenance-v4-preview.json` still reports 76
+candidates, five assignments, 71 holds, six file moves and no identity actions.
+Neither preview was applied.
+
+After an approved apply, one read-only affected-core check records remaining
+maintenance candidates without cascading further moves. Synthetic tests cover
+both a stable final membership and residual work that must not be called
+convergence. Full labelled calibration, global convergence and the separate
+200+ incremental batch remain unaccepted. The old no-policy API adapter is
+now isolated in `legacy_reconciliation.py`; command orchestration is extracted
+to `reconcile_command.py` and established actions to `identity_maintenance.py`.
+The broader CLI/library extraction is still open.
+
+The GUI now offers an explicit chosen-identity Review move with closest
+preselection, stable destination ID, protection/hash validation and undo.
+Both generated pages' executable scripts compile; all 2,376 eligible numeric
+score records have closest-other evidence, and restricted photos offer no
+reassignment. Family naming/virtual groups, the actual secondary-model
+comparison and separately approved production clean-full adapter/rebuild
+remain open.
 
 The full validation launcher passed; after the latest transaction changes
-all 127 likeness-library tests passed and the installed run's `--check`
+all 145 likeness-library tests passed and the installed run's `--check`
 passed. Generated HTML has machine-checked evidence, but visual/browser
 acceptance remains unverified: the integrated browser refused the external
 B: location as outside its trusted folders. Do not bypass that restriction.
@@ -877,6 +901,10 @@ machine-readable and human-readable results.
   candidate merge/split, avoid chain cascades and oscillation, retain
   provenance, and produce a preview/action manifest before any production
   apply. The clean rebase remains a separate baseline/recovery command.
+  Reciprocal disjoint merges, supported red-outlier splits, final-membership
+  category transitions and one bounded read-only final-core check are now
+  transaction-tested. This box stays open for measured idempotence and the
+  staged real batch; no recursive established-core cascade is authorized.
 - [ ] **P1 ai** 4.12 Implement the agreed protection contract. Identity
   protection blocks automatic Gallery-membership and identity changes;
   incoming identity-associated Review has separate admission permission. Photo

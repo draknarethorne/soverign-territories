@@ -71,6 +71,81 @@ class LikenessActionTests(unittest.TestCase):
         )
         self.assertTrue(any("selected by an active workspace workflow" in error for error in errors))
 
+    def test_explicit_other_identity_move_uses_review_and_validates_protection(self):
+        target = self.root / "Angels" / "Angelica"
+        target.mkdir(parents=True)
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"][0] = {
+            **self.action("match-accepted"), **self.destination(),
+        }
+        errors, plans = self.inspect(manifest)
+        self.assertEqual(errors, [])
+        self.assertEqual(plans[0]["destination"], target / "review" / self.photo.name)
+        self.assertTrue(self.photo.is_file())
+        protected = copy.deepcopy(self.catalog)
+        protected["photos"][self.photo_id] = {
+            "contentSha256": self.photo_hash, "protected": True,
+        }
+        errors, _ = self.inspect(manifest, protected)
+        self.assertTrue(any("remove photo protection" in error for error in errors))
+        manifest["actions"][0]["destinationFolder"] = "Angels/Missing"
+        errors, _ = self.inspect(manifest)
+        self.assertTrue(any("existing, unambiguous identity" in error for error in errors))
+
+    def test_other_identity_action_requires_destination_only_for_that_action(self):
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"][0] = self.action("match-accepted")
+        errors, plans = self.inspect(manifest)
+        self.assertTrue(errors)
+        self.assertEqual(plans, [])
+        manifest["actions"][0] = {
+            **self.action("sent-to-review"), "destinationFolder": "Angels/Angelica",
+        }
+        errors, plans = self.inspect(manifest)
+        self.assertTrue(errors)
+        self.assertEqual(plans, [])
+
+    def test_other_identity_reassignment_apply_and_undo(self):
+        (self.root / "Angels" / "Angelica" / "gallery").mkdir(parents=True)
+        manifest = copy.deepcopy(self.manifest)
+        manifest["actions"][0] = {
+            **self.action("match-accepted"), **self.destination(),
+        }
+
+        def save(updated):
+            self.catalog.clear()
+            self.catalog.update(copy.deepcopy(updated))
+
+        batch, _ = actions.apply_actions(
+            manifest, self.root, self.catalog, {}, "Various", backup_fn=lambda *_: "verified",
+            save_fn=save,
+        )
+        target = self.root / "Angels" / "Angelica" / "review" / self.photo.name
+        self.assertEqual(target.read_bytes(), b"photo bytes")
+        self.assertFalse(self.photo.exists())
+        self.assertEqual(metadata.validation_errors(self.catalog), [])
+        destination_id = manifest["actions"][0]["destinationPersonId"]
+        self.assertEqual(self.catalog["actions"][-1]["destinationPersonId"], destination_id)
+        changed = copy.deepcopy(self.catalog)
+        changed["people"][destination_id]["folder"] = "Angels/Changed"
+        errors, _, plans = actions.plan_undo(changed, self.root, batch_id=batch)
+        self.assertTrue(any("destination identity changed" in error for error in errors))
+        self.assertEqual(plans, [])
+        actions.undo_actions(
+            self.catalog, self.root, {}, "Various", batch_id=batch,
+            backup_fn=lambda *_: "verified", save_fn=save,
+        )
+        self.assertEqual(self.photo.read_bytes(), b"photo bytes")
+        self.assertFalse(target.exists())
+
+    def destination(self):
+        person_id = "person_" + "9" * 32
+        self.catalog["people"][person_id] = {
+            "id": person_id, "folder": "Angels/Angelica", "displayName": "Angelica",
+            "folderHistory": [], "identityAnchors": [], "protected": True,
+        }
+        return {"destinationFolder": "Angels/Angelica", "destinationPersonId": person_id}
+
     def test_stale_missing_and_ambiguous_photos_are_rejected(self):
         self.photo.write_bytes(b"changed photo")
         errors, _plans = self.inspect()

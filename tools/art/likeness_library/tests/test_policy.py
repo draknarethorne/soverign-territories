@@ -107,6 +107,23 @@ class LikenessPolicyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "small-group cast review minimum"):
             validate_policy(invalid)
 
+    def test_small_group_size_and_outlier_flags_are_validated_policy_controls(self):
+        policy = copy.deepcopy(self.policy)
+        policy["smallGroupMaximumUsablePhotos"] = 2
+        validate_policy(policy)
+        self.assertEqual(classify_category(3, .46, policy)["category"], "Potentials")
+        del policy["smallGroupMaximumUsablePhotos"]
+        validate_policy(policy)
+        self.assertEqual(classify_category(3, .46, policy)["category"], "Review")
+        for invalid_value in (True, 0, 1.5):
+            policy["smallGroupMaximumUsablePhotos"] = invalid_value
+            with self.assertRaisesRegex(ValueError, "smallGroupMaximumUsablePhotos"):
+                validate_policy(policy)
+        policy = copy.deepcopy(self.policy)
+        policy["categoryPolicies"]["Potentials"]["unmatchedOutlierSplitEnabled"] = "yes"
+        with self.assertRaises(ValueError):
+            validate_policy(policy)
+
     def test_protected_configured_destination_keeps_complete_review_result_shape(self):
         policy = copy.deepcopy(self.policy)
         policy["categoryPolicies"]["Models"]["identityProtectedByDefault"] = True

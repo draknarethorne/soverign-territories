@@ -40,9 +40,13 @@ holds and the saved clean-run centering context.
 The [installed-trial results and limits](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22)
 are the current evidence, superseding the older run counts below. Fia and
 Amara are now Angelica Review candidates, not trusted core additions. The
-ordinary post-run preview is not empty and was not applied. Whole-identity
-merge/split, existing-identity category transitions, family naming,
-incremental-batch acceptance and full CLI modularization remain unfinished.
+ordinary post-run preview is not empty and was not applied. Reciprocal
+whole-identity merges, red-outlier splits, ID-preserving category transitions
+and manual Review reassignment now have tested transaction paths. Apply
+performs one read-only affected-core check without cascading moves. The
+current `.4` draft's diversity heuristic is not calibrated acceptance.
+Family naming, incremental-batch acceptance, global convergence and full CLI
+modularization remain unfinished.
 The separate production clean-full rebuild is still required after acceptance
 and approval; there is no production adapter yet. Gallery visual acceptance
 also remains open because the integrated browser refused the external B:

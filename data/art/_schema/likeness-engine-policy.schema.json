@@ -22,6 +22,7 @@
     "protection"
   ],
   "properties": {
+    "smallGroupMaximumUsablePhotos": {"type": "integer", "minimum": 1},
     "runtimeSettings": {
       "type": "object",
       "additionalProperties": false,
@@ -162,6 +163,9 @@
         "identityClusterMinimumSimilarity": {
           "$ref": "#/definitions/score"
         },
+        "independentEvidenceMaximumSimilarity": {
+          "$ref": "#/definitions/score"
+        },
         "matchReviewMinimum": {
           "$ref": "#/definitions/score"
         },
@@ -286,6 +290,7 @@
       ],
       "properties": {
         "photoRouteMinimum": {"$ref": "#/definitions/score"},
+        "unmatchedOutlierSplitEnabled": {"type": "boolean"},
         "photoRouteMargin": {"type": "number", "minimum": 0, "maximum": 2},
         "reviewAdmissionEnabled": {"type": "boolean"},
         "mergeMinimum": {"$ref": "#/definitions/score"},

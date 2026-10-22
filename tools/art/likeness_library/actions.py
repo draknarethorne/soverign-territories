@@ -25,7 +25,7 @@ cw = likeness.cw
 MANIFEST_SCHEMA = ROOT / "data/art/_schema/likeness-action-manifest.schema.json"
 PHOTO_ROOTS = ("Angels", "Sisters", "Prospects", "Potentials", "Artists", "Models", "Various")
 IGNORED_PARTS = {"_archive", "_junk", "_retired"}
-MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved"}
+MOVE_ACTIONS = {"sent-to-review", "rejected-to-various", "review-approved", "match-accepted"}
 ANCHOR_ACTIONS = {"anchor-added", "anchor-removed"}
 PROTECTION_ACTIONS = {"photo-protected", "photo-unprotected"}
 WORKFLOW_ACTIONS = {"workflow-photo-selected"}
@@ -105,6 +105,8 @@ def _category_for_action(action_type):
 
 
 def _destination(action, root, pool_folder):
+    if action["type"] == "match-accepted":
+        return root / action["destinationFolder"] / "review"
     if action["type"] == "sent-to-review":
         return root / action["personFolder"] / "review"
     if action["type"] == "review-approved":
@@ -292,6 +294,27 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
             and stored_photo["protected"]
             and stored_photo["contentSha256"] == actual_hash
         )
+        if action["type"] == "match-accepted":
+            destination_folder = pathlib.PurePosixPath(action["destinationFolder"])
+            if any(part in (".", "..") for part in destination_folder.parts):
+                errors.append(f"{label}: unsafe destination folder path")
+                continue
+            target_folder = root.joinpath(*destination_folder.parts)
+            destination_person = people_by_folder.get(action["destinationFolder"].casefold())
+            if (
+                not target_folder.is_dir()
+                or target_folder.resolve() != target_folder
+                or action["destinationFolder"].casefold() == folder_key
+                or action["destinationFolder"].casefold() in duplicate_folders
+                or not destination_person
+                or destination_person[0] != action["destinationPersonId"]
+                or "mergedInto" in destination_person[1]
+            ):
+                errors.append(f"{label}: destination must be a distinct, existing, unambiguous identity with its current stable ID")
+                continue
+            if protected or photo_id in anchor_owners:
+                errors.append(f"{label}: remove photo protection or identity anchor before reassignment")
+                continue
         if action["type"] == "anchor-added" and anchored:
             errors.append(f"{label}: {photo_id} is already an identity anchor")
         elif action["type"] == "anchor-removed" and not anchored:
@@ -442,6 +465,8 @@ def _apply_catalog_action(catalog, plan, root, batch_id):
         "beforeState": before_state,
         "afterState": after_state,
     }
+    if action_type == "match-accepted":
+        record["destinationPersonId"] = action["destinationPersonId"]
     catalog["actions"].append(record)
 
 
@@ -705,6 +730,11 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
             return [f"catalogue state changed after action {action['id']}"], None, []
         source = _safe_relative_path(root, action["source"])
         destination = _safe_relative_path(root, action["destination"])
+        if action.get("destinationPersonId"):
+            target = simulated["people"].get(action["destinationPersonId"])
+            expected_folder = pathlib.PurePosixPath(action["destination"]).parent.parent.as_posix()
+            if not target or target["folder"] != expected_folder or target.get("mergedInto"):
+                return [f"destination identity changed after action {action['id']}"], None, []
         workflow = None
         if action["type"] in WORKFLOW_ACTIONS:
             if cfg is None:

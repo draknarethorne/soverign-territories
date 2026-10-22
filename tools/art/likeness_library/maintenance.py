@@ -5,6 +5,7 @@ import pathlib
 import uuid
 
 from . import metadata
+from .identity_maintenance import category_destination_available, relocated_path
 from .sandbox import is_sandbox_working_path
 
 
@@ -57,7 +58,7 @@ def proposed_moves(report, photos, root):
     return moves
 
 
-def validate_moves(root, moves):
+def validate_moves(root, moves, identity_actions=()):
     root = pathlib.Path(root).resolve()
     sources, destinations = set(), set()
     for row in moves:
@@ -68,7 +69,7 @@ def validate_moves(root, moves):
             if (
                 "\\" in value or ":" in value or relative.is_absolute()
                 or len(relative.parts) < 3 or any(part in (".", "..", "") for part in value.split("/"))
-                or relative.parts[-2] not in ("gallery", "review")
+                or (row.get("kind") != "identity-file" and relative.parts[-2] not in ("gallery", "review"))
                 or relative.parts[0] not in ("Angels", "Sisters", "Models", "Prospects", "Potentials", "Artists", "Various")
             ):
                 raise ValueError(f"unsafe reconciliation {name}: {value}")
@@ -76,6 +77,18 @@ def validate_moves(root, moves):
             if path.resolve() != path:
                 raise ValueError(f"reparse point in reconciliation path: {path}")
             paths.append(path)
+        if row.get("kind") == "identity-file" and not any(
+            row.get("personId") == action["personId"]
+            and (
+                row["source"].startswith(action["sourceFolder"] + "/")
+                and row["destination"] == relocated_path(action, row["source"])
+                if not action.get("_undo") else
+                row["destination"].startswith(action["sourceFolder"] + "/")
+                and row["source"] == relocated_path(action, row["destination"])
+            )
+            for action in identity_actions
+        ):
+            raise ValueError("identity file move must belong to a validated folder transition")
         source, destination = paths
         source_key, destination_key = str(source).casefold(), str(destination).casefold()
         if source_key in sources or destination_key in destinations:
@@ -110,7 +123,7 @@ def _backup(root, cfg):
     )
 
 
-def _validate_permissions(root, moves, policy, cfg):
+def _validate_permissions(root, moves, policy, cfg, identity_actions=()):
     catalog = metadata.load_catalog(metadata.path_for_root(root))
     protected_ids = {
         photo_id for photo_id, record in catalog["photos"].items() if record["protected"]
@@ -122,14 +135,17 @@ def _validate_permissions(root, moves, policy, cfg):
     for flow in cfg.get("flows", {}).values():
         selected_names.extend(flow.get("photos", {}).values())
     protected_ids.update(
-        metadata.photo_id_from_name(name) for name in selected_names if isinstance(name, str)
+        photo_id for name in selected_names if isinstance(name, str)
+        if (photo_id := metadata.photo_id_from_name(name))
     )
     protected_folders = {
         person["folder"] for person in catalog["people"].values() if person.get("protected")
     }
     for row in moves:
-        if row["photoId"] in protected_ids:
+        if row.get("photoId") in protected_ids:
             raise ValueError(f"protected or workflow-selected photo cannot move: {row['photoId']}")
+        if row.get("kind") == "identity-file":
+            continue
         source = pathlib.PurePosixPath(row["source"]).parts
         destination = pathlib.PurePosixPath(row["destination"]).parts
         for parts in (source, destination):
@@ -139,17 +155,102 @@ def _validate_permissions(root, moves, policy, cfg):
                 rules.get("identityProtectedByDefault") or folder in protected_folders
             ):
                 raise ValueError(f"protected Gallery cannot change membership: {folder}")
+        if (
+            source[-2] == "gallery" and source[0] != "Various"
+            and not policy["categoryPolicies"][source[0]]["automaticSplitEnabled"]
+        ):
+            raise ValueError(f"automatic Gallery removal is disabled: {row['source']}")
         if destination[-2] == "gallery" and not policy["categoryPolicies"][destination[0]]["automaticPhotoRoutingEnabled"]:
             raise ValueError(f"automatic Gallery admission is disabled: {row['destination']}")
         if destination[-2] == "review" and destination[0] != "Various" and not policy["categoryPolicies"][destination[0]]["reviewAdmissionEnabled"]:
             raise ValueError(f"Review admission is disabled: {row['destination']}")
+    identity_folders = [
+        action[key].casefold() for action in identity_actions
+        for key in ("sourceFolder", "destinationFolder")
+    ]
+    if len(identity_folders) != len(set(identity_folders)):
+        raise ValueError("identity actions must be disjoint; chains and cycles require a fresh plan")
+    for action in identity_actions:
+        person = catalog["people"].get(action["personId"])
+        if not person or person["folder"] != action["sourceFolder"]:
+            raise ValueError("identity transition no longer owns its source folder")
+        if action.get("_undo") or action["type"] not in ("category-transition", "identity-merge"):
+            raise ValueError("unsupported automatic identity action")
+        for folder in (action["sourceFolder"], action["destinationFolder"]):
+            parts = pathlib.PurePosixPath(folder).parts
+            if (
+                len(parts) != 2 or any(part in (".", "..") for part in parts)
+                or "\\" in folder or ":" in folder
+            ):
+                raise ValueError("unsafe identity transition folder")
+            rules = policy["categoryPolicies"].get(parts[0], {})
+            if (
+                not rules.get("automaticPhotoRoutingEnabled")
+                or rules.get("identityProtectedByDefault") or person.get("protected")
+                or person["identityAnchors"]
+            ):
+                raise ValueError("protected identity or anchors block automatic category transition")
+        if action["type"] == "identity-merge":
+            destination_person = catalog["people"].get(action["destinationPersonId"])
+            if (
+                not destination_person or destination_person["folder"] != action["destinationFolder"]
+                or destination_person.get("protected") or destination_person["identityAnchors"]
+                or not policy["categoryPolicies"][person["folder"].split("/")[0]]["automaticMergeEnabled"]
+                or not policy["categoryPolicies"][destination_person["folder"].split("/")[0]]["automaticMergeEnabled"]
+            ):
+                raise ValueError("merge requires two current, unprotected identities with merge permission")
+            for current_person in (person, destination_person):
+                rules = policy["categoryPolicies"][current_person["folder"].split("/")[0]]
+                if action["score"] < rules["mergeMinimum"]:
+                    raise ValueError("merge score no longer meets category policy")
+            if min(action["independentSupport"]) < policy["identityActions"]["autoMergeMinimumIndependentPhotos"]:
+                raise ValueError("merge lacks independent evidence")
+            inventory = {}
+            for path in (root / action["destinationFolder"]).rglob("*"):
+                if path.is_symlink() or path.resolve() != path:
+                    raise ValueError("reparse point in merge destination")
+                if path.is_file():
+                    inventory[path.relative_to(root).as_posix()] = metadata.content_sha256(path)
+            if inventory != action["destinationInventory"]:
+                raise ValueError("merge destination changed; replan from current evidence")
+        elif (
+            any(other["folder"] == action["destinationFolder"] for other in catalog["people"].values())
+            or not category_destination_available(root, action["destinationFolder"])
+        ):
+            raise ValueError("identity transition destination already exists")
+        current = set()
+        for path in (root / action["sourceFolder"]).rglob("*"):
+            if path.is_symlink() or path.resolve() != path:
+                raise ValueError("reparse point in identity transition")
+            if path.is_file():
+                current.add(path.relative_to(root).as_posix())
+                if metadata.photo_id_from_name(path.name) in protected_ids:
+                    raise ValueError("protected photo blocks automatic category transition")
+        planned = {
+            row["source"] for row in moves
+            if row["source"].startswith(action["sourceFolder"] + "/")
+        }
+        if not current or current != planned:
+            raise ValueError("identity inventory changed; replan the category transition")
     return catalog
 
 
-def _updated_catalog(catalog, moves, policy):
+def _updated_catalog(catalog, moves, policy, identity_actions=()):
     updated = json.loads(json.dumps(catalog))
+    for action in identity_actions:
+        person = updated["people"][action["personId"]]
+        if action["type"] == "identity-merge":
+            for other in updated["people"].values():
+                if other.get("mergedInto") == action["personId"]:
+                    other["mergedInto"] = action["destinationPersonId"]
+            person["mergedInto"] = action["destinationPersonId"]
+        else:
+            person["folderHistory"].append(person["folder"])
+            person["folder"] = action["destinationFolder"]
     people = {person["folder"]: person for person in updated["people"].values()}
     for row in moves:
+        if row.get("kind") == "identity-file":
+            continue
         parts = pathlib.PurePosixPath(row["destination"]).parts
         if parts[0] != "Various":
             folder = "/".join(parts[:-2])
@@ -184,20 +285,21 @@ def _rollback(completed, catalog, catalog_path):
     return failures
 
 
-def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=None):
+def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=None,
+                identity_actions=()):
     require_authorization(root, policy, sandbox_override)
     root = pathlib.Path(root).resolve()
     if is_sandbox_working_path(root) and not (root / ".likeness-library.json").is_file():
         raise ValueError("sandbox catalogue is not initialized; install a clean rebase before maintenance")
-    validate_moves(root, moves)
-    catalog = _validate_permissions(root, moves, policy, cfg)
+    validate_moves(root, moves, identity_actions)
+    catalog = _validate_permissions(root, moves, policy, cfg, identity_actions)
     if not moves:
         return None
     catalog_path = metadata.path_for_root(root)
-    updated = _updated_catalog(catalog, moves, policy)
+    updated = _updated_catalog(catalog, moves, policy, identity_actions)
     backup = (backup_fn or _backup)(root, cfg)
-    validate_moves(root, moves)
-    if _validate_permissions(root, moves, policy, cfg) != catalog:
+    validate_moves(root, moves, identity_actions)
+    if _validate_permissions(root, moves, policy, cfg, identity_actions) != catalog:
         raise ValueError("catalogue changed after backup; no reconciliation moves were applied")
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d-%H%M%S")
     journal = root / "_reports" / "runs" / f"reconcile_{stamp}_{uuid.uuid4().hex[:8]}.json"
@@ -207,6 +309,7 @@ def apply_moves(root, moves, policy, cfg, *, sandbox_override=False, backup_fn=N
         "backup": str(backup), "status": "prepared", "moves": moves,
         "catalogBefore": catalog, "catalogAfter": updated,
         "catalogPath": str(catalog_path),
+        "identityActions": list(identity_actions),
     }
     _write(journal, data)
     done = []
@@ -245,10 +348,11 @@ def undo_moves(root, journal, cfg, *, apply=False, backup_fn=None):
         {**row, "source": row["destination"], "destination": row["source"]}
         for row in data["moves"]
     ]
-    validate_moves(root, reverse)
+    reverse_actions = [{**action, "_undo": True} for action in data.get("identityActions", [])]
+    validate_moves(root, reverse, reverse_actions)
     if apply:
         (backup_fn or _backup)(root, cfg)
-        validate_moves(root, reverse)
+        validate_moves(root, reverse, reverse_actions)
         if (
             metadata.path_for_root(root) != catalog_path
             or metadata.content_sha256(catalog_path) != data["catalogAfterSHA256"]

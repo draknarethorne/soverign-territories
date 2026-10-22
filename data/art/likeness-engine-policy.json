@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "draft-2026-10-21.3",
+  "version": "draft-2026-10-22.4",
   "status": "draft",
   "runtimeSettings": {
     "mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"],
@@ -58,6 +58,7 @@
   ],
   "highCastSimilarityMinimum": 0.55,
   "castReviewMinimum": 0.3,
+  "smallGroupMaximumUsablePhotos": 4,
   "smallGroupCastReviewMinimum": 0.4,
   "photoRouting": {
     "reviewMinimum": 0.3,
@@ -66,6 +67,7 @@
     "minimumOwnCoreLead": 0.1
   },
   "identityActions": {
+    "independentEvidenceMaximumSimilarity": 0.95,
     "identityClusterMinimumSimilarity": 0.25,
     "matchReviewMinimum": 0.3,
     "autoMergeMinimum": 0.55,
@@ -110,6 +112,7 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Models": {
+      "unmatchedOutlierSplitEnabled": true,
       "photoRouteMinimum": 0.5,
       "photoRouteMargin": 0.15,
       "reviewAdmissionEnabled": true,
@@ -124,6 +127,7 @@
       "minimumUsablePhotosForOutlierActions": 5
     },
     "Prospects": {
+      "unmatchedOutlierSplitEnabled": true,
       "photoRouteMinimum": 0.4,
       "photoRouteMargin": 0.1,
       "reviewAdmissionEnabled": true,
@@ -138,6 +142,7 @@
       "minimumUsablePhotosForOutlierActions": 4
     },
     "Potentials": {
+      "unmatchedOutlierSplitEnabled": true,
       "photoRouteMinimum": 0.4,
       "photoRouteMargin": 0.1,
       "reviewAdmissionEnabled": true,

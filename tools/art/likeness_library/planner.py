@@ -65,7 +65,10 @@ def plan_candidates(candidates, cores, policy, name_factory, names_taken, cluste
         ]
 
     for row in candidates:
-        ranked = _rank(row["vector"], cores, row["side"])
+        ranked = _rank(
+            row["vector"], cores, row["side"],
+            excluded=(row["sourceFolder"],) if row.get("detachedOutlier") else (),
+        )
         if row["side"] == "Artists":
             held.extend(evidence(
                 [row], ranked, "artist-scoped candidate; excluded from the general identity pool",

@@ -40,10 +40,17 @@ def validate_policy(policy):
         "categoryPolicies",
         "protection",
     }
-    if set(policy) != required:
+    optional = {"smallGroupMaximumUsablePhotos"}
+    if not required <= set(policy) or set(policy) - required - optional:
         missing = sorted(required - set(policy))
-        extra = sorted(set(policy) - required)
+        extra = sorted(set(policy) - required - optional)
         raise ValueError(f"likeness policy keys mismatch; missing={missing}, extra={extra}")
+    small_group_maximum = policy.get("smallGroupMaximumUsablePhotos", 4)
+    if (
+        isinstance(small_group_maximum, bool) or not isinstance(small_group_maximum, int)
+        or small_group_maximum < 1
+    ):
+        raise ValueError("smallGroupMaximumUsablePhotos must be a positive integer")
     if policy["schemaVersion"] != 1:
         raise ValueError("unsupported likeness policy schemaVersion")
     if not isinstance(policy["version"], str) or not policy["version"].strip():
@@ -97,8 +104,10 @@ def validate_policy(policy):
             "minimumUsablePhotosForOutlierActions",
             "photoRouteMinimum", "photoRouteMargin", "reviewAdmissionEnabled", "mergeMinimum",
         }
-        if set(rules) != required_category_keys:
+        if set(rules) - {"unmatchedOutlierSplitEnabled"} != required_category_keys:
             raise ValueError(f"categoryPolicies/{category} keys are incomplete or unsupported")
+        if "unmatchedOutlierSplitEnabled" in rules and not isinstance(rules["unmatchedOutlierSplitEnabled"], bool):
+            raise ValueError(f"categoryPolicies/{category}/unmatchedOutlierSplitEnabled must be boolean")
         for key in (
             "identityProtectedByDefault",
             "automaticMergeEnabled",
@@ -196,7 +205,7 @@ def validate_policy(policy):
             raise ValueError(f"categoryAssignmentRules/{index} cast score range is invalid")
 
     identity = policy["identityActions"]
-    if set(identity) != {
+    if set(identity) - {"independentEvidenceMaximumSimilarity"} != {
         "matchReviewMinimum",
         "autoMergeMinimum",
         "autoMergeMinimumMargin",
@@ -208,6 +217,8 @@ def validate_policy(policy):
         "identityClusterMinimumSimilarity",
     }:
         raise ValueError("identityActions keys are incomplete or unsupported")
+    if "independentEvidenceMaximumSimilarity" in identity:
+        _number(identity["independentEvidenceMaximumSimilarity"], "independent evidence maximum similarity")
     merge_min = _number(identity["autoMergeMinimum"], "automatic merge minimum")
     _number(identity["identityClusterMinimumSimilarity"], "identity cluster minimum")
     review_min = _number(identity["matchReviewMinimum"], "match review minimum")
@@ -391,7 +402,7 @@ def classify_category(
             reason = "high similarity to multiple cast identities; hold for ambiguous cast review"
         return review_result(reason)
     if (
-        usable_photo_count <= 4
+        usable_photo_count <= config.get("smallGroupMaximumUsablePhotos", 4)
         and cast_similarity is not None
         and cast_similarity >= config["smallGroupCastReviewMinimum"]
     ):
@@ -546,6 +557,7 @@ def evaluate_identity_action(
     identity_protected=False,
     photo_protected=False,
     policy=None,
+    propose=False,
 ):
     """Return a protection-aware action decision; draft policies never automate."""
     config = policy or default_policy()
@@ -568,14 +580,15 @@ def evaluate_identity_action(
             return {"decision": "no-match", "reason": "below visual review threshold"}
         margin = _number(margin, "match margin", 0.0, 2.0) if margin is not None else 0.0
         qualifies = (
-            config["status"] == "approved"
+            (config["status"] == "approved" or propose)
             and category_rules["automaticMergeEnabled"]
-            and score >= identity["autoMergeMinimum"]
+            and score >= category_rules["mergeMinimum"]
             and margin >= identity["autoMergeMinimumMargin"]
             and evidence_count >= identity["autoMergeMinimumIndependentPhotos"]
         )
         if qualifies:
-            return {"decision": "auto-merge", "reason": "approved policy thresholds satisfied"}
+            return {"decision": "auto-merge", "reason": "category merge thresholds satisfied",
+                    "authorizationRequired": config["status"] != "approved"}
         return {
             "decision": "review",
             "reason": (
@@ -601,14 +614,15 @@ def evaluate_identity_action(
             "reason": "protected photo may remain workflow-usable outside the identity core",
         }
     qualifies = (
-        config["status"] == "approved"
+        (config["status"] == "approved" or propose)
         and category_rules["automaticSplitEnabled"]
         and evidence_count >= identity["splitMinimumIndependentPhotos"]
         and alternative_score >= identity["splitMinimumAlternativeSimilarity"]
         and margin >= identity["splitMinimumMargin"]
     )
     if qualifies:
-        return {"decision": "auto-split", "reason": "approved policy thresholds satisfied"}
+        return {"decision": "auto-split", "reason": "category split thresholds satisfied",
+                "authorizationRequired": config["status"] != "approved"}
     return {
         "decision": "review",
         "reason": (

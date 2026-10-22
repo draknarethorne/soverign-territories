@@ -40,7 +40,8 @@
           "uniqueItems": true,
           "items": {"$ref": "#/definitions/photoId"}
         },
-        "protected": {"type": "boolean"}
+        "protected": {"type": "boolean"},
+        "mergedInto": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"}
       }
     },
     "photo": {
@@ -86,6 +87,7 @@
           "items": {"$ref": "#/definitions/photoId"}
         },
         "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "destinationPersonId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
         "contentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "source": {"type": "string", "minLength": 1},
         "destination": {"type": "string", "minLength": 1},
