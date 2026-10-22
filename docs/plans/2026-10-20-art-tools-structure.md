@@ -42,9 +42,20 @@ behavior-changing rewrite or a bulk move of every script.
   identity-space scoring, folder rules and clustering from the likeness CLI
   into `tools/art/likeness_library/engine.py`; retain the existing CLI and
   import surface and add focused tests to standard validation.
+- [x] **P2 ai** E1b Move ComfyUI render indexing and photo/render identity-core
+  composition into focused modules with regression tests; preserve the
+  existing `likeness.py` public names.
 - [ ] **P2 ai** E2 Continue extracting command responsibilities from
   `likeness.py` in bounded, behavior-preserving slices; map direct imports,
   launchers, and tests before moving each slice.
+- [ ] **P2 ai** E2a Separate file mutation planning, history, apply, and undo
+  from the command layer; preserve preview/apply and recovery semantics.
+- [ ] **P2 ai** E2b Separate photo inspection and image operations (clean,
+  review, crop, junk) with focused tests and unchanged CLI arguments.
+- [ ] **P2 ai** E2c Separate people, artist, cast, and profile workflows;
+  retain the existing gallery/originals import contracts while extracting.
+- [ ] **P2 ai** E2d Reassess command ownership and remove compatibility names
+  only after repository-wide callers and supported launchers are migrated.
 - [ ] **P2 ai** E3 Reassess package naming after the CLI is no longer an
   importable top-level `likeness.py` module. Do not add a colliding
   `tools/art/likeness/` package before that migration and its compatibility
@@ -84,6 +95,14 @@ time with its launcher and all known references updated together.
   coupling and public references justify a package.
 
 ## Safety and acceptance
+
+The current CLI still coordinates many interdependent workflows. Its next
+extraction order is mutation/recovery, image review/transforms, then people
+and cast workflows. The existing `likeness_library` package owns shared
+likeness behavior; `library_sync.py`, `library_backup.py`, and
+`library_audit.py` are separate photo-library orchestration tools and remain
+in place until their cross-import and launcher contracts are mapped. Do not
+rename packages or move these tools just to make their names look uniform.
 
 - No user photo, workflow, prompt or generated asset is moved as part of Python
   source organization.

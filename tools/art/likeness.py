@@ -101,6 +101,15 @@ from likeness_library.engine import (
 )
 from likeness_library.engine import Embedder as _Embedder  # noqa: E402
 from likeness_library.scoring import core_scores, nz  # noqa: E402
+from likeness_library.identity import (
+    SAME_LOOK,
+    anchor_args,
+    folder_core,
+    identity,
+    identity_vec,
+    kind_of,
+)
+from likeness_library.rendering import Renders  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
 
@@ -1164,126 +1173,6 @@ def cmd_undo(args):
 PAIRS = {"Seraphine": "Drakniss", "Ravaelle": "Draknisa", "Haniya": "Drakniya", "Gavrielle": "Draknava", "Sandalyn": "Draknara",
          "Remiah": "Drakneta", "Azaline": "Draknira", "Camaris": "Draknora", "Sammara": "Draknoxa", "Nyxene": "Drakness"}
 FIXED_ANGELS = ["Angelica"]
-SAME_LOOK = 0.35  # a render and a photo of the same person score at least this
-
-
-class Renders:
-    """The pictures ComfyUI made, whose faces say which look you chose: the sisters' old X_Pose renders and the renders you saved as candidates for the angels."""
-
-    def __init__(self, cfg, cache, embed, st, space, limit=40):
-        self.cfg, self.cache, self.embed, self.st, self.space, self.limit, self.memo = cfg, cache, embed, st, space, limit, {}
-        self.files = {}
-        roots = []
-        try:
-            roots.append(cw.output_root(cfg))
-            roots.append(pathlib.Path(cfg.get("sharedOutput", "")))
-        except (KeyError, TypeError):
-            pass
-        for r in roots:
-            if r and r.is_dir():
-                for f in r.rglob("*.png"):
-                    self.files.setdefault(f.name, f)
-
-    def sister_files(self, hero):
-        pre = (f"{hero}_Qwen_X_Pose_", f"{hero}_Qwen_Alpha_1_Prime_")
-        return sorted(f for n, f in self.files.items() if n.startswith(pre))
-
-    def angel_files(self, hero):
-        d = cw.WF / "_candidates" / "angel-primes" / hero
-        names = {p.stem + ".png" for p in d.rglob("*.json")} if d.is_dir() else set()
-        return sorted(self.files[n] for n in names if n in self.files)
-
-    def centroid(self, hero, kind):
-        """(centroid of the faces in that hero's renders, how many), or None. Centred like the photos, so it can be set against them."""
-        got = self._load(hero, kind)
-        return got and (got[0], got[1])
-
-    def _load(self, hero, kind):
-        key = (hero.lower(), kind)
-        if key not in self.memo:
-            files = self.sister_files(hero) if kind == "sister" else self.angel_files(hero)
-            if len(files) > self.limit:
-                files = [files[i] for i in np.linspace(0, len(files) - 1, self.limit).astype(int)]
-            raws, added = [], False
-            for f in files:
-                sha = self.cache.sha(f)
-                if sha not in self.cache.emb:
-                    self.cache.emb[sha] = self.embed(f) or {"faces": -1}
-                    added = True
-                d = self.cache.emb[sha]
-                if d.get("v") and d.get("px", 0) >= self.st["minFace"]:
-                    raws.append(np.array(d["v"]))
-            if added:
-                self.cache.save()
-            self.memo[key] = None
-            if raws:
-                vs = np.array([nz(r - self.space.mean) for r in raws])
-                _, core, c = core_scores(vs)
-                self.memo[key] = (c, len(core), np.array(raws), core)
-        return self.memo[key]
-
-    def render_space(self, heroes, kind):
-        """{hero: unit vector} of each hero's renders centred on the average of ALL these renders. Renders share a look of their own (the model's), which centring on photos leaves in;
-        set renders against each other only in this space."""
-        got = {h: self._load(h, kind) for h in heroes}
-        got = {h: g for h, g in got.items() if g}
-        if not got:
-            return {}
-        mean = np.vstack([g[2] for g in got.values()]).mean(0)
-        out = {}
-        for h, g in got.items():
-            vs = nz(g[2] - mean)
-            _, core, c = core_scores(vs)
-            out[h] = c
-        return out
-
-
-def kind_of(key):
-    g = key.split("/")[0]
-    return "sister" if g in cw.SISTER_ROOTS else "angel" if g == "Angels" else None
-
-
-def identity(space, cfg, st, rend, key, extra=()):
-    """What a person folder is: her chosen photo (and any anchors from `likeness.anchors` or --anchor), her renders when they agree with it, and a seed made of both."""
-    ps = space.by_key.get(key, [])
-    hero = key.split("/")[-1]
-    parts = list(extra) + list(st.get("anchors", {}).get(hero, []))
-    chosen = {cw.photo_key(n) for h, n in cfg.get("photos", {}).items() if h.lower() == hero.lower() and cw.photo_key(n)}
-    anchors = [p for p in ps if cw.photo_key(p.name) in chosen or any(a and a in p.name for a in parts)]
-    a = nz(np.mean([p.vec for p in anchors], axis=0)) if anchors else None
-    got = rend.centroid(hero, kind_of(key)) if rend and kind_of(key) else None
-    r = got[0] if got else None
-    seeds, conflict = [], False
-    if a is not None:
-        seeds.append(a)
-    if r is not None:
-        if a is None or float(a @ r) >= SAME_LOOK:
-            seeds.append(r)
-        else:
-            conflict = True
-    return {"anchors": anchors, "a": a, "r": r, "nr": got[1] if got else 0, "seed": nz(np.sum(seeds, axis=0)) if seeds else None, "conflict": conflict}
-
-
-def folder_core(space, key, ident=None):
-    ps = space.by_key[key]
-    scores, core, c = core_scores(np.array([p.vec for p in ps]), ident["seed"] if ident else None)
-    return ps, scores, core, c
-
-
-def identity_vec(c, ident):
-    """The vector that stands for a person: her photos' core, joined with her renders when those are the same person."""
-    r = ident["r"] if ident else None
-    return nz(c + r) if r is not None and float(c @ r) >= SAME_LOOK else c
-
-
-def anchor_args(values):
-    out = collections.defaultdict(list)
-    for v in values or []:
-        h, _, part = v.partition("=")
-        out[h.lower()].append(part)
-    return out
-
-
 def cmd_clean(args):
     cfg, st, work, cache, space = build(args)
     rend = None if args.no_renders else Renders(cfg, cache, args.embedder or Embedder(), st, space)
