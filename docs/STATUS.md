@@ -49,6 +49,14 @@ Registered Models/Prospects now have a separate staged identity-protection
 control with stable-ID/state validation, verified-backup apply and undo.
 It does not change scores or borrow a photo ID. Synthetic browser export,
 cancel/conflict checks and actual sandbox payload checks pass.
+Registered identities now also have standalone staged manual rename in the
+Review People heading, preserving stable IDs, photo filenames and recorded
+history through backup/apply/undo. Angels/Sisters change the recorded person's
+name only; their fixed character slot, folder and workflow references remain.
+Protection blocks automation, not explicit manual correction, with a staging
+confirmation for protected identities. Collisions,
+stale inventories and unsupported workflow/workspace references are refused.
+Whole-person merge/retire/reject, name swaps and family-link changes remain open.
 Family naming, incremental-batch acceptance, global convergence and full CLI
 modularization remain unfinished.
 A new read-only `family-preview` command now exposes direct reference scores,

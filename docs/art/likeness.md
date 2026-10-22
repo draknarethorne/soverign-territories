@@ -454,6 +454,51 @@ catalogue changes across backup, preserve the complete identity record and
 record a person-only audit entry without creating a photo record. Undo refuses
 later person-state changes rather than overwriting them.
 
+### Whole-person rename
+
+In **People view**, registered Angels, Sisters, Models, Prospects and Potentials expose
+**Rename identity (standalone batch)** in the person heading. Enter a new name,
+choose **Stage rename**, then download, validate and preview through the same
+action launcher. **Cancel rename** removes that decision. Apply one rename
+alone; it cannot share a manifest with photo actions, identity protection or
+another rename. Swapping occupied names is not implemented.
+
+For Models/Prospects/Potentials this explicit user action renames the entire person folder within its current
+category and updates its catalogue display name, preserving the stable person
+ID, photo filenames/bytes, anchors, protection, exclusions and all derived
+files. The old folder is appended to folder history. The name/history record
+gets the new first-line name and filename; its existing history/profile text
+is retained with an appended rename event. A missing record is created.
+Automatic identity protection does not prohibit this explicit user rename.
+
+For Angels/Sisters it changes only the **recorded person's name** in the
+`z_` name/history record. The fixed character slot, catalogue slot display name,
+folder, filenames, workflow photo and workspace references remain unchanged.
+For example, `Sisters/Draknisa` can keep that slot while correcting its
+recorded person from Sweet Beauty to Amelia Morgan. The field starts with
+the actual recorded name, not the slot name. History records the prior name.
+Protection remains enabled; the browser asks for confirmation before staging
+an explicit rename of a protected identity. It is not an automatic operation.
+
+Windows reserved/unsafe names,
+case-only changes, case-insensitive catalogue or filesystem collisions,
+ambiguous/multiple history records and linked folders are refused. Non-cast identities
+containing a workflow-selected photo or a folder-based workspace exclusion
+are refused until those references can be safely migrated; the heading explains
+that restriction. No shared workspace config is rewritten by this action.
+
+The exported decision includes the current slot/display name, recorded person name and complete folder
+inventory hash. Changed files, empty directories or history require a fresh
+gallery export; backup revalidation detects intervening changes. Apply/undo
+use the existing verified backup and catalogue guards. Undo restores exact
+original name-record bytes and folder only if the renamed inventory and
+catalogue state still match and the old destination remains free. Save failures
+roll back the rename/history; rollback failures are surfaced with the backup.
+Regenerate reports after applying or undoing; old HTML links do not update.
+
+Whole-person merge, retirement, rejection, name swaps and saved family-link
+changes remain separate unfinished work.
+
 ### Testing exported actions safely
 
 The Review page downloads JSON; it never launches a shell. Use
@@ -483,8 +528,8 @@ the gallery after apply/undo before staging further decisions: HTML is a
 snapshot, and old locations, hashes or protection state can be stale.
 Keep workflow-photo selection out of sandbox batches; it is deliberately
 restricted to the configured library. Identity protection must be staged
-separately from that identity's photo actions. Whole-person rename, merge,
-retirement and rejection are not implemented Review controls.
+separately from that identity's photo actions. Whole-person rename is available
+as a standalone batch; merge, retirement and rejection are not yet Review controls.
 
 Automated tests round-trip every non-workflow photo action through saved JSON,
 validation, temporary-file apply and undo. Separate tests cover identity

@@ -1012,6 +1012,10 @@ before treating this interval as a production rule.
 
 ### Phase 5 — family gallery and safe naming workflow
 
+Presentation grouping and header layout now have a bounded owner in the
+[gallery/Review layout plan](2026-10-22-gallery-review-layout.md).
+This phase retains naming, matching evidence and transaction behavior.
+
 - [ ] **P1 ai** 5.1 Add family/lookalike grouping to the local people gallery
   using stable identity metadata. Show whether a link is suggested or
   threshold-assigned, preserve category/person filters, and retain the flat
@@ -1102,6 +1106,17 @@ before treating this interval as a production rule.
   preview/apply/backup/undo path for approved rename and family-link changes.
   Validate stale state, collisions, fixed slot paths, and preservation of
   prior `z_` history.
+- [x] **P1 ai** 5.3a Deliver the explicit manual rename slice for registered
+  identities: People-heading input/stage/cancel, standalone
+  JSON manifest, stable-ID/name/inventory checks, collision/Windows-path guards,
+  existing verified-backup transaction, complete-folder rename, preserved
+  photo bytes/IDs and name history, and exact undo/rollback tests.
+  Angels/Sisters change their recorded person's name while preserving fixed
+  slot folders/catalogue slot labels and workflow references. Protection
+  remains enabled and a confirmation precedes protected manual staging.
+  Non-cast identities with unsupported workflow/workspace references are
+  refused. This does not complete 5.3: name swaps, automatic
+  family naming and family-link actions remain open.
 - [ ] **P1 you** 5.4 Review the sandbox family groups and assigned names in
   the generated preview; identify exceptions and whether the threshold is
   ready for the normal-library batch. Similar first initials are preferred

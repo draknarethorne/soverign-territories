@@ -12,10 +12,24 @@
     "actions": {
       "type": "array",
       "minItems": 1,
-      "items": {"oneOf": [{"$ref": "#/definitions/action"}, {"$ref": "#/definitions/personAction"}]}
+      "items": {"oneOf": [{"$ref": "#/definitions/action"}, {"$ref": "#/definitions/personAction"}, {"$ref": "#/definitions/renameAction"}]}
     }
   },
   "definitions": {
+    "renameAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "personId", "personFolder", "expectedDisplayName", "expectedRecordedName", "expectedTreeSha256", "newName"],
+      "properties": {
+        "type": {"const": "person-renamed"},
+        "personId": {"type": "string", "pattern": "^person_[0-9a-f]{32}$"},
+        "personFolder": {"type": "string", "pattern": "^(Angels|Sisters|Models|Prospects|Potentials)/[^/\\\\:]+$"},
+        "expectedDisplayName": {"type": "string", "minLength": 1},
+        "expectedRecordedName": {"type": "string", "minLength": 1},
+        "expectedTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "newName": {"type": "string", "minLength": 1, "maxLength": 100}
+      }
+    },
     "personAction": {
       "type": "object",
       "additionalProperties": false,

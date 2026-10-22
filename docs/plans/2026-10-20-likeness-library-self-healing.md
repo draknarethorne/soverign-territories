@@ -332,6 +332,10 @@ action-specific measurements on user-labelled examples.
 
 ### Phase C — focused review gallery
 
+Header image/details/actions separation and formatting feedback are tracked
+in the [layout plan](2026-10-22-gallery-review-layout.md), not implicitly
+completed by the action implementation below.
+
 - [x] **P1 ai** C0b Verify available-action execution readiness: supported
   launcher help works; an exhaustive schema-enumerated regression round-trips
   all ten non-workflow photo actions through saved JSON, validation,
@@ -370,6 +374,8 @@ action-specific measurements on user-labelled examples.
   and history work to Phases 2 and 5 of the
   [rebaseline plan](2026-10-21-likeness-rebaseline-and-family-naming.md).
   Existing Potentials' closest-person evidence remains implemented.
+  Manual standalone rename is now implemented under task 5.3a there, also
+  covering Models. Name swaps and broader family-link changes remain open.
 - [ ] **P2 ai** C7 Keep dated report output available and support replacing
   a stable output directory. The overview/review link and order consistency
   are implemented; verify stable-directory replacement without losing the

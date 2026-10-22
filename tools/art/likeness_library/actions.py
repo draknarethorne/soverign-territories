@@ -18,7 +18,7 @@ import likeness  # noqa: E402
 import originals  # noqa: E402
 import library_backup  # noqa: E402
 import people  # noqa: E402
-from likeness_library import metadata, person_actions, rejections  # noqa: E402
+from likeness_library import metadata, person_actions, person_rename, rejections  # noqa: E402
 
 cw = likeness.cw
 
@@ -199,6 +199,8 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
     if not root.is_dir():
         return [f"photo-library root does not exist: {root}"], []
 
+    if any(action["type"] == person_rename.ACTION for action in document["actions"]):
+        return person_rename.validate(document, root, catalog, cfg or {})
     person_errors, person_plans = person_actions.validate_actions(document, root, catalog)
     if person_errors:
         return person_errors, []
@@ -404,6 +406,13 @@ def validate_manifest(document, root, catalog, pool_folder="Prospects/Various", 
 
 def print_preview(plans):
     for plan in plans:
+        if plan["type"] == person_rename.ACTION:
+            print(f"  rename identity {plan['personId']}: {plan['source']} -> {plan['destination']}")
+            print(f"    recorded person name: {plan['action']['expectedRecordedName']} -> {plan['action']['newName']}")
+            if plan["source"] == plan["destination"]:
+                print("    fixed character slot/folder and workflow inputs remain unchanged")
+            print("    preserve original filenames/IDs and history; refresh reports after apply")
+            continue
         if plan["type"] in person_actions.PROTECTION_ACTIONS:
             print(f"  {plan['type']}: {plan['personId']} ({plan['action']['personFolder']}; identity permission only)")
             continue
@@ -696,8 +705,11 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
         raise ValueError("cannot apply invalid manifest:\n  " + "\n  ".join(errors))
     batch_id = "batch_" + uuid.uuid4().hex
     updated = copy.deepcopy(catalog)
+    rename_record = None
     for plan in plans:
-        if plan["type"] in person_actions.PROTECTION_ACTIONS:
+        if plan["type"] == person_rename.ACTION:
+            rename_record = person_rename.catalog_action(updated, plan, batch_id)
+        elif plan["type"] in person_actions.PROTECTION_ACTIONS:
             person_actions.apply_action(updated, plan, batch_id)
         elif plan.get("workflow"):
             _apply_workflow_action(updated, plan, root, batch_id)
@@ -720,17 +732,33 @@ def apply_actions(document, root, catalog, cfg, pool_folder, *, backup_fn=None, 
             and _key(before["destination"]) != _key(after["destination"])
         )
         or before.get("workflow") != after.get("workflow")
+        or before.get("rename") != after.get("rename")
         for before, after in zip(plans, checked_plans)
     ):
         raise ValueError("action destinations changed after backup; no actions applied")
 
-    completed, created_directories = _move_files(checked_plans, root)
+    rename_plan = next((plan for plan in checked_plans if plan["type"] == person_rename.ACTION), None)
+    completed, created_directories = _move_files(
+        [plan for plan in checked_plans if plan["type"] != person_rename.ACTION], root,
+    )
     workflow_attempted = any(plan.get("workflow") for plan in checked_plans)
+    rename_completed = False
     try:
+        if rename_plan:
+            person_rename.change_files(rename_plan)
+            rename_completed = True
+            assert rename_record is not None
+            rename_record["renameState"] = copy.deepcopy(rename_plan["rename"])
+            metadata.validate_catalog(updated)
         _repoint_workflow_photos(checked_plans, cfg)
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
         workflow_failures = []
+        if rename_completed:
+            try:
+                person_rename.change_files(rename_plan, reverse=True)
+            except (OSError, ValueError) as restore_exc:
+                workflow_failures.append(f"rename rollback failed: {restore_exc}")
         if workflow_attempted:
             try:
                 _restore_workflow_photos(checked_plans, cfg)
@@ -793,6 +821,17 @@ def plan_undo(catalog, root, batch_id=None, chosen_ids=(), cfg=None):
     for action in reversed(batch_actions):
         if "beforeState" not in action or "afterState" not in action:
             return [f"action {action['id']} has no undo snapshot"], None, []
+        if action["type"] == person_rename.ACTION:
+            try:
+                rename_plan = person_rename.undo_plan(simulated, action, root, cfg or {})
+            except (OSError, ValueError) as exc:
+                return [str(exc)], None, []
+            simulated["people"][action["personId"]] = copy.deepcopy(action["beforeState"]["person"])
+            reverse_plans.append({
+                "actionRecord": action, "beforeState": action["beforeState"],
+                "renamePlan": rename_plan,
+            })
+            continue
         if action["type"] in person_actions.PROTECTION_ACTIONS:
             try:
                 person_actions.restore_action(simulated, action, root)
@@ -923,7 +962,9 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
         before = item["beforeState"]
         person_id = action.get("personId")
         photo_id = action["photoIds"][0] if action["photoIds"] else None
-        if action["type"] in person_actions.PROTECTION_ACTIONS:
+        if action["type"] == person_rename.ACTION:
+            updated["people"][person_id] = copy.deepcopy(before["person"])
+        elif action["type"] in person_actions.PROTECTION_ACTIONS:
             person_actions.restore_action(updated, action, root)
         elif action["type"] in WORKFLOW_ACTIONS:
             if before["photo"] is None:
@@ -969,11 +1010,21 @@ def undo_actions(catalog, root, cfg, pool_folder, *, batch_id=None, backup_fn=No
     file_plans = [item for item in checked_plans if "source" in item]
     completed, created_directories = _move_files(file_plans, root)
     workflow_attempted = any(item.get("workflow") for item in checked_plans)
+    rename_plan = next((item["renamePlan"] for item in checked_plans if "renamePlan" in item), None)
+    rename_completed = False
     try:
+        if rename_plan:
+            person_rename.change_files(rename_plan, reverse=True)
+            rename_completed = True
         _repoint_workflow_photos(checked_plans, cfg)
         (save_fn or metadata.save_catalog)(updated)
     except (OSError, ValueError) as exc:
         workflow_failures = []
+        if rename_completed:
+            try:
+                person_rename.change_files(rename_plan)
+            except (OSError, ValueError) as restore_exc:
+                workflow_failures.append(f"rename rollback failed: {restore_exc}")
         if workflow_attempted:
             try:
                 _restore_workflow_photos(checked_plans, cfg)

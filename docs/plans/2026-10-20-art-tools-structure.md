@@ -106,6 +106,10 @@ by candidate preparation, group/individual matching, staged action validation,
 maintenance and merge guards. Unsupported legacy mutations and clean-rebuild
 ID migration fail explicitly rather than discarding decisions. This bounded
 module does not complete the remaining legacy-command extraction.
+Whole-person staged rename validation, inventory snapshots and reversible
+folder/history changes live in `person_rename.py`; the existing action CLI
+retains backup, catalogue guarding and transaction ownership. This is separate
+from legacy `likeness rename` and does not invoke photo normalization.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

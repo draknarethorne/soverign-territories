@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools/art"))
 import likeness  # noqa: E402
 import originals  # noqa: E402
-from likeness_library import metadata, rejections  # noqa: E402
+from likeness_library import metadata, person_rename, rejections  # noqa: E402
 from likeness_library.audit import audit_person, catalog_photo_flags, identity_order_key  # noqa: E402
 from likeness_library.cross_reference import CATEGORY_ORDER, rank_identity_centroids, score_band  # noqa: E402
 from likeness_library.policy import (
@@ -319,6 +319,12 @@ function card(r, readOnly=false) {
   }
   destination.hidden=action.value!=="match-accepted";
   const saveStage=()=>{
+    if(action.value&&[...stagedPeople.values()].some(item=>item.type==="person-renamed")) {
+      alert("Apply or cancel the standalone identity rename before staging photo actions.");
+      action.value=staged.get(r.photoId)?.type||"";
+      destination.hidden=action.value!=="match-accepted";
+      return;
+    }
     if(action.value&&(stagedPeople.has(r.personId)||stagedPeople.has(
       records.find(item=>item.folder===destination.value)?.personId
     )&&action.value==="match-accepted")) {
@@ -387,8 +393,12 @@ function groupCards(items) {
         decision.type==="person-protected"?"Protect identity from automatic changes":"Remove identity protection",
         decision.type
       ));
-      select.value=stagedPeople.has(decision.personId)?decision.type:"";
+      select.value=stagedPeople.get(decision.personId)?.type===decision.type?decision.type:"";
       select.addEventListener("change",()=>{
+        if(select.value&&[...stagedPeople.values()].some(item=>item.type==="person-renamed")) {
+          alert("Apply or cancel the standalone rename before staging identity protection.");
+          select.value=""; return;
+        }
         const conflict=[...staged.entries()].some(([id,choice])=>{
           const item=records.find(record=>record.photoId===id);
           return item?.folder===folder||choice.destinationFolder===folder;
@@ -399,10 +409,52 @@ function groupCards(items) {
           return;
         }
         if(select.value)stagedPeople.set(decision.personId,decision);
-        else stagedPeople.delete(decision.personId);
+        else if(stagedPeople.get(decision.personId)?.type===decision.type)stagedPeople.delete(decision.personId);
         updateStagedCount();
       });
       label.append(select); header.append(label);
+    }
+    if(info.personRenameAction) {
+      const decision=info.personRenameAction;
+      const label=document.createElement("label"); label.className="stage";
+      label.append(document.createTextNode("Rename identity (standalone batch)"));
+      const castSlot=/^(Angels|Sisters)\\//.test(folder);
+      const scope=document.createElement("span");scope.className="detail";
+      scope.textContent=castSlot?
+        "Change the recorded person name only; keep the character slot and folder fixed.":
+        "Change the person name and folder; preserve photo filenames and stable IDs.";
+      const input=document.createElement("input"); input.type="text"; input.maxLength=100;
+      input.setAttribute("aria-label","New name for "+folder);
+      const current=stagedPeople.get(decision.personId);
+      input.value=current?.type==="person-renamed"?current.newName:decision.expectedRecordedName;
+      const stage=document.createElement("button"); stage.type="button"; stage.textContent="Stage rename";
+      stage.addEventListener("click",()=>{
+        const others=[...stagedPeople.entries()].some(([id,value])=>
+          id!==decision.personId||value.type!=="person-renamed");
+        if(staged.size||others) {
+          alert("Rename must be staged alone. Cancel or apply other actions first."); return;
+        }
+        if(!input.value.trim()||input.value!==input.value.trim()||
+          /[<>:"/\\\\|?*\\x00-\\x1f]/.test(input.value)||/[. ]$/.test(input.value)) {
+          alert("Enter a Windows-safe name without leading/trailing whitespace."); return;
+        }
+        if(info.identityProtected&&!confirm(
+          folder+" is protected. Stage this explicit manual name change? Automatic protection will stay enabled."
+        ))return;
+        stagedPeople.set(decision.personId,{...decision,newName:input.value});
+        updateStagedCount(); status.textContent="Rename staged; download and preview before applying.";
+      });
+      const cancel=document.createElement("button"); cancel.type="button"; cancel.textContent="Cancel rename";
+      const status=document.createElement("span"); status.className="detail";
+      if(current?.type==="person-renamed")status.textContent="Rename staged";
+      cancel.addEventListener("click",()=>{
+        if(stagedPeople.get(decision.personId)?.type==="person-renamed")stagedPeople.delete(decision.personId);
+        input.value=decision.expectedRecordedName;status.textContent="";updateStagedCount();
+      });
+      label.append(scope,input,stage,cancel,status);header.append(label);
+    } else if(info.personRenameReason) {
+      const note=document.createElement("div");note.className="detail";
+      note.textContent="Rename unavailable: "+info.personRenameReason;header.append(note);
     }
     const reference=primaryFor(folder);
     if(reference) {
@@ -848,6 +900,7 @@ def collect_items(
             or policy["categoryPolicies"].get(likeness.status_of(key), {}).get("identityProtectedByDefault")
         )
         person_id = records[0][0] if len(records) == 1 else None
+        rename_action, rename_reason = person_rename.decision(work, key, person_id, person, cfg)
         anchors = set(person["identityAnchors"]) if person else set()
         category_policy = policy["categoryPolicies"].get(likeness.status_of(key), {})
         usable = [photo for photo in gallery if photo.usable(st["minFace"])]
@@ -954,6 +1007,8 @@ def collect_items(
                 "personId": person_id,
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
+                "personRenameAction": rename_action,
+                "personRenameReason": rename_reason,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
@@ -1048,6 +1103,8 @@ def collect_items(
                 "personId": person_id,
                 "identityProtected": identity_protected,
                 "personProtectionAction": person_protection_action(key, person_id, person),
+                "personRenameAction": rename_action,
+                "personRenameReason": rename_reason,
                 "workflowSelected": photo_id in selected_ids,
                 "identityAnchor": bool(
                     photo_id in anchors and photo_id not in stale_ids and photo_id not in ambiguous_ids
@@ -1203,6 +1260,8 @@ def render_html(items, stamp, warnings=(), policy=None):
             "identityMatches": item.get("identityMatches", []),
             "identityProtected": item.get("identityProtected", False),
             "personProtectionAction": item.get("personProtectionAction"),
+            "personRenameAction": item.get("personRenameAction"),
+            "personRenameReason": item.get("personRenameReason", ""),
         })
     public_items = [
         {key: value for key, value in item.items() if key != "identityMatches"}

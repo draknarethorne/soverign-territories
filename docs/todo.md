@@ -5,7 +5,7 @@
 
 ## Open work, by priority
 
-### Your queue: needs your hands or a decision (39)
+### Your queue: needs your hands or a decision (40)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -26,6 +26,7 @@
 - [ ] 5.4 Review the sandbox family groups and assigned names in ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.2 Review the complete visual preview and manifest, ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 6.5 Inspect the refreshed gallery and selected ComfyUI ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] L5 Review the regenerated actual sandbox pages after L2-L4; ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 
 **P2 (normal)**
 
@@ -96,7 +97,7 @@
 - [ ] Continue the vocabulary audit in S5/S6 of [the prompt-template plan](2026-10-12-prompt-template-standards.md); keep `female_anatomy.txt` a user-maintained working reference until selected terms are reviewed. ([2026-10-15](plans/2026-10-15-likeness-and-edit-prompts.md))
 - [ ] H6 Keep broader art-authoring and ComfyUI batch-execution ([2026-10-20](plans/2026-10-20-likeness-library-self-healing.md))
 
-### For the assistant, when you say go (93)
+### For the assistant, when you say go (97)
 
 **P1 (blocks other work, or cheap and valuable)**
 
@@ -150,6 +151,7 @@
 - [ ] 7.1 Run labelled future-batch tests through the actual ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.2 Ensure generated reports explain destination and ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.4 Update the likeness guide, affected runbooks, active plan ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] L1 Inventory the current overview and Review person-header ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 
 **P2 (normal)**
 
@@ -186,6 +188,9 @@
 - [ ] 5.5 Refresh the people index, gallery, and documented ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 5.6 Show intended card-use guidance by category in the ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
 - [ ] 7.3 Remove or retire only features approved by the sunset ([2026-10-21](plans/2026-10-21-likeness-rebaseline-and-family-naming.md))
+- [ ] L2 Implement a responsive reference-photo panel, identity ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L3 Audit photo-detail grouping and category/name repetition, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
+- [ ] L4 Validate both sort modes, filters, primary references, ([2026-10-22](plans/2026-10-22-gallery-review-layout.md))
 
 **P3 (later, or ideas)**
 

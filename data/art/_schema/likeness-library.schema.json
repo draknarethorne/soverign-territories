@@ -81,6 +81,7 @@
             "match-rejected",
             "photo-retired",
             "person-retired",
+            "person-renamed",
             "person-protected",
             "person-unprotected",
             "action-undone",
@@ -105,12 +106,29 @@
         "workflowPhotoBefore": {"type": "string", "minLength": 1},
         "workflowPhotoAfter": {"type": "string", "minLength": 1},
         "workflowSourceBefore": {"type": "string", "minLength": 1},
-        "workflowSourceAfter": {"type": "string", "minLength": 1}
+        "workflowSourceAfter": {"type": "string", "minLength": 1},
+        "renameState": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["beforeTreeSha256", "afterTreeSha256", "oldHistoryPath", "oldHistoryBase64", "newHistoryPath", "newHistoryBase64"],
+          "properties": {
+            "beforeTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "afterTreeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "oldHistoryPath": {"type": ["string", "null"]},
+            "oldHistoryBase64": {"type": "string"},
+            "newHistoryPath": {"type": "string"},
+            "newHistoryBase64": {"type": "string"}
+          }
+        }
       },
       "allOf": [
         {
+          "if": {"properties": {"type": {"const": "person-renamed"}}, "required": ["type"]},
+          "then": {"required": ["source", "destination", "renameState"]}
+        },
+        {
           "if": {
-            "properties": {"type": {"enum": ["person-protected", "person-unprotected"]}},
+            "properties": {"type": {"enum": ["person-protected", "person-unprotected", "person-renamed"]}},
             "required": ["type"]
           },
           "then": {
