@@ -273,6 +273,17 @@ because policy status is still draft. The probe copy was removed; its report
 remains under `Working\_reports\reconciliation`. These previews changed no
 photo destinations or production files.
 
+Oct 21 modularization follow-up: cached face embedding, embedding-cache
+handling, photo records, centered identity-space scoring, category/home rules,
+library reads, and average-linkage clustering now live in
+`tools/art/likeness_library/engine.py`. The existing `likeness.py` CLI remains
+the stable entry point and re-exports the engine APIs used by gallery,
+originals, and test callers. Focused tests are included in `bin\validate.cmd`.
+This is the first bounded extraction, not a completed split: command
+orchestration remains in the large CLI module. The
+[art-tools structure plan](plans/2026-10-20-art-tools-structure.md) tracks the
+next extraction slices and the package-name decision.
+
 The catalogue foundation now has strict schema/reference validation plus
 atomic read/write helpers. A read-only `likeness audit-core` command reports
 trusted/provisional cores, score order and Prospect outlier candidates; it

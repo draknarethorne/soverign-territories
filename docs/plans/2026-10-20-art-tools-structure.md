@@ -38,6 +38,17 @@ behavior-changing rewrite or a bulk move of every script.
   creates a safe migration opportunity.
 - [ ] **P2 ai** D2 Verify the documented `bin/*.cmd` commands and relevant
   tests after each move; update tool documentation with the new locations.
+- [x] **P2 ai** E1 Extract cached face embeddings, photo records, centered
+  identity-space scoring, folder rules and clustering from the likeness CLI
+  into `tools/art/likeness_library/engine.py`; retain the existing CLI and
+  import surface and add focused tests to standard validation.
+- [ ] **P2 ai** E2 Continue extracting command responsibilities from
+  `likeness.py` in bounded, behavior-preserving slices; map direct imports,
+  launchers, and tests before moving each slice.
+- [ ] **P2 ai** E3 Reassess package naming after the CLI is no longer an
+  importable top-level `likeness.py` module. Do not add a colliding
+  `tools/art/likeness/` package before that migration and its compatibility
+  path are tested.
 
 ## Initial inventory
 
@@ -54,10 +65,14 @@ time with its launcher and all known references updated together.
 
 ## Initial package map
 
-- `likeness_library/`: identity metadata and, as phases deliver them, core
-  audits, review reports and manifest handling. Keep the existing
-  `tools/art/likeness.py` entry point untouched until its planned extraction is
-  separately tested.
+- `likeness_library/`: identity metadata and reusable likeness-library
+  behavior: cached face embeddings, photo records, identity-space scoring,
+  audits, review reports and manifest handling. The name avoids shadowing
+  the existing top-level `likeness.py` import; it is distinct from the
+  `library/` photo-normalization and synchronization domain.
+- `tools/art/likeness.py`: the stable CLI and compatibility import surface.
+  Its core image/identity engine has begun moving to `likeness_library/engine.py`;
+  command orchestration remains here and will move only in tested slices.
 - `library/`: original-photo normalization, duplicate detection, backup and
   library sync. These have shared filesystem and recovery behavior, so move
   them together only after their path and import contracts are mapped.

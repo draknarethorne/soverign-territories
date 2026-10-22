@@ -48,6 +48,11 @@ if errorlevel 1 (
   call "%~dp0_end.cmd" 1
   exit /b 1
 )
+%PY% tools\art\likeness_library\tests\test_engine.py
+if errorlevel 1 (
+  call "%~dp0_end.cmd" 1
+  exit /b 1
+)
 %PY% tools\art\test_people.py
 %PY% tools\art\test_people_gallery.py
 if errorlevel 1 (

@@ -48,7 +48,6 @@ import collections
 import contextlib
 import csv
 import datetime
-import fnmatch
 import hashlib
 import io
 import itertools
@@ -83,21 +82,32 @@ from likeness_library.sandbox import (  # noqa: E402
 )
 from likeness_library.reconciliation import frozen_identity_cores, plan_reconciliation  # noqa: E402
 from likeness_library.policy import classify_category, load_policy  # noqa: E402
+from likeness_library.engine import (
+    Cache,
+    Photo,
+    SETTINGS,
+    Space,
+    apart,
+    cluster,
+    human_rows,
+    is_sister,
+    matches,
+    new_home,
+    pool_home,
+    read_library,
+    settings,
+    side,
+    unassigned_home,
+)
+from likeness_library.engine import Embedder as _Embedder  # noqa: E402
 from likeness_library.scoring import core_scores, nz  # noqa: E402
 
 DATA = pathlib.Path(os.environ.get("LOCALAPPDATA") or (pathlib.Path.home() / ".cache")) / "sovereign-territories"
-MODEL_URLS = {
-    "face_detection_yunet_2023mar.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
-    "face_recognition_sface_2021dec.onnx": "https://github.com/opencv/opencv_zoo/raw/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
-}
-SETTINGS = {"mixed": ["Artists/*", "Various", "Prospects/Various", "Potentials/Various"], "pool": ["Various", "Prospects/Various", "Potentials/Various"], "assign": 0.40, "margin": 0.10, "cluster": 0.25,
-            "minCluster": 3, "odd": 0.15, "alike": 0.30, "minFace": 60, "multiFace": 0.3,
-            # singles: a one-photo prospect joins a prospect she scores this much against (margin 0.05). rematch: two prospect folders whose centroids score this much are one person.
-            # rematchCast: a prospect that scores this much against an angel or a sister is only listed (the cast is yours to change). different: pairs of folders never merged or listed, [["Prospects/Brielle Carter", "Sisters/Draknara"]].
-            # Measured on this library (calibrate, leave-one-out): a match at 0.40 with a margin of 0.10 is right 98.0% of the time and finds 75% of the photos, at 0.45 98.6% and 71%, at 0.35 97.2% and 77%.
-            "singles": 0.35, "rematch": 0.48, "rematchCast": 0.50, "different": [],
-            # castMerge: a prospect, a new group or a single photo that scores this much against an angel or a sister IS her (the same person scores about 0.55): it joins her folder, and the z_ file remembers who it was.
-            "castMerge": 0.55}
+
+
+class Embedder(_Embedder):
+    def __init__(self):
+        super().__init__(DATA)
 FIRST = ["Alina", "Bea", "Calla", "Dara", "Elise", "Faye", "Gia", "Hana", "Ivy", "Jade", "Kira", "Lena", "Maren", "Nia", "Odette", "Paige", "Quinn", "Rhea",
          "Sabine", "Tessa", "Una", "Vera", "Wren", "Xena", "Yara", "Zoe", "Anya", "Brynn", "Cleo", "Delia", "Esme", "Freya", "Greta", "Hollis", "Iris", "Jules",
          "Keira", "Lia", "Mara", "Neve", "Opal", "Petra", "Rina", "Sia", "Tove", "Uma", "Vienna", "Willa", "Yvette", "Zara"]
@@ -124,267 +134,6 @@ Manning Marlowe Merritt Middleton Montgomery Monroe Montrose Morrison Newberry N
 Ramsey Rathbone Redmond Remington Renshaw Ridley Rivers Rockwell Rosenthal Rothwell Rutherford Sinclair Somerset Sterling Stratton Sutton Templeton Thorne
 York
 """.split())
-
-
-# ---------- faces ----------
-
-class Embedder:
-    """Finds the main face in a picture and returns its identity vector (loads the models on first use, downloading them once)."""
-
-    def __init__(self):
-        self.det = self.rec = None
-
-    def load(self):
-        import cv2
-        DATA.joinpath("models").mkdir(parents=True, exist_ok=True)
-        for name, url in MODEL_URLS.items():
-            path = DATA / "models" / name
-            if not path.exists():
-                import urllib.request
-                print(f"downloading {name} ...")
-                urllib.request.urlretrieve(url, path)
-        self.det = cv2.FaceDetectorYN.create(str(DATA / "models" / "face_detection_yunet_2023mar.onnx"), "", (320, 320), 0.7, 0.3, 5000)
-        self.rec = cv2.FaceRecognizerSF.create(str(DATA / "models" / "face_recognition_sface_2021dec.onnx"), "")
-
-    def __call__(self, path):
-        import cv2
-        if self.det is None:
-            self.load()
-        img = cv2.imdecode(np.fromfile(str(path), np.uint8), cv2.IMREAD_COLOR)
-        if img is None:
-            return None
-        h, w = img.shape[:2]
-        scale = 1600 / max(h, w) if max(h, w) > 1600 else 1.0
-        small = cv2.resize(img, (int(w * scale), int(h * scale))) if scale != 1.0 else img
-        sh, sw = small.shape[:2]
-        self.det.setInputSize((sw, sh))
-        faces = None
-        for thr in (0.7, 0.5):  # a close-up with heavy make-up or an odd angle scores lower: look again, less strictly, only when nothing was found
-            self.det.setScoreThreshold(thr)
-            _, faces = self.det.detect(small)
-            if faces is not None and len(faces):
-                break
-        if faces is None or len(faces) == 0:
-            return {"faces": 0, "t": 0.5}
-        best = max(float(f[-1]) for f in faces)
-        humans = human_rows(faces)
-        face = max(humans, key=lambda f: f[2] * f[3])
-        areas = sorted((float(f[2] * f[3]) for f in humans), reverse=True)
-        vec = self.rec.feature(self.rec.alignCrop(small, face))[0]
-        vec = vec / np.linalg.norm(vec)
-        return {"faces": int(len(humans)), "an": int(len(faces) - len(humans)), "s": round(best, 2), "f2": round(areas[1] / areas[0], 2) if len(areas) > 1 else 0, "v": [round(float(x), 5) for x in vec],
-                "box": [round(float(face[0]) / sw, 4), round(float(face[1]) / sh, 4), round(float(face[2]) / sw, 4), round(float(face[3]) / sh, 4)], "px": int(min(face[2], face[3]) / scale)}
-
-    def faces(self, im):
-        """([(x, y, w, h)] of the human faces in a PIL image, the largest first; [(x, y, w, h)] of what the detector took for a face but is not one: animals), in the picture's own pixels."""
-        import cv2
-        if self.det is None:
-            self.load()
-        img = np.asarray(im.convert("RGB"))[:, :, ::-1].copy()
-        h, w = img.shape[:2]
-        scale = 1600 / max(h, w) if max(h, w) > 1600 else 1.0
-        small = cv2.resize(img, (int(w * scale), int(h * scale))) if scale != 1.0 else img
-        self.det.setInputSize((small.shape[1], small.shape[0]))
-        found = None
-        for thr in (0.7, 0.5):
-            self.det.setScoreThreshold(thr)
-            _, found = self.det.detect(small)
-            if found is not None and len(found):
-                break
-        rows = list(found) if found is not None else []
-        humans = human_rows(rows) if rows else []
-        box = lambda rs: sorted((tuple(float(v) / scale for v in r[:4]) for r in rs), key=lambda b: b[2] * b[3], reverse=True)  # noqa: E731
-        return box(humans), box([r for r in rows if not any(r is hr for hr in humans)])
-
-
-# The face detector also finds faces on animals (a bear, a wolf, a horse): those score lower (about 0.55 to 0.82) than a woman's face (0.9 and up).
-# When a face is certain, a face scoring under HUMAN_MIN is not counted as a person; when none is certain, every face is.
-HUMAN_BEST, HUMAN_MIN = 0.9, 0.85
-
-
-def human_rows(rows):
-    best = max(float(r[-1]) for r in rows)
-    return [r for r in rows if float(r[-1]) >= HUMAN_MIN] if best >= HUMAN_BEST else list(rows)
-
-
-class Cache:
-    """{sha1 of the file's bytes: face data}, plus a memo of (size, mtime) -> sha1 so unchanged files are not read again."""
-
-    def __init__(self, path):
-        self.path = pathlib.Path(path)
-        data = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
-        self.stat, self.emb = data.get("stat", {}), data.get("emb", {})
-        # a 'no face' read made before the second, less strict pass, a multi-face read made before the size of the second face was kept, and a read made before animals were told from people ("s") are read again
-        self.emb = {k: v for k, v in self.emb.items() if not (v.get("faces") == 0 and "t" not in v) and not (v.get("faces", 0) > 1 and "f2" not in v) and not (v.get("v") and "s" not in v)}
-
-    def sha(self, p):
-        st = p.stat()
-        key = str(p)
-        hit = self.stat.get(key)
-        if hit and hit[0] == st.st_size and hit[1] == st.st_mtime_ns:
-            return hit[2]
-        sha = hashlib.sha1(p.read_bytes()).hexdigest()
-        self.stat[key] = [st.st_size, st.st_mtime_ns, sha]
-        return sha
-
-    def save(self):
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps({"stat": self.stat, "emb": self.emb}), encoding="utf-8")
-
-
-class Photo:
-    def __init__(self, path, group, folder, sha, data):
-        self.path, self.group, self.folder, self.sha = path, group, folder, sha
-        self.key = group if group == folder else f"{group}/{folder}"  # the Various pool is a root with a gallery of its own
-        self.faces = (data or {}).get("faces", -1)
-        self.f2 = (data or {}).get("f2", 0)  # area of the second largest face against the largest: a small one is a passer-by, a big one is a second person
-        self.animals = (data or {}).get("an", 0)  # faces the detector found on animals
-        self.raw = np.array(data["v"], float) if data and data.get("v") else None
-        self.box = (data or {}).get("box")
-        self.px = (data or {}).get("px", 0)
-        self.name = path.name
-        self.vec = None  # centred, set by Space
-
-    def usable(self, min_face):
-        return self.raw is not None and self.px >= min_face
-
-
-def settings(cfg):
-    out = dict(SETTINGS)
-    out.update(cfg.get("likeness", {}))
-    return out
-
-
-def is_sister(key):
-    """A folder in the active Sisters root."""
-    return key.split("/")[0] in cw.SISTER_ROOTS
-
-
-def pool_home(st):
-    """The folder photos go back to when they belong nowhere: the top-level Various, or Prospects/Various where that is what the library has."""
-    return st.get("poolHome") or st["pool"][0]
-
-
-def side(key):
-    """Where a folder's photos come from: Artists, unassigned people, or the pool; angels and sisters may take from either."""
-    top = key.split("/")[0].lower()
-    return "Artists" if top == "artists" else "Prospects" if top in (
-        "models", "prospects", "potentials", "various"
-    ) else None
-
-
-def apart(a, b):
-    """True when a photo in folder a must never go to folder b: one is a prospect's and the other an artist's."""
-    sa, sb = side(a), side(b)
-    return bool(sa and sb and sa != sb)
-
-
-def new_home(key, name, photo_count=1):
-    """Where a new person split off folder `key` goes; unassigned groups under five become Potentials."""
-    parts = key.split("/")
-    return "/".join(parts[:2] + [name]) if side(key) == "Artists" and len(parts) >= 3 else unassigned_home(name, photo_count)
-
-
-def unassigned_home(name, photo_count):
-    return f"{'Prospects' if photo_count >= 5 else 'Potentials'}/{name}"
-
-
-def matches(key, patterns):
-    """Does a folder key like 'Artists/Pierre' match a pattern like 'Artists/*'? A star stands for one folder name, so 'Artists/*' is the artist folders and not the people grouped inside them."""
-    parts = key.lower().split("/")
-    for p in patterns:
-        pp = p.lower().split("/")
-        if len(pp) == len(parts) and all(fnmatch.fnmatch(a, b) for a, b in zip(parts, pp)):
-            return True
-    return False
-
-
-def read_library(cfg, work, cache, embed, st, progress=True, with_mixed=False):
-    """Every original in the person folders and the pool. The other mixed folders (many people, never used to describe one) are skipped unless with_mixed."""
-    photos, todo = [], []
-    for group, name, folder in cw.photo_folders(cfg, work):
-        key = f"{group}/{name}"
-        if matches(key, st["mixed"]) and not matches(key, st["pool"]) and not with_mixed:
-            continue
-        for p in originals.images(folder / "gallery"):
-            todo.append((p, group, name))
-    done = 0
-    for p, group, folder in todo:
-        sha = cache.sha(p)
-        if sha not in cache.emb:
-            try:
-                cache.emb[sha] = embed(p) or {"faces": -1}
-            except Exception as e:  # noqa: BLE001 - one bad file must not stop the scan
-                print(f"  cannot read {p.name}: {e}")
-                cache.emb[sha] = {"faces": -1}
-            done += 1
-            if progress and done % 25 == 0:
-                print(f"  ... {done} new photo(s) read")
-                cache.save()
-        photos.append(Photo(p, group, folder, sha, cache.emb[sha]))
-    if done:
-        cache.save()
-    return photos
-
-
-# ---------- the space ----------
-
-class Space:
-    """Centred identity vectors for the person folders: centroids per folder, scores of a photo against them."""
-
-    def __init__(self, photos, st):
-        self.st = st
-        self.photos = photos
-        self.pool_keys = set()
-        person = [p for p in photos if p.usable(st["minFace"]) and not matches(p.key, st["mixed"])]
-        self.person = person
-        self.mean = np.mean([p.raw for p in person], axis=0) if person else np.zeros(128)
-        for p in photos:
-            if p.raw is not None:
-                p.vec = nz(p.raw - self.mean)
-        self.by_key = collections.defaultdict(list)
-        for p in person:
-            self.by_key[p.key].append(p)
-        self.keys = sorted(self.by_key)
-
-    def centroid(self, key, skip=None):
-        vs = [p.vec for p in self.by_key.get(key, []) if p is not skip]
-        return nz(np.mean(vs, axis=0)) if vs else None
-
-    def ranking(self, vec, skip=None, own=None, source=None):
-        """[(score, key)] best first: the vector against every person folder's centroid (a photo that is in its own folder is left out of that centroid).
-        source = the folder the photo is in: prospects and artists come from different places and are never mixed, so the other side is left out."""
-        out = []
-        for k in self.keys:
-            if source and apart(source, k):
-                continue
-            c = self.centroid(k, skip=skip if k == own else None)
-            if c is not None:
-                out.append((float(vec @ c), k))
-        return sorted(out, reverse=True)
-
-    def pair_matrix(self):
-        cents = {k: self.centroid(k) for k in self.keys}
-        return cents, {(a, b): float(cents[a] @ cents[b]) for a, b in itertools.combinations(self.keys, 2)}
-
-
-def cluster(vecs, threshold):
-    """Average-linkage clusters of the rows of vecs (cosine): indices lists, most alike merged first until the best link falls below threshold."""
-    n = len(vecs)
-    sim = vecs @ vecs.T
-    groups = [[i] for i in range(n)]
-    while len(groups) > 1:
-        best, bi, bj = -2, 0, 0
-        for i in range(len(groups)):
-            for j in range(i + 1, len(groups)):
-                s = float(np.mean(sim[np.ix_(groups[i], groups[j])]))
-                if s > best:
-                    best, bi, bj = s, i, j
-        if best < threshold:
-            break
-        groups[bi] += groups[bj]
-        del groups[bj]
-    return groups
 
 
 def invent_name(seed, taken):
