@@ -773,6 +773,23 @@ Ambiguous photos already in an identity's Review remain there unless a
 specific destination qualifies: zero existing Review-to-Various moves.
 The six remaining proposals mean incremental convergence is not proven.
 
+The acceptance example `image_7518027271200184433` is traceable through those
+saved reports, not inferred from its current nearest-match label. In
+`initial-preview.json` it was a small-group ambiguous-cast hold: best group
+match Drakniya at 0.4149, with Drakneta also in `reviewAlternatives`, so no
+single cast Review destination was selected. The photo's individual
+cast-only starting comparison was Gavrielle 0.3468 with a 0.0668 lead; those
+are different evidence from the group-level decision. It was installed in
+`Various/review`. Once the non-cast library had been built,
+`post-rebase-reconciliation.json` qualified Uma Merritt at 0.5271 and proposed
+moving it to her Gallery; the `.4` maintenance preview repeats that proposal.
+Neither preview was applied. The displayed 0.53 is therefore consistent with
+the **post-build** nearest identity, not proof that Uma existed as an eligible
+reference at the initial cast-only decision. This is a concrete residual
+convergence case, not a claim that every run empties Various. Various has no
+person identity ID; its holds are unassigned rather than missing catalogue
+registrations. No threshold or hold was silently overridden to clear it.
+
 Implementation progress against 4.15-4.20 is partial: shared resolution,
 small-group preservation, provisional four-to-five reclassification,
 proposal/authorization separation, holds and real incoming execution are

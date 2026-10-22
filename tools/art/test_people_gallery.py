@@ -183,6 +183,67 @@ class PeopleGalleryTests(unittest.TestCase):
         self.assertEqual(gallery.person_name(sister, "Sisters"), "Sydney Sky")
         self.assertIsNone(gallery.person_name(prospect, "Prospects"))
 
+    def test_workflow_photo_outside_top_nine_is_shown_last_without_changing_rankings(self):
+        key, folder = self.add_person("Angels", "Example", 12)
+        paths = sorted((folder / "gallery").glob("*.jpg"))
+        for index, path in enumerate(paths):
+            path.rename(path.with_name(f"example_image_{index + 1}.jpg"))
+        paths = sorted((folder / "gallery").glob("*.jpg"))
+        chosen = paths[-1]
+        photos = []
+        for path in paths:
+            photo = gallery.likeness.Photo(path, "Angels", "Example", path.stem, {
+                "v": [0., 1.] if path == chosen else [1., 0.],
+                "faces": 1, "px": 200, "box": [.2, .2, .4, .4], "s": .95,
+            })
+            photos.append(photo)
+        st = gallery.likeness.settings({})
+        space = gallery.likeness.Space(photos, st, mean=[0., 0.])
+        cfg = {"photos": {"Example": chosen.stem + "_944x1104.png"}}
+        with (
+            mock.patch.object(gallery.likeness, "library_people", return_value=[(key, folder)]),
+            mock.patch.object(gallery, "thumb_bytes", return_value=b"thumbnail"),
+            mock.patch.object(gallery, "inspect", return_value=(True, False)),
+        ):
+            rows = gallery.collect(cfg, st, self.root, space, ["Angels"], catalog={
+                "schemaVersion": 1, "people": {}, "photos": {}, "actions": [],
+            })
+        row = rows[0]
+        self.assertTrue(row["chosen"])
+        self.assertNotIn(chosen, row["gallery_photos_identity"])
+        self.assertNotIn(chosen, row["gallery_photos_score"])
+        self.assertIn(chosen.name, [photo["name"] for photo in row["gallery_photos"]])
+        before = copy.deepcopy(row["gallery_photos"])
+        arranged, pinned = gallery.arrange_workflow_photo(row["gallery_photos"], chosen.name)
+        self.assertTrue(pinned)
+        self.assertEqual(arranged[8]["name"], chosen.name)
+        self.assertEqual(row["gallery_photos"], before)
+        page = gallery.render_html(rows, "now", {"Angels": 1})
+        self.assertIn("workflow-extra", page)
+        self.assertIn("(shown last; outside top nine)", page)
+        self.assertIn("outline:5px solid", page)
+        self.assertIn("outline-style:dashed", page)
+        self.assertIn("ordered.splice(8,0", page)
+        self.assertNotIn("(not shown)</span>", page)
+        md = gallery.render_md(rows, "now", {"Angels": 1}, self.tmp / "files", "people_gallery.html")
+        self.assertIn("(shown last; outside top nine)", md)
+        self.assertEqual(md.count("[!["), 9)
+
+    def test_workflow_grid_pinning_boundary_missing_photo_and_no_selected_photo(self):
+        photos = [{"name": str(index)} for index in range(12)]
+        for index in range(12):
+            with self.subTest(index=index):
+                ordered, pinned = gallery.arrange_workflow_photo(photos, str(index))
+                self.assertEqual(pinned, index >= 9)
+                self.assertEqual(len(ordered), len(photos))
+                self.assertEqual(len({photo["name"] for photo in ordered}), len(photos))
+                self.assertEqual(ordered[min(index, 8)]["name"], str(index))
+        for name in (None, "missing"):
+            ordered, pinned = gallery.arrange_workflow_photo(photos, name)
+            self.assertEqual(ordered, photos)
+            self.assertFalse(pinned)
+        self.assertEqual(gallery.arrange_workflow_photo([], "none"), ([], False))
+
     def test_html_and_markdown_show_person_name_after_chosen_label(self):
         folder = self.root / "Angels" / "Nyxene"
         gallery_dir = folder / "gallery"

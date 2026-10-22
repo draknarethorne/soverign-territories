@@ -60,6 +60,11 @@ verified, undoable original-file archive under `_retired/photos`, excluded
 from matching. Protected/anchored/workflow-selected originals are refused.
 The regenerated sandbox page exposes eligible Gallery and Review choices;
 whole-person retirement and permanent rejected-identity exclusions remain open.
+The overview now keeps an otherwise hidden workflow photo in slot nine with
+a dashed score-colored border; sorting recalculates the display pin.
+The reported Uma Merritt 0.53 Various hold is traced in the
+[installed trial evidence](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#installed-unified-sandbox-trial-oct-22):
+its initial cast ambiguity and unapplied post-build assignment are distinct.
 The separate production clean-full rebuild is still required after acceptance
 and approval; there is no production adapter yet. Gallery visual acceptance
 also remains open because the integrated browser refused the external B:

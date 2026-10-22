@@ -85,6 +85,8 @@ class ReviewGalleryTests(unittest.TestCase):
                 "now",
             )
             self.assertIn('"Various"', page)
+            self.assertIn('identityId.className="detail identity-id"', page)
+            self.assertIn('"unassigned (Various hold)"', page)
 
     def test_closest_other_uses_each_photo_vector_and_skips_other_sides(self):
         photo = SimpleNamespace(
@@ -459,7 +461,7 @@ class ReviewGalleryTests(unittest.TestCase):
         self.assertIn('link.href="people_gallery_review.html?"+query.toString()', page)
         self.assertIn('["Sisters", "Angels", "Models", "Prospects", "Potentials", "Artists"]', page)
         self.assertIn('r.photoId.replace(/^photo:/,"").replace(/^image_/,"")', page)
-        self.assertIn('r.personId||"not catalogued"', page)
+        self.assertIn('r.personId||(r.folder==="Various"?"unassigned (Various hold)":"not catalogued")', page)
         self.assertIn("Core size: \"+r.scoreContext.coreSize+\" photos", page)
         self.assertIn('provisional · no trusted anchors', page)
         self.assertIn('r.folder.split("/").slice(1).join("/")', page)

@@ -97,6 +97,10 @@ Direct family-reference and name-collision reporting now lives in
 read-only subcommand and dispatches to that module. It reuses the shared
 frozen-core builder and existing recorded-name helpers, with no second
 matching engine or mutation path.
+Overview ranking and workflow-photo display selection now live in
+`overview_photos.py`; `people_gallery.py` re-exports the existing ranking
+helper and renders the selected thumbnails. Workflow pinning is display-only,
+not identity evidence or a change to the ranking rules.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

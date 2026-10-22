@@ -182,10 +182,13 @@ function card(r, readOnly=false) {
   if(!readOnly) {
     const id=document.createElement("div"); id.className="detail photo-id";
     const photoId=r.photoId?r.photoId.replace(/^photo:/,"").replace(/^image_/,""):"unavailable";
-    id.textContent="Photo ID: "+photoId+
-      " · Identity ID: "+(r.personId||"not catalogued");
+    id.textContent="Photo ID: "+photoId;
     id.title="Photo ID comes from the filename; Identity ID is assigned when the folder has a likeness-catalogue record";
     article.append(id);
+    const identityId=document.createElement("div"); identityId.className="detail identity-id";
+    identityId.textContent="Identity ID: "+(r.personId||(r.folder==="Various"?"unassigned (Various hold)":"not catalogued"));
+    identityId.title="Various is an unassigned holding area, not a person identity";
+    article.append(identityId);
   }
   const badges=readOnly?[r.referenceLabel]:[
     r.bucket==="Gallery"?"Gallery photo":"Review photo",

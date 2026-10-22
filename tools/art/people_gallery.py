@@ -49,9 +49,9 @@ from likeness_library.policy import (  # noqa: E402
     render_score_legend,
 )
 from likeness_library.thumbnails import crop_thumbnail  # noqa: E402
+from likeness_library.overview_photos import MAX_PHOTOS, arrange_workflow_photo, top_gallery_photos  # noqa: E402
 
 THUMB = (176, 220)  # match the review gallery's 4:5 portrait framing
-MAX_PHOTOS = 9
 SECTIONS = [
     (category, "Artists' people" if category == "Artists" else category)
     for category in CATEGORY_ORDER
@@ -82,30 +82,6 @@ def copies(folder, stem, size):
     head = folder / f"headshot_{w}x{h}" / f"{stem}_head_{w}x{h}.png"
     body = folder / f"gallery_{w}x{h}" / f"{stem}_{w}x{h}.png"
     return (head if head.exists() else None), (body if body.exists() else None)
-
-
-def top_gallery_photos(photos, scores, *, identity_scores=None, priorities=None, sort_mode="identity"):
-    """Rank overview photos using the selected identity sort."""
-    identity_scores = identity_scores or {}
-    priorities = priorities or {}
-    if sort_mode == "score":
-        return sorted(
-            photos,
-            key=lambda photo: (
-                identity_scores.get(photo.name) is None,
-                -(identity_scores.get(photo.name) or 0.0),
-                photo.name.casefold(),
-            ),
-        )[:MAX_PHOTOS]
-    if sort_mode != "identity":
-        raise ValueError(f"unknown identity photo sort: {sort_mode}")
-    ordered = sorted(
-        photos,
-        key=lambda photo: (
-            *priorities.get(photo.name, identity_order_key(False, False, None, photo.name)),
-        ),
-    )
-    return ordered[:MAX_PHOTOS]
 
 
 def thumb_bytes(path, box=None, framing="chest", kind="JPEG"):
@@ -430,6 +406,8 @@ def collect(cfg, st, work, space, groups, rend=None, catalog=None, policy=None):
             sort_mode="score",
         )
         ordered_union = list(dict.fromkeys(ordered + score_ordered))
+        if row["chosen"] and row["source_path"] not in ordered_union:
+            ordered_union.append(row["source_path"])
         sha_by_name = {entry[0].name: getattr(entry[0], "sha", "") for entry in scored} if ps else {}
         gallery_photos = []
         for photo in ordered_union:
@@ -523,7 +501,7 @@ CSS = """body{font-family:Segoe UI,Arial,sans-serif;margin:24px;background:#faf8
 nav a{margin-right:16px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .card{background:#fff;border:1px solid #e0d8c8;border-radius:6px;padding:8px;margin:0}.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.photos a:nth-child(n+10){display:none}
 .photos img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#eee}
-.photos a.workflow-photo{outline:4px solid #8b6d32;outline-offset:-4px;border-radius:3px;background:transparent;color:inherit}.photos a.workflow-photo.score-green{outline-color:#2e7d32}.photos a.workflow-photo.score-yellow{outline-color:#b38b00}.photos a.workflow-photo.score-orange{outline-color:#c46b16}.photos a.workflow-photo.score-red{outline-color:#a52d2d}
+.photos a.workflow-photo{outline:5px solid #8b6d32;outline-offset:-5px;border-radius:3px;background:transparent;color:inherit}.photos a.workflow-photo.workflow-extra{outline-style:dashed}.photos a.workflow-photo.score-green{outline-color:#2e7d32}.photos a.workflow-photo.score-yellow{outline-color:#b38b00}.photos a.workflow-photo.score-orange{outline-color:#c46b16}.photos a.workflow-photo.score-red{outline-color:#a52d2d}
 .card b{font-size:1.05em}.meta{color:#666;font-size:.85em;margin-top:4px}.chosen{background:#2e7d32;color:#fff;border-radius:3px;padding:0 5px;font-size:.8em}.category-badge,.score-badge{display:inline-block;border-radius:4px;padding:2px 6px;font-size:.78em;font-weight:600}.category-sisters{background:#e8e0f2;color:#493365}.category-angels{background:#e4efff;color:#244f85}.category-models{background:#e4f2e5;color:#285b31}.category-prospects{background:#fff0d9;color:#704a12}.category-potentials{background:#eee;color:#555}.score-green{background:#d9efdc;color:#205b2a}.score-yellow{background:#fff1bd;color:#6b5200}.score-orange{background:#ffe0c2;color:#7a3f00}.score-red{background:#f5d6d6;color:#7b2222}.status{color:#888;font-size:.8em}.identity{font-size:.82em;color:#34495e;margin-top:4px}
 .summary{color:#555;font-size:.9em;margin-top:3px}.readiness{color:#555;font-size:.82em;margin-top:5px}.matches,.pairing{font-size:.82em;margin-top:5px}.relationship-row{margin:3px 0}.gallery-jump{margin-left:5px;text-decoration:none;font-weight:700}.pairing-subsection{margin-top:9px;padding-top:7px;border-top:1px solid #e7e0d4}.fit-detail{margin-left:4px}.noimg{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;background:#eee;color:#999;font-size:.8em}.gallery-controls{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:12px 0}.history,.photo-count{font-size:.78em;margin-left:4px;background:#eee;color:#555;border-radius:4px;padding:2px 6px}.person-title{display:flex;align-items:center;gap:5px}.identity-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}.source-photo{margin-left:5px}.full-details{font-size:.82em;margin-top:5px}.full-details ol{margin:4px 0;padding-left:24px}.policy-panel{margin:10px 0;padding:8px 10px;background:#fff;border:1px solid #e0d8c8;border-radius:6px;font-size:.84em}.policy-panel summary{cursor:pointer;font-weight:600;color:#34495e}.policy-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#f5f3ee;padding:10px;border-radius:4px;font-size:.9em}body[data-detail-level="summary"] .full-details{display:none}@media(max-width:700px){body{margin:12px}.page-header{display:block}.header-side{text-align:left;margin-top:12px}.score-legend{justify-content:flex-start}}"""
 
@@ -601,7 +579,10 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
             title = dict(sections)[current]
             out.append(f'<h2 id="{slug(current)}">{html.escape(title)} ({counts[current]})</h2><div class="grid">')
         imgs = []
-        for photo in r["gallery_photos"]:
+        display_photos, workflow_pinned = arrange_workflow_photo(
+            r["gallery_photos"], r["source"] if r["chosen"] else None,
+        )
+        for photo in display_photos:
             href = html.escape(pathlib.Path(photo["path"]).resolve().as_uri(), quote=True)
             score_title = (
                 f' · Identity score {photo["identity_score"]:.3f}'
@@ -625,10 +606,14 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 if is_workflow_photo and photo.get("identity_score") is not None else ""
             )
             workflow_class = (
-                f' class="workflow-photo{workflow_score_class}"'
+                f' class="workflow-photo{workflow_score_class}{" workflow-extra" if workflow_pinned else ""}"'
                 if is_workflow_photo else ""
             )
-            image_title = "Workflow photo" if is_workflow_photo else html.escape(photo["name"], quote=True)
+            image_title = (
+                "Workflow photo (shown last; outside current top nine)"
+                if is_workflow_photo and workflow_pinned else
+                "Workflow photo" if is_workflow_photo else html.escape(photo["name"], quote=True)
+            )
             imgs.append(
                 f'<a{workflow_class} href="{href}" target="_blank" rel="noopener noreferrer"'
                 f' title="{image_title}">'
@@ -764,7 +749,7 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
         caption_html = " · ".join(html.escape(part) for part in caption(r))
         if r.get("chosen") and r.get("source_path"):
             source_href = html.escape(pathlib.Path(r["source_path"]).resolve().as_uri(), quote=True)
-            visible_names = {photo["name"] for photo in r.get("gallery_photos", [])[:9]}
+            visible_names = {photo["name"] for photo in display_photos[:MAX_PHOTOS]}
             source_label = "Workflow photo"
             source_link = (
                 f'<a href="{source_href}" target="_blank" rel="noopener noreferrer">{source_label}</a>'
@@ -774,9 +759,10 @@ def render_html(rows, stamp, counts, pairing_report_href="../comparisons/pairing
                 " " + score_badge(source_score, "Workflow photo likeness score")
                 if source_score is not None else ""
             )
-            source_visibility = ""
+            source_visibility = "(shown last; outside top nine)" if workflow_pinned else ""
             if r["source"] not in visible_names:
-                source_visibility = ' <span class="status">(not shown)</span>'
+                source_visibility = "(not shown)"
+            source_visibility = f' <span class="status workflow-visibility">{source_visibility}</span>'
             caption_html = " · ".join(
                 source_link + source_badge + source_visibility
                 if part == "chosen source photo" else html.escape(part)
@@ -808,15 +794,25 @@ function galleryCompare(a,b,mode){
     a.dataset.photoName.localeCompare(b.dataset.photoName);
 }
 const gallerySort=document.getElementById("gallery-sort");
-gallerySort.addEventListener("change",event=>{
-  const mode=event.target.value;
+function applyGallerySort(mode){
   for(const grid of document.querySelectorAll(".photos")){
-    [...grid.querySelectorAll("a")].sort((a,b)=>galleryCompare(a.querySelector("img"),b.querySelector("img"),mode)).forEach(link=>grid.append(link));
+    const ordered=[...grid.querySelectorAll("a")].sort((a,b)=>galleryCompare(a.querySelector("img"),b.querySelector("img"),mode));
+    const workflow=ordered.find(link=>link.classList.contains("workflow-photo"));
+    const index=ordered.indexOf(workflow), pinned=index>=9;
+    if(pinned)ordered.splice(8,0,ordered.splice(index,1)[0]);
+    if(workflow){
+      workflow.classList.toggle("workflow-extra",pinned);
+      workflow.title=pinned?"Workflow photo (shown last; outside current top nine)":"Workflow photo";
+    }
+    const visibility=grid.closest(".card").querySelector(".workflow-visibility");
+    if(visibility&&workflow)visibility.textContent=pinned?"(shown last; outside top nine)":"";
+    ordered.forEach(link=>grid.append(link));
   }
   for(const link of document.querySelectorAll(".person-review-link")){
     const url=new URL(link.href,location.href);url.searchParams.set("sort",mode);link.href=url.toString();
   }
-});
+}
+gallerySort.addEventListener("change",event=>applyGallerySort(event.target.value));
 document.getElementById("thumbnail-framing").addEventListener("change",event=>{
   for(const image of document.querySelectorAll(".photos img[data-head]"))image.src=event.target.value==="head"?image.dataset.head:image.dataset.chest;
 });
@@ -857,7 +853,10 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
             current = r["status"]
             lines += [f"## {dict(sections or SECTIONS)[current]} ({counts[current]})", ""]
         parts = []
-        for index, photo in enumerate(r["gallery_photos"], 1):
+        display_photos, workflow_pinned = arrange_workflow_photo(
+            r["gallery_photos"], r["source"] if r["chosen"] else None,
+        )
+        for index, photo in enumerate(display_photos[:MAX_PHOTOS], 1):
             thumbnail = photo.get("thumbnail")
             if not thumbnail or not (files_dir.parent / thumbnail).is_file():
                 name = f"{slug(r['status'])}_{slug(r['folder'])}_{index}.jpg"
@@ -886,12 +885,14 @@ def render_md(rows, stamp, counts, files_dir, html_name, columns=3,
         identity_label = f"<br>Person: {r['person_name']}" if r.get("person_name") else ""
         caption_parts = caption(r)
         if r.get("chosen") and r.get("source_path"):
-            visible_names = {photo["name"] for photo in r.get("gallery_photos", [])[:9]}
+            visible_names = {photo["name"] for photo in display_photos[:MAX_PHOTOS]}
             source_label = "workflow photo"
             if r.get("source_identity_score") is not None:
                 source_label += f" · likeness {r['source_identity_score']:.2f}"
             if r["source"] not in visible_names:
                 source_label += " (not shown)"
+            elif workflow_pinned:
+                source_label += " (shown last; outside top nine)"
             source_uri = pathlib.Path(r["source_path"]).resolve().as_uri()
             caption_parts = [
                 f"[{source_label}]({source_uri})" if part == "chosen source photo" else part

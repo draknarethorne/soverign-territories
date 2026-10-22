@@ -344,6 +344,18 @@ is calculated from the folder's own photos when there are no trusted identity
 anchors; it is not a confirmed identity. The page also exposes face
 size/count, core size and type, core membership, centered-cosine method, and
 applicable thresholds. Clicking the face metric opens its cached face crop.
+Photo ID and Identity ID appear on separate lines. Various holds explicitly
+show an unassigned identity, because the holding area is not a person.
+
+The overview always includes the chosen workflow photo when its Gallery
+original is available. If it falls outside the current top nine, the grid
+shows the top eight plus that photo in slot nine, with a **dashed** score-colored
+5px outline and a "shown last; outside top nine" note. If it qualifies within
+the top nine, its outline is solid and its natural position is retained.
+Switching between core-first and highest-score order recalculates that
+display-only pin; it does not alter scores, rankings, core membership or
+workflow selection. Head/chest framing preserves the chosen photo's place.
+The Markdown overview uses the same nine-photo display selection.
 
 Photo-level Protect, identity-anchor, Review, Reject-to-Various,
 Review-approval, photo retirement, and eligible workflow-photo choices are **staged** in the
