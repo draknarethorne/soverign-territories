@@ -249,6 +249,38 @@ The new rebase runner will consume this bundle and link its artifacts from
 each run manifest; until then, run `diagnostics` explicitly to measure current
 library cost and review the evidence.
 
+### `likeness family-preview`: direct references and naming collisions
+
+`bin\likeness.cmd --root "<library>" --cache "<cache>" family-preview
+--policy "<policy.json>" --out "<report-folder>"` writes `family-preview.json`
+and a static `family-preview.html` with links to the existing review gallery.
+Without `--out`, a timestamped directory is created under `_reports/analysis`.
+Repeating the command safely replaces its two report files. Sandbox cache
+and report paths must stay inside the named sandbox Working directory.
+
+The preview uses the shared engine's frozen Gallery cores, stable person IDs
+and recorded `z_` names. It lists each identity's closest direct reference
+above the policy's `lookalikeGroups.suggestionMinimumSimilarity`, runner-up
+and score lead; the JSON also contains qualifying alternatives and core
+evidence. Artists are inventoried for name collisions but are never family
+references. Unregistered/merged identities and identities without a usable
+core are explicitly excluded from scoring suggestions.
+
+These are **suggestions, not accepted families**. Reciprocal links may occur;
+they are not followed into chains or collapsed into one group. High-scoring
+pairs are flagged for possible same-person review before treating them as
+distinct family members. Surname reuse is unresolved until reviewed; sharing
+a name alone is not relationship evidence.
+
+Non-cast naming proposals keep the current first name and borrow the direct
+reference's surname. Existing and proposed full-name collisions are reported
+case-insensitively, including names in Artist-person folders. Fixed cast
+names have no rename proposal. Shared-initial alternatives, approved
+membership/naming thresholds, saved family metadata and rename/apply/undo
+remain separate unfinished work. The preview does not approve a draft policy,
+change `automaticAssociationEnabled`, rename anything, save the catalogue or
+move photos. It may populate the specified embedding cache.
+
 ### `likeness sandbox-reset`: restore the sandbox baseline categories
 
 `bin\likeness.cmd --root "B:\Sovereign Territories Sandbox\Working"

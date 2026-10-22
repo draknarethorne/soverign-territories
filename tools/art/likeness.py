@@ -3084,6 +3084,11 @@ def cmd_names(args):
     print(f"\n{len(rows)} person folder(s); {made} without a z_ file" + ("; written" if args.apply and made else ("; add --apply to write them" if made else "")))
 
 
+def cmd_family_preview(args):
+    from likeness_library.family_preview import run
+    return run(args, sys.modules[__name__])
+
+
 def cmd_rename(args):
     """Rename a Prospect or Potential folder and its recorded name, preserving history and updating photo names."""
     cfg = cw.load_cfg()
@@ -3184,6 +3189,9 @@ def main(argv=None, embedder=None):
     s.add_argument("--apply", action="store_true", help="restore only Models, Prospects, and Potentials from the verified Source snapshot")
     s = add("policy", cmd_policy)
     s.add_argument("--policy", help="versioned policy JSON (default: data\\art\\likeness-engine-policy.json)")
+    s = add("family-preview", cmd_family_preview, help="read-only direct family references, surname reuse and naming collisions")
+    s.add_argument("--policy", help="versioned likeness policy JSON")
+    s.add_argument("--out", help="output directory for JSON and static HTML (default: dated _reports\\analysis folder)")
     add("alike", cmd_alike, sheet=True).add_argument("--min", type=float, help="show pairs at or above this score (default: settings alike)")
     add("compare", cmd_compare, "a", "b", sheet=True)
     s = add("folder", cmd_folder, "name", apply=True, sheet=True)

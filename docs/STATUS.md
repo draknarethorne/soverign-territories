@@ -51,6 +51,10 @@ It does not change scores or borrow a photo ID. Synthetic browser export,
 cancel/conflict checks and actual sandbox payload checks pass.
 Family naming, incremental-batch acceptance, global convergence and full CLI
 modularization remain unfinished.
+A new read-only `family-preview` command now exposes direct reference scores,
+surname reuse and collision-aware naming proposals from the saved sandbox
+scenario; see the [family/name preview evidence](plans/2026-10-21-likeness-rebaseline-and-family-naming.md#phase-2--complete-identity-names-and-define-family-metadata).
+Suggestions do not establish family membership or authorize renames.
 The separate production clean-full rebuild is still required after acceptance
 and approval; there is no production adapter yet. Gallery visual acceptance
 also remains open because the integrated browser refused the external B:

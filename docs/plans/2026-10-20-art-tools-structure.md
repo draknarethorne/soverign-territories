@@ -92,6 +92,11 @@ Package naming is unchanged to avoid shadowing
 Person-wide staged protection validation/state/history now lives in
 `person_actions.py`, sharing the existing action CLI's backup, transaction
 and undo boundary rather than duplicating filesystem execution.
+Direct family-reference and name-collision reporting now lives in
+`family_preview.py` with focused tests; `likeness.py` only registers the
+read-only subcommand and dispatches to that module. It reuses the shared
+frozen-core builder and existing recorded-name helpers, with no second
+matching engine or mutation path.
 The likeness test hook now matches package descendants and both the catalogue
 and engine-policy JSON/schema contracts. Its earlier end anchor incorrectly
 skipped Python files; an explicit verbose hook run executes all 127 tests.

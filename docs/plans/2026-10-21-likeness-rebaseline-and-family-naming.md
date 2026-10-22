@@ -586,6 +586,20 @@ refactor preserves baseline behavior.
   Vale already appears on six active identities; Angelica Vale is explicitly
   user-approved, bringing that surname to seven. Do not infer family links
   from this approved name reuse; validate those links from likeness evidence.
+- [x] **P1 ai** 2.3a Add a read-only direct-reference and naming preview
+  through `bin\likeness.cmd family-preview`, using frozen cores and stable
+  IDs. The saved `.3` sandbox scenario inventories 232 identities: 138
+  closest-reference suggestions, 52 reused surnames, no existing full-name
+  or folder collisions, 71 Artist-person exclusions from matching, and no
+  core diagnostics. One proposal conflicts with an existing full name and
+  two proposals conflict with each other. All surname reuse remains
+  unresolved rather than being labelled confirmed from scores alone.
+  The HTML has 414 validated local Review links; JSON retains alternative
+  scores and core evidence. A repeat launcher run preserved all 5,932 active
+  sandbox-file and 8,270 production-file inventories, all recorded-name
+  hashes, the sandbox catalogue hash and saved policy hash. Production has
+  no local catalogue. This advances 2.3, not its confirmed/unrelated
+  classification, the family contract, automatic naming or the family GUI.
 - [ ] **P1 either** 2.4 Specify how threshold-assigned family groups and
   below-threshold suggestions are represented, including evidence, version,
   reversibility, and surname/first-name assignment. Threshold-driven
